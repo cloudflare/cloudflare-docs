@@ -28,10 +28,11 @@ we strongly recommend using the drivers in the tables below, as they have been t
 
 ### PostgreSQL
 
-| Driver                 | Documentation                                                             |
-| ---------------------- | ------------------------------------------------------------------------- |
-| `pg8000` (recommended) | [pg8000 documentation](https://codeberg.org/tlocke/pg8000)                |
-| `psycopg`              | [psycopg documentation](https://www.psycopg.org/psycopg3/docs/index.html) |
+| Driver                  | Documentation                                                             |
+| ----------------------- | ------------------------------------------------------------------------- |
+| `asyncpg` (recommended) | [asyncpg documentation](https://magicstack.github.io/asyncpg/current/)    |
+| `pg8000`                | [pg8000 documentation](https://codeberg.org/tlocke/pg8000)                |
+| `psycopg`               | [psycopg documentation](https://www.psycopg.org/psycopg3/docs/index.html) |
 
 ### MySQL
 
@@ -71,36 +72,30 @@ Before you begin, [create a Python Worker](/workers/languages/python/#the-pywran
    ```toml
    [project]
    dependencies = [
-	   "pg8000",
+	   "asyncpg",
    ]
    ```
 
    ```python title="src/main.py"
    from contextlib import closing
 
-   import pg8000
+   import asyncpg
    from workers import Response, WorkerEntrypoint
 
    class Default(WorkerEntrypoint):
        async def fetch(self, request):
            hd = self.env.HYPERDRIVE
-           connection = pg8000.connect(
+           connection = await asyncpg.connect(
                host=hd.host,
                port=int(hd.port),
                user=hd.user,
                password=hd.password,
                database=hd.database,
-               ssl_context=False,
+               ssl=False,
            )
-           try:
-               connection.autocommit = True
-               with closing(connection.cursor()) as cursor:
-                   cursor.execute("SELECT 1")
-                   return Response.json({"result": cursor.fetchone()[0]})
-           finally:
-               connection.close()
+           await connection.execute("SELECT 1")
+           await connection.close()
    ```
-
    </TabItem>
    <TabItem label="MySQL">
 
