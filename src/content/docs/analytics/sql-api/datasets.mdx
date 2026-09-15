@@ -1,0 +1,129 @@
+---
+pcx_content_type: concept
+title: Datasets
+description: Understand SQL API dataset types and discover available datasets and columns.
+sidebar:
+  order: 2
+---
+
+Each SQL API dataset has a schema-qualified name. The prefix identifies what one row represents and how you should interpret the data.
+
+| Prefix    | Row meaning                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `events.` | Each row is a unique event. Event datasets are often sampled.                                                                           |
+| `states.` | Each row represents the current state of a system when the observation was recorded.                                                    |
+| `logs.`   | Each row is a unique event or log entry. Log datasets are typically unsampled, but can be sampled. This includes Log Explorer datasets. |
+
+## Event datasets
+
+Use an `events.` dataset for aggregate analysis, such as creating tables, charts, and dashboards. You can also retrieve individual events. For example, the following query counts HTTP requests by response status:
+
+```sql
+SELECT edgeResponseStatus AS status, COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+GROUP BY edgeResponseStatus
+ORDER BY requests DESC
+LIMIT 10
+```
+
+Event datasets are often adaptively sampled. The SQL API automatically applies sample weights to `COUNT`, `SUM`, and `AVG`. A query that selects individual rows only returns the sampled rows and cannot reconstruct events that were not retained.
+
+## State datasets
+
+Use a `states.` dataset to inspect observations of system state, such as D1 database storage. Each row describes the state at the time in its `timestamp` field; it does not represent a unique action or transaction.
+
+```sql
+SELECT timestamp, databaseId, databaseSize
+FROM states.d1Storage
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+ORDER BY timestamp DESC
+LIMIT 100
+```
+
+Each state dataset defines which aggregate functions are meaningful for its values. The API rejects aggregate functions that are not supported by the selected state dataset.
+
+## Log datasets
+
+Use a `logs.` dataset for fine-grained investigation of individual events and log entries. You can also aggregate log data to identify trends. This category includes datasets served by Log Explorer.
+
+```sql
+SELECT timestamp, scriptName, logType
+FROM logs.workersLogs
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '15' MINUTE
+ORDER BY timestamp DESC
+LIMIT 100
+```
+
+Log datasets are typically unsampled, but some use adaptive sampling. As with event datasets, the SQL API automatically applies sample weights to supported aggregate functions when a log dataset is sampled.
+
+## Discover datasets
+
+Use the introspection endpoint to list the datasets in the SQL API catalog:
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode "account_tag=<ACCOUNT_TAG>"
+```
+
+The response contains dataset names and descriptions, sorted by name. Columns are omitted by default.
+
+```json
+{
+	"datasets": [
+		{
+			"name": "events.httpRequests",
+			"description": "Aggregated HTTP requests data with adaptive sampling"
+		}
+	]
+}
+```
+
+The endpoint accepts the following query parameters:
+
+| Parameter         | Type    | Required | Description                                                                               |
+| ----------------- | ------- | -------- | ----------------------------------------------------------------------------------------- |
+| `account_tag`     | string  | Yes      | Account identifier used to authorize the request.                                         |
+| `dataset_name`    | string  | No       | Exact, case-sensitive schema-qualified dataset name to return.                            |
+| `include_columns` | boolean | No       | Set to `true` to include column names, descriptions, and data types. Defaults to `false`. |
+
+To inspect one dataset and its columns, provide both optional parameters:
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode "account_tag=<ACCOUNT_TAG>" \
+  --data-urlencode "dataset_name=events.httpRequests" \
+  --data-urlencode "include_columns=true"
+```
+
+```json
+{
+	"datasets": [
+		{
+			"name": "events.httpRequests",
+			"description": "Aggregated HTTP requests data with adaptive sampling",
+			"columns": [
+				{
+					"name": "accountTag",
+					"description": "Account tag (hex identifier)",
+					"data_type": "String"
+				},
+				{
+					"name": "timestamp",
+					"description": "The date and time the event occurred at the edge",
+					"data_type": "DateTime"
+				}
+			]
+		}
+	]
+}
+```
+
+An unknown `dataset_name` returns an empty `datasets` array.
+
+Introspection returns catalog metadata and does not query the underlying data store. A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.

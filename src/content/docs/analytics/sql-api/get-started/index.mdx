@@ -1,0 +1,73 @@
+---
+pcx_content_type: get-started
+title: Get started
+description: Authenticate and run your first SQL API query.
+sidebar:
+  order: 1
+---
+
+## Prerequisites
+
+To query the SQL API, you need a Cloudflare account or zone identifier and an API token with **Analytics: Read** permission for that account or zone.
+
+SQL API datasets represent different Cloudflare products. Some datasets and fields require additional API token permissions for the products whose data they expose. Include the permissions required by every dataset and field you plan to query.
+
+Cloudflare recommends API tokens because you can restrict each token to specific resources. Refer to [Create an API token](/fundamentals/api/get-started/create-token/) for instructions.
+
+## Run a query
+
+Send a `POST` request to the SQL API endpoint. Pass the SQL statement and its parameters as JSON.
+
+The following query returns the five most common HTTP response statuses for one account after a specified start time. Replace `<START_TIME>` with a recent ISO 8601 timestamp within the dataset's retention period.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/analytics/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "query": "SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account AND timestamp >= $start GROUP BY edgeResponseStatus ORDER BY requests DESC LIMIT 5",
+    "params": {
+      "account": "<ACCOUNT_TAG>",
+      "start": "<START_TIME>"
+    }
+  }'
+```
+
+A successful response has the following structure:
+
+```json
+{
+	"data": [
+		{
+			"status": 200,
+			"requests": 125430
+		},
+		{
+			"status": 404,
+			"requests": 8240
+		},
+		{
+			"status": 301,
+			"requests": 5175
+		},
+		{
+			"status": 304,
+			"requests": 3960
+		},
+		{
+			"status": 500,
+			"requests": 82
+		}
+	],
+	"rows": 5,
+	"statistics": {
+		"elapsed_ms": 42,
+		"rows_read": 250000,
+		"bytes_read": 18000000
+	}
+}
+```
+
+The `data` array contains one object for each result row. The object keys match selected field names or aliases. The `rows` value is the number of returned rows. The `statistics` object describes the work performed by the data store.
+
+For request options and parameter binding, refer to [Query the API](/analytics/sql-api/query-api/).
