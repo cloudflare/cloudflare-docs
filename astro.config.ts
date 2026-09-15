@@ -213,6 +213,10 @@ const integrations = [
 				features: { smartPunctuation: false },
 				hastPlugins,
 			}),
+			partialResolver: {
+				revision: "partial-resolver-v1",
+				resolve: ({ file, product }) => (product ? `${product}/${file}` : file),
+			},
 		},
 		validateMdx: false,
 		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
@@ -225,9 +229,6 @@ const integrations = [
 							item as Parameters<typeof serializeSitemapLastmod>[0],
 						),
 		},
-		// Partial resolution ( <Render file="..." product="..." /> ) is handled
-		// entirely by our own Render.astro component via astro:content's
-		// `getEntry("partials", id)` — no integration-level hook needed.
 		rules: {
 			"nimbus/frontmatter-shape": "error",
 			"nimbus/image-ref": [

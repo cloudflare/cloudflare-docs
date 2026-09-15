@@ -64,5 +64,6 @@ tools/relevant_changed_files.txt
 .flue/vitest-results.json
 
 # nimbus-docs generated files
+.nimbus/coordinates.json
 .nimbus/lint.json
 .nimbus/routes.json
