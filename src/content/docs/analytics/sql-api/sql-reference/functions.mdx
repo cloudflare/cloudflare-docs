@@ -1,0 +1,157 @@
+---
+pcx_content_type: reference
+title: Functions
+description: SQL aggregate and time functions supported by the SQL API.
+sidebar:
+  order: 3
+---
+
+Function names are case-insensitive.
+
+## Aggregate functions
+
+State dataset rows represent observations of a system's state rather than unique events. Some aggregate functions can therefore produce misleading or nonsensical results. To prevent this, each state dataset supports only the aggregate functions that are meaningful for its data. The API rejects other aggregate functions.
+
+| State dataset                      | Supported aggregate functions |
+| ---------------------------------- | ----------------------------- |
+| `states.d1Storage`                 | `MAX`                         |
+| `states.r2CombinedStorage`         | `MAX`                         |
+| `states.hyperdrivePoolSizes`       | `AVG`, `MAX`                  |
+| `states.queuesConsumerMetrics`     | `AVG`                         |
+| `states.deviceState`               | `COUNT`, `MAX`                |
+| Magic WAN Connector state datasets | `COUNT`, `MAX`                |
+
+No current state dataset supports `SUM`, `MIN`, `APPROX_MIN`, or `APPROX_MAX`.
+
+### COUNT
+
+`COUNT(*)` returns the number of events represented by the matching rows.
+
+```sql
+SELECT COUNT(*) AS requests
+```
+
+`COUNT()` is also accepted. `COUNT(field)` and `COUNT(DISTINCT field)` are not supported.
+
+For adaptively sampled event datasets, the SQL API automatically weights each row by its sample interval. You do not need to apply the sample interval manually.
+
+### SUM
+
+`SUM(expression)` returns the sum of a numeric expression.
+
+```sql
+SELECT SUM(edgeResponseBytes) AS bytes
+```
+
+For adaptively sampled event datasets, the SQL API automatically calculates a sample-weighted sum.
+
+### AVG
+
+`AVG(expression)` returns the arithmetic mean of a numeric expression.
+
+```sql
+SELECT AVG(edgeTimeToFirstByteMs) AS average_ttfb_ms
+```
+
+For adaptively sampled event datasets, the SQL API automatically calculates a sample-weighted average.
+
+### MIN
+
+`MIN(expression)` returns the smallest value.
+
+```sql
+SELECT MIN(durationMs) AS minimum_duration_ms
+```
+
+`MIN` is not supported by adaptively sampled event datasets.
+
+### APPROX_MIN
+
+`APPROX_MIN(expression)` estimates the smallest value for an adaptively sampled event dataset.
+
+```sql
+SELECT APPROX_MIN(durationMs) AS approximate_minimum_duration_ms
+```
+
+Use `APPROX_MIN` instead of `MIN` when a dataset uses adaptive sampling.
+
+### MAX
+
+`MAX(expression)` returns the largest value.
+
+```sql
+SELECT MAX(durationMs) AS maximum_duration_ms
+```
+
+`MAX` is not supported by adaptively sampled event datasets.
+
+### APPROX_MAX
+
+`APPROX_MAX(expression)` estimates the largest value for an adaptively sampled event dataset.
+
+```sql
+SELECT APPROX_MAX(durationMs) AS approximate_maximum_duration_ms
+```
+
+Use `APPROX_MAX` instead of `MAX` when a dataset uses adaptive sampling.
+
+## Date and time functions
+
+The API resolves current-time functions once when it plans the query. Repeated uses in one query therefore represent the same instant.
+
+### NOW
+
+`NOW()` returns the current UTC timestamp. Use it in selected expressions or time predicates.
+
+```sql
+WHERE timestamp >= NOW() - INTERVAL '1' HOUR
+```
+
+### CURRENT_TIMESTAMP
+
+`CURRENT_TIMESTAMP()` is equivalent to `NOW()`.
+
+```sql
+SELECT CURRENT_TIMESTAMP() AS queried_at, COUNT(*) AS requests
+```
+
+### TODAY
+
+`TODAY()` returns the start of the current day in UTC. It is supported only in a time predicate.
+
+```sql
+WHERE timestamp >= TODAY()
+```
+
+### CURRENT_DATE
+
+`CURRENT_DATE()` is equivalent to `TODAY()` and is supported only in a time predicate.
+
+### toStartOfInterval
+
+`toStartOfInterval(timestamp, interval)` rounds a `DateTime` or `DateTime64(3)` value down to the beginning of an interval. Use it to group events into time buckets:
+
+```sql
+SELECT
+  toStartOfInterval(timestamp, INTERVAL '15' MINUTE) AS bucket,
+  COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' DAY
+GROUP BY bucket
+```
+
+The interval must contain a positive integer and one of the following units: `YEAR`, `QUARTER`, `MONTH`, `WEEK`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `MILLISECOND`, `MICROSECOND`, or `NANOSECOND`.
+
+`toStartOfInterval` is not supported for datasets queried through Log Explorer.
+
+## Intervals
+
+Add an interval to or subtract an interval from a timestamp expression:
+
+```sql
+NOW() - INTERVAL '15' MINUTE
+NOW() - INTERVAL '7' DAY
+```
+
+The SQL API does not support other scalar or aggregate functions unless they appear on this page.

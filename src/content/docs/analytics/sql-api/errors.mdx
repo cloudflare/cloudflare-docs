@@ -1,0 +1,37 @@
+---
+pcx_content_type: troubleshooting
+title: Error responses
+description: Understand SQL API HTTP errors and how to resolve them.
+sidebar:
+  order: 7
+---
+
+The SQL API uses HTTP status codes to report errors. Most error responses have a `text/plain` body with a customer-safe description.
+
+| Status | Meaning                                                                                              | Action                                                                                     |
+| ------ | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `403`  | Authentication failed, the token lacks permission, or the requested dataset or field is unavailable. | Verify the bearer token, token permissions, resource scope, plan, and requested fields.    |
+| `422`  | The request or SQL statement is invalid or unsupported.                                              | Correct the request using the [SQL language reference](/analytics/sql-api/sql-reference/). |
+| `429`  | The request exceeded a rate, concurrency, queue, policy, or query-resource limit.                    | Wait before retrying or reduce query cost. Honor `Retry-After` when present.               |
+| `500`  | An unexpected internal error occurred.                                                               | Retry later. Contact Cloudflare Support if the error persists.                             |
+| `501`  | The requested SQL processing behavior is not implemented.                                            | Remove unsupported syntax.                                                                 |
+| `503`  | Authorization, tenancy resolution, queueing, or the data store is temporarily unavailable.           | Retry with exponential backoff.                                                            |
+| `507`  | The data store could not complete the query within its resource limits.                              | Reduce the time range, selected data, or result size.                                      |
+
+## Invalid SQL
+
+An HTTP `422` response begins with `Input was invalid:` and describes the validation failure. Common causes include:
+
+- Missing `accountTag` or `zoneTag` predicate.
+- Missing lower timestamp bound.
+- A bare dataset name instead of a schema-qualified name.
+- An unknown or unavailable field.
+- `ORDER BY` without `LIMIT`.
+- Multiple SQL statements.
+- Unsupported SQL syntax or functions.
+
+## Retry behavior
+
+Retry `429`, `500`, `503`, and `507` responses only when repeating the query is safe for your application. Use exponential backoff with jitter. If a `429` response includes `Retry-After`, do not retry before that interval has elapsed.
+
+Do not retry `403`, `422`, or `501` responses without changing the token, permissions, or query.

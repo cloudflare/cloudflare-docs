@@ -1,0 +1,91 @@
+---
+pcx_content_type: how-to
+title: Workers binding
+description: Query the SQL API directly from a Cloudflare Worker.
+sidebar:
+  order: 4
+---
+
+The Analytics SQL binding lets a Cloudflare Worker query SQL API datasets without making an HTTP request or managing an API token. Each binding is scoped to the Cloudflare account that owns the Worker.
+
+## Configure the binding
+
+Add an Analytics SQL binding to your Worker's Wrangler configuration:
+
+```jsonc
+{
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "ANALYTICS_SQL",
+				"type": "analytics",
+			},
+		],
+	},
+}
+```
+
+The `name` value determines how you access the binding on your Worker's `env` object.
+
+## Query from a Worker
+
+Call the binding's `query()` method with a SQL statement and optional parameters:
+
+```js
+export default {
+	async fetch(_request, env) {
+		const start = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+		const result = await env.ANALYTICS_SQL.query({
+			query: `
+        SELECT edgeResponseStatus AS status, COUNT(*) AS requests
+        FROM events.httpRequests
+        WHERE timestamp >= $start
+        GROUP BY edgeResponseStatus
+        ORDER BY requests DESC
+        LIMIT 10
+      `,
+			params: { start },
+		});
+
+		return Response.json(result);
+	},
+};
+```
+
+Do not include an `accountTag` or `zoneTag` predicate in a binding query. The binding supplies the Worker's account scope separately and the API rejects a query that also specifies tenancy in SQL.
+
+The binding can query only datasets that support account scope.
+
+## Request
+
+The `query()` method accepts the following fields:
+
+| Field    | Type            | Required | Description                                                    |
+| -------- | --------------- | -------- | -------------------------------------------------------------- |
+| `query`  | string          | Yes      | One SQL `SELECT` statement.                                    |
+| `params` | array or object | No       | Positional or named string, number, boolean, or `null` values. |
+
+The binding does not accept `scope` because it derives scope from the Worker. It does not currently expose request-level `time_range`; include the time constraint in SQL.
+
+## Response
+
+The method returns the same result structure as the HTTP API:
+
+```json
+{
+	"data": [
+		{
+			"status": 200,
+			"requests": 125430
+		}
+	],
+	"rows": 1,
+	"statistics": {
+		"elapsed_ms": 42,
+		"rows_read": 250000,
+		"bytes_read": 18000000
+	}
+}
+```
+
+The binding does not retry failed requests automatically. A thrown error includes a boolean `retryable` property that indicates whether retrying may succeed. Apply bounded exponential backoff only when `retryable` is `true`.
