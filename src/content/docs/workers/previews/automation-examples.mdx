@@ -1,0 +1,201 @@
+---
+pcx_content_type: how-to
+title: Automation examples
+description: Create Previews from Workers Builds, GitHub Actions, or another automation tool.
+sidebar:
+  order: 7
+products:
+  - workers
+---
+
+Start with raw `npx wrangler preview`. It is easy to copy, easy to debug, and does not require a wrapper action.
+
+Before adding automation, check [Resources and isolation](/workers/previews/resources/) so you know which resources are isolated and which resources are shared.
+
+## GitHub Actions
+
+Use this workflow when you want GitHub Actions to create a Preview for each pull request.
+
+### Add repository secrets
+
+From your repository, use the GitHub CLI to add the secrets used by the workflow:
+
+```sh
+gh auth login
+gh secret set CLOUDFLARE_API_TOKEN
+gh secret set CLOUDFLARE_ACCOUNT_ID
+```
+
+Create an API token with permissions to edit Workers Scripts and the resources your Preview uses. You do not need to create a `GITHUB_TOKEN` secret. GitHub Actions provides `${{ secrets.GITHUB_TOKEN }}` automatically.
+
+### Create a Preview
+
+Start here:
+
+```yaml title=".github/workflows/preview.yml"
+name: Preview
+
+on: [pull_request]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx wrangler preview --json
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+```
+
+Add install or build steps before `npx wrangler preview --json` if your Worker needs them.
+
+Repository secrets are not available to forked pull requests by default. If your repository accepts forked pull requests, add a guard such as `github.event.pull_request.head.repo.full_name == github.repository` before using Cloudflare credentials.
+
+### Use Workers Builds instead
+
+If your Worker is already connected to Cloudflare, [Workers Builds](/workers/ci-cd/builds/) can create the Preview and comment the Preview URL on your pull request.
+
+1. [Connect your Worker to a GitHub or GitLab repository](/workers/ci-cd/builds/#get-started).
+2. Enable [Preview Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds).
+3. Confirm the [Preview command](/workers/ci-cd/builds/configuration/#preview-command) is `npx wrangler preview`.
+
+### Comment the Preview URL on a pull request
+
+To post the Preview URL back to the pull request, name the Preview after the pull request number and save the URL as a workflow output.
+
+Add `pull-requests: write` permission:
+
+```yaml title=".github/workflows/preview.yml"
+permissions:
+  contents: read
+  pull-requests: write
+```
+
+Then replace the `npx wrangler preview --json` step with these steps:
+
+```yaml title=".github/workflows/preview.yml"
+- id: preview
+  name: Create or update Preview
+  run: |
+    set -o pipefail
+    output="$(npx wrangler preview --name "pr-${{ github.event.pull_request.number }}" --json)"
+    printf '%s\n' "$output"
+    preview_url="$(printf '%s' "$output" | jq -er '.preview_urls[0] // .preview.urls[0]')"
+    echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
+  env:
+    CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+- name: Comment Preview URL on PR
+  run: gh pr comment "${{ github.event.pull_request.number }}" --body "Preview: ${{ steps.preview.outputs.preview_url }}"
+  env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+This creates a new comment each time the workflow runs. If you want a single sticky comment, use `gh pr comment --edit-last --create-if-none` or a pull request comment action.
+
+This workflow uses `jq`, which is available on GitHub-hosted Ubuntu runners.
+
+### Probe the Preview
+
+After you have a Preview URL, add checks that hit the deployed Preview. This catches runtime-only problems that a build can miss.
+
+```yaml title=".github/workflows/preview.yml"
+- name: Probe Preview
+  run: curl --fail --show-error --silent "$PREVIEW_URL/api/health"
+  env:
+    PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+```
+
+Change `/api/health` to a route that proves your Worker is healthy.
+
+If a probe fails, use [Workers Observability](/workers/observability/) to inspect metrics, logs, errors, and traces. For Preview-specific details, refer to [Test and debug](/workers/previews/test-and-debug/).
+
+### Capture a screenshot
+
+For visual checks, capture the rendered Preview as a workflow artifact:
+
+```yaml title=".github/workflows/preview.yml"
+- name: Capture Preview screenshot
+  run: |
+    npx --yes playwright install --with-deps chromium
+    npx --yes playwright screenshot "$PREVIEW_URL" preview.png
+  env:
+    PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+
+- uses: actions/upload-artifact@v4
+  with:
+    name: preview-screenshot
+    path: preview.png
+```
+
+For hosted browser checks, use [Browser Run](/browser-run/). To capture screenshots through Browser Run, refer to the [screenshot endpoint](/browser-run/quick-actions/screenshot-endpoint/).
+
+### Delete closed pull request Previews
+
+If you create one Preview per pull request, delete it when the pull request closes:
+
+```yaml title=".github/workflows/preview.yml"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete Preview
+        run: npx wrangler preview delete --name "pr-${{ github.event.pull_request.number }}" --skip-confirmation
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+```
+
+### Use wrangler-action instead
+
+If you prefer a GitHub Action wrapper, use [`cloudflare/wrangler-action`](https://github.com/cloudflare/wrangler-action). The action runs Wrangler, exposes Preview URLs as workflow outputs, creates a GitHub Deployment when you pass `gitHubToken`, and writes a job summary.
+
+Add `deployments: write` permission if you pass `gitHubToken`:
+
+```yaml title=".github/workflows/preview.yml"
+permissions:
+  contents: read
+  deployments: write
+```
+
+```yaml title=".github/workflows/preview.yml"
+- uses: actions/checkout@v4
+- id: preview
+  uses: cloudflare/wrangler-action@v3
+  with:
+    command: preview --name pr-${{ github.event.pull_request.number }}
+    apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Use `${{ steps.preview.outputs.preview-url }}` in the PR comment, probe, or screenshot steps above. The plain Wrangler examples use `preview_url` because they write their own workflow output.
+
+## Monorepo with multiple Workers
+
+Preview names are scoped to a Worker. In a monorepo, each Worker can have a Preview with the same pull request name:
+
+```sh
+cd workers/api && npx wrangler preview --name "pr-123"
+cd ../web && npx wrangler preview --name "pr-123"
+```
+
+Service bindings between these Previews currently resolve to the bound Worker's production deployment rather than to another Worker's matching Preview. For end-to-end multi-Worker testing, use staging Workers or another environment strategy while Preview coverage continues to expand.
+
+## Other automation tools
+
+In any automation tool, run `npx wrangler preview` instead of `npx wrangler deploy` for pull request or branch previews:
+
+```sh
+npx wrangler preview --name "$BRANCH_NAME" --json
+```
+
+Use the JSON output to post the Preview URL wherever your team reviews changes.

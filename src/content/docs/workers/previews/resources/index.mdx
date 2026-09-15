@@ -1,0 +1,298 @@
+---
+pcx_content_type: concept
+title: Resources and isolation
+description: Understand what happens to your data when you create a Preview — which resources are shared and which are isolated.
+sidebar:
+  order: 3
+products:
+  - workers
+---
+
+import {
+	WranglerConfig,
+	PreviewsResourcesDiagram,
+	PreviewsDOCarouselDiagram,
+} from "~/components";
+
+This page covers data and state behavior after you configure Preview bindings. For setup, refer to [Configuration](/workers/previews/configuration/).
+
+## How resources are shared
+
+<PreviewsResourcesDiagram />
+
+New Previews start with a copy of your [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration). The copy includes binding settings, not the resources behind them — two Previews bound to the same resource share its data. To isolate one, rebind it to a different resource.
+
+Same-Worker [Durable Objects](#durable-objects) and [Containers](#containers) are the exception — each Preview gets its own namespace and state automatically. Static assets also deploy per Preview, since `wrangler preview` uploads built assets from your branch.
+
+## Binding reference
+
+The tables below describe what happens after a Preview has a binding. To add, remove, or update the bindings themselves, use the `previews` block or the Base configuration. For details, refer to [Configuration](/workers/previews/configuration/#wrangler-configuration-file).
+
+### Resource bindings
+
+These bindings point at account-level resources by ID or name. Two Previews bound to the same resource share data or instances. Create a separate resource to isolate.
+
+| `previews` field            | How it behaves                                                                                                                                                   | To isolate one Preview                    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `kv_namespaces`             | Binds to a KV namespace by `id`. Two Previews sharing the same `id` share namespace data.                                                                        | Bind to a different KV namespace.         |
+| `d1_databases`              | Binds to a D1 database by `database_id`. Two Previews sharing the same `database_id` share rows.                                                                 | Bind to a different D1 database.          |
+| `r2_buckets`                | Binds to an R2 bucket by `bucket_name`. Two Previews sharing the same `bucket_name` share objects.                                                               | Bind to a different R2 bucket.            |
+| `queues.producers`          | Binds a Queue producer to a queue by name. Two Previews sharing the same queue name send to the same queue.                                                      | Bind to a different queue.                |
+| `vectorize`                 | Binds to a Vectorize index by `index_name`. Must be created manually before deploying.                                                                           | Bind to a different index.                |
+| `hyperdrive`                | Binds to a Hyperdrive configuration by `id`. Must be created manually. True data isolation requires a separate config pointing at a separate database or schema. | Bind to a different Hyperdrive config.    |
+| `analytics_engine_datasets` | Writes to the `dataset` name you specify. Datasets are created implicitly by writes. Two Previews writing to the same dataset share rows.                        | Bind to a different dataset name.         |
+| `pipelines`                 | Binds to a Pipeline stream by `pipeline` ID. Two Previews sharing the same stream send events to the same destination.                                           | Bind to a different stream.               |
+| `workflows`                 | Binds to a named Workflow. Two Previews sharing the same Workflow name share instances.                                                                          | Bind to a different Workflow name.        |
+| `secrets_store_secrets`     | Binds to a Secrets Store secret by `store_id` and `secret_name`.                                                                                                 | Bind to a different store or secret name. |
+| `dispatch_namespaces`       | Binds to a Workers for Platforms dispatch namespace by `namespace`.                                                                                              | Bind to a different namespace.            |
+| `mtls_certificates`         | Binds to an mTLS client certificate by `certificate_id`.                                                                                                         | Bind to a different certificate.          |
+| `vpc_services`              | Binds to a VPC service by `service_id`.                                                                                                                          | Bind to a different service.              |
+| `ratelimits`                | Creates a Rate Limiting binding. The runtime binding name comes from `name`, not `binding`.                                                                      | Use a different `namespace_id`.           |
+
+## Durable Objects
+
+Durable Objects are class-based bindings defined in your Worker. They behave differently from resource-ID bindings like KV or D1 because their state belongs to the Worker itself. When the class is defined in the same Worker, each Preview gets automatic isolation.
+
+When a Durable Object class is defined in the same Worker with no `script_name`, each Preview gets its own isolated namespace and storage, separate from production and from other Previews. State persists across deployments within the same Preview and is deleted when the Preview is deleted.
+
+| Access pattern                          | Preview configuration                   | Result                                                             |
+| --------------------------------------- | --------------------------------------- | ------------------------------------------------------------------ |
+| [`ctx.exports`](#use-ctxexports)        | Class and migration only                | Recommended. Each Preview gets a separate namespace automatically. |
+| [`env` binding](#use-an-env-binding)    | Class, migration, and a Preview binding | Use when your code needs `env.COUNTER`.                            |
+
+### Use `ctx.exports`
+
+<PreviewsDOCarouselDiagram />
+
+Every Durable Object setup requires a Durable Object class exported from your Worker and a [migration](/durable-objects/reference/durable-objects-migrations/) in your Wrangler config.
+
+With [`ctx.exports`](/workers/runtime-apis/context/#exports) (recommended, requires [`enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags/#enable-ctxexports), enabled by default for `compatibility_date` `2025-11-17` or later), the migration is enough for automatic Preview isolation:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["Counter"] }
+	]
+}
+```
+
+</WranglerConfig>
+
+Production, `feature-login`, and `redesign` each get their own Durable Object namespace and storage. No `previews` block is needed.
+
+### Use an `env` binding
+
+If your code uses `env.COUNTER`, declare the binding in the `previews` block so the Preview has it:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{ "name": "COUNTER", "class_name": "Counter" }
+		]
+	},
+	"migrations": [
+		{ "tag": "v1", "new_classes": ["Counter"] }
+	],
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{ "name": "COUNTER", "class_name": "Counter" }
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+:::caution
+If you use `env.COUNTER` without declaring the binding in your `previews` block or in the Base configuration, the binding will not exist in the Preview and your Worker can return a **1101 error**.
+:::
+
+### Share Durable Object state
+
+If you want all Previews to share the same Durable Object state, bind the Preview to a separate Worker that owns the Durable Object class using `script_name`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"previews": {
+		"durable_objects": {
+			"bindings": [
+				{
+					"name": "COUNTER",
+					"class_name": "Counter",
+					"script_name": "my-worker-staging-do"
+				}
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+Every Preview using that setting shares the Durable Object namespace owned by `my-worker-staging-do`. Production continues to use its own Durable Object binding.
+
+:::note
+Isolation only works for classes defined in the same Worker. If a binding includes `script_name`, it resolves to that Worker's production Durable Object namespace. It does not resolve to that Worker's matching Preview.
+:::
+
+## Containers
+
+[Containers](/containers/) are backed by Durable Objects. They follow the same isolation rule as Durable Objects: when the container class is defined in the same Worker, each Preview gets its own Durable Object namespace and its own container instances, separate from production and from other Previews.
+
+Preview container configuration is not inherited from the top level. If both production and Previews need the container, declare the container in both places:
+
+- Top-level `containers` for production.
+- `previews.containers` for Previews.
+
+| Access pattern                              | Preview configuration                                            | Result                                                                 |
+| ------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [`ctx.exports`](#use-ctxexports-with-containers) | Class, SQLite migration, and `previews.containers`               | Recommended when your code does not need an `env` binding.             |
+| [`env` binding](#use-an-env-container-binding) | Class, SQLite migration, `previews.containers`, and Preview Durable Object binding | Use when your code calls `env.MY_CONTAINER`.                           |
+
+### Use `ctx.exports` with Containers
+
+Use this pattern when your Worker accesses the container class through `ctx.exports` instead of an `env` binding:
+
+```ts
+const container = ctx.exports.MyContainer.getByName("tenant-a");
+return container.fetch(request);
+```
+
+Declare the SQLite-backed Durable Object migration and the container configuration. Put the container configuration under `previews.containers` so Wrangler creates a container app for each Preview:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["MyContainer"] }
+	],
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic"
+		}
+	],
+	"previews": {
+		"containers": [
+			{
+				"class_name": "MyContainer",
+				"image": "./Dockerfile",
+				"max_instances": 10,
+				"instance_type": "basic"
+			}
+		]
+	}
+}
+```
+
+</WranglerConfig>
+
+With this setup, production and each Preview use separate Durable Object namespaces and separate container apps. No `previews.durable_objects` binding is needed unless your Worker code reads the container namespace from `env`.
+
+### Use an `env` container binding
+
+If your code uses an `env` binding, declare the Durable Object binding at the top level for production and again under `previews.durable_objects.bindings` for Previews:
+
+```ts
+import { getContainer } from "@cloudflare/containers";
+
+const container = getContainer(env.MY_CONTAINER, "tenant-a");
+return container.fetch(request);
+```
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"migrations": [
+		{ "tag": "v1", "new_sqlite_classes": ["MyContainer"] }
+	],
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 10,
+			"instance_type": "basic"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{ "name": "MY_CONTAINER", "class_name": "MyContainer" }
+		]
+	},
+	"previews": {
+		"containers": [
+			{
+				"class_name": "MyContainer",
+				"image": "./Dockerfile",
+				"max_instances": 10,
+				"instance_type": "basic"
+			}
+		],
+		"durable_objects": {
+			"bindings": [
+				{ "name": "MY_CONTAINER", "class_name": "MyContainer" }
+			]
+		}
+	}
+}
+```
+
+</WranglerConfig>
+
+:::caution
+If you use `env.MY_CONTAINER` without declaring the Durable Object binding in your `previews` block or in the Base configuration, the binding will not exist in the Preview and your Worker can return a **1101 error**.
+:::
+
+### What Wrangler creates
+
+When you run `wrangler preview`, Wrangler builds local images when needed, deploys the image for that Preview, and creates a container app owned by the Preview's Durable Object namespace. The generated container app name includes the Worker name, Preview name, and class name, for example:
+
+```text
+my-worker_feature-login_MyContainer
+```
+
+Run `wrangler containers list` to see the generated app, and `wrangler containers info <APPLICATION_ID>` to inspect the image, app state, and Durable Object namespace ID.
+
+:::note
+Container support in Previews is partial. Same-Worker container namespaces and state are isolated per Preview, but you should still verify that the container process starts and responds in your deployment path before relying on the Preview for testing.
+:::
+
+For current cleanup behavior when you delete a Preview, refer to [Limitations](/workers/previews/limitations/#container-application-cleanup).
+
+### Service bindings
+
+Service bindings from a Preview currently resolve to the bound Worker's production deployment rather than another Worker's matching Preview.
+
+| `previews` field | How it behaves                                                                       |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| `services`       | Binds to a Worker `service` and optional `entrypoint`. Currently targets production. |
+
+For same-Worker calls, use [`ctx.exports`](/workers/runtime-apis/context/#exports) instead of a service binding to self. `ctx.exports` stays inside the Preview's own code, variables, and bindings.
+
+### Other bindings
+
+| `previews` field | How it behaves                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `send_email`     | Creates a Send Email binding. The runtime binding name comes from `name`, not `binding`. Successful delivery requires valid Email Routing setup. |
+
+For non-binding `previews` fields (`tail_consumers`, `observability`, `logpush`, `limits`, `define`) and which settings come from the top level, refer to [Configuration — What goes in `previews`](/workers/previews/configuration/#what-goes-in-previews).
+
+## External state
+
+Previews can reach external systems if configured with production credentials or URLs. Before sharing a Preview, verify that its bindings and environment variables point at safe test resources.

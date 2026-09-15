@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" fill="none">
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .main-label { font-size: 16px; fill: #1a1a1a; font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .branch-name { font-size: 13px; fill: #1a1a1a; font-weight: 700; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .box-label { font-size: 12px; fill: #374151; font-weight: 600; }
+    .box-sub { font-size: 9.5px; fill: #9ca3af; }
+    .plus { font-size: 15px; fill: #6b7280; font-weight: 600; }
+    .equals { font-size: 15px; fill: #3b82f6; font-weight: 700; }
+    .url { font-size: 10.5px; fill: #2563eb; font-family: 'SF Mono', 'Fira Code', monospace; font-weight: 600; }
+    .tag { font-size: 9px; font-weight: 600; }
+    .cmd { font-size: 9.5px; fill: #6b7280; font-family: 'SF Mono', 'Fira Code', monospace; }
+    .dots { font-size: 22px; fill: #3b82f6; font-weight: 700; letter-spacing: 5px; }
+    .sublabel { font-size: 11px; fill: #6b7280; }
+  </style>
+  <defs>
+    <marker id="ah-main" markerWidth="14" markerHeight="10" refX="13" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 14 5, 0 10" fill="#374151"/>
+    </marker>
+    <marker id="ah-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== MAIN BRANCH LINE ==================== -->
+
+  <text x="20" y="35" class="main-label">main</text>
+  <line x1="75" y1="30" x2="726" y2="30" stroke="#374151" stroke-width="3" style="marker-end: url(#ah-main);"/>
+
+  <circle cx="160" cy="30" r="5" fill="#374151"/>
+  <circle cx="380" cy="30" r="5" fill="#374151"/>
+  <circle cx="600" cy="30" r="5" fill="#374151"/>
+
+  <!-- ==================== git branch arrows + labels ==================== -->
+
+  <line x1="160" y1="35" x2="160" y2="72" stroke="#3b82f6" stroke-width="2" style="marker-end: url(#ah-blue);"/>
+  <text x="172" y="60" class="cmd">git branch</text>
+
+  <line x1="380" y1="35" x2="380" y2="72" stroke="#3b82f6" stroke-width="2" style="marker-end: url(#ah-blue);"/>
+  <text x="392" y="60" class="cmd">git branch</text>
+
+  <line x1="600" y1="35" x2="600" y2="72" stroke="#3b82f6" stroke-width="2" style="marker-end: url(#ah-blue);"/>
+  <text x="612" y="60" class="cmd">git branch</text>
+
+  <!-- ==================== Branch names ==================== -->
+
+  <text x="160" y="100" text-anchor="middle" class="branch-name">fix-ui</text>
+  <text x="380" y="100" text-anchor="middle" class="branch-name">new-api</text>
+  <text x="600" y="100" text-anchor="middle" class="branch-name">redesign</text>
+
+  <!-- ==================== Code boxes ==================== -->
+
+  <rect x="100" y="110" width="120" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="160" y="127" text-anchor="middle" class="box-label">Code</text>
+  <text x="160" y="140" text-anchor="middle" class="box-sub">from main</text>
+
+  <rect x="320" y="110" width="120" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="380" y="127" text-anchor="middle" class="box-label">Code</text>
+  <text x="380" y="140" text-anchor="middle" class="box-sub">from main</text>
+
+  <rect x="540" y="110" width="120" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="600" y="127" text-anchor="middle" class="box-label">Code</text>
+  <text x="600" y="140" text-anchor="middle" class="box-sub">from main</text>
+
+  <!-- ==================== npx wrangler preview arrows + labels ==================== -->
+
+  <line x1="160" y1="155" x2="160" y2="198" stroke="#3b82f6" stroke-width="1.5" style="marker-end: url(#ah-blue);"/>
+  <text x="172" y="182" class="cmd">npx wrangler preview</text>
+
+  <line x1="380" y1="155" x2="380" y2="198" stroke="#3b82f6" stroke-width="1.5" style="marker-end: url(#ah-blue);"/>
+  <text x="392" y="182" class="cmd">npx wrangler preview</text>
+
+  <line x1="600" y1="155" x2="600" y2="198" stroke="#3b82f6" stroke-width="1.5" style="marker-end: url(#ah-blue);"/>
+  <text x="612" y="182" class="cmd">npx wrangler preview</text>
+
+  <!-- ==================== + Base Config ==================== -->
+
+  <text x="160" y="216" text-anchor="middle" class="plus">+</text>
+  <text x="380" y="216" text-anchor="middle" class="plus">+</text>
+  <text x="600" y="216" text-anchor="middle" class="plus">+</text>
+
+  <rect x="90" y="226" width="140" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="160" y="243" text-anchor="middle" class="box-label">Base Config</text>
+  <text x="160" y="256" text-anchor="middle" class="box-sub">copy of previews { }</text>
+
+  <rect x="310" y="226" width="140" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="380" y="243" text-anchor="middle" class="box-label">Base Config</text>
+  <text x="380" y="256" text-anchor="middle" class="box-sub">copy of previews { }</text>
+
+  <rect x="530" y="226" width="140" height="36" rx="5" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="600" y="243" text-anchor="middle" class="box-label">Base Config</text>
+  <text x="600" y="256" text-anchor="middle" class="box-sub">copy of previews { }</text>
+
+  <!-- ==================== = Preview URL ==================== -->
+
+  <text x="160" y="282" text-anchor="middle" class="equals">=</text>
+  <text x="380" y="282" text-anchor="middle" class="equals">=</text>
+  <text x="600" y="282" text-anchor="middle" class="equals">=</text>
+
+  <rect x="70" y="292" width="180" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="80" y="300" width="50" height="16" rx="4" fill="#3b82f6"/>
+  <text x="105" y="312" text-anchor="middle" class="tag" fill="#ffffff">Preview</text>
+  <rect x="80" y="322" width="160" height="16" rx="3" fill="#dbeafe"/>
+  <text x="160" y="334" text-anchor="middle" class="url">fix-ui-myapp.workers.dev</text>
+
+  <rect x="290" y="292" width="180" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="300" y="300" width="50" height="16" rx="4" fill="#3b82f6"/>
+  <text x="325" y="312" text-anchor="middle" class="tag" fill="#ffffff">Preview</text>
+  <rect x="300" y="322" width="160" height="16" rx="3" fill="#dbeafe"/>
+  <text x="380" y="334" text-anchor="middle" class="url">new-api-myapp.workers.dev</text>
+
+  <rect x="510" y="292" width="180" height="52" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <rect x="520" y="300" width="50" height="16" rx="4" fill="#3b82f6"/>
+  <text x="545" y="312" text-anchor="middle" class="tag" fill="#ffffff">Preview</text>
+  <rect x="520" y="322" width="160" height="16" rx="3" fill="#dbeafe"/>
+  <text x="600" y="334" text-anchor="middle" class="url">redesign-myapp.workers.dev</text>
+
+  <!-- ==================== MORE ==================== -->
+
+  <text x="725" y="270" class="dots">...</text>
+
+
+</svg>
