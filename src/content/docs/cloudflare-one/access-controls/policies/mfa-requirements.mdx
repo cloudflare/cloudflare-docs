@@ -129,6 +129,8 @@ To configure MFA for an infrastructure application policy, refer to [Infrastruct
 
 The MFA session duration determines how long a successful MFA authentication remains valid. After the MFA session expires, the user must complete MFA again on their next Cloudflare Access login in addition to completing IdP authentication. You can require users to complete MFA on each Access login or set a custom duration. MFA session durations are only checked during the login flow and do not affect a user's existing session.
 
+For examples, refer to [MFA session duration](/cloudflare-one/access-controls/access-settings/session-management/#mfa-session-duration).
+
 Access checks MFA sessions from most specific to least specific:
 
 1. **Policy MFA session duration** — If set, applies to users who match the policy.
