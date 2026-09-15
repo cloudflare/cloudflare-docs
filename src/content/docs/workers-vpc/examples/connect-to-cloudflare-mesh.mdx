@@ -8,13 +8,13 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a Cloudflare Tunnel UUID.
+This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a Cloudflare Tunnel UUID.
 
-When you bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, subnet or hostname route announced through Cloudflare Tunnel or Cloudflare Mesh, or destination connected through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
+When you bind to [Cloudflare Mesh](/mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, subnet or hostname route announced through Cloudflare Tunnel or Cloudflare Mesh, or destination connected through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
 
 ## Prerequisites
 
-- A [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node connected to your private network
+- A [Cloudflare Mesh](/mesh/) node connected to your private network
 - Private services running behind your Mesh node (for example, an internal API, database, or web application)
 
 ## 1. Configure your Worker
@@ -116,5 +116,5 @@ curl https://mesh-gateway.workers.dev/api/metrics
 
 - Learn more about [VPC Networks](/workers-vpc/configuration/vpc-networks/) configuration options
 - Refer to the [Workers Binding API](/workers-vpc/api/) reference
-- [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) for your account
+- [Set up Cloudflare Mesh](/mesh/get-started/) for your account
 - Explore [other examples](/workers-vpc/examples/)

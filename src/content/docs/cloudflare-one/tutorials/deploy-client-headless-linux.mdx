@@ -17,7 +17,7 @@ import { GlossaryTooltip, Render, Steps } from "~/components";
 This tutorial explains how to deploy the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) and logging will be unavailable.
 
 :::note
-This tutorial focuses on deploying the Cloudflare One Client as an endpoint device agent. If you are looking to deploy the Cloudflare One Client as a gateway to a private network, refer to the [Cloudflare Mesh documentation](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+This tutorial focuses on deploying the Cloudflare One Client as an endpoint device agent. If you are looking to deploy the Cloudflare One Client as a gateway to a private network, refer to the [Cloudflare Mesh documentation](/mesh/).
 :::
 
 ## Prerequisites
@@ -157,7 +157,7 @@ sudo warp-cli --accept-tos status
 
 Successful enrollment creates a device in **Zero Trust** > **Team & Resources** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`. Verify that `status` reports `Connected`. A command completion or HTTP redirect alone does not prove registration or connectivity.
 
-The registration and status commands verify enrollment and the connection to Cloudflare. To verify end-to-end traffic, connect to an included destination using the protocol you intend to use. For Cloudflare Mesh, follow [Verify connectivity](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/#2-verify-connectivity).
+The registration and status commands verify enrollment and the connection to Cloudflare. To verify end-to-end traffic, connect to an included destination using the protocol you intend to use. For Cloudflare Mesh, follow [Verify connectivity](/mesh/guides/connect-client-devices/#2-verify-connectivity).
 
 If the client reports `Registration Missing due to: Does not exist in API`, or the `warp-svc` logs show an HTTP `400` enrollment response, enrollment failed. Confirm that the service token policy uses the _Service Auth_ action, the policy is attached to device enrollment permissions, and the MDM team name and token values are correct. After correcting or confirming the configuration, restart the service and repeat both verification commands:
 

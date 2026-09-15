@@ -8,7 +8,7 @@ tags:
   - Private networks
 sidebar:
   label: Concepts
-  order: 2
+  order: 3
 head:
   - tag: title
     content: How Cloudflare Mesh works
@@ -66,9 +66,9 @@ Cloudflare Mesh requires that the [device profile](/cloudflare-one/team-and-reso
 
 If a Mesh node's device profile uses WireGuard instead, the following capabilities will not work:
 
-- [Hostname routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/#hostname-routes)
-- [IPv6 CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/#manage-cidr-routes)
-- [High availability](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/)
+- [Hostname routes](/mesh/features/routes/#hostname-routes)
+- [IPv6 CIDR routes](/mesh/features/routes/#manage-cidr-routes)
+- [High availability](/mesh/features/high-availability/)
 
 ## Mesh IPs
 
@@ -102,7 +102,7 @@ If you have used Tailscale, WireGuard, or a similar product, here is how concept
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tailnet / mesh network | Your Cloudflare account's Mesh network                                                                                                                                                                              |
 | Node / peer            | Mesh node (servers) or client device (laptops/phones)                                                                                                                                                               |
-| Subnet router          | Mesh node with [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/)                                                                                                                  |
+| Subnet router          | Mesh node with [CIDR routes](/mesh/features/routes/)                                                                                                                  |
 | MagicDNS / custom DNS  | [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) + [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) |
 | ACLs / access rules    | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) + [device posture](/cloudflare-one/reusable-components/posture-checks/)                                                              |
 | Exit node              | Attach a public CIDR to a Mesh node and traffic to those IPs exits through that node. For broader Internet filtering, use [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/).             |
@@ -118,10 +118,10 @@ Key differences:
 
 ## Next steps
 
-1. [**Create your first Mesh node**](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) — The dashboard wizard handles provisioning. Install the client on a Linux server with two commands.
-2. [**Connect client devices**](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/) — Install the Cloudflare One Client on laptops and phones. They can reach each other and any Mesh node by Mesh IP.
-3. [**Run in Docker / Kubernetes**](/cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/) — Deploy a Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
-4. [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) (optional) — Make subnets behind a Mesh node reachable from any device.
-5. [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/) (optional) — Run multiple replicas of a node for failover.
+1. [**Create your first Mesh node**](/mesh/get-started/) — The dashboard wizard handles provisioning. Install the client on a Linux server with two commands.
+2. [**Connect client devices**](/mesh/guides/connect-client-devices/) — Install the Cloudflare One Client on laptops and phones. They can reach each other and any Mesh node by Mesh IP.
+3. [**Run in Docker / Kubernetes**](/mesh/guides/run-mesh-in-containers/) — Deploy a Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
+4. [**Add routes**](/mesh/features/routes/) (optional) — Make subnets behind a Mesh node reachable from any device.
+5. [**Enable high availability**](/mesh/features/high-availability/) (optional) — Run multiple replicas of a node for failover.
 6. [**Connect from Workers**](/workers-vpc/examples/connect-to-cloudflare-mesh/) (optional) — Use VPC Network bindings to reach private services from Cloudflare Workers.
 7. [**Delegate access**](/cloudflare-one/networks/connectors/granular-permissions/) (optional) — Scope member permissions to specific Mesh nodes instead of granting account-wide control.

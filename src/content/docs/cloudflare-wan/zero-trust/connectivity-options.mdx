@@ -62,10 +62,10 @@ For detailed configuration, refer to the [Cloudflare Tunnel documentation](/clou
 
 The Cloudflare One Client is a device agent that securely connects end-user devices to Cloudflare's global network. The Cloudflare One Client encrypts traffic from the device using MASQUE (with post-quantum cryptography) or WireGuard and routes it through Cloudflare, where Gateway policies filter and inspect the traffic.
 
-Use Cloudflare One Client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable [Mesh connectivity](/cloudflare-one/networks/connectors/cloudflare-mesh/) between enrolled devices.
+Use Cloudflare One Client to secure remote workforce devices, replace traditional VPN solutions, enforce DNS filtering and web security policies, implement device posture checks, and enable [Mesh connectivity](/mesh/) between enrolled devices.
 
 :::note[Important to know]
-Cloudflare One Client is a bidirectional L3 tunnel — it on-ramps device traffic to Cloudflare and can also off-ramp traffic sent to the device's virtual IP address. Any connectivity option that routes traffic through Cloudflare's network (for example, IPsec tunnels, GRE tunnels, CNI, or another device via [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)) can initiate connections towards a Cloudflare One Client-enrolled device.
+Cloudflare One Client is a bidirectional L3 tunnel — it on-ramps device traffic to Cloudflare and can also off-ramp traffic sent to the device's virtual IP address. Any connectivity option that routes traffic through Cloudflare's network (for example, IPsec tunnels, GRE tunnels, CNI, or another device via [Cloudflare Mesh](/mesh/)) can initiate connections towards a Cloudflare One Client-enrolled device.
 :::
 
 For detailed configuration, refer to the [Cloudflare One Client documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/).
@@ -74,9 +74,9 @@ For detailed configuration, refer to the [Cloudflare One Client documentation](/
 
 ## Cloudflare Mesh (beta)
 
-Cloudflare Mesh connects your services and devices with post-quantum encrypted networking. Every enrolled device and mesh node receives a private [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/concepts/#mesh-ips) and can communicate with any other participant over TCP, UDP, or ICMP — including device-to-device without any infrastructure.
+Cloudflare Mesh connects your services and devices with post-quantum encrypted networking. Every enrolled device and mesh node receives a private [Mesh IP](/mesh/concepts/#mesh-ips) and can communicate with any other participant over TCP, UDP, or ICMP — including device-to-device without any infrastructure.
 
-Mesh nodes run the Cloudflare One Client (`warp-cli`) in headless mode on Linux servers. They can advertise [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) to make subnets behind them reachable, enabling connectivity to devices that cannot run the client (IoT, printers, legacy servers). All traffic preserves source IP addresses end-to-end.
+Mesh nodes run the Cloudflare One Client (`warp-cli`) in headless mode on Linux servers. They can advertise [CIDR routes](/mesh/features/routes/) to make subnets behind them reachable, enabling connectivity to devices that cannot run the client (IoT, printers, legacy servers). All traffic preserves source IP addresses end-to-end.
 
 Use Cloudflare Mesh for bidirectional connectivity (VoIP, SIP, AD updates, SCCM, DevOps), site-to-site networking, device-to-device connectivity, or any scenario where source IP preservation is important. For outbound-only access to private services, [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) (`cloudflared`) is simpler to deploy and runs on all platforms.
 
@@ -85,10 +85,10 @@ Accounts on Legacy routing mode do not support Cloudflare Mesh when Cloudflare W
 :::
 
 :::note
-Cloudflare Mesh supports [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/) with active-passive replicas for nodes with CIDR routes.
+Cloudflare Mesh supports [high availability](/mesh/features/high-availability/) with active-passive replicas for nodes with CIDR routes.
 :::
 
-For detailed configuration, refer to the [Cloudflare Mesh documentation](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+For detailed configuration, refer to the [Cloudflare Mesh documentation](/mesh/).
 
 ---
 
@@ -308,7 +308,7 @@ Cloudflare Mesh and Cloudflare One Appliance both provide site-level connectivit
 | **Deployment model** | Software on Linux host (can run alongside other workloads) | Dedicated hardware appliance or virtual machine |
 | **Best for** | Cloud VPCs, development environments, smaller deployments with an available Linux host | Enterprise branch offices, data centers, sites requiring high throughput (1 Gbps+) |
 | **Platform support** | Linux only (x86_64, ARM64). Currently in beta. | Hardware appliance (Dell VEP1460) or virtual (VMware ESXi, Proxmox) |
-| **High availability** | [Active-passive replicas](/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/) for nodes with routes | Supported through multiple connectors per site |
+| **High availability** | [Active-passive replicas](/mesh/features/high-availability/) for nodes with routes | Supported through multiple connectors per site |
 | **Management** | Configured as a device in the Cloudflare One Client settings | Centralized through the Cloudflare WAN dashboard with zero-touch provisioning |
 
 Use Cloudflare Mesh when you need lightweight, software-only connectivity for cloud workloads or sites where a Linux host is available. Use Cloudflare One Appliance when you need enterprise-grade throughput, high availability, or integration with existing network infrastructure.
@@ -456,7 +456,7 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [WAN transformation](/cloudflare-wan/wan-transformation/) - Plan your migration from legacy WAN to Cloudflare One
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)
-- [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
+- [Cloudflare Mesh](/mesh/)
 - [Cloudflare WAN](/cloudflare-wan/)
 - [WAN Connectors on-ramps](/cloudflare-wan/on-ramps/) - Full list of supported on-ramps
 - [Multi-Cloud Networking](/multi-cloud-networking/) - Automate cloud VPC connectivity
