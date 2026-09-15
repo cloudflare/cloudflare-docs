@@ -159,6 +159,10 @@ User feature fields add features about the end-user (client) into the Cache Key.
 * `geo` includes the client’s country, derived from the IP address
 * `lang` includes the first language code contained in the `Accept-Language` header sent by the client
 
+:::note
+The `device_type` user feature described here is the same mechanism that APO's cache by device type toggle activates. Enabling APO automatically adds [device type](/automatic-platform-optimization/reference/cache-device-type/) to the cache key; Cache Rules lets you configure this manually for non-APO zones as a parameter Cache Key -> Cache by device type.
+:::
+
 ## Availability
 
 Cache keys options availability varies according to your plan.
