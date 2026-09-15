@@ -1,0 +1,29 @@
+---
+title: Evaluate Flagship flags locally in wrangler dev
+description: Flagship bindings now use a local flag store during wrangler dev, so local development works offline and does not change production flags.
+products:
+  - flagship
+date: 2026-08-28
+---
+
+**[Wrangler](/workers/wrangler/)** now evaluates [Flagship](/flagship/) bindings against a local flag store during [`wrangler dev`](/workers/wrangler/commands/general/#dev). The store starts empty, so flags fall back to the default you pass at the call site until you populate it.
+
+Copy flags from your remote app:
+
+```sh
+npx wrangler flagship flags pull <APP_ID>
+```
+
+`create`, `get`, `list`, `update`, `delete`, `enable`, `disable`, `set`, `rollout`, `split`, `evaluate`, and the `rules` commands accept `--local` to read and write that store. They still default to the remote app.
+
+To keep using the remote app during local development, set `remote: true` on the binding:
+
+```jsonc
+{
+	"flagship": [{ "binding": "FLAGS", "app_id": "my-app", "remote": true }],
+}
+```
+
+When [Local Explorer](/workers/local-development/local-explorer/) is open, bound Flagship apps appear in the sidebar. You can list, create, edit, toggle, and evaluate flags against the same local store.
+
+Refer to [Flagship local development](/flagship/configuration/#local-development) for details.

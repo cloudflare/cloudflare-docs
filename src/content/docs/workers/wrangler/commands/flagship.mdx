@@ -12,6 +12,14 @@ Use `wrangler flagship` to manage [Flagship](/flagship/) apps and feature flags 
 
 `wrangler flagship` is available in Wrangler v4.107.0 and later.
 
+:::note[`--local` option]
+Most `wrangler flagship flags` commands accept `--local` to read and write the local flag store used by [`wrangler dev`](/workers/wrangler/commands/general/#dev). They still default to the remote app.
+
+`wrangler flagship flags pull <APP_ID>` copies remote flags into that store.
+
+For more information, refer to [Flagship local development](/flagship/configuration/#local-development).
+:::
+
 ## Authentication
 
 Run `wrangler login`, or set [`CLOUDFLARE_API_TOKEN`](/workers/wrangler/system-environment-variables/) to an API token with Flagship permissions.
