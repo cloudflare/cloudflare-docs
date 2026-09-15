@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "vitest";
 
 import { AGENTS } from "./agents";
-import { getAgentIconSource } from "./types";
+import { getAgentIconSource } from "./icons";
 
 const publicDirectory = resolve(
 	dirname(fileURLToPath(import.meta.url)),

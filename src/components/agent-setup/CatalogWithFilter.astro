@@ -1,7 +1,8 @@
 ---
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import CornerMarks from "~/components/CornerMarks.astro";
-import { getAgentIconSource, type AgentData } from "./types";
+import { getAgentIconSource } from "./icons";
+import type { AgentData } from "./types";
 
 interface Props {
 	agents: AgentData[];
@@ -59,6 +60,9 @@ const FILTERS = [
 					]
 						.filter(Boolean)
 						.join(" ");
+					const sharedIconSrc = agent.iconFile
+						? getAgentIconSource(agent.icon, agent.iconFile, "light")
+						: undefined;
 
 					return (
 						<a
@@ -69,24 +73,32 @@ const FILTERS = [
 						>
 							<div class="mb-5 flex items-center gap-3">
 								<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
-									<img
-										src={getAgentIconSource(
-											agent.icon,
-											agent.iconFile,
-											"light",
-										)}
-										alt=""
-										width="24"
-										height="24"
-										class="block size-6 dark:hidden"
-									/>
-									<img
-										src={getAgentIconSource(agent.icon, agent.iconFile, "dark")}
-										alt=""
-										width="24"
-										height="24"
-										class="hidden size-6 dark:block"
-									/>
+									{sharedIconSrc ? (
+										<img
+											src={sharedIconSrc}
+											alt=""
+											width="24"
+											height="24"
+											class="block size-6"
+										/>
+									) : (
+										<>
+											<img
+												src={getAgentIconSource(agent.icon, undefined, "light")}
+												alt=""
+												width="24"
+												height="24"
+												class="block size-6 dark:hidden"
+											/>
+											<img
+												src={getAgentIconSource(agent.icon, undefined, "dark")}
+												alt=""
+												width="24"
+												height="24"
+												class="hidden size-6 dark:block"
+											/>
+										</>
+									)}
 								</span>
 								<div class="min-w-0 leading-tight">
 									<div class="text-primary mb-0.5 font-mono text-xs tracking-widest uppercase">

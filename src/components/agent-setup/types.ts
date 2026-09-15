@@ -2,16 +2,6 @@ export type PricingModel = "subscription" | "byok" | "hybrid";
 export type ModelFlexibility = "locked" | "multi_provider";
 export type ContextApproach = "session" | "project_memory" | "indexed_codebase";
 
-export function getAgentIconSource(
-	icon: string,
-	iconFile: string | undefined,
-	theme: "light" | "dark",
-): string {
-	return iconFile
-		? `/icons/agents/${icon}/${iconFile}`
-		: `/icons/agents/${icon}/${theme}.svg`;
-}
-
 export interface AgentData {
 	name: string;
 	vendor: string;

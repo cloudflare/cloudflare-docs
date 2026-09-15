@@ -9,7 +9,7 @@
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { AGENTS } from "./agents";
 import CapabilityBadge from "./CapabilityBadge.astro";
-import { getAgentIconSource } from "./types";
+import { getAgentIconSource } from "./icons";
 
 interface Props {
 	slug: string;
@@ -23,8 +23,11 @@ if (!agent) {
 	throw new Error(`[AgentHeader] No agent found for slug="${slug}"`);
 }
 
-const lightIconSrc = getAgentIconSource(agent.icon, agent.iconFile, "light");
-const darkIconSrc = getAgentIconSource(agent.icon, agent.iconFile, "dark");
+const sharedIconSrc = agent.iconFile
+	? getAgentIconSource(agent.icon, agent.iconFile, "light")
+	: undefined;
+const lightIconSrc = getAgentIconSource(agent.icon, undefined, "light");
+const darkIconSrc = getAgentIconSource(agent.icon, undefined, "dark");
 
 const externalLinks = [
 	agent.links.skills && {
@@ -57,20 +60,34 @@ const externalLinks = [
 		<span
 			class="border-border bg-muted flex size-14 shrink-0 items-center justify-center rounded-lg border"
 		>
-			<img
-				src={lightIconSrc}
-				alt=""
-				width="32"
-				height="32"
-				class="block size-8 dark:hidden"
-			/>
-			<img
-				src={darkIconSrc}
-				alt=""
-				width="32"
-				height="32"
-				class="hidden size-8 dark:block"
-			/>
+			{
+				sharedIconSrc ? (
+					<img
+						src={sharedIconSrc}
+						alt=""
+						width="32"
+						height="32"
+						class="block size-8"
+					/>
+				) : (
+					<>
+						<img
+							src={lightIconSrc}
+							alt=""
+							width="32"
+							height="32"
+							class="block size-8 dark:hidden"
+						/>
+						<img
+							src={darkIconSrc}
+							alt=""
+							width="32"
+							height="32"
+							class="hidden size-8 dark:block"
+						/>
+					</>
+				)
+			}
 		</span>
 		<div class="min-w-0">
 			<div
