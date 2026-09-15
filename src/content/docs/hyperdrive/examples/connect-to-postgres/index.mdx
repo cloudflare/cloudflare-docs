@@ -88,6 +88,24 @@ To identify active connections to your Postgres database server from Hyperdrive:
 - Hyperdrive's connections to your database will show up with `Cloudflare Hyperdrive` as the `application_name` in the `pg_stat_activity` table.
 - Run `SELECT DISTINCT usename, application_name FROM pg_stat_activity WHERE application_name = 'Cloudflare Hyperdrive'` to show whether Hyperdrive is currently holding a connection (or connections) open to your database.
 
+:::note
+
+Hyperdrive only sets the `application_name` to `Cloudflare Hyperdrive` when your driver does not send its own. Some drivers set a default `application_name` — for example, [Postgres.js](https://github.com/porsager/postgres) sends `postgres.js` unless you override it. Hyperdrive forwards the driver-provided value to your database, so those connections appear under that name (for example, `postgres.js`) instead of `Cloudflare Hyperdrive`. This does **not** mean the connection is bypassing Hyperdrive.
+
+To keep these connections identifiable as Hyperdrive, set the `application_name` explicitly in your driver. With Postgres.js:
+
+```ts
+const sql = postgres(env.HYPERDRIVE.connectionString, {
+	max: 5,
+	fetch_types: false,
+	connection: {
+		application_name: "Cloudflare Hyperdrive",
+	},
+});
+```
+
+:::
+
 ## Next steps
 
 - Refer to the list of [supported database integrations](/workers/databases/connecting-to-databases/) to understand other ways to connect to existing databases.
