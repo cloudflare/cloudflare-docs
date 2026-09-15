@@ -1,0 +1,157 @@
+---
+pcx_content_type: how-to
+title: Query the API
+description: Send SQL statements, parameters, and time ranges to the SQL API.
+sidebar:
+  order: 3
+---
+
+Send a `POST` request to:
+
+```txt
+https://api.cloudflare.com/client/v4/analytics/sql
+```
+
+Include an `Authorization: Bearer <API_TOKEN>` header with every request.
+
+## JSON request
+
+The recommended request format is a JSON object:
+
+```json
+{
+	"query": "SELECT timestamp, clientRequestHTTPHost FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 100",
+	"params": ["<ACCOUNT_TAG>", "2026-09-15T00:00:00Z"]
+}
+```
+
+The request object supports the following fields:
+
+| Field        | Type            | Required | Description                                              |
+| ------------ | --------------- | -------- | -------------------------------------------------------- |
+| `query`      | string          | Yes      | One SQL `SELECT` statement.                              |
+| `params`     | array or object | No       | Values for positional or named placeholders in `query`.  |
+| `scope`      | object          | No       | An account or zone scope supplied separately from SQL.   |
+| `time_range` | object          | No       | A time range supplied separately from the SQL statement. |
+
+## Parameters
+
+Use parameters instead of inserting user-provided values into SQL text. Parameters keep values separate from SQL syntax.
+
+Use `$1`, `$2`, and subsequent placeholders with an array:
+
+```json
+{
+	"query": "SELECT timestamp FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 10",
+	"params": ["<ACCOUNT_TAG>", "2026-09-15T00:00:00Z"]
+}
+```
+
+Use `$name` placeholders with an object:
+
+```json
+{
+	"query": "SELECT timestamp FROM events.httpRequests WHERE accountTag = $account AND timestamp >= $start LIMIT 10",
+	"params": {
+		"account": "<ACCOUNT_TAG>",
+		"start": "2026-09-15T00:00:00Z"
+	}
+}
+```
+
+Parameter values can be strings, numbers, booleans, or `null`. The API infers the required type from the expression. Every placeholder must have a corresponding value.
+
+## Request-level scope
+
+You can supply the account or zone scope outside the SQL statement. This allows applications to reuse SQL without embedding a tenancy predicate.
+
+Use `accountTag` for account scope:
+
+```json
+{
+	"query": "SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start GROUP BY edgeResponseStatus",
+	"params": {
+		"start": "<START_TIME>"
+	},
+	"scope": {
+		"accountTag": "<ACCOUNT_TAG>"
+	}
+}
+```
+
+Use `zoneTag` for zone scope:
+
+```json
+{
+	"query": "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start",
+	"params": {
+		"start": "<START_TIME>"
+	},
+	"scope": {
+		"zoneTag": "<ZONE_TAG>"
+	}
+}
+```
+
+The `scope` object must contain exactly one of `accountTag` or `zoneTag`. Do not combine request-level scope with an `accountTag`, `zoneTag`, or resource tenancy predicate in SQL. The API returns HTTP `422` if the request specifies tenancy in both places.
+
+Request-level scope is available only with the JSON request format.
+
+## Request-level time range
+
+You can supply a time range outside the SQL statement. This is useful when an application controls the query window separately from saved SQL.
+
+```json
+{
+	"query": "SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account GROUP BY edgeResponseStatus",
+	"params": {
+		"account": "<ACCOUNT_TAG>"
+	},
+	"time_range": {
+		"start": "2026-09-15T00:00:00Z",
+		"end": "2026-09-15T01:00:00Z"
+	}
+}
+```
+
+The `start` value is required. The `end` value is optional. Both bounds are inclusive.
+
+Do not combine `time_range` with a time predicate in SQL. The API rejects a request that specifies the time range in both places.
+
+## Raw SQL request
+
+The API also accepts SQL text as the request body:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/analytics/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = '<ACCOUNT_TAG>' AND timestamp >= NOW() - INTERVAL '1' HOUR"
+```
+
+Use the JSON request format when a query has parameters or an application-supplied time range.
+
+## Response
+
+Successful requests return JSON:
+
+```json
+{
+	"data": [],
+	"rows": 0,
+	"statistics": {
+		"elapsed_ms": 12,
+		"rows_read": 10000,
+		"bytes_read": 720000
+	}
+}
+```
+
+| Field                   | Type    | Description                                |
+| ----------------------- | ------- | ------------------------------------------ |
+| `data`                  | array   | Result rows represented as JSON objects.   |
+| `rows`                  | integer | Number of objects in `data`.               |
+| `statistics.elapsed_ms` | integer | Data-store execution time in milliseconds. |
+| `statistics.rows_read`  | integer | Number of rows read to execute the query.  |
+| `statistics.bytes_read` | integer | Number of bytes read to execute the query. |
+
+Execution statistics do not include queue time, retries, network transfer, or client-side processing. A value can be `0` when the data store does not report that statistic.
