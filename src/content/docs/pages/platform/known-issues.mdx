@@ -109,14 +109,15 @@ Use the `--force` flag to skip the confirmation prompt and to force deletion of 
 To delete _all_ your deployments for a particular project name, you could run the following shell script:
 
 ```sh
+PROJECT_NAME=<my-project>
 prod_id=""
 while :; do
-  ids=$(npx wrangler pages deployment list --project-name <PROJECT_NAME> --json | jq -r '.[].Id')
+  ids=$(npx wrangler pages deployment list --project-name $PROJECT_NAME --json | jq -r '.[].Id')
   to_delete=$(echo "$ids" | grep -v -F -x "$prod_id" | grep .)
   [ -z "$to_delete" ] && { echo "Done. Production: $prod_id"; break; }
   echo "Deleting $(echo "$to_delete" | wc -l | tr -d ' ') deployments..."
   while IFS= read -r id; do
-    if ! npx wrangler pages deployment delete "$id" --project-name <PROJECT_NAME> --force 2>&1 | tee /tmp/wrangler-del.log | grep -q "Successfully deleted"; then
+    if ! npx wrangler pages deployment delete "$id" --project-name $PROJECT_NAME --force 2>&1 | tee /tmp/wrangler-del.log | grep -q "Successfully deleted"; then
       grep -q "active production deployment" /tmp/wrangler-del.log && prod_id="$id"
     fi
   done <<< "$to_delete"
