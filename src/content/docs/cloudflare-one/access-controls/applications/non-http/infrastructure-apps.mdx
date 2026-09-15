@@ -75,11 +75,11 @@ In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust*
 To filter targets by tag, add one or more `tag` query parameters:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?tag=environment:production&tag=team:platform" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?tag=environment=production&tag=team=platform" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
 
-If you add multiple `tag` parameters, Cloudflare applies AND logic.
+Use `=` between the tag key and value in each filter. If you add multiple `tag` parameters, Cloudflare applies AND logic.
 
 To sort by tag key, use the `order` and `direction` parameters:
 
@@ -87,6 +87,8 @@ To sort by tag key, use the `order` and `direction` parameters:
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?order=tag:environment&direction=asc" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
+
+The sort parameter still uses `order=tag:<key>` because it identifies the field to sort by rather than a key-value filter.
 
 </TabItem>
 </Tabs>
@@ -172,6 +174,8 @@ This is useful for organizations that want to give teams visibility into their o
 
 Use target criteria to define which targets an infrastructure application covers. Each target criteria entry includes a protocol, a port, and selectors that match targets by hostname, tag, or both.
 
+The `target_attributes` selector only supports `hostname` in both the legacy and operator-based formats. Cloudflare rejects any other `target_attributes` key.
+
 A target can only store one value for each tag key. This limit does not apply to target criteria. For example, an application can match both `environment:production` and `environment:staging` in `include`, `require`, or `exclude`.
 
 ### Operators
@@ -182,7 +186,7 @@ A target can only store one value for each tag key. This limit does not apply to
 | `require` | AND | Target must match all required selectors. |
 | `exclude` | NOT(OR) | Target is rejected if it matches any excluded selector. |
 
-Combined evaluation: **(any include) AND (all requires) AND (no excludes)**.
+Combined evaluation: **(any include) AND (all requires) AND NOT (any excludes)**.
 
 ### Legacy format
 

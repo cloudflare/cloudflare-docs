@@ -24,10 +24,7 @@ A target represents a single resource in your infrastructure (such as a server, 
 If the target IP does not appear in the dropdown, go to **Networking** > **Routes** and confirm that the IP routes through Cloudflare Tunnel.
 :::
 5. In the dropdown menu, select the IP address and [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
-6. (Optional) In **Tags**, add key-value tags to organize your target. For example, use `environment`, `team`, or `region` to group targets and match them later in [target criteria](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#target-criteria).
-   :::note
-   Each tag key can only appear once on a target. For example, a single target can have `environment:production` or `environment:staging`, but not both.
-   :::
+6. (Optional) In **Tags**, add key-value tags to organize your target. For example, use `environment`, `team`, or `region` to group targets and match them later in [target criteria](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#target-criteria). Each tag key can only appear once on a target. For example, a single target can have `environment:production` or `environment:staging`, but not both.
 7. Select **Add target**.
 </TabItem>
 <TabItem label="API">
