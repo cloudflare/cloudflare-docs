@@ -1,19 +1,21 @@
 ---
-title: Pending I/O adds up-to-15-minute keep-alive windows
-description: Eligible pending I/O provides an active keep-alive window of up to 15 minutes per event.
+title: More pending operations keep Durable Objects alive
+description: More pending operations prevent Durable Object eviction for up to 15 minutes each.
 products:
   - durable-objects
 date: 2026-09-15
 ---
 
-Durable Object keep-alive behavior covers more eligible pending outbound I/O. Each event can prevent eviction for up to 15 minutes after the caller disconnects.
+Pending service binding fetches now prevent Durable Object eviction. Requests to another Durable Object through remote procedure call (RPC) or `fetch()` and `this.ctx.container.monitor()` also prevent eviction.
 
-New coverage includes fetches to service bindings, requests to other Durable Objects through remote procedure call (RPC) or `fetch()`, and `this.ctx.container.monitor()`. Existing coverage includes ordinary outbound fetches, TCP sockets, and outbound WebSockets.
+Previously, these operations did not prevent eviction after the standard inactivity period. Pending work could stop after the caller disconnected.
 
-Each eligible pending I/O event provides an active protection window of up to 15 minutes. Later eligible I/O can reset or extend the deadline, so the invocation has no fixed 15-minute limit.
+Outbound `fetch()` requests to external services, TCP sockets, and outbound WebSockets already prevent eviction. Each listed operation prevents eviction for up to 15 minutes.
 
-![Timeline showing per-event I/O windows up to 15 minutes, later deadline extension, and standard 70–140 second eviction.](~/assets/images/durable-objects/pending-io-keep-alive.svg)
+Starting another operation that prevents eviction later can extend time in memory. There is no 15-minute limit for the entire invocation.
 
-Long-running agents and container workloads can receive more time to finish while eligible I/O continues extending the window.
+![Timeline showing a service binding fetch, Durable Object RPC, and monitor() each preventing eviction for up to 15 minutes. Later operations extend time in memory.](~/assets/images/durable-objects/pending-io-keep-alive.svg)
+
+This helps Durable Objects continue asynchronous work after the caller disconnects. Duration charges continue while an operation prevents eviction.
 
 For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).

@@ -31,7 +31,7 @@ These examples exclude the costs for the Workers calling the Durable Objects. Wh
 
 - Inactive objects receiving no requests do not incur any duration charges.
 - The [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) can dramatically reduce duration-related charges for Durable Objects communicating with clients over the WebSocket protocol, especially if messages are only transmitted occasionally at sparse intervals.
-- Pending outbound I/O keeps a Durable Object in memory. The object incurs duration charges for up to 15 minutes per I/O event, even without incoming requests. New eligible I/O can reset or extend the keep-alive window. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+- Pending outbound `fetch()` requests to external services, service binding fetches, requests to another Durable Object through [RPC](/workers/runtime-apis/rpc/) or `fetch()`, `this.ctx.container.monitor()`, outbound TCP sockets, and outbound WebSockets can keep an object in memory. Each operation can keep the object in memory for up to 15 minutes. The object incurs duration charges while an operation prevents eviction. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
 ### Example 1
 

@@ -47,7 +47,7 @@ Once all incoming requests or events have been processed, the Durable Object rem
 Hibernation can only occur if **all** of the conditions below are true:
 
 - No `setTimeout`/`setInterval` scheduled callbacks are set, since there would be no way to recreate the callback after hibernating.
-- No pending outbound I/O exists, since the Durable Object must remain available to process its completion.
+- No outbound request or `this.ctx.container.monitor()` promise is pending.
 - No WebSocket standard API is used.
 - No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
 - No active outbound TCP socket (`connect()`) or outbound WebSocket connection exists.
@@ -64,14 +64,19 @@ In case of an incoming request or event while in the **hibernated** state, the `
 
 While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
-:::note[Pending I/O keeps Durable Objects alive]
-Pending outbound I/O prevents the Durable Object from hibernating or being evicted. This allows asynchronous work to finish after the caller disconnects.
+:::note[Pending operations prevent eviction]
+The following pending operations prevent the Durable Object from hibernating or being evicted:
 
-This behavior covers outbound fetches, including fetches to service bindings. It also covers requests to other Durable Objects through remote procedure call (RPC) or `fetch()`, [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor), outbound TCP sockets, and outbound WebSockets.
+- Outbound `fetch()` requests to external services
+- Service binding fetches
+- Requests to another Durable Object through remote procedure call (RPC) or `fetch()`
+- [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor)
+- Outbound TCP sockets created with `connect()`
+- Outbound WebSockets
 
-Each pending I/O event prevents eviction for up to 15 minutes. New eligible I/O can reset or extend this window, so the invocation has no fixed 15-minute limit.
+Each listed operation prevents eviction for up to 15 minutes. Starting another operation later can extend time in memory. There is no 15-minute limit for the entire invocation.
 
-While kept alive, the Durable Object remains in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no I/O keeps the object alive, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
+While an operation prevents eviction, the Durable Object remains in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
 :::
 
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.
