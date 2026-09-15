@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"output_audio_seconds": 0.0025,
+		"Default (per second)": 0.0025
+	},
 	"examples": [
 		{
 			"name": "Cinematic Instrumental",
@@ -259,7 +263,7 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "Base64-encoded data URI for the generated music file.",
+					"description": "URL to the generated music file.",
 					"type": "string"
 				}
 			},

@@ -12,6 +12,14 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image (1-4 MP)": 0.005,
+		"Per image (5-8 MP)": 0.01,
+		"Per image (9-16 MP)": 0.02,
+		"Per image (17-32 MP)": 0.04,
+		"Per image (33-64 MP)": 0.06,
+		"Per image (65-128 MP)": 0.12
+	},
 	"examples": [
 		{
 			"name": "4MP Upscale",

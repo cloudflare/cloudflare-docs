@@ -1,0 +1,77 @@
+[files]
+extend-exclude = [
+	# Third-party OSS license notices: names and text we must not "fix".
+	"**/legal/3rdparty.*",
+	# Filenames have typos (terrform, stablization) but renaming them changes
+	# the published changelog URL. Needs a redirect, tracked separately.
+	"src/content/changelog/terraform/2025-08-29-terrform-v5.9-provider.mdx",
+	"src/content/changelog/workers/2025-03-22-smart-placement-stablization.mdx",
+]
+
+[default]
+extend-ignore-identifiers-re = [
+	# Base64 / JWT example tokens and hex hashes get tokenized into short
+	# nonsense "words" (e.g. a JWT split into `Iy`, `OT`, `ba`). Skip long
+	# opaque alphanumeric runs instead of trying to spell-check them.
+	"[A-Za-z0-9+/_-]{20,}={0,2}",
+	"\\b[0-9a-f]{8,40}\\b",
+]
+
+[default.extend-words]
+# Real acronyms, proper nouns, package names, foreign-language example
+# strings, and intentional misspellings (used to illustrate a typo) that
+# read as typos in isolation. Add new entries above this list only after
+# confirming the flagged string isn't a real typo.
+acn = "acn"                  # Australian Company Number
+als = "als"                  # AsyncLocalStorage variable name
+aso = "aso"                  # ASN field name (Autonomous System Organization)
+ba = "ba"                    # hex hash / language code fragment
+brittish = "brittish"        # period spelling, quoted Declaration of Independence
+canva = "canva"              # Canva, the product
+certifi = "certifi"          # Python package name
+christin = "christin"        # example person name
+cloudfare = "cloudfare"      # intentional example of a common misspelling
+compleat = "compleat"        # period spelling, quoted Declaration of Independence
+ect = "ect"                  # ECT (Effective Connection Type) HTTP client hint
+ede = "ede"                  # Extended DNS Error (RFC 8914)
+eit = "eit"                  # Encryption-in-Transit (EIT)
+equest = "equest"            # truncated real-world URL example fragment
+erro = "erro"                # localized (Portuguese) UI string
+fo = "fo"                    # Faroese language code
+fpt = "fpt"                  # abbreviation in Access MFA docs
+gam = "gam"                  # Google Apps Manager
+gropus = "gropus"            # intentional typo example (SCIM attribute mismatch)
+harrass = "harrass"          # period spelling, quoted Declaration of Independence
+helo = "helo"                # SMTP HELO command
+hom = "hom"                  # column value example (pipelines SQL reference)
+hpe = "hpe"                  # Hewlett Packard Enterprise
+iin = "iin"                  # Issuer Identification Number
+ist = "ist"                  # German UI string example
+iz = "iz"                    # base64 fragment
+jus = "jus"                  # dialect quote example
+metrix = "metrix"            # GT Metrix, the product
+mis = "mis"                  # hyphenated prefix (mis-issued, mis-read)
+momento = "momento"          # Spanish UI string example
+mor = "mor"                  # Merge-on-Read (Iceberg)
+muc = "muc"                  # Munich airport code
+nd = "nd"                    # abbreviation in vendor config examples
+nin = "nin"                  # $nin query operator
+noo = "noo"                  # base64 token fragment
+participantes = "participantes" # localized (Spanish/Portuguese) UI string
+pn = "pn"                    # base64 fragment / Yarn PnP
+referers = "referers"        # HTTP header name (historic spelling)
+regon = "regon"              # Polish business registry ID
+ser = "ser"                  # base64 fragment
+seeked = "seeked"            # valid past tense of "seek" in this context
+sie = "sie"                  # German UI string example
+sur = "sur"                  # macOS "Big Sur", surName attribute
+tme = "tme"                  # example domain fragment
+toi = "toi"                  # French UI string example
+tru = "tru"                  # base64 fragment
+ue = "ue"                    # base64/JWT fragment
+unparseable = "unparseable"  # valid alternate spelling of "unparsable"
+wich = "wich"                # dialect quote example
+wya = "wya"                  # base64 fragment
+
+[default.extend-identifiers]
+implicits = "implicits"      # Scala `import spark.implicits._`

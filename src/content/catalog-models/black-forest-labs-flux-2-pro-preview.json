@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"First output megapixel": 0.03,
+		"Per additional output megapixel": 0.015,
+		"Per input megapixel": 0.015
+	},
 	"examples": [
 		{
 			"name": "Simple Prompt",

@@ -12,6 +12,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per audio minute": 0.001667,
+		"input_audio_minutes_streaming": 0.003334
+	},
 	"examples": [
 		{
 			"name": "Transcribe from URL",
