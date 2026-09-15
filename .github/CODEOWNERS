@@ -7,7 +7,7 @@
 *.astro @cloudflare/content-engineering
 *.js @cloudflare/content-engineering
 *.ts @cloudflare/content-engineering
-/.github/ @ahaywood @colbywhite @MohamedH1998 @mvvmm @cloudflare/content-engineering
+/.github/ @ahaywood @colbywhite @MohamedH1998 @mvvmm @superhighfives @cloudflare/content-engineering
 /.github/actions/assign-pr/index.js @cloudflare/product-owners @cloudflare/content-engineering
 /.github/CODEOWNERS @cloudflare/product-owners @cloudflare/content-engineering
 /public/__redirects @cloudflare/product-owners @cloudflare/content-engineering
