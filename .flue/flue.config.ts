@@ -4,4 +4,5 @@ import { defineConfig } from "@flue/runtime/config";
 // explicit for clarity. The source root is `.flue/` (auto-discovered).
 export default defineConfig({
 	target: "cloudflare",
+	providers: ["cloudflare"],
 });

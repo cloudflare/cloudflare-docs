@@ -115,7 +115,7 @@ export default function ReviewValidator(_props: AgentProps): string {
 
 	const input = useInitialData<ReviewValidatorInput>();
 
-	useTool(makeReadRepoFileTool(getGitHubToken, input.headSha));
+	useTool(makeReadRepoFileTool(getGitHubToken, input.headSha, false));
 	useTool(makeSearchRepoTool(getGitHubToken));
 
 	const writeResult = useDataWriter(REVIEW_VALIDATION_DATA, {
@@ -153,7 +153,7 @@ export default function ReviewValidator(_props: AgentProps): string {
 				}
 
 				writeResult(data);
-				return "Validation recorded.";
+				return { output: "Validation recorded.", terminate: true };
 			},
 		}),
 	);

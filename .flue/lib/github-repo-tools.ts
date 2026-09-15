@@ -94,10 +94,11 @@ export function makeGetPrFilesTool(
 export function makeReadRepoFileTool(
 	getToken: TokenProvider,
 	defaultRef: string = DEFAULT_REF,
+	allowRefOverride = true,
 ): ToolDefinition {
 	return defineTool({
 		name: "read_repo_file",
-		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${defaultRef}".`,
+		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. ${allowRefOverride ? `The default ref is "${defaultRef}".` : `All reads are pinned to "${defaultRef}".`}`,
 		input: v.object({
 			path: v.pipe(
 				v.string(),
@@ -108,14 +109,21 @@ export function makeReadRepoFileTool(
 			ref: v.optional(
 				v.pipe(
 					v.string(),
-					v.description(`Git ref. Defaults to "${defaultRef}".`),
+					v.description(
+						allowRefOverride
+							? `Git ref. Defaults to "${defaultRef}".`
+							: `Ignored. Reads are pinned to "${defaultRef}".`,
+					),
 				),
 			),
 		}),
 		async run({ data }) {
 			const token = await getToken();
 			const path = data.path;
-			const ref = data.ref ?? defaultRef;
+			const ref =
+				allowRefOverride && "ref" in data && typeof data.ref === "string"
+					? data.ref
+					: defaultRef;
 			// Encode each path segment but preserve the slashes the contents API needs.
 			const encodedPath = path.split("/").map(encodeURIComponent).join("/");
 			const res = await fetch(
@@ -383,7 +391,7 @@ export function makeCodeReviewTools(
 	headSha: string,
 ): ToolDefinition[] {
 	return [
-		makeReadRepoFileTool(getToken, headSha),
+		makeReadRepoFileTool(getToken, headSha, false),
 		makeSearchRepoTool(getToken),
 	];
 }

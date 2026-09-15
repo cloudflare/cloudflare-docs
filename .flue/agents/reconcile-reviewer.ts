@@ -141,7 +141,7 @@ export default function ReconcileReviewer(_props: AgentProps): string {
 			input: ReconcileResultSchema,
 			run: ({ data }) => {
 				writeResult(data);
-				return "Reconciliation recorded.";
+				return { output: "Reconciliation recorded.", terminate: true };
 			},
 		}),
 	);

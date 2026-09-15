@@ -1,10 +1,11 @@
 import { env as workerEnv } from "cloudflare:workers";
-import { setProvider } from "@flue/runtime";
-import { createAgentRouter } from "@flue/runtime/routing";
+import { instrument, setProvider } from "@flue/runtime";
+import { createCloudflareTracing } from "@flue/runtime/cloudflare";
 import {
 	cloudflareBindingProvider,
 	type CloudflareAIBinding,
-} from "@flue/runtime/cloudflare";
+} from "@flue/runtime/cloudflare/workers-ai";
+import { createAgentRouter } from "@flue/runtime/routing";
 import { Hono } from "hono";
 import {
 	verifyGitHubSignature,
@@ -41,6 +42,9 @@ setProvider(
 			: undefined,
 	}),
 );
+
+// Retain operational spans without storing PR text, prompts, or tool payloads.
+instrument(createCloudflareTracing({ content: false }));
 
 type WebhookEnv = PipelineEnv & {
 	GITHUB_WEBHOOK_SECRET?: string;

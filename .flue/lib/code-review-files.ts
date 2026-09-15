@@ -85,7 +85,6 @@ export interface CodeReviewPullRequest {
 	head: string;
 }
 
-export const CODE_REVIEW_MAX_FILES = 20;
 // Default fan-out concurrency. Each file is reviewed by its own agent instance
 // (its own Durable Object / isolate), so peak heap is bounded by the DO model
 // rather than by deleting sessions; concurrency here bounds how many per-file
@@ -114,12 +113,11 @@ export type PullRequestFiles = Awaited<ReturnType<typeof getPullRequestFiles>>;
 /**
  * Select files eligible for code review from the full PR file list.
  * Includes any changed text file with additions and a patch, excluding
- * generated/binary noise, sorted largest-first and capped at `maxFiles`
- * (defaults to CODE_REVIEW_MAX_FILES).
+ * generated/binary noise, sorted largest-first. The Workflow scheduler applies
+ * concurrency limits; selection must not silently exclude eligible files.
  */
 export function selectCodeReviewFiles(
 	files: PullRequestFiles,
-	maxFiles: number = CODE_REVIEW_MAX_FILES,
 ): PullRequestFiles {
 	return files
 		.filter(
@@ -132,8 +130,7 @@ export function selectCodeReviewFiles(
 		.sort(
 			(a, b) =>
 				b.additions - a.additions || a.filename.localeCompare(b.filename),
-		)
-		.slice(0, maxFiles);
+		);
 }
 
 /**

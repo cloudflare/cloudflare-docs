@@ -87,7 +87,7 @@ export default function SpamFilter(_props: AgentProps): string {
 			input: SpamVerdictSchema,
 			run: ({ data }) => {
 				writeVerdict(data);
-				return "Spam verdict recorded.";
+				return { output: "Spam verdict recorded.", terminate: true };
 			},
 		}),
 	);
