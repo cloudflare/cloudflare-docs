@@ -139,6 +139,7 @@ package.json @cloudflare/content-engineering
 # argo-smart-routing
 
 /src/content/docs/argo-smart-routing/ @ncrouch-cflare @cloudflare/product-owners
+/src/content/docs/argo-smart-routing/argo-for-packets.mdx @alpdot @ncrouch-cflare @steve-cloudflare @cloudflare/product-owners
 /src/content/directory/argo-smart-routing.yaml @ncrouch-cflare @cloudflare/product-owners
 /src/icons/argo-smart-routing.svg @ncrouch-cflare @cloudflare/product-owners
 
@@ -300,6 +301,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @claudiocn @jlu-cloudflare @kennyj42 @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/ @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering.mdx @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
