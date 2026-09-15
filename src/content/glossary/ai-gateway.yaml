@@ -63,7 +63,7 @@ entries:
 
   - term: cf-aig-no-wholesale
     general_definition: |-
-      Prevents [Unified Billing fallback](/ai-gateway/features/unified-billing/#force-byok-for-third-party-requests) for a third-party provider request when set to `true`. The request must use provider credentials supplied with the request or stored on the gateway.
+      Prevents [Unified Billing fallback](/ai-gateway/features/unified-billing/#prevent-unified-billing-fallback-for-byok-third-party-providers) for a third-party provider request when set to `true`. The request must use provider credentials supplied with the request or stored on the gateway.
 
   # Deprecated headers
   - term: cf-cache-ttl

@@ -70,7 +70,7 @@ On requests routed through Unified Billing endpoints (for example, `env.AI.run()
 The `cf-aig-byok-alias` header selects a non-default alias only on [direct provider-passthrough](/ai-gateway/usage/providers/) requests.
 :::
 
-## Force BYOK for third-party requests
+## Prevent Unified Billing fallback for BYOK third-party providers
 
 Turn on **Require provider credentials** to prevent Unified Billing fallback for third-party providers. Third-party provider requests must use credentials supplied with the request or stored on the gateway. Requests without applicable credentials return an HTTP `400` response instead of using Cloudflare-managed credentials.
 
