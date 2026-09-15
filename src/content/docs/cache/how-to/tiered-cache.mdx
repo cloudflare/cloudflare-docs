@@ -33,6 +33,8 @@ Cloudflare allows you to select your cache topology so that you have control ove
 
 Generic Global topology allows for all of Cloudflare’s global data centers to serve as a network of upper-tiers. This topology may help reduce the long tail latencies for far-away visitors.
 
+Generic Global maps each lower-tier data center to fixed upper tiers within its region, and requests only tier within their region: a request served in Africa is not tiered to an upper tier in North America. The mapping is static, and Generic Global does not use latency data between the upper tier and your origin. If the path from your origin to the assigned upper tier is congested, cache misses tiered through it are slower without affecting cache hits. To select upper tiers using in-house origin-latency data, use [Smart Tiered Cache](#smart-tiered-cache). To confirm whether a request used Tiered Cache, refer to the `CacheTieredFill` field in your [http_requests](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) logs.
+
 ### Regional Tiered Cache
 
 <Render file="smart-shield-callout" product="smart-shield" />
@@ -44,6 +46,12 @@ This can help improve performance for **Smart** and **Custom Tiered Cache** topo
 ### Custom Tiered Cache
 
 Custom Tiered cache allows Enterprise customers to work with their account team to set a custom topology that fits your specific needs, for instance you have close upper tiers or you have a unique traffic pattern. If you want a custom topology, please engage your account team.
+
+## Tiered Cache and cache eligibility
+
+Tiered Cache activates for requests that are eligible for cache when they arrive. Origin response headers act later, on the response: an origin returning `Cache-Control: no-store` or bare `private` produces a [`BYPASS`](/cache/troubleshooting/investigating-uncached-responses/#bypass--origin-response-is-not-cacheable) status, but the upper-tier fetch has already happened. Origin-header bypass does not prevent the upper-tier fetch. To stop requests from being tiered, prevent their eligibility at request time with a [Cache Rule](/cache/how-to/cache-rules/settings/#bypass-cache) set to **Bypass cache**.
+
+Which location serves as the upper tier is set by the topology's lower-tier-to-upper-tier mapping, not by real-time latency between the upper tier and your origin. Smart Tiered Cache is the topology that uses origin-latency data. For intermittent slowness that only affects requests tiered to an upper tier, refer to [Investigate latency on tiered requests](/cache/troubleshooting/investigating-tiered-cache-latency/).
 
 ## Availability
 

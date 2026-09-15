@@ -1,0 +1,43 @@
+---
+title: Investigate latency on tiered requests
+pcx_content_type: troubleshooting
+products:
+  - cache
+description: Diagnose intermittent slowness on requests that Cloudflare fetches from an upper-tier data center through Tiered Cache.
+sidebar:
+  order: 3
+---
+
+Some requests for the same URL are slow and others are fast. The slow requests miss in the lower-tier data center and fetch through an upper-tier data center, while requests served from the local cache are fast. Tiered Cache activation is per request, which is why the slowness appears intermittent.
+
+## Before you start
+
+Capture the `cf-cache-status` value and the Ray ID for both a slow and a fast request. The Ray ID suffix identifies the data center that served the request (`cf-ray: 3ff26f9cc66f5a4d-EWR`). The slow requests are typically `MISS` or `EXPIRED` in a data center that fetches through an upper tier; the fast requests are `HIT`.
+
+To confirm whether a request was served through Tiered Cache, check the `CacheTieredFill` field in your [http_requests](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) logs.
+
+## The slow requests tier through an upper tier with a congested origin path
+
+Tiered Cache maps each lower-tier data center to upper-tier data centers per your topology. The mapping is static, and it does not use real-time latency between the upper tier and your origin (only [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) uses origin-latency data). When the path from the upper tier to your origin is congested, for example because a transit provider on that path is saturated, tiered cache misses take longer without affecting cache hits.
+
+1. Run an MTR from the upper-tier data center to the origin IP, and compare with a data center whose requests are fast.
+2. Compare the paths. Different providers or different path latencies between the two data centers and the origin explain the difference.
+3. Route the network-path finding to our network team with the MTR evidence: the congested provider path, the origin IP and ASN, and the working comparison. The fix is a network-path change, such as routing that prefix over a different provider.
+
+Do not disable Tiered Cache as the fix for a congested provider path. Disabling it only sends origin fetches from every lower-tier data center over uncoordinated paths; routing around the congestion is what fixes it.
+
+## Tiered Cache activates on requests the origin header-bypasses
+
+An origin response header such as `Cache-Control: no-store` or bare `private` takes effect on the response, after Cloudflare has already fetched the asset through the upper tier. The response status is [`BYPASS`](/cache/concepts/cache-responses/#bypass), but origin traffic still concentrated through the upper tier. To prevent requests from being tiered at all, stop their cache eligibility at request time with a [Cache Rule](/cache/how-to/cache-rules/settings/#bypass-cache) set to **Bypass cache**. Refer to [Tiered Cache and cache eligibility](/cache/how-to/tiered-cache/#tiered-cache-and-cache-eligibility).
+
+## The customer wants a closer or faster upper tier
+
+- **Smart Tiered Cache** selects the upper tier using in-house performance and latency data collected for your origin. It is the topology to recommend when the assigned upper tier is far from the origin.
+- **Cloud region hint**: for origins hosted on AWS, GCP, Azure, or Oracle Cloud, set a cloud region hint so Smart Tiered Cache picks upper tiers near the origin region. Refer to [Set a cloud region hint](/cache/how-to/tiered-cache/#set-a-cloud-region-hint).
+- **Custom topology**: Enterprise customers can work with their account team for a custom topology.
+
+## Related resources
+
+- [Tiered Cache](/cache/how-to/tiered-cache/)
+- [Investigate uncached responses](/cache/troubleshooting/investigating-uncached-responses/)
+- [Cache responses](/cache/concepts/cache-responses/)
