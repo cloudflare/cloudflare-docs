@@ -75,11 +75,11 @@ In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust*
 To filter targets by tag, add one or more `tag` query parameters:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?tag=environment=production&tag=team=platform" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?tag=environment:production&tag=team:platform" \
   -H "Authorization: Bearer $API_TOKEN"
 ```
 
-Use `=` between the tag key and value in each filter. If you add multiple `tag` parameters, Cloudflare applies AND logic.
+Use `:` between the tag key and value in each filter. If you add multiple `tag` parameters, Cloudflare applies AND logic.
 
 To sort by tag key, use the `order` and `direction` parameters:
 
@@ -88,7 +88,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/t
   -H "Authorization: Bearer $API_TOKEN"
 ```
 
-The sort parameter still uses `order=tag:<key>` because it identifies the field to sort by rather than a key-value filter.
+The sort parameter also uses `:` in `order=tag:<key>` because it identifies the tag field to sort by.
 
 </TabItem>
 </Tabs>
