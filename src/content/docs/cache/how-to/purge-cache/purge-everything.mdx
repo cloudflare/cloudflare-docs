@@ -1,5 +1,5 @@
 ---
-title: ​Purge everything
+title: \Purge everything
 pcx_content_type: how-to
 description: Purge all cached content for your entire zone.
 products:
@@ -13,7 +13,13 @@ import { DashButton } from "~/components"
 
 To maintain optimal site performance, Cloudflare strongly recommends using single-file (by URL) purging instead of a complete cache purge.
 
-Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If Cloudflare cannot validate the resource, Cloudflare fetches the latest version from the origin server and replaces the cached version. When a site with heavy traffic contains a lot of assets, requests to your origin server can increase substantially and result in slow site performance.
+Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If Cloudflare cannot validate the resource, Cloudflare fetches the latest version from the origin server and replaces the cached version.
+
+::caution
+When you purge everything, all cached content for your zone is removed at once. Every subsequent request must be served from your origin until the cache is repopulated. On high-traffic sites with many assets, this can cause a large spike in origin requests and may significantly slow down your site or overload your origin server.
+
+Before using purge everything, consider whether a more targeted method — such as [purge by URL](/cache/how-to/purge-cache/purge-by-single-file/), [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/), or [purge by tag](/cache/how-to/purge-cache/purge-by-tags/) -- can achieve the same result with less impact on your origin.
+:::
 
 1. In the Cloudflare dashboard, go to the **Configuration** page.
 
