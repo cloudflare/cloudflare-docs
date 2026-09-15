@@ -211,6 +211,29 @@ Different ISPs have specific requirements:
 - Yahoo: Strict DMARC enforcement
 - Corporate: Often have strict filtering rules
 
+
+## Conflicts with external mail providers
+
+### Google Workspace MX conflict
+
+Cloudflare Email Routing (inbound) and Google Workspace cannot be active simultaneously on the same domain. Both services require control of your domain's MX records, and only one set can be authoritative at a time. If both are configured, email delivery will be unpredictable.
+
+**To switch to Google Workspace for inbound email:**
+
+Complete the following steps quickly to minimize the time during which both sets of `MX` records are active.
+
+1. In **DNS** > **Records**, add the five Google Workspace `MX` records. Refer to [Set up Google Workspace DNS records](/dns/manage-dns-records/how-to/set-up-google-workspace/) for the complete record values. The Cloudflare Email Routing `MX` records remain active until the next step.
+2. Return to **Compute** > **Email Service** > **Email Routing**.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+3. Select your domain, then open **Settings** and turn off Email Routing. Cloudflare removes all routing-related DNS records it manages (`MX`, `SPF`, and `DKIM`), as described in [Remove a domain from Email Routing](/email-service/configuration/domains/#remove-a-domain-from-email-routing).
+4. In **DNS** > **Records**, add a new `SPF` `TXT` record on the root domain. If you only send email through Google Workspace, use `v=spf1 include:_spf.google.com ~all`. If you send from other services, include them in the same record. Do not add more than one `SPF` record — having multiple `v=spf1` records on the same domain breaks `SPF` authentication.
+
+**To keep Email Routing while also using Google Workspace:**
+
+Email Routing on the root domain and Google Workspace MX records are mutually exclusive. However, you can run Email Routing on a subdomain (for example, `notifications.example.com`) while Google Workspace handles email for the root domain. Refer to [subdomains](/email-service/configuration/subdomains/) for setup details.
+
 ## Testing tools
 
 Use these tools to validate your email authentication setup:
