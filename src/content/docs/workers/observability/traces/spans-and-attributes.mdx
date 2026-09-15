@@ -147,9 +147,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
-RPC traces include caller-side session spans and individual method-call spans. These spans cover Worker-to-Worker and Worker-to-Durable Object calls.
-
-- `cloudflare.jsrpc.method`
+- `jsrpc.method`
 
 #### [`Email Handler`](/email-service/api/route-emails/email-handler/)
 
@@ -164,6 +162,27 @@ RPC traces include caller-side session spans and individual method-call spans. T
 #### [`Alarm Handler`](/durable-objects/api/alarms/#alarm)
 
 - `cloudflare.scheduled_time`
+
+---
+
+### [RPC](/workers/runtime-apis/rpc/)
+
+Workers tracing emits these spans for RPC calls between Workers and from Workers to Durable Objects.
+
+#### `jsRpcSession`
+
+A caller-side span that covers the lifetime of an RPC session. Calls that reuse the session appear under this span.
+
+This span has no additional RPC-specific attributes.
+
+#### `jsRpcCall`
+
+A caller-side or callee-side span for an individual method call or property access.
+
+- `jsrpc.method` - The method name or property path
+- `jsrpc.operation` - The operation type: `call` or `getProperty`
+- `jsrpc.target_kind` - The type of RPC target
+- `jsrpc.caller_span_id` - On callee-side spans, the corresponding caller-side `jsRpcCall` span ID
 
 ---
 
