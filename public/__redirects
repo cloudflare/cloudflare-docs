@@ -89,6 +89,8 @@
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
+/changelog/product/cloudflare-challenges/ /changelog/product/bots/ 301
+/changelog/rss/cloudflare-challenges.xml /changelog/rss/bots.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
 /cloudflare-one/changelog/index.xml /changelog/rss/cloudflare-one.xml 301
@@ -3086,6 +3088,7 @@
 /ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
+/changelog/product/cloudflare-challenges/* /changelog/product/bots/ 301
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301

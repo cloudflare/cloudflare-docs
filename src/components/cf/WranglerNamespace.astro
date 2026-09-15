@@ -42,18 +42,16 @@ function flattenSubtree(subtree: Subtree) {
 flattenSubtree(node.subtree);
 ---
 
-{
-	definitions.map((definition) => {
-		if (definition.type !== "command") {
-			throw new Error(
-				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
-			);
-		}
-		return (
-			<WranglerCommand
-				command={definition.command.replace("wrangler ", "")}
-				headingLevel={headingLevel}
-			/>
+{definitions.map((definition) => {
+	if (definition.type !== "command") {
+		throw new Error(
+			`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
 		);
-	})
-}
+	}
+	return (
+		<WranglerCommand
+			command={definition.command.replace("wrangler ", "")}
+			headingLevel={headingLevel}
+		/>
+	);
+})}

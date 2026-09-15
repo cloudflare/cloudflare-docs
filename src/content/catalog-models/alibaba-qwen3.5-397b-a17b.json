@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.6,
+		"Output tokens (per 1M)": 3.6
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -4293,8 +4297,7 @@
 									}
 								},
 								"required": [
-									"role",
-									"content"
+									"role"
 								],
 								"additionalProperties": {}
 							}
@@ -4383,6 +4386,13 @@
 								}
 							},
 							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
@@ -4494,13 +4504,9 @@
 												"type": "string"
 											},
 											"content": {
-												"anyOf": [
-													{
-														"type": "string"
-													},
-													{
-														"type": "null"
-													}
+												"type": [
+													"string",
+													"null"
 												]
 											},
 											"tool_calls": {
@@ -4515,22 +4521,29 @@
 												]
 											},
 											"audio": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
 													},
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"transcript": {
-														"type": "string"
+													{
+														"type": "null"
 													}
-												},
-												"additionalProperties": {}
+												]
 											}
 										},
 										"required": [
@@ -4539,13 +4552,9 @@
 										"additionalProperties": {}
 									},
 									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},

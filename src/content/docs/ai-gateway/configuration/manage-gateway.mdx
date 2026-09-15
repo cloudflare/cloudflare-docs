@@ -78,11 +78,9 @@ To configure retry settings:
 4. Turn on the toggle to turn on automatic retries.
 5. Configure the following settings:
    - **Retry count** — the maximum number of retry attempts (up to 5).
-   - **Delay** — the base delay between retries. Available values: 100ms, 500ms, 1 second, 2 seconds, 3 seconds, or 5 seconds.
+   - **Delay** — the base delay between retries, from 0.1 to 60 seconds.
    - **Backoff** — the backoff strategy for subsequent retries: Constant, Linear, or Exponential.
 6. Select **Save**.
-
-![Retry Requests settings in the AI Gateway dashboard](~/assets/images/ai-gateway/auto-retry-settings.png)
 
 These gateway-level defaults apply to all requests routed through the gateway. Per-request headers can override these defaults — refer to [Request handling](/ai-gateway/configuration/request-handling/#request-retries) for details.
 

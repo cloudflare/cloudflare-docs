@@ -10,14 +10,15 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		<li class="flow-step">
 			<div class="node-card client-card">
 				<div class="node-header">
-					<span class="node-icon client-icon" aria-hidden="true"
-						><Icon name="warp-client" /></span
-					>
+					<span class="node-icon client-icon" aria-hidden="true">
+						<Icon name="warp-client" />
+					</span>
 					<a
 						class="node-title"
 						href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
-						>Client device</a
 					>
+						Client device
+					</a>
 				</div>
 				<p class="node-caption">
 					Requests <code>wiki.internal.local</code>
@@ -27,25 +28,29 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 		<li class="flow-connector">
 			<span class="connector-label">DNS query</span>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
-					>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/"
-						>Cloudflare Gateway</a
-					>
+					<span class="node-icon gateway-icon" aria-hidden="true">
+						<Icon name="gateway" />
+					</span>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/">
+						Cloudflare Gateway
+					</a>
 				</div>
 				<p class="node-caption">
 					Returns a token IP, then rewrites the destination to the real private
 					IP.
 				</p>
 				<div class="pill-row">
-					<span class="token-pill"><code>172.64.128.0/20</code></span>
+					<span class="token-pill">
+						<code>172.64.128.0/20</code>
+					</span>
 				</div>
 			</div>
 		</li>
@@ -54,22 +59,26 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 			<a
 				class="connector-label"
 				href="/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/#hostname-routes"
-				>Hostname route</a
 			>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+				Hostname route
+			</a>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card mesh-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"
-						><Icon name="cloudflare-mesh" /></span
-					>
+					<span class="node-icon mesh-icon" aria-hidden="true">
+						<Icon name="cloudflare-mesh" />
+					</span>
 					<a
 						class="node-title"
 						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
-						>Mesh node</a
 					>
+						Mesh node
+					</a>
 				</div>
 				<p class="node-caption">
 					Forwards traffic to the host on the local network
@@ -84,9 +93,9 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		<li class="flow-step">
 			<div class="node-card host-card">
 				<div class="node-header">
-					<span class="node-icon host-icon" aria-hidden="true"
-						><Icon name="dns" /></span
-					>
+					<span class="node-icon host-icon" aria-hidden="true">
+						<Icon name="dns" />
+					</span>
 					<span class="node-title">Private host</span>
 				</div>
 				<p class="node-caption">

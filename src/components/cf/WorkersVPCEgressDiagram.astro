@@ -21,38 +21,49 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card worker-card">
 				<div class="node-header">
-					<span class="node-icon worker-icon" aria-hidden="true"
-						><Icon name="workers" /></span
-					>
-					<a class="node-title" href="/workers/">Worker</a>
+					<span class="node-icon worker-icon" aria-hidden="true">
+						<Icon name="workers" />
+					</span>
+					<a class="node-title" href="/workers/">
+						Worker
+					</a>
 				</div>
-				<p class="node-caption">Calls <code>env.EGRESS.fetch()</code></p>
+				<p class="node-caption">
+					Calls <code>env.EGRESS.fetch()</code>
+				</p>
 			</div>
 		</li>
 
 		<li class="flow-connector">
-			<a class="connector-label" href="/workers-vpc/">VPC binding</a>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+			<a class="connector-label" href="/workers-vpc/">
+				VPC binding
+			</a>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card mesh-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"
-						><Icon name="cloudflare-mesh" /></span
-					>
+					<span class="node-icon mesh-icon" aria-hidden="true">
+						<Icon name="cloudflare-mesh" />
+					</span>
 					<a
 						class="node-title"
 						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
-						>Cloudflare Mesh</a
 					>
+						Cloudflare Mesh
+					</a>
 				</div>
 				<p class="node-caption">
-					Bind via <a
+					Bind via{" "}
+					<a
 						class="inline-pill mesh-pill"
 						href="/workers-vpc/configuration/vpc-networks/"
-						><code>cf1:network</code></a
 					>
+						<code>cf1:network</code>
+					</a>
 				</p>
 			</div>
 		</li>
@@ -64,22 +75,20 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
-					>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/"
-						>Cloudflare Gateway</a
-					>
+					<span class="node-icon gateway-icon" aria-hidden="true">
+						<Icon name="gateway" />
+					</span>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/">
+						Cloudflare Gateway
+					</a>
 				</div>
 				<p class="node-caption">Policies applied:</p>
 				<div class="pill-row">
-					{
-						policies.map((p) => (
-							<a class="policy-pill" href={p.href}>
-								{p.label}
-							</a>
-						))
-					}
+					{policies.map((p) => (
+						<a class="policy-pill" href={p.href}>
+							{p.label}
+						</a>
+					))}
 				</div>
 			</div>
 		</li>
@@ -91,7 +100,9 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<li class="flow-step">
 			<div class="node-card internet-card">
 				<div class="node-header">
-					<span class="node-icon internet-icon" aria-hidden="true">↗</span>
+					<span class="node-icon internet-icon" aria-hidden="true">
+						↗
+					</span>
 					<span class="node-title">Public Internet</span>
 				</div>
 				<p class="node-caption">Any public hostname or IP</p>

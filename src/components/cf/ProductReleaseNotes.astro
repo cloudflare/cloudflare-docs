@@ -65,59 +65,55 @@ if (!releaseNotes) {
 }
 ---
 
-{
-	page.data.pcx_content_type === "changelog" && (
-		<p>
-			<RSSButton href={`/${page.id}/index.xml`} />
-		</p>
-	)
-}
+{page.data.pcx_content_type === "changelog" && (
+	<p>
+		<RSSButton href={`/${page.id}/index.xml`} />
+	</p>
+)}
 
-{
-	releaseNotes.map(([date, entries]) => (
-		<div data-date={date}>
-			{(entries ?? []).map(async (entry) => {
-				let description;
-				if (entry.individual_page) {
-					const link = entry.individual_page;
+{releaseNotes.map(([date, entries]) => (
+	<div data-date={date}>
+		{(entries ?? []).map(async (entry) => {
+			let description;
+			if (entry.individual_page) {
+				const link = entry.individual_page;
 
-					if (!link)
-						throw new Error(
-							`Changelog entry points to individual page but no link is provided`,
-						);
+				if (!link)
+					throw new Error(
+						`Changelog entry points to individual page but no link is provided`,
+					);
 
-					const linked = await getEntry("docs", link.slice(1, -1));
+				const linked = await getEntry("docs", link.slice(1, -1));
 
-					if (!linked)
-						throw new Error(
-							`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
-						);
+				if (!linked)
+					throw new Error(
+						`Changelog entry points to ${link.slice(1, -1)} but unable to find entry with that slug`,
+					);
 
-					description =
-						(await entryToString(linked, Astro.locals)) ?? linked.body;
+				description =
+					(await entryToString(linked, Astro.locals)) ?? linked.body;
 
-					return (
+				return (
+					<div data-product={entry.product.toLowerCase()}>
+						<a href={entry.individual_page} class="no-underline">
+							<AnchorHeading depth={2} title={linked.data.title} />
+						</a>
+						<p class="text-xs">{entry.date}</p>
+						{<Fragment set:html={description} />}
+					</div>
+				);
+			} else {
+				description = renderMarkdown(entry.description as string);
+				return (
+					<>
+						<AnchorHeading depth={2} title={date} />
 						<div data-product={entry.product.toLowerCase()}>
-							<a href={entry.individual_page} class="no-underline">
-								<AnchorHeading depth={2} title={linked.data.title} />
-							</a>
-							<p class="text-xs">{entry.date}</p>
+							{entry.title && <strong>{entry.title}</strong>}
 							{<Fragment set:html={description} />}
 						</div>
-					);
-				} else {
-					description = renderMarkdown(entry.description as string);
-					return (
-						<>
-							<AnchorHeading depth={2} title={date} />
-							<div data-product={entry.product.toLowerCase()}>
-								{entry.title && <strong>{entry.title}</strong>}
-								{<Fragment set:html={description} />}
-							</div>
-						</>
-					);
-				}
-			})}
-		</div>
-	))
-}
+					</>
+				);
+			}
+		})}
+	</div>
+))}

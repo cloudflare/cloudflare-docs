@@ -11,6 +11,12 @@
 	"context_length": 128000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.3,
+		"Output tokens (per 1M)": 1.2,
+		"Cache creation tokens (per 1M)": 0.375,
+		"Cached input tokens (per 1M)": 0.06
+	},
 	"examples": [
 		{
 			"name": "Simple Conversation",
@@ -908,13 +914,9 @@
 							"type": "string"
 						},
 						"stop_reason": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"usage": {
