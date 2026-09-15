@@ -1,0 +1,64 @@
+---
+pcx_content_type: how-to
+title: Granular permissions for Access
+description: Scope Cloudflare member permissions to individual Access applications, policies, identity providers, service tokens, and infrastructure targets.
+sidebar:
+  order: 8
+products:
+  - cloudflare-one
+---
+
+import { DashButton, Steps } from "~/components";
+
+You can limit Cloudflare member permissions to specific Access resources. For example, you can let an application owner edit one Access application without granting access to every application in the account.
+
+:::note
+Resource-scoped roles are in Beta.
+:::
+
+Granular permissions supplement [account-scoped roles](/fundamentals/manage-members/roles/#account-scoped-roles). They do not replace them. A member with an account-level role such as **Cloudflare Access** can still manage every Access resource covered by that role.
+
+## Available roles
+
+Each resource-scoped role applies to one type of Access resource:
+
+| Role                                      | Resource scope                               |
+| ----------------------------------------- | -------------------------------------------- |
+| Access for Infrastructure Target Admin    | Individual Access for Infrastructure targets |
+| Cloudflare Access App Admin               | Individual Access applications               |
+| Cloudflare Access Identity Provider Admin | Individual Access identity providers (IdPs)  |
+| Cloudflare Access Policy Admin            | Individual Access policies                   |
+| Cloudflare Access Service Token Admin     | Individual Access service tokens             |
+
+Each role grants edit access to the resources selected in the member policy. To manage a different resource type, add another policy with the corresponding role.
+
+## Grant a granular permission
+
+Assign granular permissions through the standard [member management](/fundamentals/manage-members/manage/) flow.
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Members** page.
+
+   <DashButton url="/?to=/:account/members" />
+
+2. Select **Invite Members**, or open an existing member and select **Edit**.
+3. Add a permission policy and choose a [resource-scoped Access role](#available-roles).
+4. In **Scope**, select _Specific resources_.
+5. Select the Access resource type and one or more resources.
+6. Review and save the member policy.
+</Steps>
+
+To grant access to resources of another type, add another permission policy to the member.
+
+## Effective permissions
+
+Cloudflare combines all policies assigned to a member. This includes policies assigned directly and policies inherited through [user groups](/fundamentals/manage-members/user-groups/).
+
+Adding a resource-scoped policy does not reduce permissions from another policy. For example, a member with the account-scoped **Cloudflare Access** role retains account-wide Access permissions after you assign a granular role.
+
+## Related resources
+
+- [Manage account members](/fundamentals/manage-members/manage/)
+- [Account member policies](/fundamentals/manage-members/policies/)
+- [Role scopes](/fundamentals/manage-members/scope/)
+- [Roles reference](/fundamentals/manage-members/roles/)
