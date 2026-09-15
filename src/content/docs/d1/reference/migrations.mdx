@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Steps } from "~/components";
 
 Database migrations are a way of versioning your database. Each migration is stored as an `.sql` file in your `migrations` folder. The `migrations` folder is created in your project directory when you create your first migration. This enables you to store and track changes throughout database development.
 
@@ -85,6 +85,51 @@ Rules for `migrations_pattern`:
 The pattern is a standard glob — `*` matches one path segment, `**` matches any number of segments. `migrations/**/*.sql` will pick up arbitrarily deep `.sql` files.
 
 `wrangler d1 migrations create` only writes top-level files inside `migrations_dir`, so if your `migrations_pattern` only matches nested files (as with the Drizzle layout), generate new migrations using your ORM's command (for example, `drizzle-kit generate`) instead.
+
+## Add migrations to an existing database
+
+If your D1 database already has tables and you want to start using the migration system, we suggest creating a baseline migration that captures your current schema.
+
+A baseline migration records your existing schema as the first entry in your migration history, so every future migration builds on a known starting point. This lets anyone recreate the database from scratch — for example, when a new developer sets up a local database, when CI/CD spins up fresh test databases, or when you want a complete schema history in your git repository.
+
+The baseline is a suggestion, not a requirement. Migrations are useful even if you work solo because they track schema changes over time. You only need a baseline if you want to reproduce the database from your migration files. If you never recreate the database and only ever apply new migrations to it, you can skip this step and start with your next migration.
+
+<Steps>
+
+1. Get your current schema, including tables, indexes, views, and triggers:
+
+	```sh
+	npx wrangler d1 execute <DATABASE_NAME> --remote \
+		--command="SELECT sql FROM sqlite_master WHERE sql IS NOT NULL AND name NOT GLOB '_cf*' AND name != 'sqlite_sequence' AND name != 'd1_migrations'"
+	```
+
+2. Create a baseline migration:
+
+	```sh
+	npx wrangler d1 migrations create <DATABASE_NAME> baseline
+	```
+
+3. Copy the output from step 1 into the migration file. Add `IF NOT EXISTS` to each `CREATE` statement so the migration is safe to run against the live database:
+
+	```sql
+	-- migrations/0001_baseline.sql
+	CREATE TABLE IF NOT EXISTS users (
+		user_id INTEGER PRIMARY KEY,
+		email TEXT NOT NULL,
+		name TEXT
+	);
+	```
+
+4. Apply locally and remotely:
+
+	```sh
+	npx wrangler d1 migrations apply <DATABASE_NAME> --local
+	npx wrangler d1 migrations apply <DATABASE_NAME> --remote
+	```
+
+</Steps>
+
+The `IF NOT EXISTS` clause prevents existing schema objects from being recreated. The migration is recorded in the `d1_migrations` table, establishing a starting point for all future migrations.
 
 ## Foreign key constraints
 
