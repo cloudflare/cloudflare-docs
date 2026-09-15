@@ -10,8 +10,63 @@ products:
   - containers
 ---
 
-WebSocket requests are automatically forwarded to a container using the default `fetch`
-method on the `Container` class:
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
+
+Forward an incoming WebSocket upgrade request through the Durable Object to the listening port on the Container.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+}
+
+export class MyContainer extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		ctx.blockConcurrencyWhile(async () => {
+			const container = ctx.container!;
+			await container.setInactivityTimeout(2 * 60 * 1000);
+
+			if (!container.running) {
+				container.start();
+			}
+
+			const port = container.getTcpPort(8080);
+			let lastError: unknown;
+			for (let attempt = 0; attempt < 50; attempt++) {
+				try {
+					await port.fetch("http://container/");
+					return;
+				} catch (error) {
+					lastError = error;
+					await scheduler.wait(100);
+				}
+			}
+			throw lastError;
+		});
+	}
+
+	fetch(request: Request): Promise<Response> {
+		return this.ctx.container!.getTcpPort(8080).fetch(request);
+	}
+}
+
+export default {
+	fetch(request: Request, env: Env): Promise<Response> {
+		return env.MY_CONTAINER.getByName("default").fetch(request);
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
 
 ```js
 import { Container, getContainer } from "@cloudflare/containers";
@@ -28,6 +83,9 @@ export default {
 	},
 };
 ```
+
+	</TabItem>
+</Tabs>
 
 View a full example in the [Container class repository](https://github.com/cloudflare/containers/tree/main/examples/websocket).
 {/* TODO: Add more advanced examples - like kicking off a WS request then passing messages to container from the WS */}

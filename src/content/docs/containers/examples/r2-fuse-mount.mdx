@@ -11,7 +11,7 @@ products:
   - r2
 ---
 
-import { Details, TypeScriptExample } from "~/components";
+import { Details, TabItem, Tabs, TypeScriptExample } from "~/components";
 
 FUSE (Filesystem in Userspace) allows you to mount [R2 buckets](/r2/) as filesystems within Containers. Applications can then interact with R2 using standard filesystem operations rather than object storage APIs.
 
@@ -81,32 +81,94 @@ The startup script creates a mount point, starts tigrisfs in the background to m
 
 ### Passing credentials to the container
 
-Your Container needs [R2 credentials](/r2/api/tokens/) and configuration passed as environment variables. Store credentials as [Worker secrets](/workers/configuration/secrets/), then pass them through the `envVars` property:
+Your Container needs [R2 credentials](/r2/api/tokens/) and configuration passed as environment variables. Store credentials as [Worker secrets](/workers/configuration/secrets/), then pass them when the Container starts.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
 
 <TypeScriptExample filename="src/index.ts">
 ```ts
-import { Container, getContainer } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
 
 interface Env {
-  FUSEDemo: DurableObjectNamespace<FUSEDemo>;
-  AWS_ACCESS_KEY_ID: string;
-  AWS_SECRET_ACCESS_KEY: string;
-  R2_BUCKET_NAME: string;
-  R2_ACCOUNT_ID: string;
+	FUSE_DEMO: DurableObjectNamespace<FUSEDemo>;
+	FUSE_IMAGE: string;
+	AWS_ACCESS_KEY_ID: string;
+	AWS_SECRET_ACCESS_KEY: string;
+	R2_BUCKET_NAME: string;
+	R2_ACCOUNT_ID: string;
+}
+
+export class FUSEDemo extends DurableObject<Env> {
+	private currentRun: Promise<void> | undefined;
+
+	run(): Promise<void> {
+		this.currentRun ??= this.runOnce().finally(() => {
+			this.currentRun = undefined;
+		});
+		return this.currentRun;
+	}
+
+	private async runOnce(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) {
+			throw new Error("Container is already running");
+		}
+
+		container.start({
+			image: this.env.FUSE_IMAGE,
+			enableInternet: true,
+			env: {
+				AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
+				AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
+				R2_BUCKET_NAME: this.env.R2_BUCKET_NAME,
+				R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
+			},
+		});
+
+		await container.monitor();
+	}
+}
+
+export default {
+	async fetch(_request: Request, env: Env): Promise<Response> {
+		await env.FUSE_DEMO.getByName("default").run();
+		return new Response("FUSE task completed");
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { Container } from "@cloudflare/containers";
+
+interface Env {
+	FUSE_DEMO: DurableObjectNamespace<FUSEDemo>;
+	AWS_ACCESS_KEY_ID: string;
+	AWS_SECRET_ACCESS_KEY: string;
+	R2_BUCKET_NAME: string;
+	R2_ACCOUNT_ID: string;
 }
 
 export class FUSEDemo extends Container<Env> {
-  defaultPort = 8080;
-  sleepAfter = "10m";
-  envVars = {
-    AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
-    AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
-    R2_BUCKET_NAME: this.env.R2_BUCKET_NAME,
-    R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
-  };
+	defaultPort = 8080;
+	sleepAfter = "10m";
+	envVars = {
+		AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
+		AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
+		R2_BUCKET_NAME: this.env.R2_BUCKET_NAME,
+		R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
+	};
 }
 ```
 </TypeScriptExample>
+
+	</TabItem>
+</Tabs>
 
 The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets, while `R2_BUCKET_NAME` and `R2_ACCOUNT_ID` can be configured as variables in your `wrangler.jsonc`:
 
@@ -116,8 +178,9 @@ To get your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, [head to your R2 da
 ```json
 {
   "vars": {
-    "R2_BUCKET_NAME": "my-bucket",
-    "R2_ACCOUNT_ID": "your-account-id"
+	"FUSE_IMAGE": "registry.cloudflare.com/<ACCOUNT_ID>/r2-fuse:latest",
+	"R2_BUCKET_NAME": "my-bucket",
+	"R2_ACCOUNT_ID": "your-account-id"
   }
 }
 ```

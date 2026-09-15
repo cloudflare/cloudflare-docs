@@ -10,7 +10,7 @@ products:
   - containers
 ---
 
-import { WranglerConfig, Details } from "~/components";
+import { WranglerConfig, Details, TabItem, Tabs, TypeScriptExample } from "~/components";
 
 A common pattern is to serve a static frontend application (e.g., React, Vue, Svelte) using Static Assets,
 then pass backend requests to a containerized backend application.
@@ -138,6 +138,68 @@ Your Worker needs to be able to both serve static assets and route requests to t
 In this case, we will pass requests to one of three container instances if the route starts with `/api`,
 and all other requests will be served as static assets.
 
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const INSTANCE_COUNT = 3;
+
+interface Env {
+	ASSETS: Fetcher;
+	BACKEND: DurableObjectNamespace<Backend>;
+}
+
+export class Backend extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		ctx.blockConcurrencyWhile(async () => {
+			const container = ctx.container!;
+			await container.setInactivityTimeout(2 * 60 * 60 * 1000);
+
+			if (!container.running) {
+				container.start();
+			}
+
+			const port = container.getTcpPort(8080);
+			let lastError: unknown;
+			for (let attempt = 0; attempt < 50; attempt++) {
+				try {
+					await port.fetch("http://container/");
+					return;
+				} catch (error) {
+					lastError = error;
+					await scheduler.wait(100);
+				}
+			}
+			throw lastError;
+		});
+	}
+
+	fetch(request: Request): Promise<Response> {
+		return this.ctx.container!.getTcpPort(8080).fetch(request);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (new URL(request.url).pathname.startsWith("/api")) {
+			const index = Math.floor(Math.random() * INSTANCE_COUNT);
+			return env.BACKEND.getByName(`instance-${index}`).fetch(request);
+		}
+
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
+
 ```javascript
 import { Container, getRandom } from "@cloudflare/containers";
 
@@ -161,9 +223,11 @@ export default {
 };
 ```
 
+	</TabItem>
+</Tabs>
+
 :::note
-This example uses `getRandom`, which randomly selects one of a fixed number of Container
-instances for each request.
+Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
 
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 
