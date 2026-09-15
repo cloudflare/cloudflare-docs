@@ -1,12 +1,233 @@
 ---
-title: Lifecycle
-pcx_content_type: navigation
+title: Durable Object lifecycle
+description: Compose Agents SDK capabilities in a Durable Object and coordinate startup, requests, WebSockets, alarms, jobs, and cleanup.
+pcx_content_type: concept
 sidebar:
   order: 1
   group:
-    hideIndex: true
+    label: Lifecycle
+    hideIndex: false
+products:
+  - agents
 ---
 
-import { DirectoryListing } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-<DirectoryListing />
+`Lifecycle` connects Agents SDK capabilities to a Cloudflare Durable Object. It coordinates startup, requests, WebSocket events, durable jobs, alarms, and cleanup.
+
+You can install it on a class that extends the platform `DurableObject`. The [`Agent` class](/agents/runtime/lifecycle/agent-class/) installs the same lifecycle internally.
+
+:::caution[Experimental]
+
+Everything exported from `agents/lifecycle` may change between releases. Capabilities built on this API may also change while the composition model stabilizes.
+
+:::
+
+## Install the lifecycle
+
+Construct the lifecycle as a field on your Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyObject extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onStart(): void {
+		// Runs once for each in-memory object lifetime.
+	}
+
+	onRequest(request: Request): Response {
+		return new Response(`Hello from ${this.lifecycle.name}: ${request.url}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+`Lifecycle.install(this)` installs the platform-facing `fetch`, `alarm`, and hibernating WebSocket event handlers. Implement semantic callbacks such as `onStart()` and `onRequest()` instead of forwarding those platform handlers yourself.
+
+The expanded form separates construction from handler installation:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyObject extends DurableObject<Env> {
+	readonly lifecycle = new Lifecycle(this);
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.installHandlers();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Use the expanded form only when construction and installation must happen separately. Calling `installHandlers()` more than once throws an error.
+
+## Route requests
+
+Use `routeAgentRequest()` in the outer Worker to reach named lifecycle objects:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The default URL shape is `/agents/:binding/:name`. Direct calls through `env.MY_OBJECT.getByName(name).fetch(request)` also work.
+
+Lifecycle objects require named Durable Object IDs. Address them with `getByName()` or `idFromName()`. Raw IDs from `newUniqueId()` or `idFromString()` do not expose the name that Lifecycle uses for `lifecycle.name`.
+
+## Attach capabilities
+
+Construct each capability before the lifecycle starts. Register it with `use()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Sessions } from "agents/sessions";
+import { Streams } from "agents/streams";
+
+export class ConversationObject extends DurableObject<Env> {
+	readonly sessions = new Sessions();
+	readonly streams = new Streams();
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.sessions)
+		.use(this.streams);
+}
+```
+
+</TypeScriptExample>
+
+Capabilities start and receive requests in registration order. `use()` throws after lifecycle startup begins.
+
+Install a catch-all capability with `{ fallback: true }`. Lifecycle always dispatches fallback capabilities after other capabilities, regardless of installation order.
+
+For available capabilities and import paths, refer to [Capabilities](/agents/runtime/capabilities/).
+
+## Startup and request dispatch
+
+Lifecycle starts during the first request, alarm, or WebSocket event. Startup follows this order:
+
+1. Each capability runs `onStart()` in registration order.
+2. The host Durable Object runs `onStart()`.
+3. Lifecycle handles the incoming event.
+
+A warm object skips startup for later events. A failed startup can run again during a later event.
+
+For an HTTP request, Lifecycle offers the request to each capability. The first capability that returns a `Response` handles it. Returning `undefined` passes the request to the next capability. Unclaimed requests reach the host `onRequest()` callback.
+
+WebSocket upgrades follow the same claim model. The capability that accepts an upgrade owns that connection and its later WebSocket events. Lifecycle returns `404` when no capability accepts the upgrade.
+
+Lifecycle does not provide a `next()` callback. A capability can handle a request or decline it, but it cannot wrap a later response.
+
+## Durable jobs and alarms
+
+A Durable Object has one physical alarm. Lifecycle owns that alarm and derives its next time from a shared durable job queue. This prevents a scheduler, task runner, and custom capability from overwriting each other's alarms.
+
+The host can add jobs through `lifecycle.jobs` and handle them with `onJob()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+export class CleanupObject extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this, {
+		maxAlarmMemoryLimitStrikes: 3,
+	});
+
+	async scheduleCleanup(): Promise<void> {
+		await this.lifecycle.jobs.push({
+			id: "cleanup",
+			fn: "delete-marker",
+			time: Date.now() + 60_000,
+			retry: { maxAttempts: 3 },
+		});
+	}
+
+	async onJob({ job }: LifecycleJobContext): Promise<LifecycleJobOutcome> {
+		if (job.fn !== "delete-marker") return;
+		await this.ctx.storage.delete("cleanup:marker");
+	}
+}
+```
+
+</TypeScriptExample>
+
+Job operations are scoped to their owner. If two owners push the same identifier, Lifecycle rejects the collision instead of replacing another owner's job.
+
+The `onJob()` result controls the job:
+
+- Return nothing to complete and delete the job.
+- Return `{ rescheduleAt }` to move it to another time.
+- Return `"yield"` to leave it due and wake again.
+
+Lifecycle drives due jobs in timestamp order. It retries application failures according to each job policy. Jobs marked as recovery loops receive backoff and sealing after repeated Durable Object memory-limit resets.
+
+The host `onAlarm()` callback runs after due jobs. Do not call `ctx.storage.setAlarm()` while using Lifecycle because that alarm would compete with the shared queue.
+
+## Native Durable Object RPC
+
+Native Durable Object RPC bypasses `fetch()`. Start the lifecycle before an RPC method uses state that capability startup initializes:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class StatusObject extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async status(): Promise<{ pending: number }> {
+		await this.lifecycle.start();
+		return { pending: this.lifecycle.jobs.list().length };
+	}
+}
+```
+
+</TypeScriptExample>
+
+Some asynchronous capability methods start Lifecycle automatically. Native RPC methods should call `lifecycle.start()` before using synchronous capability APIs or startup-initialized state.
+
+## Host context
+
+Lifecycle makes the current host available while it invokes host callbacks. Use `getCurrentAgent()` from `agents/lifecycle` to read that context in shared code.
+
+Capability hooks run outside the host context. A capability that invokes an application callback must use its Lifecycle host boundary. Built-in capabilities, including `Scheduler` and `WebSockets`, do this automatically.
+
+For context values available to each callback, refer to [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/).
+
+## Cleanup
+
+`lifecycle.dispose()` calls each installed capability's `dispose()` hook in reverse registration order. Disposal releases live resources, such as connections and listeners. It does not delete capability storage.
+
+Durable Object eviction does not call `dispose()`. Invoke it only during explicit application teardown before deleting shared storage.
