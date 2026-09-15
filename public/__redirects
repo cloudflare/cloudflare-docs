@@ -696,6 +696,9 @@
 /cloudflare-one/networks/connectors/cloudflare-mesh/routes/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
 /cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/ 301
 /cloudflare-one/networks/connectors/cloudflare-mesh/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
+# Workers VPC IA rework
+/workers-vpc/reference/limits/ /workers-vpc/platform/limits/ 301
+/workers-vpc/reference/pricing/ /workers-vpc/platform/pricing/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301

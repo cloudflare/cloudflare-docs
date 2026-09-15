@@ -13,7 +13,9 @@ products:
 ---
 
 import {
+	CardGrid,
 	Description,
+	LinkTitleCard,
 	Plan,
 	Render,
 	TabItem,
@@ -104,6 +106,28 @@ Build employee-facing applications and MCP servers that aggregate data from mult
 ### Apply Zero Trust controls to Worker egress
 
 Route public Internet traffic from your Workers through [Cloudflare Gateway](/cloudflare-one/traffic-policies/) so existing DNS, HTTP, Network, and egress policies — and the corresponding logs — apply to programmatic compute the same way they apply to your workforce. Stop a Worker from reaching unwanted destinations without writing custom proxy logic.
+
+## Get started
+
+<CardGrid>
+
+<LinkTitleCard title="Set up Workers VPC" href="/workers-vpc/get-started/">
+	Connect your first Worker to a service in your private network.
+</LinkTitleCard>
+
+<LinkTitleCard title="Explore examples" href="/workers-vpc/examples/">
+	Connect to private APIs, databases, S3 buckets, and Cloudflare Mesh.
+</LinkTitleCard>
+
+<LinkTitleCard title="Configure Workers VPC" href="/workers-vpc/configuration/">
+	Configure VPC Services, VPC Networks, and Cloudflare Tunnel.
+</LinkTitleCard>
+
+<LinkTitleCard title="Review the API" href="/workers-vpc/api/">
+	Use VPC Service and VPC Network bindings in your Worker.
+</LinkTitleCard>
+
+</CardGrid>
 
 ## Related products
 
