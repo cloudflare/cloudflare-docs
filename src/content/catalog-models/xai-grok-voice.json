@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"total_audio_minutes": 0.05,
+		"input_text_messages": 0.004
+	},
 	"examples": [
 		{
 			"name": "WebSocket Voice Session",

@@ -1,0 +1,72 @@
+---
+title: Inspect Voice Agent turn latency and outcomes
+description: "@cloudflare/voice v0.4.0 adds per-turn metrics and browser diagnostics for Voice Agents."
+products:
+  - agents
+date: 2026-09-11
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+`@cloudflare/voice` v0.4.0 now lets you inspect where each Voice Agent turn spends time and how it ends.
+
+```ts
+client.addEventListener("turnmetrics", (turn) => {
+	console.log(turn.outcome, turn.turnTotalMs);
+});
+```
+
+### About the Voice package
+
+The `@cloudflare/voice` package lets you build real-time voice agents with Cloudflare Agents. It streams microphone audio to an Agent over WebSocket, transcribes speech, runs your model through `onTurn()`, converts the response to speech, and streams audio back to the caller.
+
+A turn moves through several stages:
+
+```txt
+User speaks -> speech-to-text -> model -> text-to-speech -> audio
+```
+
+Previously, the package's four aggregate metrics covered successful, non-empty speech turns. They did not show how failed, aborted, empty, or text turns ended.
+
+### Turn metrics
+
+Each speech or text turn now produces a typed `VoiceTurnMetrics` summary with:
+
+- A `turnId` for correlating events from the same turn.
+- A terminal outcome such as `completed`, `no_output`, `output_limit`, `content_filtered`, `model_error`, `tts_error`, or `aborted`.
+- Timings for important stages, including speech-to-final-transcript, model-to-first-text, TTS-to-first-audio, and total turn duration.
+
+These timings can overlap and are not additive. Timings for stages that a turn did not reach are omitted.
+
+The latest summary is available through `VoiceClient`, `useVoiceAgent()`, and `useVoiceInput()`. Voice input includes only the speech and transcription timings it can measure.
+
+If an agent produces no audio, you can now distinguish between the model returning no output, reaching an output limit, encountering content filtering, or failing.
+
+### Additional diagnostics
+
+For local debugging, you can forward server lifecycle events to the browser console:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { withVoice } from "@cloudflare/voice";
+
+const VoiceAgent = withVoice(Agent, {
+	diagnostics: {
+		browserConsole: true,
+	},
+});
+```
+
+</TypeScriptExample>
+
+The browser console combines server lifecycle events with local microphone, connection, and playback events, including model start, first model text, first audio, and playback start. Diagnostics are off by default, and their event names and fields can change.
+
+`VoiceClient` also exposes typed events for speech-to-text failures, connection errors, and model outcomes. The SDK removes known content fields and does not read arbitrary provider responses, but custom error messages must not contain sensitive data.
+
+Install the release with a compatible Agents SDK version:
+
+<PackageManagers pkg="@cloudflare/voice@^0.4.0 agents@^0.22.0" />
+
+Refer to the [Voice pipeline metrics](/agents/communication-channels/voice/#pipeline-metrics) and [Voice Agent example](https://github.com/cloudflare/agents/tree/main/examples/voice-agent) to get started.

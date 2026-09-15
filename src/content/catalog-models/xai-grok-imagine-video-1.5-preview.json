@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@480p (per second)": 0.08,
+		"@720p (per second)": 0.14,
+		"Default (per second)": 0.08
+	},
 	"examples": [
 		{
 			"name": "Image to video",

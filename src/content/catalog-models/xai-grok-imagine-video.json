@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.05,
+		"@720p (per second)": 0.07,
+		"@480p (per second)": 0.05
+	},
 	"examples": [
 		{
 			"name": "Simple Video",

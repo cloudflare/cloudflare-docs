@@ -32,54 +32,52 @@ const { docsOnlyMcp = false } = Astro.props;
 				>
 					cloudflare/skills
 				</a>{" "}
-				bundle covers every layer of the platform &mdash; so the agent knows your
-				conventions without you re-explaining them.
+				bundle covers every layer of the platform &mdash; so the agent knows
+				your conventions without you re-explaining them.
 			</p>
 			<SkillsList />
 		</PlatformAccessDetails>
 
 		<PlatformAccessDetails header="MCP servers">
-			{
-				docsOnlyMcp ? (
-					<>
-						<p class="text-foreground font-medium">
-							Current Cloudflare documentation without authentication.
-						</p>
-						<p>
-							The public Cloudflare docs MCP server gives your agent access to
-							current product documentation. Configure the{" "}
-							<code>cloudflare-docs</code> entry in your agent's MCP settings.
-						</p>
-					</>
-				) : (
-					<>
-						<p class="text-foreground font-medium">
-							Live access to the Cloudflare API, docs, and observability.
-						</p>
-						<p>
-							MCP servers provide typed tools to call into Cloudflare at
-							runtime. There are two options:{" "}
-							<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a>{" "}
-							— a single server that covers the entire Cloudflare API (2,500+
-							endpoints in ~1,000 tokens) — or a set of focused, domain-specific
-							servers hosted in the{" "}
-							<a
-								href="https://github.com/cloudflare/mcp-server-cloudflare"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								cloudflare/mcp-server-cloudflare
-							</a>{" "}
-							repo. The full catalog is also in the{" "}
-							<a href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/">
-								MCP servers for Cloudflare
-							</a>{" "}
-							docs.
-						</p>
-						<McpServerList />
-					</>
-				)
-			}
+			{docsOnlyMcp ? (
+				<>
+					<p class="text-foreground font-medium">
+						Current Cloudflare documentation without authentication.
+					</p>
+					<p>
+						The public Cloudflare docs MCP server gives your agent access to
+						current product documentation. Configure the{" "}
+						<code>cloudflare-docs</code> entry in your agent's MCP settings.
+					</p>
+				</>
+			) : (
+				<>
+					<p class="text-foreground font-medium">
+						Live access to the Cloudflare API, docs, and observability.
+					</p>
+					<p>
+						MCP servers provide typed tools to call into Cloudflare at runtime.
+						There are two options:{" "}
+						<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a> —
+						a single server that covers the entire Cloudflare API (2,500+
+						endpoints in ~1,000 tokens) — or a set of focused, domain-specific
+						servers hosted in the{" "}
+						<a
+							href="https://github.com/cloudflare/mcp-server-cloudflare"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							cloudflare/mcp-server-cloudflare
+						</a>{" "}
+						repo. The full catalog is also in the{" "}
+						<a href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/">
+							MCP servers for Cloudflare
+						</a>{" "}
+						docs.
+					</p>
+					<McpServerList />
+				</>
+			)}
 		</PlatformAccessDetails>
 
 		<PlatformAccessDetails header="Wrangler CLI">
@@ -87,27 +85,28 @@ const { docsOnlyMcp = false } = Astro.props;
 				Local dev, deploys, and Workers-specific commands.
 			</p>
 			<p>
-				Use <a href="/workers/wrangler/">Wrangler</a> for local development, deploys,
-				and product-specific commands like{" "}
+				Use <a href="/workers/wrangler/">Wrangler</a> for local development,
+				deploys, and product-specific commands like{" "}
 				<code>wrangler d1 migrations apply</code> or <code>wrangler tail</code>.
-				The bundled <strong>wrangler</strong> Skill teaches the agent when to reach
-				for it.
+				The bundled <strong>wrangler</strong> Skill teaches the agent when to
+				reach for it.
 			</p>
 			<aside class="border-border bg-muted/40 rounded-md border p-3">
-				<p
-					class="text-foreground m-0 mb-1 text-xs font-semibold tracking-wide uppercase"
-				>
+				<p class="text-foreground m-0 mb-1 text-xs font-semibold tracking-wide uppercase">
 					What&rsquo;s next
 				</p>
 				<p class="text-muted-foreground m-0 text-sm leading-relaxed">
-					The unified <code>cf</code> CLI is in technical preview &mdash; a next-generation
-					CLI that covers every Cloudflare product with consistent verbs and ergonomic
-					output for agents. Try it with <code>npx cf</code>.{" "}
+					The unified <code>cf</code> CLI is in technical preview &mdash; a
+					next-generation CLI that covers every Cloudflare product with
+					consistent verbs and ergonomic output for agents. Try it with{" "}
+					<code>npx cf</code>.{" "}
 					<a
 						href="https://blog.cloudflare.com/cf-cli-local-explorer/"
 						target="_blank"
-						rel="noopener noreferrer">Read the announcement &rarr;</a
+						rel="noopener noreferrer"
 					>
+						Read the announcement &rarr;
+					</a>
 				</p>
 			</aside>
 		</PlatformAccessDetails>
@@ -117,27 +116,25 @@ const { docsOnlyMcp = false } = Astro.props;
 				Token-efficient references optimized for agents.
 			</p>
 			<p>
-				Append <code>/index.md</code> to any Cloudflare docs URL for a clean markdown
-				version. Every top-level product section also has its own{" "}
-				<code>llms.txt</code> — a page index sized for a single context window. A
-				few useful ones:
+				Append <code>/index.md</code> to any Cloudflare docs URL for a clean
+				markdown version. Every top-level product section also has its own{" "}
+				<code>llms.txt</code> — a page index sized for a single context window.
+				A few useful ones:
 			</p>
-			<ul
-				class="text-muted-foreground m-0 flex list-none flex-col gap-1.5 p-0 text-sm"
-			>
+			<ul class="text-muted-foreground m-0 flex list-none flex-col gap-1.5 p-0 text-sm">
 				<li>
-					<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash; directory
-					of every Cloudflare product.
+					<a href="/llms.txt">developers.cloudflare.com/llms.txt</a> &mdash;
+					directory of every Cloudflare product.
 				</li>
 				<li>
-					<a href="/workers/llms.txt"
-						>developers.cloudflare.com/workers/llms.txt</a
-					>
+					<a href="/workers/llms.txt">
+						developers.cloudflare.com/workers/llms.txt
+					</a>
 				</li>
 				<li>
-					<a href="/agents/llms.txt"
-						>developers.cloudflare.com/agents/llms.txt</a
-					>
+					<a href="/agents/llms.txt">
+						developers.cloudflare.com/agents/llms.txt
+					</a>
 				</li>
 				<li>
 					<a href="/r2/llms.txt">developers.cloudflare.com/r2/llms.txt</a>

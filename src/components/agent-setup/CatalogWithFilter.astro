@@ -28,103 +28,97 @@ const FILTERS = [
 			role="group"
 			aria-label="Filter agents"
 		>
-			{
-				FILTERS.map((f, i) => (
-					<button
-						type="button"
-						class="border-border text-muted-foreground hover:border-primary hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground inline-flex h-8 items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors"
-						data-filter={f.key}
-						aria-pressed={i === 0 ? "true" : "false"}
-					>
-						{f.label}
-					</button>
-				))
-			}
+			{FILTERS.map((f, i) => (
+				<button
+					type="button"
+					class="border-border text-muted-foreground hover:border-primary hover:text-foreground aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground inline-flex h-8 items-center justify-center rounded-full border px-4 text-sm font-medium transition-colors"
+					data-filter={f.key}
+					aria-pressed={i === 0 ? "true" : "false"}
+				>
+					{f.label}
+				</button>
+			))}
 		</div>
 	</div>
 
-	{
-		/* Grid — cards touch via overlapping hairlines (wrapper draws the top+left
+	{/* Grid — cards touch via overlapping hairlines (wrapper draws the top+left
 	    edge, each card draws its right+bottom edge), so the grid reflows cleanly
-	    when cards are filtered out without leaving stray filled cells. */
-	}
+	    when cards are filtered out without leaving stray filled cells. */}
 	<div class="border-border relative border-t border-l">
 		<CornerMarks />
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" data-agent-grid>
-			{
-				agents.map((agent) => {
-					const matchKeys = [
-						...Object.entries(agent.capabilities)
-							.filter(([, v]) => v)
-							.map(([k]) => k),
-					]
-						.filter(Boolean)
-						.join(" ");
-					const sharedIconSrc = agent.iconFile
-						? getAgentIconSource(agent.icon, agent.iconFile, "light")
-						: undefined;
+			{agents.map((agent) => {
+				const matchKeys = [
+					...Object.entries(agent.capabilities)
+						.filter(([, v]) => v)
+						.map(([k]) => k),
+				]
+					.filter(Boolean)
+					.join(" ");
+				const sharedIconSrc = agent.iconFile
+					? getAgentIconSource(agent.icon, agent.iconFile, "light")
+					: undefined;
 
-					return (
-						<a
-							href={`/agent-setup/${agent.slug}/`}
-							class="group/agent-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 [&[hidden]]:hidden"
-							data-agent-card
-							data-match={matchKeys}
-						>
-							<div class="mb-5 flex items-center gap-3">
-								<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
-									{sharedIconSrc ? (
+				return (
+					<a
+						href={`/agent-setup/${agent.slug}/`}
+						class="group/agent-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 [&[hidden]]:hidden"
+						data-agent-card
+						data-match={matchKeys}
+					>
+						<div class="mb-5 flex items-center gap-3">
+							<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
+								{sharedIconSrc ? (
+									<img
+										src={sharedIconSrc}
+										alt=""
+										width="24"
+										height="24"
+										class="block size-6"
+									/>
+								) : (
+									<>
 										<img
-											src={sharedIconSrc}
+											src={getAgentIconSource(agent.icon, undefined, "light")}
 											alt=""
 											width="24"
 											height="24"
-											class="block size-6"
+											class="block size-6 dark:hidden"
 										/>
-									) : (
-										<>
-											<img
-												src={getAgentIconSource(agent.icon, undefined, "light")}
-												alt=""
-												width="24"
-												height="24"
-												class="block size-6 dark:hidden"
-											/>
-											<img
-												src={getAgentIconSource(agent.icon, undefined, "dark")}
-												alt=""
-												width="24"
-												height="24"
-												class="hidden size-6 dark:block"
-											/>
-										</>
-									)}
-								</span>
-								<div class="min-w-0 leading-tight">
-									<div class="text-primary mb-0.5 font-mono text-xs tracking-widest uppercase">
-										{agent.vendor}
-									</div>
-									<h3 class="text-foreground m-0 text-base leading-snug font-medium md:text-lg">
-										{agent.name}
-									</h3>
-								</div>
-							</div>
-
-							<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
-								{agent.description}
-							</p>
-
-							<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/agent-card:underline">
-								View guide
-								<Icon
-									name="ph:arrow-right"
-									class="h-3.5 w-3.5 transition-transform group-hover/agent-card:translate-x-0.5"
-								/>
+										<img
+											src={getAgentIconSource(agent.icon, undefined, "dark")}
+											alt=""
+											width="24"
+											height="24"
+											class="hidden size-6 dark:block"
+										/>
+									</>
+								)}
 							</span>
-						</a>
-					);
-				})
-			}
+							<div class="min-w-0 leading-tight">
+								<div class="text-primary mb-0.5 font-mono text-xs tracking-widest uppercase">
+									{agent.vendor}
+								</div>
+								<h3 class="text-foreground m-0 text-base leading-snug font-medium md:text-lg">
+									{agent.name}
+								</h3>
+							</div>
+						</div>
+
+						<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
+							{agent.description}
+						</p>
+
+						<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/agent-card:underline">
+							View guide
+							<Icon
+								name="ph:arrow-right"
+								class="h-3.5 w-3.5 transition-transform group-hover/agent-card:translate-x-0.5"
+							/>
+						</span>
+					</a>
+				);
+			})}
 		</div>
 	</div>
 
