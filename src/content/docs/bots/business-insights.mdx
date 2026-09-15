@@ -1,0 +1,55 @@
+---
+pcx_content_type: concept
+title: Business Insights
+description: Understand how bot traffic affects your business with request outcomes, crawl-to-referral ratios, and behavior-based classification.
+products:
+  - bots
+tags:
+  - AI
+  - Bots
+sidebar:
+  order: 7
+head:
+  - tag: title
+    content: Business Insights
+---
+
+import { DashButton } from "~/components";
+
+**Business Insights** helps business decision-makers and content owners analyze bot traffic to their website over the last 24 hours, 7 days, or 30 days.
+
+## Availability
+
+Business Insights is available to all [Enterprise Bot Management](/bots/get-started/bot-management/) customers.
+
+Business Insights is an observability surface and does not provide controls. To mitigate bots, use [Security rules](/security/rules/) or the [AI bot management options](/bots/additional-configurations/block-ai-bots/).
+
+## Access
+
+<DashButton url="/?to=/:account/:zone/analytics/business-insights" />
+
+You can also reach the dashboard from your zone-level **Analytics** > **Business Insights** in the Cloudflare dashboard.
+
+## Definitions
+
+The dashboard uses the following definitions:
+
+- **Content pages**: Content is initially defined as HTML pages on your website.
+- **Crawl-to-referral ratio, per bot operator**: The average crawl-to-referral ratio (number of crawls sent by this company, vs. the number of visitors who visit you through a referral link from that company, tracked through UTM parameters) for a given company, in the selected time period.
+- **Crawl-to-referral ratio, site-wide**: The average crawl-to-referral ratio (number of crawls sent by this company, vs. the number of visitors who visit you through a referral link from that company, tracked through UTM parameters) across all activity on your zone, in the selected time period.
+- **Classification**: Each crawler is classified with Cloudflare's updated taxonomy. See [Verified bot classifications](/bots/concepts/bot/verified-bots/) for more information. If the company has at least 1 bot with an AI use case, we label the operator with the "AI" label, plus provide this as a filter.
+- **Operator**: An operator row aggregates requests from all bots associated with that operator.
+
+### Outcome
+
+**Outcome** summarizes the HTTP responses for requests attributed to an operator.
+
+| Outcome               | Definition                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| **Allowed**           | All requests received successful HTTP responses (`2xx` or `3xx`).                           |
+| **Blocked**           | All requests received unsuccessful HTTP responses (status codes other than `2xx` or `3xx`). |
+| **Partially blocked** | The requests include both successful and unsuccessful HTTP responses.                       |
+
+For a **Partially blocked** row, the Outcome cell shows the successful and unsuccessful request counts.
+
+Outcome is based on HTTP response status and does not identify the mitigation that a website owner configured for a request. Unsuccessful responses can include errors returned by the origin, such as `404` and `5xx` responses. To investigate a request, review its mitigation, edge status code, and origin status code in [Security Analytics](/waf/analytics/security-analytics/).
