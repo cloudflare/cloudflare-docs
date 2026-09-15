@@ -1,0 +1,13 @@
+---
+title: Automatically manage inactive Access service tokens
+description: Disable or delete service tokens that have not authenticated for a specified period.
+date: 2026-09-14
+products:
+  - access
+---
+
+Cloudflare Access administrators can now automatically disable or delete inactive service tokens. Administrators can set an inactivity period from 30 to 365 days and choose what Access does when a token reaches that limit.
+
+Access checks service tokens daily. A token must be older than the configured period and must not have successfully authenticated during that period. Service tokens referenced by an Access policy rule are excluded from automatic cleanup.
+
+For configuration instructions, refer to [Manage inactive service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/#manage-inactive-service-tokens).
