@@ -1,0 +1,23 @@
+src/content/docs/waf/detections/attack-signature-detection/analyze-attack-signatures.mdx
+  s_cbe154ed79ef78::t_d6a31026e83058 1-66
+src/content/docs/waf/detections/attack-signature-detection/fields.mdx
+  s_cbe154ed79ef78::t_28a5f78b1b2c13 1-65
+src/content/docs/waf/detections/attack-signature-detection/index.mdx
+  s_cbe154ed79ef78::t_e0bed1ef38b3b5 1-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "06e4e74d9632c3f6eac492cfcba704304be6d814",
+  "prompts": {},
+  "sessions": {
+    "s_cbe154ed79ef78": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f83fd49f2ffeXFXpSY8wLgl4D2",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Daniele <daniele@cloudflare.com>"
+    }
+  }
+}

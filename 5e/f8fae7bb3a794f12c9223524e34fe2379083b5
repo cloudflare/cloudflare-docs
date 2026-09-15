@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_23a490f8948295::t_3cdb35048ddd32 133,137-138,140-141
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5ef8fae7bb3a794f12c9223524e34fe2379083b5",
+  "prompts": {},
+  "sessions": {
+    "s_23a490f8948295": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_00d2181eeffeEstmdGi18UN73X",
+        "model": "@cf/zai-org/glm-5.2"
+      },
+      "human_author": "mvm <vance@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+src/components/agent-setup/CatalogWithFilter.astro
+  s_8045362b510a8c::t_721ebcd693306e 55,66-68,156-160,176-181,214
+src/components/agent-setup/WorkflowOption.astro
+  s_8045362b510a8c::t_b681990482aaf7 1-17
+src/components/agent-setup/WorkflowSelector.astro
+  s_8045362b510a8c::t_df47ca8e6f99ee 1-47
+src/components/agent-setup/agents.ts
+  s_8045362b510a8c::t_48767ee3a18e6c 27-29,61-63,126-129,161-163
+src/components/agent-setup/workflow-selector.client.ts
+  s_8045362b510a8c::t_bd7e9358827dda 1-118
+src/content/docs/agent-setup/claude-code.mdx
+  s_8045362b510a8c::t_0f5cf0d42c20ed 3,10,12-13,29-32,34-45,47,49,51,53-56,58,60,62-64,66,68,70-98,114,126,141-144,162-163
+src/content/docs/agent-setup/codex.mdx
+  s_8045362b510a8c::t_fbdc810be53f23 3,10,12-13,29-30,34,36-47,49,51,53-57,60,62,64-65,74-75,77,79,81-83,85-93,95-99,101-102,116,127,150-151
+src/content/docs/agent-setup/github-copilot.mdx
+  s_8045362b510a8c::t_b45c26eccfe371 3,10,12-13,29-32,34,36,38-40,42,44,46-55,57,59,61-66,68-143,157,167-168,176,188-189,197-200,209-210
+src/content/docs/agent-setup/opencode.mdx
+  s_8045362b510a8c::t_d4368ccfc3c6a0 3,12-13,29-32,34,36-38,40,42-44,46,48,50-57,59,61,63-65,67,69,71-112,126,138,149,152-160,168,172
+src/components/agent-setup/types.ts
+  s_8045362b510a8c::t_e398e1b543bcc8 4,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3db3daf2ffbb60ec5f306bb212c1bd7469f37b42",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

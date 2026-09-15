@@ -1,0 +1,104 @@
+pnpm-lock.yaml
+  s_d161f87b820022::t_b0453f66715282 7,9,7277
+  s_d161f87b820022::t_ac5e5669aca4db 756-761,768-773,780-785,792-797,804-809,6605-6607,6611-6613,6617-6619,6623-6625,6629-6631,12438-12444
+  s_4418c5236c257c::t_4f0cf14824e14d 26-27,384-389,464-466,518-520,744-746,748,4459,4460,6089-6091,6094,6097-6112,6182-6189,6191-6192,6320-6321,6572,6573,6585-6589,10770-10773,10775-10780
+  s_d161f87b820022::t_d4e9344154dc7d 1645-1646,7396,11499
+  s_d161f87b820022::t_952fa1a33dbb13 8,112,324-325,328,1667-1668,1673-1674,1679-1680,1685-1686,1691-1692,1697-1698,1702,1704-1705,1709,1711-1712,1716,1718-1719,1723,1725-1726,1730,1732-1733,1737,1739-1740,1745-1746,1751-1752,4047-4052,4059-4064,4071-4076,4083-4088,4095-4100,4108-4114,4122-4128,4136-4142,4150-4156,4163-4168,4175-4180,4185-4188,4743-4744,5049-5050,5654-5655,5660,6095,6280,6285,6582,6597,7416,7419,7422,7425,7428,7431,7434,7437,7440,7443,7446,7449,7452,7455,7699,7704,8049,8057,8070,8076,8365-8366,10118-10120,10124-10126,10130-10132,10136-10138,10142-10144,10148-10150,10154-10156,10160-10162,10166-10168,10172-10174,10178-10180,10197-10212,11085,11497,11502-11515,12221,12223,12225-12226,12236,12238,12240,12243,12260
+pnpm-workspace.yaml
+  s_8df0e2915dcea4::t_3a43388dcc6f8c 18-19,20
+  s_49158312b59c15::t_6eae3e9428dc14 16-18,21,29
+astro.config.ts
+  s_4418c5236c257c::t_5a7d23cfbd5fbe 265
+  s_4418c5236c257c::t_b7ab26e6b8e339 280
+package.json
+  s_d161f87b820022::t_db74905eb4e486 47
+  s_49158312b59c15::t_4c71a81ea051b4 146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bb0860870e497b66d203491d2dd4c48dbc2121c3",
+  "prompts": {},
+  "sessions": {
+    "s_1f93ce60df5f0e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fce87-143c-7e21-b6fd-1815fcfdc476",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_4418c5236c257c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb483-bcd4-7c01-a493-49206da8167c",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_47ec88176ef461": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faf60-916e-7333-9125-0a8bc38e9d6e",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_49158312b59c15": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd373-a18a-71d1-ba44-8b8f9d2a2728",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_6651b41d3c0872": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb4da-b802-7713-8b94-52cde892dfbf",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_6e28eb19db538c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb648-8e86-7262-b83a-c40d1dbb2fbf",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_76b34036cfd885": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb382-31be-7fb3-9130-486f1db867b9",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_8df0e2915dcea4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fac24-a467-73e0-b264-b2c90f3bbd20",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_b553625579d1ad": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb63d-f79a-7e11-b6c3-13521c27e4a5",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_d161f87b820022": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa1d-271a-7160-954d-964de4f79c0f",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/sandbox/concepts/security.mdx
+  s_617df808b4b73a::t_49b651a2fd51c5 151,153,157-158,161,163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f094ccfc513ccfb5f2afe696a0aff1f1cbed6234",
+  "prompts": {},
+  "sessions": {
+    "s_617df808b4b73a": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019fd6d1-8858-705f-8a06-2eefe5cd5d2e",
+        "model": "gpt-5.5"
+      },
+      "human_author": "aron <263346377+aron-cf@users.noreply.github.com>"
+    }
+  }
+}

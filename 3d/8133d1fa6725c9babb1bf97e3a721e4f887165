@@ -1,0 +1,35 @@
+src/content/docs/pages/framework-guides/index.mdx
+  s_939909fb9d9872::t_413e743890ca37 13-15
+src/content/docs/pages/get-started/index.mdx
+  s_939909fb9d9872::t_dc8fa014586329 12-14
+src/content/docs/pages/index.mdx
+  s_939909fb9d9872::t_3d88ec42b8949d 25-26
+src/content/docs/pages/migrations/index.mdx
+  s_939909fb9d9872::t_8c9588dc42af5c 14-16
+src/content/partials/pages/workers-for-new-projects.mdx
+  s_cf5a65d2d6d59e::t_7909e8bee1eb9d 1-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3d8133d1fa6725c9babb1bf97e3a721e4f887165",
+  "prompts": {},
+  "sessions": {
+    "s_939909fb9d9872": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a019a7-b8de-7522-a89a-59396710dfd5",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    },
+    "s_cf5a65d2d6d59e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a015ee-3e90-7030-abd4-8dc825a75847",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+src/content/changelog/workers/2026-08-04-wrangler-login-device-flow.mdx
+  s_066873a75ec027::t_697af93933922b 27,31
+src/content/docs/workers/wrangler/commands/general.mdx
+  s_066873a75ec027::t_85262a13bdb914 144,148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c5d480d0b0391d5b7181c82f56de980dfade0886",
+  "prompts": {},
+  "sessions": {
+    "s_066873a75ec027": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0199e-8b3a-7012-bfdb-2d450cf1aaa1",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}
