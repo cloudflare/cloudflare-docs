@@ -153,6 +153,13 @@ If you prefer to secure the application using a traditional firewall model, you 
 Additionally, SNI selectors will only apply to Cloudflare One Client traffic. If your users will be connecting from other [on-ramps](#device-connectivity), you can allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector instead of SNI.
 :::
 
+:::note[Origins with private or self-signed certificates]
+
+If your private HTTPS application presents a certificate that is not issued by a publicly trusted certificate authority (for example, a self-signed certificate or one issued by your organization's internal CA), Gateway cannot validate the certificate and returns [Error 526](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate) when [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on.
+
+To reach the application, create a Gateway HTTP Allow policy that matches it and set the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) to _Pass through_. This also applies when you secure the application with an [Access self-hosted application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) over HTTPS on port `443`, because the browser-based login flow depends on TLS decryption.
+:::
+
 ### 4. Test the connection
 
 End users can now reach the application by going to its private hostname. For example, to connect to a private web application, open a browser and go to `wiki.internal.local`.
@@ -195,6 +202,8 @@ If you cannot connect, verify the following:
    ```
 
    If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
+
+5. **Check for certificate errors** - If your private HTTPS application returns [Error 526](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate), Gateway could not validate the origin's certificate. Create a Gateway HTTP Allow policy that matches the application and set the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) to _Pass through_.
 
 ## Limitations
 
