@@ -14,7 +14,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {},
+	"pricing": {
+		"Input tokens (per 1M)": 0,
+		"Output tokens (per 1M)": 0,
+		"Cached input tokens (per 1M)": 0
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -52,7 +56,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 28
 					},
-					"cost": 0.000036700000000000004
+					"cost": 0
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -111,7 +115,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0.00031125
+					"cost": 0
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -166,7 +170,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0.00026125
+					"cost": 0
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -229,7 +233,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0.00065375
+					"cost": 0
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -284,7 +288,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0.00025875
+					"cost": 0
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
