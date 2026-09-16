@@ -73,6 +73,35 @@ export default {
 
 </TypeScriptExample>
 
+## Build Agent URLs
+
+Use `buildAgentPath()` to create a pathname for a known Agent identity. The function handles the root route and each nested `/sub/` route.
+
+<TypeScriptExample>
+
+```ts
+import { buildAgentPath, buildAgentUrl } from "agents";
+
+const address = [
+	{ className: "Inbox", name: userId },
+	{ className: "Chat", name: chatId },
+];
+
+buildAgentPath(address, { leafPath: "/callbacks/job" });
+// /agents/inbox/{userId}/sub/chat/{chatId}/callbacks/job
+
+buildAgentUrl("https://app.example.com", address, {
+	leafPath: "/callbacks/job",
+});
+// URL("https://app.example.com/agents/inbox/...")
+```
+
+</TypeScriptExample>
+
+Inside an Agent, `this.selfPath` provides the required root-first identity. If the root Durable Object binding name differs from its class name, pass the binding name as `rootBinding`. The pathname supports both HTTP requests and WebSocket connections.
+
+For a custom route prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`. Refer to [Sub-agents](/agents/runtime/execution/sub-agents/#direct-http-and-websocket-urls) for callback and webhook examples.
+
 ## Instance naming patterns
 
 The instance name (the last part of the URL) determines which agent instance handles the request. Each unique name gets its own isolated agent with its own state.

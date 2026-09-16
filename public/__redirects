@@ -89,6 +89,8 @@
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
+/changelog/product/cloudflare-challenges/ /changelog/product/bots/ 301
+/changelog/rss/cloudflare-challenges.xml /changelog/rss/bots.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
 /cloudflare-one/changelog/index.xml /changelog/rss/cloudflare-one.xml 301
@@ -619,9 +621,10 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-05-may-2026.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/locations/ 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
@@ -3080,6 +3083,7 @@
 /ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
+/changelog/product/cloudflare-challenges/* /changelog/product/bots/ 301
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301

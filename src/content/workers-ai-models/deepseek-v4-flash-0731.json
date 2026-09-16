@@ -2,6 +2,10 @@
     "name": "@cf/deepseek-ai/deepseek-v4-flash-0731",
     "properties": [
         {
+            "property_id": "async_queue",
+            "value": "true"
+        },
+        {
             "property_id": "require_workers_paid",
             "value": "true"
         },
@@ -410,25 +414,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -1677,25 +1662,6 @@
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
                                 },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
-                                },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
                                     "anyOf": [
@@ -2512,25 +2478,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -3779,25 +3726,6 @@
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
                                             },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
-                                            },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
                                                 "anyOf": [
@@ -4726,23 +4654,6 @@
                             "anyOf": [
                                 {
                                     "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
                                 },
                                 {
                                     "type": "null"

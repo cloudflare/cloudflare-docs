@@ -12,6 +12,10 @@
 	"context_length": 65536,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.25,
+		"Output tokens (per 1M)": 30
+	},
 	"examples": [
 		{
 			"name": "Concept Sketch",

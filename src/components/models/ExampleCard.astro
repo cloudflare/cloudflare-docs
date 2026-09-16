@@ -101,68 +101,62 @@ function getLabel(label: string): string {
 ---
 
 <div class:list={["example-card", { "side-by-side": sideBySide }]}>
-	{
-		hasSnippets && (
-			<div class="example-code">
-				{snippets.length === 1 ? (
-					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
-				) : (
-					<Tabs>
-						{snippets.map((snippet) => (
-							<TabItem label={getLabel(snippet.label)}>
-								<Code code={snippet.code} lang={getLang(snippet.label)} />
-							</TabItem>
-						))}
-					</Tabs>
-				)}
-			</div>
-		)
-	}
-
-	{
-		hasResponse && (
-			<div class="example-response">
-				{hasOutput && hasRawResponse ? (
-					<Tabs>
-						<TabItem label="Output">
-							<OutputBody
-								alt={example.name}
-								textOutput={textOutput}
-								imageUrl={imageUrl}
-								imageUrls={imageUrls}
-								videoUrl={videoUrl}
-								audioUrl={audioUrl}
-							/>
+	{hasSnippets && (
+		<div class="example-code">
+			{snippets.length === 1 ? (
+				<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+			) : (
+				<Tabs>
+					{snippets.map((snippet) => (
+						<TabItem label={getLabel(snippet.label)}>
+							<Code code={snippet.code} lang={getLang(snippet.label)} />
 						</TabItem>
-						<TabItem label="Raw response">
-							<div class="example-raw-response">
-								<Code code={rawResponseJson} lang="json" />
-							</div>
-						</TabItem>
-					</Tabs>
-				) : hasOutput ? (
-					<OutputBody
-						alt={example.name}
-						textOutput={textOutput}
-						imageUrl={imageUrl}
-						imageUrls={imageUrls}
-						videoUrl={videoUrl}
-						audioUrl={audioUrl}
-					/>
-				) : (
-					<div class="example-raw-response">
-						<Code code={rawResponseJson} lang="json" />
-					</div>
-				)}
-			</div>
-		)
-	}
+					))}
+				</Tabs>
+			)}
+		</div>
+	)}
 
-	{
-		!hasResponse && !hasSnippets && example.input && (
-			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-		)
-	}
+	{hasResponse && (
+		<div class="example-response">
+			{hasOutput && hasRawResponse ? (
+				<Tabs>
+					<TabItem label="Output">
+						<OutputBody
+							alt={example.name}
+							textOutput={textOutput}
+							imageUrl={imageUrl}
+							imageUrls={imageUrls}
+							videoUrl={videoUrl}
+							audioUrl={audioUrl}
+						/>
+					</TabItem>
+					<TabItem label="Raw response">
+						<div class="example-raw-response">
+							<Code code={rawResponseJson} lang="json" />
+						</div>
+					</TabItem>
+				</Tabs>
+			) : hasOutput ? (
+				<OutputBody
+					alt={example.name}
+					textOutput={textOutput}
+					imageUrl={imageUrl}
+					imageUrls={imageUrls}
+					videoUrl={videoUrl}
+					audioUrl={audioUrl}
+				/>
+			) : (
+				<div class="example-raw-response">
+					<Code code={rawResponseJson} lang="json" />
+				</div>
+			)}
+		</div>
+	)}
+
+	{!hasResponse && !hasSnippets && example.input && (
+		<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+	)}
 </div>
 
 <style>

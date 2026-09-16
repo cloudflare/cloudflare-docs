@@ -13,6 +13,13 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@720p (per second)": 0.09,
+		"@1080p (per second)": 0.15,
+		"@2k (per second)": 0.19,
+		"@4k (per second)": 0.37,
+		"Default (per second)": 0.09
+	},
 	"examples": [
 		{
 			"name": "Text-to-Video",
