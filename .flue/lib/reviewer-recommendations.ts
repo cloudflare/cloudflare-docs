@@ -34,6 +34,7 @@ export const RECOMMENDATIONS_SKIP_LABELS = ["spam", "off topic"] as const;
  * mutable CODEOWNERS source-line numbers and derived product keys.
  */
 export const CODEOWNERS_ONLY_CONTACT_PATTERNS = [
+	"/.github/CODEOWNERS",
 	"/public/__redirects",
 ] as const;
 

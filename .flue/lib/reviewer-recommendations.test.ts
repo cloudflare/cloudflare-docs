@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	CODEOWNERS_ONLY_CONTACT_PATTERNS,
 	RECOMMENDATION_COMMENT_MARKER,
 	RECOMMENDATIONS_REPO,
 	applyClearedState,
@@ -385,6 +386,14 @@ describe("newMentions / withMentions", () => {
 		const mentions = newMentions(emptyState(), r);
 		expect(mentions).toEqual([]);
 	});
+
+	it.each(CODEOWNERS_ONLY_CONTACT_PATTERNS)(
+		"does not mention suggestions for CODEOWNERS-only pattern %s",
+		(codeownersPattern) => {
+			const r = result([area({ codeownersPattern })]);
+			expect(newMentions(emptyState(), r)).toEqual([]);
+		},
+	);
 
 	it("uses declared CODEOWNERS instead of suggestions for configured patterns", () => {
 		const r = result([
