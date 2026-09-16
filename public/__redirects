@@ -75,7 +75,6 @@
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
-/mesh/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 302
 /support/ai/ / 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -690,23 +689,12 @@
 /tunnel/advanced/local-management/as-a-service/linux/ /tunnel/features/locally-managed-tunnels/as-a-service/linux/ 301
 /tunnel/advanced/local-management/as-a-service/macos/ /tunnel/features/locally-managed-tunnels/as-a-service/macos/ 301
 /tunnel/advanced/local-management/as-a-service/windows/ /tunnel/features/locally-managed-tunnels/as-a-service/windows/ 301
-# Cloudflare Mesh IA rework
-/cloudflare-one/networks/connectors/cloudflare-mesh/ /mesh/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/ /mesh/get-started/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/concepts/ /mesh/concepts/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/features/ /mesh/features/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ /mesh/features/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/ /mesh/features/high-availability/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/guides/ /mesh/guides/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ /mesh/guides/connect-client-devices/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/ /mesh/guides/run-mesh-in-containers/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ /mesh/best-practices/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/platform/ /mesh/platform/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ /mesh/guides/connect-client-devices/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/containers/ /mesh/guides/run-mesh-in-containers/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/routes/ /mesh/features/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/ /mesh/features/high-availability/ 301
-/cloudflare-one/networks/connectors/cloudflare-mesh/tips/ /mesh/best-practices/ 301
+# Cloudflare Mesh obsolete paths
+/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/containers/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/routes/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
 # Workers VPC IA rework
 /workers-vpc/reference/limits/ /workers-vpc/platform/limits/ 301
 /workers-vpc/reference/pricing/ /workers-vpc/platform/pricing/ 301
