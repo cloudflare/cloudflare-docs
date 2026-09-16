@@ -1,0 +1,19 @@
+src/content/partials/cloudflare-one/warp/system-requirements/macOS.mdx
+  s_01c77918de2542::t_3289db3cb9afc0 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "35bc5734c759a9ae995a0de69e94f4c9db29d8d9",
+  "prompts": {},
+  "sessions": {
+    "s_01c77918de2542": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5b5f9683ffe4gvlTFQR7LPmlM",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rhett Griggs <rhett@cloudflare.com>"
+    }
+  }
+}
