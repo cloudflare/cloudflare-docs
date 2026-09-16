@@ -38,6 +38,12 @@ export interface RecommendationArea {
 	samplePaths: string[];
 	totalPaths: number;
 	codeownersPattern: string | null;
+	/** Declared CODEOWNERS refs (`@user`, `@org/team`, email). Display-only. */
+	codeownersDeclared?: string[];
+	/** Expanded owner logins; populated only when suggestions are empty. Display-only, never @-mentioned. */
+	fallbackOwners?: string[];
+	/** Full expanded owner count before the per-area cap (for "+ N more" display). */
+	totalOwners?: number;
 	suggestedPeople: RecommendationSuggestion[];
 	satisfyingApprovers: string[];
 	satisfied: boolean;
@@ -91,6 +97,9 @@ const AreaSchema = v.object({
 	samplePaths: v.array(v.string()),
 	totalPaths: v.number(),
 	codeownersPattern: v.union([v.string(), v.null()]),
+	codeownersDeclared: v.optional(v.array(v.string()), []),
+	fallbackOwners: v.optional(v.array(v.string()), []),
+	totalOwners: v.optional(v.number(), 0),
 	suggestedPeople: v.array(SuggestionSchema),
 	satisfyingApprovers: v.array(v.string()),
 	satisfied: v.boolean(),
@@ -313,6 +322,34 @@ function escapeCell(value: string): string {
 	return value.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
 
+/**
+ * Display logins for an area: the suggestions when present, otherwise the
+ * expanded CODEOWNERS fallback roster. Display-only, never @-mentioned. When
+ * the fallback was capped, `totalOwners` drives a "+ N more" suffix.
+ */
+function displayPeople(area: RecommendationArea): string {
+	const logins =
+		area.suggestedPeople.length > 0
+			? area.suggestedPeople.map((p) => p.login)
+			: (area.fallbackOwners ?? []);
+	const rendered = logins.map((login) => `\`${escapeCell(login)}\``).join(", ");
+	const omitted = Math.max(0, (area.totalOwners ?? 0) - logins.length);
+	return omitted > 0 ? `${rendered} + ${omitted} more` : rendered;
+}
+
+/**
+ * The CODEOWNERS cell: the declared refs as code spans, or "_no rule_" when
+ * the area matched no CODEOWNERS rule. Display-only, never @-mentioned.
+ */
+function codeownersCell(area: RecommendationArea): string {
+	const refs = area.codeownersDeclared ?? [];
+	if (area.codeownersPattern === null) return "_no rule_";
+	if (refs.length === 0) return "_none_";
+	return refs
+		.map((ref) => `\`${escapeCell(ref.replace(/^@/, ""))}\``)
+		.join(", ");
+}
+
 function roleLabel(roles: string[]): string {
 	const known: Record<string, string> = {
 		product_manager: "Product management",
@@ -379,15 +416,22 @@ export function renderRecommendationsComment(
 		);
 	}
 
+	if (result.areaCount > areas.length) {
+		lines.push(
+			`_${result.areaCount - areas.length} area(s) omitted from this message due to message size._`,
+			"",
+		);
+	}
+
 	if (uncovered.length > 0) {
-		lines.push("| Uncovered area | Files | Suggested people | Basis |");
-		lines.push("| --- | ---: | --- | --- |");
+		lines.push(
+			"| Uncovered area | Files | CODEOWNERS | Suggested people | Basis |",
+		);
+		lines.push("| --- | ---: | --- | --- | --- |");
 		for (const area of uncovered) {
-			const people = area.suggestedPeople
-				.map((p) => `\`${escapeCell(p.login)}\``)
-				.join(", ");
+			const people = displayPeople(area);
 			lines.push(
-				`| ${escapeCell(area.key)} | ${area.totalPaths} | ${people || "_none_"} | ${escapeCell(roleLabel(area.suggestedPeople.flatMap((p) => p.roles)))} |`,
+				`| ${escapeCell(area.key)} | ${area.totalPaths} | ${codeownersCell(area)} | ${people || "_none_"} | ${escapeCell(roleLabel(area.suggestedPeople.flatMap((p) => p.roles)))} |`,
 			);
 		}
 	} else if (areas.length > 0) {
@@ -401,18 +445,16 @@ export function renderRecommendationsComment(
 			`<summary>Covered areas (${covered.length})</summary>`,
 			"<br/>",
 			"",
-			"| Area | Approved by | Suggested people |",
-			"| --- | --- | --- |",
+			"| Area | Files | CODEOWNERS | Approved by | Suggested people |",
+			"| --- | ---: | --- | --- | --- |",
 		);
 		for (const area of covered) {
 			const approvers = area.satisfyingApprovers
 				.map((login) => `\`${escapeCell(login)}\``)
 				.join(", ");
-			const people = area.suggestedPeople
-				.map((p) => `\`${escapeCell(p.login)}\``)
-				.join(", ");
+			const people = displayPeople(area);
 			lines.push(
-				`| ${escapeCell(area.key)} | ${approvers || "_none_"} | ${people || "_none_"} |`,
+				`| ${escapeCell(area.key)} | ${area.totalPaths} | ${codeownersCell(area)} | ${approvers || "_none_"} | ${people || "_none_"} |`,
 			);
 		}
 		lines.push("", "</details>");

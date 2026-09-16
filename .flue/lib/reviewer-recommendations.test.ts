@@ -90,6 +90,28 @@ describe("parseRecommendationEvent", () => {
 		}
 	});
 
+	it("defaults the new coverage fields on a pre-contract updated event", () => {
+		const raw = updatedEvent();
+		const areaRow = raw.result.ownershipAreas[0] as unknown as Record<
+			string,
+			unknown
+		>;
+		delete areaRow["codeownersDeclared"];
+		delete areaRow["fallbackOwners"];
+		delete areaRow["totalOwners"];
+		const parsed = parseRecommendationEvent(raw);
+		expect(parsed.ok).toBe(true);
+		if (
+			parsed.ok &&
+			parsed.event.eventType === "reviewer-recommendations.updated"
+		) {
+			const area = parsed.event.result.ownershipAreas[0];
+			expect(area?.codeownersDeclared).toEqual([]);
+			expect(area?.fallbackOwners).toEqual([]);
+			expect(area?.totalOwners).toBe(0);
+		}
+	});
+
 	it("parses a valid cleared event", () => {
 		const parsed = parseRecommendationEvent(clearedEvent());
 		expect(parsed.ok).toBe(true);
@@ -361,6 +383,87 @@ describe("renderRecommendationsComment", () => {
 		expect(body).toContain("`bob`");
 		expect(body).toContain("`carol`");
 		expect(body).not.toContain("@alice`");
+	});
+
+	it("falls back to the expanded CODEOWNERS roster for unsuggested areas without mentioning them", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "1:changelog",
+						codeownersPattern: "/src/content/changelog/",
+						codeownersDeclared: [
+							"cloudflare/product-owners",
+							"cloudflare/pm-changelogs",
+						],
+						suggestedPeople: [],
+						fallbackOwners: ["dave", "erin", "frank"],
+						totalOwners: 3,
+					}),
+				]),
+				newLogins: [],
+				previouslyMentionedLogins: [],
+			}),
+		);
+		expect(body).toContain("`dave`");
+		expect(body).toContain("`erin`");
+		expect(body).toContain("`frank`");
+		expect(body).toContain("`cloudflare/product-owners`");
+		expect(body).not.toContain("_none_");
+		expect(body).not.toContain("@dave");
+		expect(body).not.toContain("@erin");
+		expect(body).not.toContain("@frank");
+		expect(body).not.toContain("@cloudflare/product-owners");
+	});
+
+	it("renders the + N more suffix when the fallback roster was capped", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "1:changelog",
+						codeownersPattern: "/src/content/changelog/",
+						suggestedPeople: [],
+						fallbackOwners: ["dave", "erin", "frank"],
+						totalOwners: 90,
+					}),
+				]),
+				newLogins: [],
+				previouslyMentionedLogins: [],
+			}),
+		);
+		expect(body).toContain("+ 87 more");
+	});
+
+	it("renders _no rule_ when an area matched no CODEOWNERS rule", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "none:none",
+						codeownersPattern: null,
+						suggestedPeople: [],
+					}),
+				]),
+				newLogins: [],
+				previouslyMentionedLogins: [],
+			}),
+		);
+		expect(body).toContain("_no rule_");
+	});
+
+	it("notes areas omitted by the message-size budget", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: {
+					...result([area()]),
+					areaCount: 3,
+				},
+			}),
+		);
+		expect(body).toContain(
+			"2 area(s) omitted from this message due to message size",
+		);
 	});
 
 	it("does not expose internal roles", () => {
