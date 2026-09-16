@@ -1,0 +1,81 @@
+---
+summary: Connect Hyperdrive to ClickHouse Managed Postgres.
+pcx_content_type: example
+title: ClickHouse Managed Postgres
+sidebar:
+  order: 5
+description: Connect Hyperdrive to ClickHouse Managed Postgres using a direct PostgreSQL connection and verified TLS.
+products:
+  - hyperdrive
+---
+
+import { PackageManagers, Render, Steps } from "~/components";
+
+This example connects Hyperdrive to a [ClickHouse Managed Postgres](https://clickhouse.com/cloud/postgres) database in ClickHouse Cloud. ClickHouse Managed Postgres is a managed PostgreSQL service with local NVMe storage and built-in ClickHouse integration for analytics.
+
+## Prerequisites
+
+Before you begin, you need:
+
+- An existing ClickHouse Managed Postgres instance.
+- A Workers project. Refer to [Get started](/workers/get-started/guide/) to create one.
+- [Wrangler](/workers/wrangler/install-and-update/) version `4.9.0` or later, authenticated with your Cloudflare account.
+
+## 1. Get your connection details
+
+<Steps>
+
+1. In the [ClickHouse Cloud console](https://console.clickhouse.cloud/), select your Postgres instance and open **Connect**.
+2. Turn off **via PgBouncer** to use the direct PostgreSQL endpoint. Hyperdrive provides [connection pooling](/hyperdrive/concepts/connection-pooling/).
+3. Copy the hostname, port, database name, username, and password. Use a database role with the permissions your application needs.
+4. In **Settings**, download the certificate authority (CA) certificate for this instance. Save it locally as `postgres-ca.pem`.
+
+</Steps>
+
+For more information, refer to [ClickHouse Managed Postgres connection details](https://clickhouse.com/docs/products/managed-postgres/connection).
+
+Your database must accept connections from Hyperdrive. If you restrict inbound connections by IP address, allow the [Cloudflare IP address ranges](/hyperdrive/configuration/firewall-and-networking-configuration/).
+
+## 2. Create a database configuration
+
+Use the instance CA to verify the database server with Transport Layer Security (TLS). The CA certificate is specific to your Postgres instance.
+
+<Steps>
+
+1. Upload the CA certificate to your Cloudflare account:
+
+   <PackageManagers
+     type="exec"
+     pkg="wrangler"
+     args="cert upload certificate-authority --ca-cert postgres-ca.pem --name clickhouse-postgres-ca"
+   />
+
+2. Copy the certificate ID from the command output. Create a Hyperdrive configuration using that ID and your database connection details:
+
+   <PackageManagers
+     type="exec"
+     pkg="wrangler"
+     args="hyperdrive create clickhouse-postgres --origin-host '<HOSTNAME>' --origin-port '<PORT>' --database '<DATABASE_NAME>' --origin-scheme postgres --origin-user '<USERNAME>' --origin-password '<PASSWORD>' --ca-certificate-id '<CA_CERTIFICATE_ID>' --sslmode verify-full --caching-disabled"
+   />
+
+   Replace each placeholder with your values. Use the direct endpoint port, which defaults to `5432`. Keep the password and command output private.
+
+3. Copy the Hyperdrive configuration ID from the output. Use this ID for the Worker binding in the next section.
+
+</Steps>
+
+The `verify-full` mode validates the certificate and database hostname. Hyperdrive checks the connection when you create the configuration. For certificate configuration details, refer to [SSL/TLS certificates](/hyperdrive/configuration/tls-ssl-certificates-for-hyperdrive/).
+
+This example turns off query caching so reads reach Postgres. Connection pooling still applies. For workloads that can tolerate cached results, refer to [Query caching](/hyperdrive/concepts/query-caching/).
+
+## 3. Use Hyperdrive from your Worker
+
+<Render file="use-node-postgres-to-make-query" product="hyperdrive" />
+
+To test the connection through Hyperdrive, [deploy your Worker](/workers/get-started/guide/) and request its URL. A successful response contains `success: true` and the query results.
+
+## Next steps
+
+- Configure [local development](/hyperdrive/configuration/local-development/).
+- Review [supported PostgreSQL features](/hyperdrive/reference/supported-databases-and-features/).
+- Diagnose connection errors with [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/).
