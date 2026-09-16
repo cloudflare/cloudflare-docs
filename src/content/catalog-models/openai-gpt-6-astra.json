@@ -15,7 +15,6 @@
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Long-context threshold (input tokens)": 272000,
 		"Short-context input (per 1M)": 10,
 		"Short-context cached input (per 1M)": 1,
 		"Short-context cache write (per 1M)": 12,
@@ -239,7 +238,8 @@
 		"API": "Responses, Chat Completions",
 		"Architecture": "Transformer",
 		"Input modalities": "Text, image",
-		"Knowledge cutoff": "April 30, 2026"
+		"Knowledge cutoff": "April 30, 2026",
+		"Long-context threshold": "272,000 input tokens"
 	},
 	"request_formats": [
 		"responses",

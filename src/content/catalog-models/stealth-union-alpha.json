@@ -14,11 +14,7 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
-	"pricing": {
-		"Input tokens (per 1M)": 0,
-		"Output tokens (per 1M)": 0,
-		"Cached input tokens (per 1M)": 0
-	},
+	"pricing": {},
 	"examples": [
 		{
 			"name": "Simple Question",
