@@ -46,7 +46,6 @@ describe("parseRecommendationState", () => {
 		headSha: null,
 		recommendation: null,
 		lastGoodRecommendation: null,
-		mentionedLogins: [],
 	};
 
 	it("accepts a valid durable state", () => {

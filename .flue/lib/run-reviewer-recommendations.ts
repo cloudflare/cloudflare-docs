@@ -27,7 +27,6 @@ import {
 	applyUpdatedState,
 	emptyState,
 	isCurrentRecommendationEvent,
-	newMentions,
 	parseRecommendationEvent,
 	parseRecommendationsMode,
 	recommendationCommentBodyHash,
@@ -37,7 +36,6 @@ import {
 	shouldWriteRecommendationComment,
 	shouldSkipRecommendationUpdate,
 	type ReviewerRecommendationState,
-	withMentions,
 } from "./reviewer-recommendations";
 
 // ── Env ───────────────────────────────────────────────────────────────────────
@@ -61,7 +59,6 @@ const StateSchema = v.object({
 	commentId: v.optional(v.number()),
 	commentBodyHash: v.optional(v.string()),
 	commentDisplayHash: v.optional(v.string()),
-	mentionedLogins: v.array(v.string()),
 });
 
 export function parseRecommendationState(
@@ -109,7 +106,6 @@ async function saveState(
 		commentId: state.commentId,
 		commentBodyHash: state.commentBodyHash,
 		commentDisplayHash: state.commentDisplayHash,
-		mentionedLogins: state.mentionedLogins,
 	});
 	const putResult = expectedEtag
 		? await bucket.put(stateKey(prNumber), body, {
@@ -429,22 +425,16 @@ export async function processRecommendationEvent(
 				`Missing recommendation render source for PR #${prNumber}`,
 			);
 		}
-		const newMentioned = newMentions(nextState, renderSource);
-		const previouslyMentionedLogins = nextState.mentionedLogins.filter(
-			(login) => !newMentioned.includes(login),
-		);
 		const existingComment = await findRecommendationComment(
 			token,
 			prNumber,
 			nextState.commentId,
 		);
-		const shouldWrite =
-			newMentioned.length > 0 ||
-			(await shouldWriteRecommendationComment(
-				state,
-				nextState,
-				existingComment?.body ?? null,
-			));
+		const shouldWrite = await shouldWriteRecommendationComment(
+			state,
+			nextState,
+			existingComment?.body ?? null,
+		);
 		if (!shouldWrite && existingComment) {
 			stateChanged ||= nextState.commentId !== existingComment.id;
 			nextState.commentId = existingComment.id;
@@ -459,8 +449,6 @@ export async function processRecommendationEvent(
 			stateChanged = true;
 			const body = renderRecommendationsComment({
 				recommendation: renderSource,
-				newLogins: newMentioned,
-				previouslyMentionedLogins,
 				degraded,
 			});
 			let commentId: number;
@@ -473,7 +461,6 @@ export async function processRecommendationEvent(
 			nextState.commentId = commentId;
 			nextState.commentBodyHash = await recommendationCommentBodyHash(body);
 			nextState.commentDisplayHash = await recommendationDisplayHash(nextState);
-			nextState = withMentions(nextState, newMentioned);
 		}
 	} else {
 		log({

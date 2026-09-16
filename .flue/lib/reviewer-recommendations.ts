@@ -217,8 +217,6 @@ export interface ReviewerRecommendationState {
 	commentBodyHash?: string;
 	/** SHA-256 of the display projection represented by that comment body. */
 	commentDisplayHash?: string;
-	/** Normalized logins that have already been @-mentioned on this PR. */
-	mentionedLogins: string[];
 }
 
 export function emptyState(): ReviewerRecommendationState {
@@ -227,7 +225,6 @@ export function emptyState(): ReviewerRecommendationState {
 		headSha: null,
 		recommendation: null,
 		lastGoodRecommendation: null,
-		mentionedLogins: [],
 	};
 }
 
@@ -380,39 +377,11 @@ export function applyClearedState(
 	return applyEventToState(state, event);
 }
 
-/**
- * Compute the normalized logins that should be @-mentioned in the next comment:
- * suggestions for uncovered areas that have not been mentioned before.
- */
-export function newMentions(
-	state: ReviewerRecommendationState,
-	result: RecommendationBoundedResult | null,
-): string[] {
-	const already = new Set(state.mentionedLogins);
-	return uncoveredSuggestedLogins(result ?? emptyResult()).filter(
-		(login) => !already.has(login),
-	);
-}
-
-/** Returns a copy of state with `logins` (normalized) added to mentionedLogins. */
-export function withMentions(
-	state: ReviewerRecommendationState,
-	logins: string[],
-): ReviewerRecommendationState {
-	const merged = new Set(state.mentionedLogins);
-	for (const login of logins) merged.add(normalizeLogin(login));
-	return { ...state, mentionedLogins: [...merged] };
-}
-
 // ── Rendering ────────────────────────────────────────────────────────────────
 
 export interface RecommendationRenderView {
 	/** Result to render: latest when available, otherwise the last good one. */
 	recommendation: RecommendationBoundedResult;
-	/** Normalized logins to @-mention (new since the last comment). */
-	newLogins: string[];
-	/** Normalized logins previously mentioned (rendered without @). */
-	previouslyMentionedLogins: string[];
 	/** True when rendering the last good result due to a degraded latest one. */
 	degraded: boolean;
 }
@@ -623,7 +592,7 @@ function codeownersMappings(
 /**
  * Render the singleton reviewer-recommendation comment body.
  *
- * - `@`-mentions only new suggestions for uncovered areas (once per PR).
+ * - `@`-mentions all suggested reviewers for uncovered areas on every update.
  * - Table cells render usernames as code spans, never as @-mentions.
  * - Raw producer warnings/errors are never published.
  * - When `degraded` is true the tables come from the last good snapshot and a
@@ -646,13 +615,7 @@ export function renderRecommendationsComment(
 	const showAreaPattern = (area: RecommendationArea): boolean =>
 		areaName(area).toLowerCase() === "other" ||
 		(areaNameCounts.get(areaName(area).toLowerCase()) ?? 0) > 1;
-	const actionableLogins = new Set(uncoveredSuggestedLogins(result));
-	const newLogins = view.newLogins.filter((login) =>
-		actionableLogins.has(normalizeLogin(login)),
-	);
-	const previouslyMentionedLogins = view.previouslyMentionedLogins.filter(
-		(login) => actionableLogins.has(normalizeLogin(login)),
-	);
+	const suggestedReviewers = uncoveredSuggestedLogins(result);
 
 	const lines: string[] = [
 		RECOMMENDATION_COMMENT_MARKER,
@@ -700,14 +663,9 @@ export function renderRecommendationsComment(
 		);
 	}
 
-	if (newLogins.length > 0) {
+	if (suggestedReviewers.length > 0) {
 		lines.push(
-			`Suggested contacts notified: ${newLogins.map((login) => `@${login}`).join(" ")}`,
-			"",
-		);
-	} else if (uncovered.length > 0 && previouslyMentionedLogins.length > 0) {
-		lines.push(
-			`_Suggested contacts previously notified: ${previouslyMentionedLogins.map(codeSpan).join(", ")}._`,
+			`Suggested reviewers: ${suggestedReviewers.map((login) => `@${login}`).join(" ")}`,
 			"",
 		);
 	}
