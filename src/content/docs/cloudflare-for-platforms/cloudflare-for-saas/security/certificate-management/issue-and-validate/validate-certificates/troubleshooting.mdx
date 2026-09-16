@@ -178,9 +178,9 @@ If you are managing DCV tokens on behalf of your customers, consider using [Dele
 
 ## SSL.com: separate DCV cycles for RSA and ECDSA
 
-When using [SSL.com](/ssl/reference/certificate-authorities/) as the certificate authority, Cloudflare requests both an RSA certificate and an ECDSA certificate. Each certificate type requires its own DCV cycle with a separate set of tokens.
+When using [SSL.com](/ssl/reference/certificate-authorities/) as the certificate authority, Cloudflare requests both an RSA certificate and an ECDSA certificate. Each certificate type goes through its own DCV cycle and can validate and issue independently. However, the certificate pack is not activated or deployed until both certificates have issued successfully.
 
-Your customer must place both sets of tokens before either certificate can issue. The `ssl.validation_records` field in the API response returns one entry per certificate type — confirm that records for both are placed in DNS.
+Ask your customer to publish **every** TXT record returned in `ssl.validation_records` — do not assume the number of records or infer which corresponds to RSA or ECDSA. The field lists all pending authorizations and must be satisfied in full before the certificate pack becomes active.
 
 ---
 
