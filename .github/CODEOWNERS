@@ -434,14 +434,14 @@ package.json @cloudflare/content-engineering
 
 # email-security
 
-/src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/assets/images/changelog/email-security/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/partials/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/directory/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/glossary/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/icons/email-security.svg @cloudflare/cf1-reviewers @cloudflare/product-owners
-/public/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/src/assets/images/changelog/email-security/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @krystyna26
+/src/assets/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/src/content/partials/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/src/content/directory/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/src/content/glossary/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/src/icons/email-security.svg @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/public/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
 
 # email-service
 # Needs CODEOWNERS
