@@ -1,0 +1,18 @@
+---
+title: Durable Object observability
+description: Filter logs and traces by Durable Object instance.
+products:
+  - workers
+  - durable-objects
+date: 2026-07-24
+---
+
+[Workers Logs](/workers/observability/logs/workers-logs/) and [OpenTelemetry](/workers/observability/exporting-opentelemetry-data/) spans for [Durable Object](/durable-objects/) requests include the Durable Object instance ID.
+
+Use `$workers.durableObjectId` to filter logs for a specific instance. Root and child spans include the same ID in `cloudflare.durable_object.id`.
+
+![Query Builder filtering traces by Durable Object instance ID](~/assets/images/changelog/workers/observability/2026-07-24-durable-object-trace-filter.png)
+
+These fields help you isolate hot objects and correlate their logs and traces.
+
+For details, refer to [Durable Objects metrics and analytics](/durable-objects/observability/metrics-and-analytics/) and [Workers tracing spans and attributes](/workers/observability/traces/spans-and-attributes/).

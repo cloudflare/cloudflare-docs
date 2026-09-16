@@ -27,6 +27,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.script_name` - The name of your Worker
 - `cloudflare.script_tags` - Tags associated with your Worker deployment
 - `cloudflare.script_version.id` - The version identifier of your deployed Worker
+- `cloudflare.durable_object.id` - The Durable Object instance ID, set on root and child spans for Durable Object invocations
 - `cloudflare.invocation.sequence.number` - A counter added to every emitted span and log that can be used to distinguish which was emitted first when the timestamps are the same
 - `telemetry.sdk.language` - The programming language used, set to `javascript`
 - `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
