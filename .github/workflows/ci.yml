@@ -302,8 +302,16 @@ jobs:
           echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
+          # These two deploys are independent (different Worker names in the
+          # same dispatch namespace), so run them concurrently instead of
+          # back-to-back.
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}" &
+          short_sha_pid=$!
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}" &
+          branch_slug_pid=$!
+
+          wait "$short_sha_pid"
+          wait "$branch_slug_pid"
 
       - name: Post preview URL on PR
         env:
