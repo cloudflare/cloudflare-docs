@@ -22,6 +22,7 @@ import {
 } from "./github";
 import {
 	RECOMMENDATION_COMMENT_MARKER,
+	RecommendationResultSchema,
 	applyClearedState,
 	applyUpdatedState,
 	emptyState,
@@ -31,10 +32,10 @@ import {
 	parseRecommendationsMode,
 	recommendationCommentBodyHash,
 	recommendationDisplayHash,
+	recommendationRenderSource,
 	renderRecommendationsComment,
 	shouldWriteRecommendationComment,
 	shouldSkipRecommendationUpdate,
-	type RecommendationBoundedResult,
 	type ReviewerRecommendationState,
 	withMentions,
 } from "./reviewer-recommendations";
@@ -55,13 +56,20 @@ const StateSchema = v.object({
 	headSha: v.union([v.string(), v.null()]),
 	resultHash: v.optional(v.string()),
 	status: v.optional(v.picklist(["complete", "fallback", "error"])),
-	recommendation: v.union([v.null(), v.unknown()]),
-	lastGoodRecommendation: v.union([v.null(), v.unknown()]),
+	recommendation: v.union([v.null(), RecommendationResultSchema]),
+	lastGoodRecommendation: v.union([v.null(), RecommendationResultSchema]),
 	commentId: v.optional(v.number()),
 	commentBodyHash: v.optional(v.string()),
 	commentDisplayHash: v.optional(v.string()),
 	mentionedLogins: v.array(v.string()),
 });
+
+export function parseRecommendationState(
+	value: unknown,
+): ReviewerRecommendationState | null {
+	const parsed = v.safeParse(StateSchema, value);
+	return parsed.success ? parsed.output : null;
+}
 
 function stateKey(prNumber: number): string {
 	return `${STATE_KEY_PREFIX}${prNumber}/reviewer-recommendations.json`;
@@ -74,29 +82,10 @@ async function readState(
 	const obj = await bucket.get(stateKey(prNumber));
 	if (!obj) return { state: emptyState(), etag: null };
 	try {
-		const parsed = v.safeParse(StateSchema, await obj.json());
-		if (!parsed.success) return { state: emptyState(), etag: obj.etag };
-		const raw = parsed.output as unknown as Record<string, unknown>;
+		const state = parseRecommendationState(await obj.json());
+		if (!state) return { state: emptyState(), etag: obj.etag };
 		return {
-			state: {
-				eventAt: String(raw["eventAt"] ?? ""),
-				headSha:
-					raw["headSha"] === null ? null : String(raw["headSha"] ?? null),
-				resultHash: raw["resultHash"] as string | undefined,
-				status: raw["status"] as ReviewerRecommendationState["status"],
-				recommendation: raw[
-					"recommendation"
-				] as RecommendationBoundedResult | null,
-				lastGoodRecommendation: raw[
-					"lastGoodRecommendation"
-				] as RecommendationBoundedResult | null,
-				commentId: raw["commentId"] as number | undefined,
-				commentBodyHash: raw["commentBodyHash"] as string | undefined,
-				commentDisplayHash: raw["commentDisplayHash"] as string | undefined,
-				mentionedLogins: Array.isArray(raw["mentionedLogins"])
-					? (raw["mentionedLogins"] as string[])
-					: [],
-			},
+			state,
 			etag: obj.etag,
 		};
 	} catch {
@@ -134,6 +123,25 @@ async function saveState(
 			`Concurrent recommendation state update for PR #${prNumber}`,
 		);
 	}
+}
+
+function hasStoredComment(state: ReviewerRecommendationState): boolean {
+	return (
+		state.commentId !== undefined ||
+		state.commentBodyHash !== undefined ||
+		state.commentDisplayHash !== undefined
+	);
+}
+
+function withoutStoredComment(
+	state: ReviewerRecommendationState,
+): ReviewerRecommendationState {
+	return {
+		...state,
+		commentId: undefined,
+		commentBodyHash: undefined,
+		commentDisplayHash: undefined,
+	};
 }
 
 /**
@@ -275,14 +283,14 @@ export async function processRecommendationEvent(
 	let pr: Awaited<ReturnType<typeof getPullRequest>> | null = null;
 	try {
 		pr = await getPullRequest(token, prNumber);
-	} catch {
+	} catch (err) {
 		log({
 			message: `Failed to fetch PR #${prNumber} for reviewer-recommendation event`,
 			event: "reviewer_recommendations",
 			prNumber,
 			action: "pr_fetch_failed",
 		});
-		throw new Error(`pr fetch failed for #${prNumber}`);
+		throw err;
 	}
 
 	// Drop updated events for PRs we must never comment on: drafts, closed
@@ -307,10 +315,14 @@ export async function processRecommendationEvent(
 			action: "drop_skipped_pr",
 		});
 		if (mode === "comment") {
+			const { state: storedState, etag: storedEtag } = await readState(
+				bucket,
+				prNumber,
+			);
 			const staleComment = await findRecommendationComment(
 				token,
 				prNumber,
-				undefined,
+				storedState.commentId,
 			);
 			if (staleComment) {
 				await deleteIssueComment(token, staleComment.id);
@@ -321,6 +333,14 @@ export async function processRecommendationEvent(
 					commentId: staleComment.id,
 					action: "delete_stale_comment",
 				});
+			}
+			if (hasStoredComment(storedState)) {
+				await saveState(
+					bucket,
+					prNumber,
+					withoutStoredComment(storedState),
+					storedEtag,
+				);
 			}
 		}
 		return { applied: false, reason: "skipped_pr" };
@@ -397,14 +417,18 @@ export async function processRecommendationEvent(
 					action: "delete_stale_comment",
 				});
 			}
+			if (hasStoredComment(state)) {
+				await saveState(bucket, prNumber, withoutStoredComment(state), etag);
+			}
 			return { applied: false, reason: "suppressed_author" };
 		}
-		const degraded =
-			nextState.status === "error" && nextState.lastGoodRecommendation !== null;
-		const renderSource =
-			nextState.status === "error" && nextState.lastGoodRecommendation !== null
-				? nextState.lastGoodRecommendation
-				: nextState.recommendation;
+		const { degraded, result: renderSource } =
+			recommendationRenderSource(nextState);
+		if (renderSource === null) {
+			throw new Error(
+				`Missing recommendation render source for PR #${prNumber}`,
+			);
+		}
 		const newMentioned = newMentions(nextState, renderSource);
 		const previouslyMentionedLogins = nextState.mentionedLogins.filter(
 			(login) => !newMentioned.includes(login),

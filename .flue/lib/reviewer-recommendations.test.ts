@@ -14,6 +14,7 @@ import {
 	parseRecommendationsMode,
 	recommendationCommentBodyHash,
 	recommendationDisplayHash,
+	recommendationRenderSource,
 	renderRecommendationsComment,
 	shouldWriteRecommendationComment,
 	shouldSkipRecommendationUpdate,
@@ -509,6 +510,30 @@ describe("shouldWriteRecommendationComment", () => {
 		await expect(
 			shouldWriteRecommendationComment(previous, next, "current body"),
 		).resolves.toBe(true);
+	});
+});
+
+describe("recommendationRenderSource", () => {
+	it("uses the latest result for healthy state and last good result for errors", () => {
+		const latest = result([area({ key: "latest" })]);
+		const lastGood = result([area({ key: "last-good" })]);
+
+		expect(
+			recommendationRenderSource({
+				...emptyState(),
+				status: "complete",
+				recommendation: latest,
+				lastGoodRecommendation: lastGood,
+			}),
+		).toEqual({ degraded: false, result: latest });
+		expect(
+			recommendationRenderSource({
+				...emptyState(),
+				status: "error",
+				recommendation: latest,
+				lastGoodRecommendation: lastGood,
+			}),
+		).toEqual({ degraded: true, result: lastGood });
 	});
 });
 

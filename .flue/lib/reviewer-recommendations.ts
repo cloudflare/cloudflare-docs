@@ -128,7 +128,7 @@ const AreaSchema = v.object({
 	satisfied: v.boolean(),
 });
 
-const ResultSchema = v.object({
+export const RecommendationResultSchema = v.object({
 	ownershipAreas: v.array(AreaSchema),
 	warnings: v.array(v.string()),
 	areaCount: v.number(),
@@ -149,7 +149,7 @@ export const UpdatedEventSchema = v.object({
 	status: v.picklist(["complete", "fallback", "error"]),
 	resultHash: v.string(),
 	computedAt: v.string(),
-	result: ResultSchema,
+	result: RecommendationResultSchema,
 });
 
 export const ClearedEventSchema = v.object({
@@ -491,10 +491,20 @@ function areaName(area: RecommendationArea): string {
 	return pathSlug ? humanizeAreaName(pathSlug) : "Other";
 }
 
-function recommendationDisplayKey(state: ReviewerRecommendationState): string {
+export function recommendationRenderSource(
+	state: ReviewerRecommendationState,
+): {
+	degraded: boolean;
+	result: RecommendationBoundedResult | null;
+} {
 	const degraded =
 		state.status === "error" && state.lastGoodRecommendation !== null;
 	const result = degraded ? state.lastGoodRecommendation : state.recommendation;
+	return { degraded, result };
+}
+
+function recommendationDisplayKey(state: ReviewerRecommendationState): string {
+	const { degraded, result } = recommendationRenderSource(state);
 	return JSON.stringify({
 		degraded,
 		result:

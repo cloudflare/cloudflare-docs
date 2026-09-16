@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import { TeamMembershipCheckError } from "./github";
-import { isRetryableRecommendationError } from "./run-reviewer-recommendations";
+import {
+	isRetryableRecommendationError,
+	parseRecommendationState,
+} from "./run-reviewer-recommendations";
 
 describe("isRetryableRecommendationError", () => {
 	it("always retries membership-check errors, even with a permanent-looking status", () => {
@@ -34,5 +37,31 @@ describe("isRetryableRecommendationError", () => {
 		expect(isRetryableRecommendationError(new Error("network reset"))).toBe(
 			true,
 		);
+	});
+});
+
+describe("parseRecommendationState", () => {
+	const state = {
+		eventAt: "2026-09-16T12:00:00.000Z",
+		headSha: null,
+		recommendation: null,
+		lastGoodRecommendation: null,
+		mentionedLogins: [],
+	};
+
+	it("accepts a valid durable state", () => {
+		expect(parseRecommendationState(state)).toEqual(state);
+	});
+
+	it("rejects corrupt recommendation projections", () => {
+		expect(
+			parseRecommendationState({ ...state, recommendation: "corrupt" }),
+		).toBeNull();
+		expect(
+			parseRecommendationState({
+				...state,
+				recommendation: { ownershipAreas: "corrupt" },
+			}),
+		).toBeNull();
 	});
 });
