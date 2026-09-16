@@ -1,0 +1,19 @@
+src/content/changelog/durable-objects/2026-08-25-durable-object-alarm-abort-no-retry.mdx
+  s_313a31aedf23dd::t_102dd4c738adbc 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8a6d2fe641b8219fa249fcc797e1ffd9f5d26d83",
+  "prompts": {},
+  "sessions": {
+    "s_313a31aedf23dd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcbe3c50fffe2n0SS9S2tgJDBh",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ashley Peacock <apeacock@cloudflare.com>"
+    }
+  }
+}

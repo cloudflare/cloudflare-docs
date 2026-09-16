@@ -1,0 +1,72 @@
+src/content/docs/agent-setup/github-copilot.mdx
+  s_8045362b510a8c::t_803cdbdfdc0f6b 12-13
+  s_8045362b510a8c::t_94e2b23faecf60 29-30,63-64,113-114,142-143,157,176,209
+src/components/ui/tabs/TabItem.astro
+  s_8045362b510a8c::t_c11e85b4ee8418 15
+src/components/ui/tabs/Tabs.astro
+  s_8045362b510a8c::t_278c79890236eb 19,22
+src/components/agent-setup/PlatformAccessSection.astro
+  s_8045362b510a8c::t_4069c4d451dff1 37-39
+  s_8045362b510a8c::t_7d0559f961e50d 41-43
+src/content/docs/agent-setup/opencode.mdx
+  s_8045362b510a8c::t_d7c0c1e42359d1 10,12-13,29-30,46,73-74,88,111-112,126
+  s_8045362b510a8c::t_a13114d7512851 149,168
+  s_8045362b510a8c::t_dfadc924063d67 138
+src/content/docs/agent-setup/claude-code.mdx
+  s_8045362b510a8c::t_60c4976becd1c9 12-13
+  s_8045362b510a8c::t_1313cf355ec4c1 29-30,72-73,97-98,114,126,141,162
+src/components/agent-setup/types.ts
+  s_8045362b510a8c::t_2cc3b074f2901b 4,23
+src/content/docs/agent-setup/visual-studio-code/index.mdx
+  s_8045362b510a8c::t_61ad66dd0b3622 10-11,35-42
+  s_8045362b510a8c::t_5497fc30643b44 66
+src/content/docs/agent-setup/codex.mdx
+  s_8045362b510a8c::t_7012650509445b 12-13,29-30,49
+  s_8045362b510a8c::t_0f4f93ce850f79 10,74-75,101-102,116,127,150
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_8045362b510a8c::t_90f7c5252223d9 26-27,31
+src/components/agent-setup/WorkflowSelector.astro
+  s_8045362b510a8c::t_6ee7e57fb8e347 1-47
+src/components/agent-setup/workflow-selector.client.ts
+  s_8045362b510a8c::t_3281e20f744046 1-118
+src/components/agent-setup/AgentHeader.astro
+  s_8045362b510a8c::t_d088a99b4bf158 31
+src/components/agent-setup/CatalogWithFilter.astro
+  s_8045362b510a8c::t_9837b37279d1c2 156-160,214
+src/components/agent-setup/McpServerList.astro
+  s_8045362b510a8c::t_e0477d577dcc0b 7-8,14-55,57-58,60-68
+src/components/agent-setup/WorkflowOption.astro
+  s_8045362b510a8c::t_de2139a4c2b65b 1-17
+src/content/agent-setup/prompt.md
+  s_8045362b510a8c::t_cad2f0f94eb079 105
+src/content/docs/agent-setup/bionic.mdx
+  s_8045362b510a8c::t_3d702c482ac274 66,75,91,107
+src/content/docs/agent-setup/cursor.mdx
+  s_8045362b510a8c::t_8f728b9acb4346 10,34,59,69,95
+src/content/docs/agent-setup/visual-studio-code/detailed-walkthrough.mdx
+  s_8045362b510a8c::t_64fed5160f959b 13,15,199
+src/content/docs/agent-setup/windsurf.mdx
+  s_8045362b510a8c::t_9139b8ccfad4dd 38,40,69,86,106
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_18be58fb60c6b5 13,19,21,33,55,59
+src/content/docs/agents/model-context-protocol/codemode.mdx
+  s_8045362b510a8c::t_ea577db488a5cd 92
+src/content/docs/docs-for-agents/index.mdx
+  s_8045362b510a8c::t_6d8ed4b9aec567 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fbc21cf23a3f35547dd741ce4f55c6508296afd0",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.github/CODEOWNERS
+  5d529e7791dd1e92 59-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "4851f04cfbf0c2a410274be9e993ad3211fb99fc",
+  "prompts": {
+    "5d529e7791dd1e92": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1be01ebcdffeRlkb8EHICb5OGQ",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "kathayl",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 5,
+      "accepted_lines": 5,
+      "overriden_lines": 0
+    }
+  }
+}

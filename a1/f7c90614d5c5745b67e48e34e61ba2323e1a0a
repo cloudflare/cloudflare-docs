@@ -1,0 +1,21 @@
+src/content/changelog/d1/2026-08-10-d1-custom-bindings.mdx
+  s_237c84ffd02fea::t_0845b28f86be4d 1-31
+src/content/docs/d1/platform/custom-bindings.mdx
+  s_237c84ffd02fea::t_9ce96582009e8a 1-366
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a1f7c90614d5c5745b67e48e34e61ba2323e1a0a",
+  "prompts": {},
+  "sessions": {
+    "s_237c84ffd02fea": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_012d23cc9ffe2yWTa5aHaoi6mW",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/components/WorkerPreviewsAgentPrompt.astro
+  s_d04f8a072b45bc::t_d7fc6081e43d86 1-95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7b2c55a30f78af082dd2ca9bab70927894f04c8c",
+  "prompts": {},
+  "sessions": {
+    "s_d04f8a072b45bc": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fd534a5faffeA0u5NfDOqJZ1bQ",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/bots/additional-configurations/ai-labyrinth.mdx
+  s_418fe1393940e5::t_d0e7832b793931 21-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a31250328922589a39610aadac8b30b854ad5f0b",
+  "prompts": {},
+  "sessions": {
+    "s_418fe1393940e5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fbcf61d52ffe7vNzLEhP7AtDZz",
+        "model": "@cf/moonshotai/kimi-k2.7-code"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

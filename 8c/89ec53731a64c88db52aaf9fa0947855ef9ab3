@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-for-platforms/workers-for-platforms/configuration/custom-bindings.mdx
+  s_e0f846f6ad0d6d::t_aa3cc6e558093e 13,23-28,31,33-39,41,43-45,68,70,94,96,98,100,131,138-229
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8c89ec53731a64c88db52aaf9fa0947855ef9ab3",
+  "prompts": {},
+  "sessions": {
+    "s_e0f846f6ad0d6d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdec28bb2ffeMQ495ZuNWc7Cmb",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

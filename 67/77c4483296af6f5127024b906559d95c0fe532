@@ -1,0 +1,19 @@
+src/content/docs/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2.mdx
+  s_e0b9f423686126::t_acf2edc3293f06 27-33,35,230,232
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6777c4483296af6f5127024b906559d95c0fe532",
+  "prompts": {},
+  "sessions": {
+    "s_e0b9f423686126": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8033-abc7-749a-a944-8cf7bb5b97d6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

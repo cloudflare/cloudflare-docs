@@ -1,0 +1,27 @@
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels.mdx
+  s_5d11eae78665e2::t_3619ac7df860e3 34
+src/content/docs/reference-architecture/diagrams/network/protect-data-center-networks.mdx
+  s_5d11eae78665e2::t_5e7001adc27683 138
+src/content/docs/cloudflare-wan/reference/gre-ipsec-tunnels.mdx
+  s_5d11eae78665e2::t_df4e268e0d50e3 33
+src/content/docs/cloudflare-wan/get-started.mdx
+  s_5d11eae78665e2::t_d85b3e05d12b59 54
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/get-started.mdx
+  s_5d11eae78665e2::t_cd6e75037a860e 54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4c465683c6f4224d2d0c12f85a37917165b9f0ca",
+  "prompts": {},
+  "sessions": {
+    "s_5d11eae78665e2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc0fd51e2ffexUq53V1Fqv05Je",
+        "model": "@cf/deepseek-ai/deepseek-v4-flash-0731"
+      },
+      "human_author": "mvm <vance@cloudflare.com>"
+    }
+  }
+}
