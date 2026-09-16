@@ -68,7 +68,7 @@ The API values in the table are case-sensitive.
 - Dashboard option: N/A (currently only available via API)
 - API action parameter: `phase`
 
-Skips all the remaining rules in the current phase. If used in a custom ruleset (at the zone level), it will skip all remaining rules in the custom ruleset, as well as all later rules in the entry point ruleset where the rule executing the custom ruleset was defined.
+Skips all the remaining rules in the current phase. If used in a custom ruleset (at the zone level), it will skip all the remaining rules in the current custom ruleset, all later rules in the entry point ruleset where the rule executing the custom ruleset was defined, and all rules in any custom rulesets executed later in the same phase.
 
 Currently, this option is only available at the zone level for the `http_request_firewall_custom` phase. You can use it in custom rulesets or entry point rulesets.
 
