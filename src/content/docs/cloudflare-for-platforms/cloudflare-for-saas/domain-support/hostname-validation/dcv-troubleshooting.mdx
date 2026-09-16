@@ -36,7 +36,7 @@ DCV errors appear under `ssl.validation_errors` when you query the [Custom Hostn
 
 Before investigating a specific error, verify the following:
 
-- [ ] **DCV tokens are placed** — for TXT validation: your customer has added the TXT record you provided to their DNS. For HTTP validation: Cloudflare serves the token automatically once the custom hostname CNAME points to your SaaS target; no DNS token placement is required from your customer.
+- [ ] **DCV tokens are placed** — for TXT validation: your customer has added the TXT record you provided to their DNS. For HTTP validation: Cloudflare serves the token automatically once the custom hostname CNAME points to your SaaS target. No DNS token placement is required from your customer.
 - [ ] **Tokens are not expired** — Let's Encrypt tokens expire after 7 days. Google Trust Services and SSL.com tokens expire after 14 days. If tokens may have expired, [refresh them](#stale-or-expired-dcv-tokens).
 - [ ] **CAA records allow the CA** — CAA records are evaluated from the hostname up the DNS tree — the CA first checks the custom hostname itself (for example, `shop.example.com`), and only moves up to the parent domain (`example.com`) if the subdomain has no CAA records. A restrictive record at any level that contains CAA records will block issuance. Refer to [CAA records](#caa-records) for details.
 - [ ] **DNS is reachable** — your customer's authoritative DNS must respond without SERVFAIL from all geographic locations.
@@ -106,7 +106,7 @@ DCV tokens become invalid in the following situations:
 
 The custom hostname shows `ssl.status: pending_validation` and `ssl.validation_errors` reports a missing token on a domain your customer believes is correctly configured, or your customer confirms they placed the token but validation has not progressed.
 
-To refresh the DCV tokens, send a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. This starts a new DCV cycle and generates fresh tokens. Share the updated tokens from `ssl.validation_records` with your customer.
+To refresh the DCV tokens, send a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Use the same `method` value (`txt` or `http`) that was set when the custom hostname was created — changing it will alter how your customer is expected to complete validation. This starts a new DCV cycle and generates fresh tokens. Share the updated tokens from `ssl.validation_records` with your customer.
 
 <Details header="Example API call">
 
@@ -117,7 +117,7 @@ curl --request PATCH \
   --header "Content-Type: application/json" \
   --data '{
     "ssl": {
-      "method": "txt",
+      "method": "<txt_or_http>",
       "type": "dv"
     }
   }'
@@ -131,7 +131,7 @@ curl --request PATCH \
 
 A custom hostname enters **Timed Out Validation** (`ssl.status: timed_out`) when the DCV tokens were not placed before the retry schedule was exhausted.
 
-To restart the DCV cycle, send a PATCH request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint:
+To restart the DCV cycle, send a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, preserving the original `method` value (`txt` or `http`):
 
 <Details header="Example API call">
 
@@ -142,7 +142,7 @@ curl --request PATCH \
   --header "Content-Type: application/json" \
   --data '{
     "ssl": {
-      "method": "txt",
+      "method": "<txt_or_http>",
       "type": "dv"
     }
   }'
@@ -150,7 +150,7 @@ curl --request PATCH \
 
 </Details>
 
-After sending the PATCH, share the updated DCV tokens from `ssl.validation_records` with your customer. Make sure the tokens are placed before they expire again.
+After sending the `PATCH`, share the updated DCV tokens from `ssl.validation_records` with your customer. Make sure the tokens are placed before they expire again.
 
 :::tip
 If you are managing DCV tokens on behalf of your customers, consider using [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) to avoid manual token delivery altogether.
