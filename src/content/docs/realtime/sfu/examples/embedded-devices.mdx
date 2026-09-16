@@ -1,0 +1,128 @@
+---
+title: Embedded devices and remote control
+description: Connect embedded firmware to Realtime SFU for audio, telemetry, and browser control using the ESP32 Pocket Radio example.
+pcx_content_type: integration-guide
+sidebar:
+  order: 1
+  label: Embedded devices
+products:
+  - realtime
+---
+
+import { LinkButton, Steps } from "~/components";
+
+Connect embedded hardware to browser listeners through Realtime SFU. Pocket Radio demonstrates the firmware's WebRTC connection, audio publication, telemetry, and an authorized return path for device controls.
+
+The working example uses an ESP32-S3. It reads a playlist from flash, publishes Opus audio, and sends spectrum and device state to browsers. One listener can control playback and the board's LED.
+
+The example is experimental and targets the documented board and toolchain. It does not implement microphone capture, device speaker output, a camera, or a complete robotics stack.
+
+![Pocket Radio with browser playback, spectrum, device telemetry, and controller controls.](~/assets/images/realtime/sfu/pocket-radio.png)
+
+<LinkButton href="https://github.com/cloudflare/realtime-examples/tree/main/esp32-radio">
+  Open the example
+</LinkButton>
+<LinkButton
+  variant="secondary"
+  href="https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/firmware/docs/sfu.md"
+>
+  Follow the firmware walkthrough
+</LinkButton>
+
+## How it works
+
+The firmware and each browser own a WebRTC peer. A Worker holds SFU credentials and handles signaling. A Durable Object tracks the device, listeners, controller lease, and cleanup.
+
+![Device and browsers exchange WebRTC media and data through SFU, with separate backend signaling.](~/assets/images/realtime/sfu/embedded-architecture.svg)
+
+The example uses these paths:
+
+| Path                                                       | Purpose                                                                          |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Device audio track to browser listeners                    | Publish pre-encoded Opus audio for playback                                      |
+| Reliable, ordered `robot` DataChannel                      | Send telemetry, metadata, commands, and command acknowledgments                  |
+| Unordered `spectrum` DataChannel with zero retransmissions | Send replaceable spectrum samples                                                |
+| Controller replies on `robot`                              | Return authorized browser commands to the device using `canReply`                |
+| Device and browser signaling to the backend                | Authenticate, allocate SFU resources, exchange SDP, and manage application state |
+
+SFU App Secrets stay on the Worker. The firmware receives its device credential, Wi-Fi configuration, and signaling origin. The Worker is this example's backend choice; the same SFU interfaces also work with other application servers.
+
+## Follow the firmware integration
+
+The [firmware/SFU walkthrough](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/firmware/docs/sfu.md) follows the protocol sequence and the code that owns it:
+
+1. Create and configure the firmware's WebRTC peer.
+2. Exchange a session description through the application backend.
+3. Publish the audio track and establish negotiated DataChannels.
+4. Connect a browser listener and acknowledge DataChannel readiness.
+5. Grant the controller reply access and handle device commands.
+6. Retain resource identifiers for teardown and retries.
+
+Keep one owner for the WebRTC peer and its SDP state. Adapt hardware I/O and media timing for your device. You can replace HTTPS device-to-backend signaling with another application protocol, such as CoAP. The backend still calls the SFU HTTPS API.
+
+## Run Pocket Radio
+
+The example targets the **ESP32-S3-DevKitC-1 N32R16V**, with 32 MiB flash, 16 MiB PSRAM, and the documented LED pin. It uses a Linux x86_64 toolchain, Node 24, Python, Rust, and ESP-IDF. The board needs outbound IPv4 UDP and HTTPS. Refer to the [complete prerequisites](https://github.com/cloudflare/realtime-examples/tree/main/esp32-radio#set-up) for exact tool versions and hardware requirements.
+
+<Steps>
+
+1. **Prepare the checkout.** Run:
+
+   ```sh
+   git clone https://github.com/cloudflare/realtime-examples.git
+   cd realtime-examples/esp32-radio
+   make setup
+   cp .credential.env.example .credential.env
+   ```
+
+2. **Configure and deploy the backend.** [Create an SFU app](/realtime/sfu/get-started/#create-your-first-app). Follow the example's [setup procedure](https://github.com/cloudflare/realtime-examples/tree/main/esp32-radio#set-up) to provision credentials, configure your hostname and account, and deploy the Worker. Keep `.credential.env` private.
+
+3. **Prepare the device.** Follow [Back up and flash](https://github.com/cloudflare/realtime-examples/tree/main/esp32-radio#back-up-and-flash). Use audio you have permission to distribute. Back up the board before replacing its software; flashing resets the device.
+
+4. **Listen and control.** Open the Worker URL, sign in with the configured viewer password, and select **Start listening**. Open another listener tab. Both should receive audio, spectrum, and telemetry.
+
+   In one tab, select **Take control**, then change the LED or pause playback. The other tab keeps listening. Select **Release control** before transferring control to another listener.
+
+</Steps>
+
+<span id="reconnect-cleanup-and-limitations"></span>
+
+## Reconnect and clean up
+
+Browsers rejoin manually after a board restart or terminal connection failure. When the board is online, select **Start listening** again. The shared viewer password is an application authentication seam; per-user identity and abuse controls are integration work.
+
+The example admits eight listeners per board and one controller. The eight-listener cap is an application policy, not an SFU subscriber limit.
+
+To stop, release control and disconnect listeners, then power off the board. Keep the backend available to expire inactive state and retry resource cleanup. Follow the [operations guide](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/PRODUCTION.md#stop-and-clean-up) before removing the Worker or SFU app.
+
+## Adapt to other devices
+
+For a shared camera or microscope monitor, keep the observer and controller model, then add camera capture, [supported video encoding](/realtime/sfu/platform/limits/#supported-codecs), and browser video playback. Use hardware or a gateway capable of supplying that video.
+
+For a sensor dashboard, replace spectrum samples with your measurements. Add sensor capture, units, timestamps, and behavior for stale readings.
+
+### Adapt the pattern to robotics
+
+Apply the observer/operator model to a robot gateway using these substitutions:
+
+| Radio component                          | Robotics adaptation                                     |
+| ---------------------------------------- | ------------------------------------------------------- |
+| Playlist audio source                    | Camera, microphone, or other supported media source     |
+| Device telemetry and spectrum samples    | Sensor state, diagnostics, and replaceable measurements |
+| Playback and LED commands                | Validated commands to a robot's local control interface |
+| Listener membership and controller lease | Observer and operator roles for the selected robot      |
+| Firmware platform layer                  | The robot's hardware or ROS integration                 |
+
+Camera capture, ROS integration, and actuator behavior are additional implementation work. Include command expiry, stale-command rejection, and local watchdog or stopping behavior in that integration. Emergency stopping and actuator limits belong on the device or its local controller.
+
+The [cloud-gaming example](/realtime/sfu/examples/cloud-gaming/) complements this pattern with a native video publisher and separate reliable and transient input channels.
+
+<span id="learn-with-an-example"></span>
+
+## Inspect the implementation
+
+Inspect the [architecture guide](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/ARCHITECTURE.md) for authentication, controller ownership, and reconnect behavior.
+
+## Try another example
+
+For a smaller browser-only exercise, run the [DataChannel example](/realtime/sfu/features/datachannels/#learn-with-an-example).

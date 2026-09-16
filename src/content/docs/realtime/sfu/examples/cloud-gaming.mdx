@@ -1,0 +1,120 @@
+---
+title: Cloud gaming
+description: Stream a Container's audio and video to browsers and return authorized keyboard and pointer input through Realtime SFU.
+pcx_content_type: integration-guide
+sidebar:
+  order: 2
+products:
+  - realtime
+---
+
+import { LinkButton, PackageManagers, Steps } from "~/components";
+
+Run Freedoom in a Cloudflare Container, stream its audio and video through Realtime SFU, and send browser input back over DataChannels. Multiple viewers can watch while one browser tab controls the game.
+
+This experimental example demonstrates a native publisher and browser receivers. The same media-and-control topology can inform remote application and device interfaces.
+
+<LinkButton href="https://github.com/cloudflare/realtime-examples/tree/main/cloud-gaming">
+  Open the example
+</LinkButton>
+
+## How it works
+
+The Container captures H.264 video and Opus audio. Its native publisher sends both tracks through a WebRTC connection to Realtime SFU. Each browser uses one SFU session and PeerConnection for received media and input DataChannels.
+
+![A Container publishes game media through SFU to browsers, with one authorized browser returning controls.](~/assets/images/realtime/sfu/cloud-gaming-architecture.svg)
+
+A Worker authenticates browser requests and holds the SFU credentials. A Durable Object owns the game run, viewer membership, controller selection, and resource cleanup. The Container's publisher and the browser exchange media and input through the SFU.
+
+## Requirements
+
+- A Cloudflare account with [Workers Paid and Containers](/containers/get-started/).
+- Node.js 22.12 or later and Docker or a compatible container engine.
+- An [SFU App ID and App Secret](/realtime/sfu/get-started/#create-your-first-app).
+- A desktop browser with keyboard and pointer-lock support.
+- Cloudflare Access for a deployed application.
+
+## Run and verify
+
+<Steps>
+
+1. **Prepare the example.** Run:
+
+   ```sh
+   git clone https://github.com/cloudflare/realtime-examples.git
+   cd realtime-examples/cloud-gaming
+   ```
+
+   <PackageManagers type="install" />
+
+   Create the ignored configuration file:
+
+   ```sh
+   cp .dev.vars.example .dev.vars
+   chmod 600 .dev.vars
+   ```
+
+   Set `REALTIME_SFU_APP_ID` and `REALTIME_SFU_BEARER_TOKEN` to your SFU app values.
+
+2. **Start the application.** With your container engine running, start development:
+
+   <PackageManagers type="run" args="dev" />
+
+   Open `http://localhost:8787/`. The local identity path works on loopback hosts only.
+
+3. **Start the game.** Select **Start** and wait for **Running**. Open a second browser tab and confirm both tabs receive video and audio.
+
+4. **Take control.** In one tab, select **Take control**. Once control is ready, select the game to capture the pointer, then use the keyboard and mouse. The other tab should remain view-only.
+
+   Use **Send Esc** for the game menu. The browser's Escape action releases pointer lock. Select **Release control** to allow another tab to take control.
+
+</Steps>
+
+For deployment, follow the example's [deployment instructions](https://github.com/cloudflare/realtime-examples/tree/main/cloud-gaming#deploy). They install the SFU values as Worker secrets and configure the Access team domain and audience. Protect the hostname with the matching Access policy before inviting viewers.
+
+## Choose delivery settings for input
+
+The example uses separate named channels for discrete actions and replaceable input:
+
+| Input                               | Delivery                       | Reason                                    |
+| ----------------------------------- | ------------------------------ | ----------------------------------------- |
+| Keyboard, buttons, wheel, and reset | Reliable and ordered           | Preserve discrete actions and their order |
+| Pointer movement                    | Unordered, `maxRetransmits: 0` | New movement replaces older movement      |
+
+The publisher chooses each channel's policy, and every subscriber mirrors it. Each browser uses the matching delivery settings with its own allocated channel ID. Refer to [DataChannel delivery settings](/realtime/sfu/features/datachannels/#configure-message-delivery).
+
+## Control ownership
+
+Viewers initially subscribe with `canReply: false` and acknowledge channel readiness with `waitForAck`. The backend grants reply access by updating the selected viewer's existing subscriptions.
+
+The application identifies each controller selection with a generation. The browser sends input only after the publisher confirms its viewer and generation. The application releases held input when control changes, pointer lock is lost, or the run ends.
+
+`canReply` restricts the SFU return path. The backend still authenticates and authorizes the operator. Refer to [reply access](/realtime/sfu/features/datachannels/#return-to-publisher-canreply) and the example's [architecture](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/ARCHITECTURE.md).
+
+<span id="stop-and-adapt"></span>
+
+## Stop and clean up
+
+Select **Stop game** and wait for **Offline** before deleting a deployment. The application stops the Container and closes known SFU tracks and DataChannels. Follow the [cleanup instructions](https://github.com/cloudflare/realtime-examples/tree/main/cloud-gaming#clean-up) to remove the Worker and Access application.
+
+A failed media pipeline ends the run; transparent publisher restart is not implemented.
+
+## Adapt the example
+
+The example implements one fixed game slot and one controller. Admission limits, rate limiting, and Access policy provisioning are deployment responsibilities.
+
+For a shared CAD viewer or simulation, replace Freedoom and adapt application startup, capture, and input handling. Preserve viewer authorization, controller ownership, and cleanup. Add the file ownership and save/export behavior your application needs. Refer to [production integration](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/PRODUCTION.md) for the application policies and controls to add.
+
+<span id="learn-with-an-example"></span>
+
+## Inspect the implementation
+
+Inspect the example's [input channel definitions](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/src/shared/input-channels.ts) to compare reliable controls with transient pointer movement.
+
+## Troubleshooting
+
+Use the [troubleshooting guide](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/TROUBLESHOOTING.md) to diagnose Container startup, media, and control failures.
+
+## Try another example
+
+[Pocket Radio](/realtime/sfu/examples/embedded-devices/) applies a related observer/controller pattern on embedded hardware.
