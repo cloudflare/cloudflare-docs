@@ -1,0 +1,44 @@
+---
+title: Monetization Gateway
+description: Charge for protected resources through the x402 protocol.
+pcx_content_type: overview
+sidebar:
+  order: 1
+products:
+  - monetization-gateway
+---
+
+import { DirectoryListing } from "~/components";
+
+:::note[Public beta]
+Monetization Gateway is in public beta.
+:::
+
+Monetization Gateway applies [x402](/agents/tools/payments/x402/) payment requirements to matching traffic. You define the request match, price, and receiving wallet.
+
+Use Monetization Gateway to protect APIs, Model Context Protocol (MCP) tools, sites, and datasets. Buyers and sellers must be based in the United States.
+
+## Protect resources
+
+You can match requests by URL, headers, and query parameters. Rules can charge every matching request or only verified bots.
+
+Payments happen within the HTTP request flow. Buyers do not use a checkout redirect or separate payment API.
+
+## Understand the payment flow
+
+1. A buyer requests a protected resource.
+2. Monetization Gateway returns payment requirements.
+3. The buyer signs an authorization and retries the request.
+4. Monetization Gateway verifies the authorization.
+5. The gateway settles through the Coinbase x402 Facilitator.
+6. The buyer receives the requested resource.
+
+For fixed pricing, the gateway settles the signed amount. For variable pricing, your origin reports the actual amount.
+
+For request and response examples, refer to [x402 protocol](/monetization-gateway/x402/).
+
+To implement a buyer, refer to [x402 payments](/agents/tools/payments/x402/). [Agents SDK users can pay for x402 resources](/agents/tools/payments/x402/pay-from-agents-sdk/).
+
+## Continue setup
+
+<DirectoryListing />
