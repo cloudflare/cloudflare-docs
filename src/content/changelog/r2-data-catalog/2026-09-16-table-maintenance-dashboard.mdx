@@ -1,0 +1,32 @@
+---
+title: R2 Data Catalog adds table maintenance visibility and manual queueing
+description: View table maintenance schedules and run history, queue compaction from the dashboard, and browse catalogs with an updated layout.
+products:
+  - r2
+date: 2026-09-16
+---
+
+import { Steps } from "~/components";
+
+[R2 Data Catalog](/r2-data-catalog/) now provides table-level maintenance visibility and manual compaction queueing in the Cloudflare dashboard. These updates make it easier to understand when maintenance is eligible to run, inspect completed operations, and request maintenance without leaving the table view.
+
+To view table maintenance details:
+
+<Steps>
+1. In the Cloudflare dashboard, go to **R2 Data Catalog**.
+2. Select a catalog, then select the **Explorer** tab. The **Explorer** tab opens by default.
+3. Select a table.
+4. Select the **Maintenance** tab.
+</Steps>
+
+![Maintenance tab for an R2 Data Catalog table showing schedules and recent runs](~/assets/images/r2-data-catalog/table-maintenance-view.png)
+
+The updated dashboard includes:
+
+- **Maintenance tab** — View compaction and snapshot expiration settings, schedules, and next eligibility alongside the table's **Schema** and **Metadata** tabs.
+- **Recent runs** — Review a paginated audit log with job status, duration, and expandable details for manifest rewrites, compaction, and snapshot expiration. Expanded rows include operation metrics and a searchable `request_id` for manually queued jobs.
+- **Manual queueing** — Select **Queue maintenance** to request compaction during normal scheduler polling. The dashboard checks permissions and explains when another maintenance job conflicts with the request or the daily accepted-request limit has been reached.
+- **Updated catalog layout** — Find catalog metrics in the **Metrics** tab, use the renamed **Explorer** tab to browse data, and switch between table details using tabs instead of a scroll-to-section sidebar.
+- **Improved schema browser** — For accounts with the schema browser enabled, select a namespace to open its tables in the right pane while also expanding the namespace tree. The tree can now be collapsed to provide more space for table details.
+
+For more information about compaction and snapshot expiration, refer to [Table maintenance](/r2-data-catalog/table-maintenance/).
