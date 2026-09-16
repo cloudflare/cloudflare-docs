@@ -1,18 +1,19 @@
 ---
-title: More pending operations keep Durable Objects alive
+title: Durable Objects keep long-running work active during more types of pending network requests
 description: More pending operations prevent Durable Object eviction for up to 15 minutes each.
 products:
   - durable-objects
 date: 2026-09-15
 ---
 
-Pending service binding fetches now prevent Durable Object eviction. Requests to another Durable Object through remote procedure call (RPC) or `fetch()` and `this.ctx.container.monitor()` also prevent eviction.
+Pending [service binding](/workers/runtime-apis/bindings/service-bindings/) requests now keep Durable Objects running while they wait for a response. Pending calls to another Durable Object through remote procedure call (RPC) or `fetch()`, as well as `this.ctx.container.monitor()`, now also keep the Durable Object running.
 
-Previously, these operations did not prevent eviction after the standard inactivity period. Pending work could stop after the caller disconnected.
+Previously, Cloudflare could shut down an idle Durable Object, if one of these operations remained pending after the client disconnected. This could stop unfinished work.
 
-Outbound `fetch()` requests to external services, TCP sockets, and outbound WebSockets already prevent eviction. Each listed operation prevents eviction for up to 15 minutes.
+This change helps you run long-running tasks such as agents. An agent can call tools through service bindings, coordinate with other Durable Objects, or wait for a container process without relying on the original client to remain connected.
+Outbound `fetch()` requests to external services, TCP sockets, and outbound WebSockets already keep Durable Objects running.
 
-Starting another operation that prevents eviction later can extend time in memory. There is no 15-minute limit for the entire invocation.
+Each pending operation prevents idle shutdown for up to 15 minutes. Starting another operation later can extend the total run beyond 15 minutes. There is no limit on a Durable Object invocation's overall wall time.
 
 ![Timeline showing a service binding fetch, Durable Object RPC, and monitor() each preventing eviction for up to 15 minutes. Later operations extend time in memory.](~/assets/images/durable-objects/pending-io-keep-alive.svg)
 
