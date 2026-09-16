@@ -8,6 +8,8 @@ sidebar:
   order: 4
 ---
 
+Blocked content policies are only available on Enterprise plans and Enterprise + [PhishGuard](/cloudflare-one/email-security/phishguard/) plans.
+
 Email security allows you to configure blocked content policies. A blocked content policy marks all messages containing specific words or phrases with a malicious [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
 
 ## How blocked content works
@@ -24,9 +26,7 @@ To create a blocked content policy:
 2. Select **Email security**.
 3. Select **Policies & rules**, then go to **Inbound** > **Blocked content**.
 4. Select **Create a policy**.
-5. In **Step 1 - Name your policy**, enter the following:
-   - **Policy name**: Enter a name for your policy.
-   - **Note** (optional): Enter an optional description.
+5. In **Step 1 - Name your policy**, enter a policy name and, optionally, a description in **Note**.
 6. In **Step 2 - Build the pattern**, configure the content to block:
    - **Scope**: Choose where to look for the content. Select one of the following:
      - **Subject only**: Match the pattern in the email subject line only.
@@ -57,7 +57,7 @@ When building your pattern, you can use the following regex modifiers:
 | `[^abc]`       | Negated class       |
 | `[a-z]`        | Range               |
 | `{n,m}`        | Quantifier (max 50) |
-| `\|`           | Or                  |
+| `\\|`          | Or                  |
 | `^`            | Start               |
 | `$`            | End                 |
 

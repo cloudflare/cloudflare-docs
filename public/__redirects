@@ -54,11 +54,6 @@
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
-/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
-/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
-/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
-/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
-/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
@@ -2640,6 +2635,24 @@
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 
+/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
+/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/policies/inbound/trusted-domains/ 301
+/cloudflare-one/email-security/settings/detection-settings/allow-policies/ /cloudflare-one/email-security/policies/inbound/allow-policies/ 301
+/cloudflare-one/email-security/settings/detection-settings/blocked-senders/ /cloudflare-one/email-security/policies/inbound/blocked-senders/ 301
+/cloudflare-one/email-security/settings/detection-settings/blocked-content/ /cloudflare-one/email-security/policies/inbound/blocked-content/ 301
+/cloudflare-one/email-security/settings/domain-management/ /cloudflare-one/email-security/settings/domains-and-directories/ 301
+/cloudflare-one/email-security/settings/detection-settings/trusted-domains/ /cloudflare-one/email-security/policies/inbound/trusted-domains/ 301
+/cloudflare-one/email-security/outbound-dlp/ /cloudflare-one/email-security/policies/outbound/outbound-dlp/ 301
+/cloudflare-one/email-security/settings/auto-moves/ /cloudflare-one/email-security/settings/detection-settings/auto-moves/ 301
+/cloudflare-one/email-security/directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/ 301
+/cloudflare-one/email-security/settings/domain-management/domain/ /cloudflare-one/email-security/settings/domains-and-directories/domains/ 301
+/cloudflare-one/email-security/settings/phish-submissions/ /cloudflare-one/email-security/settings/submission-settings/ 301
+/cloudflare-one/email-security/settings/phish-submissions/phishnet-365/ /cloudflare-one/email-security/settings/submission-settings/phishnet-365/ 301
+/cloudflare-one/email-security/settings/phish-submissions/submission-addresses/ /cloudflare-one/email-security/settings/submission-settings/submission-addresses/ 301
+/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
+
 # cloudflare-one
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
@@ -2713,7 +2726,7 @@
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
 /cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
-/cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/settings/phish-submissions/ 301
+/cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/settings/submission-settings/ 301
 /cloudflare-one/tutorials/google-workspace-saas/ /cloudflare-one/applications/configure-apps/saas-apps/google-workspace-saas/ 301
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
@@ -2912,6 +2925,7 @@
 
 # Cloudflare One / Zero Trust
 /access/configuring-identity-providers/* /cloudflare-one/integrations/identity-providers/:splat 301
+/cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
@@ -2926,7 +2940,6 @@
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/:splat 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/* /cloudflare-one/connections/connect-devices/user-side-certificates/:splat 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/:splat 301
-/cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
 /cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
 /cloudflare-one/insights/risk-score/* /cloudflare-one/team-and-resources/users/risk-score/:splat 301
@@ -2963,7 +2976,7 @@
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
-/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
+/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/submission-settings/:splat 301
 
 # Learning paths
 /learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
