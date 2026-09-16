@@ -52,6 +52,20 @@ export default defineConfig({
 		cloudflare({
 			config: (config) => {
 				flueCustomizer(config);
+				// Dev tooling must never attach to the live reviewer-recommendations
+				// queue. `flue:dev:wrangler` runs `wrangler dev --remote`, which would
+				// register this worker as a queue consumer against the production
+				// queue; strip the consumer here so remote dev can only drive events
+				// through POST /dev/recommendations. Normal `flue dev` runs local
+				// Miniflare (no live-queue attachment) and production deploys keep
+				// the consumer from the authored wrangler.jsonc.
+				if (process.env.FLUE_DEV_NO_QUEUE_CONSUMER === "1") {
+					const cfg = config as Record<string, unknown>;
+					if (cfg["queues"] && typeof cfg["queues"] === "object") {
+						const queues = cfg["queues"] as Record<string, unknown>;
+						queues["consumers"] = [];
+					}
+				}
 				if (
 					process.env.DOCS_FLUE_AGENT_EVALS === "1" &&
 					process.env.DOCS_FLUE_INTERNAL_TOKEN

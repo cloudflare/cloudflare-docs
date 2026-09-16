@@ -17,6 +17,11 @@ import {
 	type WebhookClassification,
 } from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
+import {
+	processRecommendationEvent,
+	type RecommendationEnv,
+} from "./lib/run-reviewer-recommendations";
+import { parseRecommendationsMode } from "./lib/reviewer-recommendations";
 import CodeReviewFile from "./agents/code-review-file";
 import StyleGuideFile from "./agents/style-guide-file";
 import ConventionsReviewer from "./agents/conventions-reviewer";
@@ -95,6 +100,39 @@ app.post("/dev/review/:number", async (c) => {
 
 	await startReviewPipeline(env, classification, "");
 	return c.json({ acted: true, number: prNumber }, 202);
+});
+
+// Dev-only: feed a reviewer-recommendation event into the queue consumer
+// pipeline without touching the live queue. Accepts a JSON payload shaped
+// exactly like a queue message body (see lib/reviewer-recommendations.ts) and
+// runs the same processRecommendationEvent path. Gated behind
+// DOCS_FLUE_INTERNAL_TOKEN like /dev/review. Useful for testing the comment
+// lifecycle against a real PR before the producer is wired into the queue.
+app.post("/dev/recommendations", async (c) => {
+	const env = c.env as unknown as RecommendationEnv;
+	const secret = (env as unknown as WebhookEnv).DOCS_FLUE_INTERNAL_TOKEN;
+	if (!secret) return c.text("Internal token not configured", 500);
+
+	const provided = c.req.header("x-dev-secret");
+	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+
+	let payload: unknown;
+	try {
+		payload = await c.req.json();
+	} catch {
+		return c.text("Invalid JSON payload", 400);
+	}
+
+	await processRecommendationEvent(payload, env);
+	return c.json(
+		{
+			acted: true,
+			mode: parseRecommendationsMode(
+				env.DOCS_FLUE_RECOMMENDATIONS_MODE ?? env.DOCS_FLUE_REVIEW_MODE,
+			),
+		},
+		202,
+	);
 });
 
 // GitHub webhook ingress. Stateless: verify the HMAC, classify the payload, and
