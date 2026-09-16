@@ -48,7 +48,7 @@ APO decides whether a request is eligible for HTML caching based on the request'
 - If the `Accept` header explicitly refuses HTML (`Accept: text/html; q=0`), the request is not cached as HTML.
 - If the `Accept` header does not mention `text/html` — including `Accept: */*` or a missing `Accept` header — APO evaluates the URL path instead. Requests for non-static paths (such as a page or post) remain eligible for HTML caching, while requests for static file extensions do not.
 
-Many testing tools send no `Accept` header, which is why they can return `MISS` or `DYNAMIC`. To reliably reproduce a browser-like HTML request, include `-H 'accept: text/html'` in your cURL command.
+Some testing tools send no `Accept` header. For these requests, APO uses the URL path as described above, so the cache result depends on the requested path and the other eligibility criteria. To reliably reproduce a browser-like HTML request, include `-H 'accept: text/html'` in your cURL command.
 
 ## Are Google Fonts optimized when APO is activated?
 
