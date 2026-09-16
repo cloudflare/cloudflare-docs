@@ -231,15 +231,20 @@ export function normalizeLogin(login: string): string {
 	return login.trim().toLowerCase();
 }
 
-/** Collect every unique suggestion login from a result (case-insensitive). */
-export function allSuggestedLogins(
+function isGitHubLogin(login: string): boolean {
+	return /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(login);
+}
+
+/** Collect unique suggestion logins from uncovered areas (case-insensitive). */
+export function uncoveredSuggestedLogins(
 	result: RecommendationBoundedResult,
 ): string[] {
 	const seen = new Set<string>();
 	for (const area of result.ownershipAreas) {
+		if (area.satisfied) continue;
 		for (const person of area.suggestedPeople) {
 			const key = normalizeLogin(person.login);
-			if (!seen.has(key)) seen.add(key);
+			if (isGitHubLogin(key) && !seen.has(key)) seen.add(key);
 		}
 	}
 	return [...seen];
@@ -347,14 +352,14 @@ export function applyClearedState(
 
 /**
  * Compute the normalized logins that should be @-mentioned in the next comment:
- * the current recommendation's suggestions that have not been mentioned before.
+ * suggestions for uncovered areas that have not been mentioned before.
  */
 export function newMentions(
 	state: ReviewerRecommendationState,
 	result: RecommendationBoundedResult | null,
 ): string[] {
 	const already = new Set(state.mentionedLogins);
-	return allSuggestedLogins(result ?? emptyResult()).filter(
+	return uncoveredSuggestedLogins(result ?? emptyResult()).filter(
 		(login) => !already.has(login),
 	);
 }
@@ -386,23 +391,52 @@ function escapeCell(value: string): string {
 	return value.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
 
+/** Render untrusted text as inline code without allowing it to escape the span. */
+function codeSpan(value: string): string {
+	const escaped = escapeCell(value);
+	const longestRun = Math.max(
+		0,
+		...[...escaped.matchAll(/`+/g)].map((match) => match[0].length),
+	);
+	const fence = "`".repeat(longestRun + 1);
+	const padding = escaped.startsWith("`") || escaped.endsWith("`") ? " " : "";
+	return `${fence}${padding}${escaped}${padding}${fence}`;
+}
+
+/** Escape untrusted text rendered outside code spans, including @-mentions. */
+function proseText(value: string): string {
+	return (
+		value
+			.replace(/\r?\n/g, " ")
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/([\\|`*_{}[\]()#+.!-])/g, "\\$1")
+			// GitHub resolves HTML entities before mention detection. Keep the @
+			// visible but break the login token with a zero-width separator.
+			.replace(/@/g, "@\u200b")
+	);
+}
+
 /**
- * Display logins for an area: the suggestions when present, otherwise the
- * expanded CODEOWNERS fallback roster. Display-only, never @-mentioned. When
- * the fallback roster was capped, `totalOwners` drives a "+ N more" suffix —
- * this applies only to the fallback path (suggestions are never supplemented).
+ * Display suggested contacts and their rationale, or the expanded CODEOWNERS
+ * fallback roster when no suggestion exists. Display-only, never @-mentioned.
  */
-function displayPeople(area: RecommendationArea): string {
+function contactsCell(area: RecommendationArea): string {
 	if (area.suggestedPeople.length > 0) {
 		return area.suggestedPeople
-			.map((p) => `\`${escapeCell(p.login)}\``)
-			.join(", ");
+			.map(
+				(person) =>
+					`${codeSpan(person.login)} · ${proseText(roleLabel(person.roles, person.isMatchingCodeowner))}`,
+			)
+			.join("<br/>");
 	}
 	const logins = area.fallbackOwners ?? [];
 	if (logins.length === 0) return "";
-	const rendered = logins.map((login) => `\`${escapeCell(login)}\``).join(", ");
+	const rendered = logins.map(codeSpan).join(", ");
 	const omitted = Math.max(0, (area.totalOwners ?? 0) - logins.length);
-	return omitted > 0 ? `${rendered} + ${omitted} more` : rendered;
+	const roster = omitted > 0 ? `${rendered} + ${omitted} more` : rendered;
+	return `${roster}<br/><sub>CODEOWNERS fallback · not notified</sub>`;
 }
 
 /**
@@ -411,14 +445,40 @@ function displayPeople(area: RecommendationArea): string {
  */
 function codeownersCell(area: RecommendationArea): string {
 	const refs = area.codeownersDeclared ?? [];
-	if (area.codeownersPattern === null) return "_no rule_";
-	if (refs.length === 0) return "_none_";
-	return refs
-		.map((ref) => `\`${escapeCell(ref.replace(/^@/, ""))}\``)
-		.join(", ");
+	if (area.codeownersPattern === null) return "⚠️ _No matching rule_";
+	if (refs.length === 0) return "_No eligible approvers_";
+	return refs.map(codeSpan).join(", ");
 }
 
-function roleLabel(roles: string[]): string {
+function humanizeAreaName(value: string): string {
+	return value
+		.trim()
+		.split(/[\s_-]+/)
+		.filter(Boolean)
+		.map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+		.join(" ");
+}
+
+function areaName(area: RecommendationArea): string {
+	if (area.product?.trim()) return humanizeAreaName(area.product);
+	const keyName = area.key.slice(area.key.indexOf(":") + 1);
+	if (keyName && keyName !== "none") return humanizeAreaName(keyName);
+	const pathSlug = area.samplePaths[0]?.match(
+		/^src\/(?:content\/docs|content\/partials|assets\/images|content\/changelog)\/([^/]+)/,
+	)?.[1];
+	return pathSlug ? humanizeAreaName(pathSlug) : "Other";
+}
+
+function areaCell(area: RecommendationArea, showPattern: boolean): string {
+	const files = `${area.totalPaths} ${area.totalPaths === 1 ? "file" : "files"} changed`;
+	const pattern =
+		showPattern && area.codeownersPattern !== null
+			? `<br/>${codeSpan(area.codeownersPattern)}`
+			: "";
+	return `**${proseText(areaName(area))}**<br/><sub>${files}</sub>${pattern}`;
+}
+
+function roleLabel(roles: string[], isMatchingCodeowner: boolean): string {
 	const known: Record<string, string> = {
 		product_manager: "Product management",
 		engineering_manager: "Engineering leadership",
@@ -427,14 +487,32 @@ function roleLabel(roles: string[]): string {
 	const labels = [...new Set(roles)]
 		.map((role) => known[role] ?? "")
 		.filter(Boolean);
-	if (labels.length === 0) return "Code ownership";
+	if (labels.length === 0) {
+		return isMatchingCodeowner ? "Code ownership" : "Recommendation signal";
+	}
 	return labels.join(", ");
+}
+
+function codeownersMappings(
+	areas: RecommendationArea[],
+): Array<{ pattern: string; owners: string[] }> {
+	const seen = new Set<string>();
+	const mappings: Array<{ pattern: string; owners: string[] }> = [];
+	for (const area of areas) {
+		if (area.codeownersPattern === null) continue;
+		const owners = area.codeownersDeclared ?? [];
+		const key = JSON.stringify([area.codeownersPattern, owners]);
+		if (seen.has(key)) continue;
+		seen.add(key);
+		mappings.push({ pattern: area.codeownersPattern, owners });
+	}
+	return mappings;
 }
 
 /**
  * Render the singleton reviewer-recommendation comment body.
  *
- * - `@`-mentions only logins in `newLogins` (once per PR).
+ * - `@`-mentions only new suggestions for uncovered areas (once per PR).
  * - Table cells render usernames as code spans, never as @-mentions.
  * - Raw producer warnings/errors are never published.
  * - When `degraded` is true the tables come from the last good snapshot and a
@@ -447,82 +525,126 @@ export function renderRecommendationsComment(
 	const areas = result.ownershipAreas;
 	const covered = areas.filter((area) => area.satisfied);
 	const uncovered = areas.filter((area) => !area.satisfied);
+	const omitted = Math.max(0, result.areaCount - areas.length);
+	const mappings = codeownersMappings(areas);
+	const areaNameCounts = new Map<string, number>();
+	for (const area of areas) {
+		const name = areaName(area).toLowerCase();
+		areaNameCounts.set(name, (areaNameCounts.get(name) ?? 0) + 1);
+	}
+	const showAreaPattern = (area: RecommendationArea): boolean =>
+		(areaNameCounts.get(areaName(area).toLowerCase()) ?? 0) > 1;
+	const actionableLogins = new Set(uncoveredSuggestedLogins(result));
+	const newLogins = view.newLogins.filter((login) =>
+		actionableLogins.has(normalizeLogin(login)),
+	);
+	const previouslyMentionedLogins = view.previouslyMentionedLogins.filter(
+		(login) => actionableLogins.has(normalizeLogin(login)),
+	);
 
 	const lines: string[] = [
 		RECOMMENDATION_COMMENT_MARKER,
 		`<!-- reviewed-at: ${new Date().toISOString()} -->`,
 		"",
-		"## Suggested review contacts",
+		"## Review coverage",
 	];
-
-	if (view.newLogins.length > 0) {
-		lines.push(
-			"",
-			`New contacts: ${view.newLogins.map((login) => `@${login}`).join(" ")}`,
-		);
-	} else if (view.previouslyMentionedLogins.length > 0) {
-		lines.push(
-			"",
-			`_No new contacts. Previously mentioned: ${view.previouslyMentionedLogins.join(", ")}_`,
-		);
-	} else {
-		lines.push("", "_No new contacts._");
-	}
-	lines.push("");
 
 	if (view.degraded) {
 		lines.push(
-			"⚠️ The latest recommendation could not be refreshed. Showing the last successful recommendation below.",
 			"",
-		);
-	} else {
-		const coveredCount = covered.length;
-		const totalCount = result.areaCount > 0 ? result.areaCount : areas.length;
-		lines.push(
-			`**${coveredCount} of ${totalCount} ownership areas are covered.**`,
+			"> [!WARNING]",
+			"> The latest recommendation could not be refreshed. This shows the last successful coverage.",
 			"",
 		);
 	}
 
-	if (result.areaCount > areas.length) {
+	if (uncovered.length > 0) {
+		const count = uncovered.length;
+		const prefix = omitted > 0 ? "At least " : "";
 		lines.push(
-			`_${result.areaCount - areas.length} area(s) omitted from this message due to message size._`,
+			`🟡 **${prefix}${count} ownership ${count === 1 ? "area needs" : "areas need"} approval.**`,
+			"",
+		);
+	} else if (areas.length > 0 && omitted === 0) {
+		const count = areas.length;
+		lines.push(
+			count === 1
+				? "✅ **The ownership area is covered.**"
+				: `✅ **All ${count} ownership areas are covered.**`,
+			"",
+		);
+	} else if (areas.length > 0) {
+		lines.push("🟡 **All displayed ownership areas are covered.**", "");
+	} else if (omitted > 0) {
+		lines.push("🟡 **Ownership coverage is not fully shown.**", "");
+	} else {
+		lines.push("✅ **No ownership approvals are needed.**", "");
+	}
+
+	if (omitted > 0) {
+		lines.push(
+			`_${omitted} additional ownership ${omitted === 1 ? "area was" : "areas were"} omitted due to message size._`,
+			"",
+		);
+	}
+
+	if (newLogins.length > 0) {
+		lines.push(
+			`Suggested contacts notified: ${newLogins.map((login) => `@${login}`).join(" ")}`,
+			"",
+		);
+	} else if (uncovered.length > 0 && previouslyMentionedLogins.length > 0) {
+		lines.push(
+			`_Suggested contacts previously notified: ${previouslyMentionedLogins.map(codeSpan).join(", ")}._`,
 			"",
 		);
 	}
 
 	if (uncovered.length > 0) {
 		lines.push(
-			"| Uncovered area | Files | CODEOWNERS | Suggested people | Basis |",
+			"| Needs approval | Eligible approvers | Contacts |",
+			"| --- | --- | --- |",
 		);
-		lines.push("| --- | ---: | --- | --- | --- |");
 		for (const area of uncovered) {
-			const people = displayPeople(area);
+			const contacts = contactsCell(area);
 			lines.push(
-				`| ${escapeCell(area.key)} | ${area.totalPaths} | ${codeownersCell(area)} | ${people || "_none_"} | ${escapeCell(roleLabel(area.suggestedPeople.flatMap((p) => p.roles)))} |`,
+				`| ${areaCell(area, showAreaPattern(area))} | ${codeownersCell(area)} | ${contacts || "_No contacts available_"} |`,
 			);
 		}
-	} else if (areas.length > 0) {
-		lines.push("_All ownership areas are covered._", "");
 	}
 
 	if (covered.length > 0) {
 		lines.push(
 			"",
 			"<details>",
-			`<summary>Covered areas (${covered.length})</summary>`,
+			`<summary>✅ ${covered.length} ${covered.length === 1 ? "area" : "areas"} already covered</summary>`,
 			"<br/>",
 			"",
-			"| Area | Files | CODEOWNERS | Approved by | Suggested people |",
-			"| --- | ---: | --- | --- | --- |",
+			"| Area | Approved by |",
+			"| --- | --- |",
 		);
 		for (const area of covered) {
-			const approvers = area.satisfyingApprovers
-				.map((login) => `\`${escapeCell(login)}\``)
-				.join(", ");
-			const people = displayPeople(area);
+			const approvers = area.satisfyingApprovers.map(codeSpan).join(", ");
 			lines.push(
-				`| ${escapeCell(area.key)} | ${area.totalPaths} | ${codeownersCell(area)} | ${approvers || "_none_"} | ${people || "_none_"} |`,
+				`| ${areaCell(area, showAreaPattern(area))} | ${approvers || "_No approver recorded_"} |`,
+			);
+		}
+		lines.push("", "</details>");
+	}
+
+	if (mappings.length > 0) {
+		lines.push(
+			"",
+			"<details>",
+			`<summary>CODEOWNERS mappings for displayed areas (${mappings.length})</summary>`,
+			"<br/>",
+			"",
+			"| Pattern | Owners |",
+			"| --- | --- |",
+		);
+		for (const mapping of mappings) {
+			lines.push(
+				`| ${codeSpan(mapping.pattern)} | ${mapping.owners.length > 0 ? mapping.owners.map(codeSpan).join(", ") : "_No owners declared_"} |`,
 			);
 		}
 		lines.push("", "</details>");
@@ -530,7 +652,7 @@ export function renderRecommendationsComment(
 
 	lines.push(
 		"",
-		"<sub>GitHub CODEOWNERS manages formal review requests.</sub>",
+		"<sub>Suggestions are informational. GitHub CODEOWNERS controls formal review requests.</sub>",
 	);
 
 	return lines.join("\n");
