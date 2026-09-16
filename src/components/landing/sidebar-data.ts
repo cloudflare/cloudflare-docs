@@ -1,11 +1,11 @@
 // Landing mega-nav structure (sections → links / collapsible groups).
+import type { SidebarBadge } from "@cloudflare/nimbus-docs/types";
 
 export interface SidebarLink {
 	type: "link";
 	label: string;
 	href: string;
-	/** Product icon name (src/icons/<icon>.svg). */
-	icon?: string;
+	badge?: SidebarBadge;
 }
 
 export interface SidebarGroup {
@@ -24,11 +24,15 @@ export interface SidebarSection {
 	nodes: SidebarNode[];
 }
 
-const link = (label: string, href: string, icon?: string): SidebarLink => ({
+const link = (
+	label: string,
+	href: string,
+	badge?: SidebarBadge,
+): SidebarLink => ({
 	type: "link",
 	label,
 	href,
-	icon,
+	badge,
 });
 
 export const sidebarSections: SidebarSection[] = [
@@ -210,6 +214,13 @@ export const sidebarSections: SidebarSection[] = [
 					link("Spectrum", "/spectrum/"),
 					link("BYOIP", "/byoip/"),
 				],
+			},
+			{
+				type: "group",
+				label: "Monetize",
+				icon: "ph:coins",
+				collapsed: true,
+				nodes: [link("Monetization Gateway", "/monetization-gateway/", "Beta")],
 			},
 			{
 				type: "group",

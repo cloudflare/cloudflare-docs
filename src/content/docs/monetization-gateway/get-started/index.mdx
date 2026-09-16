@@ -1,0 +1,42 @@
+---
+title: Get started
+description: Create your first seller payment rule.
+pcx_content_type: get-started
+sidebar:
+  order: 3
+products:
+  - monetization-gateway
+---
+
+import { Steps } from "~/components";
+
+Create a rule that charges matching requests for a resource.
+
+## Review prerequisites
+
+- Your account and zone meet the [eligibility requirements](/monetization-gateway/eligibility/).
+- You have a receiving wallet.
+
+## Configure a payment rule
+
+<Steps>
+1. In Monetization Gateway, select the domain you'd like to monetize
+2. Select the receiving wallet for payments.
+3. Enter the URL for the request to be monetized.
+4. Select an audience:
+
+	- Select _Everyone_ to charge all matching traffic.
+	- Select _Verified Bots_ to charge bots identified by [BotBase](/bots/botbase/).
+
+5. Select a pricing scheme:
+
+	- Select _Fixed_ to charge the same amount per request.
+	- Select _Variable_ to authorize a maximum amount. You must [report the actual amount](/monetization-gateway/configuration/payment-validation/#report-variable-settlement) to finalize the transaction.
+
+6. Enter the price to be charged. The minimum amount is $0.001.
+7. For advanced settings, refer to [Monetization rules](/monetization-gateway/configuration/rules/).
+</Steps>
+
+## Complete configuration
+
+In order to complete configuration, it is strongly recommended you [verify payment](/monetization-gateway/configuration/payment-validation/#validate-the-context) at your origin.

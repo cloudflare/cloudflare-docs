@@ -23,6 +23,7 @@ function toItem(node: SidebarNode, order: number): SidebarItem {
 			label: node.label,
 			href: node.href,
 			isCurrent: isActive(node.href),
+			badge: node.badge,
 			order,
 		};
 	}
@@ -54,6 +55,7 @@ function toItem(node: SidebarNode, order: number): SidebarItem {
 								href={node.href}
 								icon={node.icon}
 								isCurrent={isActive(node.href)}
+								badge={node.badge}
 							/>
 						) : (
 							<SidebarGroup

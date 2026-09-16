@@ -591,6 +591,12 @@ package.json @cloudflare/content-engineering
 /src/content/directory/migration-guides.yaml @cloudflare/product-owners
 /src/icons/migration-guides.svg @cloudflare/product-owners
 
+# monetization-gateway
+/src/content/changelog/monetization-gateway/ @rohinlohe @willpapper @cloudflare/product-owners
+/src/content/directory/monetization-gateway.yaml @rohinlohe @willpapper @cloudflare/product-owners
+/src/content/docs/monetization-gateway/ @rohinlohe @willpapper @cloudflare/product-owners
+/src/icons/monetization-gateway.svg @rohinlohe @willpapper @cloudflare/product-owners
+
 # moq
 
 /src/content/docs/moq/ @nils-ohlmeier @renandincer @cloudflare/product-owners
