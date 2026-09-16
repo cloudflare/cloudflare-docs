@@ -275,8 +275,8 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": "https://platform.minimax.io/docs/guides/video-generation.md",
-	"terms": "https://platform.minimax.io/docs/guides/terms-of-service.md",
+	"external_info": "https://platform.minimax.io/docs/guides/video-generation",
+	"terms": "https://platform.minimax.io/docs/guides/terms-of-service",
 	"cover_image_url": null,
 	"metadata": {
 		"Billing": "Pay-as-you-go, per output second",
