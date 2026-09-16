@@ -1,0 +1,141 @@
+---
+pcx_content_type: concept
+title: Real-Time Issues
+description: Group recurring Worker failures into issues and investigate their occurrences, context, and notification activity.
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+products:
+  - workers
+---
+
+import { DashButton, Steps, WranglerConfig } from "~/components";
+
+Real-Time Issues detects failures in your Workers and groups related occurrences into actionable issues. Each issue shows what failed, how often the failure occurred, and when Cloudflare observed it.
+
+Real-Time Issues uses error details and application context to group related occurrences. It filters changing values such as timestamps and request identifiers. Similar failures remain separate when their causes, Workers, or application stack frames differ.
+
+## Availability
+
+Real-Time Issues is available in open beta. It is free during the beta. Pricing after the beta has not yet been determined.
+
+## Turn on issue detection
+
+Add `observability.issues.enabled` to your [Wrangler configuration file](/workers/wrangler/configuration/#observability). Deploy the Worker after changing its configuration.
+
+<WranglerConfig removeSchema>
+
+```jsonc
+{
+  "observability": {
+    "issues": {
+      "enabled": true
+    }
+  }
+}
+```
+
+</WranglerConfig>
+
+To stop detecting new occurrences, set `enabled` to `false`. Then deploy the Worker again.
+
+## Detected failures
+
+Real-Time Issues detects these Worker failures:
+
+- Uncaught exceptions
+- Failed invocation outcomes
+- HTTP `5xx` responses
+- Structured `Error` objects
+- Error-level or stack-bearing logs
+
+Ordinary logs and successful responses do not create issues. One invocation can create multiple issues when it contains distinct failures.
+
+## Issue grouping
+
+Cloudflare creates a fingerprint from the Worker name, failure mechanism, normalized error name and message, and the first meaningful application stack frame. This fingerprint groups repeated occurrences into one issue.
+
+Normalization removes occurrence-specific values while preserving diagnostic details. Request identifiers and timestamps do not normally split an issue. Endpoints, status codes, error codes, database constraints, and SQL operation shapes can remain part of the issue identity.
+
+Issue grouping is scoped to a Worker. The same failure in two Workers creates two issues. Cloudflare groups known Durable Object reset, script upgrade, and unavailable container failures by their lifecycle cause.
+
+## Notifications
+
+Real-Time Issues can send notifications when failures affect your Workers. Create an automation that sends a notification when:
+
+- An issue reaches a specified occurrence count
+- An issue returns after a period of inactivity
+
+Apply an automation to every Worker or a specific Worker. You can turn an automation on or off at any time.
+
+### Connect an AI coding agent
+
+You can route notifications to Claude Code, Cursor, Devin, or another compatible coding agent through a custom webhook. The notification provides a failure summary and context for investigation.
+
+Pair the agent with the [Cloudflare MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability). The agent can inspect stack traces and invocation context, and query related logs and traces.
+
+Notifications do not change or deploy Worker code. Review and test any proposed changes before deployment.
+
+## Add application identity context
+
+Add these OpenTelemetry attributes to associate occurrences with your application identities:
+
+| Attribute    | Use                                        |
+| ------------ | ------------------------------------------ |
+| `account.id` | A tenant, team, organization, or workspace |
+| `session.id` | An application session                     |
+| `user.id`    | A user in your application                 |
+
+Real-Time Issues uses the latest value observed before the failure. These attributes appear in occurrence details and do not affect issue grouping.
+
+Do not include secrets, access tokens, or sensitive personal data in these attributes.
+
+## Review issues in the dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages** > **Observability**.
+
+   <DashButton url="/?to=/:account/workers-and-pages/observability" />
+
+2. Select **Issues**.
+3. Select an issue to review its occurrences, details, status, and activity.
+</Steps>
+
+The issue list supports status and Worker filters, text search, sorting, and pagination. Each issue includes its title, type, Worker, status, occurrence count, and observation times.
+
+### Change an issue status
+
+An issue has one of these statuses:
+
+| Status   | Behavior                                                          |
+| -------- | ----------------------------------------------------------------- |
+| Active   | The failure is currently actionable                               |
+| Ignored  | New occurrences remain grouped without reactivating the issue     |
+| Resolved | The issue is considered fixed and a new occurrence reactivates it |
+
+Changing an issue status does not change the Worker or suppress telemetry collection.
+
+### Review an occurrence
+
+An occurrence represents one failure grouped into an issue. Occurrences are ordered from newest to oldest and can include:
+
+- Error name, message, mechanism, and stack
+- Worker and script version details
+- Invocation trigger and request details
+- Chronological logs and spans
+- Application identity context
+
+The occurrence trail combines logs and spans from before the failure with invocation details and the detected error. Request context contains selected headers and excludes URL query parameters.
+
+## Limits
+
+You can create up to 50 notification automations per account.
+
+## Related resources
+
+- [Workers Observability](/workers/observability/)
+- [Workers Logs](/workers/observability/logs/workers-logs/)
+- [Workers tracing](/workers/observability/traces/)
+- [Source maps and stack traces](/workers/observability/source-maps/)
+- [Query Builder](/workers/observability/query-builder/)
