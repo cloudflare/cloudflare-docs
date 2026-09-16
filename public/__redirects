@@ -2770,6 +2770,7 @@
 
 # Specific redirects for old paths (must come before catch-all redirects)
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
+/cloudflare-one/access-controls/applications/http-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
 /cloudflare-one/applications/scan-apps/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/ 301
