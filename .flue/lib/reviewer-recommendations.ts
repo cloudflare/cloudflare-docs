@@ -305,6 +305,47 @@ export function applyEventToState(
 }
 
 /**
+ * Apply an `updated` event under the PR-head guard: a recommendation computed
+ * for an earlier head is stale and must not clobber a newer one, so it applies
+ * only when the PR is open and the event's head matches the PR's current head
+ * (or the event carries no head). Returning `state` unchanged marks the event
+ * stale/duplicate.
+ */
+export function applyUpdatedState(
+	state: ReviewerRecommendationState,
+	event: ReviewerRecommendationsUpdatedEvent,
+	prOpen: boolean,
+	prHeadSha: string | null,
+): ReviewerRecommendationState {
+	if (!prOpen) return state;
+	if (event.headSha !== null && event.headSha !== prHeadSha) return state;
+	return applyEventToState(state, event);
+}
+
+/**
+ * Apply a `cleared` event under the PR-head guard. A clear represents a PR
+ * closing or exclusion: it applies when the PR is no longer open (a closed PR
+ * keeps its head SHA, so the head check cannot be used there), and it applies
+ * when the PR is open but has moved past the head the clear was computed for.
+ * It is skipped only when the PR is still open at that exact head — a
+ * spurious or out-of-order clear — so a reopen at the same head keeps the
+ * prior recommendation.
+ */
+export function applyClearedState(
+	state: ReviewerRecommendationState,
+	event: ReviewerRecommendationsEvent & {
+		eventType: "reviewer-recommendations.cleared";
+	},
+	prOpen: boolean,
+	prHeadSha: string | null,
+): ReviewerRecommendationState {
+	if (prOpen && event.headSha !== null && event.headSha === prHeadSha) {
+		return state;
+	}
+	return applyEventToState(state, event);
+}
+
+/**
  * Compute the normalized logins that should be @-mentioned in the next comment:
  * the current recommendation's suggestions that have not been mentioned before.
  */

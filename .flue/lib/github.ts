@@ -539,11 +539,15 @@ export async function isCodeOwner(
 		if (mention.includes("/")) {
 			// Team mention: @org/team — check membership using org token (needs read:org)
 			const [org, team] = mention.split("/");
-			const memberRes = await fetch(
-				`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
-				{ headers: apiHeaders(orgToken) },
-			);
-			if (memberRes.ok) return true;
+			try {
+				if (await isGitHubTeamMember(orgToken, org, team, username)) {
+					return true;
+				}
+			} catch {
+				// Keep isCodeOwner's silent-false semantics: an ambiguous
+				// membership response must never grant or block on an unresolved
+				// lookup, so a failed check is treated as "not a codeowner".
+			}
 		} else {
 			// Direct user mention
 			if (mention.toLowerCase() === username.toLowerCase()) return true;
@@ -554,10 +558,34 @@ export async function isCodeOwner(
 }
 
 /**
- * Check whether `username` is a member of the GitHub `org/team` using the org
- * token (read:org). Definitive outcomes only: HTTP 200 → true, 404 → false.
- * Any other status (401/403/5xx) throws so callers can fail closed rather than
- * act on an ambiguous membership decision.
+ * Thrown when a GitHub team-membership check returns an ambiguous result
+ * (HTTP 401/403/5xx) instead of a definitive member or non-member. The
+ * reviewer-recommendation queue treats this class as always retryable so a
+ * misconfigured org token surfaces in retries/DLQ rather than silently
+ * disabling comment behavior.
+ */
+export class TeamMembershipCheckError extends Error {
+	constructor(
+		org: string,
+		team: string,
+		username: string,
+		status: number,
+		detail: string,
+	) {
+		super(
+			`Failed to check ${org}/${team} membership for ${username} (HTTP ${status}): ${detail}`,
+		);
+		this.name = "TeamMembershipCheckError";
+	}
+}
+
+/**
+ * Check whether `username` is an active member of the GitHub `org/team` using
+ * the org token (read:org). Definitive outcomes only: an active membership
+ * (HTTP 200, `state: "active"`) returns true; a pending invitation (200,
+ * `state: "pending"`) and no relationship (404) return false. Any other status
+ * (401/403/5xx) throws `TeamMembershipCheckError` so callers can fail closed
+ * rather than act on an ambiguous membership decision.
  */
 export async function isGitHubTeamMember(
 	orgToken: string,
@@ -569,11 +597,20 @@ export async function isGitHubTeamMember(
 		`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
 		{ headers: apiHeaders(orgToken) },
 	);
-	if (res.ok) return true;
 	if (res.status === 404) return false;
-	throw new Error(
-		`Failed to check ${org}/${team} membership for ${username} (HTTP ${res.status}): ${await res.text()}`,
-	);
+	if (!res.ok) {
+		throw new TeamMembershipCheckError(
+			org,
+			team,
+			username,
+			res.status,
+			await res.text(),
+		);
+	}
+	const data = (await res.json()) as { state?: string };
+	// HTTP 200 also covers invited-but-not-accepted users, whose state is
+	// "pending". Only an active membership is a definitive member.
+	return data.state === "active";
 }
 
 // ── Rebase / Git Data API ─────────────────────────────────────────────────────

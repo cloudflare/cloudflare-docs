@@ -65,14 +65,39 @@ export default defineConfig({
 						cfg["queues"] && typeof cfg["queues"] === "object"
 							? (cfg["queues"] as Record<string, unknown>)
 							: null;
+					// Snapshot the declared consumers BEFORE clearing so the guard
+					// below checks the config as emitted, not the array we just
+					// emptied. The dev build legitimately inherits the consumer from
+					// the authored wrangler.jsonc — that is what we strip — so the
+					// guard must fail closed only when the config is reshaped such
+					// that consumers cannot be reliably removed (a missing `queues`
+					// section, a non-array `queues.consumers`, or consumers declared
+					// under another top-level key).
+					const declaredConsumers = queues?.["consumers"];
+					const strayConsumerKeys = Object.entries(cfg)
+						.filter(([key, value]) => {
+							if (
+								key === "queues" ||
+								typeof value !== "object" ||
+								value === null
+							) {
+								return false;
+							}
+							const nested = (value as Record<string, unknown>)["consumers"];
+							return Array.isArray(nested) && nested.length > 0;
+						})
+						.map(([key]) => key);
 					if (queues) queues["consumers"] = [];
-					// Fail closed: if the consumer couldn't be stripped (missing or
-					// reshaped config), refuse to emit an artifact that would attach
-					// the dev worker to the live queue during remote dev.
-					const consumers = queues?.["consumers"];
-					if (!queues || !Array.isArray(consumers) || consumers.length !== 0) {
+					const stripped =
+						(queues === null || Array.isArray(declaredConsumers)) &&
+						strayConsumerKeys.length === 0;
+					if (!stripped) {
 						throw new Error(
-							"FLUE_DEV_NO_QUEUE_CONSUMER=1 but the emitted worker config still contains queue consumers; refusing to build an unsafe artifact",
+							"FLUE_DEV_NO_QUEUE_CONSUMER=1 but the emitted worker config does not expose queue consumers as a plain queues.consumers array" +
+								(strayConsumerKeys.length > 0
+									? ` (consumers also declared under: ${strayConsumerKeys.join(", ")})`
+									: "") +
+								"; refusing to build an artifact that could attach to the live queue",
 						);
 					}
 					console.log(

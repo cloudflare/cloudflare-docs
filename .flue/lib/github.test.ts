@@ -1,25 +1,31 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { isGitHubTeamMember } from "./github";
+import { TeamMembershipCheckError, isGitHubTeamMember } from "./github";
+
+const MEMBERSHIP_URL =
+	"https://api.github.com/orgs/cloudflare/teams/content-engineering/memberships/alice";
 
 describe("isGitHubTeamMember", () => {
-	it("returns true when the API reports membership (200)", async () => {
-		const fetchMock = vi.fn(async () => new Response(null, { status: 200 }));
+	afterEach(() => {
+		vi.unstubAllGlobals();
+	});
+
+	it("returns true for an active membership (200)", async () => {
+		const fetchMock = vi.fn(
+			async () =>
+				new Response(JSON.stringify({ state: "active" }), { status: 200 }),
+		);
 		vi.stubGlobal("fetch", fetchMock);
-		try {
-			await expect(
-				isGitHubTeamMember(
-					"org-token",
-					"cloudflare",
-					"content-engineering",
-					"alice",
-				),
-			).resolves.toBe(true);
-		} finally {
-			vi.unstubAllGlobals();
-		}
+		await expect(
+			isGitHubTeamMember(
+				"org-token",
+				"cloudflare",
+				"content-engineering",
+				"alice",
+			),
+		).resolves.toBe(true);
 		expect(fetchMock).toHaveBeenCalledWith(
-			"https://api.github.com/orgs/cloudflare/teams/content-engineering/memberships/alice",
+			MEMBERSHIP_URL,
 			expect.objectContaining({
 				headers: expect.objectContaining({
 					Authorization: "Bearer org-token",
@@ -28,41 +34,51 @@ describe("isGitHubTeamMember", () => {
 		);
 	});
 
+	it("returns false for a pending invitation, not a member yet (200)", async () => {
+		vi.stubGlobal(
+			"fetch",
+			vi.fn(
+				async () =>
+					new Response(JSON.stringify({ state: "pending" }), { status: 200 }),
+			),
+		);
+		await expect(
+			isGitHubTeamMember(
+				"org-token",
+				"cloudflare",
+				"content-engineering",
+				"alice",
+			),
+		).resolves.toBe(false);
+	});
+
 	it("returns false when the API reports no membership (404)", async () => {
 		vi.stubGlobal(
 			"fetch",
 			vi.fn(async () => new Response(null, { status: 404 })),
 		);
-		try {
-			await expect(
-				isGitHubTeamMember(
-					"org-token",
-					"cloudflare",
-					"content-engineering",
-					"bob",
-				),
-			).resolves.toBe(false);
-		} finally {
-			vi.unstubAllGlobals();
-		}
+		await expect(
+			isGitHubTeamMember(
+				"org-token",
+				"cloudflare",
+				"content-engineering",
+				"alice",
+			),
+		).resolves.toBe(false);
 	});
 
-	it("throws on ambiguous responses (403) so callers fail closed", async () => {
+	it("throws a retryable error on ambiguous responses (403)", async () => {
 		vi.stubGlobal(
 			"fetch",
 			vi.fn(async () => new Response("nope", { status: 403 })),
 		);
-		try {
-			await expect(
-				isGitHubTeamMember(
-					"org-token",
-					"cloudflare",
-					"content-engineering",
-					"carol",
-				),
-			).rejects.toThrow(/HTTP 403/);
-		} finally {
-			vi.unstubAllGlobals();
-		}
+		await expect(
+			isGitHubTeamMember(
+				"org-token",
+				"cloudflare",
+				"content-engineering",
+				"alice",
+			),
+		).rejects.toThrow(TeamMembershipCheckError);
 	});
 });

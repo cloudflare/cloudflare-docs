@@ -841,6 +841,11 @@ export default {
 					try {
 						message.ack();
 					} catch (ackErr) {
+						// A throwing ack() is fallback-retried by the Queues API, so a
+						// permanently-failed message may be redelivered and reprocessed
+						// (re-running the GitHub/R2 pipeline and re-logging the failure)
+						// until the retry budget is exhausted. Log it so operators
+						// understand why a "permanently failed" event keeps reappearing.
 						console.error({
 							message: `Failed to ack permanently failed reviewer-recommendation event: ${ackErr instanceof Error ? ackErr.message : String(ackErr)}`,
 							event: "reviewer_recommendations",

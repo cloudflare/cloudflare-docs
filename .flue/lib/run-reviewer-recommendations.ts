@@ -16,11 +16,13 @@ import {
 	getIssueComments,
 	getPullRequest,
 	isGitHubTeamMember,
+	TeamMembershipCheckError,
 	updateIssueComment,
 } from "./github";
 import {
 	RECOMMENDATION_COMMENT_MARKER,
-	applyEventToState,
+	applyClearedState,
+	applyUpdatedState,
 	emptyState,
 	newMentions,
 	parseRecommendationEvent,
@@ -29,8 +31,6 @@ import {
 	shouldSkipRecommendationUpdate,
 	type RecommendationBoundedResult,
 	type ReviewerRecommendationState,
-	type ReviewerRecommendationsEvent,
-	type ReviewerRecommendationsUpdatedEvent,
 	withMentions,
 } from "./reviewer-recommendations";
 
@@ -149,6 +149,11 @@ async function findRecommendationComment(
 
 /** Should this GitHub error be retried by the queue, or is it permanent? */
 export function isRetryableRecommendationError(err: unknown): boolean {
+	// Membership-check failures are always retried: a misconfigured or
+	// rate-limited org token must surface in retries/DLQ, never silently drop
+	// the comment behavior. The HTTP-status-based classification below must not
+	// apply to them.
+	if (err instanceof TeamMembershipCheckError) return true;
 	if (!(err instanceof Error)) return true;
 	const message = err.message;
 	if (
@@ -181,8 +186,9 @@ const NO_RECOMMENDATION_COMMENT_AUTHOR_TEAMS: ReadonlyArray<{
 
 /**
  * Whether the PR author's recommendation comment should be suppressed entirely.
- * Fail-closed: a non-definitive membership response throws (queue retries)
- * rather than risking a comment on an ambiguous membership.
+ * Fail-closed: a non-definitive membership response throws
+ * `TeamMembershipCheckError`, which the queue always retries, rather than
+ * risking a comment on an ambiguous membership.
  */
 async function authorSuppressesRecommendationComment(
 	ghEnv: Record<string, string>,
@@ -190,38 +196,26 @@ async function authorSuppressesRecommendationComment(
 ): Promise<boolean> {
 	const author = pr.user?.login;
 	if (!author) return false;
+	if (!ghEnv.GITHUB_ORG_TOKEN) {
+		// A missing org token makes authorship unknowable. Fail closed (no
+		// comment) and log loudly so the misconfiguration is visible instead of
+		// silently suppressing or pinging the wrong PRs. The thrown error is
+		// retried to the DLQ, which keeps the failure observable.
+		console.error({
+			message: `GITHUB_ORG_TOKEN is unset; cannot resolve internal-owner authorship for PR author ${author}`,
+			event: "reviewer_recommendations",
+			action: "org_token_missing",
+		});
+		throw new Error(
+			`GITHUB_ORG_TOKEN is unset; cannot resolve internal-owner authorship for PR author ${author}`,
+		);
+	}
 	for (const { org, team } of NO_RECOMMENDATION_COMMENT_AUTHOR_TEAMS) {
 		if (await isGitHubTeamMember(ghEnv.GITHUB_ORG_TOKEN, org, team, author)) {
 			return true;
 		}
 	}
 	return false;
-}
-
-function applyUpdatedState(
-	state: ReviewerRecommendationState,
-	event: ReviewerRecommendationsUpdatedEvent,
-	prOpen: boolean,
-	prHeadSha: string | null,
-): ReviewerRecommendationState {
-	// Head-guard: a recommendation computed for an earlier head is stale and
-	// must not clobber a newer one. When the PR has moved on, skip.
-	if (!prOpen) return state;
-	if (event.headSha !== null && event.headSha !== prHeadSha) return state;
-	return applyEventToState(state, event);
-}
-
-function applyClearedState(
-	state: ReviewerRecommendationState,
-	event: ReviewerRecommendationsEvent & {
-		eventType: "reviewer-recommendations.cleared";
-	},
-	prHeadSha: string | null,
-): ReviewerRecommendationState {
-	// Only apply a clear when the PR is no longer at the head the clear was
-	// computed for. A reopen at the same head keeps the prior recommendation.
-	if (event.headSha !== null && event.headSha === prHeadSha) return state;
-	return applyEventToState(state, event);
 }
 
 /**
@@ -277,20 +271,16 @@ export async function processRecommendationEvent(
 	}
 
 	// Drop updated events for PRs we must never comment on: drafts, closed
-	// PRs, PRs the spam/off-topic gate labeled, and PRs authored by members of
-	// an internal owner team (no coverage comment at all — they own the repo
-	// and handle their own reviewers). Cleared events are still processed so an
-	// existing comment is removed when the PR closes. For a skipped PR that
-	// already has a comment (posted while it was open), remove it so the
-	// "never comment on skipped PRs" policy also holds for existing comments,
-	// not just new activity.
-	const suppressedAuthor =
-		event.eventType === "reviewer-recommendations.updated" &&
-		mode === "comment" &&
-		(await authorSuppressesRecommendationComment(ghEnv, pr));
+	// PRs, and PRs the spam/off-topic gate labeled. These are cheap in-memory
+	// checks that run before any API call; internal-owner authorship is
+	// resolved later, only when an updated event is otherwise about to post.
+	// Cleared events are still processed so an existing comment is removed when
+	// the PR closes. For a skipped PR that already has a comment (posted while
+	// it was open), remove it so the "never comment on skipped PRs" policy also
+	// holds for existing comments, not just new activity.
 	if (
 		event.eventType === "reviewer-recommendations.updated" &&
-		(shouldSkipRecommendationUpdate(pr) || suppressedAuthor)
+		shouldSkipRecommendationUpdate(pr)
 	) {
 		log({
 			message: `Dropped reviewer-recommendation update for PR #${prNumber}`,
@@ -299,7 +289,6 @@ export async function processRecommendationEvent(
 			draft: pr.draft,
 			state: pr.state,
 			labels: pr.labels.map((l) => l.name),
-			suppressedAuthor,
 			action: "drop_skipped_pr",
 		});
 		if (mode === "comment") {
@@ -319,17 +308,14 @@ export async function processRecommendationEvent(
 				});
 			}
 		}
-		return {
-			applied: false,
-			reason: suppressedAuthor ? "suppressed_author" : "skipped_pr",
-		};
+		return { applied: false, reason: "skipped_pr" };
 	}
 
 	const state = await readState(bucket, prNumber);
 
 	let nextState =
 		event.eventType === "reviewer-recommendations.cleared"
-			? applyClearedState(state, event, pr.head.sha)
+			? applyClearedState(state, event, pr.state === "open", pr.head.sha)
 			: applyUpdatedState(state, event, pr.state === "open", pr.head.sha);
 
 	if (nextState === state) {
@@ -358,6 +344,35 @@ export async function processRecommendationEvent(
 		nextState.recommendation !== null &&
 		!(nextState.status === "error" && nextState.lastGoodRecommendation === null)
 	) {
+		// Internal-owner authors get no recommendation comment at all: drop the
+		// event and remove any comment posted before the policy applied. The
+		// membership check runs only here — after the cheap skip and stale
+		// checks — so an otherwise-dropped event never pays for the API call.
+		if (await authorSuppressesRecommendationComment(ghEnv, pr)) {
+			log({
+				message: `Dropped reviewer-recommendation update for internal-owner PR #${prNumber}`,
+				event: "reviewer_recommendations",
+				prNumber,
+				author: pr.user?.login,
+				action: "drop_suppressed_author",
+			});
+			const staleId = await findRecommendationComment(
+				token,
+				prNumber,
+				nextState.commentId,
+			);
+			if (staleId) {
+				await deleteIssueComment(token, staleId);
+				log({
+					message: `Deleted stale recommendation comment on suppressed PR #${prNumber}`,
+					event: "reviewer_recommendations",
+					prNumber,
+					commentId: staleId,
+					action: "delete_stale_comment",
+				});
+			}
+			return { applied: false, reason: "suppressed_author" };
+		}
 		const degraded =
 			nextState.status === "error" && nextState.lastGoodRecommendation !== null;
 		const renderSource =

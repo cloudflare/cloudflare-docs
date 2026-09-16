@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
 	RECOMMENDATION_COMMENT_MARKER,
 	RECOMMENDATIONS_REPO,
+	applyClearedState,
 	applyEventToState,
+	applyUpdatedState,
 	emptyState,
 	newMentions,
 	normalizeLogin,
@@ -231,6 +233,56 @@ describe("applyEventToState", () => {
 		expect(errored.status).toBe("error");
 		expect(errored.lastGoodRecommendation).toEqual(good.recommendation);
 		expect(errored.recommendation?.ownershipAreas).toEqual([]);
+	});
+});
+
+// ── Head guards (applyUpdatedState / applyClearedState) ───────────────────────
+
+describe("applyUpdatedState / applyClearedState", () => {
+	it("applies an updated event when the PR is open at the matching head", () => {
+		const next = applyUpdatedState(emptyState(), updatedEvent(), true, HEAD_A);
+		expect(next.recommendation).not.toBeNull();
+		expect(next.eventAt).toBe("2026-09-15T22:55:49.372Z");
+	});
+
+	it("skips an updated event computed for an earlier head", () => {
+		const state = emptyState();
+		const next = applyUpdatedState(state, updatedEvent(), true, "b".repeat(40));
+		expect(next).toBe(state);
+	});
+
+	it("skips an updated event for a closed PR", () => {
+		const state = emptyState();
+		const next = applyUpdatedState(state, updatedEvent(), false, HEAD_A);
+		expect(next).toBe(state);
+	});
+
+	it("applies a clear for a closed PR even when the head matches", () => {
+		// The corpus publishes cleared with the PR's head SHA on close, and a
+		// closed PR keeps that head SHA — so the clear must apply when the PR is
+		// no longer open, not be skipped by the head check.
+		const state = applyUpdatedState(emptyState(), updatedEvent(), true, HEAD_A);
+		expect(state.recommendation).not.toBeNull();
+		const cleared = applyClearedState(state, clearedEvent(), false, HEAD_A);
+		expect(cleared.recommendation).toBeNull();
+		expect(cleared.eventAt).toBe("2026-09-15T23:00:00.000Z");
+	});
+
+	it("applies a clear when the PR is open but moved past the cleared head", () => {
+		const state = applyUpdatedState(emptyState(), updatedEvent(), true, HEAD_A);
+		const cleared = applyClearedState(
+			state,
+			clearedEvent(),
+			true,
+			"b".repeat(40),
+		);
+		expect(cleared.recommendation).toBeNull();
+	});
+
+	it("skips a clear when the PR is still open at the same head", () => {
+		const state = applyUpdatedState(emptyState(), updatedEvent(), true, HEAD_A);
+		const cleared = applyClearedState(state, clearedEvent(), true, HEAD_A);
+		expect(cleared).toBe(state);
 	});
 });
 
