@@ -527,6 +527,8 @@ const result = await env.MY_WORKFLOW.deleteBatch([
 
 The operation returns successes and per-instance failures:
 
+<TypeScriptExample>
+
 ```ts
 type WorkflowBatchDeleteResult = {
 	deleted: { id: string }[];
@@ -538,10 +540,11 @@ type WorkflowBatchDeleteResult = {
 };
 ```
 
-- `deleted` contains the IDs that were deleted successfully.
-- `errors` contains failures identified by instance ID, with a stable error code and message.
+</TypeScriptExample>
 
-Duplicate IDs are deleted once, and the result includes one entry for each input position. An ID whose instance does not exist is included in `errors`. A running instance is terminated before its stored state is removed.
+`deleted` contains the IDs that were deleted successfully. `errors` contains failures identified by instance ID, with a stable error code and message.
+
+`deleteBatch()` accepts between 1 and 100 IDs. Duplicate IDs count toward the limit and are deleted once, with the result repeated for each input position. An ID whose instance does not exist is included in `errors`. If any ID is invalid, the call fails before deleting any instances. Deleting a running instance removes its stored state and stops its current execution without running rollback handlers.
 
 ### get
 
@@ -766,9 +769,7 @@ interface WorkflowInstanceTerminateOptions {
 
 ### delete
 
-Delete a Workflow instance and its stored state.
-
-- <code>delete(): Promise&lt;void&gt;</code>
+Delete a Workflow instance and its stored state with <code>delete(): Promise&lt;void&gt;</code>.
 
 <TypeScriptExample>
 
@@ -779,7 +780,7 @@ await instance.delete();
 
 </TypeScriptExample>
 
-If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+Deleting a running instance stops its current execution without running rollback handlers. If a Workflow deletes its own instance, execution stops during `await instance.delete()`, and code after the call does not run.
 
 ### sendEvent
 
