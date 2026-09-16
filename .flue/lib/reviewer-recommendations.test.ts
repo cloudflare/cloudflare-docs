@@ -5,12 +5,17 @@ import {
 	applyClearedState,
 	applyEventToState,
 	applyUpdatedState,
+	emptyResult,
 	emptyState,
+	isCurrentRecommendationEvent,
 	newMentions,
 	normalizeLogin,
 	parseRecommendationEvent,
 	parseRecommendationsMode,
+	recommendationCommentBodyHash,
+	recommendationDisplayHash,
 	renderRecommendationsComment,
+	shouldWriteRecommendationComment,
 	shouldSkipRecommendationUpdate,
 	withMentions,
 	type RecommendationArea,
@@ -158,6 +163,13 @@ describe("applyEventToState", () => {
 		const first = applyEventToState(emptyState(), updatedEvent());
 		const second = applyEventToState(first, updatedEvent());
 		expect(second).toBe(first);
+		expect(isCurrentRecommendationEvent(first, updatedEvent())).toBe(true);
+		expect(
+			isCurrentRecommendationEvent(
+				first,
+				updatedEvent({ resultHash: "different" }),
+			),
+		).toBe(false);
 	});
 
 	it("ignores an older updated event", () => {
@@ -215,6 +227,13 @@ describe("applyEventToState", () => {
 		const cleared = applyEventToState(emptyState(), clearedEvent());
 		const replay = applyEventToState(cleared, clearedEvent());
 		expect(replay).toBe(cleared);
+		expect(isCurrentRecommendationEvent(cleared, clearedEvent())).toBe(true);
+		expect(
+			isCurrentRecommendationEvent(
+				cleared,
+				clearedEvent({ headSha: "b".repeat(40) }),
+			),
+		).toBe(false);
 	});
 
 	it("preserves the last good recommendation across an error event", () => {
@@ -364,6 +383,132 @@ describe("newMentions / withMentions", () => {
 		]);
 		const mentions = newMentions(emptyState(), r);
 		expect(mentions).toEqual([]);
+	});
+});
+
+describe("shouldWriteRecommendationComment", () => {
+	async function writtenState(
+		recommendation: RecommendationBoundedResult = result([area()]),
+	) {
+		const state = {
+			...emptyState(),
+			eventAt: "2026-09-15T22:55:49.372Z",
+			headSha: "a".repeat(40),
+			resultHash: "envelope-a",
+			status: "complete" as const,
+			recommendation,
+			lastGoodRecommendation: recommendation,
+			commentId: 123,
+			commentBodyHash: await recommendationCommentBodyHash("current body"),
+			mentionedLogins: ["alice"],
+		};
+		return {
+			...state,
+			commentDisplayHash: await recommendationDisplayHash(state),
+		};
+	}
+
+	it("skips a write when only the event envelope and hidden data changed", async () => {
+		const previous = await writtenState();
+		const nextRecommendation = {
+			...result([
+				area({
+					suggestedPeople: [
+						{
+							login: "alice",
+							roles: ["different_internal_role"],
+							isMatchingCodeowner: false,
+						},
+					],
+				}),
+			]),
+			warnings: ["not rendered"],
+			warningCount: 1,
+			overflowCounts: { areas: 0, warnings: 1 },
+		};
+		const next = {
+			...previous,
+			eventAt: "2026-09-15T23:00:00.000Z",
+			headSha: "b".repeat(40),
+			resultHash: "envelope-b",
+			recommendation: nextRecommendation,
+			lastGoodRecommendation: nextRecommendation,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, next, "current body"),
+		).resolves.toBe(false);
+	});
+
+	it("writes when visible recommendation content changed", async () => {
+		const previous = await writtenState();
+		const covered = result([
+			area({
+				satisfied: true,
+				satisfyingApprovers: ["bob"],
+			}),
+		]);
+		const next = {
+			...previous,
+			recommendation: covered,
+			lastGoodRecommendation: covered,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, next, "current body"),
+		).resolves.toBe(true);
+	});
+
+	it("writes when log mode advanced state beyond the last comment", async () => {
+		const written = await writtenState();
+		const changed = result([
+			area({
+				suggestedPeople: [
+					{ login: "bob", roles: [], isMatchingCodeowner: true },
+				],
+			}),
+		]);
+		const previous = {
+			...written,
+			recommendation: changed,
+			lastGoodRecommendation: changed,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, previous, "current body"),
+		).resolves.toBe(true);
+	});
+
+	it("writes when the comment is missing, legacy, or externally edited", async () => {
+		const previous = await writtenState();
+		const legacy = {
+			...previous,
+			commentBodyHash: undefined,
+			commentDisplayHash: undefined,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, previous, null),
+		).resolves.toBe(true);
+		await expect(
+			shouldWriteRecommendationComment(legacy, legacy, "current body"),
+		).resolves.toBe(true);
+		await expect(
+			shouldWriteRecommendationComment(previous, previous, "edited body"),
+		).resolves.toBe(true);
+	});
+
+	it("writes when degraded status changes the rendered warning", async () => {
+		const previous = await writtenState();
+		const next = {
+			...previous,
+			status: "error" as const,
+			recommendation: emptyResult(),
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, next, "current body"),
+		).resolves.toBe(true);
 	});
 });
 

@@ -212,6 +212,10 @@ export interface ReviewerRecommendationState {
 	lastGoodRecommendation: RecommendationBoundedResult | null;
 	/** GitHub comment id of the singleton comment (when known). */
 	commentId?: number;
+	/** SHA-256 of the last comment body successfully written to GitHub. */
+	commentBodyHash?: string;
+	/** SHA-256 of the display projection represented by that comment body. */
+	commentDisplayHash?: string;
 	/** Normalized logins that have already been @-mentioned on this PR. */
 	mentionedLogins: string[];
 }
@@ -307,6 +311,27 @@ export function applyEventToState(
 			: event.result,
 	};
 	return next;
+}
+
+/** Whether an event exactly matches the current durable event. */
+export function isCurrentRecommendationEvent(
+	state: ReviewerRecommendationState,
+	event: ReviewerRecommendationsEvent,
+): boolean {
+	if (event.eventType === "reviewer-recommendations.cleared") {
+		return (
+			state.recommendation === null &&
+			state.eventAt === event.clearedAt &&
+			state.headSha === event.headSha
+		);
+	}
+	return (
+		state.recommendation !== null &&
+		state.eventAt === event.computedAt &&
+		state.headSha === event.headSha &&
+		state.resultHash === event.resultHash &&
+		state.status === event.status
+	);
 }
 
 /**
@@ -464,6 +489,95 @@ function areaName(area: RecommendationArea): string {
 		/^src\/(?:content\/docs|content\/partials|assets\/images|content\/changelog)\/([^/]+)/,
 	)?.[1];
 	return pathSlug ? humanizeAreaName(pathSlug) : "Other";
+}
+
+function recommendationDisplayKey(state: ReviewerRecommendationState): string {
+	const degraded =
+		state.status === "error" && state.lastGoodRecommendation !== null;
+	const result = degraded ? state.lastGoodRecommendation : state.recommendation;
+	return JSON.stringify({
+		degraded,
+		result:
+			result === null
+				? null
+				: {
+						areaCount: result.areaCount,
+						ownershipAreas: result.ownershipAreas.map((area) => {
+							const suggestions = area.suggestedPeople.map(
+								(person) => person.login,
+							);
+							const fallbackOwners =
+								!area.satisfied && suggestions.length === 0
+									? (area.fallbackOwners ?? [])
+									: [];
+							return {
+								name: areaName(area),
+								totalPaths: area.totalPaths,
+								codeownersPattern: area.codeownersPattern,
+								codeownersDeclared:
+									area.codeownersPattern === null
+										? []
+										: (area.codeownersDeclared ?? []),
+								contacts: area.satisfied
+									? null
+									: {
+											suggestions,
+											fallbackOwners,
+											totalOwners:
+												fallbackOwners.length > 0 ? (area.totalOwners ?? 0) : 0,
+										},
+								satisfyingApprovers: area.satisfied
+									? area.satisfyingApprovers
+									: [],
+								satisfied: area.satisfied,
+							};
+						}),
+					},
+	});
+}
+
+async function sha256(value: string): Promise<string> {
+	const digest = await crypto.subtle.digest(
+		"SHA-256",
+		new TextEncoder().encode(value),
+	);
+	return [...new Uint8Array(digest)]
+		.map((byte) => byte.toString(16).padStart(2, "0"))
+		.join("");
+}
+
+export function recommendationCommentBodyHash(body: string): Promise<string> {
+	return sha256(body);
+}
+
+export function recommendationDisplayHash(
+	state: ReviewerRecommendationState,
+): Promise<string> {
+	return sha256(recommendationDisplayKey(state));
+}
+
+/**
+ * A newer event may update durable ordering state without changing the public
+ * comment. Missing, legacy, or externally edited comments are always repaired.
+ */
+export async function shouldWriteRecommendationComment(
+	previous: ReviewerRecommendationState,
+	next: ReviewerRecommendationState,
+	existingBody: string | null,
+): Promise<boolean> {
+	if (
+		existingBody === null ||
+		previous.commentBodyHash === undefined ||
+		previous.commentDisplayHash === undefined
+	)
+		return true;
+	if ((await recommendationDisplayHash(next)) !== previous.commentDisplayHash) {
+		return true;
+	}
+	return (
+		(await recommendationCommentBodyHash(existingBody)) !==
+		previous.commentBodyHash
+	);
 }
 
 function areaCell(area: RecommendationArea, showPattern: boolean): string {

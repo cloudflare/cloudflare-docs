@@ -18,16 +18,21 @@ import {
 	isGitHubTeamMember,
 	TeamMembershipCheckError,
 	updateIssueComment,
+	type GitHubIssueComment,
 } from "./github";
 import {
 	RECOMMENDATION_COMMENT_MARKER,
 	applyClearedState,
 	applyUpdatedState,
 	emptyState,
+	isCurrentRecommendationEvent,
 	newMentions,
 	parseRecommendationEvent,
 	parseRecommendationsMode,
+	recommendationCommentBodyHash,
+	recommendationDisplayHash,
 	renderRecommendationsComment,
+	shouldWriteRecommendationComment,
 	shouldSkipRecommendationUpdate,
 	type RecommendationBoundedResult,
 	type ReviewerRecommendationState,
@@ -53,6 +58,8 @@ const StateSchema = v.object({
 	recommendation: v.union([v.null(), v.unknown()]),
 	lastGoodRecommendation: v.union([v.null(), v.unknown()]),
 	commentId: v.optional(v.number()),
+	commentBodyHash: v.optional(v.string()),
+	commentDisplayHash: v.optional(v.string()),
 	mentionedLogins: v.array(v.string()),
 });
 
@@ -63,31 +70,37 @@ function stateKey(prNumber: number): string {
 async function readState(
 	bucket: R2Bucket,
 	prNumber: number,
-): Promise<ReviewerRecommendationState> {
+): Promise<{ state: ReviewerRecommendationState; etag: string | null }> {
 	const obj = await bucket.get(stateKey(prNumber));
-	if (!obj) return emptyState();
+	if (!obj) return { state: emptyState(), etag: null };
 	try {
 		const parsed = v.safeParse(StateSchema, await obj.json());
-		if (!parsed.success) return emptyState();
+		if (!parsed.success) return { state: emptyState(), etag: obj.etag };
 		const raw = parsed.output as unknown as Record<string, unknown>;
 		return {
-			eventAt: String(raw["eventAt"] ?? ""),
-			headSha: raw["headSha"] === null ? null : String(raw["headSha"] ?? null),
-			resultHash: raw["resultHash"] as string | undefined,
-			status: raw["status"] as ReviewerRecommendationState["status"],
-			recommendation: raw[
-				"recommendation"
-			] as RecommendationBoundedResult | null,
-			lastGoodRecommendation: raw[
-				"lastGoodRecommendation"
-			] as RecommendationBoundedResult | null,
-			commentId: raw["commentId"] as number | undefined,
-			mentionedLogins: Array.isArray(raw["mentionedLogins"])
-				? (raw["mentionedLogins"] as string[])
-				: [],
+			state: {
+				eventAt: String(raw["eventAt"] ?? ""),
+				headSha:
+					raw["headSha"] === null ? null : String(raw["headSha"] ?? null),
+				resultHash: raw["resultHash"] as string | undefined,
+				status: raw["status"] as ReviewerRecommendationState["status"],
+				recommendation: raw[
+					"recommendation"
+				] as RecommendationBoundedResult | null,
+				lastGoodRecommendation: raw[
+					"lastGoodRecommendation"
+				] as RecommendationBoundedResult | null,
+				commentId: raw["commentId"] as number | undefined,
+				commentBodyHash: raw["commentBodyHash"] as string | undefined,
+				commentDisplayHash: raw["commentDisplayHash"] as string | undefined,
+				mentionedLogins: Array.isArray(raw["mentionedLogins"])
+					? (raw["mentionedLogins"] as string[])
+					: [],
+			},
+			etag: obj.etag,
 		};
 	} catch {
-		return emptyState();
+		return { state: emptyState(), etag: obj.etag };
 	}
 }
 
@@ -95,6 +108,7 @@ async function saveState(
 	bucket: R2Bucket,
 	prNumber: number,
 	state: ReviewerRecommendationState,
+	expectedEtag: string | null,
 ): Promise<void> {
 	const body = JSON.stringify({
 		eventAt: state.eventAt,
@@ -104,21 +118,21 @@ async function saveState(
 		recommendation: state.recommendation,
 		lastGoodRecommendation: state.lastGoodRecommendation,
 		commentId: state.commentId,
+		commentBodyHash: state.commentBodyHash,
+		commentDisplayHash: state.commentDisplayHash,
 		mentionedLogins: state.mentionedLogins,
 	});
-	for (let attempt = 0; attempt < 3; attempt++) {
-		const obj = await bucket.get(stateKey(prNumber));
-		const etag = obj?.etag ?? null;
-		const putResult = etag
-			? await bucket.put(stateKey(prNumber), body, {
-					onlyIf: new Headers({ "If-Match": etag }),
-				})
-			: await bucket.put(stateKey(prNumber), body, {
-					onlyIf: new Headers({ "If-None-Match": "*" }),
-				});
-		if (putResult !== null) return;
-		// Lost the race — another queue message updated the key; retry with a
-		// fresh read. State transitions are deterministic given the same event.
+	const putResult = expectedEtag
+		? await bucket.put(stateKey(prNumber), body, {
+				onlyIf: { etagMatches: expectedEtag },
+			})
+		: await bucket.put(stateKey(prNumber), body, {
+				onlyIf: { etagDoesNotMatch: "*" },
+			});
+	if (putResult === null) {
+		throw new Error(
+			`Concurrent recommendation state update for PR #${prNumber}`,
+		);
 	}
 }
 
@@ -131,11 +145,12 @@ async function findRecommendationComment(
 	token: string,
 	prNumber: number,
 	recordedId: number | undefined,
-): Promise<number | null> {
+): Promise<GitHubIssueComment | null> {
 	if (recordedId) {
 		try {
 			const found = await getIssueComments(token, prNumber);
-			if (found.some((c) => c.id === recordedId)) return recordedId;
+			const recorded = found.find((comment) => comment.id === recordedId);
+			if (recorded) return recorded;
 		} catch {
 			// fall through to marker scan; the recorded id may be stale
 		}
@@ -144,7 +159,7 @@ async function findRecommendationComment(
 	const match = comments.find((c) =>
 		c.body?.includes(RECOMMENDATION_COMMENT_MARKER),
 	);
-	return match ? match.id : null;
+	return match ?? null;
 }
 
 /** Should this GitHub error be retried by the queue, or is it permanent? */
@@ -292,18 +307,18 @@ export async function processRecommendationEvent(
 			action: "drop_skipped_pr",
 		});
 		if (mode === "comment") {
-			const staleId = await findRecommendationComment(
+			const staleComment = await findRecommendationComment(
 				token,
 				prNumber,
 				undefined,
 			);
-			if (staleId) {
-				await deleteIssueComment(token, staleId);
+			if (staleComment) {
+				await deleteIssueComment(token, staleComment.id);
 				log({
 					message: `Deleted stale recommendation comment on skipped PR #${prNumber}`,
 					event: "reviewer_recommendations",
 					prNumber,
-					commentId: staleId,
+					commentId: staleComment.id,
 					action: "delete_stale_comment",
 				});
 			}
@@ -311,14 +326,16 @@ export async function processRecommendationEvent(
 		return { applied: false, reason: "skipped_pr" };
 	}
 
-	const state = await readState(bucket, prNumber);
+	const { state, etag } = await readState(bucket, prNumber);
 
 	let nextState =
 		event.eventType === "reviewer-recommendations.cleared"
 			? applyClearedState(state, event, pr.state === "open", pr.head.sha)
 			: applyUpdatedState(state, event, pr.state === "open", pr.head.sha);
 
-	if (nextState === state) {
+	const replay =
+		nextState === state && isCurrentRecommendationEvent(state, event);
+	if (nextState === state && !replay) {
 		log({
 			message: `Skipped stale or duplicate reviewer-recommendation event for PR #${prNumber}`,
 			event: "reviewer_recommendations",
@@ -328,17 +345,26 @@ export async function processRecommendationEvent(
 		});
 		return { applied: false, reason: "stale_or_duplicate" };
 	}
+	let stateChanged = nextState !== state;
+	if (replay) nextState = { ...state };
 
 	if (mode === "comment" && nextState.recommendation === null) {
-		const commentId = await findRecommendationComment(
+		const comment = await findRecommendationComment(
 			token,
 			prNumber,
 			nextState.commentId,
 		);
-		if (commentId) {
-			await deleteIssueComment(token, commentId);
-			nextState.commentId = undefined;
+		if (comment) {
+			await deleteIssueComment(token, comment.id);
+			stateChanged = true;
 		}
+		stateChanged ||=
+			nextState.commentId !== undefined ||
+			nextState.commentBodyHash !== undefined ||
+			nextState.commentDisplayHash !== undefined;
+		nextState.commentId = undefined;
+		nextState.commentBodyHash = undefined;
+		nextState.commentDisplayHash = undefined;
 	} else if (
 		mode === "comment" &&
 		nextState.recommendation !== null &&
@@ -356,18 +382,18 @@ export async function processRecommendationEvent(
 				author: pr.user?.login,
 				action: "drop_suppressed_author",
 			});
-			const staleId = await findRecommendationComment(
+			const staleComment = await findRecommendationComment(
 				token,
 				prNumber,
 				nextState.commentId,
 			);
-			if (staleId) {
-				await deleteIssueComment(token, staleId);
+			if (staleComment) {
+				await deleteIssueComment(token, staleComment.id);
 				log({
 					message: `Deleted stale recommendation comment on suppressed PR #${prNumber}`,
 					event: "reviewer_recommendations",
 					prNumber,
-					commentId: staleId,
+					commentId: staleComment.id,
 					action: "delete_stale_comment",
 				});
 			}
@@ -383,26 +409,48 @@ export async function processRecommendationEvent(
 		const previouslyMentionedLogins = nextState.mentionedLogins.filter(
 			(login) => !newMentioned.includes(login),
 		);
-		const body = renderRecommendationsComment({
-			recommendation: renderSource,
-			newLogins: newMentioned,
-			previouslyMentionedLogins,
-			degraded,
-		});
-		const existingId = await findRecommendationComment(
+		const existingComment = await findRecommendationComment(
 			token,
 			prNumber,
 			nextState.commentId,
 		);
-		let commentId: number;
-		if (existingId) {
-			await updateIssueComment(token, existingId, body);
-			commentId = existingId;
+		const shouldWrite =
+			newMentioned.length > 0 ||
+			(await shouldWriteRecommendationComment(
+				state,
+				nextState,
+				existingComment?.body ?? null,
+			));
+		if (!shouldWrite && existingComment) {
+			stateChanged ||= nextState.commentId !== existingComment.id;
+			nextState.commentId = existingComment.id;
+			log({
+				message: `Skipped unchanged recommendation comment for PR #${prNumber}`,
+				event: "reviewer_recommendations",
+				prNumber,
+				commentId: existingComment.id,
+				action: "skip_unchanged_comment",
+			});
 		} else {
-			commentId = await createIssueComment(token, prNumber, body);
+			stateChanged = true;
+			const body = renderRecommendationsComment({
+				recommendation: renderSource,
+				newLogins: newMentioned,
+				previouslyMentionedLogins,
+				degraded,
+			});
+			let commentId: number;
+			if (existingComment) {
+				await updateIssueComment(token, existingComment.id, body);
+				commentId = existingComment.id;
+			} else {
+				commentId = await createIssueComment(token, prNumber, body);
+			}
+			nextState.commentId = commentId;
+			nextState.commentBodyHash = await recommendationCommentBodyHash(body);
+			nextState.commentDisplayHash = await recommendationDisplayHash(nextState);
+			nextState = withMentions(nextState, newMentioned);
 		}
-		nextState.commentId = commentId;
-		nextState = withMentions(nextState, newMentioned);
 	} else {
 		log({
 			message: `Recommendation processed without a comment for PR #${prNumber}`,
@@ -416,6 +464,6 @@ export async function processRecommendationEvent(
 		});
 	}
 
-	await saveState(bucket, prNumber, nextState);
+	if (stateChanged) await saveState(bucket, prNumber, nextState, etag);
 	return { applied: true };
 }
