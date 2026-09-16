@@ -11,6 +11,7 @@ The 2.0 design principle is **trusted code drives; the model only reasons.** Con
 ### Entry point and routing
 
 - **`app.ts`** — a Hono app. `setProvider(cloudflareBindingProvider({ binding: AI, gateway: … }))` runs at module scope so the Workers AI binding + AI Gateway are configured in every isolate, including the per-agent Durable Objects that make model calls. `GET /health` is public. `POST /webhooks/github` is the only ingress: it verifies the webhook HMAC signature, calls the pure `classifyWebhook`, and hands actionable events to `startReviewPipeline`. There are **no internal HTTP routes** — the orchestrators drive agents via bindings, not worker-to-worker HTTP — so there is no internal-auth middleware.
+- **`cloudflare.ts` default export** — the `queue()` handler for the `cloudflare-docs-reviewer-recommendations` queue (see Reviewer-recommendation queue below). Non-HTTP handlers live here; `fetch` stays in `app.ts`.
 - **`lib/webhook-classify.ts`** — pure, unit-tested classification of the webhook payload into a routing decision (`classifyWebhook`, `isActionable`). No transport, no GitHub calls, no bindings.
 - **`lib/pipeline-entry.ts`** — `startReviewPipeline`: the fast seam between the HTTP ingress and the durable pipeline. It kicks the right Workflow and returns immediately so the webhook always answers within GitHub's delivery timeout. Codeowner slash commands are handled inline (auth + reactions + kick/flag) because they are only a few sub-second API calls.
 
@@ -80,6 +81,18 @@ Code review and style-guide review fan out **one agent instance per changed file
 - **Models**: all model calls use `cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731`. The validation step uses `cloudflare/@cf/zai-org/glm-5.2`.
 - **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
 
+### Reviewer-recommendation queue
+
+The corpus worker (`cloudflare-docs-github-corpus`) publishes `reviewer-recommendations.updated`/`.cleared` events to the `cloudflare-docs-reviewer-recommendations` queue. Flue is the only consumer and owns every GitHub mutation; corpus never writes to GitHub.
+
+- **Ingress**: `cloudflare.ts` default export `queue()` → `processRecommendationEvent` (`lib/run-reviewer-recommendations.ts`). No agent, Workflow, or Durable Object is involved — the work is short trusted TypeScript (validate → head-check → R2 → comment).
+- **Never mutates GitHub reviewers or assignees.** CODEOWNERS alone manages formal review requests. Flue only creates/updates/deletes the singleton recommendation comment.
+- **Event contract**: version `1`, `updated` carries a bounded projection of the recommendation (`ownershipAreas[].suggestedPeople`, `satisfyingApprovers`, `satisfied`, overflow counts); `cleared` carries no payload. Schema + state transitions + rendering live in `lib/reviewer-recommendations.ts` (pure, unit-tested).
+- **Dedupe**: keyed on `computedAt`/`clearedAt` ordering plus the `resultHash`. Identical replays are no-ops; a `cleared` event supersedes prior `updated` state for the same artifact; an `updated` whose `headSha` no longer matches the current PR head is skipped.
+- **State**: R2 `diffs/pr-<n>/reviewer-recommendations.json` holds the current event, head SHA, result hash, status, latest + last-good results, comment id, and the logins already @-mentioned. `cleared` leaves a tombstone so delayed duplicates cannot resurrect the comment.
+- **Comment**: one `## Suggested review contacts` comment per PR, located by the `cloudflare-docs-flue-reviewer-recommendations` marker. Every corpus suggestion is always listed (as code spans); only *newly appearing* logins are @-mentioned, once per PR. `error`/`fallback` results render from the last good snapshot with a generic note — raw corpus warnings/errors are never published. `cleared` deletes the comment.
+- **Retries**: transient GitHub/R2 failures throw and the message is retried (dedicated DLQ after `max_retries`); malformed events, stale heads, and permanent 4xx failures are acked.
+
 ### Slash commands (codeowner-only, commented on a PR)
 
 Handled inline in `lib/pipeline-entry.ts`. Authorization is `getInstallationToken` + `isCodeOwner(token, GITHUB_ORG_TOKEN, sender)`; non-codeowners are ignored.
@@ -94,7 +107,8 @@ Handled inline in `lib/pipeline-entry.ts`. Authorization is `getInstallationToke
 
 ### Bindings & migrations (`wrangler.jsonc`)
 
-- Bindings: `AI` (Workers AI), `DOCS_FLUE_BUCKET` (R2), and four `[[workflows]]` (`REVIEW_ORCHESTRATOR`, `INGEST`, `DEPENDABOT_REVIEW`, `REBASE`). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`. `GITHUB_WEBHOOK_SECRET` and `GITHUB_ORG_TOKEN` (read:org, for codeowner checks) are required secrets.
+- Bindings: `AI` (Workers AI), `DOCS_FLUE_BUCKET` (R2), four `[[workflows]]` (`REVIEW_ORCHESTRATOR`, `INGEST`, `DEPENDABOT_REVIEW`, `REBASE`), and one `[[queues.consumers]]` entry for `cloudflare-docs-reviewer-recommendations` (sequential, per-message retry, DLQ `cloudflare-docs-reviewer-recommendations-dlq`). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`. `GITHUB_WEBHOOK_SECRET` and `GITHUB_ORG_TOKEN` (read:org, for codeowner checks) are required secrets.
+- **Recommendations mode** (`DOCS_FLUE_RECOMMENDATIONS_MODE`): `log` (default) drains the queue and updates R2 state without touching GitHub; `comment` additionally creates/updates/deletes the recommendation comment. Mirrors `DOCS_FLUE_REVIEW_MODE`; when unset it falls back to that value.
 - DO migrations: v1–v9 are the 0.11 history (kept so already-deployed workers migrate in order). **v10** is the Flue 2.0 reset: it deletes the retired `FlueRegistry` plus all nine 0.11 workflow DO classes and creates the **seven** per-agent SQLite DO classes the 2.0 build binds (`Flue<PascalCase(agentName)>Agent`). **v11** adds the `FlueReviewValidatorAgent` DO class. Every agent DO binding is created by v10/v11. Validate the whole config with `wrangler deploy --dry-run --config dist/cloudflare_docs_flue/wrangler.json`.
 
 ### Roles, build config, and dev/deploy scripts

@@ -70,6 +70,11 @@ import { runStyleGuide } from "./lib/run-style-guide";
 import { runConventionsReview } from "./lib/run-conventions-review";
 import { reconcileStream } from "./lib/run-reconcile";
 import { validateStream } from "./lib/run-review-validation";
+import {
+	isRetryableRecommendationError,
+	processRecommendationEvent,
+	type RecommendationEnv,
+} from "./lib/run-reviewer-recommendations";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -782,6 +787,40 @@ export { DependabotReviewWorkflow } from "./orchestrators/dependabot-review-work
 export { RebaseWorkflow } from "./orchestrators/rebase-workflow";
 export { IngestWorkflow } from "./orchestrators/ingest-workflow";
 
-// Reserved for future non-HTTP handlers (queue, scheduled). Must not define
-// `fetch` — HTTP handling stays in app.ts.
-export default {};
+// Reserved for non-HTTP handlers (queue, scheduled). Must not define `fetch` —
+// HTTP handling stays in app.ts.
+export default {
+	async queue(
+		batch: MessageBatch<unknown>,
+		env: RecommendationEnv,
+	): Promise<void> {
+		// The reviewer-recommendation queue carries bounded projection events from
+		// the corpus worker. Processing is sequential and per-message: each event
+		// is validated, head-checked, applied to R2 state, and reflected in the
+		// singleton recommendation comment. Malformed events and stale head
+		// matches are acked; transient failures are retried per message so one
+		// bad event never stalls the batch.
+		for (const message of batch.messages) {
+			try {
+				await processRecommendationEvent(message.body, env);
+				message.ack();
+			} catch (err) {
+				if (isRetryableRecommendationError(err)) {
+					console.error({
+						message: `Retrying reviewer-recommendation event: ${err instanceof Error ? err.message : String(err)}`,
+						event: "reviewer_recommendations",
+						action: "retry",
+					});
+					message.retry();
+				} else {
+					console.error({
+						message: `Acknowledging permanently failed reviewer-recommendation event: ${err instanceof Error ? err.message : String(err)}`,
+						event: "reviewer_recommendations",
+						action: "ack_permanent_failure",
+					});
+					message.ack();
+				}
+			}
+		}
+	},
+};

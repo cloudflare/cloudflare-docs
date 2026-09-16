@@ -138,6 +138,51 @@ export async function closeIssue(
 	}
 }
 
+/**
+ * Create a comment on an issue/PR and return the created comment's id.
+ * Unlike `postComment` (which returns void), this is used when the caller needs
+ * to persist the comment id for later updates.
+ */
+export async function createIssueComment(
+	token: string,
+	issueNumber: number,
+	body: string,
+): Promise<number> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments`,
+		{
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ body }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to post comment on ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as { id: number };
+	return data.id;
+}
+
+/** Delete an issue comment. A 404 is treated as success (already gone). */
+export async function deleteIssueComment(
+	token: string,
+	commentId: number,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{
+			method: "DELETE",
+			headers: apiHeaders(token),
+		},
+	);
+	if (res.ok || res.status === 404) return;
+	throw new Error(
+		`Failed to delete comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+	);
+}
+
 export async function postComment(
 	token: string,
 	issueNumber: number,
