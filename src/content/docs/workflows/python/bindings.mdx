@@ -12,13 +12,6 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-:::caution[Python Workflows are in beta.]
-
-You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler config file.
-
-Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or later, to be set in your Wrangler config file.
-:::
-
 The Python Workers platform leverages [FFI](https://en.wikipedia.org/wiki/Foreign_function_interface) to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
 
 From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your Wrangler configuration file.
