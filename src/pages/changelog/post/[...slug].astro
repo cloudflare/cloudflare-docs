@@ -12,6 +12,7 @@ import { getEntries, render } from "astro:content";
 import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
+import { PageActions } from "~/components/ui/page-actions";
 import { components } from "~/mdx-components";
 import { getOgImage } from "~/util/og";
 
@@ -100,6 +101,8 @@ const { Content } = await render(note);
 					<ProductPills products={products} />
 				</div>
 			)}
+
+			<PageActions class="mt-4" />
 
 			<div class="docs-content nb-cl-prose mt-9 max-w-none">
 				<Content components={components} />
