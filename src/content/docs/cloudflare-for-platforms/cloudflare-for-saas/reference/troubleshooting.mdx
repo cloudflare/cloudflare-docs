@@ -19,9 +19,9 @@ import { Details, Render } from "~/components";
 
 If a custom hostname certificate is stuck in **pending validation** or has timed out, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) step did not complete successfully.
 
-Refer to [DCV troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/dcv-troubleshooting/) for:
+Refer to [Troubleshooting certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/) for:
 
-- A breakdown of which errors require action from the **SaaS Provider** versus the **end customer**.
+- A breakdown of which errors require action from the **SaaS provider** versus **your customer**.
 - CA error messages with resolution steps.
 - How to recover from stale tokens or a **Timed Out Validation** status.
 
@@ -80,7 +80,7 @@ In some circumstances, custom hostnames can also enter a **Moved** state if your
 
 ## CAA errors
 
-If a custom hostname shows a `caa_error` status, refer to [DCV troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/dcv-troubleshooting/#caa-records) for resolution steps, including the exact CAA records required per certificate authority.
+If a custom hostname shows a `caa_error` status, refer to [Troubleshooting certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#caa-records) for resolution steps, including the exact CAA records required per certificate authority.
 
 ***
 
