@@ -104,24 +104,33 @@ If your customer does not intend to restrict certificate issuance, they can remo
 DCV tokens become invalid in the following situations:
 
 - The token validity period expires before your customer places them (Let's Encrypt: 7 days; Google Trust Services and SSL.com: 14 days).
-- Universal SSL is toggled off and back on for your SaaS zone.
 - The custom hostname is deleted and re-created.
 
 The custom hostname shows `ssl.status: pending_validation` and `ssl.validation_errors` reports a missing token on a domain your customer believes is correctly configured, or your customer confirms they placed the token but validation has not progressed.
 
-To refresh the DCV tokens, send a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Use the same `method` value (`txt` or `http`) that was set when the custom hostname was created — changing it will alter how your customer is expected to complete validation. This starts a new DCV cycle and generates fresh tokens. Share the updated tokens from `ssl.validation_records` with your customer.
+To request a DCV recheck, send a configuration-neutral `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. The `PATCH` body must echo the hostname's current `ssl.method`, `ssl.type`, and any `ssl.settings` values — omitting non-default settings resets them to defaults. First retrieve the current configuration with a GET request, then use those values in the PATCH.
+
+:::note
+A `PATCH` triggers a DCV recheck but does not guarantee immediate token rotation. After sending the `PATCH`, poll the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint and check `ssl.validation_records`. Only update the records you share with your customer if the token values have changed.
+:::
 
 <Details header="Example API call">
 
 ```sh
+# Step 1: retrieve the current ssl configuration
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "Authorization: Bearer <API_TOKEN>"
+
+# Step 2: send a PATCH echoing the current ssl object (including ssl.settings if present)
 curl --request PATCH \
   "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
     "ssl": {
-      "method": "<txt_or_http>",
-      "type": "dv"
+      "method": "<method_from_get>",
+      "type": "dv",
+      "settings": "<ssl_settings_from_get>"
     }
   }'
 ```
@@ -134,26 +143,32 @@ curl --request PATCH \
 
 A custom hostname enters **Timed Out Validation** (`ssl.status: timed_out`) when the DCV tokens were not placed before the retry schedule was exhausted.
 
-To restart the DCV cycle, send a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, preserving the original `method` value (`txt` or `http`):
+To restart the DCV cycle, send a configuration-neutral `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Retrieve the current hostname configuration with a GET request first, then echo the `ssl.method`, `ssl.type`, and `ssl.settings` values in the PATCH body.
 
 <Details header="Example API call">
 
 ```sh
+# Step 1: retrieve the current ssl configuration
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
+  --header "Authorization: Bearer <API_TOKEN>"
+
+# Step 2: send a PATCH echoing the current ssl object (including ssl.settings if present)
 curl --request PATCH \
   "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_hostnames/{custom_hostname_id}" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
     "ssl": {
-      "method": "<txt_or_http>",
-      "type": "dv"
+      "method": "<method_from_get>",
+      "type": "dv",
+      "settings": "<ssl_settings_from_get>"
     }
   }'
 ```
 
 </Details>
 
-After sending the `PATCH`, share the updated DCV tokens from `ssl.validation_records` with your customer. Make sure the tokens are placed before they expire again.
+After sending the `PATCH`, poll the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint and check `ssl.validation_records`. Only share updated tokens with your customer if the token values have changed. Make sure the tokens are placed before they expire again.
 
 :::tip
 If you are managing DCV tokens on behalf of your customers, consider using [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) to avoid manual token delivery altogether.
