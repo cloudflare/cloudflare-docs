@@ -24,7 +24,8 @@ view the following analytics:
 The same word can count different things. A retry, a fallback, and a cache hit each change
 what "requests", "tokens", and "cost" mean in the dashboard and in GraphQL analytics. The
 counting-basis table in this section makes the counting unit explicit per event shape, so
-reports can name their denominator instead of inheriting one by accident.
+reports can name their denominator instead of inheriting one by accident. The counting
+basis below is proposed; it is not backend-confirmed.
 
 | Event shape | Log rows | Provider attempts | Requests metric | Tokens and cost | Definition status |
 | --- | --- | --- | --- | --- | --- |
@@ -36,8 +37,7 @@ reports can name their denominator instead of inheriting one by accident.
 Two rules keep these numbers auditable:
 
 - **Attempts and requests are separate grains.** Reliability reporting reads attempts. Demand and customer-value reporting reads requests. A single mixed number cannot safely serve both.
-- **If a metric's counting basis is not stated, treat it as not yet defined** rather than assuming one. In the definition status column, *observed* means the behavior is described from outside behavior and is not yet confirmed against the backend. *Pending confirmation* means the stated basis is proposed rather than guaranteed. Until a row is marked *backend-confirmed*, the displayed cost attribution in that row should not be used for billing or enforcement.
-- Metrics not included in the counting-basis table are pending explicit definition.
+- **If a metric's counting basis is not stated, treat it as not yet defined** rather than assuming one. In the definition status column, *observed* means the behavior is described from outside behavior and is not yet confirmed against the backend. *Pending confirmation* means the stated basis is proposed rather than guaranteed. Until a row is marked *backend-confirmed*, the displayed cost attribution in that row should not be used for billing or enforcement. Metrics not included in the counting-basis table are pending explicit definition.
 
 When alerts or budgets key off a metric, check which basis that metric uses. A budget drawn
 on served requests will throttle traffic that a provider-cost budget would not. The two
