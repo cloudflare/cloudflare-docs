@@ -131,9 +131,7 @@ This check makes sure that:
 
 We commonly get questions about approvals, especially for pull requests that touch multiple product areas (or our components).
 
-We have a specific part of [CI](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml#L32) that [posts a comment](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/post-codeowners-comment/index.ts) with the relevant codeowners.
-
-![Codeowners comment](~/assets/images/style-guide/how-we-docs/codeowners-comment.png)
+The Cloudflare Docs Bot posts a [Suggested review contacts](https://github.com/cloudflare/cloudflare-docs/tree/production/.flue) comment on every pull request with a live view of ownership coverage: which areas need a CODEOWNERS approval, who owns each area, and which areas are already covered.
 
 #### What changed?
 
