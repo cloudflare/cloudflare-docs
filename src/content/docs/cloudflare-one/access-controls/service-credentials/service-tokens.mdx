@@ -179,7 +179,7 @@ Access considers a service token inactive when all of the following are true:
 
 - The token has not successfully authenticated with an Access application during the configured inactivity period.
 - The token is older than the configured inactivity period.
-- No Access policy rule directly references the token.
+- The token is not directly referenced by an Access policy rule.
 
 You can set the inactivity period to a whole number from 30 to 365 days. Disabled tokens remain in your account and can be turned on again. Deleted tokens cannot be recovered.
 
