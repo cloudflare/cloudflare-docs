@@ -29,6 +29,15 @@ export function parseRecommendationsMode(value: unknown): RecommendationsMode {
 export const RECOMMENDATIONS_SKIP_LABELS = ["spam", "off topic"] as const;
 
 /**
+ * CODEOWNERS rules whose declared owners replace suggested contacts in the
+ * public comment. Exact pattern matching keeps this policy independent of
+ * mutable CODEOWNERS source-line numbers and derived product keys.
+ */
+export const CODEOWNERS_ONLY_CONTACT_PATTERNS = [
+	"/public/__redirects",
+] as const;
+
+/**
  * Whether an updated recommendation event for this PR should be dropped:
  * never comment on draft, closed, or spam/off-topic PRs. Cleared events are
  * still processed so an existing comment is removed on close.
@@ -235,6 +244,15 @@ export function normalizeLogin(login: string): string {
 	return login.trim().toLowerCase();
 }
 
+function usesCodeownersOnlyContacts(area: RecommendationArea): boolean {
+	return (
+		area.codeownersPattern !== null &&
+		(CODEOWNERS_ONLY_CONTACT_PATTERNS as readonly string[]).includes(
+			area.codeownersPattern,
+		)
+	);
+}
+
 function isGitHubLogin(login: string): boolean {
 	return /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(login);
 }
@@ -245,7 +263,7 @@ export function uncoveredSuggestedLogins(
 ): string[] {
 	const seen = new Set<string>();
 	for (const area of result.ownershipAreas) {
-		if (area.satisfied) continue;
+		if (area.satisfied || usesCodeownersOnlyContacts(area)) continue;
 		for (const person of area.suggestedPeople) {
 			const key = normalizeLogin(person.login);
 			if (isGitHubLogin(key) && !seen.has(key)) seen.add(key);
@@ -448,6 +466,11 @@ function proseText(value: string): string {
  * no suggestion exists. Display-only, never @-mentioned.
  */
 function contactsCell(area: RecommendationArea): string {
+	if (usesCodeownersOnlyContacts(area)) {
+		const owners = area.codeownersDeclared ?? [];
+		if (owners.length === 0) return "_No CODEOWNERS available_";
+		return `${owners.map(codeSpan).join(", ")}<br/><sub>CODEOWNERS only · not notified</sub>`;
+	}
 	if (area.suggestedPeople.length > 0) {
 		return area.suggestedPeople
 			.map((person) => codeSpan(person.login))
@@ -513,11 +536,12 @@ function recommendationDisplayKey(state: ReviewerRecommendationState): string {
 				: {
 						areaCount: result.areaCount,
 						ownershipAreas: result.ownershipAreas.map((area) => {
-							const suggestions = area.suggestedPeople.map(
-								(person) => person.login,
-							);
+							const codeownersOnly = usesCodeownersOnlyContacts(area);
+							const suggestions = codeownersOnly
+								? []
+								: area.suggestedPeople.map((person) => person.login);
 							const fallbackOwners =
-								!area.satisfied && suggestions.length === 0
+								!codeownersOnly && !area.satisfied && suggestions.length === 0
 									? (area.fallbackOwners ?? [])
 									: [];
 							return {
@@ -531,6 +555,7 @@ function recommendationDisplayKey(state: ReviewerRecommendationState): string {
 								contacts: area.satisfied
 									? null
 									: {
+											codeownersOnly,
 											suggestions,
 											fallbackOwners,
 											totalOwners:

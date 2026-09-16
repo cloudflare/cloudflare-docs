@@ -385,6 +385,28 @@ describe("newMentions / withMentions", () => {
 		const mentions = newMentions(emptyState(), r);
 		expect(mentions).toEqual([]);
 	});
+
+	it("uses declared CODEOWNERS instead of suggestions for configured patterns", () => {
+		const r = result([
+			area({
+				key: "12:none",
+				product: null,
+				codeownersPattern: "/public/__redirects",
+				suggestedPeople: [
+					{ login: "alice", roles: [], isMatchingCodeowner: true },
+					{ login: "bob", roles: [], isMatchingCodeowner: true },
+				],
+			}),
+			area({
+				key: "13:workers",
+				suggestedPeople: [
+					{ login: "Alice", roles: [], isMatchingCodeowner: true },
+				],
+			}),
+		]);
+
+		expect(newMentions(emptyState(), r)).toEqual(["alice"]);
+	});
 });
 
 describe("shouldWriteRecommendationComment", () => {
@@ -458,6 +480,91 @@ describe("shouldWriteRecommendationComment", () => {
 		await expect(
 			shouldWriteRecommendationComment(previous, next, "current body"),
 		).resolves.toBe(true);
+	});
+
+	it("ignores hidden suggestion changes for CODEOWNERS-only patterns", async () => {
+		const recommendation = result([
+			area({
+				key: "12:none",
+				product: null,
+				codeownersPattern: "/public/__redirects",
+				codeownersDeclared: [
+					"@cloudflare/product-owners",
+					"@cloudflare/content-engineering",
+				],
+			}),
+		]);
+		const previous = await writtenState(recommendation);
+		const changed = result([
+			area({
+				...recommendation.ownershipAreas[0],
+				suggestedPeople: [
+					{ login: "bob", roles: [], isMatchingCodeowner: true },
+				],
+			}),
+		]);
+		const next = {
+			...previous,
+			recommendation: changed,
+			lastGoodRecommendation: changed,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, next, "current body"),
+		).resolves.toBe(false);
+	});
+
+	it("repairs a pre-policy display hash once on replay", async () => {
+		const recommendation = result([
+			area({
+				key: "12:none",
+				product: null,
+				codeownersPattern: "/public/__redirects",
+				codeownersDeclared: [
+					"@cloudflare/product-owners",
+					"@cloudflare/content-engineering",
+				],
+			}),
+		]);
+		const current = await writtenState(recommendation);
+		const prePolicyDisplayHash = await recommendationCommentBodyHash(
+			JSON.stringify({
+				degraded: false,
+				result: {
+					areaCount: 1,
+					ownershipAreas: [
+						{
+							name: "Workers",
+							totalPaths: 3,
+							codeownersPattern: "/public/__redirects",
+							codeownersDeclared: [
+								"@cloudflare/product-owners",
+								"@cloudflare/content-engineering",
+							],
+							contacts: {
+								suggestions: ["alice"],
+								fallbackOwners: [],
+								totalOwners: 0,
+							},
+							satisfyingApprovers: [],
+							satisfied: false,
+						},
+					],
+				},
+			}),
+		);
+		expect(prePolicyDisplayHash).not.toBe(current.commentDisplayHash);
+		const prePolicy = {
+			...current,
+			commentDisplayHash: prePolicyDisplayHash,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(prePolicy, prePolicy, "current body"),
+		).resolves.toBe(true);
+		await expect(
+			shouldWriteRecommendationComment(current, current, "current body"),
+		).resolves.toBe(false);
 	});
 
 	it("writes when log mode advanced state beyond the last comment", async () => {
@@ -664,6 +771,44 @@ describe("renderRecommendationsComment", () => {
 		expect(body).toContain("`alice`, `bob`");
 		expect(body).not.toContain("Product management");
 		expect(body).not.toContain("Relevant review history");
+	});
+
+	it("shows declared CODEOWNERS instead of suggestors for configured patterns", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "12:none",
+						product: null,
+						samplePaths: ["public/__redirects"],
+						totalPaths: 1,
+						codeownersPattern: "/public/__redirects",
+						codeownersDeclared: [
+							"@cloudflare/product-owners",
+							"@cloudflare/content-engineering",
+						],
+						suggestedPeople: [
+							{
+								login: "alice",
+								roles: ["historical_codeowner"],
+								isMatchingCodeowner: true,
+							},
+						],
+					}),
+				]),
+				newLogins: ["alice"],
+				previouslyMentionedLogins: ["alice"],
+			}),
+		);
+
+		expect(body).toContain("`@cloudflare/product-owners`");
+		expect(body).toContain("`@cloudflare/content-engineering`");
+		expect(body).toContain(
+			"| **Other**<br/><sub>1 file changed</sub> | `@cloudflare/product-owners`, `@cloudflare/content-engineering` | `@cloudflare/product-owners`, `@cloudflare/content-engineering`<br/><sub>CODEOWNERS only · not notified</sub> |",
+		);
+		expect(body).not.toContain("Suggested contacts notified");
+		expect(body).not.toContain("Suggested contacts previously notified");
+		expect(body).not.toContain("alice");
 	});
 
 	it("falls back to the expanded CODEOWNERS roster for unsuggested areas without mentioning them", () => {
