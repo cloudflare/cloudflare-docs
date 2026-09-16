@@ -419,17 +419,14 @@ function proseText(value: string): string {
 }
 
 /**
- * Display suggested contacts and their rationale, or the expanded CODEOWNERS
- * fallback roster when no suggestion exists. Display-only, never @-mentioned.
+ * Display suggested contacts, or the expanded CODEOWNERS fallback roster when
+ * no suggestion exists. Display-only, never @-mentioned.
  */
 function contactsCell(area: RecommendationArea): string {
 	if (area.suggestedPeople.length > 0) {
 		return area.suggestedPeople
-			.map(
-				(person) =>
-					`${codeSpan(person.login)} · ${proseText(roleLabel(person.roles, person.isMatchingCodeowner))}`,
-			)
-			.join("<br/>");
+			.map((person) => codeSpan(person.login))
+			.join(", ");
 	}
 	const logins = area.fallbackOwners ?? [];
 	if (logins.length === 0) return "";
@@ -476,21 +473,6 @@ function areaCell(area: RecommendationArea, showPattern: boolean): string {
 			? `<br/>${codeSpan(area.codeownersPattern)}`
 			: "";
 	return `**${proseText(areaName(area))}**<br/><sub>${files}</sub>${pattern}`;
-}
-
-function roleLabel(roles: string[], isMatchingCodeowner: boolean): string {
-	const known: Record<string, string> = {
-		product_manager: "Product management",
-		engineering_manager: "Engineering leadership",
-		historical_codeowner: "Relevant review history",
-	};
-	const labels = [...new Set(roles)]
-		.map((role) => known[role] ?? "")
-		.filter(Boolean);
-	if (labels.length === 0) {
-		return isMatchingCodeowner ? "Code ownership" : "Recommendation signal";
-	}
-	return labels.join(", ");
 }
 
 function codeownersMappings(

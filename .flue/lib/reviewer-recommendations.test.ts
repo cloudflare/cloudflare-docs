@@ -489,11 +489,11 @@ describe("renderRecommendationsComment", () => {
 		expect(body).not.toContain("@carol");
 	});
 
-	it("renders uncovered suggestions with rationale and hides covered suggestions", () => {
+	it("renders uncovered suggestions without role metadata", () => {
 		const body = renderRecommendationsComment(view());
-		expect(body).toContain("`alice` · Product management");
-		expect(body).toContain("`bob` · Relevant review history");
-		expect(body).not.toContain("`carol` · Code ownership");
+		expect(body).toContain("`alice`, `bob`");
+		expect(body).not.toContain("Product management");
+		expect(body).not.toContain("Relevant review history");
 	});
 
 	it("falls back to the expanded CODEOWNERS roster for unsuggested areas without mentioning them", () => {
@@ -623,29 +623,8 @@ describe("renderRecommendationsComment", () => {
 		const body = renderRecommendationsComment(view());
 		expect(body).not.toContain("product_manager");
 		expect(body).not.toContain("historical_codeowner");
-		expect(body).toContain("Product management");
-		expect(body).toContain("Relevant review history");
-	});
-
-	it("uses a neutral rationale when a suggestion has no role or ownership match", () => {
-		const body = renderRecommendationsComment(
-			view({
-				recommendation: result([
-					area({
-						suggestedPeople: [
-							{
-								login: "alice",
-								roles: [],
-								isMatchingCodeowner: false,
-							},
-						],
-					}),
-				]),
-				newLogins: ["alice"],
-			}),
-		);
-		expect(body).toContain("`alice` · Recommendation signal");
-		expect(body).not.toContain("`alice` · Code ownership");
+		expect(body).not.toContain("Product management");
+		expect(body).not.toContain("Relevant review history");
 	});
 
 	it("states outstanding approval work directly", () => {
