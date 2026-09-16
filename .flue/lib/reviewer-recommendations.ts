@@ -7,6 +7,7 @@
  * cloudflare.ts owns the side effects (comment create/update/delete, R2 state).
  */
 import * as v from "valibot";
+import { isCodeownersOnlyContactPattern } from "./reviewer-contact-policy";
 
 export const RECOMMENDATIONS_REPO = "cloudflare/cloudflare-docs";
 export const RECOMMENDATIONS_EVENT_VERSION = 1;
@@ -27,16 +28,6 @@ export function parseRecommendationsMode(value: unknown): RecommendationsMode {
  * Recommendation updates for such PRs are dropped so the comment never posts.
  */
 export const RECOMMENDATIONS_SKIP_LABELS = ["spam", "off topic"] as const;
-
-/**
- * CODEOWNERS rules whose declared owners replace suggested contacts in the
- * public comment. Exact pattern matching keeps this policy independent of
- * mutable CODEOWNERS source-line numbers and derived product keys.
- */
-export const CODEOWNERS_ONLY_CONTACT_PATTERNS = [
-	"/.github/CODEOWNERS",
-	"/public/__redirects",
-] as const;
 
 /**
  * Whether an updated recommendation event for this PR should be dropped:
@@ -245,15 +236,6 @@ export function normalizeLogin(login: string): string {
 	return login.trim().toLowerCase();
 }
 
-function usesCodeownersOnlyContacts(area: RecommendationArea): boolean {
-	return (
-		area.codeownersPattern !== null &&
-		(CODEOWNERS_ONLY_CONTACT_PATTERNS as readonly string[]).includes(
-			area.codeownersPattern,
-		)
-	);
-}
-
 function isGitHubLogin(login: string): boolean {
 	return /^[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?$/i.test(login);
 }
@@ -264,7 +246,11 @@ export function uncoveredSuggestedLogins(
 ): string[] {
 	const seen = new Set<string>();
 	for (const area of result.ownershipAreas) {
-		if (area.satisfied || usesCodeownersOnlyContacts(area)) continue;
+		if (
+			area.satisfied ||
+			isCodeownersOnlyContactPattern(area.codeownersPattern)
+		)
+			continue;
 		for (const person of area.suggestedPeople) {
 			const key = normalizeLogin(person.login);
 			if (isGitHubLogin(key) && !seen.has(key)) seen.add(key);
@@ -467,7 +453,7 @@ function proseText(value: string): string {
  * no suggestion exists. Display-only, never @-mentioned.
  */
 function contactsCell(area: RecommendationArea): string {
-	if (usesCodeownersOnlyContacts(area)) {
+	if (isCodeownersOnlyContactPattern(area.codeownersPattern)) {
 		const owners = area.codeownersDeclared ?? [];
 		if (owners.length === 0) return "_No CODEOWNERS available_";
 		return `${owners.map(codeSpan).join(", ")}<br/><sub>CODEOWNERS only · not notified</sub>`;
@@ -496,23 +482,14 @@ function codeownersCell(area: RecommendationArea): string {
 	return refs.map(codeSpan).join(", ");
 }
 
-function humanizeAreaName(value: string): string {
-	return value
-		.trim()
-		.split(/[\s_-]+/)
-		.filter(Boolean)
-		.map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
-		.join(" ");
-}
-
 function areaName(area: RecommendationArea): string {
-	if (area.product?.trim()) return humanizeAreaName(area.product);
+	if (area.product?.trim()) return area.product.trim();
 	const keyName = area.key.slice(area.key.indexOf(":") + 1);
-	if (keyName && keyName !== "none") return humanizeAreaName(keyName);
+	if (keyName && keyName !== "none") return keyName;
 	const pathSlug = area.samplePaths[0]?.match(
 		/^src\/(?:content\/docs|content\/partials|assets\/images|content\/changelog)\/([^/]+)/,
 	)?.[1];
-	return pathSlug ? humanizeAreaName(pathSlug) : "Other";
+	return pathSlug ?? "Other";
 }
 
 export function recommendationRenderSource(
@@ -537,7 +514,9 @@ function recommendationDisplayKey(state: ReviewerRecommendationState): string {
 				: {
 						areaCount: result.areaCount,
 						ownershipAreas: result.ownershipAreas.map((area) => {
-							const codeownersOnly = usesCodeownersOnlyContacts(area);
+							const codeownersOnly = isCodeownersOnlyContactPattern(
+								area.codeownersPattern,
+							);
 							const suggestions = codeownersOnly
 								? []
 								: area.suggestedPeople.map((person) => person.login);
@@ -665,6 +644,7 @@ export function renderRecommendationsComment(
 		areaNameCounts.set(name, (areaNameCounts.get(name) ?? 0) + 1);
 	}
 	const showAreaPattern = (area: RecommendationArea): boolean =>
+		areaName(area).toLowerCase() === "other" ||
 		(areaNameCounts.get(areaName(area).toLowerCase()) ?? 0) > 1;
 	const actionableLogins = new Set(uncoveredSuggestedLogins(result));
 	const newLogins = view.newLogins.filter((login) =>
@@ -734,13 +714,13 @@ export function renderRecommendationsComment(
 
 	if (uncovered.length > 0) {
 		lines.push(
-			"| Needs approval | Eligible approvers | Contacts |",
+			"| Needs approval | Eligible approvers | Suggested |",
 			"| --- | --- | --- |",
 		);
 		for (const area of uncovered) {
 			const contacts = contactsCell(area);
 			lines.push(
-				`| ${areaCell(area, showAreaPattern(area))} | ${codeownersCell(area)} | ${contacts || "_No contacts available_"} |`,
+				`| ${areaCell(area, showAreaPattern(area))} | ${codeownersCell(area)} | ${contacts || "_No suggestions_"} |`,
 			);
 		}
 	}
@@ -781,11 +761,6 @@ export function renderRecommendationsComment(
 		}
 		lines.push("", "</details>");
 	}
-
-	lines.push(
-		"",
-		"<sub>Suggestions are informational. GitHub CODEOWNERS controls formal review requests.</sub>",
-	);
 
 	return lines.join("\n");
 }

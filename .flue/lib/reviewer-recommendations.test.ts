@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { CODEOWNERS_ONLY_CONTACT_PATTERNS } from "./reviewer-contact-policy";
 import {
-	CODEOWNERS_ONLY_CONTACT_PATTERNS,
 	RECOMMENDATION_COMMENT_MARKER,
 	RECOMMENDATIONS_REPO,
 	applyClearedState,
@@ -523,6 +523,36 @@ describe("shouldWriteRecommendationComment", () => {
 		).resolves.toBe(false);
 	});
 
+	it("ignores hidden suggestion changes under the default CODEOWNERS rule", async () => {
+		const recommendation = result([
+			area({
+				key: "2:none",
+				product: null,
+				samplePaths: ["package.json"],
+				codeownersPattern: "*",
+				codeownersDeclared: ["@cloudflare/product-owners"],
+			}),
+		]);
+		const previous = await writtenState(recommendation);
+		const changed = result([
+			area({
+				...recommendation.ownershipAreas[0],
+				suggestedPeople: [
+					{ login: "bob", roles: [], isMatchingCodeowner: true },
+				],
+			}),
+		]);
+		const next = {
+			...previous,
+			recommendation: changed,
+			lastGoodRecommendation: changed,
+		};
+
+		await expect(
+			shouldWriteRecommendationComment(previous, next, "current body"),
+		).resolves.toBe(false);
+	});
+
 	it("repairs a pre-policy display hash once on replay", async () => {
 		const recommendation = result([
 			area({
@@ -765,7 +795,7 @@ describe("renderRecommendationsComment", () => {
 		const body = renderRecommendationsComment(view());
 		expect(body).toContain("## Review coverage");
 		expect(body).not.toContain("## Suggested review contacts");
-		expect(body).toContain("**Workers**");
+		expect(body).toContain("**workers**");
 		expect(body).not.toContain("1:workers");
 	});
 
@@ -813,7 +843,41 @@ describe("renderRecommendationsComment", () => {
 		expect(body).toContain("`@cloudflare/product-owners`");
 		expect(body).toContain("`@cloudflare/content-engineering`");
 		expect(body).toContain(
-			"| **Other**<br/><sub>1 file changed</sub> | `@cloudflare/product-owners`, `@cloudflare/content-engineering` | `@cloudflare/product-owners`, `@cloudflare/content-engineering`<br/><sub>CODEOWNERS only · not notified</sub> |",
+			"| **Other**<br/><sub>1 file changed</sub><br/>`/public/__redirects` | `@cloudflare/product-owners`, `@cloudflare/content-engineering` | `@cloudflare/product-owners`, `@cloudflare/content-engineering`<br/><sub>CODEOWNERS only · not notified</sub> |",
+		);
+		expect(body).not.toContain("Suggested contacts notified");
+		expect(body).not.toContain("Suggested contacts previously notified");
+		expect(body).not.toContain("alice");
+	});
+
+	it("shows declared CODEOWNERS instead of suggestors under the default rule", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "2:none",
+						product: null,
+						samplePaths: ["package.json"],
+						totalPaths: 1,
+						codeownersPattern: "*",
+						codeownersDeclared: ["@cloudflare/product-owners"],
+						suggestedPeople: [
+							{
+								login: "alice",
+								roles: ["historical_codeowner"],
+								isMatchingCodeowner: true,
+							},
+						],
+					}),
+				]),
+				newLogins: ["alice"],
+				previouslyMentionedLogins: ["alice"],
+			}),
+		);
+
+		expect(body).toContain("`@cloudflare/product-owners`");
+		expect(body).toContain(
+			"| **Other**<br/><sub>1 file changed</sub><br/>`*` | `@cloudflare/product-owners` | `@cloudflare/product-owners`<br/><sub>CODEOWNERS only · not notified</sub> |",
 		);
 		expect(body).not.toContain("Suggested contacts notified");
 		expect(body).not.toContain("Suggested contacts previously notified");
@@ -908,7 +972,7 @@ describe("renderRecommendationsComment", () => {
 				previouslyMentionedLogins: [],
 			}),
 		);
-		expect(body).toContain("_No contacts available_");
+		expect(body).toContain("_No suggestions_");
 		expect(body).not.toContain("5 more");
 	});
 
@@ -1076,10 +1140,10 @@ describe("renderRecommendationsComment", () => {
 			}),
 		);
 		expect(body).toContain(
-			"**Workers**<br/><sub>3 files changed</sub><br/>`*.ts`",
+			"**workers**<br/><sub>3 files changed</sub><br/>`*.ts`",
 		);
 		expect(body).toContain(
-			"**Workers**<br/><sub>3 files changed</sub><br/>`/src/components/`",
+			"**workers**<br/><sub>3 files changed</sub><br/>`/src/components/`",
 		);
 	});
 
@@ -1100,7 +1164,7 @@ describe("renderRecommendationsComment", () => {
 				previouslyMentionedLogins: [],
 			}),
 		);
-		expect(body).toContain("Weird\\|area");
+		expect(body).toContain("weird\\|area");
 		expect(body).toContain("al\\|ice");
 	});
 });
