@@ -2612,6 +2612,7 @@
 /access/rdp/ /cloudflare-one/connections/connect-networks/use-cases/rdp/ 301
 /access/ssh/ /cloudflare-one/connections/connect-networks/use-cases/ssh/ 301
 /access/ /cloudflare-one/integrations/identity-providers/ 301
+/cloudflare-one/access-controls/applications/http-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
 
 # argo-tunnel
 /argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
