@@ -15,6 +15,7 @@ import {
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
+	isGitHubTeamMember,
 	updateIssueComment,
 } from "./github";
 import {
@@ -166,6 +167,37 @@ function log(event: Record<string, unknown>): void {
 	console.log(event);
 }
 
+/**
+ * PR authors in these GitHub teams never get a recommendation comment at all —
+ * the coverage table is skipped, not just the @-mentions. Membership is
+ * resolved live via the org token (read:org) so the roster lives in GitHub —
+ * a static list here would drift and would leak a possibly-private team's
+ * members into this public repository.
+ */
+const NO_RECOMMENDATION_COMMENT_AUTHOR_TEAMS: ReadonlyArray<{
+	org: string;
+	team: string;
+}> = [{ org: "cloudflare", team: "content-engineering" }];
+
+/**
+ * Whether the PR author's recommendation comment should be suppressed entirely.
+ * Fail-closed: a non-definitive membership response throws (queue retries)
+ * rather than risking a comment on an ambiguous membership.
+ */
+async function authorSuppressesRecommendationComment(
+	ghEnv: Record<string, string>,
+	pr: Awaited<ReturnType<typeof getPullRequest>>,
+): Promise<boolean> {
+	const author = pr.user?.login;
+	if (!author) return false;
+	for (const { org, team } of NO_RECOMMENDATION_COMMENT_AUTHOR_TEAMS) {
+		if (await isGitHubTeamMember(ghEnv.GITHUB_ORG_TOKEN, org, team, author)) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function applyUpdatedState(
 	state: ReviewerRecommendationState,
 	event: ReviewerRecommendationsUpdatedEvent,
@@ -245,14 +277,20 @@ export async function processRecommendationEvent(
 	}
 
 	// Drop updated events for PRs we must never comment on: drafts, closed
-	// PRs, and PRs the spam/off-topic gate labeled. Cleared events are still
-	// processed so an existing comment is removed when the PR closes. For a
-	// skipped PR that already has a comment (posted while it was open), remove
-	// it so the "never comment on skipped PRs" policy also holds for existing
-	// comments, not just new activity.
+	// PRs, PRs the spam/off-topic gate labeled, and PRs authored by members of
+	// an internal owner team (no coverage comment at all — they own the repo
+	// and handle their own reviewers). Cleared events are still processed so an
+	// existing comment is removed when the PR closes. For a skipped PR that
+	// already has a comment (posted while it was open), remove it so the
+	// "never comment on skipped PRs" policy also holds for existing comments,
+	// not just new activity.
+	const suppressedAuthor =
+		event.eventType === "reviewer-recommendations.updated" &&
+		mode === "comment" &&
+		(await authorSuppressesRecommendationComment(ghEnv, pr));
 	if (
 		event.eventType === "reviewer-recommendations.updated" &&
-		shouldSkipRecommendationUpdate(pr)
+		(shouldSkipRecommendationUpdate(pr) || suppressedAuthor)
 	) {
 		log({
 			message: `Dropped reviewer-recommendation update for PR #${prNumber}`,
@@ -261,6 +299,7 @@ export async function processRecommendationEvent(
 			draft: pr.draft,
 			state: pr.state,
 			labels: pr.labels.map((l) => l.name),
+			suppressedAuthor,
 			action: "drop_skipped_pr",
 		});
 		if (mode === "comment") {
@@ -280,7 +319,10 @@ export async function processRecommendationEvent(
 				});
 			}
 		}
-		return { applied: false, reason: "skipped_pr" };
+		return {
+			applied: false,
+			reason: suppressedAuthor ? "suppressed_author" : "skipped_pr",
+		};
 	}
 
 	const state = await readState(bucket, prNumber);

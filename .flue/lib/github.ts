@@ -553,6 +553,29 @@ export async function isCodeOwner(
 	return false;
 }
 
+/**
+ * Check whether `username` is a member of the GitHub `org/team` using the org
+ * token (read:org). Definitive outcomes only: HTTP 200 → true, 404 → false.
+ * Any other status (401/403/5xx) throws so callers can fail closed rather than
+ * act on an ambiguous membership decision.
+ */
+export async function isGitHubTeamMember(
+	orgToken: string,
+	org: string,
+	team: string,
+	username: string,
+): Promise<boolean> {
+	const res = await fetch(
+		`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
+		{ headers: apiHeaders(orgToken) },
+	);
+	if (res.ok) return true;
+	if (res.status === 404) return false;
+	throw new Error(
+		`Failed to check ${org}/${team} membership for ${username} (HTTP ${res.status}): ${await res.text()}`,
+	);
+}
+
 // ── Rebase / Git Data API ─────────────────────────────────────────────────────
 
 export interface UpdateBranchResult {
