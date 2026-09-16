@@ -197,12 +197,19 @@ function applyClearedState(
  * validate → head-check → R2 state → comment lifecycle.
  *
  * Throws on transient failures so the queue retries; returns normally for
- * success and for events that are stale/malformed (both are ack'd).
+ * success and for events that are stale/malformed (both are ack'd). The result
+ * reports whether the event was applied so dev tooling can distinguish applied,
+ * skipped, and dropped events.
  */
+export interface RecommendationProcessResult {
+	applied: boolean;
+	reason?: string;
+}
+
 export async function processRecommendationEvent(
 	messageBody: unknown,
 	env: RecommendationEnv,
-): Promise<void> {
+): Promise<RecommendationProcessResult> {
 	const mode = parseRecommendationsMode(
 		(env as Record<string, unknown>)["DOCS_FLUE_RECOMMENDATIONS_MODE"] ??
 			env.DOCS_FLUE_REVIEW_MODE,
@@ -218,7 +225,7 @@ export async function processRecommendationEvent(
 			reason: parsed.reason,
 			action: "drop_malformed",
 		});
-		return;
+		return { applied: false, reason: parsed.reason };
 	}
 	const event = parsed.event;
 	const prNumber = event.prNumber;
@@ -239,7 +246,10 @@ export async function processRecommendationEvent(
 
 	// Drop updated events for PRs we must never comment on: drafts, closed
 	// PRs, and PRs the spam/off-topic gate labeled. Cleared events are still
-	// processed so an existing comment is removed when the PR closes.
+	// processed so an existing comment is removed when the PR closes. For a
+	// skipped PR that already has a comment (posted while it was open), remove
+	// it so the "never comment on skipped PRs" policy also holds for existing
+	// comments, not just new activity.
 	if (
 		event.eventType === "reviewer-recommendations.updated" &&
 		shouldSkipRecommendationUpdate(pr)
@@ -253,7 +263,24 @@ export async function processRecommendationEvent(
 			labels: pr.labels.map((l) => l.name),
 			action: "drop_skipped_pr",
 		});
-		return;
+		if (mode === "comment") {
+			const staleId = await findRecommendationComment(
+				token,
+				prNumber,
+				undefined,
+			);
+			if (staleId) {
+				await deleteIssueComment(token, staleId);
+				log({
+					message: `Deleted stale recommendation comment on skipped PR #${prNumber}`,
+					event: "reviewer_recommendations",
+					prNumber,
+					commentId: staleId,
+					action: "delete_stale_comment",
+				});
+			}
+		}
+		return { applied: false, reason: "skipped_pr" };
 	}
 
 	const state = await readState(bucket, prNumber);
@@ -271,7 +298,7 @@ export async function processRecommendationEvent(
 			eventType: event.eventType,
 			action: "skip_stale",
 		});
-		return;
+		return { applied: false, reason: "stale_or_duplicate" };
 	}
 
 	if (mode === "comment" && nextState.recommendation === null) {
@@ -333,4 +360,5 @@ export async function processRecommendationEvent(
 	}
 
 	await saveState(bucket, prNumber, nextState);
+	return { applied: true };
 }

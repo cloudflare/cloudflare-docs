@@ -348,13 +348,17 @@ function escapeCell(value: string): string {
 /**
  * Display logins for an area: the suggestions when present, otherwise the
  * expanded CODEOWNERS fallback roster. Display-only, never @-mentioned. When
- * the fallback was capped, `totalOwners` drives a "+ N more" suffix.
+ * the fallback roster was capped, `totalOwners` drives a "+ N more" suffix —
+ * this applies only to the fallback path (suggestions are never supplemented).
  */
 function displayPeople(area: RecommendationArea): string {
-	const logins =
-		area.suggestedPeople.length > 0
-			? area.suggestedPeople.map((p) => p.login)
-			: (area.fallbackOwners ?? []);
+	if (area.suggestedPeople.length > 0) {
+		return area.suggestedPeople
+			.map((p) => `\`${escapeCell(p.login)}\``)
+			.join(", ");
+	}
+	const logins = area.fallbackOwners ?? [];
+	if (logins.length === 0) return "";
 	const rendered = logins.map((login) => `\`${escapeCell(login)}\``).join(", ");
 	const omitted = Math.max(0, (area.totalOwners ?? 0) - logins.length);
 	return omitted > 0 ? `${rendered} + ${omitted} more` : rendered;

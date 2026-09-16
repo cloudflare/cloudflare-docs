@@ -188,19 +188,7 @@ export async function postComment(
 	issueNumber: number,
 	body: string,
 ): Promise<void> {
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments`,
-		{
-			method: "POST",
-			headers: apiHeaders(token),
-			body: JSON.stringify({ body }),
-		},
-	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to post comment on ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
+	await createIssueComment(token, issueNumber, body);
 }
 
 export async function getIssue(

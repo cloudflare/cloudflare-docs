@@ -92,15 +92,9 @@ describe("parseRecommendationEvent", () => {
 	});
 
 	it("defaults the new coverage fields on a pre-contract updated event", () => {
-		const raw = updatedEvent();
-		const areaRow = raw.result.ownershipAreas[0] as unknown as Record<
-			string,
-			unknown
-		>;
-		delete areaRow["codeownersDeclared"];
-		delete areaRow["fallbackOwners"];
-		delete areaRow["totalOwners"];
-		const parsed = parseRecommendationEvent(raw);
+		// The `area()` fixture never sets the coverage fields, so the parsed
+		// event must fall back to the schema defaults.
+		const parsed = parseRecommendationEvent(updatedEvent());
 		expect(parsed.ok).toBe(true);
 		if (
 			parsed.ok &&
@@ -479,6 +473,46 @@ describe("renderRecommendationsComment", () => {
 			}),
 		);
 		expect(body).toContain("+ 87 more");
+	});
+
+	it("does not add a + N more suffix to suggested people", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "1:workers",
+						suggestedPeople: [
+							{ login: "alice", roles: [], isMatchingCodeowner: true },
+						],
+						totalOwners: 90,
+					}),
+				]),
+				newLogins: [],
+				previouslyMentionedLogins: [],
+			}),
+		);
+		expect(body).toContain("`alice`");
+		expect(body).not.toContain("more");
+	});
+
+	it("renders _none_ when the fallback roster is empty despite totalOwners", () => {
+		const body = renderRecommendationsComment(
+			view({
+				recommendation: result([
+					area({
+						key: "1:changelog",
+						codeownersPattern: "/src/content/changelog/",
+						suggestedPeople: [],
+						fallbackOwners: [],
+						totalOwners: 5,
+					}),
+				]),
+				newLogins: [],
+				previouslyMentionedLogins: [],
+			}),
+		);
+		expect(body).toContain("_none_");
+		expect(body).not.toContain("5 more");
 	});
 
 	it("renders _no rule_ when an area matched no CODEOWNERS rule", () => {

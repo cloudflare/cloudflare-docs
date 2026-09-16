@@ -803,7 +803,17 @@ export default {
 		for (const message of batch.messages) {
 			try {
 				await processRecommendationEvent(message.body, env);
-				message.ack();
+				try {
+					message.ack();
+				} catch (ackErr) {
+					// A throwing ack() is fallback-retried by the Queues API; log
+					// instead of letting it abort the batch loop.
+					console.error({
+						message: `Failed to ack reviewer-recommendation event: ${ackErr instanceof Error ? ackErr.message : String(ackErr)}`,
+						event: "reviewer_recommendations",
+						action: "ack_failed",
+					});
+				}
 			} catch (err) {
 				if (isRetryableRecommendationError(err)) {
 					console.error({
@@ -811,14 +821,32 @@ export default {
 						event: "reviewer_recommendations",
 						action: "retry",
 					});
-					message.retry();
+					try {
+						message.retry();
+					} catch (retryErr) {
+						// A throwing retry() is fallback-acked by the Queues API
+						// after the retry budget is exhausted; log and continue.
+						console.error({
+							message: `Failed to retry reviewer-recommendation event: ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`,
+							event: "reviewer_recommendations",
+							action: "retry_failed",
+						});
+					}
 				} else {
 					console.error({
 						message: `Acknowledging permanently failed reviewer-recommendation event: ${err instanceof Error ? err.message : String(err)}`,
 						event: "reviewer_recommendations",
 						action: "ack_permanent_failure",
 					});
-					message.ack();
+					try {
+						message.ack();
+					} catch (ackErr) {
+						console.error({
+							message: `Failed to ack permanently failed reviewer-recommendation event: ${ackErr instanceof Error ? ackErr.message : String(ackErr)}`,
+							event: "reviewer_recommendations",
+							action: "ack_failed",
+						});
+					}
 				}
 			}
 		}

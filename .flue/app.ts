@@ -123,15 +123,27 @@ app.post("/dev/recommendations", async (c) => {
 		return c.text("Invalid JSON payload", 400);
 	}
 
-	await processRecommendationEvent(payload, env);
+	let result: Awaited<ReturnType<typeof processRecommendationEvent>>;
+	try {
+		result = await processRecommendationEvent(payload, env);
+	} catch (err) {
+		return c.json(
+			{
+				applied: false,
+				error: err instanceof Error ? err.message : String(err),
+			},
+			502,
+		);
+	}
 	return c.json(
 		{
-			acted: true,
+			applied: result.applied,
+			reason: result.reason ?? null,
 			mode: parseRecommendationsMode(
 				env.DOCS_FLUE_RECOMMENDATIONS_MODE ?? env.DOCS_FLUE_REVIEW_MODE,
 			),
 		},
-		202,
+		result.applied ? 202 : 200,
 	);
 });
 

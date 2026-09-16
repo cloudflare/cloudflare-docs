@@ -61,10 +61,23 @@ export default defineConfig({
 				// the consumer from the authored wrangler.jsonc.
 				if (process.env.FLUE_DEV_NO_QUEUE_CONSUMER === "1") {
 					const cfg = config as Record<string, unknown>;
-					if (cfg["queues"] && typeof cfg["queues"] === "object") {
-						const queues = cfg["queues"] as Record<string, unknown>;
-						queues["consumers"] = [];
+					const queues =
+						cfg["queues"] && typeof cfg["queues"] === "object"
+							? (cfg["queues"] as Record<string, unknown>)
+							: null;
+					if (queues) queues["consumers"] = [];
+					// Fail closed: if the consumer couldn't be stripped (missing or
+					// reshaped config), refuse to emit an artifact that would attach
+					// the dev worker to the live queue during remote dev.
+					const consumers = queues?.["consumers"];
+					if (!queues || !Array.isArray(consumers) || consumers.length !== 0) {
+						throw new Error(
+							"FLUE_DEV_NO_QUEUE_CONSUMER=1 but the emitted worker config still contains queue consumers; refusing to build an unsafe artifact",
+						);
 					}
+					console.log(
+						"[flue] Stripped the reviewer-recommendations queue consumer from the dev build.",
+					);
 				}
 				if (
 					process.env.DOCS_FLUE_AGENT_EVALS === "1" &&
