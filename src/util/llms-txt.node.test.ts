@@ -135,4 +135,15 @@ describe("formatWorkersAiModel", () => {
 			"- [@cf/meta/llama-3.1-8b-instruct](https://example.com/workers-ai/models/llama-3.1-8b-instruct/index.md): A text generation model.",
 		);
 	});
+
+	test("omits the description separator when the description is empty", () => {
+		expect(
+			formatWorkersAiModel("https://example.com", {
+				name: "@cf/example/model",
+				description: " \n ",
+			}),
+		).toBe(
+			"- [@cf/example/model](https://example.com/workers-ai/models/model/index.md)",
+		);
+	});
 });

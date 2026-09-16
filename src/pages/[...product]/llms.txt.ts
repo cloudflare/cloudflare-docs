@@ -75,13 +75,20 @@ export const getStaticPaths = (async () => {
 
 			const models =
 				productUrl === "/workers-ai/"
-					? workersAiModels.toSorted((a, b) => a.name.localeCompare(b.name))
+					? workersAiModels
+							.map(({ id, name, description, digest }) => ({
+								id,
+								name,
+								description,
+								digest,
+							}))
+							.toSorted((a, b) => a.name.localeCompare(b.name))
 					: [];
 
 			return {
 				params: { product: urlPath },
 				props: { entry, pages, navigationPages, models },
-				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest).join(",")}`,
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);

@@ -72,5 +72,6 @@ export function formatWorkersAiModel(
 ): string {
 	const slug = model.name.split("/").at(-1)!;
 	const description = model.description.replace(/\s+/g, " ").trim();
-	return `- [${model.name}](${base}/workers-ai/models/${slug}/index.md): ${description}`;
+	const line = `- [${model.name}](${base}/workers-ai/models/${slug}/index.md)`;
+	return description ? line.concat(`: ${description}`) : line;
 }
