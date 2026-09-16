@@ -78,7 +78,7 @@ The Cloudflare One Client automatically includes the following ranges in Include
 - **IPv4**: `172.64.128.0/20` — the default [Gateway initial resolved IP range](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips)
 - **IPv6**: `2606:4700:0cf1::/48` — covers [device IPs](/cloudflare-one/networks/routes/reserved-ips/#device-ips), [Cloudflare source IPs](/cloudflare-one/networks/routes/reserved-ips/#cloudflare-source-ips), and [Gateway initial resolved IPs](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips)
 
-You do not need to add these ranges to your Split Tunnels configuration. If you are troubleshooting a feature that depends on one of these ranges (for example, [hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)), you can still add the range explicitly as a diagnostic step, but this should not be required for normal operation.
+You do not need to add these ranges to your Split Tunnels configuration. If you are troubleshooting a feature that depends on one of these ranges (for example, [hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [Cloudflare Mesh](/mesh/)), you can still add the range explicitly as a diagnostic step, but this should not be required for normal operation.
 
 If your account uses a [custom initial resolved IP range](/cloudflare-one/networks/routes/configure-initial-resolved-ips/) instead of the default `172.64.128.0/20`, add that custom range to your Split Tunnels configuration.
 

@@ -1,19 +1,5 @@
 ---
-pcx_content_type: how-to
-description: Run a Cloudflare Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
-title: Run Mesh in Docker / Kubernetes
-products:
-  - mesh
-tags:
-  - Private networks
-  - Containers
-  - Docker
-  - Kubernetes
-sidebar:
-  order: 3
-head:
-  - tag: title
-    content: Run Cloudflare Mesh in containers
+{}
 ---
 
 import { DashButton, Details, Tabs, TabItem, Render } from "~/components";
@@ -86,7 +72,7 @@ Mesh nodes can also be managed with Terraform using the [`cloudflare_zero_trust_
 
 </TabItem> </Tabs>
 
-If this is your first Mesh node, configure the [required account settings](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/#required-account-settings). You can use the dashboard wizard, APIs, or Terraform.
+If this is your first Mesh node, configure the [required account settings](/mesh/get-started/#required-account-settings). You can use the dashboard wizard, APIs, or Terraform.
 
 :::caution
 Do not commit Mesh node tokens to source control. Use environment variables, `.env` files excluded from version control, or a secrets manager.
@@ -377,13 +363,13 @@ kubectl exec cloudflare-mesh-sidecar-0 -c mesh -- warp-cli status
 
 Source NAT (masquerading) is enabled by default (`SRCNAT_ENABLED=true`). When a Mesh node receives traffic from the Cloudflare edge and forwards it to a destination on the local network, it translates the source IP from the Mesh CGNAT address (`100.96.x.x`) to the node's own local interface IP. This ensures return traffic routes correctly without requiring static routes in your VPC or on-premise network.
 
-Set `SRCNAT_ENABLED=false` only if the attached networks already have return routes to the Mesh IP range (`100.96.0.0/12`). For more details on return traffic routing, refer to [Routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+Set `SRCNAT_ENABLED=false` only if the attached networks already have return routes to the Mesh IP range (`100.96.0.0/12`). For more details on return traffic routing, refer to [Routes](/mesh/features/routes/#return-traffic-routing).
 
 ## High availability on Kubernetes
 
 <Render file="mesh/masque-required" product="cloudflare-one" />
 
-For [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) with CIDR routes:
+For [high availability](/mesh/features/high-availability/) with CIDR routes:
 
 1. Use the same Mesh node token across multiple replicas.
 2. Give each Pod its own `PersistentVolumeClaim`.
@@ -392,13 +378,13 @@ Cloudflare operates replicas in active-passive mode. If the active replica goes 
 
 ## Hostname routes
 
-Containers support [hostname routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes). To resolve Kubernetes Services through a hostname route, make sure the hostname matches the cluster's actual DNS suffix. The default is `cluster.local`, producing Service names like `service.namespace.svc.cluster.local`.
+Containers support [hostname routing](/mesh/features/routes/#hostname-routes). To resolve Kubernetes Services through a hostname route, make sure the hostname matches the cluster's actual DNS suffix. The default is `cluster.local`, producing Service names like `service.namespace.svc.cluster.local`.
 
 <Render file="mesh/masque-required" product="cloudflare-one" />
 
 ## Site-to-site networking
 
-Deploy a separate Mesh node container at each site with a separate node token for each node identity. Each node should advertise its locally reachable subnet as a [CIDR route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/). Configure each site's router or workloads to send traffic for the remote subnet through the local Mesh node.
+Deploy a separate Mesh node container at each site with a separate node token for each node identity. Each node should advertise its locally reachable subnet as a [CIDR route](/mesh/features/routes/). Configure each site's router or workloads to send traffic for the remote subnet through the local Mesh node.
 
 With `SRCNAT_ENABLED=true`, destinations see the Mesh node's local address. With source NAT disabled, the attached networks require return routes through their Mesh nodes.
 
@@ -418,7 +404,7 @@ docker logs cloudflare-mesh
 
 ### A Kubernetes Service cannot be resolved
 
-Confirm that the [hostname route](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes) matches the cluster's actual DNS suffix. The usual default is `cluster.local`, producing Service names such as `service.namespace.svc.cluster.local`.
+Confirm that the [hostname route](/mesh/features/routes/#hostname-routes) matches the cluster's actual DNS suffix. The usual default is `cluster.local`, producing Service names such as `service.namespace.svc.cluster.local`.
 
 ### A hostname request arrives but no response returns
 
@@ -442,7 +428,7 @@ kubectl exec cloudflare-mesh-0 -- warp-cli status
 
 ## Next steps
 
-- [**Add routes**](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — Make subnets behind the containerized node reachable from any device on your Mesh.
-- [**Enable high availability**](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) — Run multiple replicas for production resilience.
+- [**Add routes**](/mesh/features/routes/) — Make subnets behind the containerized node reachable from any device on your Mesh.
+- [**Enable high availability**](/mesh/features/high-availability/) — Run multiple replicas for production resilience.
 - [**Connect from Workers**](/workers-vpc/examples/connect-to-cloudflare-mesh/) — Use VPC Network bindings to reach private services from Cloudflare Workers.
-- [**Tips and best practices**](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/) — Cloud VPC configuration, MTU tuning, and running alongside Cloudflare Tunnel.
+- [**Tips and best practices**](/mesh/best-practices/) — Cloud VPC configuration, MTU tuning, and running alongside Cloudflare Tunnel.

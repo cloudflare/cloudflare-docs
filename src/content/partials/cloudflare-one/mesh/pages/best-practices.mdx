@@ -1,13 +1,5 @@
 ---
-pcx_content_type: reference
-description: Reference information for Tips and best practices in Zero Trust networking.
-title: Tips and best practices
-products:
-  - mesh
-tags:
-  - Private networks
-sidebar:
-  order: 6
+{}
 ---
 
 import { Tabs, TabItem } from "~/components";
@@ -16,7 +8,7 @@ Operational guidance for managing Cloudflare Mesh deployments — updating the c
 
 ## Update a Mesh node
 
-Updating a Mesh node means updating the `cloudflare-warp` package on the Linux host. The node briefly disconnects during the update, which interrupts traffic routed through it. If you have [high availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/) enabled, traffic fails over to a standby replica automatically.
+Updating a Mesh node means updating the `cloudflare-warp` package on the Linux host. The node briefly disconnects during the update, which interrupts traffic routed through it. If you have [high availability](/mesh/features/high-availability/) enabled, traffic fails over to a standby replica automatically.
 
 <Tabs>
 <TabItem label="Debian / Ubuntu">
@@ -61,7 +53,7 @@ Updating a Mesh node means updating the `cloudflare-warp` package on the Linux h
 
 ## Make IP forwarding persistent
 
-IP forwarding allows a Mesh node to act as a gateway, forwarding packets between its network interface and the Cloudflare network. This is only required if the node advertises [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) — if you are only reaching the node by its Mesh IP, forwarding is not needed.
+IP forwarding allows a Mesh node to act as a gateway, forwarding packets between its network interface and the Cloudflare network. This is only required if the node advertises [CIDR routes](/mesh/features/routes/) — if you are only reaching the node by its Mesh IP, forwarding is not needed.
 
 Older installations may have used `sysctl -w` for IP forwarding, which does not persist across reboots. If your node loses route connectivity after a server restart, run the following to make forwarding permanent:
 
@@ -99,7 +91,7 @@ When deploying Mesh nodes in a cloud VPC, you may need to configure additional p
 
 Mesh nodes run in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/), which redirects DNS queries on the host to Cloudflare Gateway. This will conflict with DNS services running on the same machine (for example, Active Directory DNS, Pi-hole, Unbound, BIND, or dnsmasq).
 
-If your server runs a DNS service, do not install the Mesh node on that host. Instead, install the node on a separate machine on the same subnet and use [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) to make the DNS server reachable.
+If your server runs a DNS service, do not install the Mesh node on that host. Instead, install the node on a separate machine on the same subnet and use [CIDR routes](/mesh/features/routes/) to make the DNS server reachable.
 
 ## Running Mesh alongside other VPN or mesh software
 
