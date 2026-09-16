@@ -25,6 +25,7 @@ import {
 	parseRecommendationEvent,
 	parseRecommendationsMode,
 	renderRecommendationsComment,
+	shouldSkipRecommendationUpdate,
 	type RecommendationBoundedResult,
 	type ReviewerRecommendationState,
 	type ReviewerRecommendationsEvent,
@@ -234,6 +235,25 @@ export async function processRecommendationEvent(
 			action: "pr_fetch_failed",
 		});
 		throw new Error(`pr fetch failed for #${prNumber}`);
+	}
+
+	// Drop updated events for PRs we must never comment on: drafts, closed
+	// PRs, and PRs the spam/off-topic gate labeled. Cleared events are still
+	// processed so an existing comment is removed when the PR closes.
+	if (
+		event.eventType === "reviewer-recommendations.updated" &&
+		shouldSkipRecommendationUpdate(pr)
+	) {
+		log({
+			message: `Dropped reviewer-recommendation update for PR #${prNumber}`,
+			event: "reviewer_recommendations",
+			prNumber,
+			draft: pr.draft,
+			state: pr.state,
+			labels: pr.labels.map((l) => l.name),
+			action: "drop_skipped_pr",
+		});
+		return;
 	}
 
 	const state = await readState(bucket, prNumber);

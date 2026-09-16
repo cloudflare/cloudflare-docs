@@ -9,6 +9,7 @@ import {
 	parseRecommendationEvent,
 	parseRecommendationsMode,
 	renderRecommendationsComment,
+	shouldSkipRecommendationUpdate,
 	withMentions,
 	type RecommendationArea,
 	type RecommendationBoundedResult,
@@ -322,6 +323,51 @@ describe("parseRecommendationsMode", () => {
 	});
 	it("accepts comment", () => {
 		expect(parseRecommendationsMode("comment")).toBe("comment");
+	});
+});
+
+// ── shouldSkipRecommendationUpdate ────────────────────────────────────────────
+
+describe("shouldSkipRecommendationUpdate", () => {
+	const pr = {
+		draft: false,
+		state: "open",
+		labels: [{ name: "workers" }],
+	};
+
+	it("processes a normal open PR", () => {
+		expect(shouldSkipRecommendationUpdate(pr)).toBe(false);
+	});
+
+	it("skips draft PRs", () => {
+		expect(shouldSkipRecommendationUpdate({ ...pr, draft: true })).toBe(true);
+	});
+
+	it("skips closed PRs", () => {
+		expect(shouldSkipRecommendationUpdate({ ...pr, state: "closed" })).toBe(
+			true,
+		);
+	});
+
+	it("skips PRs labeled spam or off topic", () => {
+		expect(
+			shouldSkipRecommendationUpdate({ ...pr, labels: [{ name: "spam" }] }),
+		).toBe(true);
+		expect(
+			shouldSkipRecommendationUpdate({
+				...pr,
+				labels: [{ name: "off topic" }],
+			}),
+		).toBe(true);
+	});
+
+	it("processes an open PR with unrelated labels", () => {
+		expect(
+			shouldSkipRecommendationUpdate({
+				...pr,
+				labels: [{ name: "workers" }, { name: "spam-filter:reviewed" }],
+			}),
+		).toBe(false);
 	});
 });
 

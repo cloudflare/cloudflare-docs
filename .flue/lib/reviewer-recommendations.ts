@@ -22,6 +22,29 @@ export function parseRecommendationsMode(value: unknown): RecommendationsMode {
 	return value === "comment" ? "comment" : RECOMMENDATIONS_MODE_DEFAULT;
 }
 
+/**
+ * Labels the Flue spam/off-topic gate applies to PRs it classifies as spam.
+ * Recommendation updates for such PRs are dropped so the comment never posts.
+ */
+export const RECOMMENDATIONS_SKIP_LABELS = ["spam", "off topic"] as const;
+
+/**
+ * Whether an updated recommendation event for this PR should be dropped:
+ * never comment on draft, closed, or spam/off-topic PRs. Cleared events are
+ * still processed so an existing comment is removed on close.
+ */
+export function shouldSkipRecommendationUpdate(pr: {
+	draft: boolean;
+	state: string;
+	labels: Array<{ name: string }>;
+}): boolean {
+	if (pr.draft) return true;
+	if (pr.state !== "open") return true;
+	return pr.labels.some((label) =>
+		(RECOMMENDATIONS_SKIP_LABELS as readonly string[]).includes(label.name),
+	);
+}
+
 export type RecommendationEventStatus = "complete" | "fallback" | "error";
 
 // ── Bounded projection contract (mirrors corpus events.ts) ───────────────────
