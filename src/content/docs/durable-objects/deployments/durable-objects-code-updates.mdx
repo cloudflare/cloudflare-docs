@@ -45,7 +45,7 @@ An explicit `code_update_strategy` — whether in your Wrangler configuration, p
 ```mermaid
 flowchart TD
     A["You deploy a new version"] --> B{"Is the Durable Object<br/>currently running?"}
-    B -->|Inactive| C["Starts on new version<br/>on next request"]
+    B -->|Inactive| C["Starts on the new version<br/>on the next request"]
     B -->|Active| D{"code_update_strategy<br/>mode?"}
     D -->|immediate| E["Cloudflare resets it and<br/>applies the code update"]
     D -->|deferred| F["Starts a max_delay timer,<br/>keeps running its current version"]
