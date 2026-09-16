@@ -1,0 +1,591 @@
+{
+	"model_id": "stealth/union-alpha",
+	"provider_id": "stealth",
+	"name": "Union Alpha",
+	"description": "Union Alpha is a blended AI model that engages multiple language models in parallel for each request, synthesizes one answer, and supports text and vision inputs through a single API response.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Blended Model",
+		"Reasoning",
+		"Coding",
+		"Vision"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0,
+		"Output tokens (per 1M)": 0,
+		"Cached input tokens (per 1M)": 0
+	},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Ask Union Alpha for a concise answer.",
+			"input": {
+				"messages": [
+					{
+						"content": "What is the capital of France? Answer in one word.",
+						"role": "user"
+					}
+				],
+				"max_tokens": 16
+			},
+			"output": {
+				"text": "Paris"
+			},
+			"raw_response": {
+				"id": "chatcmpl-mu3b7o02sf9tov9z",
+				"object": "chat.completion",
+				"model": "union-alpha",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "Paris"
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 29,
+					"completion_tokens": 5,
+					"total_tokens": 34,
+					"prompt_tokens_details": {
+						"cached_tokens": 28
+					},
+					"cost": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [{ content: 'What is the capital of France? Answer in one word.', role: 'user' }],\n    max_tokens: 16,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France? Answer in one word.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 16\n}'"
+				}
+			]
+		},
+		{
+			"name": "System Guidance",
+			"description": "Set a helpful system role before asking a question.",
+			"input": {
+				"messages": [
+					{
+						"content": "You explain technical topics in plain language.",
+						"role": "system"
+					},
+					{
+						"content": "What is an API? Explain it in two sentences.",
+						"role": "user"
+					}
+				],
+				"max_tokens": 64
+			},
+			"output": {
+				"text": "An API (Application Programming Interface) is a set of rules that lets different software programs communicate with each other. For example, a weather app can use an API to request the latest forecast from a weather service."
+			},
+			"raw_response": {
+				"id": "chatcmpl-mu3b7pxpj3kdi2v5",
+				"object": "chat.completion",
+				"model": "union-alpha",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "An API (Application Programming Interface) is a set of rules that lets different software programs communicate with each other. For example, a weather app can use an API to request the latest forecast from a weather service."
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 19,
+					"completion_tokens": 46,
+					"total_tokens": 65,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"cost": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'You explain technical topics in plain language.', role: 'system' },\n      { content: 'What is an API? Explain it in two sentences.', role: 'user' },\n    ],\n    max_tokens: 64,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"You explain technical topics in plain language.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"What is an API? Explain it in two sentences.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 64\n}'"
+				}
+			]
+		},
+		{
+			"name": "Coding Example",
+			"description": "Ask for a short coding example.",
+			"input": {
+				"messages": [
+					{
+						"content": "Write a JavaScript function that reverses a string. Include one example call.",
+						"role": "user"
+					}
+				],
+				"max_tokens": 128
+			},
+			"output": {
+				"text": "```javascript\nfunction reverseString(str) {\n  return [...str].reverse().join(\"\");\n}\n\n// Example call:\nconsole.log(reverseString(\"hello\")); // \"olleh\"\n```"
+			},
+			"raw_response": {
+				"id": "chatcmpl-mu3b7t0objtvuaa4",
+				"object": "chat.completion",
+				"model": "union-alpha",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "```javascript\nfunction reverseString(str) {\n  return [...str].reverse().join(\"\");\n}\n\n// Example call:\nconsole.log(reverseString(\"hello\")); // \"olleh\"\n```"
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 14,
+					"completion_tokens": 39,
+					"total_tokens": 53,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"cost": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      {\n        content: 'Write a JavaScript function that reverses a string. Include one example call.',\n        role: 'user',\n      },\n    ],\n    max_tokens: 128,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"Write a JavaScript function that reverses a string. Include one example call.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 128\n}'"
+				}
+			]
+		},
+		{
+			"name": "Follow-up Conversation",
+			"description": "Continue a short conversation with prior assistant context.",
+			"input": {
+				"messages": [
+					{
+						"content": "I am planning a weekend trip to a coastal city.",
+						"role": "user"
+					},
+					{
+						"content": "Consider walkable neighborhoods, local food, and a nearby beach.",
+						"role": "assistant"
+					},
+					{
+						"content": "What should I prioritize when choosing where to stay?",
+						"role": "user"
+					}
+				],
+				"max_tokens": 96
+			},
+			"output": {
+				"text": "Prioritize **location over amenities** for a short weekend\u2014you\u2019ll get more out of your trip if you spend less time in transit.\n\n- **Your main activity:** Stay near the beach for a relaxing getaway, or near the center for restaurants, sightseeing, and nightlife.\n- **Walkability and transport:** Look for caf\u00e9s and dinner options within walking distance, plus easy access to the airport or train station. If you\u2019re driving, check parking costs.\n- **Total"
+			},
+			"raw_response": {
+				"id": "chatcmpl-mu3b7wo2jrkvi2t8",
+				"object": "chat.completion",
+				"model": "union-alpha",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "Prioritize **location over amenities** for a short weekend\u2014you\u2019ll get more out of your trip if you spend less time in transit.\n\n- **Your main activity:** Stay near the beach for a relaxing getaway, or near the center for restaurants, sightseeing, and nightlife.\n- **Walkability and transport:** Look for caf\u00e9s and dinner options within walking distance, plus easy access to the airport or train station. If you\u2019re driving, check parking costs.\n- **Total"
+						},
+						"finish_reason": "length"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 43,
+					"completion_tokens": 96,
+					"total_tokens": 139,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"cost": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'I am planning a weekend trip to a coastal city.', role: 'user' },\n      {\n        content: 'Consider walkable neighborhoods, local food, and a nearby beach.',\n        role: 'assistant',\n      },\n      { content: 'What should I prioritize when choosing where to stay?', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"I am planning a weekend trip to a coastal city.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Consider walkable neighborhoods, local food, and a nearby beach.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"What should I prioritize when choosing where to stay?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing",
+			"description": "Generate a compact piece of creative writing.",
+			"input": {
+				"messages": [
+					{
+						"content": "Write a four-line poem about finding light after a difficult day.",
+						"role": "user"
+					}
+				],
+				"max_tokens": 96
+			},
+			"output": {
+				"text": "The weary day sank softly out of sight,\nAnd left me searching shadows for a spark.\nThen one small star unfolded into light\u2014\nEnough to lead me gently through the dark."
+			},
+			"raw_response": {
+				"id": "chatcmpl-mu3b80ptkze4dltt",
+				"object": "chat.completion",
+				"model": "union-alpha",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "The weary day sank softly out of sight,\nAnd left me searching shadows for a spark.\nThen one small star unfolded into light\u2014\nEnough to lead me gently through the dark."
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 12,
+					"completion_tokens": 39,
+					"total_tokens": 51,
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"cost": 0
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'Write a four-line poem about finding light after a difficult day.', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"Write a four-line poem about finding light after a difficult day.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": null,
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/stealth/union-alpha.png",
+	"metadata": {
+		"Architecture": "Blended model",
+		"Modalities": "Text and vision"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-09-16 16:31:57",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {},
+				"modalities": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"text",
+							"audio"
+						]
+					}
+				},
+				"audio": {
+					"type": "object",
+					"properties": {
+						"voice": {
+							"type": "string",
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							]
+						},
+						"format": {
+							"type": "string",
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							]
+						}
+					},
+					"additionalProperties": false
+				},
+				"reasoning_effort": {
+					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+					"type": [
+						"string",
+						"null"
+					]
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"audio": {
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"type": [
+									"string",
+									"null"
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}
