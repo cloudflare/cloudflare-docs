@@ -243,6 +243,10 @@ If an upstream OAuth provider rejects the callback URL, check whether **Use the 
 
 ## Create a portal
 
+:::caution
+If you use a custom domain from an active zone, portal creation fails when a zone hold that includes subdomains applies to the hostname. Before you create the portal, [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) for the selected zone and each parent zone. A parent zone can belong to a different Cloudflare account.
+:::
+
 To create an MCP server portal:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
