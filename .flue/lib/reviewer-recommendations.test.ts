@@ -723,7 +723,7 @@ describe("renderRecommendationsComment", () => {
 		expect(body).toContain("`@cloudflare/product-owners`");
 		expect(body).toContain("`@cloudflare/content-engineering`");
 		expect(body).toContain(
-			"| **Other**<br/><sub>1 file changed</sub><br/>`/public/__redirects` | `@cloudflare/product-owners`, `@cloudflare/content-engineering` | `@cloudflare/product-owners`, `@cloudflare/content-engineering`<br/><sub>CODEOWNERS only · not notified</sub> |",
+			"| **Other**<br/>`/public/__redirects` | `@cloudflare/product-owners`, `@cloudflare/content-engineering` | `@cloudflare/product-owners`, `@cloudflare/content-engineering`<br/><sub>CODEOWNERS only · not notified</sub> |",
 		);
 		expect(body).not.toContain("Suggested reviewers");
 		expect(body).not.toContain("alice");
@@ -752,7 +752,7 @@ describe("renderRecommendationsComment", () => {
 		);
 		expect(body).toContain("`@cloudflare/product-owners`");
 		expect(body).toContain(
-			"| **Other**<br/><sub>1 file changed</sub><br/>`*` | `@cloudflare/product-owners` | `@cloudflare/product-owners`<br/><sub>CODEOWNERS only · not notified</sub> |",
+			"| **Other**<br/>`*` | `@cloudflare/product-owners` | `@cloudflare/product-owners`<br/><sub>CODEOWNERS only · not notified</sub> |",
 		);
 		expect(body).not.toContain("Suggested reviewers");
 		expect(body).not.toContain("alice");
@@ -972,12 +972,8 @@ describe("renderRecommendationsComment", () => {
 				]),
 			}),
 		);
-		expect(body).toContain(
-			"**workers**<br/><sub>3 files changed</sub><br/>`*.ts`",
-		);
-		expect(body).toContain(
-			"**workers**<br/><sub>3 files changed</sub><br/>`/src/components/`",
-		);
+		expect(body).toContain("**workers**<br/>`*.ts`");
+		expect(body).toContain("**workers**<br/>`/src/components/`");
 	});
 	it("escapes table cells", () => {
 		const body = renderRecommendationsComment(

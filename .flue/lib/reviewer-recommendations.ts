@@ -564,13 +564,21 @@ export async function shouldWriteRecommendationComment(
 	);
 }
 
-function areaCell(area: RecommendationArea, showPattern: boolean): string {
-	const files = `${area.totalPaths} ${area.totalPaths === 1 ? "file" : "files"} changed`;
-	const pattern =
-		showPattern && area.codeownersPattern !== null
-			? `<br/>${codeSpan(area.codeownersPattern)}`
-			: "";
-	return `**${proseText(areaName(area))}**<br/><sub>${files}</sub>${pattern}`;
+function areaCell(
+	area: RecommendationArea,
+	showPattern: boolean,
+	showFileCount: boolean,
+): string {
+	const parts = [`**${proseText(areaName(area))}**`];
+	if (showFileCount) {
+		parts.push(
+			`<sub>${area.totalPaths} ${area.totalPaths === 1 ? "file" : "files"} changed</sub>`,
+		);
+	}
+	if (showPattern && area.codeownersPattern !== null) {
+		parts.push(codeSpan(area.codeownersPattern));
+	}
+	return parts.join("<br/>");
 }
 
 function codeownersMappings(
@@ -678,7 +686,7 @@ export function renderRecommendationsComment(
 		for (const area of uncovered) {
 			const contacts = contactsCell(area);
 			lines.push(
-				`| ${areaCell(area, showAreaPattern(area))} | ${codeownersCell(area)} | ${contacts || "_No suggestions_"} |`,
+				`| ${areaCell(area, showAreaPattern(area), false)} | ${codeownersCell(area)} | ${contacts || "_No suggestions_"} |`,
 			);
 		}
 	}
@@ -696,7 +704,7 @@ export function renderRecommendationsComment(
 		for (const area of covered) {
 			const approvers = area.satisfyingApprovers.map(codeSpan).join(", ");
 			lines.push(
-				`| ${areaCell(area, showAreaPattern(area))} | ${approvers || "_No approver recorded_"} |`,
+				`| ${areaCell(area, showAreaPattern(area), true)} | ${approvers || "_No approver recorded_"} |`,
 			);
 		}
 		lines.push("", "</details>");
