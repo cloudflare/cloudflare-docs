@@ -10,11 +10,11 @@ products:
 date: 2026-05-21
 ---
 
-You can now scope Cloudflare permissions to individual [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes. Administrators can delegate access to specific Tunnels or Mesh nodes without granting account-wide control over private networking.
+You can now scope Cloudflare permissions to individual [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/mesh/) nodes. Administrators can delegate access to specific Tunnels or Mesh nodes without granting account-wide control over private networking.
 
 ### What is new
 
-When you [add a member](/fundamentals/manage-members/manage/) or create a [permission policy](/fundamentals/manage-members/policies/), the resource picker now lists [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes as scopable resource types. You can:
+When you [add a member](/fundamentals/manage-members/manage/) or create a [permission policy](/fundamentals/manage-members/policies/), the resource picker now lists [Cloudflare Tunnel](/tunnel/) instances and [Cloudflare Mesh](/mesh/) nodes as scopable resource types. You can:
 
 - Grant a read-only role on a single Cloudflare Tunnel instance to a support operator for log streaming and diagnostics — without exposing other Tunnels or destructive actions.
 - Grant a write role on a specific Cloudflare Mesh node to an application team — without giving them access to the rest of your private network.
@@ -30,6 +30,6 @@ Granular permissions are a parallel layer to existing account-level roles — th
 
 ### Get started
 
-- Configure [granular permissions for Cloudflare Tunnel](/tunnel/advanced/granular-permissions/).
+- Configure [granular permissions for Cloudflare Tunnel](/tunnel/guides/granular-permissions/).
 - Configure [granular permissions for Cloudflare Tunnel and Cloudflare Mesh in Cloudflare One](/cloudflare-one/networks/connectors/granular-permissions/).
 - Review the [resource-scoped roles](/fundamentals/manage-members/roles/#resource-scoped-roles) on the Cloudflare role reference.

@@ -12,6 +12,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Precise (per megapixel-second)": 0.07,
+		"Creative (per megapixel-second)": 0.1
+	},
 	"examples": [
 		{
 			"name": "Precise Video Upscale",

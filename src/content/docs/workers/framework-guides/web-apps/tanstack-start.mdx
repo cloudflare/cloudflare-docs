@@ -34,9 +34,21 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 <AutoconfigDiagram
 	framework="TanStack Start"
 	configs={[
-		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
-		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
-		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
+		{
+			label: "main",
+			file: "wrangler.jsonc",
+			value: ".output/server/index.mjs",
+		},
+		{
+			label: "assets",
+			file: "wrangler.jsonc",
+			value: "directory: .output/public",
+		},
+		{
+			label: "compatibility_flags",
+			file: "wrangler.jsonc",
+			value: "nodejs_compat",
+		},
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 	]}
 />
@@ -143,7 +155,6 @@ Preview the build locally before deploying:
 
 TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypoint. Create a custom server entrypoint to add additional Workers handlers such as [Queues](/queues/) and [Cron Triggers](/workers/configuration/cron-triggers/). This is also where you can add additional exports such as [Durable Objects](/durable-objects/) and [Workflows](/workflows/).
 
-
 <Steps>
 
 1. Create a custom server entrypoint file:
@@ -192,10 +203,10 @@ TanStack Start uses `@tanstack/react-start/server-entry` as your default entrypo
 
 ### Test scheduled handlers locally
 
-Test your scheduled handler locally using the `/cdn-cgi/handler/scheduled` endpoint:
+Test your scheduled handler locally using the `/cdn-cgi/local/scheduled` endpoint:
 
 ```sh
-curl "http://localhost:3000/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+curl "http://localhost:3000/cdn-cgi/local/scheduled?cron=*+*+*+*+*"
 ```
 
 <Details header="Example: Using Workflows">

@@ -110,6 +110,10 @@ In the **Include headers and selected values** section, you can add header names
   * `referer`
   * `user-agent`
 
+:::caution
+For custom and restricted headers, selected values use case-sensitive substring matching. For example, `text/plain` matches an `Accept` header value of `text/plain, foo/bar`. It can also match the unintended value `text/plaintext`, but not `Text/Plain`.
+:::
+
 To check for the presence of a header without including its actual value, use the **Check presence of** option.
 
 Currently, you can only exclude the `Origin` header. The `Origin` header is always included unless explicitly excluded. Including the [Origin header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Origin) in the Cache Key is important to enforce [CORS](https://developer.mozilla.org/en-US/docs/Glossary/CORS).

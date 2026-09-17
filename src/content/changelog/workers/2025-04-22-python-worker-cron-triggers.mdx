@@ -44,12 +44,12 @@ Define a cron trigger configuration in your Wrangler configuration file:
 </WranglerConfig>
 
 Then test your new handler by using Wrangler with the `--test-scheduled` flag and
-making a request to `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`:
+making a request to `/cdn-cgi/local/scheduled?cron=*+*+*+*+*`:
 
 ```sh
 npx wrangler dev --test-scheduled
 
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?cron=*+*+*+*+*"
 ```
 
 Consult the [Workers Cron Triggers page](/workers/configuration/cron-triggers/) for full details on cron triggers in Workers.

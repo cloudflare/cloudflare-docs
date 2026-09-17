@@ -1,15 +1,5 @@
 {
-    "id": "86b3e51a-4b05-43fa-a403-0f27821919d2",
-    "source": 1,
     "name": "@cf/zai-org/glm-4.7-flash",
-    "description": "GLM-4.7-Flash is a fast and efficient multilingual text generation model with a 131,072 token context window. Optimized for dialogue, instruction-following, and multi-turn tool calling across 100+ languages.",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2026-01-28 16:04:39.346",
-    "tags": [],
     "properties": [
         {
             "property_id": "context_window",
@@ -20,7 +10,7 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.06,
+                    "price": 0.0605,
                     "currency": "USD"
                 },
                 {
@@ -39,6 +29,16 @@
             "value": "true"
         }
     ],
+    "id": "86b3e51a-4b05-43fa-a403-0f27821919d2",
+    "source": 1,
+    "description": "GLM-4.7-Flash is a fast and efficient multilingual text generation model with a 131,072 token context window. Optimized for dialogue, instruction-following, and multi-turn tool calling across 100+ languages.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-01-28 16:04:39.346",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -399,25 +399,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -993,6 +974,7 @@
                                                                     "enum": [
                                                                         "text",
                                                                         "image_url",
+                                                                        "video_url",
                                                                         "input_audio",
                                                                         "file"
                                                                     ]
@@ -1014,6 +996,14 @@
                                                                                 "high"
                                                                             ],
                                                                             "default": "auto"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "video_url": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "url": {
+                                                                            "type": "string"
                                                                         }
                                                                     }
                                                                 },
@@ -1656,25 +1646,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2604,23 +2575,6 @@
                                     "type": "null"
                                 }
                             ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
                         }
                     },
                     "required": [
@@ -2638,5 +2592,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

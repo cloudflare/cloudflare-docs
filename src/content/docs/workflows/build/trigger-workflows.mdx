@@ -187,6 +187,8 @@ The possible values of status are as follows:
 
 If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
+To receive historical and live execution updates without polling, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
+
 ### Explicitly pause a Workflow
 
 You can explicitly pause a Workflow instance (and later resume it) by calling `pause` against a specific instance ID.

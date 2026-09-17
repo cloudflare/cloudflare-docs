@@ -20,7 +20,9 @@ const selected = shuffled.slice(0, count);
 ---
 
 <div class="not-content agent-example-prompts flex flex-col gap-2">
-	{selected.map((prompt) => <Code code={prompt} lang="txt" />)}
+	{selected.map((prompt) => (
+		<Code code={prompt} lang="txt" />
+	))}
 </div>
 
 <style>

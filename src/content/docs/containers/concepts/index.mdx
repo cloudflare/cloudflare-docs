@@ -1,11 +1,127 @@
 ---
-pcx_content_type: navigation
-title: Concepts
-description: Understand the key ideas behind Containers, including their lifecycle and placement.
+title: Container Fundamentals
+description: Understand what a Cloudflare Container is, how requests reach it, how it starts and stops, where it runs, and how it holds state.
+pcx_content_type: overview
 sidebar:
   order: 3
   group:
-    hideIndex: true
+    label: Concepts
 products:
   - containers
+reviewed: 2026-08-21
 ---
+
+import {
+	CardGrid,
+	LinkCard,
+	ContainerConnectivity,
+	ContainerIsolation,
+	ContainerRequestPath,
+	ContainerLifecycle,
+	ContainerPlacement,
+} from "~/components";
+
+A Cloudflare Container runs your container image in a full Linux environment on Cloudflare's network, alongside a Worker. The Worker handles incoming HTTP requests, while the Container provides the runtime, binaries, and languages your application needs. Together, they let you run Linux workloads without managing the underlying infrastructure.
+
+## The Container runtime
+
+_Run Linux workloads alongside your Worker._
+
+A Worker runs code in an isolated JavaScript environment. A Container runs your image in a full Linux environment, so you can bring custom runtimes and binaries when your application needs them. Each Container instance runs inside its own virtual machine, which isolates it from other workloads. The Worker receives inbound HTTP requests and routes them to the Container, so the Container is not exposed directly to end users.
+
+<ContainerIsolation client:visible>
+
+A request reaches the Worker, which routes it to a Container running inside its own virtual machine. The Worker remains in front of the Container while the Container serves the request.
+
+</ContainerIsolation>
+
+For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+## How requests reach a Container
+
+_Route every request through your Worker._
+
+The request begins at your Worker, which uses the [Durable Object](/durable-objects/) layer to identify and reach a Container. This layer coordinates routing and lifecycle behavior, allowing the Container to continue serving requests while it runs. A Container can start when it receives its first request, so the first request may take longer to complete.
+
+<ContainerRequestPath client:visible>
+
+A request flows from the client to the Worker and then to a Container. The Worker and Durable Object layer coordinate routing and lifecycle behavior before the Container serves the request. If the Container is not already running, it starts as part of that process.
+
+</ContainerRequestPath>
+
+For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+## Container lifecycle
+
+_Start on demand, then stop when idle._
+
+A Container starts when your application needs it, so the first request can take longer while its environment starts. Once running, it serves requests until it becomes inactive; after an inactivity period, it can stop and release its running resources. When another request arrives, the Container can start again.
+
+<ContainerLifecycle client:visible>
+
+The lifecycle begins with a stopped Container and a request that starts it. The Container then serves requests, becomes inactive, and stops again until another request arrives.
+
+</ContainerLifecycle>
+
+For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/) and [Pricing](/containers/platform/pricing/).
+
+## Sizing
+
+_Choose resources for your workload._
+
+Container instance sizes let you match resources to your workload. You can choose a predefined size or configure a custom one, with larger sizes providing more CPU, memory, and disk. When choosing a size, consider the resources your application needs and refer to [Limits and instance types](/containers/platform/limits/) for the available options and constraints.
+
+For more information, refer to [Pricing](/containers/platform/pricing/).
+
+## Placement
+
+_Place instances near users or within constraints._
+
+Cloudflare places Container instances across its network, helping applications serve users from suitable locations. You can constrain placement by region or jurisdiction when your workload has location or data residency requirements. You can also run multiple instances when your application needs more capacity.
+
+<ContainerPlacement client:visible>
+
+Instances can run in different Cloudflare locations, and requests can be routed to an available instance. Placement constraints can keep instances within a region or jurisdiction when location matters to your application.
+
+</ContainerPlacement>
+
+For more information, refer to [Placement](/containers/concepts/placement/).
+
+## Storage and connectivity
+
+_Keep durable data outside the local disk._
+
+Treat a Container's local disk as temporary working space, because data on it can be lost when the Container stops or restarts. For data that must persist, use Durable Object storage or Cloudflare storage bindings such as KV, R2, and D1. Configured outbound handlers let the Container access these bindings and external services without requiring an SDK inside the Container.
+
+<ContainerConnectivity client:visible>
+
+A Container can reach Cloudflare storage and external services through configured connections. Its local disk is temporary, while data in durable storage persists beyond the Container's lifecycle.
+
+</ContainerConnectivity>
+
+For more information, refer to [Connect to Workers and bindings](/containers/configuration/workers-connections/) and [Outbound traffic](/containers/guides/outbound-traffic/).
+
+## Start building
+
+When you are ready to build, start with a deployed Container or explore the available guides.
+
+<CardGrid>
+	<LinkCard
+		title="Get started"
+		href="/containers/get-started/"
+		description="Deploy your first container."
+	/>
+	<LinkCard
+		title="Guides"
+		href="/containers/guides/"
+		description="Task-focused walkthroughs for common container workloads."
+	/>
+</CardGrid>
+
+## Related resources
+
+- [Lifecycle of a Container](/containers/concepts/architecture/): the deep dive on deployment, routing, and shutdown.
+- [Placement](/containers/concepts/placement/): where instances run and how to constrain them.
+- [Connect to Workers and bindings](/containers/configuration/workers-connections/): reaching Cloudflare resources from a container.
+- [Limits and instance types](/containers/platform/limits/) and [Pricing](/containers/platform/pricing/): sizes, account limits, and billing.
+- [Rollouts](/containers/configuration/rollouts/): how new versions roll out across instances.

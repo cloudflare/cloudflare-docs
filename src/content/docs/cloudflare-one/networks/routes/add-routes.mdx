@@ -16,12 +16,16 @@ A route maps an IP address or hostname to a [Cloudflare One connector](/cloudfla
 
 The dashboard **Routes** page is the single place to view and manage the routes for all of your connectors — Cloudflare Tunnel, Cloudflare Mesh, Cloudflare WAN, and Magic Transit — in one table. When you create a route, you choose its type, which determines the connector it uses.
 
+:::note
+When adding a CIDR, hostname, or WAN route, you can enter multiple destinations at once (separated by commas), or select **Add another** to queue up several routes — including different types or connectors — before creating them all together.
+:::
+
 ## Add a CIDR route
 
 CIDR routes define the IP network segments (such as `10.0.0.0/24`) that are reachable via a Cloudflare Tunnel or a Cloudflare Mesh node.
 
 :::note[Prerequisites]
-Before you add a CIDR route, ensure you have created a Cloudflare Tunnel using [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or a [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node.
+Before you add a CIDR route, ensure you have created a Cloudflare Tunnel using [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or a [Cloudflare Mesh](/mesh/) node.
 :::
 
 To add a CIDR route:
@@ -40,7 +44,7 @@ To add a CIDR route:
 6. Select **Create route**.
 
 Cloudflare will now route requests to your private network. However, the route does not automatically capture traffic from end users. To enable client-side connectivity, refer to the [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) or
-[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/) setup guides.
+[Cloudflare Mesh](/mesh/features/routes/) setup guides.
 
 ## Add a hostname route
 

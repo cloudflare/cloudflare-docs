@@ -13,6 +13,13 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@480p non-video input (per second)": 0.06,
+		"@480p video input (per second)": 0.132,
+		"@720p non-video input (per second)": 0.12,
+		"@720p video input (per second)": 0.286,
+		"Default (per second)": 0.12
+	},
 	"examples": [
 		{
 			"name": "Quick Video",
