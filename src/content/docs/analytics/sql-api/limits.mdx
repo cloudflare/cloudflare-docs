@@ -1,0 +1,24 @@
+---
+pcx_content_type: reference
+title: Limits
+description: Review SQL API query and request limits.
+sidebar:
+  order: 6
+---
+
+The following limits apply to SQL API queries:
+
+| Limit                      | Value                                |
+| -------------------------- | ------------------------------------ |
+| SQL statements per request | 1                                    |
+| SQL statement length       | 10 KiB                               |
+| Datasets per statement     | 1                                    |
+| Accounts per statement     | 1                                    |
+| Minimum time constraint    | A lower timestamp bound is required. |
+| `ORDER BY`                 | Requires `LIMIT`.                    |
+
+Dataset-specific limits can restrict field availability, historical retention, query duration, and the maximum number of returned rows. These limits depend on the dataset, your plan, and the account or zone being queried.
+
+The API also applies request-rate, concurrency, queue, execution-time, and resource-consumption limits. Cloudflare can adjust these operational limits to protect service availability.
+
+When a request exceeds a rate or resource limit, the API returns HTTP `429`, `507`, or `503`. Reduce the requested time range or returned row count before retrying. Honor the `Retry-After` response header when it is present.
