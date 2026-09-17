@@ -16,7 +16,7 @@ When you add a `send_email` binding to a Worker, you can restrict which addresse
 
 Each entry in `send_email` can be configured to restrict what the binding can do. The sender address must always belong to a domain you have onboarded to Email Service.
 
-- **No restriction attribute**: The binding can send to any verified destination address in your account.
+- **No restriction attribute**: The binding can send to any recipient your account is allowed to send to. Before you onboard a sending domain, that is limited to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account; after you onboard a sending domain, you can send to any recipient. Refer to [Limits](/email-service/platform/limits/#verified-destination-addresses).
 - **`destination_address`**: The binding can only send to the single destination address configured here. If you call `send()` with `to` set to `null` or `undefined`, the configured address is used.
 - **`allowed_destination_addresses`**: The binding can only send to addresses listed in this allowlist.
 - **`allowed_sender_addresses`**: The binding can only send from the addresses listed in this allowlist.
@@ -26,7 +26,7 @@ Each entry in `send_email` can be configured to restrict what the binding can do
 ```jsonc
 {
 	"send_email": [
-		// Send to any verified destination
+		// Send to any recipient the account is allowed to send to
 		{ "name": "EMAIL" },
 		// Send only to a single fixed destination
 		{
