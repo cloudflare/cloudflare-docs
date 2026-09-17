@@ -1,11 +1,13 @@
 ---
-title: Workers traces now include JavaScript RPC session spans
+title: Workers traces now automatically include JavaScript RPC session spans
 description: Workers traces now include JavaScript RPC session spans for Worker-to-Worker and Worker-to-Durable Object calls.
 products:
   - workers
   - durable-objects
-date: 2026-09-10
+date: 2026-09-17
 ---
+
+import { WranglerConfig } from "~/components";
 
 Workers traces can now follow JavaScript RPC calls across Worker boundaries and into Durable Objects. Previously, a trace stopped at the caller's RPC boundary. The dashboard now shows the caller-side session and method calls alongside the callee invocation, nested calls, and callbacks into another Worker.
 
@@ -13,4 +15,17 @@ A session span covers the lifetime of a caller-side session and groups calls tha
 
 ![A Workers trace of a Worker-to-Worker RPC session, showing the session span, the caller's getCounter and increment call spans, and the callee's invocation and matching call spans](~/assets/images/workers/changelog/jsrpc-session-spans.png)
 
-[Tracing must be enabled](/workers/observability/traces/#how-to-enable-tracing) in your Wrangler configuration for these spans to be recorded. For supported spans and attributes, refer to [Spans and attributes](/workers/observability/traces/spans-and-attributes/).
+Enable tracing with one setting in your [Wrangler configuration file](/workers/wrangler/configuration/#observability):
+
+<WranglerConfig>
+
+```toml
+[observability.traces]
+enabled = true
+```
+
+</WranglerConfig>
+
+Cloudflare records these spans automatically. You do not need to change your application code or add an observability SDK.
+
+For supported spans and attributes, refer to [Spans and attributes](/workers/observability/traces/spans-and-attributes/).

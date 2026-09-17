@@ -175,9 +175,15 @@ A caller-side span that covers the lifetime of an RPC session. Calls that reuse 
 
 This span has no additional RPC-specific attributes.
 
+#### RPC invocation
+
+A callee-side span that covers an RPC invocation in the target Worker or Durable Object.
+
 #### RPC call
 
 A caller-side or callee-side span for an individual method call or property access.
+
+Caller-side and callee-side spans use the execution color of the Worker or Durable Object where they run. The color change marks the execution boundary.
 
 - `jsrpc.method` - The method name or property path
 - `jsrpc.operation` - The operation type: `call` or `getProperty`
