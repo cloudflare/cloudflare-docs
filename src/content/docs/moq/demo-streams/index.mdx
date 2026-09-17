@@ -1,6 +1,7 @@
 ---
 title: Demo streams
 pcx_content_type: how-to
+description: Subscribe to long-running MoQ demo streams using draft-14 or draft-16.
 sidebar:
   order: 3
 
@@ -32,7 +33,7 @@ The relays host the following namespaces. A check mark indicates that a namespac
 <Tabs>
 <TabItem label="Draft-14">
 
-Draft-14 supports every namespace listed above. This example subscribes to `/bbb`:
+Draft-14 supports every namespace in the table. This example subscribes to `/bbb`:
 
 ```sh
 moq-sub https://draft-14.cloudflare.mediaoverquic.com --name bbb
@@ -52,4 +53,4 @@ The provided JWT lets you subscribe without provisioning a relay or creating a t
 </TabItem>
 </Tabs>
 
-To play the stream with ffplay, append `| ffplay -` to either command.
+To play the stream with `ffplay`, append `| ffplay -` to either command.
