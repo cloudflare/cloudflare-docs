@@ -18,7 +18,7 @@ Use the AI Search REST API to manage instances and sync jobs over HTTP.
 
 ## API paths
 
-Instance APIs are scoped to a [namespace](/ai-search/concepts/namespaces/):
+AI Search scopes Instance APIs to a [namespace](/ai-search/concepts/namespaces/):
 
 | Path                                                                     | Description                              |
 | ------------------------------------------------------------------------ | ---------------------------------------- |
@@ -68,6 +68,6 @@ Trigger and monitor [sync jobs](/ai-search/configuration/indexing/syncing/) that
 Start a new sync job for an instance:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/jobs" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/jobs" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
