@@ -8,7 +8,7 @@ products:
   - ai-gateway
 ---
 
-import { Render } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 Add Data Loss Prevention (DLP) to any AI Gateway to start scanning AI prompts and responses for sensitive data.
 
@@ -52,6 +52,36 @@ After enabling DLP, you can create policies to define how sensitive data should 
      - **Both** - Scan both requests and responses
 
 3. Click **Save** to save your policy configuration.
+
+## Configure DLP with the API
+
+Use the [Update a Gateway](/api/resources/ai_gateway/methods/update/) endpoint to manage DLP programmatically:
+
+<APIRequest
+	path="/accounts/{account_id}/ai-gateway/gateways/{id}"
+	method="PUT"
+/>
+
+The following `dlp` object blocks requests that match the selected DLP profile:
+
+```json
+{
+	"dlp": {
+		"enabled": true,
+		"policies": [
+			{
+				"id": "block-financial-prompts",
+				"enabled": true,
+				"action": "BLOCK",
+				"profiles": ["DLP_PROFILE_ID"],
+				"check": ["REQUEST"]
+			}
+		]
+	}
+}
+```
+
+The update endpoint uses `PUT`. Retrieve the current gateway first and preserve its existing settings in the update body. Omitting the `dlp` property removes the gateway's DLP configuration.
 
 ## Manage DLP policies
 
