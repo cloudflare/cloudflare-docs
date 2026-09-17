@@ -17,6 +17,7 @@ import {
 	classifyContentType,
 	inferContentType,
 	resolveFavicon,
+	resolvePageHeadline,
 	resolvePageTitle,
 	resolveSocialImagePath,
 } from "~/util/page-head";
@@ -110,6 +111,7 @@ const fullTitle = resolvePageTitle({
 	titleSuffix,
 	siteTitle: config.title,
 });
+const structuredHeadline = resolvePageHeadline({ title, titleOverride });
 // Parity: no site-wide fallback — an absent description omits the tags.
 const resolvedDescription = description;
 
@@ -175,7 +177,7 @@ const datePublished = meta?.datePublished
 const jsonLd = buildStructuredData({
 	schemaType: resolvedSchemaType,
 	canonical,
-	fullTitle,
+	headline: structuredHeadline,
 	description: structuredDescription,
 	lang,
 	ogImage,

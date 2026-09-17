@@ -5,6 +5,7 @@ import {
 	classifyContentType,
 	inferContentType,
 	resolveFavicon,
+	resolvePageHeadline,
 	resolvePageTitle,
 	resolveSocialImagePath,
 } from "./page-head";
@@ -142,6 +143,21 @@ describe("resolvePageTitle", () => {
 	});
 });
 
+describe("resolvePageHeadline", () => {
+	test("uses the page title without a product/site suffix", () => {
+		expect(resolvePageHeadline({ title: "Get started" })).toBe("Get started");
+	});
+
+	test("uses the clean base of a head-title override", () => {
+		expect(
+			resolvePageHeadline({
+				title: "raw",
+				titleOverride: "Model X (Author) | Workers AI",
+			}),
+		).toBe("Model X (Author)");
+	});
+});
+
 describe("classifyContentType", () => {
 	test("empty → (null, not changelog, TechArticle)", () => {
 		expect(classifyContentType("")).toEqual({
@@ -181,7 +197,7 @@ describe("buildStructuredData", () => {
 	const base = {
 		schemaType: "TechArticle" as const,
 		canonical: "https://developers.cloudflare.com/workers/",
-		fullTitle: "Get started · Workers",
+		headline: "Get started",
 		lang: "en",
 		isChangelog: false,
 	};
@@ -245,7 +261,7 @@ describe("buildStructuredData", () => {
 	test("escapes `<` to prevent breaking out of the script tag", () => {
 		const out = buildStructuredData({
 			...base,
-			fullTitle: "a </script> b",
+			headline: "a </script> b",
 		})!;
 		expect(out).not.toContain("</script>");
 		expect(out).toContain("\\u003c/script>");
@@ -255,7 +271,7 @@ describe("buildStructuredData", () => {
 		const out = buildStructuredData({
 			schemaType: "BlogPosting",
 			canonical: "https://developers.cloudflare.com/changelog/x/",
-			fullTitle: "X · Changelog",
+			headline: "X",
 			description: "desc",
 			lang: "en",
 			ogImage: "https://developers.cloudflare.com/og.png",
