@@ -34,12 +34,13 @@ import {
 	getInstallationToken,
 	getPullRequest,
 	isCodeOwner,
+	type GitHubPullRequest,
 } from "./github";
 import {
 	setAutoReviewDisabled,
 	setReviewLimitIgnored,
 } from "./code-review-state";
-import { setDraftNeverStale } from "./draft-stale";
+import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
 export interface PipelineEnv {
@@ -200,7 +201,7 @@ async function handleCommand(
 		}
 
 		case "draft-never-stale": {
-			let pr;
+			let pr: GitHubPullRequest;
 			try {
 				pr = await getPullRequest(token, number);
 			} catch (err) {
@@ -224,6 +225,7 @@ async function handleCommand(
 			}
 			try {
 				await setDraftNeverStale(env.DOCS_FLUE_BUCKET, number, sender);
+				await clearDraftStaleState(env.DOCS_FLUE_BUCKET, number);
 			} catch (err) {
 				log(
 					"command:draft-never-stale",

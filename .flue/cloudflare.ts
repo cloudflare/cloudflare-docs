@@ -795,8 +795,16 @@ export default {
 		_controller: ScheduledController,
 		env: RecommendationEnv,
 	): Promise<void> {
-		const token = await getInstallationToken(env as Record<string, string>);
-		await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
+		try {
+			const token = await getInstallationToken(env as Record<string, string>);
+			await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
+		} catch (error) {
+			console.error({
+				message: `Draft stale sweep failed: ${error instanceof Error ? error.message : String(error)}`,
+				event: "draft_stale",
+				action: "sweep_failed",
+			});
+		}
 	},
 
 	async queue(

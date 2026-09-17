@@ -2,8 +2,10 @@ import {
 	closePullRequest,
 	createIssueComment,
 	getIssueComment,
+	getIssueComments,
 	getPullRequest,
 	listOpenDraftPullRequests,
+	type GitHubIssueComment,
 	type GitHubPullRequest,
 } from "./github";
 
@@ -11,6 +13,12 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const REMINDER_AFTER_MS = 3 * DAY_MS;
 const CLOSE_AFTER_MS = 7 * DAY_MS;
 const MINIMUM_WARNING_MS = 4 * DAY_MS;
+const COMMENT_TIMESTAMP_SKEW_MS = 60 * 1000;
+
+export const DRAFT_STALE_REMINDER_MARKER =
+	"<!-- cloudflare-docs-flue-draft-stale -->";
+export const DRAFT_STALE_CLOSE_MARKER =
+	"<!-- cloudflare-docs-flue-draft-stale-close -->";
 
 export interface DraftStaleState {
 	staleSince: string;
@@ -123,13 +131,35 @@ export function getDraftStaleAction(
 }
 
 export function renderDraftStaleReminder(author: string): string {
-	return `<!-- cloudflare-docs-flue-draft-stale -->
+	return `${DRAFT_STALE_REMINDER_MARKER}
 @${author} This draft pull request has had no activity for 3 days. It will close after 7 days of inactivity. Transition to ready for review if ready. A codeowner can comment \`/draft-never-stale\` to keep it open.`;
 }
 
 export function renderDraftStaleClose(author: string): string {
-	return `<!-- cloudflare-docs-flue-draft-stale-close -->
+	return `${DRAFT_STALE_CLOSE_MARKER}
 @${author} Closing this draft pull request after 7 days of inactivity. Re-open at a later date and transition to ready for review when you are ready if you seek review.`;
+}
+
+export function getMarkedComment(
+	comments: GitHubIssueComment[],
+	marker: string,
+): GitHubIssueComment | null {
+	return comments.findLast((comment) => comment.body?.includes(marker)) ?? null;
+}
+
+export function hasActivityAfterComment(
+	pr: Pick<GitHubPullRequest, "updated_at">,
+	comments: GitHubIssueComment[],
+	comment: GitHubIssueComment,
+): boolean {
+	const commentTime = Date.parse(comment.created_at);
+	return (
+		comments.some(
+			(candidate) =>
+				candidate.user?.type !== "Bot" &&
+				candidate.created_at > comment.created_at,
+		) || Date.parse(pr.updated_at) > commentTime + COMMENT_TIMESTAMP_SKEW_MS
+	);
 }
 
 export async function runDraftStaleSweep(
@@ -150,23 +180,35 @@ export async function runDraftStaleSweep(
 					await clearDraftStaleState(bucket, pr.number);
 					break;
 				case "remind": {
-					const reminderCommentId = await createIssueComment(
-						token,
-						pr.number,
-						renderDraftStaleReminder(pr.user.login),
+					const comments = await getIssueComments(token, pr.number);
+					let reminder = getMarkedComment(
+						comments,
+						DRAFT_STALE_REMINDER_MARKER,
 					);
-					const [reminder, updatedPr] = await Promise.all([
-						getIssueComment(token, reminderCommentId),
+					if (reminder && hasActivityAfterComment(pr, comments, reminder)) {
+						reminder = null;
+					}
+					const reusingReminder = reminder !== null;
+
+					const reminderCommentId = reminder
+						? reminder.id
+						: await createIssueComment(
+								token,
+								pr.number,
+								renderDraftStaleReminder(pr.user.login),
+							);
+					reminder ??= await getIssueComment(token, reminderCommentId);
+					const [updatedPr, updatedComments] = await Promise.all([
 						getPullRequest(token, pr.number),
+						getIssueComments(token, pr.number),
 					]);
 					if (updatedPr.state !== "open" || !updatedPr.draft) break;
-
-					// A new update during the reminder request means the PR is no longer
-					// stale. Do not begin a close timer from an outdated observation.
-					if (updatedPr.updated_at > reminder.created_at) break;
+					if (hasActivityAfterComment(updatedPr, updatedComments, reminder)) {
+						break;
+					}
 
 					await setDraftStaleState(bucket, pr.number, {
-						staleSince: pr.updated_at,
+						staleSince: reusingReminder ? reminder.created_at : pr.updated_at,
 						reminderPostedAt: reminder.created_at,
 						botUpdatedAt: updatedPr.updated_at,
 						reminderCommentId,
@@ -176,17 +218,33 @@ export async function runDraftStaleSweep(
 				case "close": {
 					if (!state) break;
 					if (!state.closingCommentId) {
-						const closingCommentId = await createIssueComment(
-							token,
-							pr.number,
-							renderDraftStaleClose(pr.user.login),
+						const comments = await getIssueComments(token, pr.number);
+						const closingComment = getMarkedComment(
+							comments,
+							DRAFT_STALE_CLOSE_MARKER,
 						);
-						const [closingComment, updatedPr] = await Promise.all([
-							getIssueComment(token, closingCommentId),
+						const closingCommentId = closingComment
+							? closingComment.id
+							: await createIssueComment(
+									token,
+									pr.number,
+									renderDraftStaleClose(pr.user.login),
+								);
+						const [updatedPr, updatedComments] = await Promise.all([
 							getPullRequest(token, pr.number),
+							getIssueComments(token, pr.number),
 						]);
 						if (updatedPr.state !== "open" || !updatedPr.draft) break;
-						if (updatedPr.updated_at > closingComment.created_at) {
+						const confirmedClosingComment =
+							closingComment ??
+							(await getIssueComment(token, closingCommentId));
+						if (
+							hasActivityAfterComment(
+								updatedPr,
+								updatedComments,
+								confirmedClosingComment,
+							)
+						) {
 							await clearDraftStaleState(bucket, pr.number);
 							break;
 						}
@@ -196,6 +254,7 @@ export async function runDraftStaleSweep(
 							closingCommentId,
 						});
 					}
+					if (await isDraftNeverStale(bucket, pr.number)) break;
 					await closePullRequest(token, pr.number);
 					await clearDraftStaleState(bucket, pr.number);
 					break;

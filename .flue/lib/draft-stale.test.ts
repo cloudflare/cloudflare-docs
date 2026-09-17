@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { getDraftStaleAction } from "./draft-stale";
+import {
+	DRAFT_STALE_REMINDER_MARKER,
+	getDraftStaleAction,
+	getMarkedComment,
+	hasActivityAfterComment,
+} from "./draft-stale";
 
 const now = new Date("2026-09-17T12:00:00.000Z");
 
@@ -82,5 +87,61 @@ describe("getDraftStaleAction", () => {
 				now,
 			),
 		).toBe("reset");
+	});
+});
+
+describe("draft stale comment helpers", () => {
+	const reminder = {
+		id: 1,
+		body: DRAFT_STALE_REMINDER_MARKER,
+		created_at: "2026-09-14T12:00:00.000Z",
+		updated_at: "2026-09-14T12:00:00.000Z",
+		user: { login: "cloudflare-docs-bot", type: "Bot" },
+	};
+
+	it("locates the latest marked comment", () => {
+		const latest = { ...reminder, id: 2 };
+		expect(
+			getMarkedComment([reminder, latest], DRAFT_STALE_REMINDER_MARKER),
+		).toBe(latest);
+	});
+
+	it("tolerates the bot's own updated_at timestamp skew", () => {
+		expect(
+			hasActivityAfterComment(
+				{ updated_at: "2026-09-14T12:00:30.000Z" },
+				[reminder],
+				reminder,
+			),
+		).toBe(false);
+	});
+
+	it("detects a human comment after the reminder", () => {
+		expect(
+			hasActivityAfterComment(
+				{ updated_at: "2026-09-14T12:00:30.000Z" },
+				[
+					reminder,
+					{
+						...reminder,
+						id: 2,
+						body: "I am still working on this.",
+						created_at: "2026-09-14T12:00:31.000Z",
+						user: { login: "author", type: "User" },
+					},
+				],
+				reminder,
+			),
+		).toBe(true);
+	});
+
+	it("detects a later PR update outside the bot timestamp skew", () => {
+		expect(
+			hasActivityAfterComment(
+				{ updated_at: "2026-09-14T12:01:01.000Z" },
+				[reminder],
+				reminder,
+			),
+		).toBe(true);
 	});
 });
