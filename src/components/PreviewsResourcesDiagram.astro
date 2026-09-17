@@ -1,5 +1,4 @@
 ---
-
 ---
 
 <figure class="pres" aria-label="Resource binding and isolation model">
@@ -11,13 +10,12 @@
 
 		<!-- Code -->
 		<div class="pres-code">
-			<code
-				><span class="pres-kw">const</span> obj = <span class="pres-kw"
-					>await</span
-				> env.<span class="pres-hl">UPLOADS</span>.get(<span class="pres-str"
-					>"avatar.png"</span
-				>);</code
-			>
+			<code>
+				<span class="pres-kw">const</span> obj ={" "}
+				<span class="pres-kw">await</span> env.
+				<span class="pres-hl">UPLOADS</span>.get(
+				<span class="pres-str">"avatar.png"</span>);
+			</code>
 		</div>
 
 		<!-- Binding name callout -->
@@ -30,9 +28,12 @@
 					y2="20"
 					stroke="currentColor"
 					stroke-width="1.5"
-					stroke-dasharray="4,3"></line>
+					stroke-dasharray="4,3"
+				></line>
 			</svg>
-			<span class="pres-binding-pill">Binding name: <code>UPLOADS</code></span>
+			<span class="pres-binding-pill">
+				Binding name: <code>UPLOADS</code>
+			</span>
 			<svg class="pres-arrow-svg" width="2" height="20" viewBox="0 0 2 20">
 				<line
 					x1="1"
@@ -41,7 +42,8 @@
 					y2="20"
 					stroke="currentColor"
 					stroke-width="1.5"
-					stroke-dasharray="4,3"></line>
+					stroke-dasharray="4,3"
+				></line>
 			</svg>
 		</div>
 
@@ -84,18 +86,21 @@
 						<option
 							value="redesign"
 							data-caption="Started from Base configuration. Same bucket as fix-api, so they read and write the same data."
-							>redesign</option
 						>
+							redesign
+						</option>
 						<option
 							value="fix-api"
 							data-caption="Started from Base configuration. Same bucket as redesign, so they read and write the same data."
-							>fix-api</option
 						>
+							fix-api
+						</option>
 						<option
 							value="feature/login"
 							data-caption="Changed its binding to a separate bucket. Only this Preview reads and writes here. redesign and fix-api are not affected."
-							>feature/login (own bucket)</option
 						>
+							feature/login (own bucket)
+						</option>
 					</select>
 				</label>
 
@@ -181,10 +186,10 @@
 		<!-- Bottom callout -->
 		<div class="pres-shared-callout">
 			<span class="pres-shared-line"></span>
-			<span class="pres-shared-text"
-				>redesign and fix-api share <code>r2-staging</code>. Same binding, same
-				data. feature/login has its own bucket.</span
-			>
+			<span class="pres-shared-text">
+				redesign and fix-api share <code>r2-staging</code>. Same binding, same
+				data. feature/login has its own bucket.
+			</span>
 			<span class="pres-shared-line"></span>
 		</div>
 	</div>

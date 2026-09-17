@@ -40,157 +40,155 @@ const paths = [
 ];
 ---
 
-{
-	variant === "paths" ? (
-		<figure class="worker-previews-diagram worker-previews-paths">
-			<div class="diagram-shell">
-				<header class="diagram-header">
-					<p class="eyebrow">Choose your path</p>
-					<div class="diagram-title">Start from how you already ship code</div>
-				</header>
+{variant === "paths" ? (
+	<figure class="worker-previews-diagram worker-previews-paths">
+		<div class="diagram-shell">
+			<header class="diagram-header">
+				<p class="eyebrow">Choose your path</p>
+				<div class="diagram-title">Start from how you already ship code</div>
+			</header>
 
-				<div class="path-grid">
-					{paths.map((path) => (
-						<a class="path-card" href={path.href}>
-							<span class="path-meta">{path.meta}</span>
-							<strong>{path.label}</strong>
-							<span class="path-detail">{path.detail}</span>
-							<code>{path.command}</code>
-						</a>
-					))}
-				</div>
-
-				<div class="path-outcome" aria-label="Shared Preview result">
-					<span aria-hidden="true">-&gt;</span>
-					<strong>Preview URL</strong>
-					<code>preview.app.example.com</code>
-				</div>
+			<div class="path-grid">
+				{paths.map((path) => (
+					<a class="path-card" href={path.href}>
+						<span class="path-meta">{path.meta}</span>
+						<strong>{path.label}</strong>
+						<span class="path-detail">{path.detail}</span>
+						<code>{path.command}</code>
+					</a>
+				))}
 			</div>
-		</figure>
-	) : (
-		<figure
-			class="worker-previews-diagram worker-previews-overview"
-			aria-label="Previews repository model"
-		>
-			<div class="diagram-shell">
-				<div class="repo-diagram">
-					<div class="repo-stage unified-stage">
-						<section class="repo-window" aria-label="Repository branch">
-							<header class="repo-titlebar">
-								<span class="repo-dot" />
-								<span class="repo-dot" />
-								<span class="repo-dot" />
-								<strong>Repository</strong>
-							</header>
-							<label class="branch-selector unified-branch-selector">
-								<span>Branch</span>
-								<select class="unified-branch-select" aria-label="Branch">
-									<option
-										value="main"
-										data-mode="production"
-										data-href="/workers/configuration/routing/custom-domains/"
-										data-eyebrow="Live app"
-										data-title="app.example.com"
-										data-detail="Production variables, secrets, bindings, and custom domain."
-										data-url="app.example.com"
-										data-command="npx wrangler deploy"
-										data-command-href="/workers/wrangler/commands/workers/#deploy"
-										data-url-href="/workers/configuration/routing/custom-domains/"
-										data-traffic-label="Traffic"
-										data-traffic-text="where live requests go"
-										data-traffic-href="/workers/configuration/versions-and-deployments/"
-									>
-										main
-									</option>
-									<option
-										value="feature/login"
-										data-mode="preview"
-										data-href="/workers/previews/configuration/"
-										data-eyebrow="Preview"
-										data-title="feature/login"
-										data-detail="Preview variables, secrets, bindings, and custom domain"
-										data-url="feature-login.app.example.com"
-										data-command="npx wrangler preview"
-										data-command-href="/workers/wrangler/commands/workers/#preview"
-										data-url-href="/workers/previews/custom-domains/"
-										data-traffic-label="Preview"
-										data-traffic-text="branch code with preview settings"
-										data-traffic-href="/workers/previews/resources/"
-									>
-										feature/login
-									</option>
-									<option
-										value="redesign"
-										data-mode="preview"
-										data-href="/workers/previews/resources/"
-										data-eyebrow="Preview"
-										data-title="redesign"
-										data-detail="Preview variables, secrets, bindings, and custom domain"
-										data-url="redesign.app.example.com"
-										data-command="npx wrangler preview"
-										data-command-href="/workers/wrangler/commands/workers/#preview"
-										data-url-href="/workers/previews/custom-domains/"
-										data-traffic-label="Preview"
-										data-traffic-text="branch code with preview settings"
-										data-traffic-href="/workers/previews/resources/"
-									>
-										redesign
-									</option>
-									<option
-										value="fix-api"
-										data-mode="preview"
-										data-href="/workers/previews/custom-domains/"
-										data-eyebrow="Preview"
-										data-title="fix-api"
-										data-detail="Preview variables, secrets, bindings, and custom domain"
-										data-url="fix-api.app.example.com"
-										data-command="npx wrangler preview"
-										data-command-href="/workers/wrangler/commands/workers/#preview"
-										data-url-href="/workers/previews/custom-domains/"
-										data-traffic-label="Preview"
-										data-traffic-text="branch code with preview settings"
-										data-traffic-href="/workers/previews/resources/"
-									>
-										fix-api
-									</option>
-								</select>
-							</label>
-							<ul class="file-list" aria-label="Repository files">
-								<li>src/index.ts</li>
-								<li>package.json</li>
-							</ul>
-						</section>
 
-						<div class="app-card unified-app-card">
-							<p class="eyebrow" data-unified-eyebrow>
-								Live app
-							</p>
-							<strong data-unified-title>app.example.com</strong>
-							<span data-unified-detail>
-								Production variables, secrets, bindings, and custom domain.
-							</span>
+			<div class="path-outcome" aria-label="Shared Preview result">
+				<span aria-hidden="true">-&gt;</span>
+				<strong>Preview URL</strong>
+				<code>preview.app.example.com</code>
+			</div>
+		</div>
+	</figure>
+) : (
+	<figure
+		class="worker-previews-diagram worker-previews-overview"
+		aria-label="Previews repository model"
+	>
+		<div class="diagram-shell">
+			<div class="repo-diagram">
+				<div class="repo-stage unified-stage">
+					<section class="repo-window" aria-label="Repository branch">
+						<header class="repo-titlebar">
+							<span class="repo-dot" />
+							<span class="repo-dot" />
+							<span class="repo-dot" />
+							<strong>Repository</strong>
+						</header>
+						<label class="branch-selector unified-branch-selector">
+							<span>Branch</span>
+							<select class="unified-branch-select" aria-label="Branch">
+								<option
+									value="main"
+									data-mode="production"
+									data-href="/workers/configuration/routing/custom-domains/"
+									data-eyebrow="Live app"
+									data-title="app.example.com"
+									data-detail="Production variables, secrets, bindings, and custom domain."
+									data-url="app.example.com"
+									data-command="npx wrangler deploy"
+									data-command-href="/workers/wrangler/commands/workers/#deploy"
+									data-url-href="/workers/configuration/routing/custom-domains/"
+									data-traffic-label="Traffic"
+									data-traffic-text="where live requests go"
+									data-traffic-href="/workers/configuration/versions-and-deployments/"
+								>
+									main
+								</option>
+								<option
+									value="feature/login"
+									data-mode="preview"
+									data-href="/workers/previews/configuration/"
+									data-eyebrow="Preview"
+									data-title="feature/login"
+									data-detail="Preview variables, secrets, bindings, and custom domain"
+									data-url="feature-login.app.example.com"
+									data-command="npx wrangler preview"
+									data-command-href="/workers/wrangler/commands/workers/#preview"
+									data-url-href="/workers/previews/custom-domains/"
+									data-traffic-label="Preview"
+									data-traffic-text="branch code with preview settings"
+									data-traffic-href="/workers/previews/resources/"
+								>
+									feature/login
+								</option>
+								<option
+									value="redesign"
+									data-mode="preview"
+									data-href="/workers/previews/resources/"
+									data-eyebrow="Preview"
+									data-title="redesign"
+									data-detail="Preview variables, secrets, bindings, and custom domain"
+									data-url="redesign.app.example.com"
+									data-command="npx wrangler preview"
+									data-command-href="/workers/wrangler/commands/workers/#preview"
+									data-url-href="/workers/previews/custom-domains/"
+									data-traffic-label="Preview"
+									data-traffic-text="branch code with preview settings"
+									data-traffic-href="/workers/previews/resources/"
+								>
+									redesign
+								</option>
+								<option
+									value="fix-api"
+									data-mode="preview"
+									data-href="/workers/previews/custom-domains/"
+									data-eyebrow="Preview"
+									data-title="fix-api"
+									data-detail="Preview variables, secrets, bindings, and custom domain"
+									data-url="fix-api.app.example.com"
+									data-command="npx wrangler preview"
+									data-command-href="/workers/wrangler/commands/workers/#preview"
+									data-url-href="/workers/previews/custom-domains/"
+									data-traffic-label="Preview"
+									data-traffic-text="branch code with preview settings"
+									data-traffic-href="/workers/previews/resources/"
+								>
+									fix-api
+								</option>
+							</select>
+						</label>
+						<ul class="file-list" aria-label="Repository files">
+							<li>src/index.ts</li>
+							<li>package.json</li>
+						</ul>
+					</section>
+
+					<div class="app-card unified-app-card">
+						<p class="eyebrow" data-unified-eyebrow>
+							Live app
+						</p>
+						<strong data-unified-title>app.example.com</strong>
+						<span data-unified-detail>
+							Production variables, secrets, bindings, and custom domain.
+						</span>
+					</div>
+
+					<div class="repo-summary unified-summary">
+						<div>
+							<strong>Command:</strong>{" "}
+							<span data-unified-command>npx wrangler deploy</span>
 						</div>
-
-						<div class="repo-summary unified-summary">
-							<div>
-								<strong>Command:</strong>{" "}
-								<span data-unified-command>npx wrangler deploy</span>
-							</div>
-							<div>
-								<strong>URL:</strong>{" "}
-								<span data-unified-url>app.example.com</span>
-							</div>
-							<div>
-								<strong data-unified-traffic-label>Traffic:</strong>{" "}
-								<span data-unified-traffic-text>where live requests go</span>
-							</div>
+						<div>
+							<strong>URL:</strong>{" "}
+							<span data-unified-url>app.example.com</span>
+						</div>
+						<div>
+							<strong data-unified-traffic-label>Traffic:</strong>{" "}
+							<span data-unified-traffic-text>where live requests go</span>
 						</div>
 					</div>
 				</div>
 			</div>
-		</figure>
-	)
-}
+		</div>
+	</figure>
+)}
 
 <style>
 	.worker-previews-diagram {
