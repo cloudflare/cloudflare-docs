@@ -49,17 +49,27 @@ Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniq
 
 ### Connection closed: this Durable Object instance is no longer active. Reconnect or retry the request.
 
-The Durable Object instance that received your request was shut down. Subsequent requests are routed to a new instance automatically. Refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior) for the reasons an instance shuts down.
+The Durable Object instance associated with the stub is no longer active. This error has its `.retryable` property set to `true`.
+
+Cloudflare automatically retries eligible `DurableObjectStub.fetch()` calls when the runtime can safely replay the request. Remote procedure call (RPC) methods are not automatically retried.
+
+If your code receives this error, create a new [`DurableObjectStub`](/durable-objects/api/stub/). Retry the operation only if it is idempotent, and apply exponential backoff between attempts.
+
+Reusing the stub that threw this error fails immediately. For more information, refer to [Error handling](/durable-objects/best-practices/error-handling/).
 
 Only in-memory state is lost. Durable state already persisted through [storage](/durable-objects/best-practices/access-durable-objects-storage/) is not affected.
 
-To recover, create a new [`DurableObjectStub`](/durable-objects/api/stub/) and send the request again, if the request is idempotent. Reusing the stub that threw this error fails immediately. Refer to [Error handling](/durable-objects/best-practices/error-handling/) for guidance on handling exceptions and applying backoff.
+For reasons an instance shuts down, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
 
 ### Durable Object connection closed because the object was reset.
 
-The Durable Object instance a WebSocket was connected to was shut down, so the connection closed. This includes connections that were [hibernating](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior) for the reasons an instance shuts down.
+This error means a Durable Object instance was replaced while it had an open WebSocket. The WebSocket closes, and the client must reconnect.
 
-Build WebSocket clients to reconnect when a connection closes. Reconnecting routes the client to the new instance. Keep any state that must survive a reconnect in [storage](/durable-objects/best-practices/access-durable-objects-storage/) rather than in memory.
+Do not rely on this text appearing as the WebSocket close reason. Build clients to reconnect after any unexpected closure.
+
+Hibernation itself does not close WebSocket connections.
+
+Keep any state that must survive a reconnect in [storage](/durable-objects/best-practices/access-durable-objects-storage/) rather than in memory. For reasons an instance shuts down, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 

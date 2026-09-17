@@ -84,24 +84,26 @@ A Durable Object incurs charges only when it is **actively running in-memory**, 
 
 ## Shutdown behavior
 
-Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:
+Durable Object instances occasionally shut down. When another request arrives, Cloudflare starts a new instance and runs your Durable Object class constructor.
+
+An instance can shut down for several reasons:
 
 - New Worker [deployments](/workers/versions-and-deployments/) with code updates
 - Lack of requests to an object following the state transitions documented above
 - Cloudflare updates to the Workers runtime system
 - Workers runtime decisions on where to host objects
 
-When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
+When a Durable Object instance shuts down, Cloudflare routes new requests to a new instance. In-flight requests are handled as follows:
 
 - **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
-- **WebSocket connections**: When an object restarts, all of its WebSocket connections close and clients must reconnect. This includes connections that were [hibernating](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Evicting an idle object into hibernation does not close its connections.
+- **WebSocket connections**: All WebSocket connections to the instance close, including [hibernating connections](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Clients must reconnect.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
-Closing WebSocket connections promptly allows every client to reconnect to the new instance together. If connections stayed open, some clients would remain attached to the previous instance while others connected to the new one.
+Hibernation itself does not close WebSocket connections. Cloudflare does not transfer existing connections to a new instance.
 
-Code that uses a [`DurableObjectStub`](/durable-objects/api/stub/) after a shutdown receives `Connection closed: this Durable Object instance is no longer active. Reconnect or retry the request.` A WebSocket closed by a shutdown reports `Durable Object connection closed because the object was reset.` Refer to [Troubleshooting](/durable-objects/observability/troubleshooting/) to handle both.
+For recovery guidance after an interrupted request or WebSocket connection, refer to [Troubleshooting](/durable-objects/observability/troubleshooting/).
 
-It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
+Design services that use Durable Objects to handle instance shutdowns.
 
 ### Code updates
 
