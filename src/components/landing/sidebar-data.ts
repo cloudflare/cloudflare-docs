@@ -161,7 +161,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Team & Resources", "/cloudflare-one/team-and-resources/"),
 					link("Networks", "/cloudflare-one/networks/"),
 					link("Access controls", "/cloudflare-one/access-controls/"),
-					link("Traffic policies", "/cloudflare-one/traffic-policies/"),
+					link("Traffic controls", "/cloudflare-one/traffic-controls/"),
 					link(
 						"Cloud & SaaS findings",
 						"/cloudflare-one/cloud-and-saas-findings/",
