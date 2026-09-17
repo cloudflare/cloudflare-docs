@@ -107,10 +107,10 @@ Use DNS locations when you need to filter DNS traffic for an entire office or ne
 :::note[Important to know]
 DNS locations filter DNS traffic only. To filter HTTP traffic, use the Cloudflare One Client or proxy endpoints.
 
-For identity-based DNS policies without the Cloudflare One Client, configure [DNS over HTTPS with user tokens](/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) (Enterprise only).
+For identity-based DNS policies without the Cloudflare One Client, configure [DNS over HTTPS with user tokens](/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/#filter-doh-requests-by-user). To resolve internal domain names or route queries to private DNS servers, use [resolver policies](/cloudflare-one/traffic-controls/resolver-policies/) (Enterprise only).
 :::
 
-For detailed configuration, refer to the [DNS locations documentation](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/).
+For detailed configuration, refer to the [DNS locations documentation](/cloudflare-one/traffic-controls/resolver-endpoints/).
 
 ---
 
@@ -129,7 +129,7 @@ Use proxy endpoints when you need to filter web traffic without device agents, i
 Proxy endpoints only filter HTTP/HTTPS traffic routed through the PAC file. They do not support UDP traffic, HTTP/3, non-browser applications, or Browser Isolation.
 :::
 
-For detailed configuration, refer to the [Proxy endpoints documentation](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/).
+For detailed configuration, refer to the [Proxy endpoints documentation](/cloudflare-one/traffic-controls/proxy-endpoints/).
 
 ---
 
@@ -464,8 +464,8 @@ This pattern serves organizations with strict compliance requirements that prohi
 - [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/)
 - [Cloudflare Network Interconnect](/network-interconnect/)
 - [Virtual Networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/)
-- [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) - Filter DNS traffic without device agents
-- [Proxy endpoints](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) - Filter web traffic using PAC files
+- [DNS locations](/cloudflare-one/traffic-controls/resolver-endpoints/) - Filter DNS traffic without device agents
+- [Proxy endpoints](/cloudflare-one/traffic-controls/proxy-endpoints/) - Filter web traffic using PAC files
 - [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) - Secure web access without device agents
 
 For implementation guidance on combining Cloudflare One connectivity options, refer to the [SASE reference architecture](/reference-architecture/architectures/sase/).

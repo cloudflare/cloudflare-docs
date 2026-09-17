@@ -10,7 +10,7 @@ tags:
 
 Cloudflare WAN (formerly Magic WAN) can work together with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to provide easy access between your networks and applications.
 
-By default, [Cloudflare Gateway](/cloudflare-one/traffic-policies/) proxies and filters TCP, UDP, and ICMP traffic routed through IPsec/GRE tunnels and destined to routes behind Cloudflare Tunnel.
+By default, [Cloudflare Gateway](/cloudflare-one/traffic-controls/) proxies and filters TCP, UDP, and ICMP traffic routed through IPsec/GRE tunnels and destined to routes behind Cloudflare Tunnel.
 
 ## Route evaluation and precedence
 
@@ -32,7 +32,7 @@ Cloudflare reserves the following IP ranges for Zero Trust services:
 | --- | --- |
 | `100.64.0.0/12` | [Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) |
 | `100.96.0.0/12` | [Device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) |
-| `172.64.128.0/20` | [Initial resolved IPs](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) |
+| `172.64.128.0/20` | [Initial resolved IPs](/cloudflare-one/traffic-controls/egress-policies/host-selectors/) |
 | `100.112.0.0/16` | [Private Load Balancers](/load-balancing/private-network/) |
 
 Do not configure routes that overlap with these reserved ranges.
@@ -61,7 +61,7 @@ ARR requires Unified Routing mode. For more information, refer to [Automatic Ret
 
 ### Hostname Routes (Initial resolved IPs)
 
-[Hostname-based routing](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) uses Gateway DNS to resolve hostnames to Initial resolved IPs, which then map to specific next hops.
+[Hostname-based routing](/cloudflare-one/traffic-controls/egress-policies/host-selectors/) uses Gateway DNS to resolve hostnames to Initial resolved IPs, which then map to specific next hops.
 
 When Hostname Routes are enabled:
 

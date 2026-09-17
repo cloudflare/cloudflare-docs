@@ -22,14 +22,14 @@ Regional Services can be used with Gateway in all [supported regions](/data-loca
 
 ### Egress policies
 
-Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
-This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
+Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-controls/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
+This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-controls/egress-policies/).
 
-Zero Trust [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) control the IPs used by WARP and Gateway traffic when it leaves Cloudflare toward the Internet. They are different from [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which control the IPs used by the Cloudflare CDN when connecting to your origin server. For guaranteed egress IP geolocation from the Cloudflare CDN to your origin, refer to the [Cache](/data-localization/how-to/cache/#egress-to-origin) guide.
+Zero Trust [dedicated egress IPs](/cloudflare-one/traffic-controls/egress-policies/dedicated-egress-ips/) control the IPs used by WARP and Gateway traffic when it leaves Cloudflare toward the Internet. They are different from [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), which control the IPs used by the Cloudflare CDN when connecting to your origin server. For guaranteed egress IP geolocation from the Cloudflare CDN to your origin, refer to the [Cache](/data-localization/how-to/cache/#egress-to-origin) guide.
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
