@@ -1,0 +1,55 @@
+---
+title: Demo streams
+pcx_content_type: how-to
+sidebar:
+  order: 3
+
+head:
+  - tag: title
+    content: Demo streams
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Cloudflare publishes long-running streams on the public [MoQ](/moq/) relays. Use these streams to test client implementations without setting up your own publisher.
+
+## Available namespaces
+
+The relays host the following namespaces. A check mark indicates that a namespace is available for that draft.
+
+| Namespace         | Draft-14 | Draft-16 |
+| ----------------- | :------: | :------: |
+| `/bbb`            |    ✅    |    ✅    |
+| `/demo-tos-360p`  |    ✅    |    —     |
+| `/demo-tos-720p`  |    ✅    |    —     |
+| `/demo-tos-1080p` |    ✅    |    —     |
+| `/demo-tos-4k`    |    ✅    |    —     |
+
+## Subscribe with moq-sub
+
+`moq-sub` from the [moq-rs](https://github.com/cloudflare/moq-rs) project writes the media as fragmented MP4 to standard output. Select a draft to view the matching command.
+
+<Tabs>
+<TabItem label="Draft-14">
+
+Draft-14 supports every namespace listed above. This example subscribes to `/bbb`:
+
+```sh
+moq-sub https://draft-14.cloudflare.mediaoverquic.com --name bbb
+```
+
+</TabItem>
+<TabItem label="Draft-16">
+
+Draft-16 supports only `/bbb`. Its relay URL includes the provided JSON Web Token (JWT):
+
+```sh
+moq-sub https://draft-16.cloudflare.mediaoverquic.com/eyJhbGciOiJFZERTQSIsImtpZCI6Im1vcS12MSIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtb3EuY2xvdWRmbGFyZS5jb20iLCJleHAiOjE4MTY0NDA0NTcsImlhdCI6MTc4NDkwNDQ1OCwiaXNzIjoiY2xvdWRmbGFyZSIsImp0aSI6IjgxMTc4MjIyZmIzNTVjMDQ3YmM0MDNkODQ2NWI0YWIzIiwib3BlcmF0aW9ucyI6WyJzdWJzY3JpYmUiXSwic3ViIjoiZWJkMWZlZDdhZjMzNzYzMjc3MDc0ODQ0NThmYWIxZmEifQ.VlTscBfWmjSybWx1NpmF0f1g5Gtfxg5H4rkUQQa2JHATtjGwO5iwl71DAS5kJ98-3ukPvmGe9RE7peYs_dqgCg --name bbb
+```
+
+The provided JWT lets you subscribe without provisioning a relay or creating a token.
+
+</TabItem>
+</Tabs>
+
+To play the stream with ffplay, append `| ffplay -` to either command.
