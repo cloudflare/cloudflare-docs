@@ -49,7 +49,7 @@ Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniq
 
 ### Connection closed: this Durable Object instance is no longer active. Reconnect or retry the request.
 
-The Durable Object instance associated with the stub is no longer active. This error has its `.retryable` property set to `true`.
+This error means the connection between your Worker and the Durable Object was interrupted by the platform. It is unrelated to your own Worker code or deployments, and it has its `.retryable` property set to `true`.
 
 Cloudflare automatically retries eligible `DurableObjectStub.fetch()` calls when the runtime can safely replay the request. Remote procedure call (RPC) methods are not automatically retried.
 
@@ -57,19 +57,15 @@ If your code receives this error, create a new [`DurableObjectStub`](/durable-ob
 
 Reusing the stub that threw this error fails immediately. For more information, refer to [Error handling](/durable-objects/best-practices/error-handling/).
 
-Only in-memory state is lost. Durable state already persisted through [storage](/durable-objects/best-practices/access-durable-objects-storage/) is not affected.
-
-For reasons an instance shuts down, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
-
 ### Durable Object connection closed because the object was reset.
 
-This error means a Durable Object instance was replaced while it had an open WebSocket. The WebSocket closes, and the client must reconnect.
+This error means the Durable Object's connection was interrupted by the platform while a WebSocket was open. The WebSocket closes, and the client must reconnect.
 
 Do not rely on this text appearing as the WebSocket close reason. Build clients to reconnect after any unexpected closure.
 
 Hibernation itself does not close WebSocket connections.
 
-Keep any state that must survive a reconnect in [storage](/durable-objects/best-practices/access-durable-objects-storage/) rather than in memory. For reasons an instance shuts down, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
+Keep any state that must survive a reconnect in [storage](/durable-objects/best-practices/access-durable-objects-storage/) rather than in memory.
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
