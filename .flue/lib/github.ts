@@ -361,14 +361,14 @@ export async function getIssueComments(
 	token: string,
 	issueNumber: number,
 ): Promise<GitHubIssueComment[]> {
-	// Fetch every newest-first page, then reverse the complete list so callers
-	// retain oldest-first order while marker comments remain discoverable.
+	// Fetch every page so marker comments remain discoverable on busy PRs.
+	// GitHub's default ordering is oldest-first, matching existing callers.
 	const comments = await fetchAllPages<GitHubIssueComment>(
 		token,
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&sort=created&direction=desc`,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100`,
 		`get comments for ${issueNumber}`,
 	);
-	return comments.reverse();
+	return comments;
 }
 
 export async function updateIssueComment(

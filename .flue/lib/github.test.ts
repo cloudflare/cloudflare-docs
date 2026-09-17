@@ -92,24 +92,25 @@ describe("getIssueComments", () => {
 		vi.unstubAllGlobals();
 	});
 
-	it("paginates newest-first responses and returns oldest-first comments", async () => {
+	it("paginates oldest-first comments", async () => {
+		const older = {
+			id: 1,
+			body: "older",
+			created_at: "2026-09-01T00:00:00Z",
+			updated_at: "2026-09-01T00:00:00Z",
+			user: { login: "author", type: "User" },
+		};
 		const newer = {
+			...older,
 			id: 2,
 			body: "newer",
 			created_at: "2026-09-02T00:00:00Z",
 			updated_at: "2026-09-02T00:00:00Z",
-			user: { login: "author", type: "User" },
-		};
-		const older = {
-			...newer,
-			id: 1,
-			body: "older",
-			created_at: "2026-09-01T00:00:00Z",
 		};
 		const fetchMock = vi
 			.fn()
 			.mockResolvedValueOnce(
-				new Response(JSON.stringify([newer]), {
+				new Response(JSON.stringify([older]), {
 					status: 200,
 					headers: {
 						Link: '<https://api.github.com/repos/cloudflare/cloudflare-docs/issues/1/comments?page=2>; rel="next"',
@@ -117,7 +118,7 @@ describe("getIssueComments", () => {
 				}),
 			)
 			.mockResolvedValueOnce(
-				new Response(JSON.stringify([older]), { status: 200 }),
+				new Response(JSON.stringify([newer]), { status: 200 }),
 			);
 		vi.stubGlobal("fetch", fetchMock);
 

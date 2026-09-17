@@ -106,12 +106,23 @@ describe("draft stale comment helpers", () => {
 		).toBe(latest);
 	});
 
-	it("ignores quoted and non-bot marker text", () => {
+	it("ignores marker text posted verbatim by a non-bot", () => {
+		const spoofed = {
+			...reminder,
+			id: 2,
+			body: DRAFT_STALE_REMINDER_MARKER,
+			user: { login: "author", type: "User" },
+		};
+		expect(
+			getMarkedComment([reminder, spoofed], DRAFT_STALE_REMINDER_MARKER),
+		).toBe(reminder);
+	});
+
+	it("ignores quoted marker text posted by a bot", () => {
 		const quoted = {
 			...reminder,
 			id: 2,
 			body: `> ${DRAFT_STALE_REMINDER_MARKER}\n> Bot message\n\nPlease do not close.`,
-			user: { login: "author", type: "User" },
 		};
 		expect(
 			getMarkedComment([reminder, quoted], DRAFT_STALE_REMINDER_MARKER),
