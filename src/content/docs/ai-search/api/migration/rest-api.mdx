@@ -62,7 +62,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 The new API uses the `messages` array format.
 
 ```bash ins="ai-search/namespaces/default/instances" ins="/chat/completions" ins='"messages"' ins='"content"' ins='"role"'
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/chat/completions" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/chat/completions" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -d '{
@@ -95,7 +95,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 The new API uses the `messages` array format. The `query` string format is also supported.
 
 ```bash ins="ai-search/namespaces/default/instances" ins='"messages"' ins='"content"' ins='"role"'
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/search" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/search" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -d '{

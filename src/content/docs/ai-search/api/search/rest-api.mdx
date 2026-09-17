@@ -38,7 +38,7 @@ Every account has a `default` namespace. Use `default` unless you created a cust
 Search a specific instance. The search endpoint also accepts a `query` string parameter. For the full specification, refer to the [Search API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/search/).
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/search" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/search" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -56,7 +56,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 Generate a response from a specific instance. For the full specification, refer to the [Chat completions API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/chat_completions/).
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/chat/completions" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/chat/completions" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{

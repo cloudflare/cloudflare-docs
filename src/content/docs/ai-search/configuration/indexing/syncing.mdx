@@ -29,7 +29,7 @@ Sync jobs normally run on a schedule, but you can also start one programmaticall
 Trigger a sync job with the Wrangler CLI, for example from a CI/CD step or deploy hook:
 
 ```sh
-npx wrangler ai-search jobs create <INSTANCE_ID>
+npx wrangler ai-search jobs create <INSTANCE_NAME>
 ```
 
 Or call the [Create job REST API](/ai-search/api/instances/rest-api/#jobs) from a CMS webhook or a Worker. Sync jobs can be triggered at most once every 30 seconds.

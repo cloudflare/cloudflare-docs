@@ -92,7 +92,7 @@ interface Env {
 	AI_SEARCH: AiSearchNamespace;
 }
 
-const INSTANCE_ID = "knowledge-base";
+const INSTANCE_NAME = "knowledge-base";
 
 const SAMPLE_DOC = `# Caching on Cloudflare
 Cloudflare caches static assets at the edge. Use Cache Rules to control what is
@@ -104,9 +104,9 @@ async function ensureInstance(env: Env) {
 	// index_method with both vector and keyword enables hybrid search.
 	const hybrid = { index_method: { vector: true, keyword: true } };
 	try {
-		await env.AI_SEARCH.create({ id: INSTANCE_ID, ...hybrid });
+		await env.AI_SEARCH.create({ id: INSTANCE_NAME, ...hybrid });
 	} catch {
-		await env.AI_SEARCH.get(INSTANCE_ID).update(hybrid);
+		await env.AI_SEARCH.get(INSTANCE_NAME).update(hybrid);
 	}
 }
 
@@ -120,7 +120,7 @@ export default {
 		if (url.pathname === "/setup") {
 			await ensureInstance(env);
 
-			const instance = aiSearch.get(INSTANCE_ID);
+			const instance = aiSearch.get(INSTANCE_NAME);
 
 			// upload() queues the file and returns immediately. Indexing runs in
 			// the background, so poll the item's status until it is searchable.
@@ -167,7 +167,7 @@ const query = url.searchParams.get("q") ?? "How does caching work?";
 // chat() returns an AI SDK model that retrieves matching chunks and generates
 // a grounded answer in one call, so there is no separate search step.
 const { text, sources } = await generateText({
-	model: aiSearch.get(INSTANCE_ID).chat({
+	model: aiSearch.get(INSTANCE_NAME).chat({
 		ai_search_options: {
 			// "hybrid" ranks results from both the vector and keyword indexes.
 			retrieval: { retrieval_type: "hybrid", max_num_results: 5 },
@@ -193,7 +193,7 @@ For longer responses, use `streamText` instead of `generateText`. AI Search emit
 ```ts
 // streamText returns right away; tokens stream in as they are generated.
 const result = streamText({
-	model: aiSearch.get(INSTANCE_ID).chat(),
+	model: aiSearch.get(INSTANCE_NAME).chat(),
 	messages: [{ role: "user", content: query }],
 });
 
@@ -243,7 +243,7 @@ import { createWorkersAI } from "workers-ai-provider";
 import { generateText, tool, stepCountIs } from "ai";
 import { z } from "zod";
 
-const instance = aiSearch.get(INSTANCE_ID);
+const instance = aiSearch.get(INSTANCE_NAME);
 // The tool-caller must support function calling. Use a dedicated model here
 // rather than the AI Search chat model, which retrieves on every request.
 const workersai = createWorkersAI({ binding: env.AI });
