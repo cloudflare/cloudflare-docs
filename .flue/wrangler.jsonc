@@ -186,10 +186,8 @@
 			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
 		},
 	],
-	// Explicitly empty crons list so wrangler clears any previously registered
-	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
 	"triggers": {
-		"crons": [],
+		"crons": [{ "cron": "0 5 * * *" }],
 	},
 	"observability": {
 		"enabled": true,

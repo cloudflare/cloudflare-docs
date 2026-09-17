@@ -42,10 +42,23 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
+	updated_at: string;
 	labels: { name: string }[];
 	base: { ref: string; sha: string; repo: { full_name: string } };
 	/** head.repo can be null when the fork has been deleted. */
 	head: { ref: string; sha: string; repo: { full_name: string } | null };
+}
+
+/** List every open draft pull request in the repository. */
+export async function listOpenDraftPullRequests(
+	token: string,
+): Promise<GitHubPullRequest[]> {
+	const pullRequests = await fetchAllPages<GitHubPullRequest>(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls?state=open&per_page=100`,
+		"list open pull requests",
+	);
+	return pullRequests.filter((pullRequest) => pullRequest.draft);
 }
 
 export async function getInstallationToken(
@@ -165,6 +178,22 @@ export async function createIssueComment(
 	return data.id;
 }
 
+export async function getIssueComment(
+	token: string,
+	commentId: number,
+): Promise<GitHubIssueComment> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get issue comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubIssueComment;
+}
+
 /** Delete an issue comment. A 404 is treated as success (already gone). */
 export async function deleteIssueComment(
 	token: string,
@@ -225,6 +254,26 @@ export async function getPullRequest(
 		);
 	}
 	return (await res.json()) as GitHubPullRequest;
+}
+
+/** Close a pull request without applying an issue-only state reason. */
+export async function closePullRequest(
+	token: string,
+	pullNumber: number,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}`,
+		{
+			method: "PATCH",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ state: "closed" }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to close PR ${pullNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
 }
 
 /**
@@ -312,21 +361,14 @@ export async function getIssueComments(
 	token: string,
 	issueNumber: number,
 ): Promise<GitHubIssueComment[]> {
-	// Fetch newest comments first so recent human replies aren't missed on
-	// busy PRs that exceed the 100-comment page limit.
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&direction=desc`,
-		{ headers: apiHeaders(token) },
+	// Fetch every page so marker comments remain discoverable on busy PRs.
+	// GitHub's default ordering is oldest-first, matching existing callers.
+	const comments = await fetchAllPages<GitHubIssueComment>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100`,
+		`get comments for ${issueNumber}`,
 	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get comments for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	// Reverse so callers get oldest-first order (consistent with previous behavior
-	// and safe for findLast() / botComment detection).
-	const comments = (await res.json()) as GitHubIssueComment[];
-	return comments.reverse();
+	return comments;
 }
 
 export async function updateIssueComment(

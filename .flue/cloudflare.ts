@@ -75,6 +75,7 @@ import {
 	processRecommendationEvent,
 	type RecommendationEnv,
 } from "./lib/run-reviewer-recommendations";
+import { runDraftStaleSweep } from "./lib/draft-stale";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -790,6 +791,23 @@ export { IngestWorkflow } from "./orchestrators/ingest-workflow";
 // Reserved for non-HTTP handlers (queue, scheduled). Must not define `fetch` —
 // HTTP handling stays in app.ts.
 export default {
+	async scheduled(
+		_controller: ScheduledController,
+		env: RecommendationEnv,
+	): Promise<void> {
+		try {
+			const token = await getInstallationToken(env as Record<string, string>);
+			await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
+		} catch (error) {
+			console.error({
+				message: `Draft stale sweep aborted: ${error instanceof Error ? error.message : String(error)}`,
+				event: "draft_stale",
+				action: "sweep_aborted",
+			});
+			throw error;
+		}
+	},
+
 	async queue(
 		batch: MessageBatch<unknown>,
 		env: RecommendationEnv,
