@@ -11,7 +11,6 @@ updates:
     cooldown:
       default-days: 1
     assignees:
-      - "kodster28"
       - "mvvmm"
     reviewers:
       - "cloudflare/content-engineering"
@@ -37,7 +36,6 @@ updates:
     cooldown:
       default-days: 1
     assignees:
-      - "kodster28"
       - "mvvmm"
     reviewers:
       - "cloudflare/content-engineering"
