@@ -8,11 +8,131 @@ products:
 description: Browse available notification types by product.
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications } from "~/components";
 
 Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
 
 Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
+
+## Custom Alerts
+
+Custom Alerts evaluate a SQL API query on a schedule. Cloudflare sends a notification when the query result meets your detection criteria.
+
+The datasets available to Custom Alerts depend on your plan and permissions. The dashboard only lists datasets available to the selected account or zone. For more information about dataset scopes and sampling, refer to [SQL API datasets](/analytics/sql-api/datasets/).
+
+### Alert details
+
+Each Custom Alert has the following details:
+
+| Option        | Required | Description                                                                       |
+| ------------- | -------- | --------------------------------------------------------------------------------- |
+| Name          | Yes      | Identifies the alert in notifications and the Cloudflare dashboard.               |
+| Description   | No       | Records additional context about the alert.                                       |
+| Dataset scope | Yes      | Limits dataset selection to account-level datasets or datasets for one zone.      |
+| Destination   | Yes      | Sends notifications to at least one email address, webhook, or PagerDuty service. |
+
+You can add up to 20 email recipients. Webhook and PagerDuty availability depends on your plan.
+
+### Alert query
+
+Use the query builder or enter custom SQL. The query builder supports these options:
+
+| Option     | Description                                                                                                      |
+| ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| Dataset    | Selects one dataset available within the dataset scope.                                                          |
+| Metric     | Applies `COUNT` or a supported aggregate function to a numeric field. The builder returns the result as `value`. |
+| Time range | Sets the data window relative to each alert evaluation. The builder adds the required timestamp bounds.          |
+| Filters    | Restricts rows by field value. Available operators depend on the field data type. Multiple filters use `AND`.    |
+
+For adaptively sampled datasets, the builder uses `APPROX_MIN` and `APPROX_MAX` instead of `MIN` and `MAX`. The SQL API automatically applies sample weights to `COUNT`, `SUM`, and `AVG`.
+
+A custom SQL query must meet these requirements:
+
+- Return one numeric value in a column named `value`.
+- Read one schema-qualified SQL API dataset.
+- Include an account or zone filter.
+- Include a lower timestamp bound.
+- Use the [supported SQL syntax](/analytics/sql-api/sql-reference/).
+- Omit a trailing semicolon.
+
+For example, this query returns the number of server errors during the previous five minutes:
+
+```sql
+SELECT COUNT(*) AS value
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '5' MINUTE
+  AND edgeResponseStatus >= 500
+```
+
+Custom Alerts validate the query before saving. Query errors identify unsupported syntax, unavailable datasets or fields, and invalid scope. For SQL API query limits, refer to [Limits](/analytics/sql-api/limits/).
+
+### Detection methods
+
+Choose how Cloudflare evaluates the query result:
+
+| Method                  | Description                                                                                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------- |
+| Threshold               | Compares the query result with a fixed numeric value.                                                |
+| Anomaly detection       | Compares the query result with its historical baseline and detects spikes or drops.                  |
+| Service-level objective | Compares the ratio of successful events to total events with a service-level objective (SLO) target. |
+
+#### Threshold
+
+A threshold alert supports these options:
+
+| Option              | Description                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Query               | Produces the numeric value to evaluate.                                                                       |
+| Evaluation window   | Sets the data window for each evaluation. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration. |
+| Comparison operator | Compares the result with the threshold. Supported operators are `<`, `>`, `<=`, `>=`, `==`, and `!=`.         |
+| Threshold           | Sets the numeric value used by the comparison.                                                                |
+
+#### Anomaly detection
+
+Anomaly detection calculates the number of standard deviations between the current result and its historical baseline. It detects both spikes and drops.
+
+| Option              | Description                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Query               | Produces the numeric value to evaluate.                                                                                                                      |
+| Evaluation window   | Sets the current data window. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.                                                            |
+| Baseline window     | Sets the historical comparison window. Presets are `4h`, `6h`, and `24h`. The value must be at least six times the evaluation window and no more than `24h`. |
+| Sensitivity         | Sets the z-score threshold. Presets are `3.0` (high), `3.5` (medium), and `4.0` (low). Lower values detect smaller changes. You can enter a custom value.    |
+| Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                                                              |
+
+New anomaly alerts require at least 30 minutes of historical data before they can trigger.
+
+#### Service-level objective
+
+An SLO alert calculates the successful-event percentage from unsuccessful and total event counts. Both queries must return a numeric column named `value`.
+
+| Option                     | Description                                                                                                                       |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Unsuccessful events query  | Counts events that do not meet your success criteria.                                                                             |
+| Unsuccessful events window | Sets the data window for the unsuccessful events query. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.       |
+| Total events query         | Counts all events in the same population as the unsuccessful events query.                                                        |
+| Total events window        | Sets the data window for the total events query. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.              |
+| SLO target                 | Triggers when `(1 - unsuccessful events / total events) × 100` falls below this value. Presets are `99.7%`, `99.8%`, and `99.9%`. |
+| Minimum event count        | Optionally suppresses alerts for low-volume evaluation windows.                                                                   |
+
+Use equivalent filters in both queries. The unsuccessful events query should represent a subset of the total events query.
+
+### Evaluation and notification frequency
+
+Custom Alerts support two independent frequency settings:
+
+| Option                       | Description                                                                                                                                                                                                                |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Execution interval           | Controls how often Cloudflare runs the query. Leave this option at _Default_ to use the fastest interval supported by the dataset. You can select `1m`, `5m`, or `15m`, or enter a custom duration of at least one minute. |
+| Repeat notification interval | Controls how often Cloudflare sends another notification while the alert remains active. Presets are `1h`, `6h`, and `24h`. You can enter a custom duration from one minute through `168h`. The default is `1h`.           |
+
+Most SQL API datasets support a one-minute execution interval. Log Explorer datasets support a minimum execution interval of 10 minutes. Cloudflare rejects an interval shorter than the selected dataset supports.
+
+### Query preview
+
+The query preview validates and charts the signal before you save. Choose a preview range of one, three, or six hours. The preview samples 12 evaluations across the selected range.
+
+Threshold previews show the configured threshold. SLO previews show the calculated percentage and target. A query that returns no rows produces no signal and cannot trigger the alert for that evaluation.
 
 ## Actions available on receiving a Notification
 
