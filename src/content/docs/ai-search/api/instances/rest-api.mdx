@@ -18,34 +18,33 @@ Use the AI Search REST API to manage instances and sync jobs over HTTP.
 
 ## API paths
 
-AI Search APIs are available at two base paths:
+Instance APIs are scoped to a [namespace](/ai-search/concepts/namespaces/):
 
-| Path                                                                 | Description                                                                 |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `/accounts/{account_id}/ai-search/instances/{id}`                        | Operates on a specific instance                                             |
-| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+| Path                                                                     | Description                              |
+| ------------------------------------------------------------------------ | ---------------------------------------- |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}` | Operates on instances within a namespace |
 
-The available operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+Every account has a `default` namespace. Use `default` unless you created a custom namespace. For the full specification, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
 
 ## Instances
 
-Create, list, get, update, and delete AI Search instances. For the full specification, refer to the [Instances API reference](/api/resources/ai_search/subresources/instances/).
+Create, list, get, update, and delete AI Search instances. For the full specification, refer to the [Instances API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/).
 
-| Operation                                                                 | Method   | Description                   |
-| ------------------------------------------------------------------------- | -------- | ----------------------------- |
-| [Create](/api/resources/ai_search/subresources/instances/methods/create/) | `POST`   | Create a new instance         |
-| [List](/api/resources/ai_search/subresources/instances/methods/list/)     | `GET`    | List all instances            |
-| [Get](/api/resources/ai_search/subresources/instances/methods/read/)      | `GET`    | Get an instance by ID         |
-| [Update](/api/resources/ai_search/subresources/instances/methods/update/) | `PUT`    | Update instance configuration |
-| [Delete](/api/resources/ai_search/subresources/instances/methods/delete/) | `DELETE` | Delete an instance            |
-| [Stats](/api/resources/ai_search/subresources/instances/methods/stats/)   | `GET`    | Get indexing statistics       |
+| Operation                                                                                         | Method   | Description                   |
+| ------------------------------------------------------------------------------------------------- | -------- | ----------------------------- |
+| [Create](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/create/) | `POST`   | Create a new instance         |
+| [List](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/list/)     | `GET`    | List all instances            |
+| [Get](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/read/)      | `GET`    | Get an instance by ID         |
+| [Update](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/update/) | `PUT`    | Update instance configuration |
+| [Delete](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/delete/) | `DELETE` | Delete an instance            |
+| [Stats](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/stats/)   | `GET`    | Get indexing statistics       |
 
 ### Example: Create an instance
 
 Create an instance in the default namespace:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -55,20 +54,20 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ## Jobs
 
-Trigger and monitor [sync jobs](/ai-search/configuration/indexing/syncing/) that scan your data source and index new or updated content. For the full specification, refer to the [Jobs API reference](/api/resources/ai_search/subresources/instances/subresources/jobs/).
+Trigger and monitor [sync jobs](/ai-search/configuration/indexing/syncing/) that scan your data source and index new or updated content. For the full specification, refer to the [Jobs API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/jobs/).
 
-| Operation                                                                                   | Method | Description                   |
-| ------------------------------------------------------------------------------------------- | ------ | ----------------------------- |
-| [Create](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/create/) | `POST` | Trigger a new sync job        |
-| [List](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/list/)     | `GET`  | List all jobs for an instance |
-| [Get](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/read/)      | `GET`  | Get job details               |
-| [Logs](/api/resources/ai_search/subresources/instances/subresources/jobs/methods/logs/)     | `GET`  | View job logs                 |
+| Operation                                                                                                           | Method | Description                   |
+| ------------------------------------------------------------------------------------------------------------------- | ------ | ----------------------------- |
+| [Create](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/jobs/methods/create/) | `POST` | Trigger a new sync job        |
+| [List](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/jobs/methods/list/)     | `GET`  | List all jobs for an instance |
+| [Get](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/jobs/methods/get/)       | `GET`  | Get job details               |
+| [Logs](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/jobs/methods/logs/)     | `GET`  | View job logs                 |
 
 ### Example: Trigger a sync job
 
 Start a new sync job for an instance:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/jobs" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/jobs" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```

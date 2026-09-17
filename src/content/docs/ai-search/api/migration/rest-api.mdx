@@ -12,12 +12,12 @@ The [AutoRAG API endpoints](/api/resources/autorag/) are the legacy REST API for
 
 ## Endpoint changes
 
-The legacy AutoRAG API endpoints under `/autorag/rags/` have been replaced by new endpoints under `/ai-search/instances/`.
+The legacy AutoRAG API endpoints under `/autorag/rags/` have been replaced by new endpoints under `/ai-search/namespaces/{namespace}/instances/`.
 
-| Description      | New endpoint                                   | Reference                                                                                  |
-| ---------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Chat completions | `/ai-search/instances/{name}/chat/completions` | [API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/) |
-| Search           | `/ai-search/instances/{name}/search`           | [API reference](/api/resources/ai_search/subresources/instances/methods/search/)           |
+| Description      | New endpoint                                                          | Reference                                                                                                          |
+| ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Chat completions | `/ai-search/namespaces/{namespace}/instances/{name}/chat/completions` | [API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/chat_completions/) |
+| Search           | `/ai-search/namespaces/{namespace}/instances/{name}/search`           | [API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/search/)           |
 
 The new API also includes endpoints for [instance management](/ai-search/api/instances/rest-api/), [items](/ai-search/api/items/rest-api/), and [namespace-level search](/ai-search/api/search/rest-api/#cross-instance-search-and-chat) that are not available in the legacy API. For the legacy endpoints, refer to the [AutoRAG API reference](/api/resources/autorag/).
 
@@ -61,8 +61,8 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 
 The new API uses the `messages` array format.
 
-```bash ins="ai-search/instances" ins="/chat/completions" ins='"messages"' ins='"content"' ins='"role"'
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
+```bash ins="ai-search/namespaces/default/instances" ins="/chat/completions" ins='"messages"' ins='"content"' ins='"role"'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/chat/completions" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -d '{
@@ -94,8 +94,8 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/autorag
 
 The new API uses the `messages` array format. The `query` string format is also supported.
 
-```bash ins="ai-search/instances" ins='"messages"' ins='"content"' ins='"role"'
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+```bash ins="ai-search/namespaces/default/instances" ins='"messages"' ins='"content"' ins='"role"'
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/search" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -d '{
@@ -199,6 +199,6 @@ Combine multiple conditions where all must match:
 ## API references
 
 - [REST API documentation](/ai-search/api/search/rest-api/)
-- [Chat Completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/)
-- [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/)
+- [Chat Completions API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/chat_completions/)
+- [Search API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/search/)
 - [Legacy AutoRAG API reference](/api/resources/autorag/)
