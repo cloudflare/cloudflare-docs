@@ -1,0 +1,222 @@
+---
+title: Invalidate cached content
+pcx_content_type: how-to
+description: Mark cached content stale and revalidate it on the next request, reusing cached bodies when your origin confirms they have not changed.
+products:
+  - cache
+---
+
+import { DashButton, Steps } from "~/components";
+
+Invalidate cached content to trigger revalidation on the next request.
+
+Cloudflare marks matching entries stale and retains their cached bodies. An origin `304 Not Modified` lets Cloudflare reuse those bodies.
+
+Invalidation, also called soft purge, supports the same selectors as [purge](/cache/how-to/purge-cache/). Select URLs, cache tags, hostnames, URL prefixes, or everything.
+
+## Choose an action
+
+Choose the action that matches your freshness requirements:
+
+| Action     | Behavior                                                   | Use case                                            |
+| ---------- | ---------------------------------------------------------- | --------------------------------------------------- |
+| Invalidate | Marks content stale and retains its body for revalidation. | Refresh content that might be unchanged.            |
+| Purge      | Removes content instead of retaining it for revalidation.  | Prevent the existing cached copy from being served. |
+
+Invalidation can allow stale content while revalidation runs or the origin fails. Your cache settings determine whether Cloudflare can serve that content.
+
+Use **Purge** when the existing cached copy must stop being served. Update or remove the origin content before purging. Otherwise, a subsequent request can cache the unwanted version again.
+
+## Prerequisites
+
+Before you invalidate content, check the following requirements:
+
+- **Cached content:** The target response must be eligible for caching.
+- **Origin validators:** For body reuse, return accurate `ETag` or `Last-Modified` headers and support conditional requests.
+- **API authorization:** For API requests, use a token with **Cache Purge** permission for the target zone.
+
+Invalidation uses the corresponding [purge limits](/cache/how-to/purge-cache/#availability-and-limits). Those limits include account request rates and batch sizes.
+
+## Invalidate using the API
+
+To invalidate content, send a `POST` request to this endpoint:
+
+```txt
+https://api.cloudflare.com/client/v4/zones/{zone_id}/invalidate_cache
+```
+
+Use the same request body as the corresponding purge operation.
+
+The endpoint selects the action. Do not include a `purge_mode` field.
+
+Replace `$ZONE_ID` with your [zone ID](/fundamentals/account/find-account-and-zone-ids/). Set `$CLOUDFLARE_API_TOKEN` to your [API token](/fundamentals/api/get-started/create-token/).
+
+### Invalidate by URL
+
+To invalidate one URL, send its value in `files`:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "files": ["https://www.example.com/images/product.jpg"]
+  }'
+```
+
+For cache keys that include headers, identify the cached variant. Include the matching header values in the request body:
+
+```json
+{
+	"files": [
+		{
+			"url": "https://www.example.com/images/product.jpg",
+			"headers": {
+				"CF-Device-Type": "desktop",
+				"CF-IPCountry": "US"
+			}
+		}
+	]
+}
+```
+
+For matching requirements, refer to [single-file purge](/cache/how-to/purge-cache/purge-by-single-file/).
+
+### Invalidate by tag, hostname, prefix, or everything
+
+Choose the request body that identifies your target content:
+
+| Selection    | Example request body                      |
+| ------------ | ----------------------------------------- |
+| Cache tags   | `{"tags":["product-images"]}`             |
+| Hostnames    | `{"hosts":["images.example.com"]}`        |
+| URL prefixes | `{"prefixes":["www.example.com/images"]}` |
+| Everything   | `{"purge_everything":true}`               |
+
+Tags must already be associated with the cached responses. Prefixes include a hostname and path without a URL scheme.
+
+To invalidate content tagged `product-images`, use this request:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"tags":["product-images"]}'
+```
+
+Select the smallest useful set of content to invalidate. Invalidating everything can trigger many revalidations as requests arrive.
+
+### Invalidate a specific environment
+
+For non-production [Version Management](/version-management/) environments, include the environment ID:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/environments/$ENVIRONMENT_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"tags":["product-images"]}'
+```
+
+Use the zone-level endpoint for production. To find `$ENVIRONMENT_ID`, refer to [Retrieve the environment ID](/cache/how-to/purge-cache/purge-zone-versions/#step-1-retrieve-the-environment-id).
+
+An environment-scoped `{"purge_everything":true}` request invalidates only that environment. The same body at the zone-level endpoint reaches all environments.
+
+## Invalidate using the dashboard
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Caching** > **Configuration**.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. If your zone has multiple environments, select the target environment.
+3. Select **Invalidate** as the action to perform.
+4. Select **Custom invalidation**, or **Select content** for an environment.
+5. Choose the content selector and enter the matching values.
+6. Select **Invalidate** to submit your request.
+
+</Steps>
+
+To invalidate everything, select the all-content option and confirm its scope. If the request fails, your input remains available for retry.
+
+## Revalidation behavior
+
+Invalidation does not proactively fetch replacement content from your origin. The next request triggers revalidation of the stale entry.
+
+With origin validators, Cloudflare can send a conditional request. An origin `304 Not Modified` allows Cloudflare to reuse the cached body. If the origin returns a new cacheable response, Cloudflare replaces the entry.
+
+Invalidation does not guarantee that a cached body remains available. Absent or evicted entries require a cache fill. Origins that return full responses still transfer those response bodies.
+
+### Stale content
+
+Your cache policy controls whether visitors can receive stale content. Invalidation does not turn on background revalidation by itself.
+
+When permitted, `stale-while-revalidate` allows stale content during background revalidation. Otherwise, requests wait for revalidation. The `stale-if-error` directive can allow stale content after qualifying origin failures.
+
+For previously fresh entries, stale windows run from invalidation time. They do not wait for the original future expiry. Invalidation does not extend a stale window that already expired.
+
+For example, this response allows a 30-second background revalidation window:
+
+```http
+Cache-Control: public, max-age=3600, stale-while-revalidate=30
+ETag: "image-v1"
+```
+
+Invalidating this fresh entry starts that window before normal expiry. Other directives and Cache Rules can prevent stale serving. For those restrictions, refer to [Revalidation](/cache/concepts/revalidation/).
+
+### Cache Reserve
+
+For production zone requests, invalidation also retains Cache Reserve bodies. An origin `304 Not Modified` allows those bodies to be reused.
+
+Cache Reserve does not support non-production zone environments. Environment-scoped invalidation applies to their disk cache. For removal behavior, refer to [Cache Reserve purge behavior](/cache/advanced-configuration/cache-reserve/#purge-behavior).
+
+## Verify an invalidation
+
+Use a cacheable test URL with an accurate origin validator. Keep the origin content unchanged throughout this test.
+
+To observe synchronous revalidation, omit `stale-while-revalidate` from the test response. Set a positive freshness time to live (TTL).
+
+<Steps>
+
+1. Request the test URL until `CF-Cache-Status` returns `HIT`.
+2. Invalidate the URL using the API or dashboard.
+3. Request the URL again and inspect the response headers:
+
+   ```bash
+   curl --silent --show-error --dump-header - --output /dev/null \
+     "https://www.example.com/images/product.jpg"
+   ```
+
+4. Check your origin logs for a conditional request and `304`.
+
+</Steps>
+
+For a retained, cacheable entry, expect these results:
+
+| Revalidation result                                            | Expected cache status                                        |
+| -------------------------------------------------------------- | ------------------------------------------------------------ |
+| Origin confirms unchanged content synchronously                | `REVALIDATED`, then `HIT` on a subsequent request            |
+| Origin supplies a new cacheable response synchronously         | `EXPIRED`, then `HIT` once Cloudflare caches the replacement |
+| Cloudflare serves stale content during background revalidation | `UPDATING`, then `HIT` after revalidation                    |
+| No reusable cached entry exists                                | `MISS` and a cache fill                                      |
+
+An origin `304` can produce a visitor response of `200 OK`. Cloudflare supplies the cached body in that response.
+
+Cache tiers and concurrent requests can affect the observed status. Use origin logs to confirm revalidation and body-transfer savings. For status definitions, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
+
+## Troubleshoot invalidation
+
+### Full response bodies
+
+Check that the entry is cached and your selectors match. Confirm that your origin returns accurate validators and handles conditional requests. Changed or unavailable content requires a new response body.
+
+### Stale content remains visible
+
+Check `stale-while-revalidate`, `stale-if-error`, and your Cache Rules. Use **Purge** when the previous cached copy must not be served.
+
+### Endpoint returns `404`
+
+Check feature availability, the endpoint path, and the target IDs. Invalidation returns `404` when the feature is turned off. Do not automatically retry using `/purge_cache`, which removes cached content.

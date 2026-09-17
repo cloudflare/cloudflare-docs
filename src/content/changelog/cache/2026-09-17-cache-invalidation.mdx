@@ -1,0 +1,25 @@
+---
+title: Revalidate cached content with cache invalidation
+description: Mark cached content stale and reuse its body when your origin confirms it has not changed.
+products:
+  - cache
+date: 2026-09-17
+---
+
+Cache invalidation marks cached content stale without requiring a full-body download. On the next request, Cloudflare revalidates the content. An origin `304 Not Modified` allows Cloudflare to reuse the stored body.
+
+Invalidation supports URLs, cache tags, hostnames, URL prefixes, and everything. For example, invalidate content tagged `product-images` with this request:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"tags":["product-images"]}'
+```
+
+Use an API token with **Cache Purge** permission. In the dashboard, select **Invalidate** under **Caching** > **Configuration**.
+
+Your cache settings still control whether Cloudflare serves stale content. Use **Purge** when the existing cached copy must stop being served.
+
+For request examples and verification steps, refer to [Invalidate cached content](/cache/guides/invalidate-cache/).
