@@ -4,6 +4,16 @@ import { formatContentType } from "./content-type";
 
 export type SchemaType = "BlogPosting" | "WebPage" | "TechArticle";
 
+function resolveBaseTitle({
+	title,
+	titleOverride,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
+	return titleOverride ? titleOverride.split(" | ")[0] : title;
+}
+
 /** `<title>`: `${base} · ${suffix}` when a suffix applies, else a raw
  *  head.title override or `${title} | ${siteTitle}`. */
 export function resolvePageTitle({
@@ -17,13 +27,14 @@ export function resolvePageTitle({
 	titleSuffix?: string;
 	siteTitle: string;
 }): string {
-	const baseTitle = titleOverride ? titleOverride.split(" | ")[0] : title;
+	const baseTitle = resolveBaseTitle({ title, titleOverride });
 	return titleSuffix
 		? `${baseTitle} · ${titleSuffix}`
 		: (titleOverride ?? `${title} | ${siteTitle}`);
 }
 
-/** JSON-LD headline: the clean page title without the product/site suffix. */
+/** JSON-LD headline: always the clean semantic page title without an SEO,
+ *  product, or site suffix, even when `<title>` preserves a raw override. */
 export function resolvePageHeadline({
 	title,
 	titleOverride,
@@ -31,7 +42,7 @@ export function resolvePageHeadline({
 	title: string;
 	titleOverride?: string;
 }): string {
-	return titleOverride ? titleOverride.split(" | ")[0] : title;
+	return resolveBaseTitle({ title, titleOverride });
 }
 
 /** Favicon link: first of svg > ico > png that exists, else svg. */

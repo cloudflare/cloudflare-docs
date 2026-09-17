@@ -136,10 +136,10 @@ describe("resolvePageTitle", () => {
 		expect(
 			resolvePageTitle({
 				title: "raw",
-				titleOverride: "Custom Head Title",
+				titleOverride: "Custom Head Title | SEO context",
 				siteTitle: "Cloudflare Docs",
 			}),
-		).toBe("Custom Head Title");
+		).toBe("Custom Head Title | SEO context");
 	});
 });
 
@@ -148,7 +148,7 @@ describe("resolvePageHeadline", () => {
 		expect(resolvePageHeadline({ title: "Get started" })).toBe("Get started");
 	});
 
-	test("uses the clean base of a head-title override", () => {
+	test("uses the clean base even when `<title>` preserves the raw override", () => {
 		expect(
 			resolvePageHeadline({
 				title: "raw",
