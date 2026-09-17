@@ -66,7 +66,7 @@ The following errors appear in `ssl.validation_errors` on the custom hostname ob
 
 ## CAA records
 
-If a custom hostname shows a `caa_error` status, your customer's CAA records are preventing the certificate authority from issuing a certificate for their domain. Your customer needs to resolve this issue.
+If a custom hostname's `ssl.validation_errors` contains a CAA-related error, your customer's CAA records are preventing the certificate authority from issuing a certificate for their domain. Your customer needs to resolve this issue.
 
 :::caution[CAA lookup walks up the DNS tree]
 Under [RFC 8659 section 4.1](https://www.rfc-editor.org/rfc/rfc8659#section-4.1), a certificate authority checks CAA records starting at the custom hostname (for example, `shop.example.com`) and stops at the first DNS level that has CAA records. It only falls back to the parent domain (`example.com`) when the subdomain has no CAA records of its own. A restrictive record at whichever level the CA stops at will block issuance.
@@ -141,7 +141,7 @@ curl --request PATCH \
 
 ## Timed out validation
 
-A custom hostname enters **Timed Out Validation** (`ssl.status: timed_out`) when the DCV tokens were not placed before the retry schedule was exhausted.
+A custom hostname enters **Timed Out Validation** (`ssl.status: validation_timed_out`) when DCV did not complete before the retry schedule ended.
 
 To restart the DCV cycle, send a configuration-neutral `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Retrieve the current hostname configuration with a GET request first, then echo the `ssl.method`, `ssl.type`, and `ssl.settings` values in the PATCH body.
 
