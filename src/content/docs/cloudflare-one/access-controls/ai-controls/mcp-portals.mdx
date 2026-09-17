@@ -243,10 +243,6 @@ If an upstream OAuth provider rejects the callback URL, check whether **Use the 
 
 ## Create a portal
 
-:::caution
-If you use a custom domain from an active zone, portal creation fails when a zone hold that includes subdomains applies to the hostname. Before you create the portal, [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) for the selected zone and each parent zone. A parent zone can belong to a different Cloudflare account.
-:::
-
 To create an MCP server portal:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
@@ -1157,6 +1153,12 @@ These limitations only apply to servers that are being authorized through a port
 Independent MFA, purpose justification, and temporary authentication will be enforced for servers that are not authorized through a portal.
 
 ## Troubleshooting
+
+### Portal creation fails because of a zone hold
+
+Cloudflare creates a custom hostname for each portal custom domain. Portal creation fails when a zone hold that includes subdomains applies to this hostname.
+
+[Release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) for the selected zone and each parent zone. Then create the portal again. A parent zone can belong to a different Cloudflare account.
 
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
