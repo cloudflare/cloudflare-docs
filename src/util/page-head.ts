@@ -23,6 +23,17 @@ export function resolvePageTitle({
 		: (titleOverride ?? `${title} | ${siteTitle}`);
 }
 
+/** JSON-LD headline: the clean page title without the product/site suffix. */
+export function resolvePageHeadline({
+	title,
+	titleOverride,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
+	return titleOverride ? titleOverride.split(" | ")[0] : title;
+}
+
 /** Favicon link: first of svg > ico > png that exists, else svg. */
 export function resolveFavicon(exists: (file: string) => boolean): {
 	file: string;
@@ -104,7 +115,7 @@ export function classifyContentType(
 export interface StructuredDataInput {
 	schemaType: SchemaType;
 	canonical: string | null;
-	fullTitle: string;
+	headline: string;
 	description?: string;
 	lang: string;
 	ogImage?: string | null;
@@ -120,7 +131,7 @@ export interface StructuredDataInput {
 export function buildStructuredData({
 	schemaType,
 	canonical,
-	fullTitle,
+	headline,
 	description,
 	lang,
 	ogImage,
@@ -134,7 +145,7 @@ export function buildStructuredData({
 		"@context": "https://schema.org",
 		"@type": schemaType,
 		"@id": `${canonical}#page`,
-		headline: fullTitle,
+		headline,
 		...(description ? { description } : {}),
 		url: canonical,
 		inLanguage: lang,
