@@ -31,7 +31,7 @@
 		"test:prebuild": "vitest --project Node --project Astro",
 		"test:postbuild": "vitest --project Workers",
 		"flue:dev": "NODE_OPTIONS=--max-old-space-size=8192 pnpm --dir .flue exec vite dev",
-		"flue:dev:wrangler": "pnpm --dir .flue exec vite build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
+		"flue:dev:wrangler": "FLUE_DEV_NO_QUEUE_CONSUMER=1 pnpm --dir .flue exec vite build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec vite build",
 		"flue:deploy": "pnpm run flue:build && pnpm --dir .flue exec wrangler deploy --config dist/cloudflare_docs_flue/wrangler.json",
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
