@@ -144,7 +144,12 @@ export function getMarkedComment(
 	comments: GitHubIssueComment[],
 	marker: string,
 ): GitHubIssueComment | null {
-	return comments.findLast((comment) => comment.body?.includes(marker)) ?? null;
+	return (
+		comments.findLast(
+			(comment) =>
+				comment.user?.type === "Bot" && comment.body?.startsWith(marker),
+		) ?? null
+	);
 }
 
 export function hasActivityAfterComment(

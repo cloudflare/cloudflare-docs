@@ -800,10 +800,11 @@ export default {
 			await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
 		} catch (error) {
 			console.error({
-				message: `Draft stale sweep failed: ${error instanceof Error ? error.message : String(error)}`,
+				message: `Draft stale sweep aborted: ${error instanceof Error ? error.message : String(error)}`,
 				event: "draft_stale",
-				action: "sweep_failed",
+				action: "sweep_aborted",
 			});
+			throw error;
 		}
 	},
 

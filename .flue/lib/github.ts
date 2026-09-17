@@ -361,20 +361,13 @@ export async function getIssueComments(
 	token: string,
 	issueNumber: number,
 ): Promise<GitHubIssueComment[]> {
-	// Fetch newest comments first so recent human replies aren't missed on
-	// busy PRs that exceed the 100-comment page limit.
-	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&direction=desc`,
-		{ headers: apiHeaders(token) },
+	// Fetch every newest-first page, then reverse the complete list so callers
+	// retain oldest-first order while marker comments remain discoverable.
+	const comments = await fetchAllPages<GitHubIssueComment>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&sort=created&direction=desc`,
+		`get comments for ${issueNumber}`,
 	);
-	if (!res.ok) {
-		throw new Error(
-			`Failed to get comments for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
-		);
-	}
-	// Reverse so callers get oldest-first order (consistent with previous behavior
-	// and safe for findLast() / botComment detection).
-	const comments = (await res.json()) as GitHubIssueComment[];
 	return comments.reverse();
 }
 

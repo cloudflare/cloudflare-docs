@@ -106,6 +106,18 @@ describe("draft stale comment helpers", () => {
 		).toBe(latest);
 	});
 
+	it("ignores quoted and non-bot marker text", () => {
+		const quoted = {
+			...reminder,
+			id: 2,
+			body: `> ${DRAFT_STALE_REMINDER_MARKER}\n> Bot message\n\nPlease do not close.`,
+			user: { login: "author", type: "User" },
+		};
+		expect(
+			getMarkedComment([reminder, quoted], DRAFT_STALE_REMINDER_MARKER),
+		).toBe(reminder);
+	});
+
 	it("tolerates the bot's own updated_at timestamp skew", () => {
 		expect(
 			hasActivityAfterComment(

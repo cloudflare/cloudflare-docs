@@ -225,7 +225,6 @@ async function handleCommand(
 			}
 			try {
 				await setDraftNeverStale(env.DOCS_FLUE_BUCKET, number, sender);
-				await clearDraftStaleState(env.DOCS_FLUE_BUCKET, number);
 			} catch (err) {
 				log(
 					"command:draft-never-stale",
@@ -236,6 +235,15 @@ async function handleCommand(
 				);
 				return;
 			}
+			await clearDraftStaleState(env.DOCS_FLUE_BUCKET, number).catch((err) => {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"stale_state_clear_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+			});
 			await addReactionToComment(token, commentId, "+1").catch(() => {});
 			log("command:draft-never-stale", c, number, "draft_never_stale_set");
 			return;
