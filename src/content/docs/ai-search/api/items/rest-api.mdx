@@ -47,7 +47,7 @@ Upload, list, get, delete, and download items within an instance. For the full s
 Upload a file to an instance:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/items" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -F "file=@/path/to/your/file.pdf"
 ```
@@ -57,14 +57,14 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 List all items in an instance:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/items" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 To find a single item by its exact object key, pass the `key` query parameter:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>/items?key=docs/readme.md" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
