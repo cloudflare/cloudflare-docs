@@ -7,7 +7,7 @@ products:
 date: 2026-08-12
 ---
 
-Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [Network](/cloudflare-one/traffic-policies/network-policies/) policies now include a **Traffic Source** selector that identifies how traffic reaches Cloudflare. This allows administrators to write policies that target specific on-ramp methods - for example, applying different rules to traffic arriving via the Cloudflare One Client compared to traffic routed through an MCP portal or a proxy endpoint.
+Gateway [HTTP](/cloudflare-one/traffic-controls/http-policies/) and [Network](/cloudflare-one/traffic-controls/network-policies/) policies now include a **Traffic Source** selector that identifies how traffic reaches Cloudflare. This allows administrators to write policies that target specific on-ramp methods - for example, applying different rules to traffic arriving via the Cloudflare One Client compared to traffic routed through an MCP portal or a proxy endpoint.
 
 ### Available traffic source values
 
@@ -17,7 +17,7 @@ Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [Network](/c
 | Mesh                          | `mesh`             | Traffic from a [Cloudflare Mesh](/mesh/) connector |
 | Cloudflare WAN                | `cloudflare_wan`   | Traffic from [Cloudflare WAN](/cloudflare-wan/zero-trust/cloudflare-gateway/) (Magic WAN) |
 | Clientless RDP                | `clientless_rdp`   | Traffic from a clientless RDP session                                            |
-| Proxy endpoint                | `proxy_endpoint`   | Traffic from a [proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/) (PAC file) |
+| Proxy endpoint                | `proxy_endpoint`   | Traffic from a [proxy endpoint](/cloudflare-one/traffic-controls/proxy-endpoints/) (PAC file) |
 | Clientless Browser Isolation  | `agentless_biso`   | Traffic from [clientless Browser Isolation](/cloudflare-one/remote-browser-isolation/) |
 | MCP portal                    | `mcp_portal`       | Traffic from an [MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/) |
 
@@ -35,4 +35,4 @@ A **Browser Isolation** selector is also available in Network and HTTP policies.
 | ------------------- | ------------------------------ |
 | Browser Isolation   | `net.is_isolated == true`      |
 
-For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-controls/http-policies/) and [Network policies](/cloudflare-one/traffic-controls/network-policies/).

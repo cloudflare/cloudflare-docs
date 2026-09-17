@@ -9,7 +9,7 @@ sidebar:
   label: Get started
 ---
 
-Browser Isolation is enabled through [Secure Web Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/). By default, no traffic is isolated until you have added an Isolate policy to your HTTP policies.
+Browser Isolation is enabled through [Secure Web Gateway HTTP policies](/cloudflare-one/traffic-controls/http-policies/). By default, no traffic is isolated until you have added an Isolate policy to your HTTP policies.
 
 ## 1. Connect devices to Cloudflare
 
@@ -17,10 +17,10 @@ Setup instructions vary depending on how you want to connect your devices to Clo
 
 | Connection                                                                                                | Mode         | Description                                                                                                          |
 | --------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| [Traffic and DNS mode](/cloudflare-one/traffic-policies/get-started/http/)                                | In-line      | Apply identity-based HTTP policies to traffic proxied through the Cloudflare One Client.                                       |
+| [Traffic and DNS mode](/cloudflare-one/traffic-controls/get-started/http/)                                | In-line      | Apply identity-based HTTP policies to traffic proxied through the Cloudflare One Client.                                       |
 | [Access](/cloudflare-one/access-controls/policies/isolate-application/)                                   | In-line      | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser.                     |
-| [Gateway proxy endpoint (source IP)](/cloudflare-one/remote-browser-isolation/setup/non-identity/)        | In-line      | Apply non-identity HTTP policies to traffic forwarded to a [source IP proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#source-ip-endpoint).              |
-| [Gateway proxy endpoint (authorization)](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint) | In-line      | Apply identity-based HTTP policies to traffic forwarded to an [authorization proxy endpoint](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/#authorization-endpoint).    |
+| [Gateway proxy endpoint (source IP)](/cloudflare-one/remote-browser-isolation/setup/non-identity/)        | In-line      | Apply non-identity HTTP policies to traffic forwarded to a [source IP proxy endpoint](/cloudflare-one/traffic-controls/proxy-endpoints/#source-ip-endpoint).              |
+| [Gateway proxy endpoint (authorization)](/cloudflare-one/traffic-controls/proxy-endpoints/#authorization-endpoint) | In-line      | Apply identity-based HTTP policies to traffic forwarded to an [authorization proxy endpoint](/cloudflare-one/traffic-controls/proxy-endpoints/#authorization-endpoint).    |
 | [Cloudflare WAN](/cloudflare-one/remote-browser-isolation/setup/non-identity/)                            | In-line      | Apply non-identity HTTP policies to traffic connected through a GRE or IPsec tunnel (site-to-site encrypted connections to Cloudflare's network).                                 |
 | [Clientless remote browser](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) | Prefixed URL | Render web pages in a remote browser when users go to `https://<your-team-name>.cloudflareaccess.com/browser/<URL>`. |
 
@@ -32,7 +32,7 @@ To configure Browser Isolation policies:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Select **Add a policy** and enter a name for the policy.
-3. Use the HTTP policy [selectors](/cloudflare-one/traffic-policies/http-policies/#selectors) and [operators](/cloudflare-one/traffic-policies/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
+3. Use the HTTP policy [selectors](/cloudflare-one/traffic-controls/http-policies/#selectors) and [operators](/cloudflare-one/traffic-controls/http-policies/#comparison-operators) to specify the websites or content you want to isolate.
 4. For **Action**, choose either [_Isolate_](/cloudflare-one/remote-browser-isolation/isolation-policies/#isolate) or [_Do not Isolate_](/cloudflare-one/remote-browser-isolation/isolation-policies/#do-not-isolate).
 5. (Optional) Configure [settings](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) for an Isolate policy.
 6. Select **Create policy**.

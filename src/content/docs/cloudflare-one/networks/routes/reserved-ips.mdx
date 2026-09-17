@@ -41,7 +41,7 @@ Unlike the other IPv4 ranges, Gateway initial resolved IPs are drawn from public
 Cloudflare source IPs are the source addresses used when a Cloudflare service sends traffic to your private networks. This range applies to customers using [Unified Routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing). Examples of requests that are sourced from this range include:
 
 - [Load Balancing](/load-balancing/monitors/) — health check requests to private endpoints
-- [Gateway DNS resolver](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/) — DNS resolution for private hostnames
+- [Gateway DNS resolver](/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/) — DNS resolution for private hostnames
 - [Cloudflare Workers](/workers/) — requests from Workers to private origins
 
 The default IPv4 range is `100.64.0.0/12`. You can change this to a different `/12` CIDR to avoid conflicts with your existing IP address management plan. For more information on affected services and configuration instructions, refer to [Configure Cloudflare source IPs](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
@@ -53,8 +53,8 @@ Gateway initial resolved IPs (also called token IPs) are ephemeral addresses use
 The following features use this range:
 
 - [Private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) — routes traffic to private applications behind Cloudflare Tunnel using their hostnames.
-- [Public hostname routing](/cloudflare-one/traffic-policies/egress-policies/egress-cloudflared/) — egresses traffic through Cloudflare Tunnel to anchor source IPs for public destinations.
-- [Egress policy host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors/) — evaluates Gateway egress policies using hostname-based selectors.
+- [Public hostname routing](/cloudflare-one/traffic-controls/egress-policies/egress-cloudflared/) — egresses traffic through Cloudflare Tunnel to anchor source IPs for public destinations.
+- [Egress policy host selectors](/cloudflare-one/traffic-controls/egress-policies/host-selectors/) — evaluates Gateway egress policies using hostname-based selectors.
 - [Access private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) — manage access to private applications using their private hostnames.
 
 Cloudflare assigns initial resolved IPs from the `172.64.128.0/20` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range by default. Unlike earlier CGNAT-based defaults, the IPv4 range is public Cloudflare address space, so it is not affected by [Google Chrome's Local Network Access restrictions](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#google-chrome-restricts-access-to-private-hostnames).
