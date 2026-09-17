@@ -1,11 +1,8 @@
 import { describe, expect, it } from "vitest";
-import {
-	CODEOWNERS_ONLY_CONTACT_PATTERNS,
-	isCodeownersOnlyContactPattern,
-} from "./reviewer-contact-policy";
+import { isCodeownersOnlyContactPattern } from "./reviewer-contact-policy";
 
 describe("isCodeownersOnlyContactPattern", () => {
-	it.each(CODEOWNERS_ONLY_CONTACT_PATTERNS)(
+	it.each(["*", "/.github/CODEOWNERS", "/public/__redirects"])(
 		"matches configured pattern %s",
 		(pattern) => {
 			expect(isCodeownersOnlyContactPattern(pattern)).toBe(true);

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { TeamMembershipCheckError } from "./github";
+import { emptyResult } from "./reviewer-recommendations";
 import {
 	isRetryableRecommendationError,
 	parseRecommendationState,
@@ -59,7 +60,7 @@ describe("parseRecommendationState", () => {
 		expect(
 			parseRecommendationState({
 				...state,
-				recommendation: { ownershipAreas: "corrupt" },
+				recommendation: { ...emptyResult(), ownershipAreas: "corrupt" },
 			}),
 		).toBeNull();
 	});
