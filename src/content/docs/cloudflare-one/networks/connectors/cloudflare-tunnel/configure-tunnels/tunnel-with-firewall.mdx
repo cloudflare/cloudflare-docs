@@ -17,6 +17,10 @@ import { Render } from "~/components";
 
 You can implement a positive security model with Cloudflare Tunnel by blocking all ingress traffic and allowing only egress traffic from `cloudflared`. Only the services specified in your tunnel configuration will be exposed to the outside world.
 
+:::note
+The destinations on this page are the ones `cloudflared` needs. The [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (WARP) connects to a different set of hostnames, such as `engage.cloudflareclient.com` and `connectivity.cloudflareclient.com`. If you deploy the client as well, refer to [Cloudflare One Client with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) for that allowlist.
+:::
+
 ## Ports
 
 The parameters below can be configured for egress traffic inside of a firewall.
