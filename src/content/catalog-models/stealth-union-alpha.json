@@ -2,11 +2,10 @@
 	"model_id": "stealth/union-alpha",
 	"provider_id": "stealth",
 	"name": "Union Alpha",
-	"description": "Union Alpha is a blended AI model that engages multiple language models in parallel for each request, synthesizes one answer, and supports text and vision inputs through a single API response.",
+	"description": "Union Alpha supports text and vision inputs for text generation, reasoning, and coding tasks.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",
-		"Blended Model",
 		"Reasoning",
 		"Coding",
 		"Vision"
@@ -317,7 +316,6 @@
 	"terms": null,
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/stealth/union-alpha.png",
 	"metadata": {
-		"Architecture": "Blended model",
 		"Modalities": "Text and vision"
 	},
 	"request_formats": [
