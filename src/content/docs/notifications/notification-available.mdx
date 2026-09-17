@@ -51,9 +51,14 @@ A custom SQL query must meet these requirements:
 - Return one numeric value in a column named `value`.
 - Read one schema-qualified SQL API dataset.
 - Include an account or zone filter.
-- Include a lower timestamp bound.
+- Include a lower timestamp bound, unless the alert supplies a fixed time range.
 - Use the [supported SQL syntax](/analytics/sql-api/sql-reference/).
 - Omit a trailing semicolon.
+
+Custom SQL supports two ways to define the time range:
+
+- **Query-defined time range**: Include the timestamp filter in the SQL query.
+- **Fixed time range**: Omit the timestamp filter and configure an evaluation window. For each evaluation, Cloudflare supplies a start and end time based on that window and the evaluation time.
 
 For example, this query returns the number of server errors during the previous five minutes:
 
@@ -81,24 +86,24 @@ Choose how Cloudflare evaluates the query result:
 
 A threshold alert supports these options:
 
-| Option              | Description                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- |
-| Query               | Produces the numeric value to evaluate.                                                                       |
-| Evaluation window   | Sets the data window for each evaluation. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration. |
-| Comparison operator | Compares the result with the threshold. Supported operators are `<`, `>`, `<=`, `>=`, `==`, and `!=`.         |
-| Threshold           | Sets the numeric value used by the comparison.                                                                |
+| Option              | Description                                                                                           |
+| ------------------- | ----------------------------------------------------------------------------------------------------- |
+| Query               | Produces the numeric value to evaluate.                                                               |
+| Evaluation window   | Sets the data window for each evaluation. You can select a preset or enter a custom duration.         |
+| Comparison operator | Compares the result with the threshold. Supported operators are `<`, `>`, `<=`, `>=`, `==`, and `!=`. |
+| Threshold           | Sets the numeric value used by the comparison.                                                        |
 
 #### Anomaly detection
 
 Anomaly detection calculates the number of standard deviations between the current result and its historical baseline. It detects both spikes and drops.
 
-| Option              | Description                                                                                                                                                  |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Query               | Produces the numeric value to evaluate.                                                                                                                      |
-| Evaluation window   | Sets the current data window. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.                                                            |
-| Baseline window     | Sets the historical comparison window. Presets are `4h`, `6h`, and `24h`. The value must be at least six times the evaluation window and no more than `24h`. |
-| Sensitivity         | Sets the z-score threshold. Presets are `3.0` (high), `3.5` (medium), and `4.0` (low). Lower values detect smaller changes. You can enter a custom value.    |
-| Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                                                              |
+| Option              | Description                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Query               | Produces the numeric value to evaluate.                                                                                   |
+| Evaluation window   | Sets the current data window. You can select a preset or enter a custom duration.                                         |
+| Baseline window     | Sets the historical comparison window. The value must be at least six times the evaluation window and no more than `24h`. |
+| Sensitivity         | Sets the z-score threshold. Lower values detect smaller changes. You can select a preset or enter a custom value.         |
+| Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                           |
 
 New anomaly alerts require at least 30 minutes of historical data before they can trigger.
 
@@ -106,14 +111,14 @@ New anomaly alerts require at least 30 minutes of historical data before they ca
 
 An SLO alert calculates the successful-event percentage from unsuccessful and total event counts. Both queries must return a numeric column named `value`.
 
-| Option                     | Description                                                                                                                       |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Unsuccessful events query  | Counts events that do not meet your success criteria.                                                                             |
-| Unsuccessful events window | Sets the data window for the unsuccessful events query. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.       |
-| Total events query         | Counts all events in the same population as the unsuccessful events query.                                                        |
-| Total events window        | Sets the data window for the total events query. Presets are `5m`, `15m`, and `1h`. You can enter a custom duration.              |
-| SLO target                 | Triggers when `(1 - unsuccessful events / total events) × 100` falls below this value. Presets are `99.7%`, `99.8%`, and `99.9%`. |
-| Minimum event count        | Optionally suppresses alerts for low-volume evaluation windows.                                                                   |
+| Option                     | Description                                                                                                                             |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Unsuccessful events query  | Counts events that do not meet your success criteria.                                                                                   |
+| Unsuccessful events window | Sets the data window for the unsuccessful events query. You can select a preset or enter a custom duration.                             |
+| Total events query         | Counts all events in the same population as the unsuccessful events query.                                                              |
+| Total events window        | Sets the data window for the total events query. You can select a preset or enter a custom duration.                                    |
+| SLO target                 | Triggers when `(1 - unsuccessful events / total events) × 100` falls below this value. You can select a preset or enter a custom value. |
+| Minimum event count        | Optionally suppresses alerts for low-volume evaluation windows.                                                                         |
 
 Use equivalent filters in both queries. The unsuccessful events query should represent a subset of the total events query.
 
@@ -121,16 +126,16 @@ Use equivalent filters in both queries. The unsuccessful events query should rep
 
 Custom Alerts support two independent frequency settings:
 
-| Option                       | Description                                                                                                                                                                                                                |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Execution interval           | Controls how often Cloudflare runs the query. Leave this option at _Default_ to use the fastest interval supported by the dataset. You can select `1m`, `5m`, or `15m`, or enter a custom duration of at least one minute. |
-| Repeat notification interval | Controls how often Cloudflare sends another notification while the alert remains active. Presets are `1h`, `6h`, and `24h`. You can enter a custom duration from one minute through `168h`. The default is `1h`.           |
+| Option                       | Description                                                                                                                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Execution interval           | Controls how often Cloudflare runs the query. Leave this option at _Default_ to use the fastest interval supported by the dataset. You can select a preset or enter a custom duration of at least one minute. |
+| Repeat notification interval | Controls how often Cloudflare sends another notification while the alert remains active. You can select a preset or enter a custom duration from one minute through `168h`. The default is `1h`.              |
 
 Most SQL API datasets support a one-minute execution interval. Log Explorer datasets support a minimum execution interval of 10 minutes. Cloudflare rejects an interval shorter than the selected dataset supports.
 
 ### Query preview
 
-The query preview validates and charts the signal before you save. Choose a preview range of one, three, or six hours. The preview samples 12 evaluations across the selected range.
+The query preview validates and charts an approximation of the signal before you save. Select a preview range to inspect how the alert might behave. The data shown in the preview may differ from the data evaluated by an alert, including historical evaluations.
 
 Threshold previews show the configured threshold. SLO previews show the calculated percentage and target. A query that returns no rows produces no signal and cannot trigger the alert for that evaluation.
 
