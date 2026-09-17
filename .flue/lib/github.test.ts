@@ -123,5 +123,11 @@ describe("getIssueComments", () => {
 		vi.stubGlobal("fetch", fetchMock);
 
 		await expect(getIssueComments("token", 1)).resolves.toEqual([older, newer]);
+		expect(fetchMock.mock.calls[0][0]).toBe(
+			"https://api.github.com/repos/cloudflare/cloudflare-docs/issues/1/comments?per_page=100",
+		);
+		expect(fetchMock.mock.calls[1][0]).toBe(
+			"https://api.github.com/repos/cloudflare/cloudflare-docs/issues/1/comments?page=2",
+		);
 	});
 });
