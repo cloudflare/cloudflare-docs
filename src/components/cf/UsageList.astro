@@ -20,60 +20,33 @@ const { usage } = props.parse(Astro.props);
 		<strong>Pages</strong>
 	</p>
 	<ul>
-		{
-			[...usage.pages]
-				.filter((path) => path.startsWith("src/content/docs/"))
-				.sort()
-				.map((path) => {
-					const slugified =
-						"/" +
-						path
-							.replace("src/content/docs/", "")
-							.replace("/index.mdx", "")
-							.replace(".mdx", "")
-							.split("/")
-							.map((segment) => {
-								if (segment === "1.1.1.1") {
-									return segment;
-								}
-								return slug(segment);
-							})
-							.join("/") +
-						"/";
+		{[...usage.pages]
+			.filter((path) => path.startsWith("src/content/docs/"))
+			.sort()
+			.map((path) => {
+				const slugified =
+					"/" +
+					path
+						.replace("src/content/docs/", "")
+						.replace("/index.mdx", "")
+						.replace(".mdx", "")
+						.split("/")
+						.map((segment) => {
+							if (segment === "1.1.1.1") {
+								return segment;
+							}
+							return slug(segment);
+						})
+						.join("/") +
+					"/";
 
-					return (
-						<li>
-							<a href={slugified} target="_blank">
-								{slugified}
-							</a>
-							<span>
-								-
-								<a
-									href={
-										"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
-										path
-									}
-									target="_blank"
-								>
-									Source
-								</a>
-							</span>
-						</li>
-					);
-				})
-		}
-	</ul>
-	<p>
-		<strong>Partials</strong>
-	</p>
-	<ul>
-		{
-			[...usage.pages]
-				.filter((path) => path.startsWith("src/content/partials/"))
-				.sort()
-				.map((path) => {
-					return (
-						<li>
+				return (
+					<li>
+						<a href={slugified} target="_blank">
+							{slugified}
+						</a>
+						<span>
+							-
 							<a
 								href={
 									"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
@@ -81,11 +54,34 @@ const { usage } = props.parse(Astro.props);
 								}
 								target="_blank"
 							>
-								{path}
+								Source
 							</a>
-						</li>
-					);
-				})
-		}
+						</span>
+					</li>
+				);
+			})}
+	</ul>
+	<p>
+		<strong>Partials</strong>
+	</p>
+	<ul>
+		{[...usage.pages]
+			.filter((path) => path.startsWith("src/content/partials/"))
+			.sort()
+			.map((path) => {
+				return (
+					<li>
+						<a
+							href={
+								"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
+								path
+							}
+							target="_blank"
+						>
+							{path}
+						</a>
+					</li>
+				);
+			})}
 	</ul>
 </>

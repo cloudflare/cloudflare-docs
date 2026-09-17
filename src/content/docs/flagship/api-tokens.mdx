@@ -1,0 +1,110 @@
+---
+pcx_content_type: how-to
+title: API tokens
+description: Create account-wide or app-scoped API tokens for Flagship. App-scoped tokens can access only the Flagship apps you select.
+sidebar:
+  order: 4
+products:
+  - flagship
+---
+
+import { DashButton, Render } from "~/components";
+
+Flagship supports two kinds of API tokens. Both use the same [Create API token](/fundamentals/api/get-started/create-token/) flow. The difference is the resource the permission policy applies to.
+
+| Token type   | Resource                    | What it can access                |
+| ------------ | --------------------------- | --------------------------------- |
+| Account-wide | **Entire Account**          | Every Flagship app in the account |
+| App-scoped   | **Specified Flagship apps** | Only the Flagship apps you select |
+
+Use an account-wide token when a trusted server-side workflow needs access to every Flagship app. Use an app-scoped token when that workflow should only touch the apps you select — for example, CI or a backend service for one product.
+
+Both token types support **Read**, **Write**, and **Evaluate**. The names change with the resource:
+
+| Access                  | Account-wide          | App-scoped                |
+| ----------------------- | --------------------- | ------------------------- |
+| Evaluate flags          | **Flagship Evaluate** | **Flagship App Evaluate** |
+| Read flag configuration | **Flagship Read**     | **Flagship App Read**     |
+| Manage flags            | **Flagship Write**    | **Flagship App Write**    |
+
+You must [create a Flagship app](/flagship/get-started/#create-an-app-and-a-flag) before you can create an app-scoped token. The dashboard can only list apps that already exist.
+
+## Create an account-wide token
+
+[Create an account-wide Flagship token](https://dash.cloudflare.com/?to=/:account/api-tokens) to open the Account API tokens page. Then create a custom token and leave the resource set to **Entire Account**.
+
+To create the token yourself:
+
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+   You can also create a user token from [My Profile](https://dash.cloudflare.com/profile/api-tokens) > **API Tokens**.
+
+2. Select **Create Token**.
+3. Select **Create Custom Token** > **Get started**.
+4. Enter a token name.
+5. Under **Permission policies**, leave the resource dropdown set to **Entire Account**.
+6. Search for Flagship and select **Flagship Evaluate**, **Flagship Read**, or **Flagship Write**.
+7. (Optional) Restrict the token with [IP address filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).
+8. Select **Review token** > **Create Token**.
+9. Copy the token secret and store it securely.
+
+<Render file="new-token-warning" product="fundamentals" />
+
+## Create an app-scoped token
+
+[Create an app-scoped Flagship token](https://dash.cloudflare.com/?to=/:account/api-tokens&permissionGroupKeys=[{%22key%22:%22flagship_app%22,%22type%22:%22evaluate%22}]&scope=specified_flagship_app) to open the token form with **Specified Flagship apps** and **Flagship App Evaluate** already selected. Then choose the app and create the token.
+
+To create the token yourself:
+
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+   You can also create a user token from [My Profile](https://dash.cloudflare.com/profile/api-tokens) > **API Tokens**.
+
+2. Select **Create Token**.
+3. Select **Create Custom Token** > **Get started**.
+4. Enter a token name that describes where you will use it, such as `checkout-service-ci`.
+5. Under **Permission policies**, open the resource dropdown (it defaults to **Entire Account**) and select **Specified Flagship apps**.
+6. In **Select Flagship apps**, choose the app or apps this token should access.
+7. Under **Developer Platform**, select a **Flagship App** permission:
+
+   | Use case                                      | Permission                |
+   | --------------------------------------------- | ------------------------- |
+   | Evaluate flags in the selected apps           | **Flagship App Evaluate** |
+   | Read flag configuration for the selected apps | **Flagship App Read**     |
+   | Manage flags in the selected apps             | **Flagship App Write**    |
+
+8. (Optional) Restrict the token with [IP address filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).
+9. Select **Review token** > **Create Token**.
+10. Copy the token secret and store it securely.
+
+<Render file="new-token-warning" product="fundamentals" />
+
+## Use the token
+
+Pass the token to an OpenFeature SDK as `authToken` (TypeScript) or the equivalent option in [Python](/flagship/sdk/python/) and [Go](/flagship/sdk/go/).
+
+```ts
+import { OpenFeature } from "@openfeature/server-sdk";
+import { FlagshipServerProvider } from "@cloudflare/flagship/server";
+
+await OpenFeature.setProviderAndWait(
+	new FlagshipServerProvider({
+		appId: "<APP_ID>",
+		accountId: "<ACCOUNT_ID>",
+		authToken: "<APP_SCOPED_API_TOKEN>",
+	}),
+);
+```
+
+Replace `<APP_ID>` and `<ACCOUNT_ID>` with the app and account the token is scoped to. An app-scoped token is rejected if you evaluate a different app.
+
+Inside a Cloudflare Worker, prefer the [binding](/flagship/binding/). The binding authenticates automatically and does not need an API token.
+
+## Next steps
+
+- Set up the [TypeScript Server SDK](/flagship/sdk/server-provider/) outside of Workers.
+- Restrict token use with [IP filtering or a TTL](/fundamentals/api/how-to/restrict-tokens/).

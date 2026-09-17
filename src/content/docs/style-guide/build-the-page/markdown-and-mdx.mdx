@@ -1,0 +1,66 @@
+---
+title: Markdown and MDX
+pcx_content_type: concept
+sidebar:
+  order: 1
+description: Cloudflare docs pages are authored in MDX, Markdown extended with components. Learn the body syntax, importing components, and escaping special characters.
+products:
+  - style-guide
+---
+
+Cloudflare docs pages are authored in MDX, which is Markdown extended with JSX components. Every page is a `.mdx` file with a [frontmatter](/style-guide/build-the-page/frontmatter/) block at the top, followed by the body content.
+
+## Body content
+
+The body is standard Markdown. Use it for headings, paragraphs, lists, tables, links, and code:
+
+```md
+## A heading
+
+A paragraph with a [link](/style-guide/) and `inline code`.
+
+- A list item
+- Another list item
+```
+
+Refer to the [formatting](/style-guide/style-and-grammar/formatting/) section for the rules that govern how to write each of these elements.
+
+## Import components
+
+Components add formatting that plain Markdown cannot, such as tabs, asides, and collapsible sections. Import them from `~/components` after the frontmatter block, then add them anywhere in the body:
+
+```mdx
+---
+title: Example page
+---
+
+import { Aside } from "~/components";
+
+<Aside type="note">This is an aside.</Aside>
+```
+
+Refer to the [components](/style-guide/build-the-page/components/) section for the props and requirements of each component.
+
+## Escape special characters
+
+MDX treats `{`, `}`, `<`, and `>` as syntax. When these characters are part of your content rather than code, wrap them in backticks so they render literally:
+
+```md
+Set the value to `{"key": "value"}`.
+```
+
+Characters inside a fenced code block are already literal and do not need escaping.
+
+## Code blocks
+
+Open a fenced code block with a lowercase language identifier so the code is highlighted correctly. Use `txt` for generic output that has no language:
+
+````md
+```js
+const value = 1;
+```
+
+```txt
+Deployment complete.
+```
+````

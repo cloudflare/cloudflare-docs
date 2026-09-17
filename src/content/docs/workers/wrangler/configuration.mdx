@@ -1213,7 +1213,7 @@ The following options are available under the `assets` key.
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
 - `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
-  - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
+  - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Supports at most 100 entries (duplicates count toward the limit). Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
@@ -1268,14 +1268,14 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
-    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/platform-details/image-management/).
+    build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
     and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
-    the see [instance types documentation](/containers/platform-details#instance-types).
+    see the [instance types documentation](/containers/platform/limits/#instance-types).
   - To specify a custom instance type, see [here](#custom-instance-types).
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
   - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
@@ -1289,9 +1289,9 @@ The following options are available:
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
-  - During a [rollout](/containers/platform-details/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
+  - During a [rollout](/containers/configuration/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
-  - Percentage of container instances to update at each [rollout](/containers/platform-details/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array must contain ascending integer values from `10` through `100`, end in `100`, contain at most 10 entries, and contain no more entries than `max_instances`; its values are cumulative. Defaults to `100` if `max_instances` is omitted or less than `2`; otherwise defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
+  - Percentage of container instances to update at each [rollout](/containers/configuration/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array must contain ascending integer values from `10` through `100`, end in `100`, contain at most 10 entries, and contain no more entries than `max_instances`; its values are cumulative. Defaults to `100` if `max_instances` is omitted or less than `2`; otherwise defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
 - `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />
@@ -1299,7 +1299,7 @@ The following options are available:
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file.
 - `constraints` <Type text="object" /> <MetaInfo text="optional" />
-  - Placement constraints for the container. Refer to [Containers placement](/containers/platform-details/placement/) for details.
+  - Placement constraints for the container. Refer to [Containers placement](/containers/concepts/placement/) for details.
 - `constraints.regions` <Type text="string[]" /> <MetaInfo text="optional" />
   - Limit container placement to specific geographic regions. Valid values: `"ENAM"`, `"WNAM"`, `"EEUR"`, `"WEUR"`, `"APAC"`, `"SAM"`, `"ME"`, `"OC"`, `"AFR"`.
 - `constraints.jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
@@ -1345,8 +1345,8 @@ The following options are available:
 
 ### Custom Instance Types
 
-In place of the [named instance types](/containers/platform-details/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
-See the [limits documentation](/containers/platform-details/limits/#custom-instance-types) for constraints on custom instance types.
+In place of the [named instance types](/containers/platform/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
+See the [limits documentation](/containers/platform/limits/#custom-instance-types) for constraints on custom instance types.
 
 The following options are available:
 
@@ -1380,7 +1380,7 @@ The following options are available:
 
 ### SSH
 
-Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/ssh/).
+Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
 
 The following options are available:
 
@@ -1513,7 +1513,7 @@ You can configure various aspects of local development, such as the local protoc
 - `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
   - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers.
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
-  - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
+  - Used for local development of [Containers](/containers/guides/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
 - `generate_types` <Type text="boolean" /> <MetaInfo text="optional" />
   - Generate types from your Worker configuration. Defaults to `false`.
 

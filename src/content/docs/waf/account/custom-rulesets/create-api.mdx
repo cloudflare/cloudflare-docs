@@ -18,6 +18,26 @@ import { Render, APIRequest } from "~/components";
 This feature requires an Enterprise plan.
 :::
 
+## Quota limits
+
+Account-level custom rulesets have the following quota limits:
+
+- **Maximum rulesets:** 10
+- **Maximum rules per ruleset:** 100
+- **Total rule quota:** 1,000 rules across all rulesets on the request path
+
+The total rule quota of 1,000 rules is a hard limit that applies to all plans and cannot be increased. This limit applies across all rulesets that a request traverses, not just account-level custom rulesets.
+
+### Redistribute rules across rulesets
+
+If you need to change the distribution of rules across your rulesets (for example, to create fewer rulesets with more rules per ruleset), contact Cloudflare Support. Only Cloudflare Support can update account-level entitlements to change the ruleset and rule distribution.
+
+Before contacting Support, consider the following optimizations:
+
+- **Consolidate rules:** Combine rules with similar conditions or actions into a single rule with broader matching criteria.
+- **Remove unused rules:** Audit your rulesets and remove rules that are no longer triggering or are duplicating functionality.
+- **Use IP lists:** Instead of creating multiple rules for individual IP addresses, use [IP lists](/waf/tools/lists/) to group IPs and reference them in a single rule.
+
 To deploy custom rules at the account level:
 
 1. Create a custom ruleset with one or more rules. Alternatively, identify the existing custom ruleset you want to deploy using the [List account rulesets](/api/resources/rulesets/methods/list/) API operation.

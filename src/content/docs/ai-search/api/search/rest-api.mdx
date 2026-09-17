@@ -12,10 +12,6 @@ import { Render } from "~/components";
 
 Use the AI Search REST API to query your AI Search instances over HTTP.
 
-:::note
-The previous [AutoRAG API endpoints](/api/resources/autorag/) are no longer recommended for use. Refer to [Migrate from AutoRAG REST API](/ai-search/api/migration/rest-api/) for details.
-:::
-
 ## Authentication
 
 <Render file="rest-api-auth" product="ai-search" />
@@ -29,21 +25,20 @@ AI Search provides two APIs for querying an instance. Both use an OpenAI-compati
 
 ### API paths
 
-AI Search APIs are available at two base paths:
+Search and chat APIs are scoped to a [namespace](/ai-search/concepts/namespaces/):
 
-| Path                                                                      | Description                                                                 |
-| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `/accounts/{account_id}/ai-search/instances/{id}/`                        | Operates on a specific instance                                             |
-| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+| Path                                                                      | Description                                        |
+| ------------------------------------------------------------------------- | -------------------------------------------------- |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on a specific instance within a namespace |
 
-The following operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+Every account has a `default` namespace. Use `default` unless you created a custom namespace. For the full specification, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
 
 ### Search
 
-Search a specific instance. The search endpoint also accepts a `query` string parameter. For the full specification, refer to the [Search API reference](/api/resources/ai_search/subresources/instances/methods/search/).
+Search a specific instance. The search endpoint also accepts a `query` string parameter. For the full specification, refer to the [Search API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/search/).
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/search" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/search" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -58,10 +53,10 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 ### Chat completions
 
-Generate a response from a specific instance. For the full specification, refer to the [Chat completions API reference](/api/resources/ai_search/subresources/instances/methods/chat_completions/).
+Generate a response from a specific instance. For the full specification, refer to the [Chat completions API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/chat_completions/).
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/chat/completions" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/chat/completions" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{

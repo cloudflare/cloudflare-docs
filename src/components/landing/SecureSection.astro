@@ -79,29 +79,26 @@ const categories = [
 	<SectionHeading id="secure-heading" class="mb-2">
 		Security that scales
 	</SectionHeading>
-	<p
-		class="text-muted-foreground mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg"
-	>
+	<p class="text-muted-foreground mb-8 max-w-[600px] text-sm leading-relaxed text-pretty md:text-lg">
 		Everything you need to secure applications, APIs, and infrastructure.
 	</p>
 
 	<div class="space-y-8">
-		{
-			categories.map((cat) => (
-				<ProductCardGrid label={cat.label}>
-					{cat.threats.map((t) => (
-						<ProductCard
-							icon={t.icon}
-							product={t.product}
-							scenario={t.scenario}
-							detail={t.detail}
-							href={t.href}
-							cta={t.cta}
-							category={"category" in cat ? cat.category : undefined}
-						/>
-					))}
-				</ProductCardGrid>
-			))
-		}
+		{categories.map((cat) => (
+			<ProductCardGrid label={cat.label}>
+				{cat.threats.map((t) => (
+					<ProductCard
+						icon={t.icon}
+						product={t.product}
+						scenario={t.scenario}
+						detail={t.detail}
+						href={t.href}
+						cta={t.cta}
+						headingLevel={4}
+						category={"category" in cat ? cat.category : undefined}
+					/>
+				))}
+			</ProductCardGrid>
+		))}
 	</div>
 </section>

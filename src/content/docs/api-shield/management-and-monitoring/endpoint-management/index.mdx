@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-description: Promote, learn, and monitor API endpoints with API Shield and Web Assets.
+description: Manage API operations through the Web Assets dashboard.
 products:
   - api-shield
 title: Endpoint Management
@@ -12,9 +12,15 @@ import { GlossaryTooltip, Plan, Steps, DashButton } from "~/components";
 
 <Plan type="all" />
 
-Web Assets provides a unified inventory for managing <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip>. In Web Assets, an **operation** represents an endpoint by its HTTP method, hostname pattern, and path pattern.
+Endpoint Management content uses the current [Web Assets](/security/web-assets/) dashboard. Go to **Web Assets** > **Operations** to manage <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip>.
 
-Promote an API endpoint to move its operation into the `full` state. Promotion starts collecting data for profile learning and [performance analysis](#endpoint-analysis).
+An operation is Cloudflare's term for an endpoint identified by HTTP method, hostname pattern, and path pattern. Web Assets continuously discovers operations, and you can add them manually.
+
+Cloudflare discovered operations are only added to the inventory. To start profiling, select **Learn profile** for the intended operation.
+
+:::note[Schema Profile availability]
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed beta access does not imply future plan availability or pricing.
+:::
 
 :::note
 When an endpoint uses [Cloudflare Workers](/workers/), some metrics are not populated.
@@ -29,22 +35,15 @@ When an endpoint uses [Cloudflare Workers](/workers/), some metrics are not popu
 2. Go to the **Operations** tab.
 </Steps>
 
-### Add endpoints from API Discovery
+### Review discovered operations
 
-The **Learn profile** action is available to API Shield customers using unified operation discovery and other customers with access to profile learning.
+Web Assets continuously adds discovered operations to the inventory. Discovery does not start profile learning.
 
-This workflow promotes an existing discovered operation.
+Candidate operations can provide context for matching, edge security detections, and [Sequence Analytics](/api-shield/security/sequence-analytics/). You do not need to change every discovered operation.
 
-<Steps>
-1. From **Web Assets** > **Operations**, open the row actions for a candidate or shadow operation.
-2. Select **Learn profile**.
-</Steps>
+<a id="add-endpoints-from-schema-validation" />
 
-Cloudflare promotes the operation to the `full` state. The row action then changes to **Profile learned**. For more information, refer to [Promote an operation](/security/web-assets/manage-operations/#promote-an-operation).
-
-You do not need to promote every discovered operation. Candidate operations can provide context for matching, edge security detections, and [Sequence Analytics](/api-shield/security/sequence-analytics/) without promotion. Persisted API profiles and [risk findings](/api-shield/management-and-monitoring/endpoint-labels/#risk-labels) require operations in the `full` state.
-
-### Add endpoints from Schema validation
+### Add operations from Schema validation
 
 <Steps>
 1. From **Web Assets** > **Operations**, select **Add operation**.
@@ -55,7 +54,9 @@ You do not need to promote every discovered operation. Candidate operations can 
 
 API Shield looks for duplicate operations with the same hostname, method, and path. Duplicate operations are not added.
 
-### Add endpoints manually
+<a id="add-endpoints-manually" />
+
+### Add operations manually
 
 <Steps>
 1. From **Web Assets** > **Operations**, select **Add operation**.
@@ -101,13 +102,26 @@ You can edit the identity of an operation.
 
 </Steps>
 
-Editing a candidate or shadow operation promotes it to the `full` state with the edited values.
-
 :::caution[Editing this operation will change its ID]
-Cloudflare computes operation IDs from the HTTP method, hostname, and path. Cloudflare relearns labels, schemas, and rate limiting recommendations for an operation with a new ID.
+Cloudflare computes operation IDs from the HTTP method, hostname, and path. Changing these values creates a different operation ID.
 :::
 
-### Delete endpoints manually
+### Start profile learning
+
+Start profiling only after reviewing the operation identity.
+
+<Steps>
+
+1. From **Web Assets** > **Operations**, open the operation overflow menu.
+2. Select **Learn profile**.
+3. After the profile becomes available, open the overflow menu again.
+4. Select **View details** and review **Security overview**.
+
+</Steps>
+
+For learning requirements, analytics, and enforcement, refer to [Application Profiles](/waf/detections/application-profiles/).
+
+### Delete operations manually
 
 You can delete endpoints one at a time or in bulk.
 
@@ -120,7 +134,9 @@ You can delete endpoints one at a time or in bulk.
 When you delete a full operation, Cloudflare stops tracking its associated performance and analytics data. Its previous historical metrics cannot be restored. If the operation returns to the `full` state, metric tracking restarts from that point.
 :::
 
-## Endpoint analysis
+<a id="endpoint-analysis" />
+
+## Operation analysis
 
 For each operation in the `full` state, you can view:
 

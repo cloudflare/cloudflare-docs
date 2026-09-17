@@ -8,7 +8,7 @@ products:
   - logpush
 ---
 
-import { FeatureTable, LinkButton } from "~/components"
+import { LinkButton } from "~/components"
 
 Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes.
 
@@ -53,7 +53,9 @@ There is currently a max limit of **4 Logpush jobs per zone**. Trying to create 
 
 ## Availability
 
-<FeatureTable id="analytics.logpush" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | No | No | Yes |
 
 :::note
 

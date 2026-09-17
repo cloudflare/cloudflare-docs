@@ -13,7 +13,7 @@ products:
 description: Create rules to inspect and act on incoming HTTP traffic.
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Cloudflare Firewall Rules allows you to create rules that inspect incoming traffic and block, challenge, log, or allow specific requests.
 
@@ -28,7 +28,12 @@ Cloudflare Firewall Rules allows you to create rules that inspect incoming traff
 
 This table outlines the Firewall Rules features and entitlements available with each customer plan:
 
-<FeatureTable id="security.x_firewall_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 5 | 20 | 100 | 1,000 |
+| Supported actions | All except Log | All except Log | All except Log | All |
+| Regex support | No | No | Yes | Yes |
 
 ## Next steps
 

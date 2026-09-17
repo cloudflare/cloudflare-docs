@@ -20,7 +20,7 @@ import {
 
 ## Description
 
-Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
+Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/reference/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
 
 The low-level API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
 
@@ -161,7 +161,7 @@ With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `Arr
 - Environment variable names cannot contain `=` or null characters. Environment values, `cwd`, and `user` cannot contain null characters.
 - `kill()` throws a `RangeError` when the signal is outside the supported range.
 
-For task-oriented examples, refer to [Execute commands](/containers/execute-commands/).
+For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
 
 ### `destroy`
 
@@ -338,7 +338,7 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 
 ## Related resources
 
-- [Container class reference](/containers/container-class/) — the recommended high-level API built on top of this interface
+- [Container class reference](/containers/reference/container-class/) — the recommended high-level API built on top of this interface
 - [Containers overview](/containers/)
 - [Get started with Containers](/containers/get-started/)
 - [SQLite storage API](/durable-objects/api/sqlite-storage-api/) — persist state across container restarts

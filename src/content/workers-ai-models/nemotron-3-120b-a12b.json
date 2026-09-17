@@ -1,15 +1,5 @@
 {
-    "id": "43dbadb4-2b0a-47e9-8479-34a49b971f1e",
-    "source": 1,
     "name": "@cf/nvidia/nemotron-3-120b-a12b",
-    "description": "NVIDIA Nemotron 3 Super is a hybrid MoE model with leading accuracy for multi-agent applications and specialized agentic AI systems.",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2026-02-24 23:22:47.215",
-    "tags": [],
     "properties": [
         {
             "property_id": "context_window",
@@ -43,6 +33,16 @@
             "value": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/"
         }
     ],
+    "id": "43dbadb4-2b0a-47e9-8479-34a49b971f1e",
+    "source": 1,
+    "description": "NVIDIA Nemotron 3 Super is a hybrid MoE model with leading accuracy for multi-agent applications and specialized agentic AI systems.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-02-24 23:22:47.215",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -403,25 +403,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -997,6 +978,7 @@
                                                                     "enum": [
                                                                         "text",
                                                                         "image_url",
+                                                                        "video_url",
                                                                         "input_audio",
                                                                         "file"
                                                                     ]
@@ -1018,6 +1000,14 @@
                                                                                 "high"
                                                                             ],
                                                                             "default": "auto"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "video_url": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "url": {
+                                                                            "type": "string"
                                                                         }
                                                                     }
                                                                 },
@@ -1660,25 +1650,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2608,23 +2579,6 @@
                                     "type": "null"
                                 }
                             ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
                         }
                     },
                     "required": [
@@ -2642,5 +2596,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

@@ -13,6 +13,11 @@
 	"context_length": 1000000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2.5,
+		"Output tokens (per 1M)": 15,
+		"Cached input tokens (per 1M)": 0.25
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -7996,6 +8001,7 @@
 		"responses",
 		"chat-completions"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:53:35",
 	"schema": {
@@ -8104,8 +8110,7 @@
 									}
 								},
 								"required": [
-									"role",
-									"content"
+									"role"
 								],
 								"additionalProperties": {}
 							}
@@ -8194,6 +8199,13 @@
 								}
 							},
 							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
@@ -8300,13 +8312,9 @@
 												"type": "string"
 											},
 											"content": {
-												"anyOf": [
-													{
-														"type": "string"
-													},
-													{
-														"type": "null"
-													}
+												"type": [
+													"string",
+													"null"
 												]
 											},
 											"tool_calls": {
@@ -8321,22 +8329,29 @@
 												]
 											},
 											"audio": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
 													},
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"transcript": {
-														"type": "string"
+													{
+														"type": "null"
 													}
-												},
-												"additionalProperties": {}
+												]
 											}
 										},
 										"required": [
@@ -8345,13 +8360,9 @@
 										"additionalProperties": {}
 									},
 									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},

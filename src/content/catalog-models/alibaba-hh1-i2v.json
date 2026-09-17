@@ -11,6 +11,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@720p (per second)": 0.14,
+		"@1080p (per second)": 0.28,
+		"Default (per second)": 0.28
+	},
 	"examples": [
 		{
 			"name": "Simple Image-to-Video",
@@ -128,6 +133,7 @@
 		"Resolutions": "720P, 1080P"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:52:49",
 	"schema": {

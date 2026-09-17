@@ -22,10 +22,12 @@ When you add a domain on a [primary (full)](/dns/zone-setups/full-setup/) or [se
 The default assignment method is to use [standard nameservers](/dns/nameservers/#standard-nameservers) and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts, you may get different nameserver names, even for domains that are within the same account.
 
 :::caution
-To prevent domain hijacking, you can no longer preset Cloudflare nameservers at your registrar before creating the respective zone in Cloudflare. If you preset your nameservers and then add the domain, your domain will be assigned a new pair of nameservers.
+To prevent domain hijacking, you can no longer preset Cloudflare nameservers at your registrar before creating the respective zone in Cloudflare. If you preset your nameservers and then add the domain, your domain will be assigned a new set of nameservers.
 :::
 
-These nameserver assignments cannot be changed. However, depending on your subscription, you may have different options for better nameserver consistency.
+:::caution
+Once a zone is created, its assigned nameservers cannot be changed — not even by Cloudflare Support. If your new zone was assigned a different set from your other zones, refer to [Why does my new zone have different nameservers than my other zones?](/dns/faq/#why-does-my-new-zone-have-different-nameservers-than-my-other-zones) in the DNS FAQ. To keep new zones on the same nameservers going forward, refer to [Nameserver consistency](#nameserver-consistency).
+:::
 
 ### Nameserver consistency
 

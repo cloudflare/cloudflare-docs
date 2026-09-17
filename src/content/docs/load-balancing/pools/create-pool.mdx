@@ -34,7 +34,7 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 ## Endpoint address uniqueness
 
-Within a single pool, each endpoint must be unique. Endpoints can share the same IP address as long as they are differentiated by port or by [virtual network](/load-balancing/private-network/) — a common pattern for private endpoints reachable on the same IP across different internal networks.
+Within a single pool, each endpoint address must be unique. Endpoints cannot share the same IP address, even when they use different ports or virtual networks. To use overlapping IP addresses, assign the endpoints to different pools.
 
 ---
 
@@ -76,7 +76,7 @@ To update specific settings without having to resubmit the entire configuration,
 
 ## Delete a pool
 
-You cannot delete pools that are in use by load balancers. This includes [geo steering regions](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/#region-steering) pools as well as [fallback pools](/load-balancing/understand-basics/health-details/#fallback-pools).
+You cannot delete pools that are in use by load balancers. This includes [geo steering regions](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/#region-steering) pools, pools referenced by a [pool set](/load-balancing/understand-basics/traffic-steering/pool-sets/), as well as [fallback pools](/load-balancing/understand-basics/health-details/#fallback-pools).
 
 If you get an error when trying to delete a pool, consider the hostnames listed in the error and [edit the respective load balancers](/load-balancing/load-balancers/create-load-balancer/), making sure to remove all references to the pool.
 

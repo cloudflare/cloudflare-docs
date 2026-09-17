@@ -12,6 +12,14 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"hd": 0.17,
+		"fhd": 0.29,
+		"v2v_hd": 0.41,
+		"v2v_fhd": 0.53,
+		"hd_draft": 0.06,
+		"v2v_hd_draft": 0.12
+	},
 	"examples": [
 		{
 			"name": "Text to Video",
@@ -64,12 +72,13 @@
 		"Modes": "Text-to-video, image-to-video, video continuation"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-08-04 19:40:03",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
-			"anyOf": [
+			"oneOf": [
 				{
 					"type": "object",
 					"properties": {
@@ -78,9 +87,9 @@
 							"const": "t2v"
 						},
 						"prompt": {
-							"description": "Free-form prompt describing the video.",
 							"type": "string",
-							"minLength": 1
+							"minLength": 1,
+							"description": "Free-form prompt describing the video."
 						},
 						"aspect_ratio": {
 							"description": "Output aspect ratio. `auto` (default) picks one from the prompt and any references.",
@@ -147,18 +156,17 @@
 							"const": "i2v"
 						},
 						"prompt": {
-							"description": "Free-form prompt describing the video.",
 							"type": "string",
-							"minLength": 1
+							"minLength": 1,
+							"description": "Free-form prompt describing the video."
 						},
 						"keyframes": {
 							"anyOf": [
 								{
-									"description": "A single image (HTTPS URL or base64) as the opening frame.",
-									"type": "string"
+									"type": "string",
+									"description": "A single image (HTTPS URL or base64) as the opening frame."
 								},
 								{
-									"description": "A single [seconds, image] pair.",
 									"type": "array",
 									"prefixItems": [
 										{
@@ -167,19 +175,22 @@
 										{
 											"type": "string"
 										}
-									]
+									],
+									"items": false,
+									"minItems": 2,
+									"maxItems": 2,
+									"description": "A single [seconds, image] pair."
 								},
 								{
-									"description": "Untimed images (1-10). One starts the video; two start and end it; with more, the first starts it, the last ends it, and the rest fall evenly in between. 3+ images require an explicit whole-number `duration`.",
 									"minItems": 1,
 									"maxItems": 10,
 									"type": "array",
 									"items": {
 										"type": "string"
-									}
+									},
+									"description": "Untimed images (1-10). One starts the video; two start and end it; with more, the first starts it, the last ends it, and the rest fall evenly in between. 3+ images require an explicit whole-number `duration`."
 								},
 								{
-									"description": "Timed [seconds, image] pairs (1-10), e.g. [[0, \"...\"], [3.5, \"...\"]]. With `duration: \"auto\"` the video runs to the last pair's second, rounded up (20s max).",
 									"minItems": 1,
 									"maxItems": 10,
 									"type": "array",
@@ -192,8 +203,12 @@
 											{
 												"type": "string"
 											}
-										]
-									}
+										],
+										"items": false,
+										"minItems": 2,
+										"maxItems": 2
+									},
+									"description": "Timed [seconds, image] pairs (1-10), e.g. [[0, \"...\"], [3.5, \"...\"]]. With `duration: \"auto\"` the video runs to the last pair's second, rounded up (20s max)."
 								}
 							]
 						},
@@ -263,13 +278,13 @@
 							"const": "v2v"
 						},
 						"prompt": {
-							"description": "Free-form prompt describing the video.",
 							"type": "string",
-							"minLength": 1
+							"minLength": 1,
+							"description": "Free-form prompt describing the video."
 						},
 						"start_video": {
-							"description": "The video to continue: an HTTPS URL or base64 mp4 (<= 50MB, <= 15s). The generated clip carries on from its final frames.",
-							"type": "string"
+							"type": "string",
+							"description": "The video to continue: an HTTPS URL or base64 mp4 (<= 50MB, <= 15s). The generated clip carries on from its final frames."
 						},
 						"aspect_ratio": {
 							"description": "Output aspect ratio. `auto` (default) picks one from the prompt and any references.",
@@ -336,9 +351,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Signed URL to the generated mp4 (24fps, with audio by default). Expires ~2 hours after ready \u2014 download promptly.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Signed URL to the generated mp4 (24fps, with audio by default). Expires ~2 hours after ready \u2014 download promptly."
 				},
 				"draft_cache": {
 					"description": "Draft-mode cache bundle URL, only present for draft: true requests.",

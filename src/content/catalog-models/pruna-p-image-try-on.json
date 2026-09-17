@@ -12,6 +12,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.015,
+		"Per input image": 0.008
+	},
 	"examples": [
 		{
 			"name": "Single Garment",
@@ -98,6 +102,7 @@
 		"Output Formats": "jpg, png, webp"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": {
 		"id": "97503cbc-cf25-4782-b55e-03aa37f6c7e3",
 		"title": "70% off P-Image-Try-On",

@@ -1,0 +1,57 @@
+---
+title: "WAF Release - 2026-08-26 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-08-26 emergency release
+date: 2026-08-26
+---
+
+import { RuleID } from "~/components";
+
+This emergency release updates an existing Next.js remote code execution rule to identify CVE-2026-75604 and adds a new rule for remote code execution in the Next.js Image Optimizer via crafted AVIF images.
+
+**Key Findings**
+
+- CVE-2026-75604 affects Windows-hosted Next.js applications using both the Pages Router and App Router without Cache Components and can lead to unauthenticated remote code execution.
+
+- GHSA-2xp9-vwfh-vxw4 affects the Next.js Image Optimizer and can lead to unauthenticated remote code execution when it optimizes an attacker-controlled AVIF image.
+
+**Impact**
+
+Next.js recommends updating to version 16.3.3 or 15.5.24 to address these vulnerabilities.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2b6b94ec864d47f99630ecf72ca6cce3" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - Remote Code Execution - CVE:CVE-2026-75604</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="18b22b0bd423423c945b3a0180256efe" />
+			</td>
+			<td>N/A</td>
+			<td>Next.js - Image Optimizer Remote Code Execution via Crafted AVIF</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

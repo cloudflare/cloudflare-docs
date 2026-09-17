@@ -122,6 +122,10 @@ The order in which the patterns are listed is not significant.
 
 In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
+:::note
+When providing `run_worker_first` as an array, you can specify at most 100 entries. This limit counts raw entries, not distinct patterns — duplicate entries count toward the limit. If you are approaching the limit, check whether an existing wildcard pattern already covers the path before adding a new rule.
+:::
+
 Common uses for `run_worker_first` include authentication checks, A/B testing, and [injecting bootstrap data into your SPA shell](/workers/examples/spa-shell/).
 
 ## `binding`

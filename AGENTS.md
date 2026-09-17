@@ -37,7 +37,8 @@ cloudflare-docs/
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
-│   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   ├── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   └── fetch-logpush-datasets.ts  # Downloads generated Logpush dataset pages from middlecache
 ├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
@@ -82,7 +83,7 @@ reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `troubleshooting`, `tutorial`, `video`.
 
 ### Writing and style rules
 
@@ -182,7 +183,7 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 ## Content collections
 
-The site defines 20 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
+The site defines 19 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
 | Collection          | Location                         | Description                              |
 | ------------------- | -------------------------------- | ---------------------------------------- |
@@ -190,7 +191,6 @@ The site defines 20 content collections in `src/content.config.ts` with schemas 
 | `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
 | `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
 | `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `plans`             | `src/content/plans/`             | Plan/pricing data (YAML)                 |
 | `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
 | `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
 | `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |

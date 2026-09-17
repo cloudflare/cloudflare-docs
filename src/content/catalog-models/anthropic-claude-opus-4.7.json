@@ -16,6 +16,12 @@
 	"context_length": 1000000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 5,
+		"Output tokens (per 1M)": 25,
+		"Cached input tokens (per 1M)": 0.5,
+		"Cache creation tokens (per 1M)": 6.25
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -762,6 +768,7 @@
 	"request_formats": [
 		"anthropic-messages"
 	],
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:52:55",
 	"schema": {
@@ -896,13 +903,9 @@
 					"type": "string"
 				},
 				"stop_reason": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {

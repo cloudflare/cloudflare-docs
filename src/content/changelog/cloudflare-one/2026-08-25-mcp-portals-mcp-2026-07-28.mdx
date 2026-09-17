@@ -1,0 +1,14 @@
+---
+title: MCP server portals support MCP 2026-07-28 specification
+description: MCP server portals support the latest stateless MCP specification while retaining compatibility with 2025 clients and servers.
+date: 2026-08-25
+products:
+  - cloudflare-one
+  - access
+---
+
+[MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) support the stateless MCP `2026-07-28` specification for client and upstream server connections.
+
+The portal's `/mcp` endpoint automatically accepts stateless MCP `2026-07-28` requests and earlier 2025 Streamable HTTP clients. When the portal connects to an upstream Streamable HTTP server, it checks for MCP `2026-07-28` support and falls back to the 2025 handshake when needed. Client and upstream protocol selection are independent, so clients and servers can upgrade separately without portal configuration changes.
+
+SSE connections continue to use the legacy protocol. For details, refer to [MCP server portal transport and protocol compatibility](/cloudflare-one/access-controls/ai-controls/mcp-portals/#transport).

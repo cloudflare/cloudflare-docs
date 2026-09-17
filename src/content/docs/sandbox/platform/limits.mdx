@@ -13,12 +13,12 @@ import { WranglerConfig } from "~/components";
 Since the Sandbox SDK is built on top of the [Containers](/containers/) platform, it shares the same underlying platform characteristics. Refer to these pages to understand how pricing and limits work for your sandbox deployments.
 
 Sandbox also inherits current Containers lifecycle, placement, and routing behavior. For more
-detail, refer to [Lifecycle of a Container](/containers/platform-details/architecture/) and
-[Scaling and Routing](/containers/platform-details/scaling-and-routing/).
+detail, refer to [Lifecycle of a Container](/containers/concepts/architecture/) and
+[Scaling and Routing](/containers/configuration/scaling-and-routing/).
 
 ## Container limits
 
-Refer to [Containers limits](/containers/platform-details/limits/) for complete details on:
+Refer to [Containers limits](/containers/platform/limits/) for complete details on:
 
 - Memory, vCPU, and disk limits for concurrent container instances
 - Instance types and their resource allocations
@@ -59,7 +59,7 @@ See [Transport modes](/sandbox/configuration/transport/) for a complete guide.
 
 To work within these limits:
 
-- **Right-size your instances** - Choose the appropriate [instance type](/containers/platform-details/limits/#instance-types) based on your workload requirements
+- **Right-size your instances** - Choose the appropriate [instance type](/containers/platform/limits/#instance-types) based on your workload requirements
 - **Clean up unused sandboxes** - Terminate sandbox sessions when they are no longer needed to free up resources
 - **Optimize images** - Keep your [custom Dockerfiles](/sandbox/configuration/dockerfile/) lean to reduce image size
 - **Use RPC transport for high-frequency operations** - Enable `SANDBOX_TRANSPORT=rpc` to avoid subrequest limits when making many SDK calls per request

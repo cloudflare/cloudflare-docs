@@ -1,0 +1,24 @@
+---
+title: Load balancing analytics now filters by pool name
+description: The pool filter in load balancing analytics now queries by pool name instead of pool ID, matching what you see in the UI dropdown.
+products:
+  - load-balancing
+date: 2026-08-17
+---
+
+Load balancing analytics now filters traffic data by pool name instead of pool ID, aligning the query behavior with the pool names displayed in the filter dropdown.
+
+Previously, the analytics pool filter queried by internal pool ID while displaying pool names in the UI dropdown. This mismatch caused filtering issues when pools shared similar names or when you expected results based on the visible pool name. Because the underlying query used a different identifier than what appeared on screen, the displayed data could be confusing or incorrect.
+
+The pool filter now queries by the same pool name shown in the dropdown. When you select a pool from the filter, the analytics graphs and tables display data for that specific pool as you would expect. This change affects:
+
+- **Requests over time**, filtering the chart series to the selected pool.
+- **Pool distribution**, showing only the selected pool segment.
+- **Top endpoints**, displaying cards for origins in the selected pool.
+- **Latency**, showing latency data for the selected pool.
+
+The **Logs** view and health event filtering are unchanged.
+
+To use this, go to **Traffic** > **Load Balancing Analytics** for a zone. The same pool filter appears in the analytics view for an individual load balancer under **Load Balancing** at the account level.
+
+For more information about analytics filters and metrics, refer to [Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/).

@@ -45,8 +45,6 @@ export { default as RSSButton } from "./components/cf/RSSButton.astro";
 export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinition.astro";
 export { default as WranglerCommand } from "./components/cf/WranglerCommand.astro";
 export { default as AnchorHeading } from "./components/cf/AnchorHeading.astro";
-export { default as FeatureTable } from "./components/cf/FeatureTable.astro";
-export { default as ProductFeatures } from "./components/cf/ProductFeatures.astro";
 export { default as PagesBuildPreset } from "./components/cf/PagesBuildPreset.astro";
 export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPresetsTable.astro";
 export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
@@ -81,3 +79,8 @@ export { default as SubtractIPCalculator } from "./components/react/SubtractIPCa
 export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
 export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
+export { ContainerConnectivity } from "./components/react/container/ContainerConnectivity";
+export { ContainerIsolation } from "./components/react/container/ContainerIsolation";
+export { ContainerRequestPath } from "./components/react/container/ContainerRequestPath";
+export { ContainerLifecycle } from "./components/react/container/ContainerLifecycle";
+export { ContainerPlacement } from "./components/react/container/ContainerPlacement";

@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.03,
+		"Per image": 0.03
+	},
 	"examples": [
 		{
 			"name": "Default",
@@ -66,6 +70,7 @@
 		"Price (with moodboards)": "$0.040"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-06-17 14:18:21",
 	"schema": {
@@ -74,11 +79,10 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the image to generate.",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt describing the image to generate."
 				},
 				"aspect_ratio": {
-					"description": "Aspect ratio of the generated image.",
 					"type": "string",
 					"enum": [
 						"1:1",
@@ -89,24 +93,21 @@
 						"4:5",
 						"2:3",
 						"9:16"
-					]
+					],
+					"description": "Aspect ratio of the generated image."
 				},
 				"resolution": {
-					"description": "Resolution scale.",
 					"type": "string",
 					"enum": [
 						"1K"
-					]
+					],
+					"description": "Resolution scale."
 				},
 				"seed": {
 					"description": "Random seed for reproducible generations. Pass null or omit for a random seed.",
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				},
 				"styles": {
@@ -116,14 +117,14 @@
 						"type": "object",
 						"properties": {
 							"id": {
-								"description": "Style (typically LoRA) identifier.",
-								"type": "string"
+								"type": "string",
+								"description": "Style (typically LoRA) identifier."
 							},
 							"strength": {
-								"description": "Style strength, between -2 and 2.",
 								"type": "number",
 								"minimum": -2,
-								"maximum": 2
+								"maximum": 2,
+								"description": "Style strength, between -2 and 2."
 							}
 						},
 						"required": [
@@ -141,9 +142,9 @@
 						"type": "object",
 						"properties": {
 							"url": {
-								"description": "URL of the reference image (max 1024 chars).",
 								"type": "string",
-								"format": "uri"
+								"format": "uri",
+								"description": "URL of the reference image (max 1024 chars)."
 							},
 							"strength": {
 								"description": "Style influence (0 = no influence, 1 = maximum). Default 0.5.",
@@ -199,10 +200,10 @@
 						"type": "object",
 						"properties": {
 							"id": {
-								"description": "Moodboard identifier.",
 								"type": "string",
 								"format": "uuid",
-								"pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+								"pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+								"description": "Moodboard identifier."
 							},
 							"strength": {
 								"description": "Moodboard influence (0 = no influence, 1 = maximum). Default 0.23.",
@@ -231,9 +232,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Presigned URL for the generated image.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the generated image."
 				}
 			},
 			"required": [

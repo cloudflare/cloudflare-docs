@@ -30,7 +30,6 @@ const NON_PRODUCT_SECTIONS = new Set([
 	"404",
 	"directory",
 	"glossary",
-	"plans",
 	"resources",
 	"sponsorships",
 	"videos",

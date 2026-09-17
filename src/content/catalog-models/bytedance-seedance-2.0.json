@@ -14,6 +14,17 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.15,
+		"@480p non-video input (per second)": 0.07,
+		"@480p video input (per second)": 0.172,
+		"@720p non-video input (per second)": 0.15,
+		"@720p video input (per second)": 0.372,
+		"@1080p non-video input (per second)": 0.37,
+		"@1080p video input (per second)": 0.914,
+		"@4k non-video input (per second)": 0.78,
+		"@4k video input (per second)": 1.866
+	},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -238,6 +249,7 @@
 		"Resolutions": "480p, 720p, 1080p"
 	},
 	"request_formats": null,
+	"providers": null,
 	"banner": null,
 	"created_at": "2026-05-22 17:52:58",
 	"schema": {
