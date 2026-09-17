@@ -1449,11 +1449,11 @@
 # CF1 changelog page
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 MSP page moved under tiered-policies
-/cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ 301
+/cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-controls/tiered-policies/tenant-api/ 301
 # CF1 package protection renamed to package registry security
-/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
+/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-controls/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
-/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-controls/packet-filtering/network-firewall-overview/ 301
 # CF1 Audit SSH retired
 /cloudflare-one/traffic-policies/network-policies/ssh-logging/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/ 301
 # cross-product magic-firewall slug renames
@@ -2689,10 +2689,10 @@
 /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas-saml/ 301
 /cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/ 301
 /cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
-/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/ 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ 301
+/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/traffic-controls/proxy-endpoints/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/ 301
 /cloudflare-one/policies/gateway/dns-policies/scheduled-dns-policies/ /cloudflare-one/policies/gateway/timed-policies/#scheduled-policies 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/ 301
 /cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/ 301
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/identity/devices/access-integrations/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
@@ -2729,7 +2729,7 @@
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
-/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-controls/get-started/dns/ 301
 /cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -2787,8 +2787,8 @@
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
-/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
-/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-controls/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-controls/packet-filtering/create-rate-limiting-policies/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
@@ -2802,15 +2802,15 @@
 /cloudflare-one/data-loss-prevention/saas-apps-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
-/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
+/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-controls/dns-policies/#safe-search 301
 /cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/reusable-components/lists/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/get-started/dns/ 301
-/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-policies/get-started/ 301
-/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-policies/get-started/dns/ 301
-/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-policies/get-started/http/ 301
-/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-policies/get-started/network/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-controls/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-controls/get-started/ 301
+/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-controls/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-controls/get-started/http/ 301
+/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-controls/get-started/network/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/client-checks/tanium/ 301
@@ -2833,7 +2833,7 @@
 /cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
+/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-controls/enable-ids/ 301
 
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
@@ -2849,9 +2849,20 @@
 /cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 /cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
+/cloudflare-one/networks/resolvers-and-proxies/ /cloudflare-one/traffic-controls/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/ /cloudflare-one/traffic-controls/resolver-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/locations/ /cloudflare-one/traffic-controls/resolver-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/ /cloudflare-one/traffic-controls/proxy-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/ /cloudflare-one/traffic-controls/proxy-endpoints/configure-pac-file-on-device/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/ /cloudflare-one/traffic-controls/proxy-endpoints/best-practices/ 301
+/cloudflare-one/traffic-policies/ /cloudflare-one/traffic-controls/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+/cloudflare-one/traffic-policies/* /cloudflare-one/traffic-controls/:splat 301
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
 
@@ -2966,7 +2977,7 @@
 /cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/:splat 301
 /cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
 /cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
-/cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
+/cloudflare-one/policies/gateway/* /cloudflare-one/traffic-controls/:splat 301
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 

@@ -18,7 +18,7 @@ To check whether a profile detects specific content without sending traffic thro
 
 ## DLP policy does not trigger or block content
 
-DLP not inspecting or blocking content is the most common issue reported. If you have configured a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) but it fails to inspect or block traffic, the cause is almost always that the traffic is not being decrypted. To use DLP to scan the content of HTTPS requests, you must turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+DLP not inspecting or blocking content is the most common issue reported. If you have configured a [DLP policy](/cloudflare-one/data-loss-prevention/dlp-policies/) but it fails to inspect or block traffic, the cause is almost always that the traffic is not being decrypted. To use DLP to scan the content of HTTPS requests, you must turn on [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/).
 
 To turn on TLS decryption:
 
@@ -40,7 +40,7 @@ Once you turn on TLS decryption, you can create a DLP policy to inspect the cont
 2. Check **Traffic direction**. Remove the filter to include all traffic directions, or select _Unknown_ to check bodies without a recorded direction.
 3. Confirm that the expected detection entry is enabled in at least one DLP profile in the account.
 4. Confirm that traffic meets the [Gateway inspection prerequisites](/cloudflare-one/data-loss-prevention/passive-detection/#prerequisites), including HTTP filtering and TLS decryption for HTTPS.
-5. Check whether a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) or another routing configuration excludes the traffic from inspection.
+5. Check whether a [Do Not Inspect policy](/cloudflare-one/traffic-controls/http-policies/#do-not-inspect) or another routing configuration excludes the traffic from inspection.
 </Steps>
 
 An individual request or response body may not be sampled. An empty dashboard does not confirm that sensitive data is absent.
@@ -69,7 +69,7 @@ This policy only blocks uploads of financial data to file-sharing websites for a
 | DLP Profile        | in       | _Financial Information_         | And   |        |
 | User Group Names   | in       | `Finance Team`                  |       |        |
 
-You can also create policies that match trusted applications using the [**Do Not Scan** action](/cloudflare-one/traffic-policies/http-policies/#do-not-scan).
+You can also create policies that match trusted applications using the [**Do Not Scan** action](/cloudflare-one/traffic-controls/http-policies/#do-not-scan).
 
 ## DLP detections are inconsistent
 

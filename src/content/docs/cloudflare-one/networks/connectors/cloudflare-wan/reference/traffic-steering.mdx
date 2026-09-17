@@ -20,7 +20,7 @@ When traffic enters Cloudflare's network, it needs to reach the correct destinat
 The Cloudflare Virtual Network is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
 - Magic Transit delivery for [Denial of Service (DoS)](/ddos-protection/) and [Cloudflare Network Firewall](/cloudflare-network-firewall/) filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
-- Cloudflare WAN packet transport between IPsec/GRE tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), [Access](/cloudflare-one/access-controls/policies/), and [Gateway](/cloudflare-one/traffic-policies/).
+- Cloudflare WAN packet transport between IPsec/GRE tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/), [Access](/cloudflare-one/access-controls/policies/), and [Gateway](/cloudflare-one/traffic-controls/).
 
 The Cloudflare Virtual Network supports routing the Cloudflare WAN traffic through anycast tunnels using [GRE and Internet Protocol Security (IPsec)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels/) or [CNI with Dataplane v2](/network-interconnect/). You can add entries to the Cloudflare Virtual Network routing table through static route configuration or through routes learned through BGP peering (beta). Traffic can also be routed automatically according to tracked flow state.
 
@@ -293,7 +293,7 @@ For traffic between WAN connections (IPsec to IPsec, GRE to GRE, and CNI to CNI)
 
 <AnchorHeading depth={4} title="Site-to-site traffic with Gateway" />
 
-When [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) are applied to site-to-site WAN traffic, route selection follows these rules:
+When [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) are applied to site-to-site WAN traffic, route selection follows these rules:
 
 | Scenario                                      | Behavior                                                                              |
 | --------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -606,4 +606,4 @@ You need to enable [legacy health checks](/cloudflare-one/networks/connectors/cl
 
 By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Cloudflare WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
-For more information, refer to [Applications and app types](/cloudflare-one/traffic-policies/application-app-types/).
+For more information, refer to [Applications and app types](/cloudflare-one/traffic-controls/application-app-types/).
