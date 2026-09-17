@@ -69,6 +69,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"default": 0.03,
+				"720p": 0.03,
+				"1080p": 0.06
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:53:11",
 	"schema": {
@@ -77,26 +87,26 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
-					"type": "string"
+					"type": "string",
+					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI."
 				},
 				"images": {
-					"description": "Identity reference image(s), 1 to 3, to place into the video. Each entry is an HTTP(S) URL or a data URI.",
 					"minItems": 1,
 					"maxItems": 3,
 					"type": "array",
 					"items": {
 						"type": "string"
-					}
+					},
+					"description": "Identity reference image(s), 1 to 3, to place into the video. Each entry is an HTTP(S) URL or a data URI."
 				},
 				"turbo": {
-					"description": "Turbo mode: faster generation for slightly lower quality.",
 					"default": false,
+					"description": "Turbo mode: faster generation for slightly lower quality.",
 					"type": "boolean"
 				},
 				"resolution": {
-					"description": "Target resolution.",
 					"default": "720p",
+					"description": "Target resolution.",
 					"type": "string",
 					"enum": [
 						"720p",
@@ -104,18 +114,18 @@
 					]
 				},
 				"save_audio": {
-					"description": "Save the video with audio.",
 					"default": true,
+					"description": "Save the video with audio.",
 					"type": "boolean"
 				},
 				"ignore_audio": {
-					"description": "Ignore source audio during generation.",
 					"default": false,
+					"description": "Ignore source audio during generation.",
 					"type": "boolean"
 				},
 				"target_fps": {
-					"description": "Target FPS for the working video.",
 					"default": "original",
+					"description": "Target FPS for the working video.",
 					"type": "string",
 					"enum": [
 						"24",
@@ -124,8 +134,8 @@
 					]
 				},
 				"instruction_prompt": {
-					"description": "Further instruction on how to place people from the reference images into the scene.",
 					"default": "",
+					"description": "Further instruction on how to place people from the reference images into the scene.",
 					"type": "string"
 				},
 				"seed": {
@@ -135,8 +145,8 @@
 					"maximum": 9007199254740991
 				},
 				"disable_safety_checker": {
-					"description": "Disable safety checker for generated videos.",
 					"default": false,
+					"description": "Disable safety checker for generated videos.",
 					"type": "boolean"
 				}
 			},
@@ -158,9 +168,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Presigned URL for the replacement video.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the replacement video."
 				}
 			},
 			"required": [

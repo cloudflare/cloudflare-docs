@@ -13,8 +13,8 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Per input image": 0.002,
-		"Per image": 0.02
+		"Per image": 0.02,
+		"Per input image": 0.002
 	},
 	"examples": [
 		{
@@ -131,6 +131,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"output_image_count": 0.02,
+				"input_image_count": 0.002
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:54:03",
 	"schema": {

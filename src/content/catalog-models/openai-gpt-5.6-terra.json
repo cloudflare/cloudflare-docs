@@ -16,9 +16,9 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2,
+		"Output tokens (per 1M)": 12,
 		"Cached input tokens (per 1M)": 0.2,
-		"Cache creation tokens (per 1M)": 2.5,
-		"Output tokens (per 1M)": 12
+		"Cache creation tokens (per 1M)": 2.5
 	},
 	"examples": [
 		{
@@ -274,6 +274,17 @@
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 12,
+				"input_cached_tokens": 0.2,
+				"input_cache_creation_tokens": 2.5
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-10 02:49:52",
 	"schema": {

@@ -139,6 +139,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"output_image_count": 0.04,
+				"input_image_count": 0.01
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-14 22:17:39",
 	"schema": {
@@ -249,8 +258,8 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Generated image. Either a base64 data URI (`data:image/png;base64,...`) or an `https://` URL, depending on the upstream `response_format`.",
-					"type": "string"
+					"type": "string",
+					"description": "Generated image. Either a base64 data URI (`data:image/png;base64,...`) or an `https://` URL, depending on the upstream `response_format`."
 				}
 			},
 			"required": [

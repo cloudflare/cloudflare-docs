@@ -201,6 +201,75 @@
 			]
 		},
 		{
+			"name": "First and Last Frame",
+			"description": "Create a controlled transition between supplied first and last frames.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "Show the character growing from childhood into adulthood through a continuous, emotional camera move."
+					},
+					{
+						"type": "image_url",
+						"image_url": {
+							"url": "https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg"
+						},
+						"role": "first_frame"
+					},
+					{
+						"type": "image_url",
+						"image_url": {
+							"url": "https://filecdn.minimax.chat/public/97b7cd08-764e-4b8b-a7bf-87a0bd898575.jpeg"
+						},
+						"role": "last_frame"
+					}
+				],
+				"duration": 5,
+				"resolution": "2K",
+				"ratio": "adaptive"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3/first-and-last-frame.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441811301478471",
+					"model": "MiniMax-H3",
+					"status": "succeeded",
+					"created_at": 1789416926,
+					"updated_at": 1789417242,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3/first-and-last-frame.mp4"
+					},
+					"resolution": "2K",
+					"duration": 5,
+					"usage": {
+						"total_seconds": 5,
+						"input_seconds": 0,
+						"output_seconds": 5,
+						"input_image_count": 2,
+						"total_tokens": 286430,
+						"prompt_tokens": 26040,
+						"completion_tokens": 260390
+					},
+					"ratio": "adaptive",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'Show the character growing from childhood into adulthood through a continuous, emotional camera move.',\n      },\n      {\n        type: 'image_url',\n        image_url: {\n          url: 'https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg',\n        },\n        role: 'first_frame',\n      },\n      {\n        type: 'image_url',\n        image_url: {\n          url: 'https://filecdn.minimax.chat/public/97b7cd08-764e-4b8b-a7bf-87a0bd898575.jpeg',\n        },\n        role: 'last_frame',\n      },\n    ],\n    duration: 5,\n    resolution: '2K',\n    ratio: 'adaptive',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"Show the character growing from childhood into adulthood through a continuous, emotional camera move.\"\n      },\n      {\n        \"type\": \"image_url\",\n        \"image_url\": {\n          \"url\": \"https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg\"\n        },\n        \"role\": \"first_frame\"\n      },\n      {\n        \"type\": \"image_url\",\n        \"image_url\": {\n          \"url\": \"https://filecdn.minimax.chat/public/97b7cd08-764e-4b8b-a7bf-87a0bd898575.jpeg\"\n        },\n        \"role\": \"last_frame\"\n      }\n    ],\n    \"duration\": 5,\n    \"resolution\": \"2K\",\n    \"ratio\": \"adaptive\"\n  }\n}'"
+				}
+			]
+		},
+		{
 			"name": "Multiple Reference Images",
 			"description": "Use multiple reference images to preserve character appearance and style.",
 			"input": {
@@ -275,8 +344,8 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": "https://platform.minimax.io/docs/guides/video-generation",
-	"terms": "https://platform.minimax.io/docs/guides/terms-of-service",
+	"external_info": "https://platform.minimax.io/docs/guides/video-generation.md",
+	"terms": "https://platform.minimax.io/docs/guides/terms-of-service.md",
 	"cover_image_url": null,
 	"metadata": {
 		"Billing": "Pay-as-you-go, per output second",
@@ -286,6 +355,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"default": 0.08,
+				"768p": 0.08,
+				"2k": 0.13
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-16 19:44:34",
 	"schema": {

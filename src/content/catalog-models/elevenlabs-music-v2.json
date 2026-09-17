@@ -68,6 +68,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "elevenlabs",
+			"pricing": {
+				"output_audio_seconds": 0.0025
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-24 20:04:42",
 	"schema": {
@@ -263,8 +271,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated music file.",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated music file."
 				}
 			},
 			"required": [

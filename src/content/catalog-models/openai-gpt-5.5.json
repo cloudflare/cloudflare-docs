@@ -5267,6 +5267,15 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 5,
+				"output_tokens": 30
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:37",
 	"schema": {

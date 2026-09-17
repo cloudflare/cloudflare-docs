@@ -15,11 +15,11 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input <=200k (per 1M)": 1.5,
-		"Output <=200k (per 1M)": 9,
 		"Cached input <=200k (per 1M)": 0.15,
+		"Output <=200k (per 1M)": 9,
 		"Input >200k (per 1M)": 1.5,
-		"Output >200k (per 1M)": 9,
-		"Cached input >200k (per 1M)": 0.15
+		"Cached input >200k (per 1M)": 0.15,
+		"Output >200k (per 1M)": 9
 	},
 	"examples": [
 		{
@@ -442,6 +442,19 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"under_200k_per_1m_input_tokens": 1.5,
+				"under_200k_per_1m_input_cached_tokens": 0.15,
+				"under_200k_per_1m_output_tokens": 9,
+				"over_200k_per_1m_input_tokens": 1.5,
+				"over_200k_per_1m_input_cached_tokens": 0.15,
+				"over_200k_per_1m_output_tokens": 9
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-17 23:03:54",
 	"schema": {

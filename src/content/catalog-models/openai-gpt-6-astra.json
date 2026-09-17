@@ -15,6 +15,7 @@
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
 	"pricing": {
+		"Long-context threshold (input tokens)": 272000,
 		"Short-context input (per 1M)": 10,
 		"Short-context cached input (per 1M)": 1,
 		"Short-context cache write (per 1M)": 12,
@@ -238,14 +239,29 @@
 		"API": "Responses, Chat Completions",
 		"Architecture": "Transformer",
 		"Input modalities": "Text, image",
-		"Knowledge cutoff": "April 30, 2026",
-		"Long-context threshold": "272,000 input tokens"
+		"Knowledge cutoff": "April 30, 2026"
 	},
 	"request_formats": [
 		"responses",
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"long_context_threshold_tokens": 272000,
+				"short_context_input_tokens": 10,
+				"short_context_input_cached_tokens": 1,
+				"short_context_input_cache_creation_tokens": 12,
+				"short_context_output_tokens": 50,
+				"long_context_input_tokens": 20,
+				"long_context_input_cached_tokens": 2,
+				"long_context_input_cache_creation_tokens": 25,
+				"long_context_output_tokens": 75
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-10 20:01:11",
 	"schema": {
