@@ -287,8 +287,8 @@ package.json @cloudflare/content-engineering
 
 # cloudflare-one
 
-/src/assets/images/cloudflare-one/ @asamborski @cf-rhett @csujedihy @jiulingz @lpraneis @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/changelog/cloudflare-one/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @asamborski @cf-rhett @csujedihy @jiulingz @lpraneis @jeffh-cloudflare @steve-cloudflare @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/cloudflare-one/ @asamborski @kennyj42 @jeffh-cloudflare @steve-cloudflare @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/access-controls/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/account-limits.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
