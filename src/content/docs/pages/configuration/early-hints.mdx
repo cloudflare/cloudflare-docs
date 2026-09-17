@@ -60,3 +60,30 @@ Remove any automatically generated `Link` headers by adding the following to you
 Automatic `Link` header generation should not have any negative performance impact on your website. If you need to disable this feature, contact us by letting us know about your circumstance in our [Discord server](https://discord.com/invite/cloudflaredev).
 
 :::
+
+## Early Hints probes in logs
+
+Cloudflare automatically runs Early Hints probe requests on all Pages domains, including custom domains. These probes appear in your Cloudflare logs with these field values:
+
+- `ClientRequestSource: earlyHintsCache`
+- `ClientRequestUserAgent: nginx-ssl early hints` or `bastion early hints`
+
+A `504` response on a probe means no Early Hint has been cached for that URL yet (a cache miss). A `200` means a cached Early Hint was served. These probes are internal Cloudflare subrequests — they do not reach your Pages project or origin server and have no impact on end users.
+
+:::note
+
+Early Hints is always enabled for Cloudflare Pages. The zone-level Early Hints setting does not apply to Pages domains or custom domains.
+
+:::
+
+### Filter probes from logs
+
+To exclude Early Hints probes from Log Explorer queries or alert rules, filter on `ClientRequestSource != "earlyHintsCache"`.
+
+### Reduce probe cache misses
+
+Probes return `504` when Cloudflare has no `Link` headers cached for a URL. To convert cache misses to hits and reduce `504` volume in your logs, configure `Link` headers in your Pages project using either the [`_headers` file](/pages/configuration/headers/) or automatic `Link` header generation from HTML elements.
+
+### Disable Early Hints on Pages
+
+Early Hints cannot be disabled for Cloudflare Pages. If you need full control over the Early Hints setting, [migrate your project from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/). Workers respects the zone-level Early Hints setting.
