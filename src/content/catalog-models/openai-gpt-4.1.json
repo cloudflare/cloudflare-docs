@@ -9805,6 +9805,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 8,
+				"input_cached_tokens": 0.5
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:24",
 	"schema": {

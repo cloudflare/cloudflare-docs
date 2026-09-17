@@ -97,6 +97,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 0.25,
+				"output_tokens": 30
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-01 20:21:36",
 	"schema": {

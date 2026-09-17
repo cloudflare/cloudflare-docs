@@ -180,6 +180,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"input_characters": 0.0001
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:20",
 	"schema": {
@@ -188,32 +196,32 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to convert to speech. Maximum 10,000 characters.",
 					"type": "string",
-					"maxLength": 10000
+					"maxLength": 10000,
+					"description": "The text to convert to speech. Maximum 10,000 characters."
 				},
 				"voice_id": {
-					"description": "The voice ID to use for synthesis",
 					"default": "English_expressive_narrator",
+					"description": "The voice ID to use for synthesis",
 					"type": "string"
 				},
 				"speed": {
-					"description": "Speech speed (0.5 to 2)",
 					"default": 1,
+					"description": "Speech speed (0.5 to 2)",
 					"type": "number",
 					"minimum": 0.5,
 					"maximum": 2
 				},
 				"volume": {
-					"description": "Speech volume (0 to 10)",
 					"default": 1,
+					"description": "Speech volume (0 to 10)",
 					"type": "number",
 					"minimum": 0,
 					"maximum": 10
 				},
 				"pitch": {
-					"description": "Pitch adjustment (-12 to 12)",
 					"default": 0,
+					"description": "Pitch adjustment (-12 to 12)",
 					"type": "integer",
 					"minimum": -12,
 					"maximum": 12
@@ -233,8 +241,8 @@
 					]
 				},
 				"format": {
-					"description": "Output audio format",
 					"default": "mp3",
+					"description": "Output audio format",
 					"type": "string",
 					"enum": [
 						"mp3",
@@ -287,8 +295,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated audio file"
 				}
 			},
 			"required": [

@@ -357,6 +357,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 1.25,
+				"output_tokens": 10,
+				"input_cached_tokens": 0.125
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:08",
 	"schema": {

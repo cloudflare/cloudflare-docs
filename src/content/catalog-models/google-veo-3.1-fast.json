@@ -13,13 +13,13 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
+		"Default (per second)": 0.08,
 		"@720p (per second)": 0.08,
 		"@1080p (per second)": 0.1,
 		"@4k (per second)": 0.25,
 		"@720p w/ audio (per second)": 0.1,
 		"@1080p w/ audio (per second)": 0.12,
-		"@4k w/ audio (per second)": 0.3,
-		"Default (per second)": 0.08
+		"@4k w/ audio (per second)": 0.3
 	},
 	"examples": [
 		{
@@ -178,6 +178,20 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"default": 0.08,
+				"720p": 0.08,
+				"1080p": 0.1,
+				"4k": 0.25,
+				"720p_audio": 0.1,
+				"1080p_audio": 0.12,
+				"4k_audio": 0.3
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:15",
 	"schema": {
@@ -186,16 +200,16 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video to generate",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt describing the video to generate"
 				},
 				"image_input": {
 					"description": "Base64-encoded reference image for i2v",
 					"type": "string"
 				},
 				"duration": {
-					"description": "Video duration",
 					"default": "6s",
+					"description": "Video duration",
 					"type": "string",
 					"enum": [
 						"4s",
@@ -204,8 +218,8 @@
 					]
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio",
 					"default": "16:9",
+					"description": "Video aspect ratio",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -214,8 +228,8 @@
 					]
 				},
 				"resolution": {
-					"description": "Video resolution",
 					"default": "720p",
+					"description": "Video resolution",
 					"type": "string",
 					"enum": [
 						"720p",
@@ -223,8 +237,8 @@
 					]
 				},
 				"generate_audio": {
-					"description": "Whether to generate audio with the video",
 					"default": true,
+					"description": "Whether to generate audio with the video",
 					"type": "boolean"
 				}
 			},
@@ -242,9 +256,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

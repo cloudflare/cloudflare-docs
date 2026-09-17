@@ -97,6 +97,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"output_image_count": 0.04
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-19 20:42:08",
 	"schema": {

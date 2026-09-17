@@ -332,6 +332,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"default": 0.05,
+				"480p": 0.05,
+				"768p": 0.08
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-16 19:46:57",
 	"schema": {

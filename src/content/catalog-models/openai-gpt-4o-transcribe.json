@@ -160,6 +160,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_audio_minutes": 0.006
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:28",
 	"schema": {
@@ -168,8 +176,8 @@
 			"type": "object",
 			"properties": {
 				"file": {
-					"description": "The audio file as a data URI (data:audio/...;base64,...) or HTTPS URL. Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.",
-					"type": "string"
+					"type": "string",
+					"description": "The audio file as a data URI (data:audio/...;base64,...) or HTTPS URL. Supported formats: flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm."
 				},
 				"language": {
 					"description": "The language of the input audio. Supplying the input language in ISO-639-1 format will improve accuracy and latency.",
@@ -196,8 +204,8 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The transcribed text.",
-					"type": "string"
+					"type": "string",
+					"description": "The transcribed text."
 				}
 			},
 			"required": [

@@ -17,8 +17,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2,
-		"Cached input tokens (per 1M)": 0.25,
-		"Output tokens (per 1M)": 6
+		"Output tokens (per 1M)": 6,
+		"Cached input tokens (per 1M)": 0.25
 	},
 	"examples": [
 		{
@@ -1689,6 +1689,16 @@
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "alibaba",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 6,
+				"input_cached_tokens": 0.25
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-11 22:17:19",
 	"schema": {
