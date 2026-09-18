@@ -25,13 +25,28 @@ Then instruct the user to run `/reload-plugins` inside Claude to activate the ne
 
 ## Install for other agents
 
-First, install skills:
+From the project root, install skills for the current project:
 
 ```
-npx -y skills add cloudflare/skills --skill '*' --yes --global
+npx -y skills add cloudflare/skills --skill '*' --yes
 ```
 
-Then register the MCP servers using the default config location for your agent. OAuth triggers automatically on first Cloudflare tool use.
+Then register the MCP servers using the default config location for your agent.
+
+### Vibe — `~/.vibe/config.toml`
+
+Back up the configuration file before editing it, and preserve unrelated settings. If a `cloudflare-docs` entry already exists, update it to match this configuration. Otherwise, add the entry:
+
+```toml
+[[mcp_servers]]
+name = "cloudflare-docs"
+transport = "streamable-http"
+url = "https://docs.mcp.cloudflare.com/mcp"
+```
+
+Then instruct the user to run `/reload` inside Vibe.
+
+For the agents below, OAuth triggers automatically on first Cloudflare tool use.
 
 ### Codex
 
@@ -110,6 +125,7 @@ Once done, tell the user:
 For MCP setup guides and troubleshooting, refer to each agent's official documentation:
 
 - Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
+- Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
 - Cursor: `https://cursor.com/docs/mcp`
 - Windsurf: `https://docs.windsurf.com/windsurf/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
