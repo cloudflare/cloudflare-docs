@@ -1,0 +1,76 @@
+---
+title: Observability
+description: Diagnose Realtime SFU setup, negotiation, media, DataChannel, and adapter problems using endpoint and backend observations.
+pcx_content_type: troubleshooting
+sidebar:
+  order: 6
+products:
+  - realtime
+---
+
+Separate application requests, WebRTC connection state, and media delivery when diagnosing an SFU integration. A successful backend response does not by itself prove that media is arriving.
+
+For a returned API error, use the [Error codes reference](/realtime/sfu/observability/error-codes/) to interpret the response and choose the next action.
+
+## Record useful context
+
+Record the operation, time, application resource ID, SFU session or adapter ID, HTTP status, and per-item error codes. On the endpoint, record signaling, connection, and DataChannel state transitions.
+
+Keep App Secrets, endpoint tokens, SDP, ICE credentials, and media payloads out of logs. Sanitize errors before returning them to untrusted clients.
+
+## Check the failing layer
+
+Use the symptom to choose the next observation:
+
+| Symptom                                                         | Check                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Application request is denied                                   | Identity, membership, ownership, and the deployed backend's authentication configuration                                                                                                                                                                                                                                                           |
+| SFU request fails                                               | HTTP status, top-level error, per-item results, and required fields in the [API schema](/realtime/static/realtime-api-2024-05-21.yaml)                                                                                                                                                                                                             |
+| HTTP `200` but a track is missing                               | Per-track error fields, publication discovery, publisher session ID, and track name                                                                                                                                                                                                                                                                |
+| Negotiation remains unstable, or overlapping pulls return `406` | Public errors, outstanding offers, and [per-session ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session)                                                                                                                                                                                                                 |
+| Connected but no incoming media                                 | Source publication, subscribed tracks, receiver statistics, and browser playback state                                                                                                                                                                                                                                                             |
+| Video works but audio is silent                                 | Microphone permission, mute state, audio track statistics, and autoplay requirements                                                                                                                                                                                                                                                               |
+| Publisher messages do not reach a subscriber                    | Check that each endpoint uses its own [allocated channel ID](/realtime/sfu/features/datachannels/#add-an-application-channel), matching [delivery settings](/realtime/sfu/features/datachannels/#configure-message-delivery), and any required [readiness message](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack). |
+| Subscriber controls do not reach the publisher                  | Check that this subscriber holds [reply access](/realtime/sfu/features/datachannels/#return-to-publisher-canreply). With `waitForAck`, its first message is consumed as readiness; send commands afterward.                                                                                                                                        |
+| An adapter cannot connect                                       | Check the service's [WebSocket upgrade, reachability, and authentication](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#troubleshooting).                                                                                                                                                                                     |
+
+## Inspect browser media statistics
+
+Use `RTCPeerConnection.getStats()` to observe inbound traffic. Compare samples over time; a single cumulative byte count cannot establish that media is still flowing.
+
+In this browser snippet, `pc` is the receiving PeerConnection:
+
+```ts
+const report = await pc.getStats();
+for (const stat of report.values()) {
+  if (stat.type === "inbound-rtp") {
+    console.log({
+      id: stat.id,
+      kind: stat.kind,
+      bytesReceived: stat.bytesReceived,
+      packetsLost: stat.packetsLost,
+      jitter: stat.jitter,
+    });
+  }
+}
+```
+
+Check increasing received bytes alongside the application's visible playback state. If packets arrive but the element stays silent, inspect playback permissions and audio output. If packets stop, inspect publication, subscriptions, and connection state.
+
+## Handle lifecycle failures
+
+Use application state and resource results to distinguish these failures:
+
+| Symptom                                        | Check and next action                                                                                                                                                                                                |
+| ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Membership remains after media fails           | Compare application membership with the PeerConnection state. Use the application's [connection recovery policy](/realtime/sfu/best-practices/#define-recovery-explicitly).                                          |
+| Reconnect restores the wrong tracks            | Compare the current session IDs and connection attempt ID with the response being applied. Refer to [replacement connections](/realtime/sfu/concepts/negotiation/#retry-and-reconnect).                              |
+| Leave or stop never finishes                   | Inspect pending track, channel, and adapter closures and their item errors. [Retain cleanup state](/realtime/sfu/best-practices/#retain-cleanup-state) while retrying failed items.                                  |
+| A track disappears after inactivity            | Check the source's last incoming media and the [inactivity timeout](/realtime/sfu/platform/limits/#inactivity-timeout).                                                                                              |
+| An adapter stops delivering after a disconnect | Check its direction and whether the [stream reconnect window](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#automatic-reconnection-for-streaming) expired. Recreate terminally closed adapters. |
+
+## Learn with an example
+
+The [video-room troubleshooting guide](https://github.com/cloudflare/realtime-examples/blob/main/video-room/TROUBLESHOOTING.md) connects authentication, media, and room lifecycle symptoms to checks. The [cloud-gaming guide](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/TROUBLESHOOTING.md) distinguishes Container startup, publisher readiness, media, and control ownership.
+
+For device setup and browser recovery, use [Pocket Radio troubleshooting](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/TROUBLESHOOTING.md). The [WebSocket adapter reference](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#troubleshooting) explains its public errors and media-format checks.

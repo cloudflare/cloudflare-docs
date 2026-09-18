@@ -1,0 +1,65 @@
+---
+title: Sessions and tracks
+description: Understand Realtime SFU applications, PeerConnection sessions, track names, and publication and subscription.
+pcx_content_type: concept
+sidebar:
+  order: 1
+products:
+  - realtime
+---
+
+Applications group your SFU resources. Sessions represent WebRTC connections. Media tracks carry audio or video, and DataChannels carry application messages.
+
+## Applications
+
+An SFU application has an App ID and App Secret. Its sessions can publish and subscribe to resources within that application. Use separate applications for development, staging, or other environments that need isolation.
+
+Your backend uses the App Secret to authorize SFU API calls. Your application's own authentication and permission checks determine which end users can request those calls.
+
+## Sessions
+
+A session represents one endpoint's WebRTC connection to the SFU. In a browser, an `RTCPeerConnection` object manages that connection. Native applications use the equivalent peer in their WebRTC library. One connection can send and receive multiple media tracks and DataChannels.
+
+A participant does not have to correspond to exactly one session. The [video-room example](/realtime/sfu/examples/video-room/) uses separate publishing and receiving sessions. [Cloud gaming](/realtime/sfu/examples/cloud-gaming/) uses one session per browser for incoming media and outgoing controls.
+
+Follow [connection patterns](/realtime/sfu/get-started/connection-patterns/) to publish media, receive a track, exchange messages, or combine media with controls. Follow [per-session mutation ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session) when updating those connections.
+
+## Media tracks
+
+A media track carries audio or video. Publishing sends that media into the SFU. Subscribing requests a copy of another endpoint's publication. A browser supplies a `MediaStreamTrack`, while a native endpoint supplies the corresponding encoded media through its WebRTC implementation.
+
+To publish a track, call `tracks/new` with `location: "local"` and give the publication a `trackName`. To subscribe, call `tracks/new` on the receiving session with `location: "remote"`, the publisher's `sessionId`, and the same `trackName`.
+
+The main identifiers have distinct purposes:
+
+| Identifier                      | Purpose                                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------------------------- |
+| `appId`                         | Selects the SFU application                                                                 |
+| `sessionId`                     | Identifies a session; on a remote track request, identifies its publisher                   |
+| `trackName`                     | Names the publication within its publishing session                                         |
+| `mid`                           | Identifies a media section/transceiver in a particular PeerConnection's session description |
+| Application member or device ID | Identifies an entity in your own state and permission model                                 |
+
+Use the publisher's session ID together with the track name to locate remote media. A track's `mid` belongs to its connection; a subscriber can receive that publication on a different `mid`.
+
+## Discovery and subscriptions
+
+Your application maintains a list of available publications and shares it with authorized subscribers. Each subscriber chooses which tracks to request.
+
+For a room, that state might contain members and their camera/microphone publications. For a device, it might contain its active publisher session and telemetry channel names. Keep discovery state current when publications end or sessions are replaced.
+
+A successful HTTP response can contain errors for individual tracks. Check each result before recording a publication or subscription as ready.
+
+## DataChannels
+
+DataChannels carry application messages such as telemetry, text, and control events. They have negotiated channel IDs and delivery settings, and use separate [DataChannel API operations](/realtime/sfu/features/datachannels/). They are not browser `MediaStreamTrack` objects.
+
+## Resource lifetime
+
+Close tracks and DataChannels when the application no longer needs them. Remove their discovery entries after cleanup succeeds, and preserve enough state to retry failed cleanup.
+
+Inactivity timeouts are described in [limits](/realtime/sfu/platform/limits/). They do not replace application membership, reconnect decisions, or explicit cleanup.
+
+## Learn with an example
+
+[Run the video room](/realtime/sfu/get-started/) to publish camera and microphone tracks, discover another participant, and pull remote media. Its [architecture guide](https://github.com/cloudflare/realtime-examples/blob/main/video-room/ARCHITECTURE.md#identifier-ownership) maps each identifier to the component that owns it.

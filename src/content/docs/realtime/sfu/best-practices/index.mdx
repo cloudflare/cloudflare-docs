@@ -1,0 +1,53 @@
+---
+title: Best practices
+description: Preserve credential boundaries, resource authorization, negotiation ordering, and cleanup when adapting Realtime SFU applications.
+pcx_content_type: design-guide
+sidebar:
+  order: 7
+products:
+  - realtime
+---
+
+Your application owns identity, state, and lifecycle around the SFU's media transport. Preserve these boundaries when adapting an example.
+
+## Keep credentials on the backend
+
+Store the SFU App Secret on trusted server infrastructure. In Workers, use a Worker secret. Browsers and devices authenticate to your application backend using credentials scoped to their own responsibilities.
+
+Expose application operations with validated inputs. Avoid an unrestricted SFU proxy that lets a browser select arbitrary sessions, publications, or destructive operations.
+
+WebSocket endpoint credentials are separate from the SFU App Secret. Keep both out of public assets, URLs sent to viewers, and logs.
+
+## Authorize resource operations
+
+Check identity and resource ownership before creating, publishing, subscribing, updating permissions, or closing resources. A room name, session ID, track name, or adapter ID is a locator rather than proof of permission.
+
+An operator role also needs application authorization. For device control, the backend can assign a short controller lease and grant `canReply` only to that selection. Handle lease expiry and revoked access in the application, not just the browser UI.
+
+## Coordinate negotiation
+
+Follow [per-session mutation ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session). Retain work that arrives during an outstanding exchange, and check per-item results before advancing application state.
+
+## Define recovery explicitly
+
+Decide whether an application keeps its identity while replacing a media connection. Give each connection attempt an ID so old responses cannot alter replacement sessions. Follow the [replacement-connection sequence](/realtime/sfu/concepts/negotiation/#retry-and-reconnect).
+
+Make reconnect visible to the user, bound retries, and provide a recovery action when automatic attempts fail. The correct choice depends on the application: a room can rebuild subscriptions, while a device listener might require an explicit rejoin.
+
+For WebSocket adapters, implement recreation after terminal closure and respect the different ingest and stream reconnect behavior.
+
+## Retain cleanup state
+
+Store the identifiers of allocated tracks, channels, and adapters until cleanup succeeds or the API explicitly establishes that they are absent. Retry failed items without recreating successful ones.
+
+Use explicit leave/stop operations and an application expiry mechanism for abandoned clients. A closed browser tab cannot guarantee delivery of a final cleanup request. Keep the backend available while its cleanup retries still need to run.
+
+## Apply application limits
+
+Set admission limits, operation rates, and resource lifetimes appropriate to your application. An example's room size or controller policy is an application decision; refer to [SFU limits](/realtime/sfu/platform/limits/) for product constraints.
+
+Use [observability](/realtime/sfu/observability/) to connect API results, endpoint state, and media delivery. Validate authorization and failure paths alongside the successful flow.
+
+## Learn with an example
+
+The [video-room production guide](https://github.com/cloudflare/realtime-examples/blob/main/video-room/PRODUCTION.md) explains identity and room authorization. The [cloud-gaming architecture](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/ARCHITECTURE.md) shows controller generations and input release. [Pocket Radio's architecture](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/ARCHITECTURE.md) explains device credentials, listener membership, and controller leases.

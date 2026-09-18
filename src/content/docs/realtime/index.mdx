@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Realtime
-description: Build scalable real-time applications with Cloudflare Realtime products including RealtimeKit, SFU, and TURN.
+description: Build live applications with RealtimeKit, programmable WebRTC media and data with Realtime SFU, and relayed connections with TURN.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -26,7 +26,7 @@ Build live audio, video, and data applications with managed Realtime products.
 
 ### RealtimeKit
 
-[RealtimeKit](/realtime/realtimekit/) is a set of SDKs and APIs that lets you add customizable live video and voice to web or mobile applications. It is fully customisable and lets you set up in just a few lines of code.
+[RealtimeKit](/realtime/realtimekit/) is a set of SDKs and APIs that lets you add customizable live video and voice to web or mobile applications. Use its meeting and participant abstractions to build your application.
 
 It sits on top of the Realtime SFU, abstracting away the heavy lifting of media routing, peer management, and other complex WebRTC operations.
 
@@ -34,7 +34,7 @@ It sits on top of the Realtime SFU, abstracting away the heavy lifting of media 
 
 The [Realtime SFU (Selective Forwarding Unit)](/realtime/sfu/) routes WebRTC audio, video, and DataChannels between application endpoints.
 
-Use Realtime SFU when your application needs custom media routing, signaling, state, permissions, or user interfaces. Common topologies include custom calls, interactive broadcasts, AI media pipelines, cloud gaming, device control, and media processing.
+Use Realtime SFU when you want to own the WebRTC connections, signaling, and publication/subscription model. Common topologies include custom calls, interactive broadcasts, AI media pipelines, cloud gaming, device control, and media processing.
 
 Your application backend keeps the Realtime SFU credentials and decides which sessions can publish, subscribe, or control resources.
 
@@ -46,14 +46,44 @@ The [TURN service](/realtime/turn/) is a managed service that acts as a relay fo
 
 Use this comparison table to quickly find the right Realtime product for your needs:
 
-|                              | **RealtimeKit**                                                                | **Realtime SFU**                                                                                        | **TURN Service**                                                            |
-| ---------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Choose it when**           | You want meeting SDKs, participant management, and pre-built UI components.    | You want to compose WebRTC media and data into a custom application topology.                           | You need a relay for peer-to-peer or self-hosted WebRTC connections.        |
-| **Provides**                 | Meetings, participants, presets, stage management, and UI components.          | Sessions, media tracks, DataChannels, and programmable publish and subscribe operations.                | TURN allocations and relayed UDP, TCP, or TLS transport.                    |
-| **Your application manages** | Product integration, branding, and application-specific behavior.              | Authentication, authorization, signaling, presence, state, and track discovery.                         | Peer connections, signaling, media routing, and application state.          |
-| **Example outcomes**         | Meetings, classrooms, webinars, and social video.                              | Custom calls, interactive broadcasts, AI pipelines, cloud gaming, device control, and media processing. | Connectivity through restrictive firewalls and network address translation. |
-| **Pricing**                  | Pricing by minute [view details](https://workers.cloudflare.com/pricing#media) | $0.05/GB egress                                                                                         | Free when used with Realtime SFU, otherwise $0.05/GB egress                 |
-| **Free tier**                | None                                                                           | First 1,000 GB free each month                                                                          | First 1,000 GB free each month                                              |
+|                              | **RealtimeKit**                                                             | **Realtime SFU**                                                                                        | **TURN Service**                                                            |
+| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Choose it when**           | You want meeting SDKs, participant management, and pre-built UI components. | You want to compose WebRTC media and data into a custom application topology.                           | You need a relay for peer-to-peer or self-hosted WebRTC connections.        |
+| **Provides**                 | Meetings, participants, presets, stage management, and UI components.       | Sessions, media tracks, DataChannels, and programmable publish and subscribe operations.                | TURN allocations and relayed UDP, TCP, or TLS transport.                    |
+| **Your application manages** | Product integration, branding, and application-specific behavior.           | Authentication, authorization, signaling, presence, state, and track discovery.                         | Peer connections, signaling, media routing, and application state.          |
+| **Example outcomes**         | Meetings, classrooms, webinars, and social video.                           | Custom calls, interactive broadcasts, AI pipelines, cloud gaming, device control, and media processing. | Connectivity through restrictive firewalls and network address translation. |
+| **Pricing**                  | [RealtimeKit pricing](/realtime/realtimekit/pricing/)                       | [SFU pricing](/realtime/sfu/platform/pricing/)                                                          | [TURN pricing](/realtime/turn/faq/)                                         |
+
+## Build with Realtime SFU
+
+Explore three applications built from SFU media tracks and DataChannels:
+
+<CardGrid class="xl:grid-cols-3">
+	<LinkTitleCard
+		title="Embedded devices"
+		href="/realtime/sfu/examples/embedded-devices/"
+		icon="ph:cpu"
+	>
+		Connect an ESP32 to browser listeners and an authorized device controller.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="Cloud gaming"
+		href="/realtime/sfu/examples/cloud-gaming/"
+		icon="ph:game-controller"
+	>
+		Stream a Container's audio and video, then return browser input through
+		DataChannels.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="AI audio pipelines"
+		href="/realtime/sfu/examples/ai-audio/"
+		icon="ph:waveform"
+	>
+		Transcribe microphone audio and broadcast generated speech with Workers AI.
+	</LinkTitleCard>
+</CardGrid>
+
+For your first media connection, [run the SFU video-room quickstart](/realtime/sfu/get-started/).
 
 ## Related products
 

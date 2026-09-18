@@ -1,0 +1,90 @@
+---
+title: Connection API
+description: Use the Realtime SFU HTTPS API from your backend to manage sessions, tracks, DataChannels, and WebSocket media adapters.
+pcx_content_type: reference
+sidebar:
+  order: 5
+products:
+  - realtime
+---
+
+Use the Connection API to manage a Realtime SFU application's media resources. Your backend sends authenticated HTTPS requests, while endpoints exchange media and DataChannels with the SFU over WebRTC.
+
+Base URL:
+
+```txt
+https://rtc.live.cloudflare.com/v1
+```
+
+Send `Authorization: Bearer <APP_SECRET>` and `Content-Type: application/json`. Keep the App Secret on trusted backend infrastructure. Endpoint authentication and resource authorization belong to your application.
+
+[Download the full OpenAPI schema](/realtime/static/realtime-api-2024-05-21.yaml) for request and response fields.
+
+To implement a connection, follow the [browser and backend recipes](/realtime/sfu/get-started/connection-patterns/) for publication, reception, messages, or media with controls. Use this reference to look up operations and fields.
+
+## Create an application
+
+Create an SFU app in the dashboard or through the [Cloudflare account API](/api/resources/calls/subresources/sfu/methods/create/). App creation uses your Cloudflare account authorization. The Connection API uses the resulting SFU App ID and App Secret.
+
+The [quickstart](/realtime/sfu/get-started/) shows this setup with a Worker backend.
+
+## Session and track operations
+
+The paths in this table are relative to the base URL:
+
+| Operation                      | Method and path                                        |
+| ------------------------------ | ------------------------------------------------------ |
+| Create a session               | `POST /apps/{appId}/sessions/new`                      |
+| Publish or subscribe to tracks | `POST /apps/{appId}/sessions/{sessionId}/tracks/new`   |
+| Update tracks                  | `PUT /apps/{appId}/sessions/{sessionId}/tracks/update` |
+| Submit a renegotiation answer  | `PUT /apps/{appId}/sessions/{sessionId}/renegotiate`   |
+| Close tracks                   | `PUT /apps/{appId}/sessions/{sessionId}/tracks/close`  |
+| Read session information       | `GET /apps/{appId}/sessions/{sessionId}`               |
+
+Refer to [sessions and tracks](/realtime/sfu/concepts/sessions-tracks/) for publication and identifier ownership.
+
+## DataChannel operations
+
+These operations act on the same session and negotiation state as its media tracks:
+
+| Operation                        | Method and path                                                  |
+| -------------------------------- | ---------------------------------------------------------------- |
+| Establish transport              | `POST /apps/{appId}/sessions/{sessionId}/datachannels/establish` |
+| Publish or subscribe to channels | `POST /apps/{appId}/sessions/{sessionId}/datachannels/new`       |
+| Update subscription flags        | `PUT /apps/{appId}/sessions/{sessionId}/datachannels/update`     |
+| Close channels                   | `PUT /apps/{appId}/sessions/{sessionId}/datachannels/close`      |
+
+Refer to [DataChannels](/realtime/sfu/features/datachannels/) for negotiated IDs, reliability, readiness, and reply access.
+
+## WebSocket adapter operations
+
+Create adapters to ingest external audio or stream existing audio/video publications to WebSocket endpoints:
+
+| Operation       | Method and path                               |
+| --------------- | --------------------------------------------- |
+| Create adapters | `POST /apps/{appId}/adapters/websocket/new`   |
+| Close adapters  | `POST /apps/{appId}/adapters/websocket/close` |
+
+The [WebSocket adapter reference](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) covers formats, request limits, partial success, reconnect, and close behavior.
+
+## Batch resource operations
+
+Track and DataChannel create, update, and close operations accept multiple entries in their `tracks` or `dataChannels` array. For example, publish camera and microphone tracks together, or request several publications in one receiving-session call. Each batch targets the session in the request URL.
+
+For `tracks/new` and `datachannels/new`, keep every entry `local` or every entry `remote`. A remote batch can reference different publishing sessions. Follow the [operation's limits](/realtime/sfu/platform/limits/#api-and-resource-limits) when choosing its size. WebSocket adapter creation and closure accept one to four entries per request.
+
+Check every result because a batch can partially succeed. Preserve successful allocations and complete any required SDP exchange before the next mutation on that session. Other sessions can proceed independently.
+
+## Handle responses and negotiation
+
+Check the HTTP status, top-level errors, and every per-track or per-channel result. Public errors use `errorCode` and `errorDescription`. Preserve successful allocations from partially successful requests. Look up the code and its next action in [Error codes](/realtime/sfu/observability/error-codes/).
+
+Complete any required SDP exchange before starting the next mutation on that session. [Connection patterns](/realtime/sfu/get-started/connection-patterns/) gives the request sequences, including how to answer an SFU offer. [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains concurrent handlers, uncertain request outcomes, and retries.
+
+## Network connectivity
+
+Configure endpoint ICE, STUN, and TURN as part of [connection preparation](/realtime/sfu/get-started/connection-patterns/#network-connectivity). That section also covers connection waits and candidate gathering.
+
+## Learn with an example
+
+[Run the video room](/realtime/sfu/get-started/) to follow backend session and track operations. The [DataChannel example](https://github.com/cloudflare/realtime-examples/tree/main/echo-datachannels#api-and-lifecycle) shows the same API boundary in a small local Node.js server.

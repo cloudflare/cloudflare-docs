@@ -1,0 +1,87 @@
+---
+title: Error codes
+description: Look up public Realtime SFU API errors and find the next action for request, session, media, DataChannel, or adapter failures.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - realtime
+---
+
+Use this reference when the [Connection API](/realtime/sfu/api/) returns an `errorCode`. Read its `errorDescription` for the specific failure. The operation, response placement, and connection state help determine the next action.
+
+For a symptom without an API error, such as connected video that does not play, start with [troubleshooting](/realtime/sfu/observability/#check-the-failing-layer).
+
+## Read the response
+
+A top-level error applies to the request. Batch operations can also return errors inside individual `tracks` or `dataChannels` results. Check every item and retain successful allocations, even when another item fails.
+
+Track and DataChannel batch operations can return HTTP `200` with failed items. WebSocket adapter creation and closure return HTTP `200` when at least one item succeeds, or `503` when all attempted items fail. Earlier request validation or authentication can return a top-level error instead.
+
+An item exposes `errorCode` and `errorDescription`, without a separate HTTP status. An adapter's outer `503` can therefore contain a configuration error that needs correction before another attempt.
+
+The following tables cover common public codes. Use the [API schema](/realtime/static/realtime-api-2024-05-21.yaml) for each operation's response structure.
+
+## Request errors
+
+| Code                | Meaning and next action                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `unauthorized`      | The SFU App Secret was not accepted. Check the backend's bearer header and that its secret belongs to the selected app. Correct authorization before retrying.                                                                 |
+| `not_found`         | The SFU app was not found. Check the App ID. For a newly created app, follow the response's propagation guidance before retrying. This code concerns the app, rather than a missing publication.                               |
+| `decoding_error`    | The request could not be decoded or validated. Check JSON and field types. For `datachannels/establish`, this code can also describe a transport setup failure; check its setup state using the guidance following this table. |
+| `invalid_params`    | A field, value, combination, or request limit is invalid. Check the operation's schema and description. Correct the request before retrying.                                                                                   |
+| `payload_too_large` | A `tracks/new` or `/renegotiate` request exceeds the body-size limit. Reduce the request size while preserving complete generated SDP and per-session ordering.                                                                |
+
+### DataChannel transport setup errors
+
+A valid JSON request to `datachannels/establish` can still receive `decoding_error` when transport setup fails. Check that the request targets the intended session and that DataChannel transport has not already been negotiated. Finish any pending offer/answer exchange before another mutation. Do not repeat establish as a connection-state check.
+
+Use the [complete message recipe](/realtime/sfu/get-started/connection-patterns/#send-messages-between-two-endpoints) for a new connection, or [add DataChannels to an existing media connection](/realtime/sfu/get-started/connection-patterns/#add-datachannels-to-a-media-connection).
+
+## Session and negotiation errors
+
+| Code                          | Meaning and next action                                                                                                                                                                                                                                                                                                             |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `session_error`               | The session is not ready, is disconnected, or has closed. With top-level HTTP `425`, finish setup and wait for connection before later operations. With `410`, check the session ID and endpoint state; replace a closed connection and rebuild its publications and subscriptions. Retrying the old session does not reconnect it. |
+| `invalid_session_description` | SDP cannot be accepted, or the offer/answer order is wrong. Check the generated SDP, transceivers, `mid` values, codec support, and which session expects the answer. Complete the outstanding exchange and serialize later mutations. Do not replay an answer after its exchange has finished.                                     |
+
+HTTP `406` alone does not establish that requests overlapped. Inspect the public error and endpoint state. [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains the full exchange boundary and concurrent handlers.
+
+## Track and DataChannel errors
+
+These codes usually appear in individual resource results. Some operations can instead fail the whole request.
+
+| Code                         | Meaning and next action                                                                                                                                                                                                                                               |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `not_found_track_error`      | The requested media publication or DataChannel cannot be found. Check its publisher session ID and name against application discovery, and confirm that the publisher is connected. For media, check that it is sending packets. Retry after the source is available. |
+| `empty_track_error`          | A media subscription did not receive source media in time. Check the publisher's connection and outgoing packets, then retry the failed subscription after media is available.                                                                                        |
+| `repeated_local_track_error` | A DataChannel allocation already exists. This code can apply to a publication or a subscription. Reconcile retained allocations; if replacement is intended, close the correct allocation before creating it again.                                                   |
+| `update_track_error`         | The track is not configured for the requested simulcast update. Check the publication and use [simulcast updates](/realtime/sfu/features/simulcast/#change-the-received-layer) on an applicable receiving track.                                                      |
+| `close_track_error`          | The track or DataChannel does not exist or is already closed. For cleanup of a resource your application owns, an explicit result reporting absence satisfies that resource's cleanup. Process other items independently.                                             |
+
+For simulcast updates, use the receiving session's `mid`. For media closure, use the `mid` from the session on which you are closing the track. DataChannel closure uses that endpoint's allocated channel ID. Refer to [identifier ownership](/realtime/sfu/concepts/sessions-tracks/#media-tracks) and [cleanup state](/realtime/sfu/best-practices/#retain-cleanup-state).
+
+## Adapter errors
+
+These codes appear in the adapter operation's `tracks` results. The outer HTTP status reflects the batch outcome.
+
+| Code                              | Meaning and next action                                                                                                                                                                                         |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `websocket_localhost_not_allowed` | The endpoint names localhost. Supply a publicly reachable WebSocket endpoint. Retrying the same address cannot make it reachable from the SFU.                                                                  |
+| `websocket_handshake_failed`      | The endpoint did not complete the WebSocket upgrade. Check its WebSocket route, upgrade response, and authentication behavior before retrying the failed item.                                                  |
+| `websocket_connection_timeout`    | The WebSocket handshake timed out. Check endpoint availability, routing, and handshake processing. Supply the final endpoint URL because the adapter does not follow redirects.                                 |
+| `adapter_not_found`               | The adapter is absent or already closed. This explicit item result can satisfy cleanup for an adapter your application owns. Keep other failures pending; an outer HTTP `503` alone does not establish absence. |
+
+For endpoint configuration, packet formats, and recovery, follow the [WebSocket adapter reference](/realtime/sfu/features/media-transport-adapters/websocket-adapter/).
+
+## Service errors and retries
+
+| Code                            | Meaning and next action                                                                                                                                                                                                       |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `retryable_transient_error`     | The API explicitly identifies a retryable failure. Retry the failed operation with bounded backoff through the session's ordering mechanism. Preserve successful results from other operations.                               |
+| `temporarily_unavailable_error` | The service is temporarily unavailable. Wait before another attempt. Retain successful allocations and reconcile an uncertain mutation outcome before repeating resource creation.                                            |
+| `transport_unavailable_error`   | Media transport setup could not complete. A later attempt may succeed. Bound retries and check whether the session is still usable before continuing.                                                                         |
+| `backend_error`                 | The service could not obtain or supply a required result. Retain resource state and sanitized diagnostic context. Inspect unresolved operations before starting another mutation.                                             |
+| `internal_error`                | The API could not classify the failure more specifically. Check operation inputs and current session/resource state. Preserve diagnostics and unresolved cleanup; this code does not prescribe automatic resource recreation. |
+
+Retry failed items individually instead of repeating a partially successful creation batch. A timeout with no response leaves the result uncertain. Follow [retry and reconnect guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect), and retain [diagnostic context](/realtime/sfu/observability/#record-useful-context) for persistent failures.
