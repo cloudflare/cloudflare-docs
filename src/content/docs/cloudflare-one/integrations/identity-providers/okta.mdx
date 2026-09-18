@@ -185,6 +185,14 @@ To verify the integration, select **View Logs** in the Okta SCIM application.
 
 If you see the error `Failed to fetch user/group information from the identity`, double-check your Okta configuration:
 
-- If your Okta tenant has more than 100 groups, include an Okta API token in the identity provider configuration. This setting is specific to Okta and is not part of SCIM. The token lets Cloudflare retrieve Okta group names for the policy builder. Access does not use the API token to evaluate a user's group membership during authentication.
+- If your Okta tenant has more than 100 groups, include an Okta API token in the identity provider configuration. When the user's OIDC token contains no groups or reaches Okta's 100-group limit, Cloudflare uses the API token during authentication to fetch the user's complete group membership. This setting is specific to Okta and is not part of SCIM. The API token does not populate group options in the Access policy builder; those come from groups provisioned through SCIM.
 - If Okta returns more than 100 groups in a user's OIDC token, Okta may omit some group memberships from the token. This is an Okta token claim limitation, not a Cloudflare limit. If a required group is omitted, Cloudflare cannot evaluate policies that depend on that group. To avoid this, narrow the Okta groups claim filter so that only groups used in Cloudflare policies are included. For more information, refer to [Okta's group functions and dynamic allowlists documentation](https://support.okta.com/help/s/article/limitations-of-group-functions-dynamic-allowlists?language=en_US).
 - The request may be blocked by the [ThreatInsights feature](https://help.okta.com/en/prod/Content/Topics/Security/threat-insight/ti-index.htm) within Okta.
+
+### Okta Groups selector is empty or missing groups in the policy builder
+
+The **Okta Groups** selector in the Access policy builder is populated by groups provisioned through SCIM, not by the optional Okta API token. If groups are missing from the selector:
+
+- In Okta, go to the SCIM application's **Push Groups** tab and push the groups you want to use in Access policies. For more information, refer to [Configure SCIM in Okta](#2-configure-scim-in-okta).
+- Make sure the groups you push through SCIM match the groups returned in the OIDC `groups` claim.
+- Adding an Okta API token will not add groups to the selector. The API token is only used during authentication to fetch a user's group membership.
