@@ -164,6 +164,10 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 - `cloudflare.scheduled_time`
 
+#### [Durable Object shutdown hook](/durable-objects/api/base/#shutdown)
+
+A shutdown invocation produces a tracing span, like a constructor invocation. Its `cloudflare.handler_type` value is `shutdown`.
+
 ---
 
 ### [RPC](/workers/runtime-apis/rpc/)
