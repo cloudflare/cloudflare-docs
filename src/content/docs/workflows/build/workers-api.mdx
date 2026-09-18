@@ -351,9 +351,8 @@ By default, the state of a finished Workflow instance is retained for the maximu
 
 - `success_retention` applies to instances that complete successfully and to instances that are terminated, and `error_retention` applies to instances that end in an errored state.
 - Both fields are optional and accept either a duration string, such as `"3 days"`, or a whole number of milliseconds.
-- Values larger than your account's retention limit are capped at that limit.
 
-An instance that sets its own [`retention`](/workflows/build/workers-api/#workflowinstancecreateoptions) when it is created uses that value instead of the binding default.
+Instance-level retention settings take precedence over Workflow binding settings, which take precedence over the account default. The retention period cannot exceed your account's [retention limit](/workflows/reference/limits/).
 
 :::note
 
