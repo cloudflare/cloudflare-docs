@@ -15,8 +15,8 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Input tokens (per 1M)": 1.25,
-		"Output tokens (per 1M)": 6.25,
+		"Input tokens (per 1M)": 2.5,
+		"Output tokens (per 1M)": 7.5,
 		"Cached input tokens (per 1M)": 0.25
 	},
 	"examples": [
@@ -329,8 +329,8 @@
 		{
 			"id": "unbiased",
 			"pricing": {
-				"input_tokens": 1.25,
-				"output_tokens": 6.25,
+				"input_tokens": 2.5,
+				"output_tokens": 7.5,
 				"input_cached_tokens": 0.25
 			}
 		}
