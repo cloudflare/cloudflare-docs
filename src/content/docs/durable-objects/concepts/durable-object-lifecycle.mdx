@@ -47,10 +47,9 @@ Once all incoming requests or events have been processed, the Durable Object rem
 Hibernation can only occur if **all** of the conditions below are true:
 
 - No `setTimeout`/`setInterval` scheduled callbacks are set, since there would be no way to recreate the callback after hibernating.
-- No in-progress awaited `fetch()` exists, since it is considered to be waiting for I/O.
+- No I/O operation or connection remains pending or active.
 - No WebSocket standard API is used.
 - No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
-- No active outbound TCP socket (`connect()`) or outbound WebSocket connection exists.
 
 After 10 seconds of no incoming request or event, and all the above conditions satisfied, the Durable Object will transition into the **hibernated** state.
 
@@ -64,14 +63,12 @@ In case of an incoming request or event while in the **hibernated** state, the `
 
 While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
-:::note[Outbound connections keep Durable Objects alive]
-Active outbound connections created via [`connect()`](/workers/runtime-apis/tcp-sockets/) (TCP) or an outbound WebSocket prevent the Durable Object from being evicted. Eviction is deferred until both conditions are met: all outbound connections have closed, **and** the standard 70-140 second inactivity window has elapsed with no incoming requests or events.
+:::note[Pending operations prevent eviction]
+Pending or active I/O prevents a Durable Object from hibernating or being evicted. Examples include service binding requests, Durable Object remote procedure call (RPC) calls, outbound requests, [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor), TCP sockets, and outbound WebSockets.
 
-While kept alive by an outbound connection, the Durable Object remains in memory in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+An I/O operation prevents eviction until it completes or has run for 15 minutes, whichever comes first. Later operations can extend the Durable Object's total time in memory, but their limits do not automatically stack. There is no overall invocation wall-time limit.
 
-Each outbound connection keeps the Durable Object alive for a maximum of 15 minutes. After 15 minutes, the connection stops preventing eviction (the connection itself continues operating), and the [standard eviction rules](/durable-objects/concepts/durable-object-lifecycle/#durable-object-lifecycle-state-transitions) resume.
-
-This applies to outbound TCP sockets and outbound WebSockets (including a `fetch()` request upgraded to a WebSocket via `Upgrade: websocket`). It does not apply to plain `fetch()` subrequests. Those never keep the Durable Object alive, even while the response body is still streaming.
+While an operation prevents eviction, the Durable Object remains in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
 :::
 
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.
@@ -93,7 +90,7 @@ Durable Objects will occasionally shut down and objects are restarted, which wil
 
 When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
 
-- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
+- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage. If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
 - **WebSocket connections**: WebSocket requests are terminated automatically during shutdown. This is so that the new instance can take over the connection as soon as possible.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
