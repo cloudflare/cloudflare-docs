@@ -1,0 +1,50 @@
+---
+title: Configure Container image and instance size at runtime
+description: The durable_object scheduling policy gives each Durable Object control of Container configuration.
+products:
+  - containers
+date: 2026-09-28
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+[Containers](/containers/) now support the `durable_object` scheduling policy in public beta. This policy lets a Durable Object select the image and instance size for a Container at runtime instead of using one centrally managed configuration for the application.
+
+Configure the policy and one or more named images in Wrangler:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Wrangler prepares each image and exposes its immutable reference through `ctx.container.images`. Supply that reference and an instance size when you start the Container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+this.ctx.container.start({
+	image: this.ctx.container.images.base,
+	instance: "standard-2",
+});
+```
+
+</TypeScriptExample>
+
+Durable Object-managed Container instances have independent lifecycles and do not participate in application-wide image rollouts. The existing `default` policy and its rollout behavior are unchanged.
+
+For configuration, runtime sizing, snapshots, and update behavior, refer to [Scheduling Policies](/containers/configuration/scheduling-policy/).

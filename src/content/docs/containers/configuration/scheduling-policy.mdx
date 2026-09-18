@@ -1,0 +1,171 @@
+---
+pcx_content_type: concept
+title: Scheduling Policies
+description: Choose whether Container configuration is managed centrally or by each Durable Object at runtime.
+sidebar:
+  order: 1
+products:
+  - containers
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+A scheduling policy determines where you configure a Container image and instance size. It also determines how image updates apply. Choose the policy when you create the Container application.
+
+| Policy | Configure image and instance size | Image updates | Best for |
+| - | - | - | - |
+| `default` | In Wrangler configuration | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size |
+| `durable_object` | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance | Sandboxes, agent environments, and other workloads that need per-instance configuration |
+
+The scheduling policy is immutable. To use a different policy, create a new Container application. Deleting and recreating an application also replaces its Container instances.
+
+:::note
+The `durable_object` scheduling policy is in public beta.
+:::
+
+## Use the default scheduling policy
+
+The `default` policy preserves the existing Containers behavior. Define one `image`, one `instance_type`, and application-level settings such as `max_instances` in Wrangler configuration. Omitting `scheduling_policy` selects `default`.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "ApiContainer",
+			"scheduling_policy": "default",
+			"image": "./api/Dockerfile",
+			"instance_type": "standard-1",
+			"max_instances": 5,
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+When you change the image or instance type and deploy, Cloudflare rolls out that change across the application. Refer to [Rollouts](/containers/configuration/rollouts/).
+
+## Use the Durable Object scheduling policy
+
+The `durable_object` policy moves per-instance decisions into your Durable Object. Wrangler associates the Container application with the Durable Object class, and your code supplies a startup image or snapshot and an optional instance size to `ctx.container.start()`.
+
+Configure the policy and the images that the Durable Object can start:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "agent-computer",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+				},
+			},
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "AGENT_COMPUTER",
+				"class_name": "AgentComputer",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["AgentComputer"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Wrangler builds or resolves each named image, prepares it for the Containers runtime, and exposes its digest-pinned reference on `ctx.container.images`. Select an image and instance size when the Durable Object starts its Container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class AgentComputer extends DurableObject {
+	startContainer() {
+		if (this.ctx.container.running) {
+			return;
+		}
+
+		this.ctx.container.start({
+			image: this.ctx.container.images.base,
+			instance: "standard-2",
+			enableInternet: true,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+`ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/durable-objects/api/container/#exec).
+
+### Configure named images
+
+Each key in `images` is a name you choose. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. Wrangler builds and uploads the image. You can also set `build_context` and `build_vars` for that image.
+
+Use `image` for a digest-pinned image in the Cloudflare managed registry. Use the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`.
+
+A configuration can contain up to 100 named images. An image name must contain between 1 and 128 characters.
+
+The image map is uploaded with the Worker version. Updating the map does not restart or replace running Container instances. Your application selects an image from the map when it starts an instance.
+
+### Choose an instance size at runtime
+
+Set `instance` in `ctx.container.start()` to one of the following named instance types:
+
+- `lite`
+- `standard-1`
+- `standard-2`
+- `standard-3`
+- `standard-4`
+
+If you omit `instance`, the Container uses `lite`. You can also supply a custom instance object:
+
+```ts
+this.ctx.container.start({
+	image: this.ctx.container.images.base,
+	instance: {
+		vcpu: 1,
+		memoryMib: 4096,
+		diskMb: 8000,
+	},
+});
+```
+
+The runtime uses camel case (`memoryMib` and `diskMb`). Wrangler's application-level `instance_type` object uses snake case (`memory_mib` and `disk_mb`) and only applies to the `default` policy. Refer to [Limits and Instance Types](/containers/platform/limits/).
+
+### Start from an image or snapshot
+
+For a new filesystem, pass `image` to `ctx.container.start()`. To restore a full filesystem snapshot, pass `containerSnapshot` instead. `image` and `containerSnapshot` are mutually exclusive because a snapshot already identifies the filesystem to restore.
+
+Refer to [Snapshots](/containers/guides/snapshots/) for the complete save and restore flow.
+
+### Manage updates from application code
+
+Container instances that use the `durable_object` policy do not participate in application-wide image rollouts. A running instance continues to use its startup image. Your application decides when to stop that instance and start it with another configured image.
+
+One Wrangler configuration can contain applications with both policies. This lets a Worker use centrally managed service Containers alongside Durable Object-managed sandboxes.
+
+## Related resources
+
+- [Durable Object Container API](/durable-objects/api/container/)
+- [Lifecycle of a Container](/containers/concepts/architecture/)
+- [Image Management](/containers/guides/image-management/)
+- [Wrangler Containers configuration](/workers/wrangler/configuration/#containers)
