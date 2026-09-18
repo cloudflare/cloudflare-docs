@@ -22,9 +22,9 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 ## Prerequisites
 
 - Private IPs and hostnames are reachable over the Cloudflare One Client, Cloudflare WAN (formerly Magic WAN) or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
-- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-controls/resolver-policies/).
 - Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [Cloudflare Mesh](/mesh/), or [Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-routes/).
-- (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
+- (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
 
 ## Add your application to Access
 
@@ -83,7 +83,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 		:::
 
 	- <Render file="access/access-block-page" product="cloudflare-one" />
-	- The following settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/):
+	- The following settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/):
 		<Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
 
 
@@ -97,12 +97,12 @@ The authentication experience depends on the application's protocol.
 
 ### HTTPS applications
 
-If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+If [Gateway TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 
-If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the Cloudflare One Client](#other-non-http-applications) instead of in the browser.
+If [Gateway TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) is turned off, session management is [handled in the Cloudflare One Client](#other-non-http-applications) instead of in the browser.
 
 :::note
-If your origin uses a self-signed or otherwise untrusted certificate, create a Gateway HTTP Allow policy for the origin with the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) set to _Pass through_. Otherwise, Gateway will block the connection before it reaches Access.
+If your origin uses a self-signed or otherwise untrusted certificate, create a Gateway HTTP Allow policy for the origin with the [untrusted certificate action](/cloudflare-one/traffic-controls/http-policies/#untrusted-certificates) set to _Pass through_. Otherwise, Gateway will block the connection before it reaches Access.
 :::
 
 ### Plaintext HTTP applications
@@ -121,11 +121,11 @@ While authentication is pending, the Cloudflare icon in the macOS menu bar or Wi
 
 ### Access vs Gateway policies
 
-By default, Cloudflare will evaluate Access application policies after evaluating all [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). To evaluate Access applications before or after specific Gateway policies:
+By default, Cloudflare will evaluate Access application policies after evaluating all [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/). To evaluate Access applications before or after specific Gateway policies:
 
 <ol>
 <li>
-In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. In **Network**, [create a Network policy](/cloudflare-one/traffic-policies/network-policies/) with the following configuration:
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. In **Network**, [create a Network policy](/cloudflare-one/traffic-controls/network-policies/) with the following configuration:
 
     | Selector                                    | Operator | Value     | Action |
     | ------------------------------------------- | -------- | --------- | ------ |
@@ -135,7 +135,7 @@ In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust*
 
 <li>
 	Update the policy's [order of
-	precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence)
+	precedence](/cloudflare-one/traffic-controls/order-of-enforcement/#order-of-precedence)
 	using the dashboard or API.
 </li>
 

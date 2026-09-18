@@ -34,4 +34,4 @@ On Windows devices, Clientless Web Isolation may load with a blank screen if the
 To fix this, either disable **Anonymize local IPs exposed by WebRTC** in your browser flags or ensure `IGMPLevel` is enabled (set to `2`) in your Windows network settings.
 
 ### Rendering issues (CSS/Images)
-If a website displays incorrectly (for example, broken CSS or missing images), it may indicate that the remote browser is unable to fetch specific resources from the origin server. Check your [Gateway HTTP logs](/cloudflare-one/traffic-policies/troubleshooting/) for any blocked subresources that might be required by the page.
+If a website displays incorrectly (for example, broken CSS or missing images), it may indicate that the remote browser is unable to fetch specific resources from the origin server. Check your [Gateway HTTP logs](/cloudflare-one/traffic-controls/troubleshooting/) for any blocked subresources that might be required by the page.
