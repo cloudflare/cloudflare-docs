@@ -127,9 +127,9 @@ By default, Cloudflare will evaluate Access application policies after evaluatin
 <li>
 In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic policies** > **Firewall policies**. In **Network**, [create a Network policy](/cloudflare-one/traffic-policies/network-policies/) with the following configuration:
 
-    | Selector                     | Operator | Value     | Action |
-    | ---------------------------- | -------- | --------- | ------ |
-    | Access Private App           | is       | _Present_ | Allow  |
+    | Selector                                    | Operator | Value     | Action |
+    | ------------------------------------------- | -------- | --------- | ------ |
+    | Self-hosted Access App with Private Address | is       | _Present_ | Allow  |
 
 </li>
 
