@@ -1,8 +1,8 @@
 {
-	"model_id": "stealth/union-alpha",
-	"provider_id": "stealth",
-	"name": "Union Alpha",
-	"description": "Union Alpha is a blended AI model that engages multiple language models in parallel for each request, synthesizes one answer, and supports text and vision inputs through a single API response.",
+	"model_id": "unbiased/pareto",
+	"provider_id": "unbiased",
+	"name": "Pareto",
+	"description": "Pareto is Unbiased's blended AI model. It engages multiple language models in parallel for each request, synthesizes one answer, and supports text and vision inputs through a single API response.",
 	"task": "Text Generation",
 	"tags": [
 		"LLM",
@@ -15,14 +15,14 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Input tokens (per 1M)": 0,
-		"Output tokens (per 1M)": 0,
-		"Cached input tokens (per 1M)": 0
+		"Input tokens (per 1M)": 2.5,
+		"Output tokens (per 1M)": 7.5,
+		"Cached input tokens (per 1M)": 0.25
 	},
 	"examples": [
 		{
 			"name": "Simple Question",
-			"description": "Ask Union Alpha for a concise answer.",
+			"description": "Ask Pareto for a concise answer.",
 			"input": {
 				"messages": [
 					{
@@ -36,7 +36,7 @@
 				"text": "Paris"
 			},
 			"raw_response": {
-				"id": "chatcmpl-mu3b7o02sf9tov9z",
+				"id": "chatcmpl-mu5ww8tss0mj6ofw",
 				"object": "chat.completion",
 				"model": "union-alpha",
 				"choices": [
@@ -50,13 +50,13 @@
 					}
 				],
 				"usage": {
-					"prompt_tokens": 29,
+					"prompt_tokens": 11,
 					"completion_tokens": 5,
-					"total_tokens": 34,
+					"total_tokens": 16,
 					"prompt_tokens_details": {
-						"cached_tokens": 28
+						"cached_tokens": 0
 					},
-					"cost": 0
+					"cost": 0.000045
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -66,12 +66,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [{ content: 'What is the capital of France? Answer in one word.', role: 'user' }],\n    max_tokens: 16,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'unbiased/pareto',\n  {\n    messages: [{ content: 'What is the capital of France? Answer in one word.', role: 'user' }],\n    max_tokens: 16,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France? Answer in one word.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 16\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"unbiased/pareto\",\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France? Answer in one word.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 16\n}'"
 				}
 			]
 		},
@@ -92,10 +92,10 @@
 				"max_tokens": 64
 			},
 			"output": {
-				"text": "An API (Application Programming Interface) is a set of rules that lets different software programs communicate with each other. For example, a weather app can use an API to request the latest forecast from a weather service."
+				"text": "An API (Application Programming Interface) is a set of rules that lets one software program request information or actions from another. For example, a weather app uses an API to get forecasts from a weather service."
 			},
 			"raw_response": {
-				"id": "chatcmpl-mu3b7pxpj3kdi2v5",
+				"id": "chatcmpl-mu5wwcpm6hxi7lsb",
 				"object": "chat.completion",
 				"model": "union-alpha",
 				"choices": [
@@ -103,19 +103,19 @@
 						"index": 0,
 						"message": {
 							"role": "assistant",
-							"content": "An API (Application Programming Interface) is a set of rules that lets different software programs communicate with each other. For example, a weather app can use an API to request the latest forecast from a weather service."
+							"content": "An API (Application Programming Interface) is a set of rules that lets one software program request information or actions from another. For example, a weather app uses an API to get forecasts from a weather service."
 						},
 						"finish_reason": "stop"
 					}
 				],
 				"usage": {
 					"prompt_tokens": 19,
-					"completion_tokens": 46,
-					"total_tokens": 65,
+					"completion_tokens": 45,
+					"total_tokens": 64,
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0
+					"cost": 0.000305
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -125,12 +125,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'You explain technical topics in plain language.', role: 'system' },\n      { content: 'What is an API? Explain it in two sentences.', role: 'user' },\n    ],\n    max_tokens: 64,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'unbiased/pareto',\n  {\n    messages: [\n      { content: 'You explain technical topics in plain language.', role: 'system' },\n      { content: 'What is an API? Explain it in two sentences.', role: 'user' },\n    ],\n    max_tokens: 64,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"You explain technical topics in plain language.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"What is an API? Explain it in two sentences.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 64\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"unbiased/pareto\",\n  \"messages\": [\n    {\n      \"content\": \"You explain technical topics in plain language.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"What is an API? Explain it in two sentences.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 64\n}'"
 				}
 			]
 		},
@@ -147,10 +147,10 @@
 				"max_tokens": 128
 			},
 			"output": {
-				"text": "```javascript\nfunction reverseString(str) {\n  return [...str].reverse().join(\"\");\n}\n\n// Example call:\nconsole.log(reverseString(\"hello\")); // \"olleh\"\n```"
+				"text": "```javascript\nfunction reverseString(str) {\n  return Array.from(str).reverse().join(\"\");\n}\n\nconsole.log(reverseString(\"Hello\")); // \"olleH\"\n```"
 			},
 			"raw_response": {
-				"id": "chatcmpl-mu3b7t0objtvuaa4",
+				"id": "chatcmpl-mu5wwj1mqcjfe7xb",
 				"object": "chat.completion",
 				"model": "union-alpha",
 				"choices": [
@@ -158,19 +158,19 @@
 						"index": 0,
 						"message": {
 							"role": "assistant",
-							"content": "```javascript\nfunction reverseString(str) {\n  return [...str].reverse().join(\"\");\n}\n\n// Example call:\nconsole.log(reverseString(\"hello\")); // \"olleh\"\n```"
+							"content": "```javascript\nfunction reverseString(str) {\n  return Array.from(str).reverse().join(\"\");\n}\n\nconsole.log(reverseString(\"Hello\")); // \"olleH\"\n```"
 						},
 						"finish_reason": "stop"
 					}
 				],
 				"usage": {
 					"prompt_tokens": 14,
-					"completion_tokens": 39,
-					"total_tokens": 53,
+					"completion_tokens": 37,
+					"total_tokens": 51,
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0
+					"cost": 0.00024875
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -180,12 +180,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      {\n        content: 'Write a JavaScript function that reverses a string. Include one example call.',\n        role: 'user',\n      },\n    ],\n    max_tokens: 128,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'unbiased/pareto',\n  {\n    messages: [\n      {\n        content: 'Write a JavaScript function that reverses a string. Include one example call.',\n        role: 'user',\n      },\n    ],\n    max_tokens: 128,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"Write a JavaScript function that reverses a string. Include one example call.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 128\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"unbiased/pareto\",\n  \"messages\": [\n    {\n      \"content\": \"Write a JavaScript function that reverses a string. Include one example call.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 128\n}'"
 				}
 			]
 		},
@@ -210,10 +210,10 @@
 				"max_tokens": 96
 			},
 			"output": {
-				"text": "Prioritize **location over amenities** for a short weekend\u2014you\u2019ll get more out of your trip if you spend less time in transit.\n\n- **Your main activity:** Stay near the beach for a relaxing getaway, or near the center for restaurants, sightseeing, and nightlife.\n- **Walkability and transport:** Look for caf\u00e9s and dinner options within walking distance, plus easy access to the airport or train station. If you\u2019re driving, check parking costs.\n- **Total"
+				"text": "For a weekend trip, **prioritize location over extra amenities**\u2014less time in transit means more time enjoying the city.\n\n- **Close to your main plans:** Stay near the beach for a beach-focused trip, or near restaurants and sights if you\u2019re more interested in exploring.\n- **Easy transportation:** Check airport or station connections, public transit, and parking costs if you\u2019re driving.\n- **Comfort and quiet:** Recent reviews can reveal street noise, cleanliness issues"
 			},
 			"raw_response": {
-				"id": "chatcmpl-mu3b7wo2jrkvi2t8",
+				"id": "chatcmpl-mu5wwqlruoazrxij",
 				"object": "chat.completion",
 				"model": "union-alpha",
 				"choices": [
@@ -221,7 +221,7 @@
 						"index": 0,
 						"message": {
 							"role": "assistant",
-							"content": "Prioritize **location over amenities** for a short weekend\u2014you\u2019ll get more out of your trip if you spend less time in transit.\n\n- **Your main activity:** Stay near the beach for a relaxing getaway, or near the center for restaurants, sightseeing, and nightlife.\n- **Walkability and transport:** Look for caf\u00e9s and dinner options within walking distance, plus easy access to the airport or train station. If you\u2019re driving, check parking costs.\n- **Total"
+							"content": "For a weekend trip, **prioritize location over extra amenities**\u2014less time in transit means more time enjoying the city.\n\n- **Close to your main plans:** Stay near the beach for a beach-focused trip, or near restaurants and sights if you\u2019re more interested in exploring.\n- **Easy transportation:** Check airport or station connections, public transit, and parking costs if you\u2019re driving.\n- **Comfort and quiet:** Recent reviews can reveal street noise, cleanliness issues"
 						},
 						"finish_reason": "length"
 					}
@@ -233,7 +233,7 @@
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0
+					"cost": 0.00065375
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -243,12 +243,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'I am planning a weekend trip to a coastal city.', role: 'user' },\n      {\n        content: 'Consider walkable neighborhoods, local food, and a nearby beach.',\n        role: 'assistant',\n      },\n      { content: 'What should I prioritize when choosing where to stay?', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'unbiased/pareto',\n  {\n    messages: [\n      { content: 'I am planning a weekend trip to a coastal city.', role: 'user' },\n      {\n        content: 'Consider walkable neighborhoods, local food, and a nearby beach.',\n        role: 'assistant',\n      },\n      { content: 'What should I prioritize when choosing where to stay?', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"I am planning a weekend trip to a coastal city.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Consider walkable neighborhoods, local food, and a nearby beach.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"What should I prioritize when choosing where to stay?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"unbiased/pareto\",\n  \"messages\": [\n    {\n      \"content\": \"I am planning a weekend trip to a coastal city.\",\n      \"role\": \"user\"\n    },\n    {\n      \"content\": \"Consider walkable neighborhoods, local food, and a nearby beach.\",\n      \"role\": \"assistant\"\n    },\n    {\n      \"content\": \"What should I prioritize when choosing where to stay?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
 				}
 			]
 		},
@@ -265,10 +265,10 @@
 				"max_tokens": 96
 			},
 			"output": {
-				"text": "The weary day sank softly out of sight,\nAnd left me searching shadows for a spark.\nThen one small star unfolded into light\u2014\nEnough to lead me gently through the dark."
+				"text": "The day lay heavy, stitched with shades of gray,\nUntil one star shone through the frayed dusk\u2019s seam.\nI set my burdens down beside the way,\nAnd let its little light rekindle dream."
 			},
 			"raw_response": {
-				"id": "chatcmpl-mu3b80ptkze4dltt",
+				"id": "chatcmpl-mu5wx6hq2jpgslxe",
 				"object": "chat.completion",
 				"model": "union-alpha",
 				"choices": [
@@ -276,19 +276,19 @@
 						"index": 0,
 						"message": {
 							"role": "assistant",
-							"content": "The weary day sank softly out of sight,\nAnd left me searching shadows for a spark.\nThen one small star unfolded into light\u2014\nEnough to lead me gently through the dark."
+							"content": "The day lay heavy, stitched with shades of gray,\nUntil one star shone through the frayed dusk\u2019s seam.\nI set my burdens down beside the way,\nAnd let its little light rekindle dream."
 						},
 						"finish_reason": "stop"
 					}
 				],
 				"usage": {
 					"prompt_tokens": 12,
-					"completion_tokens": 39,
-					"total_tokens": 51,
+					"completion_tokens": 46,
+					"total_tokens": 58,
 					"prompt_tokens_details": {
 						"cached_tokens": 0
 					},
-					"cost": 0
+					"cost": 0.0003025
 				},
 				"gatewayMetadata": {
 					"keySource": "Unified"
@@ -298,12 +298,12 @@
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'stealth/union-alpha',\n  {\n    messages: [\n      { content: 'Write a four-line poem about finding light after a difficult day.', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'unbiased/pareto',\n  {\n    messages: [\n      { content: 'Write a four-line poem about finding light after a difficult day.', role: 'user' },\n    ],\n    max_tokens: 96,\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"stealth/union-alpha\",\n  \"messages\": [\n    {\n      \"content\": \"Write a four-line poem about finding light after a difficult day.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"unbiased/pareto\",\n  \"messages\": [\n    {\n      \"content\": \"Write a four-line poem about finding light after a difficult day.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"max_tokens\": 96\n}'"
 				}
 			]
 		}
@@ -313,19 +313,30 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": null,
-	"terms": null,
-	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/stealth/union-alpha.png",
+	"external_info": "https://unbiased.ai/model-card/",
+	"terms": "https://unbiased.ai/terms/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/unbiased/pareto.png",
 	"metadata": {
 		"Architecture": "Blended model",
-		"Modalities": "Text and vision"
+		"Modalities": "Text and vision",
+		"Provider": "Unbiased"
 	},
 	"request_formats": [
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "unbiased",
+			"pricing": {
+				"input_tokens": 2.5,
+				"output_tokens": 7.5,
+				"input_cached_tokens": 0.25
+			}
+		}
+	],
 	"banner": null,
-	"created_at": "2026-09-16 16:31:57",
+	"created_at": "2026-09-17 23:10:39",
 	"schema": {
 		"input": {
 			"$schema": "https://json-schema.org/draft/2020-12/schema",
