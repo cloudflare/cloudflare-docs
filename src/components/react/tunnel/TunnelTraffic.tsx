@@ -12,22 +12,21 @@ import { useEffect, useRef, useState } from "react";
 import { Diagram, useDiagramOrDefault } from "@cloudflare/nimbus-docs/react";
 import { LabelCard, makeRect } from "../diagram-weld";
 import { WeldCanvas, weldEnter } from "../container/WeldCanvas";
-import { LabeledButton } from "../container/Transport";
+import { LabeledButton, Toolbar } from "../container/Transport";
 import type { DiagramFallbackProps } from "../container/DiagramFallback";
 import { NetBoundary, Port, Pour, Sparks, Squash } from "./TunnelKit";
 
-// Layout, in SVG user units. Everything shares one vertical spine, below
-// the overlaid button stack so nothing collides.
+// Layout, in SVG user units. Everything shares one vertical spine.
 const VIEW_W = 340;
-const VIEW_H = 492;
+const VIEW_H = 394;
 const CX = 170;
-const USER = makeRect(136, 102, 68, 32);
-const CF_REGION = makeRect(78, 150, 184, 76);
-const HOST = makeRect(110, 180, 120, 26);
-const CHIP = makeRect(122, 252, 96, 44);
-const FIELD = makeRect(60, 328, 220, 150);
-const DAEMON = makeRect(110, 356, 120, 40);
-const RES = makeRect(110, 430, 120, 34);
+const USER = makeRect(136, 4, 68, 32);
+const CF_REGION = makeRect(78, 52, 184, 76);
+const HOST = makeRect(110, 82, 120, 26);
+const CHIP = makeRect(122, 154, 96, 44);
+const FIELD = makeRect(60, 230, 220, 150);
+const DAEMON = makeRect(110, 258, 120, 40);
+const RES = makeRect(110, 332, 120, 34);
 
 // Timing (ms).
 const TUNNEL_UP_MS = 700;
@@ -127,26 +126,28 @@ function TrafficBody() {
 										? "The route is set; the tunnel is not enabled."
 										: "The path is complete."
 			}
-			overlay={
-				<div className="absolute top-1 right-1 flex flex-col items-stretch gap-1">
-					<LabeledButton
-						ariaLabel="Enable the tunnel"
-						ariaDisabled={tunnel !== "none"}
-						onClick={() => tunnel === "none" && setTunnel("connecting")}
-					>
-						{tunnel === "connecting" ? "Connecting…" : "Enable tunnel"}
-					</LabeledButton>
-					<LabeledButton
-						ariaLabel="Connect the public hostname"
-						ariaDisabled={route}
-						onClick={() => !route && setRoute(true)}
-					>
-						Connect hostname
-					</LabeledButton>
-					<LabeledButton ariaLabel="Send a request" onClick={send}>
-						Send request
-					</LabeledButton>
-				</div>
+			controls={
+				<Toolbar className="justify-end">
+					<div className="flex flex-col items-stretch gap-1">
+						<LabeledButton
+							ariaLabel="Enable the tunnel"
+							ariaDisabled={tunnel !== "none"}
+							onClick={() => tunnel === "none" && setTunnel("connecting")}
+						>
+							{tunnel === "connecting" ? "Connecting…" : "Enable tunnel"}
+						</LabeledButton>
+						<LabeledButton
+							ariaLabel="Connect the public hostname"
+							ariaDisabled={route}
+							onClick={() => !route && setRoute(true)}
+						>
+							Connect hostname
+						</LabeledButton>
+						<LabeledButton ariaLabel="Send a request" onClick={send}>
+							Send request
+						</LabeledButton>
+					</div>
+				</Toolbar>
 			}
 		>
 			<NetBoundary rect={CF_REGION} label="Cloudflare" />
