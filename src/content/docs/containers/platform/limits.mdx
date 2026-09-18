@@ -16,7 +16,7 @@ The memory, vCPU, and disk space for Containers are set through instance types. 
 
 <Render product="containers" file="instance-types" />
 
-These are specified using the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file.
+For an application that uses the [`default` scheduling policy](/containers/configuration/scheduling-policy/), specify the size with the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. For the `durable_object` policy, pass the named size to `ctx.container.start()` with the runtime `instance` property.
 
 :::note
 The `dev` and `standard` instance types are preserved for backward compatibility and are aliases for `lite` and `standard-1`, respectively.
@@ -24,7 +24,9 @@ The `dev` and `standard` instance types are preserved for backward compatibility
 
 ### Custom Instance Types
 
-In addition to the predefined instance types, you can configure custom instance types by specifying `vcpu`, `memory_mib`, and `disk_mb` values. See the [Wrangler configuration documentation](/workers/wrangler/configuration/#custom-instance-types) for configuration details.
+In addition to the predefined instance types, you can configure custom instance types. Field names depend on where you configure the size. Wrangler configuration for the `default` policy uses `vcpu`, `memory_mib`, and `disk_mb`. A `ctx.container.start()` call for the `durable_object` policy uses `vcpu`, `memoryMib`, and `diskMb`.
+
+Refer to the [Wrangler configuration documentation](/workers/wrangler/configuration/#custom-instance-types) or [scheduling policy documentation](/containers/configuration/scheduling-policy/#choose-an-instance-size-at-runtime) for examples.
 
 Custom instance types have the following constraints:
 

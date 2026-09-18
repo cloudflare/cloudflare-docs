@@ -10,6 +10,10 @@ products:
 
 import { WranglerConfig, PackageManagers, Steps } from "~/components";
 
+:::note
+The `image` examples on this page apply to Container applications that use the [`default` scheduling policy](/containers/configuration/scheduling-policy/). For the `durable_object` policy, configure a named `images` map and select an image from `ctx.container.images` at runtime. A named `image` entry must be a digest-pinned reference in the Cloudflare managed registry; a named `dockerfile` entry can build from an external base image.
+:::
+
 ## Push images during `wrangler deploy`
 
 When running `wrangler deploy`, if you set the `image` attribute in your [Wrangler configuration](/workers/wrangler/configuration/#containers) to a path to a Dockerfile, Wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.

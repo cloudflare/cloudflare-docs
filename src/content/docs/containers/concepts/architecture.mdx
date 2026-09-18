@@ -10,12 +10,13 @@ products:
 
 ## Deployment
 
-After you deploy an application with a Container, your image is uploaded to
-[Cloudflare's Registry](/containers/guides/image-management/) and distributed globally to Cloudflare's Network.
-Cloudflare will pre-schedule instances and pre-fetch images across the globe to ensure quick start
-times when scaling up the number of concurrent container instances.
+How images and running Container instances update depends on the [scheduling policy](/containers/configuration/scheduling-policy/) for the application.
 
-Worker code goes live on deploy. Container instances update with a [rollout](/containers/configuration/rollouts/). Refer to [Deploy Containers](/containers/guides/deploy/).
+With the `default` policy, Wrangler uploads or resolves the application image. Cloudflare distributes that image across its network and prepares capacity for new instances. Changes to the image or instance type use a [rollout](/containers/configuration/rollouts/).
+
+With the `durable_object` policy, Wrangler prepares the named images for the application. Durable Object code can access their immutable references. The code selects an image and instance size when it calls `ctx.container.start()`. Running instances do not participate in application-wide image rollouts.
+
+Worker code goes live on deploy before any application-wide Container rollout finishes. Refer to [Deploy Containers](/containers/guides/deploy/).
 
 ## Lifecycle of a Request
 
@@ -41,8 +42,7 @@ state associated with each instance.
 
 ### Starting a Container
 
-When a Durable Object instance requests to start a new container instance, the **nearest location
-with a pre-fetched image** is selected.
+When a Durable Object requests a new Container instance, Cloudflare selects eligible capacity with the required image available. The `default` policy uses the application image and instance type from Wrangler configuration. The `durable_object` policy uses the `image` and `instance` options supplied to `ctx.container.start()`.
 
 :::note
 Durable Objects and their associated Container instances are not guaranteed to run in the
@@ -52,12 +52,7 @@ Container placement is optimized for request routing and startup speed, so a Con
 start in a different location than its Durable Object.
 :::
 
-Starting additional container instances will use other locations with pre-fetched images,
-and Cloudflare will automatically begin prepping additional machines behind the scenes
-for additional scaling and quick cold starts. Because there are a finite number of pre-warmed
-locations, some container instances may be started in locations that are farther away from
-the end-user. This is done to ensure that the container instance starts quickly. You are
-only charged for actively running instances and not for any unused pre-warmed images.
+Starting additional Container instances can use other locations where the image is available. Cloudflare prepares additional capacity as demand grows. Because prepared capacity is finite, some Container instances may start in locations farther from the end user. You are only charged for actively running instances, not for prepared images that are not running.
 
 #### Cold starts
 
