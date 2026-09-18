@@ -5,7 +5,7 @@ import { CardGrid } from "./components/ui/card-grid";
 import { Code } from "./components/ui/code";
 import { FileTree } from "./components/ui/file-tree";
 import { PackageManagers } from "./components/ui/package-managers";
-import { Steps } from "./components/ui/steps";
+import { Step, Steps } from "./components/ui/steps";
 import { TabItem, Tabs } from "./components/ui/tabs";
 import LinkButton from "./components/ui/link-button/LinkButton.astro";
 import Render from "./components/Render.astro";
@@ -83,6 +83,7 @@ export const components = {
 	ResourcesBySelector,
 	RSSButton,
 	RuleID,
+	Step,
 	Steps,
 	Stream,
 	TabItem,
