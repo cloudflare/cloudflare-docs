@@ -240,26 +240,24 @@ const headings: MarkdownHeading[] = [
 	collection="docs"
 	meta={{ contentType: "reference" }}
 >
-	<Fragment slot="pagination"></Fragment>
+	<Fragment slot="pagination" />
 
 	<div slot="page-title">
 		<div class="not-prose mt-6 flex items-center gap-4">
-			{
-				author ? (
-					<img
-						class="bg-card h-14 w-14 shrink-0 rounded-sm object-contain dark:bg-gray-200 dark:p-1"
-						src={author.logo}
-						alt={`${authorName} logo`}
-					/>
-				) : (
-					<span
-						aria-hidden="true"
-						class="bg-accent text-muted-foreground flex h-14 w-14 shrink-0 items-center justify-center rounded-md text-2xl font-black uppercase"
-					>
-						{model.author.charAt(0)}
-					</span>
-				)
-			}
+			{author ? (
+				<img
+					class="bg-card h-14 w-14 shrink-0 rounded-sm object-contain dark:bg-gray-200 dark:p-1"
+					src={author.logo}
+					alt={`${authorName} logo`}
+				/>
+			) : (
+				<span
+					aria-hidden="true"
+					class="bg-accent text-muted-foreground flex h-14 w-14 shrink-0 items-center justify-center rounded-md text-2xl font-black uppercase"
+				>
+					{model.author.charAt(0)}
+				</span>
+			)}
 			<div class="min-w-0">
 				<div class="flex flex-wrap items-center gap-3">
 					<h1
@@ -283,34 +281,34 @@ const headings: MarkdownHeading[] = [
 		<CopyableCode text={model.name} label="Copy model ID" />
 	</div>
 
-	<div class="not-prose mb-4"><ModelBadges model={model} /></div>
+	<div class="not-prose mb-4">
+		<ModelBadges model={model} />
+	</div>
 
 	<p>{description}</p>
 
-	{
-		banner && (
-			<Aside type={bannerAsideType(banner.severity)}>
-				<p>
-					{banner.title && <strong>{banner.title}: </strong>}
-					{banner.text}
-					{banner.link && (
-						<Fragment>
-							{" "}
-							<a
-								href={banner.link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								aria-label={`${banner.link.label} (${displayName})`}
-							>
-								{banner.link.label}
-								<span class="external-link"> ↗</span>
-							</a>
-						</Fragment>
-					)}
-				</p>
-			</Aside>
-		)
-	}
+	{banner && (
+		<Aside type={bannerAsideType(banner.severity)}>
+			<p>
+				{banner.title && <strong>{banner.title}: </strong>}
+				{banner.text}
+				{banner.link && (
+					<Fragment>
+						{" "}
+						<a
+							href={banner.link.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={`${banner.link.label} (${displayName})`}
+						>
+							{banner.link.label}
+							<span class="external-link"> ↗</span>
+						</a>
+					</Fragment>
+				)}
+			</p>
+		</Aside>
+	)}
 
 	{
 		/* Defensive dead branch (model not in slice): Llama 3.2 11b license note. */
@@ -341,49 +339,45 @@ const headings: MarkdownHeading[] = [
 		)
 	}
 
-	{
-		requiresWorkersPaid && (
-			<Render file="workers-paid-only-note" product="workers-ai" />
-		)
-	}
+	{requiresWorkersPaid && (
+		<Render file="workers-paid-only-note" product="workers-ai" />
+	)}
 
 	<ModelFeatures model={model} />
 
-	{
-		hasReasoningEffortGuidance && (
-			<Fragment>
-				<AnchorHeading
-					depth={2}
-					title="Reasoning effort"
-					slug="reasoning-effort"
-				/>
-				<p>
-					GLM-5.2 supports <code>high</code> and <code>max</code> reasoning
-					effort, or you can turn reasoning off. For compatibility with Chat
-					Completions and other protocols in the ecosystem, other reasoning
-					efforts will be mapped to these modes:
-				</p>
-				<ul>
-					<li>
-						<code>none</code> and <code>minimal</code> turn reasoning off.
-					</li>
-					<li>
-						<code>low</code> and <code>medium</code> map to <code>high</code>.
-					</li>
-					<li>
-						<code>xhigh</code> maps to <code>max</code>.
-					</li>
-				</ul>
-				<p>
-					This is the same mapping used by Z.ai's API, and{" "}
-					<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
-						in their <code>reasoning_effort</code> documentation
-					</a>
-					.
-				</p>
-			</Fragment>
-		)
-	}
+	{hasReasoningEffortGuidance && (
+		<Fragment>
+			<AnchorHeading
+				depth={2}
+				title="Reasoning effort"
+				slug="reasoning-effort"
+			/>
+			<p>
+				GLM-5.2 supports <code>high</code> and <code>max</code> reasoning
+				effort, or you can turn reasoning off. For compatibility with Chat
+				Completions and other protocols in the ecosystem, other reasoning
+				efforts will be mapped to these modes:
+			</p>
+			<ul>
+				<li>
+					<code>none</code> and <code>minimal</code> turn reasoning off.
+				</li>
+				<li>
+					<code>low</code> and <code>medium</code> map to <code>high</code>.
+				</li>
+				<li>
+					<code>xhigh</code> maps to <code>max</code>.
+				</li>
+			</ul>
+			<p>
+				This is the same mapping used by Z.ai's API, and{" "}
+				<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
+					in their <code>reasoning_effort</code> documentation
+				</a>
+				.
+			</p>
+		</Fragment>
+	)}
 
 	{
 		/* Defensive dead branch (model not in slice): nova-3 transport pricing. */
@@ -408,92 +402,61 @@ const headings: MarkdownHeading[] = [
 		)
 	}
 
-	{
-		hasPlayground && (
-			<Fragment>
-				<AnchorHeading depth={2} title="Playground" slug="playground" />
-				<p>
-					Try out this model with Workers AI LLM Playground. It does not require
-					any setup or authentication and is an instant way to preview and test
-					a model directly in the browser.
-				</p>
-				<LinkButton
-					href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
-				>
-					Launch the LLM Playground
-				</LinkButton>
-			</Fragment>
-		)
-	}
+	{hasPlayground && (
+		<Fragment>
+			<AnchorHeading depth={2} title="Playground" slug="playground" />
+			<p>
+				Try out this model with Workers AI LLM Playground. It does not require
+				any setup or authentication and is an instant way to preview and test a
+				model directly in the browser.
+			</p>
+			<LinkButton
+				href={`https://playground.ai.cloudflare.com/?model=${model.name}`}
+			>
+				Launch the LLM Playground
+			</LinkButton>
+		</Fragment>
+	)}
 
-	{
-		hasCatalogUsage && firstExample && (
-			<Fragment>
-				<AnchorHeading depth={2} title="Usage" slug="usage" />
-				<ExampleCard example={firstExample} layout="stack" />
-			</Fragment>
-		)
-	}
+	{hasCatalogUsage && firstExample && (
+		<Fragment>
+			<AnchorHeading depth={2} title="Usage" slug="usage" />
+			<ExampleCard example={firstExample} layout="stack" />
+		</Fragment>
+	)}
 
-	{
-		!hasCatalogUsage && CodeExamples && (
-			<Fragment>
-				<AnchorHeading depth={2} title="Usage" slug="usage" />
-				<CodeExamples name={model.name} lora={false} />
-			</Fragment>
-		)
-	}
+	{!hasCatalogUsage && CodeExamples && (
+		<Fragment>
+			<AnchorHeading depth={2} title="Usage" slug="usage" />
+			<CodeExamples name={model.name} lora={false} />
+		</Fragment>
+	)}
 
-	{
-		hasRemainingExamples && (
-			<Fragment>
-				<AnchorHeading depth={2} title="Examples" slug="examples" />
-				{remainingExamples.map((example) => (
-					<details>
-						<summary>
-							<strong>{example.name}</strong>
-							{example.description && (
-								<span> &mdash; {example.description}</span>
-							)}
-						</summary>
-						<ExampleCard example={example} />
-					</details>
-				))}
-			</Fragment>
-		)
-	}
+	{hasRemainingExamples && (
+		<Fragment>
+			<AnchorHeading depth={2} title="Examples" slug="examples" />
+			{remainingExamples.map((example) => (
+				<details>
+					<summary>
+						<strong>{example.name}</strong>
+						{example.description && <span> &mdash; {example.description}</span>}
+					</summary>
+					<ExampleCard example={example} />
+				</details>
+			))}
+		</Fragment>
+	)}
 
-	{
-		hasSchema && apiModes && apiModes.length > 1 ? (
-			<Fragment>
-				<AnchorHeading depth={2} title="Parameters" slug="parameters" />
+	{hasSchema && apiModes && apiModes.length > 1 ? (
+		<Fragment>
+			<AnchorHeading depth={2} title="Parameters" slug="parameters" />
 
-				{allInputsIdentical ? (
-					<Fragment>
-						<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
-						<SchemaDisplay schema={apiModes[0].input} title="Input" />
+			{allInputsIdentical ? (
+				<Fragment>
+					<h3 class="mt-4! mb-2! text-base font-semibold">Input</h3>
+					<SchemaDisplay schema={apiModes[0].input} title="Input" />
 
-						<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
-						<div class="not-prose space-y-3">
-							{apiModes.map((mode) => (
-								<details class="group border-border rounded-lg border py-3">
-									<summary class="text-foreground cursor-pointer px-8 font-medium">
-										<span>{mode.name}</span>
-										{mode.description && (
-											<span class="text-muted-foreground text-sm font-normal">
-												{" "}
-												— {mode.description}
-											</span>
-										)}
-									</summary>
-									<div class="border-border border-t p-4 pb-1">
-										<SchemaDisplay schema={mode.output} title="Output" />
-									</div>
-								</details>
-							))}
-						</div>
-					</Fragment>
-				) : (
+					<h3 class="mt-6! mb-2! text-base font-semibold">Output</h3>
 					<div class="not-prose space-y-3">
 						{apiModes.map((mode) => (
 							<details class="group border-border rounded-lg border py-3">
@@ -507,82 +470,61 @@ const headings: MarkdownHeading[] = [
 									)}
 								</summary>
 								<div class="border-border border-t p-4 pb-1">
-									<Tabs syncKey={`schema-${mode.id}`}>
-										<TabItem label="Input">
-											<SchemaDisplay schema={mode.input} title="Input" />
-										</TabItem>
-										<TabItem label="Output">
-											<SchemaDisplay schema={mode.output} title="Output" />
-										</TabItem>
-									</Tabs>
+									<SchemaDisplay schema={mode.output} title="Output" />
 								</div>
 							</details>
 						))}
 					</div>
-				)}
-			</Fragment>
-		) : (
-			hasSchema && (
-				<Fragment>
-					<AnchorHeading depth={2} title="Parameters" slug="parameters" />
-					{variantTitles.length > 0 ? (
-						<div data-variant-section data-active-variant={activeVariant}>
-							<SchemaVariantTabs titles={variantTitles} client:visible />
-							<Tabs syncKey="schema-tab">
-								<TabItem label="Input">
-									{variantTitles.map((title) => (
-										<div
-											data-variant-pane={title}
-											hidden={title !== activeVariant}
-										>
-											<SchemaDisplay
-												schema={model.schema.input}
-												title="Input"
-												variantTitle={title}
-											/>
-										</div>
-									))}
-								</TabItem>
-								<TabItem label="Output">
-									{outputIsBinary ? (
-										<p>
-											{outputContentType?.startsWith("audio/") ? (
-												<Fragment>
-													The binding returns a <code>ReadableStream</code> with
-													the audio in{" "}
-													{outputContentType
-														.replace("audio/", "")
-														.toUpperCase()}{" "}
-													format (check the model's output schema).
-												</Fragment>
-											) : (
-												<Fragment>
-													The binding returns a <code>ReadableStream</code> with
-													the output (check the model's output schema).
-												</Fragment>
-											)}
-										</p>
-									) : (
-										variantTitles.map((title) => (
-											<div
-												data-variant-pane={title}
-												hidden={title !== activeVariant}
-											>
-												<SchemaDisplay
-													schema={model.schema.output}
-													title="Output"
-													variantTitle={title}
-												/>
-											</div>
-										))
-									)}
-								</TabItem>
-							</Tabs>
-						</div>
-					) : (
+				</Fragment>
+			) : (
+				<div class="not-prose space-y-3">
+					{apiModes.map((mode) => (
+						<details class="group border-border rounded-lg border py-3">
+							<summary class="text-foreground cursor-pointer px-8 font-medium">
+								<span>{mode.name}</span>
+								{mode.description && (
+									<span class="text-muted-foreground text-sm font-normal">
+										{" "}
+										— {mode.description}
+									</span>
+								)}
+							</summary>
+							<div class="border-border border-t p-4 pb-1">
+								<Tabs syncKey={`schema-${mode.id}`}>
+									<TabItem label="Input">
+										<SchemaDisplay schema={mode.input} title="Input" />
+									</TabItem>
+									<TabItem label="Output">
+										<SchemaDisplay schema={mode.output} title="Output" />
+									</TabItem>
+								</Tabs>
+							</div>
+						</details>
+					))}
+				</div>
+			)}
+		</Fragment>
+	) : (
+		hasSchema && (
+			<Fragment>
+				<AnchorHeading depth={2} title="Parameters" slug="parameters" />
+				{variantTitles.length > 0 ? (
+					<div data-variant-section data-active-variant={activeVariant}>
+						<SchemaVariantTabs titles={variantTitles} client:visible />
 						<Tabs syncKey="schema-tab">
 							<TabItem label="Input">
-								<SchemaDisplay schema={model.schema.input} title="Input" />
+								{variantTitles.map((title) => (
+									<div
+										data-variant-pane={title}
+										hidden={title !== activeVariant}
+									>
+										<SchemaDisplay
+											schema={model.schema.input}
+											title="Input"
+											variantTitle={title}
+										/>
+									</div>
+								))}
 							</TabItem>
 							<TabItem label="Output">
 								{outputIsBinary ? (
@@ -602,37 +544,73 @@ const headings: MarkdownHeading[] = [
 										)}
 									</p>
 								) : (
-									<SchemaDisplay schema={model.schema.output} title="Output" />
+									variantTitles.map((title) => (
+										<div
+											data-variant-pane={title}
+											hidden={title !== activeVariant}
+										>
+											<SchemaDisplay
+												schema={model.schema.output}
+												title="Output"
+												variantTitle={title}
+											/>
+										</div>
+									))
 								)}
 							</TabItem>
 						</Tabs>
-					)}
-				</Fragment>
-			)
-		)
-	}
-
-	{
-		hasSchema && (
-			<Fragment>
-				<AnchorHeading depth={2} title="API Schemas (Raw)" slug="api-schemas" />
-				<div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
-					{rawLinks.map((link) => (
-						<div class="border-border flex items-center justify-between rounded-lg border px-4 py-1.5">
-							<span class="text-sm">
-								<span class="text-foreground font-medium">{link.name}</span>
-								{link.kind && (
-									<span class="text-muted-foreground ml-2">{link.kind}</span>
-								)}
-							</span>
-							<SchemaFileLinks
-								href={`${schemaBasePath}/${link.file}.json`}
-								filename={`${link.file}.json`}
-							/>
-						</div>
-					))}
-				</div>
+					</div>
+				) : (
+					<Tabs syncKey="schema-tab">
+						<TabItem label="Input">
+							<SchemaDisplay schema={model.schema.input} title="Input" />
+						</TabItem>
+						<TabItem label="Output">
+							{outputIsBinary ? (
+								<p>
+									{outputContentType?.startsWith("audio/") ? (
+										<Fragment>
+											The binding returns a <code>ReadableStream</code> with the
+											audio in{" "}
+											{outputContentType.replace("audio/", "").toUpperCase()}{" "}
+											format (check the model's output schema).
+										</Fragment>
+									) : (
+										<Fragment>
+											The binding returns a <code>ReadableStream</code> with the
+											output (check the model's output schema).
+										</Fragment>
+									)}
+								</p>
+							) : (
+								<SchemaDisplay schema={model.schema.output} title="Output" />
+							)}
+						</TabItem>
+					</Tabs>
+				)}
 			</Fragment>
 		)
-	}
+	)}
+
+	{hasSchema && (
+		<Fragment>
+			<AnchorHeading depth={2} title="API Schemas (Raw)" slug="api-schemas" />
+			<div class="not-prose grid grid-cols-1 gap-2 sm:grid-cols-2">
+				{rawLinks.map((link) => (
+					<div class="border-border flex items-center justify-between rounded-lg border px-4 py-1.5">
+						<span class="text-sm">
+							<span class="text-foreground font-medium">{link.name}</span>
+							{link.kind && (
+								<span class="text-muted-foreground ml-2">{link.kind}</span>
+							)}
+						</span>
+						<SchemaFileLinks
+							href={`${schemaBasePath}/${link.file}.json`}
+							filename={`${link.file}.json`}
+						/>
+					</div>
+				))}
+			</div>
+		</Fragment>
+	)}
 </DocsLayout>

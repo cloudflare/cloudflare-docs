@@ -56,16 +56,14 @@ const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
 ---
 
 <ul class="m-0 flex list-none flex-wrap items-center gap-x-1.5 p-0">
-	{
-		badges.map((badge) => (
-			<li class="m-0">
-				<Badge
-					text={badge.text}
-					variant={badge.variant}
-					size="small"
-					title={badge.title}
-				/>
-			</li>
-		))
-	}
+	{badges.map((badge) => (
+		<li class="m-0">
+			<Badge
+				text={badge.text}
+				variant={badge.variant}
+				size="small"
+				title={badge.title}
+			/>
+		</li>
+	))}
 </ul>

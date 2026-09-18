@@ -187,6 +187,8 @@ The possible values of status are as follows:
 
 If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
+To receive historical and live execution updates without polling, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
+
 ### Explicitly pause a Workflow
 
 You can explicitly pause a Workflow instance (and later resume it) by calling `pause` against a specific instance ID.
@@ -322,9 +324,57 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 		});
 	}
 }
+### Delete Workflow instances
+
+Deleting an instance removes its stored state. Deleting a running instance stops its current execution without running rollback handlers.
+
+Delete one instance by calling `delete()` on its handle:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
 ```
 
 </TypeScriptExample>
+
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+
+Delete up to 100 instances in one call with `deleteBatch()`:
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+
+console.log(result.deleted); // [{ id: "instance-abc" }, { id: "instance-def" }]
+console.log(result.errors); // Per-instance failures, if any
+```
+
+</TypeScriptExample>
+
+`deleteBatch()` accepts between 1 and 100 IDs. Missing IDs are returned as per-instance errors. Duplicate IDs count toward the limit and are deleted once, with the result repeated for each input position. If any ID is invalid, the call fails before deleting any instances.
+
+Wrangler accepts one or more instance IDs or a file containing a top-level JSON array of strings. You can combine positional IDs with `--filename`, up to 100 IDs total. Use `latest` to delete the most recently created instance.
+
+```json title="instance-ids.json"
+["instance-abc", "instance-def"]
+```
+
+```sh
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> latest
+npx wrangler workflows instances delete <WORKFLOW_NAME> --filename ./instance-ids.json
+# For local Workflow instances during wrangler dev:
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
+```
+
+For the full APIs, refer to [`delete`](/workflows/build/workers-api/#delete) and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
 
 ### Trigger a Workflow from another Workflow
 

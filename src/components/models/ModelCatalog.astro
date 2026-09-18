@@ -26,9 +26,7 @@ const facetMatchMaps = Object.fromEntries(
 ---
 
 <div data-models class="not-prose">
-	<div
-		class="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center"
-	>
+	<div class="mb-4 flex flex-col gap-3 md:flex-row md:flex-wrap md:items-center">
 		<div class="relative flex-1 md:min-w-[300px]">
 			<svg
 				class="text-muted-foreground pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2"
@@ -40,7 +38,8 @@ const facetMatchMaps = Object.fromEntries(
 				<path
 					stroke-linecap="round"
 					stroke-linejoin="round"
-					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+					d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+				></path>
 			</svg>
 			<input
 				id="model-search"
@@ -52,19 +51,17 @@ const facetMatchMaps = Object.fromEntries(
 		</div>
 
 		<div class="flex flex-wrap items-center gap-2">
-			{
-				facets.map((facet) => (
-					<FilterDropdownWrapper
-						label={facet.label}
-						filterKey={facet.key}
-						items={facet.options.map((o) => ({
-							value: o.value,
-							label: o.label,
-						}))}
-						client:load
-					/>
-				))
-			}
+			{facets.map((facet) => (
+				<FilterDropdownWrapper
+					label={facet.label}
+					filterKey={facet.key}
+					items={facet.options.map((o) => ({
+						value: o.value,
+						label: o.label,
+					}))}
+					client:load
+				/>
+			))}
 			<SortSelectWrapper client:load />
 		</div>
 	</div>
@@ -94,9 +91,7 @@ const facetMatchMaps = Object.fromEntries(
 		aria-labelledby="model-comparison-heading"
 	>
 		<DialogContent class="bg-background max-h-[85vh] max-w-6xl">
-			<div
-				class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3"
-			>
+			<div class="border-border flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">
 				<div>
 					<h2
 						id="model-comparison-heading"
@@ -108,9 +103,7 @@ const facetMatchMaps = Object.fromEntries(
 						Compare up to three models.
 					</p>
 				</div>
-				<DialogClose
-					class="border-border bg-background text-foreground hover:bg-muted focus-visible:outline-ring cursor-pointer rounded-md border px-3 py-1.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2"
-				>
+				<DialogClose class="border-border bg-background text-foreground hover:bg-muted focus-visible:outline-ring cursor-pointer rounded-md border px-3 py-1.5 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2">
 					Close
 				</DialogClose>
 			</div>
@@ -145,11 +138,9 @@ const facetMatchMaps = Object.fromEntries(
 
 	<div class="border-border relative w-full border-t border-l">
 		<div data-models-grid class={LG_GRID_CLASS[cols]}>
-			{
-				models.map((model, i) => (
-					<ModelCard model={model} index={i} cols={cols} basePath={basePath} />
-				))
-			}
+			{models.map((model, i) => (
+				<ModelCard model={model} index={i} cols={cols} basePath={basePath} />
+			))}
 		</div>
 	</div>
 

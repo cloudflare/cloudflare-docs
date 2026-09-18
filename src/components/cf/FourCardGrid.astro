@@ -11,7 +11,9 @@ interface Props {
 const { stagger = false } = Astro.props;
 ---
 
-<div class:list={["card-grid", { stagger }]}><slot /></div>
+<div class:list={["card-grid", { stagger }]}>
+	<slot />
+</div>
 
 <style>
 	.card-grid {

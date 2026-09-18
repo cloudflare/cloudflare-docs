@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 1.2,
+		"Output tokens (per 1M)": 6
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -1820,6 +1824,15 @@
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "alibaba",
+			"pricing": {
+				"input_tokens": 1.2,
+				"output_tokens": 6
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:52:51",
 	"schema": {
@@ -1860,8 +1873,7 @@
 									}
 								},
 								"required": [
-									"role",
-									"content"
+									"role"
 								],
 								"additionalProperties": {}
 							}
@@ -1950,6 +1962,13 @@
 								}
 							},
 							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
@@ -2061,13 +2080,9 @@
 												"type": "string"
 											},
 											"content": {
-												"anyOf": [
-													{
-														"type": "string"
-													},
-													{
-														"type": "null"
-													}
+												"type": [
+													"string",
+													"null"
 												]
 											},
 											"tool_calls": {
@@ -2082,22 +2097,29 @@
 												]
 											},
 											"audio": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
 													},
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"transcript": {
-														"type": "string"
+													{
+														"type": "null"
 													}
-												},
-												"additionalProperties": {}
+												]
 											}
 										},
 										"required": [
@@ -2106,13 +2128,9 @@
 										"additionalProperties": {}
 									},
 									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},

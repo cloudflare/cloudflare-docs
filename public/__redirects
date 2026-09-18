@@ -62,10 +62,10 @@
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/ /cloudflare-one/networks/connectors/cloudflare-mesh/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/tips/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
 /learning-paths/replace-vpn/connect-private-network/warp-connector/ /learning-paths/replace-vpn/connect-private-network/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/ 301
@@ -75,7 +75,6 @@
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
-/mesh/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 302
 /support/ai/ / 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -89,6 +88,8 @@
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
+/changelog/product/cloudflare-challenges/ /changelog/product/bots/ 301
+/changelog/rss/cloudflare-challenges.xml /changelog/rss/bots.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
 /cloudflare-one/changelog/index.xml /changelog/rss/cloudflare-one.xml 301
@@ -443,6 +444,7 @@
 /ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
+/bots/attribution-business-insights/ /bots/business-insights/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
@@ -619,9 +621,10 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-05-may-2026.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/locations/ 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
@@ -688,6 +691,15 @@
 /tunnel/advanced/local-management/as-a-service/linux/ /tunnel/features/locally-managed-tunnels/as-a-service/linux/ 301
 /tunnel/advanced/local-management/as-a-service/macos/ /tunnel/features/locally-managed-tunnels/as-a-service/macos/ 301
 /tunnel/advanced/local-management/as-a-service/windows/ /tunnel/features/locally-managed-tunnels/as-a-service/windows/ 301
+# Cloudflare Mesh obsolete paths
+/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/containers/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/routes/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
+# Workers VPC IA rework
+/workers-vpc/reference/limits/ /workers-vpc/platform/limits/ 301
+/workers-vpc/reference/pricing/ /workers-vpc/platform/pricing/ 301
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
@@ -2642,7 +2654,7 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
-/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/networks/connectors/cloudflare-mesh/tips/ 301
+/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
 /cloudflare-one/connections/connect-networks/private-net/cloudflared/load-balancing/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/ /cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/ 301
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
@@ -2767,6 +2779,7 @@
 
 # Specific redirects for old paths (must come before catch-all redirects)
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
+/cloudflare-one/access-controls/applications/http-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
 /cloudflare-one/applications/scan-apps/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/ 301
@@ -3080,6 +3093,7 @@
 /ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
+/changelog/product/cloudflare-challenges/* /changelog/product/bots/ 301
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301

@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.08,
+		"@480p (per second)": 0.08,
+		"@720p (per second)": 0.14
+	},
 	"examples": [
 		{
 			"name": "Image to video",
@@ -65,6 +70,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"default": 0.08,
+				"480p": 0.08,
+				"720p": 0.14
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-03 20:26:48",
 	"schema": {
