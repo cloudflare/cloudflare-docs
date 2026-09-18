@@ -63,10 +63,7 @@ Automatic `Link` header generation should not have any negative performance impa
 
 ## Early Hints probes in logs
 
-Cloudflare automatically runs Early Hints probe requests on all Pages domains, including custom domains. These probes appear in your Cloudflare logs with these field values:
-
-- `ClientRequestSource: earlyHintsCache`
-- `ClientRequestUserAgent: nginx-ssl early hints` or `bastion early hints`
+Cloudflare automatically runs Early Hints probe requests on all Pages domains, including custom domains. These probes appear in your Cloudflare logs with `ClientRequestSource: earlyHintsCache` and a `ClientRequestUserAgent` of `nginx-ssl early hints` or `bastion early hints`.
 
 A `504` response on a probe means no Early Hint has been cached for that URL yet (a cache miss). A `200` means a cached Early Hint was served. These probes are internal Cloudflare subrequests — they do not reach your Pages project or origin server and have no impact on end users.
 
