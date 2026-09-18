@@ -8,8 +8,12 @@ products:
   - workers
 ---
 
+import { Render } from "~/components";
+
 The Cloudflare Vite plugin enables a full-featured integration between [Vite](https://vite.dev/) and the [Workers runtime](/workers/runtime-apis/).
-Your Worker code runs inside [workerd](https://github.com/cloudflare/workerd), matching the production behavior as closely as possible and providing confidence as you develop and deploy your applications.
+Your Worker code runs inside a local [`workerd`](https://github.com/cloudflare/workerd) process, which closely matches the runtime APIs and behavior of deployed Workers.
+
+<Render file="local-development-security" product="workers" />
 
 ## Features
 
