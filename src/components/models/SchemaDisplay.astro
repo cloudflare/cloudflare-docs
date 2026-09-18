@@ -415,23 +415,21 @@ const variantRows =
 ---
 
 <div class="schema-display">
-	{
-		topLevelVariants && variantRows.length > 0 ? (
-			<SchemaVariantSelector
-				variants={variantRows}
-				schemaId={schemaId}
-				hideRequired={hideRequired}
-				client:visible
-			/>
-		) : rows.length === 0 ? (
-			<p class="text-muted-foreground text-sm">No parameters defined.</p>
-		) : (
-			<SchemaTreeView
-				rows={rows}
-				schemaId={schemaId}
-				hideRequired={hideRequired}
-				client:visible
-			/>
-		)
-	}
+	{topLevelVariants && variantRows.length > 0 ? (
+		<SchemaVariantSelector
+			variants={variantRows}
+			schemaId={schemaId}
+			hideRequired={hideRequired}
+			client:visible
+		/>
+	) : rows.length === 0 ? (
+		<p class="text-muted-foreground text-sm">No parameters defined.</p>
+	) : (
+		<SchemaTreeView
+			rows={rows}
+			schemaId={schemaId}
+			hideRequired={hideRequired}
+			client:visible
+		/>
+	)}
 </div>

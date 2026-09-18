@@ -52,6 +52,58 @@ export default defineConfig({
 		cloudflare({
 			config: (config) => {
 				flueCustomizer(config);
+				// Dev tooling must never attach to the live reviewer-recommendations
+				// queue. `flue:dev:wrangler` runs `wrangler dev --remote`, which would
+				// register this worker as a queue consumer against the production
+				// queue; strip the consumer here so remote dev can only drive events
+				// through POST /dev/recommendations. Normal `flue dev` runs local
+				// Miniflare (no live-queue attachment) and production deploys keep
+				// the consumer from the authored wrangler.jsonc.
+				if (process.env.FLUE_DEV_NO_QUEUE_CONSUMER === "1") {
+					const cfg = config as Record<string, unknown>;
+					const queues =
+						cfg["queues"] && typeof cfg["queues"] === "object"
+							? (cfg["queues"] as Record<string, unknown>)
+							: null;
+					// Snapshot the declared consumers BEFORE clearing so the guard
+					// below checks the config as emitted, not the array we just
+					// emptied. The dev build legitimately inherits the consumer from
+					// the authored wrangler.jsonc — that is what we strip — so the
+					// guard must fail closed only when the config is reshaped such
+					// that consumers cannot be reliably removed (a missing `queues`
+					// section, a non-array `queues.consumers`, or consumers declared
+					// under another top-level key).
+					const declaredConsumers = queues?.["consumers"];
+					const strayConsumerKeys = Object.entries(cfg)
+						.filter(([key, value]) => {
+							if (
+								key === "queues" ||
+								typeof value !== "object" ||
+								value === null
+							) {
+								return false;
+							}
+							const nested = (value as Record<string, unknown>)["consumers"];
+							return Array.isArray(nested) && nested.length > 0;
+						})
+						.map(([key]) => key);
+					if (queues) queues["consumers"] = [];
+					const stripped =
+						(queues === null || Array.isArray(declaredConsumers)) &&
+						strayConsumerKeys.length === 0;
+					if (!stripped) {
+						throw new Error(
+							"FLUE_DEV_NO_QUEUE_CONSUMER=1 but the emitted worker config does not expose queue consumers as a plain queues.consumers array" +
+								(strayConsumerKeys.length > 0
+									? ` (consumers also declared under: ${strayConsumerKeys.join(", ")})`
+									: "") +
+								"; refusing to build an artifact that could attach to the live queue",
+						);
+					}
+					console.log(
+						"[flue] Stripped the reviewer-recommendations queue consumer from the dev build.",
+					);
+				}
 				if (
 					process.env.DOCS_FLUE_AGENT_EVALS === "1" &&
 					process.env.DOCS_FLUE_INTERNAL_TOKEN

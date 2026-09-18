@@ -19,6 +19,7 @@ export type WebhookCommand =
 	| "full-review"
 	| "ignore-review-limit"
 	| "disable-auto-review"
+	| "draft-never-stale"
 	| "rebase";
 
 export interface WebhookClassification {
@@ -71,6 +72,8 @@ function commandFromComment(
 			return "ignore-review-limit";
 		case "/disable-auto-review":
 			return "disable-auto-review";
+		case "/draft-never-stale":
+			return "draft-never-stale";
 		case "/rebase":
 			return "rebase";
 		default:

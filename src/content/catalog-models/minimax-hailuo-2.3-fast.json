@@ -12,6 +12,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.032,
+		"6s @768p": 0.19,
+		"10s @768p": 0.32,
+		"6s @1080p": 0.33
+	},
 	"examples": [
 		{
 			"name": "Basic I2V",
@@ -141,6 +147,17 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"default": 0.032,
+				"768p_6s": 0.19,
+				"768p_10s": 0.32,
+				"1080p_6s": 0.33
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:18",
 	"schema": {
@@ -149,8 +166,8 @@
 			"type": "object",
 			"properties": {
 				"first_frame_image": {
-					"description": "URL or base64 data URI of the first frame image",
-					"type": "string"
+					"type": "string",
+					"description": "URL or base64 data URI of the first frame image"
 				},
 				"prompt": {
 					"type": "string",

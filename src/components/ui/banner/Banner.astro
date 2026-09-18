@@ -46,29 +46,27 @@ const safeContent = sanitizeBannerHtml(content);
 		className,
 	)}
 	style={`--_c: ${c.color}; --_t: ${c.tint};`}
-	{...dismissible
+	{...(dismissible
 		? {
 				"data-nb-banner-dismiss": dismissible.id,
 				"data-nb-banner-days": dismissible.days,
 			}
-		: {}}
+		: {})}
 	{...attrs}
 >
 	<div class="banner-card-body min-w-0 flex-1">
 		<Fragment set:html={safeContent} />
 	</div>
-	{
-		dismissible && (
-			<button
-				type="button"
-				data-nb-banner-close
-				class="hover:bg-card/60 -my-1 -mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-current opacity-60 transition-[background-color,opacity] hover:opacity-100"
-				aria-label="Dismiss banner"
-			>
-				<Icon name="ph:x" class="h-3.5 w-3.5" />
-			</button>
-		)
-	}
+	{dismissible && (
+		<button
+			type="button"
+			data-nb-banner-close
+			class="hover:bg-card/60 -my-1 -mr-2 flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-current opacity-60 transition-[background-color,opacity] hover:opacity-100"
+			aria-label="Dismiss banner"
+		>
+			<Icon name="ph:x" class="h-3.5 w-3.5" />
+		</button>
+	)}
 </div>
 
 <script>

@@ -17,6 +17,10 @@ Cloudflare's Instant Purge ensures that updates to your content are reflected im
 To purge cached content using the Cloudflare API, refer to [Purge Cached Content](/api/resources/cache/methods/purge/).
 
 :::note
+A successful purge request returns `HTTP 200`. This indicates that Cloudflare received the request — it does not confirm that Cloudflare cached the targeted content or evicted any content. To verify a purge, request the asset after purging and confirm that [`CF-Cache-Status`](/cache/concepts/cache-responses/) is no longer `HIT`.
+:::
+
+:::note
 If versioning is active on your zone and multiple environments are configured, you can select the specific environment you want to purge. For more details, refer to the [Version Management](/version-management/) documentation.
 :::
 

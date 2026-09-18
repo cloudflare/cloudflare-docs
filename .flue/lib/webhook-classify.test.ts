@@ -83,6 +83,7 @@ describe("classifyWebhook — slash commands", () => {
 		["/full-review", "full-review"],
 		["/ignore-review-limit", "ignore-review-limit"],
 		["/disable-auto-review", "disable-auto-review"],
+		["/draft-never-stale", "draft-never-stale"],
 		["/rebase", "rebase"],
 	])("recognizes %s", (body, expected) => {
 		const c = classifyWebhook("issue_comment", base(body));

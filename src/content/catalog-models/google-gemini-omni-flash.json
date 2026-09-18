@@ -1,0 +1,268 @@
+{
+	"model_id": "google/gemini-omni-flash",
+	"provider_id": "google",
+	"name": "Gemini Omni Flash",
+	"description": "Preview high-performance multimodal video generation and editing model with conversational controls and generated audio.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Audio",
+		"Multimodal",
+		"Preview"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 1.5,
+		"Input image tokens (per 1M)": 1.5,
+		"Input audio tokens (per 1M)": 1.5,
+		"Input video tokens (per 1M)": 1.5,
+		"output_text_tokens": 9,
+		"Reasoning tokens (per 1M)": 9,
+		"output_video_tokens": 17.5,
+		"Default (per second)": 1.5
+	},
+	"examples": [
+		{
+			"name": "Underwater reef",
+			"description": "Generate an underwater landscape video",
+			"input": {
+				"text": "A school of silver fish moving through a sunlit coral reef, slow cinematic tracking shot with drifting particles.",
+				"aspect_ratio": "16:9",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/underwater-reef.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/underwater-reef.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-flash',\n  {\n    text: 'A school of silver fish moving through a sunlit coral reef, slow cinematic tracking shot with drifting particles.',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-flash\",\n  \"input\": {\n    \"text\": \"A school of silver fish moving through a sunlit coral reef, slow cinematic tracking shot with drifting particles.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Breakfast robot",
+			"description": "Generate a portrait-format character scene",
+			"input": {
+				"text": "A friendly home robot preparing breakfast in a bright modern kitchen, gentle handheld camera movement.",
+				"aspect_ratio": "9:16",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/breakfast-robot.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/breakfast-robot.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-flash',\n  {\n    text: 'A friendly home robot preparing breakfast in a bright modern kitchen, gentle handheld camera movement.',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-flash\",\n  \"input\": {\n    \"text\": \"A friendly home robot preparing breakfast in a bright modern kitchen, gentle handheld camera movement.\",\n    \"aspect_ratio\": \"9:16\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Desert train",
+			"description": "Generate a high-resolution desert scene",
+			"input": {
+				"text": "A vintage train crossing a vast desert at golden hour, dust glowing in the sunset as the camera sweeps alongside.",
+				"aspect_ratio": "16:9",
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/desert-train.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/desert-train.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-flash',\n  {\n    text: 'A vintage train crossing a vast desert at golden hour, dust glowing in the sunset as the camera sweeps alongside.',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-flash\",\n  \"input\": {\n    \"text\": \"A vintage train crossing a vast desert at golden hour, dust glowing in the sunset as the camera sweeps alongside.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Northern lights",
+			"description": "Generate a low-resolution night landscape",
+			"input": {
+				"text": "Colorful northern lights dancing above a frozen lake, a small cabin glowing warmly in the foreground.",
+				"aspect_ratio": "16:9",
+				"resolution": "360p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/northern-lights.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-flash/northern-lights.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-flash',\n  {\n    text: 'Colorful northern lights dancing above a frozen lake, a small cabin glowing warmly in the foreground.',\n    aspect_ratio: '16:9',\n    resolution: '360p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-flash\",\n  \"input\": {\n    \"text\": \"Colorful northern lights dancing above a frozen lake, a small cabin glowing warmly in the foreground.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"360p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": null,
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-omni-flash.png",
+	"metadata": {
+		"Audio Generation": "Yes",
+		"Input Modalities": "Text, image, audio, video",
+		"Resolutions": "360p, 720p, 1080p, 4k"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-ai-studio",
+			"pricing": {
+				"input_audio_tokens": 1.5,
+				"input_image_tokens": 1.5,
+				"input_text_tokens": 1.5,
+				"input_video_tokens": 1.5,
+				"output_reasoning_tokens": 9,
+				"output_text_tokens": 9,
+				"output_video_tokens": 17.5
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-09 18:36:40",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "Text prompt or editing instruction",
+					"type": "string"
+				},
+				"image": {
+					"description": "First-frame or primary reference image",
+					"type": "string"
+				},
+				"last_frame": {
+					"description": "Last-frame reference image",
+					"type": "string"
+				},
+				"reference_images": {
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"video": {
+					"description": "Reference video for editing or extension",
+					"type": "string"
+				},
+				"audio": {
+					"description": "Reference audio input",
+					"type": "string"
+				},
+				"previous_interaction_id": {
+					"type": "string"
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"360p",
+						"720p",
+						"1080p",
+						"4k"
+					]
+				}
+			},
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"anyOf": [
+						{
+							"type": "string",
+							"pattern": "^data:.*"
+						},
+						{
+							"type": "string",
+							"format": "uri"
+						}
+					]
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -8,27 +8,23 @@ import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
 <div>
 	<AnchorHeading depth={3} title="Core Routes" />
 	<ul>
-		{
-			CoreRoutes.map((route) => (
-				<li>
-					<strong>{(route.parent ?? []).concat(route.name).join(" > ")}</strong>
-					<br />
-					<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
-				</li>
-			))
-		}
+		{CoreRoutes.map((route) => (
+			<li>
+				<strong>{(route.parent ?? []).concat(route.name).join(" > ")}</strong>
+				<br />
+				<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
+			</li>
+		))}
 	</ul>
 
 	<AnchorHeading depth={3} title="Zero Trust Routes" />
 	<ul>
-		{
-			ZeroTrustRoutes.map((route) => (
-				<li>
-					<strong>{route.name}</strong>
-					<br />
-					<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
-				</li>
-			))
-		}
+		{ZeroTrustRoutes.map((route) => (
+			<li>
+				<strong>{route.name}</strong>
+				<br />
+				<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
+			</li>
+		))}
 	</ul>
 </div>
