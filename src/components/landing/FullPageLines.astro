@@ -28,9 +28,7 @@ const pad = "max(2rem, 4vw)";
 	aria-hidden="true"
 >
 	{/* Centered box matching the content container (max-w-[1280px]). */}
-	<div
-		class="absolute inset-y-0 left-1/2 w-full max-w-[1280px] -translate-x-1/2"
-	>
+	<div class="absolute inset-y-0 left-1/2 w-full max-w-[1280px] -translate-x-1/2">
 		{/* Dot-grid gutter — fills the right padding, between the two rules. */}
 		<div class="absolute inset-y-0 right-0" style={`width:${pad}`}>
 			<Dots />
@@ -40,11 +38,12 @@ const pad = "max(2rem, 4vw)";
 		<div
 			class="absolute inset-y-0 w-px translate-x-1/2"
 			style={`right:${pad};${dashed}`}
-		>
-		</div>
+		></div>
 
 		{/* Outer dashed rule — at the container boundary. */}
-		<div class="absolute inset-y-0 right-0 w-px translate-x-1/2" style={dashed}>
-		</div>
+		<div
+			class="absolute inset-y-0 right-0 w-px translate-x-1/2"
+			style={dashed}
+		></div>
 	</div>
 </div>
