@@ -6,7 +6,7 @@ products:
   - ruleset-engine
   - rules
 sidebar:
-  order: 8
+  order: 11
 ---
 
 import { CURL, DashButton } from "~/components";
@@ -34,9 +34,9 @@ It is also available when you create or update rules under **Rules** > **Overvie
 
 ## API validation
 
-To validate a Rulesets API write operation, add the `dry_run=true` query parameter to the request. You can use this parameter with `POST`, `PUT`, `PATCH`, and `DELETE` operations at the account or zone level.
+Supported Rulesets API mutation endpoints accept the `dry_run=true` query parameter. You can use this parameter with `POST`, `PUT`, `PATCH`, and `DELETE` operations at the account or zone level.
 
-A dry run performs the same validation and authorization checks as the requested operation. It does not create, update, delete, or publish any configuration.
+A dry run performs the same authorization and server-side validation checks as the requested operation. It does not create, update, delete, or publish any configuration.
 
 Only `true` and `false` are valid values for `dry_run`. An omitted value defaults to `false`. Any other value returns a `400` response.
 
@@ -45,15 +45,18 @@ Only `true` and `false` are valid values for `dry_run`. An omitted value default
 The following request validates a rule update without applying it:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
+	url="https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/$RULESET_ID/rules/$RULE_ID"
 	method="PATCH"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
 	query={{
 		dry_run: "true",
 	}}
 	json={{
 		action: "block",
 		expression: 'ip.src.country eq "GB"',
-		description: "Block requests from Great Britain",
+		description: "Block requests from the United Kingdom",
 		enabled: true,
 	}}
 />
