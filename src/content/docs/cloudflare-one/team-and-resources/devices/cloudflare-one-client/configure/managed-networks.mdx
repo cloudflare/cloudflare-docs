@@ -57,6 +57,8 @@ A TLS endpoint is a host on your network that serves a TLS certificate. The TLS 
 
 The TLS certificate can be hosted by any device on your network. However, the endpoint must be inaccessible to users outside of the network location. The Cloudflare One Client will automatically exclude the managed network endpoint from all device profiles to ensure that users cannot connect to this endpoint over Cloudflare Tunnel. We recommend choosing a host that is physically in the office which remote users do not need to access, such as a printer.
 
+Use a private IP address for the endpoint. If you configure a public IP address, traffic to that IP bypasses Gateway controls because the Cloudflare One Client excludes the endpoint from the tunnel.
+
 ### Create a new TLS endpoint
 
 If you do not already have a TLS endpoint on your network, you can set one up as follows:
@@ -233,7 +235,7 @@ The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed
 </TabItem>
 </Tabs>
 
-The Cloudflare One Client will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, the Cloudflare One Client will not automatically exclude it.
+The Cloudflare One Client will automatically exclude the TLS endpoint from all device profiles if it is specified as an IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of an IP address, the Cloudflare One Client will not automatically exclude it.
 
 :::note[Split Tunnels in Include mode]
 If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) in **Include** mode, ensure that your Split Tunnel entries do not contain the TLS endpoint IP address; otherwise the Cloudflare One Client will exclude the entire Split Tunnel entry from the tunnel. For example, if you are currently including `10.0.0.0/8` but your TLS endpoint is on `10.0.0.1`, use our [IP subtraction calculator](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#add-a-route) to remove `10.0.0.1` from `10.0.0.0/8`.
