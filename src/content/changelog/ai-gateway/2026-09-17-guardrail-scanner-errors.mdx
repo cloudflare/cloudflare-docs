@@ -1,0 +1,13 @@
+---
+title: AI Gateway distinguishes Guardrails scanner errors
+description: AI Gateway now separates Guardrails scanner failures from content moderation results.
+date: 2026-09-17
+---
+
+AI Gateway now separates Guardrails scanner failures from moderation decisions. Applications can respond to billing or service problems without treating content as unsafe.
+
+Scanner credit errors return HTTP `402` with AI Gateway code `2021`. Scanner service errors return HTTP `503` with code `7013` when a **Block** rule applies. Requests with only **Flag** rules continue, and the scanner is recorded as unavailable rather than flagged.
+
+Actual moderation results keep their existing status codes. Provider endpoints return HTTP `424` with code `2016` for blocked prompts or code `2017` for blocked responses. The `/run` API returns HTTP `422` with code `2017` for blocked content.
+
+For the complete error table, refer to [Set up Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/#error-handling-and-blocked-requests).

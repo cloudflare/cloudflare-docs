@@ -31,15 +31,18 @@ After enabling Guardrails, you can monitor results through **AI Gateway Logs** i
 
 ## Error handling and blocked requests
 
-When a request is blocked by guardrails, you will receive a structured error response. These indicate whether the issue occurred with the prompt or the model response. Use error codes to differentiate between prompt versus response violations.
+Guardrails return structured errors when content is blocked. They also return errors when a scan cannot run. Provider-specific endpoints and the `/run` API use different moderation codes. The HTTP status and AI Gateway code identify the result:
 
-- **Prompt blocked**
-  - `"code": 2016`
-  - `"message": "Prompt blocked due to security configurations"`
+| Result                     | Provider-specific endpoints | `/run` API     |
+| -------------------------- | --------------------------- | -------------- |
+| Prompt blocked             | `424` / `2016`              | `422` / `2017` |
+| Response blocked           | `424` / `2017`              | `422` / `2017` |
+| Scanner needs more credits | `402` / `2021`              | `402` / `2021` |
+| Scanner unavailable        | `503` / `7013`              | `503` / `7013` |
 
-- **Response blocked**
-  - `"code": 2017`
-  - `"message": "Response blocked due to security configurations"`
+All structured error responses use `name: "AiGatewayError"`. The internal code is available in `internalCode` and the nested `error` field.
+
+Scanner failures follow the configured Guardrails action. A scanner failure returns `503` when any rule for that phase uses **Block**. If all rules use **Flag**, the request continues and the scanner is recorded as unavailable. A scanner credit error always returns `402`.
 
 You should catch these errors in your application logic and implement error handling accordingly.
 
