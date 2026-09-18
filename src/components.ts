@@ -84,3 +84,6 @@ export { ContainerIsolation } from "./components/react/container/ContainerIsolat
 export { ContainerRequestPath } from "./components/react/container/ContainerRequestPath";
 export { ContainerLifecycle } from "./components/react/container/ContainerLifecycle";
 export { ContainerPlacement } from "./components/react/container/ContainerPlacement";
+export { TunnelOutbound } from "./components/react/tunnel/TunnelOutbound";
+export { TunnelIdentity } from "./components/react/tunnel/TunnelIdentity";
+export { TunnelTraffic } from "./components/react/tunnel/TunnelTraffic";
