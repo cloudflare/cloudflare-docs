@@ -1,0 +1,13 @@
+---
+title: Authentication options for Google Workspace identity providers
+description: Control Google account prompts and send domain-matched login hints from Cloudflare Access.
+date: 2026-09-10
+products:
+  - access
+---
+
+Google Workspace identity provider integrations now support additional authentication options through the Cloudflare API. Administrators can set Google's prompt behavior to `none`, `consent`, or `select_account`.
+
+Administrators can also turn on login hints. When exactly one previously authenticated Access email matches the Google Workspace domain, Access sends that address to Google to simplify account selection.
+
+For configuration details, refer to [Authentication options](/cloudflare-one/integrations/identity-providers/google-workspace/#authentication-options).

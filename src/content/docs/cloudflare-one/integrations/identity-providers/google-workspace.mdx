@@ -91,9 +91,11 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that you wish to add to your user's identity.
 
-6. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
+6. (Optional) Configure [authentication options](#authentication-options) through the API.
 
-7. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
+7. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
+
+8. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
 To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google Workspace. Your user identity and group membership should return.
 
@@ -107,14 +109,25 @@ To test successfully, you must [finish setup](https://community.cloudflare.com/t
 
 :::
 
-## Example API Configuration
+## Authentication options
+
+You can control how Google prompts users during authentication by updating the identity provider through the API. The Google Workspace configuration supports the following fields:
+
+- `prompt`: Set to `none`, `consent`, or `select_account` to send the corresponding prompt value to Google.
+- `use_login_hint`: Set to `true` to use a previously authenticated Access email address as Google's login hint. Access sends the hint only when exactly one email address matches the Google Workspace domain.
+
+First, retrieve the identity provider's current configuration from the [Access identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/get/). Then, send the complete configuration to the [update identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/update/) with the authentication options added to the `config` object.
+
+## Example API configuration
 
 ```json
 {
 	"config": {
 		"client_id": "<your client id>",
 		"client_secret": "<your client secret>",
-		"apps_domain": "mycompany.com"
+		"apps_domain": "mycompany.com",
+		"prompt": "select_account",
+		"use_login_hint": true
 	},
 	"type": "google-apps",
 	"name": "my example idp"
