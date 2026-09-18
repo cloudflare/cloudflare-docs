@@ -67,9 +67,9 @@ Confidence thresholds indicate how confident Cloudflare DLP is in a detection. D
 
 When you set a confidence threshold on a profile, DLP only triggers on detections at that level or higher:
 
-- **Low** (default) — Based on regular expressions with few proximity keywords. This is the most inclusive setting, with high tolerance for false positives
-- **Medium** — Applies additional validations, to filter out low confidence detections. This setting has a medium tolerance for false positives.
-- **Medium** — Applies additional validations to filter out low confidence detections. This setting has a medium tolerance for false positives.
+- **Low** (default) — Uses regular expressions with few proximity keywords. This is the most inclusive setting and has the highest tolerance for false positives.
+- **Medium** — Applies additional validation to filter out low-confidence detections. This setting has a medium tolerance for false positives.
+- **High** — Triggers only on detections classified as high confidence.
 
 Confidence threshold is set on the DLP profile. Not all detection entries support confidence thresholds — when you select a threshold in the dashboard, entries that support confidence scoring display their current level. Entries without a displayed confidence level either do not support this feature or use detection methods (such as exact match) where confidence scoring does not apply.
 
