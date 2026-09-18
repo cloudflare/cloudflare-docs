@@ -1,0 +1,32 @@
+---
+title: Pricing and availability by product
+pcx_content_type: navigation
+description: Find pricing and availability for Workers, Log Explorer, and Logpush.
+sidebar:
+  order: 5
+  label: Pricing
+products:
+  - observability
+---
+
+import { CardGrid, LinkCard } from "~/components";
+
+Workers, Log Explorer, and Logpush use separate pricing and availability models.
+
+<CardGrid>
+	<LinkCard
+		title="Workers and Workers Logs"
+		description="Review Workers plans, included usage, and additional charges."
+		href="/workers/platform/pricing/"
+	/>
+	<LinkCard
+		title="Log Explorer"
+		description="Review Log Explorer availability, billing, and usage management."
+		href="/log-explorer/pricing/"
+	/>
+	<LinkCard
+		title="Logpush"
+		description="Review current Logpush availability by plan."
+		href="/logs/logpush/"
+	/>
+</CardGrid>
