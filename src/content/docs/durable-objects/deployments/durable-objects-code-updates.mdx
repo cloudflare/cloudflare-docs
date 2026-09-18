@@ -10,12 +10,7 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-{/* TODO: Confirm the compatibility date and launch date before publication.
-    TODO: Confirm the `code_update_strategy` REST API field name and shape with the EWC/API
-    team. The engineering spec still calls this field `durable_objects_hibernation_timeout`
-    and uses a duration string. This page follows Brendan Irvine-Broque's proposal instead
-    (`code_update_strategy` with `mode` and `max_delay`). Update this page once the spec and
-    schema catch up. */}
+{/* TODO: Confirm the launch date for this feature before publication. */}
 
 By default, Durable Objects delay applying Worker code deployments so in-flight requests can finish. Instead of resetting an active Durable Object immediately to apply a code update, Cloudflare applies the code update once the object is inactive (is hibernated).
 
@@ -28,12 +23,9 @@ Deploy a Worker with `--durable-objects-code-update-mode immediate` to apply a c
 | `deferred`  | 30 seconds            | Cloudflare waits for an active Durable Object to hibernate before applying the update. If the object does not hibernate within `max_delay` (300 seconds maximum), Cloudflare resets it and applies the update. |
 | `immediate` | Not applicable        | Cloudflare resets an active Durable Object and applies the update right away, without waiting for it to hibernate.                                |
 
-Durable Objects code update strategy depends on your Workers compatibility date:
+`deferred` with a 30-second `max_delay` is the default code update strategy for all Workers — you do not need to set a compatibility date or change any configuration to get this behavior.
 
-- Workers with a compatibility date **before** `COMPATIBILITY_DATE` default to `immediate`.
-- Workers with a compatibility date **on or after** `COMPATIBILITY_DATE` default to `deferred` with a 30-second `max_delay`.
-
-An explicit `code_update_strategy` — whether in your Wrangler configuration, passed as a CLI flag, or sent through the REST API — always overrides the compatibility-date default.
+An explicit `code_update_strategy` — whether in your Wrangler configuration, passed as a CLI flag, or sent through the REST API — always overrides the default.
 
 ## How it works
 
@@ -84,8 +76,7 @@ If a Durable Objects binding uses `script_name` to reference a class defined in 
 
 | `code_update_strategy`                                                    | Result                                                                                                                       |
 | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| *(omitted)*, compatibility date before `COMPATIBILITY_DATE`                 | Defaults to `immediate`.                                                                                                     |
-| *(omitted)*, compatibility date on or after `COMPATIBILITY_DATE`            | Defaults to `deferred` with a 30-second `max_delay`.                                                                         |
+| *(omitted)*                                                                  | Defaults to `deferred` with a 30-second `max_delay`.                                                                         |
 | `{ "mode": "deferred" }`                                                     | Cloudflare waits up to the default `max_delay` (30 seconds) for the object to hibernate.                                     |
 | `{ "mode": "deferred", "max_delay": 0 }`                                     | Valid, but Cloudflare waits zero seconds — behaves identically to `immediate`.                                               |
 | `{ "mode": "deferred", "max_delay": 120 }`                                   | Cloudflare waits up to 120 seconds for the object to hibernate before applying the update.                                   |
@@ -117,7 +108,7 @@ Add `code_update_strategy` alongside `bindings` in the `durable_objects` object 
 
 </WranglerConfig>
 
-`max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default for your compatibility date.
+`max_delay` is in seconds and only applies when `mode` is `deferred`. The maximum is `300` (five minutes). Omit `max_delay` to use the default (30 seconds).
 
 If you're using [`ctx.exports`](/workers/runtime-apis/context/#exports) and don't need an explicit `bindings` entry, `code_update_strategy` still applies on its own:
 
@@ -160,7 +151,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/
   }'
 ```
 
-Cloudflare returns the effective strategy in create, get, and list deployment responses, including the compatibility-date default when you omit the field. Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history:
+Cloudflare returns the effective strategy in create, get, and list deployment responses, including the default when you omit the field. Use `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments/{deployment_id}` to check the strategy Cloudflare applied to one deployment, or `GET /accounts/{account_id}/workers/scripts/{script_name}/deployments` to list deployment history:
 
 ```json
 {
@@ -189,7 +180,7 @@ Wrangler resolves `mode` in this order:
 
 1. The `--durable-objects-code-update-mode` flag.
 2. `durable_objects.code_update_strategy.mode` in your Wrangler configuration.
-3. The default for your compatibility date.
+3. The default (`deferred`).
 
 A single-deployment override is most useful when waiting is worse than resetting. For example, set `code_update_strategy` to `{ "mode": "immediate" }` (or pass `--durable-objects-code-update-mode immediate`) when:
 
