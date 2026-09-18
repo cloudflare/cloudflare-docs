@@ -130,12 +130,13 @@ The [`QueuesContentType`](/queues/configuration/javascript-apis/#queuescontentty
 
 ## Consumers
 
-Queues supports two types of consumer:
+Queues supports three types of consumer:
 
 1. A [consumer Worker](/queues/configuration/configure-queues/), which is push-based: the Worker is invoked when the queue has messages to deliver.
 2. A [HTTP pull consumer](/queues/configuration/pull-consumers/), which is pull-based: the consumer calls the queue endpoint over HTTP to receive and then acknowledge messages.
+3. A [notification consumer](/queues/configuration/notification-consumers/), which sends messages to email, PagerDuty, or webhook destinations through Cloudflare Notifications.
 
-A queue can only have one type of consumer configured.
+A queue can only have one active consumer configured.
 
 ### Create a consumer Worker
 
@@ -230,6 +231,10 @@ To remove a queue from your project, run `wrangler queues consumer remove <queue
 A queue can have a HTTP-based consumer that pulls from the queue, instead of messages being pushed to a Worker.
 
 This consumer can be any HTTP-speaking service that can communicate over the Internet. Review the [pull consumer guide](/queues/configuration/pull-consumers/) to learn how to configure a pull-based consumer for a queue.
+
+### Notification consumers
+
+A queue can send messages to email, PagerDuty, or webhook destinations through Cloudflare Notifications. Review [Notification consumers](/queues/configuration/notification-consumers/) to learn how to configure notification delivery.
 
 ## Messages
 
