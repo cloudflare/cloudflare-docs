@@ -307,16 +307,16 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "high",
+                                                "none"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: low maps to high; medium maps to high; max maps to high.",
+                                    "default": "high"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -324,7 +324,7 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1554,16 +1554,16 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "high",
+                                                "none"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: low maps to high; medium maps to high; max maps to high.",
+                                    "default": "high"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -1571,7 +1571,7 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2371,16 +2371,16 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "high",
+                                                            "none"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: low maps to high; medium maps to high; max maps to high.",
+                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -2388,7 +2388,7 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3618,16 +3618,16 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "high",
+                                                            "none"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: low maps to high; medium maps to high; max maps to high.",
+                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -3635,7 +3635,7 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",

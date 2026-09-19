@@ -83,6 +83,18 @@ const response = await openai.responses.create({
 });
 ```
 
+### Reasoning controls
+
+Reasoning controls and defaults depend on the model. Refer to each [model's input schema](/workers-ai/models/) for its supported values.
+
+- **Chat Completions:** Use `reasoning_effort` when the model supports named effort levels. For example, GPT-OSS supports `low`, `medium` (the default), and `high`. Its reasoning is always enabled.
+- **Responses:** For GPT-OSS, use `reasoning: { effort: "medium" }` instead of the top-level `reasoning_effort` field.
+- **Thinking on or off:** Models such as GLM-4.7-Flash support `chat_template_kwargs: { enable_thinking: false }`. GLM-4.7-Flash has an on/off control, rather than separate low, medium, and high levels.
+
+Gemma 4 supports `reasoning_effort: "none"` (the default) or `"high"`. Kimi K2.6 supports the same two values and defaults to `"high"`. Compatibility aliases such as `"low"` and `"medium"` select `"high"` for these models; they do not represent distinct effort levels. A `"none"` alias does not necessarily disable reasoning on models where reasoning is mandatory. Refer to the model's schema before using it as an off switch.
+
+The input schema linked from each model page is also available as JSON. For example, [Gemma 4's synchronous input schema](/workers-ai/models/gemma-4-26b-a4b-it/sync-input.json) documents its effort values and thinking default.
+
 ### AI Gateway
 
 These endpoints are also compatible with [AI Gateway](/ai-gateway/usage/providers/workersai/#openai-compatible-endpoints).

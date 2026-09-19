@@ -303,16 +303,17 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "max",
+                                                "high",
+                                                "low"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
+                                    "default": "max"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -320,7 +321,10 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                            "enum": [
+                                                true
+                                            ]
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1550,16 +1554,17 @@
                                         {
                                             "type": "string",
                                             "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
+                                                "max",
+                                                "high",
+                                                "low"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
+                                    "default": "max"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -1567,7 +1572,10 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                            "enum": [
+                                                true
+                                            ]
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2367,16 +2375,17 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "max",
+                                                            "high",
+                                                            "low"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
+                                                "default": "max"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -2384,7 +2393,10 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                                        "enum": [
+                                                            true
+                                                        ]
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3614,16 +3626,17 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
+                                                            "max",
+                                                            "high",
+                                                            "low"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
+                                                "default": "max"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -3631,7 +3644,10 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                                        "enum": [
+                                                            true
+                                                        ]
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
