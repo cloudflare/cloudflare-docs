@@ -11,7 +11,7 @@ reviewed: 2026-06-18
 
 import { TypeScriptExample } from "~/components";
 
-Use `exec()` to start another process inside a running [Container](/containers/reference/container-class/). The examples call `this.ctx.container.exec()` inside a class extending `Container` from `@cloudflare/containers`.
+Use `exec()` to start another process inside a running [Container](/containers/api/container-class/). The examples call `this.ctx.container.exec()` inside a class extending `Container` from `@cloudflare/containers`.
 
 `exec()` does not start a stopped Container. In remote procedure call (RPC) methods, check `this.ctx.container.running` and call `await this.start()` when needed. You can also use the `onStart()` hook to run any series of commands whenever the Container starts.
 
@@ -490,4 +490,4 @@ export class MyContainer extends Container {
 ```
 </TypeScriptExample>
 
-For all fields and return types, refer to the [`exec()` API contract](/durable-objects/api/container/#exec).
+For all fields and return types, refer to the [`exec()` API contract](/containers/api/durable-object-container/#exec).
