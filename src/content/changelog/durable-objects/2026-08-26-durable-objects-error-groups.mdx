@@ -1,0 +1,23 @@
+---
+title: Filter Durable Objects by error group
+description: Filter Durable Object instances by error category to quickly drill down, investigate, and resolve production issues.
+products:
+  - durable-objects
+  - workers
+date: 2026-08-26
+---
+
+import errorFilterImage from "~/assets/images/changelog/durable-objects/durable-objects-error-filter.png";
+
+The Durable Objects overview now makes it easier to investigate errors by showing exactly which Durable Object instances are associated with an error group.
+
+Previously, you could identify that an error occurred in your application, but you could not easily drill down to pinpoint the specific Durable Objects involved. Now, you can filter your instances by specific error categories, including internal errors, Worker exceptions, CPU and memory limits, and client disconnects. By reviewing the affected objects alongside their request and error-rate metrics, you can significantly reduce the time it takes to debug and resolve production issues.
+
+For example, select **Worker threw exception** to surface the exact object IDs associated with those exceptions. You can then compare each affected instance's request volume, error rate, P99 wall time, P99 memory, and last active time to help identify and resolve the issue.
+
+<img
+	src={errorFilterImage.src}
+	alt="The Durable Objects overview filtered by Worker threw exception, showing the matching object ID and its request, error rate, wall time, memory, and last active metrics."
+/>
+
+To learn more about debugging Durable Objects, refer to [Troubleshooting Durable Objects](/durable-objects/observability/troubleshooting/).
