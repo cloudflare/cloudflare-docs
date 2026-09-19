@@ -64,8 +64,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v6
-      - name: Build & Deploy Worker
+      - name: Checkout
+        uses: actions/checkout@v6
+      # Run your project's build step, if required
+      # - name: Build
+      #   run: npm ci && npm run build
+      - name: Deploy Worker
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
