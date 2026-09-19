@@ -21,12 +21,12 @@ package.json @cloudflare/content-engineering
 
 # 1.1.1.1
 
-/src/assets/images/1.1.1.1/ @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
+/src/assets/images/1.1.1.1/ @cf-joshnabbott @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
 /src/content/changelog/1.1.1.1/ @chreo @dklbreitling @fattouche @hannes-cf @kerolasa @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/1.1.1.1/ @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
-/src/content/partials/1.1.1.1/ @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
-/src/content/directory/1.1.1.1.yaml @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
-/src/icons/1.1.1.1.svg @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
+/src/content/docs/1.1.1.1/ @cf-joshnabbott @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
+/src/content/partials/1.1.1.1/ @cf-joshnabbott @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
+/src/content/directory/1.1.1.1.yaml @cf-joshnabbott @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
+/src/icons/1.1.1.1.svg @cf-joshnabbott @cf-rhett @chreo @csujedihy @dklbreitling @fattouche @hannes-cf @jiulingz @kerolasa @lpraneis @matildeopbravo @mworsley-cloudflare @sebastiaanyn @svenr-cf @tojens-ietf @vavrusa @vendemiat @Woutifier @xofyarg @cloudflare/product-owners
 
 # access
 
@@ -287,7 +287,7 @@ package.json @cloudflare/content-engineering
 
 # cloudflare-one
 
-/src/assets/images/cloudflare-one/ @asamborski @cf-rhett @csujedihy @jiulingz @lpraneis @jeffh-cloudflare @steve-cloudflare @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/cloudflare-one/ @asamborski @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @jeffh-cloudflare @steve-cloudflare @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/changelog/cloudflare-one/ @asamborski @kennyj42 @jeffh-cloudflare @steve-cloudflare @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/docs/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/access-controls/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners
@@ -304,8 +304,8 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/vnc-browser-rendering.mdx @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/setup/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/team-and-resources/devices/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up.mdx @asamborski @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up.mdx @asamborski @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/team-and-resources/users/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
@@ -316,7 +316,7 @@ package.json @cloudflare/content-engineering
 /src/content/partials/cloudflare-one/ssh/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/troubleshooting/browser-isolation.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/partials/cloudflare-one/warp/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/warp/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/assets/images/changelog/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/directory/cloudflare-one.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/glossary/cloudflare-one.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
@@ -324,8 +324,8 @@ package.json @cloudflare/content-engineering
 
 # cloudflare-one-client
 
-/src/content/changelog/cloudflare-one-client/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/cloudflare-one-client.yaml @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/cloudflare-one-client/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/cloudflare-one-client.yaml @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # cloudflare-wan
 
@@ -1012,11 +1012,11 @@ package.json @cloudflare/content-engineering
 
 # warp-client
 
-/src/content/docs/warp-client/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
-/src/content/partials/warp-client/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
-/src/content/directory/warp-client.yaml @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
-/src/content/warp-releases/ @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
-/src/icons/warp-client.svg @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
+/src/content/docs/warp-client/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
+/src/content/partials/warp-client/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
+/src/content/directory/warp-client.yaml @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
+/src/content/warp-releases/ @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
+/src/icons/warp-client.svg @cf-joshnabbott @cf-rhett @csujedihy @jiulingz @lpraneis @tojens-ietf @cloudflare/product-owners
 
 # web-analytics
 
