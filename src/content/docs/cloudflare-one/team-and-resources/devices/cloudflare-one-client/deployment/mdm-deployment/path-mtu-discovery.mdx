@@ -45,7 +45,7 @@ Certain features may be disabled or degraded at low MTU thresholds. For details,
 
 ## Enable Path MTU Discovery
 
-PMTUD is disabled by default. To enable PMTUD on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `true`. For example:
+PMTUD is now enabled by default (Cloudflare One Client version 2026.6.822.0 and above). To disable PMTUD on your devices, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#windows) with the `enable_pmtud` key set to `false`. For example:
 
 ```xml
 <dict>
@@ -54,13 +54,13 @@ PMTUD is disabled by default. To enable PMTUD on your devices, [deploy an MDM fi
 	<key>warp_tunnel_protocol</key>
   <string>masque</string>
 	<key>enable_pmtud</key>
-  <true/>
+  <false/>
 </dict>
 ```
 
-This configuration enables the PMTUD feature and explicitly configures the MASQUE tunnel protocol.
+This configuration disables the PMTUD feature and explicitly configures the MASQUE tunnel protocol.
 
-The Cloudflare One Client will now send active probes to detect the network path MTU and will update its tunnel interface MTU accordingly. You can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
+With Path MTU Discovery disabled, the Cloudflare One Client will not send active probes to detect the network path MTU and will not update its tunnel interface MTU accordingly. If enabled, you can expect PMTUD probes to generate an extra 25 Mb/day of traffic coming from the device.
 
 ## Verify PMTUD is enabled
 
