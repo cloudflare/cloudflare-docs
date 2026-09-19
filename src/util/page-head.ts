@@ -4,6 +4,16 @@ import { formatContentType } from "./content-type";
 
 export type SchemaType = "BlogPosting" | "WebPage" | "TechArticle";
 
+function resolveBaseTitle({
+	title,
+	titleOverride,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
+	return titleOverride ? titleOverride.split(" | ")[0] : title;
+}
+
 /** `<title>`: `${base} · ${suffix}` when a suffix applies, else a raw
  *  head.title override or `${title} | ${siteTitle}`. */
 export function resolvePageTitle({
@@ -17,10 +27,22 @@ export function resolvePageTitle({
 	titleSuffix?: string;
 	siteTitle: string;
 }): string {
-	const baseTitle = titleOverride ? titleOverride.split(" | ")[0] : title;
+	const baseTitle = resolveBaseTitle({ title, titleOverride });
 	return titleSuffix
 		? `${baseTitle} · ${titleSuffix}`
 		: (titleOverride ?? `${title} | ${siteTitle}`);
+}
+
+/** JSON-LD headline: always the clean semantic page title without an SEO,
+ *  product, or site suffix, even when `<title>` preserves a raw override. */
+export function resolvePageHeadline({
+	title,
+	titleOverride,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
+	return resolveBaseTitle({ title, titleOverride });
 }
 
 /** Favicon link: first of svg > ico > png that exists, else svg. */
@@ -104,7 +126,7 @@ export function classifyContentType(
 export interface StructuredDataInput {
 	schemaType: SchemaType;
 	canonical: string | null;
-	fullTitle: string;
+	headline: string;
 	description?: string;
 	lang: string;
 	ogImage?: string | null;
@@ -120,7 +142,7 @@ export interface StructuredDataInput {
 export function buildStructuredData({
 	schemaType,
 	canonical,
-	fullTitle,
+	headline,
 	description,
 	lang,
 	ogImage,
@@ -134,7 +156,7 @@ export function buildStructuredData({
 		"@context": "https://schema.org",
 		"@type": schemaType,
 		"@id": `${canonical}#page`,
-		headline: fullTitle,
+		headline,
 		...(description ? { description } : {}),
 		url: canonical,
 		inLanguage: lang,
