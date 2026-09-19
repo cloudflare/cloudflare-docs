@@ -1218,6 +1218,10 @@ The following options are available under the `assets` key.
   - Determines the redirects and rewrites of requests for HTML content. Learn more about the various options in [assets routing](/workers/static-assets/routing/advanced/html-handling/).
 - `not_found_handling`: <Type text={'"single-page-application" | "404-page" | "none"'} /> <MetaInfo text={'optional, defaults to "none"'} />
   - Determines the handling of requests that do not map to an asset. Learn more about the various options for [routing behavior](/workers/static-assets/#routing-behavior).
+- `retention` <Type text="object" /> <MetaInfo text="optional" />
+  - Configures [asset retention](/workers/static-assets/asset-retention/) for this Worker. When enabled, assets from recently deployed versions remain reachable, preventing version skew breakage for SPAs and static sites. Enabling is immediately retroactive over the last 24 hours of deployments.
+  - `enabled` <Type text="boolean" /> <MetaInfo text="required" />
+    - Set to `true` to enable asset retention.
 
 Example:
 
