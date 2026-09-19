@@ -1259,6 +1259,8 @@ You can also configure `run_worker_first` with an array of route patterns:
 
 You can define [Containers](/containers) to run alongside your Worker using the `containers` field.
 
+Each Container application has a [scheduling policy](/containers/configuration/scheduling-policy/) that determines whether image and instance configuration is managed centrally or supplied by Durable Object code at runtime. The policy is immutable after the application is created.
+
 :::note
 You must also define a Durable Object to communicate with your Container via Workers. This Durable Object's
 class name must match the `class_name` value in container configuration.
@@ -1266,19 +1268,26 @@ class name must match the `class_name` value in container configuration.
 
 The following options are available:
 
-- `image` <Type text="string" /> <MetaInfo text="required" />
+- `scheduling_policy` <Type text="string" /> <MetaInfo text="optional" />
+  - `"default"` uses the centrally configured application image, instance type, limits, and rollouts. This is the default when the field is omitted.
+  - `"durable_object"` lets each Durable Object supply its Container image and instance size to `ctx.container.start()`. Refer to [Scheduling Policies](/containers/configuration/scheduling-policy/).
+- `image` <Type text="string" /> <MetaInfo text="required for default" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
     build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
+- `images` <Type text="Record<string, object>" /> <MetaInfo text="optional for durable_object" />
+  - Named images that Durable Object code can access through `ctx.container.images`. A configuration can contain up to 100 named images, and each name must contain 1-128 characters.
+  - Each named image must set exactly one of `dockerfile` or `image`. `dockerfile` is a local Dockerfile path and can also set `build_context` and `build_vars`. `image` must be a digest-pinned reference in the Cloudflare managed registry.
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
     and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
-  - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
+  - The instance type for the `default` policy. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
     see the [instance types documentation](/containers/platform/limits/#instance-types).
+  - For the `durable_object` policy, set the runtime `instance` option in `ctx.container.start()` instead.
   - To specify a custom instance type, see [here](#custom-instance-types).
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
+  - The maximum number of concurrent container instances for the `default` policy. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
   - Defaults to 20.
   - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 - `name` <Type text="string" /> <MetaInfo text="optional" />
@@ -1312,6 +1321,7 @@ The following options are available:
 	"containers": [
 		{
 			"class_name": "MyContainer",
+			"scheduling_policy": "default",
 			"image": "./Dockerfile",
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
@@ -1342,6 +1352,48 @@ The following options are available:
 ```
 
 </WranglerConfig>
+
+For the `durable_object` policy, name one or more images and select one from Durable Object code when the Container starts:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+					"build_context": ".",
+					"build_vars": {
+						"APP_ENV": "production",
+					},
+				},
+			},
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "AGENT_COMPUTER",
+				"class_name": "AgentComputer",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["AgentComputer"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Only policy-level fields such as `name`, `class_name`, `scheduling_policy`, and `images` apply to a Durable Object-managed entry. Configure its image and instance size in `ctx.container.start()` instead of setting `image`, `instance_type`, or rollout fields here.
 
 ### Custom Instance Types
 

@@ -104,11 +104,12 @@ Refer to [image management](/containers/guides/image-management/#use-pre-built-c
 
 ## Is disk persistent? What happens to my disk when my container sleeps?
 
-All disk is ephemeral. When a Container instance goes to sleep, the next time
-it is started, it will have a fresh disk as defined by its container image.
+All disk is ephemeral by default. When a Container instance goes to sleep, the
+next time it starts, it uses a fresh disk from the container image.
 
-Snapshots are coming soon, which allow the user to quickly persist and restore the disk
-from an entire container or a directory.
+If you need point-in-time filesystem state, create and restore a snapshot.
+Snapshots are immutable, so later file changes require a new snapshot. For more
+information, refer to [Snapshots](/containers/guides/snapshots/).
 
 You can also use [FUSE](/containers/examples/r2-fuse-mount/) to persist disk
 to R2 or other object storage backends. Though you should not expect native
