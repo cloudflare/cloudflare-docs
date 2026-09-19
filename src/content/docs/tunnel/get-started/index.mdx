@@ -170,6 +170,10 @@ Your application is now live at the hostname you configured. Cloudflare automati
 Non-HTTP services (SSH, TCP, RDP) require `cloudflared` on the client side. Refer to the [protocols reference](/tunnel/concepts/routing/#supported-protocols) for details.
 :::
 
+:::note
+The [Cloudflare Trace tool](https://dash.cloudflare.com/?to=/:account/trace) can be helpful for testing your tunnels before DNS is finished propagating. If trace is creating requests to your web server, your tunnel is correctly configured but you'll need to wait for DNS to update.
+:::
+
 ## Quick tunnels (development)
 
 For local development, you can instantly expose localhost without a Cloudflare account:
