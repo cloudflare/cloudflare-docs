@@ -1,0 +1,66 @@
+---
+title: Validate rule changes before deployment
+pcx_content_type: configuration
+description: Validate rules and rulesets in the Cloudflare dashboard or with the Rulesets API without deploying changes.
+products:
+  - ruleset-engine
+  - rules
+sidebar:
+  order: 11
+---
+
+import { CURL, DashButton } from "~/components";
+
+Cloudflare can validate a rule or ruleset before deployment. Validation checks the complete configuration without persisting or publishing changes.
+
+Validation includes:
+
+- Expression syntax and the availability of fields, functions, and operators
+- Actions, action parameters, and phase compatibility
+- Permissions, plan entitlements, and rule quotas
+- References to resources used by the rule
+
+## Dashboard validation
+
+The Cloudflare dashboard automatically validates supported rule changes before deployment. If validation fails, the dashboard displays the error without publishing the change.
+
+Dashboard validation is available for custom rules and rate limiting rules under **Security** > **Security rules**.
+
+<DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+It is also available when you create or update rules under **Rules** > **Overview**.
+
+<DashButton url="/?to=/:account/:zone/rules/overview" />
+
+## API validation
+
+Supported Rulesets API mutation endpoints accept the `dry_run=true` query parameter. You can use this parameter with `POST`, `PUT`, `PATCH`, and `DELETE` operations at the account or zone level.
+
+A dry run performs the same authorization and server-side validation checks as the requested operation. It does not create, update, delete, or publish any configuration.
+
+Only `true` and `false` are valid values for `dry_run`. An omitted value defaults to `false`. Any other value returns a `400` response.
+
+### Example
+
+The following request validates a rule update without applying it:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/$RULESET_ID/rules/$RULE_ID"
+	method="PATCH"
+	headers={{
+		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
+	}}
+	query={{
+		dry_run: "true",
+	}}
+	json={{
+		action: "block",
+		expression: 'ip.src.country eq "GB"',
+		description: "Block requests from the United Kingdom",
+		enabled: true,
+	}}
+/>
+
+The API returns the same errors and status codes as the corresponding write operation. A successful operation that normally returns `200` returns `result: null`. An operation that normally returns `204 No Content` continues to return `204`.
+
+For supported operations and request schemas, refer to the [Rulesets API reference](/api/resources/rulesets/).
