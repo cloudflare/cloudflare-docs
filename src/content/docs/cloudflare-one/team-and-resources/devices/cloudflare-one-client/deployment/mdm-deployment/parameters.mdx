@@ -153,8 +153,10 @@ NetBIOS over TCP/IP (NetBT) is a legacy feature in Windows primarily used for na
 
 **Value:**
 
-- `false` — (default) Disables PMTUD.
-- `true` — Enables PMTUD on the Cloudflare One Client tunnel interface.
+- `false` — Disables PMTUD.
+- `true` — Enables PMTUD on the Cloudflare One Client tunnel interface. This is the default in Cloudflare One Client version 2026.6.822.0 and later.
+
+In earlier versions, the default is `false`.
 
 ### `enable_post_quantum`
 
