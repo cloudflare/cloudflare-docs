@@ -149,6 +149,24 @@ After a recorded session closes, the recording may still be finalizing. The endp
 
 The event arrays are available under `result.events`. The keys in `result.events` (such as `target-1`, `target-2`) are [CDP targets](https://chromedevtools.github.io/devtools-protocol/tot/Target/). In the context of session recording, each target typically corresponds to a browser tab. A session that opened multiple tabs will have one target per tab, and each target's value is an independent rrweb event array for that tab.
 
+## Retrieve network activity via API
+
+Use the network recording endpoint to retrieve the requests captured for a specific target. The `target` query parameter is required and must contain one of the target IDs returned in `result.events`:
+
+```bash
+curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID>/network?target=<TARGET_ID>' \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+The response is a JSON array containing the recorded requests for that target, including available request and response headers, payloads, status codes, timing information, and transfer sizes.
+
+To retrieve the network activity as an [HTTP Archive (HAR) 1.2](https://w3c.github.io/web-performance/specs/HAR/Overview.html) document, set `format=har`:
+
+```bash
+curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID>/network?target=<TARGET_ID>&format=har' \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
 ## Replay a recording
 
 Each value in `result.events` is a standard rrweb event array and can be passed directly to [`rrweb-player`](https://github.com/rrweb-io/rrweb/tree/master/packages/rrweb-player) to self-host a replay UI with a timeline scrubber and playback controls.

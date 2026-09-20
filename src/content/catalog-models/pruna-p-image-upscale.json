@@ -12,6 +12,14 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image (1-4 MP)": 0.005,
+		"Per image (5-8 MP)": 0.01,
+		"Per image (9-16 MP)": 0.02,
+		"Per image (17-32 MP)": 0.04,
+		"Per image (33-64 MP)": 0.06,
+		"Per image (65-128 MP)": 0.12
+	},
 	"examples": [
 		{
 			"name": "4MP Upscale",
@@ -62,6 +70,19 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"mp_1_4": 0.005,
+				"mp_5_8": 0.01,
+				"mp_9_16": 0.02,
+				"mp_17_32": 0.04,
+				"mp_33_64": 0.06,
+				"mp_65_128": 0.12
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:52:26",
 	"schema": {
@@ -70,19 +91,19 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Input image to upscale. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
-					"type": "string"
+					"type": "string",
+					"description": "Input image to upscale. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
 				},
 				"target": {
-					"description": "Target resolution in megapixels (1-128). Output is capped at 128 MP.",
 					"default": 4,
+					"description": "Target resolution in megapixels (1-128). Output is capped at 128 MP.",
 					"type": "integer",
 					"minimum": 1,
 					"maximum": 128
 				},
 				"output_format": {
-					"description": "Format of the output image.",
 					"default": "jpg",
+					"description": "Format of the output image.",
 					"type": "string",
 					"enum": [
 						"webp",
@@ -91,25 +112,25 @@
 					]
 				},
 				"output_quality": {
-					"description": "Quality when saving the output image (0-100). Not relevant for .png outputs.",
 					"default": 80,
+					"description": "Quality when saving the output image (0-100). Not relevant for .png outputs.",
 					"type": "integer",
 					"minimum": 0,
 					"maximum": 100
 				},
 				"enhance_details": {
-					"description": "Enhance fine textures and small details.",
 					"default": false,
+					"description": "Enhance fine textures and small details.",
 					"type": "boolean"
 				},
 				"enhance_realism": {
-					"description": "Improve realism. Recommended for AI-generated images.",
 					"default": false,
+					"description": "Improve realism. Recommended for AI-generated images.",
 					"type": "boolean"
 				},
 				"disable_safety_checker": {
-					"description": "Disable safety checker for generated images.",
 					"default": false,
+					"description": "Disable safety checker for generated images.",
 					"type": "boolean"
 				}
 			},
@@ -129,9 +150,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Presigned URL for the upscaled image.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the upscaled image."
 				}
 			},
 			"required": [

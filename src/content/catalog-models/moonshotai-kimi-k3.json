@@ -16,6 +16,11 @@
 	"context_length": 1048576,
 	"max_output_tokens": 1048576,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 3,
+		"Output tokens (per 1M)": 15,
+		"Cached input tokens (per 1M)": 0.3
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -21703,8 +21708,8 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/moonshotai/kimi-k3.png",
 	"metadata": {
 		"Architecture": "Kimi Delta Attention (Hybrid Linear)",
-		"Parameters": "2.8T",
 		"Function Calling": "Yes",
+		"Parameters": "2.8T",
 		"Reasoning": "Yes (always-on)",
 		"Vision": "Yes"
 	},
@@ -21712,6 +21717,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "moonshot",
+			"pricing": {
+				"input_tokens": 3,
+				"output_tokens": 15,
+				"input_cached_tokens": 0.3
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-16 19:53:45",
 	"schema": {
@@ -21750,8 +21765,7 @@
 							}
 						},
 						"required": [
-							"role",
-							"content"
+							"role"
 						],
 						"additionalProperties": {}
 					}
@@ -21840,6 +21854,13 @@
 						}
 					},
 					"additionalProperties": false
+				},
+				"reasoning_effort": {
+					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+					"type": [
+						"string",
+						"null"
+					]
 				}
 			},
 			"required": [
@@ -21878,13 +21899,9 @@
 										"type": "string"
 									},
 									"content": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									},
 									"tool_calls": {
@@ -21899,22 +21916,29 @@
 										]
 									},
 									"audio": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "string"
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
 											},
-											"data": {
-												"type": "string"
-											},
-											"expires_at": {
-												"type": "number"
-											},
-											"transcript": {
-												"type": "string"
+											{
+												"type": "null"
 											}
-										},
-										"additionalProperties": {}
+										]
 									}
 								},
 								"required": [
@@ -21923,13 +21947,9 @@
 								"additionalProperties": {}
 							},
 							"finish_reason": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "null"
-									}
+								"type": [
+									"string",
+									"null"
 								]
 							}
 						},

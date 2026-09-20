@@ -37,7 +37,8 @@ import { WranglerCommand } from "~/components";
 You can add or replace help text for specific flags using the `ExtraFlagDetails` component:
 
 ```mdx
-import { WranglerCommand, ExtraFlagDetails } from "~/components";
+import { WranglerCommand } from "~/components";
+import ExtraFlagDetails from "~/components/cf/ExtraFlagDetails.astro";
 
 <WranglerCommand command="deploy">
 	<ExtraFlagDetails key="dry-run">

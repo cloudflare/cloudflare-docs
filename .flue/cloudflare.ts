@@ -70,6 +70,12 @@ import { runStyleGuide } from "./lib/run-style-guide";
 import { runConventionsReview } from "./lib/run-conventions-review";
 import { reconcileStream } from "./lib/run-reconcile";
 import { validateStream } from "./lib/run-review-validation";
+import {
+	isRetryableRecommendationError,
+	processRecommendationEvent,
+	type RecommendationEnv,
+} from "./lib/run-reviewer-recommendations";
+import { runDraftStaleSweep } from "./lib/draft-stale";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -782,6 +788,90 @@ export { DependabotReviewWorkflow } from "./orchestrators/dependabot-review-work
 export { RebaseWorkflow } from "./orchestrators/rebase-workflow";
 export { IngestWorkflow } from "./orchestrators/ingest-workflow";
 
-// Reserved for future non-HTTP handlers (queue, scheduled). Must not define
-// `fetch` — HTTP handling stays in app.ts.
-export default {};
+// Reserved for non-HTTP handlers (queue, scheduled). Must not define `fetch` —
+// HTTP handling stays in app.ts.
+export default {
+	async scheduled(
+		_controller: ScheduledController,
+		env: RecommendationEnv,
+	): Promise<void> {
+		try {
+			const token = await getInstallationToken(env as Record<string, string>);
+			await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
+		} catch (error) {
+			console.error({
+				message: `Draft stale sweep aborted: ${error instanceof Error ? error.message : String(error)}`,
+				event: "draft_stale",
+				action: "sweep_aborted",
+			});
+			throw error;
+		}
+	},
+
+	async queue(
+		batch: MessageBatch<unknown>,
+		env: RecommendationEnv,
+	): Promise<void> {
+		// The reviewer-recommendation queue carries bounded projection events from
+		// the corpus worker. Processing is sequential and per-message: each event
+		// is validated, head-checked, applied to R2 state, and reflected in the
+		// singleton recommendation comment. Malformed events and stale head
+		// matches are acked; transient failures are retried per message so one
+		// bad event never stalls the batch.
+		for (const message of batch.messages) {
+			try {
+				await processRecommendationEvent(message.body, env);
+				try {
+					message.ack();
+				} catch (ackErr) {
+					// A throwing ack() is fallback-retried by the Queues API; log
+					// instead of letting it abort the batch loop.
+					console.error({
+						message: `Failed to ack reviewer-recommendation event: ${ackErr instanceof Error ? ackErr.message : String(ackErr)}`,
+						event: "reviewer_recommendations",
+						action: "ack_failed",
+					});
+				}
+			} catch (err) {
+				if (isRetryableRecommendationError(err)) {
+					console.error({
+						message: `Retrying reviewer-recommendation event: ${err instanceof Error ? err.message : String(err)}`,
+						event: "reviewer_recommendations",
+						action: "retry",
+					});
+					try {
+						message.retry();
+					} catch (retryErr) {
+						// A throwing retry() is fallback-acked by the Queues API
+						// after the retry budget is exhausted; log and continue.
+						console.error({
+							message: `Failed to retry reviewer-recommendation event: ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`,
+							event: "reviewer_recommendations",
+							action: "retry_failed",
+						});
+					}
+				} else {
+					console.error({
+						message: `Acknowledging permanently failed reviewer-recommendation event: ${err instanceof Error ? err.message : String(err)}`,
+						event: "reviewer_recommendations",
+						action: "ack_permanent_failure",
+					});
+					try {
+						message.ack();
+					} catch (ackErr) {
+						// A throwing ack() is fallback-retried by the Queues API, so a
+						// permanently-failed message may be redelivered and reprocessed
+						// (re-running the GitHub/R2 pipeline and re-logging the failure)
+						// until the retry budget is exhausted. Log it so operators
+						// understand why a "permanently failed" event keeps reappearing.
+						console.error({
+							message: `Failed to ack permanently failed reviewer-recommendation event: ${ackErr instanceof Error ? ackErr.message : String(ackErr)}`,
+							event: "reviewer_recommendations",
+							action: "ack_failed",
+						});
+					}
+				}
+			}
+		}
+	},
+};

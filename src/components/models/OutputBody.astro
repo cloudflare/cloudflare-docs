@@ -22,7 +22,9 @@ const {
 <div class="example-output-body">
 	{textOutput && <pre class="example-text">{textOutput}</pre>}
 	{imageUrl && <img src={imageUrl} alt={alt} loading="lazy" />}
-	{imageUrls.map((url) => <img src={url} alt={alt} loading="lazy" />)}
+	{imageUrls.map((url) => (
+		<img src={url} alt={alt} loading="lazy" />
+	))}
 	{
 		/* AI-generated outputs do not ship caption tracks. */
 		/* eslint-disable-next-line astro/jsx-a11y/media-has-caption */

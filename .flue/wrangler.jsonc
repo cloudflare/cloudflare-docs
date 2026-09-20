@@ -13,6 +13,23 @@
 			"bucket_name": "docs-flue-bucket",
 		},
 	],
+	// Consumes reviewer-recommendation events produced by the corpus worker
+	// (cloudflare-docs-reviewer-recommendations queue). The producer lives in
+	// the cloudflare-docs-github-corpus worker; Flue owns the GitHub mutations.
+	// Sequential (max_concurrency 1) so per-PR comment updates never race.
+	"queues": {
+		"consumers": [
+			{
+				"queue": "cloudflare-docs-reviewer-recommendations",
+				"max_batch_size": 10,
+				"max_batch_timeout": 5,
+				"max_concurrency": 1,
+				"max_retries": 5,
+				"retry_delay": 30,
+				"dead_letter_queue": "cloudflare-docs-reviewer-recommendations-dlq",
+			},
+		],
+	},
 	// App-owned Cloudflare Workflow (D1). class_name resolves against the
 	// generated Worker entry, which re-exports cloudflare.ts's named exports
 	// (`export * from cloudflare.ts`). Cloudflare Workflows are not Durable
@@ -169,10 +186,8 @@
 			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
 		},
 	],
-	// Explicitly empty crons list so wrangler clears any previously registered
-	// cron triggers on deploy (an absent triggers key leaves existing ones intact).
 	"triggers": {
-		"crons": [],
+		"crons": [{ "cron": "0 5 * * *" }],
 	},
 	"observability": {
 		"enabled": true,

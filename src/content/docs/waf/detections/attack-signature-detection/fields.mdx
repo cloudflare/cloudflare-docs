@@ -1,0 +1,65 @@
+---
+title: Fields
+pcx_content_type: reference
+description: Reference Attack Signature Detection fields, example values, Security Rules usage, and Logpush mappings.
+products:
+  - waf
+sidebar:
+  order: 4
+  label: Fields
+---
+
+import { Type } from "~/components";
+
+Attack Signature Detection populates these request fields when signatures match:
+
+| Field                                 | Type                          | Meaning                                                                                                             |
+| ------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `cf.waf.signature.request.categories` | <Type text="Array<String>" /> | Categories associated with all matching signatures. A signature can have more than one category.                    |
+| `cf.waf.signature.request.confidence` | <Type text="Array<String>" /> | Confidence values associated with matching signatures. Supported values are `high` and `low`.                       |
+| `cf.waf.signature.request.refs`       | <Type text="Array<String>" /> | Refs for matching signatures, up to 10 per request. Each Ref matches the corresponding Managed Rule public Rule ID. |
+
+:::note
+Attack Signature Detection is available in Early Access. Contact your Cloudflare account team to request access.
+:::
+
+All three fields are available in Security Analytics and Security Rules. You can reference them in rules created in the dashboard or through the API.
+
+## Example values
+
+The fields can contain values like these:
+
+| Field                                 | Example value                          |
+| ------------------------------------- | -------------------------------------- |
+| `cf.waf.signature.request.categories` | `["sqli", "cve-2025-55182"]`           |
+| `cf.waf.signature.request.confidence` | `["high"]`                             |
+| `cf.waf.signature.request.refs`       | `["d68f8101f6e14e25aefcaea69c530a29"]` |
+
+## Rules language examples
+
+Use `any()` to test array elements:
+
+```txt
+any(cf.waf.signature.request.categories[*] eq "sqli")
+```
+
+```txt
+any(cf.waf.signature.request.confidence[*] eq "high")
+```
+
+```txt
+any(cf.waf.signature.request.refs[*] eq "d68f8101f6e14e25aefcaea69c530a29")
+```
+
+For rollout guidance, refer to [Use attack signatures in Security Rules](/waf/detections/attack-signature-detection/use-attack-signatures-in-security-rules/).
+
+## Logpush fields
+
+Signature Refs and categories are available in Logpush:
+
+| Rules field                           | Logpush field                                                                                                           |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `cf.waf.signature.request.refs`       | [`wafRequestSignatureRefs`](/logs/logpush/logpush-job/datasets/zone/http_requests/#wafrequestsignaturerefs)             |
+| `cf.waf.signature.request.categories` | [`wafRequestSignatureCategories`](/logs/logpush/logpush-job/datasets/zone/http_requests/#wafrequestsignaturecategories) |
+
+Only signature Ref and category mappings are available in Logpush.

@@ -122,7 +122,6 @@ const llmsUrl = Astro.site
 				window.__nbApplyTheme = applyTheme;
 			})();
 		</script>
-
 		<PageHead
 			title={title}
 			description={description}
@@ -156,6 +155,7 @@ const llmsUrl = Astro.site
 			import "../scripts/footnotes.client";
 			import "../scripts/scroll-to-top.client";
 			import "../scripts/onetrust-focus.client";
+			import "../scripts/rule-id.client";
 			// Custom Zaraz analytics event wiring (link/tab/details/copy/search).
 			// Registers delegated document listeners once; safe with view transitions.
 			import "../scripts/analytics";
