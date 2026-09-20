@@ -1,0 +1,15 @@
+---
+title: Enforce positive security with Application Profiles
+description: Learn expected request structures, analyze deviations, and selectively block non-conforming traffic.
+date: 2026-09-07
+---
+
+Application Profiles add a positive-security layer to Cloudflare WAF. Instead of looking only for requests that resemble known attacks, Application Profiles learn what valid requests to your application look like and identify traffic that deviates from the expected structure.
+
+The first available profile type, Schema Profiles, can learn path variables, query parameters, headers, cookies, JSON bodies, and form-encoded bodies. Profiles model field types and constraints such as numeric ranges, string lengths, and character classes. After a profile becomes available, an always-on detection classifies requests as conforming or non-conforming without blocking traffic.
+
+Use **Profile Analysis** in [Security Analytics](/waf/analytics/security-analytics/) to review conformance trends and sampled violation details before enforcing a profile. When you are ready to mitigate traffic, use a [Custom Rule](/waf/custom-rules/) to scope enforcement by hostname, path, operation, or other security signals such as Attack Score.
+
+Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is also opening a closed beta to invited Enterprise customers without API Security. Contact your Cloudflare account team to express interest.
+
+For more information, refer to [Application Profiles](/waf/detections/application-profiles/).
