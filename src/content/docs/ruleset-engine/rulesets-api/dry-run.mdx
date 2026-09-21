@@ -9,7 +9,7 @@ sidebar:
   order: 11
 ---
 
-import { CURL, DashButton } from "~/components";
+import { APIRequest, DashButton } from "~/components";
 
 Cloudflare can validate a rule or ruleset before deployment. Validation checks the complete configuration without persisting or publishing changes.
 
@@ -44,13 +44,10 @@ Only `true` and `false` are valid values for `dry_run`. An omitted value default
 
 The following request validates a rule update without applying it:
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/$RULESET_ID/rules/$RULE_ID"
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}"
 	method="PATCH"
-	headers={{
-		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
-	}}
-	query={{
+	parameters={{
 		dry_run: "true",
 	}}
 	json={{
