@@ -149,6 +149,6 @@ If multiple rules apply to the same prefix or object key, the strictest (longest
 
 - Rules without prefix apply to all objects in the bucket.
 - Bucket locks protect both existing objects and objects created after the rule is enabled. They do not prevent new object creation.
-- A successful rule update is the enforcement boundary. Mutations to existing keys are denied if they commit after the update succeeds. This includes overwrites, deletes, copies, multipart completions, and lifecycle deletions that began earlier.
+- A successful rule update is the enforcement boundary. R2 denies mutations to existing keys if they commit after the update succeeds. This includes overwrites, deletes, copies, multipart completions, and lifecycle deletions that began earlier.
 - Bucket lock rules take precedence over [lifecycle rules](/r2/buckets/object-lifecycles/). For example, if a lifecycle rule attempts to delete an object at 30 days but a bucket lock rule requires it be retained for 90 days, the object will not be deleted until the 90-day requirement is met.
 - A bucket cannot be emptied while any bucket lock rules are configured. Remove all lock rules before [emptying a bucket](/r2/buckets/delete-buckets/#empty-a-bucket). Bucket lock rules also apply when [deleting folders](/r2/objects/delete-objects/) from the dashboard.
