@@ -12,6 +12,8 @@ import { Steps } from "~/components";
 
 Choose the task for your endpoint. Each setup recipe starts with a new browser connection and matching SFU session. Your application can combine these endpoints into rooms, broadcasts, and device interfaces.
 
+Create the SFU session when ready to begin that connection's SDP exchange. [Unconnected sessions can expire before their first operation](/realtime/sfu/concepts/sessions-tracks/#session-setup).
+
 | Task                                                                        | Result                                         | Runnable example                                                                                   |
 | --------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [Publish audio or video](#publish-audio-or-video)                           | Make local media available to subscribers      | [Video room](/realtime/sfu/examples/video-room/)                                                   |
@@ -44,11 +46,11 @@ This recipe publishes a browser camera or microphone. It creates a media connect
 
 <Steps>
 
-1. **Create the connection.** In the browser, create an `RTCPeerConnection`, called `pc` here. On your backend, call `POST /sessions/new` with no request body. Store the returned `sessionId` with this connection.
-2. **Prepare the media offer.** Capture tracks with `navigator.mediaDevices.getUserMedia()`. Add each track with `pc.addTransceiver(track, { direction: "sendonly" })`. Create an offer with `await pc.createOffer()`, then apply it with `await pc.setLocalDescription(offer)`.
+1. **Prepare the media offer.** In the browser, capture tracks with `navigator.mediaDevices.getUserMedia()`. Create an `RTCPeerConnection`, called `pc` here, and add each track with `pc.addTransceiver(track, { direction: "sendonly" })`. Create an offer with `await pc.createOffer()`, then apply it with `await pc.setLocalDescription(offer)`.
 
    Read each transceiver's `mid` after setting the local description. This identifier associates a media section in this connection's SDP with the track you publish.
 
+2. **Create the SFU session.** On your backend, call `POST /sessions/new` with no request body. Store the returned `sessionId` with this connection.
 3. **Publish the tracks.** On the backend, call `POST /sessions/{sessionId}/tracks/new` with the browser's generated offer:
 
    ```json

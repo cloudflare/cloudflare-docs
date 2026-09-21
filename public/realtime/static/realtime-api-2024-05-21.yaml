@@ -12,7 +12,11 @@ paths:
     post:
       tags:
         - New Session
-      summary: Create a new PeerConnection
+      summary: Create a session
+      description: >
+        With no request body, this operation returns a sessionId without establishing
+        a WebRTC connection. Create the session when ready to begin SDP negotiation;
+        an unconnected session can expire before its first use.
       security:
         - secret: []
       parameters:

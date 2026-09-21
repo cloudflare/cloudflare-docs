@@ -35,7 +35,7 @@ Apply each timeout to its resource and condition:
 | A session loses WebRTC connectivity              | 30-second session/track reuse window                     | Reuse requires a viable connection and resources. Replace failed or closed connections immediately, or reconnect with a new session after the window.                            |
 | A remote DataChannel uses `waitForAck: true`     | First subscriber message within 30 seconds of allocation | Without it, the gated channel closes. Create a new subscription; refer to [subscriber readiness](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack). |
 
-The media inactivity timeout does not define the lifetime of an unconnected session, a connected session without media, or a DataChannel-only connection. Complete setup when ready and close resources when finished.
+For expiry before a session's first connection, follow [session setup guidance](/realtime/sfu/concepts/sessions-tracks/#session-setup). The media inactivity timeout does not define the lifetime of a connected session without media or a DataChannel-only connection. Close resources when finished.
 
 Application heartbeat expiry does not mean WebRTC disconnected. Media that keeps arriving does not meet the inactivity condition. Use [close results](/realtime/sfu/observability/error-codes/#interpret-close-results) and [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) to decide whether cleanup is complete or a resource can be reused.
 

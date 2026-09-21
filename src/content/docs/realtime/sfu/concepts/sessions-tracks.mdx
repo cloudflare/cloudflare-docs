@@ -22,7 +22,15 @@ A session represents one endpoint's WebRTC connection to the SFU. In a browser, 
 
 A participant does not have to correspond to exactly one session. The [video-room example](/realtime/sfu/examples/video-room/) uses separate publishing and receiving sessions. [Cloud gaming](/realtime/sfu/examples/cloud-gaming/) uses one session per browser for incoming media and outgoing controls.
 
-Follow [connection patterns](/realtime/sfu/get-started/connection-patterns/) to publish media, receive a track, exchange messages, or combine media with controls. Follow [per-session mutation ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session) when updating those connections.
+### Session setup
+
+Calling `POST /sessions/new` with no request body returns a `sessionId`, but does not establish the WebRTC connection. Follow a [connection recipe](/realtime/sfu/get-started/connection-patterns/) to complete SDP negotiation, then wait for the endpoint's connection state to become `connected`.
+
+Create each session when ready to begin negotiation. An unconnected session can expire before its first track or DataChannel operation; activity on another session does not keep it alive.
+
+If setup expires, later operations can return HTTP `410` with `session_error`. Create a new session and repeat connection setup.
+
+Follow [per-session mutation ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session) during setup and later updates.
 
 ## Media tracks
 
