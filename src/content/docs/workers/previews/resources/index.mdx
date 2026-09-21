@@ -9,7 +9,6 @@ products:
 ---
 
 import { WranglerConfig } from "~/components";
-import PreviewsDOCarouselDiagram from "~/components/PreviewsDOCarouselDiagram.astro";
 
 ## Binding reference
 
@@ -51,8 +50,6 @@ State persists across deployments within the same Preview and is deleted when th
 | [`env` binding](#use-an-env-binding)         | Class, migration, and a Preview binding | Use when your code needs `env.COUNTER`.                            |
 
 ### Use `ctx.exports` (recommended)
-
-<PreviewsDOCarouselDiagram />
 
 Every Durable Object setup requires a Durable Object class exported from your Worker and a [migration](/durable-objects/reference/durable-objects-migrations/) in your Wrangler config.
 
