@@ -18,6 +18,13 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "mandatory": true,
+                "default_enabled": true
+            }
+        },
+        {
             "property_id": "terms",
             "value": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE"
         },

@@ -18,6 +18,26 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "max",
+                    "high",
+                    "low"
+                ],
+                "default_effort": "max",
+                "normalizes_to": {
+                    "none": "max",
+                    "minimal": "max",
+                    "medium": "max",
+                    "xhigh": "max",
+                    "null": "max"
+                },
+                "mandatory": true,
+                "default_enabled": true
+            }
+        },
+        {
             "property_id": "terms",
             "value": "https://huggingface.co/zai-org/GLM-5.3-Flash/blob/main/LICENSE"
         },

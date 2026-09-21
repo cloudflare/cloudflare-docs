@@ -18,6 +18,26 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "high",
+                    "none"
+                ],
+                "default_effort": "none",
+                "normalizes_to": {
+                    "minimal": "none",
+                    "low": "high",
+                    "medium": "high",
+                    "max": "high",
+                    "auto": "high",
+                    "null": "none"
+                },
+                "mandatory": false,
+                "default_enabled": false
+            }
+        },
+        {
             "property_id": "terms",
             "value": "https://ai.google.dev/gemma/docs/gemma_4_license"
         },

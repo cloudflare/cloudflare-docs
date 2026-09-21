@@ -39,6 +39,18 @@ describe("model display formatting", () => {
 		expect(formatModelReasoning(undefined, undefined)).toBeNull();
 	});
 
+	it("summarizes structured binary reasoning metadata", () => {
+		expect(
+			formatModelReasoning({ mandatory: true, default_enabled: true }, "false"),
+		).toBe("Always on");
+		expect(
+			formatModelReasoning(
+				{ mandatory: false, default_enabled: true },
+				"false",
+			),
+		).toBe("On by default");
+	});
+
 	it("formats supported pricing values and omits nested metadata", () => {
 		expect(
 			formatModelPricing({

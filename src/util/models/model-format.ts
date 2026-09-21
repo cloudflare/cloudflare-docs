@@ -82,8 +82,11 @@ export function formatModelReasoning(
 			return `${label} (default)`;
 		}
 
+		if (metadata.mandatory === true) {
+			return "Always on";
+		}
 		if (typeof metadata.default_enabled === "boolean") {
-			return metadata.default_enabled ? "Yes" : "No";
+			return metadata.default_enabled ? "On by default" : "Off by default";
 		}
 	}
 

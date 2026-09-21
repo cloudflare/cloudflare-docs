@@ -18,6 +18,26 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "max",
+                    "high",
+                    "none"
+                ],
+                "default_effort": "max",
+                "default_enabled": true,
+                "mandatory": false,
+                "normalizes_to": {
+                    "null": "max",
+                    "low": "high",
+                    "medium": "high",
+                    "xhigh": "max",
+                    "minimal": "none"
+                }
+            }
+        },
+        {
             "property_id": "price",
             "value": [
                 {

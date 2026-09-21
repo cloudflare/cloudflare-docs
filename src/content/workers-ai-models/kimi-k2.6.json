@@ -22,6 +22,24 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "high",
+                    "none"
+                ],
+                "default_effort": "high",
+                "normalizes_to": {
+                    "low": "high",
+                    "medium": "high",
+                    "max": "high",
+                    "null": "high"
+                },
+                "mandatory": false,
+                "default_enabled": true
+            }
+        },
+        {
             "property_id": "terms",
             "value": "https://huggingface.co/moonshotai/Kimi-K2.6/blob/main/LICENSE"
         },

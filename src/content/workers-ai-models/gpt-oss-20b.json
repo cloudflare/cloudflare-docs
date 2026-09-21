@@ -31,6 +31,19 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "high",
+                    "medium",
+                    "low"
+                ],
+                "default_effort": "medium",
+                "mandatory": true,
+                "default_enabled": true
+            }
         }
     ],
     "id": "188a4e1e-253e-46d0-9616-0bf8c149763f",
