@@ -1,20 +1,90 @@
 ---
 pcx_content_type: how-to
 title: Image Management
-description: Learn how to use Cloudflare Registry, Docker Hub, and Amazon ECR images with Containers.
+description: Configure and update Container images with the durable_object and default scheduling policies.
 sidebar:
   order: 4
 products:
   - containers
 ---
 
-import { WranglerConfig, PackageManagers, Steps } from "~/components";
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-:::note
-The `image` examples on this page apply to Container applications that use the [`default` scheduling policy](/containers/configuration/scheduling-policy/). For the `durable_object` policy, configure a named `images` map and select an image from `ctx.container.images` at runtime. A named `image` entry must be a digest-pinned reference in the Cloudflare managed registry; a named `dockerfile` entry can build from an external base image.
-:::
+Container applications manage images differently based on their [scheduling policy](/containers/configuration/scheduling-policy/). With the `durable_object` policy, Durable Object code selects a named image each time it starts a Container. With the `default` policy, Wrangler configuration sets one image for the application.
 
-## Push images during `wrangler deploy`
+## Use images with the `durable_object` scheduling policy
+
+Configure one or more named images in the `images` map. Each entry must use exactly one image source. Set `dockerfile` to build an image from a local Dockerfile. Set `image` to use a digest-pinned image from the Cloudflare managed registry.
+
+The following configuration defines one image from each source:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+					"build_context": ".",
+				},
+				"tools": {
+					"image": "registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Wrangler builds or resolves each named image and exposes its immutable reference through `ctx.container.images`. Select a reference when the Durable Object starts its Container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class AgentComputer extends DurableObject {
+	startContainer() {
+		this.ctx.container.start({
+			image: this.ctx.container.images.base,
+			instance: "standard-2",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+A configuration can contain up to 100 named images. Each image name must contain between 1 and 128 characters. For the complete policy configuration, refer to [Scheduling Policies](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
+
+### Roll out a named image update
+
+To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. The corresponding value in `ctx.container.images` now refers to the updated image.
+
+Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
+
+### Use an external image
+
+A named `image` entry must use a digest-pinned reference from the Cloudflare managed registry. To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, configure the resulting digest-pinned reference as a named image.
+
+A named `dockerfile` entry can use an external image in its `FROM` instruction. Authenticate your local Docker installation before deploying if the base image is private.
+
+## Use images with the `default` scheduling policy
+
+Set the singular `image` field to a local Dockerfile or a supported registry reference. Changing this field deploys the new application image through an [application-wide rollout](/containers/configuration/rollouts/).
+
+### Push images during `wrangler deploy`
 
 When running `wrangler deploy`, if you set the `image` attribute in your [Wrangler configuration](/workers/wrangler/configuration/#containers) to a path to a Dockerfile, Wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
 This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
@@ -45,7 +115,7 @@ Docker or a Docker-compatible CLI tool must be running for Wrangler to build and
 This is not necessary if you are using a pre-built image, as described below.
 :::
 
-## Use pre-built container images
+### Use pre-built container images
 
 Containers support images from the Cloudflare managed registry at `registry.cloudflare.com`, [Docker Hub](https://hub.docker.com/), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google Artifact Registry](https://cloud.google.com/artifact-registry).
 
@@ -55,7 +125,7 @@ Cloudflare does not cache images pulled from Docker Hub, Amazon ECR, or Google A
 Docker Hub pulls may be subject to Docker Hub pull limits or fair-use restrictions. Pulling images from Amazon ECR or Google Artifact Registry may incur cloud provider egress charges.
 :::
 
-### Use public Docker Hub images
+#### Use public Docker Hub images
 
 To use a public Docker Hub image, set `image` to a fully qualified Docker Hub image reference in your Wrangler configuration.
 
@@ -85,7 +155,7 @@ If Docker Hub credentials have been configured, those credentials are used to pu
 Official Docker Hub images use the `library` namespace. For example, use `docker.io/library/<IMAGE>:<TAG>` instead of `docker.io/<IMAGE>:<TAG>`.
 :::
 
-### Configure private registry credentials
+#### Configure private registry credentials
 
 To use a private image from Docker Hub, Amazon ECR, or Google Artifact Registry, run [`wrangler containers registries configure`](/workers/wrangler/commands/containers/#containers-registries-configure) for the registry domain.
 
@@ -93,7 +163,7 @@ Wrangler prompts for the secret and stores it in [Secrets Store](/secrets-store)
 
 Use `--secret-name` to name or reuse a secret, `--secret-store-id` to target a specific Secrets Store store, and `--skip-confirmation` for non-interactive runs. In CI or scripts, pass the secret through `stdin`.
 
-### Use private Docker Hub images
+#### Use private Docker Hub images
 
 Configure Docker Hub in Wrangler using these values:
 
@@ -126,7 +196,7 @@ printf '%s' "$DOCKERHUB_PAT" | npx wrangler containers registries configure dock
 
 After you configure the registry, use the same fully qualified Docker Hub image reference shown above.
 
-### Use private Amazon ECR images
+#### Use private Amazon ECR images
 
 Configure Amazon ECR in Wrangler using these values:
 
@@ -195,7 +265,7 @@ After you configure the registry, use the fully qualified Amazon ECR image refer
 
 </WranglerConfig>
 
-### Use private Google Artifact Registry images
+#### Use private Google Artifact Registry images
 
 Configure Google Artifact Registry in Wrangler using these values:
 
@@ -256,7 +326,7 @@ image = "<REGION>-docker.pkg.dev/<PROJECT_ID>/<REPOSITORY>/<IMAGE>:<TAG>"
 
 </WranglerConfig>
 
-### Use images from other registries
+#### Use images from other registries
 
 If you want to use a pre-built image from another registry provider, first make sure it exists locally, then push it to the Cloudflare Registry:
 
@@ -305,7 +375,7 @@ With `vite dev`, image references from external registries such as Docker Hub, A
 If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
 :::
 
-## Push images with CI
+### Push images with CI
 
 To use an image built in a continuous integration environment, install `wrangler` then
 build and push images using either `wrangler containers build` with the `--push` flag, or
