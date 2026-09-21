@@ -27,23 +27,23 @@ import {
 
 <Description>
 
-Execute untrusted or generated code away from your application
+Start a sandbox and run untrusted or generated code
 
 </Description>
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run untrusted or generated work. The program you load there has its own memory and, when it needs them, its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
+A sandbox is an isolated place to run untrusted or generated code. That code has its own memory and, when it needs them, its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
 
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
-Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the program that already handles your traffic.
+Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the application that already handles your traffic.
 
 ---
 
 ## Dynamic Workers
 
-[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly. It starts in milliseconds.
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime in milliseconds. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly.
 
 That code cannot see your application's memory. It can use only the APIs and data you pass in, and it cannot reach the Internet unless you allow it.
 
@@ -54,22 +54,31 @@ The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code i
 ```ts
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const worker = env.LOADER.load({
+		const sandbox = env.LOADER.load({
 			compatibilityDate: "$today",
-			mainModule: "src/index.js",
+			mainModule: "code.js",
 			modules: {
-				"src/index.js": `
-					export default {
-						fetch() {
-							return new Response("Hello from a sandbox");
-						},
-					};
+				"code.js": `
+					import { WorkerEntrypoint } from "cloudflare:workers";
+
+					export class Code extends WorkerEntrypoint {
+						evaluate() {
+							const users = [
+								{ name: "Ada", role: "admin" },
+								{ name: "Grace", role: "user" },
+							];
+							return users
+								.filter((u) => u.role === "admin")
+								.map((u) => u.name);
+						}
+					}
 				`,
 			},
 			globalOutbound: null,
 		});
 
-		return worker.getEntrypoint().fetch(request);
+		const result = await sandbox.getEntrypoint("Code").evaluate();
+		return Response.json({ result });
 	},
 };
 ```
@@ -84,27 +93,31 @@ export default {
 
 ## Containers
 
-[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can use any language or runtime, install packages, compile code, and keep long-running processes. Your Worker can start the instance and send it work.
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
 
-The instance does not share a process or a kernel with your Worker, so it cannot read your Worker's memory. Other instances or customers cannot reach it. HTTP traffic from the Internet reaches it only through your Worker.
-
-Each instance runs in Firecracker: a microVM with its own kernel and network. Your image is a Linux container inside that VM, and no other workload shares it.
+The isolation comes from [Firecracker](/containers/concepts/architecture/#container-runtime). Each instance is a microVM with its own kernel and network, so no other workload shares it. Your image runs as a Linux container inside that VM.
 
 <TypeScriptExample>
 
 ```ts
-import { Container, getContainer } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
 
-export class MyContainer extends Container {
-	defaultPort = 4000;
-	sleepAfter = "10m";
+export class MyContainer extends DurableObject<Env> {
+	async exec(argv: string[]) {
+		if (!this.ctx.container.running) {
+			this.ctx.container.start({ enableInternet: false });
+		}
+
+		const process = await this.ctx.container.exec(argv);
+		const stdout = await new Response(process.stdout).text();
+		return { stdout, exitCode: await process.exitCode };
+	}
 }
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const { "session-id": sessionId } = await request.json();
-		const container = getContainer(env.MY_CONTAINER, sessionId);
-		return container.fetch(request);
+		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+		return Response.json(await sandbox.exec(["uname", "-a"]));
 	},
 };
 ```
