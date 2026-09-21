@@ -12,11 +12,11 @@ products:
 reviewed: 2026-09-09
 ---
 
-A sandbox is an isolated place to run untrusted or generated work. Isolation is the whole boundary around that work, not only secrets and egress.
+A sandbox is an isolated place to run untrusted or generated code. Isolation is the whole boundary around that code, not only secrets and egress.
 
-The program you load there has its own memory. When it needs them, it has its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
+That code has its own memory. When it needs them, it has its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
 
-Cloudflare provides two sandbox environments. Both start from a [Worker](/workers/), the program that already handles your traffic.
+Cloudflare provides two sandbox environments. Both start from a [Worker](/workers/), the application that already handles your traffic.
 
 ## Dynamic Workers
 
@@ -30,11 +30,9 @@ For more information, refer to the [Workers security model](/workers/reference/s
 
 ## Containers
 
-[Containers](/containers/) run an image you provide. The instance is a full Linux environment. Your Worker starts the instance and sends it work.
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
 
-The instance does not share a process or a kernel with your Worker, so it cannot read your Worker's memory. Other instances or customers cannot reach it. HTTP traffic from the Internet reaches it only through your Worker.
-
-Each instance runs in Firecracker: a microVM with its own kernel and network. Your image is a Linux container inside that VM, and no other workload shares it.
+The isolation comes from [Firecracker](/containers/concepts/architecture/#container-runtime). Each instance is a microVM with its own kernel and network, so no other workload shares it. Your image runs as a Linux container inside that VM.
 
 For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
 
@@ -44,7 +42,7 @@ Neither environment is a closed box by default.
 
 On Dynamic Workers, omit `globalOutbound` and the sandbox inherits the parent Worker's network access. Pass [bindings](/dynamic-workers/usage/bindings/) if the sandbox needs APIs or data.
 
-On Containers, `enableInternet` defaults to `true`. Set it to `false` when the workload should not reach the public Internet. For more information, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/).
+On Containers, `enableInternet` on `start()` defaults to `false`. Set it to `true` only when the process should reach the public Internet. For more information, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/).
 
 Isolation is the platform boundary. Access is the set of APIs, data, and network paths you add back.
 
