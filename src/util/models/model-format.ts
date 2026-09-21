@@ -15,19 +15,16 @@ const implicitTokenPriceLabels = new Map([
 	["output_video_tokens", "Output video"],
 ]);
 
-const reasoningEffortLabels = new Map([
-	["none", "Off"],
-	["minimal", "Minimal"],
-	["low", "Low"],
-	["medium", "Medium"],
-	["high", "High"],
-	["xhigh", "Extra high"],
-	["max", "Max"],
-]);
-
 const reasoningEffortOrder = new Map(
-	[...reasoningEffortLabels.keys()].map((effort, index) => [effort, index]),
+	["none", "minimal", "low", "medium", "high", "xhigh", "max"].map(
+		(effort, index) => [effort, index],
+	),
 );
+
+export interface ModelReasoningEffort {
+	value: string;
+	isDefault: boolean;
+}
 
 export function formatCompactTokens(value: unknown): string | null {
 	const count = Number(value);
@@ -39,7 +36,7 @@ export function formatCompactTokens(value: unknown): string | null {
 export function formatModelReasoning(
 	reasoningEffort: unknown,
 	reasoning: unknown,
-): string | null {
+): string | ModelReasoningEffort[] | null {
 	if (
 		typeof reasoningEffort === "object" &&
 		reasoningEffort !== null &&
@@ -50,12 +47,15 @@ export function formatModelReasoning(
 			typeof metadata.default_effort === "string"
 				? metadata.default_effort.toLowerCase()
 				: null;
+		const normalizedDefaultEffort =
+			defaultEffort === "off" ? "none" : defaultEffort;
 		const supportedEfforts = Array.isArray(metadata.supported_efforts)
 			? [
 					...new Set(
 						metadata.supported_efforts
 							.filter((effort): effort is string => typeof effort === "string")
-							.map((effort) => effort.toLowerCase()),
+							.map((effort) => effort.toLowerCase())
+							.map((effort) => (effort === "off" ? "none" : effort)),
 					),
 				].sort(
 					(a, b) =>
@@ -65,21 +65,10 @@ export function formatModelReasoning(
 			: [];
 
 		if (supportedEfforts.length > 0) {
-			return supportedEfforts
-				.map((effort) => {
-					const label =
-						reasoningEffortLabels.get(effort) ??
-						effort.charAt(0).toUpperCase() + effort.slice(1);
-					return effort === defaultEffort ? `${label} (default)` : label;
-				})
-				.join(", ");
-		}
-
-		if (defaultEffort) {
-			const label =
-				reasoningEffortLabels.get(defaultEffort) ??
-				defaultEffort.charAt(0).toUpperCase() + defaultEffort.slice(1);
-			return `${label} (default)`;
+			return supportedEfforts.map((value) => ({
+				value,
+				isDefault: value === normalizedDefaultEffort,
+			}));
 		}
 
 		if (metadata.mandatory === true) {

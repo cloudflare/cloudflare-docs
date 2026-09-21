@@ -21,7 +21,11 @@ describe("model display formatting", () => {
 				},
 				"true",
 			),
-		).toBe("Low, Medium, Extra high (default)");
+		).toEqual([
+			{ value: "low", isDefault: false },
+			{ value: "medium", isDefault: false },
+			{ value: "xhigh", isDefault: true },
+		]);
 		expect(
 			formatModelReasoning(
 				{
@@ -30,7 +34,11 @@ describe("model display formatting", () => {
 				},
 				"true",
 			),
-		).toBe("Off, Low, Medium (default)");
+		).toEqual([
+			{ value: "none", isDefault: false },
+			{ value: "low", isDefault: false },
+			{ value: "medium", isDefault: true },
+		]);
 		expect(
 			formatModelReasoning(
 				{
@@ -39,7 +47,20 @@ describe("model display formatting", () => {
 				},
 				"true",
 			),
-		).toBe("Low, High, Max (default)");
+		).toEqual([
+			{ value: "low", isDefault: false },
+			{ value: "high", isDefault: false },
+			{ value: "max", isDefault: true },
+		]);
+		expect(
+			formatModelReasoning(
+				{ supported_efforts: ["off", "none", "low"] },
+				"true",
+			),
+		).toEqual([
+			{ value: "none", isDefault: false },
+			{ value: "low", isDefault: false },
+		]);
 	});
 
 	it("falls back to a clean yes or no when effort metadata is absent", () => {
