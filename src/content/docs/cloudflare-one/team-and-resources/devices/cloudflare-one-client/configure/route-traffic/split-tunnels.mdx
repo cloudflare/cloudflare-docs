@@ -107,6 +107,8 @@ Domain-based Split Tunnels work differently on mobile clients than on desktop cl
 
 Clients on these platforms work by dynamically inserting the IP address of the domain immediately after it is resolved into the routing table for split tunneling. This allows the desktop clients to support wildcard domain prefixes (for example, `*.example.com`), not just a singular domain (like `example.com` or `www.example.com`).
 
+Cloudflare One Client versions `2026.8.1755.1` and above attempt to maintain name-based Split Tunnel rule results across tunnel connections. Earlier versions did not maintain these results, so access to these domains was not maintained while the client was disconnected or reconnecting. Before the first tunnel connection, however, the client firewall blocks these domains. This is because the client has not yet queried which IP addresses are associated with each domain and therefore defaults to blocking this traffic to avoid unintended leaks.
+
 #### iOS, Android and ChromeOS
 
 Due to platform differences, mobile clients can only apply Split Tunnels rules when the tunnel is initially started. This means:
