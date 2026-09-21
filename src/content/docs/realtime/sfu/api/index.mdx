@@ -45,7 +45,7 @@ Refer to [sessions and tracks](/realtime/sfu/concepts/sessions-tracks/) for publ
 
 ### Correlate session creation
 
-The optional `correlationId` query parameter on `sessions/new` is a diagnostic label. Repeating it creates another session; the API cannot look up sessions by this label. Retain the returned `sessionId`, and follow [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) if the response is lost.
+The optional `correlationId` query parameter on `sessions/new` is a diagnostic label. Repeating it creates another session. The API cannot look up sessions by this label. Retain the returned `sessionId`, and follow [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) if the response is lost.
 
 ### Inspect a session
 
@@ -75,11 +75,11 @@ Call `GET /apps/{appId}/sessions/{sessionId}` to inspect the session's media tra
 
 Interpret the resource's `status` as follows:
 
-| Status         | Meaning                                                                                       |
-| -------------- | --------------------------------------------------------------------------------------------- |
-| `active`       | The media track has not closed or become unavailable, or the DataChannel is open.             |
-| `inactive`     | The media track is closed or unavailable, or the DataChannel is no longer connecting or open. |
-| `initializing` | The DataChannel is still connecting.                                                          |
+| Status         | Media track                           | DataChannel                   |
+| -------------- | ------------------------------------- | ----------------------------- |
+| `active`       | Has not closed or become unavailable. | Open.                         |
+| `inactive`     | Closed or unavailable.                | No longer connecting or open. |
+| `initializing` | Not applicable.                       | Still connecting.             |
 
 A media track marked `active` does not prove that packets are arriving or playing. Use [endpoint statistics](/realtime/sfu/observability/#inspect-browser-media-statistics) to check delivery. Forced closure can leave a track listed as `inactive`.
 
@@ -115,13 +115,11 @@ Track and DataChannel create, update, and close operations accept multiple entri
 
 For `tracks/new` and `datachannels/new`, keep every entry `local` or every entry `remote`. A remote batch can reference different publishing sessions. Follow the [operation's limits](/realtime/sfu/platform/limits/#api-and-resource-limits) when choosing its size. WebSocket adapter creation and closure accept one to four entries per request.
 
-Check every result because a batch can partially succeed. Preserve successful allocations and complete any required SDP exchange before the next mutation on that session. Other sessions can proceed independently.
-
 ## Handle responses and negotiation
 
 Check the HTTP status, top-level errors, and every per-track or per-channel result. Public errors use `errorCode` and `errorDescription`. Preserve successful allocations from partially successful requests. Look up the code and its next action in [Error codes](/realtime/sfu/observability/error-codes/).
 
-Complete any required SDP exchange before starting the next mutation on that session. [Connection patterns](/realtime/sfu/get-started/connection-patterns/) gives the request sequences, including how to answer an SFU offer. [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains concurrent handlers, uncertain request outcomes, and retries.
+Complete any required SDP exchange before starting the next mutation on that session. Other sessions can proceed independently. [Connection patterns](/realtime/sfu/get-started/connection-patterns/) gives the request sequences, including how to answer an SFU offer. [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains concurrent handlers, uncertain request outcomes, and retries.
 
 ## Network connectivity
 

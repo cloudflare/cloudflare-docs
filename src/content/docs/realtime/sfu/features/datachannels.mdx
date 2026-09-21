@@ -25,7 +25,7 @@ flowchart LR
 
 Your backend makes authenticated SFU API calls. Browser and native endpoints own the corresponding WebRTC channels. Refer to [application architecture](/realtime/sfu/concepts/architecture/) for the credential and signaling boundary.
 
-To connect two endpoints and send a first message, follow the complete [message recipe](/realtime/sfu/get-started/connection-patterns/#send-messages-between-two-endpoints). Transport setup connects each endpoint to the SFU; application-channel allocation selects the named messages to publish or receive.
+To connect two endpoints and send a first message, follow the complete [message recipe](/realtime/sfu/get-started/connection-patterns/#send-messages-between-two-endpoints). Transport setup connects each endpoint to the SFU. Application-channel allocation selects the named messages to publish or receive.
 
 <span id="set-up-a-datachannel"></span>
 
@@ -35,9 +35,9 @@ Start with a publisher and subscriber whose DataChannel transports are already c
 
 <Steps>
 
-1. On your backend, call `POST /apps/{appId}/sessions/{publisherSessionId}/datachannels/new`. In the request's `dataChannels` array, add an entry with `location: "local"` and the chosen `dataChannelName`.
-2. On the subscriber's session, call `POST /apps/{appId}/sessions/{subscriberSessionId}/datachannels/new`. Its `dataChannels` entry uses `location: "remote"`, the publisher's `sessionId`, and the same `dataChannelName`.
-3. Check every API result and retain successful allocations. Return each channel `id` to its own endpoint. Create its browser channel with `pc.createDataChannel(name, { negotiated: true, id: channelId })`. Publisher and subscriber IDs can differ. This configuration uses reliable, ordered delivery by default.
+1. On your backend, call `POST /apps/{appId}/sessions/{publisherSessionId}/datachannels/new`. In the request's `dataChannels` array, add an entry with `location: "local"` and the chosen `dataChannelName`. Check the publication result and retain the successful allocation before subscribing.
+2. On the subscriber's session, call `POST /apps/{appId}/sessions/{subscriberSessionId}/datachannels/new`. Its `dataChannels` entry uses `location: "remote"`, the publisher's `sessionId`, and the same `dataChannelName`. Check the subscription result and retain its successful allocation.
+3. Return each channel's `id` to its own endpoint as `channelId`. Create its browser channel with `pc.createDataChannel(name, { negotiated: true, id: channelId })`. Publisher and subscriber IDs can differ. This configuration uses reliable, ordered delivery by default.
 4. Install the subscriber's message handler and wait for the channels to open. Have the subscriber report readiness through your application before the publisher sends a message. Confirm that the subscriber receives it.
 
 </Steps>
@@ -68,7 +68,7 @@ The optional delivery fields are:
 | `maxRetransmits`    | Maximum retransmission attempts after the initial send. Set to zero for no retransmissions.        |
 | `maxPacketLifeTime` | Transport time budget in milliseconds for attempting transmission and retransmission of a message. |
 
-Set at most one of `maxRetransmits` and `maxPacketLifeTime`. Omit both for reliable delivery; omitting a retry limit is different from setting `maxRetransmits: 0`. Ordering and retry behavior are independent: unordered delivery can still be reliable.
+Set at most one of `maxRetransmits` and `maxPacketLifeTime`. Omit both for reliable delivery. Omitting a retry limit is different from setting `maxRetransmits: 0`. Ordering and retry behavior are independent: unordered delivery can still be reliable.
 
 `maxPacketLifeTime` is a transport budget, not an end-to-end message-age deadline. Use application timestamps or sequence numbers to discard stale updates. Reliable delivery does not provide durable storage or confirm command execution.
 
@@ -161,7 +161,7 @@ if (channel.readyState === "open") {
 }
 ```
 
-The SFU consumes this first message and opens the gate. It must arrive within 30 seconds of creating the remote subscription; otherwise the SFU tears down that gated channel. Create a new subscription to retry.
+The SFU consumes this first message and opens the gate. It must arrive within 30 seconds of creating the remote subscription. Otherwise the SFU tears down that gated channel. Create a new subscription to retry.
 
 This acknowledgment establishes subscriber readiness. It is not an application command acknowledgment. Send a separate readiness message before commands, and use your own command IDs and acknowledgments when needed.
 
@@ -177,7 +177,7 @@ Reply access has these properties:
 - Granting it to another subscriber replaces the previous selection.
 - Replies go to the publisher and are not forwarded to other subscribers.
 
-Your backend must authenticate the operator and authorize the grant. `canReply` controls the SFU return path; application state determines who may receive that permission.
+Your backend must authenticate the operator and authorize the grant. `canReply` controls the SFU return path. Application state determines who may receive that permission.
 
 ### Allow replies when subscribing
 
@@ -233,7 +233,7 @@ On the backend, send `PUT /apps/{appId}/sessions/{sessionId}/datachannels/close`
 }
 ```
 
-Match results by `id`. A `close_track_error` item means absent or already closed; retain other failed or unreported IDs for retry. Refer to [close-result handling](/realtime/sfu/observability/error-codes/#interpret-close-results).
+Match results by `id`. A `close_track_error` item means the channel is absent or already closed. Retain other failed or unreported IDs for retry. Refer to [close-result handling](/realtime/sfu/observability/error-codes/#interpret-close-results).
 
 Closure needs no SDP exchange. Close the endpoint's channel objects, then its PeerConnection when no longer needed. Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) if work is still outstanding.
 
@@ -241,7 +241,7 @@ Closure needs no SDP exchange. Close the endpoint's channel objects, then its Pe
 
 DataChannels can carry encoded media as binary application messages. The SFU forwards these bytes without interpreting their media format. Publication and subscription, delivery settings, transport congestion control, and data statistics still apply.
 
-Your application supplies media framing, compatible decoders, playback timing, synchronization, and recovery from missing or late frames. Pace writes and bound application buffers. SFU codec negotiation, simulcast, and WebSocket media adapters operate on media tracks; they do not interpret media embedded in DataChannel messages.
+Your application supplies media framing, compatible decoders, playback timing, synchronization, and recovery from missing or late frames. Pace writes and bound application buffers. SFU codec negotiation, simulcast, and WebSocket media adapters operate on media tracks. They do not interpret media embedded in DataChannel messages.
 
 ## Learn with an example
 

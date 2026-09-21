@@ -16,9 +16,9 @@ The API limits are:
 
 | Resource or operation                               | Limit                                                                          |
 | --------------------------------------------------- | ------------------------------------------------------------------------------ |
-| API requests per session                            | 50 requests per second; the rate limit is per session rather than per app      |
+| API requests per session                            | 50 requests per second. The rate limit is per session rather than per app      |
 | Tracks added in one API request                     | Up to 64                                                                       |
-| Tracks in a session                                 | No fixed upper bound; endpoint and connection capacity impose practical limits |
+| Tracks in a session                                 | No fixed upper bound. Endpoint and connection capacity impose practical limits |
 | WebSocket adapters created or closed in one request | One to four track entries                                                      |
 | Reply access to a publisher DataChannel             | At most one subscriber with `canReply`                                         |
 | WebSocket audio ingest message                      | 32 KB including serialized packet overhead                                     |
@@ -33,7 +33,7 @@ Apply each timeout to its resource and condition:
 | ------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A media track receives no incoming media packets | 30 seconds                                               | The track is garbage-collected. Restore an expired publication and rebuild its subscriptions.                                                                                    |
 | A session loses WebRTC connectivity              | 30-second session/track reuse window                     | Reuse requires a viable connection and resources. Replace failed or closed connections immediately, or reconnect with a new session after the window.                            |
-| A remote DataChannel uses `waitForAck: true`     | First subscriber message within 30 seconds of allocation | Without it, the gated channel closes. Create a new subscription; refer to [subscriber readiness](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack). |
+| A remote DataChannel uses `waitForAck: true`     | First subscriber message within 30 seconds of allocation | Without it, the gated channel closes. Create a new subscription. Refer to [subscriber readiness](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack). |
 
 For expiry before a session's first connection, follow [session setup guidance](/realtime/sfu/concepts/sessions-tracks/#session-setup). The media inactivity timeout does not define the lifetime of a connected session without media or a DataChannel-only connection. Close resources when finished.
 

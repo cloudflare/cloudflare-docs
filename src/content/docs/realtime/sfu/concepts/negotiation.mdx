@@ -32,13 +32,11 @@ Sequential `await` calls are sufficient when one execution path owns all mutatio
 
 Separate publishing and receiving sessions can simplify an application's ownership model. A single bidirectional session is also valid when all its mutations share the same queue.
 
-In either layout, initial discovery, publication notifications, and user actions can each trigger mutations. When these independent handlers target the same SFU session, they must use its shared ordering mechanism.
-
 ### Example: simultaneous meeting joins
 
 In a conferencing application, participant B may join while participant A is still joining. A's initial room snapshot triggers subscriptions to existing participants, while B's join notification triggers another subscription. Both handlers update **A's receiving session**.
 
-If the handlers submit requests independently, the second `tracks/new` can arrive before the first offer/answer exchange finishes. The SFU can reject the conflicting request with HTTP `406`. A `406` can also indicate other invalid requests; inspect the public `errorCode`, `errorDescription`, and endpoint state when diagnosing it.
+If the handlers submit requests independently, the second `tracks/new` can arrive before the first offer/answer exchange finishes. The SFU can reject the conflicting request with HTTP `406`. A `406` can also indicate other invalid requests. Inspect the public `errorCode`, `errorDescription`, and endpoint state when diagnosing it.
 
 Route the initial snapshot and later participant updates through A's receiving-session queue:
 
@@ -67,17 +65,17 @@ A lost response leaves the request's outcome unknown. Pause later mutations on t
 
 Use the interrupted operation to choose the next step:
 
-| Interrupted operation                      | Next step                                                                                                                                                  |
-| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sessions/new`                             | Without its returned ID, the allocation cannot be looked up. Create a replacement session; another request creates another allocation.                     |
-| `tracks/new`                               | Inspect allocations before creating more tracks. Repeated subscriptions can allocate duplicates. If the SDP response is lost, replace the connection.      |
-| `datachannels/new`                         | Inspect allocated channel IDs before requesting more channels. Retain successful allocations from partial responses.                                       |
-| `datachannels/establish`                   | Complete the transport's SDP exchange. If its response is lost, replace the connection; repeating establish is not a state check.                          |
-| `/renegotiate`                             | A repeated answer can fail after the first succeeds. If acceptance remains unknown, replace the connection. A retry error cannot resolve that uncertainty. |
-| Forced media close or `datachannels/close` | Retry known unresolved IDs in order. Process each result, including already-closed items.                                                                  |
-| Negotiated media close                     | Apply the original answer if available. Otherwise, retire the connection and force-close its known tracks.                                                 |
+| Interrupted operation                      | Next step                                                                                                                                                            |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sessions/new`                             | Without its returned ID, the allocation cannot be looked up. Create a replacement session. Another request creates another allocation.                               |
+| `tracks/new`                               | Inspect allocations before creating more tracks. Repeated subscriptions can allocate duplicates. If the SDP response is lost, replace the connection.                |
+| `datachannels/new`                         | Recover visible allocations through session inspection. An empty snapshot cannot resolve an uncertain request. Retain successful allocations from partial responses. |
+| `datachannels/establish`                   | Complete the transport's SDP exchange. If its response is lost, replace the connection. Repeating establish is not a state check.                                    |
+| `/renegotiate`                             | A repeated answer can fail after the first succeeds. If acceptance remains unknown, replace the connection. A retry error cannot resolve that uncertainty.           |
+| Forced media close or `datachannels/close` | Retry known unresolved IDs in order. Process each result, including already-closed items.                                                                            |
+| Negotiated media close                     | Apply the original answer if available. Otherwise, retire the connection and force-close its known tracks.                                                           |
 
-[Session inspection](/realtime/sfu/api/#inspect-a-session) can recover resource identifiers, but not lost SDP or request history. [`correlationId`](/realtime/sfu/api/#correlate-session-creation) labels diagnostics; it does not recover or deduplicate a session.
+[Session inspection](/realtime/sfu/api/#inspect-a-session) can recover resource identifiers, but not lost SDP or request history. [`correlationId`](/realtime/sfu/api/#correlate-session-creation) labels diagnostics. It does not recover or deduplicate a session.
 
 Give a replacement connection a new application attempt ID. Ignore old responses when updating it, but retain any resource IDs they return for cleanup. Republish and rebuild subscriptions using the new session identifiers.
 
@@ -89,7 +87,7 @@ With a responsive endpoint, finish the current API/SDP exchange, then [close tra
 
 If the endpoint cannot answer, retire the connection, force-close known tracks, and close known DataChannels. Forced closure does not finish the abandoned SDP exchange. Do not resume queued work on that connection.
 
-A timed-out API request may still finish. Closing known tracks does not cancel it; retain late allocations for cleanup. Keep [required cleanup](/realtime/sfu/best-practices/#retain-cleanup-state) unresolved until the affected resources are accounted for and closed.
+A timed-out API request may still finish. Closing known tracks does not cancel it. Retain late allocations for cleanup. Keep [required cleanup](/realtime/sfu/best-practices/#retain-cleanup-state) unresolved until the affected resources are accounted for and closed.
 
 ## Learn with an example
 

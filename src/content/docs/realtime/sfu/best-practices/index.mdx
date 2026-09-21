@@ -40,13 +40,13 @@ For WebSocket adapters, implement recreation after terminal closure and respect 
 
 Remove unavailable or unauthorized publications from discovery. Retain their resource identifiers privately until required cleanup is complete. Check [individual close results](/realtime/sfu/observability/error-codes/#interpret-close-results) and keep unresolved items available for retry.
 
-Decide whether replacement can proceed while old resources remain. Discarding an obsolete connection from application state does not stop SFU forwarding. When stopping access is required, close the affected SFU resources and confirm the result.
+Decide whether replacement can proceed while old resources remain. Discarding an obsolete connection from application state does not stop SFU forwarding. When you need to stop access, close the affected SFU resources and confirm the result.
 
 Use explicit leave/stop operations and application expiry for abandoned clients. A browser tab may close without sending cleanup. Keep the backend available while retries still need to run.
 
 ## Apply application limits
 
-Set admission limits, operation rates, and resource lifetimes appropriate to your application. An example's room size or controller policy is an application decision; refer to [SFU limits](/realtime/sfu/platform/limits/) for product constraints.
+Set admission limits, operation rates, and resource lifetimes appropriate to your application. An example's room size or controller policy is an application decision. Refer to [SFU limits](/realtime/sfu/platform/limits/) for product constraints.
 
 Use [observability](/realtime/sfu/observability/) to connect API results, endpoint state, and media delivery. Validate authorization and failure paths alongside the successful flow.
 

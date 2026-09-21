@@ -24,9 +24,9 @@ A participant does not have to correspond to exactly one session. The [video-roo
 
 ### Session setup
 
-Calling `POST /sessions/new` with no request body returns a `sessionId`, but does not establish the WebRTC connection. Follow a [connection recipe](/realtime/sfu/get-started/connection-patterns/) to complete SDP negotiation, then wait for the endpoint's connection state to become `connected`.
+Calling `POST /sessions/new` with no request body returns a `sessionId`, but does not establish the WebRTC connection. Follow a [connection recipe](/realtime/sfu/get-started/connection-patterns/) to complete the offer/answer exchange, then wait for the endpoint's connection state to become `connected`.
 
-Create each session when ready to begin negotiation. An unconnected session can expire before its first track or DataChannel operation; activity on another session does not keep it alive.
+Create each session when ready to begin negotiation. An unconnected session can expire before its first track or DataChannel operation. Activity on another session does not keep it alive.
 
 If setup expires, later operations can return HTTP `410` with `session_error`. Create a new session and repeat connection setup.
 
@@ -43,12 +43,12 @@ The main identifiers have distinct purposes:
 | Identifier                      | Purpose                                                                                     |
 | ------------------------------- | ------------------------------------------------------------------------------------------- |
 | `appId`                         | Selects the SFU application                                                                 |
-| `sessionId`                     | Identifies a session; on a remote track request, identifies its publisher                   |
+| `sessionId`                     | In the URL, selects the target session. In a remote track entry, identifies the publisher   |
 | `trackName`                     | Names the publication within its publishing session                                         |
 | `mid`                           | Identifies a media section/transceiver in a particular PeerConnection's session description |
 | Application member or device ID | Identifies an entity in your own state and permission model                                 |
 
-Use the publisher's session ID together with the track name to locate remote media. A track's `mid` belongs to its connection; a subscriber can receive that publication on a different `mid`.
+Use the publisher's session ID together with the track name to locate remote media. A track's `mid` belongs to its connection. A subscriber can receive that publication on a different `mid`.
 
 ## Discovery and subscriptions
 

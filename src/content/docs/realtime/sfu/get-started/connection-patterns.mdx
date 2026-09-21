@@ -10,7 +10,7 @@ products:
 
 import { Steps } from "~/components";
 
-Choose the task for your endpoint. Each setup recipe starts with a new browser connection and matching SFU session. Your application can combine these endpoints into rooms, broadcasts, and device interfaces.
+Choose the task for your endpoint. Each initial setup recipe starts with a new browser connection and matching SFU session. Your application can combine these endpoints into rooms, broadcasts, and device interfaces.
 
 Create the SFU session when ready to begin that connection's SDP exchange. [Unconnected sessions can expire before their first operation](/realtime/sfu/concepts/sessions-tracks/#session-setup).
 
@@ -21,7 +21,7 @@ Create the SFU session when ready to begin that connection's SDP exchange. [Unco
 | [Send messages between two endpoints](#send-messages-between-two-endpoints) | Exchange application data without media tracks | [DataChannel example](https://github.com/cloudflare/realtime-examples/tree/main/echo-datachannels) |
 | [Receive media and send controls](#receive-media-and-send-controls)         | Watch a publisher and return authorized input  | [Cloud gaming](/realtime/sfu/examples/cloud-gaming/)                                               |
 
-For an existing connection, refer to [Add DataChannels to a media connection](#add-datachannels-to-a-media-connection) or [Close media tracks](#close-media-tracks). To run an application before implementing these exchanges, follow the [quickstart](/realtime/sfu/get-started/).
+For an existing connection, refer to [Add media](#add-media-to-an-existing-connection), [Add DataChannels](#add-datachannels-to-a-media-connection), or [Close media tracks](#close-media-tracks). To run an application before implementing these exchanges, follow the [quickstart](/realtime/sfu/get-started/).
 
 ## Before you start
 
@@ -29,11 +29,11 @@ Create an [SFU app](/realtime/sfu/get-started/#create-your-first-app). Your back
 
 In a browser, an `RTCPeerConnection` manages one connection to the SFU. The matching `sessionId` identifies that connection in API calls. Session Description Protocol (SDP) describes the connection's media and transport settings. The browser and SFU exchange an offer and answer to agree on those settings.
 
-Check the HTTP status, public errors, and individual resource results on every API call. Retain successful allocations for cleanup. Complete each request and its required SDP exchange before starting the next mutation on the same session. Different sessions can proceed independently; [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains how to coordinate overlapping handlers.
+Check the HTTP status, public errors, and individual resource results on every API call. Retain successful allocations for cleanup. Complete each request and its required SDP exchange before starting the next mutation on the same session. Different sessions can proceed independently. [Negotiation and session lifecycle](/realtime/sfu/concepts/negotiation/) explains how to coordinate overlapping handlers.
 
 ### Network connectivity
 
-WebRTC uses Interactive Connectivity Establishment (ICE) to find a working network path. Configure it for the networks your endpoints support. Cloudflare's public STUN server is `stun.cloudflare.com:3478`; STUN helps discover network addresses. [TURN](/realtime/turn/) can relay traffic when an endpoint's network requires it.
+WebRTC uses Interactive Connectivity Establishment (ICE) to find a working network path. Configure it for the networks your endpoints support. Cloudflare's public STUN server is `stun.cloudflare.com:3478`. STUN helps discover network addresses. [TURN](/realtime/turn/) can relay traffic when an endpoint's network requires it.
 
 Install connection-state handlers and give connection waits a timeout that reports failure. After setting a local description, gather network candidates before sending `pc.localDescription` to your backend. The [cloud-gaming WebRTC helpers](https://github.com/cloudflare/realtime-examples/blob/main/cloud-gaming/src/client/webrtc.ts) demonstrate bounded candidate gathering.
 
@@ -48,10 +48,10 @@ This recipe publishes a browser camera or microphone. It creates a media connect
 
 1. **Prepare the media offer.** In the browser, capture tracks with `navigator.mediaDevices.getUserMedia()`. Create an `RTCPeerConnection`, called `pc` here, and add each track with `pc.addTransceiver(track, { direction: "sendonly" })`. Create an offer with `await pc.createOffer()`, then apply it with `await pc.setLocalDescription(offer)`.
 
-   Read each transceiver's `mid` after setting the local description. This identifier associates a media section in this connection's SDP with the track you publish.
+   Wait for [candidate gathering](#network-connectivity), then read each transceiver's `mid`. This identifier associates a media section in this connection's SDP with the track you publish.
 
 2. **Create the SFU session.** On your backend, call `POST /sessions/new` with no request body. Store the returned `sessionId` with this connection.
-3. **Publish the tracks.** On the backend, call `POST /sessions/{sessionId}/tracks/new` with the browser's generated offer:
+3. **Publish the tracks.** On the backend, call `POST /sessions/{sessionId}/tracks/new` with the browser's `pc.localDescription` as `sessionDescription`:
 
    ```json
    {
@@ -64,7 +64,7 @@ This recipe publishes a browser camera or microphone. It creates a media connect
 
    Replace the placeholders with the generated SDP and assigned `mid`. To publish camera and microphone together, include both tracks in this request. Each entry uses its own `mid` and `trackName`. Refer to [batch resource operations](/realtime/sfu/api/#batch-resource-operations).
 
-4. **Apply the answer.** In the browser, await `pc.setRemoteDescription(response.sessionDescription)` with the returned SFU answer. This completes the offer/answer exchange; no `/renegotiate` call is needed for this answer.
+4. **Apply the answer.** In the browser, await `pc.setRemoteDescription(response.sessionDescription)` with the returned SFU answer. This completes the offer/answer exchange. No `/renegotiate` call is needed for this answer.
 5. **Make the publication discoverable.** Wait for the connection to become `connected`. Share successful publications' session ID and track names with authorized subscribers through your application.
 
 </Steps>
@@ -90,13 +90,13 @@ Start with the publisher's session ID and track name, obtained through your appl
    }
    ```
 
-   To receive several publications together, include one entry for each in `tracks`. They can come from different publishers; this request adds them all to the same receiving session.
+   To receive several publications together, include one entry for each in `tracks`. They can come from different publishers. This request adds them all to the same receiving session.
 
 3. **Answer the SFU offer.** Map each successful result's receiving `mid` to its publication before applying the returned offer. In the browser, await `pc.setRemoteDescription(response.sessionDescription)`, then `pc.createAnswer()` and `pc.setLocalDescription(answer)`.
 
-   In the `track` handler, use `event.transceiver.mid` to associate `event.track` with the requested publication and attach it to the playback element.
+   In the `track` handler, use `event.transceiver.mid` to select the publication's playback element. For one received track, set `element.srcObject = new MediaStream([event.track])`.
 
-4. **Finish the exchange.** Return the generated answer to your backend. Send it to `PUT /sessions/{subscriberSessionId}/renegotiate`:
+4. **Finish the exchange.** After candidate gathering, return `pc.localDescription` to your backend. Send it as `sessionDescription` to `PUT /sessions/{subscriberSessionId}/renegotiate`:
 
    ```json
    {
@@ -129,9 +129,9 @@ This recipe connects a publisher and a subscriber without audio or video. It use
    }
    ```
 
-   Check the returned `dataChannel` allocation. The `server-events` channel is reserved for transport setup; the application channel is allocated separately.
+   Check the returned `dataChannel` allocation. The `server-events` channel is reserved for transport setup. The application channel is allocated separately.
 
-3. **Answer each SFU offer.** In the corresponding browser, await `pc.setRemoteDescription(response.sessionDescription)`, create an answer, and await `pc.setLocalDescription(answer)`. Return that answer to your backend and send `PUT /sessions/{sessionId}/renegotiate`:
+3. **Answer each SFU offer.** In the corresponding browser, await `pc.setRemoteDescription(response.sessionDescription)`, create an answer, and await `pc.setLocalDescription(answer)`. After candidate gathering, return `pc.localDescription` to your backend and send `PUT /sessions/{sessionId}/renegotiate`:
 
    ```json
    {
@@ -167,7 +167,7 @@ This recipe connects a publisher and a subscriber without audio or video. It use
 
    Retain the successful subscriber allocation and its `id`.
 
-6. **Create the browser channels.** Return each allocation to its own endpoint. On each PeerConnection, create the channel with that endpoint's returned `channelId`:
+6. **Create the browser channels.** Return each allocation's `id` to its own endpoint as `channelId`. On each PeerConnection, create the channel with that ID:
 
    ```js
    const channel = pc.createDataChannel("messages", {
@@ -205,7 +205,7 @@ This recipe uses one browser connection for incoming media and outgoing controls
 
    Map successful receiving `mid` values to their publications. Use `event.transceiver.mid` in the `track` handler to attach each received track to its playback element.
 
-3. **Finish media negotiation.** Await `pc.setRemoteDescription(response.sessionDescription)`, `pc.createAnswer()`, and `pc.setLocalDescription(answer)`. Send the generated answer through your backend to `PUT /sessions/{subscriberSessionId}/renegotiate`:
+3. **Finish media negotiation.** Await `pc.setRemoteDescription(response.sessionDescription)`, `pc.createAnswer()`, and `pc.setLocalDescription(answer)`. After candidate gathering, send `pc.localDescription` through your backend to `PUT /sessions/{subscriberSessionId}/renegotiate`:
 
    ```json
    {
@@ -228,7 +228,7 @@ This recipe uses one browser connection for incoming media and outgoing controls
 
    Retain the successful allocation and reserved `server-events` channel for cleanup.
 
-5. **Finish the new negotiation.** Apply this new SFU offer with `pc.setRemoteDescription()`. Create and set a new local answer, then have your backend submit it to `PUT /sessions/{subscriberSessionId}/renegotiate`:
+5. **Finish the new negotiation.** Apply this new SFU offer with `pc.setRemoteDescription()`. Create and set a new local answer. After candidate gathering, submit `pc.localDescription` through your backend to `PUT /sessions/{subscriberSessionId}/renegotiate`:
 
    ```json
    {
@@ -255,7 +255,7 @@ This recipe uses one browser connection for incoming media and outgoing controls
 
    Check the result. At most one subscriber can hold reply access for this publisher channel. Granting access to this subscriber replaces any previous holder. Your backend controls who receives that permission.
 
-7. **Open and verify controls.** Return the subscriber's allocated `channelId` to the browser:
+7. **Open and verify controls.** Return the subscription's `id` to the browser as `channelId`:
 
    ```js
    const controls = pc.createDataChannel("controls", {
@@ -270,6 +270,15 @@ This recipe uses one browser connection for incoming media and outgoing controls
 
 The [cloud-gaming guide](/realtime/sfu/examples/cloud-gaming/) shows media and input on one browser connection, including controller ownership and separate delivery settings for discrete and replaceable input.
 
+## Add media to an existing connection
+
+Start with a connected PeerConnection and keep its SFU session. Serialize additions with [other operations on that session](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session).
+
+- **Publish more media:** Add transceivers for the new tracks, then create and set a fresh local offer. Follow the [publication recipe](#publish-audio-or-video) from `tracks/new`, sending the new local entries with the gathered `pc.localDescription`.
+- **Receive more media:** Call `tracks/new` on the same session with additional remote entries in the [receive request format](#receive-a-published-track). [Complete any returned SFU offer](#complete-an-sfu-offer).
+
+Finish the required SDP exchange before the next mutation.
+
 ## Add DataChannels to a media connection
 
 Start here when an existing PeerConnection has completed media-only negotiation and has no DataChannel transport. Keep its SFU session and finish any outstanding operation first.
@@ -277,7 +286,7 @@ Start here when an existing PeerConnection has completed media-only negotiation 
 <Steps>
 
 1. Install a `datachannel` listener to retain the reserved channel for teardown. Call `POST /sessions/{sessionId}/datachannels/establish` with `dataChannel: { location: "remote", dataChannelName: "server-events" }`.
-2. Check the allocation and apply the returned offer. Await creation and local application of a new answer. Submit it through your backend to `PUT /sessions/{sessionId}/renegotiate` as `sessionDescription: { type: "answer", sdp: "<LOCAL_ANSWER_SDP>" }`.
+2. Check the allocation and apply the returned offer. Await creation and local application of a new answer. After candidate gathering, submit `pc.localDescription` through your backend to `PUT /sessions/{sessionId}/renegotiate` as `sessionDescription`.
 3. Wait for API acceptance and a `connected` PeerConnection. You can now [add application channels](/realtime/sfu/features/datachannels/#add-an-application-channel) using `datachannels/new`.
 
 </Steps>
@@ -292,12 +301,12 @@ The recipes use a known starting state. Existing integrations may negotiate tran
 
 ## Complete an SFU offer
 
-An operation returning `sessionDescription.type: "offer"` with `requiresImmediateRenegotiation: true` needs an answer before the next mutation on that session. The recipes include this exchange; use this reference when implementing another operation.
+An operation returning `sessionDescription.type: "offer"` with `requiresImmediateRenegotiation: true` needs an answer before the next mutation on that session. The recipes include this exchange. Use this reference when implementing another operation.
 
 <Steps>
 
 1. In the browser, await `pc.setRemoteDescription(response.sessionDescription)`.
-2. Await `pc.createAnswer()` and `pc.setLocalDescription(answer)`. Return the generated answer to your backend.
+2. Await `pc.createAnswer()` and `pc.setLocalDescription(answer)`. After candidate gathering, return `pc.localDescription` to your backend.
 3. Send `PUT /sessions/{sessionId}/renegotiate` with `sessionDescription: { type: "answer", sdp: "<LOCAL_ANSWER_SDP>" }`.
 4. Check that the API accepted the answer before starting another mutation. A browser's `signalingState` becoming `stable` does not confirm that the backend has submitted the answer.
 
@@ -305,7 +314,7 @@ An operation returning `sessionDescription.type: "offer"` with `requiresImmediat
 
 ## Close media tracks
 
-Use the `mid` from the connection you are modifying. Closing a receiving track stops that subscription; closing a publishing track stops the source. A successful close of a bidirectional transceiver stops both directions. Subscribers' PeerConnections can remain connected, and media already buffered can still play.
+Use the `mid` from the connection you are modifying. Closing a receiving track stops that subscription. Closing a publishing track stops the source. A successful close of a bidirectional transceiver stops both directions. Subscribers' PeerConnections can remain connected, and media already buffered can still play.
 
 ### Close with negotiation
 
@@ -314,7 +323,7 @@ Start with an established connection and no unfinished offer/answer exchange.
 <Steps>
 
 1. **Prepare the endpoint's offer.** In the browser, save the `mid` of each transceiver to close, then call its `stop()` method. Create an offer with `await pc.createOffer()` and apply it with `await pc.setLocalDescription(offer)`.
-2. **Close the tracks.** On the backend, send `PUT /sessions/{sessionId}/tracks/close` with those mids and the browser's generated offer:
+2. **Close the tracks.** After candidate gathering, send `PUT /sessions/{sessionId}/tracks/close` from your backend with those mids and the browser's `pc.localDescription` as `sessionDescription`:
 
    ```json
    {
@@ -342,7 +351,7 @@ Set `force: true` to close selected media flows without exchanging SDP. This is 
 }
 ```
 
-Check each track result; no `/renegotiate` call is needed. Forced closure can leave records in [session information](/realtime/sfu/api/#inspect-a-session). Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) for outstanding negotiation or requests.
+Check each track result. No `/renegotiate` call is needed. Forced closure can leave records in [session information](/realtime/sfu/api/#inspect-a-session). Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) for outstanding negotiation or requests.
 
 ## Clean up
 

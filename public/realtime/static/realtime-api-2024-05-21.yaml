@@ -15,8 +15,8 @@ paths:
       summary: Create a session
       description: >
         With no request body, this operation returns a sessionId without establishing
-        a WebRTC connection. Create the session when ready to begin SDP negotiation;
-        an unconnected session can expire before its first use.
+        a WebRTC connection. Create the session when ready to begin SDP negotiation.
+        An unconnected session can expire before its first use.
       security:
         - secret: []
       parameters:
@@ -609,6 +609,7 @@ paths:
                         errorDescription: Track doesn't exist or was already closed
                       - mid: "2"
                         errorCode: internal_error
+                        errorDescription: Backend error
   /apps/{appId}/sessions/{sessionId}/tracks/update:
     put:
       tags:
