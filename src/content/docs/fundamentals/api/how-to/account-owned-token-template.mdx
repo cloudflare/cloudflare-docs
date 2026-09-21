@@ -1,7 +1,7 @@
 ---
 title: API token template URLs
 description: Generate Cloudflare API tokens with pre-configured permissions using template URLs. Learn how to create and customize template URLs for any use case.
-lastUpdated: 2025-01-14
+lastUpdated: 2026-09-21
 products:
   - fundamentals
   - api
@@ -65,11 +65,17 @@ Account token template URLs do not use `accountId` or `zoneId` parameters. Resou
 
 ## Permission format
 
-Both user token and account token template URLs use the same permission encoding. Permissions are encoded as a JSON array with the following structure:
+Both user token and account token template URLs use the same permission encoding: a JSON array with the following structure.
 
 ```json
 [{ "key": "permission_name", "type": "read|edit|revoke|run|purge" }]
 ```
+
+The two token types resolve these entries differently, as described below.
+
+For **account token URLs**, each `key` can be either a short permission key (for example, `dns`) or a [permission group ID](#use-permission-group-ids), and the `type` accepts either `edit` or `write` for write access. Keys must match exactly — a mistyped key (for example, `workers-scripts` instead of `workers_scripts`) is not auto-corrected and is reported as unresolved. Refer to [Troubleshooting](#troubleshooting).
+
+For **user token URLs**, each `key` must be a short permission key that matches a group `name` exactly, and the `type` must be `edit` (not `write`), `read`, `revoke`, `run`, or `purge`. Permission group IDs are not supported, and any entry that does not match is dropped silently.
 
 ### Permission types
 
@@ -80,6 +86,38 @@ Both user token and account token template URLs use the same permission encoding
 | `revoke` | Revoke permissions                         |
 | `run`    | Execute permissions                        |
 | `purge`  | Purge permissions                          |
+
+## Use permission group IDs
+
+:::note
+
+Permission group IDs are supported in **account token URLs** only. User token URLs must use short keys.
+
+:::
+
+The short keys in the [permission reference](#permission-reference) are a convenience layer and do not cover every permission group. In an account token URL, to address any permission group — including ones without a short key — use its permission group ID as the `key`:
+
+```json
+[{ "key": "82e64a83756745bbbb1c9c2701bf816b", "type": "edit" }]
+```
+
+Permission group IDs are the stable, canonical identifier for a permission group. They are the same IDs accepted by the [Create token](/api/resources/user/subresources/tokens/methods/create/) endpoint and the Cloudflare Terraform provider, so a template URL can pre-select any permission group without depending on an undocumented short key. Because the ID names one specific group, the `type` field is ignored when you pass an ID.
+
+To look up the current permission group IDs, use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/user/tokens/permission_groups" \
+	--header "Authorization: Bearer <API_TOKEN>"
+```
+
+For account-owned tokens, use the account-scoped endpoint:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/tokens/permission_groups" \
+	--header "Authorization: Bearer <API_TOKEN>"
+```
+
+Each result includes the permission group `id` and `name`. The [API token permissions](/fundamentals/api/reference/permissions/) reference also lists these IDs.
 
 ## Create custom templates
 
@@ -256,12 +294,16 @@ Follow these guidelines when creating and sharing template URLs.
 
 Review the list of common issues and solutions.
 
-| Issue                             | Solution                                                  |
-| --------------------------------- | --------------------------------------------------------- |
-| URL does not pre-fill permissions | Verify the JSON is properly URL-encoded                   |
-| Permissions are missing           | Check permission keys in the reference table              |
-| Token name does not appear        | Ensure the name parameter is URL-encoded                  |
-| Access denied error               | Verify the user has required permissions in their account |
+| Issue                             | Solution                                                                                                                      |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| URL does not pre-fill permissions | Verify the JSON is properly URL-encoded                                                                                      |
+| Permissions are missing           | Check permission keys against the reference table, or address the group by its [permission group ID](#use-permission-group-ids) |
+| Token name does not appear        | Ensure the name parameter is URL-encoded                                                                                     |
+| Access denied error               | Verify the user has required permissions in their account                                                                    |
+
+For **account token URLs**, when a template URL contains a key that cannot be resolved, or the `permissionGroupKeys` value is not valid JSON, the dashboard still opens the token creation form with whatever it could resolve and shows a notice naming the keys it could not apply. It does not redirect back to the token list, so a mistyped key surfaces in the form instead of failing silently.
+
+For **user token URLs**, unresolved entries are dropped silently and no notice is shown, so verify each key against the [permission reference](#permission-reference) before sharing the URL.
 
 Additionally, review the checklist before sharing a template URL.
 
