@@ -8,7 +8,7 @@ products:
   - workers-ai
 ---
 
-import { Render } from "~/components";
+import { Aside, Render } from "~/components";
 
 <Render file="openai-compatibility" product="workers-ai" /> <br />
 
@@ -92,6 +92,36 @@ Reasoning controls and defaults depend on the model. Refer to each [model's inpu
 - **Thinking on or off:** Models such as GLM-4.7-Flash support `chat_template_kwargs: { enable_thinking: false }`. GLM-4.7-Flash has an on/off control, rather than separate low, medium, and high levels.
 
 Gemma 4 supports `reasoning_effort: "none"` (the default) or `"high"`. Kimi K2.6 supports the same two values and defaults to `"high"`. Compatibility aliases such as `"low"` and `"medium"` select `"high"` for these models; they do not represent distinct effort levels. A `"none"` alias does not necessarily disable reasoning on models where reasoning is mandatory. Refer to the model's schema before using it as an off switch.
+
+Qwen 3.8 supports `"low"`, `"medium"`, and `"xhigh"`. It defaults to `"xhigh"`. Other effort names, including `"high"`, `"max"`, and `"none"`, are not aliases. To turn off Qwen 3.8 reasoning, use `chat_template_kwargs: { enable_thinking: false }`.
+
+<Aside type="note" title="Nemotron uses model-specific reasoning controls">
+
+Nemotron supports normal reasoning, low reasoning, and reasoning turned off. It does not currently select these modes from the top-level `reasoning_effort` field. Pass the corresponding options through `chat_template_kwargs` instead.
+
+To use low reasoning, set both `enable_thinking` and `low_effort`:
+
+```python
+response = client.chat.completions.create(
+    model="@cf/nvidia/nemotron-3-120b-a12b",
+    messages=[{"role": "user", "content": "What is the capital of Japan?"}],
+    max_tokens=16000,
+    temperature=1.0,
+    top_p=0.95,
+    extra_body={
+        "chat_template_kwargs": {
+            "enable_thinking": True,
+            "low_effort": True,
+        }
+    },
+)
+```
+
+The low-effort option appends `{reasoning effort: low}` to the latest user message. To turn reasoning off, set `enable_thinking` to `False`. For coding agents, set `force_nonempty_content` to `True` in the same `chat_template_kwargs` object.
+
+For more information, refer to [NVIDIA's Nemotron API client example](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8#api-client).
+
+</Aside>
 
 The input schema linked from each model page is also available as JSON. For example, [Gemma 4's synchronous input schema](/workers-ai/models/gemma-4-26b-a4b-it/sync-input.json) documents its effort values and thinking default.
 
