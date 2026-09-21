@@ -1,6 +1,6 @@
 ---
-title: Containers
-description: Deploy a Worker that starts a Linux container and proxies HTTP to it.
+title: Run a Linux command
+description: POST a command to your Worker and read stdout from Linux.
 pcx_content_type: get-started
 sidebar:
   order: 2
@@ -9,67 +9,134 @@ products:
   - containers
   - workers
   - durable-objects
-reviewed: 2026-09-09
+reviewed: 2026-09-21
 ---
 
-import { PackageManagers, Render, Steps } from "~/components";
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-In this guide, you will deploy a Worker that starts a container and forwards HTTP to it. The container is a full Linux environment. Traffic from the Internet reaches it only through your Worker.
+You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
-You also need [Docker](https://www.docker.com/) or another Docker-compatible engine. Wrangler uses it to build and push the image.
-
-<Render product="containers" file="docker-setup" />
-
-## Create and deploy the project
+## Run a command in Linux
 
 <Steps>
 
-1. Create a Worker with the Containers starter template:
+1. Create a Worker project:
 
    <PackageManagers
    	type="create"
    	pkg="cloudflare@latest"
-   	args={"--template=cloudflare/templates/containers-template"}
+   	args={"sandbox-linux --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
    />
 
-2. Change into the project directory, then deploy:
+2. Change into the project directory:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   ```sh
+   cd sandbox-linux
+   ```
 
-3. Wait for the command to finish. The first image build and push usually take the longest.
+3. Replace `wrangler.jsonc` so a Durable Object can start a container:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "sandbox-linux",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"class_name": "MyContainer",
+   				"name": "MY_CONTAINER",
+   			},
+   		],
+   	},
+   	"migrations": [
+   		{
+   			"new_sqlite_classes": ["MyContainer"],
+   			"tag": "v1",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Generate types for the binding:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+5. Replace `src/index.ts`. The Worker reads `argv` from the JSON body and runs it in Linux:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   export class MyContainer extends DurableObject<Env> {
+   	async exec(argv: string[]) {
+   		if (!this.ctx.container.running) {
+   			this.ctx.container.start({
+   				image: "cloudflare/debian-trixie",
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await this.ctx.container.exec(argv);
+   		const output = await process.output();
+   		return {
+   			stdout: new TextDecoder().decode(output.stdout),
+   			exitCode: output.exitCode,
+   		};
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const { argv } = (await request.json()) as { argv: string[] };
+   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   		return Response.json(await sandbox.exec(argv));
+   	},
+   };
+   ```
+
+   </TypeScriptExample>
+
+   `cloudflare/debian-trixie` is Debian Trixie with Node.js 24. `enableInternet: false` blocks the public Internet.
+
+6. Run `wrangler dev`:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+7. POST a command to the URL Wrangler printed. The default is `http://localhost:8787`:
+
+   ```sh
+   curl http://localhost:8787 --request POST --json '{"argv":["uname","-a"]}'
+   ```
 
 </Steps>
 
-:::note
-
-After the first deploy, wait several minutes before you expect container routes to succeed. The Worker URL may respond while Cloudflare is still provisioning containers.
-
-:::
-
-## Send a request
-
-Open the Worker URL. It looks like `https://hello-containers.<YOUR_WORKERS_SUBDOMAIN>.workers.dev`.
-
-- Requests to `/container/1` or `/container/2` route to specific instances. Each path after `/container/` maps to one container.
-- Requests to `/lb` load-balance across three instances.
-
-Read the response body. It should identify the instance that handled the request.
-
-If the Worker responds but container routes error, wait for provisioning. Then check [Containers](https://dash.cloudflare.com/?to=/:account/workers/containers) logs in the dashboard.
-
-## What happened
-
-Your [Worker](/workers/) received the request first. It chose a [Container](/containers/) instance with `getContainer()` and forwarded HTTP to that instance.
-
-The instance does not share a process or a kernel with the Worker. Other instances and customers cannot reach it. For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker started a Linux VM and ran the command you sent.
 
 ## Next steps
 
-- Run another process in the instance. Refer to [Run a Linux command](/sandbox/guides/run-a-linux-command/).
-- Block or intercept outbound HTTP. Refer to [Block the Internet](/sandbox/guides/block-the-internet/).
-- Read the template in depth on [Get started with Containers](/containers/get-started/).
-- Compare environments in [Choose an environment](/sandbox/concepts/choose-an-environment/).
+- Run another process in the instance. Refer to [Execute commands](/containers/guides/execute-commands/).
+- Run JavaScript. Refer to [Run JavaScript](/sandbox/get-started/dynamic-workers/).
+- Use the [Durable Object container API](/durable-objects/api/container/) for `start()` and `exec()`.

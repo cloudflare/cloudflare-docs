@@ -86,7 +86,7 @@ export default {
 </TypeScriptExample>
 
 <LinkButton variant="primary" href="/sandbox/get-started/dynamic-workers/">
-	Get started with Dynamic Workers
+	Run JavaScript
 </LinkButton>
 
 ---
@@ -105,12 +105,18 @@ import { DurableObject } from "cloudflare:workers";
 export class MyContainer extends DurableObject<Env> {
 	async exec(argv: string[]) {
 		if (!this.ctx.container.running) {
-			this.ctx.container.start({ enableInternet: false });
+			this.ctx.container.start({
+				image: "cloudflare/debian-trixie",
+				enableInternet: false,
+			});
 		}
 
 		const process = await this.ctx.container.exec(argv);
-		const stdout = await new Response(process.stdout).text();
-		return { stdout, exitCode: await process.exitCode };
+		const output = await process.output();
+		return {
+			stdout: new TextDecoder().decode(output.stdout),
+			exitCode: output.exitCode,
+		};
 	}
 }
 
@@ -125,7 +131,7 @@ export default {
 </TypeScriptExample>
 
 <LinkButton variant="primary" href="/sandbox/get-started/containers/">
-	Get started with Containers
+	Run a Linux command
 </LinkButton>
 
 ---
@@ -135,7 +141,7 @@ export default {
 <CardGrid>
 
 <LinkTitleCard title="Get started" href="/sandbox/get-started/" icon="rocket">
-	Run your first sandbox on Dynamic Workers or Containers.
+	Run JavaScript or a Linux command in your first sandbox.
 </LinkTitleCard>
 
 <LinkTitleCard title="Concepts" href="/sandbox/concepts/" icon="seti:info">
