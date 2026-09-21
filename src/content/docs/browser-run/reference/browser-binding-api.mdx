@@ -1,0 +1,213 @@
+---
+pcx_content_type: reference
+title: Browser binding API
+description: Acquire, connect to, inspect, and manage Browser Run sessions from a Cloudflare Worker with typed browser binding methods.
+sidebar:
+  order: 21
+products:
+  - browser-run
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+The Browser Run binding provides typed methods for browser session management from a [Cloudflare Worker](/workers/). Use these methods to acquire a session, connect a browser client, route browser requests through another Worker, and manage DevTools targets.
+
+Configure a [browser binding](/browser-run/reference/wrangler/#bindings) in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+name = "browser-binding-example"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[browser]
+binding = "BROWSER"
+```
+
+</WranglerConfig>
+
+## Session methods
+
+| Method                                | Description                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `acquire(options?)`                   | Creates a browser session and returns its session ID. Set `targets: true` to include the session's current targets. |
+| `connectSession(sessionId, options?)` | Returns a session-pinned `Fetcher` for connecting a CDP client to an existing session.                              |
+| `launch(options?)`                    | Acquires a session and returns the same connection result as `connectSession()`.                                    |
+| `getLiveView(sessionId, options?)`    | Creates a Live View URL for a session or target.                                                                    |
+| `listSessions(options?)`              | Lists active sessions in the account.                                                                               |
+| `history(options?)`                   | Lists recent active and closed sessions.                                                                            |
+| `limits()`                            | Returns the current session limits and usage values.                                                                |
+| `getSession(sessionId)`               | Returns session details or `null` when the session does not exist.                                                  |
+| `closeSession(sessionId)`             | Closes a session and returns `closing` or `closed`.                                                                 |
+| `devtools`                            | Provides typed methods for the DevTools JSON endpoints.                                                             |
+
+## Acquire and connect to a session
+
+`acquire()` returns session metadata. Use `connectSession()` to get a session-pinned Fetcher, then open a WebSocket upgrade and send Chrome DevTools Protocol (CDP) commands.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	BROWSER: Fetcher;
+}
+
+type CdpResponse = {
+	id: number;
+	result?: unknown;
+	error?: { message: string };
+};
+
+function sendCdpCommand(
+	socket: WebSocket,
+	method: string,
+	params: Record<string, unknown> = {},
+): Promise<unknown> {
+	return new Promise((resolve, reject) => {
+		const id = 1;
+		const onMessage = (event: MessageEvent<string>) => {
+			const message = JSON.parse(event.data) as CdpResponse;
+			if (message.id !== id) return;
+
+			socket.removeEventListener("message", onMessage);
+			if (message.error) {
+				reject(new Error(message.error.message));
+			} else {
+				resolve(message.result);
+			}
+		};
+
+		socket.addEventListener("message", onMessage);
+		socket.send(JSON.stringify({ id, method, params }));
+	});
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const session = await env.BROWSER.acquire({ targets: true });
+		const connection = await env.BROWSER.connectSession(session.sessionId);
+		const response = await connection.webSocket.fetch(
+			"https://browser-binding.invalid",
+			{ headers: { Upgrade: "websocket" } },
+		);
+		if (!response.webSocket) {
+			throw new Error("Browser Run did not return a WebSocket");
+		}
+
+		const socket = response.webSocket;
+		socket.accept();
+
+		try {
+			await sendCdpCommand(socket, "Page.navigate", {
+				url: "https://example.com",
+			});
+			const version = await sendCdpCommand(socket, "Browser.getVersion");
+			return Response.json(version);
+		} finally {
+			socket.close();
+			await env.BROWSER.closeSession(session.sessionId);
+		}
+	},
+};
+```
+
+</TypeScriptExample>
+
+Use `launch()` when you do not need to separate acquisition from connection:
+
+<TypeScriptExample>
+
+```ts
+const session = await env.BROWSER.launch();
+const response = await session.webSocket.fetch(
+	"https://browser-binding.invalid",
+	{ headers: { Upgrade: "websocket" } },
+);
+
+const socket = response.webSocket;
+if (!socket) {
+	throw new Error("Browser Run did not return a WebSocket");
+}
+
+socket.accept();
+socket.send(
+	JSON.stringify({
+		id: 1,
+		method: "Browser.getVersion",
+	}),
+);
+```
+
+</TypeScriptExample>
+
+`launch()` performs the acquire and connection-capability steps in one call. Both methods return a connection object with this shape:
+
+| Property    | Description                                               |
+| ----------- | --------------------------------------------------------- |
+| `sessionId` | The Browser Run session ID.                               |
+| `webSocket` | A session-pinned `Fetcher` used to open a CDP connection. |
+| `targets`   | The target list when requested with `targets: true`.      |
+
+### Session options
+
+`acquire()` and `launch()` accept these options:
+
+| Option                   | Type                      | Description                                                                                                                                           |
+| ------------------------ | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keepAlive`              | `number`                  | Session inactivity timeout in milliseconds. The value must be between 10 seconds and 20 minutes.                                                      |
+| `recording`              | `boolean`                 | Records the session for later inspection.                                                                                                             |
+| `location`               | `string`                  | ISO 3166-1 alpha-2 country code for the browser location.                                                                                             |
+| `outboundByHost`         | `Record<string, Fetcher>` | Routes requests for each hostname through a Worker Fetcher. See [Route requests through an outbound Worker](/browser-run/features/outbound-workers/). |
+| `guardrails`             | `object`                  | Restricts the hostnames that the browser session can access. See [Guardrails](/browser-run/features/guardrails/).                                     |
+| `targets`                | `boolean`                 | Includes the session's DevTools targets in the result.                                                                                                |
+| `liveViewUrlExpiresInMs` | `number`                  | Sets the expiry for target Live View URLs when `targets` is `true`.                                                                                   |
+
+The binding uses `keepAlive` in its options object.
+
+## DevTools methods
+
+The `devtools` property exposes the DevTools JSON endpoints as typed methods. It is one nested binding target, so you can call the methods from the same Browser Run binding:
+
+| Method                                 | Description                                                                                          |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `getVersion(sessionId)`                | Returns browser version information.                                                                 |
+| `getProtocol(sessionId)`               | Returns the browser's DevTools protocol description.                                                 |
+| `listTargets(sessionId, options?)`     | Lists the browser's targets. Set `liveViewUrlExpiresInMs` to control generated Live View URL expiry. |
+| `getTarget(sessionId, targetId)`       | Returns one target.                                                                                  |
+| `newTarget(sessionId, url?, options?)` | Opens a new target. If `url` is omitted, the target opens at `about:blank`.                          |
+| `activateTarget(sessionId, targetId)`  | Activates a target.                                                                                  |
+| `closeTarget(sessionId, targetId)`     | Closes a target.                                                                                     |
+
+Target objects include the target ID, type, URL, title, and, when available, a `devtoolsFrontendUrl`.
+
+<TypeScriptExample>
+
+```ts
+const targets = await env.BROWSER.devtools.listTargets(sessionId, {
+	liveViewUrlExpiresInMs: 300_000,
+});
+
+const page = targets.find((target) => target.type === "page");
+if (!page) {
+	throw new Error("No page target found");
+}
+
+const liveView = await env.BROWSER.getLiveView(sessionId, {
+	targetId: page.id,
+	mode: "devtools",
+});
+
+console.log(liveView.devtoolsFrontendUrl);
+```
+
+</TypeScriptExample>
+
+Use the returned `devtoolsFrontendUrl` to open Live View. To connect a CDP client to a specific target, pass its ID to `connectSession(sessionId, { targetId })`. Treat Live View URLs as credentials because they contain access tokens.
+
+## Next steps
+
+- Learn about [Live View](/browser-run/features/live-view/).
+- Review [session management with HTTP](/browser-run/cdp/session-management/).
+- Use the [Chrome DevTools Protocol](/browser-run/cdp/) for direct browser control.

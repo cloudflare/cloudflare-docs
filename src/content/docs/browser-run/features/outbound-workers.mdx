@@ -1,0 +1,132 @@
+---
+pcx_content_type: how-to
+title: Outbound Workers
+description: Route selected Browser Run requests through another Worker for private services, authentication, or response processing.
+sidebar:
+  order: 8
+products:
+  - browser-run
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Use `outboundByHost` to send browser requests for selected hostnames through another Worker. The outbound Worker can reach a private service, add authentication, or transform the response before it reaches the browser.
+
+This feature is useful when the browser should request a hostname that has no public DNS record. Browser Run matches the hostname and sends the request to the Worker Fetcher instead of requiring public DNS resolution.
+
+## Configure the bindings
+
+Declare a Browser Run binding and a service binding for the outbound Worker:
+
+<WranglerConfig>
+
+```toml
+name = "browser-runner"
+main = "src/index.ts"
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[browser]
+binding = "BROWSER"
+
+[[services]]
+binding = "OUTBOUND"
+service = "outbound-worker"
+```
+
+</WranglerConfig>
+
+The service binding gives the browser Worker a `Fetcher` for the outbound Worker. The outbound Worker does not need a public route.
+
+## Route requests by hostname
+
+Pass the service binding to `launch()` or `acquire()` in the `outboundByHost` map. The map key must exactly match the hostname in the browser request.
+
+The following example uses raw CDP commands. It opens a Browser Run session, routes `private.example.test` through the outbound Worker, and sends a `Page.navigate` command:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	BROWSER: Fetcher;
+	OUTBOUND: Fetcher;
+}
+
+type CdpResponse = {
+	id: number;
+	result?: unknown;
+	error?: { message: string };
+};
+
+function sendCdpCommand(
+	socket: WebSocket,
+	method: string,
+	params: Record<string, unknown> = {},
+): Promise<unknown> {
+	return new Promise((resolve, reject) => {
+		const id = 1;
+		const onMessage = (event: MessageEvent<string>) => {
+			const message = JSON.parse(event.data) as CdpResponse;
+			if (message.id !== id) return;
+
+			socket.removeEventListener("message", onMessage);
+			if (message.error) {
+				reject(new Error(message.error.message));
+			} else {
+				resolve(message.result);
+			}
+		};
+
+		socket.addEventListener("message", onMessage);
+		socket.send(JSON.stringify({ id, method, params }));
+	});
+}
+
+export default {
+	async fetch(_request: Request, env: Env): Promise<Response> {
+		const connection = await env.BROWSER.launch({
+			outboundByHost: {
+				"private.example.test": env.OUTBOUND,
+			},
+		});
+		const response = await connection.webSocket.fetch(
+			"https://browser-binding.invalid",
+			{ headers: { Upgrade: "websocket" } },
+		);
+		if (!response.webSocket) {
+			throw new Error("Browser Run did not return a WebSocket");
+		}
+
+		const socket = response.webSocket;
+		socket.accept();
+
+		try {
+			await sendCdpCommand(socket, "Page.navigate", {
+				url: "http://private.example.test",
+			});
+			return new Response("Navigation sent through the outbound Worker");
+		} finally {
+			socket.close();
+			await env.BROWSER.closeSession(connection.sessionId);
+		}
+	},
+};
+```
+
+</TypeScriptExample>
+
+The `.test` top-level domain is reserved for testing. Use a hostname that does not resolve on public DNS for a virtual outbound route. The hostname must still match the key in `outboundByHost`.
+
+Outbound Worker routing supports HTTP requests only. Use an `http://` URL for the routed hostname. HTTPS requests do not use the outbound Worker.
+
+## Constraints
+
+- Use `outboundByHost` with Browser Run binding methods only. It is not supported by REST endpoints or legacy HTTP-only bindings.
+- Create the Fetcher and call `acquire()` or `launch()` in the same Worker invocation.
+- The Fetcher is not persisted with the browser session and cannot be reused by a later invocation.
+- Outbound routing applies to the hostnames in the map. Requests to other hostnames use the browser's normal network path.
+
+## Next steps
+
+- Review the [Browser binding API](/browser-run/reference/browser-binding-api/).
+- Learn how to use the [Chrome DevTools Protocol](/browser-run/cdp/).
