@@ -1,15 +1,14 @@
 ---
-title: Run JavaScript away from your Worker
-description: Start a sandbox from your Worker and run JavaScript inside it.
+title: Run JavaScript
+description: POST JavaScript to your Worker and read the sandboxed result.
 pcx_content_type: get-started
 sidebar:
   order: 1
-  label: Run JavaScript
 products:
   - sandbox
   - dynamic-workers
   - workers
-reviewed: 2026-09-09
+reviewed: 2026-09-21
 ---
 
 import {
@@ -20,17 +19,17 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-In this guide, you will POST JavaScript your Worker did not ship and read the sandboxed execution result.
+You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
-## Create a Worker
+## Run JavaScript
 
 <Steps>
 
-1. Create a new Worker project:
+1. Create a Worker project:
 
    <PackageManagers
    	type="create"
@@ -44,98 +43,79 @@ In this guide, you will POST JavaScript your Worker did not ship and read the sa
    cd sandbox-dynamic-worker
    ```
 
-</Steps>
+3. Add a Worker Loader binding to `wrangler.jsonc`:
 
-## Add a Worker Loader binding
+   <WranglerConfig>
 
-Add a [Worker Loader](/dynamic-workers/getting-started/#configure-worker-loader) binding so your Worker can call `load()`.
+   ```jsonc
+   {
+   	"name": "sandbox-dynamic-worker",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"worker_loaders": [
+   		{
+   			"binding": "LOADER",
+   		},
+   	],
+   }
+   ```
 
-<WranglerConfig>
+   </WranglerConfig>
 
-```jsonc
-{
-	"name": "sandbox-dynamic-worker",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"worker_loaders": [
-		{
-			"binding": "LOADER",
-		},
-	],
-}
-```
+4. Replace `src/index.ts`. The Worker reads `code` from the JSON body and runs it in the sandbox:
 
-</WranglerConfig>
+   <TypeScriptExample filename="src/index.ts">
 
-## Run posted JavaScript in the sandbox
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const { code } = (await request.json()) as { code: string };
 
-Replace `src/index.ts`. The Worker reads `code` from the JSON body. That string becomes the body of `evaluate()`. A `return` statement is required.
+   		const sandbox = env.LOADER.load({
+   			compatibilityDate: "$today",
+   			mainModule: "code.js",
+   			modules: {
+   				"code.js": `
+   					import { WorkerEntrypoint } from "cloudflare:workers";
 
-`load()` does not pass `env`. `globalOutbound: null` blocks `fetch()` and `connect()`.
+   					export class Code extends WorkerEntrypoint {
+   						evaluate() {
+   							${code}
+   						}
+   					}
+   				`,
+   			},
+   			globalOutbound: null,
+   		});
 
-<TypeScriptExample filename="src/index.ts">
+   		const result = await sandbox.getEntrypoint("Code").evaluate();
+   		return Response.json({ result });
+   	},
+   };
+   ```
 
-```ts
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		if (request.method !== "POST") {
-			return new Response("POST JSON with a code string", { status: 405 });
-		}
+   </TypeScriptExample>
 
-		const { code } = (await request.json()) as { code?: string };
+   `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`.
 
-		if (typeof code !== "string" || code.length === 0) {
-			return new Response("JSON body must include a code string", {
-				status: 400,
-			});
-		}
-
-		const sandbox = env.LOADER.load({
-			compatibilityDate: "$today",
-			mainModule: "code.js",
-			modules: {
-				"code.js": `
-					import { WorkerEntrypoint } from "cloudflare:workers";
-
-					export class Code extends WorkerEntrypoint {
-						evaluate() {
-							${code}
-						}
-					}
-				`,
-			},
-			globalOutbound: null,
-		});
-
-		const result = await sandbox.getEntrypoint("Code").evaluate();
-		return Response.json({ result });
-	},
-};
-```
-
-</TypeScriptExample>
-
-## Confirm the sandbox ran the posted code
-
-<Steps>
-
-1. Start a local session:
+5. Run `wrangler dev`:
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-2. POST JavaScript to the URL Wrangler printed. The default is `http://localhost:8787`:
+6. POST JavaScript to the URL Wrangler printed. The default is `http://localhost:8787`:
 
    ```sh
-   curl http://localhost:8787 --request POST --json '{"code":"const users = [{ name: \"Ada\", role: \"admin\" }, { name: \"Grace\", role: \"user\" }]; return users.filter((u) => u.role === \"admin\").map((u) => u.name);"}'
+   curl http://localhost:8787 --request POST --json '{
+     "code": "const users = [{ name: \\"Ada\\", role: \\"admin\\" }, { name: \\"Grace\\", role: \\"user\\" }]; return users.filter((u) => u.role === \\"admin\\").map((u) => u.name);"
+   }'
    ```
 
 </Steps>
 
-The response body should be `{"result":["Ada"]}`.
+The response body is `{"result":["Ada"]}`. The Worker ran the JavaScript you sent.
 
 ## Next steps
 
 - Pass APIs and data into the sandbox. Refer to [Bindings](/dynamic-workers/usage/bindings/).
-- Follow [Getting started](/dynamic-workers/getting-started/) in the Dynamic Workers docs for the Loader API.
-- Run a Linux environment from your Worker. Refer to [Containers](/sandbox/get-started/containers/).
-- Compare the two environments. Refer to [Choose an environment](/sandbox/concepts/choose-an-environment/).
+- Run a Linux command. Refer to [Run a Linux command](/sandbox/get-started/containers/).
+- Use the [Loader API](/dynamic-workers/getting-started/) for `load()` and `get()`.
