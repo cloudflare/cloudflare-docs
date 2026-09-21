@@ -6,7 +6,11 @@
  * beta → Batch → request formats → partner → realtime → unit price →
  * dashboard pricing link.
  */
-import { modelCurrencyFormatter, type ModelView } from "~/util/models";
+import {
+	formatModelReasoning,
+	modelCurrencyFormatter,
+	type ModelView,
+} from "~/util/models";
 
 interface Props {
 	model: ModelView;
@@ -44,6 +48,10 @@ const hasProps = Object.keys(properties).length > 0;
 const price = Array.isArray(properties.price)
 	? (properties.price as { price: number; unit: string }[])
 	: null;
+const reasoning = formatModelReasoning(
+	properties.reasoning_effort,
+	properties.reasoning,
+);
 ---
 
 {hasProps && (
@@ -127,10 +135,10 @@ const price = Array.isArray(properties.price)
 					<td>Yes</td>
 				</tr>
 			)}
-			{properties.reasoning && (
+			{reasoning && (
 				<tr>
 					<td>Reasoning</td>
-					<td>{properties.reasoning_effort ?? "Yes"}</td>
+					<td>{reasoning}</td>
 				</tr>
 			)}
 			{properties.vision && (

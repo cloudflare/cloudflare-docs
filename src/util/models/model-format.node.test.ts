@@ -1,10 +1,42 @@
 import { describe, expect, it } from "vitest";
-import { formatCompactTokens, formatModelPricing } from "./model-format";
+import {
+	formatCompactTokens,
+	formatModelPricing,
+	formatModelReasoning,
+} from "./model-format";
 
 describe("model display formatting", () => {
 	it("formats token counts compactly", () => {
 		expect(formatCompactTokens(200_000)).toBe("200K tokens");
 		expect(formatCompactTokens(null)).toBeNull();
+	});
+
+	it("formats structured reasoning efforts in a concise natural order", () => {
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["xhigh", "medium", "low"],
+					default_effort: "xhigh",
+					default_enabled: true,
+				},
+				"true",
+			),
+		).toBe("Low, Medium, Extra high (default)");
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["medium", "low", "none"],
+					default_effort: "medium",
+				},
+				"true",
+			),
+		).toBe("Off, Low, Medium (default)");
+	});
+
+	it("falls back to a clean yes or no when effort metadata is absent", () => {
+		expect(formatModelReasoning(undefined, "true")).toBe("Yes");
+		expect(formatModelReasoning(undefined, "false")).toBe("No");
+		expect(formatModelReasoning(undefined, undefined)).toBeNull();
 	});
 
 	it("formats supported pricing values and omits nested metadata", () => {
