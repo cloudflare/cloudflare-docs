@@ -188,7 +188,7 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 }
 ```
 
-A wildcard can also come before a file extension, and it matches at any depth. Use this when static files and Function routes share a path, such as an API that serves pre-rendered `.json` files beside routes a Function answers. In the example below, `/api/users/1.json` and `/api/users/1/posts.json` are served as static assets without invoking the Function, while `/api/users/1` and `/api/search` invoke it.
+A wildcard can also come before a file extension, and it matches at any depth. Use this when static files and Function routes share a path, such as an API that serves pre-rendered `.json` files beside routes a Function answers. With this `_routes.json`, `/api/users/1.json` and `/api/users/1/posts.json` are served as static assets without invoking the Function, while `/api/users/1` and `/api/search` invoke it:
 
 ```json
 {
