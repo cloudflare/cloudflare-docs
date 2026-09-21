@@ -16,15 +16,13 @@ the amount of connections your Hyperdrive configuration uses to connect to your 
 For instance, if your Worker makes many queries to your database (which cannot be resolved by Hyperdrive's caching), you may want to allow Hyperdrive to make more connections to your database.
 Conversely, if your Worker makes few queries that actually need to reach your database or if your database allows a small number of database connections, you can reduce the amount of connections Hyperdrive will make to your database.
 
-All configurations have a minimum of 5 connections, with a maximum depending on your Workers plan. Customers on a Workers Paid plan can set up to 1,500 connections per configuration.
+All configurations have a minimum of 5 connections. The maximum depends on your Workers plan: 20 connections on the Free plan and 1,500 connections on the Workers Paid plan.
 
 ## How Hyperdrive pools database connections
 
 Hyperdrive will automatically scale the amount of database connections held open by Hyperdrive depending on your traffic and the amount of load that is put on your database.
 
-The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database. This is a soft limit, so set it lower than your origin database connection limit.
-
-Hyperdrive may create more connections if network disruptions prevent existing connections from being used.
+The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database. This limit is separate from your origin database's connection limits. We recommend setting it lower than your origin database's connection limit.
 
 ## Restart the connection pool
 

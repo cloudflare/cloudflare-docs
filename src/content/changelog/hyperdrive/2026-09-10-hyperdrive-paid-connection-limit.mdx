@@ -8,8 +8,8 @@ date: 2026-09-10
 
 Customers on a Workers Paid plan can configure up to 1,500 origin database connections per Hyperdrive configuration. This increases the connection pool size available for workloads that need more concurrent database access.
 
-The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database. You can configure this value in the dashboard settings for your Hyperdrive configuration.
+The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database. You can configure this value via the dashboard, Wrangler, or the REST API.
 
-Set this value lower than your origin database's own connection limit to leave room for adjustments.
+We recommend setting this value lower than your origin database's connection limit.
 
 For more information, refer to [Hyperdrive limits](/hyperdrive/platform/limits/) and [Tune connection pooling](/hyperdrive/configuration/tune-connection-pool/).
