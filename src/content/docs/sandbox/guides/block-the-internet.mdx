@@ -53,20 +53,34 @@ You can still pass [bindings](/dynamic-workers/usage/bindings/) so the sandbox c
 
 ## Containers
 
-Set `enableInternet` to `false` on the `Container` subclass. The setting applies when the instance starts.
+Pass `enableInternet: false` to `start()`. The setting applies to that instance.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Container } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
 
-export class MyContainer extends Container {
-	enableInternet = false;
+export class MyContainer extends DurableObject<Env> {
+	async exec(argv: string[]) {
+		if (!this.ctx.container.running) {
+			this.ctx.container.start({
+				image: "cloudflare/debian-trixie",
+				enableInternet: false,
+			});
+		}
+
+		const process = await this.ctx.container.exec(argv);
+		const output = await process.output();
+		return {
+			stdout: new TextDecoder().decode(output.stdout),
+			exitCode: output.exitCode,
+		};
+	}
 }
 ```
 
 </TypeScriptExample>
 
-When `enableInternet` is `false`, only traffic you later allow through `allowedHosts` or outbound handlers can leave the instance.
+`enableInternet` defaults to `false` on `start()`. Set it to `true` only when the process should reach the public Internet.
 
-To allow specific hosts, inject authorization headers, or intercept HTTPS, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/). Export `ContainerProxy` from your Worker entrypoint when you intercept outbound HTTP.
+To intercept outbound HTTP from the instance, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/).

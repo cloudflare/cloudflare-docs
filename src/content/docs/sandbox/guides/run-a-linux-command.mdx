@@ -25,38 +25,39 @@ Complete [Get started with Containers](/sandbox/get-started/containers/) first. 
 <Steps>
 
 1. In the RPC method, check `this.ctx.container.running`.
-2. Call `await this.start()` when the instance is stopped.
+2. Call `this.ctx.container.start({ image: "cloudflare/debian-trixie" })` when the instance is stopped.
 3. Pass the executable and arguments as an array. `exec()` does not start a shell.
-4. Read stdout and the exit code from the returned process.
+4. Read stdout and the exit code from `process.output()`.
 
 </Steps>
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Container, getContainer } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
 
-export class MyContainer extends Container {
+export class MyContainer extends DurableObject<Env> {
 	async runVersion() {
 		if (!this.ctx.container.running) {
-			await this.start();
+			this.ctx.container.start({
+				image: "cloudflare/debian-trixie",
+				enableInternet: false,
+			});
 		}
 
-		const process = await this.ctx.container.exec(["node", "--version"]);
-		const stdout = process.stdout
-			? await new Response(process.stdout).text()
-			: "";
-		const exitCode = await process.exitCode;
-
-		return { pid: process.pid, stdout, exitCode };
+		const process = await this.ctx.container.exec(["uname", "-a"]);
+		const output = await process.output();
+		return {
+			stdout: new TextDecoder().decode(output.stdout),
+			exitCode: output.exitCode,
+		};
 	}
 }
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const container = getContainer(env.MY_CONTAINER, "session-1");
-		const result = await container.runVersion();
-		return Response.json(result);
+		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+		return Response.json(await sandbox.runVersion());
 	},
 };
 ```
@@ -67,31 +68,34 @@ Each array item is one argument. Pipes, redirects, and globbing do not run unles
 
 When the command needs a shell, use `["bash", "-lc", "<COMMAND>"]` if Bash exists in the image, or `["sh", "-c", "<COMMAND>"]` if it does not. Pass untrusted values as separate arguments. Do not interpolate them into the command string.
 
-## Run commands on start
+## Run a command after start
 
-Override `onStart()` to run setup whenever the instance boots. `output()` buffers stdout and stderr as separate `ArrayBuffer` values.
+Call `exec()` after `start()` when you need setup in the same request. `output()` buffers stdout and stderr as separate `ArrayBuffer` values.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Container } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
 
-export class MyContainer extends Container {
-	override async onStart() {
-		const process = await this.ctx.container.exec([
-			"node",
-			"scripts/prepare.js",
-		]);
+export class MyContainer extends DurableObject<Env> {
+	async prepare() {
+		if (!this.ctx.container.running) {
+			this.ctx.container.start({
+				image: "cloudflare/debian-trixie",
+				enableInternet: false,
+			});
+		}
+
+		const process = await this.ctx.container.exec(["uname", "-a"]);
 		const output = await process.output();
-		const decoder = new TextDecoder();
 
 		if (output.exitCode !== 0) {
 			throw new Error(
-				`Container preparation failed: ${decoder.decode(output.stderr)}`,
+				`Command failed: ${new TextDecoder().decode(output.stderr)}`,
 			);
 		}
 
-		console.log(decoder.decode(output.stdout));
+		return new TextDecoder().decode(output.stdout);
 	}
 }
 ```

@@ -13,13 +13,13 @@ products:
 reviewed: 2026-09-09
 ---
 
-A [Worker](/workers/) is the program that already handles your traffic. Both sandbox environments are accessible through that Worker. The untrusted work never faces the Internet on its own.
+A [Worker](/workers/) is the application that already handles your traffic. Both sandbox environments are accessible through that Worker. The untrusted code never faces the Internet on its own.
 
 ## What the Worker does
 
 The Worker receives the request. It decides which sandbox to start, what code or image to load, and which APIs the sandbox may use. It then forwards work into the sandbox and returns the result.
 
-That split is the point of the model. Your application stays in the Worker. The untrusted or generated program runs somewhere else.
+That split is the point of the model. Your application stays in the Worker. The untrusted or generated code runs somewhere else.
 
 ## Dynamic Workers
 
@@ -29,7 +29,7 @@ You pass APIs and data in. You set `globalOutbound` when the sandbox should not 
 
 ## Containers
 
-The Worker addresses a container through a [Durable Object](/durable-objects/). The [`Container` class](/containers/reference/container-class/) extends `DurableObject`. `getContainer()` returns the instance for an ID you choose.
+The Worker addresses a container through a [Durable Object](/durable-objects/). `getByName()` returns the instance for an ID you choose. The Worker passes an image to `this.ctx.container.start()`, such as `cloudflare/debian-trixie`.
 
 HTTP from the Internet always hits the Worker first. End users cannot open TCP or UDP to the instance. The Durable Object stores identity and state that should survive a container restart. The disk inside the instance is ephemeral.
 
