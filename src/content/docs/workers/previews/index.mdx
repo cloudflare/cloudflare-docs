@@ -8,17 +8,15 @@ products:
   - workers
 ---
 
-import WorkerPreviewsDiagram from "~/components/WorkerPreviewsDiagram.astro";
+**Previews** give each branch an isolated, production-like environment under the same Worker. Each Preview is [configured with its own variables, secrets, and bindings](/workers/previews/configuration/), served on its own [URL](/workers/previews/custom-domains/), and has its own [observability](/workers/previews/test-and-debug/).
 
-**Previews** give each branch or pull request its own URL, variables, secrets, and bindings — separate from production — so you can test changes before merging.
-
-<WorkerPreviewsDiagram />
+![Worker dashboard showing the Preview dropdown and an overview of bindings, metrics, and deployments](~/assets/images/workers/previews/previews-dash-overview.png)
 
 Used [Version URLs](/workers/versions-and-deployments/version-urls/) or [Wrangler environments](/workers/wrangler/environments/) before? Refer to [Compare workflows](/workers/previews/compare-workflows/) to understand how they differ from Previews and our recommended practices for branch testing.
 
 ## How it works
 
-Running `npx wrangler preview` creates or updates a Preview from your current branch. As you use `npx wrangler deploy` for production, use `npx wrangler preview` to test a branch before merging.
+Running `npx wrangler preview` creates or updates a Preview for your current branch under the same Worker. As you use `npx wrangler deploy` for production, use `npx wrangler preview` to test a branch before merging.
 
 | Branch          | Command                | What happens                                        |
 | --------------- | ---------------------- | --------------------------------------------------- |
@@ -39,11 +37,13 @@ Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [cus
 
 ### Settings and isolation
 
-Previews do not inherit production values. Configure each Preview independently, or set a [Base configuration](/workers/previews/configuration/#setting-your-previews-base-configuration) that new Previews start from. Full details in [Configuration](/workers/previews/configuration/).
+Previews do not inherit production settings. Define them in your [configuration file](/workers/previews/configuration/). Since Git tracks that file, each branch can have its own Preview settings. When you run `npx wrangler preview`, Wrangler uses the current branch's settings to create or update its Preview.
 
-Durable Objects and Containers get separate state per Preview automatically. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
+Since secrets cannot be stored in the configuration file or version control, use commands to apply [secrets](/workers/previews/configuration/#secrets) to all new Previews or to an individual Preview.
 
-[Service bindings](/workers/previews/limitations/#service-bindings), [routes](/workers/previews/limitations/#routes), [Cron Triggers](/workers/previews/limitations/#cron-triggers), and [Queue consumers](/workers/previews/limitations/#queue-consumers) currently target production or sit outside the Previews system.
+Cloudflare automatically provisions a new [Durable Object namespace](/workers/previews/resources/#durable-objects) and [container instances](/workers/previews/resources/#containers) for each Preview. KV, D1, R2, and other resources are isolated when you bind the Preview to a separate resource. For the full matrix, refer to [Resources and isolation](/workers/previews/resources/).
+
+Workflow bindings use existing Workflows and do not create Preview-specific Workflows. Service bindings from a Preview call the bound Worker's production deployment. Routes and Cron Triggers target production. Queue consumers cannot target a Preview. For details, refer to [Limitations](/workers/previews/resources/#limitations).
 
 ### Access control
 
@@ -68,4 +68,4 @@ You can also delete Previews yourself with `npx wrangler preview delete --name <
 - [Get started](/workers/previews/get-started/) - Set up your first Preview
 - [Configuration](/workers/previews/configuration/) - Configure variables, secrets, bindings, and Base configuration
 - [Resources and isolation](/workers/previews/resources/) - Understand which resources are isolated or shared
-- [Limitations](/workers/previews/limitations/) - Review current support gaps and workarounds
+- [Limitations](/workers/previews/resources/#limitations) - Review current support gaps and workarounds

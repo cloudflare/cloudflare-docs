@@ -1,17 +1,18 @@
 ---
+
 ---
 
-<figure class="pcfg" aria-label="Preview configuration model">
+<figure class="pcfg" aria-label="Preview configuration by Git branch">
 	<div class="pcfg-shell">
 		<div class="pcfg-grid">
-			<!-- Left: base configuration -->
+			<!-- Left: starting configuration -->
 			<div class="pcfg-col pcfg-col-shared">
-				<section class="pcfg-win" aria-label="Base configuration">
+				<section class="pcfg-win" aria-label="Previews block on main">
 					<header class="pcfg-bar">
 						<span class="pcfg-dot"></span>
 						<span class="pcfg-dot"></span>
 						<span class="pcfg-dot"></span>
-						<strong>Base configuration</strong>
+						<strong><code>previews</code> on main</strong>
 					</header>
 					<div class="pcfg-rows">
 						<div class="pcfg-row">
@@ -23,19 +24,11 @@
 							<code>API_URL = "api.staging.example.com"</code>
 						</div>
 						<div class="pcfg-row">
-							<span class="pcfg-t pcfg-t-secret">secret</span>
-							<code>API_KEY = ••••••</code>
-						</div>
-						<div class="pcfg-row">
 							<span class="pcfg-t pcfg-t-binding">binding</span>
 							<code>UPLOADS = preview-r2-bucket</code>
 						</div>
 					</div>
 				</section>
-
-				<p class="pcfg-caption">
-					Every Preview starts with a copy of these settings
-				</p>
 			</div>
 
 			<!-- Right: One Preview at a time -->
@@ -45,19 +38,19 @@
 					<select class="pcfg-branch-select" aria-label="Select Preview branch">
 						<option
 							value="feature/login"
-							data-caption="Started from the base configuration, then changed UPLOADS and added DEBUG"
+							data-caption="uses the configuration file on feature/login as the source of truth"
 						>
 							feature/login
 						</option>
 						<option
 							value="redesign"
-							data-caption="No changes yet, still matches the base configuration"
+							data-caption="uses the configuration file on redesign as the source of truth"
 						>
 							redesign
 						</option>
 						<option
 							value="fix-api"
-							data-caption="Changed API_URL and removed the UPLOADS binding"
+							data-caption="uses the configuration file on fix-api as the source of truth"
 						>
 							fix-api
 						</option>
@@ -84,10 +77,6 @@
 							<div class="pcfg-row">
 								<span class="pcfg-t pcfg-t-var">var</span>
 								<code>API_URL = "api.staging.example.com"</code>
-							</div>
-							<div class="pcfg-row">
-								<span class="pcfg-t pcfg-t-secret">secret</span>
-								<code>API_KEY = ••••••</code>
 							</div>
 							<div class="pcfg-row">
 								<span class="pcfg-t pcfg-t-binding">binding</span>
@@ -119,10 +108,6 @@
 								<code>API_URL = "api.staging.example.com"</code>
 							</div>
 							<div class="pcfg-row">
-								<span class="pcfg-t pcfg-t-secret">secret</span>
-								<code>API_KEY = ••••••</code>
-							</div>
-							<div class="pcfg-row">
 								<span class="pcfg-t pcfg-t-binding">binding</span>
 								<code>UPLOADS = preview-r2-bucket</code>
 							</div>
@@ -146,10 +131,6 @@
 								<span class="pcfg-t pcfg-t-var">var</span>
 								<code>API_URL = "api.dev.example.com"</code>
 							</div>
-							<div class="pcfg-row">
-								<span class="pcfg-t pcfg-t-secret">secret</span>
-								<code>API_KEY = ••••••</code>
-							</div>
 							<div class="pcfg-row pcfg-row-rm">
 								<span class="pcfg-t pcfg-t-binding">binding</span>
 								<code class="pcfg-struck">UPLOADS</code>
@@ -159,9 +140,11 @@
 					</section>
 				</div>
 
-				<p class="pcfg-caption" data-pcfg-caption>
-					Started from the base configuration, then changed UPLOADS and added
-					DEBUG
+				<p class="pcfg-caption">
+					<code class="pcfg-command">npx wrangler preview</code>
+					<span data-pcfg-caption>
+						uses the configuration file on feature/login as the source of truth
+					</span>
 				</p>
 			</div>
 		</div>
@@ -497,6 +480,16 @@
 		color: var(--p-muted);
 		font-size: 0.8125rem;
 		line-height: 1.45;
+	}
+
+	.pcfg .pcfg-command {
+		display: inline-block;
+		padding: 0.125rem 0.375rem !important;
+		border: 1px solid var(--p-border) !important;
+		border-radius: 0.375rem !important;
+		background: var(--p-soft) !important;
+		color: var(--p-text);
+		font-weight: 600;
 	}
 
 	/* ── Responsive ── */

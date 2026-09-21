@@ -10,26 +10,11 @@ products:
 
 import { DashButton, WranglerConfig } from "~/components";
 
-Version URLs let you open a specific Worker version before that version is deployed to production traffic.
+Version URLs, previously called preview URLs, let you access an uploaded version of your Worker before deploying it to production. A Version URL uses that Worker version's existing configuration and resources instead of creating a separate environment.
 
-Use Version URLs when you are working with [Workers Versions and Deployments](/workers/versions-and-deployments/) and want to test one uploaded version. Use [Previews](/workers/previews/) when you want a branch or pull request to get its own URL, settings, and deployments.
+This is useful for testing a specific version directly. To test the version with your zone's performance or security settings, use [version overrides](/workers/versions-and-deployments/version-overrides/).
 
-:::caution[Version URLs use production resources]
-
-A Version URL runs a version of your production Worker. It uses the bindings, environment variables, secrets, routes, and resources configured for that Worker version. It does not create isolated branch resources.
-
-If you need a branch to use test KV namespaces, D1 databases, R2 buckets, or Preview-specific secrets, use [Previews](/workers/previews/) instead.
-
-:::
-
-## Action guide
-
-| Desired action | Use this |
-| --- | --- |
-| Test one uploaded Worker version before deploying it | Version URL. |
-| Share a stable link for a branch or pull request | [Preview URL](/workers/previews/). |
-| Test with separate Preview variables, secrets, and bindings | [Previews](/workers/previews/configuration/). |
-| Run a persistent staging Worker | [Wrangler environment](/workers/wrangler/environments/). |
+For isolated branch or pull request testing, use [Previews](/workers/previews/). To compare Previews, Version URLs, and Wrangler environments, refer to [Compare workflows](/workers/previews/compare-workflows/).
 
 ## URL format
 
@@ -93,6 +78,14 @@ staging-<worker-name>.<subdomain>.workers.dev
 
 Aliases may only be created during version upload.
 
+## Manage access to Version URLs
+
+When enabled, Version URLs are publicly available. To require visitors to sign in, use [Cloudflare Access](/workers/configuration/cloudflare-access/).
+
+Access can protect Version URLs for one Worker or every Worker in an account. You can also protect both production and version deployments.
+
+To use details about the signed-in user in your Worker, read the [user identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JSON Web Token (JWT) or the `/cdn-cgi/access/get-identity` endpoint.
+
 ## Enable or disable Version URLs
 
 Version URLs follow the same default as your `workers.dev` route:
@@ -151,8 +144,9 @@ If `preview_urls` is not specified, it defaults to the value of `workers_dev`.
 - The alias and Worker name combined with a dash must not exceed 63 characters due to DNS label limits.
 - Only the 1000 most recently deployed aliases are retained. When a new alias is created beyond this limit, the least recently deployed alias is deleted.
 
-## Use Previews for branch testing
+## Limitations
 
-Version URLs are tied to Worker versions. They are not branch environments, and they do not isolate resources from production.
-
-For pull request review, branch-specific settings, custom domain Previews, or test resources, use [Previews](/workers/previews/).
+- Version URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. For Containers testing options, refer to [Deploy Containers](/containers/guides/deploy/#before-production).
+- Version URLs are not generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers).
+- You cannot configure Version URLs to run on a subdomain other than [`workers.dev`](/workers/configuration/routing/workers-dev/).
+- You cannot view logs for Version URLs with Workers Logs, Wrangler tail, or Logpush.

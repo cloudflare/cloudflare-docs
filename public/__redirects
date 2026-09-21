@@ -2258,6 +2258,7 @@
 /workers/previews/recipes/ /workers/previews/ci-cd/ 301
 /workers/previews/resources/bindings/ /workers/previews/resources/ 301
 /workers/previews/resources/durable-objects/ /workers/previews/resources/ 301
+/workers/previews/limitations/ /workers/previews/resources/#limitations 301
 /workers/previews/troubleshooting/ /workers/previews/ 301
 /workers/reference/apis/web-crypto/ /workers/runtime-apis/web-crypto/ 301
 /workers/reference/cache-api/ /workers/runtime-apis/cache/ 301

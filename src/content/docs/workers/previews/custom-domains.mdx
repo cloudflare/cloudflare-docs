@@ -10,6 +10,8 @@ products:
 
 import { DashButton, Steps, TabItem, Tabs, WranglerConfig } from "~/components";
 
+**Before you start:** For custom domains, enable Previews in the same place that manages the domain. If the Cloudflare dashboard manages it, use the Dashboard instructions. If Wrangler or Terraform manages it, enable Previews in that configuration so the next deploy does not overwrite dashboard changes.
+
 Preview URLs can be served from a custom domain, from `workers.dev`, or from both.
 
 | Host type     | Preview URL                                            | Deployment URL                                          |
@@ -22,8 +24,6 @@ Enable at least one host type to get a Preview URL. If both [custom domain Previ
 ## Enable custom domain Previews
 
 When you enable Previews on a custom domain, Cloudflare provisions a wildcard DNS record and SSL certificate, such as `*.app.example.com`. SSL certificates can take time to issue after the first Preview is created.
-
-Manage Preview URL routing where you already manage routes. If Wrangler or Terraform manages this domain, enable Previews there so your next deploy does not overwrite the dashboard setting. Use the tabs below for Dashboard or Wrangler setup.
 
 :::note[Use a dedicated subdomain]
 If your production domain already has subdomains like `docs.example.com`, use a dedicated Preview subdomain to avoid wildcard conflicts. It can be `previews.example.com`, `staging.example.com`, or another hostname you reserve for Previews.

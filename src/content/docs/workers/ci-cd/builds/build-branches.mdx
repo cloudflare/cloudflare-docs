@@ -8,6 +8,8 @@ products:
   - workers
 ---
 
+import { DashButton, Steps } from "~/components";
+
 When you connect a git repository to Workers, commits made on the production branch produce a production build. To create [Previews](/workers/previews/) and [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) for branches that are not your production branch, enable preview builds.
 
 ## Change production branch
@@ -32,6 +34,14 @@ When enabled, every push to a branch that is not your production branch triggers
 
 ### Existing Workers connected to Builds
 
-If your Worker is already connected to a Git repository, you will see an **Enable Worker Previews** banner in **Settings** > **Build**. Click **Enable** to switch your preview command from `npx wrangler deploy` to `npx wrangler preview`. You can customize this command in the modal that appears.
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages** > your Worker > **Settings** > **Builds**. In the **Set up Worker Previews** banner, select **Set up**.
 
-For Preview-specific settings such as variables, secrets, and bindings, refer to [Previews](/workers/previews/configuration/).
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Confirm that you configured Preview variables, secrets, and bindings. For setup instructions, refer to [Get started](/workers/previews/get-started/#step-1-configure-preview-settings).
+3. Review the new Preview command. Custom commands must invoke `npx wrangler preview`.
+4. Select **Switch to Worker Previews**.
+</Steps>
+
+After switching, pushes to branches that are not your production branch use Worker Previews.
