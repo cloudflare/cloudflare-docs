@@ -44,6 +44,7 @@ Your Wrangler file has production settings at the top level and Preview settings
 
 ```jsonc
 {
+  // ...
   "vars": {
     "ENVIRONMENT": "production"
   },
@@ -53,7 +54,9 @@ Your Wrangler file has production settings at the top level and Preview settings
       "bucket_name": "prod-uploads"
     }
   ],
+  // ...
   "previews": {
+    // ...
     "vars": {
       "ENVIRONMENT": "preview"
     },
@@ -63,6 +66,7 @@ Your Wrangler file has production settings at the top level and Preview settings
         "bucket_name": "r2-staging"
       }
     ]
+    // ...
   }
 }
 ```
@@ -144,6 +148,22 @@ Use this table to determine where each setting belongs.
     </tbody>
   </table>
 </div>
+
+If your Worker uses only top-level settings, include an empty `previews` block:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "compatibility_date": "$today",
+  "assets": {
+    "directory": "./public"
+  },
+  "previews": {}
+}
+```
+
+</WranglerConfig>
 
 Do not add Queue consumers, Cron Triggers, or production routes to `previews`. These do not target Previews. For Preview hostnames, refer to [Custom domains](/workers/previews/custom-domains/).
 
