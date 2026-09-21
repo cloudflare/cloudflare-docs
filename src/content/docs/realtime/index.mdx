@@ -1,6 +1,6 @@
 ---
 title: Cloudflare Realtime
-description: Build live applications with RealtimeKit, programmable WebRTC media and data with Realtime SFU, and relayed connections with TURN.
+description: Build live audio, video, and data applications with Cloudflare Realtime, or broadcast live video with Stream.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -12,121 +12,133 @@ products:
 ---
 
 import {
-	Description,
-	RelatedProduct,
 	CardGrid,
+	GuideCard,
+	GuideCardGrid,
 	LinkTitleCard,
+	RealtimeProductChooser,
 } from "~/components";
 
-<Description>
+Build live applications where people, AI systems, and devices communicate in real time over [Cloudflare's global network](https://www.cloudflare.com/network/).
 
-Build live audio, video, and data applications with managed Realtime products.
+<RealtimeProductChooser />
 
-</Description>
+## What you can build
 
-### RealtimeKit
+<GuideCardGrid>
+	<GuideCard
+		product="RealtimeKit"
+		title="In-app meetings"
+		description="Add audio or video calls to your web or mobile app with prebuilt screens and controls."
+		href="/realtime/realtimekit/quickstart/"
+		icon="ph:video-camera"
+		headingLevel={3}
+	/>
+	<GuideCard
+		product="RealtimeKit"
+		title="Virtual classrooms"
+		description="Set instructor and student permissions, then split a class into breakout rooms. Record or transcribe sessions when needed."
+		href="/realtime/realtimekit/ui-kit/breakout-rooms/"
+		icon="ph:graduation-cap"
+		headingLevel={3}
+	/>
+	<GuideCard
+		product="RealtimeKit"
+		title="Live events"
+		description="Add reactions, chat, and polls to a live event."
+		href="/realtime/realtimekit/webinar/"
+		icon="ph:broadcast"
+		headingLevel={3}
+	/>
+	<GuideCard
+		product="Realtime SFU"
+		title="Embedded devices"
+		description="Send audio and telemetry from an ESP32 to browsers, with controls for one authorized operator. Use the same design for robot gateways."
+		href="/realtime/sfu/examples/embedded-devices/"
+		icon="ph:cpu"
+		headingLevel={3}
+	/>
+	<GuideCard
+		product="Realtime SFU"
+		title="Cloud gaming"
+		description="Stream a game from a Container to browsers, then send keyboard and pointer input back over DataChannels."
+		href="/realtime/sfu/examples/cloud-gaming/"
+		icon="ph:game-controller"
+		headingLevel={3}
+	/>
+	<GuideCard
+		product="Realtime SFU"
+		title="AI audio pipelines"
+		description="Transcribe microphone audio with Workers AI, then send generated speech to browsers through WebSocket media adapters."
+		href="/realtime/sfu/examples/ai-audio/"
+		icon="ph:waveform"
+		headingLevel={3}
+	/>
+</GuideCardGrid>
 
-[RealtimeKit](/realtime/realtimekit/) is a set of SDKs and APIs that lets you add customizable live video and voice to web or mobile applications. Use its meeting and participant abstractions to build your application.
-
-It sits on top of the Realtime SFU, abstracting away the heavy lifting of media routing, peer management, and other complex WebRTC operations.
-
-### Realtime SFU
-
-The [Realtime SFU (Selective Forwarding Unit)](/realtime/sfu/) routes WebRTC audio, video, and DataChannels between application endpoints.
-
-Use Realtime SFU when you want to own the WebRTC connections, signaling, and publication/subscription model. Common topologies include custom calls, interactive broadcasts, AI media pipelines, cloud gaming, device control, and media processing.
-
-Your application backend keeps the Realtime SFU credentials and decides which sessions can publish, subscribe, or control resources.
-
-### TURN Service
-
-The [TURN service](/realtime/turn/) is a managed service that acts as a relay for WebRTC traffic. It ensures connectivity for users behind restrictive firewalls or NATs by providing a public relay point for media streams.
-
-## Choose the right Realtime product
-
-Use this comparison table to quickly find the right Realtime product for your needs:
-
-|                              | **RealtimeKit**                                                             | **Realtime SFU**                                                                                        | **TURN Service**                                                            |
-| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Choose it when**           | You want meeting SDKs, participant management, and pre-built UI components. | You want to compose WebRTC media and data into a custom application topology.                           | You need a relay for peer-to-peer or self-hosted WebRTC connections.        |
-| **Provides**                 | Meetings, participants, presets, stage management, and UI components.       | Sessions, media tracks, DataChannels, and programmable publish and subscribe operations.                | TURN allocations and relayed UDP, TCP, or TLS transport.                    |
-| **Your application manages** | Product integration, branding, and application-specific behavior.           | Authentication, authorization, signaling, presence, state, and track discovery.                         | Peer connections, signaling, media routing, and application state.          |
-| **Example outcomes**         | Meetings, classrooms, webinars, and social video.                           | Custom calls, interactive broadcasts, AI pipelines, cloud gaming, device control, and media processing. | Connectivity through restrictive firewalls and network address translation. |
-| **Pricing**                  | [RealtimeKit pricing](/realtime/realtimekit/pricing/)                       | [SFU pricing](/realtime/sfu/platform/pricing/)                                                          | [TURN pricing](/realtime/turn/faq/)                                         |
-
-## Build with Realtime SFU
-
-Explore three applications built from SFU media tracks and DataChannels:
+## Realtime primitives
 
 <CardGrid class="xl:grid-cols-3">
 	<LinkTitleCard
-		title="Embedded devices"
-		href="/realtime/sfu/examples/embedded-devices/"
-		icon="ph:cpu"
+		title="Cloudflare TURN"
+		href="/realtime/turn/"
+		icon="ph:arrows-left-right"
 	>
-		Connect an ESP32 to browser listeners and an authorized device controller.
+		Relay WebRTC traffic through Cloudflare when a NAT or firewall prevents a
+		direct connection.
 	</LinkTitleCard>
 	<LinkTitleCard
-		title="Cloud gaming"
-		href="/realtime/sfu/examples/cloud-gaming/"
-		icon="ph:game-controller"
+		title="WebSocket adapter"
+		href="/realtime/sfu/features/media-transport-adapters/websocket-adapter/"
+		icon="ph:plugs-connected"
 	>
-		Stream a Container's audio and video, then return browser input through
-		DataChannels.
+		In beta. Send PCM audio in either direction between Realtime SFU and a
+		WebSocket service, or send JPEG video to the service.
 	</LinkTitleCard>
 	<LinkTitleCard
-		title="AI audio pipelines"
-		href="/realtime/sfu/examples/ai-audio/"
-		icon="ph:waveform"
+		title="DataChannels"
+		href="/realtime/sfu/features/datachannels/"
+		icon="ph:chat-circle-dots"
 	>
-		Transcribe microphone audio and broadcast generated speech with Workers AI.
+		Exchange chat, sensor updates, and control events between WebRTC endpoints.
 	</LinkTitleCard>
 </CardGrid>
 
-For your first media connection, [run the SFU video-room quickstart](/realtime/sfu/get-started/).
+## Frequently asked questions
 
-## Related products
+### Should I use RealtimeKit or Realtime SFU?
 
-<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+If you are new to [WebRTC](https://www.cloudflare.com/learning/video-streaming/how-webrtc-works/) and want to add audio or video meetings to your app, use [RealtimeKit](/realtime/realtimekit/). It includes [web and mobile SDKs](/realtime/realtimekit/sdk-selection/) with [prebuilt UI](/realtime/realtimekit/ui-kit/). Cloudflare handles signaling and media routing, and you can add managed [recording](/realtime/realtimekit/recording-guide/) or [transcription](/realtime/realtimekit/ai/transcription/).
 
-Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+If you have WebRTC experience and need control over [what each endpoint publishes or receives](/realtime/sfu/concepts/sessions-tracks/), use [Realtime SFU](/realtime/sfu/). Your application handles [signaling, permissions, session state, and track discovery](/realtime/sfu/concepts/architecture/). Cloudflare runs the SFU and forwards media to subscribers.
 
-</RelatedProduct>
+### How does TURN fit into WebRTC?
 
-<RelatedProduct header="Stream" href="/stream/" product="stream">
+A [TURN server](/realtime/turn/what-is-turn/) relays traffic when a NAT or firewall prevents two WebRTC endpoints from connecting directly. If a direct connection works, TURN stays out of the path.
 
-Cloudflare Stream lets you or your end users upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure.
+RealtimeKit configures [Cloudflare TURN](/realtime/turn/) for you. Realtime SFU includes access to the same service. You can also use Cloudflare TURN with your own SFU or peer-to-peer application by [generating TURN credentials](/realtime/turn/generate-credentials/).
 
-</RelatedProduct>
+Cloudflare TURN uses [Anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/), so you do not have to deploy regional TURN servers or load balancers.
 
-## More resources
+### For webinars, should I use RealtimeKit or Stream Live?
+
+Use [RealtimeKit webinars](/realtime/realtimekit/webinar/) when attendees join as participants. They might speak, appear on camera, or move into [breakout rooms](/realtime/realtimekit/ui-kit/breakout-rooms/).
+
+Use [Stream Live](/stream/stream-live/) when a small group of presenters broadcasts and the audience mainly watches. For example, a webinar with a few presenters and a large watch-only audience should use Stream Live.
+
+## Next steps
 
 <CardGrid>
-
-<LinkTitleCard
-	title="Developer Discord"
-	href="https://discord.cloudflare.com"
-	icon="discord"
->
-	Connect with the Realtime community on Discord to ask questions, show what you
-	are building, and discuss the platform with other developers.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Build with Realtime SFU"
-	href="/realtime/sfu/#what-you-can-build"
-	icon="document"
->
-	Explore custom media and data application topologies.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="@CloudflareDev"
-	href="https://x.com/cloudflaredev"
-	icon="x.com"
->
-	Follow @CloudflareDev on Twitter to learn about product announcements, and
-	what is new in Cloudflare Realtime.
-</LinkTitleCard>
-
+	<LinkTitleCard
+		title="Get started with RealtimeKit"
+		href="/realtime/realtimekit/quickstart/"
+	>
+		Create your first meeting and add RealtimeKit to your app.
+	</LinkTitleCard>
+	<LinkTitleCard
+		title="Get started with Realtime SFU"
+		href="/realtime/sfu/get-started/"
+	>
+		Create an application, open an SFU session, and publish a media track.
+	</LinkTitleCard>
 </CardGrid>
