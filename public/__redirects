@@ -663,7 +663,6 @@
 /sandbox/platform/beta-info/ /sandbox/sdk/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
 /sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
-/sandbox/get-started/ /sandbox/sdk/get-started/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
