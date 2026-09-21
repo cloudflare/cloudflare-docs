@@ -1,5 +1,5 @@
 ---
-title: Configure Container image and instance size at runtime
+title: New scheduling policy for Containers to configure image and instance from Durable Objects
 description: The durable_object scheduling policy gives each Durable Object control of Container configuration.
 products:
   - containers
@@ -45,6 +45,6 @@ this.ctx.container.start({
 
 </TypeScriptExample>
 
-Durable Object-managed Container instances have independent lifecycles and do not participate in application-wide image rollouts. The existing `default` policy and its rollout behavior are unchanged.
+Durable Object-managed Container instances have independent lifecycles and do not participate in application-wide image rollouts.
 
 For configuration, runtime sizing, snapshots, and update behavior, refer to [Scheduling Policies](/containers/configuration/scheduling-policy/).
