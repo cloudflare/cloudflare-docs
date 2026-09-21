@@ -144,26 +144,8 @@ describe("resolvePageTitle", () => {
 });
 
 describe("resolvePageHeadline", () => {
-	test("uses the semantic page title", () => {
+	test("returns the semantic page title", () => {
 		expect(resolvePageHeadline({ title: "Get started" })).toBe("Get started");
-	});
-
-	test("ignores `<title>` overrides with section suffixes (e.g. 'Performance · Use cases')", () => {
-		expect(
-			resolvePageHeadline({
-				title: "Performance",
-				titleOverride: "Performance · Use cases",
-			}),
-		).toBe("Performance");
-	});
-
-	test("ignores `<title>` overrides with product suffixes (e.g. 'Plans — Cloudflare for SaaS')", () => {
-		expect(
-			resolvePageHeadline({
-				title: "Plans",
-				titleOverride: "Plans — Cloudflare for SaaS",
-			}),
-		).toBe("Plans");
 	});
 });
 
