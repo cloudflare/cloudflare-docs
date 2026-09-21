@@ -144,17 +144,16 @@ describe("resolvePageTitle", () => {
 });
 
 describe("resolvePageHeadline", () => {
-	test("uses the page title without a product/site suffix", () => {
+	test("uses the semantic page title", () => {
 		expect(resolvePageHeadline({ title: "Get started" })).toBe("Get started");
 	});
 
-	test("uses the clean base even when `<title>` preserves the raw override", () => {
-		expect(
-			resolvePageHeadline({
-				title: "raw",
-				titleOverride: "Model X (Author) | Workers AI",
-			}),
-		).toBe("Model X (Author)");
+	test("ignores `<title>` overrides with section suffixes (e.g. 'Performance · Use cases')", () => {
+		expect(resolvePageHeadline({ title: "Performance" })).toBe("Performance");
+	});
+
+	test("ignores `<title>` overrides with product suffixes (e.g. 'Plans — Cloudflare for SaaS')", () => {
+		expect(resolvePageHeadline({ title: "Plans" })).toBe("Plans");
 	});
 });
 

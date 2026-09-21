@@ -33,16 +33,11 @@ export function resolvePageTitle({
 		: (titleOverride ?? `${title} | ${siteTitle}`);
 }
 
-/** JSON-LD headline: always the clean semantic page title without an SEO,
- *  product, or site suffix, even when `<title>` preserves a raw override. */
-export function resolvePageHeadline({
-	title,
-	titleOverride,
-}: {
-	title: string;
-	titleOverride?: string;
-}): string {
-	return resolveBaseTitle({ title, titleOverride });
+/** JSON-LD headline: the semantic page title, matching the page's visible
+ *  `<h1>` — never the `<title>` override or its section/product/site suffixes
+ *  ("Performance · Use cases", "Plans — Cloudflare for SaaS"). */
+export function resolvePageHeadline({ title }: { title: string }): string {
+	return title;
 }
 
 /** Favicon link: first of svg > ico > png that exists, else svg. */
