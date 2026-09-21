@@ -76,7 +76,11 @@ Deploying an updated image map does not restart running Containers. A running Co
 
 ### Use an external image
 
-A named `image` entry must use a digest-pinned reference from the Cloudflare managed registry. To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, configure the resulting digest-pinned reference as a named image.
+:::note
+The `durable_object` scheduling policy does not support direct image references from external registries at this time. A named `image` source must use a digest-pinned reference from the Cloudflare managed registry.
+:::
+
+To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, configure the resulting digest-pinned reference as a named image.
 
 A named `dockerfile` entry can use an external image in its `FROM` instruction. Authenticate your local Docker installation before deploying if the base image is private.
 
