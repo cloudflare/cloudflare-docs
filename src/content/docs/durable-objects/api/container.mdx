@@ -22,7 +22,7 @@ import {
 
 Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/reference/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
 
-The low-level API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
+The Durable Object Container API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
 
 Because the `Container` class extends `DurableObject`, you also have access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) via `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
