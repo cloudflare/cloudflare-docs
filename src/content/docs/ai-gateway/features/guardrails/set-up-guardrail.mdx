@@ -33,16 +33,16 @@ After enabling Guardrails, you can monitor results through **AI Gateway Logs** i
 
 Guardrails return structured errors when content is blocked. They also return errors when a scan cannot run. Provider-specific endpoints and the `/run` API use different moderation codes. The HTTP status and AI Gateway code identify the result:
 
-| Result                     | Provider-specific endpoints | `/run` API     |
-| -------------------------- | --------------------------- | -------------- |
-| Prompt blocked             | `424` / `2016`              | `422` / `2017` |
-| Response blocked           | `424` / `2017`              | `422` / `2017` |
-| Scanner needs more credits | `402` / `2021`              | `402` / `2021` |
-| Scanner unavailable        | `503` / `7013`              | `503` / `7013` |
+| Result                                  | Provider-specific endpoints | `/run` API     |
+| --------------------------------------- | --------------------------- | -------------- |
+| Prompt blocked                          | `424` / `2016`              | `422` / `2017` |
+| Response blocked                        | `424` / `2017`              | `422` / `2017` |
+| Insufficient prepaid Workers AI credits | `402` / `2021`              | `402` / `2021` |
+| Guardrails service unavailable          | `503` / `7013`              | `503` / `7013` |
 
 All structured error responses use `name: "AiGatewayError"`. The internal code is available in `internalCode` and the nested `error` field.
 
-Scanner failures follow the configured Guardrails action. A scanner failure returns `503` when any rule for that phase uses **Block**. If all rules use **Flag**, the request continues and the scanner is recorded as unavailable. A scanner credit error always returns `402`.
+If Workers AI uses prepaid AI Gateway credits, insufficient credits return `402`. Other Guardrails service failures follow the configured action. A failure returns `503` when any rule for that phase uses **Block**. If all rules use **Flag**, the request continues and AI Gateway records the service as unavailable.
 
 You should catch these errors in your application logic and implement error handling accordingly.
 
