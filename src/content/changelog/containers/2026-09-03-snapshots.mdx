@@ -10,7 +10,7 @@ import { TypeScriptExample } from "~/components";
 
 [Containers](/containers/) now support experimental snapshot APIs for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
 
-Use `snapshotContainer()` to capture the full container filesystem. The example uses the [low-level Durable Object container API](/durable-objects/api/container/). Create snapshots from a container that is already running:
+Use `snapshotContainer()` to capture the full container filesystem. The example uses the [Durable Object Container API](/durable-objects/api/container/). Create snapshots from a container that is already running:
 
 <TypeScriptExample filename="src/index.ts">
 
