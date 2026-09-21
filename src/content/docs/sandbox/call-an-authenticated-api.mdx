@@ -1,0 +1,289 @@
+---
+title: Call an authenticated API
+description: Let code in a sandbox call GitHub without exposing your access token.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - sandbox
+  - workers
+  - dynamic-workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-21
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Keep credentials in your Worker. Give the sandbox a narrow way to use them.
+
+This guide calls the GitHub API endpoint for the authenticated user. The response contains the username associated with your access token. The sandbox never receives the token.
+
+:::caution
+The examples do not authenticate incoming requests. Authenticate callers before production so they cannot consume your GitHub API quota.
+:::
+
+## Prerequisites
+
+- Complete [Run JavaScript](/sandbox/get-started/dynamic-workers/) or [Run a Linux command](/sandbox/get-started/containers/).
+- Create a GitHub access token that can read your profile.
+
+## Store the access token
+
+Declare the secret so `wrangler types` includes it in `Env`. Then store its value with Wrangler.
+
+<Steps>
+
+1. In your project, add `secrets` to `wrangler.jsonc`. Keep the existing Worker Loader or Container configuration:
+
+   <WranglerConfig removeSchema>
+
+   ```jsonc
+   {
+   	"secrets": {
+   		"required": ["GITHUB_TOKEN"],
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+2. Regenerate the Worker types:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+3. Store your GitHub access token when Wrangler prompts for it:
+
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="secret put GITHUB_TOKEN"
+   />
+
+</Steps>
+
+Complete the procedure for your sandbox environment.
+
+## Dynamic Workers
+
+Pass a method into the sandbox instead of the token. The method calls one fixed GitHub endpoint from your Worker.
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   type GitHubUser = {
+   	login: string;
+   };
+
+   type CodeEntrypoint = WorkerEntrypoint & {
+   	run(): Promise<string>;
+   };
+
+   export class GitHub extends WorkerEntrypoint<Env> {
+   	async getUsername(): Promise<string> {
+   		const response = await fetch("https://api.github.com/user", {
+   			headers: {
+   				Accept: "application/vnd.github+json",
+   				Authorization: `Bearer ${this.env.GITHUB_TOKEN}`,
+   				"User-Agent": "cloudflare-sandbox",
+   				"X-GitHub-Api-Version": "2022-11-28",
+   			},
+   		});
+
+   		if (!response.ok) {
+   			throw new Error(`GitHub returned ${response.status}`);
+   		}
+
+   		const user = await response.json<GitHubUser>();
+   		return user.login;
+   	}
+   }
+
+   export default {
+   	async fetch(
+   		_request: Request,
+   		env: Env,
+   		ctx: ExecutionContext,
+   	): Promise<Response> {
+   		const sandbox = env.LOADER.load({
+   			compatibilityDate: "$today",
+   			mainModule: "code.js",
+   			modules: {
+   				"code.js": `
+   					import { WorkerEntrypoint } from "cloudflare:workers";
+
+   					export class Code extends WorkerEntrypoint {
+   						async run() {
+   							return this.env.GITHUB.getUsername();
+   						}
+   					}
+   				`,
+   			},
+   			env: {
+   				GITHUB: ctx.exports.GitHub,
+   			},
+   			globalOutbound: null,
+   		});
+
+   		const username = await sandbox
+   			.getEntrypoint<CodeEntrypoint>("Code")
+   			.run();
+   		return Response.json({ username });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Send a request to the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+   ```
+
+</Steps>
+
+The response contains the GitHub username:
+
+```json output
+{ "username": "octocat" }
+```
+
+The `GitHub` entrypoint reads `GITHUB_TOKEN` in your Worker. The sandbox receives only `getUsername()`. Setting `globalOutbound` to `null` blocks all other `fetch()` and `connect()` calls from the sandbox.
+
+## Containers
+
+Route one hostname through your Worker. The Worker checks the request and adds the token before forwarding it to GitHub.
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+   export class GitHubGateway extends WorkerEntrypoint<Env> {
+   	async fetch(request: Request): Promise<Response> {
+   		const url = new URL(request.url);
+
+   		if (
+   			request.method !== "GET" ||
+   			url.hostname !== "api.github.com" ||
+   			url.pathname !== "/user" ||
+   			url.search !== ""
+   		) {
+   			return new Response("Forbidden", { status: 403 });
+   		}
+
+   		return fetch("https://api.github.com/user", {
+   			headers: {
+   				Accept: "application/vnd.github+json",
+   				Authorization: `Bearer ${this.env.GITHUB_TOKEN}`,
+   				"User-Agent": "cloudflare-sandbox",
+   				"X-GitHub-Api-Version": "2022-11-28",
+   			},
+   		});
+   	}
+   }
+
+   export class MyContainer extends DurableObject<Env> {
+   	async getUsername(): Promise<string> {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("Container is not configured");
+   		}
+
+   		await container.interceptOutboundHttps(
+   			"api.github.com",
+   			this.ctx.exports.GitHubGateway,
+   		);
+
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await container.exec(
+   			[
+   				"node",
+   				"--input-type=module",
+   				"--eval",
+   				`const response = await fetch("https://api.github.com/user");
+   if (!response.ok) throw new Error("GitHub request failed");
+   const user = await response.json();
+   console.log(user.login);`,
+   			],
+   			{
+   				env: {
+   					NODE_EXTRA_CA_CERTS:
+   						"/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   				},
+   			},
+   		);
+   		const output = await process.output();
+
+   		if (output.exitCode !== 0) {
+   			throw new Error(new TextDecoder().decode(output.stderr));
+   		}
+
+   		return new TextDecoder().decode(output.stdout).trim();
+   	}
+   }
+
+   export default {
+   	async fetch(_request: Request, env: Env): Promise<Response> {
+   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   		const username = await sandbox.getUsername();
+   		return Response.json({ username });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Send a request to the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+   ```
+
+</Steps>
+
+The response contains the GitHub username:
+
+```json output
+{ "username": "octocat" }
+```
+
+The command receives only the certificate path. `enableInternet: false` blocks other Internet traffic. Requests to `api.github.com` pass through `GitHubGateway`, which accepts only `GET /user` and adds the token inside your Worker.
+
+## Next steps
+
+- To expose other methods to a Dynamic Worker, refer to [Bindings](/dynamic-workers/usage/bindings/).
+- To restrict or audit requests from a Dynamic Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/).
+- To intercept other Container destinations, refer to [`interceptOutboundHttp`](/durable-objects/api/container/#interceptoutboundhttp) and [`interceptOutboundHttps`](/durable-objects/api/container/#interceptoutboundhttps).
+- To rotate or manage the token, refer to [Secrets](/workers/configuration/secrets/).
