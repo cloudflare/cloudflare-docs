@@ -1,0 +1,40 @@
+---
+title: Limits
+description: Review RealtimeKit API and SDK limits.
+pcx_content_type: reference
+sidebar:
+  order: 22
+products:
+  - realtime
+---
+
+RealtimeKit applies limits to API requests and SDK operations. Use these values when designing your application.
+
+## API rate limits
+
+The following limits apply to RealtimeKit API requests.
+
+| API                  | Limit                         |
+| -------------------- | ----------------------------- |
+| All RealtimeKit APIs | 250 requests per 10 seconds   |
+| Recording APIs       | 1,000 requests per 60 seconds |
+
+## SDK rate limits
+
+The following limits apply to SDK operations performed by each participant.
+
+| Operation                                                                                                                                    | Limit                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Write to a [Collaborative Store](/realtime/realtimekit/collaborative-stores/) (`set()`, `update()`, `delete()`, `bulkSet()`, `bulkDelete()`) | 5 invocations per second     |
+| Broadcast a message (`broadcastMessage()`)                                                                                                   | 5 invocations per second     |
+| Send a text message (`sendTextMessage()`)                                                                                                    | 180 invocations per minute   |
+| Send a message (`sendMessage()`)                                                                                                             | 180 invocations per minute   |
+| Send an image (`sendImageMessage()`)                                                                                                         | 20 invocations per minute    |
+| Send a file (`sendFileMessage()`)                                                                                                            | 20 invocations per minute    |
+| Fetch connected meetings (`getConnectedMeetings()`)                                                                                          | 60 invocations per minute    |
+| Fetch meeting participants (`getAllJoinedPeers()`)                                                                                           | 10 invocations per minute    |
+| Update participant permissions (`updatePermissions()`)                                                                                       | 1,000 invocations per minute |
+
+## Data retention
+
+For the retention periods for recordings, chat, transcripts, analytics, and webhook logs, refer to [Data retention](/realtime/realtimekit/data-retention/).
