@@ -527,6 +527,18 @@ entries:
     keywords: [request, api shield, client, visitor]
     summary: Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
 
+  - name: cf.web_asset.labels
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, operation, endpoint, label, web assets]
+    summary: An array of labels associated with the operation matched by the request.
+    description: |-
+      Use this field to create rules based on labels applied to operations in Web Assets, including API endpoints. For more information, refer to [Label operations](/security/web-assets/label-operations/).
+    example_value: |-
+      ["cf-log-in"]
+    example_block: |-
+      any(cf.web_asset.labels[*] == "cf-log-in")
+
   - name: cf.bot_management.verified_bot
     data_type: Boolean
     categories: [Request, Bots]
