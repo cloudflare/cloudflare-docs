@@ -160,7 +160,7 @@ This file will include three different properties:
 
 :::note
 
-Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything after the`/users/` path.
+Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything after the `/users/` path.
 
 :::
 
@@ -185,6 +185,16 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 	"version": 1,
 	"include": ["/*"],
 	"exclude": ["/build/*"]
+}
+```
+
+A wildcard can also come before a file extension, and it matches at any depth. Use this when static files and Function routes share a path, such as an API that serves pre-rendered `.json` files beside routes a Function answers. In the example below, `/api/users/1.json` and `/api/users/1/posts.json` are served as static assets without invoking the Function, while `/api/users/1` and `/api/search` invoke it.
+
+```json
+{
+	"version": 1,
+	"include": ["/api/*"],
+	"exclude": ["/api/*.json"]
 }
 ```
 
