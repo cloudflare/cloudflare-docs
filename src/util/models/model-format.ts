@@ -22,7 +22,7 @@ const reasoningEffortLabels = new Map([
 	["medium", "Medium"],
 	["high", "High"],
 	["xhigh", "Extra high"],
-	["max", "Maximum"],
+	["max", "Max"],
 ]);
 
 const reasoningEffortOrder = new Map(

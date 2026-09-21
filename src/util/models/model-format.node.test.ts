@@ -31,6 +31,15 @@ describe("model display formatting", () => {
 				"true",
 			),
 		).toBe("Off, Low, Medium (default)");
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["max", "high", "low"],
+					default_effort: "max",
+				},
+				"true",
+			),
+		).toBe("Low, High, Max (default)");
 	});
 
 	it("falls back to a clean yes or no when effort metadata is absent", () => {
