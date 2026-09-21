@@ -81,9 +81,9 @@ This location will again be the nearest location to the originating request with
 
 ### Container runtime
 
-Each container instance runs inside its own VM, which provides strong
-isolation from other workloads running on Cloudflare's network. Containers
-should be built for the `linux/amd64` architecture, and should stay within
+Each container instance runs in a Firecracker microVM. That VM has its own kernel and network, so the instance does not share a kernel with other workloads on Cloudflare's network. Your image is a Linux container inside the VM.
+
+Containers should be built for the `linux/amd64` architecture, and should stay within
 [size limits](/containers/platform/limits/).
 
 [Logging](/containers/faq/#how-do-container-logs-work), metrics collection, and
