@@ -35,8 +35,15 @@ export function resolvePageTitle({
 
 /** JSON-LD headline: the semantic page title, matching the page's visible
  *  `<h1>` — never the `<title>` override or its section/product/site suffixes
- *  ("Performance · Use cases", "Plans — Cloudflare for SaaS"). */
-export function resolvePageHeadline({ title }: { title: string }): string {
+ *  ("Performance · Use cases", "Plans — Cloudflare for SaaS"). `titleOverride`
+ *  is deliberately ignored: SEO overrides use inconsistent separators and can
+ *  carry real page titles on either side (e.g. "Get started - CLI"). */
+export function resolvePageHeadline({
+	title,
+}: {
+	title: string;
+	titleOverride?: string;
+}): string {
 	return title;
 }
 

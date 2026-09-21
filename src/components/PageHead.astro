@@ -111,7 +111,7 @@ const fullTitle = resolvePageTitle({
 	titleSuffix,
 	siteTitle: config.title,
 });
-const structuredHeadline = resolvePageHeadline({ title });
+const structuredHeadline = resolvePageHeadline({ title, titleOverride });
 // Parity: no site-wide fallback — an absent description omits the tags.
 const resolvedDescription = description;
 

@@ -149,11 +149,21 @@ describe("resolvePageHeadline", () => {
 	});
 
 	test("ignores `<title>` overrides with section suffixes (e.g. 'Performance · Use cases')", () => {
-		expect(resolvePageHeadline({ title: "Performance" })).toBe("Performance");
+		expect(
+			resolvePageHeadline({
+				title: "Performance",
+				titleOverride: "Performance · Use cases",
+			}),
+		).toBe("Performance");
 	});
 
 	test("ignores `<title>` overrides with product suffixes (e.g. 'Plans — Cloudflare for SaaS')", () => {
-		expect(resolvePageHeadline({ title: "Plans" })).toBe("Plans");
+		expect(
+			resolvePageHeadline({
+				title: "Plans",
+				titleOverride: "Plans — Cloudflare for SaaS",
+			}),
+		).toBe("Plans");
 	});
 });
 
