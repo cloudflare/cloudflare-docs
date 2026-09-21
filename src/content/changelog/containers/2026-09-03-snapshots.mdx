@@ -1,6 +1,6 @@
 ---
 title: Snapshot and restore Container state
-description: Persist point-in-time container filesystem with experimental snapshot APIs.
+description: Persist point-in-time container filesystem with snapshot APIs in public beta.
 products:
   - containers
 date: 2026-09-03
@@ -8,7 +8,7 @@ date: 2026-09-03
 
 import { TypeScriptExample } from "~/components";
 
-[Containers](/containers/) now support experimental snapshot APIs for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
+[Containers](/containers/) now support snapshot APIs in public beta for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
 
 Use `snapshotContainer()` to capture the full container filesystem. The example uses the [Durable Object Container API](/durable-objects/api/container/). Create snapshots from a container that is already running:
 
