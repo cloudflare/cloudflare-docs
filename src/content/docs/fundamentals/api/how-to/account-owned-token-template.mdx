@@ -73,7 +73,7 @@ Both user token and account token template URLs use the same permission encoding
 
 The two token types resolve these entries differently, as described below.
 
-For **account token URLs**, each `key` can be either a short permission key (for example, `dns`) or a [permission group ID](#use-permission-group-ids), and the `type` accepts either `edit` or `write` for write access. Keys must match exactly — a mistyped key (for example, `workers-scripts` instead of `workers_scripts`) is not auto-corrected and is reported as unresolved. Refer to [Troubleshooting](#troubleshooting).
+For **account token URLs**, each `key` can be either a short permission key (for example, `dns`) or a [permission group ID](#use-permission-group-ids). Using the permission group ID is the most reliable option, since it maps to exactly one group. See [Use permission group IDs](#use-permission-group-ids).
 
 For **user token URLs**, each `key` must be a short permission key that matches a group `name` exactly, and the `type` must be `edit` (not `write`), `read`, `revoke`, `run`, or `purge`. Permission group IDs are not supported, and any entry that does not match is dropped silently.
 
@@ -95,25 +95,34 @@ Permission group IDs are supported in **account token URLs** only. User token UR
 
 :::
 
-The short keys in the [permission reference](#permission-reference) are a convenience layer and do not cover every permission group. In an account token URL, to address any permission group — including ones without a short key — use its permission group ID as the `key`:
+To address any permission group in an account token URL, including groups that do not have a short key in the [permission reference](#permission-reference), use its permission group ID as the `key`:
 
 ```json
 [{ "key": "82e64a83756745bbbb1c9c2701bf816b", "type": "edit" }]
 ```
 
-Permission group IDs are the stable, canonical identifier for a permission group. They are the same IDs accepted by the [Create token](/api/resources/user/subresources/tokens/methods/create/) endpoint and the Cloudflare Terraform provider, so a template URL can pre-select any permission group without depending on an undocumented short key. Because the ID names one specific group, the `type` field is ignored when you pass an ID.
+Permission group IDs are the stable, canonical identifier for a permission group. They are the same IDs accepted by the [Create token](/api/resources/user/subresources/tokens/methods/create/) endpoint and the Cloudflare Terraform provider, so a template URL can pre-select any permission group by ID. Because the ID names one specific group, the `type` field is ignored when you pass an ID.
 
-To look up the current permission group IDs, use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint:
+Combine multiple IDs in the same array, just as you would with short keys:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/user/tokens/permission_groups" \
-	--header "Authorization: Bearer <API_TOKEN>"
+```json
+[
+	{ "key": "e086da7e2179491d91ee5f35b3ca210a", "type": "edit" },
+	{ "key": "7cf72faf220841aabcfdfab81c43c4f6", "type": "read" }
+]
 ```
 
-For account-owned tokens, use the account-scoped endpoint:
+Because account token URLs create account-owned tokens, look up their permission group IDs with the **account-scoped** [List permission groups](/api/resources/accounts/subresources/tokens/subresources/permission_groups/methods/list/) endpoint. The request needs a token with the `API Tokens Read` account permission:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/tokens/permission_groups" \
+	--header "Authorization: Bearer <API_TOKEN>"
+```
+
+For user tokens, use the [user-scoped endpoint](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) instead, which returns the permission groups available to user tokens:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/user/tokens/permission_groups" \
 	--header "Authorization: Bearer <API_TOKEN>"
 ```
 
