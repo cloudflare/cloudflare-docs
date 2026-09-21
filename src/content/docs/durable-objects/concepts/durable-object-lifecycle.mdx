@@ -130,7 +130,7 @@ The runtime invokes the hook for these shutdown causes:
 | ---------------------------------------------------------- | ---------------------- |
 | Lack of requests to an object (eviction due to inactivity) | Yes                    |
 | New Worker deployment with a code update                   | Yes                    |
-| Runtime process reload or drain                            | No                     |
+| Workers runtime updates                           | No                     |
 | `ctx.abort()`                                              | No                     |
 | Broken input or output gate                                | No                     |
 | CPU or memory limit termination                            | No                     |
