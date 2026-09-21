@@ -14,7 +14,7 @@ For a symptom without an API error, such as connected video that does not play, 
 
 ## Read the response
 
-A top-level error applies to the request. Batch operations can also return errors inside individual `tracks` or `dataChannels` results. Check every item and retain successful allocations, even when another item fails.
+A top-level error applies to the request. It does not necessarily mean that the operation made no changes. For example, a negotiated track close can close tracks before its SDP exchange fails. Batch operations can also return errors inside individual `tracks` or `dataChannels` results. Check every item and retain successful allocations, even when another item fails.
 
 Track and DataChannel batch operations can return HTTP `200` with failed items. WebSocket adapter creation and closure return HTTP `200` when at least one item succeeds, or `503` when all attempted items fail. Earlier request validation or authentication can return a top-level error instead.
 
@@ -60,6 +60,29 @@ These codes usually appear in individual resource results. Some operations can i
 | `close_track_error`          | The track or DataChannel does not exist or is already closed. For cleanup of a resource your application owns, an explicit result reporting absence satisfies that resource's cleanup. Process other items independently.                                             |
 
 For simulcast updates, use the receiving session's `mid`. For media closure, use the `mid` from the session on which you are closing the track. DataChannel closure uses that endpoint's allocated channel ID. Refer to [identifier ownership](/realtime/sfu/concepts/sessions-tracks/#media-tracks) and [cleanup state](/realtime/sfu/best-practices/#retain-cleanup-state).
+
+### Interpret close results
+
+Match each media-close result to the requested `mid` on the session you modified. For example, a forced close of mids `0`, `1`, and `2` can return HTTP `200` with:
+
+```json
+{
+  "requiresImmediateRenegotiation": false,
+  "tracks": [
+    { "mid": "0" },
+    {
+      "mid": "1",
+      "errorCode": "close_track_error",
+      "errorDescription": "Track doesn't exist or was already closed"
+    },
+    { "mid": "2", "errorCode": "internal_error" }
+  ]
+}
+```
+
+Track `0` closed; `1` is absent or already closed. Keep `2` and any unreported mids pending. For DataChannels, match results by `id`.
+
+A request-level error without item results does not establish resource absence. Follow [recovery and teardown guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) after an interrupted request.
 
 ## Adapter errors
 

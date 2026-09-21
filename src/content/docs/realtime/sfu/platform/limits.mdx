@@ -27,9 +27,17 @@ Distribute larger track batches across multiple calls and serialize mutations on
 
 ## Inactivity timeout
 
-A media track is garbage-collected after 30 seconds without incoming media packets. For connectivity loss, the documented session/track reuse window is 30 seconds. Your application still needs its own membership, reconnect, and cleanup behavior.
+Apply each timeout to its resource and condition:
 
-A remote DataChannel created with `waitForAck: true` requires the subscriber's first message within 30 seconds. Otherwise, the SFU tears down the gated channel. Refer to [subscriber readiness](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack).
+| Condition                                        | Timeout                                                  | Result                                                                                                                                                                           |
+| ------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A media track receives no incoming media packets | 30 seconds                                               | The track is garbage-collected. Restore an expired publication and rebuild its subscriptions.                                                                                    |
+| A session loses WebRTC connectivity              | 30-second session/track reuse window                     | Reuse requires a viable connection and resources. Replace failed or closed connections immediately, or reconnect with a new session after the window.                            |
+| A remote DataChannel uses `waitForAck: true`     | First subscriber message within 30 seconds of allocation | Without it, the gated channel closes. Create a new subscription; refer to [subscriber readiness](/realtime/sfu/features/datachannels/#wait-for-subscriber-readiness-waitforack). |
+
+The media inactivity timeout does not define the lifetime of an unconnected session, a connected session without media, or a DataChannel-only connection. Complete setup when ready and close resources when finished.
+
+Application heartbeat expiry does not mean WebRTC disconnected. Media that keeps arriving does not meet the inactivity condition. Use [close results](/realtime/sfu/observability/error-codes/#interpret-close-results) and [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) to decide whether cleanup is complete or a resource can be reused.
 
 ## PeerConnection requirements
 

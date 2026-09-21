@@ -225,7 +225,17 @@ A subscription can set both `waitForAck` and `canReply`. Its first message opens
 
 ## Close channels
 
-Close application channels through `PUT /apps/{appId}/sessions/{sessionId}/datachannels/close` and check individual results. Preserve unsuccessful cleanup work for retry. Close the endpoint's DataChannels and PeerConnection when that connection is no longer needed.
+On the backend, send `PUT /apps/{appId}/sessions/{sessionId}/datachannels/close` with the IDs allocated on that endpoint's session:
+
+```json
+{
+  "dataChannels": [{ "id": 2 }, { "id": 3 }]
+}
+```
+
+Match results by `id`. A `close_track_error` item means absent or already closed; retain other failed or unreported IDs for retry. Refer to [close-result handling](/realtime/sfu/observability/error-codes/#interpret-close-results).
+
+Closure needs no SDP exchange. Close the endpoint's channel objects, then its PeerConnection when no longer needed. Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) if work is still outstanding.
 
 ## Custom media payloads
 

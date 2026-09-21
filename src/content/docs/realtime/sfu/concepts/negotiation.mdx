@@ -63,17 +63,33 @@ Queue the subscription work before creating SDP or issuing its API request. When
 
 ## Retry and reconnect
 
-Distinguish retrying an application request from creating a replacement SFU session. A network timeout can leave your backend uncertain whether an operation succeeded.
+A lost response leaves the request's outcome unknown. Pause later mutations on that session while recovering. Application-level duplicate detection does not make an SFU request safe to repeat.
 
-Track in-flight work and the resources returned by successful operations. An application request ID can help your backend recognize duplicate requests, but it does not make every SFU API operation idempotent.
+Use the interrupted operation to choose the next step:
 
-When replacing a connection, assign the new attempt an ID in application state. Reject late responses associated with an older attempt. Republish and rebuild subscriptions using the current session identifiers. Close the old resources and update discovery state as part of that lifecycle.
+| Interrupted operation                      | Next step                                                                                                                                                  |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sessions/new`                             | Without its returned ID, the allocation cannot be looked up. Create a replacement session; another request creates another allocation.                     |
+| `tracks/new`                               | Inspect allocations before creating more tracks. Repeated subscriptions can allocate duplicates. If the SDP response is lost, replace the connection.      |
+| `datachannels/new`                         | Inspect allocated channel IDs before requesting more channels. Retain successful allocations from partial responses.                                       |
+| `datachannels/establish`                   | Complete the transport's SDP exchange. If its response is lost, replace the connection; repeating establish is not a state check.                          |
+| `/renegotiate`                             | A repeated answer can fail after the first succeeds. If acceptance remains unknown, replace the connection. A retry error cannot resolve that uncertainty. |
+| Forced media close or `datachannels/close` | Retry known unresolved IDs in order. Process each result, including already-closed items.                                                                  |
+| Negotiated media close                     | Apply the original answer if available. Otherwise, retire the connection and force-close its known tracks.                                                 |
+
+[Session inspection](/realtime/sfu/api/#inspect-a-session) can recover resource identifiers, but not lost SDP or request history. [`correlationId`](/realtime/sfu/api/#correlate-session-creation) labels diagnostics; it does not recover or deduplicate a session.
+
+Give a replacement connection a new application attempt ID. Ignore old responses when updating it, but retain any resource IDs they return for cleanup. Republish and rebuild subscriptions using the new session identifiers.
 
 ## Teardown
 
-Stop accepting new mutations before tearing down a session. Resolve or invalidate outstanding negotiation work, retain identifiers returned by in-flight requests, and close known tracks and DataChannels. Close the endpoint's PeerConnection when its transport is no longer needed.
+Stop accepting new mutations and withdraw ended publications from discovery. Keep their resource IDs for cleanup.
 
-If an operation cannot complete, preserve the cleanup state and provide a retry path. Refer to [application best practices](/realtime/sfu/best-practices/) for ownership and cleanup guidance.
+With a responsive endpoint, finish the current API/SDP exchange, then [close tracks](/realtime/sfu/get-started/connection-patterns/#close-media-tracks), [channels](/realtime/sfu/features/datachannels/#close-channels), and the endpoint's PeerConnection in order.
+
+If the endpoint cannot answer, retire the connection, force-close known tracks, and close known DataChannels. Forced closure does not finish the abandoned SDP exchange. Do not resume queued work on that connection.
+
+A timed-out API request may still finish. Closing known tracks does not cancel it; retain late allocations for cleanup. Keep [required cleanup](/realtime/sfu/best-practices/#retain-cleanup-state) unresolved until the affected resources are accounted for and closed.
 
 ## Learn with an example
 

@@ -56,9 +56,9 @@ DataChannels carry application messages such as telemetry, text, and control eve
 
 ## Resource lifetime
 
-Close tracks and DataChannels when the application no longer needs them. Remove their discovery entries after cleanup succeeds, and preserve enough state to retry failed cleanup.
+Remove a publication from discovery when your application stops offering it. This does not close existing subscriptions. Retain its SFU identifiers privately while cleanup remains outstanding.
 
-Inactivity timeouts are described in [limits](/realtime/sfu/platform/limits/). They do not replace application membership, reconnect decisions, or explicit cleanup.
+Follow the [media-close sequence](/realtime/sfu/get-started/connection-patterns/#close-media-tracks) or [DataChannel closure](/realtime/sfu/features/datachannels/#close-channels) when resources are no longer needed. Refer to [limits](/realtime/sfu/platform/limits/#inactivity-timeout) for expiration and reuse, and [Best practices](/realtime/sfu/best-practices/#retain-cleanup-state) for cleanup ownership.
 
 ## Learn with an example
 

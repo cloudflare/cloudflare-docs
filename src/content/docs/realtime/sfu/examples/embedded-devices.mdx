@@ -93,7 +93,7 @@ Browsers rejoin manually after a board restart or terminal connection failure. W
 
 The example admits eight listeners per board and one controller. The eight-listener cap is an application policy, not an SFU subscriber limit.
 
-To stop, release control and disconnect listeners, then power off the board. Keep the backend available to expire inactive state and retry resource cleanup. Follow the [operations guide](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/PRODUCTION.md#stop-and-clean-up) before removing the Worker or SFU app.
+To stop, release control and disconnect listeners, then power off the board. Keep the backend available while required cleanup remains pending. The example's [operations guide](https://github.com/cloudflare/realtime-examples/blob/main/esp32-radio/PRODUCTION.md#stop-and-clean-up) explains publisher replacement, state expiry, and resource cleanup before removing the Worker or SFU app.
 
 ## Adapt to other devices
 

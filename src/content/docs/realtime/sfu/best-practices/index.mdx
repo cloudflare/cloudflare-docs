@@ -38,9 +38,11 @@ For WebSocket adapters, implement recreation after terminal closure and respect 
 
 ## Retain cleanup state
 
-Store the identifiers of allocated tracks, channels, and adapters until cleanup succeeds or the API explicitly establishes that they are absent. Retry failed items without recreating successful ones.
+Remove unavailable or unauthorized publications from discovery. Retain their resource identifiers privately until required cleanup is complete. Check [individual close results](/realtime/sfu/observability/error-codes/#interpret-close-results) and keep unresolved items available for retry.
 
-Use explicit leave/stop operations and an application expiry mechanism for abandoned clients. A closed browser tab cannot guarantee delivery of a final cleanup request. Keep the backend available while its cleanup retries still need to run.
+Decide whether replacement can proceed while old resources remain. Discarding an obsolete connection from application state does not stop SFU forwarding. When stopping access is required, close the affected SFU resources and confirm the result.
+
+Use explicit leave/stop operations and application expiry for abandoned clients. A browser tab may close without sending cleanup. Keep the backend available while retries still need to run.
 
 ## Apply application limits
 

@@ -43,6 +43,48 @@ The paths in this table are relative to the base URL:
 
 Refer to [sessions and tracks](/realtime/sfu/concepts/sessions-tracks/) for publication and identifier ownership.
 
+### Correlate session creation
+
+The optional `correlationId` query parameter on `sessions/new` is a diagnostic label. Repeating it creates another session; the API cannot look up sessions by this label. Retain the returned `sessionId`, and follow [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) if the response is lost.
+
+### Inspect a session
+
+Call `GET /apps/{appId}/sessions/{sessionId}` to inspect the session's media tracks and DataChannels. The response identifies media by `mid` and channels by their allocated `id`. For a remote resource, `sessionId` identifies its publisher:
+
+```json
+{
+  "tracks": [
+    {
+      "location": "local",
+      "mid": "0",
+      "trackName": "camera",
+      "status": "inactive"
+    }
+  ],
+  "dataChannels": [
+    {
+      "location": "remote",
+      "sessionId": "<PUBLISHER_SESSION_ID>",
+      "dataChannelName": "controls",
+      "id": 2,
+      "status": "active"
+    }
+  ]
+}
+```
+
+Interpret the resource's `status` as follows:
+
+| Status         | Meaning                                                                                       |
+| -------------- | --------------------------------------------------------------------------------------------- |
+| `active`       | The media track has not closed or become unavailable, or the DataChannel is open.             |
+| `inactive`     | The media track is closed or unavailable, or the DataChannel is no longer connecting or open. |
+| `initializing` | The DataChannel is still connecting.                                                          |
+
+A media track marked `active` does not prove that packets are arriving or playing. Use [endpoint statistics](/realtime/sfu/observability/#inspect-browser-media-statistics) to check delivery. Forced closure can leave a track listed as `inactive`.
+
+The response contains resource state, not SDP or request history. Pending requests can still change it, even when the resource lists are empty. Follow [retry and reconnect guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect) before resuming mutations.
+
 ## DataChannel operations
 
 These operations act on the same session and negotiation state as its media tracks:

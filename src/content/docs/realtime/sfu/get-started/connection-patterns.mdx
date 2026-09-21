@@ -10,7 +10,7 @@ products:
 
 import { Steps } from "~/components";
 
-Choose the task for your endpoint. Each recipe starts with a new browser connection and matching SFU session. Your application can combine these endpoints into rooms, broadcasts, and device interfaces.
+Choose the task for your endpoint. Each setup recipe starts with a new browser connection and matching SFU session. Your application can combine these endpoints into rooms, broadcasts, and device interfaces.
 
 | Task                                                                        | Result                                         | Runnable example                                                                                   |
 | --------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -19,7 +19,7 @@ Choose the task for your endpoint. Each recipe starts with a new browser connect
 | [Send messages between two endpoints](#send-messages-between-two-endpoints) | Exchange application data without media tracks | [DataChannel example](https://github.com/cloudflare/realtime-examples/tree/main/echo-datachannels) |
 | [Receive media and send controls](#receive-media-and-send-controls)         | Watch a publisher and return authorized input  | [Cloud gaming](/realtime/sfu/examples/cloud-gaming/)                                               |
 
-For an existing connection, refer to [Add DataChannels to a media connection](#add-datachannels-to-a-media-connection). To run an application before implementing these exchanges, follow the [quickstart](/realtime/sfu/get-started/).
+For an existing connection, refer to [Add DataChannels to a media connection](#add-datachannels-to-a-media-connection) or [Close media tracks](#close-media-tracks). To run an application before implementing these exchanges, follow the [quickstart](/realtime/sfu/get-started/).
 
 ## Before you start
 
@@ -301,8 +301,47 @@ An operation returning `sessionDescription.type: "offer"` with `requiresImmediat
 
 </Steps>
 
+## Close media tracks
+
+Use the `mid` from the connection you are modifying. Closing a receiving track stops that subscription; closing a publishing track stops the source. A successful close of a bidirectional transceiver stops both directions. Subscribers' PeerConnections can remain connected, and media already buffered can still play.
+
+### Close with negotiation
+
+Start with an established connection and no unfinished offer/answer exchange.
+
+<Steps>
+
+1. **Prepare the endpoint's offer.** In the browser, save the `mid` of each transceiver to close, then call its `stop()` method. Create an offer with `await pc.createOffer()` and apply it with `await pc.setLocalDescription(offer)`.
+2. **Close the tracks.** On the backend, send `PUT /sessions/{sessionId}/tracks/close` with those mids and the browser's generated offer:
+
+   ```json
+   {
+     "tracks": [{ "mid": "<TRANSCEIVER_MID>" }],
+     "sessionDescription": { "type": "offer", "sdp": "<LOCAL_SDP>" },
+     "force": false
+   }
+   ```
+
+3. **Apply the answer.** Check request-level and per-track errors. In the browser, await `pc.setRemoteDescription(response.sessionDescription)` with the returned answer, even if individual tracks failed. Other tracks may have closed.
+4. **Handle unfinished work.** Complete this exchange before another mutation. Retain failed closures for retry. If no usable answer arrives, follow [recovery guidance](/realtime/sfu/concepts/negotiation/#retry-and-reconnect).
+
+</Steps>
+
+Use [close results](/realtime/sfu/observability/error-codes/#interpret-close-results) to distinguish successful closure, an already-closed track, and an unresolved failure.
+
+### Stop forwarding without negotiation
+
+Set `force: true` to close selected media flows without exchanging SDP. This is useful when the endpoint cannot supply a close offer. On the backend, send `PUT /sessions/{sessionId}/tracks/close`:
+
+```json
+{
+  "tracks": [{ "mid": "<TRANSCEIVER_MID>" }],
+  "force": true
+}
+```
+
+Check each track result; no `/renegotiate` call is needed. Forced closure can leave records in [session information](/realtime/sfu/api/#inspect-a-session). Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) for outstanding negotiation or requests.
+
 ## Clean up
 
-Stop accepting new operations for the connection. Close its media tracks through `PUT /sessions/{sessionId}/tracks/close` using that session's track `mid` values. Close application DataChannels through `PUT /sessions/{sessionId}/datachannels/close` with `dataChannels: [{ id: <ALLOCATED_ID> }]`. Use the [OpenAPI schemas](/realtime/static/realtime-api-2024-05-21.yaml) for complete request bodies.
-
-Complete each close operation's required SDP exchange before starting the next close on that session. Retain failed cleanup for retry. Close the endpoint's DataChannels and PeerConnection, and stop captured camera/microphone tracks when they are no longer needed. Follow [teardown ordering](/realtime/sfu/concepts/negotiation/#teardown) when requests remain in flight.
+Stop accepting new operations and withdraw ended publications from discovery. Close allocated [media tracks](#close-media-tracks) and [DataChannels](/realtime/sfu/features/datachannels/#close-channels), then close the endpoint's PeerConnection and stop captures when no longer needed. Follow [cleanup responsibilities](/realtime/sfu/best-practices/#retain-cleanup-state) if the endpoint leaves before finishing.
