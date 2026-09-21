@@ -118,7 +118,7 @@ _routes.json
 
 ### Deploy with automatic configuration
 
-To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) in your project directory:
+To deploy an existing project, run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) in your project directory:
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -126,7 +126,7 @@ Wrangler will detect your framework, show the configuration it will apply, and p
 
 ### Configure without deploying
 
-To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/general/#setup):
+To configure your project without deploying, use [`wrangler setup`](/workers/wrangler/commands/workers/#setup):
 
 <PackageManagers type="exec" pkg="wrangler" args="setup" />
 
@@ -140,13 +140,19 @@ To see what changes would be made without actually modifying any files:
 
 This outputs a summary of the configuration that would be generated.
 
-## Non-interactive mode
+## Skip configuration confirmation
 
-To skip the confirmation prompts, use the [`--yes` flag](/workers/wrangler/commands/general/#deploy):
+To apply the detected configuration without confirming it, pass `--yes` to [`wrangler setup`](/workers/wrangler/commands/workers/#setup):
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy --yes" />
+<PackageManagers type="exec" pkg="wrangler" args="setup --yes" />
 
-This applies the configuration automatically using sensible defaults. This is useful in CI/CD environments or when you want to accept the detected settings without reviewing them.
+This is useful in CI/CD environments, or when you want to accept the detected settings without reviewing them.
+
+When setup finishes, Wrangler prints the command to deploy with. In a project with a `package.json`, use the generated `deploy` script:
+
+<PackageManagers type="run" args="deploy" />
+
+If Wrangler detected a build command, the generated script runs it before deploying. In a project without a `package.json`, run `wrangler deploy`.
 
 ## Importing a repository from the dashboard
 
