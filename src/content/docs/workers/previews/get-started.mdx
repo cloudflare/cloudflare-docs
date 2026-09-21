@@ -45,6 +45,8 @@ Add a `previews` block to your Wrangler configuration file. Top-level settings d
 
 To determine which settings belong at the top level or in `previews`, refer to [What goes in the `previews` block](/workers/previews/configuration/#what-goes-in-the-previews-block).
 
+Settings that you add or import in the dashboard must also be copied to your [Wrangler configuration file](/workers/previews/configuration/#dashboard-configuration).
+
 ## Step 2: Deploy a Preview
 
 Run the same Preview command locally or in your existing CI workflow:
@@ -53,7 +55,7 @@ Run the same Preview command locally or in your existing CI workflow:
 
 The Preview name defaults to your current Git branch. To choose a name, add `--name <PREVIEW_NAME>`.
 
-To post Preview URLs automatically to pull requests or merge requests, [connect your Git repository](/workers/ci-cd/builds/#get-started) and use [Workers Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds). If you already have a Git-connected Worker that uses Workers Builds, complete the [one-time setup](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
+To post Preview URLs automatically to pull requests or merge requests, [connect your Git repository](/workers/ci-cd/builds/#get-started) and use [Workers Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds). New Workers use Worker Previews by default. If an existing Worker already uses Workers Builds, complete the [one-time setup](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
 
 A successful deployment returns a **Preview URL** that always points to the latest changes. It also returns a **Unique Deployment URL** for each deployment, so you can access earlier versions in the Preview's deployment history.
 

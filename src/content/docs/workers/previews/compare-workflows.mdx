@@ -8,37 +8,23 @@ products:
   - workers
 ---
 
-For non-production testing, use Previews. Previews give every branch its own isolated copy of your Worker with Preview-specific variables, secrets, bindings, and isolation for supported resources.
-
-Version URLs and Wrangler environments still exist, but they solve narrower problems. This page explains when each one applies and why Previews should be your default.
-
-## Quick comparison
-
-| Workflow                  | Best for                                                          | Command                        | Resource behavior                                                                                     |
-| ------------------------- | ----------------------------------------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------- |
-| **Previews**              | Branches and pull requests.                                       | `npx wrangler preview`         | Can use Preview-specific variables, secrets, and bindings. Some resources are isolated automatically. |
-| **Version URLs**          | Inspecting one uploaded Worker version.                           | `wrangler versions upload`     | Uses the resources configured for that Worker version. Does not create branch-isolated resources.     |
-| **Wrangler environments** | Persistent environments like staging, development, or production. | `wrangler deploy --env <name>` | Creates a separately named Worker with environment-specific config.                                   |
-
-## Previews
+import { WranglerConfig } from "~/components";
 
 Previews are the recommended way to test changes before production.
 
-Your production branch uses `wrangler deploy`. Your feature branch uses `npx wrangler preview`. The Preview gets a stable Preview URL with its own variables, secrets, and bindings.
+## Quick comparison
 
-Use Previews for:
-
-- Pull request and branch review.
-- QA and stakeholder testing.
-- Testing with Preview-specific resources, such as test databases, staging KV namespaces, and separate Durable Object storage.
-- Sharing custom domain Preview URLs.
-- Any workflow where you previously used Version URL aliases or Wrangler environments for branch testing.
+| Workflow                                                            | Best for                                                                | Command                        |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------------------ |
+| **Previews**                                                        | Full environments for branches and pull requests under the same Worker. | `npx wrangler preview`         |
+| **[Version URLs](/workers/versions-and-deployments/version-urls/)** | An uploaded version of your code that uses production resources.        | `wrangler versions upload`     |
+| **[Wrangler environments](/workers/wrangler/environments/)**        | Separately deployed Workers.                                            | `wrangler deploy --env <name>` |
 
 ## Version URLs
 
-:::caution[Version URLs use the version's resources]
+:::caution[Version URLs use production resources]
 
-A Version URL runs one uploaded Worker version. It uses the resources configured for that Worker version. It does not create isolated branch resources.
+A Version URL runs one uploaded Worker version with the production resources configured for that version. It does not create isolated branch resources.
 
 Do not use Version URLs for branch or pull request testing. Use [Previews](/workers/previews/) instead.
 
@@ -67,13 +53,57 @@ Previews give you branch isolation, Preview-specific settings, custom domain sup
 
 ## Wrangler environments
 
-Wrangler environments create separately named Workers, such as `my-worker-staging`, deployed with `wrangler deploy --env staging`. They are not created automatically for branches or pull requests.
+Wrangler environments create separately named Workers, such as `my-worker-staging`. Use them when development, staging, or other environments need persistent Workers with different settings, routes, or custom domains.
 
-If you are using Wrangler environments for branch or pull request testing, switch to Previews. Previews handle branch isolation automatically and do not require manually maintaining separate environment blocks with duplicated bindings.
+You can create branch Previews under a Wrangler environment. Define its Preview settings in `env.staging.previews`:
 
-Wrangler environments are still useful for:
+<WranglerConfig>
 
-- Long-lived persistent environments that must always be running, for example, a staging Worker that external partners hit continuously.
-- Environment-specific routes or custom domains that need to stay up permanently.
+```jsonc
+{
+  "name": "my-worker",
+  "env": {
+    "dev": {
+      "name": "my-worker-dev",
+      "vars": {
+        "ENVIRONMENT": "development"
+      }
+    },
+    "staging": {
+      "name": "my-worker-staging",
+      "vars": {
+        "ENVIRONMENT": "staging"
+      },
+      "previews": {
+        "vars": {
+          "ENVIRONMENT": "staging-preview"
+        }
+      }
+    }
+  }
+}
+```
 
-For most teams, Previews replace the need for a `[env.staging]` or `[env.dev]` block entirely. You do not need to create a Wrangler environment to use Previews.
+</WranglerConfig>
+
+In this example, `dev` has no `previews` block and remains a persistent Worker environment. `staging` includes a `previews` block for branch Previews.
+
+Then include the environment when you run the Preview command:
+
+```sh
+npx wrangler preview --env staging
+```
+
+This creates or updates the branch Preview under the staging Worker. The Wrangler environment provides the persistent boundary, and Previews provide branch isolation within it.
+
+:::caution[Include the environment in every Preview command]
+
+Use the same `--env` value when you create, update, manage, or delete a Preview. For example:
+
+```sh
+npx wrangler preview delete --env staging --name <PREVIEW_NAME>
+```
+
+If you omit `--env staging`, Wrangler targets the top-level Worker instead of the staging Worker.
+
+:::

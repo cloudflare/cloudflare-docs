@@ -25,6 +25,8 @@ Every push event made to this branch will trigger a build and execute the [build
 
 Preview builds are builds for branches that are not your production branch.
 
+New Workers use Worker Previews for preview builds by default. Their Preview command is `npx wrangler preview`.
+
 To enable or disable preview builds:
 
 1. In **Overview**, select your Workers project.
@@ -34,13 +36,21 @@ When enabled, every push to a branch that is not your production branch triggers
 
 ### Existing Workers connected to Builds
 
+Workers that were connected to Builds before [Worker Previews](/workers/previews/) keep the previous preview model until you complete a one-time switch.
+
+:::caution[The switch cannot be reversed]
+After switching, you cannot return to the previous preview model, which uses production settings.
+:::
+
 <Steps>
 1. In the Cloudflare dashboard, go to **Workers & Pages** > your Worker > **Settings** > **Builds**. In the **Set up Worker Previews** banner, select **Set up**.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
-2. Confirm that you configured Preview variables, secrets, and bindings. For setup instructions, refer to [Get started](/workers/previews/get-started/#step-1-configure-preview-settings).
-3. Review the new Preview command. Custom commands must invoke `npx wrangler preview`.
+   ![Dialog showing Preview settings confirmation and the new Worker Previews command](~/assets/images/workers/ci-cd/builds/switch-to-worker-previews.png)
+
+2. Configure the variables, secrets, and bindings your Worker needs for Previews. Previews do not use production settings. For instructions, refer to [Get started](/workers/previews/get-started/#step-1-configure-preview-settings).
+3. Review the new Preview command. Workers Builds replaces the current command with `npx wrangler preview`. Custom commands must invoke `npx wrangler preview`.
 4. Select **Switch to Worker Previews**.
 </Steps>
 

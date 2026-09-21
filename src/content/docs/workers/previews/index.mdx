@@ -37,7 +37,7 @@ Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [cus
 
 ### Settings and isolation
 
-Previews do not inherit production settings. Define them in your [configuration file](/workers/previews/configuration/). Since Git tracks that file, each branch can have its own Preview settings. When you run `npx wrangler preview`, Wrangler uses the current branch's settings to create or update its Preview.
+Previews do not inherit production settings. Define them in the `previews` block of your Wrangler configuration file. When you run `npx wrangler preview` on a branch, Wrangler creates or updates its Preview using that branch's `previews` block. For more information, refer to [Configuration](/workers/previews/configuration/).
 
 Since secrets cannot be stored in the configuration file or version control, use commands to apply [secrets](/workers/previews/configuration/#secrets) to all new Previews or to an individual Preview.
 

@@ -15,7 +15,7 @@ Previews do not inherit production settings. Define them in the [`previews` bloc
 
 ## Setting your Previews Base configuration
 
-Define your starting `previews` block on the branch your team branches from, such as `main`. Git carries the configuration file into each new branch, so you do not need to redefine Preview settings every time.
+Define your starting `previews` block on the branch your team branches from, such as `main`. Git carries the configuration file into each new branch.
 
 Change the `previews` block on a branch when its Preview needs different settings. When you run `npx wrangler preview`, Wrangler uses the configuration file from your current branch as the source of truth. For setup instructions, refer to [Get started](/workers/previews/get-started/).
 
@@ -149,11 +149,9 @@ Do not add Queue consumers, Cron Triggers, or production routes to `previews`. T
 
 Service bindings from a Preview call the bound Worker's production deployment. For more limitations, refer to [Limitations](/workers/previews/resources/#limitations).
 
-## Dashboard
+## Dashboard configuration
 
-Configure Previews Base settings in the dashboard. When you add or change a setting, the dashboard shows the matching `previews` configuration to add to your Wrangler file. Copy those changes into your file to keep future deployments in sync.
-
-![Dashboard showing generated Wrangler configuration for a Previews Base binding](~/assets/images/workers/previews/dashboard-wrangler-config.png)
+You can configure Previews Base settings in the dashboard, but you must copy the generated configuration into your Wrangler file. To avoid this extra step, configure your Preview settings in the Wrangler file directly.
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Workers & Pages**.
@@ -168,4 +166,8 @@ Configure Previews Base settings in the dashboard. When you add or change a sett
 4. Select **Previews Base** in each section to configure what new Previews start from. You can import names and values from production, then edit them. You must re-enter secrets manually.
 
    ![Import dialog showing variables and secrets imported from production to Previews](~/assets/images/workers/previews/import_from_prod.png)
+
+5. Update your Wrangler configuration file with the generated `previews` configuration. This keeps future deployments in sync.
+
+   ![Dashboard showing generated Wrangler configuration for a Previews Base binding](~/assets/images/workers/previews/dashboard-wrangler-config.png)
 </Steps>
