@@ -54,6 +54,9 @@ The request was eligible for cache, but the origin response or configuration pre
 - **The origin returned `Vary: *`.** This value always bypasses cache, regardless of other configuration.
 - **The request included an `Authorization` header and [Origin Cache Control](/cache/concepts/cache-control/) is enabled** (the default on Free, Pro, and Business plans). In that mode, the response is cacheable only if `Cache-Control` also includes `public`, `s-maxage`, or `must-revalidate`. On Enterprise plans with Origin Cache Control disabled, `Authorization` does not by itself prevent caching.
 
+
+If [Tiered Cache](/cache/how-to/tiered-cache/) is enabled, an eligible request may be routed through an upper-tier data center before Cloudflare receives the origin response. Origin headers that produce `BYPASS` act after this upper-tier fetch has already happened. Origin-header bypass does not prevent the upper-tier fetch. To prevent requests from reaching the upper tier, use a request-time bypass rule — a [Cache Rule](/cache/how-to/cache-rules/settings/#bypass-cache) with **Bypass cache**, or a legacy `Cache Level: Bypass` [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/rules/page-rules/).
+
 Refer to [BYPASS](/cache/concepts/cache-responses/#bypass) for the reference definition of this status.
 
 ## Repeated MISS — cacheable but not in cache
@@ -94,3 +97,8 @@ If the response is still `MISS` or `BYPASS` after these checks, capture two full
 - [Default cache behavior](/cache/concepts/default-cache-behavior/) — when Cloudflare caches successfully by default.
 - [Cache Rules](/cache/how-to/cache-rules/) — configure Edge TTL, eligibility, and cache key.
 - [Cache Analytics](/cache/performance-review/cache-analytics/) — measure hit rate and identify low-performing URLs.
+
+## Related resources
+
+- [Tiered Cache](/cache/how-to/tiered-cache/)
+- [Investigate latency on tiered requests](/cache/troubleshooting/investigating-tiered-cache-latency/)
