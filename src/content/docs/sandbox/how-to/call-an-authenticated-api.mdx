@@ -1,9 +1,10 @@
 ---
-title: Call an authenticated API
-description: Let code in a sandbox call GitHub without exposing your access token.
+title: Call an authenticated API from a sandbox
+description: Use a Dynamic Worker or Container to call an authenticated API without exposing the access token to sandboxed code.
 pcx_content_type: how-to
 sidebar:
   order: 1
+  label: Call an authenticated API
 products:
   - sandbox
   - workers
@@ -164,7 +165,7 @@ The response contains the GitHub username:
 { "username": "octocat" }
 ```
 
-The `GitHub` entrypoint reads `GITHUB_TOKEN` in your Worker. The sandbox receives only `getUsername()`. Setting `globalOutbound` to `null` blocks all other `fetch()` and `connect()` calls from the sandbox.
+The `GitHub` entrypoint reads `GITHUB_TOKEN` in your Worker. The sandbox receives the `getUsername()` capability, not the token. Setting `globalOutbound` to `null` blocks all other `fetch()` and `connect()` calls from the sandbox.
 
 ## Containers
 
@@ -279,7 +280,7 @@ The response contains the GitHub username:
 { "username": "octocat" }
 ```
 
-The command receives only the certificate path. `enableInternet: false` blocks other Internet traffic. Requests to `api.github.com` pass through `GitHubGateway`, which accepts only `GET /user` and adds the token inside your Worker.
+The command receives the CA certificate path, not the GitHub token. With `enableInternet: false`, the container cannot connect directly to the public Internet. Its request to `api.github.com` passes through `GitHubGateway`, which accepts only `GET /user` and adds the token inside your Worker.
 
 ## Next steps
 

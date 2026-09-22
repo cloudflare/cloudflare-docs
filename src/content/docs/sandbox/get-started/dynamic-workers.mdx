@@ -67,6 +67,12 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
+   import type { WorkerEntrypoint } from "cloudflare:workers";
+
+   type CodeEntrypoint = WorkerEntrypoint & {
+       evaluate(): Promise<unknown>;
+   };
+
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const { code } = (await request.json()) as { code: string };
@@ -88,7 +94,9 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    			globalOutbound: null,
    		});
 
-   		const result = await sandbox.getEntrypoint("Code").evaluate();
+           const result = await sandbox
+               .getEntrypoint<CodeEntrypoint>("Code")
+               .evaluate();
    		return Response.json({ result });
    	},
    };

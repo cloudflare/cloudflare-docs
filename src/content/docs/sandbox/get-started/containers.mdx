@@ -92,14 +92,19 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
    export class MyContainer extends DurableObject<Env> {
    	async exec(argv: string[]) {
-   		if (!this.ctx.container.running) {
-   			this.ctx.container.start({
+           const container = this.ctx.container;
+           if (!container) {
+               throw new Error("The container binding is not configured");
+           }
+
+           if (!container.running) {
+               container.start({
    				image: "cloudflare/debian-trixie",
    				enableInternet: false,
    			});
    		}
 
-   		const process = await this.ctx.container.exec(argv);
+           const process = await container.exec(argv);
    		const output = await process.output();
    		return {
    			stdout: new TextDecoder().decode(output.stdout),

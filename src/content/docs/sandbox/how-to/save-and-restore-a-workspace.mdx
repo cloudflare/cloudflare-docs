@@ -1,6 +1,6 @@
 ---
-title: Save and restore a sandbox workspace
-description: Save a sandbox workspace, stop its Linux instance, and restore the files when the session returns.
+title: Save and restore a sandbox with snapshots
+description: Create a Container snapshot, stop the sandbox, and restore its filesystem in a new Linux instance.
 pcx_content_type: how-to
 sidebar:
   order: 2
@@ -20,6 +20,8 @@ Give each sandbox a workspace that can return after its Linux instance stops. Th
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
 :::
+
+For the distinction between a saved filesystem and a running Linux instance, refer to [Sandbox persistence](/sandbox/persistence/).
 
 ## Prerequisites
 
@@ -237,9 +239,9 @@ The final request starts a new Linux instance from the saved snapshot. The sandb
 
 ## Snapshot behavior
 
-`snapshotContainer()` captures the container's writable root filesystem. Finish filesystem writes before you create the snapshot.
+`snapshotContainer()` captures the state of the container's writable root filesystem. It does not capture files from separately mounted filesystems. Finish filesystem writes before you create the snapshot.
 
-Restoring a snapshot starts a new instance and runs its entrypoint. A snapshot does not restore running processes, memory, terminal sessions, or network connections.
+Starting with a snapshot creates a new instance that uses the saved filesystem. The new instance runs the `entrypoint` configured in this guide. A snapshot does not restore running processes, memory, terminal sessions, or network connections.
 
 Restores are explicit. If the sandbox changes after its last snapshot, create another snapshot before the instance stops. Otherwise, the next instance starts from the previous saved state.
 

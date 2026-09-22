@@ -33,7 +33,7 @@ Start a sandbox and run untrusted or generated code
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run untrusted or generated code. That code has its own memory and, when it needs them, its own files and processes. It cannot touch your application. You decide which APIs it can call and whether it can reach the Internet.
+A sandbox is an isolated place to run untrusted or generated code. The code cannot directly read your application's memory or data. Your Worker decides which application APIs and data the code receives and whether it can reach the public Internet. A Container also provides an isolated Linux filesystem and processes.
 
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
@@ -43,15 +43,21 @@ Cloudflare provides two sandbox environments. Both are accessible through a [Wor
 
 ## Dynamic Workers
 
-[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime in milliseconds. The untrusted code can be JavaScript, TypeScript, Python, or WebAssembly.
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, Python, or WebAssembly. Compile TypeScript to JavaScript before loading it.
 
-That code cannot see your application's memory. It can use only the APIs and data you pass in, and it cannot reach the Internet unless you allow it.
+That code cannot see your application's memory. It can access your application only through the methods and data you pass, and it cannot reach the Internet unless you allow it.
 
-The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers platform adds a second layer around the process and exposes only the APIs you grant. For more information, refer to the [Workers security model](/workers/reference/security-model/).
+The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers runtime adds a process-level sandbox around the isolate. For more information, refer to the [Workers security model](/workers/reference/security-model/).
 
 <TypeScriptExample>
 
 ```ts
+import type { WorkerEntrypoint } from "cloudflare:workers";
+
+type CodeEntrypoint = WorkerEntrypoint & {
+	evaluate(): Promise<string[]>;
+};
+
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const sandbox = env.LOADER.load({
@@ -77,7 +83,9 @@ export default {
 			globalOutbound: null,
 		});
 
-		const result = await sandbox.getEntrypoint("Code").evaluate();
+		const result = await sandbox
+			.getEntrypoint<CodeEntrypoint>("Code")
+			.evaluate();
 		return Response.json({ result });
 	},
 };
@@ -104,14 +112,19 @@ import { DurableObject } from "cloudflare:workers";
 
 export class MyContainer extends DurableObject<Env> {
 	async exec(argv: string[]) {
-		if (!this.ctx.container.running) {
-			this.ctx.container.start({
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		if (!container.running) {
+			container.start({
 				image: "cloudflare/debian-trixie",
 				enableInternet: false,
 			});
 		}
 
-		const process = await this.ctx.container.exec(argv);
+		const process = await container.exec(argv);
 		const output = await process.output();
 		return {
 			stdout: new TextDecoder().decode(output.stdout),
@@ -145,11 +158,20 @@ export default {
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Choose an environment"
+	title="Choose a sandbox environment"
 	href="/sandbox/choose-an-environment/"
 	icon="seti:info"
 >
 	Decide whether each job needs APIs you pass in or a Linux environment.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Sandbox persistence"
+	href="/sandbox/persistence/"
+	icon="database"
+>
+	Understand how Container snapshots preserve a writable root filesystem across
+	Linux instances while running processes do not return.
 </LinkTitleCard>
 
 <LinkTitleCard title="How-to guides" href="/sandbox/how-to/" icon="seti:shell">

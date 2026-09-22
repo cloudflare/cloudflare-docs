@@ -1,6 +1,6 @@
 ---
-title: Choose an environment
-description: Dynamic Workers run code with APIs and data you provide. Containers run code that needs Linux.
+title: Choose a sandbox environment
+description: Compare Dynamic Workers and Containers for isolated code execution, scoped APIs, and workloads that require Linux.
 pcx_content_type: concept
 sidebar:
   order: 3
@@ -14,13 +14,13 @@ reviewed: 2026-09-21
 
 import { CardGrid, Example, LinkTitleCard } from "~/components";
 
-Your application may need to run code it did not create. A short program may need only APIs you provide, while a test runner, build tool, or server may expect Linux. Cloudflare supports both kinds of work, and your [Worker](/workers/) chooses the environment for each job.
+Your application may need to run code it did not create. A small task may need only APIs you provide, while a test runner, build tool, or server may expect Linux. Cloudflare supports both kinds of work, and your [Worker](/workers/) chooses the environment for each job.
 
 ## What the code receives
 
 A [Dynamic Worker](/dynamic-workers/) receives the modules, methods, and values you pass to it. It does not inherit your application's bindings, credentials, or data. Set `globalOutbound` to `null` to block direct access to the Internet.
 
-A [Container](/containers/) starts from an image you provide. A command can use the runtimes, packages, and files in that image, and it can start processes.
+A [Container](/containers/) runs a Linux image you provide. A command can use the runtimes, packages, and files in that image, and it can start processes.
 
 ```mermaid
 flowchart LR
@@ -34,7 +34,7 @@ accDescr: Credentials and policy stay in your Worker. The Worker passes methods 
 		X["Command"] -->|"uses"| L["Linux userspace<br/>runtimes, filesystem, processes"]
 	end
 	W -->|"passes"| G
-	W -->|"starts an image and sends a command"| X
+	W -->|"starts a Container and sends a command"| X
 ```
 
 ## Give code an interface
@@ -43,9 +43,9 @@ Use a Dynamic Worker when generated code can complete its job through methods an
 
 Your Worker can expose `listPullRequests()` for one account and repository while keeping the API token. Generated code can filter the returned records without gaining access to another repository or the token. For more information, refer to [Bindings](/dynamic-workers/usage/bindings/).
 
-In [Code Mode](/agents/tools/codemode/), the model writes a JavaScript program against typed methods. A Dynamic Worker runs the program and returns its result, so intermediate values do not enter the model context. For generated snippets, use JavaScript because the runtime decides which host APIs exist.
+In [Code Mode](/agents/tools/codemode/), the model writes JavaScript against typed methods. A Dynamic Worker runs the code and returns its result, so intermediate values do not enter the model context.
 
-You can create a Dynamic Worker for one request and discard it afterward. You can also run a generated application with scoped storage. Adding storage does not give that application access to your other resources.
+Use `load()` to create a new Dynamic Worker. Use `get()` with a stable ID when the same code may run again; the runtime can reuse a warm Dynamic Worker. You can also run a generated application with [scoped storage](/dynamic-workers/usage/durable-object-facets/). Adding storage does not give that application access to your other resources.
 
 ## Run code that expects Linux
 
@@ -57,7 +57,7 @@ A Dynamic Worker cannot run code that starts child processes, loads native add-o
 
 A Container supplies the Linux environment that these programs expect. Your Worker controls when the instance starts, whether it can reach the Internet, and how HTTP requests reach it. The [Agents sandbox tool](/agents/tools/sandbox/) uses a Container to run commands for an agent.
 
-File contents can go to either environment. If your Worker has text or bytes to parse or transform, pass that data into a Dynamic Worker. Use a Container when the tool working with those files needs a Linux command, runtime, or filesystem behavior.
+Both environments can process text or bytes. Pass the data into a Dynamic Worker when code only needs to parse or transform it. Use a Container when the tool needs a Linux command, runtime, or filesystem behavior.
 
 ## What you maintain
 
