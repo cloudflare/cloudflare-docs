@@ -299,15 +299,17 @@ Turned-off tools will not appear in the portal's tool list. Users will not be ab
 
 ### Use an allowlist pattern
 
-By default, all tools and prompts from an MCP server are available in the portal. You can invert this behavior so that all tools are hidden by default and only explicitly turned-on tools are exposed. This is useful when an MCP server has many tools but you only want to expose a curated subset.
+By default, all tools and prompts from an MCP server are available in the portal. You can invert this behavior so that all capabilities are hidden by default and only explicitly turned-on tools and prompts are exposed. This is useful when an MCP server has many capabilities but you only want to expose a curated subset.
 
-To configure an allowlist via the API, set `default_disabled` to `true` on the server-to-portal mapping, then explicitly list the tools you want to expose in `updated_tools`:
+To configure an allowlist via the API, set `default_disabled` to `true` on the server-to-portal mapping, then explicitly list the tools you want to expose in `updated_tools`. To expose prompts, list them in `updated_prompts` in the same way.
+
+When a portal update includes `servers`, the supplied array replaces the complete server-to-portal mapping. Include every attached server and preserve its existing mapping fields. Omitting a server removes it from the portal, and omitting a mapping field resets that field to its default value.
 
 ```json title="API request body (portal update)"
 {
 	"servers": [
 		{
-			"id": "example-server",
+			"server_id": "example-server",
 			"default_disabled": true,
 			"updated_tools": [
 				{
@@ -324,7 +326,7 @@ To configure an allowlist via the API, set `default_disabled` to `true` on the s
 }
 ```
 
-With `default_disabled` set to `true`, only `search_documents` and `list_projects` will be available to portal users. All other tools from this server will be hidden.
+With `default_disabled` set to `true`, only `search_documents` and `list_projects` will be available to portal users. All other tools and all prompts from this server will be hidden.
 
 ### Rename tools and prompts with aliases
 
@@ -1080,7 +1082,7 @@ You can also enable or disable a specific server directly from your MCP client w
 
 > Disable my Jira server.
 
-The portal toggles the server and updates the active tool list immediately. Disabling a server removes its tools from the session, which reduces context window usage.
+The portal toggles the server and refreshes the active tool list immediately. The resulting list only includes tools and prompts allowed by the portal policy. A server can be enabled while exposing no tools or prompts if its allowlist is empty.
 
 ### Reauthenticate a server
 
