@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/limits.mdx
+  s_50618f17062f7b::t_dd4789cf8d86c0 15-17,19-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7417050ceec093292d40cc2e50511f4c1b214b2a",
+  "prompts": {},
+  "sessions": {
+    "s_50618f17062f7b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f387495a7ffefHs2JBPQbqMb28",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Swapnil Madavi <smadavi@cloudflare.com>"
+    }
+  }
+}
