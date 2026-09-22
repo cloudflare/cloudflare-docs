@@ -12,12 +12,14 @@ RealtimeKit applies limits to API requests and SDK operations. Use these values 
 
 ## API rate limits
 
-The following limits apply to RealtimeKit API requests.
+RealtimeKit API requests count toward the global Cloudflare API limit, which
+applies across all `api.cloudflare.com` API requests. Recording APIs are also
+subject to a separate limit.
 
-| API                  | Limit                         |
-| -------------------- | ----------------------------- |
-| All RealtimeKit APIs | 250 requests per 10 seconds   |
-| Recording APIs       | 1,000 requests per 60 seconds |
+| API                  | Limit                           |
+| -------------------- | ------------------------------- |
+| All RealtimeKit APIs | 3,500 requests per five minutes |
+| Recording APIs       | 1,000 requests per 50 seconds   |
 
 ## SDK rate limits
 
