@@ -1,0 +1,32 @@
+---
+title: concat() now supports up to 32 arguments
+description: Build richer dynamic values in Rules expressions by combining up to 32 values with concat().
+date: 2026-09-22
+---
+
+The `concat()` function in Cloudflare Rules now accepts up to 32 arguments, increased from 16. This allows you to build richer dynamic values directly in Rules expressions and simplify configurations that combine request data.
+
+A common use case is adding a request header that sends context to your origin. The following Rulesets API request adds a Request Header Transform Rule to an existing `http_request_late_transform` phase ruleset. Its 18-argument expression combines request and network information into one header value:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/rulesets/$RULESET_ID/rules" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "ref": "add_request_context_header",
+    "description": "Add request context for the origin",
+    "expression": "true",
+    "action": "rewrite",
+    "action_parameters": {
+      "headers": {
+        "X-Request-Context": {
+          "operation": "set",
+          "expression": "concat(\"ip=\", to_string(ip.src), \";country=\", ip.src.country, \";host=\", http.host, \";method=\", http.request.method, \";path=\", http.request.uri.path, \";query=\", http.request.uri.query, \";ray-id=\", cf.ray_id, \";asn=\", to_string(ip.src.asnum), \";user-agent=\", http.user_agent)"
+        }
+      }
+    }
+  }'
+```
+
+For more information, refer to the [`concat()` function reference](/ruleset-engine/rules-language/functions/#concat) and [HTTP request header modification](/rules/transform/request-header-modification/).
