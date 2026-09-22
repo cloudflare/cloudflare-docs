@@ -17,7 +17,7 @@ describe("issue label assignment helpers", () => {
 	it("ignores developer docs links without a path", () => {
 		expect(
 			extractDeveloperDocsPaths(
-				"https://developers.cloudflare.com https://developers.cloudflare.com. https://developers.cloudflare.com/workers/",
+				"https://developers.cloudflare.com https://developers.cloudflare.com. https://developers.cloudflare.com/ https://developers.cloudflare.com/// https://developers.cloudflare.com/workers/",
 			),
 		).toEqual(["/workers/"]);
 	});
