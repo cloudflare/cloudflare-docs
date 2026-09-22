@@ -127,7 +127,7 @@ Use this table to determine where each setting belongs.
       </tr>
       <tr>
         <td><a href="/workers/previews/resources/#d1-migrations">D1 migrations</a></td>
-        <td>Follow the D1 migration steps to create a migration configuration, apply migrations to each physical Preview database, and then deploy the Preview.</td>
+        <td>Configure a shared staging database on the base branch. To isolate one branch, update both its Preview binding and migration configuration to use a different database. Apply migrations to the database used by the branch before deploying its Preview.</td>
       </tr>
       <tr>
         <td><a href="/workers/previews/resources/#workflows">Workflows</a></td>

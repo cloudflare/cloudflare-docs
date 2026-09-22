@@ -256,11 +256,11 @@ Do not delete container apps by Worker name alone. A production app for the same
 
 ## D1 migrations
 
-Follow these steps to apply [D1 migrations](/d1/reference/migrations/) to databases used by Previews.
+Use your base branch to configure one staging database that all Previews share by default. A branch that needs an isolated database overrides that binding in its own configuration. Follow these steps to keep each branch's [D1 migration](/d1/reference/migrations/) target aligned with its Preview binding.
 
-### 1. Keep the D1 binding in your Preview configuration
+### 1. Configure the shared staging database
 
-In your main Wrangler configuration file, bind the Preview to its database under `previews.d1_databases`:
+On your base branch, bind Previews to the shared staging database under `previews.d1_databases`. New branches inherit this configuration and use the same database:
 
 ```jsonc title="wrangler.jsonc"
 {
@@ -278,7 +278,7 @@ In your main Wrangler configuration file, bind the Preview to its database under
 
 ### 2. Create a Wrangler configuration file for migrations
 
-Create a separate file named `wrangler.preview-migrations.jsonc` for the database used by the Preview you are about to deploy. Declare the database under top-level `d1_databases`. Copy the `database_name` and `database_id` from the current branch's `previews.d1_databases` binding:
+On the base branch, create a separate file named `wrangler.preview-migrations.jsonc`. Declare the shared staging database under top-level `d1_databases`. Copy the `database_name` and `database_id` from `previews.d1_databases`:
 
 ```jsonc title="wrangler.preview-migrations.jsonc"
 {
@@ -293,11 +293,22 @@ Create a separate file named `wrangler.preview-migrations.jsonc` for the databas
 }
 ```
 
-### 3. Add migration files
+### 3. Override the database for one branch (optional)
+
+On a branch that needs an isolated database, change `database_name` and `database_id` in both files:
+
+| File | Binding to update |
+| - | - |
+| `wrangler.jsonc` | `previews.d1_databases` |
+| `wrangler.preview-migrations.jsonc` | Top-level `d1_databases` |
+
+The two files must point to the same physical database. Other branches continue to use the shared staging database from the base branch.
+
+### 4. Add migration files
 
 Add your migration files to the `migrations/` directory. To use another location, change `migrations_dir` in `wrangler.preview-migrations.jsonc`.
 
-### 4. Apply migrations to the Preview database
+### 5. Apply migrations to the Preview database
 
 Confirm that `database_name` and `database_id` match the Preview binding for the current branch, then apply the migrations:
 
@@ -307,7 +318,7 @@ npx wrangler d1 migrations apply PREVIEW_DB --remote --config wrangler.preview-m
 
 If multiple Previews share the same `database_id`, run the migration command for that database only once.
 
-### 5. Deploy the Preview
+### 6. Deploy the Preview
 
 After the migrations succeed, deploy the Preview from the branch that contains its `previews.d1_databases` binding:
 
