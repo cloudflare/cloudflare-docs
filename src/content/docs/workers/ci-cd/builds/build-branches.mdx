@@ -19,7 +19,7 @@ To change the production branch of your project:
 1. In **Overview**, select your Workers project.
 2. Go to **Settings** > **Build** > **Branch control**. Workers will default to the default branch of your git repository, but this can be changed in the dropdown.
 
-Every push event made to this branch will trigger a build and execute the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [deploy command](/workers/ci-cd/builds/configuration/#deploy-command).
+Every push event made to this branch will trigger a build and execute the [build command](/workers/ci-cd/builds/configuration/#build-settings), followed by the [deploy command](/workers/ci-cd/builds/configuration/#deploy-command).
 
 ## Configure preview builds
 
@@ -32,7 +32,7 @@ To enable or disable preview builds:
 1. In **Overview**, select your Workers project.
 2. Go to **Settings** > **Build** > **Branch control**. The checkbox **Enable Preview Builds** allows you to enable or disable Preview Builds.
 
-When enabled, every push to a branch that is not your production branch triggers a preview build. Workers Builds runs the [build command](/workers/ci-cd/builds/configuration/#deploy-command), followed by the [Preview command](/workers/ci-cd/builds/configuration/#preview-command).
+When enabled, every push to a branch that is not your production branch triggers a preview build. Workers Builds runs the [build command](/workers/ci-cd/builds/configuration/#build-settings), followed by the [Preview command](/workers/ci-cd/builds/configuration/#preview-command).
 
 ### Existing Workers connected to Builds
 

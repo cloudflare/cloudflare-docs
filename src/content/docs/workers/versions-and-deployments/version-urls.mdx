@@ -88,7 +88,7 @@ To use details about the signed-in user in your Worker, read the [user identity]
 
 ## Enable or disable Version URLs
 
-Version URLs follow the same default as your `workers.dev` route:
+When no Version URL setting exists, Version URLs follow the same default as your `workers.dev` route:
 
 - If `workers_dev` is enabled, Version URLs are enabled by default.
 - If `workers_dev` is disabled, Version URLs are disabled by default.
@@ -134,7 +134,7 @@ To disable Version URLs:
 
 </WranglerConfig>
 
-If `preview_urls` is not specified, it defaults to the value of `workers_dev`.
+If `preview_urls` is omitted, Wrangler does not change an existing Version URL setting. Set `preview_urls` explicitly to change it.
 
 ## Limits
 

@@ -10,6 +10,8 @@ products:
 
 **Previews** give each branch an isolated, production-like environment under the same Worker. Each Preview is [configured with its own variables, secrets, and bindings](/workers/previews/configuration/), served on its own [URL](/workers/previews/custom-domains/), and has its own [observability](/workers/previews/test-and-debug/).
 
+Worker Previews requires `Wrangler 4.135.0` or later. Update the project dependency because project commands do not use a newer global installation.
+
 ![Worker dashboard showing the Preview dropdown and an overview of bindings, metrics, and deployments](~/assets/images/workers/previews/previews-dash-overview.png)
 
 Used [Version URLs](/workers/versions-and-deployments/version-urls/) or [Wrangler environments](/workers/wrangler/environments/) before? Refer to [Compare workflows](/workers/previews/compare-workflows/) to understand how they differ from Previews and our recommended practices for branch testing.

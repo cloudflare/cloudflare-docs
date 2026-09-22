@@ -109,7 +109,7 @@ Use this table to determine where each setting belongs.
         <td>Top-level placement applies to Previews. Add <code>previews.placement</code> to override it.</td>
       </tr>
       <tr>
-        <td><code>observability</code>, <code>tail_consumers</code>, <code>logpush</code>, <code>limits</code>, <code>define</code></td>
+        <td><code>observability</code>, <code>logpush</code>, <code>limits</code></td>
         <td>Add to <code>previews</code> only if you want Preview-specific values. For observability settings, refer to <a href="/workers/previews/test-and-debug/">Test and debug</a>.</td>
       </tr>
     </tbody>
@@ -126,6 +126,10 @@ Use this table to determine where each setting belongs.
         <td>Add the same binding name, pointed at a Preview-safe resource. Examples: KV, D1, R2, Hyperdrive, Vectorize, Analytics Engine, Pipelines, and Secrets Store.</td>
       </tr>
       <tr>
+        <td><a href="/workers/previews/resources/#d1-migrations">D1 migrations</a></td>
+        <td>Follow the D1 migration steps to create a migration configuration, apply migrations to each physical Preview database, and then deploy the Preview.</td>
+      </tr>
+      <tr>
         <td><a href="/workers/previews/resources/#workflows">Workflows</a></td>
         <td>Add a binding to an existing Workflow. Previews do not create a Workflow when you change the Workflow name.</td>
       </tr>
@@ -134,12 +138,20 @@ Use this table to determine where each setting belongs.
         <td>Add <code>previews.queues.producers</code>, pointed at a Preview-safe queue.</td>
       </tr>
       <tr>
+        <td><code>define</code></td>
+        <td>Add <code>previews.define</code>. Top-level values are not inherited.</td>
+      </tr>
+      <tr>
+        <td><code>tail_consumers</code></td>
+        <td>Add <code>previews.tail_consumers</code>. Top-level Tail Worker destinations are not inherited.</td>
+      </tr>
+      <tr>
         <td><a href="/workers/previews/resources/#durable-objects">Durable Objects</a></td>
         <td>Each Preview automatically gets a new Durable Object namespace and storage. Keep classes and migrations at the top level. Add <code>previews.durable_objects.bindings</code> only if your code reads the binding from <code>env</code>.</td>
       </tr>
       <tr>
         <td><a href="/workers/previews/resources/#containers">Containers</a></td>
-        <td>Each Preview automatically gets a new container app and container instances. Keep <code>containers</code> and migrations at the top level. Add the Durable Object binding under <code>previews</code> only if your code reads the container binding from <code>env</code>.</td>
+        <td>Each Preview automatically gets a new container app and container instances. Keep migrations at the top level and add container definitions under <code>previews.containers</code>. Keep production container definitions in top-level <code>containers</code>. Add the Durable Object binding under <code>previews</code> only if your code reads the container binding from <code>env</code>.</td>
       </tr>
       <tr>
         <td>API bindings</td>

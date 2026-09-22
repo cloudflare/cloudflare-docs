@@ -73,7 +73,7 @@ You can use [Wrangler Environments](/workers/wrangler/environments/) with Worker
 1. [Deploy via Wrangler](/workers/wrangler/commands/general/#deploy) to create the Workers for your environments on the Dashboard, if you do not already have them.
 2. Find the Workers for your environments. They are typically named `[name of Worker] - [environment name]`.
 3. Connect your repository to each of the Workers for your environment.
-4. In each of the Workers, edit your Wrangler commands to include the flag `--env: <environment name>` in the build configurations for both the deploy command and the [Preview command](/workers/ci-cd/builds/configuration/#preview-command) ([if applicable](/workers/ci-cd/builds/build-branches/#configure-preview-builds)).
+4. In each of the Workers, edit your Wrangler commands to include the flag `--env <environment-name>` in the build configurations for both the deploy command and the [Preview command](/workers/ci-cd/builds/configuration/#preview-command) ([if applicable](/workers/ci-cd/builds/build-branches/#configure-preview-builds)).
 
 When a new commit is detected in the repository, a new build/deploy will trigger for each associated Worker.
 

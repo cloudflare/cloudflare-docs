@@ -77,6 +77,10 @@ Choose which traffic the custom domain serves:
 3. Enter your domain. For **Enable for**, select _Preview_ or _Production and Preview_. Then select **Add domain**.
 
    ![Add Domain modal with Enable for set to Preview](~/assets/images/workers/previews/replace.png)
+
+4. Confirm that the domain appears under **Custom Domains and Routes**.
+
+   ![Domains tab showing a custom domain enabled for Preview traffic](~/assets/images/workers/previews/customdomainonly.png)
 </Steps>
 
 </TabItem>
@@ -111,7 +115,7 @@ Set `preview_urls` in your Wrangler configuration file, then run `npx wrangler d
 
 </WranglerConfig>
 
-If omitted, `preview_urls` uses the value of `workers_dev`. Set it explicitly to manage Production and Preview URLs separately.
+If `preview_urls` is omitted, Wrangler does not change an existing Preview URL setting. If no setting exists, its initial value depends on `workers_dev`. Set `preview_urls` explicitly to change the Preview URL setting.
 
 </TabItem>
 <TabItem label="Dashboard">
