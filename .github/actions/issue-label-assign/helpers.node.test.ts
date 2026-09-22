@@ -14,6 +14,14 @@ describe("issue label assignment helpers", () => {
 		).toEqual(["/r2/", "/workers/", "/d1/", "/kv/", "/images/", "/stream/"]);
 	});
 
+	it("ignores developer docs links without a path", () => {
+		expect(
+			extractDeveloperDocsPaths(
+				"https://developers.cloudflare.com https://developers.cloudflare.com. https://developers.cloudflare.com/workers/",
+			),
+		).toEqual(["/workers/"]);
+	});
+
 	it("only skips edited events without a body change", () => {
 		expect(shouldSkipEditedEvent("edited", undefined)).toBe(true);
 		expect(shouldSkipEditedEvent("edited", { body: { from: "old" } })).toBe(

@@ -4,8 +4,8 @@ export function extractDeveloperDocsPaths(content: string): string[] {
 	let match;
 
 	while ((match = regex.exec(content)) !== null) {
-		const pathname = match[1]?.replace(/[.,;:!?]+$/, "");
-		if (pathname !== undefined) links.push(pathname.toLowerCase());
+		const pathname = (match[1] ?? "").replace(/[.,;:!?]+$/, "");
+		if (pathname) links.push(pathname.toLowerCase());
 	}
 
 	return links;
@@ -23,6 +23,8 @@ export async function removeStaleProductLabels(
 	newLabels: ReadonlySet<string>,
 	removeLabel: (label: string) => Promise<unknown>,
 ): Promise<void> {
+	// Labels have no provenance, so an empty result cannot safely distinguish
+	// stale automatic labels from labels added manually or by other automation.
 	if (newLabels.size === 0) return;
 
 	for (const label of currentLabels) {
