@@ -278,7 +278,7 @@ In your main Wrangler configuration file, bind the Preview to its database under
 
 ### 2. Create a Wrangler configuration file for migrations
 
-Create a separate file named `wrangler.preview-migrations.jsonc` for the database used by the Preview you are about to deploy. Declare the database under top-level `d1_databases`, using the same `database_name` as the binding in `previews.d1_databases`:
+Create a separate file named `wrangler.preview-migrations.jsonc` for the database used by the Preview you are about to deploy. Declare the database under top-level `d1_databases`. Copy the `database_name` and `database_id` from the current branch's `previews.d1_databases` binding:
 
 ```jsonc title="wrangler.preview-migrations.jsonc"
 {
@@ -286,6 +286,7 @@ Create a separate file named `wrangler.preview-migrations.jsonc` for the databas
 		{
 			"binding": "PREVIEW_DB",
 			"database_name": "preview-shared-db",
+			"database_id": "<PREVIEW_DATABASE_ID>",
 			"migrations_dir": "migrations",
 		},
 	],
@@ -298,7 +299,7 @@ Add your migration files to the `migrations/` directory. To use another location
 
 ### 4. Apply migrations to the Preview database
 
-Confirm that `database_name` matches the Preview binding for the current branch, then apply the migrations:
+Confirm that `database_name` and `database_id` match the Preview binding for the current branch, then apply the migrations:
 
 ```sh
 npx wrangler d1 migrations apply PREVIEW_DB --remote --config wrangler.preview-migrations.jsonc
