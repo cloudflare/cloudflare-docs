@@ -1,0 +1,27 @@
+src/content/docs/workers/runtime-apis/nodejs/index.mdx
+  s_3f312cb67d5967::t_9b30ebadbffd51 23,25-27,33-34,40-41,72
+src/content/compatibility-flags/nodejs-compat.mdx
+  s_3f312cb67d5967::t_a1d4031ac3158a 16,35-36
+src/content/docs/workers/configuration/compatibility-flags.mdx
+  s_3f312cb67d5967::t_0ab18452ae8a37 53,55,62-70,77-78
+src/content/partials/workers/nodejs-compat-howto.mdx
+  s_3f312cb67d5967::t_2c71bec932d5d1 8
+src/content/partials/workers/nodejs_compat.mdx
+  s_3f312cb67d5967::t_e9be588c9cc68f 7,17,22-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ccbef8315de8d8ad4fdd098fe5af947db744fe7d",
+  "prompts": {},
+  "sessions": {
+    "s_3f312cb67d5967": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff2ae-53b0-7183-89e3-db7dccdbbacb",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

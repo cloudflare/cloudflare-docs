@@ -1,0 +1,21 @@
+src/content/docs/pages/platform/limits.mdx
+  s_078edbe0c8c97e::t_dd40a65db2d857 80-82
+src/content/docs/workers/platform/limits.mdx
+  s_078edbe0c8c97e::t_f006eea794ef40 32,37,306
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f2a5184208befcbdd4f24ac913f56098102aa689",
+  "prompts": {},
+  "sessions": {
+    "s_078edbe0c8c97e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a03f76-996f-7c63-9edd-9a25551e3d3e",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

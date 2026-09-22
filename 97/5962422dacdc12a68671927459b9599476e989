@@ -1,0 +1,23 @@
+src/content/docs/workers/previews/resources/index.mdx
+  s_1db491faeae11b::t_18934da4a2750f 65-66,72,257-316
+src/content/docs/workers/static-assets/headers.mdx
+  s_1db491faeae11b::t_7d3a5c0781d4eb 74-79,132
+src/content/docs/workers/static-assets/migration-guides/migrate-from-pages.mdx
+  s_1db491faeae11b::t_b5a6c2512c903a 18,325,327-329,335-342,348-351,428
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "975962422dacdc12a68671927459b9599476e989",
+  "prompts": {},
+  "sessions": {
+    "s_1db491faeae11b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f4e7517efffetz3wL5F0YedGIE",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}

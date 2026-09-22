@@ -1,0 +1,21 @@
+src/content/release-notes/pages.yaml
+  s_225c95b2d3b188::t_382eda2d0dc6e1 6-10
+src/content/release-notes/workers.yaml
+  s_225c95b2d3b188::t_6a98723b5bfff0 6-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4f587b3b65414d5dfd64bfabdcf46b3baab7e6b5",
+  "prompts": {},
+  "sessions": {
+    "s_225c95b2d3b188": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff165-8cc5-7952-af1e-256d9488f270",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

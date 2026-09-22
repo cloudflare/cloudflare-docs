@@ -1,0 +1,19 @@
+astro.config.ts
+  s_4aff66036dbf2b::t_d6298419264837 15,206-207,243-245,286
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "597c67fb239f9dc895a5be15915a5d1b8756f4be",
+  "prompts": {},
+  "sessions": {
+    "s_4aff66036dbf2b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f97bc7301ffeDoXLls0PHUSv5Y",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}
