@@ -1097,7 +1097,6 @@ package.json @cloudflare/content-engineering
 /src/assets/images/changelog/workflows/ @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/changelog/workflows/ @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/content/directory/workflows.yaml @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/product-owners
-/src/content/release-notes/workflows.yaml @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/product-owners
 /src/content/glossary/workflows.yaml @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/product-owners
 /src/icons/workflows.svg @celso @deloreyj @irvinebroque @jonesphillip @mia303 @rita3ko @vy-ton @cloudflare/product-owners
 
