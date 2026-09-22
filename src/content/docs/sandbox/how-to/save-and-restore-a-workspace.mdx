@@ -1,0 +1,251 @@
+---
+title: Save and restore a sandbox workspace
+description: Save a sandbox workspace, stop its Linux instance, and restore the files when the session returns.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: Save and restore a workspace
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-21
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Give each sandbox a workspace that can return after its Linux instance stops. This guide saves `/workspace/notes.txt`, stops the instance, and restores the file in a new instance.
+
+:::note[Public beta]
+Container snapshots are in public beta. Features and behavior may change.
+:::
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+## Save the workspace
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   const snapshotKey = "workspaceSnapshotId";
+   const notesPath = "/workspace/notes.txt";
+
+   export class MyContainer extends DurableObject<Env> {
+    private get container(): Container {
+     const container = this.ctx.container;
+
+     if (!container) {
+      throw new Error("The container binding is not configured");
+     }
+
+     return container;
+    }
+
+    private async waitForSandbox(): Promise<void> {
+     let lastError: unknown;
+
+     for (let attempt = 0; attempt < 60; attempt++) {
+      try {
+       const process = await this.container.exec(["true"]);
+       if ((await process.exitCode) === 0) {
+        return;
+       }
+      } catch (error) {
+       lastError = error;
+      }
+
+      await scheduler.wait(500);
+     }
+
+     throw new Error("The sandbox did not start within 30 seconds", {
+      cause: lastError,
+     });
+    }
+
+    private async startSandbox(): Promise<void> {
+     const container = this.container;
+
+     if (!container.running) {
+      const snapshotId = await this.ctx.storage.get<string>(snapshotKey);
+
+      if (snapshotId) {
+       container.start({
+        containerSnapshot: { id: snapshotId },
+        entrypoint: ["sh", "-c", "sleep infinity"],
+        enableInternet: false,
+       });
+      } else {
+       container.start({
+        image: "cloudflare/debian-trixie",
+        entrypoint: ["sh", "-c", "sleep infinity"],
+        enableInternet: false,
+       });
+      }
+     }
+
+     await this.waitForSandbox();
+    }
+
+    async writeNotes(contents: string) {
+     await this.startSandbox();
+
+     const process = await this.container.exec(
+      ["sh", "-c", `mkdir -p /workspace && cat > ${notesPath}`],
+      { stdin: "pipe", stdout: "ignore" },
+     );
+
+     if (!process.stdin) {
+      throw new Error("The notes process did not open standard input");
+     }
+
+     const writer = process.stdin.getWriter();
+     await writer.write(new TextEncoder().encode(contents));
+     await writer.close();
+
+     const exitCode = await process.exitCode;
+     if (exitCode !== 0) {
+      throw new Error(`Writing notes failed with exit code ${exitCode}`);
+     }
+
+     return { path: notesPath };
+    }
+
+    async saveWorkspace() {
+     await this.startSandbox();
+
+     const snapshot = await this.container.snapshotContainer({
+      name: "workspace",
+     });
+
+     await this.ctx.storage.put(snapshotKey, snapshot.id);
+     await this.container.destroy();
+
+     return {
+      snapshotId: snapshot.id,
+      size: snapshot.size,
+     };
+    }
+
+    async readNotes() {
+     await this.startSandbox();
+
+     const process = await this.container.exec(["cat", notesPath]);
+     const output = await process.output();
+
+     if (output.exitCode !== 0) {
+      throw new Error(new TextDecoder().decode(output.stderr));
+     }
+
+     return {
+      path: notesPath,
+      contents: new TextDecoder().decode(output.stdout),
+     };
+    }
+   }
+
+   export default {
+    async fetch(request: Request, env: Env): Promise<Response> {
+     const url = new URL(request.url);
+     const match = /^\/sandboxes\/([^/]+)\/(notes|snapshot)$/.exec(
+      url.pathname,
+     );
+
+     if (!match) {
+      return new Response("Not found", { status: 404 });
+     }
+
+     const sandboxId = decodeURIComponent(match[1]);
+     const action = match[2];
+     const sandbox = env.MY_CONTAINER.getByName(sandboxId);
+
+     if (request.method === "POST" && action === "notes") {
+      const { contents } = (await request.json()) as { contents: string };
+      return Response.json(await sandbox.writeNotes(contents));
+     }
+
+     if (request.method === "POST" && action === "snapshot") {
+      return Response.json(await sandbox.saveWorkspace());
+     }
+
+     if (request.method === "GET" && action === "notes") {
+      return Response.json(await sandbox.readNotes());
+     }
+
+     return new Response("Method not allowed", { status: 405 });
+    },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   Each URL sandbox ID maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Write a file in the sandbox named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/notes \
+     --request POST \
+     --json '{"contents":"Continue from this checkpoint."}'
+   ```
+
+   ```json output
+   { "path": "/workspace/notes.txt" }
+   ```
+
+4. Save the sandbox filesystem and stop its Linux instance:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/snapshot \
+     --request POST
+   ```
+
+   The response contains the snapshot ID and its size in bytes:
+
+   ```json output
+   { "snapshotId": "<SNAPSHOT_ID>", "size": 123456 }
+   ```
+
+5. Read the file from the same sandbox ID:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/notes
+   ```
+
+   ```json output
+   {
+     "path": "/workspace/notes.txt",
+     "contents": "Continue from this checkpoint."
+   }
+   ```
+
+</Steps>
+
+The final request starts a new Linux instance from the saved snapshot. The sandbox keeps the same ID, and its files return without keeping the previous instance running.
+
+## Snapshot behavior
+
+`snapshotContainer()` captures the container's writable root filesystem. Finish filesystem writes before you create the snapshot.
+
+Restoring a snapshot starts a new instance and runs its entrypoint. A snapshot does not restore running processes, memory, terminal sessions, or network connections.
+
+Restores are explicit. If the sandbox changes after its last snapshot, create another snapshot before the instance stops. Otherwise, the next instance starts from the previous saved state.
+
+Snapshots may contain credentials or other sensitive files written inside the sandbox. Keep credentials in your Worker when possible. For an example, refer to [Call an authenticated API](/sandbox/how-to/call-an-authenticated-api/).
+
+## Next steps
+
+- To run more processes in the restored workspace, refer to [Execute commands](/containers/guides/execute-commands/).
+- To store shared files outside one sandbox, refer to [Mount R2 buckets with FUSE](/containers/examples/r2-fuse-mount/).
