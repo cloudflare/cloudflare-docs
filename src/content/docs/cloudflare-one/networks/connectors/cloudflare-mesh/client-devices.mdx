@@ -13,7 +13,7 @@ head:
     content: Connect client devices to Cloudflare Mesh
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { DashButton, Steps, TabItem, Tabs } from "~/components";
 
 Client devices — laptops, phones, and desktops — join your Mesh network by installing the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) and enrolling. Each device receives a [Mesh IP](/cloudflare-one/networks/connectors/cloudflare-mesh/#mesh-ips) and can immediately communicate with every other enrolled device and Mesh node.
 
@@ -23,15 +23,25 @@ Client devices — laptops, phones, and desktops — join your Mesh network by i
 
 ## 1. Enroll the Cloudflare One Client
 
-Connect a laptop or phone to your Mesh network:
+Use the Mesh dashboard to review account requirements and install the Cloudflare One Client:
 
-### Windows, macOS, and Linux
+<Steps>
 
-<Render file="warp/enroll-desktop" product="cloudflare-one" />
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
-### iOS and Android
+   <DashButton url="/?to=/:account/mesh" />
 
-<Render file="warp/enroll-ios-android" product="cloudflare-one" />
+2. Select **Add participant** > **Add device**.
+3. If prompted, enter a team name for your Cloudflare One organization.
+4. If your account requires a device enrollment policy, select **Just me** or **My organization**.
+5. Review the proposed account changes. If Split Tunnels must change, review the Mesh IP range and affected exclusions.
+6. Select **Confirm and set up**. Resolve any warnings before continuing.
+7. Select Windows, macOS, Linux, iOS, or Android. Follow the installation instructions for your platform.
+8. Enter your team name in the Cloudflare One Client and complete authentication.
+
+</Steps>
+
+The dashboard prepares your account but does not enroll the device or verify connectivity. For manual installation and enrollment instructions, refer to [Download the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) and [Enroll a device](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/).
 
 ### Headless Windows, macOS, and Linux devices
 
@@ -42,6 +52,8 @@ For platform-specific installation methods and configuration file locations, ref
 This method works on [supported Windows, macOS, and Linux systems](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/). Service-token devices use the shared identity `non_identity@<team-name>.cloudflareaccess.com`. Policies based on identity provider users or groups do not apply to these devices. To assign device profiles, use the expression `identity.service_token_uuid == "<SERVICE_TOKEN_ID>"`, where `<SERVICE_TOKEN_ID>` is the service token resource UUID (`id`), not its `auth_client_id`. Place this [Service Token selector](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/#service-token) before broader OS or email profiles. Use the shared non-identity email only when all Service Auth devices should match the profile.
 
 After enrollment, the device receives a Mesh IP and connects to your Mesh network.
+
+The device then appears with Mesh nodes in the participant table under **Networking** > **Mesh**. Use the table to search for devices, filter participants by type or status, and open a device's Zero Trust details page. If more results are available, select **Load more participants**, **Load more nodes**, or **Load more devices**. New results append without replacing the participants already shown.
 
 ## 2. Verify connectivity
 

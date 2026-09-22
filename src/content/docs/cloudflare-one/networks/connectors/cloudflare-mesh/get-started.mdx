@@ -68,18 +68,13 @@ The setup wizard [configures your account for Mesh networking](#required-account
 
    <DashButton url="/?to=/:account/mesh" />
 
-2. Select **Add a node**.
+2. Select **Add participant** > **Add node**.
 3. Enter a name for your node (for example, `web-server` or `staging-db`).
 4. Select **Create node**.
-5. (Optional) If you have a Linux server, run the install commands shown in the dashboard to bring the node online. If you do not have a server ready, select **I'll connect later** — you can install the node at any time from the node detail page.
-
-   <Details header="Installation commands">
-
-   <Render file="mesh/install-node" product="cloudflare-one" />
-
-   </Details>
-
-6. Select **View node details** to complete the setup wizard.
+5. Select **Linux**, **Kubernetes**, **Docker Compose**, or **Docker CLI**.
+6. Follow the installation instructions for your selected method. The dashboard masks the node token but includes it when required by a copied command. Docker Compose configurations and Kubernetes manifests reference a secret instead of containing the token.
+7. (Optional) If you are not ready to install the node, select **I'll connect later**. You can install the node from its detail page later.
+8. If you installed the node, wait for it to connect and select **Continue**.
 
 </Steps>
 
@@ -172,17 +167,25 @@ You can also manage nodes with the [`cloudflare_zero_trust_tunnel_warp_connector
 
 ## 2. Connect a client device
 
-Connect a laptop or phone to your Mesh network:
+Use the guided workflow to prepare your account and connect a laptop or phone:
 
-### Windows, macOS, and Linux
+<Steps>
 
-<Render file="warp/enroll-desktop" product="cloudflare-one" />
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
-### iOS and Android
+   <DashButton url="/?to=/:account/mesh" />
 
-<Render file="warp/enroll-ios-android" product="cloudflare-one" />
+2. Select **Add participant** > **Add device**.
+3. If prompted, enter a team name for your Cloudflare One organization.
+4. If your account requires a device enrollment policy, select **Just me** or **My organization**.
+5. Review the account changes required for Mesh. If the workflow must change Split Tunnels, review the Mesh IP range and affected exclusions.
+6. Select **Confirm and set up**. Resolve any warnings before continuing to the installation instructions.
+7. Select the device platform and follow the installation instructions. For iOS or Android, you can scan the displayed QR code.
+8. Enter your team name in the Cloudflare One Client and complete authentication.
 
-Once you see a **Connected** status, your device is on the mesh and receives its own Mesh IP.
+</Steps>
+
+The workflow prepares your account but does not enroll the device or verify connectivity. After the Cloudflare One Client displays **Connected**, test connectivity as described in [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/#2-verify-connectivity).
 
 ## 3. Test connectivity
 
