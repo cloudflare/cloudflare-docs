@@ -3,7 +3,7 @@ pcx_content_type: reference
 title: Browser binding API
 description: Acquire, connect to, inspect, and manage Browser Run sessions from a Cloudflare Worker with typed browser binding methods.
 sidebar:
-  order: 21
+  order: 22
 products:
   - browser-run
 ---
@@ -30,18 +30,18 @@ binding = "BROWSER"
 
 ## Session methods
 
-| Method                                | Description                                                                                                         |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `acquire(options?)`                   | Creates a browser session and returns its session ID. Set `targets: true` to include the session's current targets. |
-| `connectSession(sessionId, options?)` | Returns a session-pinned `Fetcher` for connecting a CDP client to an existing session.                              |
-| `launch(options?)`                    | Acquires a session and returns the same connection result as `connectSession()`.                                    |
-| `getLiveView(sessionId, options?)`    | Creates a Live View URL for a session or target.                                                                    |
-| `listSessions(options?)`              | Lists active sessions in the account.                                                                               |
-| `history(options?)`                   | Lists recent active and closed sessions.                                                                            |
-| `limits()`                            | Returns the current session limits and usage values.                                                                |
-| `getSession(sessionId)`               | Returns session details or `null` when the session does not exist.                                                  |
-| `closeSession(sessionId)`             | Closes a session and returns `closing` or `closed`.                                                                 |
-| `devtools`                            | Provides typed methods for the DevTools JSON endpoints.                                                             |
+| Method                                | Description                                                                                                               |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `acquire(options?)`                   | Creates a browser session and returns its session ID. Set `targets: true` to include the session's current targets.       |
+| `connectSession(sessionId, options?)` | Returns a connection object with a session-pinned `webSocket` Fetcher for connecting a CDP client to an existing session. |
+| `launch(options?)`                    | Acquires a session and returns the same connection result as `connectSession()`.                                          |
+| `getLiveView(sessionId, options?)`    | Creates a Live View URL for a session or target.                                                                          |
+| `listSessions(options?)`              | Lists active sessions in the account.                                                                                     |
+| `history(options?)`                   | Lists recent active and closed sessions.                                                                                  |
+| `limits()`                            | Returns the current session limits and usage values.                                                                      |
+| `getSession(sessionId)`               | Returns session details or `null` when the session does not exist.                                                        |
+| `closeSession(sessionId)`             | Closes a session and returns `closing` or `closed`.                                                                       |
+| `devtools`                            | Provides typed methods for the DevTools JSON endpoints.                                                                   |
 
 ## Acquire and connect to a session
 
@@ -60,18 +60,36 @@ type CdpResponse = {
 	error?: { message: string };
 };
 
+let nextCdpCommandId = 0;
+
 function sendCdpCommand(
 	socket: WebSocket,
 	method: string,
 	params: Record<string, unknown> = {},
 ): Promise<unknown> {
 	return new Promise((resolve, reject) => {
-		const id = 1;
+		const id = ++nextCdpCommandId;
+		const timeout = setTimeout(() => {
+			cleanup();
+			reject(new Error(`CDP command "${method}" timed out`));
+		}, 30_000);
+
+		const cleanup = () => {
+			clearTimeout(timeout);
+			socket.removeEventListener("message", onMessage);
+			socket.removeEventListener("close", onClose);
+		};
+
+		const onClose = () => {
+			cleanup();
+			reject(new Error("CDP connection closed before the command completed"));
+		};
+
 		const onMessage = (event: MessageEvent<string>) => {
 			const message = JSON.parse(event.data) as CdpResponse;
 			if (message.id !== id) return;
 
-			socket.removeEventListener("message", onMessage);
+			cleanup();
 			if (message.error) {
 				reject(new Error(message.error.message));
 			} else {
@@ -80,7 +98,13 @@ function sendCdpCommand(
 		};
 
 		socket.addEventListener("message", onMessage);
-		socket.send(JSON.stringify({ id, method, params }));
+		socket.addEventListener("close", onClose);
+		try {
+			socket.send(JSON.stringify({ id, method, params }));
+		} catch (error) {
+			cleanup();
+			reject(error);
+		}
 	});
 }
 
@@ -120,24 +144,30 @@ Use `launch()` when you do not need to separate acquisition from connection:
 <TypeScriptExample>
 
 ```ts
-const session = await env.BROWSER.launch();
-const response = await session.webSocket.fetch(
-	"https://browser-binding.invalid",
-	{ headers: { Upgrade: "websocket" } },
-);
-
-const socket = response.webSocket;
-if (!socket) {
-	throw new Error("Browser Run did not return a WebSocket");
+interface Env {
+	BROWSER: Fetcher;
 }
 
-socket.accept();
-socket.send(
-	JSON.stringify({
-		id: 1,
-		method: "Browser.getVersion",
-	}),
-);
+async function useLaunch(env: Env): Promise<unknown> {
+	const session = await env.BROWSER.launch();
+	const response = await session.webSocket.fetch(
+		"https://browser-binding.invalid",
+		{ headers: { Upgrade: "websocket" } },
+	);
+	if (!response.webSocket) {
+		throw new Error("Browser Run did not return a WebSocket");
+	}
+
+	const socket = response.webSocket;
+	socket.accept();
+
+	try {
+		return await sendCdpCommand(socket, "Browser.getVersion");
+	} finally {
+		socket.close();
+		await env.BROWSER.closeSession(session.sessionId);
+	}
+}
 ```
 
 </TypeScriptExample>
@@ -154,15 +184,15 @@ socket.send(
 
 `acquire()` and `launch()` accept these options:
 
-| Option                   | Type                      | Description                                                                                                                                           |
-| ------------------------ | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `keepAlive`              | `number`                  | Session inactivity timeout in milliseconds. The value must be between 10 seconds and 20 minutes.                                                      |
-| `recording`              | `boolean`                 | Records the session for later inspection.                                                                                                             |
-| `location`               | `string`                  | ISO 3166-1 alpha-2 country code for the browser location.                                                                                             |
-| `outboundByHost`         | `Record<string, Fetcher>` | Routes requests for each hostname through a Worker Fetcher. See [Route requests through an outbound Worker](/browser-run/features/outbound-workers/). |
-| `guardrails`             | `object`                  | Restricts the hostnames that the browser session can access. See [Guardrails](/browser-run/features/guardrails/).                                     |
-| `targets`                | `boolean`                 | Includes the session's DevTools targets in the result.                                                                                                |
-| `liveViewUrlExpiresInMs` | `number`                  | Sets the expiry for target Live View URLs when `targets` is `true`.                                                                                   |
+| Option                   | Type                      | Description                                                                                                                                                |
+| ------------------------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keepAlive`              | `number`                  | Session inactivity timeout in milliseconds. The value must be between 10 seconds and 20 minutes.                                                           |
+| `recording`              | `boolean`                 | Records the session for later inspection.                                                                                                                  |
+| `location`               | `string`                  | ISO 3166-1 alpha-2 country code for the browser location.                                                                                                  |
+| `outboundByHost`         | `Record<string, Fetcher>` | Routes requests for each hostname through a Worker Fetcher. Refer to [Route requests through an outbound Worker](/browser-run/features/outbound-workers/). |
+| `guardrails`             | `object`                  | Restricts the hostnames that the browser session can access. Refer to [Guardrails](/browser-run/features/guardrails/).                                     |
+| `targets`                | `boolean`                 | Includes the session's DevTools targets in the result.                                                                                                     |
+| `liveViewUrlExpiresInMs` | `number`                  | Sets the expiry for target Live View URLs when `targets` is `true`.                                                                                        |
 
 The binding uses `keepAlive` in its options object.
 
