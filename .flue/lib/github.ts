@@ -49,15 +49,22 @@ export interface GitHubPullRequest {
 	head: { ref: string; sha: string; repo: { full_name: string } | null };
 }
 
-/** List every open draft pull request in the repository. */
-export async function listOpenDraftPullRequests(
+/** List every open pull request in the repository (drafts included). */
+export async function listOpenPullRequests(
 	token: string,
 ): Promise<GitHubPullRequest[]> {
-	const pullRequests = await fetchAllPages<GitHubPullRequest>(
+	return fetchAllPages<GitHubPullRequest>(
 		token,
 		`https://api.github.com/repos/${REPO}/pulls?state=open&per_page=100`,
 		"list open pull requests",
 	);
+}
+
+/** List every open draft pull request in the repository. */
+export async function listOpenDraftPullRequests(
+	token: string,
+): Promise<GitHubPullRequest[]> {
+	const pullRequests = await listOpenPullRequests(token);
 	return pullRequests.filter((pullRequest) => pullRequest.draft);
 }
 

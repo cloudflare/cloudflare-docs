@@ -37,6 +37,11 @@ export interface WebhookClassification {
 	isSpamFilterEvent: boolean;
 	/** Non-Dependabot PR event that should run code review (after the gate). */
 	isCodeReviewEvent: boolean;
+	/**
+	 * PR event that should run the changelog date check (new changelog files
+	 * dated in the past). Additive to review routing — it never replaces it.
+	 */
+	isChangelogDateEvent: boolean;
 	/** Whether the PR is a draft (code review is suppressed unless ready_for_review). */
 	isDraft: boolean;
 	/** Codeowner slash command, if the event is an actionable PR comment. */
@@ -53,6 +58,13 @@ const PR_REVIEW_ACTIONS = [
 	"synchronize",
 	"ready_for_review",
 ];
+
+/**
+ * PR events that trigger the changelog date check: every review action (the
+ * check rides along with review routing) plus `closed` so the marker comment
+ * is removed when a PR merges or closes.
+ */
+const CHANGELOG_DATE_ACTIONS = [...PR_REVIEW_ACTIONS, "closed"];
 
 function asRecord(value: unknown): Record<string, unknown> | undefined {
 	return typeof value === "object" && value !== null
@@ -111,6 +123,14 @@ export function classifyWebhook(
 
 	const isDependabotReviewEvent = isDependabotPr && isPrReviewAction;
 
+	// Dependabot PRs never add changelog entries; exclude them so the check
+	// runs only where a changelog file is plausible.
+	const isChangelogDateEvent =
+		!isDependabotPr &&
+		eventType === "pull_request" &&
+		action !== undefined &&
+		CHANGELOG_DATE_ACTIONS.includes(action);
+
 	const isDraft = pullRequest?.draft === true;
 
 	// Slash commands: issue_comment created on a PR.
@@ -136,6 +156,7 @@ export function classifyWebhook(
 		isDependabotReviewEvent,
 		isSpamFilterEvent,
 		isCodeReviewEvent,
+		isChangelogDateEvent,
 		isDraft,
 		command,
 		commentId,
@@ -150,6 +171,7 @@ export function isActionable(c: WebhookClassification): boolean {
 		c.isDependabotReviewEvent ||
 		c.isSpamFilterEvent ||
 		c.isCodeReviewEvent ||
+		c.isChangelogDateEvent ||
 		c.command !== null
 	);
 }

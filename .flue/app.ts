@@ -88,6 +88,7 @@ app.post("/dev/review/:number", async (c) => {
 		isDependabotReviewEvent: pr.user?.login === "dependabot[bot]",
 		isSpamFilterEvent: pr.user?.login !== "dependabot[bot]",
 		isCodeReviewEvent: pr.user?.login !== "dependabot[bot]",
+		isChangelogDateEvent: pr.user?.login !== "dependabot[bot]",
 		isDraft: pr.draft,
 		command: null,
 		commentId: undefined,

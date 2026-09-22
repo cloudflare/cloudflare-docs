@@ -14,6 +14,9 @@
  * Routing (ports the 0.11 `orchestrate` workflow):
  *   - codeowner slash command → handled inline (auth, 👀/👍, kick workflow or
  *     set an R2 flag).
+ *   - changelog date check (pull_request events) → handled inline: reconciles
+ *     the changelog-date marker comment, then falls through to the routing
+ *     below for non-closed events (additive; never replaces review routing).
  *   - Dependabot PR event → `DEPENDABOT_REVIEW` (skips the spam gate).
  *   - spam-filter event (issue / non-Dependabot PR):
  *       · sender is a codeowner → skip the gate; kick `REVIEW_ORCHESTRATOR`
@@ -40,6 +43,7 @@ import {
 	setAutoReviewDisabled,
 	setReviewLimitIgnored,
 } from "./code-review-state";
+import { reconcileChangelogDateComment } from "./changelog-date-check";
 import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
@@ -69,6 +73,15 @@ export async function startReviewPipeline(
 	if (c.command) {
 		await handleCommand(env, c, number);
 		return;
+	}
+
+	// ── 1.5 Changelog date check (additive; never replaces review routing) ──
+	// Runs inline like the codeowner commands: a handful of sub-second GitHub
+	// API calls. For `closed` events this removes the marker comment and stops
+	// (no other routing exists for closed); otherwise routing continues below.
+	if (c.isChangelogDateEvent) {
+		await runChangelogDateCheckSafely(env, c, number);
+		if (c.action === "closed") return;
 	}
 
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────
@@ -294,6 +307,37 @@ async function handleCommand(
 			log(`command:${c.command}`, c, number, "review_kicked");
 			return;
 		}
+	}
+}
+
+// ── Changelog date check ─────────────────────────────────────────────────────
+
+/**
+ * The changelog date check is deterministic trusted TypeScript (no agent): a
+ * few sub-second GitHub API calls (PR fetch, PR files, per-file content,
+ * comment list, one comment write), so it runs inline like the codeowner
+ * commands. Failures are logged and never break the webhook response or the
+ * review routing that follows for non-closed events.
+ */
+async function runChangelogDateCheckSafely(
+	env: PipelineEnv,
+	c: WebhookClassification,
+	number: number,
+): Promise<void> {
+	const ghEnv = env as unknown as Record<string, string>;
+	try {
+		const token = await getInstallationToken(ghEnv);
+		const pr = await getPullRequest(token, number);
+		const result = await reconcileChangelogDateComment(token, pr);
+		log("changelog-date", c, number, `changelog_date_${result.action.kind}`);
+	} catch (err) {
+		log(
+			"changelog-date",
+			c,
+			number,
+			"changelog_date_check_failed",
+			err instanceof Error ? err.message : String(err),
+		);
 	}
 }
 
