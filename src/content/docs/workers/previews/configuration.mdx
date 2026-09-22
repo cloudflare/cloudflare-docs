@@ -23,18 +23,16 @@ Change the `previews` block on a branch when its Preview needs different setting
 
 ## Secrets
 
-Secrets cannot be stored in Wrangler configuration files. To preserve the same default-and-override model, use Wrangler commands to set a secret for all new Previews or a different value for an individual Preview.
+Secrets cannot be stored in Wrangler configuration files. To preserve the branching model without applying the same secrets to every Preview manually, set shared secrets once in the Previews Base configuration. Each new Preview receives those secrets when it is created. Set a different value for an individual Preview when needed. Later changes to Base secrets apply only to new Previews, so active Previews remain unchanged.
 
 | I want to                                       | Command                                                                                                                               |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Add a secret to the **Base configuration**      | [`npx wrangler preview base-config secret put SECRET_NAME`](/workers/wrangler/commands/workers/#preview-base-config-secret-put)       |
 | Add a secret to **one Preview**                 | [`npx wrangler preview secret put SECRET_NAME --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-put)              |
-| List secrets for **one Preview**                | [`npx wrangler preview secret list --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-list)                        |
 | Remove a secret from the **Base configuration** | [`npx wrangler preview base-config secret delete SECRET_NAME`](/workers/wrangler/commands/workers/#preview-base-config-secret-delete) |
 | Remove a secret from **one Preview**            | [`npx wrangler preview secret delete SECRET_NAME --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-delete)        |
-| Bulk upload secrets                             | [`npx wrangler preview secret bulk secrets.json --name <preview>`](/workers/wrangler/commands/workers/#preview-secret-bulk)           |
 
-The `--name` flag defaults to the current git branch if omitted. For `bulk`, setting a key to `null` deletes that secret.
+The `--name` flag defaults to the current git branch if omitted.
 
 ## Wrangler configuration file
 

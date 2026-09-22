@@ -340,11 +340,13 @@ If you need same-Worker calls to stay inside the Preview, use [`ctx.exports`](/w
 
 ### Workflows
 
-Previews can bind to existing Workflows. They do not create or deploy a Preview-specific Workflow.
+Adding a Workflow binding to a `previews` block binds the Preview to an existing Workflow. It does not create or deploy a Preview-specific Workflow. To create a Workflow, [deploy one with Wrangler](/workflows/get-started/guide/#6-deploy-your-workflow).
 
-A production Workflow binding runs that Workflow's deployed code and bindings. Its instances belong to the existing Workflow. Changing the binding to a new name does not create a Workflow. Calls to that binding fail with `workflow.not_found`.
+A binding to an existing Workflow runs that Workflow's deployed code and bindings. Its instances belong to the existing Workflow. Changing the binding to a new name does not create a Workflow. Calls to that binding fail with `workflow.not_found`.
 
-For isolated testing, bind to a dedicated non-production Workflow. A Workflow owned by another Worker runs that Worker's deployed implementation.
+For isolated testing, first deploy a dedicated non-production Workflow, then bind the Preview to it. Previews bound to the same Workflow share its instances. A Workflow owned by another Worker runs that Worker's deployed implementation.
+
+Cloudflare is working on automatic per-Preview Workflow provisioning, similar to [Durable Objects](#durable-objects).
 
 ### Queue consumers
 
