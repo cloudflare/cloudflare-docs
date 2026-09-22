@@ -20,21 +20,8 @@
         {
             "property_id": "reasoning_effort",
             "value": {
-                "supported_efforts": [
-                    "high",
-                    "none"
-                ],
-                "default_effort": "none",
-                "normalizes_to": {
-                    "minimal": "none",
-                    "low": "high",
-                    "medium": "high",
-                    "max": "high",
-                    "auto": "high",
-                    "null": "none"
-                },
                 "mandatory": false,
-                "default_enabled": false
+                "default_enabled": true
             }
         },
         {
@@ -317,28 +304,12 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "high",
-                                                "none"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: minimal maps to none; low maps to high; medium maps to high; max maps to high; auto maps to high.",
-                                    "default": "none"
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
+                                            "default": true,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -1568,28 +1539,12 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "high",
-                                                "none"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: minimal maps to none; low maps to high; medium maps to high; max maps to high; auto maps to high.",
-                                    "default": "none"
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
+                                            "default": true,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -2389,28 +2344,12 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "high",
-                                                            "none"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: minimal maps to none; low maps to high; medium maps to high; max maps to high; auto maps to high.",
-                                                "default": "none"
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
+                                                        "default": true,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
@@ -3640,28 +3579,12 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "high",
-                                                            "none"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Reasoning effort. Supported levels: high, none. Compatibility aliases: minimal maps to none; low maps to high; medium maps to high; max maps to high; auto maps to high.",
-                                                "default": "none"
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
+                                                        "default": true,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {

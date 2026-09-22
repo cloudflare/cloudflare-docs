@@ -36,9 +36,9 @@
             "property_id": "reasoning_effort",
             "value": {
                 "supported_efforts": [
-                    "high",
+                    "low",
                     "medium",
-                    "low"
+                    "high"
                 ],
                 "default_effort": "medium",
                 "mandatory": true,

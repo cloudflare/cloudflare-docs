@@ -28,7 +28,9 @@
                 "default_effort": "max",
                 "normalizes_to": {
                     "none": "max",
+                    "minimal": "max",
                     "medium": "max",
+                    "xhigh": "max",
                     "null": "max"
                 },
                 "mandatory": true,
@@ -322,7 +324,7 @@
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; medium maps to max.",
+                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
                                     "default": "max"
                                 },
                                 "chat_template_kwargs": {
@@ -1573,7 +1575,7 @@
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; medium maps to max.",
+                                    "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
                                     "default": "max"
                                 },
                                 "chat_template_kwargs": {
@@ -2394,7 +2396,7 @@
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; medium maps to max.",
+                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
                                                 "default": "max"
                                             },
                                             "chat_template_kwargs": {
@@ -3645,7 +3647,7 @@
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; medium maps to max.",
+                                                "description": "Reasoning effort. Supported levels: max, high, low. Reasoning cannot be disabled. Compatibility aliases: none maps to max; minimal maps to max; medium maps to max; xhigh maps to max.",
                                                 "default": "max"
                                             },
                                             "chat_template_kwargs": {

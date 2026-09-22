@@ -305,21 +305,6 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Reasoning effort. Supported levels: high. Reasoning cannot be disabled. Compatibility aliases: none maps to high; low maps to high; medium maps to high; max maps to high.",
-                                    "default": "high"
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
@@ -1554,21 +1539,6 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Reasoning effort. Supported levels: high. Reasoning cannot be disabled. Compatibility aliases: none maps to high; low maps to high; medium maps to high; max maps to high.",
-                                    "default": "high"
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
@@ -2372,21 +2342,6 @@
                                                 ],
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
-                                            },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Reasoning effort. Supported levels: high. Reasoning cannot be disabled. Compatibility aliases: none maps to high; low maps to high; medium maps to high; max maps to high.",
-                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -3621,21 +3576,6 @@
                                                 ],
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
-                                            },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Reasoning effort. Supported levels: high. Reasoning cannot be disabled. Compatibility aliases: none maps to high; low maps to high; medium maps to high; max maps to high.",
-                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",

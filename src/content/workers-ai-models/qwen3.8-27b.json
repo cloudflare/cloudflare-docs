@@ -21,9 +21,9 @@
             "property_id": "reasoning_effort",
             "value": {
                 "supported_efforts": [
-                    "xhigh",
+                    "low",
                     "medium",
-                    "low"
+                    "xhigh"
                 ],
                 "default_effort": "xhigh",
                 "normalizes_to": {

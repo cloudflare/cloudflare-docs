@@ -295,7 +295,7 @@
                                 "force_nonempty_content": {
                                     "type": "boolean",
                                     "default": false,
-                                    "description": "For coding agent use, Nvidia suggests setting force_nonempty_content=true"
+                                    "description": "For coding agents, force non-empty assistant content."
                                 }
                             }
                         },
@@ -1092,7 +1092,7 @@
                                 "force_nonempty_content": {
                                     "type": "boolean",
                                     "default": false,
-                                    "description": "For coding agent use, Nvidia suggests setting force_nonempty_content=true"
+                                    "description": "For coding agents, force non-empty assistant content."
                                 }
                             }
                         },
