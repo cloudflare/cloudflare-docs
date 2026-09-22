@@ -4,7 +4,7 @@ This directory contains the Flue-powered docs bot for `cloudflare-docs`, deploye
 
 ## Architecture
 
-The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs three independent specialist reviews — **code review**, **conventions**, and **style-guide review** — and posts all three as one GitHub comment with `### Code Review`, `### Conventions`, and `### Style Guide Review` sections. It also runs a spam/off-topic gate on new issues and PRs, a separate Dependabot review path, and a `/rebase` command.
+The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs three independent specialist reviews — **code review**, **conventions**, and **style-guide review** — and posts all three as one GitHub comment with `### Code Review`, `### Conventions`, and `### Style Guide Review` sections. It also runs a spam/off-topic gate on new issues and PRs, a separate Dependabot review path, a nightly cron sweep (draft-stale reminders plus the changelog date check), and a `/rebase` command.
 
 The 2.0 design principle is **trusted code drives; the model only reasons.** Control flow lives in Cloudflare `WorkflowEntrypoint`s and plain TypeScript drivers. Each AI step is a Flue **agent** (a Durable Object) invoked via `init(Agent, { id }).dispatch().read()`. Agents never call GitHub or mutate state — they return structured data through a single `submit_*` tool, and trusted code performs every side effect.
 
@@ -19,12 +19,12 @@ The 2.0 design principle is **trusted code drives; the model only reasons.** Con
 
 `ReviewOrchestrator` is defined in `cloudflare.ts`; the others live under `orchestrators/` and are re-exported from `cloudflare.ts`. The generated Worker entry does `export * from cloudflare.ts`, so every named export is surfaced for the `[[workflows]]` `class_name` bindings. Cloudflare Workflows are **not** Durable Objects and need no migration entry.
 
-| Workflow (class)                                                           | Binding               | Role                                                                                                                                      |
-| -------------------------------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Workflow (class)                                                           | Binding               | Role                                                                                                                                                          |
+| -------------------------------------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ReviewOrchestrator` (`cloudflare.ts`)                                     | `REVIEW_ORCHESTRATOR` | The code-review pipeline: guards → gather-context → placeholder → 3 concurrent specialist steps → reconcile → validate-findings → publish → mark-auto-review. |
-| `IngestWorkflow` (`orchestrators/ingest-workflow.ts`)                      | `INGEST`              | Spam/off-topic gate for issues + non-Dependabot PRs; kicks `REVIEW_ORCHESTRATOR` for a clean non-draft PR.                                |
-| `DependabotReviewWorkflow` (`orchestrators/dependabot-review-workflow.ts`) | `DEPENDABOT_REVIEW`   | Separate review path for Dependabot PRs.                                                                                                  |
-| `RebaseWorkflow` (`orchestrators/rebase-workflow.ts`)                      | `REBASE`              | The `/rebase` command: GitHub update-branch, AI-assisted conflict resolution, then re-trigger a full review.                              |
+| `IngestWorkflow` (`orchestrators/ingest-workflow.ts`)                      | `INGEST`              | Spam/off-topic gate for issues + non-Dependabot PRs; kicks `REVIEW_ORCHESTRATOR` for a clean non-draft PR.                                                    |
+| `DependabotReviewWorkflow` (`orchestrators/dependabot-review-workflow.ts`) | `DEPENDABOT_REVIEW`   | Separate review path for Dependabot PRs.                                                                                                                      |
+| `RebaseWorkflow` (`orchestrators/rebase-workflow.ts`)                      | `REBASE`              | The `/rebase` command: GitHub update-branch, AI-assisted conflict resolution, then re-trigger a full review.                                                  |
 
 The specialist and reconcile Flue agents are driven from **inside** Workflow steps via the trusted drivers in `lib/run-*.ts`. Because the pipeline `awaits` each specialist as a durable step, there is no fire-and-forget admit, no poll, and no R2 rendezvous namespace — Workflow step durability provides the crash protection the 0.11 placeholder results + finalize lock used to.
 
@@ -38,7 +38,7 @@ Each agent is a `"use agent"` module whose default-export function uses hooks (`
 | `style-guide-file.ts`         | style-guide-file         | FlueStyleGuideFileAgent         | run-style-guide.ts        |
 | `conventions-reviewer.ts`     | conventions-reviewer     | FlueConventionsReviewerAgent    | run-conventions-review.ts |
 | `reconcile-reviewer.ts`       | reconcile-reviewer       | FlueReconcileReviewerAgent      | run-reconcile.ts          |
-| `review-validator.ts`      | review-validator          | FlueReviewValidatorAgent        | run-review-validation.ts   |
+| `review-validator.ts`         | review-validator         | FlueReviewValidatorAgent        | run-review-validation.ts  |
 | `spam-filter.ts`              | spam-filter              | FlueSpamFilterAgent             | run-spam-filter.ts        |
 | `dependabot-reviewer.ts`      | dependabot-reviewer      | FlueDependabotReviewerAgent     | run-dependabot-review.ts  |
 | `rebase-conflict-resolver.ts` | rebase-conflict-resolver | FlueRebaseConflictResolverAgent | run-rebase-conflict.ts    |
@@ -94,6 +94,15 @@ The corpus worker (`cloudflare-docs-github-corpus`) publishes `reviewer-recommen
 - **State**: R2 `diffs/pr-<n>/reviewer-recommendations.json` holds the current event, head SHA, result hash, status, latest + last-good results, comment id, `commentBodyHash`, and `commentDisplayHash`. `commentDisplayHash` binds the comment to the projection it represents, which prevents stale comments after recommendation state advances in log mode. `cleared` leaves a tombstone so delayed duplicates cannot resurrect the comment. State writes use the read-time ETag for conditional writes; a concurrent update throws so the queue event is retried.
 - **Comment**: one `## Review coverage` comment per PR, located by the `cloudflare-docs-flue-reviewer-recommendations` marker. It leads with outstanding approval work, lists uncovered areas in an action table, collapses covered areas into a minimal approval audit, and provides the exact matched CODEOWNERS patterns and declared owners for displayed ownership areas in a separate collapsed table. Owner refs stay inside code spans so the diagnostic table cannot notify users or teams. All suggested reviewers for uncovered areas are @-mentioned on every comment update (rendered as `Suggested reviewers: @a @b`); covered-area suggestions are neither listed nor notified. Rules in `CODEOWNERS_ONLY_CONTACT_PATTERNS` (`lib/reviewer-contact-policy.ts`, currently the `*` default rule plus `/.github/CODEOWNERS` and `/public/__redirects`) suppress their suggestions from both mentions and display, showing the complete declared CODEOWNERS rule as display-only contacts instead. Area labels are the raw docs product-directory slug from the event (e.g. `workers`, `workers-ai`); areas outside the docs content roots render as `Other` with their CODEOWNERS pattern shown. The `@`-mention line is the only notification surface (rendered as `Suggested reviewers: @a @b`); the action table's `Suggested` column is display-only — logins render as code spans, never `@`-prefixed — and no "suggestions are informational" footer is appended. An `error` result renders the last good snapshot with a generic warning; a `fallback` result renders its current bounded coverage. Raw corpus warnings/errors are never published. `cleared` deletes the comment.
 - **Retries**: transient GitHub/R2 failures throw and the message is retried (dedicated DLQ after `max_retries`); malformed events, stale heads, and permanent 4xx failures are acked.
+
+### Changelog date check (nightly cron + PR webhooks)
+
+A non-blocking ⚠️ warning for PRs that add changelog entries dated in the past. Trusted TypeScript only — no agent, no model, no R2 state. One code path, `reconcileChangelogDateComment` in `lib/changelog-date-check.ts`, serves both triggers:
+
+- **Nightly cron** (`0 5 * * *`, run first in `scheduled()` in `cloudflare.ts`, before the draft-stale sweep): `runChangelogDateSweep` lists every open PR (drafts included) and reconciles the marker comment per PR with per-PR error isolation.
+- **Webhook `pull_request` events** (opened/reopened/synchronize/ready_for_review/closed): routed by `isChangelogDateEvent` (`lib/webhook-classify.ts`) and handled inline in `lib/pipeline-entry.ts` before the regular routing, so review routing is unaffected. `closed` removes the marker comment and stops.
+
+Rules: only files the PR _introduces_ (status `added`/`copied`) under `src/content/changelog/**` with a frontmatter `date:` are checked — editing an old entry must not nag about its historical date. An entry dated before the current UTC day is stale (zero tolerance: today passes, yesterday warns as "1 day old"); future dates pass because `publish_future_dated_entry` is a supported feature; unparsable dates are skipped (the docs content schema owns them). The singleton `<!-- cloudflare-docs-flue-changelog-date -->` comment is created/updated while a stale entry exists (the nightly PATCH refreshes the age; skipped when the rendered body is unchanged) and deleted once the date is current, the file is removed, or the PR closes/merges. There is no R2 state — the comment is located by marker on every run (`getMarkedComment` from `lib/draft-stale.ts`).
 
 ### Slash commands (codeowner-only, commented on a PR)
 
@@ -195,13 +204,13 @@ Both the server and the eval runner need `DOCS_FLUE_INTERNAL_TOKEN` set to the s
 
 ### Current eval coverage
 
-| Agent                  | Eval file             | Cases                                                                                                        |
-| ---------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `style-guide-file`     | `style-guide.eval.ts` | Full URL flag (asserts rule/severity/path/line), clean root-relative link pass, body H1 flag                 |
-| `conventions-reviewer` | `conventions.eval.ts` | Vague title flag (asserts rule/severity), well-described PR pass, scope-accuracy flag (new page unmentioned) |
-| `spam-filter`          | `spam-filter.eval.ts` | Spam issue flag, legit typo report pass, support request off-topic flag, sparse PR with real diff pass       |
-| `reconcile-reviewer`   | `reconcile.eval.ts`   | Resolved finding, ignored-by-author, incremental carry-forward, weak comment stays active                    |
-| `code-review-file`     | `code-review.eval.ts` | Unhandled promise flag (asserts rule/severity/path/line), no false-positive on clean error handling          |
+| Agent                  | Eval file                   | Cases                                                                                                                                          |
+| ---------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `style-guide-file`     | `style-guide.eval.ts`       | Full URL flag (asserts rule/severity/path/line), clean root-relative link pass, body H1 flag                                                   |
+| `conventions-reviewer` | `conventions.eval.ts`       | Vague title flag (asserts rule/severity), well-described PR pass, scope-accuracy flag (new page unmentioned)                                   |
+| `spam-filter`          | `spam-filter.eval.ts`       | Spam issue flag, legit typo report pass, support request off-topic flag, sparse PR with real diff pass                                         |
+| `reconcile-reviewer`   | `reconcile.eval.ts`         | Resolved finding, ignored-by-author, incremental carry-forward, weak comment stays active                                                      |
+| `code-review-file`     | `code-review.eval.ts`       | Unhandled promise flag (asserts rule/severity/path/line), no false-positive on clean error handling                                            |
 | `review-validator`     | `review-validation.eval.ts` | Valid finding kept (unhandled promise), false positive suppressed (proper error handling), style false positive suppressed (img in code block) |
 
 Not yet covered: `dependabot-reviewer` and `rebase-conflict-resolver` (need GitHub/npm tool fixtures or credentials).

@@ -76,6 +76,7 @@ import {
 	type RecommendationEnv,
 } from "./lib/run-reviewer-recommendations";
 import { runDraftStaleSweep } from "./lib/draft-stale";
+import { runChangelogDateSweep } from "./lib/changelog-date-check";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface ReviewOrchestratorParams {
@@ -795,6 +796,19 @@ export default {
 		_controller: ScheduledController,
 		env: RecommendationEnv,
 	): Promise<void> {
+		// The changelog date sweep is non-critical: log failures without
+		// aborting the draft-stale sweep below.
+		try {
+			const token = await getInstallationToken(env as Record<string, string>);
+			await runChangelogDateSweep(token);
+		} catch (error) {
+			console.error({
+				message: `Changelog date sweep aborted: ${error instanceof Error ? error.message : String(error)}`,
+				event: "changelog_date",
+				action: "sweep_aborted",
+			});
+		}
+
 		try {
 			const token = await getInstallationToken(env as Record<string, string>);
 			await runDraftStaleSweep(token, env.DOCS_FLUE_BUCKET);
