@@ -9,7 +9,8 @@ products:
   - r2
 ---
 
-import { Tabs, TabItem, DashButton, R2LocalUploadsDiagram } from "~/components";
+import { Tabs, TabItem, DashButton } from "~/components";
+import R2LocalUploadsDiagram from "~/components/cf/R2LocalUploadsDiagram.astro";
 
 You can enable Local Uploads on your bucket to improve the performance of upload requests when clients upload data from a different region than your bucket. Local Uploads writes object data to a nearby location, then asynchronously copies it to your bucket. Data is available immediately and remains strongly consistent.
 

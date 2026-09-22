@@ -55,26 +55,24 @@ const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 	collection="docs"
 	feedback={false}
 >
-	<Fragment slot="pagination"></Fragment>
+	<Fragment slot="pagination" />
 	<RSSButton href="/changelog/rss/waf.xml" />
 
-	{
-		page.data.map(async (entry) => {
-			const { Content } = await render(entry);
-			return (
-				<>
-					<AnchorHeading
-						depth={2}
-						title={format(entry.data.date, "yyyy-MM-dd")}
-					/>
-					<br />
-					<strong>{entry.data.title}</strong>
-					<br />
-					<Content components={components} />
-				</>
-			);
-		})
-	}
+	{page.data.map(async (entry) => {
+		const { Content } = await render(entry);
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content components={components} />
+			</>
+		);
+	})}
 
 	<Pagination
 		currentPage={page.currentPage}

@@ -43,26 +43,24 @@ const featuredAgents = AGENTS.filter((a) =>
 			class="relative flex h-5 shrink-0 items-center justify-start gap-[3px]"
 			aria-hidden="true"
 		>
-			{
-				featuredAgents.map((agent) => (
-					<>
-						<img
-							src={`/icons/agents/${agent.id}/light.svg`}
-							alt=""
-							class="block h-5 w-5 dark:hidden"
-							loading="lazy"
-							decoding="async"
-						/>
-						<img
-							src={`/icons/agents/${agent.id}/dark.svg`}
-							alt=""
-							class="hidden h-5 w-5 dark:block"
-							loading="lazy"
-							decoding="async"
-						/>
-					</>
-				))
-			}
+			{featuredAgents.map((agent) => (
+				<>
+					<img
+						src={`/icons/agents/${agent.id}/light.svg`}
+						alt=""
+						class="block h-5 w-5 dark:hidden"
+						loading="lazy"
+						decoding="async"
+					/>
+					<img
+						src={`/icons/agents/${agent.id}/dark.svg`}
+						alt=""
+						class="hidden h-5 w-5 dark:block"
+						loading="lazy"
+						decoding="async"
+					/>
+				</>
+			))}
 		</span>
 		<span class="group-data-[copied=true]/copy:hidden">Copy prompt</span>
 		<span class="hidden group-data-[copied=true]/copy:inline">

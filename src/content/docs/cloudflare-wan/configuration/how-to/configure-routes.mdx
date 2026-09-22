@@ -19,7 +19,7 @@ Refer to [Traffic Steering](/cloudflare-wan/reference/traffic-steering/) for mor
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
 - BGP peering (beta)
-- [Automatic Return Routing (ARR)](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta)
+- [Automatic Return Routing (ARR)](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing)
 
 <Aside type="note" title="One page for all your routes">
 The dashboard **Routes** page shows the routes for all of your connectors — including Cloudflare Tunnel and Cloudflare Mesh — in a single table, not just Cloudflare WAN static routes. The following steps cover Cloudflare WAN static routes. Routes for other connector types appear in the same table and can be filtered by type.
@@ -269,9 +269,9 @@ Example:
 
 </TabItem> </Tabs>
 
-## Configure Automatic Return Routing (beta)
+## Configure Automatic Return Routing
 
-[Automatic Return Routing (beta)](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta).
+[Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires [Unified Routing mode](/cloudflare-wan/reference/traffic-steering/#unified-routing).
 
 To enable ARR:
 
@@ -305,8 +305,8 @@ Create a `POST` request to create an [IPsec](/api/resources/magic_transit/subres
 
 BGP peering is available when using the following on-ramps:
 
-- [CNI with Dataplane v2](/network-interconnect/).
-- [IPsec and GRE tunnels (beta)](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/). Requires [Unified Routing (beta)](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta).
+- [CNI with Dataplane v2](/network-interconnect/) (closed beta and not available to new customers).
+- [IPsec and GRE tunnels (beta)](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/). Requires [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing).
 
 ### Choose an ASN for BGP peering
 
@@ -370,7 +370,7 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations and is not a security mechanism.
 8. (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using Cloudflare WAN with Gateway.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/mesh/features/routes/#return-traffic-routing).
 	- A route to `100.64.0.0/12`, the portion of CGNAT space [used by default for Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
 9. Select **Save**.
 
@@ -394,7 +394,7 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations and is not a security mechanism.
 8. (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using Cloudflare WAN with Gateway.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/mesh/features/routes/#return-traffic-routing).
 	- A route to `100.64.0.0/12`, the portion of CGNAT space [used by default for Cloudflare Source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
 9. Select **Save**.
 

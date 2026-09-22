@@ -527,6 +527,18 @@ entries:
     keywords: [request, api shield, client, visitor]
     summary: Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
 
+  - name: cf.web_asset.labels
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, operation, endpoint, label, web assets]
+    summary: An array of labels associated with the operation matched by the request.
+    description: |-
+      Use this field to create rules based on labels applied to operations in Web Assets, including API endpoints. For more information, refer to [Label operations](/security/web-assets/label-operations/).
+    example_value: |-
+      ["cf-log-in"]
+    example_block: |-
+      any(cf.web_asset.labels[*] == "cf-log-in")
+
   - name: cf.bot_management.verified_bot
     data_type: Boolean
     categories: [Request, Bots]
@@ -613,6 +625,19 @@ entries:
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
     example_block: |-
       any(cf.bot_management.detection_ids[*] eq 33554817)
+
+  - name: cf.bot_management.tags
+    data_type: Array<String>
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor, tags]
+    plan_info_label: Enterprise add-on
+    summary: Provides the tags associated with bot traffic.
+    description: |-
+      Use this field to match requests associated with a specific bot tag.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      any(cf.bot_management.tags[*] eq "API")
 
   - name: cf.client.bot
     data_type: Boolean
@@ -1172,6 +1197,28 @@ entries:
     summary: Indicates whether the file scanner was unable to scan any of the content objects detected in the request.
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+  - name: cf.waf.content_scan.truncated
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request body exceeded the size limit for content scanning and was truncated before scanning.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+      When this field is true, the scan results may be incomplete. Refer to [Size limit](/waf/detections/malicious-uploads/#size-limit).
+    example_block: |-
+      # Block requests to a specific endpoint whose content was not fully scanned
+      cf.waf.content_scan.truncated and http.request.uri.path eq "/upload"
 
   - name: cf.waf.content_scan.num_obj
     data_type: Integer

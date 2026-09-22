@@ -32,12 +32,15 @@ import type { IngestParams } from "../orchestrators/ingest-workflow";
 import {
 	addReactionToComment,
 	getInstallationToken,
+	getPullRequest,
 	isCodeOwner,
+	type GitHubPullRequest,
 } from "./github";
 import {
 	setAutoReviewDisabled,
 	setReviewLimitIgnored,
 } from "./code-review-state";
+import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
 export interface PipelineEnv {
@@ -194,6 +197,55 @@ async function handleCommand(
 			}
 			await addReactionToComment(token, commentId, "+1").catch(() => {});
 			log("command:disable-auto-review", c, number, "auto_review_disabled");
+			return;
+		}
+
+		case "draft-never-stale": {
+			let pr: GitHubPullRequest;
+			try {
+				pr = await getPullRequest(token, number);
+			} catch (err) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_pr_fetch_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+				return;
+			}
+			if (pr.state !== "open" || !pr.draft) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_ignored_not_draft",
+				);
+				return;
+			}
+			try {
+				await setDraftNeverStale(env.DOCS_FLUE_BUCKET, number, sender);
+			} catch (err) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_write_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+				return;
+			}
+			await clearDraftStaleState(env.DOCS_FLUE_BUCKET, number).catch((err) => {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"stale_state_clear_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+			});
+			await addReactionToComment(token, commentId, "+1").catch(() => {});
+			log("command:draft-never-stale", c, number, "draft_never_stale_set");
 			return;
 		}
 

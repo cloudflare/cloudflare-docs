@@ -66,7 +66,7 @@ To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install
 Log in to Wrangler with the [`wrangler login` command](/workers/wrangler/commands/general/#login). Then run the [`r2 bucket sippy enable` command](/workers/wrangler/commands/r2/#r2-bucket-sippy-enable):
 
 ```sh
-npx wrangler r2 bucket sippy enable <BUCKET_NAME>
+npx wrangler r2 bucket sippy enable "<BUCKET_NAME>"
 ```
 
 This will prompt you to select between supported object storage providers and lead you through setup.
@@ -120,7 +120,7 @@ You can optionally select a time window to query. This defaults to the last 24 h
 To disable Sippy, run the [`r2 bucket sippy disable` command](/workers/wrangler/commands/r2/#r2-bucket-sippy-disable):
 
 ```sh
-npx wrangler r2 bucket sippy disable <BUCKET_NAME>
+npx wrangler r2 bucket sippy disable "<BUCKET_NAME>"
 ```
 
 ### API

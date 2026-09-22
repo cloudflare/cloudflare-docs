@@ -1154,6 +1154,12 @@ Independent MFA, purpose justification, and temporary authentication will be enf
 
 ## Troubleshooting
 
+### Portal creation fails because of a zone hold
+
+Cloudflare creates a custom hostname for each portal custom domain. Portal creation fails when a zone hold that includes subdomains applies to this hostname.
+
+[Release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) for the selected zone and each parent zone. Then create the portal again. A parent zone can belong to a different Cloudflare account.
+
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
 1. An MCP portal and server must both have an attached Access policy. Ensure that all MCP servers assigned to the portal have their own associated policy.

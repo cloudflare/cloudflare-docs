@@ -12,6 +12,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per audio minute": 0.0035
+	},
 	"examples": [
 		{
 			"name": "Basic Transcription",
@@ -912,6 +915,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "assemblyai",
+			"pricing": {
+				"input_audio_minutes": 0.0035
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:52:58",
 	"schema": {
@@ -1102,8 +1113,8 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The transcribed text.",
-					"type": "string"
+					"type": "string",
+					"description": "The transcribed text."
 				},
 				"words": {
 					"description": "Word-level timestamps and confidence scores.",
@@ -1126,13 +1137,9 @@
 										"type": "number"
 									},
 									"speaker": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},
@@ -1191,35 +1198,23 @@
 				},
 				"confidence": {
 					"description": "Overall confidence score for the transcription.",
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				},
 				"language_code": {
 					"description": "Detected or specified language code.",
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"language_confidence": {
 					"description": "Confidence score for language detection.",
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				}
 			},

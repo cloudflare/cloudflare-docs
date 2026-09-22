@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.025,
+		"@720p (per second)": 0.025,
+		"@1080p (per second)": 0.045
+	},
 	"examples": [
 		{
 			"name": "Product Demo Greeting",
@@ -62,6 +67,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"default": 0.025,
+				"720p": 0.025,
+				"1080p": 0.045
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:52:58",
 	"schema": {
@@ -70,16 +85,16 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Input portrait image (first frame). HTTP(S) URL or data URI. Supports jpg, jpeg, png, webp.",
-					"type": "string"
+					"type": "string",
+					"description": "Input portrait image (first frame). HTTP(S) URL or data URI. Supports jpg, jpeg, png, webp."
 				},
 				"audio": {
 					"description": "URL of uploaded audio to drive speech. HTTP(S) URL or data URI. If both audio and voice_script are provided, audio takes priority.",
 					"type": "string"
 				},
 				"voice": {
-					"description": "Voice for generated speech.",
 					"default": "Zephyr (Female)",
+					"description": "Voice for generated speech.",
 					"type": "string",
 					"enum": [
 						"Zephyr (Female)",
@@ -115,13 +130,13 @@
 					]
 				},
 				"voice_script": {
-					"description": "Script for the person to say when no audio is uploaded.",
 					"default": "",
+					"description": "Script for the person to say when no audio is uploaded.",
 					"type": "string"
 				},
 				"voice_language": {
-					"description": "Output language.",
 					"default": "English (US)",
+					"description": "Output language.",
 					"type": "string",
 					"enum": [
 						"English (US)",
@@ -137,8 +152,8 @@
 					]
 				},
 				"resolution": {
-					"description": "Resolution of the video.",
 					"default": "720p",
+					"description": "Resolution of the video.",
 					"type": "string",
 					"enum": [
 						"720p",
@@ -146,23 +161,23 @@
 					]
 				},
 				"video_prompt": {
-					"description": "Optional prompt for the video.",
 					"default": "The person is talking.",
+					"description": "Optional prompt for the video.",
 					"type": "string"
 				},
 				"voice_prompt": {
-					"description": "Optional speaking style, tone, pacing or emotion instructions.",
 					"default": "Say the following.",
+					"description": "Optional speaking style, tone, pacing or emotion instructions.",
 					"type": "string"
 				},
 				"negative_prompt": {
-					"description": "Mention what you do NOT want in the video. Disabled if empty.",
 					"default": "",
+					"description": "Mention what you do NOT want in the video. Disabled if empty.",
 					"type": "string"
 				},
 				"strength_negative_prompt": {
-					"description": "Strength of the negative prompt (0-4).",
 					"default": 0.5,
+					"description": "Strength of the negative prompt (0-4).",
 					"type": "number",
 					"minimum": 0,
 					"maximum": 4
@@ -174,13 +189,13 @@
 					"maximum": 9007199254740991
 				},
 				"disable_safety_filter": {
-					"description": "Disable safety filter for prompts and input image.",
 					"default": true,
+					"description": "Disable safety filter for prompts and input image.",
 					"type": "boolean"
 				},
 				"disable_prompt_upsampling": {
-					"description": "When true, skip the prompt upsampler and pass the raw user prompt.",
 					"default": false,
+					"description": "When true, skip the prompt upsampler and pass the raw user prompt.",
 					"type": "boolean"
 				}
 			},
@@ -204,9 +219,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Presigned URL for the generated avatar video.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the generated avatar video."
 				}
 			},
 			"required": [

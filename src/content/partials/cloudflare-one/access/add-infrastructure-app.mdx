@@ -17,9 +17,9 @@ import {
 2. Select **Create new application**.
 3. Select **Infrastructure**.
 4. Enter any name for the application.
-5. In **Target criteria**, select the <GlossaryTooltip term="target hostname">target hostname(s)</GlossaryTooltip> that you want to secure. This application definition will apply to all targets that share the selected hostname, including any targets added in the future. Similarly, if you later decide to change the hostname for a target, the renamed target will no longer be covered by this application.
+5. In **Target criteria**, choose which targets this application covers. Match targets by <GlossaryTooltip term="target hostname">hostname</GlossaryTooltip>, tag, or both. Use `include` to match any value. Use `require` to match all values. Use `exclude` to reject matching targets.
 6. Enter the **Protocol** and **Port** that will be used to connect to the server.
-7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
+7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target criteria and protocol with a different port number.
    :::note
    Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
    :::
@@ -42,6 +42,8 @@ import {
 
 Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
 
+The following example uses the operator-based target criteria format with `include`, `require`, and `exclude`:
+
 <APIRequest
 	path="/accounts/{account_id}/access/apps"
 	method="POST"
@@ -50,11 +52,26 @@ Make a `POST` request to the [Access applications](/api/resources/zero_trust/sub
 		type: "infrastructure",
 		target_criteria: [
 			{
-				target_attributes: {
-					hostname: ["infra-access-target"],
-				},
 				port: 22,
 				protocol: "SSH",
+				include: {
+					target_attributes: {
+						hostname: ["infra-access-target"],
+					},
+					tags: {
+						environment: ["production", "staging"],
+					},
+				},
+				require: {
+					tags: {
+						team: ["platform"],
+					},
+				},
+				exclude: {
+					tags: {
+						lifecycle: ["decommissioned"],
+					},
+				},
 			},
 		],
 		policies: [
@@ -77,6 +94,8 @@ Make a `POST` request to the [Access applications](/api/resources/zero_trust/sub
 		],
 	}}
 />
+
+For more information about target criteria formats, refer to [Target criteria](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#target-criteria).
 
 </TabItem>
 <TabItem label="Terraform (v4)">
@@ -106,6 +125,8 @@ The following example requires Cloudflare provider version `>=4.45.0`.
     	}
     }
     ```
+
+	To match targets by tag, define `include`, `require`, or `exclude` blocks with `tags` selectors.
 
 3.  Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
 

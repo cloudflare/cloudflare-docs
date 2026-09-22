@@ -221,32 +221,24 @@ const hasRssAlternate = headExtras.some(
 
 <meta name="generator" content={Astro.generator} />
 <meta name="generator" content={PRODUCTION_GENERATOR} />
-{
-	resolvedDescription && (
-		<meta name="description" content={resolvedDescription} />
-	)
-}
+{resolvedDescription && (
+	<meta name="description" content={resolvedDescription} />
+)}
 {noindex && <meta name="robots" content="noindex" />}
 
 <link rel="shortcut icon" type={selectedFavicon.type} href={faviconHref} />
 <link rel="stylesheet" href={shikiCssHref} />
 {site && canonical && <link rel="canonical" href={canonical} />}
 {site && <link rel="sitemap" href="/sitemap-index.xml" />}
-{
-	!isHiddenVersion && (
-		<link rel="alternate" type="text/markdown" href={markdownHref} />
-	)
-}
-{
-	rssHref && !hasRssAlternate && (
-		<link rel="alternate" type="application/rss+xml" href={rssHref} />
-	)
-}
-{
-	versionAlternates.map((alt) => (
-		<link rel="alternate" data-version={alt.version} href={alt.href} />
-	))
-}
+{!isHiddenVersion && (
+	<link rel="alternate" type="text/markdown" href={markdownHref} />
+)}
+{rssHref && !hasRssAlternate && (
+	<link rel="alternate" type="application/rss+xml" href={rssHref} />
+)}
+{versionAlternates.map((alt) => (
+	<link rel="alternate" data-version={alt.version} href={alt.href} />
+))}
 
 {/* Base + enriched og:title are both intentional (matches Starlight). */}
 <meta property="og:title" content={title} />
@@ -254,11 +246,9 @@ const hasRssAlternate = headExtras.some(
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content={config.title} />
 <meta property="og:locale" content={lang} />
-{
-	resolvedDescription && (
-		<meta property="og:description" content={resolvedDescription} />
-	)
-}
+{resolvedDescription && (
+	<meta property="og:description" content={resolvedDescription} />
+)}
 {site && pageUrl && <meta property="og:url" content={pageUrl} />}
 {ogImage && <meta property="image" content={ogImage} />}
 {ogImage && <meta property="og:image" content={ogImage} />}
@@ -272,32 +262,22 @@ const hasRssAlternate = headExtras.some(
 {productGroup && <meta name="pcx_content_group" content={productGroup} />}
 {contentType && <meta name="pcx_content_type" content={contentType} />}
 {contentType && <meta name="algolia_content_type" content={contentType} />}
-{
-	meta?.products && (
-		<meta name="pcx_additional_products" content={meta.products.join(",")} />
-	)
-}
+{meta?.products && (
+	<meta name="pcx_additional_products" content={meta.products.join(",")} />
+)}
 {meta?.tags && <meta name="pcx_tags" content={meta.tags.join(",")} />}
-{
-	lastModifiedDays !== null && (
-		<meta name="pcx_last_modified" content={String(lastModifiedDays)} />
-	)
-}
-{
-	lastReviewedDays !== null && (
-		<meta name="pcx_last_reviewed" content={String(lastReviewedDays)} />
-	)
-}
+{lastModifiedDays !== null && (
+	<meta name="pcx_last_modified" content={String(lastModifiedDays)} />
+)}
+{lastReviewedDays !== null && (
+	<meta name="pcx_last_reviewed" content={String(lastReviewedDays)} />
+)}
 
-{
-	!noindex && jsonLd && (
-		<script type="application/ld+json" set:html={jsonLd} is:inline />
-	)
-}
+{!noindex && jsonLd && (
+	<script type="application/ld+json" set:html={jsonLd} is:inline></script>
+)}
 
-{
-	headExtras.map(({ tag: Tag, attrs = {}, content }) =>
-		content ? <Tag {...attrs} set:html={content} /> : <Tag {...attrs} />,
-	)
-}
+{headExtras.map(({ tag: Tag, attrs = {}, content }) =>
+	content ? <Tag {...attrs} set:html={content} /> : <Tag {...attrs} />,
+)}
 <script src="../scripts/webmcp.ts"></script>
