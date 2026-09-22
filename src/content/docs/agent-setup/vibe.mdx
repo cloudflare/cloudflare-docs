@@ -1,6 +1,6 @@
 ---
 title: Vibe + Cloudflare
-description: Use Mistral Vibe with Cloudflare Skills, the Cloudflare docs MCP server, and Wrangler to build and deploy Cloudflare projects.
+description: "Coding agent for terminal, IDE, and cloud workflows that reads files, runs commands, writes code, and opens pull requests. Made by Mistral AI."
 template: splash
 pcx_content_type: how-to
 products:
@@ -35,7 +35,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	2. **Set up Vibe**
 
-		Complete the setup flow and sign in with your Mistral account or API key.
+		Complete the setup flow. Sign in with your Mistral account or enter an API key.
 
 		```bash
 		vibe --setup
@@ -51,26 +51,75 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 			args="add cloudflare/skills --skill '*' --yes"
 		/>
 
-	4. **Add the Cloudflare docs MCP server**
+	4. **Add Cloudflare MCP servers**
 
-		In `~/.vibe/config.toml`, add the Cloudflare docs Model Context Protocol (MCP) server. Preserve existing settings, and update the entry if `cloudflare-docs` is already configured:
+		Add the Cloudflare Model Context Protocol (MCP) servers to `~/.vibe/config.toml`. Back up an existing file and preserve unrelated settings. Update entries that already exist instead of adding duplicates.
+
+		The Cloudflare docs server is public. The other servers in this configuration require OAuth:
 
 		```toml
+		[[mcp_servers]]
+		name = "cloudflare"
+		transport = "streamable-http"
+		url = "https://mcp.cloudflare.com/mcp"
+
+		[mcp_servers.auth]
+		type = "oauth"
+		scopes = []
+
 		[[mcp_servers]]
 		name = "cloudflare-docs"
 		transport = "streamable-http"
 		url = "https://docs.mcp.cloudflare.com/mcp"
+
+		[[mcp_servers]]
+		name = "cloudflare-bindings"
+		transport = "streamable-http"
+		url = "https://bindings.mcp.cloudflare.com/mcp"
+
+		[mcp_servers.auth]
+		type = "oauth"
+		scopes = []
+
+		[[mcp_servers]]
+		name = "cloudflare-builds"
+		transport = "streamable-http"
+		url = "https://builds.mcp.cloudflare.com/mcp"
+
+		[mcp_servers.auth]
+		type = "oauth"
+		scopes = []
+
+		[[mcp_servers]]
+		name = "cloudflare-observability"
+		transport = "streamable-http"
+		url = "https://observability.mcp.cloudflare.com/mcp"
+
+		[mcp_servers.auth]
+		type = "oauth"
+		scopes = []
 		```
 
-		If Vibe is already running, enter `/reload` to load the updated configuration.
+		For source and configuration details, refer to [cloudflare/mcp](https://github.com/cloudflare/mcp) and [cloudflare/mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare).
 
-	5. **Launch Vibe**
+	5. **Launch and authorize Vibe**
 
-		Start Vibe from your project root. If the project already exists, use the directory that contains `wrangler.jsonc`.
+		Start Vibe from your project root. For an existing project, use the directory that contains `wrangler.jsonc`.
 
 		```bash
 		vibe
 		```
+
+		If Vibe is already running, enter `/reload` instead. Then enter `/mcp status` to check each server. Authorize the four servers that access your Cloudflare account:
+
+		```txt
+		/mcp login cloudflare
+		/mcp login cloudflare-bindings
+		/mcp login cloudflare-builds
+		/mcp login cloudflare-observability
+		```
+
+		Complete each OAuth flow in your browser.
 
 	6. **Try a prompt**
 
@@ -81,7 +130,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 ## Cloudflare platform access
 
-<PlatformAccess docsOnlyMcp />
+<PlatformAccess />
 
 ## Example prompts
 
@@ -91,32 +140,33 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TipsList>
 
-- The Cloudflare docs MCP server gives Vibe access to current Cloudflare documentation without authentication.
-- Store project-specific instructions in `AGENTS.md`. Vibe loads instructions from the project root and relevant subdirectories.
-- Use Vibe's `plan` agent to inspect a project before making changes.
+- The Cloudflare API MCP server uses Code Mode — Vibe writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Store project instructions in `AGENTS.md`. Vibe loads instructions from the project root and relevant subdirectories.
+- Start Vibe with `vibe --agent plan` to inspect a project without modifying it.
 
 </TipsList>
 
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
-		Use all three. Skills provide Cloudflare guidance for architecture and
-		implementation. The Cloudflare docs MCP server provides current product
-		documentation. Wrangler handles local development, deployments, and
-		Workers-specific commands.
+	<FAQItem question="Should I use Skills, MCP servers, Wrangler CLI, or all three?">
+		Use all three. Skills provide Cloudflare implementation guidance. MCP servers
+		provide current documentation and authenticated API tools. Wrangler handles
+		local development, deployments, and Workers-specific commands.
 	</FAQItem>
-	<FAQItem question="Does the Cloudflare docs MCP server require authentication?">
-		No. The Cloudflare docs MCP server is public and does not require
-		authentication.
+	<FAQItem question="How do I give Vibe access to my Cloudflare account?">
+		Run `/mcp login <name>` for each server configured with OAuth, then
+		complete the authorization flow in your browser. The `cloudflare-docs`
+		server is public and does not require authentication.
 	</FAQItem>
 	<FAQItem question="Can I use another model provider with Vibe?">
 		Yes. Vibe supports Mistral-hosted models, compatible API providers, and local
 		models. Configure models and providers in <code>~/.vibe/config.toml</code>.
 	</FAQItem>
 	<FAQItem question="Is Vibe open source?">
-		The Vibe CLI is open source under the Apache 2.0 license. The source is
-		available at <a href="https://github.com/mistralai/mistral-vibe" target="_blank" rel="noopener noreferrer">github.com/mistralai/mistral-vibe</a>.
+		Yes. The Vibe CLI is available under the Apache 2.0 license in the
+		[mistralai/mistral-vibe](https://github.com/mistralai/mistral-vibe)
+		repository.
 	</FAQItem>
 </FAQList>
 
@@ -124,19 +174,24 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 <TroubleshootingList>
 	<TroubleshootingItem issue="MCP server not connecting">
-		Confirm that the <code>cloudflare-docs</code> entry in
-		<code>~/.vibe/config.toml</code> matches the configuration in the quick start.
-		Run <code>/reload</code>, then run <code>/mcp status</code> to check the server.
+		Confirm that the entries in `~/.vibe/config.toml` match the quick start. Enter
+		`/reload`, then enter `/mcp status`. If a server reports `needs_auth`, enter
+		`/mcp login <name>`.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server authentication fails">
+		Enter `/mcp logout <name>`, then enter `/mcp login <name>`. Complete the
+		new authorization flow in your browser.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Cloudflare Skills are not available">
-		Run <code>/reload</code> to reload Vibe configuration and Skills. If the Skills
-		still do not load, confirm that the installer wrote them to the project's
-		<code>.agents/skills/</code> directory.
+		Enter `/reload` to reload Vibe configuration and Skills. If the Skills still
+		do not load, confirm that the installer wrote them to the project
+		`.agents/skills/` directory.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Point Vibe to <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for a
-		directory of all products, or use
-		<code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code> for a
+		Enter `/mcp status` and confirm that `cloudflare-docs` is connected.
+		Alternatively, point Vibe to
+		[developers.cloudflare.com/llms.txt](/llms.txt) for a directory of all
+		products. Use `developers.cloudflare.com/<product>/llms.txt` for a
 		product-specific index.
 	</TroubleshootingItem>
 </TroubleshootingList>

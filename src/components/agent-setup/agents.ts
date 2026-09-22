@@ -166,7 +166,6 @@ export const AGENTS: AgentData[] = [
 		vendor: "Mistral AI",
 		slug: "vibe",
 		icon: "vibe",
-		iconFile: "icon.png",
 		description:
 			"Coding agent for terminal, IDE, and cloud workflows that reads files, runs commands, writes code, and opens pull requests. Made by Mistral AI.",
 		capabilities: {
@@ -188,6 +187,8 @@ export const AGENTS: AgentData[] = [
 		context_approach: "project_memory",
 		links: {
 			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
 			cli: "https://docs.mistral.ai/vibe/code/cli/install-setup",
 			docs: "https://docs.mistral.ai/vibe/code/overview",
 			website: "https://mistral.ai/products/vibe/code/",
