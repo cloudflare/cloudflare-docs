@@ -44,6 +44,10 @@ export const cloudflareOneLeafRules: ProductPathRule[] = [
 		],
 	},
 	{
+		label: "product:cloudflare-wan",
+		paths: ["cloudflare-one/networks/connectors/cloudflare-wan"],
+	},
+	{
 		label: "product:access",
 		paths: ["cloudflare-one/access-controls"],
 	},
@@ -57,7 +61,18 @@ export const cloudflareOneLeafRules: ProductPathRule[] = [
 	},
 	{
 		label: "product:casb",
-		paths: ["cloudflare-one/integrations/cloud-and-saas"],
+		paths: [
+			"cloudflare-one/cloud-and-saas-findings",
+			"cloudflare-one/integrations/cloud-and-saas",
+			"cloudflare-one/casb",
+		],
+	},
+	{
+		label: "product:mesh",
+		paths: [
+			"cloudflare-one/networks/connectors/cloudflare-mesh",
+			"cloudflare-one/mesh",
+		],
 	},
 	{
 		label: "product:browser-isolation",
@@ -122,7 +137,8 @@ function pathTrie(paths: string[]): PathTrie {
 }
 
 // Produce positive globs for everything below basePath except the listed
-// subtrees/files. Positive partitions avoid negations matching a different file
+// directories. excludedPaths are directory paths relative to basePath, not files
+// or full paths. Positive partitions avoid negations matching a different file
 // in a multi-file PR.
 export function pathGlobsExcluding(
 	basePath: string,

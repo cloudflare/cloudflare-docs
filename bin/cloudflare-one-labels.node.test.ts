@@ -35,6 +35,22 @@ describe("Cloudflare One product path classifier", () => {
 		).toBe("product:network-interconnect");
 	});
 
+	it("classifies Cloudflare One product paths with separate labels", () => {
+		expect(
+			classifyProductPath("/cloudflare-one/cloud-and-saas-findings/"),
+		).toBe("product:casb");
+		expect(
+			classifyProductPath(
+				"/cloudflare-one/networks/connectors/cloudflare-mesh/",
+			),
+		).toBe("product:mesh");
+		expect(
+			classifyProductPath(
+				"/cloudflare-one/networks/connectors/cloudflare-wan/analytics/",
+			),
+		).toBe("product:cloudflare-wan");
+	});
+
 	it("keeps Email Security aggregate except exact PhishNet pages", () => {
 		expect(
 			classifyProductPath("/cloudflare-one/email-security/settings/"),

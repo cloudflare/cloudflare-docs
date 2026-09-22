@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6
         with:
+          # Product labels are config-managed; synchronize may reconcile manually assigned product labels.
           sync-labels: true
     continue-on-error: true
   label_size:

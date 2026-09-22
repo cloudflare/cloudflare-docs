@@ -5,6 +5,11 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 import * as codeOwnersUtils from "codeowners-utils";
 import { classifyProductPath } from "../../../bin/cloudflare-one-labels";
+import {
+	extractDeveloperDocsPaths,
+	removeStaleProductLabels,
+	shouldSkipEditedEvent,
+} from "./helpers";
 
 // This pulls assignment logic from our codeowners file
 
@@ -20,6 +25,9 @@ import { classifyProductPath } from "../../../bin/cloudflare-one-labels";
 		if (action !== "opened" && action !== "edited") {
 			throw new Error('Must be an "issues.opened" or "issues.edited" event!');
 		}
+		if (shouldSkipEditedEvent(action, payload.changes)) {
+			return console.log("ignore issue edit without body change");
+		}
 
 		const labels: string[] = (issue.labels || []).map((x) => x.name);
 		if (labels.includes("engineering")) {
@@ -33,18 +41,7 @@ import { classifyProductPath } from "../../../bin/cloudflare-one-labels";
 		const content = issue.body ?? "";
 		if (!issue.number) throw new Error('Missing "issue.number" value!');
 
-		const regex = /https?:\/\/developers\.cloudflare\.com([^\s|)]*)/gm;
-		const links: string[] = [];
-		let m;
-
-		while ((m = regex.exec(content)) !== null) {
-			// This is necessary to avoid infinite loops with zero-width matches
-			if (m.index === regex.lastIndex) {
-				regex.lastIndex++;
-			}
-
-			links.push(m[1].toLowerCase());
-		}
+		const links = extractDeveloperDocsPaths(content);
 
 		console.log("Links are:");
 		console.log(links);
@@ -113,15 +110,14 @@ import { classifyProductPath } from "../../../bin/cloudflare-one-labels";
 			});
 		}
 
-		for (const label of currentProductLabels) {
-			if (newLabels.has(label)) continue;
-			await client.rest.issues.removeLabel({
+		await removeStaleProductLabels(currentProductLabels, newLabels, (label) =>
+			client.rest.issues.removeLabel({
 				owner: repository.owner.login,
 				issue_number: issue.number,
 				repo: repository.name,
 				name: label,
-			});
-		}
+			}),
+		);
 
 		console.log("Labels added");
 

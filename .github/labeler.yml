@@ -208,12 +208,24 @@ product:casb:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/changelog/casb/**
+          - src/content/docs/cloudflare-one/cloud-and-saas-findings/**
+          - src/content/docs/cloudflare-one/cloud-and-saas-findings.*
+          - src/content/partials/cloudflare-one/cloud-and-saas-findings/**
+          - src/content/partials/cloudflare-one/cloud-and-saas-findings.*
+          - src/assets/images/cloudflare-one/cloud-and-saas-findings/**
+          - src/assets/images/cloudflare-one/cloud-and-saas-findings.*
           - src/content/docs/cloudflare-one/integrations/cloud-and-saas/**
           - src/content/docs/cloudflare-one/integrations/cloud-and-saas.*
           - src/content/partials/cloudflare-one/integrations/cloud-and-saas/**
           - src/content/partials/cloudflare-one/integrations/cloud-and-saas.*
           - src/assets/images/cloudflare-one/integrations/cloud-and-saas/**
           - src/assets/images/cloudflare-one/integrations/cloud-and-saas.*
+          - src/content/docs/cloudflare-one/casb/**
+          - src/content/docs/cloudflare-one/casb.*
+          - src/content/partials/cloudflare-one/casb/**
+          - src/content/partials/cloudflare-one/casb.*
+          - src/assets/images/cloudflare-one/casb/**
+          - src/assets/images/cloudflare-one/casb.*
 
 product:changelog:
   - changed-files:
@@ -272,18 +284,16 @@ product:cloudflare-one:
           - src/assets/images/changelog/cloudflare-one/**
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/cloudflare-one/!(access-controls.*|data-loss-prevention.*|email-security.*|remote-browser-isolation.*|traffic-policies.*)
-          - src/content/docs/cloudflare-one/!(access-controls|data-loss-prevention|email-security|insights|integrations|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/content/docs/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/content/docs/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
           - src/content/docs/cloudflare-one/insights/!(analytics-overview.*|dex.*)
           - src/content/docs/cloudflare-one/insights/!(analytics-overview|dex)/**
           - src/content/docs/cloudflare-one/integrations/!(cloud-and-saas.*)
           - src/content/docs/cloudflare-one/integrations/!(cloud-and-saas)/**
           - src/content/docs/cloudflare-one/networks/*
           - src/content/docs/cloudflare-one/networks/!(connectors)/**
-          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-tunnel.*)
-          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-tunnel|cloudflare-wan)/**
-          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
-          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
           - src/content/docs/cloudflare-one/reusable-components/!(posture-checks.*)
           - src/content/docs/cloudflare-one/reusable-components/!(posture-checks)/**
           - src/content/docs/cloudflare-one/team-and-resources/!(app-library.*)
@@ -294,18 +304,16 @@ product:cloudflare-one:
           - src/content/docs/cloudflare-one/team-and-resources/users/!(risk-score)/**
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/partials/cloudflare-one/!(access-controls.*|data-loss-prevention.*|email-security.*|remote-browser-isolation.*|traffic-policies.*)
-          - src/content/partials/cloudflare-one/!(access-controls|data-loss-prevention|email-security|insights|integrations|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/content/partials/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/content/partials/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
           - src/content/partials/cloudflare-one/insights/!(analytics-overview.*|dex.*)
           - src/content/partials/cloudflare-one/insights/!(analytics-overview|dex)/**
           - src/content/partials/cloudflare-one/integrations/!(cloud-and-saas.*)
           - src/content/partials/cloudflare-one/integrations/!(cloud-and-saas)/**
           - src/content/partials/cloudflare-one/networks/*
           - src/content/partials/cloudflare-one/networks/!(connectors)/**
-          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-tunnel.*)
-          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-tunnel|cloudflare-wan)/**
-          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
-          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
           - src/content/partials/cloudflare-one/reusable-components/!(posture-checks.*)
           - src/content/partials/cloudflare-one/reusable-components/!(posture-checks)/**
           - src/content/partials/cloudflare-one/team-and-resources/!(app-library.*)
@@ -316,18 +324,16 @@ product:cloudflare-one:
           - src/content/partials/cloudflare-one/team-and-resources/users/!(risk-score)/**
   - changed-files:
       - any-glob-to-any-file:
-          - src/assets/images/cloudflare-one/!(access-controls.*|data-loss-prevention.*|email-security.*|remote-browser-isolation.*|traffic-policies.*)
-          - src/assets/images/cloudflare-one/!(access-controls|data-loss-prevention|email-security|insights|integrations|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/assets/images/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/assets/images/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
           - src/assets/images/cloudflare-one/insights/!(analytics-overview.*|dex.*)
           - src/assets/images/cloudflare-one/insights/!(analytics-overview|dex)/**
           - src/assets/images/cloudflare-one/integrations/!(cloud-and-saas.*)
           - src/assets/images/cloudflare-one/integrations/!(cloud-and-saas)/**
           - src/assets/images/cloudflare-one/networks/*
           - src/assets/images/cloudflare-one/networks/!(connectors)/**
-          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-tunnel.*)
-          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-tunnel|cloudflare-wan)/**
-          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
-          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
           - src/assets/images/cloudflare-one/reusable-components/!(posture-checks.*)
           - src/assets/images/cloudflare-one/reusable-components/!(posture-checks)/**
           - src/assets/images/cloudflare-one/team-and-resources/!(app-library.*)
@@ -357,6 +363,14 @@ product:cloudflare-one-client:
           - src/assets/images/cloudflare-one/team-and-resources/devices/cloudflare-one-client.*
 
 product:cloudflare-wan:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
   - changed-files:
       - any-glob-to-any-file:
           - src/content/changelog/cloudflare-wan/**
@@ -678,6 +692,20 @@ product:magic-transit:
           - src/content/changelog/magic-transit/**
 
 product:mesh:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/content/docs/cloudflare-one/mesh/**
+          - src/content/docs/cloudflare-one/mesh.*
+          - src/content/partials/cloudflare-one/mesh/**
+          - src/content/partials/cloudflare-one/mesh.*
+          - src/assets/images/cloudflare-one/mesh/**
+          - src/assets/images/cloudflare-one/mesh.*
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/mesh/**
