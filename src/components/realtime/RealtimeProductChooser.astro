@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import CornerMarks from "@/components/CornerMarks.astro";
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import globe from "~/assets/images/realtime/global-web-rtc-network.png";
+import globeDark from "~/assets/images/realtime/global-web-rtc-network-dark.png";
 ---
 
 <section
@@ -10,13 +11,22 @@ import globe from "~/assets/images/realtime/global-web-rtc-network.png";
 	aria-label="Choose a Cloudflare Realtime product"
 >
 	<CornerMarks />
-	<div class="border-border h-56 overflow-hidden border-r border-b bg-[#fffbf5] sm:h-64">
+	<div class="border-border h-56 overflow-hidden border-r border-b bg-[#fffbf5] dark:bg-[#141414] sm:h-64">
 		<Image
 			src={globe}
 			alt=""
 			widths={[640, 960, 1400]}
 			sizes="(max-width: 768px) 100vw, 800px"
-			class="h-full w-full object-cover object-[50%_42%]"
+			class="block h-full w-full object-cover object-[50%_42%] dark:hidden"
+			loading="eager"
+			decoding="async"
+		/>
+		<Image
+			src={globeDark}
+			alt=""
+			widths={[640, 960, 1400]}
+			sizes="(max-width: 768px) 100vw, 800px"
+			class="hidden h-full w-full object-cover object-[50%_42%] dark:block"
 			loading="eager"
 			decoding="async"
 		/>
