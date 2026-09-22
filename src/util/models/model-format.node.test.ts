@@ -78,7 +78,13 @@ describe("model display formatting", () => {
 				{ mandatory: false, default_enabled: true },
 				"false",
 			),
-		).toBe("On by default");
+		).toBe("Yes");
+		expect(
+			formatModelReasoning(
+				{ mandatory: false, default_enabled: false },
+				"false",
+			),
+		).toBe("Yes");
 	});
 
 	it("formats supported pricing values and omits nested metadata", () => {
