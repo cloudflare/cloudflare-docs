@@ -37,6 +37,10 @@ Each Preview gets two types of URLs. You can serve them on `workers.dev`, a [cus
 | `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
 | Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
 
+### Search engine indexing
+
+Cloudflare adds the `X-Robots-Tag: noindex` response header to Previews served on `workers.dev`. Cloudflare does not add this header to Previews served on custom domains.
+
 ### Settings and isolation
 
 Previews do not inherit production settings. Define them in the `previews` block of your Wrangler configuration file. When you run `npx wrangler preview` on a branch, Wrangler creates or updates its Preview using that branch's `previews` block. For more information, refer to [Configuration](/workers/previews/configuration/).
