@@ -21,7 +21,10 @@ The following limits apply to RealtimeKit API requests.
 
 ## SDK rate limits
 
-The following limits apply to SDK operations performed by each participant.
+Each participant has a separate limit for SDK operations during an active session.
+Limits are not shared across participants or applied to your app as a whole. For
+example, in a two-participant meeting, each participant can send up to 180 text
+messages per minute.
 
 | Operation                                                                                                                                    | Limit                        |
 | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
