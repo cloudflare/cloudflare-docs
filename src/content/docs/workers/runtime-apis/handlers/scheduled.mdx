@@ -14,7 +14,9 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 :::note[Testing scheduled() handlers in local development]
 
-You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/local/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
+Use [Local Explorer](/workers/local-development/local-explorer/#test-cron-triggers) to invoke your `scheduled()` handler with a configured or ad hoc cron expression. You can choose the scheduled time and inspect the structured result.
+
+For scripted tests, send an HTTP request to `/cdn-cgi/local/scheduled`. Pass `?format=json` to return the structured scheduled handler result.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/local/scheduled?format=json"
