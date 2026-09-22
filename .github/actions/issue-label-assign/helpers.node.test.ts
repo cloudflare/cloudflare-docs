@@ -22,6 +22,14 @@ describe("issue label assignment helpers", () => {
 		).toEqual(["/workers/"]);
 	});
 
+	it("strips queries and fragments from developer docs paths", () => {
+		expect(
+			extractDeveloperDocsPaths(
+				"https://developers.cloudflare.com/workers/?ref=docs https://developers.cloudflare.com/r2/#overview https://developers.cloudflare.com/d1?source=issue",
+			),
+		).toEqual(["/workers/", "/r2/", "/d1"]);
+	});
+
 	it("only skips edited events without a body change", () => {
 		expect(shouldSkipEditedEvent("edited", undefined)).toBe(true);
 		expect(shouldSkipEditedEvent("edited", { body: { from: "old" } })).toBe(

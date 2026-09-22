@@ -4,7 +4,7 @@ export function extractDeveloperDocsPaths(content: string): string[] {
 	let match;
 
 	while ((match = regex.exec(content)) !== null) {
-		const pathname = match[1].replace(/[.,;:!?]+$/, "");
+		const pathname = match[1].replace(/[?#].*$/, "").replace(/[.,;:!?]+$/, "");
 		if (pathname.replace(/^\/+|\/+$/g, "")) links.push(pathname.toLowerCase());
 	}
 
