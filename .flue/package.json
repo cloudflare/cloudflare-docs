@@ -14,7 +14,7 @@
 		"evals:json": "vitest run --config vitest.evals.config.ts --reporter=vitest-evals/reporter --reporter=json --outputFile.json=vitest-results.json"
 	},
 	"dependencies": {
-		"@cloudflare/workers-types": "5.20260920.1",
+		"@cloudflare/workers-types": "5.20260921.1",
 		"@flue/runtime": "0.4.0-nightly.202605211826",
 		"@octokit/auth-app": "8.3.1",
 		"agents": "0.24.0",
@@ -22,7 +22,7 @@
 		"valibot": "1.5.0"
 	},
 	"devDependencies": {
-		"@cloudflare/vite-plugin": "1.56.0",
+		"@cloudflare/vite-plugin": "1.57.1",
 		"@flue/cli": "0.4.0-nightly.202605211826",
 		"@flue/sdk": "0.4.0-nightly.202605211826",
 		"@flue/vite": "0.4.0-nightly.202605211826",
@@ -30,6 +30,6 @@
 		"vite": "8.3.0",
 		"vitest": "4.1.10",
 		"vitest-evals": "0.17.0",
-		"wrangler": "4.135.0"
+		"wrangler": "4.136.1"
 	}
 }
