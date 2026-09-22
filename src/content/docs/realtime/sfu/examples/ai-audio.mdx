@@ -9,13 +9,14 @@ products:
 ---
 
 import { LinkButton, PackageManagers, Steps } from "~/components";
+import AiAudioPipeline from "~/components/realtime/sfu/AiAudioPipeline.astro";
 
 Use the `ai-tts-stt` example to connect speech-to-text and text-to-speech services to WebRTC audio. A publisher can generate speech for browser listeners and send microphone audio for transcription.
 
 The application uses Workers AI, a Worker, Durable Objects, and Realtime SFU's WebSocket adapters. The browser uses WebRTC for audio and an application WebSocket for transcription results.
 
 <LinkButton href="https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt">
-  Open the example
+	Open the example
 </LinkButton>
 
 The example is experimental. It keeps SFU and AI credentials on the server, but its publisher and cleanup operations are unauthenticated. Add application authentication, authorization, and resource controls before sharing a deployment publicly.
@@ -24,17 +25,7 @@ The example is experimental. It keeps SFU and AI credentials on the server, but 
 
 The application uses separate adapters for the two audio directions:
 
-```mermaid
-flowchart LR
-  Text[Publisher text] --> TTS[TTS Durable Object]
-  TTS <--> Speech[Workers AI speech generation]
-  TTS -->|PCM over WebSocket| SFU[Realtime SFU]
-  SFU -->|WebRTC audio| Listeners[Browser listeners]
-  Mic[Browser microphone] -->|WebRTC audio| SFU
-  SFU -->|PCM over WebSocket| STT[STT Durable Object]
-  STT <--> Transcription[Workers AI transcription]
-  STT -->|Transcript WebSocket| UI[Browser transcript]
-```
+<AiAudioPipeline />
 
 `TTSAdapter` and `STTAdapter` are application Durable Objects. They call Workers AI, manage application state, and convert audio to or from the SFU adapter's 48 kHz stereo PCM format.
 

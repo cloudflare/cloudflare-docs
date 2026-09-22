@@ -10,6 +10,7 @@ products:
 ---
 
 import { LinkButton } from "~/components";
+import MediaTransportAdaptersFlow from "~/components/realtime/sfu/MediaTransportAdaptersFlow.astro";
 
 Media transport adapters connect WebRTC tracks to services that exchange media over another transport. The WebSocket adapter supports audio ingest, audio egress, and video egress as JPEG frames.
 
@@ -25,17 +26,12 @@ The WebSocket adapter is in beta. Choose the path your external service needs; e
 | Transcribes or processes audio        | WebRTC → SFU → WebSocket | Audio delivered as PCM                      |
 | Inspects frames or generates previews | WebRTC → SFU → WebSocket | Video delivered as JPEG frames              |
 
-```mermaid
-flowchart LR
-  Endpoint[WebRTC endpoint] <-->|Media tracks| SFU[Realtime SFU]
-  SFU <--> Adapter[WebSocket adapters]
-  Adapter <-->|Binary media packets| Service[Your WebSocket service]
-```
+<MediaTransportAdaptersFlow />
 
 Use separate adapter instances for bidirectional audio. Video ingest over the WebSocket adapter is not supported.
 
 <LinkButton href="/realtime/sfu/features/media-transport-adapters/websocket-adapter/">
-  Use the WebSocket adapter
+	Use the WebSocket adapter
 </LinkButton>
 
 ## Learn with an example

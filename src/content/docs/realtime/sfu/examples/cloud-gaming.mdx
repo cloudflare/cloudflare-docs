@@ -9,20 +9,21 @@ products:
 ---
 
 import { LinkButton, PackageManagers, Steps } from "~/components";
+import CloudGamingArchitecture from "~/components/realtime/sfu/CloudGamingArchitecture.astro";
 
 Run Freedoom in a Cloudflare Container, stream its audio and video through Realtime SFU, and send browser input back over DataChannels. Multiple viewers can watch while one browser tab controls the game.
 
 This experimental example demonstrates a native publisher and browser receivers. The same media-and-control topology can inform remote application and device interfaces.
 
 <LinkButton href="https://github.com/cloudflare/realtime-examples/tree/main/cloud-gaming">
-  Open the example
+	Open the example
 </LinkButton>
 
 ## How it works
 
 The Container captures H.264 video and Opus audio. Its native publisher sends both tracks through a WebRTC connection to Realtime SFU. Each browser uses one SFU session and PeerConnection for received media and input DataChannels.
 
-![A Container publishes game media through SFU to browsers, with one authorized browser returning controls.](~/assets/images/realtime/sfu/cloud-gaming-architecture.svg)
+<CloudGamingArchitecture />
 
 A Worker authenticates browser requests and holds the SFU credentials. A Durable Object owns the game run, viewer membership, controller selection, and resource cleanup. The Container's publisher and the browser exchange media and input through the SFU.
 

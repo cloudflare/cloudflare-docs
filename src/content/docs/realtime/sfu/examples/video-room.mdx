@@ -9,15 +9,16 @@ products:
 ---
 
 import { LinkButton, PackageManagers, Steps } from "~/components";
+import VideoRoomArchitecture from "~/components/realtime/sfu/VideoRoomArchitecture.astro";
 
 Build a browser room where participants publish camera and microphone tracks and receive each other's media. The example exposes the SFU operations and the application state that connects them.
 
 <LinkButton href="/realtime/sfu/get-started/">Run the quickstart</LinkButton>
 <LinkButton
-  variant="secondary"
-  href="https://github.com/cloudflare/realtime-examples/tree/main/video-room"
+	variant="secondary"
+	href="https://github.com/cloudflare/realtime-examples/tree/main/video-room"
 >
-  Open the source
+	Open the source
 </LinkButton>
 
 The example is experimental. It includes backend authentication and authorization, reconnect, and cleanup. Its [production guide](https://github.com/cloudflare/realtime-examples/blob/main/video-room/PRODUCTION.md) identifies the policies and controls to integrate for your application.
@@ -26,7 +27,7 @@ The example is experimental. It includes backend authentication and authorizatio
 
 Each browser owns separate publishing and receiving PeerConnections. Each connection corresponds to an SFU session. This makes the two negotiation lifecycles independent.
 
-![Browsers publish and subscribe through SFU while a Worker and Durable Object coordinate room state.](~/assets/images/realtime/sfu/video-room-architecture.svg)
+<VideoRoomArchitecture />
 
 The components have these responsibilities:
 

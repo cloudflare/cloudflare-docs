@@ -8,6 +8,8 @@ products:
   - realtime
 ---
 
+import NegotiationQueueSequence from "~/components/realtime/sfu/NegotiationQueueSequence.astro";
+
 A Realtime SFU session has one WebRTC PeerConnection and one offer/answer state machine. Session Description Protocol (SDP) is the setup text that describes the connection's media and transport settings. It does not carry the media itself.
 
 Your endpoint creates or applies SDP. Your backend carries the descriptions between the endpoint and the [SFU API](/realtime/sfu/api/).
@@ -40,22 +42,7 @@ If the handlers submit requests independently, the second `tracks/new` can arriv
 
 Route the initial snapshot and later participant updates through A's receiving-session queue:
 
-```mermaid
-sequenceDiagram
-  participant Snapshot as Initial room snapshot
-  participant Joined as Participant-joined handler
-  participant Queue as A's receiving-session queue
-  participant SFU as Realtime SFU
-  Snapshot->>Queue: Subscribe to existing participants
-  Joined->>Queue: Subscribe to B
-  Queue->>SFU: tracks/new for existing publications
-  SFU-->>Queue: Offer requiring an answer
-  Note over Queue: A applies the offer and creates an answer
-  Queue->>SFU: renegotiate with A's answer
-  SFU-->>Queue: Answer accepted
-  Queue->>SFU: tracks/new for B's publications
-  Note over Queue,SFU: Complete the next offer/answer exchange
-```
+<NegotiationQueueSequence />
 
 Queue the subscription work before creating SDP or issuing its API request. When it runs, reconcile it with the current publications and connection. Deduplicate repeated publication locators and discard subscriptions that are no longer wanted. Other sessions can continue while A completes this exchange.
 

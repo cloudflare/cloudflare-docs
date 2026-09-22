@@ -12,6 +12,7 @@ products:
 ---
 
 import { CardGrid, Description, LinkButton, LinkTitleCard } from "~/components";
+import RealtimeSfuArchitecture from "~/components/realtime/sfu/RealtimeSfuArchitecture.astro";
 
 <Description>
 	Connect devices, applications, and AI with real-time media and data.
@@ -65,13 +66,7 @@ For a browser-first introduction, [run a custom video room](/realtime/sfu/get-st
 
 Your endpoints exchange media and DataChannels with Realtime SFU. A separate application backend authenticates users and devices, calls the SFU API, and shares the track identifiers that endpoints need.
 
-```mermaid
-flowchart LR
-  Endpoint[Browser, device, or native endpoint] <-->|WebRTC media and DataChannels| SFU[Realtime SFU]
-  Endpoint <-.->|Application signaling| Backend[Your backend]
-  Backend <-.->|HTTPS API| SFU
-  Backend <-.-> State[Application state]
-```
+<RealtimeSfuArchitecture />
 
 The backend holds the SFU App Secret and manages application state and permissions. Refer to [application architecture](/realtime/sfu/concepts/architecture/) for the responsibilities and trust boundaries.
 

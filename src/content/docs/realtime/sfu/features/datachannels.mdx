@@ -9,19 +9,13 @@ products:
 ---
 
 import { Steps } from "~/components";
+import DataChannelsFlow from "~/components/realtime/sfu/DataChannelsFlow.astro";
 
 Use DataChannels for application messages such as chat, sensor updates, and control events. Use media tracks for standard audio and video transport.
 
 A publisher creates a named channel. Multiple subscribers can receive its messages, and one selected subscriber can reply on that publisher channel.
 
-```mermaid
-flowchart LR
-  P[Publisher] -->|Messages| SFU[Realtime SFU]
-  SFU -->|Messages| V[Subscribers]
-  SFU -->|Messages| C[Selected subscriber]
-  C -->|Authorized replies| SFU
-  SFU -->|Replies| P
-```
+<DataChannelsFlow />
 
 Your backend makes authenticated SFU API calls. Browser and native endpoints own the corresponding WebRTC channels. Refer to [application architecture](/realtime/sfu/concepts/architecture/) for the credential and signaling boundary.
 
@@ -80,14 +74,14 @@ For replaceable player state, your backend creates the publisher's allocation wi
 
 ```json
 {
-  "dataChannels": [
-    {
-      "location": "local",
-      "dataChannelName": "player-state",
-      "ordered": false,
-      "maxRetransmits": 0
-    }
-  ]
+	"dataChannels": [
+		{
+			"location": "local",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
 }
 ```
 
@@ -95,10 +89,10 @@ After checking the result, return its channel ID to the publisher. In the publis
 
 ```ts
 const publisherChannel = publisherPc.createDataChannel("player-state", {
-  negotiated: true,
-  id: publisherChannelId,
-  ordered: false,
-  maxRetransmits: 0,
+	negotiated: true,
+	id: publisherChannelId,
+	ordered: false,
+	maxRetransmits: 0,
 });
 ```
 
@@ -106,15 +100,15 @@ On each subscriber's session, the backend requests the same publication with the
 
 ```json
 {
-  "dataChannels": [
-    {
-      "location": "remote",
-      "sessionId": "<PUBLISHER_SESSION_ID>",
-      "dataChannelName": "player-state",
-      "ordered": false,
-      "maxRetransmits": 0
-    }
-  ]
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "player-state",
+			"ordered": false,
+			"maxRetransmits": 0
+		}
+	]
 }
 ```
 
@@ -122,10 +116,10 @@ After checking the subscription result, return its channel ID to that subscriber
 
 ```ts
 const subscriberChannel = subscriberPc.createDataChannel("player-state", {
-  negotiated: true,
-  id: subscriberChannelId,
-  ordered: false,
-  maxRetransmits: 0,
+	negotiated: true,
+	id: subscriberChannelId,
+	ordered: false,
+	maxRetransmits: 0,
 });
 ```
 
@@ -139,14 +133,14 @@ This example subscribes to a `device-events` publication that uses reliable, ord
 
 ```json
 {
-  "dataChannels": [
-    {
-      "location": "remote",
-      "sessionId": "<PUBLISHER_SESSION_ID>",
-      "dataChannelName": "device-events",
-      "waitForAck": true
-    }
-  ]
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "device-events",
+			"waitForAck": true
+		}
+	]
 }
 ```
 
@@ -155,9 +149,9 @@ When the negotiated channel opens, the subscriber sends a readiness message:
 ```ts
 // channel is the negotiated remote DataChannel for this subscription.
 if (channel.readyState === "open") {
-  channel.send("ready");
+	channel.send("ready");
 } else {
-  channel.addEventListener("open", () => channel.send("ready"), { once: true });
+	channel.addEventListener("open", () => channel.send("ready"), { once: true });
 }
 ```
 
@@ -185,14 +179,14 @@ This example uses the same reliable, ordered `device-events` policy. Your backen
 
 ```json
 {
-  "dataChannels": [
-    {
-      "location": "remote",
-      "sessionId": "<PUBLISHER_SESSION_ID>",
-      "dataChannelName": "device-events",
-      "canReply": true
-    }
-  ]
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "device-events",
+			"canReply": true
+		}
+	]
 }
 ```
 
@@ -204,14 +198,14 @@ To grant or revoke access on an existing subscription, call `PUT /apps/{appId}/s
 
 ```json
 {
-  "dataChannels": [
-    {
-      "location": "remote",
-      "sessionId": "<PUBLISHER_SESSION_ID>",
-      "dataChannelName": "device-events",
-      "canReply": true
-    }
-  ]
+	"dataChannels": [
+		{
+			"location": "remote",
+			"sessionId": "<PUBLISHER_SESSION_ID>",
+			"dataChannelName": "device-events",
+			"canReply": true
+		}
+	]
 }
 ```
 
@@ -229,7 +223,7 @@ On the backend, send `PUT /apps/{appId}/sessions/{sessionId}/datachannels/close`
 
 ```json
 {
-  "dataChannels": [{ "id": 2 }, { "id": 3 }]
+	"dataChannels": [{ "id": 2 }, { "id": 3 }]
 }
 ```
 

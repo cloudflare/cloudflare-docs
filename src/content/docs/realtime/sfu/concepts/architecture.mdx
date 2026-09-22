@@ -8,6 +8,8 @@ products:
   - realtime
 ---
 
+import ApplicationMediaSequence from "~/components/realtime/sfu/ApplicationMediaSequence.astro";
+
 Realtime SFU forwards media tracks and DataChannels between endpoints. Your application supplies the signaling, state, and permissions around those connections.
 
 An endpoint can be a browser, embedded device, native process, or server with a WebRTC implementation. Endpoints publish media, subscribe to media, or do both.
@@ -18,22 +20,7 @@ Media and DataChannels flow over WebRTC between the endpoint and SFU. Signaling 
 
 Your backend coordinates which publications an endpoint can send or receive. The SFU carries the selected media:
 
-```mermaid
-sequenceDiagram
-  participant Publisher as Publishing endpoint
-  participant Backend as Application backend
-  participant SFU as Realtime SFU
-  participant Subscriber as Receiving endpoint
-  Publisher->>Backend: Authenticate and request publication
-  Backend->>SFU: Set up the publishing session and tracks
-  Backend-->>Publisher: Complete connection setup
-  Publisher->>SFU: WebRTC media
-  Backend-->>Subscriber: Share authorized publication identifiers
-  Subscriber->>Backend: Request those publications
-  Backend->>SFU: Set up the receiving session and subscriptions
-  Backend-->>Subscriber: Complete connection setup
-  SFU->>Subscriber: Forward the selected media
-```
+<ApplicationMediaSequence />
 
 The [connection patterns](/realtime/sfu/get-started/connection-patterns/) guide gives complete media and DataChannel setup sequences. The backend can use HTTPS, WebSockets, or another application protocol to communicate with endpoints. Its SFU API calls use HTTPS. Workers is one backend option; containers and conventional servers use the same interfaces.
 

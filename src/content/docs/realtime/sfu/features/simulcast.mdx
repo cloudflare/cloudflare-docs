@@ -9,18 +9,11 @@ products:
 ---
 
 import { Steps } from "~/components";
+import SimulcastFlow from "~/components/realtime/sfu/SimulcastFlow.astro";
 
 Simulcast lets a publisher send multiple encodings of one video source. Subscribers can select different quality levels for their display and network conditions.
 
-```mermaid
-graph LR
-    A[Publisher] -->|Low quality| B[Cloudflare Realtime SFU]
-    A -->|Medium quality| B
-    A -->|High quality| B
-B -->|Low quality| C@{ shape: procs, label: "Subscribers"}
-B -->|Medium quality| D@{ shape: procs, label: "Subscribers"}
-B -->|High quality| E@{ shape: procs, label: "Subscribers"}
-```
+<SimulcastFlow />
 
 ## How it works
 
@@ -47,12 +40,12 @@ In a browser, use this `addTransceiver()` call in place of the one in [Publish a
 
 ```js
 const transceiver = peerConnection.addTransceiver(track, {
-  direction: "sendonly",
-  sendEncodings: [
-    { scaleResolutionDownBy: 1, rid: "f" },
-    { scaleResolutionDownBy: 2, rid: "h" },
-    { scaleResolutionDownBy: 4, rid: "q" },
-  ],
+	direction: "sendonly",
+	sendEncodings: [
+		{ scaleResolutionDownBy: 1, rid: "f" },
+		{ scaleResolutionDownBy: 2, rid: "h" },
+		{ scaleResolutionDownBy: 4, rid: "q" },
+	],
 });
 ```
 
