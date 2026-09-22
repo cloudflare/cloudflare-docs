@@ -13,6 +13,7 @@ import {
 	TabItem,
 	Tabs,
 	DashButton,
+	Steps,
 } from "~/components";
 
 ## Background
@@ -193,7 +194,27 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/general/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This exposes a `/cdn-cgi/local/scheduled` route, which can be used to test using an HTTP request. If you are using the Cloudflare Vite Plugin, ensure that you use the correct vite port for the following commands (Vite defaults to 5173).
+Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) or the [Cloudflare Vite plugin](/workers/vite-plugin/) to test Cron Triggers locally. You can use Local Explorer or send an HTTP request.
+
+Cron Trigger testing in Local Explorer requires Wrangler 4.137.0 or later, or Cloudflare Vite plugin 1.58.0 or later.
+
+### Use Local Explorer
+
+[Local Explorer](/workers/local-development/local-explorer/) displays the exact Cron Triggers configured for the active environment. It can also test ad hoc expressions without changing your configuration.
+
+<Steps>
+1. Start your local development server and open Local Explorer.
+2. Select **Cron Triggers** > **Configured Crons**.
+3. Select _Now_ or add a scheduled time preset.
+4. Select **Trigger** next to the expression you want to test.
+5. Review the handler outcome. Use **Observability** > **Traces** to inspect logs and traces.
+</Steps>
+
+To test an expression that is not configured, select **Cron Triggers** > **Ad-Hoc Triggers**. Ad hoc triggers stay in your browser and do not modify deployed Cron Triggers.
+
+### Use an HTTP request
+
+Your local development server exposes `/cdn-cgi/local/scheduled`. If you use the Cloudflare Vite plugin, send requests to your Vite port. Vite uses port `5173` by default.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/local/scheduled"
