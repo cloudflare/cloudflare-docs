@@ -60,16 +60,11 @@ const PR_REVIEW_ACTIONS = [
 ];
 
 /**
- * PR events that trigger the changelog date check. `closed` is included so
- * the marker comment is removed when a PR merges or closes.
+ * PR events that trigger the changelog date check: every review action (the
+ * check rides along with review routing) plus `closed` so the marker comment
+ * is removed when a PR merges or closes.
  */
-const CHANGELOG_DATE_ACTIONS = [
-	"opened",
-	"reopened",
-	"synchronize",
-	"ready_for_review",
-	"closed",
-];
+const CHANGELOG_DATE_ACTIONS = [...PR_REVIEW_ACTIONS, "closed"];
 
 function asRecord(value: unknown): Record<string, unknown> | undefined {
 	return typeof value === "object" && value !== null

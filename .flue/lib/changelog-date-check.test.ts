@@ -78,6 +78,17 @@ describe("parseChangelogDate", () => {
 		);
 	});
 
+	it("parses datetime values, capturing only the date portion", () => {
+		expect(
+			parseChangelogDate(
+				"---\ntitle: T\ndate: 2026-04-15T10:00:00Z\n---\nBody",
+			),
+		).toBe("2026-04-15");
+		expect(
+			parseChangelogDate('---\ndate: "2026-04-15T10:00:00Z"\n---\nBody'),
+		).toBe("2026-04-15");
+	});
+
 	it("returns null without frontmatter", () => {
 		expect(parseChangelogDate("# No frontmatter\n\ndate: 2026-09-17")).toBe(
 			null,

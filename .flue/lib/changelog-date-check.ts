@@ -68,9 +68,12 @@ export function isChangelogEntryFile(
 }
 
 /**
- * Parse `date: YYYY-MM-DD` from an MDX file's YAML frontmatter. Returns null
- * for anything the frontmatter does not clearly provide — unparsable dates are
- * the docs build's problem (the content schema validates them), not ours.
+ * Parse `date: YYYY-MM-DD` (optionally with a datetime suffix — the content
+ * schema coerces via `z.coerce.date()`, so real entries like
+ * `date: 2026-04-15T10:00:00Z` are valid) from an MDX file's YAML frontmatter.
+ * Returns null for anything the frontmatter does not clearly provide —
+ * unparsable dates are the docs build's problem (the content schema validates
+ * them), not ours.
  */
 export function parseChangelogDate(content: string): string | null {
 	if (!content.startsWith("---")) return null;
@@ -78,7 +81,7 @@ export function parseChangelogDate(content: string): string | null {
 	if (!closing || closing.index === undefined) return null;
 	const frontmatter = content.slice(3, closing.index + 3);
 	const match = frontmatter.match(
-		/^date:\s*["']?(\d{4}-\d{2}-\d{2})["']?\s*$/m,
+		/^date:\s*["']?(\d{4}-\d{2}-\d{2})(?:T[^"'\s]*)?["']?\s*$/m,
 	);
 	return match ? match[1] : null;
 }
@@ -212,14 +215,19 @@ async function collectStaleChangelogEntries(
 	const paths = files.filter(isChangelogEntryFile).map((file) => file.filename);
 	if (paths.length === 0) return [];
 
+	// Fetch all file contents concurrently — this runs inline on the webhook
+	// hot path, so per-file fetches must not stack up sequentially.
+	// The contents API accepts a PR head SHA even for fork branches, since the
+	// head commit is reachable in the base repository.
+	const contents = await Promise.all(
+		paths.map((path) => getRepoFileContent(token, path, pr.head.sha)),
+	);
+
 	const entries: ChangelogEntry[] = [];
-	for (const path of paths) {
-		// The contents API accepts a PR head SHA even for fork branches, since
-		// the head commit is reachable in the base repository.
-		const content = await getRepoFileContent(token, path, pr.head.sha);
+	for (const [i, content] of contents.entries()) {
 		if (!content) continue;
 		const date = parseChangelogDate(content);
-		if (date) entries.push({ path, date });
+		if (date) entries.push({ path: paths[i], date });
 	}
 	return getStaleChangelogEntries(entries, now);
 }
