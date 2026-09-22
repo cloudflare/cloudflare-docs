@@ -8,14 +8,23 @@
  * `wrangler` package already in this app's dependencies.
  */
 import { experimental_getWranglerCommands } from "wrangler";
+import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
+import CfNamespace from "./CfNamespace.astro";
 import WranglerCommand from "./WranglerCommand.astro";
 
 interface Props {
 	namespace: string;
 	headingLevel?: number;
+	cfNamespace?: string;
 }
 
-const { namespace, headingLevel = 2 } = Astro.props;
+const { namespace, headingLevel = 2, cfNamespace } = Astro.props;
+
+if (cfNamespace !== undefined && cfNamespace.trim().length === 0) {
+	throw new Error(
+		`[WranglerNamespace] cfNamespace must be a non-empty string on "${Astro.url.pathname}".`,
+	);
+}
 
 const { registry } = experimental_getWranglerCommands();
 
@@ -42,16 +51,39 @@ function flattenSubtree(subtree: Subtree) {
 flattenSubtree(node.subtree);
 ---
 
-{definitions.map((definition) => {
-	if (definition.type !== "command") {
-		throw new Error(
-			`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+{cfNamespace ? (
+	<CliPreferenceSwitch>
+		<Fragment slot="wrangler">
+			{definitions.map((definition) => {
+				if (definition.type !== "command") {
+					throw new Error(
+						`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+					);
+				}
+				return (
+					<WranglerCommand
+						command={definition.command.replace("wrangler ", "")}
+						headingLevel={headingLevel}
+					/>
+				);
+			})}
+		</Fragment>
+		<Fragment slot="cf">
+			<CfNamespace namespace={cfNamespace} headingLevel={headingLevel} />
+		</Fragment>
+	</CliPreferenceSwitch>
+) : (
+	definitions.map((definition) => {
+		if (definition.type !== "command") {
+			throw new Error(
+				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+			);
+		}
+		return (
+			<WranglerCommand
+				command={definition.command.replace("wrangler ", "")}
+				headingLevel={headingLevel}
+			/>
 		);
-	}
-	return (
-		<WranglerCommand
-			command={definition.command.replace("wrangler ", "")}
-			headingLevel={headingLevel}
-		/>
-	);
-})}
+	})
+)}

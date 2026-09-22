@@ -1,0 +1,54 @@
+---
+const uid = `cli-preference-${crypto.randomUUID()}`;
+---
+
+<div
+	data-nb-cli-control
+	style="visibility: hidden"
+	class="invisible mb-2 flex min-w-0 items-center justify-end gap-2"
+>
+	<span id={`${uid}-label`} class="text-muted-foreground text-xs font-medium">
+		Select your preferred CLI
+	</span>
+	<div
+		role="group"
+		aria-labelledby={`${uid}-label`}
+		aria-describedby={`${uid}-help`}
+		class="ring-border/70 inline-flex h-6.5 max-w-full min-w-0 rounded-md bg-[var(--nb-surface-sunken)] px-0.5 ring"
+	>
+		<button
+			type="button"
+			data-nb-cli-toggle="wrangler"
+			aria-pressed="true"
+			disabled
+			class="text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring"
+		>
+			Wrangler
+		</button>
+		<button
+			type="button"
+			data-nb-cli-toggle="cf"
+			aria-pressed="false"
+			disabled
+			class="text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring"
+		>
+			CF
+		</button>
+	</div>
+	<span id={`${uid}-help`} class="sr-only">
+		Changes examples on this page to use the selected CLI.
+	</span>
+	<span data-nb-cli-status role="status" class="sr-only"></span>
+</div>
+
+<style is:global>
+	@media (forced-colors: active) {
+		[data-nb-cli-toggle][aria-pressed="true"] {
+			border: 1px solid Highlight;
+		}
+	}
+</style>
+
+<script>
+	import "./cli-preference-selector.client";
+</script>

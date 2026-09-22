@@ -12,14 +12,23 @@
 import TOML from "@iarna/toml";
 import { parse as jsoncParse } from "jsonc-parser";
 import { parse } from "node-html-parser";
+import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
 import { Code } from "../ui/code";
 import { TabItem, Tabs } from "../ui/tabs";
 
 interface Props {
 	removeSchema?: boolean;
+	cfConfig?: string;
 }
 
-const { removeSchema = false } = Astro.props;
+const { removeSchema = false, cfConfig } = Astro.props;
+const normalizedCfConfig = cfConfig?.trim();
+
+if (cfConfig !== undefined && !normalizedCfConfig) {
+	throw new Error(
+		`[WranglerConfig] cfConfig must not be empty (on "${Astro.url.pathname}").`,
+	);
+}
 
 const slot = await Astro.slots.render("default");
 // `blockTextElements: {}` — by default node-html-parser keeps <pre> content
@@ -77,11 +86,33 @@ if (hadTodayMagicString) {
 }
 ---
 
-<Tabs syncKey="wranglerConfig">
-	<TabItem label="wrangler.jsonc">
-		<Code lang="jsonc" code={json} />
-	</TabItem>
-	<TabItem label="wrangler.toml">
-		<Code lang="toml" code={toml} />
-	</TabItem>
-</Tabs>
+{normalizedCfConfig ? (
+	<CliPreferenceSwitch>
+		<Fragment slot="wrangler">
+			<Tabs syncKey="wranglerConfig">
+				<TabItem label="wrangler.jsonc">
+					<Code lang="jsonc" code={json} />
+				</TabItem>
+				<TabItem label="wrangler.toml">
+					<Code lang="toml" code={toml} />
+				</TabItem>
+			</Tabs>
+		</Fragment>
+		<Fragment slot="cf">
+			<Code
+				lang="ts"
+				code={normalizedCfConfig}
+				meta={'title="cloudflare.config.ts"'}
+			/>
+		</Fragment>
+	</CliPreferenceSwitch>
+) : (
+	<Tabs syncKey="wranglerConfig">
+		<TabItem label="wrangler.jsonc">
+			<Code lang="jsonc" code={json} />
+		</TabItem>
+		<TabItem label="wrangler.toml">
+			<Code lang="toml" code={toml} />
+		</TabItem>
+	</Tabs>
+)}

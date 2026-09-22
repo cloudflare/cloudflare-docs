@@ -1,0 +1,34 @@
+---
+title: CfCommand
+styleGuide:
+  component: CfCommand
+description: Display a single Cloudflare CLI command with details.
+products:
+  - style-guide
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `CfCommand` component documents one Cloudflare CLI command using metadata from the version of `cf` installed in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
+
+## Import
+
+```mdx
+import { CfCommand } from "~/components";
+```
+
+## Usage
+
+```mdx
+import { CfCommand } from "~/components";
+
+<CfCommand command="deploy" />
+<CfCommand command="auth whoami" headingLevel={3} />
+```
+
+## Arguments
+
+- `command` <Type text="string" /> <MetaInfo text="required" />
+  - The command without the `cf` prefix, such as `deploy` or `auth whoami`.
+- `headingLevel` <Type text="number" /> <MetaInfo text="(default: 2) optional" />
+  - The heading level for the command name.

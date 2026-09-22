@@ -1,0 +1,25 @@
+---
+import CommandReference from "./CommandReference.astro";
+
+interface Props {
+	command: string;
+	headingLevel?: number;
+	includeHidden?: boolean;
+}
+
+const { command, headingLevel = 2, includeHidden = false } = Astro.props;
+const definition = (await import("./cf-command-metadata")).resolveCfCommand(
+	command,
+	{ includeHidden },
+);
+---
+
+<CommandReference
+	title={definition.title}
+	headingId={definition.headingId}
+	invocation={definition.invocation}
+	description={definition.description}
+	headingLevel={headingLevel}
+	mode="cf"
+	args={definition.args}
+/>

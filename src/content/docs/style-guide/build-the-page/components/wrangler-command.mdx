@@ -30,6 +30,10 @@ import { WranglerCommand } from "~/components";
 />
 
 <WranglerCommand command="d1 execute" />
+
+<WranglerCommand command="deploy" cfCommand="deploy" />
+
+<WranglerCommand command="d1 execute" cfCommand={["d1 query", "d1 raw"]} />
 ```
 
 ## With ExtraFlagDetails
@@ -57,7 +61,9 @@ import ExtraFlagDetails from "~/components/cf/ExtraFlagDetails.astro";
 
 - `command` <Type text="string" /> <MetaInfo text="required" />
   - The name of the command, i.e `d1 execute`.
-- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+- `headingLevel` <Type text="number" /> <MetaInfo text="(default: 2) optional" />
   - The heading level that the command name should be added at on the page, i.e `2` for a `h2`.
 - `description` <Type text="string" /> <MetaInfo text="optional" />
   - A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.
+- `cfCommand` <Type text="string | string[]" /> <MetaInfo text="optional" />
+  - One or more reviewed Cloudflare CLI equivalents without the `cf` prefix. Supplying this prop displays the shared CLI selector. Explain partial or non-equivalent workflows in the surrounding page content.
