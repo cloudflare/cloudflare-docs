@@ -79,11 +79,9 @@ Contains loopback bindings to the Worker's own top-level exports. This has exact
 
 `waitUntil` is available on `DurableObjectState` for API compatibility with [Workers Runtime APIs](/workers/runtime-apis/context/#waituntil).
 
-:::note[`waitUntil` has no effect in Durable Objects]
+:::note[`waitUntil` can prevent eviction]
 
-Unlike in Workers, `waitUntil` has no effect in Durable Objects. It does not extend the lifetime of a Durable Object or affect when a request or RPC completes.
-
-Durable Objects automatically remain active as long as there is ongoing work or pending I/O, so `waitUntil` is not needed. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
+A promise passed to `waitUntil` can prevent a Durable Object from being evicted for up to 15 minutes while the promise remains incomplete. It does not affect when a request or RPC completes.
 :::
 
 #### Parameters

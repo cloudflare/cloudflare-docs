@@ -6,9 +6,13 @@ products:
 date: 2026-09-15
 ---
 
-Durable Objects remain active while handling a request from a connected client. This change applies when no client is connected, such as when an alarm starts work or an agent continues a submitted job after its client disconnects.
+Durable Objects remain active while handling a request from a connected client. This change applies when no client is connected, such as when an agent continues a submitted job after its client disconnects.
+
+Alarms already prevent eviction for their first 15 minutes. Pending operations started by an alarm can prevent eviction after that period ends.
 
 Pending [service binding](/workers/runtime-apis/bindings/service-bindings/) requests now keep Durable Objects running while they wait for a response. Pending calls to another Durable Object through remote procedure call (RPC) or `fetch()`, as well as `this.ctx.container.monitor()`, now also keep the Durable Object running.
+
+Promises passed to `this.ctx.waitUntil()` and some storage operations, such as `this.ctx.storage.put()`, also receive this protection.
 
 Previously, Cloudflare could shut down an idle Durable Object while one of these operations remained pending without a connected client. This could stop unfinished work.
 

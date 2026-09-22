@@ -47,7 +47,7 @@ Once all incoming requests or events have been processed, the Durable Object rem
 Hibernation can only occur if **all** of the conditions below are true:
 
 - No `setTimeout`/`setInterval` scheduled callbacks are set, since there would be no way to recreate the callback after hibernating.
-- No I/O operation or connection remains pending or active.
+- No I/O operation or promise passed to `this.ctx.waitUntil()` remains unfinished, and no outbound connection remains open.
 - No WebSocket standard API is used.
 - No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
 
@@ -64,9 +64,11 @@ In case of an incoming request or event while in the **hibernated** state, the `
 While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
 :::note[Pending operations prevent eviction]
-Pending or active I/O prevents a Durable Object from hibernating or being evicted. Examples include service binding requests, Durable Object remote procedure call (RPC) calls, outbound requests, [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor), TCP sockets, and outbound WebSockets.
+Unfinished I/O operations, promises passed to `this.ctx.waitUntil()`, and open outbound connections prevent a Durable Object from hibernating or being evicted. Examples include service binding requests, Durable Object remote procedure call (RPC) calls, outbound requests, storage operations such as `this.ctx.storage.put()`, [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor), TCP sockets, and outbound WebSockets.
 
-An I/O operation prevents eviction until it completes or has run for 15 minutes, whichever comes first. Later operations can extend the Durable Object's total time in memory, but their limits do not automatically stack. There is no overall invocation wall-time limit.
+Each I/O operation prevents eviction until it completes or for up to 15 minutes from when it starts, whichever comes first. An operation started later can therefore extend the Durable Object's total time in memory.
+
+Operations started together do not combine their windows. There is no overall invocation wall-time limit.
 
 While an operation prevents eviction, the Durable Object remains in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
 :::
