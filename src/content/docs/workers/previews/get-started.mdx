@@ -1,0 +1,67 @@
+---
+pcx_content_type: get-started
+title: Get started
+description: Create a Worker Preview and configure preview-safe settings with Wrangler.
+sidebar:
+  order: 1
+products:
+  - workers
+---
+
+import { PackageManagers, WranglerConfig } from "~/components";
+
+You can create a Preview for a new or existing Worker. You do not need to deploy a Worker to production before creating its first Preview.
+
+## Before you begin
+
+Worker Previews requires `Wrangler 4.135.0` or later. Update the project dependency because project commands do not use a newer global installation.
+
+<PackageManagers pkg="wrangler@latest" dev />
+
+## Step 1: Configure Preview settings
+
+Add a `previews` block to your Wrangler configuration file. Top-level settings define production, and the `previews` block defines Preview settings. The `previews` block can be empty if your Preview does not need separate settings.
+
+<WranglerConfig>
+
+```jsonc
+{
+  // ...
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  // ...
+  "previews": {
+    // ...
+    "vars": {
+      "ENVIRONMENT": "preview"
+    }
+    // ...
+  }
+}
+```
+
+</WranglerConfig>
+
+To determine which settings belong at the top level or in `previews`, refer to [What goes in the `previews` block](/workers/previews/configuration/#what-goes-in-the-previews-block).
+
+Settings that you add or import in the dashboard must also be copied to your [Wrangler configuration file](/workers/previews/configuration/#dashboard-configuration).
+
+## Step 2: Deploy a Preview
+
+Run the same Preview command locally or in your existing CI workflow:
+
+<PackageManagers type="exec" pkg="wrangler" args="preview" />
+
+The Preview name defaults to your current Git branch. To choose a name, add `--name <PREVIEW_NAME>`.
+
+To post Preview URLs automatically to pull requests or merge requests, [connect your Git repository](/workers/ci-cd/builds/#get-started) and use [Workers Builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds). New Workers use Worker Previews by default. If an existing Worker already uses Workers Builds, complete the [one-time setup](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
+
+A successful deployment returns a **Preview URL** that always points to the latest changes. It also returns a **Unique Deployment URL** for each deployment, so you can access earlier versions in the Preview's deployment history.
+
+## Next steps
+
+- [Configuration](/workers/previews/configuration/) - Configure variables, secrets, bindings, and Previews Base.
+- [Resources and isolation](/workers/previews/resources/) - Decide which resources to share or isolate.
+- [Limitations](/workers/previews/resources/#limitations) - Review current support gaps and workarounds.
+- [Examples](/workers/previews/automation-examples/) - Add Preview deployments to CI.
