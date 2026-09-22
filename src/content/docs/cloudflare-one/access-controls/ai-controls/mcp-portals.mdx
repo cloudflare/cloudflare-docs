@@ -211,7 +211,7 @@ To manually refresh the MCP server in Zero Trust:
 2. Go to the **MCP servers** tab and find the server that you want to refresh.
 3. Select the three dots > **Sync capabilities**.
 
-The MCP server page will show the updated list of tools and prompts. New tools and prompts are automatically enabled in the MCP server portal.
+The MCP server page will show the updated list of tools and prompts. By default, new tools and prompts are automatically enabled. For mappings with `default_disabled` set to `true`, they remain hidden until explicitly enabled.
 
 You can also trigger a sync via the API. The sync endpoint returns the current server state after synchronization, including the updated [server status](#server-status), tool count, and [error details](#error-details) if the sync failed.
 
