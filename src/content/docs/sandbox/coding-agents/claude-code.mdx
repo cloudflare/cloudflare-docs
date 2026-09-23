@@ -154,7 +154,7 @@ You also need:
 
 ## 2. Allow only the gateway and GitHub
 
-Create `src/outbound.ts`. The sandbox sends every HTTP and HTTPS request through this entrypoint in your Worker:
+Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through this entrypoint in your Worker. Without Internet access, it cannot reach other ports:
 
 <TypeScriptExample filename="src/outbound.ts">
 
@@ -522,7 +522,7 @@ Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific
 
 `startSandbox()` starts the container from the image Wrangler built, with no direct Internet access. The `standard-1` [instance type](/containers/platform/limits/#instance-types) gives Claude Code and the repository room to work. Choose a size that fits your agent and your repositories.
 
-After each start, the Durable Object sends all HTTP and HTTPS requests from the container to the `Outbound` entrypoint. The interception lasts for one container run, so `startSandbox()` sets it up every time it starts the container. For more information, refer to [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps).
+After each start, the Durable Object sends HTTP and HTTPS requests on ports `80` and `443` from the container to the `Outbound` entrypoint. The interception lasts for one container run, so `startSandbox()` sets it up every time it starts the container. For more information, refer to [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps).
 
 Your Worker reads HTTPS traffic from the container by re-signing it with a Cloudflare certificate authority. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests.
 

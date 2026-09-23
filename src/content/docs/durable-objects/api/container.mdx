@@ -213,6 +213,10 @@ With `stderr: "combined"` or `pty`, `ExecProcess` has no `stderr` stream, and `E
 
 `exec` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
+:::caution
+Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits records an internal error. `AbortSignal.timeout()` still fires after the process exits, so pass a signal from an `AbortController` and clear its timer when `exitCode` resolves.
+:::
+
 `kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running in the container. `exitCode` resolves when that process exits, but `output()` and the output streams wait until every process that holds the output exits. To stop a command and every process it started, run it under GNU coreutils `timeout`, for example `["timeout", "--kill-after=5", "60", "bash", "-c", command]`. The command then exits with code `124` when it runs longer than 60 seconds.
 
 #### Exceptions
@@ -457,7 +461,9 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 
 ### `interceptAllOutboundHttp`
 
-`interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
+`interceptAllOutboundHttp` routes outbound HTTP requests on port `80` from the container through a `WorkerEntrypoint`, regardless of destination.
+
+Connections to other ports are not intercepted. When the container started with `enableInternet: true`, they reach the Internet directly. To send every request through your Worker, start the container with `enableInternet: false`.
 
 ```js
 await this.ctx.container.interceptAllOutboundHttp(worker);
@@ -465,7 +471,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 #### Parameters
 
-- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle outbound HTTP requests.
 
 #### Return values
 
@@ -486,13 +492,15 @@ this.ctx.container.interceptOutboundHttps("api.example.com", worker);
 // Match a hostname glob pattern
 this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 
-// Intercept all HTTPS traffic
+// Intercept HTTPS to every hostname
 this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
+Only HTTPS on port `443` is intercepted. Matching uses the hostname the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while `*` is intercepted.
+
 #### Parameters
 
-- `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept HTTPS to every hostname.
 - `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
 
 #### Return values
