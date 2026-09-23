@@ -267,7 +267,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    npx wrangler r2 object put sandbox-artifacts/jobs/ada/input.txt --file input.txt --remote
    ```
 
-2. Run the job. Replace the example hostname with the `workers.dev` URL that Wrangler printed:
+2. Run the job. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/jobs/ada/digest --request POST
@@ -277,7 +277,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    { "exitCode": 0, "stderr": "" }
    ```
 
-   The command in the sandbox read `input.txt` from the mount and wrote `input.sha256` next to it.
+   The command in the sandbox reads `input.txt` from the mount and writes `input.sha256` next to it.
 
 3. Read the result from R2:
 
@@ -331,7 +331,7 @@ To mount a bucket from another S3-compatible service, change `endpoint`, `region
 
 To use short-lived credentials, pass `credentials: { type: "provider", fetcher }`. `S3Gateway` requests credentials from the fetcher for each storage request. Refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
 
-To keep the files on the sandbox's own disk between instances, refer to [Save and restore a workspace](/sandbox/how-to/save-and-restore-a-workspace/). Snapshots do not include mounted directories.
+To keep the files on the sandbox's own disk between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/). Snapshots do not include mounted directories.
 
 ## Next steps
 

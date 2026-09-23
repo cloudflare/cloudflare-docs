@@ -244,7 +244,7 @@ An exception in a WebSocket event listener closes the socket without running the
 
 An open terminal keeps the sandbox running, even when nobody types.
 
-When the tab closes or the connection drops, the Durable Object aborts `exec()`, which sends `SIGKILL` to `bash`. The command running in the foreground ends with the shell. Commands started in the background with `&` keep running until the Linux instance stops.
+When the tab closes or the connection drops, the Durable Object aborts `exec()`, which sends `SIGKILL` to `bash`. The command running in the foreground ends with the shell, because it loses its terminal. Commands started in the background with `&` keep running until the Linux instance stops.
 
 When the shell exits, the Durable Object closes the WebSocket, and the page shows the exit code. The Durable Object does not abort `exec()` for a shell that has already exited, because signaling an exited process records an internal error in [Workers Logs](/workers/observability/logs/workers-logs/). Reloading the page starts a new shell. Output from the previous shell is not kept.
 
@@ -256,7 +256,7 @@ Replace `bash` with another interactive command, such as a coding agent's comman
 
 The example sets `enableInternet: false`, so commands in the terminal cannot reach the Internet. Set it to `true` only if the shell needs the Internet, or allow specific destinations with an outbound handler. Refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
 
-The shell runs as `root` in the sandbox. To run it as another Linux user, pass the `user` option to `exec()`. Refer to the [Durable Object container API](/durable-objects/api/container/#exec).
+The shell runs as `root` in the sandbox. To run it as another Linux user, pass numeric user and group IDs in the `user` option of `exec()`, such as `user: "1000:1000"`. Refer to the [Durable Object container API](/durable-objects/api/container/#exec).
 
 The page loads xterm.js from a CDN to keep the example in one file. In production, install `@xterm/xterm` and `@xterm/addon-fit` from npm and serve them with [static assets](/workers/static-assets/).
 

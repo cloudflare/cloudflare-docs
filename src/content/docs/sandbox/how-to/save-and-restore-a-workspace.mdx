@@ -222,7 +222,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 
    </TypeScriptExample>
 
-   Each URL sandbox ID maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
+   Each sandbox name in the URL maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
 
    Files that are not in a snapshot exist only while the Linux instance runs. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for 10 minutes after the Durable Object becomes inactive, so the file written in one request is still there when the next request saves it. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
 
@@ -255,7 +255,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
    { "snapshotId": "<SNAPSHOT_ID>", "size": 123456 }
    ```
 
-5. Read the file from the same sandbox ID:
+5. Read the file from the same sandbox name:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/notes
@@ -270,7 +270,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 
 </Steps>
 
-The final request starts a new Linux instance from the saved snapshot. The sandbox keeps the same ID, and its files return without keeping the previous instance running.
+The final request starts a new Linux instance from the saved snapshot. The sandbox keeps the same name, and its files return without keeping the previous instance running.
 
 ## Copy and reset a workspace
 
@@ -336,7 +336,7 @@ Starting with a snapshot creates a new instance that uses the saved filesystem. 
 
 Restores are explicit. If the sandbox changes after its last snapshot, create another snapshot before the instance stops. Otherwise, the next instance starts from the previous saved state.
 
-If a stored snapshot cannot be restored, the request fails with an error such as `Snapshot "<SNAPSHOT_ID>" was not found.` Later requests fail the same way until the stored ID changes. The example does not fall back to the image, because that would show an empty workspace under a sandbox ID that should resume.
+If a stored snapshot cannot be restored, the request fails with an error such as `Snapshot "<SNAPSHOT_ID>" was not found.` Later requests fail the same way until the stored ID changes. The example does not fall back to the image, because that would show an empty workspace under a sandbox name that should keep its files.
 
 Snapshots may contain credentials or other sensitive files written inside the sandbox. A copy receives every file in the snapshot, so copy a workspace only to sandboxes that belong to the same user. Keep credentials in your Worker when possible. For more information, refer to [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox).
 

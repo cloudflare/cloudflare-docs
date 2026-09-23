@@ -711,7 +711,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    rm .secrets.json
    ```
 
-4. Save the `workers.dev` URL that Wrangler printed in a shell variable:
+4. Save the `workers.dev` URL that Wrangler prints in a shell variable:
 
    ```sh
    WORKER_URL=https://sandbox-coding-agent.<YOUR_SUBDOMAIN>.workers.dev
@@ -800,7 +800,6 @@ You built a Worker that runs Claude Code on a repository in a sandbox. The sandb
 ## Next steps
 
 - Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
-- Send Claude Code's events to a client while the task runs. Refer to [Stream command output](/sandbox/how-to/stream-command-output/).
 - Clone private repositories by adding a GitHub token in the `Outbound` entrypoint. Refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
 - Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
 - Route Claude Code through AI Gateway from other environments. Refer to [Claude Code in AI Gateway](/ai-gateway/integrations/coding-agents/claude-code/).

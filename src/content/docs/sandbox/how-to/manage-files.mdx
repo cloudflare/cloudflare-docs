@@ -292,7 +292,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
    </TypeScriptExample>
 
-   Each sandbox ID in the URL maps to one Durable Object and its Linux instance. File paths in the URL resolve against `/workspace` through the `cwd` option.
+   Each sandbox name in the URL maps to one Durable Object and its Linux instance. File paths in the URL resolve against `/workspace` through the `cwd` option.
 
    `Files` does not start the container. `startSandbox()` starts it before each operation. `read()` calls `stat()` first, then lists a directory with `readDirectory()` or streams a file with `readFile()`. `write()` creates missing parent directories, then streams the request body into the file.
 
@@ -361,7 +361,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
 </Steps>
 
-The compressed file came from a command that ran in the sandbox, and the download streamed its bytes back through your Worker. A different sandbox ID, such as `grace`, starts a separate Linux instance with its own `/workspace`.
+A command in the sandbox creates the compressed file, and the download streams its bytes back through your Worker. A different sandbox name, such as `grace`, starts a separate Linux instance with its own `/workspace`.
 
 ## Handle file errors
 
