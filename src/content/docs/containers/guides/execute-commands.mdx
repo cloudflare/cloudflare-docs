@@ -302,7 +302,7 @@ export class MyContainer extends Container {
 ```
 </TypeScriptExample>
 
-The merged stream does not guarantee ordering between source streams. In this mode, `process.stderr` is `null`, and `output.stderr` is an empty `ArrayBuffer`. This example assumes Bash exists in the image.
+The merged stream does not guarantee ordering between source streams. In this mode, `process.stderr` is `undefined`, and `output.stderr` is an empty `ArrayBuffer`. This example assumes Bash exists in the image.
 
 ## Handle nonzero exits
 
