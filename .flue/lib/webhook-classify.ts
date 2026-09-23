@@ -1,7 +1,7 @@
 /**
  * Pure GitHub-webhook classification.
  *
- * Extracted from the 0.11 `orchestrate` workflow so the routing decision is a
+ * Keeps the webhook routing decision as a
  * plain, unit-testable function with no transport, no GitHub API calls, and no
  * bindings. `app.ts` verifies the HMAC, calls `classifyWebhook`, and acts on
  * the result (dispatching the durable orchestrator or handling a codeowner
@@ -17,7 +17,6 @@ import {
 export type WebhookCommand =
 	| "review"
 	| "full-review"
-	| "ignore-review-limit"
 	| "disable-auto-review"
 	| "draft-never-stale"
 	| "rebase";
@@ -80,8 +79,6 @@ function commandFromComment(
 			return "full-review";
 		case "/review":
 			return "review";
-		case "/ignore-review-limit":
-			return "ignore-review-limit";
 		case "/disable-auto-review":
 			return "disable-auto-review";
 		case "/draft-never-stale":

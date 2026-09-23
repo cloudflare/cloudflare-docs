@@ -4,8 +4,10 @@
 	"account_id": "b54f07a6c269ecca2fa60f1ae4920c99",
 	"compatibility_date": "2026-04-01",
 	"compatibility_flags": ["nodejs_compat"],
+	// Workers AI always runs remotely, including in local dev.
 	"ai": {
 		"binding": "AI",
+		"remote": true,
 	},
 	"r2_buckets": [
 		{
@@ -184,6 +186,23 @@
 			// false-positive findings from the specialist agents.
 			"tag": "v11",
 			"new_sqlite_classes": ["FlueReviewValidatorAgent"],
+		},
+		{
+			// v12: Whole-diff review. Replace the per-file code/style agents,
+			// reconcile, and validator with whole-diff code/style specialists and
+			// one judge. Conventions keeps its class.
+			"tag": "v12",
+			"deleted_classes": [
+				"FlueCodeReviewFileAgent",
+				"FlueStyleGuideFileAgent",
+				"FlueReconcileReviewerAgent",
+				"FlueReviewValidatorAgent",
+			],
+			"new_sqlite_classes": [
+				"FlueCodeReviewerAgent",
+				"FlueStyleGuideReviewerAgent",
+				"FlueReviewJudgeAgent",
+			],
 		},
 	],
 	"triggers": {

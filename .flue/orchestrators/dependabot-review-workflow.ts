@@ -1,15 +1,14 @@
 /**
  * DependabotReviewWorkflow — durable Dependabot review pipeline (D6).
  *
- * Cloudflare `WorkflowEntrypoint` that replaces the 0.11
- * `workflows/dependabot-review.ts`. Re-exported from `cloudflare.ts` so the
+ * Cloudflare `WorkflowEntrypoint`. Re-exported from `cloudflare.ts` so the
  * generated Worker entry (`export * from cloudflare.ts`) picks it up; bound as
  * `DEPENDABOT_REVIEW` in `wrangler.jsonc`. Kicked from `pipeline-entry.ts` for
  * Dependabot PRs (opened/reopened/synchronize/ready_for_review) and for
  * `/review`/`/full-review` commands on Dependabot PRs.
  *
  * Steps: fetch PR + parse packages → placeholder (comment mode) → drive the
- * `dependabot-reviewer` agent (`lib/run-dependabot-review.ts`) → render + post
+ * `dependabot-reviewer` agent → render + post
  * (or log), swapping 👀→👍 on the trigger comment. All GitHub side-effects stay
  * in trusted TS; the agent only reasons and submits (D5).
  *
@@ -18,6 +17,12 @@
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
+import DependabotReviewer, {
+	DEPENDABOT_REVIEW_DATA,
+	type DependabotReviewInput,
+} from "../agents/dependabot-reviewer";
+import { agentStep } from "../lib/agents/agent-step";
+import { SPECIALIST_DURABILITY } from "../lib/agents/durability";
 import {
 	addReactionToComment,
 	getInstallationToken,
@@ -27,13 +32,12 @@ import {
 import {
 	BOT_COMMENT_MARKER,
 	type DependabotPackage,
-	type DependabotReviewResult,
+	DependabotReviewResultSchema,
 	findExistingBotComment,
 	parseDependabotPackages,
 	postOrUpdateComment,
 	renderComment,
 } from "../lib/dependabot-review";
-import { runDependabotReview } from "../lib/run-dependabot-review";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface DependabotReviewParams {
@@ -147,34 +151,31 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 		}
 
 		// ── 3. Run the dependabot reviewer agent ────────────────────────────────
-		const review = await step.do<{
-			ok: boolean;
-			result: DependabotReviewResult | null;
-		}>("review", async () => {
-			try {
-				const result = await runDependabotReview(
-					{
-						prNumber: number,
-						prTitle: ctx.title,
-						prBody: ctx.body,
-						packages: ctx.packages,
-					},
-					`${runId}:dependabot:${ctx.headSha}`,
-				);
-				return { ok: true, result };
-			} catch (err) {
-				console.error({
-					message: `Dependabot review agent failed: PR #${number} — ${err instanceof Error ? err.message : String(err)}`,
-					event: "dependabot_review",
-					number,
-					runId,
-					action: "agent_failed",
-				});
-				return { ok: false, result: null };
-			}
+		const review = await agentStep(step, {
+			name: "dependabot-review",
+			agent: DependabotReviewer,
+			id: `${runId}:dependabot:${ctx.headSha}`,
+			message:
+				"Review this Dependabot PR's bumped packages, then submit the structured result.",
+			initialData: {
+				prNumber: number,
+				prTitle: ctx.title,
+				prBody: ctx.body,
+				packages: ctx.packages,
+			} satisfies DependabotReviewInput,
+			dataName: DEPENDABOT_REVIEW_DATA,
+			schema: DependabotReviewResultSchema,
+			readTimeoutMs: SPECIALIST_DURABILITY.timeoutMs,
 		});
 
-		if (!review.ok || !review.result) {
+		if (!review.ok) {
+			console.error({
+				message: `Dependabot review agent failed: PR #${number} — ${review.error}`,
+				event: "dependabot_review",
+				number,
+				runId,
+				action: "agent_failed",
+			});
 			if (reviewMode === "comment") {
 				await step.do("publish-failure", async () => {
 					const token = await getInstallationToken(ghEnv);
@@ -195,7 +196,7 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 			};
 		}
 
-		const result = review.result;
+		const result = review.value;
 
 		// ── 4. Render + post/log the final comment ──────────────────────────────
 		const published = await step.do<{

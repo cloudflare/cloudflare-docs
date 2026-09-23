@@ -1,11 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { TeamMembershipCheckError } from "./github";
 import { emptyResult } from "./reviewer-recommendations";
 import {
+	findRecommendationComment,
 	isRetryableRecommendationError,
 	parseRecommendationState,
 } from "./run-reviewer-recommendations";
+
+const github = vi.hoisted(() => ({ getIssueComments: vi.fn() }));
+vi.mock("./github", async (importOriginal) => ({
+	...(await importOriginal<typeof import("./github")>()),
+	getIssueComments: github.getIssueComments,
+}));
 
 describe("isRetryableRecommendationError", () => {
 	it("always retries membership-check errors, even with a permanent-looking status", () => {
@@ -63,5 +70,23 @@ describe("parseRecommendationState", () => {
 				recommendation: { ...emptyResult(), ownershipAreas: "corrupt" },
 			}),
 		).toBeNull();
+	});
+});
+
+describe("findRecommendationComment", () => {
+	const marker = "<!-- cloudflare-docs-flue-reviewer-recommendations -->";
+	it("ignores spoofed recorded ids and scans for the newest valid bot marker", async () => {
+		const valid = { id: 2, body: `${marker}\nvalid`, user: { type: "Bot" } };
+		github.getIssueComments.mockResolvedValue([
+			{ id: 1, body: marker, user: { type: "User" } },
+			valid,
+			{ id: 3, body: `quoted ${marker}`, user: { type: "Bot" } },
+		]);
+		expect(await findRecommendationComment("token", 1, 1)).toBe(valid);
+	});
+	it("uses a valid recorded id", async () => {
+		const recorded = { id: 1, body: `${marker}\nvalid`, user: { type: "Bot" } };
+		github.getIssueComments.mockResolvedValue([recorded]);
+		expect(await findRecommendationComment("token", 1, 1)).toBe(recorded);
 	});
 });

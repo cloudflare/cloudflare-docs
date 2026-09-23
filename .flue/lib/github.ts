@@ -364,6 +364,46 @@ export interface GitHubIssueComment {
 	user: GitHubUser | null;
 }
 
+export interface GitHubPullRequestReview {
+	id: number;
+	body: string | null;
+	submitted_at: string | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export interface GitHubPullRequestReviewComment {
+	id: number;
+	body: string | null;
+	created_at: string;
+	path: string;
+	line: number | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export async function listPullRequestReviews(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReview[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/reviews?per_page=100`,
+		`list reviews for ${pullNumber}`,
+	);
+}
+
+export async function listPullRequestReviewComments(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReviewComment[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/comments?per_page=100`,
+		`list review comments for ${pullNumber}`,
+	);
+}
+
 export async function getIssueComments(
 	token: string,
 	issueNumber: number,

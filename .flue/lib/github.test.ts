@@ -4,6 +4,8 @@ import {
 	TeamMembershipCheckError,
 	getIssueComments,
 	isGitHubTeamMember,
+	listPullRequestReviewComments,
+	listPullRequestReviews,
 } from "./github";
 
 const MEMBERSHIP_URL =
@@ -128,6 +130,42 @@ describe("getIssueComments", () => {
 		);
 		expect(fetchMock.mock.calls[1][0]).toBe(
 			"https://api.github.com/repos/cloudflare/cloudflare-docs/issues/1/comments?page=2",
+		);
+	});
+});
+
+describe("pull request review lists", () => {
+	afterEach(() => vi.unstubAllGlobals());
+
+	it("paginates reviews and review comments", async () => {
+		const fetchMock = vi
+			.fn()
+			.mockResolvedValueOnce(
+				new Response(JSON.stringify([{ id: 1, body: "review" }]), {
+					status: 200,
+					headers: {
+						Link: '<https://example.test/reviews?page=2>; rel="next"',
+					},
+				}),
+			)
+			.mockResolvedValueOnce(
+				new Response(JSON.stringify([{ id: 2, body: "review" }]), {
+					status: 200,
+				}),
+			)
+			.mockResolvedValueOnce(
+				new Response(JSON.stringify([{ id: 3, body: "comment" }]), {
+					status: 200,
+				}),
+			);
+		vi.stubGlobal("fetch", fetchMock);
+		expect(await listPullRequestReviews("token", 1)).toHaveLength(2);
+		expect(await listPullRequestReviewComments("token", 1)).toHaveLength(1);
+		expect(fetchMock.mock.calls[0][0]).toContain(
+			"/pulls/1/reviews?per_page=100",
+		);
+		expect(fetchMock.mock.calls[2][0]).toContain(
+			"/pulls/1/comments?per_page=100",
 		);
 	});
 });
