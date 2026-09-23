@@ -231,6 +231,37 @@ try {
 
 - `TcpPort`: a `TcpPort` object representing the TCP port. This object can be used to send requests to the container over TCP and HTTP.
 
+### `setInactivityTimeout`
+
+`setInactivityTimeout` sets how long a running container can stay idle before Cloudflare stops it. A container is idle when it has no open connections or other activity. Cloudflare does not stop a container for inactivity while a connection to it is open.
+
+Without an inactivity timeout, Cloudflare decides when to stop a container that has no open connections. With a timeout, the container can keep running after the Durable Object that started it becomes inactive. This lets a long-running server, such as a development preview, handle later requests.
+
+Call `setInactivityTimeout` after each call to `start()`.
+
+```js
+this.ctx.container.start({
+	entrypoint: ["node", "server.js"],
+});
+
+// Stop the container after 5 minutes without activity.
+await this.ctx.container.setInactivityTimeout(5 * 60 * 1000);
+```
+
+The [`Container` class](/containers/reference/container-class/) manages container lifetime with [`sleepAfter`](/containers/reference/container-class/#sleepafter). Use `sleepAfter` when your class extends `Container`.
+
+#### Parameters
+
+- `durationMs` (`number | bigint`): idle time in milliseconds before Cloudflare stops the container. The value must be greater than `0`.
+
+#### Return values
+
+- A promise that resolves once the timeout is configured.
+
+#### Exceptions
+
+- `setInactivityTimeout()` throws a `TypeError` when `durationMs` is `0` or less.
+
 ### `monitor`
 
 `monitor` returns a promise that resolves when a container exits and errors if a container errors. This is useful for setting up
