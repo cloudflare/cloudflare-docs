@@ -1,0 +1,197 @@
+---
+title: Stream command output
+description: Send stdout and stderr from a Linux command to the client while the command runs.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Stream output from a command in a Linux sandbox while the command runs. This guide sends standard output and standard error to the client as server-sent events, reports the exit code, and stops the command if the client disconnects.
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+:::caution
+The example runs any command in the request body and does not authenticate incoming requests. Authenticate callers before production, and run only commands your application chooses.
+:::
+
+## Stream a command
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   const encoder = new TextEncoder();
+
+   export class MyContainer extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	async stream(argv: string[]): Promise<Response> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await this.container.exec(argv);
+   		const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+   		const writer = writable.getWriter();
+
+   		const send = (event: string, data: unknown) =>
+   			writer.write(
+   				encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+   			);
+
+   		const forward = async (
+   			stream: ReadableStream<Uint8Array>,
+   			event: "stdout" | "stderr",
+   		) => {
+   			for await (const text of stream.pipeThrough(new TextDecoderStream())) {
+   				await send(event, text);
+   			}
+   		};
+
+   		// Stop the process when the client disconnects.
+   		writer.closed.catch(() => process.kill());
+
+   		// Detect a disconnected client while the process writes nothing.
+   		const heartbeat = setInterval(() => {
+   			writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
+   		}, 5_000);
+
+   		const pump = async () => {
+   			try {
+   				await Promise.all([
+   					forward(process.stdout!, "stdout"),
+   					forward(process.stderr!, "stderr"),
+   				]);
+   				await send("exit", { exitCode: await process.exitCode });
+   				await writer.close();
+   			} catch {
+   				process.kill();
+   			} finally {
+   				clearInterval(heartbeat);
+   			}
+   		};
+
+   		// Keep streaming after this method returns the response.
+   		void pump();
+
+   		return new Response(readable, {
+   			headers: {
+   				"Content-Type": "text/event-stream",
+   				"Cache-Control": "no-cache",
+   			},
+   		});
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const { argv } = (await request.json()) as { argv: string[] };
+   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   		return sandbox.stream(argv);
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. POST a command to the `workers.dev` URL that Wrangler prints. The command writes a line each second, writes a warning to standard error, and exits with code `3`:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --no-buffer --json '{
+     "argv": ["sh", "-c", "for i in 1 2 3; do echo \"step $i\"; sleep 1; done; echo \"warning: almost done\" >&2; exit 3"]
+   }'
+   ```
+
+   The events arrive about one second apart:
+
+   ```txt output
+   event: stdout
+   data: "step 1\n"
+
+   event: stdout
+   data: "step 2\n"
+
+   event: stdout
+   data: "step 3\n"
+
+   event: stderr
+   data: "warning: almost done\n"
+
+   event: exit
+   data: {"exitCode":3}
+   ```
+
+   `--no-buffer` makes `curl` print each event when it arrives.
+
+</Steps>
+
+## Read the event stream
+
+The response uses the [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html) format. Each event has a type and a JSON-encoded `data` value:
+
+- `stdout` and `stderr` events contain text the process wrote. An event can hold part of a line or several lines, so join the text instead of treating each event as a line.
+- The `exit` event contains the exit code and is the last event.
+- Lines that start with `:` are comments. The Worker sends `: keep-alive` every five seconds. Server-sent event clients ignore comments.
+
+The browser `EventSource` API sends only `GET` requests. To read this stream in a browser, send the request with `fetch()` and read the response body, or accept the command in a `GET` request.
+
+## How the Worker streams output
+
+The Worker returns the response before the command finishes. `pump()` keeps reading the process output and writes each chunk to the response as the process produces it.
+
+The Worker reads standard output and standard error at the same time. If one stream is not read, backpressure can pause a process that keeps writing to it. Events from the two streams arrive in the order the Worker reads them, which might not match the order the process wrote them.
+
+`TextDecoderStream` decodes UTF-8 text across chunk boundaries, so a character split between two chunks is not corrupted.
+
+When the client disconnects, the next write fails and `writer.closed` rejects. The Worker then calls `kill()`, which sends `SIGTERM` to the process that `exec()` started. The keep-alive comment makes that write happen even when the process writes nothing.
+
+The sandbox starts with `sleep infinity` as its main process. If the main process exits, the Linux instance stops and ends every running command. `exec()` waits for a new instance to start, so the Worker can run the command right after `start()`.
+
+## Adapt the stream
+
+Replace the command in the request body with commands your application chooses, such as a fixed build or test command.
+
+To send both streams as one stream, pass `{ stderr: "combined" }` to `exec()` and forward only `process.stdout`. Refer to [Execute commands](/containers/guides/execute-commands/#combine-standard-error).
+
+`SIGTERM` reaches only the process that `exec()` started. If that process starts other processes, it must stop them when it receives `SIGTERM`.
+
+To stop a command after a time limit, call `process.kill()` from a timer. Refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
+
+The example sets `enableInternet: false`, so commands cannot download packages or reach other services. Set it to `true` only for commands that need the Internet.
+
+## Next steps
+
+- To run a repository's tests, refer to [Run tests from a Git repository](/sandbox/how-to/run-tests-from-a-git-repository/).
+- To serve a long-running process over HTTP, refer to [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+- For every `exec()` option, refer to the [Durable Object container API](/durable-objects/api/container/#exec).
