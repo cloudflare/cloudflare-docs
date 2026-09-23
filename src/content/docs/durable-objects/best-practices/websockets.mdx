@@ -715,13 +715,13 @@ Configure your Wrangler file with a Durable Object [binding](/durable-objects/ge
 
 A full example is available in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 
-:::caution[WebSocket disconnection when an instance is replaced]
+:::caution[WebSocket disconnection]
 
-Cloudflare occasionally replaces a Durable Object instance. For example, this happens when you deploy new Worker code.
+Cloudflare occasionally has to stop a running Durable Object instance. This is rare, and happens in cases such as a hardware failure, or an instance that stays active long enough that Cloudflare has to move it.
 
-All WebSockets connected to the instance close, including hibernating connections. Build clients to reconnect.
+Connections accepted with the [WebSocket Hibernation API](#durable-objects-hibernation-websocket-api) are not closed by hibernation itself. Connections that use the Web Standard WebSocket API prevent hibernation, so they close whenever the instance stops.
 
-Hibernation itself does not close WebSocket connections. For reasons an instance shuts down, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
+Build clients to reconnect after any unexpected closure.
 
 :::
 

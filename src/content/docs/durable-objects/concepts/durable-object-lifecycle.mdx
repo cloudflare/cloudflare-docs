@@ -96,14 +96,10 @@ An instance can shut down for several reasons:
 When a Durable Object instance shuts down, Cloudflare routes new requests to a new instance. In-flight requests are handled as follows:
 
 - **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
-- **WebSocket connections**: All WebSocket connections to the instance close, including [hibernating connections](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Clients must reconnect.
+- **WebSocket connections**: Connections that use the Web Standard WebSocket API close, because they prevent the object from hibernating. Connections accepted with the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) stay open when the object hibernates, but close if the instance stops before it hibernates.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
-Hibernation itself does not close WebSocket connections. Cloudflare does not transfer existing connections to a new instance.
-
-For recovery guidance after an interrupted request or WebSocket connection, refer to [Troubleshooting](/durable-objects/observability/troubleshooting/).
-
-Design services that use Durable Objects to handle instance shutdowns.
+It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
 
 ### Code updates
 
