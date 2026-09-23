@@ -159,7 +159,11 @@ If your origin already serves HTTPS or redirects HTTP to HTTPS, refer to [Troubl
 
 3. Install `cloudflared` on your server and run the tunnel using the `token` obtained in [Create a tunnel](/tunnel/get-started/#create-a-tunnel):
 
-   <Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
+   <Render
+    file="tunnel/install-and-run-tunnel"
+    product="cloudflare-one"
+    params={{ namedServicesURL: "/tunnel/guides/named-services/" }}
+   />
 
 </TabItem>
 </Tabs>

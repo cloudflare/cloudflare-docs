@@ -28,6 +28,8 @@ When you run a tunnel, `cloudflared` establishes four outbound-only, [post-quant
 
 A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica.
 
+For remotely-managed tunnels, you can [run multiple named `cloudflared` services](/tunnel/guides/named-services/) on one host.
+
 <Render file="tunnel/availability/cloudflared-replicas-diagram" product="cloudflare-one" />
 
 ### Deploy a replica
@@ -44,7 +46,7 @@ To deploy a replica for a remotely-managed tunnel:
 2. Select your tunnel.
 3. Select **Add a replica**.
 4. Select the operating system of the host where you want to deploy a replica.
-5. Copy the installation command and run it on the host.
+5. Copy the installation command and run it on the host. If a `cloudflared` service already exists on the host, [install a named service](/tunnel/guides/named-services/) instead.
 
 </TabItem>
 
@@ -123,10 +125,10 @@ The most commonly used parameters:
 | [`--region`](/tunnel/reference/run-parameters/#region)     | global            | Route through US-only data centers with `us`             |
 | [`--token`](/tunnel/reference/run-parameters/#token)       | —                 | Tunnel token (remotely-managed tunnels)                  |
 
-The following example shows how to manually run a tunnel with configuration flags:
+The following example shows how to manually run a tunnel with configuration flags. Save the token in a file that only the `cloudflared` user can read before running the command:
 
 ```sh
-cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token <TOKEN VALUE>
+cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token-file /etc/cloudflared/tunnel.token
 ```
 
 For the complete list of run parameters and instructions on how to add them to a tunnel service, refer to [Run parameters](/tunnel/reference/run-parameters/).

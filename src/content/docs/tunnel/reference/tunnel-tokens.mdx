@@ -1,7 +1,7 @@
 ---
 title: Tunnel tokens
 pcx_content_type: reference
-description: Manage tunnel authentication tokens for remote and local tunnels.
+description: Manage authentication tokens for remotely-managed Cloudflare Tunnels.
 products:
   - tunnel
 tags:
@@ -48,6 +48,12 @@ To get the token for a remotely-managed tunnel:
 </TabItem>
 </Tabs>
 
+## Use a token with a service
+
+When you run `cloudflared service install <TUNNEL_TOKEN>`, the installer saves the token in a restricted file. The service then reads it with `--token-file`, so the token does not appear in the running service's command line. Each [named service](/tunnel/guides/named-services/) has its own token file.
+
+The token may still be visible while the install command runs or remain in your shell history. Treat the installation command as a secret. `--token-file` and `TUNNEL_TOKEN_FILE` apply to `cloudflared tunnel run`, not to `cloudflared service install`. If you run `cloudflared` without the service installer, use [`--token-file`](/tunnel/reference/run-parameters/#token-file) to keep the token out of the run command.
+
 ## Rotate a token
 
 Rotate tokens regularly to reduce the risk of compromise. For tunnels with multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), rotate outside working hours and update replicas in batches.
@@ -60,12 +66,14 @@ Rotate tokens regularly to reduce the risk of compromise. For tunnels with multi
 3. Select **Rotate token**.
 	After rotating the token, `cloudflared` cannot establish new connections with the old token. Existing connectors remain active until restarted.
 4. Select **Add replica** and copy the new `cloudflared` installation command.
-5. On each replica, reinstall the `cloudflared` service using the new token:
+5. On each replica, uninstall the service and reinstall it with the new token. For the default Linux service, run:
 
 	```sh
 	sudo cloudflared service uninstall
 	sudo cloudflared service install <NEW_TOKEN>
 	```
+
+	If you use a named service, specify the same `--service-name` value in both commands. For installation and uninstallation commands on each operating system, refer to [Run multiple cloudflared services](/tunnel/guides/named-services/).
 
 <Details header="Rotate a compromised token">
 
@@ -76,6 +84,6 @@ If your tunnel token is compromised, immediately [rotate the token](#rotate-a-to
 	method="DELETE"
 />
 
-Then reinstall the `cloudflared` service on all replicas using the new token.
+Then reinstall the `cloudflared` service on all replicas using the new token. If you use named services, reinstall each one with its original service name.
 
 </Details>

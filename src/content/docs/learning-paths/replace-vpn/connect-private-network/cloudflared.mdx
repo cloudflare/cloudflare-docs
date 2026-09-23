@@ -62,7 +62,11 @@ To connect your private network:
 
 5. Install `cloudflared` on a host machine in your private network and run the tunnel:
 
-		<Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
+		<Render
+			file="tunnel/install-and-run-tunnel"
+			product="cloudflare-one"
+			params={{ namedServicesURL: "/tunnel/guides/named-services/" }}
+		/>
 
 </TabItem>
 </Tabs>

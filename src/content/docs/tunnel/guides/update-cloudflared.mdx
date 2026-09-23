@@ -26,9 +26,10 @@ Run the following command:
 cloudflared update
 ```
 
-After running `cloudflared update` to update `cloudflared`, you must restart the service for it to take effect. Run:
+After updating `cloudflared`, restart the default service:
 
 ```powershell
+net stop cloudflared
 net start cloudflared
 ```
 
@@ -40,14 +41,13 @@ net start cloudflared
 brew upgrade cloudflared
 ```
 
-2. Restart the service:
+2. Restart the default system launch daemon:
 
 ```sh
-sudo launchctl stop com.cloudflare.cloudflared
-sudo launchctl unload /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-sudo launchctl load /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
-sudo launchctl start com.cloudflare.cloudflared
+sudo launchctl kickstart -k system/com.cloudflare.cloudflared
 ```
+
+If you installed the service without `sudo`, run `launchctl kickstart -k gui/$(id -u)/com.cloudflare.cloudflared` instead.
 
 </TabItem> <TabItem label="Debian">
 
@@ -143,6 +143,8 @@ If you installed `cloudflared` with a package manager, you must update it using 
 
 </TabItem> </Tabs>
 
+If you use named services, [restart each named service](/tunnel/guides/named-services/#restart-a-named-service/) after updating `cloudflared`. The restart commands in the platform tabs apply to the default service.
+
 ## Update with Cloudflare Load Balancer
 
 You can update `cloudflared` without downtime by using Cloudflare's Load Balancer product with your Cloudflare Tunnel deployment.
@@ -170,19 +172,4 @@ When the old replica is stopped, it will drop long-lived HTTP requests (for exam
 
 ### Run multiple instances in Windows
 
-Windows systems require services to have a unique name and display name. You can run multiple instances of `cloudflared` by creating `cloudflared` services with unique names.
-
-1. Install and configure `cloudflared`.
-2. Next, create a service with a unique name and point to the `cloudflared` executable and configuration file.
-
-```powershell
-sc.exe create <unique-name> binPath='<path-to-exe>' --config '<path-to-config>' displayname="Unique Name"
-```
-
-3. Proceed to create additional services with unique names.
-
-4. You can now start each unique service.
-
-```powershell
-sc.exe start <unique-name>
-```
+For remotely-managed tunnels, you can [run multiple named `cloudflared` services](/tunnel/guides/named-services/) on one Windows host. For locally-managed tunnels, run additional `cloudflared tunnel run` processes using the appropriate tunnel credentials.

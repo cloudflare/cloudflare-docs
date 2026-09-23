@@ -44,21 +44,22 @@ sudo cloudflared service install
 
 Cloudflare Tunnel will be installed as a launch daemon and start whenever your system boots, using your configuration found in `/etc/cloudflared`.
 
-## 3. Manually start the service
+## 3. Check the service
 
-Run the following command:
+For a system launch daemon installed with `sudo`, check its status:
 
 ```sh
-sudo launchctl start com.cloudflare.cloudflared
+sudo launchctl print system/com.cloudflare.cloudflared
 ```
 
-The output will be logged to `/Library/Logs/com.cloudflare.cloudflared.err.log` and `/Library/Logs/com.cloudflare.cloudflared.out.log`.
+For a user launch agent, run `launchctl print gui/$(id -u)/com.cloudflare.cloudflared`. The output is logged in the `Library/Logs` directory of the user that installed the service.
 
 ## Next steps
 
-You can now <a href={props.routeTrafficURL}>route traffic through your tunnel</a>. If you add IP routes or otherwise change the configuration, restart the service to load the new configuration:
+You can now <a href={props.routeTrafficURL}>route traffic through your tunnel</a>. If you change the configuration of a system launch daemon, restart it to load the changes:
 
 ```sh
-sudo launchctl stop com.cloudflare.cloudflared
-sudo launchctl start com.cloudflare.cloudflared
+sudo launchctl kickstart -k system/com.cloudflare.cloudflared
 ```
+
+For a user launch agent, run `launchctl kickstart -k gui/$(id -u)/com.cloudflare.cloudflared` instead.

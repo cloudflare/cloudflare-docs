@@ -32,7 +32,7 @@ The connector, referred to as `cloudflared`, establishes connectivity from your 
 
 ## Replica
 
-A replica is an additional instance of `cloudflared` running the same tunnel on a different host. You can create and configure a tunnel once, then run it through multiple replicas for redundancy. DNS records and Cloudflare Load Balancers continue to point to the tunnel (`UUID.cfargotunnel.com`), while Cloudflare distributes traffic across the available replicas. There is no guarantee about which replica will be chosen — Cloudflare routes to the geographically closest one. Replicas are typically deployed to keep a tunnel available if a host running `cloudflared` goes offline.
+A replica is an additional instance of `cloudflared` running the same tunnel. For remotely-managed tunnels, you can [run multiple named services](/tunnel/guides/named-services/) on one host. To keep the tunnel available if a host goes offline, deploy replicas on different hosts. DNS records and Cloudflare Load Balancers continue to point to the tunnel (`UUID.cfargotunnel.com`). Cloudflare routes traffic to the geographically closest replica.
 
 ## Remotely-managed tunnel
 
