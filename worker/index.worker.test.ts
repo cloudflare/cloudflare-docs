@@ -99,6 +99,71 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("redirects", () => {
+		it.each([
+			[
+				"/cloudflare-one/traffic-policies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/traffic-policies/http-policies/example/",
+				"/cloudflare-one/traffic-controls/http-policies/example/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/configure-pac-file-on-device/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/best-practices/",
+			],
+		])("redirects %s to %s", async (source, destination) => {
+			const request = new Request(`http://fakehost${source}`);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(destination);
+		});
+
+		it("redirects an unslashed resolver and proxy request", async () => {
+			const request = new Request(
+				"http://fakehost/cloudflare-one/networks/resolvers-and-proxies",
+			);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/cloudflare-one/traffic-controls/",
+			);
+		});
+
 		it("redirects requests with a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
