@@ -26,7 +26,7 @@ Use `AS` to set result field names:
 
 ```sql
 SELECT
-  clientRequestHTTPHost AS host,
+  clientRequestHttpHost AS host,
   edgeResponseStatus AS status
 FROM events.httpRequests
 WHERE accountTag = '<ACCOUNT_TAG>'
@@ -54,7 +54,9 @@ zoneTag = '<ZONE_TAG>'
 zoneTag IN ('<ZONE_TAG_1>', '<ZONE_TAG_2>')
 ```
 
-A query can select only one account. Tenancy predicates must be top-level conditions joined with `AND`. Do not place `accountTag` or `zoneTag` inside `OR`, `NOT`, or `NOT IN` expressions.
+A query can select only one account. Specify zone tenancy in one `zoneTag` predicate; use `IN` to select multiple zones. Tenancy predicates must be top-level conditions joined with `AND`. Do not place `accountTag` or `zoneTag` inside `OR`, `NOT`, or `NOT IN` expressions.
+
+Any query containing `zoneTag` requires **Zone Analytics Read** permission for every named zone, even if the token has Account Analytics Read permission for the owning account.
 
 Every query also requires a lower bound on the dataset timestamp field. Use `>`, `>=`, or `BETWEEN` to provide the lower bound. The timestamp field name varies by dataset.
 
@@ -75,11 +77,11 @@ GROUP BY edgeResponseStatus
 Use `HAVING` to filter grouped results. A `HAVING` expression must reference an aggregate function.
 
 ```sql
-SELECT clientRequestHTTPHost AS host, COUNT(*) AS requests
+SELECT clientRequestHttpHost AS host, COUNT(*) AS requests
 FROM events.httpRequests
 WHERE accountTag = '<ACCOUNT_TAG>'
   AND timestamp >= NOW() - INTERVAL '1' HOUR
-GROUP BY clientRequestHTTPHost
+GROUP BY clientRequestHttpHost
 HAVING COUNT(*) > 100
 ```
 

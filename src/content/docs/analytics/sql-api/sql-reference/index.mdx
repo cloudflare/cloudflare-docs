@@ -12,12 +12,12 @@ Every query must read one schema-qualified dataset and must include an account o
 
 ```sql
 SELECT
-  clientRequestHTTPHost AS host,
+  clientRequestHttpHost AS host,
   COUNT(*) AS requests
 FROM events.httpRequests
 WHERE accountTag = '<ACCOUNT_TAG>'
   AND timestamp >= NOW() - INTERVAL '1' HOUR
-GROUP BY clientRequestHTTPHost
+GROUP BY clientRequestHttpHost
 ORDER BY requests DESC
 LIMIT 10
 ```
