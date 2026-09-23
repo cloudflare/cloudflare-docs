@@ -418,6 +418,68 @@ export async function getIssueComments(
 	return comments;
 }
 
+/**
+ * Get the last time each pull request's head branch was pushed to, via one
+ * batched GraphQL query (one alias per PR). REST pull request objects do not
+ * expose a per-branch push timestamp, and a push followed by a bot comment
+ * cannot be recovered from `updated_at` alone.
+ *
+ * PRs whose head ref has no recorded push time (or that no longer exist) are
+ * omitted from the map. Throws on transport failure so callers can decide how
+ * to degrade; per-PR GraphQL errors are skipped so a single bad alias cannot
+ * fail the batch.
+ */
+export async function getHeadRefPushedAt(
+	token: string,
+	pullNumbers: number[],
+): Promise<Map<number, string>> {
+	const [owner, name] = REPO.split("/");
+	const result = new Map<number, string>();
+	const CHUNK_SIZE = 50;
+	for (let index = 0; index < pullNumbers.length; index += CHUNK_SIZE) {
+		const chunk = pullNumbers.slice(index, index + CHUNK_SIZE);
+		const aliases = chunk
+			.map(
+				(pullNumber, i) =>
+					`p${i}: pullRequest(number: ${pullNumber}) { headRefPushedAt }`,
+			)
+			.join("\n");
+		const res = await fetch("https://api.github.com/graphql", {
+			method: "POST",
+			headers: apiHeaders(token),
+			body: JSON.stringify({
+				query: `query {
+	repository(owner: "${owner}", name: "${name}") {
+${aliases}
+	}
+}`,
+			}),
+		});
+		if (!res.ok) {
+			throw new Error(
+				`Failed to fetch head ref push times (HTTP ${res.status}): ${await res.text()}`,
+			);
+		}
+		const data = (await res.json()) as {
+			data?: {
+				repository?: Record<string, { headRefPushedAt: string | null } | null>;
+			};
+			errors?: unknown[];
+		};
+		const repository = data.data?.repository;
+		if (!repository) {
+			throw new Error(
+				`Failed to fetch head ref push times: ${JSON.stringify(data.errors ?? data)}`,
+			);
+		}
+		chunk.forEach((pullNumber, i) => {
+			const headRefPushedAt = repository[`p${i}`]?.headRefPushedAt;
+			if (headRefPushedAt) result.set(pullNumber, headRefPushedAt);
+		});
+	}
+	return result;
+}
+
 export async function updateIssueComment(
 	token: string,
 	commentId: number,
