@@ -1,0 +1,23 @@
+---
+title: Run coding agents in a sandbox
+description: Run coding agents such as Claude Code on a repository in a Linux sandbox that holds no model credentials.
+pcx_content_type: navigation
+sidebar:
+  order: 4.5
+  label: Overview
+  group:
+    label: Coding agents
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+---
+
+import { DirectoryListing } from "~/components";
+
+A coding agent reads a repository, edits files, and runs commands until its task is done. Run the agent in a Linux sandbox so those commands stay inside a [Container](/containers/) that belongs to one task. The agent gets Git, a shell, and the files it works on.
+
+Your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach.
+
+<DirectoryListing />
