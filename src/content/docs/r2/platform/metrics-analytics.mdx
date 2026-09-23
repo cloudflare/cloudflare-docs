@@ -1,27 +1,36 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
-description: View R2 storage and operations metrics via the dashboard or GraphQL Analytics API.
+description: View R2 storage, operations, and bandwidth usage metrics.
 products:
   - r2
 ---
 
 import { DashButton } from "~/components";
 
-R2 exposes analytics that allow you to inspect the requests and storage of the buckets in your account.
+[R2](/r2/) exposes analytics for requests, storage, and bandwidth usage across your buckets.
 
 The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
 ## Metrics
 
-R2 currently has two datasets:
+R2 has three datasets:
 
-| Dataset    | GraphQL Dataset Name         | Description                                                                  |
-| ---------- | ---------------------------- | ---------------------------------------------------------------------------- |
-| Operations | `r2OperationsAdaptiveGroups` | This dataset consists of the operations taken on a bucket within an account. |
-| Storage    | `r2StorageAdaptiveGroups`    | This dataset consists of the storage of a bucket within an account.          |
+| Dataset    | GraphQL Dataset Name             | Description                                                                  |
+| ---------- | -------------------------------- | ---------------------------------------------------------------------------- |
+| Operations | `r2OperationsAdaptiveGroups`     | This dataset consists of the operations taken on a bucket within an account. |
+| Storage    | `r2StorageAdaptiveGroups`        | This dataset consists of the storage of a bucket within an account.          |
+| Bandwidth  | `r2BandwidthUsageAdaptiveGroups` | Dataset contains uploaded and downloaded bytes for buckets within an account.       |
 
-### Operations Dataset
+Metrics can be queried for a maximum range of 31 days. These datasets require an `accountTag` filter with your Cloudflare account ID.
+
+:::caution[Querying buckets with jurisdiction restriction]
+In your account, you may have two buckets of the same name, one with a specified jurisdiction, and one without.
+
+Therefore, if you want to query metrics about a bucket which has a specified jurisdiction, you must include the [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) followed by an underscore before the bucket name. For example: `eu_bucket-name`. This ensures you query the correct bucket.
+:::
+
+### Operations dataset
 
 | Field              | Description                                                                                                                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +41,7 @@ R2 currently has two datasets:
 | responseStatusCode | The http status code returned by this operation.                                                                                                                                                                            |
 | datetime           | The time of the request.                                                                                                                                                                                                    |
 
-### Storage Dataset
+### Storage dataset
 
 | Field        | Description                                                                                                                                                                                                                                                                                          |
 | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -41,15 +50,29 @@ R2 currently has two datasets:
 | metadataSize | The size of the metadata of the objects in the bucket.                                                                                                                                                                                                                                               |
 | objectCount  | The number of objects in the bucket.                                                                                                                                                                                                                                                                 |
 | uploadCount  | The number of pending multipart uploads in the bucket.                                                                                                                                                                                                                                               |
-| datetime     | The time that this storage value represents.                                                                                                                                                                                                                                                         |
+| datetime     | The time that this storage value represents.                                                                                                                                                                                                                                                     
+### Bandwidth dataset
 
-Metrics can be queried (and are retained) for the past 31 days. These datasets require an `accountTag` filter with your Cloudflare account ID.
+The dataset excludes bandwidth transfers smaller than 100 KiB. This threshold applies to transfer size, not object size.
 
-:::caution[Querying buckets with jurisdiction restriction]
-In your account, you may have two buckets of the same name, one with a specified jurisdiction, and one without.
+You can filter by the following fields:
 
-Therefore, if you want to query metrics about a bucket which has a specified jurisdiction, you must include the [jurisdiction](https://developers.cloudflare.com/r2/reference/data-location/#jurisdictional-restrictions) followed by an underscore before the bucket name. For example: `eu_bucket-name`. This ensures you query the correct bucket.
-:::
+| Field                    | Description                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| `bucketName`             | The R2 bucket identifier, including the jurisdiction prefix if applicable. |
+| `date`                   | The transfer timestamp truncated to the start of the day.                            |
+| `datetimeHour`           | The transfer timestamp truncated to the start of the hour.                           |
+| `datetimeFifteenMinutes` | The transfer timestamp rounded down to the nearest quarter hour.             |
+| `datetimeFiveMinutes`    | The transfer timestamp truncated to the start of the five-minute interval.           |
+| `datetimeMinute`         | The transfer timestamp truncated to the start of the minute.                         |
+| `datetime`               | The raw transfer timestamp.                                                          |
+
+The following fields can be summed:
+
+| Field           | Description                                                           |
+| --------------- | --------------------------------------------------------------------- |
+| `bytesDownload` | Downloaded bytes. |
+| `bytesUpload`   | Uploaded bytes. |
 
 ## View via the dashboard
 
@@ -135,6 +158,41 @@ query R2StorageExample(
 				}
 				dimensions {
 					datetime
+				}
+			}
+		}
+	}
+}
+```
+
+### Bandwidth
+
+To query hourly uploads and downloads for a bucket. Results contain byte totals, not transfer rates, and excluded transfers smaller than 100 KiB.
+
+```graphql graphql-api-explorer
+query R2BandwidthExample(
+	$accountTag: string!
+	$startDate: Time!
+	$endDate: Time!
+	$bucketName: string!
+) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			r2BandwidthUsageAdaptiveGroups(
+				limit: 1000
+				filter: {
+					datetime_geq: $startDate
+					datetime_lt: $endDate
+					bucketName: $bucketName
+				}
+				orderBy: [datetimeHour_ASC]
+			) {
+				sum {
+					bytesUpload
+					bytesDownload
+				}
+				dimensions {
+					datetimeHour
 				}
 			}
 		}
