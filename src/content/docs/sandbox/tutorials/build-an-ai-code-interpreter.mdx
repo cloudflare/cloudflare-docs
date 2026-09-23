@@ -1,0 +1,294 @@
+---
+title: Build an AI code interpreter
+description: Let a Workers AI model write JavaScript and run it in a Dynamic Worker sandbox.
+pcx_content_type: tutorial
+difficulty: Intermediate
+sidebar:
+  order: 1
+products:
+  - sandbox
+  - dynamic-workers
+  - workers-ai
+  - workers
+reviewed: 2026-09-23
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+In this tutorial, you will build a Worker that answers questions by running code. A [Workers AI](/workers-ai/) model writes JavaScript, a [Dynamic Worker](/dynamic-workers/) runs it without network access, and the model uses the result in its answer.
+
+You will learn how to:
+
+- Run model-generated JavaScript in a Dynamic Worker with no network access and a CPU time limit.
+- Give a model a tool that runs code and returns the result.
+- Send code errors back to the model so it can fix its code.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## 1. Create the project
+
+<Steps>
+
+1. Create a Worker project:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args={"sandbox-code-interpreter --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
+   />
+
+2. Change into the project directory:
+
+   ```sh
+   cd sandbox-code-interpreter
+   ```
+
+3. Install the [AI SDK](https://ai-sdk.dev/), the [Workers AI provider](/workers-ai/configuration/ai-sdk/), and [Zod](https://zod.dev/):
+
+   <PackageManagers pkg="ai workers-ai-provider zod" />
+
+4. Replace `wrangler.jsonc` to add a Workers AI binding and a Worker Loader binding:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "sandbox-code-interpreter",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"ai": {
+   		"binding": "AI",
+   	},
+   	"worker_loaders": [
+   		{
+   			"binding": "LOADER",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   `AI` calls Workers AI models. `LOADER` creates Dynamic Workers at runtime.
+
+5. Generate types for the bindings:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+</Steps>
+
+## 2. Run code in a sandbox
+
+Create `src/sandbox.ts`. The `runJavaScript()` function loads the code into a new Dynamic Worker and returns its result and logs:
+
+<TypeScriptExample filename="src/sandbox.ts">
+
+```ts
+import type { WorkerEntrypoint } from "cloudflare:workers";
+
+export type Output = {
+	result?: unknown;
+	logs: string[];
+};
+
+type CodeEntrypoint = WorkerEntrypoint & {
+	run(): Promise<Output>;
+};
+
+export function runJavaScript(env: Env, code: string): Promise<Output> {
+	const sandbox = env.LOADER.load({
+		compatibilityDate: "$today",
+		mainModule: "code.js",
+		modules: {
+			"code.js": `
+				import { WorkerEntrypoint } from "cloudflare:workers";
+
+				function format(value) {
+					return typeof value === "string" ? value : JSON.stringify(value);
+				}
+
+				export class Code extends WorkerEntrypoint {
+					async run() {
+						const logs = [];
+						const console = {
+							log: (...values) => logs.push(values.map(format).join(" ")),
+						};
+						const result = await (async () => {
+							${code}
+						})();
+						return { result, logs };
+					}
+				}
+			`,
+		},
+		globalOutbound: null,
+		limits: { cpuMs: 50 },
+	});
+
+	return sandbox.getEntrypoint<CodeEntrypoint>("Code").run();
+}
+```
+
+</TypeScriptExample>
+
+The Dynamic Worker limits what the generated code can do:
+
+- `globalOutbound: null` makes `fetch()` and `connect()` throw, so the code has no network access.
+- The Dynamic Worker receives no `env`, so the code cannot call Workers AI or any other resource your Worker can reach.
+- `limits: { cpuMs: 50 }` stops code that uses more than 50 milliseconds of CPU time. Refer to [Custom resource limits](/dynamic-workers/usage/limits/).
+- Each call to `load()` creates a new Dynamic Worker, so values from one run are not available in the next.
+
+The generated code becomes the body of an async function, so it can use `await` and must `return` its result. A local `console` object collects `console.log()` output. The code can still change anything inside the Dynamic Worker, including the wrapper around it, but it cannot reach anything the Dynamic Worker does not receive.
+
+## 3. Let the model run code
+
+Replace `src/index.ts`. The Worker gives the model a `runJavaScript` tool and returns the model's answer with every piece of code it ran:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { generateText, isStepCount, tool } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+import { z } from "zod";
+import { runJavaScript, type Output } from "./sandbox";
+
+const model = "@cf/openai/gpt-oss-120b";
+
+const instructions = `Answer the question.
+Always call the runJavaScript tool before you answer. Do not calculate, count, or sort in your head.
+Write the body of an async JavaScript function and return the value you need.
+If the tool returns an error, fix the code and run it again.
+Answer in one or two plain-text sentences.`;
+
+type Run = { code: string } & ({ output: Output } | { error: string });
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (request.method !== "POST") {
+			return new Response("Send a POST request", { status: 405 });
+		}
+
+		const { question } = (await request.json()) as { question: string };
+		const workersai = createWorkersAI({ binding: env.AI });
+		const runs: Run[] = [];
+
+		const result = await generateText({
+			model: workersai(model),
+			instructions,
+			prompt: question,
+			tools: {
+				runJavaScript: tool({
+					description:
+						"Run JavaScript in a sandbox with no network access. The code is the body of an async function. Return a JSON-serializable value. console.log output is captured.",
+					inputSchema: z.object({
+						code: z.string().describe("Body of an async JavaScript function"),
+					}),
+					execute: async ({ code }) => {
+						try {
+							const output = await runJavaScript(env, code);
+							runs.push({ code, output });
+							return output;
+						} catch (error) {
+							const message =
+								error instanceof Error ? error.message : String(error);
+							runs.push({ code, error: message });
+							return { error: message };
+						}
+					},
+				}),
+			},
+			stopWhen: isStepCount(5),
+		});
+
+		return Response.json({ answer: result.text, runs });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`generateText()` sends the question to the model. When the model calls `runJavaScript`, the AI SDK runs `execute()` and sends the return value back to the model. The model can then run more code or answer.
+
+If the code throws, exceeds the CPU time limit, or calls `fetch()`, `execute()` returns the error message instead of failing the request. The model reads the error and can fix its code. `isStepCount(5)` stops the loop after five model steps, so a model that keeps failing cannot run code indefinitely.
+
+## 4. Test locally
+
+<Steps>
+
+1. Start a local development server:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+   The Dynamic Worker runs on your computer. Workers AI requests always run on Cloudflare and count toward your [Workers AI usage](/workers-ai/platform/pricing/).
+
+2. POST a question to the URL Wrangler printed. The default is `http://localhost:8787`:
+
+   ```sh
+   curl http://localhost:8787 --json '{"question":"How many prime numbers are there below 100,000?"}'
+   ```
+
+   The response includes the answer and the code the model ran:
+
+   ```json output
+   {
+   	"answer": "There are 9,592 prime numbers below 100,000.",
+   	"runs": [
+   		{
+   			"code": "function isPrime(n){if(n<2)return false; if(n%2===0) return n===2; for(let i=3;i*i<=n;i+=2){if(n%i===0) return false;} return true;} let count=0; for(let i=2;i<100000;i++){ if(isPrime(i)) count++; } return count;",
+   			"output": { "result": 9592, "logs": [] }
+   		}
+   	]
+   }
+   ```
+
+   The model writes different code and wording each time. `result` is `9592`.
+
+3. Ask a question that needs sorting:
+
+   ```sh
+   curl http://localhost:8787 --json '{"question":"Sort these words by length, then alphabetically: pear, fig, banana, kiwi, apple, date."}'
+   ```
+
+   The answer lists `fig, date, kiwi, pear, apple, banana`.
+
+</Steps>
+
+## 5. Deploy
+
+:::caution
+The Worker does not authenticate requests. Anyone with the URL can send questions and use your Workers AI allowance. Authenticate callers before you share the URL.
+:::
+
+<Steps>
+
+1. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+2. POST a question to the `workers.dev` URL Wrangler printed:
+
+   ```sh
+   curl https://sandbox-code-interpreter.<YOUR_SUBDOMAIN>.workers.dev --json '{"question":"How many prime numbers are there below 100,000?"}'
+   ```
+
+   The response has the same shape as the local response.
+
+</Steps>
+
+You built a Worker where a model writes JavaScript, a Dynamic Worker runs it without network access or bindings, and the model answers from the result.
+
+## Next steps
+
+- Give sandboxed code access to specific APIs. Refer to [Bindings](/dynamic-workers/usage/bindings/).
+- Let a model call typed tools from generated code. Refer to [Code Mode](/agents/tools/codemode/).
+- Run Python, shell commands, or other Linux programs. Refer to [Run a Linux command](/sandbox/get-started/containers/).
+- Choose a different model. Refer to [Workers AI models](/workers-ai/models/).
