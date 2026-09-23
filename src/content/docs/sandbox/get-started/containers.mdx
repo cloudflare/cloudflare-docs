@@ -54,6 +54,10 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    	"name": "sandbox-linux",
    	"main": "src/index.ts",
    	"compatibility_date": "$today",
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
    	"containers": [
    		{
    			"class_name": "MyContainer",

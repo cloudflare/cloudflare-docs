@@ -43,15 +43,20 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    cd sandbox-dynamic-worker
    ```
 
-3. Add a Worker Loader binding to `wrangler.jsonc`:
+3. Replace `wrangler.jsonc` to add a Worker Loader binding:
 
    <WranglerConfig>
 
    ```jsonc
    {
+   	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "sandbox-dynamic-worker",
    	"main": "src/index.ts",
    	"compatibility_date": "$today",
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
    	"worker_loaders": [
    		{
    			"binding": "LOADER",
