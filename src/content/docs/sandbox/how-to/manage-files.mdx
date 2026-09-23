@@ -381,10 +381,11 @@ await files.rename(`${path}.partial`, path, { cwd: workspace });
 
 `Files` follows Linux path rules and opens any path in the sandbox. Your Worker decides which paths a caller can request. The example resolves request paths against `/workspace` and rejects absolute paths and `..` segments.
 
-The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points to another path in the same sandbox. To open files as a Linux user other than the image default, pass the `user` option to each operation.
+The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points to another path in the same sandbox. To open files as another Linux user, pass numeric user and group IDs in the `user` option, such as `user: "1000:1000"`.
 
 ## Next steps
 
+- For every `Files` method, option, and error, refer to [Files API](/sandbox/reference/files/).
 - To keep files after the Linux instance stops, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
 - To run a project's commands in the workspace, refer to [Run tests from a Git repository](/sandbox/how-to/run-tests-from-a-git-repository/).
 - To return command output while it runs, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
