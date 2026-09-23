@@ -14,6 +14,10 @@ Snapshots let you save point-in-time filesystem state from a running [Container]
 
 Use `snapshotContainer()` to capture the full container filesystem. Snapshots are immutable. If you restore a snapshot and then change files, create a new snapshot to persist those changes.
 
+:::caution[Snapshots are bound to an image]
+Snapshots capture the full Container filesystem rather than an image-independent data layer. A snapshot is bound to the exact image it was created from and cannot be restored with a different or updated image. After changing the image, create a new snapshot from a Container running that image.
+:::
+
 The returned snapshot handle is a plain data object. You can store it and restore it later, including from another Durable Object:
 
 <TypeScriptExample filename="src/index.ts">
