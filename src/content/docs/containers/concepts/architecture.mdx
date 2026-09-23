@@ -119,8 +119,10 @@ Refer to the [status hooks example](/containers/examples/status-hooks/) for a fu
 All disk is ephemeral. When a Container instance goes to sleep, the next time
 it is started, it will have a fresh disk as defined by its container image.
 
-Snapshots are coming soon, which allow the user to quickly persist and restore the disk
-from an entire container or a directory.
+To keep the disk, save it with [`snapshotContainer()`](/durable-objects/api/container/#snapshotcontainer)
+and start a later instance from the snapshot. Snapshots are in public beta and
+require `scheduling_policy: "durable_object"`. For an example, refer to
+[Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
 
 You can also use [FUSE](/containers/examples/r2-fuse-mount/) to persist disk
 to R2 or other object storage backends. Though you should not expect native
