@@ -21,6 +21,8 @@ We recommend starting new applications with the Durable Object Container API. If
 
 Your Durable Object also has access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) through `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
+Use storage to preserve configuration and state across container restarts. Use alarms to schedule work without keeping the container running.
+
 <TypeScriptExample filename="index.ts">
 
 ```ts
