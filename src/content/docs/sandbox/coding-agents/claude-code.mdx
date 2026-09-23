@@ -55,13 +55,13 @@ You also need:
    <PackageManagers
    	type="create"
    	pkg="cloudflare@latest"
-   	args={"sandbox-claude-code --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
+   	args={"sandbox-coding-agent --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
    />
 
 2. Change into the project directory:
 
    ```sh
-   cd sandbox-claude-code
+   cd sandbox-coding-agent
    ```
 
 3. Install the [`@cloudflare/sandbox`](/sandbox/reference/) package and [Zod](https://zod.dev/):
@@ -98,7 +98,7 @@ You also need:
    ```jsonc
    {
    	"$schema": "node_modules/wrangler/config-schema.json",
-   	"name": "sandbox-claude-code",
+   	"name": "sandbox-coding-agent",
    	"main": "src/index.ts",
    	"compatibility_date": "$today",
    	"compatibility_flags": ["nodejs_compat"],
@@ -116,7 +116,7 @@ You also need:
    	},
    	"containers": [
    		{
-   			"class_name": "ClaudeCodeSandbox",
+   			"class_name": "AgentSandbox",
    			"scheduling_policy": "durable_object",
    			"images": {
    				"agent": {
@@ -128,14 +128,14 @@ You also need:
    	"durable_objects": {
    		"bindings": [
    			{
-   				"class_name": "ClaudeCodeSandbox",
+   				"class_name": "AgentSandbox",
    				"name": "SANDBOX",
    			},
    		],
    	},
    	"migrations": [
    		{
-   			"new_sqlite_classes": ["ClaudeCodeSandbox"],
+   			"new_sqlite_classes": ["AgentSandbox"],
    			"tag": "v1",
    		},
    	],
@@ -144,7 +144,7 @@ You also need:
 
    </WranglerConfig>
 
-   Each sandbox is a `ClaudeCodeSandbox` Durable Object with its own container. Wrangler builds the `Dockerfile` when you deploy, and the Durable Object starts the built image as `this.ctx.container.images.agent`. `MODEL` is an Anthropic model ID that your gateway can serve. `secrets.required` makes `wrangler deploy` fail if the gateway token is missing.
+   Each sandbox is an `AgentSandbox` Durable Object with its own container. Wrangler builds the `Dockerfile` when you deploy, and the Durable Object starts the built image as `this.ctx.container.images.agent`. `MODEL` is an Anthropic model ID that your gateway can serve. `secrets.required` makes `wrangler deploy` fail if the gateway token is missing.
 
 6. Generate types for the bindings, variables, and secret:
 
@@ -205,7 +205,7 @@ Every other request gets a `403` response. Claude Code therefore cannot install 
 
 ## 3. Run Claude Code in the sandbox
 
-Create `src/sandbox.ts`. The `ClaudeCodeSandbox` Durable Object clones a repository, runs one Claude Code task at a time, and reports the task's state and the repository diff:
+Create `src/sandbox.ts`. The `AgentSandbox` Durable Object clones a repository, runs one Claude Code task at a time, and reports the task's state and the repository diff:
 
 <TypeScriptExample filename="src/sandbox.ts">
 
@@ -255,7 +255,7 @@ export type CommandResult = {
 	stderr: string;
 };
 
-export class ClaudeCodeSandbox extends DurableObject<Env> {
+export class AgentSandbox extends DurableObject<Env> {
 	private readonly container: Container;
 	private readonly files: Files;
 
@@ -313,10 +313,10 @@ export class ClaudeCodeSandbox extends DurableObject<Env> {
 			await this.files.mkdir(taskDirectory);
 
 			const task = await this.container.exec(
-				["/bin/sh", "-c", taskScript, "agent", ...this.claudeCommand(prompt)],
+				["/bin/sh", "-c", taskScript, "agent", ...this.agentCommand(prompt)],
 				{
 					cwd: repositoryDirectory,
-					env: { ...trustEnv, ...this.claudeEnv() },
+					env: { ...trustEnv, ...this.agentEnv() },
 					stdout: "ignore",
 					stderr: "ignore",
 				},
@@ -362,7 +362,7 @@ export class ClaudeCodeSandbox extends DurableObject<Env> {
 		);
 	}
 
-	private claudeCommand(prompt: string): string[] {
+	private agentCommand(prompt: string): string[] {
 		return [
 			"claude",
 			"--print",
@@ -378,7 +378,7 @@ export class ClaudeCodeSandbox extends DurableObject<Env> {
 		];
 	}
 
-	private claudeEnv(): Record<string, string> {
+	private agentEnv(): Record<string, string> {
 		return {
 			ANTHROPIC_BASE_URL: `https://gateway.ai.cloudflare.com/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}/anthropic`,
 			ANTHROPIC_API_KEY: "provided-by-worker",
@@ -516,6 +516,8 @@ async function* readLines(
 
 </TypeScriptExample>
 
+Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific to Claude Code. The other pages in [Coding agents](/sandbox/coding-agents/) replace those parts to run a different agent in the same Worker.
+
 ### Start the sandbox
 
 `startSandbox()` starts the container from the image Wrangler built, with no direct Internet access. The `standard-1` [instance type](/containers/platform/limits/#instance-types) gives Claude Code and the repository room to work. Choose a size that fits your agent and your repositories.
@@ -577,7 +579,7 @@ Replace `src/index.ts` with the following Worker. It exports both classes and ma
 import { z } from "zod";
 
 export { Outbound } from "./outbound";
-export { ClaudeCodeSandbox } from "./sandbox";
+export { AgentSandbox } from "./sandbox";
 
 const sandboxName = /^[a-z0-9][a-z0-9-]{0,62}$/;
 
@@ -712,7 +714,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 4. Save the `workers.dev` URL that Wrangler printed in a shell variable:
 
    ```sh
-   WORKER_URL=https://sandbox-claude-code.<YOUR_SUBDOMAIN>.workers.dev
+   WORKER_URL=https://sandbox-coding-agent.<YOUR_SUBDOMAIN>.workers.dev
    ```
 
 </Steps>
