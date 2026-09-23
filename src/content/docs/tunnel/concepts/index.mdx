@@ -1,6 +1,6 @@
 ---
 title: Tunnel fundamentals
-description: Learn how Cloudflare Tunnel connects private resources to Cloudflare, how routes direct traffic, and how to get started.
+description: Understand what Cloudflare Tunnel is, how it connects private resources to Cloudflare, how routes work, and how to get started.
 pcx_content_type: overview
 products:
   - tunnel
@@ -15,24 +15,25 @@ import {
 	LinkCard,
 	TunnelOutbound,
 	TunnelIdentity,
+	TunnelQuickNested,
 	TunnelTraffic,
 } from "~/components";
 
-Cloudflare Tunnel creates a secure, outbound-only connection between your infrastructure and Cloudflare's network, and gives that connection a stable identity within your account.
+A Cloudflare Tunnel is a secure link between Cloudflare's network and your infrastructure, with a stable identity in your Cloudflare account.
 
-Each connection originates inside your network and remains open to Cloudflare, so resources behind the tunnel need neither public IP addresses nor open inbound ports. Traffic reaches them through the tunnel rather than over the public Internet.
+Tunnel connections begin inside your network and remain open to Cloudflare, so the resources behind them do not need public IP addresses or open inbound ports. Traffic can reach those resources through the tunnel instead of connecting to them directly over the Internet.
 
 ## The connection starts with `cloudflared`
 
-_Keep your resources private by connecting outward to Cloudflare._
+_Connect out to Cloudflare while keeping your resources private._
 
-`cloudflared` is the daemon that establishes and maintains a tunnel's connections to Cloudflare. It runs inside your network and connects outward, allowing requests and responses to flow without exposing your origin at a public address.
+`cloudflared` is the daemon that establishes and maintains a tunnel's connections to Cloudflare. It initiates those connections from inside your network, allowing requests and responses to travel in both directions without requiring your origin to expose a public address.
 
-In a traditional setup, Cloudflare connects to a public address on your server. Cloudflare Tunnel reverses that model: `cloudflared` connects to Cloudflare first, and Cloudflare sends traffic to your resources over those established connections.
+This is the central idea behind Tunnel: Cloudflare does not connect to a public address on your server. `cloudflared` connects to Cloudflare first, and Cloudflare uses those existing connections to reach resources in your network.
 
 <TunnelOutbound client:visible>
 
-`cloudflared` establishes outbound connections from a private network to Cloudflare, which can then send traffic through those connections to your resources. Before the tunnel exists, requests stop at the network boundary because nothing accepts inbound connections.
+`cloudflared` opens connections from a private network to Cloudflare, allowing traffic to reach resources through those connections. A request sent before the tunnel exists is refused at the network boundary, because nothing inside accepts inbound connections.
 
 </TunnelOutbound>
 
@@ -40,39 +41,59 @@ For more information, refer to [Configuration](/tunnel/configuration/).
 
 ## Tunnel identity and connectors
 
-_Separate the tunnel you configure from the software that runs it._
+_Keep the tunnel you configure separate from the software that runs it._
 
-When you create a tunnel, Cloudflare assigns it a unique ID, such as `#123` in the diagram. Routes and other Cloudflare services use this ID to identify the tunnel.
+When you create a tunnel, Cloudflare gives it a unique ID, like the `#123` in the figure below. Routes and other Cloudflare services use this ID to identify the tunnel.
 
-A connector is a running instance of `cloudflared`, and each connector maintains several connections to Cloudflare. Every connector for a tunnel reports the same tunnel ID, so you can add connectors and scale the tunnel without changing its routes.
-
-Additional connectors are called replicas and usually run on separate hosts. If one connector becomes unavailable, Cloudflare can route new traffic through another.
+Each running instance of `cloudflared` is called a connector, and it maintains several network connections to Cloudflare. A tunnel can scale beyond a single connector without changing its routes because every connector shares the same tunnel ID. Each additional connector is called a replica and usually runs on a separate host. If one connector becomes unavailable, Cloudflare can send new traffic through another.
 
 <TunnelIdentity client:visible>
 
-Two `cloudflared` connectors share one stable tunnel identity. If connector B stops, new requests travel through connector A while the tunnel ID and its routes remain unchanged.
+Two `cloudflared` connectors share one stable tunnel identity, allowing traffic to continue when one connector stops. Stopping connector B sends every new request through connector A while the tunnel ID and its routes stay unchanged.
 
 </TunnelIdentity>
 
 For more information, refer to [Replicas and high availability](/tunnel/configuration/#replicas-and-high-availability) and [Load balancing](/tunnel/concepts/routing/#load-balancing).
 
+## Quick tunnels
+
+_Reach a local service without an account or configuration._
+
+The tunnels above are persistent: each has a stable ID and stays in your account until you delete it. A quick tunnel skips that identity. It runs from a single command:
+
+```sh
+cloudflared tunnel --url http://localhost:8080
+```
+
+Cloudflare assigns a random `trycloudflare.com` address that routes back through the tunnel to your service.
+
+The connection still starts from inside your network, so your machine stays private. What changes is permanence: a quick tunnel exists only while `cloudflared` runs, and its address is different each time. This makes quick tunnels useful for temporary work, such as sharing a development preview or receiving a webhook, and unsuited to production traffic or routes you intend to keep.
+
+<TunnelQuickNested client:visible>
+
+A named tunnel keeps its identity as a record in your Cloudflare account, so stopping `cloudflared` leaves that record in place. A quick tunnel keeps the account empty: its address floats in Cloudflare's network, held up only by the live connection, so stopping `cloudflared` destroys it and the next run mints a different one.
+
+</TunnelQuickNested>
+
+For more information, refer to [Quick tunnels](/tunnel/get-started/#quick-tunnels-development).
+
 ## How traffic reaches a resource
 
-_Use routes to send traffic through the tunnel to your resources._
+_Connect traffic to resources through the tunnel._
 
-Opening a tunnel does not, by itself, make resources reachable. Routing configuration determines which traffic enters the tunnel and where each request goes.
+A connected tunnel does not make a resource reachable on its own. Routing configuration determines which traffic uses the tunnel and which resource that traffic should reach.
 
-- **Published applications** map public hostnames (for example, `app.example.com`) to services behind the tunnel.
-- **Private network routes** send traffic for private hostnames, IP addresses, or network ranges through the tunnel.
-- **Workers VPC** provides Workers with a path to private services through the tunnel.
+- **Published applications** connect public hostnames (for example, `app.example.com`) to services behind the tunnel.
+- **Private network routes** direct traffic for private hostnames, IP addresses, or network ranges through the tunnel.
+- **Workers VPC** lets Workers reach private services through the tunnel.
 
-One tunnel can serve many resources through different types of routes. When traffic matches a route, Cloudflare sends it through an available tunnel connection, and `cloudflared` delivers it to a resource it can reach inside your network.
+One tunnel can carry traffic for multiple resources, even when those resources use different types of routing. When traffic matches the routing configuration, Cloudflare sends it over an available tunnel connection. `cloudflared` receives the traffic and forwards it to a resource it can reach in your network.
 
-The tunnel provides connectivity, while you manage access separately for each resource.
+The tunnel provides connectivity. Access to each resource is controlled separately.
 
 <TunnelTraffic client:visible>
 
-Routing configuration sends matching traffic through an available tunnel connection to `cloudflared`, which delivers it to a reachable resource. A request without a matching route fails immediately, while a request with a route but no available tunnel fails at Cloudflare's edge. For traffic to reach a resource, both the route and tunnel must be in place.
+Routing configuration sends traffic through an available tunnel connection to `cloudflared`, which forwards it to a reachable resource. A request with no route fails immediately, and a routed request with no tunnel fails at Cloudflare's edge, because both the route and the tunnel are required.
 
 </TunnelTraffic>
 
@@ -80,13 +101,13 @@ For more information, refer to [Routing](/tunnel/concepts/routing/), [Private ne
 
 ## Start building
 
-Choose how you want to use the tunnel.
+When you are ready to build, choose how you want to use the tunnel.
 
 <CardGrid>
 	<LinkCard
 		title="Publish an application"
 		href="/tunnel/get-started/"
-		description="Expose a service in your network at a public hostname."
+		description="Connect a public hostname to a service in your network."
 	/>
 	<LinkCard
 		title="Connect a private network"
@@ -96,7 +117,12 @@ Choose how you want to use the tunnel.
 	<LinkCard
 		title="Connect Workers VPC"
 		href="/workers-vpc/get-started/"
-		description="Give Workers access to services in a private network."
+		description="Let Workers call services in a private network."
+	/>
+	<LinkCard
+		title="Try a quick tunnel"
+		href="/tunnel/get-started/#quick-tunnels-development"
+		description="Share a local service from a single command, without an account or configuration."
 	/>
 </CardGrid>
 
@@ -105,4 +131,4 @@ Choose how you want to use the tunnel.
 - [Configuration](/tunnel/configuration/): replicas, firewall rules, and connection settings.
 - [Routing](/tunnel/concepts/routing/): public hostnames, protocols, and load balancing.
 - [Observability](/tunnel/observability/): tunnel status, logs, metrics, and notifications.
-- [Troubleshooting](/tunnel/troubleshooting/): diagnosing failures along the request path.
+- [Troubleshooting](/tunnel/troubleshooting/): failures across the request path.
