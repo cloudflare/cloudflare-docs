@@ -1,0 +1,296 @@
+---
+import RealtimeDiagramFrame from "./RealtimeDiagramFrame.astro";
+
+interface Participant {
+	id: string;
+	label: string;
+	tone?: "accent" | "blue";
+}
+
+interface Group {
+	label: string;
+	from: string;
+	to: string;
+	tone?: "accent" | "blue";
+}
+
+interface MessageEvent {
+	type?: "message";
+	from: string;
+	to: string;
+	label: string;
+	dashed?: boolean;
+}
+
+interface NoteEvent {
+	type: "note";
+	from: string;
+	to: string;
+	label: string;
+}
+
+interface Props {
+	ariaLabel: string;
+	participants: Participant[];
+	events: Array<MessageEvent | NoteEvent>;
+	groups?: Group[];
+	caption?: string;
+	captionId?: string;
+}
+
+const {
+	ariaLabel,
+	participants,
+	events,
+	groups = [],
+	caption,
+	captionId,
+} = Astro.props;
+
+const participantIndexes = new Map(
+	participants.map((participant, index) => [participant.id, index]),
+);
+
+const getRange = (from: string, to: string) => {
+	const fromIndex = participantIndexes.get(from) ?? 0;
+	const toIndex = participantIndexes.get(to) ?? fromIndex;
+
+	return {
+		fromIndex,
+		toIndex,
+		start: Math.min(fromIndex, toIndex) + 1,
+		span: Math.abs(toIndex - fromIndex) + 1,
+		direction: toIndex >= fromIndex ? "right" : "left",
+	};
+};
+---
+
+<RealtimeDiagramFrame
+	ariaLabel={ariaLabel}
+	caption={caption}
+	captionId={captionId}
+	className="rt-sequence"
+>
+	<div class="rtsq-desktop">
+		<div
+			class="rtsq-chart"
+			style={`--rtsq-columns: ${participants.length}; --rtsq-rows: ${events.length};`}
+		>
+			{groups.map((group) => {
+				const range = getRange(group.from, group.to);
+
+				return (
+					<div
+						class:list={[
+							"rtsq-group",
+							group.tone && `rtsq-group--${group.tone}`,
+						]}
+						style={`--rtsq-start: ${range.start}; --rtsq-span: ${range.span};`}
+					>
+						<span>{group.label}</span>
+					</div>
+				);
+			})}
+
+			{participants.map((participant, index) => (
+				<>
+					<div
+						class:list={[
+							"rt-diagram__node",
+							"rtsq-participant",
+							participant.tone && `rt-diagram__node--${participant.tone}`,
+						]}
+						style={`--rtsq-column: ${index + 1};`}
+					>
+						<strong>{participant.label}</strong>
+					</div>
+					<span
+						class="rtsq-lifeline"
+						style={`--rtsq-column: ${index + 1};`}
+						aria-hidden="true"
+					></span>
+				</>
+			))}
+
+			{events.map((event, index) => {
+				const range = getRange(event.from, event.to);
+				const row = index + 2;
+
+				if (event.type === "note") {
+					return (
+						<div
+							class="rtsq-note"
+							style={`--rtsq-row: ${row}; --rtsq-start: ${range.start}; --rtsq-span: ${range.span};`}
+						>
+							{event.label}
+						</div>
+					);
+				}
+
+				return (
+					<div
+						class:list={[
+							"rtsq-message",
+							`rtsq-message--${range.direction}`,
+							event.dashed && "rtsq-message--dashed",
+						]}
+						style={`--rtsq-row: ${row}; --rtsq-start: ${range.start}; --rtsq-span: ${range.span};`}
+					>
+						<span class="rtsq-message-label">{event.label}</span>
+						<span class="rtsq-message-line" aria-hidden="true"></span>
+					</div>
+				);
+			})}
+		</div>
+	</div>
+</RealtimeDiagramFrame>
+
+<style>
+	.rtsq-desktop {
+		overflow-x: auto;
+		padding: 0.25rem;
+	}
+
+	.rtsq-chart {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(var(--rtsq-columns), minmax(7rem, 1fr));
+		grid-template-rows: 6.25rem repeat(var(--rtsq-rows), 3.75rem);
+		min-width: calc(var(--rtsq-columns) * 7.5rem);
+		isolation: isolate;
+	}
+
+	.rtsq-group {
+		position: relative;
+		grid-column: var(--rtsq-start) / span var(--rtsq-span);
+		grid-row: 1 / -1;
+		margin: 0 0.25rem;
+		border: 1px dashed var(--rtd-border);
+		border-radius: 0.75rem;
+		z-index: 0;
+	}
+
+	.rtsq-group--accent {
+		border-color: var(--rtd-accent);
+		background: var(--rtd-accent-soft);
+	}
+
+	.rtsq-group--blue {
+		border-color: color-mix(in srgb, var(--rtd-blue) 55%, var(--rtd-border));
+		background: var(--rtd-blue-soft);
+	}
+
+	.rtsq-group > span {
+		position: absolute;
+		top: -0.65rem;
+		left: 0.75rem;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtd-border);
+		border-radius: 9999px;
+		background: var(--rtd-panel);
+		color: var(--rtd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rtsq-group--accent > span {
+		border-color: var(--rtd-accent);
+		color: var(--rtd-accent);
+	}
+
+	.rtsq-group--blue > span {
+		border-color: var(--rtd-blue);
+		color: var(--rtd-blue);
+	}
+
+	.rtsq-participant {
+		grid-column: var(--rtsq-column);
+		grid-row: 1;
+		align-self: center;
+		margin: 1rem 0.5rem 0;
+		z-index: 4;
+	}
+
+	.rtsq-lifeline {
+		grid-column: var(--rtsq-column);
+		grid-row: 1 / -1;
+		justify-self: center;
+		width: 1px;
+		margin-top: 5.6rem;
+		background: var(--rtd-line);
+		z-index: 1;
+	}
+
+	.rtsq-message,
+	.rtsq-note {
+		grid-column: var(--rtsq-start) / span var(--rtsq-span);
+		grid-row: var(--rtsq-row);
+		z-index: 3;
+	}
+
+	.rtsq-message {
+		position: relative;
+		margin-inline: calc(50% / var(--rtsq-span));
+	}
+
+	.rtsq-message-label {
+		position: absolute;
+		left: 50%;
+		top: 0.25rem;
+		width: max-content;
+		max-width: min(90%, 18rem);
+		padding: 0.1rem 0.35rem;
+		background: var(--rtd-panel);
+		color: var(--rtd-text);
+		font-size: 0.625rem;
+		line-height: 1.3;
+		text-align: center;
+		transform: translateX(-50%);
+	}
+
+	.rtsq-message-line {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		border-top: 1.5px solid var(--rtd-line);
+	}
+
+	.rtsq-message--dashed .rtsq-message-line {
+		border-top-style: dashed;
+	}
+
+	.rtsq-message-line::after {
+		content: "";
+		position: absolute;
+		top: -4px;
+		width: 7px;
+		height: 7px;
+		border-top: 1.5px solid var(--rtd-line);
+		border-right: 1.5px solid var(--rtd-line);
+	}
+
+	.rtsq-message--right .rtsq-message-line::after {
+		right: 0;
+		transform: rotate(45deg);
+	}
+
+	.rtsq-message--left .rtsq-message-line::after {
+		left: 0;
+		transform: rotate(-135deg);
+	}
+
+	.rtsq-note {
+		align-self: center;
+		margin: 0.35rem calc(12.5% / var(--rtsq-span));
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--rtd-border);
+		border-radius: 0.5rem;
+		background: var(--rtd-head);
+		color: var(--rtd-muted);
+		font-size: 0.625rem;
+		line-height: 1.35;
+		text-align: center;
+	}
+</style>

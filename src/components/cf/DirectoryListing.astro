@@ -86,25 +86,23 @@ if (pageTree.length === 0) {
 }
 ---
 
-{
-	button ? (
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-			{[...pageTree]
-				.sort((a, b) => a.page.data.title.localeCompare(b.page.data.title))
-				.map((node) => (
-					<a
-						class="border-border text-foreground hover:bg-muted flex items-center rounded-lg border p-4 font-semibold no-underline transition-colors"
-						href={node.page.data.external_link ?? "/" + node.page.id + "/"}
-					>
-						{node.page.data.title}
-					</a>
-				))}
-		</div>
-	) : (
-		<ul>
-			{pageTree.map((node) => (
-				<DirectoryListingItem node={node} descriptions={descriptions} />
+{button ? (
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		{[...pageTree]
+			.sort((a, b) => a.page.data.title.localeCompare(b.page.data.title))
+			.map((node) => (
+				<a
+					class="border-border text-foreground hover:bg-muted flex items-center rounded-lg border p-4 font-semibold no-underline transition-colors"
+					href={node.page.data.external_link ?? "/" + node.page.id + "/"}
+				>
+					{node.page.data.title}
+				</a>
 			))}
-		</ul>
-	)
-}
+	</div>
+) : (
+	<ul>
+		{pageTree.map((node) => (
+			<DirectoryListingItem node={node} descriptions={descriptions} />
+		))}
+	</ul>
+)}

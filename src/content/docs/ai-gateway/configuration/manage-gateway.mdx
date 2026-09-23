@@ -24,13 +24,14 @@ The request that triggers auto-creation must be authenticated. When using the [R
 
 The auto-created default gateway uses the following settings:
 
-| Setting            | Default value    |
-| ------------------ | ---------------- |
-| Authentication     | On               |
-| Log collection     | On               |
-| Caching            | Off (TTL of 0)   |
-| Rate limiting      | Off              |
-| Workers AI billing | Standard billing |
+| Setting                      | Default value    |
+| ---------------------------- | ---------------- |
+| Authentication               | On               |
+| Log collection               | On               |
+| Caching                      | Off (TTL of 0)   |
+| Rate limiting                | Off              |
+| Require provider credentials | Off              |
+| Workers AI billing           | Standard billing |
 
 After creation, you can edit the default gateway settings like any other gateway. If you delete the default gateway, sending a new authenticated request to the `default` gateway ID auto-creates it again.
 
@@ -65,6 +66,10 @@ To use prepaid AI Gateway credits for Workers AI requests:
 5. Select **Save**.
 
 Workers AI requests routed through this gateway will deduct from your AI Gateway credit balance in real time.
+
+### Prevent Unified Billing fallback for BYOK third-party providers
+
+To prevent Unified Billing fallback for third-party provider requests, turn on **Require provider credentials**. Refer to [Prevent Unified Billing fallback for BYOK third-party providers](/ai-gateway/features/unified-billing/#prevent-unified-billing-fallback-for-byok-third-party-providers) for dashboard and API instructions.
 
 ## Retry requests
 

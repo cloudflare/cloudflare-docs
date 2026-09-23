@@ -1,0 +1,29 @@
+---
+title: Pricing
+description: Understand Realtime SFU, TURN, and WebSocket adapter egress pricing and the shared monthly free tier.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - realtime
+---
+
+Realtime billing is based on data sent from Cloudflare to your application. The SFU and TURN services cost $0.05 per GB of egress.
+
+The first 1,000 GB each month is free. SFU and TURN share this allowance; they do not have independent free tiers. Realtime usage appears as a single line item on your Cloudflare bill.
+
+## SFU
+
+Traffic from Cloudflare to clients incurs egress charges. Traffic published into Cloudflare is free, including when no client subscribes to that publication.
+
+## WebSocket adapter
+
+WebSocket adapter usage is tracked in Realtime billing. Traffic from Cloudflare to your WebSocket endpoint follows the Realtime egress rate and shares the Realtime free tier. Audio ingested from a WebSocket endpoint into the SFU is not charged as ingress.
+
+The adapter close response's `bytesProcessed` field is an operational statistic. It is not the authoritative billed-usage total.
+
+Workers, Durable Objects, Containers, and AI services used by an application have their own pricing.
+
+## TURN
+
+Traffic between Realtime TURN and Realtime SFU or Cloudflare Stream WHIP/WHEP is not charged twice. Refer to the [TURN FAQ](/realtime/turn/faq/) for the traffic paths measured for TURN billing.

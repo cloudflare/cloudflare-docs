@@ -12,6 +12,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.01
+	},
 	"examples": [
 		{
 			"name": "Watercolor Style",
@@ -63,6 +66,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"output_image_count": 0.01
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:48:19",
 	"schema": {
@@ -71,26 +82,26 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text instruction describing the desired edit or composition.",
-					"type": "string"
+					"type": "string",
+					"description": "Text instruction describing the desired edit or composition."
 				},
 				"images": {
-					"description": "Array of 1-5 reference images. Each entry is an HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
 					"minItems": 1,
 					"maxItems": 5,
 					"type": "array",
 					"items": {
 						"type": "string"
-					}
+					},
+					"description": "Array of 1-5 reference images. Each entry is an HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
 				},
 				"turbo": {
-					"description": "Run faster with additional optimizations. For complicated tasks, it is recommended to turn this off.",
 					"default": true,
+					"description": "Run faster with additional optimizations. For complicated tasks, it is recommended to turn this off.",
 					"type": "boolean"
 				},
 				"aspect_ratio": {
-					"description": "Output aspect ratio.",
 					"default": "match_input_image",
+					"description": "Output aspect ratio.",
 					"type": "string",
 					"enum": [
 						"match_input_image",
@@ -110,8 +121,8 @@
 					"maximum": 9007199254740991
 				},
 				"disable_safety_checker": {
-					"description": "Disable safety checker for generated images.",
 					"default": false,
+					"description": "Disable safety checker for generated images.",
 					"type": "boolean"
 				}
 			},
@@ -129,9 +140,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Presigned URL for the edited image.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the edited image."
 				}
 			},
 			"required": [

@@ -1,0 +1,897 @@
+{
+	"model_id": "typesafe/jev",
+	"provider_id": "typesafe",
+	"name": "Jev",
+	"description": "Jev is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence.",
+	"task": "Text Generation",
+	"tags": [
+		"Structured Output",
+		"Classification",
+		"Evaluation",
+		"Confidence"
+	],
+	"context_length": 32000,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.042,
+		"Output tokens (per 1M)": 0,
+		"Cached input tokens (per 1M)": 0
+	},
+	"examples": [
+		{
+			"name": "Typed evaluation",
+			"description": "Evaluate urgency, team routing, and frustration together",
+			"input": {
+				"state": "Help! My payouts have been failing for 3 days.",
+				"questions": {
+					"is_urgent": {
+						"type": "noul",
+						"instructions": "Does this convey urgency?",
+						"criteria": {
+							"true": "Explicitly time-sensitive",
+							"false": "No urgency expressed"
+						}
+					},
+					"department": {
+						"type": "choice",
+						"instructions": "Which team should handle this?",
+						"criteria": {
+							"billing": "Payments, invoicing, refunds",
+							"technical": "Bugs, outages, integrations",
+							"sales": "Pricing, upgrades, new accounts"
+						}
+					},
+					"frustration": {
+						"type": "score",
+						"instructions": "How frustrated is the customer?",
+						"criteria": [
+							"Calm",
+							"Frustrated",
+							"Very angry"
+						]
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"is_urgent": {
+						"type": "noul",
+						"noul": 0.95
+					},
+					"department": {
+						"type": "choice",
+						"choice": "billing",
+						"confidence": 0.8,
+						"probabilities": {
+							"billing": 0.87,
+							"sales": 0,
+							"technical": 0.13
+						}
+					},
+					"frustration": {
+						"type": "score",
+						"score": 1.04,
+						"confidence": 0.94,
+						"legend": {
+							"0": "Calm",
+							"1": "Frustrated",
+							"2": "Very angry"
+						},
+						"probabilities": {
+							"0": 0,
+							"1": 0.96,
+							"2": 0.04
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 426,
+					"output_tokens": 73
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"is_urgent": {
+						"type": "noul",
+						"noul": 0.95
+					},
+					"department": {
+						"type": "choice",
+						"choice": "billing",
+						"confidence": 0.8,
+						"probabilities": {
+							"billing": 0.87,
+							"sales": 0,
+							"technical": 0.13
+						}
+					},
+					"frustration": {
+						"type": "score",
+						"score": 1.04,
+						"confidence": 0.94,
+						"legend": {
+							"0": "Calm",
+							"1": "Frustrated",
+							"2": "Very angry"
+						},
+						"probabilities": {
+							"0": 0,
+							"1": 0.96,
+							"2": 0.04
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 426,
+					"output_tokens": 73
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: 'Help! My payouts have been failing for 3 days.',\n    questions: {\n      is_urgent: {\n        type: 'noul',\n        instructions: 'Does this convey urgency?',\n        criteria: { true: 'Explicitly time-sensitive', false: 'No urgency expressed' },\n      },\n      department: {\n        type: 'choice',\n        instructions: 'Which team should handle this?',\n        criteria: {\n          billing: 'Payments, invoicing, refunds',\n          technical: 'Bugs, outages, integrations',\n          sales: 'Pricing, upgrades, new accounts',\n        },\n      },\n      frustration: {\n        type: 'score',\n        instructions: 'How frustrated is the customer?',\n        criteria: ['Calm', 'Frustrated', 'Very angry'],\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": \"Help! My payouts have been failing for 3 days.\",\n    \"questions\": {\n      \"is_urgent\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Does this convey urgency?\",\n        \"criteria\": {\n          \"true\": \"Explicitly time-sensitive\",\n          \"false\": \"No urgency expressed\"\n        }\n      },\n      \"department\": {\n        \"type\": \"choice\",\n        \"instructions\": \"Which team should handle this?\",\n        \"criteria\": {\n          \"billing\": \"Payments, invoicing, refunds\",\n          \"technical\": \"Bugs, outages, integrations\",\n          \"sales\": \"Pricing, upgrades, new accounts\"\n        }\n      },\n      \"frustration\": {\n        \"type\": \"score\",\n        \"instructions\": \"How frustrated is the customer?\",\n        \"criteria\": [\n          \"Calm\",\n          \"Frustrated\",\n          \"Very angry\"\n        ]\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Structured refund review",
+			"description": "Evaluate a refund request against a structured order and policy",
+			"input": {
+				"state": {
+					"ticket": {
+						"subject": "Duplicate charge",
+						"message": "I was charged twice for order A-104. Please refund the duplicate."
+					},
+					"order": {
+						"id": "A-104",
+						"charges": [
+							{
+								"amount_usd": 49,
+								"status": "captured"
+							},
+							{
+								"amount_usd": 49,
+								"status": "captured"
+							}
+						]
+					},
+					"refund_policy": "Duplicate charges are eligible for a refund."
+				},
+				"questions": {
+					"refund_requested": {
+						"type": "noul",
+						"instructions": "Does `ticket.message` request a refund?"
+					},
+					"policy_supports_refund": {
+						"type": "noul",
+						"instructions": "Does `refund_policy` support the refund requested in `ticket.message`, given `order.charges`?"
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"refund_requested": {
+						"type": "noul",
+						"noul": 0.99
+					},
+					"policy_supports_refund": {
+						"type": "noul",
+						"noul": 0.98
+					}
+				},
+				"usage": {
+					"input_tokens": 422,
+					"output_tokens": 41
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"refund_requested": {
+						"type": "noul",
+						"noul": 0.99
+					},
+					"policy_supports_refund": {
+						"type": "noul",
+						"noul": 0.98
+					}
+				},
+				"usage": {
+					"input_tokens": 422,
+					"output_tokens": 41
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: {\n      ticket: {\n        subject: 'Duplicate charge',\n        message: 'I was charged twice for order A-104. Please refund the duplicate.',\n      },\n      order: {\n        id: 'A-104',\n        charges: [\n          { amount_usd: 49, status: 'captured' },\n          { amount_usd: 49, status: 'captured' },\n        ],\n      },\n      refund_policy: 'Duplicate charges are eligible for a refund.',\n    },\n    questions: {\n      refund_requested: { type: 'noul', instructions: 'Does `ticket.message` request a refund?' },\n      policy_supports_refund: {\n        type: 'noul',\n        instructions:\n          'Does `refund_policy` support the refund requested in `ticket.message`, given `order.charges`?',\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": {\n      \"ticket\": {\n        \"subject\": \"Duplicate charge\",\n        \"message\": \"I was charged twice for order A-104. Please refund the duplicate.\"\n      },\n      \"order\": {\n        \"id\": \"A-104\",\n        \"charges\": [\n          {\n            \"amount_usd\": 49,\n            \"status\": \"captured\"\n          },\n          {\n            \"amount_usd\": 49,\n            \"status\": \"captured\"\n          }\n        ]\n      },\n      \"refund_policy\": \"Duplicate charges are eligible for a refund.\"\n    },\n    \"questions\": {\n      \"refund_requested\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Does `ticket.message` request a refund?\"\n      },\n      \"policy_supports_refund\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Does `refund_policy` support the refund requested in `ticket.message`, given `order.charges`?\"\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Support department routing",
+			"description": "Route a support request to the right department",
+			"input": {
+				"state": "I cannot log in after changing my password, and the reset email never arrives.",
+				"questions": {
+					"department": {
+						"type": "choice",
+						"instructions": "Which team should handle this support request?",
+						"criteria": {
+							"account": "Login, password, profile, or security issues",
+							"billing": "Charges, invoices, refunds, or subscriptions",
+							"technical": "Product bugs, outages, or integrations",
+							"other": "Requests that do not fit the other departments"
+						}
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"department": {
+						"type": "choice",
+						"choice": "account",
+						"confidence": 1,
+						"probabilities": {
+							"technical": 0,
+							"billing": 0,
+							"account": 1,
+							"other": 0
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 380,
+					"output_tokens": 45
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"department": {
+						"type": "choice",
+						"choice": "account",
+						"confidence": 1,
+						"probabilities": {
+							"technical": 0,
+							"billing": 0,
+							"account": 1,
+							"other": 0
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 380,
+					"output_tokens": 45
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: 'I cannot log in after changing my password, and the reset email never arrives.',\n    questions: {\n      department: {\n        type: 'choice',\n        instructions: 'Which team should handle this support request?',\n        criteria: {\n          account: 'Login, password, profile, or security issues',\n          billing: 'Charges, invoices, refunds, or subscriptions',\n          technical: 'Product bugs, outages, or integrations',\n          other: 'Requests that do not fit the other departments',\n        },\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": \"I cannot log in after changing my password, and the reset email never arrives.\",\n    \"questions\": {\n      \"department\": {\n        \"type\": \"choice\",\n        \"instructions\": \"Which team should handle this support request?\",\n        \"criteria\": {\n          \"account\": \"Login, password, profile, or security issues\",\n          \"billing\": \"Charges, invoices, refunds, or subscriptions\",\n          \"technical\": \"Product bugs, outages, or integrations\",\n          \"other\": \"Requests that do not fit the other departments\"\n        }\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Account risk assessment",
+			"description": "Score account risk and determine whether escalation is needed",
+			"input": {
+				"state": {
+					"account_age_days": 12,
+					"recent_events": [
+						"Five failed login attempts",
+						"Password reset requested from a new country",
+						"Successful login from the usual device"
+					],
+					"account_verified": true
+				},
+				"questions": {
+					"risk_level": {
+						"type": "score",
+						"instructions": "How risky does this account activity appear?",
+						"criteria": [
+							"Low risk: activity is consistent with the account history",
+							"Moderate risk: some unusual activity needs monitoring",
+							"High risk: multiple strong indicators of account compromise"
+						]
+					},
+					"escalate": {
+						"type": "noul",
+						"instructions": "Should this account be escalated for manual security review?",
+						"criteria": {
+							"true": "The activity warrants immediate human review",
+							"false": "The activity can be handled with normal automated controls"
+						}
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"risk_level": {
+						"type": "score",
+						"score": 1.84,
+						"confidence": 0.77,
+						"legend": {
+							"0": "Low risk: activity is consistent with the account history",
+							"1": "Moderate risk: some unusual activity needs monitoring",
+							"2": "High risk: multiple strong indicators of account compromise"
+						},
+						"probabilities": {
+							"0": 0,
+							"1": 0.16,
+							"2": 0.84
+						}
+					},
+					"escalate": {
+						"type": "noul",
+						"noul": 0.81
+					}
+				},
+				"usage": {
+					"input_tokens": 421,
+					"output_tokens": 36
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"risk_level": {
+						"type": "score",
+						"score": 1.84,
+						"confidence": 0.77,
+						"legend": {
+							"0": "Low risk: activity is consistent with the account history",
+							"1": "Moderate risk: some unusual activity needs monitoring",
+							"2": "High risk: multiple strong indicators of account compromise"
+						},
+						"probabilities": {
+							"0": 0,
+							"1": 0.16,
+							"2": 0.84
+						}
+					},
+					"escalate": {
+						"type": "noul",
+						"noul": 0.81
+					}
+				},
+				"usage": {
+					"input_tokens": 421,
+					"output_tokens": 36
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: {\n      account_age_days: 12,\n      recent_events: [\n        'Five failed login attempts',\n        'Password reset requested from a new country',\n        'Successful login from the usual device',\n      ],\n      account_verified: true,\n    },\n    questions: {\n      risk_level: {\n        type: 'score',\n        instructions: 'How risky does this account activity appear?',\n        criteria: [\n          'Low risk: activity is consistent with the account history',\n          'Moderate risk: some unusual activity needs monitoring',\n          'High risk: multiple strong indicators of account compromise',\n        ],\n      },\n      escalate: {\n        type: 'noul',\n        instructions: 'Should this account be escalated for manual security review?',\n        criteria: {\n          true: 'The activity warrants immediate human review',\n          false: 'The activity can be handled with normal automated controls',\n        },\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": {\n      \"account_age_days\": 12,\n      \"recent_events\": [\n        \"Five failed login attempts\",\n        \"Password reset requested from a new country\",\n        \"Successful login from the usual device\"\n      ],\n      \"account_verified\": true\n    },\n    \"questions\": {\n      \"risk_level\": {\n        \"type\": \"score\",\n        \"instructions\": \"How risky does this account activity appear?\",\n        \"criteria\": [\n          \"Low risk: activity is consistent with the account history\",\n          \"Moderate risk: some unusual activity needs monitoring\",\n          \"High risk: multiple strong indicators of account compromise\"\n        ]\n      },\n      \"escalate\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Should this account be escalated for manual security review?\",\n        \"criteria\": {\n          \"true\": \"The activity warrants immediate human review\",\n          \"false\": \"The activity can be handled with normal automated controls\"\n        }\n      }\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.typesafe.ai/models.md",
+	"terms": "https://docs.typesafe.ai/legal.md",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/typesafe/jev.png",
+	"metadata": {
+		"Answer types": "Noul, Choice, and Score",
+		"Provider model": "jev-latest"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "typesafe",
+			"pricing": {
+				"input_tokens": 0.042,
+				"output_tokens": 0,
+				"input_cached_tokens": 0
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-17 19:34:28",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"state": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {
+								"$ref": "#/$defs/__schema0"
+							}
+						},
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/$defs/__schema0"
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"questions": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string",
+						"minLength": 1
+					},
+					"additionalProperties": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "noul"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "object",
+												"propertyNames": {
+													"type": "string"
+												},
+												"additionalProperties": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "array",
+												"items": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"criteria": {
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"true": {
+														"anyOf": [
+															{
+																"type": "string"
+															},
+															{
+																"type": "object",
+																"propertyNames": {
+																	"type": "string"
+																},
+																"additionalProperties": {
+																	"$ref": "#/$defs/__schema0"
+																}
+															},
+															{
+																"type": "array",
+																"items": {
+																	"$ref": "#/$defs/__schema0"
+																}
+															},
+															{
+																"type": "null"
+															}
+														]
+													},
+													"false": {
+														"anyOf": [
+															{
+																"type": "string"
+															},
+															{
+																"type": "object",
+																"propertyNames": {
+																	"type": "string"
+																},
+																"additionalProperties": {
+																	"$ref": "#/$defs/__schema0"
+																}
+															},
+															{
+																"type": "array",
+																"items": {
+																	"$ref": "#/$defs/__schema0"
+																}
+															},
+															{
+																"type": "null"
+															}
+														]
+													}
+												},
+												"additionalProperties": false
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"type",
+									"instructions"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "object",
+												"propertyNames": {
+													"type": "string"
+												},
+												"additionalProperties": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "array",
+												"items": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"criteria": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"anyOf": [
+												{
+													"type": "string"
+												},
+												{
+													"type": "object",
+													"propertyNames": {
+														"type": "string"
+													},
+													"additionalProperties": {
+														"$ref": "#/$defs/__schema0"
+													}
+												},
+												{
+													"type": "array",
+													"items": {
+														"$ref": "#/$defs/__schema0"
+													}
+												},
+												{
+													"type": "null"
+												}
+											]
+										}
+									}
+								},
+								"required": [
+									"type",
+									"instructions",
+									"criteria"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"instructions": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "object",
+												"propertyNames": {
+													"type": "string"
+												},
+												"additionalProperties": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "array",
+												"items": {
+													"$ref": "#/$defs/__schema0"
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"criteria": {
+										"minItems": 2,
+										"type": "array",
+										"items": {
+											"anyOf": [
+												{
+													"type": "string"
+												},
+												{
+													"type": "object",
+													"propertyNames": {
+														"type": "string"
+													},
+													"additionalProperties": {
+														"$ref": "#/$defs/__schema0"
+													}
+												},
+												{
+													"type": "array",
+													"items": {
+														"$ref": "#/$defs/__schema0"
+													}
+												},
+												{
+													"type": "null"
+												}
+											]
+										}
+									}
+								},
+								"required": [
+									"type",
+									"instructions",
+									"criteria"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				}
+			},
+			"required": [
+				"state",
+				"questions"
+			],
+			"additionalProperties": false,
+			"$defs": {
+				"__schema0": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "number"
+						},
+						{
+							"type": "boolean"
+						},
+						{
+							"type": "null"
+						},
+						{
+							"type": "array",
+							"items": {
+								"$ref": "#/$defs/__schema0"
+							}
+						},
+						{
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {
+								"$ref": "#/$defs/__schema0"
+							}
+						}
+					]
+				}
+			}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"model": {
+					"type": "string",
+					"minLength": 1
+				},
+				"answers": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string",
+						"minLength": 1
+					},
+					"additionalProperties": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "noul"
+									},
+									"noul": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"noul"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"choice": {
+										"type": "string"
+									},
+									"probabilities": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "number",
+											"minimum": 0,
+											"maximum": 1
+										}
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"choice",
+									"probabilities",
+									"confidence"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"score": {
+										"type": "number"
+									},
+									"legend": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "string"
+										}
+									},
+									"probabilities": {
+										"type": "object",
+										"propertyNames": {
+											"type": "string"
+										},
+										"additionalProperties": {
+											"type": "number",
+											"minimum": 0,
+											"maximum": 1
+										}
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"type",
+									"score",
+									"legend",
+									"probabilities",
+									"confidence"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 9007199254740991
+						},
+						"output_tokens": {
+							"type": "integer",
+							"minimum": 0,
+							"maximum": 9007199254740991
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"model",
+				"answers",
+				"usage"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -33,7 +33,21 @@ The fields available for Cache Rule matching expressions in the **Expression Bui
 - Cookie value of - `http.request.cookies`
 - File extension - `http.request.uri.path.extension`
 
-If you select the [Edit expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter any of the [available fields](/ruleset-engine/rules-language/fields/reference/).
+If you select the [Edit expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) option, you can enter additional fields supported by Cache Rules. These fields include:
+
+- `cf.bot_management.score`
+- `cf.bot_management.ja3_hash`
+- `cf.bot_management.ja4`
+- `cf.bot_management.verified_bot`
+- `cf.bot_management.static_resource`
+- `cf.bot_management.js_detection.passed`
+- `cf.bot_management.detection_ids`
+- `cf.bot_management.tags`
+- `cf.bot_management.signed_agent`
+- `cf.bot_management.corporate_proxy`
+- `ip.src.asnum`
+
+Bot Management fields require a [Bot Management subscription](/bots/plans/bm-subscription/). For field types, descriptions, and expression syntax, refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/).
 
 :::note
 

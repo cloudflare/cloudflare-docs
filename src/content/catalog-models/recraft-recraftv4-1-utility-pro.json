@@ -13,6 +13,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.25
+	},
 	"examples": [
 		{
 			"name": "Print-Ready Illustration",
@@ -180,6 +183,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "recraft",
+			"pricing": {
+				"output_image_count": 0.25
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:53",
 	"schema": {
