@@ -43,16 +43,7 @@ For a complete Worker, refer to [Manage files in a sandbox](/sandbox/how-to/mana
 
 ## Requirements
 
-- The container image contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version:
-
-  ```dockerfile
-  COPY --from=docker.io/cloudflare/sandbox:<VERSION> /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
-  ```
-
-  The helper is a statically linked `linux/amd64` binary. It runs in any `linux/amd64` image.
-
-- The Worker has the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag. `Files` reads Linux error names through `node:os`.
-- The container is running when a method is called.
+`Files` has the [package requirements](/sandbox/reference/#requirements) and no others.
 
 ## Constructor
 
