@@ -13,15 +13,17 @@ This error indicates that a CNAME record between domains in different Cloudflare
 
 ### Common cause
 
-By default, Cloudflare prohibits a DNS CNAME record between domains in different Cloudflare accounts. CNAME records are permitted within a domain (`www.example.com` CNAME to `api.example.com`) and across zones within the same user account (`www.example.com` CNAME to `www.example.net`) or using our [Cloudflare for SaaS](https://www.cloudflare.com/saas/) solution.
+Common causes include:
 
-Another common cause occurs when connecting a custom domain to an R2 bucket or [creating an MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/#create-a-portal). Error 1014 appears when the custom domain belongs to an active zone with a [zone hold](/fundamentals/account/account-security/zone-holds/), or when the zone is banned.
+- A DNS CNAME record points between domains in different Cloudflare accounts. Cloudflare permits CNAME records within a domain (`www.example.com` CNAME to `api.example.com`), across zones within the same user account (`www.example.com` CNAME to `www.example.net`), or when using [Cloudflare for SaaS](https://www.cloudflare.com/saas/).
+- A custom domain is connected to an R2 bucket, and its active zone has a [zone hold](/fundamentals/account/account-security/zone-holds/) or is banned.
+- A custom domain is used to [create an MCP portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/#create-a-portal), and its active zone has a zone hold or is banned.
 
 ### Resolution
 
 - To allow CNAME record resolution to a domain in a different Cloudflare account, the domain owner of the CNAME target must use [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/).
 - To connect a custom domain to an R2 bucket, release the [zone hold](/fundamentals/account/account-security/zone-holds/) on the custom domain target zone.
-- To create an MCP portal with a custom domain, release the zone hold on the selected zone and each parent zone. Then create the portal again.
+- To create an MCP portal with a custom domain, release the [zone hold](/fundamentals/account/account-security/zone-holds/) on the selected zone and each parent zone. Then create the portal again.
 - If the zone for the custom domain is banned:
 
   - First, check whether there is any [phishing report](/fundamentals/reference/report-abuse/complaint-types/) for the hostname (and request a review if there is one).
