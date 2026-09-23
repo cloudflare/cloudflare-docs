@@ -45,7 +45,7 @@ Cloudflare provides two sandbox environments. Both are accessible through a [Wor
 
 [Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, Python, or WebAssembly. Compile TypeScript to JavaScript before loading it.
 
-That code cannot see your application's memory. It can access your application only through the methods and data you pass, and it cannot reach the Internet unless you allow it.
+That code cannot see your application's memory. It can access your application only through the methods and data you pass, and your Worker decides whether it can reach the Internet.
 
 The isolation comes from V8, the JavaScript engine in Chrome. V8 runs the code in an isolate: a sandbox that cannot read memory outside itself. The Workers runtime adds a process-level sandbox around the isolate. For more information, refer to the [Workers security model](/workers/reference/security-model/).
 
