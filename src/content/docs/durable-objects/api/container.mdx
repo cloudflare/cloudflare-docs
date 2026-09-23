@@ -115,7 +115,7 @@ this.ctx.container.start({
   - `instance` (`string | { vcpu: number; memoryMib: number; diskMb: number }`) — compute size. Use `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, or `"standard-4"`, or custom resources. `memoryMib` is in mebibytes and `diskMb` is in megabytes. Both must be positive integers. For sizes and limits, refer to [Limits](/containers/platform/limits/).
   - `entrypoint` (`string[]`) — command to run in the container instead of the image default.
   - `enableInternet` (`boolean`, default `false`) — allows the container to make outbound requests to the Internet.
-  - `env` (`Record<string, string>`) — environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
+  - `env` (`Record<string, string>`) — environment variables for the entrypoint process. This is useful for passing configuration values or secrets to the container. Processes started with [`exec()`](#exec) do not receive these variables.
   - `labels` (`Record<string, string>`) — up to 10 labels that [`inspect()`](#inspect) returns. Label names are 1 to 16 bytes. Label values are at most 64 bytes. Names and values cannot contain control characters.
 
 `image`, `containerSnapshot`, and `instance` apply to containers with `scheduling_policy: "durable_object"`. These containers require `image` or `containerSnapshot`.
@@ -180,7 +180,7 @@ export class MyContainer extends Container {
   - `stdout` (`"pipe" | "ignore"`, default `"pipe"`) — captures or discards standard output.
   - `stderr` (`"pipe" | "ignore" | "combined"`, default `"pipe"`) — captures, discards, or merges standard error into standard output. The `"combined"` value requires `stdout: "pipe"`. Combined output does not guarantee ordering between its source streams.
   - `cwd` (`string`) — working directory for the process.
-  - `env` (`Record<string, string>`) — environment additions and overrides. The process inherits existing Container variables. Matching keys use the per-execution value.
+  - `env` (`Record<string, string>`) — environment variables for the process. The process does not inherit variables from `start()` or from the image. It receives the image's `PATH` unless `env` sets `PATH`.
   - `user` (`string`) — numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user.
   - `signal` (`AbortSignal`) — aborting the signal sends `SIGKILL` to the process. An already-aborted signal makes `exec()` throw an `AbortError`.
   - `pty` (`boolean | { cols?: number; rows?: number }`) — runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
