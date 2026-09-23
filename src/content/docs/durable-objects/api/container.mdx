@@ -91,7 +91,7 @@ this.ctx.container.start({
   - `env`: An object containing environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
   - `entrypoint`: An array of strings representing the command to run in the container.
   - `enableInternet`: A boolean indicating whether to enable internet access for the container.
-  - `image`: The image reference to start. For a Container application that uses the `durable_object` scheduling policy, pass a reference from [`ctx.container.images`](#images) unless you are restoring a snapshot.
+  - `image`: The image reference to start. For a Container application that uses the `durable_object` scheduling policy, pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a reference from [`ctx.container.images`](#images). Omit this option when restoring a snapshot.
   - `instance`: The instance size to use for a Container application that uses the `durable_object` scheduling policy. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
   - `containerSnapshot`: A full container snapshot to restore before the container starts. You cannot use `containerSnapshot` and `image` in the same call.
 
