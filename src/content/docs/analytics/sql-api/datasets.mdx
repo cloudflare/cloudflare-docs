@@ -100,7 +100,7 @@ The endpoint accepts the following query parameters:
 | Parameter         | Type    | Required | Description                                                                               |
 | ----------------- | ------- | -------- | ----------------------------------------------------------------------------------------- |
 | `account_tag`     | string  | No       | Account identifier. Requires Account Analytics Read permission.                           |
-| `zone_tag`        | string  | No       | Zone identifier. Requires Zone Analytics Read permission and returns zone-scoped datasets. |
+| `zone_tag`        | string  | No       | Zone identifier. Requires Zone Analytics Read permission for the zone or Account Analytics Read permission for its owning account, and returns zone-scoped datasets. |
 | `dataset_name`    | string  | No       | Exact, case-sensitive schema-qualified dataset name to return.                            |
 | `include_columns` | boolean | No       | Set to `true` to include column names, descriptions, and data types. Defaults to `false`. |
 | `include_custom_attributes` | boolean | No | Set to `true` to discover custom attribute names and types from account data. Requires `account_tag` and a nonempty `dataset_name`. |

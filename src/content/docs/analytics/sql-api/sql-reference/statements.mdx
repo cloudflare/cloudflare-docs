@@ -56,7 +56,7 @@ zoneTag IN ('<ZONE_TAG_1>', '<ZONE_TAG_2>')
 
 A query can select only one account. Specify zone tenancy in one `zoneTag` predicate; use `IN` to select multiple zones. Tenancy predicates must be top-level conditions joined with `AND`. Do not place `accountTag` or `zoneTag` inside `OR`, `NOT`, or `NOT IN` expressions.
 
-Any query containing `zoneTag` requires **Zone Analytics Read** permission for every named zone, even if the token has Account Analytics Read permission for the owning account.
+Any query containing `zoneTag` requires either **Zone Analytics Read** permission for every named zone or **Account Analytics Read** permission for their owning account.
 
 Every query also requires a lower bound on the dataset timestamp field. Use `>`, `>=`, or `BETWEEN` to provide the lower bound. The timestamp field name varies by dataset.
 
