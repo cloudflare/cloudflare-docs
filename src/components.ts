@@ -62,7 +62,6 @@ export { default as WARPReleases } from "./components/cf/WARPReleases.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
-export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
 export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
 export { ContainerConnectivity } from "./components/react/container/ContainerConnectivity";
