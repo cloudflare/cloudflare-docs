@@ -24,7 +24,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 The example does not authenticate incoming requests. Authenticate callers before production so other people cannot start or stop previews.
 For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
 
-Code in a preview runs in the visitor's browser under your Worker's hostname. Serve previews from a hostname that does not host your application, its cookies, or its APIs.
+Code in a preview runs in the visitor's browser under your Worker's hostname. Serve previews from a hostname that does not host your application, its cookies, or its APIs. Refer to [Serve previews on their own hostnames](/sandbox/how-to/serve-previews-on-their-own-hostnames/).
 :::
 
 ## Start a preview
@@ -221,7 +221,7 @@ The Durable Object forwards each visitor request once. Retrying a request that f
 
 Replace the `entrypoint` with the command that starts your web server. Configure the server to listen on `0.0.0.0` and port `8080`. Many development servers listen on `localhost` by default and provide a host option.
 
-The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, or configure your application's base path.
+The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, configure your application's base path, or [serve each preview on its own hostname](/sandbox/how-to/serve-previews-on-their-own-hostnames/).
 
 When Cloudflare stops an instance, the main process receives `SIGTERM` and must exit promptly. A process that runs as process ID 1 must handle `SIGTERM` to exit on that signal. The example server exits when it receives `SIGTERM`.
 
