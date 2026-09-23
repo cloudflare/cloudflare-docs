@@ -445,6 +445,25 @@ export class MyContainer extends Container {
 
 Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pass another signal when the process requires it. A process can handle or ignore a signal, so this is not a hard execution deadline. Observe completion through `exitCode`, and do not infer a specific exit code from a signal.
 
+The signal reaches only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit. To stop a command and every process it started, run it under GNU coreutils `timeout`. The image must include `timeout`.
+
+```ts
+const process = await this.ctx.container.exec([
+	"timeout",
+	"--kill-after=5",
+	"30",
+	"bash",
+	"-c",
+	"npm test",
+]);
+const output = await process.output();
+
+// The exit code is 124 when the command runs longer than 30 seconds.
+console.log(output.exitCode);
+```
+
+`timeout` sends `SIGTERM` to the command and every process it started. With `--kill-after=5`, it sends `SIGKILL` five seconds later if they are still running.
+
 ## Coordinate operations
 
 Place `exec()` calls in the Durable Object that controls the Container. The Durable Object can coordinate process state and Container lifecycle.
