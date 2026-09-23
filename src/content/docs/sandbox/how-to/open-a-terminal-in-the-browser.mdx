@@ -98,8 +98,17 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    			}
    		});
 
-   		// Stop the shell when the browser disconnects.
-   		server.addEventListener("close", () => abort.abort());
+   		let exited = false;
+   		const markExited = () => {
+   			exited = true;
+   		};
+   		shell.exitCode.then(markExited, markExited);
+
+   		// Stop the shell when the browser disconnects. This listener also runs
+   		// after the shell exits and the socket closes, so skip an exited shell.
+   		server.addEventListener("close", () => {
+   			if (!exited) abort.abort();
+   		});
 
    		const forward = async () => {
    			for await (const chunk of shell.stdout!) {
@@ -237,7 +246,7 @@ An open terminal keeps the sandbox running, even when nobody types.
 
 When the tab closes or the connection drops, the Durable Object aborts `exec()`, which sends `SIGKILL` to `bash`. The command running in the foreground ends with the shell. Commands started in the background with `&` keep running until the Linux instance stops.
 
-When the shell exits, the Durable Object closes the WebSocket, and the page shows the exit code. Reloading the page starts a new shell. Output from the previous shell is not kept.
+When the shell exits, the Durable Object closes the WebSocket, and the page shows the exit code. The Durable Object does not abort `exec()` for a shell that has already exited, because signaling an exited process records an internal error in [Workers Logs](/workers/observability/logs/workers-logs/). Reloading the page starts a new shell. Output from the previous shell is not kept.
 
 After the last terminal closes, the Linux instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout). When it stops, background commands end, and files that are not in a [snapshot](/sandbox/how-to/save-and-restore-a-workspace/) are lost.
 
