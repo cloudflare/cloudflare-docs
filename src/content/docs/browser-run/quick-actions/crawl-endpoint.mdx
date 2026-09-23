@@ -37,7 +37,7 @@ Refer to [optional parameters](/browser-run/quick-actions/crawl-endpoint/#option
 There are two steps to using the `/crawl` endpoint:
 
 1. [Initiate the crawl job](/browser-run/quick-actions/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
-2. [Request results of the crawl job](/browser-run/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
+2. [Request results of the crawl job](/browser-run/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) — Monitor the crawl with an event subscription or `GET` request. When it finishes, send a `GET` request for the results.
 
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
@@ -84,6 +84,18 @@ The response includes a `status` field indicating the current state of the crawl
 - `cancelled_by_user` — The crawl job was manually cancelled by the user.
 - `errored` — The crawl job encountered an error.
 - `completed` — The crawl job finished successfully.
+
+### Subscribe to lifecycle events
+
+Use [Queues event subscriptions](/queues/event-subscriptions/events-schemas/#browser-run) as a push-based alternative to status polling. The linked reference includes setup instructions and payload schemas.
+
+Browser Run is an account-level event source. A subscription receives events for all crawl jobs in your account:
+
+- `crawl.started` — A crawl job starts.
+- `crawl.updated` — A crawled URL changes status.
+- `crawl.finished` — A crawl job finishes.
+
+These events provide lifecycle and status information, not crawled page content. After `crawl.finished`, send a `GET` request with the job ID to fetch the full results.
 
 ### Polling for completion
 

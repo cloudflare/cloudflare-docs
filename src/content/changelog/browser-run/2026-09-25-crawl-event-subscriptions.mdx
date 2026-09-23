@@ -1,0 +1,22 @@
+---
+title: Subscribe to Browser Run crawl events
+description: Receive crawl lifecycle events through Cloudflare Queues.
+products:
+  - browser-run
+  - queues
+date: 2026-09-25
+---
+
+import { PackageManagers } from "~/components";
+
+[Browser Run crawl jobs](/browser-run/quick-actions/crawl-endpoint/) can publish lifecycle events to [Cloudflare Queues](/queues/). Subscribe to started, updated, and finished events to track progress or trigger downstream processing without polling.
+
+To create an account-level subscription, run the following command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="queues subscription create <QUEUE_NAME> --source browserRun --events crawl.started,crawl.updated,crawl.finished"
+/>
+
+For payload examples, refer to the [Browser Run event schemas](/queues/event-subscriptions/events-schemas/#browser-run).
