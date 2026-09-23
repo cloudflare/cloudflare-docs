@@ -9,7 +9,7 @@ products:
   - logpush
 ---
 
-import { DashButton, Badge } from "~/components";
+import { APIRequest, DashButton, Badge } from "~/components";
 
 <Badge text="Beta" variant="caution" />
 
@@ -72,16 +72,15 @@ Every transformer action is available through the Cloudflare API. To authenticat
 
 The following request creates a transformer that selects three fields from the zone-scoped `dns_logs` dataset:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/logpush/transformers" \
-  --request POST \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --json '{
-    "name": "dns-query-fields",
-    "description": "Selects key fields from DNS query logs.",
-    "code": "SELECT QueryName, QueryType, ResponseCode FROM dns_logs"
-  }'
-```
+<APIRequest
+  path="/accounts/{account_id}/logpush/transformers"
+  method="POST"
+  json={{
+    name: "dns-query-fields",
+    description: "Selects key fields from DNS query logs.",
+    code: "SELECT QueryName, QueryType, ResponseCode FROM dns_logs",
+  }}
+/>
 
 To attach or detach a transformer from a job, set `transformer_id` on the Logpush job. Refer to [Logpush job setup](/logs/logpush/logpush-job/) for job endpoints.
 
