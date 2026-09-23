@@ -65,6 +65,10 @@ You will learn how to:
    	"name": "sandbox-code-interpreter",
    	"main": "src/index.ts",
    	"compatibility_date": "$today",
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
    	"ai": {
    		"binding": "AI",
    	},
@@ -88,7 +92,7 @@ You will learn how to:
 
 ## 2. Run code in a sandbox
 
-Create `src/sandbox.ts`. The `runJavaScript()` function loads the code into a new Dynamic Worker and returns its result and logs:
+Create `src/sandbox.ts`. The `runJavaScript()` function loads the code into a new Dynamic Worker and returns its result and logs. It throws if the code does not finish within five seconds:
 
 <TypeScriptExample filename="src/sandbox.ts">
 
@@ -104,7 +108,9 @@ type CodeEntrypoint = WorkerEntrypoint & {
 	run(): Promise<Output>;
 };
 
-export function runJavaScript(env: Env, code: string): Promise<Output> {
+const timeoutMs = 5_000;
+
+export async function runJavaScript(env: Env, code: string): Promise<Output> {
 	const sandbox = env.LOADER.load({
 		compatibilityDate: "$today",
 		mainModule: "code.js",
@@ -134,7 +140,21 @@ export function runJavaScript(env: Env, code: string): Promise<Output> {
 		limits: { cpuMs: 50 },
 	});
 
-	return sandbox.getEntrypoint<CodeEntrypoint>("Code").run();
+	let timer: number | null = null;
+	const timeout = new Promise<never>((_, reject) => {
+		timer = setTimeout(() => {
+			reject(new Error(`The code did not finish within ${timeoutMs} ms`));
+		}, timeoutMs);
+	});
+
+	try {
+		return await Promise.race([
+			sandbox.getEntrypoint<CodeEntrypoint>("Code").run(),
+			timeout,
+		]);
+	} finally {
+		clearTimeout(timer);
+	}
 }
 ```
 
@@ -145,6 +165,7 @@ The Dynamic Worker limits what the generated code can do:
 - `globalOutbound: null` makes `fetch()` and `connect()` throw, so the code has no network access.
 - The Dynamic Worker receives no `env`, so the code cannot call Workers AI or any other resource your Worker can reach.
 - `limits: { cpuMs: 50 }` stops code that uses more than 50 milliseconds of CPU time. Refer to [Custom resource limits](/dynamic-workers/usage/limits/).
+- The five-second timeout stops your Worker from waiting on code that waits without using CPU, such as a long `setTimeout()`. The timer runs in your Worker, so the generated code cannot change it.
 - Each call to `load()` creates a new Dynamic Worker, so values from one run are not available in the next.
 
 The generated code becomes the body of an async function, so it can use `await` and must `return` its result. A local `console` object collects `console.log()` output. The code can still change anything inside the Dynamic Worker, including the wrapper around it, but it cannot reach anything the Dynamic Worker does not receive.
@@ -163,6 +184,8 @@ import { runJavaScript, type Output } from "./sandbox";
 
 const model = "@cf/openai/gpt-oss-120b";
 
+const Question = z.object({ question: z.string().min(1) });
+
 const instructions = `Answer the question.
 Always call the runJavaScript tool before you answer. Do not calculate, count, or sort in your head.
 Write the body of an async JavaScript function and return the value you need.
@@ -177,39 +200,55 @@ export default {
 			return new Response("Send a POST request", { status: 405 });
 		}
 
-		const { question } = (await request.json()) as { question: string };
+		const body = Question.safeParse(await request.json().catch(() => null));
+
+		if (!body.success) {
+			return Response.json(
+				{ error: "Send a JSON body with a question" },
+				{ status: 400 },
+			);
+		}
+
 		const workersai = createWorkersAI({ binding: env.AI });
 		const runs: Run[] = [];
 
-		const result = await generateText({
-			model: workersai(model),
-			instructions,
-			prompt: question,
-			tools: {
-				runJavaScript: tool({
-					description:
-						"Run JavaScript in a sandbox with no network access. The code is the body of an async function. Return a JSON-serializable value. console.log output is captured.",
-					inputSchema: z.object({
-						code: z.string().describe("Body of an async JavaScript function"),
+		try {
+			const result = await generateText({
+				model: workersai(model),
+				instructions,
+				prompt: body.data.question,
+				tools: {
+					runJavaScript: tool({
+						description:
+							"Run JavaScript in a sandbox with no network access. The code is the body of an async function. Return a JSON-serializable value. console.log output is captured.",
+						inputSchema: z.object({
+							code: z.string().describe("Body of an async JavaScript function"),
+						}),
+						execute: async ({ code }) => {
+							try {
+								const output = await runJavaScript(env, code);
+								runs.push({ code, output });
+								return output;
+							} catch (error) {
+								const message =
+									error instanceof Error ? error.message : String(error);
+								runs.push({ code, error: message });
+								return { error: message };
+							}
+						},
 					}),
-					execute: async ({ code }) => {
-						try {
-							const output = await runJavaScript(env, code);
-							runs.push({ code, output });
-							return output;
-						} catch (error) {
-							const message =
-								error instanceof Error ? error.message : String(error);
-							runs.push({ code, error: message });
-							return { error: message };
-						}
-					},
-				}),
-			},
-			stopWhen: isStepCount(5),
-		});
+				},
+				stopWhen: isStepCount(5),
+			});
 
-		return Response.json({ answer: result.text, runs });
+			return Response.json({ answer: result.text, runs });
+		} catch (error) {
+			console.error("Model request failed", error);
+			return Response.json(
+				{ error: "The model request failed. Try again later.", runs },
+				{ status: 502 },
+			);
+		}
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -218,7 +257,9 @@ export default {
 
 `generateText()` sends the question to the model. When the model calls `runJavaScript`, the AI SDK runs `execute()` and sends the return value back to the model. The model can then run more code or answer.
 
-If the code throws, exceeds the CPU time limit, or calls `fetch()`, `execute()` returns the error message instead of failing the request. The model reads the error and can fix its code. `isStepCount(5)` stops the loop after five model steps, so a model that keeps failing cannot run code indefinitely.
+If the code throws, exceeds the CPU time limit or the timeout, or calls `fetch()`, `execute()` returns the error message instead of failing the request. The model reads the error and can fix its code. `isStepCount(5)` stops the loop after five model steps, so a model that keeps failing cannot run code indefinitely.
+
+The Worker validates the request body with Zod before it calls the model. If a Workers AI request fails, for example because of a [rate limit](/workers-ai/platform/limits/), the Worker logs the error and responds with `502` and the code that already ran. `observability` in `wrangler.jsonc` keeps those logs in [Workers Logs](/workers/observability/logs/workers-logs/).
 
 ## 4. Test locally
 
