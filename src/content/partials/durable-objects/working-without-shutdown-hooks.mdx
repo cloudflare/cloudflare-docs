@@ -8,7 +8,7 @@ Durable Objects may shut down at any time due to deployments, inactivity, or run
 
 Use the best-effort [`[shutdown]()`](/durable-objects/api/base/#shutdown) hook for clean shutdown logic. The hook runs before idle eviction and code-update resets, but it is not guaranteed to run.
 
-Persist important changes during normal request processing. SQLite storage operations such as `sql.exec()` are synchronous, while key-value storage operations are strongly consistent and complete asynchronously.
+Persist important changes during normal request processing rather than deferring them to shutdown. SQLite storage operations such as `sql.exec()` complete synchronously, and key-value storage writes issued without an intervening `await` are automatically coalesced into a single atomic transaction — so writing incrementally does not add meaningful overhead compared to batching writes until shutdown.
 
 For example, persist each event as it arrives rather than buffering events in memory until shutdown:
 
