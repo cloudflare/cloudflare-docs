@@ -21,6 +21,8 @@ export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
+export { default as CfCommand } from "./components/cf/CfCommand.astro";
+export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
 export { default as Description } from "./components/cf/Description.astro";

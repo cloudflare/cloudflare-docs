@@ -1,0 +1,19 @@
+---
+import CliPreferenceSelector from "./CliPreferenceSelector.astro";
+
+interface Props {
+	anchorId?: string;
+}
+
+const { anchorId } = Astro.props;
+---
+
+<div data-nb-cli-preference-scope data-nb-cli-anchor={anchorId} class="w-full">
+	<CliPreferenceSelector />
+	<div data-nb-cli-variant="wrangler">
+		<slot name="wrangler" />
+	</div>
+	<div data-nb-cli-variant="cf">
+		<slot name="cf" />
+	</div>
+</div>
