@@ -1,11 +1,17 @@
 ---
 const uid = `cli-preference-${crypto.randomUUID()}`;
+const options = [
+	{ value: "wrangler", label: "Wrangler" },
+	{ value: "cf", label: "CF" },
+] as const;
+const toggleClass =
+	"text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring";
 ---
 
 <div
 	data-nb-cli-control
 	style="visibility: hidden"
-	class="invisible mb-2 flex min-w-0 items-center justify-end gap-2"
+	class="mb-2 flex min-w-0 items-center justify-end gap-2"
 >
 	<span id={`${uid}-label`} class="text-muted-foreground text-xs font-medium">
 		Select your preferred CLI
@@ -16,24 +22,17 @@ const uid = `cli-preference-${crypto.randomUUID()}`;
 		aria-describedby={`${uid}-help`}
 		class="ring-border/70 inline-flex h-6.5 max-w-full min-w-0 rounded-md bg-[var(--nb-surface-sunken)] px-0.5 ring"
 	>
-		<button
-			type="button"
-			data-nb-cli-toggle="wrangler"
-			aria-pressed="true"
-			disabled
-			class="text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring"
-		>
-			Wrangler
-		</button>
-		<button
-			type="button"
-			data-nb-cli-toggle="cf"
-			aria-pressed="false"
-			disabled
-			class="text-muted-foreground hover:text-foreground aria-pressed:bg-card aria-pressed:text-foreground aria-pressed:ring-border focus-visible:ring-primary relative z-1 my-0.5 cursor-pointer rounded-sm border-0 px-2 text-xs font-medium whitespace-nowrap shadow-none transition-[color,background-color,box-shadow] focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset aria-pressed:shadow-sm aria-pressed:ring"
-		>
-			CF
-		</button>
+		{options.map(({ value, label }) => (
+			<button
+				type="button"
+				data-nb-cli-toggle={value}
+				aria-pressed={value === "wrangler"}
+				disabled
+				class={toggleClass}
+			>
+				{label}
+			</button>
+		))}
 	</div>
 	<span id={`${uid}-help`} class="sr-only">
 		Changes examples on this page to use the selected CLI.

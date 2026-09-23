@@ -109,9 +109,18 @@ import { PackageManagers } from "~/components";
 <!-- Execute a command: -->
 
 <PackageManagers type="exec" pkg="wrangler" args="init my-project" />
+
+<!-- Show reviewed Wrangler and Cloudflare CLI equivalents: -->
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 ```
 
-Use `global` only for packages designed to be installed globally. Use `cfCommand` only for a reviewed, single-line `cf` equivalent of a Wrangler execution command. Supplying it surfaces the shared CLI selector. Existing calls without `cfCommand` remain Wrangler-only.
+Use `global` only for packages designed to be installed globally. Use `cfCommand` only for a reviewed, single-line `cf` equivalent of a Wrangler execution command. The value is the complete alternative command and must begin with `cf `; `args` continues to define only the Wrangler invocation. Unlike `WranglerCommand`'s `cfCommand` prop, this prop includes the `cf` prefix. Supplying it surfaces the shared CLI selector. Existing calls without `cfCommand` remain Wrangler-only.
 
 ---
 

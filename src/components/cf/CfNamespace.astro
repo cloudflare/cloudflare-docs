@@ -1,9 +1,10 @@
 ---
 import CfCommand from "./CfCommand.astro";
+import type { HeadingLevel } from "./command-reference";
 
 interface Props {
 	namespace: string;
-	headingLevel?: number;
+	headingLevel?: HeadingLevel;
 }
 
 const { namespace, headingLevel = 2 } = Astro.props;

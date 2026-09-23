@@ -5,14 +5,17 @@ import { Code } from "../ui/code";
 import { PackageManagers } from "../ui/package-managers";
 import CommandArgument from "./CommandArgument.astro";
 import Details from "./Details.astro";
-import type { CommandArgumentDefinition } from "./command-reference";
+import type {
+	CommandArgumentDefinition,
+	HeadingLevel,
+} from "./command-reference";
 
 interface Props {
 	title: string;
 	headingId?: string | false;
 	invocation: string;
 	description: string;
-	headingLevel?: number;
+	headingLevel?: HeadingLevel;
 	mode: "wrangler" | "cf";
 	epilogue?: string;
 	experimental?: boolean;
@@ -38,11 +41,14 @@ const positionalSet = new Set(positionals);
 const visibleArgs = args
 	? Object.entries(args).filter(([, definition]) => !definition.hidden)
 	: [];
+const visibleGlobalFlags = globalFlags
+	? Object.entries(globalFlags).filter(([, definition]) => !definition.hidden)
+	: [];
 const resolvedHeadingId =
 	headingId === false
 		? undefined
 		: (headingId ?? title.toLowerCase().replace(/[^a-z0-9]+/g, "-"));
-const Heading = `h${headingLevel}` as "h2";
+const Heading = `h${headingLevel}` as `h${HeadingLevel}`;
 ---
 
 <Heading id={resolvedHeadingId}>
@@ -78,10 +84,10 @@ const Heading = `h${headingLevel}` as "h2";
 	</ul>
 )}
 
-{globalFlags && (
+{visibleGlobalFlags.length > 0 && (
 	<Details header="Global flags">
 		<ul>
-			{Object.entries(globalFlags).map(([key, definition]) => (
+			{visibleGlobalFlags.map(([key, definition]) => (
 				<CommandArgument key={key} definition={definition} />
 			))}
 		</ul>

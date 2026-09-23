@@ -13,7 +13,6 @@ interface ParameterMetadata {
 	description?: string;
 	choices?: ReadonlyArray<string | number>;
 	default?: unknown;
-	position?: number;
 }
 
 interface CommandMetadata {
@@ -91,8 +90,6 @@ function parseParameter(value: unknown, context: string): ParameterMetadata {
 		default: Object.hasOwn(parameter, "default")
 			? parameter.default
 			: undefined,
-		position:
-			typeof parameter.position === "number" ? parameter.position : undefined,
 	};
 }
 
@@ -165,7 +162,7 @@ const installedCfVersion = requireString(
 	cfPackage.version,
 	"cf/package.json version",
 );
-const require = createRequire(resolve(process.cwd(), "package.json"));
+const require = createRequire(import.meta.url);
 const cfPackagePath = require.resolve("cf/package.json");
 const commandMetadataPath = resolve(
 	dirname(cfPackagePath),
@@ -206,10 +203,15 @@ function resolveCommandKey(
 	}
 	const args: Record<string, CommandArgumentDefinition> = {};
 	for (const parameter of command.arguments) {
+		if (Object.hasOwn(args, parameter.name)) {
+			throw new Error(
+				`CF command "${key}" repeats argument "${parameter.name}".`,
+			);
+		}
 		args[parameter.name] = toArgumentDefinition(parameter, true);
 	}
 	for (const parameter of command.options) {
-		if (args[parameter.name]) {
+		if (Object.hasOwn(args, parameter.name)) {
 			throw new Error(
 				`CF command "${key}" repeats argument "${parameter.name}".`,
 			);

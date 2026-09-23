@@ -93,4 +93,10 @@ describe("formatCommandArgumentName", () => {
 			}),
 		).toBe("secret put <KEY> [VALUE]");
 	});
+
+	test("rejects a positional without an argument definition", () => {
+		expect(() => formatCommandInvocation("secret put", ["key"])).toThrow(
+			'is missing its positional argument definition for "key"',
+		);
+	});
 });

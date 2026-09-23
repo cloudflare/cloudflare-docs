@@ -10,6 +10,8 @@ export interface CommandArgumentDefinition {
 	positional?: boolean;
 }
 
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
 export function formatCommandArgumentName(
 	key: string,
 	definition: CommandArgumentDefinition,
@@ -26,9 +28,18 @@ export function formatCommandInvocation(
 	args: Record<string, CommandArgumentDefinition> = {},
 ) {
 	const suffix = positionals
-		.map((key) =>
-			formatCommandArgumentName(key, { ...args[key], positional: true }),
-		)
+		.map((key) => {
+			const definition = args[key];
+			if (!definition) {
+				throw new Error(
+					`Command "${command}" is missing its positional argument definition for "${key}".`,
+				);
+			}
+			return formatCommandArgumentName(key, {
+				...definition,
+				positional: true,
+			});
+		})
 		.join(" ");
 	return suffix ? `${command} ${suffix}` : command;
 }

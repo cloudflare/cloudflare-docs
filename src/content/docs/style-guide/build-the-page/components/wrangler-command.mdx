@@ -33,7 +33,11 @@ import { WranglerCommand } from "~/components";
 
 <WranglerCommand command="deploy" cfCommand="deploy" />
 
-<WranglerCommand command="d1 execute" cfCommand={["d1 query", "d1 raw"]} />
+<WranglerCommand
+	command="d1 execute"
+	cfCommand={["d1 query", "d1 raw"]}
+	includeHiddenCf
+/>
 ```
 
 ## With ExtraFlagDetails
@@ -67,3 +71,5 @@ import ExtraFlagDetails from "~/components/cf/ExtraFlagDetails.astro";
   - A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.
 - `cfCommand` <Type text="string | string[]" /> <MetaInfo text="optional" />
   - One or more reviewed Cloudflare CLI equivalents without the `cf` prefix. Supplying this prop displays the shared CLI selector. Explain partial or non-equivalent workflows in the surrounding page content.
+- `includeHiddenCf` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Allows explicitly reviewed `cfCommand` values that the installed Cloudflare CLI marks as hidden.

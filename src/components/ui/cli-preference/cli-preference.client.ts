@@ -6,6 +6,7 @@ const STORAGE_KEY = "ui-cli-preference";
 const listeners = new Set<(value: CliPreference) => void>();
 const runtime = window as typeof window & {
 	__nbCliPreferenceOverride?: CliPreference;
+	__nbCliPreferenceCleanup?: () => void;
 };
 
 function isCliPreference(value: unknown): value is CliPreference {
@@ -64,24 +65,35 @@ export function subscribeCliPreference(
 	return () => listeners.delete(listener);
 }
 
-window.addEventListener("storage", (event) => {
+function handleStorage(event: StorageEvent): void {
 	if (event.key !== STORAGE_KEY && event.key !== null) return;
 	try {
 		if (event.storageArea && event.storageArea !== localStorage) return;
 	} catch {
 		return;
 	}
-	delete runtime.__nbCliPreferenceOverride;
+	if (runtime.__nbCliPreferenceOverride) {
+		applyPreference(runtime.__nbCliPreferenceOverride);
+		return;
+	}
 	applyPreference(
 		isCliPreference(event.newValue) ? event.newValue : readRouteDefault(),
 	);
-});
+}
 
-document.addEventListener("astro:after-swap", () => {
+function handleAfterSwap(): void {
 	if (runtime.__nbCliPreferenceOverride) {
 		applyPreference(runtime.__nbCliPreferenceOverride);
 		return;
 	}
 	const stored = readStoredPreference();
 	applyPreference(stored ?? readRouteDefault());
-});
+}
+
+runtime.__nbCliPreferenceCleanup?.();
+window.addEventListener("storage", handleStorage);
+document.addEventListener("astro:after-swap", handleAfterSwap);
+runtime.__nbCliPreferenceCleanup = () => {
+	window.removeEventListener("storage", handleStorage);
+	document.removeEventListener("astro:after-swap", handleAfterSwap);
+};

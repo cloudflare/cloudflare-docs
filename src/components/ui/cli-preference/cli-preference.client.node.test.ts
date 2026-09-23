@@ -102,6 +102,25 @@ describe("CLI preference", () => {
 		expect(preference.getCliPreference()).toBe("cf");
 	});
 
+	test("retains an in-memory override across storage events", async () => {
+		vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+			throw new DOMException("Full", "QuotaExceededError");
+		});
+		const preference = await loadPreference();
+
+		preference.setCliPreference("cf");
+		window.dispatchEvent(
+			new StorageEvent("storage", {
+				key: "ui-cli-preference",
+				newValue: "wrangler",
+				storageArea: localStorage,
+			}),
+		);
+		document.dispatchEvent(new Event("astro:after-swap"));
+
+		expect(preference.getCliPreference()).toBe("cf");
+	});
+
 	test("treats clearing local storage as a route-default reset", async () => {
 		window.history.replaceState({}, "", "/cf/get-started/");
 		const preference = await loadPreference();
@@ -121,5 +140,22 @@ describe("CLI preference", () => {
 		window.history.replaceState({}, "", "/cf/get-started/");
 		document.dispatchEvent(new Event("astro:after-swap"));
 		expect(document.documentElement.dataset.nbCliPreference).toBe("cf");
+	});
+
+	test("replaces global listeners when the module reloads", async () => {
+		const removeWindowListener = vi.spyOn(window, "removeEventListener");
+		const removeDocumentListener = vi.spyOn(document, "removeEventListener");
+
+		await loadPreference();
+		await loadPreference();
+
+		expect(removeWindowListener).toHaveBeenCalledWith(
+			"storage",
+			expect.any(Function),
+		);
+		expect(removeDocumentListener).toHaveBeenCalledWith(
+			"astro:after-swap",
+			expect.any(Function),
+		);
 	});
 });

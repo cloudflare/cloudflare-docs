@@ -26,8 +26,14 @@ function initCliPreference(container: HTMLElement): () => void {
 				String(toggle.dataset.nbCliToggle === value),
 			);
 		});
-		control?.classList.remove("invisible");
 		control?.style.removeProperty("visibility");
+		if (status) {
+			status.textContent = container.contains(document.activeElement)
+				? value === "cf"
+					? "Showing Cloudflare CLI examples."
+					: "Showing Wrangler examples."
+				: "";
+		}
 		if (
 			control &&
 			!control.hasAttribute("data-nb-cli-ready") &&
@@ -47,12 +53,6 @@ function initCliPreference(container: HTMLElement): () => void {
 			.nbCliToggle;
 		if (value !== "wrangler" && value !== "cf") return;
 		setCliPreference(value);
-		if (status) {
-			status.textContent =
-				value === "cf"
-					? "Showing Cloudflare CLI examples."
-					: "Showing Wrangler examples.";
-		}
 	};
 
 	toggles.forEach((toggle) => toggle.addEventListener("click", onToggle));

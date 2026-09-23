@@ -1,9 +1,10 @@
 ---
 import CommandReference from "./CommandReference.astro";
+import type { HeadingLevel } from "./command-reference";
 
 interface Props {
 	command: string;
-	headingLevel?: number;
+	headingLevel?: HeadingLevel;
 	includeHidden?: boolean;
 }
 

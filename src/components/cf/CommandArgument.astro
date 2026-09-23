@@ -36,7 +36,8 @@ if (definition.alias) {
 
 <li>
 	<code>{name}</code>
-	<Type text={typeText} /> {aliasText && <MetaInfo text={aliasText} />}
+	{typeText && <Type text={typeText} />}{" "}
+	{aliasText && <MetaInfo text={aliasText} />}
 	{definition.demandOption && <MetaInfo text="required" />}
 	{definition.default !== undefined && (
 		<MetaInfo text={`default: ${definition.default}`} />

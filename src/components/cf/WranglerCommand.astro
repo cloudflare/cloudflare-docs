@@ -15,16 +15,25 @@ import { experimental_getWranglerCommands } from "wrangler";
 import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
 import CfCommand from "./CfCommand.astro";
 import CommandReference from "./CommandReference.astro";
-import { formatCommandInvocation } from "./command-reference";
+import {
+	formatCommandInvocation,
+	type HeadingLevel,
+} from "./command-reference";
 
 interface Props {
 	command: string;
-	headingLevel?: number;
+	headingLevel?: HeadingLevel;
 	description?: string;
 	cfCommand?: string | string[];
+	includeHiddenCf?: boolean;
 }
 
-const { command, headingLevel = 2, cfCommand } = Astro.props;
+const {
+	command,
+	headingLevel = 2,
+	cfCommand,
+	includeHiddenCf = false,
+} = Astro.props;
 
 const commands = experimental_getWranglerCommands();
 const { registry, globalFlags } = commands;
@@ -79,6 +88,15 @@ if (
 		`[WranglerCommand] cfCommand must contain at least one command on "${Astro.url.pathname}".`,
 	);
 }
+
+const normalizedCfCommands = cfCommands.map((target) =>
+	target.trim().replace(/^cf\s+/, ""),
+);
+if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
+	throw new Error(
+		`[WranglerCommand] cfCommand contains duplicate commands on "${Astro.url.pathname}".`,
+	);
+}
 ---
 
 {cfCommands.length ? (
@@ -99,8 +117,12 @@ if (
 			/>
 		</Fragment>
 		<Fragment slot="cf">
-			{cfCommands.map((target) => (
-				<CfCommand command={target} headingLevel={headingLevel} includeHidden />
+			{normalizedCfCommands.map((target) => (
+				<CfCommand
+					command={target}
+					headingLevel={headingLevel}
+					includeHidden={includeHiddenCf}
+				/>
 			))}
 		</Fragment>
 	</CliPreferenceSwitch>

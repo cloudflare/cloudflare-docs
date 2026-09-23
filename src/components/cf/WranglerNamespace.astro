@@ -11,10 +11,11 @@ import { experimental_getWranglerCommands } from "wrangler";
 import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
 import CfNamespace from "./CfNamespace.astro";
 import WranglerCommand from "./WranglerCommand.astro";
+import type { HeadingLevel } from "./command-reference";
 
 interface Props {
 	namespace: string;
-	headingLevel?: number;
+	headingLevel?: HeadingLevel;
 	cfNamespace?: string;
 }
 
