@@ -4,14 +4,19 @@ pcx_content_type: tutorial
 difficulty: Intermediate
 sidebar:
   order: 6
-description: Mount R2 buckets as local filesystem paths to persist data across sandbox lifecycles.
+description: Mount R2 buckets as local filesystem paths with the Sandbox SDK 0.x to persist data across sandbox lifecycles.
 reviewed: 2025-11-18
 products:
   - sandbox
   - r2
+head:
+  - tag: title
+    content: "Data persistence with R2 (Sandbox SDK 0.x)"
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/mount-an-r2-bucket/", title: "Mount an R2 bucket" }} />
 
 Mount object storage buckets as local filesystem paths to persist data across sandbox lifecycles. This tutorial uses Cloudflare R2, but the same approach works with any S3-compatible provider.
 

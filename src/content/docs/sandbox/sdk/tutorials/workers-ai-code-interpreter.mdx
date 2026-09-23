@@ -4,14 +4,19 @@ pcx_content_type: tutorial
 difficulty: Intermediate
 sidebar:
   order: 3
-description: Build a code interpreter using Workers AI GPT-OSS model with the official workers-ai-provider package.
+description: Build a Sandbox SDK 0.x code interpreter using the Workers AI GPT-OSS model and the workers-ai-provider package.
 reviewed: 2026-01-28
 products:
   - sandbox
   - workers-ai
+head:
+  - tag: title
+    content: "Code interpreter with Workers AI (Sandbox SDK 0.x)"
 ---
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/tutorials/build-an-ai-code-interpreter/", title: "Build an AI code interpreter" }} />
 
 Build a powerful code interpreter that gives the [gpt-oss model](/workers-ai/models/gpt-oss-120b/) on Workers AI the ability to execute Python code using the Cloudflare Sandbox SDK.
 

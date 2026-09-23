@@ -3,14 +3,19 @@ title: HTTP API reference
 pcx_content_type: reference
 sidebar:
   order: 1
-description: Complete HTTP API reference for the sandbox bridge Worker.
+description: Complete HTTP API reference for the Sandbox SDK 0.x bridge Worker.
 reviewed: 2026-04-13
 products:
   - sandbox
   - workers
+head:
+  - tag: title
+    content: "HTTP API reference (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 This page documents every route exposed by the [sandbox bridge](/sandbox/sdk/bridge/) on the stable template.
 

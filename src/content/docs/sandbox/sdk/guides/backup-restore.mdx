@@ -3,12 +3,17 @@ title: Backup and restore
 pcx_content_type: how-to
 sidebar:
   order: 11
-description: Snapshot a sandbox directory to R2 and restore it later.
+description: Snapshot a sandbox directory to R2 and restore it later with the Sandbox SDK 0.x.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Backup and restore (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/save-and-restore-a-workspace/", title: "Save and restore a sandbox with snapshots" }} />
 
 This guide shows you how to snapshot a sandbox directory to R2 and restore it later.
 

@@ -1,14 +1,19 @@
 ---
 title: Tunnels
-description: Expose sandbox services on the public internet with quick tunnels (*.trycloudflare.com) or named tunnels bound to a hostname on your Cloudflare zone.
+description: Expose Sandbox SDK 0.x services on the public Internet with quick tunnels (*.trycloudflare.com) or named tunnels bound to a hostname on your Cloudflare zone.
 pcx_content_type: reference
 sidebar:
   order: 6
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Tunnels (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 The `sandbox.tunnels` namespace exposes a service running inside a sandbox on the public internet through a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). The SDK runs `cloudflared` inside the container and opens a persistent QUIC connection to Cloudflare's edge.
 

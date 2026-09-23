@@ -1,12 +1,19 @@
 ---
 title: Dockerfile reference
-description: Customize the Sandbox SDK container image with packages, tools, and configurations.
+description: Customize the Sandbox SDK 0.x container image with packages, tools, and configurations.
 pcx_content_type: configuration
 sidebar:
   order: 2
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Dockerfile reference (Sandbox SDK 0.x)"
 ---
+
+import { Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Customize the sandbox container image with your own packages, tools, and configurations by extending the base runtime image.
 

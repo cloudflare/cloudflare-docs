@@ -3,12 +3,17 @@ title: Browser terminals
 pcx_content_type: how-to
 sidebar:
   order: 9
-description: Connect browser-based terminals to sandbox shells using xterm.js or raw WebSockets.
+description: Connect browser-based terminals to Sandbox SDK 0.x shells using xterm.js or raw WebSockets.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Browser terminals (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample, PackageManagers } from "~/components";
+import { TypeScriptExample, PackageManagers, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/open-a-terminal-in-the-browser/", title: "Open a terminal in the browser" }} />
 
 This guide shows you how to connect a browser-based terminal to a sandbox shell. You can use the `SandboxAddon` with xterm.js, or connect directly over WebSockets.
 

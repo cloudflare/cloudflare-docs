@@ -1,14 +1,19 @@
 ---
 title: Storage
-description: Mount S3-compatible storage buckets into the Sandbox SDK filesystem for persistent data access.
+description: Mount S3-compatible storage buckets into the Sandbox SDK 0.x filesystem for persistent data access.
 pcx_content_type: concept
 sidebar:
   order: 4
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Storage (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/mount-an-r2-bucket/", title: "Mount an R2 bucket" }} />
 
 Mount S3-compatible storage buckets (R2, S3, GCS) into the sandbox filesystem for persistent data access. `mountBucket()` supports R2 binding mounts, local R2 binding sync during development, and remote S3-compatible endpoint mounts.
 

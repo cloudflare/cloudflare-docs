@@ -4,13 +4,18 @@ pcx_content_type: tutorial
 difficulty: Beginner
 sidebar:
   order: 5
-description: Deploy Cursor self-hosted machines that run each assigned session in an isolated Cloudflare container.
+description: Deploy Cursor self-hosted machines that run each assigned session in a Sandbox SDK 0.x container.
 products:
   - sandbox
   - containers
+head:
+  - tag: title
+    content: "Run Cursor Cloud Agents on Cloudflare via self-hosted machines (Sandbox SDK 0.x)"
 ---
 
-import { Steps } from "~/components";
+import { Steps, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/coding-agents/", title: "Run coding agents in a sandbox" }} />
 
 Run Cursor Cloud Agents on Cloudflare via [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
 

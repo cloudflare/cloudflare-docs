@@ -1,6 +1,6 @@
 ---
 title: Architecture
-description: Sandbox SDK combines Workers, Durable Objects, and Containers for secure code execution.
+description: Sandbox SDK 0.x combines Workers, Durable Objects, and Containers for secure code execution.
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -9,9 +9,14 @@ products:
   - workers
   - durable-objects
   - containers
+head:
+  - tag: title
+    content: "Architecture (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Sandbox SDK lets you execute untrusted code safely from your Workers. It combines three Cloudflare technologies to provide secure, stateful, and isolated execution:
 

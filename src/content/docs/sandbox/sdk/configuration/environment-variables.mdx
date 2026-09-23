@@ -1,14 +1,19 @@
 ---
 title: Environment variables
-description: Pass configuration, secrets, and runtime settings to Sandbox SDK containers using environment variables.
+description: Pass configuration, secrets, and runtime settings to Sandbox SDK 0.x containers using environment variables.
 pcx_content_type: configuration
 sidebar:
   order: 3
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Environment variables (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 

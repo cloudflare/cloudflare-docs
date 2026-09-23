@@ -1,12 +1,19 @@
 ---
 title: Terminal connections
-description: Sandbox SDK terminal connections stream bidirectional data between browser UIs and container shells.
+description: Sandbox SDK 0.x terminal connections stream bidirectional data between browser UIs and container shells.
 pcx_content_type: concept
 sidebar:
   order: 5
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Terminal connections (Sandbox SDK 0.x)"
 ---
+
+import { Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/open-a-terminal-in-the-browser/", title: "Open a terminal in the browser" }} />
 
 Terminal connections let browser-based UIs interact directly with sandbox shells. Instead of executing discrete commands with `exec()`, a terminal connection opens a persistent, bidirectional channel to a bash shell — the same model as SSH or a local terminal emulator.
 

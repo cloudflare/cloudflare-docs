@@ -3,12 +3,17 @@ title: 2026 deprecation migration guide
 pcx_content_type: how-to
 sidebar:
   order: 99
-description: Migrate away from deprecated Sandbox SDK features on the current stable package.
+description: Migrate away from deprecated Sandbox SDK 0.x features on the current stable package.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "2026 deprecation migration guide (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 This guide is for applications that stay on `@cloudflare/sandbox` and need to leave deprecated features (transports, default sessions, stream helpers, and related APIs).
 

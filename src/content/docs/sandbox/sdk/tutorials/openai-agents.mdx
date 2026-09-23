@@ -4,16 +4,21 @@ pcx_content_type: tutorial
 difficulty: Advanced
 sidebar:
   order: 2
-description: Use the OpenAI Agents SDK with Cloudflare Sandbox to build a Python agent that writes, tests, and delivers code in an isolated environment.
+description: Use the OpenAI Agents SDK with the Sandbox SDK 0.x to build a Python agent that writes, tests, and delivers code in an isolated environment.
 tags:
   - Python
   - OpenAI
 reviewed: 2026-04-13
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Build an AI coding agent with OpenAI Agents SDK (Sandbox SDK 0.x)"
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/coding-agents/", title: "Run coding agents in a sandbox" }} />
 
 The [OpenAI Agents SDK](https://openai.github.io/openai-agents-python/) is a lightweight Python framework for building multi-agent workflows. A Cloudflare Sandbox integration is provided out of the box and ensures that the SDK includes a first-class Cloudflare backend that gives your agents isolated containers for running code, installing packages, and managing files.
 

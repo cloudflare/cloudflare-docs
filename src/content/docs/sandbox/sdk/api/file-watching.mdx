@@ -1,14 +1,19 @@
 ---
 title: File watching
-description: Monitor sandbox filesystem changes in real-time using the Sandbox SDK watch API.
+description: Monitor sandbox filesystem changes in real-time using the Sandbox SDK 0.x watch API.
 pcx_content_type: concept
 sidebar:
   order: 4
 products:
   - sandbox
+head:
+  - tag: title
+    content: "File watching (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Monitor filesystem changes in real-time using Linux's native inotify system. The `watch()` method returns a Server-Sent Events (SSE) stream of file change events that you consume with `parseSSEStream()`.
 

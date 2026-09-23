@@ -4,13 +4,18 @@ pcx_content_type: tutorial
 difficulty: Intermediate
 sidebar:
   order: 2
-description: Upload CSV files, generate analysis code with Claude, and return visualizations.
+description: Upload CSV files, generate analysis code with Claude, and return visualizations with the Sandbox SDK 0.x.
 reviewed: 2025-10-15
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Analyze data with AI (Sandbox SDK 0.x)"
 ---
 
 import { Render, PackageManagers } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/tutorials/build-an-ai-code-interpreter/", title: "Build an AI code interpreter" }} />
 
 Build an AI-powered data analysis system that accepts CSV uploads, uses Claude to generate Python analysis code, executes it in sandboxes, and returns visualizations.
 

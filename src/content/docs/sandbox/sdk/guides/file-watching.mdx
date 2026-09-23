@@ -3,12 +3,17 @@ title: Watch filesystem changes
 pcx_content_type: how-to
 sidebar:
   order: 3
-description: Monitor files and directories in real-time to build responsive development tools and automation workflows.
+description: Monitor files and directories in real time with the Sandbox SDK 0.x to build development tools and automation workflows.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Watch filesystem changes (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 This guide shows you how to monitor filesystem changes in real-time using the Sandbox SDK's file watching API. File watching is useful for building development tools, automated workflows, and applications that react to file changes as they happen.
 
