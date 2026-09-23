@@ -36,11 +36,11 @@ Cloudflare Mesh requires that the Mesh node's [device profile](/cloudflare-one/t
 
 Choose an enrollment method based on what you want to connect:
 
-| Goal | Participant type | Enrollment method | Browser required |
-| --- | --- | --- | --- |
-| Run a service or route a subnet from Linux | [Mesh node](#1-configure-mesh) | Connector token | No |
-| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/mesh/guides/connect-client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No |
-| Connect a user device with identity | [Client device](#2-connect-a-client-device) | Interactive identity provider enrollment | Yes |
+| Goal                                                  | Participant type                                                                                        | Enrollment method                               | Browser required |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------- |
+| Run a service or route a subnet from Linux            | [Mesh node](#1-configure-mesh)                                                                          | Connector token                                 | No               |
+| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/mesh/guides/connect-client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No               |
+| Connect a user device with identity                   | [Client device](#2-connect-a-client-device)                                                             | Interactive identity provider enrollment        | Yes              |
 
 ## 1. Configure Mesh
 
@@ -156,7 +156,7 @@ You can also manage nodes with the [`cloudflare_zero_trust_tunnel_warp_connector
 
 ## 2. Connect a client device
 
-Use the guided workflow to prepare your account and connect a laptop or phone:
+Use the Add device workflow to find the Cloudflare One Client installer and organization name for a laptop or phone:
 
 <Steps>
 
@@ -165,16 +165,13 @@ Use the guided workflow to prepare your account and connect a laptop or phone:
    <DashButton url="/?to=/:account/mesh" />
 
 2. Select **Add participant** > **Add device**.
-3. If prompted, enter a team name for your Cloudflare One organization.
-4. If your account requires a device enrollment policy, select **Just me** or **My organization**.
-5. Review the account changes required for Mesh. If the workflow must change Split Tunnels, review the Mesh IP range and affected exclusions.
-6. Select **Confirm and set up**. Resolve any warnings before continuing to the installation instructions.
-7. Select the device platform and follow the installation instructions. For iOS or Android, you can scan the displayed QR code.
-8. Enter your team name in the Cloudflare One Client and complete authentication.
+3. Select the device platform and use the provided link or QR code to install the Cloudflare One Client.
+4. Open the client and select **Cloudflare Zero Trust** when prompted for a connection type.
+5. Enter the organization name displayed in the Mesh dashboard and complete authentication.
 
 </Steps>
 
-The workflow prepares your account but does not enroll the device or verify connectivity. After the Cloudflare One Client displays **Connected**, test connectivity as described in [Connect client devices](/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/#2-verify-connectivity).
+The workflow does not change account settings, enroll the device, or verify connectivity. Configure [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) before connecting the device. After the Cloudflare One Client displays **Connected**, test connectivity as described in [Connect client devices](/mesh/guides/connect-client-devices/#2-verify-connectivity).
 
 ## 3. Test connectivity
 
@@ -205,7 +202,7 @@ Traffic from Mesh nodes appears in [Gateway activity logs](/cloudflare-one/insig
 
 ## Required account settings
 
-The dashboard wizard configures the following Cloudflare One settings automatically for new deployments. Non-wizard deployments must configure the same settings:
+The Add node workflow configures the following Cloudflare One settings automatically for new deployments. The Add device workflow does not change these settings. Configure them before enrolling a client device:
 
 | Setting                                                                                                                                                                                                                                                                                                                                                                                       | What it does                                                                                                                                                                                                                                                                                                                                                                                                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

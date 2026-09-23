@@ -30,21 +30,21 @@ For more details, refer to [Connect client devices](/mesh/guides/connect-client-
 ## Prerequisites
 
 - A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- A [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization) with [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) configured
 - Two Linux, Windows, macOS, Android, or iOS devices you want to connect together.
 
 ## Step 1: Enroll your first device
 
-Enrollment permissions control which users can connect devices to your account. In this step, you set an enrollment email and download the Cloudflare One Client. The email you provide becomes the first allowed login for your organization, and anyone with that email address can enroll a device.
+Enrollment permissions control which users can connect devices to your account. Configure them before continuing. The Mesh dashboard provides the Cloudflare One Client installer and organization name but does not change your account settings.
 
 1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
    <DashButton url="/?to=/:account/mesh" />
 
 2. Select **Add participant** > **Add device**.
-3. If prompted, enter a team name and select **Just me** or **My organization** for the enrollment policy.
-4. Review the proposed account changes, then select **Confirm and set up**.
-5. Select your platform and follow the installation instructions.
-6. Open the client, enter your team name, and sign in with your email.
+3. Select your platform and use the provided link or QR code to install the Cloudflare One Client.
+4. Open the client and select **Cloudflare Zero Trust** when prompted for a connection type.
+5. Enter the organization name displayed in the Mesh dashboard and sign in.
 
 ## Step 2: Enroll your second device
 
