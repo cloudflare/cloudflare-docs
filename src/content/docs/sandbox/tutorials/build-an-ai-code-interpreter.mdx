@@ -269,9 +269,9 @@ The Worker validates the request body with Zod before it calls the model. If a W
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-   The Dynamic Worker runs on your computer. Workers AI requests always run on Cloudflare and count toward your [Workers AI usage](/workers-ai/platform/pricing/).
+   During `wrangler dev`, the Dynamic Worker runs locally. Workers AI requests always run on Cloudflare and count toward your [Workers AI usage](/workers-ai/platform/pricing/).
 
-2. POST a question to the URL Wrangler printed. The default is `http://localhost:8787`:
+2. POST a question to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --json '{"question":"How many prime numbers are there below 100,000?"}'
@@ -316,7 +316,7 @@ For more information, refer to [Sandbox security](/sandbox/security/).
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-2. POST a question to the `workers.dev` URL Wrangler printed:
+2. POST a question to the `workers.dev` URL Wrangler prints:
 
    ```sh
    curl https://sandbox-code-interpreter.<YOUR_SUBDOMAIN>.workers.dev --json '{"question":"How many prime numbers are there below 100,000?"}'

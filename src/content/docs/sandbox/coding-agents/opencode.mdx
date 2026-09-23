@@ -50,7 +50,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs the baseline x64 OpenCode binary directly. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. When you build an `amd64` image on another architecture, that machine is an emulator, so the package can pick the wrong binary. The baseline binary runs on every x64 CPU.
+   The image installs the baseline x64 OpenCode binary directly. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. When you build an `amd64` image on another architecture, the build runs under an emulator, so the package can pick the wrong binary. The baseline binary runs on every x64 CPU.
 
    OpenCode searches files with `rg` from the image. Without `ripgrep`, it tries to download `rg` from GitHub. Pin the OpenCode version, because its model list and event format can change between releases.
 

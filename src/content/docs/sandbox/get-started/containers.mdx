@@ -135,7 +135,7 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-7. POST a command to the URL Wrangler printed. The default is `http://localhost:8787`:
+7. POST a command to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --request POST --json '{"argv":["uname","-a"]}'
@@ -147,6 +147,6 @@ The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker sta
 
 ## Next steps
 
-- Run another process in the instance. Refer to [Execute commands](/containers/guides/execute-commands/).
+- Run another process in the instance. Refer to [`exec()`](/durable-objects/api/container/#exec).
 - Run JavaScript. Refer to [Run JavaScript](/sandbox/get-started/dynamic-workers/).
 - Use the [Durable Object container API](/durable-objects/api/container/) for `start()` and `exec()`.
