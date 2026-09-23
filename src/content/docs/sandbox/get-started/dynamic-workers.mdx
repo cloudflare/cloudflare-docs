@@ -67,7 +67,11 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    </WranglerConfig>
 
-4. Replace `src/index.ts`. The Worker reads `code` from the JSON body and runs it in the sandbox:
+4. Generate types for the binding:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+5. Replace `src/index.ts`. The Worker reads `code` from the JSON body and runs it in the sandbox:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -75,7 +79,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    import type { WorkerEntrypoint } from "cloudflare:workers";
 
    type CodeEntrypoint = WorkerEntrypoint & {
-       evaluate(): Promise<unknown>;
+   	evaluate(): Promise<unknown>;
    };
 
    export default {
@@ -99,9 +103,9 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    			globalOutbound: null,
    		});
 
-           const result = await sandbox
-               .getEntrypoint<CodeEntrypoint>("Code")
-               .evaluate();
+   		const result = await sandbox
+   			.getEntrypoint<CodeEntrypoint>("Code")
+   			.evaluate();
    		return Response.json({ result });
    	},
    };
@@ -111,15 +115,15 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`.
 
-5. Run `wrangler dev`:
+6. Run `wrangler dev`:
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-6. POST JavaScript to the URL Wrangler printed. The default is `http://localhost:8787`:
+7. POST JavaScript to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --request POST --json '{
-     "code": "const users = [{ name: \\"Ada\\", role: \\"admin\\" }, { name: \\"Grace\\", role: \\"user\\" }]; return users.filter((u) => u.role === \\"admin\\").map((u) => u.name);"
+     "code": "const users = [{ name: \"Ada\", role: \"admin\" }, { name: \"Grace\", role: \"user\" }]; return users.filter((u) => u.role === \"admin\").map((u) => u.name);"
    }'
    ```
 
