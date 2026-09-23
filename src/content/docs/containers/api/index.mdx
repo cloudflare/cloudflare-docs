@@ -13,7 +13,7 @@ import { CardGrid, LinkTitleCard, TypeScriptExample } from "~/components";
 
 Containers provide two APIs for managing a container from a Durable Object. Both APIs address the same container runtime.
 
-For new applications, use the Durable Object Container API when you need direct lifecycle control. Use the `Container` class when you prefer built-in lifecycle helpers.
+For new applications, we recommend the Durable Object Container API. It gives you direct control over the container lifecycle and access to Durable Object features such as storage, alarms, and request routing. Use the `Container` class when you prefer built-in lifecycle helpers.
 
 <CardGrid>
 
@@ -40,11 +40,11 @@ For new applications, use the Durable Object Container API when you need direct 
 
 ### Durable Object Container API
 
-The Durable Object Container API exposes the container runtime through `ctx.container`. Choose it when you need direct control over startup, shutdown, networking, or resource usage. You can add readiness checks, custom request routing, or lifecycle policies when your application needs them.
+The Durable Object Container API is recommended for new applications. Inside a Durable Object, use `ctx.container` to control the container runtime directly. You can manage startup, shutdown, networking, and resource usage and add readiness checks, custom request routing, or lifecycle policies when needed.
 
 ### Container class
 
-The `Container` class builds on Durable Objects and the runtime API. Choose it when you prefer built-in request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers reduce application code, but some features use Durable Object storage and alarms.
+The `Container` class builds on Durable Objects and the runtime API. Choose it when you prefer built-in request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers reduce application code by handling common Durable Object lifecycle tasks for you. Some features still use Durable Object storage and alarms.
 
 The following table compares both options:
 
