@@ -11,9 +11,13 @@ import { Render, Tabs, TabItem } from "~/components";
 AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them.
 You can toggle Workers Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/ai-gateway/reference/pricing).
 
+Workers Logpush works with both [Logs](/ai-gateway/observability/logging/) and [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/).
+
 This guide explains how to set up Workers Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
 
-You can store up to 10 million logs per gateway. If your limit is reached, new logs will stop being saved and will not be exported through Workers Logpush. To continue saving and exporting logs, you must delete older logs to free up space for new logs. Workers Logpush has a limit of 4 jobs and a maximum request size of 1 MB per log.
+For Legacy Logs on Workers Paid, you can store 10 million logs per gateway. If saving stops at this limit, logs are not saved or exported. Delete older logs or turn on automatic deletion to resume exports.
+
+Workers Logpush supports four jobs per account. Each exported log can be up to 1 MB.
 
 :::note[Note]
 

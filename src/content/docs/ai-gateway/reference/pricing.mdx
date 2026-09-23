@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Pricing
-description: Review AI Gateway pricing, including free core features, persistent log storage limits, and premium add-ons.
+description: Review AI Gateway pricing for logs and premium features.
 sidebar:
   order: 8
 products:
@@ -16,18 +16,24 @@ We will continue to build and expand AI Gateway. Some new features may be additi
 
 You can monitor your usage in the AI Gateway dashboard.
 
-## Persistent logs
+## Logs
 
-Persistent logs are available on all plans. Log storage limits vary by plan.
+Log pricing depends on your Cloudflare account creation date.
 
-### Log storage limits
+### Accounts created on or after September 24, 2026
+
+These accounts use [Logs](/ai-gateway/observability/logging/) powered by Workers Observability. Refer to [Workers Logs pricing](/workers/observability/logs/workers-logs/#pricing) for current pricing and retention.
+
+### Accounts created before September 24, 2026
+
+These accounts use [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/). Persistent log storage is available on all plans with these limits:
 
 | Plan         | Log storage limit                      |
 | ------------ | -------------------------------------- |
 | Workers Free | 100,000 logs total across all gateways |
 | Workers Paid | 10,000,000 logs per gateway            |
 
-For more details on log storage behavior and automatic log deletion, refer to [Limits](/ai-gateway/reference/limits/) and [Logging](/ai-gateway/observability/logging/#automatic-log-deletion).
+For storage behavior and deletion options, refer to [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/#manage-storage).
 
 ## Data Loss Prevention (DLP)
 
@@ -45,7 +51,7 @@ A 5% fee is applied to all credits purchased through [Unified Billing](/ai-gatew
 
 ## Logpush
 
-Logpush is only available on the Workers Paid plan.
+Logpush works with both Logs and Legacy Logs. It is only available on the Workers Paid plan.
 
 |          | Paid plan                          |
 | -------- | ---------------------------------- |
