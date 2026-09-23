@@ -268,6 +268,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "runwayml",
+			"pricing": {
+				"default": 0.12
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:58",
 	"schema": {
@@ -276,18 +284,18 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing what should appear in the video",
 					"type": "string",
 					"minLength": 1,
-					"maxLength": 1000
+					"maxLength": 1000,
+					"description": "Text prompt describing what should appear in the video"
 				},
 				"image_input": {
 					"description": "HTTPS URL, Runway URI, or data URI containing an image for image-to-video",
 					"type": "string"
 				},
 				"ratio": {
-					"description": "Resolution/aspect ratio of the output video",
 					"default": "1280:720",
+					"description": "Resolution/aspect ratio of the output video",
 					"type": "string",
 					"enum": [
 						"1280:720",
@@ -299,8 +307,8 @@
 					]
 				},
 				"duration": {
-					"description": "Video duration in seconds",
 					"default": 5,
+					"description": "Video duration in seconds",
 					"type": "integer",
 					"minimum": 2,
 					"maximum": 10
@@ -339,9 +347,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

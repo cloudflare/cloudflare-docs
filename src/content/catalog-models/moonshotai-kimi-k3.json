@@ -18,8 +18,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 3,
-		"Cached input tokens (per 1M)": 0.3,
-		"Output tokens (per 1M)": 15
+		"Output tokens (per 1M)": 15,
+		"Cached input tokens (per 1M)": 0.3
 	},
 	"examples": [
 		{
@@ -21717,6 +21717,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "moonshot",
+			"pricing": {
+				"input_tokens": 3,
+				"output_tokens": 15,
+				"input_cached_tokens": 0.3
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-16 19:53:45",
 	"schema": {

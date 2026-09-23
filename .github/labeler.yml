@@ -21,6 +21,30 @@ product:1.1.1.1:
           - src/assets/images/1.1.1.1/**
           - src/content/changelog/1.1.1.1/**
 
+product:access:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/access/**
+          - src/assets/images/changelog/access/**
+          - src/content/docs/cloudflare-one/access-controls/*
+          - src/content/docs/cloudflare-one/access-controls/!(applications)/**
+          - src/content/docs/cloudflare-one/access-controls/applications/*
+          - src/content/docs/cloudflare-one/access-controls/applications/!(non-http)/**
+          - src/content/docs/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps.*)
+          - src/content/docs/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps)/**
+          - src/content/partials/cloudflare-one/access-controls/*
+          - src/content/partials/cloudflare-one/access-controls/!(applications)/**
+          - src/content/partials/cloudflare-one/access-controls/applications/*
+          - src/content/partials/cloudflare-one/access-controls/applications/!(non-http)/**
+          - src/content/partials/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps.*)
+          - src/content/partials/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps)/**
+          - src/assets/images/cloudflare-one/access-controls/*
+          - src/assets/images/cloudflare-one/access-controls/!(applications)/**
+          - src/assets/images/cloudflare-one/access-controls/applications/*
+          - src/assets/images/cloudflare-one/access-controls/applications/!(non-http)/**
+          - src/assets/images/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps.*)
+          - src/assets/images/cloudflare-one/access-controls/applications/non-http/!(infrastructure-apps)/**
+
 product:agent-lee:
   - changed-files:
       - any-glob-to-any-file:
@@ -95,6 +119,16 @@ product:api-shield:
           - src/content/changelog/api-shield/**
           - src/assets/images/changelog/api-shield/**
 
+product:application-library:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/team-and-resources/app-library/**
+          - src/content/docs/cloudflare-one/team-and-resources/app-library.*
+          - src/content/partials/cloudflare-one/team-and-resources/app-library/**
+          - src/content/partials/cloudflare-one/team-and-resources/app-library.*
+          - src/assets/images/cloudflare-one/team-and-resources/app-library/**
+          - src/assets/images/cloudflare-one/team-and-resources/app-library.*
+
 product:argo-smart-routing:
   - changed-files:
       - any-glob-to-any-file:
@@ -112,6 +146,7 @@ product:automatic-platform-optimization:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/automatic-platform-optimization/**
+          - src/content/changelog/automatic-platform-optimization/**
 
 product:billing:
   - changed-files:
@@ -131,6 +166,18 @@ product:bots:
           - src/content/release-notes/bots.yaml
           - src/content/changelog/bots/**
           - src/assets/images/changelog/bots/**
+
+product:browser-isolation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/browser-isolation/**
+          - src/assets/images/changelog/browser-isolation/**
+          - src/content/docs/cloudflare-one/remote-browser-isolation/**
+          - src/content/docs/cloudflare-one/remote-browser-isolation.*
+          - src/content/partials/cloudflare-one/remote-browser-isolation/**
+          - src/content/partials/cloudflare-one/remote-browser-isolation.*
+          - src/assets/images/cloudflare-one/remote-browser-isolation/**
+          - src/assets/images/cloudflare-one/remote-browser-isolation.*
 
 product:browser-run:
   - changed-files:
@@ -156,6 +203,29 @@ product:cache:
           - src/content/partials/cache/**
           - src/assets/images/cache/**
           - src/content/changelog/cache/**
+
+product:casb:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/casb/**
+          - src/content/docs/cloudflare-one/cloud-and-saas-findings/**
+          - src/content/docs/cloudflare-one/cloud-and-saas-findings.*
+          - src/content/partials/cloudflare-one/cloud-and-saas-findings/**
+          - src/content/partials/cloudflare-one/cloud-and-saas-findings.*
+          - src/assets/images/cloudflare-one/cloud-and-saas-findings/**
+          - src/assets/images/cloudflare-one/cloud-and-saas-findings.*
+          - src/content/docs/cloudflare-one/integrations/cloud-and-saas/**
+          - src/content/docs/cloudflare-one/integrations/cloud-and-saas.*
+          - src/content/partials/cloudflare-one/integrations/cloud-and-saas/**
+          - src/content/partials/cloudflare-one/integrations/cloud-and-saas.*
+          - src/assets/images/cloudflare-one/integrations/cloud-and-saas/**
+          - src/assets/images/cloudflare-one/integrations/cloud-and-saas.*
+          - src/content/docs/cloudflare-one/casb/**
+          - src/content/docs/cloudflare-one/casb.*
+          - src/content/partials/cloudflare-one/casb/**
+          - src/content/partials/cloudflare-one/casb.*
+          - src/assets/images/cloudflare-one/casb/**
+          - src/assets/images/cloudflare-one/casb.*
 
 product:changelog:
   - changed-files:
@@ -189,7 +259,6 @@ product:cloudflare-challenges:
           - src/content/docs/cloudflare-challenges/**
           - src/content/partials/cloudflare-challenges/**
           - src/assets/images/cloudflare-challenges/**
-          - src/content/changelog/cloudflare-challenges/**
 
 product:cloudflare-for-platforms:
   - changed-files:
@@ -211,34 +280,113 @@ product:cloudflare-network-firewall:
 product:cloudflare-one:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/cloudflare-one/**
-          - src/content/partials/cloudflare-one/**
-          - src/assets/images/cloudflare-one/**
-          - src/content/changelog/access/**
-          - src/content/changelog/browser-isolation/**
-          - src/content/changelog/casb/**
           - src/content/changelog/cloudflare-one/**
-          - src/content/changelog/cloudflare-one-client/**
-          - src/content/changelog/dex/**
-          - src/content/changelog/dlp/**
-          - src/content/changelog/email-security-cf1/**
-          - src/content/changelog/gateway/**
-          - src/content/changelog/mesh/**
-          - src/content/changelog/risk-score/**
-          - src/assets/images/changelog/access/**
-          - src/assets/images/changelog/browser-isolation/**
           - src/assets/images/changelog/cloudflare-one/**
-          - src/assets/images/changelog/dex/**
-          - src/assets/images/changelog/dlp/**
-          - src/assets/images/changelog/gateway/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/content/docs/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/content/docs/cloudflare-one/insights/!(analytics-overview.*|dex.*)
+          - src/content/docs/cloudflare-one/insights/!(analytics-overview|dex)/**
+          - src/content/docs/cloudflare-one/integrations/!(cloud-and-saas.*)
+          - src/content/docs/cloudflare-one/integrations/!(cloud-and-saas)/**
+          - src/content/docs/cloudflare-one/networks/*
+          - src/content/docs/cloudflare-one/networks/!(connectors)/**
+          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/content/docs/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
+          - src/content/docs/cloudflare-one/reusable-components/!(posture-checks.*)
+          - src/content/docs/cloudflare-one/reusable-components/!(posture-checks)/**
+          - src/content/docs/cloudflare-one/team-and-resources/!(app-library.*)
+          - src/content/docs/cloudflare-one/team-and-resources/!(app-library|devices|users)/**
+          - src/content/docs/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client.*)
+          - src/content/docs/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client)/**
+          - src/content/docs/cloudflare-one/team-and-resources/users/!(risk-score.*)
+          - src/content/docs/cloudflare-one/team-and-resources/users/!(risk-score)/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/partials/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/content/partials/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/content/partials/cloudflare-one/insights/!(analytics-overview.*|dex.*)
+          - src/content/partials/cloudflare-one/insights/!(analytics-overview|dex)/**
+          - src/content/partials/cloudflare-one/integrations/!(cloud-and-saas.*)
+          - src/content/partials/cloudflare-one/integrations/!(cloud-and-saas)/**
+          - src/content/partials/cloudflare-one/networks/*
+          - src/content/partials/cloudflare-one/networks/!(connectors)/**
+          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/content/partials/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
+          - src/content/partials/cloudflare-one/reusable-components/!(posture-checks.*)
+          - src/content/partials/cloudflare-one/reusable-components/!(posture-checks)/**
+          - src/content/partials/cloudflare-one/team-and-resources/!(app-library.*)
+          - src/content/partials/cloudflare-one/team-and-resources/!(app-library|devices|users)/**
+          - src/content/partials/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client.*)
+          - src/content/partials/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client)/**
+          - src/content/partials/cloudflare-one/team-and-resources/users/!(risk-score.*)
+          - src/content/partials/cloudflare-one/team-and-resources/users/!(risk-score)/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/assets/images/cloudflare-one/!(access-controls.*|casb.*|cloud-and-saas-findings.*|data-loss-prevention.*|email-security.*|mesh.*|remote-browser-isolation.*|traffic-policies.*)
+          - src/assets/images/cloudflare-one/!(access-controls|casb|cloud-and-saas-findings|data-loss-prevention|email-security|insights|integrations|mesh|networks|remote-browser-isolation|reusable-components|team-and-resources|traffic-policies)/**
+          - src/assets/images/cloudflare-one/insights/!(analytics-overview.*|dex.*)
+          - src/assets/images/cloudflare-one/insights/!(analytics-overview|dex)/**
+          - src/assets/images/cloudflare-one/integrations/!(cloud-and-saas.*)
+          - src/assets/images/cloudflare-one/integrations/!(cloud-and-saas)/**
+          - src/assets/images/cloudflare-one/networks/*
+          - src/assets/images/cloudflare-one/networks/!(connectors)/**
+          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-mesh.*|cloudflare-tunnel.*|cloudflare-wan.*)
+          - src/assets/images/cloudflare-one/networks/connectors/!(cloudflare-mesh|cloudflare-tunnel|cloudflare-wan)/**
+          - src/assets/images/cloudflare-one/reusable-components/!(posture-checks.*)
+          - src/assets/images/cloudflare-one/reusable-components/!(posture-checks)/**
+          - src/assets/images/cloudflare-one/team-and-resources/!(app-library.*)
+          - src/assets/images/cloudflare-one/team-and-resources/!(app-library|devices|users)/**
+          - src/assets/images/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client.*)
+          - src/assets/images/cloudflare-one/team-and-resources/devices/!(cloudflare-one-client)/**
+          - src/assets/images/cloudflare-one/team-and-resources/users/!(risk-score.*)
+          - src/assets/images/cloudflare-one/team-and-resources/users/!(risk-score)/**
+
+product:cloudflare-one-appliance:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-wan/configuration/appliance/**
+          - src/content/docs/cloudflare-wan/configuration/appliance.*
+          - src/assets/images/cloudflare-wan/configuration/appliance/**
+          - src/assets/images/cloudflare-wan/configuration/appliance.*
+
+product:cloudflare-one-client:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/cloudflare-one-client/**
+          - src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/**
+          - src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client.*
+          - src/content/partials/cloudflare-one/team-and-resources/devices/cloudflare-one-client/**
+          - src/content/partials/cloudflare-one/team-and-resources/devices/cloudflare-one-client.*
+          - src/assets/images/cloudflare-one/team-and-resources/devices/cloudflare-one-client/**
+          - src/assets/images/cloudflare-one/team-and-resources/devices/cloudflare-one-client.*
 
 product:cloudflare-wan:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/cloudflare-wan/**
-          - src/assets/images/cloudflare-wan/**
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect.*)
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/!(network-interconnect)/**
+  - changed-files:
+      - any-glob-to-any-file:
           - src/content/changelog/cloudflare-wan/**
           - src/assets/images/changelog/cloudflare-wan/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-wan/*
+          - src/content/docs/cloudflare-wan/!(configuration)/**
+          - src/content/docs/cloudflare-wan/configuration/!(appliance.*)
+          - src/content/docs/cloudflare-wan/configuration/!(appliance)/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/assets/images/cloudflare-wan/*
+          - src/assets/images/cloudflare-wan/!(configuration)/**
+          - src/assets/images/cloudflare-wan/configuration/!(appliance.*)
+          - src/assets/images/cloudflare-wan/configuration/!(appliance)/**
 
 product:constellation:
   - changed-files:
@@ -281,6 +429,30 @@ product:ddos-protection:
           - src/content/release-notes/ddos-network.yaml
           - src/content/release-notes/ddos.yaml
 
+product:dex:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/dex/**
+          - src/assets/images/changelog/dex/**
+          - src/content/docs/cloudflare-one/insights/dex/**
+          - src/content/docs/cloudflare-one/insights/dex.*
+          - src/content/partials/cloudflare-one/insights/dex/**
+          - src/content/partials/cloudflare-one/insights/dex.*
+          - src/assets/images/cloudflare-one/insights/dex/**
+          - src/assets/images/cloudflare-one/insights/dex.*
+
+product:dlp:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/dlp/**
+          - src/assets/images/changelog/dlp/**
+          - src/content/docs/cloudflare-one/data-loss-prevention/**
+          - src/content/docs/cloudflare-one/data-loss-prevention.*
+          - src/content/partials/cloudflare-one/data-loss-prevention/**
+          - src/content/partials/cloudflare-one/data-loss-prevention.*
+          - src/assets/images/cloudflare-one/data-loss-prevention/**
+          - src/assets/images/cloudflare-one/data-loss-prevention.*
+
 product:dmarc-management:
   - changed-files:
       - any-glob-to-any-file:
@@ -295,6 +467,16 @@ product:dns:
           - src/assets/images/dns/**
           - src/content/changelog/dns/**
           - src/assets/images/changelog/dns/**
+
+product:dns-filtering:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/traffic-policies/get-started/dns/**
+          - src/content/docs/cloudflare-one/traffic-policies/get-started/dns.*
+          - src/content/partials/cloudflare-one/traffic-policies/get-started/dns/**
+          - src/content/partials/cloudflare-one/traffic-policies/get-started/dns.*
+          - src/assets/images/cloudflare-one/traffic-policies/get-started/dns/**
+          - src/assets/images/cloudflare-one/traffic-policies/get-started/dns.*
 
 product:docs-for-agents:
   - changed-files:
@@ -325,10 +507,52 @@ product:email-routing:
 product:email-security:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/email-security/**
-          - src/content/partials/email-security/**
-          - src/assets/images/email-security/**
+          - src/content/changelog/email-security-cf1/**
+          - src/content/docs/cloudflare-one/email-security/!(phishguard.*)
+          - src/content/docs/cloudflare-one/email-security/!(phishguard|settings)/**
+          - src/content/docs/cloudflare-one/email-security/settings/*
+          - src/content/docs/cloudflare-one/email-security/settings/!(phish-submissions)/**
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365.*|phishnet-google-workspace.*)
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365|phishnet-google-workspace)/**
+          - src/content/partials/cloudflare-one/email-security/!(phishguard.*)
+          - src/content/partials/cloudflare-one/email-security/!(phishguard|settings)/**
+          - src/content/partials/cloudflare-one/email-security/settings/*
+          - src/content/partials/cloudflare-one/email-security/settings/!(phish-submissions)/**
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365.*|phishnet-google-workspace.*)
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365|phishnet-google-workspace)/**
+          - src/assets/images/cloudflare-one/email-security/!(phishguard.*)
+          - src/assets/images/cloudflare-one/email-security/!(phishguard|settings)/**
+          - src/assets/images/cloudflare-one/email-security/settings/*
+          - src/assets/images/cloudflare-one/email-security/settings/!(phish-submissions)/**
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365.*|phishnet-google-workspace.*)
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/!(phishnet-365|phishnet-google-workspace)/**
+  - changed-files:
+      - any-glob-to-any-file:
           - src/assets/images/changelog/email-security/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/email-security/*
+          - src/content/docs/email-security/!(email-configuration)/**
+          - src/content/docs/email-security/email-configuration/*
+          - src/content/docs/email-security/email-configuration/!(phish-submissions)/**
+          - src/content/docs/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace.*|phishnet-o365.*)
+          - src/content/docs/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace|phishnet-o365)/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/partials/email-security/*
+          - src/content/partials/email-security/!(email-configuration)/**
+          - src/content/partials/email-security/email-configuration/*
+          - src/content/partials/email-security/email-configuration/!(phish-submissions)/**
+          - src/content/partials/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace.*|phishnet-o365.*)
+          - src/content/partials/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace|phishnet-o365)/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/assets/images/email-security/*
+          - src/assets/images/email-security/!(email-configuration)/**
+          - src/assets/images/email-security/email-configuration/*
+          - src/assets/images/email-security/email-configuration/!(phish-submissions)/**
+          - src/assets/images/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace.*|phishnet-o365.*)
+          - src/assets/images/email-security/email-configuration/phish-submissions/!(phishnet-gworkspace|phishnet-o365)/**
 
 product:email-service:
   - changed-files:
@@ -366,6 +590,24 @@ product:fundamentals:
           - src/content/changelog/sdk/**
           - src/assets/images/changelog/audit-logs/**
           - src/assets/images/changelog/fundamentals/**
+
+product:gateway:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/gateway/**
+          - src/assets/images/changelog/gateway/**
+          - src/content/docs/cloudflare-one/traffic-policies/*
+          - src/content/docs/cloudflare-one/traffic-policies/!(get-started)/**
+          - src/content/docs/cloudflare-one/traffic-policies/get-started/!(dns.*)
+          - src/content/docs/cloudflare-one/traffic-policies/get-started/!(dns)/**
+          - src/content/partials/cloudflare-one/traffic-policies/*
+          - src/content/partials/cloudflare-one/traffic-policies/!(get-started)/**
+          - src/content/partials/cloudflare-one/traffic-policies/get-started/!(dns.*)
+          - src/content/partials/cloudflare-one/traffic-policies/get-started/!(dns)/**
+          - src/assets/images/cloudflare-one/traffic-policies/*
+          - src/assets/images/cloudflare-one/traffic-policies/!(get-started)/**
+          - src/assets/images/cloudflare-one/traffic-policies/get-started/!(dns.*)
+          - src/assets/images/cloudflare-one/traffic-policies/get-started/!(dns)/**
 
 product:google-tag-gateway:
   - changed-files:
@@ -449,6 +691,26 @@ product:magic-transit:
           - src/assets/images/magic-transit/**
           - src/content/changelog/magic-transit/**
 
+product:mesh:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-mesh/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-mesh.*
+          - src/content/docs/cloudflare-one/mesh/**
+          - src/content/docs/cloudflare-one/mesh.*
+          - src/content/partials/cloudflare-one/mesh/**
+          - src/content/partials/cloudflare-one/mesh.*
+          - src/assets/images/cloudflare-one/mesh/**
+          - src/assets/images/cloudflare-one/mesh.*
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/mesh/**
+          - src/content/changelog/mesh/**
+
 product:migration-guides:
   - changed-files:
       - any-glob-to-any-file:
@@ -490,6 +752,14 @@ product:network-flow:
 product:network-interconnect:
   - changed-files:
       - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect/**
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect.*
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect.*
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect.*
+  - changed-files:
+      - any-glob-to-any-file:
           - src/content/docs/network-interconnect/**
           - src/content/changelog/network-interconnect/**
 
@@ -508,12 +778,60 @@ product:pages:
           - src/content/release-notes/pages.yaml
           - src/content/changelog/pages/**
 
+product:phishguard:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/email-security/phishguard/**
+          - src/content/docs/cloudflare-one/email-security/phishguard.*
+          - src/content/partials/cloudflare-one/email-security/phishguard/**
+          - src/content/partials/cloudflare-one/email-security/phishguard.*
+          - src/assets/images/cloudflare-one/email-security/phishguard/**
+          - src/assets/images/cloudflare-one/email-security/phishguard.*
+
+product:phishnet:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/phishnet-365/**
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/phishnet-365.*
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/phishnet-365/**
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/phishnet-365.*
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/phishnet-365/**
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/phishnet-365.*
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace/**
+          - src/content/docs/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace.*
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace/**
+          - src/content/partials/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace.*
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace/**
+          - src/assets/images/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace.*
+          - src/content/docs/email-security/email-configuration/phish-submissions/phishnet-gworkspace/**
+          - src/content/docs/email-security/email-configuration/phish-submissions/phishnet-gworkspace.*
+          - src/content/partials/email-security/email-configuration/phish-submissions/phishnet-gworkspace/**
+          - src/content/partials/email-security/email-configuration/phish-submissions/phishnet-gworkspace.*
+          - src/assets/images/email-security/email-configuration/phish-submissions/phishnet-gworkspace/**
+          - src/assets/images/email-security/email-configuration/phish-submissions/phishnet-gworkspace.*
+          - src/content/docs/email-security/email-configuration/phish-submissions/phishnet-o365/**
+          - src/content/docs/email-security/email-configuration/phish-submissions/phishnet-o365.*
+          - src/content/partials/email-security/email-configuration/phish-submissions/phishnet-o365/**
+          - src/content/partials/email-security/email-configuration/phish-submissions/phishnet-o365.*
+          - src/assets/images/email-security/email-configuration/phish-submissions/phishnet-o365/**
+          - src/assets/images/email-security/email-configuration/phish-submissions/phishnet-o365.*
+
 product:pipelines:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/pipelines/**
           - src/assets/images/pipelines/**
           - src/content/changelog/pipelines/**
+
+product:posture-checks:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/reusable-components/posture-checks/**
+          - src/content/docs/cloudflare-one/reusable-components/posture-checks.*
+          - src/content/partials/cloudflare-one/reusable-components/posture-checks/**
+          - src/content/partials/cloudflare-one/reusable-components/posture-checks.*
+          - src/assets/images/cloudflare-one/reusable-components/posture-checks/**
+          - src/assets/images/cloudflare-one/reusable-components/posture-checks.*
 
 product:privacy-gateway:
   - changed-files:
@@ -626,6 +944,17 @@ product:resource-tagging:
           - src/content/docs/resource-tagging/**
           - src/content/changelog/resource-tagging/**
           - src/assets/images/changelog/resource-tagging/**
+
+product:risk-score:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/changelog/risk-score/**
+          - src/content/docs/cloudflare-one/team-and-resources/users/risk-score/**
+          - src/content/docs/cloudflare-one/team-and-resources/users/risk-score.*
+          - src/content/partials/cloudflare-one/team-and-resources/users/risk-score/**
+          - src/content/partials/cloudflare-one/team-and-resources/users/risk-score.*
+          - src/assets/images/cloudflare-one/team-and-resources/users/risk-score/**
+          - src/assets/images/cloudflare-one/team-and-resources/users/risk-score.*
 
 product:rules:
   - changed-files:
@@ -750,6 +1079,14 @@ product:time-services:
           - src/assets/images/time-services/**
 
 product:tunnel:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/**
+          - src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel.*
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-tunnel/**
+          - src/content/partials/cloudflare-one/networks/connectors/cloudflare-tunnel.*
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-tunnel/**
+          - src/assets/images/cloudflare-one/networks/connectors/cloudflare-tunnel.*
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/tunnel/**
@@ -878,3 +1215,23 @@ product:zaraz:
           - src/assets/images/zaraz/**
           - src/content/release-notes/zaraz.yaml
           - src/content/changelog/zaraz/**
+
+product:zt-access-for-infrastructure:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/**
+          - src/content/docs/cloudflare-one/access-controls/applications/non-http/infrastructure-apps.*
+          - src/content/partials/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/**
+          - src/content/partials/cloudflare-one/access-controls/applications/non-http/infrastructure-apps.*
+          - src/assets/images/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/**
+          - src/assets/images/cloudflare-one/access-controls/applications/non-http/infrastructure-apps.*
+
+product:zt-art-analytics:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/cloudflare-one/insights/analytics-overview/**
+          - src/content/docs/cloudflare-one/insights/analytics-overview.*
+          - src/content/partials/cloudflare-one/insights/analytics-overview/**
+          - src/content/partials/cloudflare-one/insights/analytics-overview.*
+          - src/assets/images/cloudflare-one/insights/analytics-overview/**
+          - src/assets/images/cloudflare-one/insights/analytics-overview.*

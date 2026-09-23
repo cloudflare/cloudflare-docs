@@ -73,6 +73,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "krea",
+			"pricing": {
+				"output_image_count": 0.015
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-17 14:17:23",
 	"schema": {

@@ -240,6 +240,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"input_characters": 0.000015
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-03 20:26:50",
 	"schema": {
@@ -254,8 +262,8 @@
 					"maxLength": 15000
 				},
 				"language": {
-					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required for both REST and WebSocket modes. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi.",
-					"type": "string"
+					"type": "string",
+					"description": "BCP-47 language code (e.g. \"en\", \"zh\", \"pt-BR\") or \"auto\" for automatic language detection. Required for both REST and WebSocket modes. Supported codes: auto, en, ar-EG, ar-SA, ar-AE, bn, zh, fr, de, hi, id, it, ja, ko, pt-BR, pt-PT, ru, es-MX, es-ES, tr, vi."
 				},
 				"websocket": {
 					"description": "Enable WebSocket streaming for text-to-speech. When true, establishes a bidirectional WebSocket connection. Mutually exclusive with text.",
@@ -373,8 +381,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "Presigned R2 URL for the generated audio file. MIME type reflects the requested codec (audio/mpeg for mp3, audio/wav for wav, etc.).",
-					"type": "string"
+					"type": "string",
+					"description": "Presigned R2 URL for the generated audio file. MIME type reflects the requested codec (audio/mpeg for mp3, audio/wav for wav, etc.)."
 				}
 			},
 			"required": [

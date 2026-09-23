@@ -8,7 +8,8 @@ products:
   - workers
 ---
 
-import { CompatibilityFlags, WranglerConfig, Render } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+import CompatibilityFlags from "~/components/cf/CompatibilityFlags.astro";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 

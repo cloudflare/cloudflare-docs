@@ -172,6 +172,20 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-ai-studio",
+			"pricing": {
+				"input_audio_tokens": 1.5,
+				"input_image_tokens": 1.5,
+				"input_text_tokens": 1.5,
+				"input_video_tokens": 1.5,
+				"output_reasoning_tokens": 9,
+				"output_text_tokens": 9,
+				"output_video_tokens": 17.5
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-09 18:36:40",
 	"schema": {

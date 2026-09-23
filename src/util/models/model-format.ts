@@ -9,6 +9,12 @@ export const modelCurrencyFormatter = new Intl.NumberFormat("en-US", {
 	maximumFractionDigits: 10,
 });
 
+const implicitTokenPriceLabels = new Map([
+	["output_audio_tokens", "Output audio"],
+	["output_text_tokens", "Output text"],
+	["output_video_tokens", "Output video"],
+]);
+
 export function formatCompactTokens(value: unknown): string | null {
 	const count = Number(value);
 	return Number.isFinite(count) && count > 0
@@ -32,17 +38,22 @@ export function formatModelPricing(
 }
 
 function formatPricingLabel(label: string): string {
+	const implicitTokenPrice = implicitTokenPriceLabels.get(
+		label.trim().toLowerCase(),
+	);
+	if (implicitTokenPrice) {
+		return `${implicitTokenPrice} (per 1M tokens)`;
+	}
+
 	const normalized = label.replaceAll("_", " ").replace(/\s+/g, " ").trim();
-	const lower = normalized.toLowerCase();
 	const tokenPrice =
-		/^per (?:1)?m (cached )?(input|output) tokens$/.exec(lower) ??
-		/^(cached )?(input|output) tokens \(per (?:1)?m\)$/.exec(lower);
+		/^per (?:1)?m (.+?) tokens$/i.exec(normalized) ??
+		/^(.+?) tokens \(per (?:1)?m\)$/i.exec(normalized);
 	if (tokenPrice) {
-		const direction = tokenPrice[2] === "input" ? "Input" : "Output";
-		const displayDirection = tokenPrice[1]
-			? `Cached ${direction.toLowerCase()}`
-			: direction;
-		return `${displayDirection} (per 1M tokens)`;
+		const descriptor = tokenPrice[1];
+		const displayDescriptor =
+			descriptor.charAt(0).toUpperCase() + descriptor.slice(1);
+		return `${displayDescriptor} (per 1M tokens)`;
 	}
 	return normalized;
 }

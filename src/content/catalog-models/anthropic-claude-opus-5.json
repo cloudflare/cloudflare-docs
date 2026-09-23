@@ -18,9 +18,9 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 5,
+		"Output tokens (per 1M)": 25,
 		"Cached input tokens (per 1M)": 0.5,
-		"Cache creation tokens (per 1M)": 6.25,
-		"Output tokens (per 1M)": 25
+		"Cache creation tokens (per 1M)": 6.25
 	},
 	"examples": [
 		{
@@ -155,6 +155,17 @@
 		"anthropic-messages"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "anthropic",
+			"pricing": {
+				"input_tokens": 5,
+				"output_tokens": 25,
+				"input_cached_tokens": 0.5,
+				"input_cache_creation_tokens": 6.25
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-24 19:36:01",
 	"schema": {

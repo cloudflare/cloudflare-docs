@@ -1,6 +1,12 @@
 import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { dump, load } from "js-yaml";
+import { format } from "prettier";
+import {
+	cloudflareOneLeafRules,
+	cloudflareOneParentPaths,
+	pathGlobsExcluding,
+} from "./cloudflare-one-labels";
 
 // Regenerates .github/labeler.yml from the content collections.
 //
@@ -16,6 +22,30 @@ import { dump, load } from "js-yaml";
 // Run: pnpm run generate:labeler
 
 const rootDir = path.resolve(import.meta.dirname, "..");
+
+type ChangedFilesGroup = {
+	"any-glob-to-any-file"?: string[];
+	"all-globs-to-any-file"?: string[];
+};
+
+type LabelRules = Record<string, ChangedFilesGroup[]>;
+
+const productRoots: Record<string, string[]> = {
+	"cloudflare-one": [
+		"src/content/docs/cloudflare-one",
+		"src/content/partials/cloudflare-one",
+		"src/assets/images/cloudflare-one",
+	],
+	"cloudflare-wan": [
+		"src/content/docs/cloudflare-wan",
+		"src/assets/images/cloudflare-wan",
+	],
+	"email-security": [
+		"src/content/docs/email-security",
+		"src/content/partials/email-security",
+		"src/assets/images/email-security",
+	],
+};
 
 // Collection folders that map wholesale to a single product.
 const collectionGlobs: Record<string, string[]> = {
@@ -42,6 +72,18 @@ const specialRules: Record<string, string[]> = {
 // Changelog folders whose names do not match a directory entry.
 const changelogAliases: Record<string, string> = {
 	"cloudflare-tunnel": "tunnel",
+};
+
+const cloudflareOneChangelogLabels: Record<string, string> = {
+	access: "product:access",
+	"browser-isolation": "product:browser-isolation",
+	casb: "product:casb",
+	"cloudflare-one-client": "product:cloudflare-one-client",
+	dex: "product:dex",
+	dlp: "product:dlp",
+	"email-security-cf1": "product:email-security",
+	gateway: "product:gateway",
+	"risk-score": "product:risk-score",
 };
 
 function firstUrlSegment(url: string): string {
@@ -102,6 +144,99 @@ async function changelogToProduct(
 	return result;
 }
 
+function pathGlobs(root: string, pathname: string): string[] {
+	return [`${root}/${pathname}/**`, `${root}/${pathname}.*`];
+}
+
+function addCloudflareOneRules(rules: LabelRules) {
+	const movedChangelogGlobs = new Map<string, string[]>();
+	const aggregateRules = rules["product:cloudflare-one"] ?? [];
+	for (const rule of aggregateRules) {
+		const globs = rule["any-glob-to-any-file"];
+		if (!globs) continue;
+		rule["any-glob-to-any-file"] = globs.filter((glob) => {
+			const match = glob.match(
+				/^src\/(?:content|assets\/images)\/changelog\/([^/]+)\/\*\*$/,
+			);
+			const label = match ? cloudflareOneChangelogLabels[match[1]] : undefined;
+			if (!label) return true;
+			movedChangelogGlobs.set(label, [
+				...(movedChangelogGlobs.get(label) ?? []),
+				glob,
+			]);
+			return false;
+		});
+	}
+
+	for (const rule of cloudflareOneLeafRules) {
+		const globs: string[] = [...(movedChangelogGlobs.get(rule.label) ?? [])];
+		for (const pathname of rule.paths) {
+			const [parent, ...segments] = pathname.split("/");
+			const rulePath = segments.join("/");
+			const childPaths = cloudflareOneLeafRules
+				.filter(
+					(candidate) =>
+						candidate.label !== rule.label &&
+						candidate.paths.some((path) => path.startsWith(`${pathname}/`)),
+				)
+				.flatMap((candidate) =>
+					candidate.paths.filter((path) => path.startsWith(`${pathname}/`)),
+				);
+
+			if (childPaths.length === 0) {
+				globs.push(
+					...productRoots[parent].flatMap((root) => pathGlobs(root, rulePath)),
+				);
+				continue;
+			}
+
+			globs.push(
+				...productRoots[parent].flatMap((root) =>
+					pathGlobsExcluding(
+						`${root}/${rulePath}`,
+						childPaths.map((path) => path.slice(pathname.length + 1)),
+					),
+				),
+			);
+		}
+		const existing = rules[rule.label] ?? [];
+		rules[rule.label] = [{ "any-glob-to-any-file": globs }, ...existing];
+	}
+
+	for (const parent of cloudflareOneParentPaths) {
+		const label = `product:${parent}`;
+		const parentRules = rules[label] ?? [];
+		const roots = productRoots[parent];
+		const rootGlobs = new Set(roots.map((root) => `${root}/**`));
+		const otherRules = parentRules
+			.map((rule) => ({
+				...rule,
+				...(rule["any-glob-to-any-file"]
+					? {
+							"any-glob-to-any-file": rule["any-glob-to-any-file"].filter(
+								(glob) => !rootGlobs.has(glob),
+							),
+						}
+					: {}),
+			}))
+			.filter(
+				(rule) =>
+					(rule["any-glob-to-any-file"]?.length ?? 0) > 0 ||
+					(rule["all-globs-to-any-file"]?.length ?? 0) > 0,
+			);
+		const excludedPaths = cloudflareOneLeafRules.flatMap((rule) =>
+			rule.paths
+				.filter((pathname) => pathname.startsWith(`${parent}/`))
+				.map((pathname) => pathname.split("/").slice(1).join("/")),
+		);
+		const fallbackRules = roots.map((root) => ({
+			"any-glob-to-any-file": pathGlobsExcluding(root, excludedPaths),
+		}));
+
+		rules[label] = [...otherRules, ...fallbackRules];
+	}
+}
+
 async function main() {
 	const docsDir = "src/content/docs";
 	const productSlugs = (await readDir(docsDir)).sort();
@@ -133,7 +268,7 @@ async function main() {
 		changelogAliases,
 	);
 
-	const rules: Record<string, string[][]> = {};
+	const rules: LabelRules = {};
 
 	for (const slug of productSlugs) {
 		const globs = [`src/content/docs/${slug}/**`];
@@ -153,26 +288,24 @@ async function main() {
 		if (extraGlobs[slug]) globs.push(...extraGlobs[slug]);
 		if (collectionGlobs[slug]) globs.push(...collectionGlobs[slug]);
 
-		rules[`product:${slug}`] = [globs];
+		rules[`product:${slug}`] = [{ "any-glob-to-any-file": globs }];
 	}
 
 	for (const [label, globs] of Object.entries(specialRules)) {
-		rules[label] = [globs, ...(rules[label] ?? [])];
+		rules[label] = [{ "any-glob-to-any-file": globs }, ...(rules[label] ?? [])];
 	}
 
-	const sortedRules: Record<string, string[][]> = {};
+	addCloudflareOneRules(rules);
+
+	const sortedRules: LabelRules = {};
 	for (const label of Object.keys(rules).sort()) {
 		sortedRules[label] = rules[label];
 	}
 
-	const matchShape = (globs: string[]) => ({
-		"changed-files": [{ "any-glob-to-any-file": globs }],
-	});
-
 	const rulesForYaml = Object.fromEntries(
 		Object.entries(sortedRules).map(([label, globGroups]) => [
 			label,
-			globGroups.map(matchShape),
+			globGroups.map((group) => ({ "changed-files": [group] })),
 		]),
 	);
 
@@ -203,9 +336,13 @@ async function main() {
 		);
 	}
 
-	await writeFile(path.join(rootDir, ".github/labeler.yml"), header + labeler, {
-		encoding: "utf-8",
-	});
+	await writeFile(
+		path.join(rootDir, ".github/labeler.yml"),
+		await format(header + labeler, { filepath: ".github/labeler.yml" }),
+		{
+			encoding: "utf-8",
+		},
+	);
 
 	console.log(
 		`Wrote .github/labeler.yml with ${Object.keys(sortedRules).length} label rules.`,

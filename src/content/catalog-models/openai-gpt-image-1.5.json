@@ -197,6 +197,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 5,
+				"output_tokens": 10,
+				"input_cached_tokens": 1.25
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:38",
 	"schema": {
@@ -205,8 +215,8 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the image to generate or edit",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt describing the image to generate or edit"
 				},
 				"images": {
 					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
@@ -256,9 +266,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "URL to the generated image",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated image"
 				}
 			},
 			"required": [

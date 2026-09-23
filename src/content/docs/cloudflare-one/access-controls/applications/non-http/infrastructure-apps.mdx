@@ -30,7 +30,9 @@ import { Badge, Details, Tabs, TabItem, Render } from "~/components";
 
 </Details>
 
-Access for Infrastructure allows you to have granular control over how users access individual servers, clusters, or databases. By adding an infrastructure application to Cloudflare Access, you can configure how users authenticate to the resource as well as control and authorize the ports, protocols, and usernames that they can connect with. Access and command logs ensure regulatory compliance and allow for auditing of user activity in case of a security breach.
+Access for Infrastructure gives you granular control over how users access individual servers, clusters, or databases. You can configure how users authenticate to the resource and control the ports, protocols, and usernames they can use.
+
+You can also organize targets with tags and define applications that match targets by hostname, tag, or both. Access logs and command logs help you audit access and support compliance workflows.
 
 :::note
 Access for Infrastructure currently supports [SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/). To connect using other protocols, [add a self-hosted private application](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/). For browser-based SSH, RDP, or VNC, refer to [browser-rendered terminal](/cloudflare-one/access-controls/applications/non-http/browser-rendering/).
@@ -47,6 +49,49 @@ Access for Infrastructure currently supports [SSH](/cloudflare-one/networks/conn
 	file="access/add-target-generic"
 	product="cloudflare-one"
 />
+
+### Tag targets
+
+You can attach key-value [resource tags](/resource-tagging/) to infrastructure targets. Use them to organize targets by environment, team, region, or other metadata.
+
+You can then define infrastructure applications that automatically cover any target with matching values.
+
+You can manage tags inline when you create or edit a target or through the [Resource Tagging API](/resource-tagging/how-to/manage-tags/).
+
+Each tag key can only appear once on a target. For example, a target can have `environment:production` or `environment:staging`, but not both.
+
+### Filter and sort targets by tag
+
+You can filter and sort targets by tag values.
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Targets**. Use the filter and sort controls to narrow the list by tag key or value.
+
+</TabItem>
+<TabItem label="API">
+
+To filter targets by tag, add one or more `tag` query parameters:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?tag=environment:production&tag=team:platform" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+Use `:` between the tag key and value in each filter. If you add multiple `tag` parameters, Cloudflare applies AND logic.
+
+To sort by tag key, use the `order` and `direction` parameters:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/infrastructure/targets?order=tag:environment&direction=asc" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+The sort parameter also uses `:` in `order=tag:<key>` because it identifies the tag field to sort by.
+
+</TabItem>
+</Tabs>
 
 ## 2. Add an infrastructure application
 
@@ -124,6 +169,28 @@ To revoke a user's access to all infrastructure targets, you can either [revoke 
 Infrastructure Access supports granular read permissions through [Cloudflare's role-based access control](/fundamentals/manage-members/roles/). Administrators can assign read-only roles scoped to specific targets instead of granting account-wide access. When a user with a scoped role calls the targets list API, the response is automatically filtered to only include the targets they have permission to view.
 
 This is useful for organizations that want to give teams visibility into their own infrastructure targets without exposing the full target inventory.
+
+## Target criteria
+
+Use target criteria to define which targets an infrastructure application covers. Each target criteria entry includes a protocol, a port, and selectors that match targets by hostname, tag, or both.
+
+The `target_attributes` selector only supports `hostname` in both the legacy and operator-based formats. Cloudflare rejects any other `target_attributes` key.
+
+A target can only store one value for each tag key. This limit does not apply to target criteria. For example, an application can match both `environment:production` and `environment:staging` in `include`, `require`, or `exclude`.
+
+### Operators
+
+| Operator | Logic | Description |
+| --- | --- | --- |
+| `include` | OR | Target must match at least one included selector. |
+| `require` | AND | Target must match all required selectors. |
+| `exclude` | NOT(OR) | Target is rejected if it matches any excluded selector. |
+
+Combined evaluation: **(any include) AND (all requires) AND NOT (any excludes)**.
+
+### Legacy format
+
+You can continue to use the flat `target_attributes` format for existing hostname-only applications. This only matters if you manage applications through the API or Terraform. For each target criteria entry, choose one format: either flat `target_attributes` or operator-based `include`, `require`, and `exclude`.
 
 ## Infrastructure policy selectors
 
