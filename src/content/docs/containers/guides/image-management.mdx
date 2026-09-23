@@ -17,6 +17,16 @@ import {
 
 Container applications manage images differently based on their [scheduling policy](/containers/configuration/scheduling-policy/). With the `durable_object` policy, Durable Object code selects a named image each time it starts a Container. With the `default` policy, Wrangler configuration sets one image for the application.
 
+## Cloudflare-managed image
+
+Cloudflare provides the following managed image:
+
+| Managed image              | Source image                                                                                                                                                                                 | Contents                              |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `cloudflare/debian-trixie` | [`node:24.20.0-trixie-slim`](https://hub.docker.com/layers/library/node/24.20.0-trixie-slim/images/sha256-a747ad80c8a161b650d79a6da9c422005b91148b18b8d2c669eb5a0b7c07e600) pinned by digest | Node.js 24.20.0 on Debian Trixie slim |
+
+`cloudflare/debian-trixie` is a Cloudflare-managed identifier, not a public Cloudflare Docker Hub image.
+
 ## Use images with the `durable_object` scheduling policy
 
 Configure one or more named images in the `images` map. Each entry must use exactly one image source. Set `dockerfile` to build an image from a local Dockerfile. Set `image` to use a digest-pinned image from the Cloudflare managed registry.
