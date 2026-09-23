@@ -1,6 +1,5 @@
 ---
 {}
-
 ---
 
 import { PackageManagers } from "~/components";
@@ -9,6 +8,11 @@ import { PackageManagers } from "~/components";
 
 Run the deploy command to deploy your application to Cloudflare.
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 
 This command will automatically use the output `wrangler.json` that was included in the build output.

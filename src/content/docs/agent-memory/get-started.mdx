@@ -61,7 +61,11 @@ Install the dependencies used by this guide:
 
 A [namespace](/agent-memory/concepts/namespaces-profiles/) scopes the memory profiles for your application. Create one with Wrangler:
 
-<PackageManagers type="exec" pkg="wrangler" args="agent-memory namespace create my-agent" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="agent-memory namespace create my-agent"
+/>
 
 You will use the namespace name, `my-agent`, in your Worker binding.
 
@@ -355,7 +359,7 @@ If the model can call a memory-write tool, add system prompt instructions that d
 
 Start local development:
 
-<PackageManagers type="exec" pkg="wrangler" args="dev" />
+<PackageManagers type="exec" pkg="wrangler" args="dev" cfCommand="cf dev" />
 
 Ask the first conversation to remember a durable preference:
 
