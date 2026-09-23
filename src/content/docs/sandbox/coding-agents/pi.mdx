@@ -1,0 +1,238 @@
+---
+title: Run Pi in a sandbox
+description: Run the Pi coding agent on a GitHub repository in a Linux sandbox and read its changes as a diff.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+  label: Pi
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Give the [Pi](https://github.com/earendil-works/pi) coding agent a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Pi calls models through [AI Gateway](/ai-gateway/) with its built-in provider. Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+
+## Prerequisites
+
+- Complete [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/) and use its `sandbox-coding-agent` project. This guide replaces the image, the model, and the parts of the Worker that are specific to the agent.
+- Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
+
+:::caution
+The Worker does not authenticate requests. Anyone with the URL can run Pi and spend your AI Gateway credits. Authenticate callers before you share the URL.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+## Switch the Worker to Pi
+
+<Steps>
+
+1. Replace the `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   RUN npm install --global --ignore-scripts @earendil-works/pi-coding-agent@0.87.1
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The image installs Pi instead of Claude Code. Pin the version, because Pi's flags and event format can change between releases.
+
+2. In `wrangler.jsonc`, set `MODEL` to a model ID from Pi's `cloudflare-ai-gateway` provider:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"AI_GATEWAY_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"AI_GATEWAY_ID": "default",
+   		"MODEL": "claude-sonnet-5",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+   Use a model from a provider such as Anthropic. Pi 0.87.1 requests as many output tokens as the context window for most Workers AI models in its catalog, and Workers AI rejects those requests.
+
+3. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for the Pi events that report the outcome:
+
+   ```ts title="src/sandbox.ts"
+   const PiEvent = z.union([
+   	z.object({ type: z.literal("agent_settled") }),
+   	z.object({
+   		type: z.literal("message_end"),
+   		message: z.object({
+   			role: z.literal("assistant"),
+   			content: z.array(
+   				z.object({ type: z.string(), text: z.string().optional() }),
+   			),
+   			stopReason: z.string(),
+   			errorMessage: z.string().optional(),
+   		}),
+   	}),
+   ]);
+
+   type PiMessage = Extract<
+   	z.infer<typeof PiEvent>,
+   	{ type: "message_end" }
+   >["message"];
+   ```
+
+4. Replace the `agentCommand()` and `agentEnv()` methods:
+
+   ```ts title="src/sandbox.ts"
+   	private agentCommand(prompt: string): string[] {
+   		return [
+   			"pi",
+   			"--mode",
+   			"json",
+   			"--no-session",
+   			"--provider",
+   			"cloudflare-ai-gateway",
+   			"--model",
+   			this.env.MODEL,
+   			"--",
+   			prompt,
+   		];
+   	}
+
+   	private agentEnv(): Record<string, string> {
+   		return {
+   			CLOUDFLARE_API_KEY: "provided-by-worker",
+   			CLOUDFLARE_ACCOUNT_ID: this.env.AI_GATEWAY_ACCOUNT_ID,
+   			CLOUDFLARE_GATEWAY_ID: this.env.AI_GATEWAY_ID,
+   			PI_OFFLINE: "1",
+   			PI_SKIP_VERSION_CHECK: "1",
+   			PI_TELEMETRY: "0",
+   		};
+   	}
+   ```
+
+5. Replace the `outcome()` method:
+
+   ```ts title="src/sandbox.ts"
+   	private async outcome(exitCode: number): Promise<TaskStatus> {
+   		if (exitCode !== 0) {
+   			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
+   			return {
+   				state: "failed",
+   				error: `pi exited with ${exitCode}: ${stderr.slice(-2000)}`,
+   			};
+   		}
+
+   		let settled = false;
+   		let final: PiMessage | undefined;
+   		const events = await this.files.readFile(eventsPath);
+
+   		for await (const line of readLines(events.body)) {
+   			const parsed = PiEvent.safeParse(parseJson(line));
+
+   			if (!parsed.success) {
+   				continue;
+   			}
+
+   			if (parsed.data.type === "agent_settled") {
+   				settled = true;
+   			} else {
+   				final = parsed.data.message;
+   			}
+   		}
+
+   		if (!settled || final === undefined) {
+   			return { state: "failed", error: "pi exited before the agent settled" };
+   		}
+
+   		if (final.stopReason === "error" || final.stopReason === "aborted") {
+   			return {
+   				state: "failed",
+   				error: final.errorMessage ?? `pi stopped: ${final.stopReason}`,
+   			};
+   		}
+
+   		const text = final.content.flatMap((block) =>
+   			block.type === "text" ? [block.text ?? ""] : [],
+   		);
+   		return { state: "succeeded", result: text.join("") };
+   	}
+   ```
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   The `AI_GATEWAY_TOKEN` secret from the tutorial stays in place. A running container keeps the image it started with, so use a new sandbox name for Pi.
+
+</Steps>
+
+## Run a task
+
+<Steps>
+
+1. Clone a repository into a sandbox named `pi-1`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/pi-1/repository" \
+   	--json '{"url": "https://github.com/octocat/Hello-World"}'
+   ```
+
+2. Start a task:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/pi-1/task" \
+   	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
+   ```
+
+3. Check the task until its state is `succeeded` or `failed`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/pi-1/task"
+   ```
+
+   A `succeeded` task includes the text of Pi's last reply.
+
+4. Read the changes:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/pi-1/diff"
+   ```
+
+   The diff shows the new `NOTES.md` file.
+
+</Steps>
+
+## How Pi runs in the sandbox
+
+Pi runs its tools without approval prompts. The container limits what Pi's commands can reach. The command sets these options:
+
+- `--mode json` runs one task, writes one JSON event per line to the events file, and exits.
+- `--no-session` keeps the session in memory instead of saving it to disk.
+- `--provider cloudflare-ai-gateway` selects Pi's built-in AI Gateway provider, which reads the account and gateway IDs from the environment.
+- `--model` selects the model from `MODEL`.
+
+Pi does not start without an API key, so `CLOUDFLARE_API_KEY` is a placeholder. Pi sends the key in the `cf-aig-authorization` header, and the `Outbound` entrypoint replaces it with the gateway token. `PI_OFFLINE`, `PI_SKIP_VERSION_CHECK`, and `PI_TELEMETRY` turn off Pi's model catalog refresh, version check, and telemetry. Model requests still go through.
+
+Pi still loads `AGENTS.md` and `CLAUDE.md` files from the repository. Without the `--approve` flag, it skips the protected project resources in the repository's `.pi` directory. Leave `--approve` off for repositories you do not trust.
+
+Pi exits successfully even when a model request fails, so the outcome comes from its events. The task succeeds when Pi sends an `agent_settled` event and its last assistant message has a `stopReason` other than `error` or `aborted`. Otherwise, the task fails with Pi's error message. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it.
+
+## Next steps
+
+- Learn how the Worker starts the sandbox, runs the task, and keeps the sandbox running. Refer to [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/).
+- Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
+- Route Pi through AI Gateway from your own terminal. Refer to [Pi in AI Gateway](/ai-gateway/integrations/coding-agents/pi/).

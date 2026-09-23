@@ -1,0 +1,224 @@
+---
+title: Run Codex in a sandbox
+description: Run the Codex CLI on a GitHub repository in a Linux sandbox and read its changes as a diff.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: Codex
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Give [Codex](https://developers.openai.com/codex/cli) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Codex calls OpenAI models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+
+## Prerequisites
+
+- Complete [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/) and use its `sandbox-coding-agent` project. This guide replaces the image, the model, and the parts of the Worker that are specific to the agent.
+- OpenAI credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an OpenAI API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
+
+:::caution
+The Worker does not authenticate requests. Anyone with the URL can run Codex and spend your AI Gateway credits. Authenticate callers before you share the URL.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+## Switch the Worker to Codex
+
+<Steps>
+
+1. Replace the `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   RUN npm install --global --ignore-scripts @openai/codex@0.156.1
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The image installs the Codex CLI instead of Claude Code. The npm package ships its native binaries as dependencies, so it installs without running install scripts. Pin the version, because Codex's flags and event format can change between releases.
+
+2. In `wrangler.jsonc`, set `MODEL` to an OpenAI model ID that your gateway can serve:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"AI_GATEWAY_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"AI_GATEWAY_ID": "default",
+   		"MODEL": "gpt-6-sol",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+   Codex sends requests in the OpenAI Responses format, so it works only with OpenAI models that support the Responses API.
+
+3. In `src/sandbox.ts`, replace the `ResultEvent` constant with a path for Codex's final message and a schema for its failure events:
+
+   ```ts title="src/sandbox.ts"
+   const lastMessagePath = `${taskDirectory}/last-message.txt`;
+
+   const FailureEvent = z.union([
+   	z.object({
+   		type: z.literal("turn.failed"),
+   		error: z.object({ message: z.string() }),
+   	}),
+   	z.object({ type: z.literal("error"), message: z.string() }),
+   ]);
+   ```
+
+4. Replace the `agentCommand()` and `agentEnv()` methods:
+
+   ```ts title="src/sandbox.ts"
+   	private agentCommand(prompt: string): string[] {
+   		const baseUrl = `https://gateway.ai.cloudflare.com/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}/openai`;
+
+   		return [
+   			"codex",
+   			"exec",
+   			"--json",
+   			"--ephemeral",
+   			"--dangerously-bypass-approvals-and-sandbox",
+   			"--output-last-message",
+   			lastMessagePath,
+   			"--model",
+   			this.env.MODEL,
+   			"--config",
+   			'model_provider="cloudflare-ai-gateway"',
+   			"--config",
+   			`model_providers.cloudflare-ai-gateway={ name = "Cloudflare AI Gateway", base_url = ${JSON.stringify(baseUrl)}, wire_api = "responses" }`,
+   			"--config",
+   			"analytics.enabled=false",
+   			"--config",
+   			"check_for_update_on_startup=false",
+   			"--config",
+   			"features.plugins=false",
+   			"--",
+   			prompt,
+   		];
+   	}
+
+   	private agentEnv(): Record<string, string> {
+   		return {};
+   	}
+   ```
+
+5. Replace the `outcome()` method:
+
+   ```ts title="src/sandbox.ts"
+   	private async outcome(exitCode: number): Promise<TaskStatus> {
+   		if (exitCode === 0) {
+   			return {
+   				state: "succeeded",
+   				result: (await this.readOptionalText(lastMessagePath)) ?? "",
+   			};
+   		}
+
+   		let failure: string | undefined;
+   		const events = await this.files.readFile(eventsPath);
+
+   		for await (const line of readLines(events.body)) {
+   			const parsed = FailureEvent.safeParse(parseJson(line));
+
+   			if (parsed.success) {
+   				failure =
+   					parsed.data.type === "error"
+   						? parsed.data.message
+   						: parsed.data.error.message;
+   			}
+   		}
+
+   		if (failure === undefined) {
+   			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
+   			return {
+   				state: "failed",
+   				error: `codex exited with ${exitCode}: ${stderr.slice(-2000)}`,
+   			};
+   		}
+
+   		return { state: "failed", error: failure };
+   	}
+   ```
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   The `AI_GATEWAY_TOKEN` secret from the tutorial stays in place. A running container keeps the image it started with, so use a new sandbox name for Codex.
+
+</Steps>
+
+## Run a task
+
+<Steps>
+
+1. Clone a repository into a sandbox named `codex-1`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/codex-1/repository" \
+   	--json '{"url": "https://github.com/octocat/Hello-World"}'
+   ```
+
+2. Start a task:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/codex-1/task" \
+   	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
+   ```
+
+3. Check the task until its state is `succeeded` or `failed`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/codex-1/task"
+   ```
+
+   A `succeeded` task includes the final message that Codex wrote.
+
+4. Read the changes:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/codex-1/diff"
+   ```
+
+   The diff shows the new `NOTES.md` file.
+
+</Steps>
+
+## How Codex runs in the sandbox
+
+`codex exec` runs one task without an interactive terminal. The command sets these options:
+
+- `--json` writes one JSON event per line to the events file.
+- `--ephemeral` skips the session files Codex would otherwise save.
+- `--dangerously-bypass-approvals-and-sandbox` turns off Codex's approval prompts and its own command sandbox. The container limits what Codex's commands can reach instead.
+- `--output-last-message` writes Codex's final message to `lastMessagePath`, outside the repository.
+- The `model_provider` and `model_providers` settings add a custom provider that sends requests to your gateway's OpenAI endpoint. A custom provider sends no API key, and the `Outbound` entrypoint adds the gateway token.
+- `analytics.enabled=false` and `check_for_update_on_startup=false` stop Codex's analytics and update requests.
+- `features.plugins=false` stops Codex from syncing its plugin marketplace, which clones a repository from `github.com` on every run.
+
+With these settings, Codex sends requests only to your gateway. Codex reads the certificate for intercepted HTTPS from `SSL_CERT_FILE`, which the tutorial's `trustEnv` sets.
+
+Codex exits with a nonzero code when its turn fails, so the exit code decides the outcome. A successful task returns the final message file. A failed task returns the message from the last `turn.failed` or `error` event. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. Codex retries a failing model request five times, which takes about 20 seconds, before the task fails.
+
+## Next steps
+
+- Learn how the Worker starts the sandbox, runs the task, and keeps the sandbox running. Refer to [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/).
+- Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
+- Route Codex through AI Gateway from your own terminal. Refer to [OpenAI Codex in AI Gateway](/ai-gateway/integrations/coding-agents/openai-codex/).
