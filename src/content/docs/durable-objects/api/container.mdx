@@ -233,18 +233,20 @@ try {
 
 ### `setInactivityTimeout`
 
-`setInactivityTimeout` sets how long a running container can stay idle before Cloudflare stops it. A container is idle when it has no open connections or other activity. Cloudflare does not stop a container for inactivity while a connection to it is open.
+`setInactivityTimeout` sets how long a container keeps running after its Durable Object becomes inactive. If the Durable Object handles another request before the timeout ends, it controls the same running container. Otherwise, Cloudflare stops the container.
 
-Without an inactivity timeout, Cloudflare decides when to stop a container that has no open connections. With a timeout, the container can keep running after the Durable Object that started it becomes inactive. This lets a long-running server, such as a development preview, handle later requests.
+Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive. Set a timeout when a long-running process, such as a development server or a workspace, must still be running for later requests.
 
-Call `setInactivityTimeout` after each call to `start()`.
+The timeout does not survive a Durable Object restart. Call `setInactivityTimeout` on every request that uses the container, not only after `start()`.
 
 ```js
-this.ctx.container.start({
-	entrypoint: ["node", "server.js"],
-});
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		entrypoint: ["node", "server.js"],
+	});
+}
 
-// Stop the container after 5 minutes without activity.
+// Keep the container running for 5 minutes after this Durable Object becomes inactive.
 await this.ctx.container.setInactivityTimeout(5 * 60 * 1000);
 ```
 
@@ -252,7 +254,7 @@ The [`Container` class](/containers/reference/container-class/) manages containe
 
 #### Parameters
 
-- `durationMs` (`number | bigint`): idle time in milliseconds before Cloudflare stops the container. The value must be greater than `0`.
+- `durationMs` (`number | bigint`): time in milliseconds that the container keeps running after the Durable Object becomes inactive. The value must be greater than `0` and at most 6 hours (`21600000`).
 
 #### Return values
 
@@ -261,6 +263,7 @@ The [`Container` class](/containers/reference/container-class/) manages containe
 #### Exceptions
 
 - `setInactivityTimeout()` throws a `TypeError` when `durationMs` is `0` or less.
+- The returned promise rejects when `durationMs` is greater than 6 hours.
 
 ### `monitor`
 
