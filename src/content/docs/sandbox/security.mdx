@@ -27,7 +27,7 @@ The sandbox is therefore the smallest unit of trust. When two users share a sand
 
 ## Code can read what you put in its sandbox
 
-Consider a coding agent that clones a private repository and installs its dependencies. If your Worker puts a token in the clone URL, Git saves that URL in the repository's `.git/config` file. When `npm install` runs, each dependency's install script runs with the same access as the agent. Any of those scripts can read the token.
+Consider a coding agent that clones a private repository, installs its dependencies, and runs its tests. If your Worker puts a token in the clone URL, Git saves that URL in the repository's `.git/config` file. The tests, and every dependency they load, run with the same access as the agent. Any of that code can read the token.
 
 Environment variables, command arguments, and files your Worker writes work the same way. Once a value is in the sandbox, all the code there can read it and send it anywhere the sandbox can reach.
 
@@ -45,7 +45,7 @@ For more information about what a sandbox keeps between instances, refer to [San
 
 A sandbox starts without outbound network access. A Dynamic Worker loaded with `globalOutbound: null` cannot make requests, and a Container starts with `enableInternet: false` by default.
 
-Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets an install script send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
+Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
 
 ## Output carries the same risk
 
