@@ -182,7 +182,7 @@ export class MyContainer extends Container {
   - `cwd` (`string`) — working directory for the process.
   - `env` (`Record<string, string>`) — environment variables for the process. The process does not inherit variables from `start()` or from the image. It receives the image's `PATH` unless `env` sets `PATH`.
   - `user` (`string`) — numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user.
-  - `signal` (`AbortSignal`) — aborting the signal sends `SIGKILL` to the process. An already-aborted signal makes `exec()` throw an `AbortError`.
+  - `signal` (`AbortSignal`) — aborting the signal sends `SIGKILL` to the process. Processes that it started keep running. An already-aborted signal makes `exec()` throw an `AbortError`.
   - `pty` (`boolean | { cols?: number; rows?: number }`) — runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
 
 :::caution
@@ -212,6 +212,8 @@ With `stderr: "combined"` or `pty`, `ExecProcess` has no `stderr` stream, and `E
 `output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
 
 `exec` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
+
+`kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running in the container. `exitCode` resolves when that process exits, but `output()` and the output streams wait until every process that holds the output exits. To stop a command and every process it started, run it under GNU coreutils `timeout`, for example `["timeout", "--kill-after=5", "60", "bash", "-c", command]`. The command then exits with code `124` when it runs longer than 60 seconds.
 
 #### Exceptions
 
