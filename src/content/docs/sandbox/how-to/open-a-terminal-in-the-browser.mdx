@@ -1,0 +1,258 @@
+---
+title: Open a terminal in the browser
+description: Connect a browser terminal to an interactive shell in a Linux sandbox over a WebSocket.
+pcx_content_type: how-to
+sidebar:
+  order: 7
+  label: Open a terminal
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Give a person a live shell in a Linux sandbox from a web page. This guide serves a page that runs [xterm.js](https://xtermjs.org/), connects it to `bash` in the sandbox over a WebSocket, and resizes the shell when the browser window changes size.
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+:::caution
+The example gives anyone who opens the page a `root` shell in the sandbox named in the URL. Authenticate callers before production, and derive the sandbox name from the caller's identity.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+## Open a terminal
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker. It serves the terminal page and passes the page's WebSocket to the sandbox:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   export class MyContainer extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	async fetch(request: Request): Promise<Response> {
+   		if (request.headers.get("Upgrade") !== "websocket") {
+   			return new Response("Expected a WebSocket upgrade", { status: 426 });
+   		}
+
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   		}
+
+   		await this.container.setInactivityTimeout(5 * 60 * 1000);
+
+   		const url = new URL(request.url);
+   		const abort = new AbortController();
+   		const shell = await this.container.exec(["bash"], {
+   			pty: {
+   				cols: Number(url.searchParams.get("cols")) || 80,
+   				rows: Number(url.searchParams.get("rows")) || 24,
+   			},
+   			env: { TERM: "xterm-256color" },
+   			cwd: "/root",
+   			signal: abort.signal,
+   		});
+
+   		const [client, server] = Object.values(new WebSocketPair());
+
+   		// Receive binary messages as ArrayBuffer instead of Blob.
+   		server.binaryType = "arraybuffer";
+
+   		// Keep this Durable Object in memory while the shell runs.
+   		server.accept();
+
+   		const stdin = shell.stdin!.getWriter();
+
+   		server.addEventListener("message", (event) => {
+   			if (typeof event.data === "string") {
+   				try {
+   					const { cols, rows } = JSON.parse(event.data);
+   					shell.resize(cols, rows);
+   				} catch {
+   					// Ignore malformed resize messages so the shell keeps running.
+   				}
+   			} else {
+   				stdin.write(new Uint8Array(event.data)).catch(() => {});
+   			}
+   		});
+
+   		// Stop the shell when the browser disconnects.
+   		server.addEventListener("close", () => abort.abort());
+
+   		const forward = async () => {
+   			for await (const chunk of shell.stdout!) {
+   				server.send(chunk);
+   			}
+
+   			server.close(1000, `Shell exited with code ${await shell.exitCode}`);
+   		};
+
+   		void forward().catch(() => server.close(1011, "Shell output failed"));
+
+   		return new Response(null, { status: 101, webSocket: client });
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([^/]+)\/(terminal)?$/.exec(url.pathname);
+
+   		if (!match) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+
+   		if (match[2]) {
+   			return sandbox.fetch(request);
+   		}
+
+   		return new Response(page, {
+   			headers: { "Content-Type": "text/html; charset=utf-8" },
+   		});
+   	},
+   } satisfies ExportedHandler<Env>;
+
+   const page = `<!doctype html>
+   <html lang="en">
+   	<head>
+   		<meta charset="utf-8" />
+   		<title>Sandbox terminal</title>
+   		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/css/xterm.css" />
+   		<style>
+   			html, body, #terminal { height: 100%; margin: 0; background: #000; }
+   		</style>
+   	</head>
+   	<body>
+   		<div id="terminal"></div>
+   		<script type="module">
+   			import { Terminal } from "https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/lib/xterm.mjs";
+   			import { FitAddon } from "https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.11.0/lib/addon-fit.mjs";
+
+   			const terminal = new Terminal();
+   			const fitAddon = new FitAddon();
+   			terminal.loadAddon(fitAddon);
+   			terminal.open(document.getElementById("terminal"));
+   			fitAddon.fit();
+
+   			const url = new URL("terminal", location.href);
+   			url.protocol = location.protocol === "https:" ? "wss:" : "ws:";
+   			url.searchParams.set("cols", terminal.cols);
+   			url.searchParams.set("rows", terminal.rows);
+
+   			const socket = new WebSocket(url);
+   			socket.binaryType = "arraybuffer";
+
+   			const encoder = new TextEncoder();
+   			const send = (data) => {
+   				if (socket.readyState === WebSocket.OPEN) socket.send(data);
+   			};
+
+   			socket.addEventListener("message", (event) => {
+   				terminal.write(new Uint8Array(event.data));
+   			});
+   			socket.addEventListener("close", (event) => {
+   				terminal.writeln("");
+   				terminal.writeln("[" + (event.reason || "Disconnected") + "]");
+   			});
+
+   			terminal.onData((data) => send(encoder.encode(data)));
+   			terminal.onResize(({ cols, rows }) => send(JSON.stringify({ cols, rows })));
+   			addEventListener("resize", () => fitAddon.fit());
+   		</script>
+   	</body>
+   </html>`;
+   ```
+
+   </TypeScriptExample>
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Open the terminal for the sandbox named `ada` in your browser. Replace the example hostname with the `workers.dev` URL that Wrangler prints, and keep the trailing slash:
+
+   ```txt
+   https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/
+   ```
+
+   A `bash` prompt appears after the sandbox starts.
+
+4. Run `stty size`. The shell prints its rows and columns, such as `33 109`. Resize the browser window and run `stty size` again. The numbers change to match the window.
+
+5. Write a file:
+
+   ```sh
+   echo hello > /root/note.txt
+   ```
+
+6. Open the same URL in a second browser tab, and read the file:
+
+   ```sh
+   cat /root/note.txt
+   ```
+
+   The second tab has its own shell in the same sandbox, so it prints `hello`.
+
+</Steps>
+
+## How the terminal works
+
+The page runs xterm.js, which draws the terminal and interprets the escape sequences that commands use for color and cursor movement. The page sends each keystroke to the Worker as a binary WebSocket message. When the window changes size, the fit add-on recalculates the rows and columns, and the page sends the new size as a JSON text message.
+
+Each WebSocket gets its own `bash` process. The Durable Object passes `pty` to `exec()`, so `bash` runs attached to a pseudo-terminal. With a pseudo-terminal, `bash` shows a prompt and supports line editing, and `CTRL + C` interrupts the running command. Standard output and standard error arrive together on `stdout`, and the Durable Object forwards the bytes unchanged.
+
+Binary WebSocket messages arrive in a Worker as `Blob` objects by default. Setting `binaryType` to `"arraybuffer"` lets the Durable Object write each message to the shell's standard input.
+
+The shell's process handle exists only in the Durable Object's memory. The Durable Object accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard that handle. An accepted WebSocket keeps the Durable Object in memory while the terminal is open.
+
+An exception in a WebSocket event listener closes the socket without running the `close` listener, which leaves the shell running. The Durable Object ignores malformed resize messages instead of throwing.
+
+## What ends a terminal session
+
+An open terminal keeps the sandbox running, even when nobody types.
+
+When the tab closes or the connection drops, the Durable Object aborts `exec()`, which sends `SIGKILL` to `bash`. The command running in the foreground ends with the shell. Commands started in the background with `&` keep running until the Linux instance stops.
+
+When the shell exits, the Durable Object closes the WebSocket, and the page shows the exit code. Reloading the page starts a new shell. Output from the previous shell is not kept.
+
+After the last terminal closes, the Linux instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout). When it stops, background commands end, and files that are not in a [snapshot](/sandbox/how-to/save-and-restore-a-workspace/) are lost.
+
+## Adapt the terminal
+
+Replace `bash` with another interactive command, such as a coding agent's command-line interface. `cloudflare/debian-trixie` includes few tools, so build your own image to add one. Refer to [Image management](/containers/guides/image-management/).
+
+The example sets `enableInternet: false`, so commands in the terminal cannot reach the Internet. Set it to `true` only if the shell needs the Internet, or allow specific destinations with an outbound handler. Refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+
+The shell runs as `root` in the sandbox. To run it as another Linux user, pass the `user` option to `exec()`. Refer to the [Durable Object container API](/durable-objects/api/container/#exec).
+
+The page loads xterm.js from a CDN to keep the example in one file. In production, install `@xterm/xterm` and `@xterm/addon-fit` from npm and serve them with [static assets](/workers/static-assets/).
+
+## Next steps
+
+- To run a command without a terminal and stream its output, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
+- For every `exec()` option, refer to the [Durable Object container API](/durable-objects/api/container/#exec).
+- For terminal options and add-ons, refer to the [xterm.js documentation](https://xtermjs.org/docs/).
