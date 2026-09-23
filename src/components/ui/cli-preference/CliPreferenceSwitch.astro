@@ -8,7 +8,7 @@ interface Props {
 const { anchorId } = Astro.props;
 ---
 
-<div id={anchorId} data-nb-cli-preference-scope class="w-full">
+<div data-nb-cli-preference-scope data-nb-cli-anchor={anchorId} class="w-full">
 	<CliPreferenceSelector />
 	<div data-nb-cli-variant="wrangler">
 		<slot name="wrangler" />

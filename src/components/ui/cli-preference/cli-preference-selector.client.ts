@@ -14,11 +14,37 @@ function initCliPreference(container: HTMLElement): () => void {
 	let readyFrame: number | undefined;
 
 	const apply = (value: CliPreference) => {
-		container
-			.querySelectorAll<HTMLElement>("[data-nb-cli-variant]")
-			.forEach((variant) => {
-				variant.hidden = variant.dataset.nbCliVariant !== value;
-			});
+		const variants = Array.from(
+			container.querySelectorAll<HTMLElement>("[data-nb-cli-variant]"),
+		);
+		const activeVariant = variants.find(
+			(variant) => variant.dataset.nbCliVariant === value,
+		);
+		variants.forEach((variant) => {
+			variant.hidden = variant !== activeVariant;
+		});
+
+		const anchorId = container.dataset.nbCliAnchor;
+		if (anchorId && activeVariant) {
+			const headings = variants
+				.map((variant) =>
+					variant.querySelector<HTMLElement>("h1, h2, h3, h4, h5, h6"),
+				)
+				.filter((heading) => heading !== null);
+			const activeHeading = activeVariant.querySelector<HTMLElement>(
+				"h1, h2, h3, h4, h5, h6",
+			);
+			if (activeHeading) {
+				const moved = activeHeading.id !== anchorId;
+				headings.forEach((heading) => {
+					if (heading.id === anchorId) heading.removeAttribute("id");
+				});
+				activeHeading.id = anchorId;
+				if (moved && location.hash === `#${anchorId}`) {
+					requestAnimationFrame(() => activeHeading.scrollIntoView());
+				}
+			}
+		}
 		toggles.forEach((toggle) => {
 			toggle.disabled = false;
 			toggle.setAttribute(

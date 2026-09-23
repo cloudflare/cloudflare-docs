@@ -104,7 +104,7 @@ if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
 		<Fragment slot="wrangler">
 			<CommandReference
 				title={command}
-				headingId={false}
+				headingId={headingId}
 				invocation={invocation}
 				description={description}
 				headingLevel={headingLevel}
@@ -121,6 +121,7 @@ if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
 				<CfCommand
 					command={target}
 					headingLevel={headingLevel}
+					headingId={false}
 					includeHidden={includeHiddenCf}
 				/>
 			))}
