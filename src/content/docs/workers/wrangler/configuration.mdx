@@ -163,7 +163,7 @@ The `main` key is optional for assets-only Workers.
 - `compatibility_flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. Refer to [types of routes](#types-of-routes).
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
@@ -362,7 +362,7 @@ Example:
 Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. To keep the `workers.dev` URL alongside routes, set `workers_dev` to `true`. For more information, refer to [`workers.dev`](/workers/configuration/routing/workers-dev/).
 
 <WranglerConfig>
 
