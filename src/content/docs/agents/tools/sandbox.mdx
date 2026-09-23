@@ -8,7 +8,7 @@ description: Give agents isolated Linux environments for running code, managing 
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can use [Sandbox](/sandbox/) to run code in isolated container environments. Use Sandbox when an agent needs a real filesystem, shell commands, language runtimes, package installation, or long-lived project state that should not run inside the agent's own Worker isolate.
+Agents can use the [Sandbox SDK](/sandbox/sdk/) to run code in isolated container environments. Use Sandbox when an agent needs a real filesystem, shell commands, language runtimes, package installation, or long-lived project state that should not run inside the agent's own Worker isolate.
 
 Sandbox is built on [Cloudflare Containers](/containers/) and exposes a TypeScript API for command execution, file operations, background processes, and service previews.
 
@@ -105,9 +105,15 @@ For long-running sandbox work, pair Sandbox with [durable execution with fibers]
 ## Related resources
 
 <LinkCard
-	title="Sandbox SDK"
+	title="Sandboxes"
 	href="/sandbox/"
-	description="Full Sandbox documentation for commands, files, sessions, and deployment."
+	description="Choose between Dynamic Workers and Containers to run untrusted or generated code."
+/>
+
+<LinkCard
+	title="Sandbox SDK"
+	href="/sandbox/sdk/"
+	description="Full Sandbox SDK documentation for commands, files, sessions, and deployment."
 />
 
 <LinkCard
