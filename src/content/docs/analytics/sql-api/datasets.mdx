@@ -60,6 +60,12 @@ LIMIT 100
 
 Log datasets are typically unsampled, but some use adaptive sampling. As with event datasets, the SQL API automatically applies sample weights to supported aggregate functions when a log dataset is sampled.
 
+## Workers Analytics Engine datasets
+
+Query a Workers Analytics Engine dataset as `events.analyticsEngine.<DATASET_NAME>`, replacing `<DATASET_NAME>` with the name configured for the binding. Use an unquoted SQL identifier for names such as `myDataset`, or a double-quoted identifier for names containing characters such as hyphens: `events.analyticsEngine."example-dataset"`. These datasets require `accountTag` or `scope.accountTag`; zone scope is not supported. The `events.analyticsEngine` namespace by itself is not queryable, and account-specific Analytics Engine dataset names are not returned by introspection.
+
+This interface uses the Analytics SQL API endpoint and SQL dialect. It is separate from the [Workers Analytics Engine SQL API](/analytics/analytics-engine/sql-api/).
+
 ## Discover datasets
 
 Use the introspection endpoint to list the datasets in the SQL API catalog:
@@ -70,14 +76,20 @@ curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
   --data-urlencode "account_tag=<ACCOUNT_TAG>"
 ```
 
-The response contains dataset names and descriptions, sorted by name. Columns are omitted by default.
+The response contains dataset names, titles, descriptions, and kinds, sorted by name. Columns are omitted by default.
 
 ```json
 {
 	"datasets": [
 		{
 			"name": "events.httpRequests",
-			"description": "Aggregated HTTP requests data with adaptive sampling"
+			"title": "HTTP Requests",
+			"description": "Aggregated HTTP requests data with adaptive sampling",
+			"kind": {
+				"events": {
+					"sampling": "adaptive"
+				}
+			}
 		}
 	]
 }
@@ -87,9 +99,13 @@ The endpoint accepts the following query parameters:
 
 | Parameter         | Type    | Required | Description                                                                               |
 | ----------------- | ------- | -------- | ----------------------------------------------------------------------------------------- |
-| `account_tag`     | string  | Yes      | Account identifier used to authorize the request.                                         |
+| `account_tag`     | string  | No       | Account identifier. Requires Account Analytics Read permission.                           |
+| `zone_tag`        | string  | No       | Zone identifier. Requires Zone Analytics Read permission and returns zone-scoped datasets. |
 | `dataset_name`    | string  | No       | Exact, case-sensitive schema-qualified dataset name to return.                            |
 | `include_columns` | boolean | No       | Set to `true` to include column names, descriptions, and data types. Defaults to `false`. |
+| `include_custom_attributes` | boolean | No | Set to `true` to discover custom attribute names and types from account data. Requires `account_tag` and a nonempty `dataset_name`. |
+
+Specify exactly one of `account_tag` or `zone_tag`.
 
 To inspect one dataset and its columns, provide both optional parameters:
 
@@ -106,7 +122,13 @@ curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
 	"datasets": [
 		{
 			"name": "events.httpRequests",
+			"title": "HTTP Requests",
 			"description": "Aggregated HTTP requests data with adaptive sampling",
+			"kind": {
+				"events": {
+					"sampling": "adaptive"
+				}
+			},
 			"columns": [
 				{
 					"name": "accountTag",
@@ -126,4 +148,4 @@ curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
 
 An unknown `dataset_name` returns an empty `datasets` array.
 
-Introspection returns catalog metadata and does not query the underlying data store. A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.
+Introspection normally returns static catalog metadata without querying the underlying data store. Setting `include_custom_attributes=true` queries the preceding seven days of the selected dataset within the specified account. Each custom-attribute type is capped at the service's configured attribute limit, so the response might not include every historical custom attribute. A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.

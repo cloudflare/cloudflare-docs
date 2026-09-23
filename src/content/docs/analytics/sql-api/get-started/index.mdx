@@ -8,7 +8,7 @@ sidebar:
 
 ## Prerequisites
 
-To query the SQL API, you need a Cloudflare account or zone identifier and an API token with **Analytics: Read** permission for that account or zone.
+To run an account-scoped query, you need an account identifier and an API token with **Account Analytics Read** permission for that account. Any query containing `zoneTag` requires **Zone Analytics Read** permission for every named zone, even if the token has Account Analytics Read permission for the owning account.
 
 SQL API datasets represent different Cloudflare products. Some datasets and fields require additional API token permissions for the products whose data they expose. Include the permissions required by every dataset and field you plan to query.
 

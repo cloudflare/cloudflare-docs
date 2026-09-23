@@ -20,7 +20,7 @@ The recommended request format is a JSON object:
 
 ```json
 {
-	"query": "SELECT timestamp, clientRequestHTTPHost FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 100",
+	"query": "SELECT timestamp, clientRequestHttpHost FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 100",
 	"params": ["<ACCOUNT_TAG>", "2026-09-15T00:00:00Z"]
 }
 ```
@@ -92,6 +92,8 @@ Use `zoneTag` for zone scope:
 	}
 }
 ```
+
+A query that contains `zoneTag`, including request-level zone scope, requires **Zone Analytics Read** permission for every named zone. Account Analytics Read permission for the owning account does not replace this zone permission.
 
 The `scope` object must contain exactly one of `accountTag` or `zoneTag`. Do not combine request-level scope with an `accountTag`, `zoneTag`, or resource tenancy predicate in SQL. The API returns HTTP `422` if the request specifies tenancy in both places.
 
