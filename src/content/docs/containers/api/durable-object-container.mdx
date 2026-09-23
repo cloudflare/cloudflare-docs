@@ -15,7 +15,9 @@ Each [container](/containers/) is managed and proxied by a Durable Object. The D
 
 The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
 
-You can instead use the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers`. The class adds routing, readiness checks, lifecycle hooks, activity tracking, and scheduling. To compare both APIs, refer to [Containers APIs](/containers/api/).
+:::note
+We recommend starting new applications with the Durable Object Container API. If you prefer built-in lifecycle helpers, use the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers`. The class adds routing, readiness checks, lifecycle hooks, activity tracking, and scheduling. To compare both APIs, refer to [Containers APIs](/containers/api/).
+:::
 
 Your Durable Object also has access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) through `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
