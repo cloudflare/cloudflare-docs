@@ -666,7 +666,8 @@
 /sandbox/tutorials/ai-code-executor/ /sandbox/sdk/tutorials/ai-code-executor/ 301
 /sandbox/tutorials/analyze-data-with-ai/ /sandbox/sdk/tutorials/analyze-data-with-ai/ 301
 /sandbox/tutorials/automated-testing-pipeline/ /sandbox/sdk/tutorials/automated-testing-pipeline/ 301
-/sandbox/tutorials/claude-code/ /sandbox/sdk/tutorials/claude-code/ 301
+/sandbox/tutorials/claude-code/ /sandbox/coding-agents/claude-code/ 301
+/sandbox/sdk/tutorials/claude-code/ /sandbox/coding-agents/claude-code/ 301
 /sandbox/tutorials/claude-managed-agents/ /sandbox/sdk/tutorials/claude-managed-agents/ 301
 /sandbox/tutorials/code-review-bot/ /sandbox/sdk/tutorials/code-review-bot/ 301
 /sandbox/tutorials/cursor-cloud-agents/ /sandbox/sdk/tutorials/cursor-cloud-agents/ 301
