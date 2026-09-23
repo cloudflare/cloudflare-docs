@@ -3,92 +3,161 @@ title: Sandbox
 pcx_content_type: concept
 sidebar:
   order: 1
-description: Give agents isolated Linux environments for running code, managing files, and executing commands.
+description: Give an agent a Linux sandbox to run shell commands, scripts, and tests.
+products:
+  - agents
 ---
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can use the [Sandbox SDK](/sandbox/sdk/) to run code in isolated container environments. Use Sandbox when an agent needs a real filesystem, shell commands, language runtimes, package installation, or long-lived project state that should not run inside the agent's own Worker isolate.
+An agent can run commands in a Linux sandbox of its own. The sandbox is a [Container](/containers/) that the agent starts. The model runs shell commands through a tool, and the files it creates stay in the sandbox between turns while the container runs.
 
-Sandbox is built on [Cloudflare Containers](/containers/) and exposes a TypeScript API for command execution, file operations, background processes, and service previews.
+Use a sandbox when an agent needs to:
 
-## When to use Sandbox
+- Run shell commands or scripts that the model writes.
+- Build or test code with Node.js, compilers, or other Linux tools.
+- Work on the same files across several turns of a conversation.
+- Run untrusted or model-generated code away from the agent's storage and credentials.
 
-Use Sandbox for agents that need to:
+When the model writes JavaScript that only needs the APIs you pass in, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a Container. For more information about choosing, refer to [Choose a sandbox environment](/sandbox/choose-an-environment/).
 
-- Run untrusted or model-generated code in isolation.
-- Execute Python, Node.js, shell commands, or package managers.
-- Read, write, and manage project files.
-- Run tests, linters, build tools, or data analysis scripts.
-- Maintain a workspace across multiple agent turns.
+## How it works
+
+An agent is a [Durable Object](/durable-objects/). When you attach a container to the agent's class, each agent instance can start one Linux sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
+
+The sandbox runs in its own virtual machine. It cannot read the agent's storage, environment variables, or bindings, and it cannot reach the Internet unless you allow it.
 
 ## Basic pattern
 
-Bind the Sandbox Durable Object to your Worker, then access a sandbox from your agent methods with `getSandbox()`.
+The following [Think](/agents/harnesses/think/) agent gives the model one tool, `run_command`. The tool starts the sandbox on first use and runs each command with Bash.
 
 <TypeScriptExample>
 
 ```ts
-import { Agent, callable } from "agents";
-import { getSandbox } from "@cloudflare/sandbox";
-import type { Sandbox } from "@cloudflare/sandbox";
+import { Think } from "@cloudflare/think";
+import { routeAgentRequest } from "agents";
+import { tool } from "ai";
+import { createWorkersAI } from "workers-ai-provider";
+import { z } from "zod";
 
-export { Sandbox } from "@cloudflare/sandbox";
+const MAX_OUTPUT_CHARS = 10_000;
 
-type Env = {
-	Sandbox: DurableObjectNamespace<Sandbox>;
-};
+export class CodeAgent extends Think<Env> {
+	getModel() {
+		return createWorkersAI({ binding: this.env.AI })(
+			"@cf/moonshotai/kimi-k2.6",
+		);
+	}
 
-export class CodeAgent extends Agent<Env, { lastOutput?: string }> {
-	@callable()
-	async runPython(code: string) {
-		const sandbox = getSandbox(this.env.Sandbox, this.name);
+	getSystemPrompt() {
+		return "You are a coding assistant. Use run_command to work in your Debian Linux sandbox.";
+	}
 
-		await sandbox.writeFile("/workspace/script.py", code);
-		const result = await sandbox.exec("python3 /workspace/script.py");
+	// Offer only the sandbox tool, so the model does not use the workspace file tools.
+	beforeTurn() {
+		return { activeTools: ["run_command"] };
+	}
 
-		this.setState({ lastOutput: result.stdout });
+	getTools() {
+		return {
+			run_command: tool({
+				description:
+					"Run a shell command in this agent's Debian Linux sandbox. The sandbox cannot reach the Internet.",
+				inputSchema: z.object({
+					command: z.string().describe("The command to run with bash -lc"),
+				}),
+				execute: ({ command }) => this.runCommand(command),
+			}),
+		};
+	}
+
+	private async runCommand(command: string) {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		if (!container.running) {
+			container.start({
+				image: "cloudflare/debian-trixie",
+				entrypoint: ["sleep", "infinity"],
+				enableInternet: false,
+			});
+		}
+		await container.setInactivityTimeout(10 * 60 * 1000);
+
+		// `timeout` stops the command and every process it started.
+		const process = await container.exec([
+			"timeout",
+			"--kill-after=5",
+			"60",
+			"bash",
+			"-lc",
+			command,
+		]);
+		const output = await process.output();
+		const decoder = new TextDecoder();
 
 		return {
-			success: result.success,
-			stdout: result.stdout,
-			stderr: result.stderr,
-			exitCode: result.exitCode,
+			exitCode: output.exitCode,
+			stdout: decoder.decode(output.stdout).slice(-MAX_OUTPUT_CHARS),
+			stderr: decoder.decode(output.stderr).slice(-MAX_OUTPUT_CHARS),
 		};
 	}
 }
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
+`start()` boots the `cloudflare/debian-trixie` image, a Debian system with Node.js and npm. The image's default command exits immediately, so the `sleep infinity` entrypoint keeps the container running between commands. `enableInternet: false` blocks outbound requests.
+
+`setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. The timeout does not survive a Durable Object restart, so the tool sets it before every command. For more information, refer to [`setInactivityTimeout`](/durable-objects/api/container/#setinactivitytimeout).
+
+`timeout` stops a command that runs longer than 60 seconds and returns exit code `124`. A command that ignores the stop signal is killed five seconds later. The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model's context.
+
+Think gives every agent built-in [workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), which store files in the agent rather than in the sandbox. Without `beforeTurn()`, the model can write a file with a workspace tool that commands in the sandbox cannot see. `activeTools` limits the model to `run_command`, so all of its file work happens in the sandbox.
+
+To add Python, Git, compilers, or other tools, build your own image and pass it to `start()`. For more information, refer to [`images`](/durable-objects/api/container/#images).
+
 ## Configuration
 
-Configure the Sandbox container, Durable Object binding, and migration in `wrangler.jsonc`.
+Attach a container to the agent's class in `wrangler.jsonc`. The class also needs a Durable Object binding and a SQLite migration, like any agent. Containers require the [Workers Paid plan](/workers/platform/pricing/).
 
 <WranglerConfig>
 
 ```jsonc
 {
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI"
+	},
 	"containers": [
 		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-			"instance_type": "lite",
-			"max_instances": 1
+			"class_name": "CodeAgent",
+			"scheduling_policy": "durable_object"
 		}
 	],
 	"durable_objects": {
 		"bindings": [
 			{
-				"name": "Sandbox",
-				"class_name": "Sandbox"
+				"class_name": "CodeAgent",
+				"name": "CodeAgent"
 			}
 		]
 	},
 	"migrations": [
 		{
 			"tag": "v1",
-			"new_sqlite_classes": ["Sandbox"]
+			"new_sqlite_classes": ["CodeAgent"]
 		}
 	]
 }
@@ -96,34 +165,52 @@ Configure the Sandbox container, Durable Object binding, and migration in `wrang
 
 </WranglerConfig>
 
+`scheduling_policy: "durable_object"` lets the agent choose the image when it calls `start()`.
+
+## Network access
+
+The sandbox starts without Internet access, so commands such as `npm install` cannot download packages. Setting `enableInternet: true` allows every destination, and each destination gives the model's commands a way to send out whatever they can read.
+
+To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route the sandbox's requests through an outbound handler in your Worker. For an example, refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
+
 ## Sandbox and agent state
 
-Use agent state for user-visible progress and small metadata. Use the sandbox filesystem for workspace files, generated code, package installs, logs, and artifacts.
+Files in the sandbox last while its container runs. When the container stops, the next command starts a new sandbox from the image, and earlier files are gone. To keep files after the container stops, save a snapshot and start from it later. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
 
-For long-running sandbox work, pair Sandbox with [durable execution with fibers](/agents/runtime/execution/durable-execution/) or [Workflows](/agents/runtime/execution/run-workflows/) so the agent can recover or report progress if work outlives a single request.
+Use agent state for user-visible progress and small metadata, such as the ID of the latest snapshot.
+
+For long-running sandbox work, pair the sandbox with [durable execution with fibers](/agents/runtime/execution/durable-execution/) or [Workflows](/agents/runtime/execution/run-workflows/) so the agent can recover or report progress if work outlives a single request.
+
+## Security considerations
+
+The model reads everything that `run_command` returns. A file, package, or web page in the sandbox can print text written to steer the model, such as an instruction to run another command. Check tool results before the agent acts on them outside the sandbox, and require [approval](/agents/harnesses/think/tools/#tool-approval) for tools with side effects.
+
+Every user who talks to the same agent instance shares its sandbox. Give each user their own agent instance when their files must stay apart.
+
+For more information, refer to [Sandbox security](/sandbox/security/).
 
 ## Related resources
 
 <LinkCard
 	title="Sandboxes"
 	href="/sandbox/"
-	description="Choose between Dynamic Workers and Containers to run untrusted or generated code."
+	description="Run untrusted or generated code in Dynamic Workers or Containers."
 />
 
 <LinkCard
-	title="Sandbox SDK"
-	href="/sandbox/sdk/"
-	description="Full Sandbox SDK documentation for commands, files, sessions, and deployment."
+	title="Choose a sandbox environment"
+	href="/sandbox/choose-an-environment/"
+	description="Decide whether generated code needs APIs you pass in or a Linux system."
 />
 
 <LinkCard
-	title="Execute commands"
-	href="/sandbox/sdk/guides/execute-commands/"
-	description="Run shell commands in a sandbox environment."
+	title="Run Claude Code in a sandbox"
+	href="/sandbox/coding-agents/claude-code/"
+	description="Run a coding agent CLI in a sandbox from a Worker."
 />
 
 <LinkCard
-	title="Manage files"
-	href="/sandbox/sdk/guides/manage-files/"
-	description="Read, write, upload, and download sandbox files."
+	title="Container API"
+	href="/durable-objects/api/container/"
+	description="Start, run commands in, and snapshot a container from a Durable Object."
 />
