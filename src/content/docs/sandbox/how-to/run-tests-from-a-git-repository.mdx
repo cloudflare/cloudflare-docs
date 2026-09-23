@@ -1,0 +1,237 @@
+---
+title: Run tests from a Git repository
+description: Clone a public Git repository into a Container sandbox, install its dependencies, and return the test results.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-22
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Run tests for a public Git repository in a fresh Linux sandbox. This guide clones a tagged repository, installs its dependencies, runs its test script, and removes the Linux instance.
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+:::caution
+The example does not authenticate incoming requests. Authenticate callers before production so other people cannot start test runs.
+:::
+
+## Run the test suite
+
+The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) repository. Its test suite uses Node.js and npm.
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   const repository =
+    "https://github.com/cloudflare/workers-oauth-provider.git";
+   const revision = "v0.0.6";
+   const workspace = "/workspace/repository";
+
+   type ProcessResult = {
+    stage: "setup" | "clone" | "install" | "test";
+    stdout: string;
+    stderr: string;
+    exitCode: number;
+   };
+
+   export class MyContainer extends DurableObject<Env> {
+    private get container(): Container {
+     const container = this.ctx.container;
+
+     if (!container) {
+      throw new Error("The container binding is not configured");
+     }
+
+     return container;
+    }
+
+    private async waitForSandbox(): Promise<void> {
+     let lastError: unknown;
+
+     for (let attempt = 0; attempt < 60; attempt++) {
+      try {
+       const process = await this.container.exec(["true"]);
+       if ((await process.exitCode) === 0) {
+        return;
+       }
+      } catch (error) {
+       lastError = error;
+      }
+
+      await scheduler.wait(500);
+     }
+
+     throw new Error("The sandbox did not start within 30 seconds", {
+      cause: lastError,
+     });
+    }
+
+    private async startSandbox(): Promise<void> {
+     if (!this.container.running) {
+      this.container.start({
+       image: "cloudflare/debian-trixie",
+       entrypoint: ["sh", "-c", "sleep infinity"],
+       enableInternet: true,
+      });
+     }
+
+     await this.waitForSandbox();
+    }
+
+    private async run(
+     stage: ProcessResult["stage"],
+     argv: string[],
+     cwd?: string,
+    ): Promise<ProcessResult> {
+     const process = await this.container.exec(
+      argv,
+      cwd ? { cwd } : undefined,
+     );
+     const output = await process.output();
+     const decoder = new TextDecoder();
+
+     return {
+      stage,
+      stdout: decoder.decode(output.stdout),
+      stderr: decoder.decode(output.stderr),
+      exitCode: output.exitCode,
+     };
+    }
+
+    async runTests(): Promise<ProcessResult> {
+     try {
+      await this.startSandbox();
+
+      const update = await this.run("setup", ["apt-get", "update"]);
+
+      if (update.exitCode !== 0) {
+       return update;
+      }
+
+      const installGit = await this.run("setup", [
+       "apt-get",
+       "install",
+       "--yes",
+       "git",
+      ]);
+
+      if (installGit.exitCode !== 0) {
+       return installGit;
+      }
+
+      const clone = await this.run("clone", [
+       "git",
+       "clone",
+       "--depth",
+       "1",
+       "--branch",
+       revision,
+       repository,
+       workspace,
+      ]);
+
+      if (clone.exitCode !== 0) {
+       return clone;
+      }
+
+      const installDependencies = await this.run(
+       "install",
+       ["npm", "ci", "--no-audit", "--no-fund"],
+       workspace,
+      );
+
+      if (installDependencies.exitCode !== 0) {
+       return installDependencies;
+      }
+
+      return await this.run(
+       "test",
+       ["npm", "test", "--", "--silent"],
+       workspace,
+      );
+     } finally {
+      if (this.container.running) {
+       await this.container.destroy();
+      }
+     }
+    }
+   }
+
+   export default {
+    async fetch(request: Request, env: Env): Promise<Response> {
+     if (request.method !== "POST") {
+      return new Response("Send a POST request to run the tests", {
+       status: 405,
+      });
+     }
+
+     const sandbox = env.MY_CONTAINER.getByName(crypto.randomUUID());
+     const result = await sandbox.runTests();
+
+     return Response.json(result, {
+      status: result.exitCode === 0 ? 200 : 500,
+     });
+    },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   The Debian image includes Node.js 24 but does not include Git. The sandbox installs Git before cloning the repository. Each request gets a new sandbox. The `finally` block stops its Linux instance after the test run.
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Send a `POST` request to the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --request POST
+   ```
+
+   The response includes the test output and exit code:
+
+   ```json output
+   {
+     "stage": "test",
+     "stdout": "...\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n...",
+     "stderr": "",
+     "exitCode": 0
+   }
+   ```
+
+</Steps>
+
+An exit code of `0` means the test script completed successfully. If setup, cloning, dependency installation, or testing returns a nonzero exit code, the Worker responds with `500`. The `stage` field identifies the failed operation.
+
+:::caution[Repository code can access the Internet]
+`enableInternet: true` lets setup and test processes reach the public Internet. Installation and test scripts can make outbound requests. Do not pass credentials into this sandbox.
+:::
+
+## Adapt the test run
+
+To use another repository, change `repository` and `revision`. Replace the `npm ci` and `npm test` argument arrays with the commands for your project. Keep the executable and each argument in separate array entries because `exec()` does not start a shell.
+
+The example buffers standard output and standard error with `output()`. For test suites with large output, consume both streams instead. For more information, refer to [Execute commands](/containers/guides/execute-commands/).
+
+This example covers public repositories. Do not place an access token in the repository URL because code in the sandbox can read it.
+
+## Next steps
+
+- To keep installed dependencies between Linux instances, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+- To let code call a protected service without receiving its credential, refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
