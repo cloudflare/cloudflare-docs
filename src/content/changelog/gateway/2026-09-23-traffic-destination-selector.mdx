@@ -1,0 +1,28 @@
+---
+title: Traffic Destination selector in Gateway policies
+description: Gateway HTTP and Network policies now support a Traffic Destination selector to match traffic based on how it exits Cloudflare.
+products:
+  - gateway
+  - cloudflare-one
+date: 2026-09-23
+---
+
+Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [Network](/cloudflare-one/traffic-policies/network-policies/) policies now include a **Traffic Destination** selector that identifies how traffic exits Cloudflare. This allows administrators to write policies that target specific off-ramp methods - for example, applying different rules to traffic destined for the public Internet compared to traffic routed through Cloudflare Tunnel or Cloudflare WAN.
+
+### Available traffic destination values
+
+| UI name               | API value           | Description                                                                                                                      |
+| --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Internet              | `internet`          | Traffic to the public Internet                                                                                                   |
+| Cloudflare WAN        | `cloudflare_wan`    | Traffic through a [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) connection                               |
+| Cloudflare Tunnel     | `cloudflare_tunnel` | Traffic to a private origin through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                  |
+| Cloudflare One Client | `device_client`     | Traffic to another device running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) |
+| Mesh                  | `mesh`              | Traffic through a [Cloudflare Mesh](/mesh/) node                                                                                 |
+
+The selector uses the `net.offramp.type` API field in both HTTP and Network policies.
+
+| UI name             | API example                      |
+| ------------------- | -------------------------------- |
+| Traffic Destination | `net.offramp.type == "internet"` |
+
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
