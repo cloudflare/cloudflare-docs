@@ -1,0 +1,340 @@
+---
+title: Mount an R2 bucket
+description: Mount a prefix of an R2 bucket in a Linux sandbox without giving the sandbox your credentials.
+pcx_content_type: how-to
+sidebar:
+  order: 8
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+  - r2
+reviewed: 2026-09-23
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Give commands in a Linux sandbox a directory backed by R2. This guide mounts one prefix of a bucket for each job, runs a command that reads an input file and writes a result through the mount, and reads the result from R2.
+
+The `S3Mounts` class from the `@cloudflare/sandbox` package mounts the prefix with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request, so the sandbox never receives them.
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+<Render product="containers" file="docker-setup" />
+
+:::caution
+The example does not authenticate incoming requests. Authenticate callers before production so other people cannot run jobs or read their results.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+## Create a bucket and credentials
+
+<Steps>
+
+1. Create a bucket:
+
+   <PackageManagers type="exec" pkg="wrangler" args="r2 bucket create sandbox-artifacts" />
+
+2. Create an R2 API token with the **Object Read & Write** permission, and apply it to the `sandbox-artifacts` bucket only. Refer to [Authentication](/r2/api/tokens/).
+
+3. Copy the token's **Access Key ID** and **Secret Access Key**. You add them to the Worker as secrets later in this guide.
+
+</Steps>
+
+## Mount the bucket
+
+<Steps>
+
+1. Install the package:
+
+   <PackageManagers pkg="@cloudflare/sandbox" />
+
+2. Create a `Dockerfile` in the project root:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends ca-certificates fuse3 s3fs \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   CMD ["sleep", "infinity"]
+   ```
+
+   The image installs FUSE and `s3fs`, which `S3Mounts` uses to mount the bucket. Replace the `FROM` line with the base image your commands need. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
+
+3. Replace `wrangler.jsonc`. Replace `<ACCOUNT_ID>` with your Cloudflare account ID:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "sandbox-linux",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"compatibility_flags": ["nodejs_compat"],
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
+   	"vars": {
+   		"R2_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"R2_BUCKET": "sandbox-artifacts",
+   	},
+   	"secrets": {
+   		"required": ["R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY"],
+   	},
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"artifacts": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"class_name": "MyContainer",
+   				"name": "MY_CONTAINER",
+   			},
+   		],
+   	},
+   	"migrations": [
+   		{
+   			"new_sqlite_classes": ["MyContainer"],
+   			"tag": "v1",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   `secrets.required` declares the two secrets, so type generation includes them and `wrangler deploy` fails if they are missing.
+
+4. Generate types for the new variables and secrets:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+5. Add the credentials from the R2 API token as secrets. Enter each value when Wrangler prompts for it:
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put R2_ACCESS_KEY_ID" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put R2_SECRET_ACCESS_KEY" />
+
+6. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { S3Mounts } from "@cloudflare/sandbox";
+   import { DurableObject } from "cloudflare:workers";
+
+   // S3Mounts sends the sandbox's storage requests to this entrypoint.
+   export { S3Gateway } from "@cloudflare/sandbox";
+
+   const mountPath = "/mnt/artifacts";
+   const idleTimeout = 10 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	private get mounts(): S3Mounts {
+   		return new S3Mounts(this.container, this.ctx.exports.S3Gateway);
+   	}
+
+   	private async mountArtifacts(job: string) {
+   		const container = this.container;
+
+   		if (!container.running) {
+   			container.start({
+   				image: container.images.artifacts,
+   				enableInternet: false,
+   			});
+   		}
+
+   		await container.setInactivityTimeout(idleTimeout);
+
+   		await this.mounts.mount({
+   			mountPath,
+   			source: {
+   				type: "s3",
+   				endpoint: `https://${this.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+   				region: "auto",
+   				bucket: this.env.R2_BUCKET,
+   				credentials: {
+   					type: "static",
+   					accessKeyId: this.env.R2_ACCESS_KEY_ID,
+   					secretAccessKey: this.env.R2_SECRET_ACCESS_KEY,
+   				},
+   			},
+   			keyPrefix: `jobs/${job}`,
+   			access: "read-write",
+   		});
+   	}
+
+   	async digest(job: string) {
+   		await this.mountArtifacts(job);
+
+   		const process = await this.container.exec(
+   			["sh", "-c", "sha256sum input.txt > input.sha256"],
+   			{ cwd: mountPath },
+   		);
+   		const output = await process.output();
+
+   		return {
+   			exitCode: output.exitCode,
+   			stderr: new TextDecoder().decode(output.stderr),
+   		};
+   	}
+
+   	async finish() {
+   		if (!this.container.running) {
+   			return;
+   		}
+
+   		await this.mounts.unmount(mountPath);
+   		await this.container.destroy();
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/jobs\/([a-z0-9-]+)(\/digest)?$/.exec(url.pathname);
+
+   		if (!match) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const [, job, digest] = match;
+   		const sandbox = env.MY_CONTAINER.getByName(job);
+
+   		if (digest && request.method === "POST") {
+   			return Response.json(await sandbox.digest(job));
+   		}
+
+   		if (!digest && request.method === "DELETE") {
+   			await sandbox.finish();
+   			return new Response(null, { status: 204 });
+   		}
+
+   		return new Response("Method not allowed", { status: 405 });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+7. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+</Steps>
+
+## Process a file through the mount
+
+<Steps>
+
+1. Upload an input file for the job named `ada`:
+
+   ```sh
+   echo "artifact input" > input.txt
+   npx wrangler r2 object put sandbox-artifacts/jobs/ada/input.txt --file input.txt --remote
+   ```
+
+2. Run the job. Replace the example hostname with the `workers.dev` URL that Wrangler printed:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/jobs/ada/digest --request POST
+   ```
+
+   ```json output
+   { "exitCode": 0, "stderr": "" }
+   ```
+
+   The command in the sandbox read `input.txt` from the mount and wrote `input.sha256` next to it.
+
+3. Read the result from R2:
+
+   ```sh
+   npx wrangler r2 object get sandbox-artifacts/jobs/ada/input.sha256 --remote --pipe
+   ```
+
+   ```txt output
+   <SHA256_DIGEST>  input.txt
+   ```
+
+4. Unmount the prefix and stop the sandbox:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/jobs/ada --request DELETE
+   ```
+
+</Steps>
+
+## How the mount keeps credentials out of the sandbox
+
+`s3fs` in the sandbox sends each storage request over HTTP to an address that the container intercepts. The intercept delivers the request to `S3Gateway` in your Worker. `S3Gateway` checks that the request is an operation `s3fs` uses, within the bucket and prefix of the mount, and allowed by the access mode. It then signs the request with the credentials from your Worker's secrets and sends it to R2.
+
+The sandbox receives placeholder credentials, because `s3fs` requires a key pair. `S3Gateway` ignores them. The mount works with `enableInternet: false`, because the requests never leave through the sandbox's own network access.
+
+Any process in the sandbox can use the mount. A command that the job runs can read, change, or delete every object under `jobs/<JOB>/`. Mount the narrowest prefix the job needs, and use `access: "read-only"` when it only reads. Limit the R2 API token to the bucket as well. For more information, refer to [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox).
+
+## How mounted files behave
+
+The mounted directory maps files to R2 objects. It does not behave like a local disk:
+
+- Renaming a file copies the object and deletes the original.
+- File locks, hard links, ownership, permissions, and atomic replacement do not work as they do on a local filesystem.
+- Directories come from object key prefixes.
+- `s3fs` caches file metadata. A change made directly in R2 can take time to appear in the sandbox.
+- An interrupted write can leave an incomplete upload in R2.
+
+Write files that other systems read, such as results, to the mount. Keep working files, such as dependencies and build output, on the sandbox's own disk.
+
+## Mount once for each job
+
+The Worker calls `mount()` on every request. When the mount already exists with the same settings, `mount()` reuses it. When the Linux instance has stopped, the next request starts a new instance and mounts the prefix again.
+
+Each new mount adds an outbound intercept to the Linux instance, and unmounting does not remove it. An instance supports a limited number of intercepts. Keep one mount for the life of a job, and give each job its own sandbox name instead of remounting a different prefix in the same instance.
+
+Call `unmount()` before you destroy the instance. If a process is still using the directory, `unmount()` throws `SandboxS3MountError` with code `S3_MOUNT_BUSY`. Stop the process, then call `unmount()` again.
+
+## Adapt the mount
+
+To mount a bucket from another S3-compatible service, change `endpoint`, `region`, and `bucket`, and use credentials from that service.
+
+To use short-lived credentials, pass `credentials: { type: "provider", fetcher }`. `S3Gateway` requests credentials from the fetcher for each storage request. Refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
+
+To keep the files on the sandbox's own disk between instances, refer to [Save and restore a workspace](/sandbox/how-to/save-and-restore-a-workspace/). Snapshots do not include mounted directories.
+
+## Next steps
+
+- For every option and error, refer to the [S3Mounts API](/sandbox/reference/s3-mounts/).
+- To read and write files on the sandbox's own disk, refer to [Manage files](/sandbox/how-to/manage-files/).
+- For the S3 operations that R2 supports, refer to [S3 API compatibility](/r2/api/s3/api/).
