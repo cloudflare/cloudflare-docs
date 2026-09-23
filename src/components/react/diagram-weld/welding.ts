@@ -30,26 +30,36 @@ export interface NotchConfig {
 	right?: NotchSide;
 }
 
-function resolveSide(side: NotchSide | undefined, edge: number): number[] {
+function resolveSide(
+	side: NotchSide | undefined,
+	edge: number,
+	radius = RX,
+): number[] {
 	if (!side) return [];
 	const raw = side === true ? [0.5] : [...side].sort((a, b) => a - b);
 	if (edge <= 0) return [];
-	const min = (RX + NOTCH_W) / edge;
+	// a notch (width NOTCH_W, centred on f) must clear the corner arcs:
+	// centre >= radius + NOTCH_W/2 from either corner. Exact fit allowed.
+	const min = (radius + NOTCH_W / 2) / edge;
 	const max = 1 - min;
-	if (min >= max) return [];
+	if (min > max) return [];
 	return raw.filter((f) => f >= min && f <= max);
 }
 
-export function indentedRect(rect: NodeRect, notches: NotchConfig): string {
+export function indentedRect(
+	rect: NodeRect,
+	notches: NotchConfig,
+	radius = RX,
+): string {
 	const { l, t, r: right, b, w, h } = rect;
-	const rx = Math.min(RX, w / 2, h / 2);
+	const rx = Math.min(radius, w / 2, h / 2);
 	const nw = NOTCH_W;
 	const nd = NOTCH_D;
 
-	const top = resolveSide(notches.top, w);
-	const bottom = resolveSide(notches.bottom, w);
-	const leftSide = resolveSide(notches.left, h);
-	const rightSide = resolveSide(notches.right, h);
+	const top = resolveSide(notches.top, w, rx);
+	const bottom = resolveSide(notches.bottom, w, rx);
+	const leftSide = resolveSide(notches.left, h, rx);
+	const rightSide = resolveSide(notches.right, h, rx);
 
 	const parts: string[] = [`M ${l + rx},${t}`];
 
