@@ -112,12 +112,17 @@ export async function setDraftNeverStale(
  * draft-stale reminders themselves) can never restart the staleness clock.
  * `lastPushAt` (GraphQL headRefPushedAt) recovers pushes that a later bot
  * comment hides from `updated_at`.
+ *
+ * Returns null when the last human activity is unknowable: without a push
+ * time, a push that landed before the newest comment is invisible, and when
+ * that comment is a bot's it also explains `updated_at`. Callers must skip
+ * the PR rather than act on fabricated staleness.
  */
 export function computeLastActivityAt(
 	pr: Pick<GitHubPullRequest, "updated_at">,
 	comments: GitHubIssueComment[],
 	lastPushAt: string | null | undefined,
-): number {
+): number | null {
 	const lastHumanCommentMs = Math.max(
 		0,
 		...comments
@@ -138,9 +143,25 @@ export function computeLastActivityAt(
 		updatedAtMs > lastAnyCommentMs + COMMENT_TIMESTAMP_SKEW_MS
 			? updatedAtMs
 			: 0;
-	const lastPushMs = lastPushAt ? Date.parse(lastPushAt) : 0;
+	const lastPushMs = lastPushAt != null ? Date.parse(lastPushAt) : 0;
+	const hasPushTime = Number.isFinite(lastPushMs) && lastPushMs > 0;
+
+	const newestComment = comments.reduce<GitHubIssueComment | null>(
+		(latest, comment) =>
+			latest === null || comment.created_at > latest.created_at
+				? comment
+				: latest,
+		null,
+	);
+	if (
+		!hasPushTime &&
+		unexplainedBumpMs === 0 &&
+		newestComment?.user?.type === "Bot"
+	) {
+		return null;
+	}
 	return Math.max(
-		Number.isFinite(lastPushMs) ? lastPushMs : 0,
+		hasPushTime ? lastPushMs : 0,
 		lastHumanCommentMs,
 		unexplainedBumpMs,
 	);
@@ -205,10 +226,11 @@ export async function runDraftStaleSweep(
 			listedPrs.map((pr) => pr.number),
 		);
 	} catch (error) {
-		// Without push times, a push hidden behind a later bot comment looks
-		// stale. Comments-only staleness is safe enough for one night.
+		// Without push times, a push hidden behind a later bot comment is
+		// invisible. computeLastActivityAt returns null for those PRs and the
+		// sweep skips them rather than acting on unknowable staleness.
 		console.error({
-			message: `Draft stale sweep could not fetch head ref push times, degrading to comments-only staleness: ${error instanceof Error ? error.message : String(error)}`,
+			message: `Draft stale sweep could not fetch head ref push times: ${error instanceof Error ? error.message : String(error)}`,
 			event: "draft_stale",
 			action: "head_push_times_unavailable",
 		});
@@ -228,6 +250,15 @@ export async function runDraftStaleSweep(
 				comments,
 				headPushTimes.get(pr.number),
 			);
+			if (lastActivityAtMs === null) {
+				console.log({
+					message: `Draft stale sweep skipped PR #${listedPr.number}: last human activity unknowable without head push times`,
+					event: "draft_stale",
+					number: listedPr.number,
+					action: "activity_unknown",
+				});
+				continue;
+			}
 			switch (getDraftStaleAction(lastActivityAtMs, state)) {
 				case "none":
 					break;
@@ -256,12 +287,17 @@ export async function runDraftStaleSweep(
 						getIssueComments(token, pr.number),
 					]);
 					if (updatedPr.state !== "open" || !updatedPr.draft) break;
+					// Null means no new information (e.g. the reminder now being
+					// the newest bot comment masks updated_at on a degraded
+					// night) — the top-level gate already verified activity.
+					const updatedActivityAtMs = computeLastActivityAt(
+						updatedPr,
+						updatedComments,
+						headPushTimes.get(pr.number),
+					);
 					if (
-						computeLastActivityAt(
-							updatedPr,
-							updatedComments,
-							headPushTimes.get(pr.number),
-						) > Date.parse(reminder.created_at)
+						updatedActivityAtMs !== null &&
+						updatedActivityAtMs > Date.parse(reminder.created_at)
 					) {
 						break;
 					}
@@ -295,12 +331,15 @@ export async function runDraftStaleSweep(
 						const confirmedClosingComment =
 							closingComment ??
 							(await getIssueComment(token, closingCommentId));
+						const updatedActivityAtMs = computeLastActivityAt(
+							updatedPr,
+							updatedComments,
+							headPushTimes.get(pr.number),
+						);
 						if (
-							computeLastActivityAt(
-								updatedPr,
-								updatedComments,
-								headPushTimes.get(pr.number),
-							) > Date.parse(confirmedClosingComment.created_at)
+							updatedActivityAtMs !== null &&
+							updatedActivityAtMs >
+								Date.parse(confirmedClosingComment.created_at)
 						) {
 							await clearDraftStaleState(bucket, pr.number);
 							break;

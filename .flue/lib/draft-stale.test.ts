@@ -37,21 +37,45 @@ describe("computeLastActivityAt", () => {
 			humanComment(1, "2026-09-10T12:00:00.000Z"),
 			botComment(2, "2026-09-16T12:00:00.000Z"),
 		];
-		expect(computeLastActivityAt(pr, comments, null)).toBe(
-			Date.parse("2026-09-10T12:00:00.000Z"),
-		);
+		expect(
+			computeLastActivityAt(pr, comments, "2026-09-10T12:00:00.000Z"),
+		).toBe(Date.parse("2026-09-10T12:00:00.000Z"));
 	});
 
 	it("uses the newest human comment", () => {
-		const pr = { updated_at: "2026-09-15T12:00:00.000Z" };
+		const pr = { updated_at: "2026-09-14T12:00:00.000Z" };
 		const comments = [
 			humanComment(1, "2026-09-10T12:00:00.000Z"),
-			humanComment(2, "2026-09-14T12:00:00.000Z"),
-			botComment(3, "2026-09-15T12:00:00.000Z"),
+			botComment(2, "2026-09-13T12:00:00.000Z"),
+			humanComment(3, "2026-09-14T12:00:00.000Z"),
 		];
 		expect(computeLastActivityAt(pr, comments, null)).toBe(
 			Date.parse("2026-09-14T12:00:00.000Z"),
 		);
+	});
+
+	it("returns null when a bot comment masks activity and no push time is known", () => {
+		// A push may hide between the human comment and the bot comment;
+		// without a push time the sweep must skip rather than guess.
+		const pr = { updated_at: "2026-09-16T12:00:00.000Z" };
+		const comments = [
+			humanComment(1, "2026-09-10T12:00:00.000Z"),
+			botComment(2, "2026-09-16T12:00:00.000Z"),
+		];
+		expect(computeLastActivityAt(pr, comments, null)).toBeNull();
+	});
+
+	it("returns null when only bot comments exist and no push time is known", () => {
+		// Guards against a fabricated epoch staleness anchor.
+		const pr = { updated_at: "2026-09-16T12:00:00.000Z" };
+		const comments = [botComment(1, "2026-09-16T12:00:00.000Z")];
+		expect(computeLastActivityAt(pr, comments, null)).toBeNull();
+	});
+
+	it("treats an unparseable push time as missing", () => {
+		const pr = { updated_at: "2026-09-16T12:00:00.000Z" };
+		const comments = [botComment(1, "2026-09-16T12:00:00.000Z")];
+		expect(computeLastActivityAt(pr, comments, "not-a-timestamp")).toBeNull();
 	});
 
 	it("counts a push hidden behind a later bot comment", () => {
@@ -76,7 +100,9 @@ describe("computeLastActivityAt", () => {
 	it("does not count an updated_at bump explained by a bot comment", () => {
 		const pr = { updated_at: "2026-09-14T12:00:30.000Z" };
 		const comments = [botComment(1, "2026-09-14T12:00:00.000Z")];
-		expect(computeLastActivityAt(pr, comments, null)).toBe(0);
+		expect(
+			computeLastActivityAt(pr, comments, "2026-09-13T00:00:00.000Z"),
+		).toBe(Date.parse("2026-09-13T00:00:00.000Z"));
 	});
 
 	it("falls back to updated_at when there are no comments", () => {
