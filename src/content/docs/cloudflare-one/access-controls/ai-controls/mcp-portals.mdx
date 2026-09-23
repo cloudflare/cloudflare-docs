@@ -11,7 +11,7 @@ sidebar:
   label: MCP server portals
 ---
 
-import { Render, Tabs, TabItem, CURL, Steps } from "~/components";
+import { Render, Tabs, TabItem, CURL, Steps, DashButton } from "~/components";
 
 An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
@@ -185,24 +185,24 @@ Manual credentials require per-user authentication. Leave **Require user auth** 
 
 The MCP server status indicates the server's connection and tool and prompt synchronization status in Cloudflare Access.
 
-| Status        | Description                                                                                                                                                                                         |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                              |
-| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
-| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                      |
-| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.              |
+| Status        | Description                                                                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                                        |
+| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
+| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                   |
+| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.         |
 
 #### Error details
 
 When an MCP server is in the **Error** or **Sync Required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
-| Field         | Description                                                                                                            |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `status_code` | The HTTP status code returned by the MCP server, if available.                                                         |
-| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                                      |
-| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                                     |
-| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed.                       |
-| `cause`       | The underlying error message.                                                                                          |
+| Field         | Description                                                                                      |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| `status_code` | The HTTP status code returned by the MCP server, if available.                                   |
+| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                |
+| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                |
+| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed. |
+| `cause`       | The underlying error message.                                                                    |
 
 If `is_upstream` is `true`, use `status_code`, `mcp_code`, and `cause` to troubleshoot the MCP server. If it is `false`, verify that the server URL is correct and reachable. Retry the sync when `retryable` is `true`; otherwise, correct the reported cause before trying again. Reauthenticate the server only when the error points to expired or invalid credentials.
 
@@ -245,11 +245,11 @@ OAuth providers typically exact-match the full URI, including the path.
 
 If your upstream OAuth provider restricts redirect URIs, add the URLs that match your server's configuration:
 
-| OAuth configuration | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider |
-| --- | --- | --- |
-| Automatic (DCR) | No | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server. |
-| Automatic (DCR) | Yes | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
-| Manual OAuth credentials | Not available | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration. |
+| OAuth configuration      | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider                                                                                                                                                                                   |
+| ------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Automatic (DCR)          | No                                               | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server.   |
+| Automatic (DCR)          | Yes                                              | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
+| Manual OAuth credentials | Not available                                    | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration.                                                                             |
 
 For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
 
@@ -629,11 +629,11 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 The `auth_type` field accepts the following values:
 
-| Value             | Description                                                                                                                                          |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                   |
+| Value             | Description                                                                                                                                                                                               |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                                                                            |
 | `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
-| `unauthenticated` | The server does not require authentication.                                                                                                          |
+| `unauthenticated` | The server does not require authentication.                                                                                                                                                               |
 
 #### Manual OAuth credentials
 
@@ -680,8 +680,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-    "auth_type": "bearer",
-    "auth_credentials": "your-bearer-token"
+  	"auth_type": "bearer",
+  	"auth_credentials": "your-bearer-token"
   }
   ```
 
@@ -689,8 +689,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-    "auth_type": "bearer",
-    "auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
+  	"auth_type": "bearer",
+  	"auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
   }
   ```
 
@@ -990,7 +990,38 @@ The agent can retry the request, but it will continue to be blocked until the co
 
 Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-from-an-mcp-client) that support remote MCP servers.
 
+### Connect Claude Desktop
+
+<Steps>
+
+1. Go to **Zero Trust** > **Access controls** > **MCP Portals**.
+
+   <DashButton url="/?to=/:account/access/ai-controls/mcp-server-portal" zeroTrust />
+
+2. Find the portal you want to connect, then select the three dots > **Edit**.
+3. In **Advanced settings**, add `https://claude.ai/api/mcp/auth_callback` to **Allowed redirect URIs**, then select **Save**.
+4. Add a custom connector in Claude:
+
+   a. For Free, Pro, and Max plans, go to **Customize** > **Connectors**. Select **+ Add** > **Add custom connector**.
+
+   b. For Team and Enterprise plans, an owner must go to **Organization settings** > **Connectors**. Select **Add** > **Custom** > **Web**.
+
+5. Enter `https://<subdomain>.<domain>/mcp` as the MCP server URL. Complete the remaining connector settings, then select **Add**.
+6. For Team and Enterprise plans, go to **Customize** > **Connectors**. Find the new connector, then select **Connect**.
+
+</Steps>
+
+For plan-specific instructions, refer to [Claude's custom connector guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+
+:::note
+Claude connects to remote MCP servers from Anthropic's cloud infrastructure, including when you use Claude Desktop. The connection does not pass through the Cloudflare One Client on the user's device. Do not add a Cloudflare root certificate to the Claude connector.
+:::
+
+### Test in Workers AI Playground
+
 To test in Workers AI Playground:
+
+<Steps>
 
 1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
 2. Under **MCP Servers**, enter `https://<subdomain>.<domain>/mcp` for the portal URL.
@@ -998,6 +1029,8 @@ To test in Workers AI Playground:
 4. In the popup window, log in to your Cloudflare Access identity provider.
 5. The popup window will list the MCP servers in the portal that require authentication. For each of these MCP servers, select **Connect** and follow the login prompts.
 6. Select **Done** to complete the portal authentication process.
+
+</Steps>
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
@@ -1008,6 +1041,19 @@ For MCP clients with server configuration files, add the portal as a remote HTTP
 	"mcpServers": {
 		"example-mcp-server": {
 			"url": "https://<subdomain>.<domain>/mcp"
+		}
+	}
+}
+```
+
+For clients that do not support remote MCP servers directly, use `mcp-remote` as a local bridge:
+
+```json title="MCP client configuration using mcp-remote"
+{
+	"mcpServers": {
+		"example-mcp-server": {
+			"command": "npx",
+			"args": ["-y", "mcp-remote@latest", "https://<subdomain>.<domain>/mcp"]
 		}
 	}
 }
@@ -1025,7 +1071,7 @@ The homepage shows:
 
 - The portal name and your organization branding (if configured in Cloudflare Access)
 - The MCP endpoint URL with a copy button
-- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients with OS-specific file paths
+- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients
 
 Authenticated users see their email address and a **Sign out** button in the session bar. Users who are not authenticated can still view the homepage and connection instructions.
 
