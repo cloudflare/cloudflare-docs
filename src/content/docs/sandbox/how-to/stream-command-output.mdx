@@ -185,9 +185,9 @@ Replace the command in the request body with commands your application chooses, 
 
 To send both streams as one stream, pass `{ stderr: "combined" }` to `exec()` and forward only `process.stdout`. Refer to [Execute commands](/containers/guides/execute-commands/#combine-standard-error).
 
-`SIGTERM` reaches only the process that `exec()` started. If that process starts other processes, it must stop them when it receives `SIGTERM`.
+`SIGTERM` reaches only the process that `exec()` started. When that process starts others, such as the commands in an `sh -c` script, they keep running after a disconnect, and the output streams stay open until they exit.
 
-To stop a command after a time limit, call `process.kill()` from a timer. Refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
+To stop a command and every process it started after a time limit, run it under GNU coreutils `timeout`, for example `["timeout", "--kill-after=5", "60", "sh", "-c", command]`. The command exits with code `124` when it runs longer than 60 seconds. Refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
 
 The example sets `enableInternet: false`, so commands cannot download packages or reach other services. Set it to `true` only for commands that need the Internet.
 
