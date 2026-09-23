@@ -20,10 +20,11 @@ Use a cron expression in your Wrangler config to specify the schedule:
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
 	"name": "cron-container",
 	"main": "src/index.ts",
+	"compatibility_date": "$today",
 	"triggers": {
 		"crons": [
 			"*/2 * * * *" // Run every 2 minutes
@@ -54,7 +55,7 @@ Use a cron expression in your Wrangler config to specify the schedule:
 
 </WranglerConfig>
 
-Then call the Container from the `scheduled()` handler in the Worker. The raw API example expects the Container to expose a `POST /run` endpoint that starts the scheduled task.
+Then call the Container from the `scheduled()` handler in the Worker. The raw API example expects the Container to expose a `GET /health` endpoint that returns success when ready and a `POST /run` endpoint that starts the scheduled task.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
@@ -87,14 +88,17 @@ export class CronContainer extends DurableObject<Env> {
 
 		const port = container.getTcpPort(8080);
 		let lastError: unknown;
-		for (let attempt = 0; attempt < 50; attempt++) {
+		for (let attempt = 0; attempt < 100; attempt++) {
 			try {
-				await port.fetch("http://container/");
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
 				lastError = undefined;
 				break;
 			} catch (error) {
 				lastError = error;
-				await scheduler.wait(100);
+				await scheduler.wait(200);
 			}
 		}
 		if (lastError) {
@@ -127,6 +131,7 @@ export default {
 	</TabItem>
 	<TabItem label="Container class">
 
+<TypeScriptExample filename="src/index.ts">
 ```ts
 import { Container, getContainer } from "@cloudflare/containers";
 
@@ -157,6 +162,7 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
 
 	</TabItem>
 </Tabs>

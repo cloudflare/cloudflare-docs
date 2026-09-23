@@ -141,7 +141,7 @@ The [`Container` class](/containers/api/container-class/) adds hooks that run Wo
 - [`onStart()`](/containers/api/container-class/#onstart) — Runs after the container has started.
 - [`onStop()`](/containers/api/container-class/#onstop) — Runs after the container process exits. Receives the exit code and reason for the stop.
 - [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) — Runs when the [`sleepAfter`](/containers/api/container-class/#sleepafter) timer expires with no incoming requests. The default implementation calls `stop()` to shut down the container. You can use this to only stop the container on certain conditions.
-- [`onError()`](/containers/api/container-class/#onerror) — Runs when the container exits with an error.
+- [`onError()`](/containers/api/container-class/#onerror) — Runs when container startup or port checking fails.
 
 Refer to the [status hooks example](/containers/examples/status-hooks/) for a full implementation.
 

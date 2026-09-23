@@ -14,6 +14,8 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 To proxy requests across a fixed number of Container instances, select an instance name and forward the request through its Durable Object.
 
+For the direct API example, expose a `GET /health` endpoint on port 8080 that returns a successful response when the application is ready.
+
 <Tabs>
 	<TabItem label="Durable Object Container API">
 
@@ -28,34 +30,57 @@ interface Env {
 }
 
 export class Backend extends DurableObject<Env> {
+	private ready: Promise<void> | undefined;
+
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
-
-		ctx.blockConcurrencyWhile(async () => {
-			const container = ctx.container!;
-			await container.setInactivityTimeout(2 * 60 * 60 * 1000);
-
-			if (!container.running) {
-				container.start();
-			}
-
-			const port = container.getTcpPort(8080);
-			let lastError: unknown;
-			for (let attempt = 0; attempt < 50; attempt++) {
-				try {
-					await port.fetch("http://container/");
-					return;
-				} catch (error) {
-					lastError = error;
-					await scheduler.wait(100);
-				}
-			}
-			throw lastError;
-		});
+		ctx.blockConcurrencyWhile(() =>
+			ctx.container!.setInactivityTimeout(2 * 60 * 60 * 1000),
+		);
 	}
 
-	fetch(request: Request): Promise<Response> {
-		return this.ctx.container!.getTcpPort(8080).fetch(request);
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			this.ready = undefined;
+		}
+		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
+			this.ready = undefined;
+			throw error;
+		});
+		await this.ready;
+
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return container.getTcpPort(8080).fetch(forwarded);
+	}
+
+	private async startAndWaitForPort(): Promise<void> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			container.start();
+		}
+
+		const port = container.getTcpPort(8080);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 100; attempt++) {
+			try {
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(200);
+			}
+		}
+		throw new Error("Container did not become ready on port 8080", {
+			cause: lastError,
+		});
 	}
 }
 
@@ -71,12 +96,17 @@ export default {
 	</TabItem>
 	<TabItem label="Container class">
 
+<TypeScriptExample filename="src/index.ts">
 ```ts
 import { Container, getRandom } from "@cloudflare/containers";
 
 const INSTANCE_COUNT = 3;
 
-class Backend extends Container {
+interface Env {
+	BACKEND: DurableObjectNamespace<Backend>;
+}
+
+export class Backend extends Container<Env> {
 	defaultPort = 8080;
 	sleepAfter = "2h";
 }
@@ -88,6 +118,7 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
 
 	</TabItem>
 </Tabs>

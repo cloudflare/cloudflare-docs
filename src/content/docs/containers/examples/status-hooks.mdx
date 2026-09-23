@@ -15,6 +15,8 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 Use `monitor()` with the Durable Object Container API to run code after the Container exits or errors. The `Container` class adds named lifecycle hooks and an inactivity callback.
 
+For the direct API example, expose `GET /health` on port 4000. Return a successful response once the application is ready.
+
 <Tabs>
 	<TabItem label="Durable Object Container API">
 
@@ -45,7 +47,12 @@ export class MyContainer extends DurableObject<Env> {
 		});
 		await this.ready;
 
-		return container.getTcpPort(4000).fetch(request);
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return container.getTcpPort(4000).fetch(forwarded);
 	}
 
 	private async startAndMonitor(): Promise<void> {
@@ -63,17 +70,22 @@ export class MyContainer extends DurableObject<Env> {
 
 		const port = container.getTcpPort(4000);
 		let lastError: unknown;
-		for (let attempt = 0; attempt < 50; attempt++) {
+		for (let attempt = 0; attempt < 100; attempt++) {
 			try {
-				await port.fetch("http://container/");
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
 				console.log("Container successfully started");
 				return;
 			} catch (error) {
 				lastError = error;
-				await scheduler.wait(100);
+				await scheduler.wait(200);
 			}
 		}
-		throw lastError;
+		throw new Error("Container did not become ready on port 4000", {
+			cause: lastError,
+		});
 	}
 }
 ```
@@ -82,8 +94,9 @@ export class MyContainer extends DurableObject<Env> {
 	</TabItem>
 	<TabItem label="Container class">
 
+<TypeScriptExample filename="src/index.ts">
 ```ts
-import { Container } from "@cloudflare/containers";
+import { Container, type StopParams } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 4000;
@@ -93,7 +106,7 @@ export class MyContainer extends Container {
 		console.log("Container successfully started");
 	}
 
-	override onStop(stopParams) {
+	override onStop(stopParams: StopParams) {
 		if (stopParams.exitCode === 0) {
 			console.log("Container stopped gracefully");
 		} else {
@@ -108,11 +121,12 @@ export class MyContainer extends Container {
 		await this.stop();
 	}
 
-	override onError(error: string) {
+	override onError(error: unknown) {
 		console.log("Container error:", error);
 	}
 }
 ```
+</TypeScriptExample>
 
 	</TabItem>
 </Tabs>
