@@ -1,0 +1,62 @@
+---
+title: Sandbox security
+description: Code in a sandbox can use everything your Worker places inside it, so each sandbox should hold only what that code may have.
+pcx_content_type: concept
+sidebar:
+  order: 3.6
+products:
+  - sandbox
+  - workers
+  - dynamic-workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+A sandbox runs code you do not trust. A model might generate the code, a user might write it, or a package might bring it in as a dependency. Cloudflare isolates the sandbox from your Worker and from other sandboxes. For more information about that isolation, refer to [Sandboxes on Cloudflare](/sandbox/).
+
+Isolation does not limit what the code does inside its own sandbox. The safe assumption is that the code will use everything it can reach there, including the files, credentials, and network access your Worker provides.
+
+## Everything in one sandbox is shared
+
+Every process in a Container runs on the same Linux system. The processes can read the same files, see each other, and connect to the same `localhost` ports. Code loaded into one Dynamic Worker shares its memory in the same way.
+
+A separate Linux user can keep a command away from files that user cannot read. That user still shares the network and every destination the sandbox can reach. To choose the user for a command, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
+
+The sandbox is therefore the smallest unit of trust. When two users share a sandbox, each user's code can read the other's work. A sandbox for each user, or for each job, keeps one user's code away from another user's files and credentials.
+
+## Code can read what you put in its sandbox
+
+Consider a coding agent that clones a private repository and installs its dependencies. If your Worker puts a token in the clone URL, Git saves that URL in the repository's `.git/config` file. When `npm install` runs, each dependency's install script runs with the same access as the agent. Any of those scripts can read the token.
+
+Environment variables, command arguments, and files your Worker writes work the same way. Once a value is in the sandbox, all the code there can read it and send it anywhere the sandbox can reach.
+
+Credentials are safer outside the sandbox. A Dynamic Worker can receive a method that uses the credential in your Worker and returns only the result. A Container can send its request without the credential, and an outbound handler in your Worker adds the credential after the request leaves the sandbox. The code uses the service without holding the key. The method or handler also decides which requests to make, so it limits what the code can do with the service. For both patterns, refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
+
+## The sandbox name decides what a request reaches
+
+A sandbox keeps its files while its instance runs. A snapshot saves those files, including a token in `.git/config`, and restoring the snapshot brings them back. Your Worker reaches the same sandbox whenever it calls `getByName()` with the same name.
+
+So the name decides which sandbox, and which saved files, a request reaches. The name does not show who sent the request. Your Worker authenticates the caller and derives the sandbox name from that identity. Reusing a name or a snapshot for someone else gives them the earlier user's files. The how-to guides read the name from the URL only to keep the examples short.
+
+For more information about what a sandbox keeps between instances, refer to [Sandbox persistence](/sandbox/persistence/).
+
+## Every opening is also a way out
+
+A sandbox starts without outbound network access. A Dynamic Worker loaded with `globalOutbound: null` cannot make requests, and a Container starts with `enableInternet: false` by default.
+
+Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets an install script send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
+
+## Output carries the same risk
+
+Results, files, and HTTP responses from a sandbox come from the code you do not trust. They need the same checks as user input before your application stores them, acts on them, or shows them to someone else.
+
+A web preview goes further, because the browser runs it. When your Worker forwards a page from a sandbox, the page runs in the visitor's browser under the hostname that served it. On your application's hostname, the page can use your application's cookies and call its APIs. A separate hostname for previews keeps the page away from both. For an example, refer to [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+
+## Related resources
+
+- [Choose a sandbox environment](/sandbox/choose-an-environment/)
+- [Sandbox persistence](/sandbox/persistence/)
+- [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/)
+- [Preview a web application](/sandbox/how-to/preview-a-web-application/)
+- [Workers security model](/workers/reference/security-model/)
