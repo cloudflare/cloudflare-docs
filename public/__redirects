@@ -656,7 +656,7 @@
 # Containers IA rework: platform-details/ dissolved into core sections
 /containers/platform-details/architecture/ /containers/concepts/architecture/ 301
 /containers/platform-details/placement/ /containers/concepts/placement/ 301
-/containers/platform-details/outbound-traffic/ /containers/guides/outbound-traffic/ 301
+/containers/platform-details/outbound-traffic/ /containers/configuration/outbound-traffic/ 301
 /containers/platform-details/workers-connections/ /containers/configuration/workers-connections/ 301
 /containers/platform-details/environment-variables/ /containers/configuration/environment-variables/ 301
 /containers/platform-details/rollouts/ /containers/configuration/rollouts/ 301
@@ -666,6 +666,7 @@
 /containers/platform-details/durable-object-methods/ /durable-objects/api/container/ 301
 /containers/platform-details/ /containers/concepts/architecture/ 301
 # Containers IA rework: Configuration section + Local Development to Guides + Wrangler pages to Reference
+/containers/guides/outbound-traffic/ /containers/configuration/outbound-traffic/ 301
 /containers/reference/local-dev/ /containers/guides/local-dev/ 301
 /containers/reference/environment-variables/ /containers/configuration/environment-variables/ 301
 /containers/reference/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
