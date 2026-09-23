@@ -36,11 +36,11 @@ Cloudflare Mesh requires that the Mesh node's [device profile](/cloudflare-one/t
 
 Choose an enrollment method based on what you want to connect:
 
-| Goal | Participant type | Enrollment method | Browser required |
-| --- | --- | --- | --- |
-| Run a service or route a subnet from Linux | [Mesh node](#1-configure-mesh) | Connector token | No |
-| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/mesh/guides/connect-client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No |
-| Connect a user device with identity | [Client device](#2-connect-a-client-device) | Interactive identity provider enrollment | Yes |
+| Goal                                                  | Participant type                                                                                        | Enrollment method                               | Browser required |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------- |
+| Run a service or route a subnet from Linux            | [Mesh node](#1-configure-mesh)                                                                          | Connector token                                 | No               |
+| Connect an unattended Windows, macOS, or Linux device | [Headless client device](/mesh/guides/connect-client-devices/#headless-windows-macos-and-linux-devices) | Service token and managed deployment parameters | No               |
+| Connect a user device with identity                   | [Client device](#2-connect-a-client-device)                                                             | Interactive identity provider enrollment        | Yes              |
 
 ## 1. Configure Mesh
 
@@ -57,18 +57,13 @@ The setup wizard [configures your account for Mesh networking](#required-account
 
    <DashButton url="/?to=/:account/mesh" />
 
-2. Select **Add a node**.
+2. Select **Add participant** > **Add node**.
 3. Enter a name for your node (for example, `web-server` or `staging-db`).
 4. Select **Create node**.
-5. (Optional) If you have a Linux server, run the install commands shown in the dashboard to bring the node online. If you do not have a server ready, select **I'll connect later** — you can install the node at any time from the node detail page.
-
-   <Details header="Installation commands">
-
-   <Render file="mesh/install-node" product="cloudflare-one" />
-
-   </Details>
-
-6. Select **View node details** to complete the setup wizard.
+5. Select **Linux**, **Kubernetes**, **Docker Compose**, or **Docker CLI**.
+6. Follow the installation instructions for your selected method. The dashboard masks the node token but includes it when required by a copied command. Docker Compose configurations and Kubernetes manifests reference a secret instead of containing the token.
+7. (Optional) If you are not ready to install the node, select **I'll connect later**. You can install the node from its detail page later.
+8. If you installed the node, wait for it to connect and select **Continue**.
 
 </Steps>
 
@@ -161,17 +156,22 @@ You can also manage nodes with the [`cloudflare_zero_trust_tunnel_warp_connector
 
 ## 2. Connect a client device
 
-Connect a laptop or phone to your Mesh network:
+Use the Add device workflow to find the Cloudflare One Client installer and organization name for a laptop or phone:
 
-### Windows, macOS, and Linux
+<Steps>
 
-<Render file="warp/enroll-desktop" product="cloudflare-one" />
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
-### iOS and Android
+   <DashButton url="/?to=/:account/mesh" />
 
-<Render file="warp/enroll-ios-android" product="cloudflare-one" />
+2. Select **Add participant** > **Add device**.
+3. Select the device platform and use the provided link or QR code to install the Cloudflare One Client.
+4. Open the client and select **Cloudflare Zero Trust** when prompted for a connection type.
+5. Enter the organization name displayed in the Mesh dashboard and complete authentication.
 
-Once you see a **Connected** status, your device is on the mesh and receives its own Mesh IP.
+</Steps>
+
+The workflow does not enroll the device or verify connectivity. After the Cloudflare One Client displays **Connected**, test connectivity as described in [Connect client devices](/mesh/guides/connect-client-devices/#2-verify-connectivity).
 
 ## 3. Test connectivity
 
