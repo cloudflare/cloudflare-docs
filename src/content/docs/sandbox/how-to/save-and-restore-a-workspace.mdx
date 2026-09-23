@@ -40,6 +40,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 
    const snapshotKey = "workspaceSnapshotId";
    const notesPath = "/workspace/notes.txt";
+   const idleTimeout = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
     private get container(): Container {
@@ -52,27 +53,6 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
      return container;
     }
 
-    private async waitForSandbox(): Promise<void> {
-     let lastError: unknown;
-
-     for (let attempt = 0; attempt < 60; attempt++) {
-      try {
-       const process = await this.container.exec(["true"]);
-       if ((await process.exitCode) === 0) {
-        return;
-       }
-      } catch (error) {
-       lastError = error;
-      }
-
-      await scheduler.wait(500);
-     }
-
-     throw new Error("The sandbox did not start within 30 seconds", {
-      cause: lastError,
-     });
-    }
-
     private async startSandbox(): Promise<void> {
      const container = this.container;
 
@@ -82,19 +62,19 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
       if (snapshotId) {
        container.start({
         containerSnapshot: { id: snapshotId },
-        entrypoint: ["sh", "-c", "sleep infinity"],
+        entrypoint: ["sleep", "infinity"],
         enableInternet: false,
        });
       } else {
        container.start({
         image: "cloudflare/debian-trixie",
-        entrypoint: ["sh", "-c", "sleep infinity"],
+        entrypoint: ["sleep", "infinity"],
         enableInternet: false,
        });
       }
      }
 
-     await this.waitForSandbox();
+     await container.setInactivityTimeout(idleTimeout);
     }
 
     async writeNotes(contents: string) {
@@ -190,6 +170,8 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
    </TypeScriptExample>
 
    Each URL sandbox ID maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
+
+   Files that are not in a snapshot exist only while the Linux instance runs. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for 10 minutes after the Durable Object becomes inactive, so the file written in one request is still there when the next request saves it. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
 
 2. Deploy the Worker:
 

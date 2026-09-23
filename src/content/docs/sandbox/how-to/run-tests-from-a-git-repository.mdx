@@ -60,39 +60,6 @@ The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oa
      return container;
     }
 
-    private async waitForSandbox(): Promise<void> {
-     let lastError: unknown;
-
-     for (let attempt = 0; attempt < 60; attempt++) {
-      try {
-       const process = await this.container.exec(["true"]);
-       if ((await process.exitCode) === 0) {
-        return;
-       }
-      } catch (error) {
-       lastError = error;
-      }
-
-      await scheduler.wait(500);
-     }
-
-     throw new Error("The sandbox did not start within 30 seconds", {
-      cause: lastError,
-     });
-    }
-
-    private async startSandbox(): Promise<void> {
-     if (!this.container.running) {
-      this.container.start({
-       image: "cloudflare/debian-trixie",
-       entrypoint: ["sh", "-c", "sleep infinity"],
-       enableInternet: true,
-      });
-     }
-
-     await this.waitForSandbox();
-    }
-
     private async run(
      stage: ProcessResult["stage"],
      argv: string[],
@@ -115,7 +82,11 @@ The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oa
 
     async runTests(): Promise<ProcessResult> {
      try {
-      await this.startSandbox();
+      this.container.start({
+       image: "cloudflare/debian-trixie",
+       entrypoint: ["sleep", "infinity"],
+       enableInternet: true,
+      });
 
       const update = await this.run("setup", ["apt-get", "update"]);
 

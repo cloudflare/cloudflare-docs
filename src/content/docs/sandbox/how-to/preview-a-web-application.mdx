@@ -65,6 +65,8 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
    `;
 
    export class MyContainer extends DurableObject<Env> {
+   	private ready = false;
+
    	private get container(): Container {
    		const container = this.ctx.container;
 
@@ -75,6 +77,24 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
    		return container;
    	}
 
+   	private async waitForServer(): Promise<boolean> {
+   		const deadline = Date.now() + 30_000;
+
+   		while (Date.now() < deadline) {
+   			try {
+   				const response = await this.container
+   					.getTcpPort(port)
+   					.fetch("http://container/", { signal: AbortSignal.timeout(1_000) });
+   				await response.body?.cancel();
+   				return true;
+   			} catch {
+   				await scheduler.wait(500);
+   			}
+   		}
+
+   		return false;
+   	}
+
    	async fetch(request: Request): Promise<Response> {
    		if (!this.container.running) {
    			this.container.start({
@@ -82,23 +102,25 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
    				entrypoint: ["node", "--eval", app],
    				enableInternet: false,
    			});
+   			this.ready = false;
    		}
 
    		await this.container.setInactivityTimeout(idleTimeout);
 
-   		for (let attempt = 0; attempt < 60; attempt++) {
-   			if (!this.container.running) {
-   				break;
-   			}
+   		if (!this.ready) {
+   			this.ready = await this.waitForServer();
 
-   			try {
-   				return await this.container.getTcpPort(port).fetch(request.clone());
-   			} catch {
-   				await scheduler.wait(500);
+   			if (!this.ready) {
+   				return new Response("The preview did not start", { status: 503 });
    			}
    		}
 
-   		return new Response("The preview did not start", { status: 503 });
+   		try {
+   			return await this.container.getTcpPort(port).fetch(request);
+   		} catch {
+   			this.ready = false;
+   			return new Response("The preview is not responding", { status: 502 });
+   		}
    	}
 
    	async stop(): Promise<void> {
@@ -138,7 +160,9 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
 
    </TypeScriptExample>
 
-   Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) stops the instance five minutes after its last request. Without it, Cloudflare can stop an idle instance between preview requests.
+   Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests.
+
+   [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for five minutes after the Durable Object becomes inactive. Without it, Cloudflare stops the instance shortly after the last request. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
 
 2. Deploy the Worker:
 
@@ -188,7 +212,9 @@ The instance does not expose a public port. Requests from the Internet reach the
 
 The server listens on `0.0.0.0`. A server that listens only on `127.0.0.1` does not receive requests from `getTcpPort()`.
 
-If the server exits, or does not accept connections within 30 seconds, the Durable Object responds with `503`.
+After it starts an instance, the Durable Object sends `GET /` to the server until the server responds. Any HTTP response counts as ready. If the server does not respond within 30 seconds, the Durable Object responds with `503`.
+
+The Durable Object forwards each visitor request once. Retrying a request that fails could send a `POST` or other request twice. If the server stops responding, the Durable Object responds with `502` and checks the server again on the next request.
 
 ## Adapt the preview
 
@@ -196,12 +222,12 @@ Replace the `entrypoint` with the command that starts your web server. Configure
 
 The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, or configure your application's base path.
 
-Cloudflare sends `SIGTERM` to the main process before it stops an instance. A process that runs as process ID 1 must handle `SIGTERM` to exit on that signal. The example server exits when it receives `SIGTERM`.
+When Cloudflare stops an instance, the main process receives `SIGTERM` and must exit promptly. A process that runs as process ID 1 must handle `SIGTERM` to exit on that signal. The example server exits when it receives `SIGTERM`.
 
 When the instance stops, changes to its filesystem are lost. To keep a workspace between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
 
 ## Next steps
 
 - To run a repository's tests in a sandbox, refer to [Run tests from a Git repository](/sandbox/how-to/run-tests-from-a-git-repository/).
+- To stream a command's output instead of serving HTTP, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
 - To connect over TCP instead of HTTP, refer to [`getTcpPort`](/durable-objects/api/container/#gettcpport).
-- To learn how Cloudflare stops Container instances, refer to [Lifecycle of a Container](/containers/concepts/architecture/#container-shutdown).
