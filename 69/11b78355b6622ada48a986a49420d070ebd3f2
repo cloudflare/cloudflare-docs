@@ -1,0 +1,21 @@
+src/content/warp-releases/macos/beta/2026.8.1755.1.yaml
+  s_440b7485ebd2a9::t_b3a7425b07ad37 1-31
+src/content/warp-releases/windows/beta/2026.8.1755.1.yaml
+  s_440b7485ebd2a9::t_4b4f13072f3a7c 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6911b78355b6622ada48a986a49420d070ebd3f2",
+  "prompts": {},
+  "sessions": {
+    "s_440b7485ebd2a9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0c52c-12ac-71d2-8074-147f88811586",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Logan Praneis <lpraneis@cloudflare.com>"
+    }
+  }
+}

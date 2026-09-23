@@ -1,0 +1,19 @@
+src/content/docs/r2/platform/limits.mdx
+  s_1ce4317c599725::t_2605af549d2068 23,33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a2b4d24f32a7b731d68528ae07a9c1cbe23b257b",
+  "prompts": {},
+  "sessions": {
+    "s_1ce4317c599725": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f927f8ac1ffeFUic5MgMZmShqd",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "rdimaio <riccardodimaio11@gmail.com>"
+    }
+  }
+}
