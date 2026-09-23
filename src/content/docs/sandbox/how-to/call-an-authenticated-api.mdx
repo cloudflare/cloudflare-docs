@@ -220,6 +220,7 @@ Route one hostname through your Worker. The Worker checks the request and adds t
    		if (!container.running) {
    			container.start({
    				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
    				enableInternet: false,
    			});
    		}

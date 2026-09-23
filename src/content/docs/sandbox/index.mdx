@@ -120,6 +120,7 @@ export class MyContainer extends DurableObject<Env> {
 		if (!container.running) {
 			container.start({
 				image: "cloudflare/debian-trixie",
+				entrypoint: ["sleep", "infinity"],
 				enableInternet: false,
 			});
 		}
