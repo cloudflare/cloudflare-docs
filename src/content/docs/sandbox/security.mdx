@@ -45,7 +45,7 @@ For more information about what a sandbox keeps between instances, refer to [San
 
 A Container starts with `enableInternet: false` by default, so it cannot make outbound requests. A Dynamic Worker has the network access of your Worker unless you load it with `globalOutbound: null`, which makes `fetch()` and `connect()` throw.
 
-Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
+Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. Keep Internet access off when you use one: handlers see HTTP on port `80` and HTTPS on port `443`, and with Internet access on, connections to other ports go out directly. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
 
 ## Output carries the same risk
 
