@@ -1,0 +1,207 @@
+---
+title: Preview a web application
+description: Run a web server in a Container sandbox and open it through your Worker.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Run a web server in a sandbox and open it in your browser. This guide starts a Node.js server in Linux, sends preview requests to it through your Worker, and stops the instance when you delete the preview.
+
+## Prerequisites
+
+Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+
+:::caution
+The example does not authenticate incoming requests. Authenticate callers before production so other people cannot start or stop previews.
+
+Code in a preview runs in the visitor's browser under your Worker's hostname. Serve previews from a hostname that does not host your application, its cookies, or its APIs.
+:::
+
+## Start a preview
+
+<Steps>
+
+1. Replace `src/index.ts` with the following Worker:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   const port = 8080;
+   const idleTimeout = 5 * 60 * 1000;
+
+   const app = `
+   const { createServer } = require("node:http");
+
+   process.on("SIGTERM", () => process.exit(0));
+
+   createServer((request, response) => {
+   	if (request.url === "/api/status") {
+   		response.writeHead(200, { "Content-Type": "application/json" });
+   		response.end(JSON.stringify({
+   			pid: process.pid,
+   			uptime: Math.round(process.uptime()),
+   		}));
+   		return;
+   	}
+
+   	response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+   	response.end(
+   		"<!doctype html><title>Preview</title><h1>Hello from a sandbox</h1>" +
+   			"<pre id='status'></pre><script>fetch('api/status').then((r) => r.text())" +
+   			".then((text) => { document.getElementById('status').textContent = text; });</script>",
+   	);
+   }).listen(${port}, "0.0.0.0");
+   `;
+
+   export class MyContainer extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	async fetch(request: Request): Promise<Response> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["node", "--eval", app],
+   				enableInternet: false,
+   			});
+   		}
+
+   		await this.container.setInactivityTimeout(idleTimeout);
+
+   		for (let attempt = 0; attempt < 60; attempt++) {
+   			if (!this.container.running) {
+   				break;
+   			}
+
+   			try {
+   				return await this.container.getTcpPort(port).fetch(request.clone());
+   			} catch {
+   				await scheduler.wait(500);
+   			}
+   		}
+
+   		return new Response("The preview did not start", { status: 503 });
+   	}
+
+   	async stop(): Promise<void> {
+   		if (this.container.running) {
+   			await this.container.destroy();
+   		}
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/previews\/([^/]+)(\/.*)?$/.exec(url.pathname);
+
+   		if (!match) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		const path = match[2];
+
+   		if (!path && request.method === "DELETE") {
+   			await sandbox.stop();
+   			return new Response(null, { status: 204 });
+   		}
+
+   		if (!path) {
+   			url.pathname += "/";
+   			return Response.redirect(url.toString(), 308);
+   		}
+
+   		const target = new URL(path + url.search, "http://container");
+   		return sandbox.fetch(new Request(target, request));
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) stops the instance five minutes after its last request. Without it, Cloudflare can stop an idle instance between preview requests.
+
+2. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+3. Open the preview named `ada` in your browser. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```txt
+   https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada/
+   ```
+
+   The page shows **Hello from a sandbox** and the server status. The first request waits until the server accepts connections.
+
+4. Request the server status:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada/api/status
+   ```
+
+   ```json output
+   { "pid": 1, "uptime": 2 }
+   ```
+
+   Wait 30 seconds and send the same request again:
+
+   ```json output
+   { "pid": 1, "uptime": 32 }
+   ```
+
+   The process ID stays the same and the uptime increases. The same server handled both requests.
+
+5. Delete the preview:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada --request DELETE
+   ```
+
+   The Worker responds with `204` and stops the Linux instance. The next request to `/previews/ada/` starts a new server with an uptime of `0`.
+
+</Steps>
+
+## How requests reach the preview
+
+The Worker removes `/previews/<NAME>` from the path and sends the request to that preview's Durable Object. The Durable Object uses `getTcpPort()` to forward the request to port `8080` in the Linux instance.
+
+The instance does not expose a public port. Requests from the Internet reach the server only through your Worker, so the Worker can authenticate callers before it forwards them.
+
+The server listens on `0.0.0.0`. A server that listens only on `127.0.0.1` does not receive requests from `getTcpPort()`.
+
+If the server exits, or does not accept connections within 30 seconds, the Durable Object responds with `503`.
+
+## Adapt the preview
+
+Replace the `entrypoint` with the command that starts your web server. Configure the server to listen on `0.0.0.0` and port `8080`. Many development servers listen on `localhost` by default and provide a host option.
+
+The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, or configure your application's base path.
+
+Cloudflare sends `SIGTERM` to the main process before it stops an instance. A process that runs as process ID 1 must handle `SIGTERM` to exit on that signal. The example server exits when it receives `SIGTERM`.
+
+When the instance stops, changes to its filesystem are lost. To keep a workspace between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+
+## Next steps
+
+- To run a repository's tests in a sandbox, refer to [Run tests from a Git repository](/sandbox/how-to/run-tests-from-a-git-repository/).
+- To connect over TCP instead of HTTP, refer to [`getTcpPort`](/durable-objects/api/container/#gettcpport).
+- To learn how Cloudflare stops Container instances, refer to [Lifecycle of a Container](/containers/concepts/architecture/#container-shutdown).
