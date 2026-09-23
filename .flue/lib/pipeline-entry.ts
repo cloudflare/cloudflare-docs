@@ -11,7 +11,7 @@
  * check for spam-filter events (to decide whether a codeowner skips the
  * INGEST gate). These are a handful of sub-second API calls.
  *
- * Routing (ports the 0.11 `orchestrate` workflow):
+ * Routing:
  *   - codeowner slash command → handled inline (auth, 👀/👍, kick workflow or
  *     set an R2 flag).
  *   - changelog date check (pull_request events) → handled inline: reconciles
@@ -28,7 +28,6 @@
  * (`init().dispatch().read()` from inside Workflow steps) — there is no
  * worker-to-worker HTTP and no internal-auth surface.
  */
-import type { ReviewOrchestratorParams } from "../cloudflare";
 import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 import type { RebaseParams } from "../orchestrators/rebase-workflow";
 import type { IngestParams } from "../orchestrators/ingest-workflow";
@@ -39,10 +38,8 @@ import {
 	isCodeOwner,
 	type GitHubPullRequest,
 } from "./github";
-import {
-	setAutoReviewDisabled,
-	setReviewLimitIgnored,
-} from "./code-review-state";
+import { setAutoReviewDisabled } from "./review/state";
+import { startReview, type ReviewWorkflowParams } from "./review/start";
 import { reconcileChangelogDateComment } from "./changelog-date-check";
 import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
@@ -53,7 +50,7 @@ export interface PipelineEnv {
 	/** Personal/org token (read:org) for codeowner team-membership checks. */
 	GITHUB_ORG_TOKEN?: string;
 	/** App-owned Cloudflare Workflows. */
-	REVIEW_ORCHESTRATOR: Workflow<ReviewOrchestratorParams>;
+	REVIEW_ORCHESTRATOR: Workflow<ReviewWorkflowParams>;
 	DEPENDABOT_REVIEW: Workflow<DependabotReviewParams>;
 	REBASE: Workflow<RebaseParams>;
 	INGEST: Workflow<IngestParams>;
@@ -97,11 +94,12 @@ export async function startReviewPipeline(
 
 		// Codeowners skip the spam gate — their issues and PRs are never spam.
 		let codeowner = false;
+		let token: string | undefined;
 		if (c.senderLogin) {
 			try {
-				const token = await getInstallationToken(ghEnv);
+				token = await getInstallationToken(ghEnv);
 				codeowner = await isCodeOwner(
-					token,
+					token!,
 					env.GITHUB_ORG_TOKEN ?? "",
 					c.senderLogin,
 				);
@@ -115,7 +113,14 @@ export async function startReviewPipeline(
 		if (codeowner) {
 			// Skip the gate; kick the review directly for a non-draft PR.
 			if (c.isCodeReviewEvent && !draftSkipped) {
-				await env.REVIEW_ORCHESTRATOR.create({ params: { number } });
+				const pr = await getPullRequest(token!, number);
+				await startReview(env.REVIEW_ORCHESTRATOR, {
+					number,
+					headSha: pr.head.sha,
+					trigger: "auto",
+					action: c.action,
+					fullReview: false,
+				});
 				log("code-review", c, number, "review_kicked_codeowner_skip_spam");
 			} else {
 				log("spam-filter", c, number, "codeowner_skip_no_review");
@@ -177,27 +182,9 @@ async function handleCommand(
 	}
 
 	switch (c.command) {
-		case "ignore-review-limit": {
-			try {
-				await setReviewLimitIgnored(env.DOCS_FLUE_BUCKET, number, sender);
-			} catch (err) {
-				log(
-					"command:ignore-review-limit",
-					c,
-					number,
-					"command_write_failed",
-					err instanceof Error ? err.message : String(err),
-				);
-				return;
-			}
-			await addReactionToComment(token, commentId, "+1").catch(() => {});
-			log("command:ignore-review-limit", c, number, "ignore_review_limit_set");
-			return;
-		}
-
 		case "disable-auto-review": {
 			try {
-				await setAutoReviewDisabled(env.DOCS_FLUE_BUCKET, number, sender);
+				await setAutoReviewDisabled(env.DOCS_FLUE_BUCKET, number, true);
 			} catch (err) {
 				log(
 					"command:disable-auto-review",
@@ -295,14 +282,15 @@ async function handleCommand(
 				log(`command:${c.command}`, c, number, "dependabot_review_kicked");
 				return;
 			}
-			await env.REVIEW_ORCHESTRATOR.create({
-				params: {
-					number,
-					forceFullReview: c.command === "full-review",
-					bypassReviewLimit: true,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyes,
-				},
+			const pr = await getPullRequest(token, number);
+			await startReview(env.REVIEW_ORCHESTRATOR, {
+				number,
+				headSha: pr.head.sha,
+				trigger: "command",
+				fullReview: c.command === "full-review",
+				commentId,
+				...(eyes ? { eyesReactionId: eyes } : {}),
+				requestedBy: sender,
 			});
 			log(`command:${c.command}`, c, number, "review_kicked");
 			return;

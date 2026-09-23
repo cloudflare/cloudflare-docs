@@ -37,6 +37,7 @@
 		"flue:clear-r2-pr-data:local": "tsx .flue/bin/clear-r2-pr-data.ts --local",
 		"flue:reset:local": "rm -rf .flue/.wrangler/state .flue/.wrangler/tmp .flue/dist/cloudflare_docs_flue/.wrangler/state && echo 'Cleared local flue dev state (Durable Objects + R2). Stop the dev server before running this.'",
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
+		"flue:replay": "tsx .flue/bin/replay.ts",
 		"lint": "eslint",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets",

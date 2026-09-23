@@ -145,7 +145,14 @@ function withoutStoredComment(
  * comment id when present; otherwise scans the most recent comments for the
  * marker. Returns null when no comment exists.
  */
-async function findRecommendationComment(
+function isRecommendationComment(comment: GitHubIssueComment): boolean {
+	return (
+		comment.user?.type === "Bot" &&
+		comment.body?.startsWith(RECOMMENDATION_COMMENT_MARKER) === true
+	);
+}
+
+export async function findRecommendationComment(
 	token: string,
 	prNumber: number,
 	recordedId: number | undefined,
@@ -154,15 +161,13 @@ async function findRecommendationComment(
 		try {
 			const found = await getIssueComments(token, prNumber);
 			const recorded = found.find((comment) => comment.id === recordedId);
-			if (recorded) return recorded;
+			if (recorded && isRecommendationComment(recorded)) return recorded;
 		} catch {
 			// fall through to marker scan; the recorded id may be stale
 		}
 	}
 	const comments = await getIssueComments(token, prNumber);
-	const match = comments.find((c) =>
-		c.body?.includes(RECOMMENDATION_COMMENT_MARKER),
-	);
+	const match = comments.findLast(isRecommendationComment);
 	return match ?? null;
 }
 

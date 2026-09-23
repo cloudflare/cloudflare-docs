@@ -187,7 +187,13 @@ export async function findExistingBotComment(
 	prNumber: number,
 ): Promise<GitHubIssueComment | null> {
 	const comments = await getIssueComments(token, prNumber);
-	return comments.findLast((c) => c.body?.includes(BOT_COMMENT_MARKER)) ?? null;
+	return (
+		comments.findLast(
+			(comment) =>
+				comment.user?.type === "Bot" &&
+				comment.body?.startsWith(BOT_COMMENT_MARKER),
+		) ?? null
+	);
 }
 
 /** Create or update the bot review comment on a PR. */

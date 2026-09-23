@@ -119,7 +119,6 @@ describe("classifyWebhook — slash commands", () => {
 	it.each([
 		["/review", "review"],
 		["/full-review", "full-review"],
-		["/ignore-review-limit", "ignore-review-limit"],
 		["/disable-auto-review", "disable-auto-review"],
 		["/draft-never-stale", "draft-never-stale"],
 		["/rebase", "rebase"],
@@ -141,6 +140,12 @@ describe("classifyWebhook — slash commands", () => {
 		const c = classifyWebhook("issue_comment", base("thanks!"));
 		expect(c.command).toBeNull();
 		expect(isActionable(c)).toBe(false);
+	});
+
+	it("ignores the removed review-limit command", () => {
+		expect(
+			classifyWebhook("issue_comment", base("/ignore-review-limit")).command,
+		).toBeNull();
 	});
 
 	it("ignores commands on issues (not PRs)", () => {
