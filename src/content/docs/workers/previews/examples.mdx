@@ -57,7 +57,7 @@ jobs:
           set -o pipefail
           output="$(npx wrangler preview --name "pr-${{ github.event.pull_request.number }}" --json)"
           printf '%s\n' "$output"
-          preview_url="$(printf '%s' "$output" | jq -er '.preview_urls[0] // .preview.urls[0]')"
+          preview_url="$(printf '%s' "$output" | jq -er '.preview.urls[0]')"
           echo "preview_url=$preview_url" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -145,4 +145,4 @@ For other CI systems, run:
 npx wrangler preview --name "$BRANCH_NAME" --json
 ```
 
-Use the JSON output to post the Preview URL to your review tool.
+The output is a JSON object with `preview` and `deployment` keys. Read the Preview URL from `.preview.urls[0]` and post it to your review tool.
