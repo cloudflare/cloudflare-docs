@@ -3,13 +3,18 @@ title: Deploy a Sandbox application
 pcx_content_type: how-to
 sidebar:
   order: 9
-description: Deploy a Sandbox Worker and keep the npm package and container image on the same release line.
+description: Deploy a Sandbox SDK 0.x Worker and keep the npm package and container image on the same release line.
 products:
   - sandbox
   - containers
+head:
+  - tag: title
+    content: "Deploy a Sandbox application (Sandbox SDK 0.x)"
 ---
 
-import { PackageManagers } from "~/components";
+import { PackageManagers, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Sandbox runs on [Containers](/containers/). For deploy commands, Workers Builds, and rollout flags, refer to [Deploy Containers](/containers/guides/deploy/) and [Rollouts](/containers/configuration/rollouts/).
 

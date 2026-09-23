@@ -1,12 +1,19 @@
 ---
 title: Directory backups
-description: Production restore mounts a copy-on-write overlay. Local restore extracts the archive instead.
+description: Sandbox SDK 0.x restores a directory backup as a copy-on-write overlay in production and by extracting the archive in local development.
 pcx_content_type: concept
 sidebar:
   order: 8
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Directory backups (Sandbox SDK 0.x)"
 ---
+
+import { Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/persistence/", title: "Sandbox persistence" }} />
 
 Backup and restore snapshot a sandbox directory into an R2 archive, then bring that tree back later. The public API is the same in production and in `wrangler dev`. The restore mechanism is not.
 

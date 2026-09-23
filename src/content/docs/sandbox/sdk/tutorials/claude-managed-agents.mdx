@@ -2,7 +2,7 @@
 title: Set up Claude Managed Agents
 pcx_content_type: tutorial
 difficulty: Beginner
-description: Run Claude Managed Agents on self-managed Cloudflare environments.
+description: Run Claude Managed Agents on self-managed Cloudflare environments with the Sandbox SDK 0.x.
 sidebar:
   order: 3
 products:
@@ -11,9 +11,14 @@ products:
   - agents
 tags:
   - AI
+head:
+  - tag: title
+    content: "Set up Claude Managed Agents (Sandbox SDK 0.x)"
 ---
 
-import { LinkButton } from "~/components";
+import { LinkButton, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/coding-agents/", title: "Run coding agents in a sandbox" }} />
 
 Cloudflare provides a self-managed environment for [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview). The agent loop runs on the Anthropic platform, while Cloudflare provides the runtime — sandboxes, egress control, browser access, email, and custom tools — that the agent's actions execute in.
 

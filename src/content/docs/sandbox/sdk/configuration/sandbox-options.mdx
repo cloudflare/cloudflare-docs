@@ -1,14 +1,19 @@
 ---
 title: Sandbox options
-description: Configure Sandbox SDK behavior with sleep timeouts, resource limits, and container settings.
+description: Configure Sandbox SDK 0.x behavior with sleep timeouts, resource limits, and container settings.
 pcx_content_type: configuration
 sidebar:
   order: 4
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Sandbox options (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Configure sandbox behavior by passing options when creating a sandbox instance with `getSandbox()`.
 

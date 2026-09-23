@@ -1,6 +1,6 @@
 ---
 title: Transport modes
-description: Configure how Sandbox SDK communicates between Durable Objects and containers.
+description: Configure how Sandbox SDK 0.x communicates between Durable Objects and containers.
 pcx_content_type: configuration
 sidebar:
   order: 5
@@ -8,9 +8,14 @@ products:
   - sandbox
   - durable-objects
   - containers
+head:
+  - tag: title
+    content: "Transport modes (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Configure how the Sandbox SDK communicates with containers using transport modes.
 

@@ -4,13 +4,18 @@ pcx_content_type: tutorial
 difficulty: Intermediate
 sidebar:
   order: 5
-description: Build a testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
+description: Build a Sandbox SDK 0.x testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
 reviewed: 2025-10-15
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Automated testing pipeline (Sandbox SDK 0.x)"
 ---
 
 import { Render, PackageManagers } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/run-tests-from-a-git-repository/", title: "Run tests from a Git repository" }} />
 
 Build a testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
 

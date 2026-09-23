@@ -4,12 +4,17 @@ pcx_content_type: tutorial
 difficulty: Beginner
 sidebar:
   order: 4
-description: Deploy a Devin Outpost that runs each Devin session in an isolated Cloudflare container.
+description: Deploy a Devin Outpost that runs each Devin session in a Sandbox SDK 0.x container.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Run Devin Outposts on Cloudflare (Sandbox SDK 0.x)"
 ---
 
-import { PackageManagers, Steps } from "~/components";
+import { PackageManagers, Steps, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/coding-agents/", title: "Run coding agents in a sandbox" }} />
 
 Run [Devin agents](https://docs.devin.ai/onboard-devin/outposts) on Cloudflare. Each Devin session runs in its own isolated sandbox backed by Cloudflare Containers.
 

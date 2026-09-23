@@ -1,14 +1,19 @@
 ---
 title: Code interpreter
-description: Execute Python, JavaScript, and TypeScript code with rich output formats in Sandbox SDK.
+description: Execute Python, JavaScript, and TypeScript code with rich output formats in Sandbox SDK 0.x.
 pcx_content_type: concept
 sidebar:
   order: 4
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Code interpreter (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Execute Python, JavaScript, and TypeScript code with support for data visualizations, tables, and rich output formats. Contexts maintain state (variables, imports, functions) across executions.
 

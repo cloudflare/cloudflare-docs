@@ -3,12 +3,17 @@ title: Terminal
 pcx_content_type: concept
 sidebar:
   order: 7
-description: Connect browser-based terminal UIs to sandbox shells via WebSocket.
+description: Connect browser-based terminal UIs to Sandbox SDK 0.x shells over WebSocket.
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Terminal (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/how-to/open-a-terminal-in-the-browser/", title: "Open a terminal in the browser" }} />
 
 Connect browser-based terminal UIs to sandbox shells via WebSocket. The server-side `terminal()` method proxies WebSocket connections to the container, and the client-side `SandboxAddon` integrates with xterm.js for terminal rendering.
 

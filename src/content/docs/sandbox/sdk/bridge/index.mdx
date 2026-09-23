@@ -3,7 +3,7 @@ title: Sandbox bridge
 pcx_content_type: reference
 sidebar:
   order: 8
-description: Deploy the sandbox bridge Worker to control Cloudflare Sandboxes over HTTP from any language or platform.
+description: Deploy the Sandbox SDK 0.x bridge Worker to control sandboxes over HTTP from any language or platform.
 tags:
   - Python
   - Node.js
@@ -11,9 +11,14 @@ tags:
 reviewed: 2026-04-13
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Sandbox bridge (Sandbox SDK 0.x)"
 ---
 
-import { Details, Tabs, TabItem } from "~/components";
+import { Details, Tabs, TabItem, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 The sandbox bridge is a reference-implementation Cloudflare Worker that exposes the [Sandbox SDK](/sandbox/sdk/api/) as an HTTP API. Any HTTP client — Python script, Node.js service, CI pipeline — can create and control sandboxes without writing a Worker. You deploy the Worker in **your** account; it is not a Cloudflare-hosted shared API.
 

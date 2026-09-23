@@ -1,14 +1,19 @@
 ---
 title: API reference
-description: Sandbox SDK API for executing code, managing files, running processes, and exposing services.
+description: Sandbox SDK 0.x API for executing code, managing files, running processes, and exposing services.
 pcx_content_type: navigation
 sidebar:
   order: 6
 products:
   - sandbox
+head:
+  - tag: title
+    content: "API reference (Sandbox SDK 0.x)"
 ---
 
-import { LinkTitleCard, CardGrid } from "~/components";
+import { LinkTitleCard, CardGrid, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes.
 

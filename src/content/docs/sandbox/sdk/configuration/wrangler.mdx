@@ -1,6 +1,6 @@
 ---
 title: Wrangler configuration
-description: Set up Wrangler bindings, Durable Objects, and container settings for Sandbox SDK.
+description: Set up Wrangler bindings, Durable Objects, and container settings for Sandbox SDK 0.x.
 pcx_content_type: configuration
 sidebar:
   order: 1
@@ -8,9 +8,14 @@ products:
   - sandbox
   - durable-objects
   - containers
+head:
+  - tag: title
+    content: "Wrangler configuration (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 ## Minimal configuration
 

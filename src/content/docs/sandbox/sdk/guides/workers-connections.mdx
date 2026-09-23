@@ -3,15 +3,20 @@ title: Connect to Workers bindings
 pcx_content_type: how-to
 sidebar:
   order: 17
-description: Access KV, R2, Durable Objects, and other bindings from a sandbox.
+description: Access KV, R2, Durable Objects, and other bindings from a Sandbox SDK 0.x sandbox.
 products:
   - sandbox
   - kv
   - r2
   - durable-objects
+head:
+  - tag: title
+    content: "Connect to Workers bindings (Sandbox SDK 0.x)"
 ---
 
-import { TypeScriptExample } from "~/components";
+import { TypeScriptExample, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Sandboxes can access [Workers bindings](/workers/runtime-apis/bindings/) — KV, R2, D1, Durable Objects, and others — through [outbound handlers](/sandbox/sdk/guides/outbound-traffic/#define-outbound-handlers). An outbound handler intercepts HTTP requests from the sandbox and runs inside the Workers runtime, where all of your configured bindings are available.
 

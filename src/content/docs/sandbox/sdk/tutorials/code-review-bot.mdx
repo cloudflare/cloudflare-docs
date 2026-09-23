@@ -4,13 +4,18 @@ pcx_content_type: tutorial
 difficulty: Advanced
 sidebar:
   order: 3
-description: Clone repositories, analyze code with Claude, and post review comments to GitHub PRs.
+description: Clone repositories, analyze code with Claude, and post review comments to GitHub pull requests with the Sandbox SDK 0.x.
 reviewed: 2025-10-15
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Build a code review bot (Sandbox SDK 0.x)"
 ---
 
 import { Render, PackageManagers } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/coding-agents/", title: "Run coding agents in a sandbox" }} />
 
 Build a GitHub bot that responds to pull requests, clones the repository in a sandbox, uses Claude to analyze code changes, and posts review comments.
 

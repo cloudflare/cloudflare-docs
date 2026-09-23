@@ -1,14 +1,19 @@
 ---
 title: Limits
-description: Resource limits for Sandbox SDK including vCPU, memory, disk, and container constraints.
+description: Resource limits for Sandbox SDK 0.x including vCPU, memory, disk, and container constraints.
 pcx_content_type: reference
 sidebar:
   order: 2
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Limits (Sandbox SDK 0.x)"
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Since the Sandbox SDK is built on top of the [Containers](/containers/) platform, it shares the same underlying platform characteristics. Refer to these pages to understand how pricing and limits work for your sandbox deployments.
 

@@ -1,12 +1,19 @@
 ---
 title: Container runtime
-description: Sandbox SDK containers run isolated Linux environments with Python, Node.js, and common dev tools.
+description: Sandbox SDK 0.x containers run isolated Linux environments with Python, Node.js, and common dev tools.
 pcx_content_type: concept
 sidebar:
   order: 3
 products:
   - sandbox
+head:
+  - tag: title
+    content: "Container runtime (Sandbox SDK 0.x)"
 ---
+
+import { Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/", title: "Sandboxes" }} />
 
 Each sandbox runs in an isolated Linux container with Python, Node.js, and common development tools pre-installed. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/sdk/configuration/dockerfile/).
 
