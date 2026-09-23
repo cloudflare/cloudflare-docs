@@ -57,7 +57,7 @@ The configuration uses three sections:
 2. **`durable_objects.bindings`** makes the Durable Object namespace available to Worker code. In this example, access it through `env.MY_CONTAINER`.
 3. **`migrations`** creates the SQLite-backed Durable Object class. Use `new_sqlite_classes`, not `new_classes`, for a Container.
 
-The `class_name` in all three sections must match the exported Durable Object class in your Worker.
+The `class_name` in `containers` and `durable_objects.bindings`, and the class listed in `migrations.new_sqlite_classes`, must match the exported Durable Object class in your Worker.
 
 ## Container settings
 

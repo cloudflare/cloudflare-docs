@@ -11,7 +11,7 @@ products:
   - r2
 ---
 
-import { Details, TabItem, Tabs, TypeScriptExample } from "~/components";
+import { Details, TypeScriptExample, WranglerConfig } from "~/components";
 
 FUSE (Filesystem in Userspace) allows you to mount [R2 buckets](/r2/) as filesystems within Containers. Applications can then interact with R2 using standard filesystem operations rather than object storage APIs.
 
@@ -39,20 +39,21 @@ To mount an R2 bucket, install a FUSE adapter in your Dockerfile and configure i
 This example uses [tigrisfs](https://github.com/tigrisdata/tigrisfs), which supports S3-compatible storage including R2:
 
 <Details header="Dockerfile">
+
 ```dockerfile
 FROM alpine:3.20
 
 # Install FUSE and dependencies
-RUN apk add --no-cache \ 
+RUN apk add --no-cache \
     --repository http://dl-cdn.alpinelinux.org/alpine/v3.20/main \
     ca-certificates fuse curl bash
 
-# Install tigrisfs
+# Install the tested tigrisfs release
+ARG TIGRISFS_VERSION=v1.2.2
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then ARCH="amd64"; fi && \
     if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
-    VERSION=$(curl -s https://api.github.com/repos/tigrisdata/tigrisfs/releases/latest | grep -o '"tag_name": "[^"]*' | cut -d'"' -f4) && \
-    curl -L "https://github.com/tigrisdata/tigrisfs/releases/download/${VERSION}/tigrisfs_${VERSION#v}_linux_${ARCH}.tar.gz" -o /tmp/tigrisfs.tar.gz && \
+    curl -fL "https://github.com/tigrisdata/tigrisfs/releases/download/${TIGRISFS_VERSION}/tigrisfs_${TIGRISFS_VERSION#v}_linux_${ARCH}.tar.gz" -o /tmp/tigrisfs.tar.gz && \
     tar -xzf /tmp/tigrisfs.tar.gz -C /usr/local/bin/ && \
     rm /tmp/tigrisfs.tar.gz && \
     chmod +x /usr/local/bin/tigrisfs
@@ -61,12 +62,26 @@ RUN ARCH=$(uname -m) && \
 RUN printf '#!/bin/sh\n\
     set -e\n\
     \n\
+    : "${R2_ACCOUNT_ID:?R2_ACCOUNT_ID is required}"\n\
+    : "${R2_BUCKET_NAME:?R2_BUCKET_NAME is required}"\n\
+    : "${AWS_ACCESS_KEY_ID:?AWS_ACCESS_KEY_ID is required}"\n\
+    : "${AWS_SECRET_ACCESS_KEY:?AWS_SECRET_ACCESS_KEY is required}"\n\
+    \n\
     mkdir -p /mnt/r2\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
     echo "Mounting bucket ${R2_BUCKET_NAME}..."\n\
     /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
-    sleep 3\n\
+    mount_pid=$!\n\
+    attempts=0\n\
+    until mountpoint -q /mnt/r2; do\n\
+        if ! kill -0 "$mount_pid" 2>/dev/null || [ "$attempts" -ge 30 ]; then\n\
+            echo "R2 mount failed" >&2\n\
+            exit 1\n\
+        fi\n\
+        attempts=$((attempts + 1))\n\
+        sleep 1\n\
+    done\n\
     \n\
     echo "Contents of mounted bucket:"\n\
     ls -lah /mnt/r2\n\
@@ -75,24 +90,22 @@ RUN printf '#!/bin/sh\n\
 EXPOSE 8080
 CMD ["/startup.sh"]
 ```
+
 </Details>
 
-The startup script creates a mount point, starts tigrisfs in the background to mount the bucket, and then lists the mounted directory contents.
+The startup script checks the required credentials, starts tigrisfs, and waits for the mount to be ready before listing the mounted directory. It exits with an error if mounting fails.
 
 ### Passing credentials to the container
 
 Your Container needs [R2 credentials](/r2/api/tokens/) and configuration passed as environment variables. Store credentials as [Worker secrets](/workers/configuration/secrets/), then pass them when the Container starts.
 
-<Tabs>
-	<TabItem label="Durable Object Container API">
-
 <TypeScriptExample filename="src/index.ts">
+
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
 interface Env {
 	FUSE_DEMO: DurableObjectNamespace<FUSEDemo>;
-	FUSE_IMAGE: string;
 	AWS_ACCESS_KEY_ID: string;
 	AWS_SECRET_ACCESS_KEY: string;
 	R2_BUCKET_NAME: string;
@@ -116,7 +129,6 @@ export class FUSEDemo extends DurableObject<Env> {
 		}
 
 		container.start({
-			image: this.env.FUSE_IMAGE,
 			enableInternet: true,
 			env: {
 				AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
@@ -137,53 +149,43 @@ export default {
 	},
 };
 ```
+
 </TypeScriptExample>
 
-	</TabItem>
-	<TabItem label="Container class">
+This is a one-shot task: the Worker waits for the mount-and-list process to exit. A long-running service that keeps the mount available can instead use the [`Container` class](/containers/api/container-class/), but it must also provide the listening port that the class checks during startup.
 
-<TypeScriptExample filename="src/index.ts">
-```ts
-import { Container } from "@cloudflare/containers";
-
-interface Env {
-	FUSE_DEMO: DurableObjectNamespace<FUSEDemo>;
-	AWS_ACCESS_KEY_ID: string;
-	AWS_SECRET_ACCESS_KEY: string;
-	R2_BUCKET_NAME: string;
-	R2_ACCOUNT_ID: string;
-}
-
-export class FUSEDemo extends Container<Env> {
-	defaultPort = 8080;
-	sleepAfter = "10m";
-	envVars = {
-		AWS_ACCESS_KEY_ID: this.env.AWS_ACCESS_KEY_ID,
-		AWS_SECRET_ACCESS_KEY: this.env.AWS_SECRET_ACCESS_KEY,
-		R2_BUCKET_NAME: this.env.R2_BUCKET_NAME,
-		R2_ACCOUNT_ID: this.env.R2_ACCOUNT_ID,
-	};
-}
-```
-</TypeScriptExample>
-
-	</TabItem>
-</Tabs>
-
-The `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` should be stored as secrets, while `R2_BUCKET_NAME` and `R2_ACCOUNT_ID` can be configured as variables in your `wrangler.jsonc`:
+Store `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` as secrets. Configure `R2_BUCKET_NAME` and `R2_ACCOUNT_ID` as variables in `wrangler.jsonc`. The container uses the image from this Wrangler configuration:
 
 :::note[Creating your R2 AWS API keys]
 To get your `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`, [head to your R2 dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) and create a new R2 Access API key. Use the generated the `Access Key ID` as your `AWS_ACCESS_KEY_ID` and `Secret Access Key` is the `AWS_SECRET_ACCESS_KEY`.
 :::
-```json
+
+<WranglerConfig>
+
+```jsonc
 {
-  "vars": {
-	"FUSE_IMAGE": "registry.cloudflare.com/<ACCOUNT_ID>/r2-fuse:latest",
-	"R2_BUCKET_NAME": "my-bucket",
-	"R2_ACCOUNT_ID": "your-account-id"
-  }
+	"name": "r2-fuse-demo",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"containers": [
+		{
+			"class_name": "FUSEDemo",
+			"image": "./Dockerfile",
+			"max_instances": 1,
+		},
+	],
+	"durable_objects": {
+		"bindings": [{ "name": "FUSE_DEMO", "class_name": "FUSEDemo" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["FUSEDemo"] }],
+	"vars": {
+		"R2_BUCKET_NAME": "my-bucket",
+		"R2_ACCOUNT_ID": "your-account-id",
+	},
 }
 ```
+
+</WranglerConfig>
 
 ### Other S3-compatible storage providers
 
@@ -203,7 +205,13 @@ RUN printf '#!/bin/sh\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
     /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
-    sleep 3\n\
+    mount_pid=$!\n\
+    attempts=0\n\
+    until mountpoint -q /mnt/r2; do\n\
+        if ! kill -0 "$mount_pid" 2>/dev/null || [ "$attempts" -ge 30 ]; then exit 1; fi\n\
+        attempts=$((attempts + 1))\n\
+        sleep 1\n\
+    done\n\
     \n\
     echo "Accessing prefix: ${BUCKET_PREFIX}"\n\
     ls -lah "/mnt/r2/${BUCKET_PREFIX}"\n\
@@ -224,7 +232,13 @@ RUN printf '#!/bin/sh\n\
     \n\
     R2_ENDPOINT="https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com"\n\
     /usr/local/bin/tigrisfs --endpoint "${R2_ENDPOINT}" -o ro -f "${R2_BUCKET_NAME}" /mnt/r2 &\n\
-    sleep 3\n\
+    mount_pid=$!\n\
+    attempts=0\n\
+    until mountpoint -q /mnt/r2; do\n\
+        if ! kill -0 "$mount_pid" 2>/dev/null || [ "$attempts" -ge 30 ]; then exit 1; fi\n\
+        attempts=$((attempts + 1))\n\
+        sleep 1\n\
+    done\n\
     \n\
     ls -lah /mnt/r2\n\
     ' > /startup.sh && chmod +x /startup.sh
