@@ -50,6 +50,18 @@ When Cloudflare stops an instance, the main process receives `SIGTERM` and must 
 
 After an instance stops, the next request that calls `start()` starts a new instance.
 
+## Deploys keep instances running
+
+Deploying a new version of your Worker restarts every Durable Object. A running Linux instance keeps running, and the next request reaches the same instance, with its files and processes. Outbound handlers that the Durable Object set up with [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) remain in place and run the code of the new version.
+
+A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. To move a sandbox to the new image, call `destroy()` and start the instance again. Its files and processes end with the old instance.
+
+Requests, streamed responses, and WebSockets that the previous version was handling end during the deploy. A browser terminal disconnects and must connect again.
+
+After the previous version stops, the instance keeps running for the inactivity timeout that version set. If no request arrives within that time, the instance stops. The new version does not have the timeout, so it sets the timeout again on the next request, as the sandbox examples do.
+
+Container [rollouts](/containers/configuration/rollouts/) replace instances only in Container applications that do not use `scheduling_policy: "durable_object"`, so no rollout replaces a sandbox.
+
 ## Files and processes end with the instance
 
 An instance's disk holds the repository, installed packages, configuration files, and output written by commands. Its memory holds running processes, open terminals, and network connections. All of it ends when the instance stops. The next instance starts from its image, or from a snapshot.
