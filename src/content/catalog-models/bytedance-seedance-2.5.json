@@ -207,7 +207,7 @@
 				"prompt": {
 					"description": "Text prompt describing the video to generate. Optional when at least one reference image, video, or audio clip is provided (Seedance 2.5 supports audio-only input).",
 					"type": "string",
-					"maxLength": 25000
+					"maxLength": 2000
 				},
 				"image": {
 					"description": "First-frame reference image (HTTP(S) URL or base64 data URI) for image-to-video",
