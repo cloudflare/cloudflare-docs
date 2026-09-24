@@ -1,0 +1,45 @@
+---
+title: Declare Workflows in the `exports` configuration
+description: Declare the Workflows a Worker defines in the `exports` field of your Wrangler configuration, without adding a binding.
+products:
+  - workflows
+  - workers
+date: 2026-09-24
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now declare the Workflows a Worker defines in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of your Wrangler configuration file. Previously, a Worker could only define a Workflow through a `workflows` binding, even when the Worker never called the Workflow itself.
+
+Key each entry by the name of the class that extends `WorkflowEntrypoint`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "my-workflow",
+			"limits": {
+				"steps": 25000,
+			},
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, and `default_retention`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings.
+
+You can declare a Workflow as both a binding and an export. Both declarations must use the same class, and cannot set the same setting to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+Workflow exports require Wrangler 4.139.0 or above.
+
+`wrangler dev` does not run Workflows declared only in `exports`. To develop a Workflow locally, also declare it as a `workflows` binding.
+
+For more information, refer to [Declare Workflows in `exports`](/workflows/build/workers-api/#declare-workflows-in-exports).
