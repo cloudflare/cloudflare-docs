@@ -9,34 +9,76 @@ products:
 
 ## 499 Client Close Request
 
-The `HTTP 499` response code typically occurs when a client terminates the connection before the server is able to respond.
-
-### Common use cases
-
-Examples of `499` response code include situations where a client times out and closes the connection before the server completes processing, such as during large file uploads or long-running requests. They can also occur due to issues in the TCP three-way handshake, where the client terminates the connection prematurely because of its timeout settings.
-
-### Cloudflare-specific information
-
-The `499 Client Closed Request` status code is specific to nginx and indicates that the client closed the connection while the server was still processing the request, preventing the server from sending a status code in response. This status code appears in [Cloudflare Logs](/logs/) and status code analytics for Enterprise customers.
+The `HTTP 499` response code is an nginx-specific status code that indicates a client closed the connection before the server finished processing the request. Because Cloudflare is built on nginx, 499 appears in [Cloudflare Logs](/logs/) and analytics whenever this happens. A 499 is never sent in an HTTP response — it only appears in logs.
 
 :::note
-Since Cloudflare is built on nginx, the 499 HTTP code is also logged in Cloudflare Logs and analytics for connections terminated by clients before Cloudflare has finished processing the request. It is expected to occasionally see these entries in your logs as clients close connections.
+A small number of 499 errors is normal. Clients routinely cancel requests due to page navigation, app backgrounding, or browser tab closure. Only investigate when 499 errors spike, persist at a specific Cloudflare data center, or affect a latency-sensitive endpoint.
 :::
 
-To provide more context, a TCP connection must be established between Cloudflare and the website's origin server before any higher protocol (such as HTTP) begins communication. TCP uses a three-way handshake to establish connection:
+### Common causes
 
-- **SYN**: Cloudflare sends a SYN packet to the origin server.
-- **SYN+ACK**: The origin server responds with a SYN+ACK packet.
-- **ACK**: Cloudflare sends an ACK packet back to the origin server.
+499 errors have three distinct causes that require different responses:
 
-At this point, the connection is established, and both Cloudflare and the origin server can communicate. However, if the origin server does not send a SYN+ACK back to Cloudflare within 19 seconds, Cloudflare retries once more, with another 15-second timeout.
+| Cause | What you observe | What to do |
+|---|---|---|
+| **Client timeout or cancellation** | Low, steady 499 rate; `OriginIP` present in logs; no TTFB spike | Expected behavior. Review client timeout settings only if the rate is unexpectedly high. |
+| **Origin too slow — client aborts** | 499 spike correlates with a TTFB spike; `OriginIP` present in logs | Investigate origin performance. Use [Origin Analytics](/speed/origin-analytics/) to find slow endpoints. |
+| **Cloudflare-side stall** | 499 spike with `OriginIP` absent from logs; errors often concentrated in one data center | Contact Cloudflare Support with affected Ray IDs and the data center name. |
 
-Depending on the client-side timeout settings, the following scenarios can occur:
+### How to identify the cause
 
-- **Shorter client timeout (less than 38 seconds)**: If the client has a shorter timeout, it will abandon the connection before Cloudflare completes processing, and a `499` response code will be logged.
-- **Successful connection (more than 38 seconds)**: If the client has a longer timeout and the TCP connection is successfully established, the HTTP transaction proceeds normally, and Cloudflare returns a standard status code (`HTTP 200`).
-- **Handshake failure**: If the client has a longer timeout but Cloudflare cannot establish the TCP handshake with the origin server, Cloudflare will return an `HTTP 522` status code.
+Use [Instant Logs](/logs/instant-logs/) or [Logpush](/logs/logpush/) to inspect 499 requests and check the `OriginIP` field:
 
-### Diagnose with Origin Analytics
+- **`OriginIP` is present**: Cloudflare reached your origin. The client timed out either because the origin responded too slowly or because the client's timeout is shorter than expected.
+- **`OriginIP` is absent**: Cloudflare did not reach your origin. The stall occurred inside Cloudflare's network — this is not a client configuration issue. Contact Cloudflare Support.
 
-Use [Origin Analytics](/speed/origin-analytics/) to check whether slow origin response times are causing clients to close connections prematurely. If P95 origin response times are high, identify the slow endpoints in the **Top endpoints** table and optimize them to reduce `499` errors.
+To narrow the cause when `OriginIP` is present:
+
+1. In [Origin Analytics](/speed/origin-analytics/), check P95 origin response time for the affected endpoint. A spike indicates origin slowness.
+2. In Cloudflare Logs, filter on `EdgeResponseStatus = 499` and group by `EdgeColoCode`. If 499 errors concentrate in one data center (for example, `HKG` or `AMS`), the issue may be infrastructure-related. Contact Cloudflare Support with the data center name and the affected time window.
+
+### TCP connection timing
+
+Cloudflare sends a SYN packet to your origin and waits 19 seconds for a SYN+ACK response. If no response arrives, Cloudflare retries with a 15-second timeout.
+
+Depending on your client's timeout setting:
+
+- **Shorter than 38 seconds**: Your client abandons the connection before Cloudflare completes the handshake, logging a 499.
+- **Longer than 38 seconds, handshake succeeds**: The request proceeds normally.
+- **Longer than 38 seconds, handshake fails**: Cloudflare returns an [Error 522](/support/troubleshooting/http-status-codes/5xx-server-error/error-522/) instead.
+
+### Streaming and media clients
+
+Media players — such as HLS players, DASH clients, and Android ExoPlayer — have strict, often non-configurable timeouts of 5–10 seconds. A 499 spike in a streaming context almost always means first-byte delivery exceeded the player's deadline, not that clients are disconnecting randomly.
+
+To investigate 499 errors in streaming:
+
+1. Check whether the cache hit rate dropped for the affected paths. A lower hit rate forces origin fetches that may exceed the player's timeout.
+2. In Cloudflare Logs, check `EdgeColoCode` for the 499 requests. If errors concentrate in a specific data center, contact Cloudflare Support.
+3. If the cache hit rate is normal but 499 errors persist, review your [Tiered Cache](/cache/how-to/enable-tiered-cache/) settings to reduce origin latency for cache misses.
+
+### Non-idempotent requests
+
+When a 499 occurs on a `POST`, `PATCH`, or `DELETE` request, the connection closed before Cloudflare received a response status from your origin. Cloudflare does not retry these requests, so the request state is ambiguous — your origin may or may not have processed it.
+
+If your application performs payments, financial transactions, or other state-changing operations:
+
+- Implement idempotency keys so you can safely retry ambiguous requests.
+- Check your origin server logs to confirm whether the request was processed before the connection closed.
+
+### When to contact Cloudflare Support
+
+Contact support when:
+
+- 499 errors spike suddenly across multiple endpoints without a corresponding increase in origin response time.
+- `OriginIP` is absent from Cloudflare Logs for the affected requests.
+- 499 errors concentrate in one data center, or you can confirm that multiple zones experienced the same spike at the same time.
+
+When you contact support, include:
+
+- The affected hostname and zone ID
+- The UTC time window (start and end)
+- 10–20 Ray IDs from the 499 responses
+- Whether `OriginIP` is present or absent in your logs for those requests
+- Whether other zones or hostnames experienced the same spike simultaneously
+- For Enterprise customers: a [Logpush](/logs/logpush/) export filtered to `EdgeResponseStatus = 499`
