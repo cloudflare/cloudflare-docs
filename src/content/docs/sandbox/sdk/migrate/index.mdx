@@ -1,0 +1,39 @@
+---
+title: Migrate from Sandbox SDK 0.x
+description: Move an application from the Sandbox class in @cloudflare/sandbox 0.12 to a Durable Object that starts its own container and uses @cloudflare/sandbox 1.0.
+pcx_content_type: navigation
+sidebar:
+  order: 1
+  label: Overview
+  group:
+    label: Migrate to 1.0
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { DirectoryListing } from "~/components";
+
+`@cloudflare/sandbox` 0.12 gives you a `Sandbox` Durable Object class that owns the container and runs commands for you. In 1.0, your own Durable Object starts the container through `this.ctx.container` and runs commands with [`exec()`](/durable-objects/api/container/#exec). [`@cloudflare/sandbox`](/sandbox/reference/) 1.0 works with a container you start from a Durable Object. This guide uses its `Files` and `S3Mounts` classes where 0.12 had methods for files and bucket mounts.
+
+## What changes
+
+Moving to 1.0 changes these behaviors:
+
+- 0.12 started the container on the first call to a sandbox. In 1.0, your Durable Object starts it with `start()`.
+- `exec()` takes an array of arguments and starts one process without a shell. A `cd` or `export` in one call does not carry over to the next call.
+- A container has no Internet access unless `start()` passes `enableInternet: true`. 0.12 allowed Internet access by default.
+- The package has no timeouts. Pass an `AbortSignal` to stop an operation.
+- You choose the container image. `Files` and `S3Mounts` need the `sandbox-shim` helper in it.
+- Files in containers that 0.12 started do not carry over. Copy the files you need before you deploy.
+- Preview URLs, background processes, terminals, backups, and outbound rules become code in your Worker. The page for each feature shows that code.
+- `runCode()` and code contexts have no replacement in the package. Run JavaScript in a [Dynamic Worker](/dynamic-workers/), or run an interpreter such as `python3` with `exec()`.
+
+## Migrate
+
+Start with [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/), which every application needs. Then follow the pages for the features your application uses.
+
+<DirectoryListing />
+
+To stay on 0.x and stop using its deprecated features, refer to the [2026 deprecation migration guide](/sandbox/sdk/guides/2026-deprecation/).
