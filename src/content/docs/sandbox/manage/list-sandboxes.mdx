@@ -1,0 +1,234 @@
+---
+title: List a user's sandboxes
+description: Record each user's Linux sandboxes in a Durable Object, and report which of them are running.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+List the sandboxes that belong to one user, for example to show their open sessions. Your Worker records each sandbox in a registry, one Durable Object for each user, when the sandbox first runs a command. To report which sandboxes are running, the Worker asks the Durable Object of each sandbox, which knows whether its container is running.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+## List the sandboxes
+
+<Steps>
+
+1. In `wrangler.jsonc`, add a Durable Object class for the registry and a migration that creates it:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"class_name": "MyContainer",
+   				"name": "MY_CONTAINER",
+   			},
+   			{
+   				"class_name": "SandboxDirectory",
+   				"name": "SANDBOX_DIRECTORY",
+   			},
+   		],
+   	},
+   	"migrations": [
+   		{
+   			"new_sqlite_classes": ["MyContainer"],
+   			"tag": "v1",
+   		},
+   		{
+   			"new_sqlite_classes": ["SandboxDirectory"],
+   			"tag": "v2",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+2. Add the registry class to your Worker. Each user gets one `SandboxDirectory`, which stores the user's sandbox sessions in SQLite:
+
+   ```ts title="src/index.ts"
+   export class SandboxDirectory extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		ctx.storage.sql.exec(
+   			"CREATE TABLE IF NOT EXISTS sandboxes (session TEXT PRIMARY KEY, created_at INTEGER NOT NULL)",
+   		);
+   	}
+
+   	add(session: string) {
+   		this.ctx.storage.sql.exec(
+   			"INSERT OR IGNORE INTO sandboxes (session, created_at) VALUES (?, ?)",
+   			session,
+   			Date.now(),
+   		);
+   	}
+
+   	remove(session: string) {
+   		this.ctx.storage.sql.exec("DELETE FROM sandboxes WHERE session = ?", session);
+   	}
+
+   	list() {
+   		return this.ctx.storage.sql
+   			.exec<{ session: string }>("SELECT session FROM sandboxes ORDER BY created_at")
+   			.toArray()
+   			.map((row) => row.session);
+   	}
+   }
+   ```
+
+   `INSERT OR IGNORE` keeps the time of the first command when the same session runs again.
+
+3. In `MyContainer`, set an inactivity timeout whenever the Durable Object uses the container, and add methods that report and stop the container. Define the timeout at the top of the file:
+
+   ```ts title="src/index.ts"
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+   ```
+
+   In `exec()`, set the timeout after the `start()` block:
+
+   ```ts title="src/index.ts"
+   await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   ```
+
+   Then add the two methods to `MyContainer`:
+
+   ```ts title="src/index.ts"
+   async isRunning() {
+   	const container = this.ctx.container;
+   	if (!container?.running) {
+   		return false;
+   	}
+   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	return true;
+   }
+
+   async destroy() {
+   	await this.ctx.container?.destroy();
+   }
+   ```
+
+   `running` reports whether the container is running, and reading it does not start the container. A Durable Object that listing wakes no longer has the inactivity timeout that `exec()` set, so `isRunning()` sets it again. Without that call, the sandbox stops shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
+
+4. Replace the `fetch` handler. It names each sandbox `<OWNER>/<SESSION>`, records the session before running a command, lists the sessions with their state, and removes a session after stopping its container:
+
+   ```ts title="src/index.ts"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const [, users, owner, sandboxes, session] = url.pathname.split("/");
+
+   		if (users !== "users" || !owner || sandboxes !== "sandboxes") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const directory = env.SANDBOX_DIRECTORY.getByName(owner);
+
+   		if (request.method === "GET" && !session) {
+   			const sessions = await directory.list();
+   			const list = await Promise.all(
+   				sessions.map(async (name) => ({
+   					session: name,
+   					running: await env.MY_CONTAINER.getByName(`${owner}/${name}`).isRunning(),
+   				})),
+   			);
+   			return Response.json(list);
+   		}
+
+   		if (!session) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(`${owner}/${session}`);
+
+   		if (request.method === "POST") {
+   			const { argv } = (await request.json()) as { argv: string[] };
+   			await directory.add(session);
+   			return Response.json(await sandbox.exec(argv));
+   		}
+
+   		if (request.method === "DELETE") {
+   			await sandbox.destroy();
+   			await directory.remove(session);
+   			return new Response(null, { status: 204 });
+   		}
+
+   		return new Response("Not found", { status: 404 });
+   	},
+   };
+   ```
+
+   Listing calls the Durable Object of every session in parallel. A sandbox whose container stopped stays in the list with `running: false` until the Worker removes its session.
+
+   Authenticate callers first, and derive the owner from their identity rather than from the URL. Otherwise anyone can list, use, or stop another user's sandboxes. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+
+5. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+6. Start two sandboxes for the user `ada`, on the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/users/ada/sandboxes/notes --request POST --json '{"argv":["uname","-s"]}'
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/users/ada/sandboxes/tests --request POST --json '{"argv":["uname","-s"]}'
+   ```
+
+7. List them:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/users/ada/sandboxes
+   ```
+
+   ```json output
+   [
+   	{ "session": "notes", "running": true },
+   	{ "session": "tests", "running": true }
+   ]
+   ```
+
+8. Stop one of them, and list again:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/users/ada/sandboxes/tests --request DELETE
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/users/ada/sandboxes
+   ```
+
+   ```json output
+   [{ "session": "notes", "running": true }]
+   ```
+
+</Steps>
+
+## List sandboxes across the account
+
+The registry lists only the sandboxes that your Worker recorded. To see every Linux sandbox that a Container application started, including sandboxes that failed or that the registry missed, use the Containers API. Its list of instances returns the name passed to `getByName()` and the state of each sandbox:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/containers/applications/<APPLICATION_ID>/instances?name_prefix=ada/" \
+	--header "Authorization: Bearer <API_TOKEN>"
+```
+
+- The application ID appears in `wrangler containers list`. The application is named after the Worker and the Durable Object class, such as `sandbox-linux-mycontainer`.
+- The [API token](/fundamentals/api/get-started/create-token/) needs the **Containers Read** permission, which covers every Container application in the account. Use it for administration and cleanup, not in routes that users call.
+- `name_prefix` filters by the start of the name, and `state=active` returns only sandboxes that are starting, running, or stopping. Stopped sandboxes stay in the list.
+- A new sandbox can take a few seconds to appear, and sandboxes that run under `wrangler dev` do not appear.
+
+## Related resources
+
+- [Sandbox lifetime](/sandbox/lifetime/): what keeps a sandbox running, and what stops it.
+- [`destroy()`](/durable-objects/api/container/#destroy)
+- [SQLite storage API](/durable-objects/api/sqlite-storage-api/)
