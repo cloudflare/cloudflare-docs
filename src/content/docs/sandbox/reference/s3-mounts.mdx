@@ -202,7 +202,7 @@ A mounted directory maps files to objects in the bucket. It does not behave like
 - Renaming a file copies the object and deletes the original.
 - File locks, hard links, ownership, permissions, and atomic replacement do not work as they do on a local filesystem.
 - Directories come from object key prefixes.
-- `s3fs` caches file metadata for 900 seconds by default, and it remembers for the same time that a file does not exist. A file that another client adds to the bucket or changes can take that long to appear in the container. To shorten the wait, set a lower `stat_cache_expire` in `s3fsOptions`, or set `disable_noobj_cache: true`.
+- `s3fs` caches file metadata for 900 seconds by default, and it remembers for the same time that a file does not exist. Until the cache expires, a file that another client adds to the bucket can stay missing in the container. A file that another client changes can keep its old size, and a read can return the new content cut to that size. To shorten the wait, set a lower `stat_cache_expire` in `s3fsOptions`. To stop caching missing files, set `disable_noobj_cache: true`.
 - An interrupted write can leave an incomplete upload in the bucket.
 - A [snapshot](/durable-objects/api/container/#snapshotcontainer) does not include mounted directories.
 
