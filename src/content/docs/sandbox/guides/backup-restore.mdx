@@ -173,7 +173,7 @@ const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 const checkpoint = await sandbox.createBackup({ dir: "/workspace" });
 
 try {
-	await sandbox.exec("npm install <your-package>");
+	await sandbox.exec("npm install <some-experimental-package>");
 	await sandbox.exec("npm run build");
 } catch (error) {
 	await sandbox.restoreBackup(checkpoint);
