@@ -50,6 +50,8 @@ When Cloudflare stops an instance, the main process receives `SIGTERM` and must 
 
 After an instance stops, the next request that calls `start()` starts a new instance.
 
+Cloudflare does not wake the Durable Object when its instance stops. To record each stop and its reason, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+
 ## Deploys keep instances running
 
 Deploying a new version of your Worker restarts every Durable Object. A running Linux instance keeps running, and the next request reaches the same instance, with its files and processes. Outbound handlers that the Durable Object set up with [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) remain in place and run the code of the new version.

@@ -1,0 +1,230 @@
+---
+title: Run code when a sandbox stops
+description: Record when and why a Linux sandbox stops, including stops that happen while no requests arrive.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+Run your own code when a sandbox stops, for example to update your records, notify the user, or release resources. The runtime does not wake a Durable Object when its container stops. Instead, [`monitor()`](/durable-objects/api/container/#monitor) reports the stop while the Durable Object is in memory, and a check on every request and alarm catches a stop that happened while it was not. An alarm that runs every minute also lets the Durable Object stop idle sandboxes itself, so it knows why each sandbox stopped.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+## Record each stop
+
+<Steps>
+
+1. At the top of `src/index.ts`, define how often the Durable Object checks the sandbox, how long a sandbox can go without requests, and the record it keeps:
+
+   ```ts title="src/index.ts"
+   const CHECK_INTERVAL_MS = 60 * 1000;
+   const IDLE_LIMIT_MS = 10 * 60 * 1000;
+   const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+
+   interface SandboxRecord {
+   	state: "running" | "stopped";
+   	lastActivity: number;
+   	reason?: string;
+   	exitCode?: number | null;
+   	stoppedAt?: number;
+   }
+   ```
+
+   The Durable Object stops a sandbox after `IDLE_LIMIT_MS` without requests. The inactivity timeout is longer than the check interval, so the container keeps running between alarms. If the alarms stop, the timeout still stops the container.
+
+2. In `MyContainer`, add a constructor, a method that watches the container, and a method that records the stop:
+
+   ```ts title="src/index.ts"
+   constructor(ctx: DurableObjectState, env: Env) {
+   	super(ctx, env);
+   	if (ctx.container?.running) {
+   		this.watch();
+   	}
+   }
+
+   watch() {
+   	this.ctx.container?.monitor().then(
+   		() => this.onStop("exited", 0),
+   		(error: unknown) => {
+   			const exitCode = (error as { exitCode?: number }).exitCode;
+   			if (exitCode === undefined) {
+   				return this.onStop(String(error), null);
+   			}
+   			return this.onStop("exited", exitCode);
+   		},
+   	);
+   }
+
+   async onStop(reason: string, exitCode: number | null) {
+   	const record = await this.ctx.storage.get<SandboxRecord>("sandbox");
+   	if (record?.state !== "running") {
+   		return;
+   	}
+
+   	await this.ctx.storage.put<SandboxRecord>("sandbox", {
+   		...record,
+   		state: "stopped",
+   		reason,
+   		exitCode,
+   		stoppedAt: Date.now(),
+   	});
+   	await this.ctx.storage.deleteAlarm();
+   	console.log(JSON.stringify({ event: "sandbox.stopped", reason, exitCode }));
+   }
+   ```
+
+   `monitor()` resolves when the main process exits with code `0`, or when your code calls `destroy()` without a reason. It rejects with an error that has an `exitCode` property when the main process exits with another code, and with the reason passed to `destroy()`. A deploy or an eviction restarts the Durable Object and drops the earlier `monitor()` call, so the constructor calls it again when the container is still running. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
+
+3. Add a method that records a stop that `monitor()` missed:
+
+   ```ts title="src/index.ts"
+   async reconcile() {
+   	const record = await this.ctx.storage.get<SandboxRecord>("sandbox");
+   	if (record?.state === "running" && !this.ctx.container?.running) {
+   		await this.onStop("unknown", null);
+   	}
+   }
+   ```
+
+   A stop that happened while the Durable Object was not in memory has no exit code, so its reason is `unknown`.
+
+4. Replace `exec()`. It checks for a missed stop, watches a container it starts, records the activity, and schedules the next check:
+
+   ```ts title="src/index.ts"
+   async exec(argv: string[]) {
+   	const container = this.ctx.container;
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	await this.reconcile();
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
+   		});
+   		this.watch();
+   	}
+   	await this.ctx.storage.put<SandboxRecord>("sandbox", {
+   		state: "running",
+   		lastActivity: Date.now(),
+   	});
+   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
+
+   	const process = await container.exec(argv);
+   	const output = await process.output();
+   	return {
+   		stdout: new TextDecoder().decode(output.stdout),
+   		exitCode: output.exitCode,
+   	};
+   }
+   ```
+
+5. Add an alarm handler that checks the sandbox and stops it when it has been idle too long, and methods that return the record and stop the sandbox:
+
+   ```ts title="src/index.ts"
+   async alarm() {
+   	await this.reconcile();
+   	const record = await this.ctx.storage.get<SandboxRecord>("sandbox");
+   	if (record?.state !== "running") {
+   		return;
+   	}
+
+   	if (Date.now() - record.lastActivity > IDLE_LIMIT_MS) {
+   		await this.ctx.container?.destroy("idle");
+   		return;
+   	}
+   	await this.ctx.container?.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
+   }
+
+   async status() {
+   	return (await this.ctx.storage.get<SandboxRecord>("sandbox")) ?? null;
+   }
+
+   async stop() {
+   	await this.ctx.container?.destroy("stopped");
+   }
+   ```
+
+   The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`. Each alarm also sets the inactivity timeout again, because a Durable Object that restarted between alarms no longer has it.
+
+6. Replace the `fetch` handler, so that `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
+
+   ```ts title="src/index.ts"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+
+   		if (request.method === "GET") {
+   			return Response.json(await sandbox.status());
+   		}
+
+   		if (request.method === "DELETE") {
+   			await sandbox.stop();
+   			return new Response(null, { status: 204 });
+   		}
+
+   		const { argv } = (await request.json()) as { argv: string[] };
+   		return Response.json(await sandbox.exec(argv));
+   	},
+   };
+   ```
+
+   Authenticate callers first, so other people cannot use or stop the sandbox. For more information, refer to [Sandbox security](/sandbox/security/).
+
+7. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+8. Run a command, stop the sandbox, and read the record, on the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --request POST --json '{"argv":["uname","-s"]}'
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --request DELETE
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+   ```
+
+   ```json output
+   {
+   	"state": "stopped",
+   	"lastActivity": 1790270030663,
+   	"reason": "stopped",
+   	"exitCode": null,
+   	"stoppedAt": 1790270031496
+   }
+   ```
+
+   Run another command and send no requests for 10 minutes. The next alarm stops the sandbox, and the record shows `"reason": "idle"`. A deploy while the sandbox runs does not record a stop.
+
+</Steps>
+
+## Reasons in the record
+
+The `reason` field shows how the sandbox stopped:
+
+| Reason              | Meaning                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `exited`            | The main process exited. `exitCode` holds its exit code.                                                                                         |
+| `idle` or `stopped` | Your Durable Object called `destroy()` with this reason.                                                                                         |
+| `unknown`           | The container stopped while the Durable Object was not in memory, and a later request or alarm found it stopped. The exit code is not available. |
+| Any other text      | The error from `monitor()` when the container failed.                                                                                            |
+
+## Related resources
+
+- [Sandbox lifetime](/sandbox/lifetime/): what keeps a sandbox running, and what stops it.
+- [List a user's sandboxes](/sandbox/manage/list-sandboxes/)
+- [`monitor()`](/durable-objects/api/container/#monitor) and [`destroy()`](/durable-objects/api/container/#destroy)
+- [Durable Object alarms](/durable-objects/api/alarms/)
