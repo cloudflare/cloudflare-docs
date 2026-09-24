@@ -195,6 +195,17 @@ Every inspection has `mountPath` and `attachment.status`:
 - `S3Gateway` allows only the object and list operations that `s3fs` uses, within the mount's bucket and prefix. A read-only mount allows no writes. Other requests are rejected.
 - Any process in the container that can reach the mount path can perform every allowed operation on the prefix. Limit the credentials to the bucket and prefix as well.
 
+## Mounted file behavior
+
+A mounted directory maps files to objects in the bucket. It does not behave like a local disk:
+
+- Renaming a file copies the object and deletes the original.
+- File locks, hard links, ownership, permissions, and atomic replacement do not work as they do on a local filesystem.
+- Directories come from object key prefixes.
+- `s3fs` caches file metadata. A change made directly in the bucket can take time to appear in the container.
+- An interrupted write can leave an incomplete upload in the bucket.
+- A [snapshot](/durable-objects/api/container/#snapshotcontainer) does not include mounted directories.
+
 ## Errors
 
 ### `SandboxS3MountError`

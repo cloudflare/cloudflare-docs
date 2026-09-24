@@ -14,7 +14,12 @@ products:
 reviewed: 2026-09-23
 ---
 
-import { DirectoryListing, PackageManagers } from "~/components";
+import {
+	DirectoryListing,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 `@cloudflare/sandbox` works with a container you start from a Durable Object. Its classes run helper processes in the running container through [`exec()`](/durable-objects/api/container/#exec). The package does not start, stop, or monitor the container.
 
@@ -37,7 +42,75 @@ Every class in the package has these requirements. A class page lists any others
 - The Worker has the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag. The package reads Linux error names through `node:os`.
 - The container is running when a method is called.
 
-To build the image from a `Dockerfile`, add it to `images` in the class's Wrangler `containers` entry, and pass the built image to `start()`. Refer to [`images`](/durable-objects/api/container/#images).
+## Set up a project
+
+The how-to guides that use the package add these three pieces to a Worker with a Durable Object that starts a container.
+
+A `Dockerfile` copies the helper into the base image your code needs. This one uses Debian Trixie with Node.js 24 and keeps the container running with `sleep infinity`:
+
+```dockerfile title="Dockerfile"
+FROM node:24-trixie-slim
+
+COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+RUN mkdir /workspace
+CMD ["sleep", "infinity"]
+```
+
+The Wrangler configuration turns on `nodejs_compat` and builds the `Dockerfile` as a named image:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat"],
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"workspace": {
+					"dockerfile": "./Dockerfile",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The Durable Object starts the built image, then passes the container to a class from the package:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Files } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+export class MyContainer extends DurableObject<Env> {
+	async files(): Promise<Files> {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		if (!container.running) {
+			container.start({
+				image: container.images.workspace,
+				enableInternet: false,
+			});
+		}
+
+		await container.setInactivityTimeout(10 * 60 * 1000);
+		return new Files(container);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For more information about building images, refer to [`images`](/durable-objects/api/container/#images).
 
 ## Classes
 

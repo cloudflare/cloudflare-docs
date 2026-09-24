@@ -305,17 +305,9 @@ The sandbox receives placeholder credentials, because `s3fs` requires a key pair
 
 Any process in the sandbox can use the mount. A command that the job runs can read, change, or delete every object under `jobs/<JOB>/`. Mount the narrowest prefix the job needs, and use `access: "read-only"` when it only reads. Limit the R2 API token to the bucket as well. For more information, refer to [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox).
 
-## How mounted files behave
+## Keep working files on the sandbox disk
 
-The mounted directory maps files to R2 objects. It does not behave like a local disk:
-
-- Renaming a file copies the object and deletes the original.
-- File locks, hard links, ownership, permissions, and atomic replacement do not work as they do on a local filesystem.
-- Directories come from object key prefixes.
-- `s3fs` caches file metadata. A change made directly in R2 can take time to appear in the sandbox.
-- An interrupted write can leave an incomplete upload in R2.
-
-Write files that other systems read, such as results, to the mount. Keep working files, such as dependencies and build output, on the sandbox's own disk.
+The mounted directory maps files to R2 objects, so renames, locks, and permissions do not work as they do on a local disk. Write files that other systems read, such as results, to the mount. Keep working files, such as dependencies and build output, on the sandbox's own disk. For more information, refer to [Mounted file behavior](/sandbox/reference/s3-mounts/#mounted-file-behavior).
 
 ## Mount once for each job
 
