@@ -65,6 +65,30 @@ into the local container images to sync code changes. This can be done, but ther
 mechanism for doing so, and best-practices will depend on the languages and frameworks
 you are using in your container code.
 
+## Differences after you deploy
+
+Local containers run in Docker, so some code works locally and fails after you deploy.
+
+### The hostname is longer than a DNS label
+
+A deployed container's hostname is 64 characters, one more than a DNS label allows, and it does not resolve. Locally, the hostname is the 12-character Docker container ID. Code that looks up its own hostname can fail only after you deploy.
+
+For example, `python3 -m http.server` and other servers built on Python's `http.server` module, such as `wsgiref`, exit on startup with this error:
+
+```txt
+UnicodeEncodeError: 'idna' codec can't encode characters in position 0-63: label too long
+```
+
+To serve files with Python, use `socketserver`, which does not look up the hostname:
+
+```sh
+python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer(("", 8000), h.SimpleHTTPRequestHandler).serve_forever()'
+```
+
+### Other Linux users keep root capabilities
+
+Locally, Docker gives a process that runs as another Linux user no capabilities, so file permissions apply to it. In a deployed container, every process has the same Linux capabilities as `root`, whatever its user. For more information, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
+
 ## Troubleshooting
 
 ### Ports
