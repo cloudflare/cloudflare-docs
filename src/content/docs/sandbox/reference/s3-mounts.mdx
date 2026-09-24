@@ -120,7 +120,7 @@ unmount(mountPath: string, options?: S3MountOperationOptions): Promise<void>
 Denies further storage requests for the mount, then unmounts the path. A path with no mount succeeds without changes. `unmount()` never forces an unmount.
 
 - When a process is using the path, `unmount()` throws `S3_MOUNT_BUSY`. Requests stay denied. Stop the process and call `unmount()` again, or call `mount()` with the same request to restore access.
-- After denial, new storage requests for the mount receive HTTP `403`. A request already in progress can complete. Data cached by `s3fs` can remain readable.
+- After denial, new storage requests for the mount receive HTTP `403`, and a request already in progress can complete. A process that still uses the path can read empty files and lose writes without an error. Listing a directory fails. A file that the process opened and read before the denial can stay readable through that open file.
 - Canceling `unmount()` or `mount()` can leave the filesystem mounted with requests denied. Call `mount()` with the same request, or call `unmount()` again.
 
 ## Types
