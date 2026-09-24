@@ -1,0 +1,36 @@
+---
+title: Get started
+description: Choose a guide for your first Basin data workflow.
+pcx_content_type: navigation
+sidebar:
+  order: 2
+products:
+  - basin
+---
+
+import { CardGrid, LinkCard } from "~/components";
+
+Choose a guide based on the result you need.
+
+<CardGrid>
+	<LinkCard
+		title="Ingest streaming data"
+		description="Send events, transform them with SQL, and write them to R2."
+		href="/basin-pipelines/getting-started/"
+	/>
+	<LinkCard
+		title="Manage Iceberg tables"
+		description="Create a catalog, load sample data, and connect with PyIceberg."
+		href="/basin-catalog/get-started/"
+	/>
+	<LinkCard
+		title="Query data with SQL"
+		description="Ingest sample events and query their Iceberg table with Basin SQL."
+		href="/basin-sql/get-started/"
+	/>
+	<LinkCard
+		title="Build an end-to-end workflow"
+		description="Create a transaction pipeline and analyze its data with Basin SQL."
+		href="/basin-sql/tutorials/end-to-end-pipeline/"
+	/>
+</CardGrid>

@@ -1,0 +1,45 @@
+---
+title: Basin SQL
+
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Basin SQL
+description: A distributed SQL engine for Basin Catalog
+products:
+  - basin-sql
+---
+
+import {
+	PackageManagers,
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Query Apache Iceberg tables managed by Basin Catalog using SQL.
+
+</Description>
+
+:::note[Product rename]
+Basin SQL was formerly known as R2 SQL. Existing APIs continue to work and will be deprecated in the future.
+:::
+
+Basin SQL is Cloudflare's serverless, distributed, analytics query engine for querying [Apache Iceberg](https://iceberg.apache.org/) tables stored in [Basin Catalog](/basin-catalog/). Basin SQL is designed to efficiently query large amounts of data by automatically utilizing file pruning, Cloudflare's distributed compute, and R2 object storage.
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={
+		'basin sql query "YOUR_WAREHOUSE_NAME" "SELECT * FROM default.transactions LIMIT 10"'
+	}
+/>
+
+Create an end-to-end data pipeline by following [this step by step guide](/basin-sql/get-started/), which shows you how to stream events into an Apache Iceberg table and query it with Basin SQL.

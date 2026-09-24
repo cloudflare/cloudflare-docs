@@ -117,9 +117,17 @@ export const sidebarSections: SidebarSection[] = [
 				collapsed: true,
 				nodes: [
 					link("R2", "/r2/"),
-					link("R2 Data Catalog", "/r2-data-catalog/"),
-					link("R2 SQL", "/r2-sql/"),
-					link("Pipelines", "/pipelines/"),
+					{
+						type: "group",
+						label: "Basin",
+						collapsed: true,
+						nodes: [
+							link("Overview", "/basin/"),
+							link("Basin Pipelines", "/basin-pipelines/"),
+							link("Basin Catalog", "/basin-catalog/"),
+							link("Basin SQL", "/basin-sql/"),
+						],
+					},
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),

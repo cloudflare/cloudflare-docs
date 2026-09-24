@@ -12,7 +12,12 @@ vi.mock("astro:content", async (importOriginal) => {
 		...actual,
 		getCollection: vi.fn(async (id: string, ...args: any[]) =>
 			id === "product-availability"
-				? []
+				? [
+						{ id: "zY33Vr", data: { availability: "Beta" } },
+						{ id: "7nEJGj", data: { availability: "Beta" } },
+						{ id: "yWaDMQ", data: { availability: "Beta" } },
+						{ id: "FX9rys", data: { availability: "Beta" } },
+					]
 				: actual.getCollection(id as any, ...args),
 		),
 	};
@@ -114,4 +119,12 @@ describe("docsSidebarTransform badges", () => {
 			badge: { text: "API", variant: "note" },
 		});
 	});
+
+	test.each(["/basin/", "/basin-pipelines/", "/basin-catalog/", "/basin-sql/"])(
+		"does not add a stale Beta badge to %s",
+		async (href) => {
+			const [item] = await runDocs([link({ href })]);
+			expect(item.badge).toBeUndefined();
+		},
+	);
 });

@@ -269,7 +269,15 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 // URL → "Beta" badge, from directory entries whose product-availability is
 // "beta". Built once per build (the collections don't change mid-build).
 // Realtime is an umbrella for features with independent availability stages.
-const AUTO_BETA_BADGE_EXCLUSIONS = new Set(["/realtime/"]);
+// Basin is generally available, but the remote availability feed may still
+// report the preserved pre-GA product IDs as beta during the rename rollout.
+const AUTO_BETA_BADGE_EXCLUSIONS = new Set([
+	"/realtime/",
+	"/basin/",
+	"/basin-pipelines/",
+	"/basin-catalog/",
+	"/basin-sql/",
+]);
 
 let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
 function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {

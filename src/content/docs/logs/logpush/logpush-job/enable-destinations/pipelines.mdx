@@ -1,21 +1,21 @@
 ---
 pcx_content_type: how-to
-title: Enable Cloudflare Pipelines
+title: Enable Basin Pipelines
 sidebar:
   order: 41
-description: Push Cloudflare logs to Cloudflare Pipelines.
+description: Push Cloudflare logs to Basin Pipelines.
 products:
   - logpush
-  - pipelines
+  - basin-pipelines
 ---
 
 import { Steps, DashButton } from "~/components";
 
-[Cloudflare Pipelines](/pipelines/) ingests events, transforms them with [SQL](/pipelines/sql-reference/), and delivers them to [R2](/r2/) as [Iceberg](/r2-data-catalog/) tables or as Parquet and JSON files. Logpush can write data to Pipelines as a native destination.
+[Basin Pipelines](/basin-pipelines/) ingests events, transforms them with [SQL](/basin-pipelines/sql-reference/), and delivers them to [R2](/r2/) as [Iceberg](/basin-catalog/) tables or as Parquet and JSON files. Logpush can write data to Basin Pipelines as a native destination.
 
-Instead of sending raw logs directly to a storage bucket as JSON, Logpush can route them to a Pipeline to filter, enrich, and transform your data into Parquet or Apache Iceberg tables managed by [R2 Data Catalog](/r2-data-catalog/). This allows the data to be much more compact and optimized for analytics such as querying with [R2 SQL](/r2-sql/).
+Instead of sending raw logs directly to a storage bucket as JSON, Logpush can route them to a pipeline to filter, enrich, and transform your data into Parquet or Apache Iceberg tables managed by [Basin Catalog](/basin-catalog/). This allows the data to be much more compact and optimized for analytics such as querying with [Basin SQL](/basin-sql/).
 
-The Pipelines destination supports the following Logpush datasets:
+The Basin Pipelines destination supports the following Logpush datasets:
 
 | Scope   | Datasets                                       |
 | ------- | ---------------------------------------------- |
@@ -36,13 +36,13 @@ For a full list of fields available in each dataset, refer to [Datasets](/logs/l
    - A Pipeline name is auto-generated, but you can edit it.
 5. In the **Destination** step, configure the destination:
    - Select an existing R2 bucket or type a new name to create one during setup.
-   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/r2-data-catalog/).
+   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/basin-catalog/).
    - If you select R2 Data Catalog, enter a catalog namespace and table name.
-   - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Pipelines Sinks documentation](/pipelines/sinks/).
+   - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Basin Pipelines sinks documentation](/basin-pipelines/sinks/).
 6. In the **Transform** step, choose how to process logs before they are written to the Sink:
    - **Simple** forwards all fields without modification (default).
-   - **Custom SQL** opens a SQL editor where you can filter, transform, and enrich your data. Refer to the [Pipelines SQL reference](/pipelines/sql-reference/) for a complete list of SQL functions.
-7. In the **Review** step, verify your configuration and select **Create**. This automatically creates all required resources, including the [Stream](/pipelines/streams/), [Sink](/pipelines/sinks/), R2 credentials or Data Catalog token, [Pipeline](/pipelines/), and the Logpush job.
+   - **Custom SQL** opens a SQL editor where you can filter, transform, and enrich your data. Refer to the [Basin Pipelines SQL reference](/basin-pipelines/sql-reference/) for a complete list of SQL functions.
+7. In the **Review** step, verify your configuration and select **Create**. This automatically creates all required resources, including the [stream](/basin-pipelines/streams/), [sink](/basin-pipelines/sinks/), R2 credentials or catalog token, [pipeline](/basin-pipelines/), and the Logpush job.
 
 </Steps>
 

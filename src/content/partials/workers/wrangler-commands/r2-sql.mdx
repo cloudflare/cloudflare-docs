@@ -2,12 +2,18 @@
 {}
 ---
 
-import { Render, AnchorHeading, Type, MetaInfo, WranglerCommand, WranglerNamespace } from "~/components";
+import { PackageManagers } from "~/components";
 
 :::note
 
-R2 SQL is currently in open beta. Report R2 SQL bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose). R2 SQL expects there to be a [`WRANGLER_R2_SQL_AUTH_TOKEN`](/r2-sql/query-data/#authentication) environment variable to be set.
+Report Basin SQL bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose). Basin SQL expects the [`WRANGLER_R2_SQL_AUTH_TOKEN`](/basin-sql/query-data/#authentication) environment variable to be set.
 
 :::
 
-<WranglerCommand command="r2 sql query" headingLevel={3} />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={'basin sql query <WAREHOUSE_NAME> "SELECT * FROM <NAMESPACE>.<TABLE> LIMIT 10"'}
+/>
+
+For more information, refer to [Basin SQL Wrangler commands](/basin-sql/reference/wrangler-commands/).

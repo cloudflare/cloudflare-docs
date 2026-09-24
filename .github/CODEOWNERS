@@ -661,12 +661,12 @@ package.json @cloudflare/content-engineering
 /src/icons/pages.svg @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
 /public/images/pages/ @aninibread @GregBrimble @irvinebroque @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
 
-# pipelines
+# basin-pipelines
 
-/src/content/docs/pipelines/ @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
+/src/content/docs/basin-pipelines/ @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
 /src/assets/images/pipelines/ @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
-/src/content/changelog/pipelines/ @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/pipelines.yaml @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
+/src/content/changelog/basin-pipelines/ @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/basin-pipelines.yaml @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
 /src/icons/pipelines.svg @cmackenzie1 @garvit-gupta @jonesphillip @Marcinthecloud @oliy @sejoker @cloudflare/product-owners
 
 # precursor
@@ -723,20 +723,20 @@ package.json @cloudflare/content-engineering
 /src/icons/r2.svg @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
 /public/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
 
-# r2-data-catalog
+# basin-catalog
 
-/src/content/changelog/r2-data-catalog/ @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
-/src/content/docs/r2-data-catalog/ @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
+/src/content/changelog/basin-catalog/ @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
+/src/content/docs/basin-catalog/ @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
 /src/assets/images/r2-data-catalog/ @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
-/src/content/directory/r2-data-catalog.yaml @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
+/src/content/directory/basin-catalog.yaml @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
 /src/icons/r2-data-catalog.svg @jonesphillip @laplab @Marcinthecloud @nagraham @sejoker @vovacf201 @cloudflare/product-owners
 
-# r2-sql
+# basin-sql
 
-/src/content/docs/r2-sql/ @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
+/src/content/docs/basin-sql/ @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
 /src/assets/images/r2-sql/ @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
-/src/content/changelog/r2-sql/ @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/r2-sql.yaml @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
+/src/content/changelog/basin-sql/ @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/basin-sql.yaml @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
 /src/icons/r2-sql.svg @jonathanc-n @jonesphillip @laplab @Marcinthecloud @netgusto @sejoker @sesteves @cloudflare/product-owners
 
 # radar
