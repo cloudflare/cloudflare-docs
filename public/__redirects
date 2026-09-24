@@ -10,8 +10,8 @@
 /cache/plans/ /cache/ 301
 /style-guide/components/product-features/ /style-guide/build-the-page/components/ 301
 
-# Sandbox (claude-managed-agents moved to tutorials)
-/sandbox/claude-managed-agents/ /sandbox/sdk/tutorials/claude-managed-agents/ 301
+# Sandbox (claude-managed-agents moved to coding agents)
+/sandbox/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
 
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
@@ -668,10 +668,13 @@
 /sandbox/tutorials/automated-testing-pipeline/ /sandbox/sdk/tutorials/automated-testing-pipeline/ 301
 /sandbox/tutorials/claude-code/ /sandbox/coding-agents/claude-code/ 301
 /sandbox/sdk/tutorials/claude-code/ /sandbox/coding-agents/claude-code/ 301
-/sandbox/tutorials/claude-managed-agents/ /sandbox/sdk/tutorials/claude-managed-agents/ 301
+/sandbox/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
+/sandbox/sdk/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
 /sandbox/tutorials/code-review-bot/ /sandbox/sdk/tutorials/code-review-bot/ 301
-/sandbox/tutorials/cursor-cloud-agents/ /sandbox/sdk/tutorials/cursor-cloud-agents/ 301
-/sandbox/tutorials/devin-outposts/ /sandbox/sdk/tutorials/devin-outposts/ 301
+/sandbox/tutorials/cursor-cloud-agents/ /sandbox/coding-agents/cursor/ 301
+/sandbox/sdk/tutorials/cursor-cloud-agents/ /sandbox/coding-agents/cursor/ 301
+/sandbox/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
+/sandbox/sdk/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
 /sandbox/tutorials/openai-agents/ /sandbox/sdk/tutorials/openai-agents/ 301
 /sandbox/tutorials/persistent-storage/ /sandbox/sdk/tutorials/persistent-storage/ 301
 /sandbox/tutorials/workers-ai-code-interpreter/ /sandbox/sdk/tutorials/workers-ai-code-interpreter/ 301
