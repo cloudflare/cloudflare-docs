@@ -1,6 +1,6 @@
 import { createAppAuth } from "@octokit/auth-app";
 
-const REPO = "cloudflare/cloudflare-docs";
+export const REPO = "cloudflare/cloudflare-docs";
 
 export interface PullRequestFile {
 	filename: string;
@@ -42,6 +42,7 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
+	created_at: string;
 	updated_at: string;
 	labels: { name: string }[];
 	base: { ref: string; sha: string; repo: { full_name: string } };
@@ -418,66 +419,98 @@ export async function getIssueComments(
 	return comments;
 }
 
-/**
- * Get the last time each pull request's head branch was pushed to, via one
- * batched GraphQL query (one alias per PR). REST pull request objects do not
- * expose a per-branch push timestamp, and a push followed by a bot comment
- * cannot be recovered from `updated_at` alone.
- *
- * PRs whose head ref has no recorded push time (or that no longer exist) are
- * omitted from the map. Throws on transport failure so callers can decide how
- * to degrade; per-PR GraphQL errors are skipped so a single bad alias cannot
- * fail the batch.
- */
-export async function getHeadRefPushedAt(
+export interface GitHubIssueEvent {
+	id: number;
+	event: string;
+	created_at: string;
+	actor: GitHubUser | null;
+}
+
+/** Every issue event for an issue or PR, oldest first, across all pages. */
+export async function listIssueEvents(
 	token: string,
-	pullNumbers: number[],
-): Promise<Map<number, string>> {
-	const [owner, name] = REPO.split("/");
-	const result = new Map<number, string>();
-	const CHUNK_SIZE = 50;
-	for (let index = 0; index < pullNumbers.length; index += CHUNK_SIZE) {
-		const chunk = pullNumbers.slice(index, index + CHUNK_SIZE);
-		const aliases = chunk
-			.map(
-				(pullNumber, i) =>
-					`p${i}: pullRequest(number: ${pullNumber}) { headRefPushedAt }`,
-			)
-			.join("\n");
-		const res = await fetch("https://api.github.com/graphql", {
-			method: "POST",
-			headers: apiHeaders(token),
-			body: JSON.stringify({
-				query: `query {
-	repository(owner: "${owner}", name: "${name}") {
-${aliases}
+	issueNumber: number,
+): Promise<GitHubIssueEvent[]> {
+	return fetchAllPages<GitHubIssueEvent>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/events?per_page=100`,
+		`list events for ${issueNumber}`,
+	);
+}
+
+export interface GitHubBranchActivity {
+	id: number;
+	activity_type: string;
+	timestamp: string;
+	actor: GitHubUser | null;
+}
+
+/**
+ * The first page (newest first, up to 100 entries) of repository activity for
+ * one branch of this repository. Branch names containing `/`, `#`, and other
+ * special characters are percent-encoded by the query builder. Throws on HTTP
+ * failure.
+ */
+export async function listBranchActivity(
+	token: string,
+	ref: string,
+): Promise<GitHubBranchActivity[]> {
+	const query = new URLSearchParams({
+		ref: `refs/heads/${ref}`,
+		direction: "desc",
+		per_page: "100",
+	});
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/activity?${query}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to list activity for ${ref} (HTTP ${res.status}): ${await res.text()}`,
+		);
 	}
-}`,
-			}),
-		});
-		if (!res.ok) {
-			throw new Error(
-				`Failed to fetch head ref push times (HTTP ${res.status}): ${await res.text()}`,
-			);
-		}
-		const data = (await res.json()) as {
-			data?: {
-				repository?: Record<string, { headRefPushedAt: string | null } | null>;
-			};
-			errors?: unknown[];
-		};
-		const repository = data.data?.repository;
-		if (!repository) {
-			throw new Error(
-				`Failed to fetch head ref push times: ${JSON.stringify(data.errors ?? data)}`,
-			);
-		}
-		chunk.forEach((pullNumber, i) => {
-			const headRefPushedAt = repository[`p${i}`]?.headRefPushedAt;
-			if (headRefPushedAt) result.set(pullNumber, headRefPushedAt);
-		});
+	return (await res.json()) as GitHubBranchActivity[];
+}
+
+export interface GitHubCommitSummary {
+	/** `commit.committer.date` */
+	committedAt: string;
+	/** The GitHub account linked to the commit author, when GitHub knows it. */
+	author: GitHubUser | null;
+}
+
+/**
+ * The committer date and the GitHub-linked author for one commit. Works for
+ * fork PR head SHAs. Throws on HTTP failure, or when the commit has no
+ * committer date.
+ */
+export async function getCommitSummary(
+	token: string,
+	sha: string,
+): Promise<GitHubCommitSummary> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get commit ${sha} (HTTP ${res.status}): ${await res.text()}`,
+		);
 	}
-	return result;
+	const data = (await res.json()) as {
+		commit?: { committer?: { date?: string } };
+		author?: { login: string; type?: string } | null;
+	};
+	const committedAt = data.commit?.committer?.date;
+	if (!committedAt) {
+		throw new Error(`Commit ${sha} has no committer date`);
+	}
+	return {
+		committedAt,
+		author: data.author
+			? { login: data.author.login, type: data.author.type }
+			: null,
+	};
 }
 
 export async function updateIssueComment(

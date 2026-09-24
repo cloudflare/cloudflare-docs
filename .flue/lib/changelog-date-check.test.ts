@@ -178,7 +178,10 @@ describe("renderChangelogDateComment", () => {
 		expect(body).toContain(CHANGELOG_DATE_MARKER);
 		expect(body).toContain("⚠️ @octocat ");
 		expect(body).toContain("`src/content/changelog/workers/2026-09-16-x.mdx`");
-		expect(body).toContain("dated **2026-09-16**, 1 day old");
+		expect(body).toContain(
+			"- `src/content/changelog/workers/2026-09-16-x.mdx` — dated **2026-09-16**\n",
+		);
+		expect(body).not.toContain("day old");
 		expect(body).toContain(
 			"Typically, changelog entries should be dated the day they merge.",
 		);
@@ -186,19 +189,23 @@ describe("renderChangelogDateComment", () => {
 		expect(body).not.toContain("removed automatically");
 	});
 
-	it("uses the plural for multi-day ages", () => {
-		const body = renderChangelogDateComment(
-			[
-				{
-					path: "src/content/changelog/d1/a.mdx",
-					date: "2026-09-01",
-					ageDays: 16,
-				},
-			],
+	it("renders the same body as the entry ages", () => {
+		const entries = [
+			{ path: "src/content/changelog/d1/a.mdx", date: "2026-09-01" },
+		];
+		const today = renderChangelogDateComment(
+			getStaleChangelogEntries(entries, now),
 			undefined,
 		);
-		expect(body).toContain("16 days old");
-		expect(body).not.toContain("@");
+		const tomorrow = renderChangelogDateComment(
+			getStaleChangelogEntries(
+				entries,
+				new Date(now.getTime() + 24 * 60 * 60 * 1000),
+			),
+			undefined,
+		);
+		expect(tomorrow).toBe(today);
+		expect(today).not.toContain("@");
 	});
 });
 
@@ -228,7 +235,7 @@ describe("getChangelogDateAction", () => {
 		expect(action).toEqual({ kind: "none" });
 	});
 
-	it("upserts when the rendered body changed (age grew)", () => {
+	it("upserts when the rendered body changed", () => {
 		const action = getChangelogDateAction(stale, marked, "new body");
 		expect(action).toEqual({ kind: "upsert", body: "new body" });
 	});
