@@ -275,7 +275,7 @@
 			"properties": {
 				"prompt": {
 					"type": "string",
-					"maxLength": 10000,
+					"maxLength": 2000,
 					"description": "Text prompt describing the video to generate"
 				},
 				"image": {
