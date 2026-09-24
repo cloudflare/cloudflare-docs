@@ -143,6 +143,9 @@ Give commands in a Linux sandbox a directory backed by R2, such as a job's input
    		},
    		keyPrefix: `jobs/${job}`,
    		access: "read-write",
+   		// R2 needs every part of a multipart upload except the last to be
+   		// the same size.
+   		s3fsOptions: { nomixupload: true },
    	});
 
    	return container;
@@ -150,6 +153,8 @@ Give commands in a Linux sandbox a directory backed by R2, such as a job's input
    ```
 
    Any process in the sandbox can read, change, or delete every object under the prefix, so mount the narrowest prefix the job needs, and use `access: "read-only"` when it only reads. The sandbox receives placeholder credentials, because `s3fs` requires a key pair, and the mount works with `enableInternet: false`. For short-lived credentials, refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
+
+   `nomixupload` makes `s3fs` upload the whole file when a command changes part of a large file, instead of copying the unchanged ranges into parts of other sizes.
 
    Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept that unmounting does not remove, and an instance supports a limited number of intercepts. Give each job its own sandbox name instead of mounting a different prefix in the same instance.
 
