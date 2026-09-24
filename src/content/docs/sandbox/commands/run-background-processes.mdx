@@ -3,7 +3,7 @@ title: Run background processes
 description: Start a long-running process in a Linux sandbox from one request, then check its status, read its output, wait for it, and stop it from later requests.
 pcx_content_type: how-to
 sidebar:
-  order: 5.5
+  order: 3
 products:
   - sandbox
   - workers
@@ -511,18 +511,18 @@ async waitForExit(id: string, timeoutMs: number) {
 }
 ```
 
-To wait until a server in a process accepts requests, retry a request to its port. Refer to [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+To wait until a server in a process accepts requests, retry a request to its port. Refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
 
 To pass environment variables to a process, add an `env` option to the `exec()` call in `start()`. `exec()` does not inherit the `env` passed to `container.start()`.
 
 The directories of processes that ended stay until the container stops. To remove them, delete the directory of each process whose state is `exited` or `lost`.
 
-Processes end when the container stops, and their directories go with its disk. Keep output that must last in Durable Object storage or in a [mounted bucket](/sandbox/how-to/mount-an-r2-bucket/). Log files grow until the process ends, so rotate them for processes that write a lot.
+Processes end when the container stops, and their directories go with its disk. Keep output that must last in Durable Object storage or in a [mounted bucket](/sandbox/files/mount-an-r2-bucket/). Log files grow until the process ends, so rotate them for processes that write a lot.
 
-The example sets `enableInternet: false`, so processes cannot download packages or reach other services. To route requests to chosen hosts through your Worker, refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
+The example sets `enableInternet: false`, so processes cannot download packages or reach other services. To route requests to chosen hosts through your Worker, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
 
 ## Next steps
 
-- To stream the output of a command that the request waits for, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
-- To serve a long-running process over HTTP, refer to [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+- To stream the output of a command that the request waits for, refer to [Stream command output](/sandbox/commands/stream-command-output/).
+- To serve a long-running process over HTTP, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
 - For every `exec()` option, refer to the [Durable Object container API](/durable-objects/api/container/#exec).

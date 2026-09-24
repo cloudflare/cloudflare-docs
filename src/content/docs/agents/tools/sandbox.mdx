@@ -171,11 +171,11 @@ Attach a container to the agent's class in `wrangler.jsonc`. The class also need
 
 The sandbox starts without Internet access, so commands such as `npm install` cannot download packages. Setting `enableInternet: true` allows every destination, and each destination gives the model's commands a way to send out whatever they can read.
 
-To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route the sandbox's requests through an outbound handler in your Worker. For an example, refer to [Call an authenticated API from a sandbox](/sandbox/how-to/call-an-authenticated-api/).
+To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route the sandbox's requests through an outbound handler in your Worker. For an example, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
 
 ## Sandbox and agent state
 
-Files in the sandbox last while its container runs. When the container stops, the next command starts a new container from the image, and earlier files are gone. To keep files after the container stops, save a snapshot and start from it later. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+Files in the sandbox last while its container runs. When the container stops, the next command starts a new container from the image, and earlier files are gone. To keep files after the container stops, save a snapshot and start from it later. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
 Use agent state for user-visible progress and small metadata, such as the ID of the latest snapshot.
 

@@ -3,7 +3,7 @@ title: Open a terminal in the browser
 description: Connect a browser terminal to an interactive shell in a Linux sandbox over a WebSocket.
 pcx_content_type: how-to
 sidebar:
-  order: 7
+  order: 4
   label: Open a terminal
 products:
   - sandbox
@@ -357,7 +357,7 @@ Run `exit` in the shell, and the session ends. The tmux client exits, and the Du
 
 The Durable Object does not abort `exec()` for a client that has already exited, because signaling an exited process records an internal error in [Workers Logs](/workers/observability/logs/workers-logs/).
 
-An open terminal keeps the sandbox running, even when nobody types. After the last terminal closes, the Linux instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout). When it stops, every tmux session ends, and files that are not in a [snapshot](/sandbox/how-to/save-and-restore-a-workspace/) are lost.
+An open terminal keeps the sandbox running, even when nobody types. After the last terminal closes, the Linux instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout). When it stops, every tmux session ends, and files that are not in a [snapshot](/sandbox/files/save-and-restore-a-workspace/) are lost.
 
 ## Adapt the terminal
 
@@ -373,6 +373,6 @@ The page loads xterm.js from a CDN to keep the example in one file. In productio
 
 ## Next steps
 
-- To run a command without a terminal and stream its output, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
+- To run a command without a terminal and stream its output, refer to [Stream command output](/sandbox/commands/stream-command-output/).
 - For every `exec()` option, refer to the [Durable Object container API](/durable-objects/api/container/#exec).
 - For terminal options and add-ons, refer to the [xterm.js documentation](https://xtermjs.org/docs/).

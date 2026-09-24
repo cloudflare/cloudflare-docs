@@ -51,7 +51,7 @@ return new Response(process.stdout, {
 });
 ```
 
-The body contains the command's own output, not server-sent events. Read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
+The body contains the command's own output, not server-sent events. Read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/commands/stream-command-output/).
 
 ## Replace sessions
 
@@ -151,7 +151,7 @@ Each call to `readDirectory()` starts one process in the container. For a large 
 
 `files.rename()` fails with `EXDEV` across filesystems. To move a file to another filesystem, copy it with `container.exec(["cp", "-a", source, destination])`, then remove the source.
 
-For more examples, refer to [Manage files](/sandbox/how-to/manage-files/).
+For more examples, refer to [Manage files](/sandbox/files/manage-files/).
 
 ## Replace file watching
 

@@ -3,7 +3,7 @@ title: Sandbox persistence
 description: Understand how Container snapshots preserve a sandbox filesystem across Linux instances without restoring running processes.
 pcx_content_type: concept
 sidebar:
-  order: 3.5
+  order: 4
 products:
   - sandbox
   - workers
@@ -67,4 +67,4 @@ Changes made to the writable root filesystem after a snapshot belong only to the
 
 Snapshots suit files that belong to one continuing Linux workspace. Files that must be shared, queried independently, or kept outside that workspace belong in an external storage service such as R2.
 
-To preserve a workspace in an application, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/).
+To preserve a workspace in an application, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
