@@ -10,5 +10,5 @@ entry:
 
 meta:
   title: Cloudflare Sandboxes docs
-  description: Isolated execution on Cloudflare using Dynamic Workers and Containers
+  description: Isolated execution on Cloudflare using Containers and Dynamic Workers
   author: "@cloudflare"

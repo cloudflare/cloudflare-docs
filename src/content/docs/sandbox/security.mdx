@@ -31,7 +31,7 @@ Consider a coding agent that clones a private repository, installs its dependenc
 
 Environment variables, command arguments, and files your Worker writes work the same way. Once a value is in the sandbox, all the code there can read it and send it anywhere the sandbox can reach.
 
-Credentials are safer outside the sandbox. A Dynamic Worker can receive a method that uses the credential in your Worker and returns only the result. A Container can send its request without the credential, and an outbound handler in your Worker adds the credential after the request leaves the sandbox. The code uses the service without holding the key. The method or handler also decides which requests to make, so it limits what the code can do with the service. For both patterns, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
+Credentials are safer outside the sandbox. A Container can send its request without the credential, and an outbound handler in your Worker adds the credential after the request leaves the sandbox. A Dynamic Worker can receive a method that uses the credential in your Worker and returns only the result. The code uses the service without holding the key. The method or handler also decides which requests to make, so it limits what the code can do with the service. For both patterns, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
 
 ## The sandbox name decides what a request reaches
 
@@ -45,7 +45,7 @@ For more information about what a sandbox keeps between instances, refer to [San
 
 A Container starts with `enableInternet: false` by default, so it cannot make outbound requests. A Dynamic Worker has the network access of your Worker unless you load it with `globalOutbound: null`, which makes `fetch()` and `connect()` throw.
 
-Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. Keep Internet access off when you use one: handlers see HTTP on port `80` and HTTPS on port `443`, and with Internet access on, connections to other ports go out directly. To route requests through your Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers and [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers.
+Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. Keep Internet access off when you use one: handlers see HTTP on port `80` and HTTPS on port `443`, and with Internet access on, connections to other ports go out directly. To route requests through your Worker, refer to [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.
 
 ## Output carries the same risk
 
