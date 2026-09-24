@@ -9,33 +9,36 @@ products:
 
 ## 499 Client Close Request
 
-The `HTTP 499` response code is an nginx-specific status code that indicates a client closed the connection before the server finished processing the request. Because Cloudflare is built on nginx, 499 appears in [Cloudflare Logs](/logs/) and analytics whenever this happens. A 499 is never sent in an HTTP response — it only appears in logs.
+The `HTTP 499` response code is an nginx-specific status code logged when a client closes the connection before the server finishes processing the request. Because Cloudflare is built on nginx, 499 appears in [Cloudflare Logs](/logs/) and analytics whenever this happens. A 499 is never sent in an HTTP response — it only appears in logs.
 
 :::note
-A small number of 499 errors is normal. Clients routinely cancel requests due to page navigation, app backgrounding, or browser tab closure. Only investigate when 499 errors spike, persist at a specific Cloudflare data center, or affect a latency-sensitive endpoint.
+A low rate of 499 errors is expected. Clients routinely cancel requests due to page navigation, app backgrounding, or browser tab closure. Investigate when 499 errors spike noticeably above your zone's normal baseline, persist at a specific Cloudflare data center, or affect a latency-sensitive endpoint.
 :::
 
 ### Common causes
 
-499 errors have three distinct causes that require different responses:
+499 errors typically have one of three causes, but diagnosing which requires checking multiple log fields together — not any single field in isolation:
 
-| Cause | What you observe | What to do |
+| Cause | Signals to look for | What to do |
 |---|---|---|
-| **Client timeout or cancellation** | Low, steady 499 rate; `OriginIP` present in logs; no TTFB spike | Expected behavior. Review client timeout settings only if the rate is unexpectedly high. |
-| **Origin too slow — client aborts** | 499 spike correlates with a TTFB spike; `OriginIP` present in logs | Investigate origin performance. Use [Origin Analytics](/speed/origin-analytics/) to find slow endpoints. |
-| **Cloudflare-side stall** | 499 spike with `OriginIP` absent from logs; errors often concentrated in one data center | Contact Cloudflare Support with affected Ray IDs and the data center name. |
+| **Client timeout or cancellation** | Rate near baseline; `OriginIP` present; no TTFB spike | Expected behavior. Review client timeout settings if rate is unexpectedly elevated. |
+| **Origin too slow — client aborts** | Rate spike correlated with a TTFB spike; `OriginIP` present | Investigate origin performance. Use [Origin Analytics](/speed/origin-analytics/) to find slow endpoints. |
+| **Possible Cloudflare-side issue** | Rate spike; `OriginIP` absent; `CfCacheStatus` is MISS, BYPASS, or DYNAMIC (not HIT or STALE); errors concentrated in one data center; no origin-side explanation | Collect evidence and contact Cloudflare Support. |
 
-### How to identify the cause
+### How to investigate
 
-Use [Instant Logs](/logs/instant-logs/) or [Logpush](/logs/logpush/) to inspect 499 requests and check the `OriginIP` field:
+Use [Instant Logs](/logs/instant-logs/) or [Logpush](/logs/logpush/) to inspect 499 requests. No single field confirms the cause — check the following together:
 
-- **`OriginIP` is present**: Cloudflare reached your origin. The client timed out either because the origin responded too slowly or because the client's timeout is shorter than expected.
-- **`OriginIP` is absent**: Cloudflare did not reach your origin. The stall occurred inside Cloudflare's network — this is not a client configuration issue. Contact Cloudflare Support.
+- **`OriginIP`** — identifies whether Cloudflare contacted an origin server for that request. An absent value does not by itself indicate a Cloudflare fault: cache-served responses (status HIT or STALE) do not need an origin fetch and will not have an origin IP.
+- **`CfCacheStatus`** — cross-check with `OriginIP`. If `OriginIP` is absent and `CfCacheStatus` is HIT or STALE, the request was served from cache and the missing origin IP is expected. If `OriginIP` is absent and `CfCacheStatus` is MISS, BYPASS, or DYNAMIC, Cloudflare should have contacted the origin but may not have — this combination warrants investigation.
+- **`EdgeColoCode`** — if 499 errors concentrate in one data center, the issue may be infrastructure-related regardless of whether `OriginIP` is present.
+- **UTC time window and volume trend** — compare against completed requests in the same window. A spike that affects only 499s while successful requests continue normally suggests a timeout or stall, not a broad outage.
 
-To narrow the cause when `OriginIP` is present:
+To investigate a 499 spike:
 
-1. In [Origin Analytics](/speed/origin-analytics/), check P95 origin response time for the affected endpoint. A spike indicates origin slowness.
-2. In Cloudflare Logs, filter on `EdgeResponseStatus = 499` and group by `EdgeColoCode`. If 499 errors concentrate in one data center (for example, `HKG` or `AMS`), the issue may be infrastructure-related. Contact Cloudflare Support with the data center name and the affected time window.
+1. In [Origin Analytics](/speed/origin-analytics/), check P95 origin response time for the affected endpoint during the 499 window. A spike indicates origin slowness — the client's timeout fired while waiting.
+2. Filter Cloudflare Logs to `EdgeResponseStatus = 499` and check whether `OriginIP` is populated and what `CfCacheStatus` shows for those entries.
+3. Group the 499 entries by `EdgeColoCode`. If errors concentrate in one data center (for example, `HKG` or `AMS`), contact Cloudflare Support with the data center name and the affected time window.
 
 ### TCP connection timing
 
@@ -43,19 +46,20 @@ Cloudflare sends a SYN packet to your origin and waits 19 seconds for a SYN+ACK 
 
 Depending on your client's timeout setting:
 
-- **Shorter than 38 seconds**: Your client abandons the connection before Cloudflare completes the handshake, logging a 499.
+- **Shorter than 38 seconds**: Your client may abandon the connection before Cloudflare completes the handshake, logging a 499.
 - **Longer than 38 seconds, handshake succeeds**: The request proceeds normally.
 - **Longer than 38 seconds, handshake fails**: Cloudflare returns an [Error 522](/support/troubleshooting/http-status-codes/5xx-server-error/error-522/) instead.
 
 ### Streaming and media clients
 
-Media players — such as HLS players, DASH clients, and Android ExoPlayer — have strict, often non-configurable timeouts of 5–10 seconds. A 499 spike in a streaming context almost always means first-byte delivery exceeded the player's deadline, not that clients are disconnecting randomly.
+Media players such as HLS players, DASH clients, and Android ExoPlayer often use short default connection and read timeouts. Default values vary by player and SDK version; some are configurable by the application developer and some are not. A 499 spike in a streaming context may mean first-byte delivery is exceeding the player's effective deadline.
 
-To investigate 499 errors in streaming:
+To investigate 499 errors in a streaming context:
 
-1. Check whether the cache hit rate dropped for the affected paths. A lower hit rate forces origin fetches that may exceed the player's timeout.
-2. In Cloudflare Logs, check `EdgeColoCode` for the 499 requests. If errors concentrate in a specific data center, contact Cloudflare Support.
-3. If the cache hit rate is normal but 499 errors persist, review your [Tiered Cache](/cache/how-to/enable-tiered-cache/) settings to reduce origin latency for cache misses.
+1. Confirm the effective timeout in use — check the player SDK documentation and, if possible, confirm with your development team whether the timeout is configurable.
+2. Check whether the cache hit rate dropped for the affected paths. A lower hit rate forces origin fetches that take longer than a cached response.
+3. In Cloudflare Logs, check `EdgeColoCode` for the 499 requests. If errors concentrate in a specific data center, contact Cloudflare Support.
+4. If the cache hit rate is normal but 499 errors persist, review your [Tiered Cache](/cache/how-to/enable-tiered-cache/) settings to reduce origin latency for cache misses.
 
 ### Non-idempotent requests
 
@@ -70,15 +74,16 @@ If your application performs payments, financial transactions, or other state-ch
 
 Contact support when:
 
-- 499 errors spike suddenly across multiple endpoints without a corresponding increase in origin response time.
-- `OriginIP` is absent from Cloudflare Logs for the affected requests.
-- 499 errors concentrate in one data center, or you can confirm that multiple zones experienced the same spike at the same time.
+- 499 errors spike clearly above your zone's normal baseline across multiple endpoints without a corresponding increase in origin response time.
+- `OriginIP` is absent and `CfCacheStatus` is MISS, BYPASS, or DYNAMIC for the affected requests — ruling out cache-served responses as the explanation.
+- 499 errors concentrate in one data center, or the same spike is visible across multiple zones simultaneously.
 
 When you contact support, include:
 
 - The affected hostname and zone ID
 - The UTC time window (start and end)
 - 10–20 Ray IDs from the 499 responses
-- Whether `OriginIP` is present or absent in your logs for those requests
+- The `OriginIP` and `CfCacheStatus` values for those Ray IDs
+- The `EdgeColoCode` distribution for the 499 entries
 - Whether other zones or hostnames experienced the same spike simultaneously
-- For Enterprise customers: a [Logpush](/logs/logpush/) export filtered to `EdgeResponseStatus = 499`
+- For Enterprise customers: a [Logpush](/logs/logpush/) export filtered to `EdgeResponseStatus = 499` for the time window
