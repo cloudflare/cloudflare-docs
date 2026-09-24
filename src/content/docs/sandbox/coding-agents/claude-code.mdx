@@ -1,0 +1,204 @@
+---
+title: Run Claude Code in a sandbox
+description: Run Claude Code on a GitHub repository in a Linux sandbox and read its changes as a diff.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+  label: Claude Code
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+reviewed: 2026-09-24
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Give [Claude Code](https://code.claude.com/docs/en/overview) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+
+## Prerequisites
+
+- The `sandbox-coding-agent` project from [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/). The tutorial builds the runner with Claude Code. Use this page to switch back to Claude Code after you run another agent, or to change its settings.
+- Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
+
+## Switch the Worker to Claude Code
+
+<Steps>
+
+1. Replace the `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   RUN npm install --global @anthropic-ai/claude-code@2.1.280
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The installation runs the Claude Code package's own install script, which puts its native binary in place. Pin the version, because Claude Code's flags and event format can change between releases.
+
+2. In `wrangler.jsonc`, set `MODEL` to an Anthropic model ID that your gateway can serve:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"AI_GATEWAY_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"AI_GATEWAY_ID": "default",
+   		"MODEL": "claude-sonnet-5",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+3. In `src/outbound.ts`, make sure the `Outbound` entrypoint removes the `x-api-key` header before it adds the gateway token:
+
+   ```ts title="src/outbound.ts"
+   const headers = new Headers(request.headers);
+   headers.delete("x-api-key");
+   headers.set("cf-aig-authorization", `Bearer ${this.env.AI_GATEWAY_TOKEN}`);
+   ```
+
+   Claude Code sends a placeholder API key. If the Worker left it in place, AI Gateway would forward it to Anthropic, and the model request would fail with `Invalid API key`.
+
+4. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for Claude Code's final event:
+
+   ```ts title="src/sandbox.ts"
+   const ResultEvent = z.object({
+   	type: z.literal("result"),
+   	subtype: z.string(),
+   	is_error: z.boolean(),
+   	result: z.string().optional(),
+   });
+   ```
+
+5. Replace the `agentCommand()` and `agentEnv()` methods:
+
+   ```ts title="src/sandbox.ts"
+   	private agentCommand(prompt: string): string[] {
+   		return [
+   			"claude",
+   			"--print",
+   			"--output-format",
+   			"stream-json",
+   			"--verbose",
+   			"--dangerously-skip-permissions",
+   			"--no-session-persistence",
+   			"--model",
+   			this.env.MODEL,
+   			"--",
+   			prompt,
+   		];
+   	}
+
+   	private agentEnv(): Record<string, string> {
+   		return {
+   			ANTHROPIC_BASE_URL: `https://gateway.ai.cloudflare.com/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}/anthropic`,
+   			ANTHROPIC_API_KEY: "provided-by-worker",
+   			CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+   			IS_SANDBOX: "1",
+   		};
+   	}
+   ```
+
+   - `--print` runs Claude Code without an interactive terminal.
+   - `--output-format stream-json --verbose` writes one JSON event per line, including a final `result` event.
+   - `--dangerously-skip-permissions` lets Claude Code run commands and edit files without asking. The container limits what its commands can reach. Claude Code requires `IS_SANDBOX=1` to allow this as `root`.
+   - `ANTHROPIC_BASE_URL` sends model requests to your gateway's Anthropic endpoint.
+   - `ANTHROPIC_API_KEY` is a placeholder, because Claude Code does not start without an API key.
+   - `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` turns off update checks, telemetry, and error reporting, so Claude Code calls only your gateway.
+
+   Claude Code still reads a `CLAUDE.md` file in the repository, so the repository's own instructions apply to the task.
+
+6. Replace the `outcome()` method:
+
+   ```ts title="src/sandbox.ts"
+   	private async outcome(exitCode: number): Promise<TaskStatus> {
+   		let result: z.infer<typeof ResultEvent> | undefined;
+   		const events = await this.files.readFile(eventsPath);
+
+   		for await (const line of readLines(events.body)) {
+   			const parsed = ResultEvent.safeParse(parseJson(line));
+
+   			if (parsed.success) {
+   				result = parsed.data;
+   			}
+   		}
+
+   		if (result === undefined) {
+   			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
+   			return {
+   				state: "failed",
+   				error: `claude exited with ${exitCode}: ${stderr.slice(-2000)}`,
+   			};
+   		}
+
+   		if (result.is_error) {
+   			return { state: "failed", error: result.result ?? result.subtype };
+   		}
+
+   		return { state: "succeeded", result: result.result ?? "" };
+   	}
+   ```
+
+   Claude Code exits successfully even when a model request fails, so the outcome comes from the `is_error` field of the final `result` event instead of the exit code. Claude Code retries a failing model request 10 times, so a rejected gateway token takes about three minutes to fail the task with `Failed to authenticate. API Error: 401 Unauthorized`.
+
+7. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   A running container keeps the image it started with, so use a new sandbox name for Claude Code.
+
+</Steps>
+
+## Run a task
+
+<Steps>
+
+1. Clone a repository into a sandbox named `claude-1`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/claude-1/repository" \
+   	--json '{"url": "https://github.com/octocat/Hello-World"}'
+   ```
+
+2. Start a task:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/claude-1/task" \
+   	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
+   ```
+
+3. Check the task until its state is `succeeded` or `failed`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/claude-1/task"
+   ```
+
+   A `succeeded` task includes Claude Code's final reply.
+
+4. Read the changes:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/claude-1/diff"
+   ```
+
+   The diff shows the new `NOTES.md` file.
+
+</Steps>
+
+## Related resources
+
+- [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/): how the runner starts the sandbox, runs the task, and reads the diff.
+- [Claude Code in AI Gateway](/ai-gateway/integrations/coding-agents/claude-code/): route Claude Code through AI Gateway from other environments.
