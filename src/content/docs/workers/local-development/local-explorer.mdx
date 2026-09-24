@@ -55,6 +55,8 @@ For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [
 
 Local Explorer can send one-off invocations to the [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) for your Worker. Configure at least one [Cron Trigger](/workers/configuration/cron-triggers/) for the active environment before using this interface.
 
+Cron Trigger testing requires Wrangler 4.139.0 or later, or Cloudflare Vite plugin 1.60.0 or later.
+
 <Steps>
 1. In Local Explorer, select **Cron Triggers** > **Configured Crons**.
 2. Under **Scheduled time**, select _Now_. To test another time, select **Add preset** and enter a UTC date and time or epoch milliseconds.
