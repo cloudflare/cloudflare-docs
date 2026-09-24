@@ -187,6 +187,8 @@ export class MyContainer extends Container {
 
 :::caution
 Pass both IDs in `user`. A user ID without a group ID runs the process as `root`. A user or group name rejects with an internal error.
+
+In a deployed container, every process has the same Linux capabilities as `root`, whatever its user. File permissions do not restrict a process that runs as another user, and the process can switch back to `root`. The IDs set the owner of files that the process creates. Under `wrangler dev`, Docker removes these capabilities from other users, so file permissions apply locally but not after you deploy.
 :::
 
 With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, which is the default. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
