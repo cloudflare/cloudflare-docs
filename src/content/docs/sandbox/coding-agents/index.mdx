@@ -14,14 +14,72 @@ products:
   - ai-gateway
 ---
 
-import { DirectoryListing } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
 
 A coding agent reads a repository, edits files, and runs commands until its task is done. Run the agent in a Linux sandbox so those commands stay inside a [Container](/containers/) that belongs to one task. The agent gets Git, a shell, and the files it works on.
 
+## The agent runs in your sandbox
+
 When the agent runs inside the sandbox, as Claude Code, Codex, OpenCode, and Pi do, your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach. The pages for these four agents start from the runner that [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/) builds, and replace the parts that are specific to the agent.
+
+<CardGrid>
+	<LinkTitleCard
+		title="Claude Code"
+		href="/sandbox/coding-agents/claude-code/"
+		icon="simple-icons:claude"
+		description="Edit a GitHub repository with Claude Code, which calls Anthropic models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="Codex"
+		href="/sandbox/coding-agents/codex/"
+		icon="simple-icons:openai"
+		description="Edit a GitHub repository with the Codex CLI, which calls OpenAI models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="OpenCode"
+		href="/sandbox/coding-agents/opencode/"
+		icon="simple-icons:opencode"
+		description="Edit a GitHub repository with OpenCode, which calls models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="Pi"
+		href="/sandbox/coding-agents/pi/"
+		icon="simple-icons:pi"
+		description="Edit a GitHub repository with Pi, which calls models through its built-in AI Gateway provider."
+	/>
+</CardGrid>
+
+## The vendor runs the agent loop
 
 Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in the vendor's own service and send the commands and file edits to sandboxes in your Cloudflare account. Each vendor's template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the sandbox also holds a vendor credential, because the vendor's worker process runs inside it.
 
-To give an agent that you build with the Agents SDK a Linux sandbox as a tool, refer to [Sandbox](/agents/tools/sandbox/) in the Agents SDK documentation.
+<CardGrid>
+	<LinkTitleCard
+		title="Devin"
+		href="/sandbox/coding-agents/devin/"
+		icon="devin"
+		description="Deploy a Devin Outpost that runs each Devin session in its own sandbox on Containers."
+	/>
+	<LinkTitleCard
+		title="Cursor Cloud Agents"
+		href="/sandbox/coding-agents/cursor/"
+		icon="simple-icons:cursor"
+		description="Deploy self-hosted machines that run each Cursor session in its own sandbox on Containers."
+	/>
+	<LinkTitleCard
+		title="Claude Managed Agents"
+		href="/sandbox/coding-agents/claude-managed-agents/"
+		icon="simple-icons:claude"
+		description="Run Claude Managed Agents sessions in sandboxes on Containers and Dynamic Workers."
+	/>
+	<LinkTitleCard
+		title="OpenAI Agents API"
+		href="/sandbox/coding-agents/openai-agents-api/"
+		icon="simple-icons:openai"
+		description="Deploy a self-hosted environment that runs each Codex session in its own sandbox on Containers."
+	/>
+</CardGrid>
 
-<DirectoryListing />
+## Build your own agent
+
+To give an agent that you build with the Agents SDK a Linux sandbox as a tool, refer to [Sandbox](/agents/tools/sandbox/) in the Agents SDK documentation.
