@@ -156,7 +156,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as a job's input
 
    `nomixupload` makes `s3fs` upload the whole file when a command changes part of a large file, instead of copying the unchanged ranges into parts of other sizes.
 
-   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept that unmounting does not remove, and an instance supports a limited number of intercepts. Give each job its own sandbox name instead of mounting a different prefix in the same instance.
+   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept that unmounting does not remove, and an instance supports a [limited number of intercepts](/durable-objects/api/container/#interceptoutboundhttp). Give each job its own sandbox name instead of mounting a different prefix in the same instance.
 
 7. Add a method that runs a command in the mounted directory:
 

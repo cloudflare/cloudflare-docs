@@ -95,7 +95,7 @@ Mounts the source at `request.mountPath`. The result depends on what the path ho
 - Leftover state from a failed or canceled `mount()` with the same settings: `mount()` repairs it.
 - Another filesystem, or a mount with different settings: `mount()` throws `SandboxS3MountError` with code `S3_MOUNT_CONFLICT`. To change the settings, call `unmount()` first.
 
-Each new mount adds an outbound intercept to the container. Reusing a mount does not. A container has a limited number of outbound intercepts, and `unmount()` does not remove one. Repeated mounts with new settings in one container eventually fail.
+Each new mount adds one outbound intercept target to the container. Reusing a mount does not. A container accepts up to [64 intercept targets](/durable-objects/api/container/#interceptoutboundhttp), including the ones your own code registers, and `unmount()` does not remove one. Repeated mounts with new settings in one container eventually fail.
 
 `S3Mounts` does not retry a failed operation. Call `inspect()` before you retry.
 
