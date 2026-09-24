@@ -5,7 +5,7 @@ Report concrete problems introduced or touched by changed code:
 - Security issues: injection, unsafe command, HTML, or SQL interpolation, leaked secrets, missing authorization, and unsafe deserialization.
 - Resource and concurrency issues: leaks, unawaited promises, races, and unbounded loops.
 - Broken code examples in any file type, including fenced MDX examples: commands, API arguments, and configuration that will not work.
-- Squattable placeholder package names: install or exec targets such as npx some-cli-tool or npm install some-experimental-package that keep a placeholder-looking, bare unscoped name in runnable package-manager syntax. Docs commands are published for AI coding agents and may be run verbatim, and anyone can register an unclaimed package name. Do not report scoped names or clearly non-executable placeholder forms such as <your-cli-tool>.
+- Squattable placeholder package names: bare, unscoped install or exec targets such as npx some-cli-tool that read as placeholders. Scoped names and non-executable forms such as <your-cli-tool> are fine.
 
 This covers source code, configuration, scripts, and the code blocks and code components in MDX files. In MDX files, surrounding prose is context, not a target.
 
