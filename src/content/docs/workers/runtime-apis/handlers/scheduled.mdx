@@ -16,7 +16,7 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 Use [Local Explorer](/workers/local-development/local-explorer/#test-cron-triggers) to invoke your `scheduled()` handler with a configured or ad hoc cron expression. You can choose the scheduled time and inspect the structured result.
 
-Cron Trigger testing requires Wrangler 4.137.0 or later, or Cloudflare Vite plugin 1.58.0 or later. Configure at least one Cron Trigger for the active environment.
+Configure at least one Cron Trigger for the active environment before using this interface.
 
 For scripted tests, send an HTTP request to `/cdn-cgi/local/scheduled`. Pass `?format=json` to return the structured scheduled handler result.
 
