@@ -40,7 +40,7 @@ Each workspace maps to one Durable Object running the Agents SDK. This object is
 
 A separate per-user Durable Object stores profile settings, the workspace registry, integrations, and grants. One user owns many independently stateful workspaces.
 
-The workspace coordinates resources but does not store everything. The workspace picks an execution environment per task: Dynamic Workers for bounded [Code Mode](/agents/model-context-protocol/), Sandbox SDK containers for a full shell and build environment, and Browser Run for isolated browser sessions. Large files and reusable outputs live in a versioned file service, and sharing grants are kept separate from the output bytes so access can be granted or revoked without moving the file. Sandbox backups and shared organizational context use [R2](/r2/). Usage and lifecycle events use [Workers Analytics Engine](/analytics/analytics-engine/) or an external system.
+The workspace coordinates resources but does not store everything. The workspace picks an execution environment per task: Dynamic Workers for bounded [Code Mode](/agents/model-context-protocol/), [Linux sandboxes](/sandbox/) for a full shell and build environment, and Browser Run for isolated browser sessions. Large files and reusable outputs live in a versioned file service, and sharing grants are kept separate from the output bytes so access can be granted or revoked without moving the file. Sandbox backups and shared organizational context use [R2](/r2/). Usage and lifecycle events use [Workers Analytics Engine](/analytics/analytics-engine/) or an external system.
 
 | Scope                          | Cloudflare primitive          | Responsibility                                                  | Lifetime                   |
 | ------------------------------ | ----------------------------- | --------------------------------------------------------------- | -------------------------- |
@@ -48,7 +48,7 @@ The workspace coordinates resources but does not store everything. The workspace
 | User                           | Durable Object                | Profile, workspace registry, integrations, grants, and activity | Durable                    |
 | Workspace                      | Agents SDK and Durable Object | Agent state, event queue, and turn orchestration                | Durable                    |
 | Code Mode execution            | Dynamic Worker                | Bounded code and tool composition                               | Ephemeral                  |
-| Active development environment | Sandbox SDK container         | Shell, builds, previews, and coding sessions                    | Created on demand          |
+| Active development environment | Linux sandbox (Containers)    | Shell, builds, previews, and coding sessions                    | Created on demand          |
 | Browser session                | Browser Run                   | Web navigation, interaction, screenshots, and PDF rendering     | Session scoped             |
 | User files                     | Versioned file service        | Files, saved outputs, and revisions                             | Durable                    |
 | Skills and context library     | Read-only object store (R2)   | Curated skills, reference context, and commands                 | Published centrally        |
@@ -75,7 +75,7 @@ Treat model output, tool output, and generated code as untrusted. Apply controls
 - **Identity:** Use Access for browser sessions and MCP portal connections. Verify asynchronous channels before routing their events to a workspace.
 - **Authorization:** Check user ownership before resolving a workspace, opening a terminal, reading an output, or serving a preview.
 - **Tool access:** Use MCP server portal policies, tool allowlists, OAuth, grants, and consent for sensitive operations.
-- **Code isolation:** Run bounded code in Dynamic Workers and full development workloads in Sandbox SDK containers.
+- **Code isolation:** Run bounded code in Dynamic Workers and full development workloads in Linux sandboxes.
 - **Credential isolation:** Keep model and tool credentials in platform services. Never expose them to generated code or model context.
 - **Curated inputs:** Publish skills and context to a read-only, versioned store. A workspace cannot mutate the shared library.
 - **Auditability:** Record model usage, tool calls, consent decisions, output sharing, and execution lifecycle events.
@@ -86,7 +86,7 @@ Treat model output, tool output, and generated code as untrusted. Apply controls
 - [AI Gateway](/ai-gateway/)
 - [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
 - [Dynamic Workers](/dynamic-workers/)
-- [Sandbox SDK](/sandbox/sdk/)
+- [Sandboxes](/sandbox/)
 - [Browser Run](/browser-run/)
 - [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/)
 - [Enterprise AI Vibe Coding Platform](/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform/)

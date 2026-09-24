@@ -5,7 +5,7 @@ products: [ai-gateway, workers-for-platforms]
 sidebar:
   order: 0
   label: AI Vibe Coding Platform
-updated: 2025-08-28
+updated: 2026-09-24
 description: Cloudflare's low-latency, fully serverless compute platform, Workers offers powerful capabilities to enable A/B testing using a server-side implementation.
 ---
 
@@ -56,7 +56,12 @@ If you’re building an AI code generator and want it to be more knowledgeable a
 
 ## Development environment for executing AI-generated code
 
-Both the [Sandbox SDK](/sandbox/sdk/) and [Containers](/containers/) provide secure, isolated environments for executing untrusted AI-generated code. They offer:
+[Sandboxes](/sandbox/) run untrusted AI-generated code in one of two environments:
+
+- [Dynamic Workers](/dynamic-workers/) run generated JavaScript or TypeScript in a new Worker that can reach only the APIs you grant.
+- Linux sandboxes run on [Containers](/containers/). Each one has a shell, a filesystem, and processes, for code that installs packages, builds a project, or runs a development server.
+
+For how to choose, refer to [Choose a sandbox environment](/sandbox/choose-an-environment/). Linux sandboxes offer:
 
 - **Strong isolation and sandboxing controls** to prevent malicious or buggy code from affecting other instances
 - **Fast startup times** to enable rapid iteration cycles with real-time feedback
@@ -64,9 +69,9 @@ Both the [Sandbox SDK](/sandbox/sdk/) and [Containers](/containers/) provide sec
 - **Preview URLs** to allow users to test applications during development
 - **Global edge deployment** on Cloudflare's network for low-latency execution worldwide
 
-**The Sandbox SDK provides a fully-managed solution** that works out-of-the-box, with [pre-built APIs](/sandbox/sdk/api/) for code execution, output formatting, and developer tools, making it ideal for most AI code execution use cases.
+Each user gets their own sandbox. A code generation Worker sends code updates to it, and a Worker serves the application that runs in each sandbox on a preview URL:
 
-![Figure 3: Vibe Code Development - Sandbox SDK](~/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg)
+![Figure 3: Vibe code development in a sandbox](~/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg)
 
 **Containers offer complete runtime control** through custom Docker images, allowing you to run any language or framework with up to 4GB RAM and dedicated vCPU and are best when you need custom runtimes or resource-intensive workloads.
 
