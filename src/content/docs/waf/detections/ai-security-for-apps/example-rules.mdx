@@ -10,18 +10,18 @@ sidebar:
   order: 8
 ---
 
-## Return a custom error when a user asks about violent or hateful content
+## Return a custom error for violent or hateful content
 
-A customer support chatbot should not engage with prompts about violent crimes or hate speech. This [custom rule](/waf/custom-rules/create-dashboard/) blocks the request and returns a JSON response that your application can parse and display to the user.
+A customer support chatbot should not engage with prompts about violence or hate speech. This [custom rule](/waf/custom-rules/create-dashboard/) blocks the request and returns a JSON response that your application can parse and display to the user.
 
 - **When incoming requests match**:
 
-  | Field                       | Operator | Value                            |
-  | --------------------------- | -------- | -------------------------------- |
-  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
+  | Field                       | Operator | Value                                            |
+  | --------------------------- | -------- | ------------------------------------------------ |
+  | LLM Unsafe topic categories | is in    | `VIOLENCE_AND_WEAPONS` `HATE_AND_DISCRIMINATION` |
 
   Expression when using the editor:<br />
-  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"VIOLENCE_AND_WEAPONS" "HATE_AND_DISCRIMINATION"}))`
 
 - **Action**: _Block_
 - **With response type**: Custom JSON

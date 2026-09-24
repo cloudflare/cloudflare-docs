@@ -1675,27 +1675,19 @@ entries:
     description: |-
       The possible values are the following:
 
-      | Value | Category name             | Description                                                                                                       |
-      | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-      | `S1`  | Violent crimes            | Violent crimes against people or animals.                                                                         |
-      | `S2`  | Non-violent crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
-      | `S3`  | Sex-related crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
-      | `S4`  | Child sexual exploitation | Sexual exploitation of children.                                                                                  |
-      | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
-      | `S6`  | Specialized advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
-      | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
-      | `S8`  | Intellectual property     | Violate a third party's intellectual property rights.                                                             |
-      | `S9`  | Indiscriminate weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
-      | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
-      | `S11` | Suicide and self-harm     | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
-      | `S12` | Sexual content            | Erotic content.                                                                                                   |
-      | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
-      | `S14` | Code interpreter abuse    | Misuse of code execution capabilities.                                                                            |
+      | Value                     | Category name           | Description                                                                                                                                                                                                                       |
+      | ------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | `VIOLENCE_AND_WEAPONS`    | Violence and weapons    | Content that promotes, glorifies, threatens, or provides instructions for physical violence or the acquisition, creation, or use of weapons.                                                                                      |
+      | `NON_VIOLENT_CRIME`       | Non-violent crime       | Content that encourages or facilitates nonviolent crimes, including fraud, theft, hacking, and the illegal drug trade.                                                                                                            |
+      | `SEXUAL_CONTENT`          | Sexual content          | Sexually explicit or suggestive content, including sexual exploitation, trafficking, assault, harassment, and other non-consensual sexual acts involving adults.                                                                  |
+      | `CHILD_SAFETY`            | Child safety            | Content that sexualizes, exploits, abuses, grooms, or otherwise endangers minors.                                                                                                                                                 |
+      | `HATE_AND_DISCRIMINATION` | Hate and discrimination | Content that attacks, demeans, discriminates against, or incites hatred toward people based on protected characteristics. This category also includes content that promotes dishonesty, manipulation, or professional misconduct. |
+      | `SELF_HARM_AND_SUICIDE`   | Self-harm and suicide   | Content that encourages, glorifies, or provides instructions for self-harm or suicide.                                                                                                                                            |
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
-      # Matches requests where an unsafe topic categorized as "S2" (Non-violent crimes) or "S10" (Hate) was detected in the LLM prompt:
-      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
+      # Matches requests where an unsafe topic categorized as "NON_VIOLENT_CRIME" or "HATE_AND_DISCRIMINATION" was detected in the LLM prompt:
+      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"NON_VIOLENT_CRIME" "HATE_AND_DISCRIMINATION"}))
 
   - name: cf.llm.prompt.injection_score
     data_type: Number
