@@ -1,6 +1,6 @@
 ---
 title: Preview a web application
-description: Run a web server in a Linux sandbox and open it through your Worker.
+description: Open a web server that runs in a Linux sandbox through your Worker, keep its WebSocket connections open, and share it with a link.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -9,226 +9,371 @@ products:
   - workers
   - containers
   - durable-objects
-reviewed: 2026-09-23
+reviewed: 2026-09-24
 ---
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Run a web server in a sandbox and open it in your browser. This guide starts a Node.js server in Linux, sends preview requests to it through your Worker, and stops the instance when you delete the preview.
+Open a web server that runs in a sandbox, such as an application a coding agent is building, in a browser. Your Worker forwards each request under `/previews/<NAME>/` to the server, which has no public port.
 
 ## Prerequisites
 
-Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
 
-:::caution
-The example does not authenticate incoming requests. Authenticate callers before production so other people cannot start or stop previews.
-For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
-
-Code in a preview runs in the visitor's browser under your Worker's hostname. Serve previews from a hostname that does not host your application, its cookies, or its APIs. Refer to [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/).
-:::
-
-## Start a preview
+## Forward requests to the server
 
 <Steps>
 
-1. Replace `src/index.ts` with the following Worker:
+1. Choose the command that starts your server. This guide runs a small Node.js server so you can check the result. Replace it with your own command, such as `npm run dev`:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { DurableObject } from "cloudflare:workers";
-
    const port = 8080;
-   const idleTimeout = 5 * 60 * 1000;
 
-   const app = `
+   const server = `
    const { createServer } = require("node:http");
 
    process.on("SIGTERM", () => process.exit(0));
 
    createServer((request, response) => {
-   	if (request.url === "/api/status") {
-   		response.writeHead(200, { "Content-Type": "application/json" });
-   		response.end(JSON.stringify({
-   			pid: process.pid,
-   			uptime: Math.round(process.uptime()),
-   		}));
-   		return;
-   	}
-
-   	response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+   	response.setHeader("Content-Type", "application/json");
    	response.end(
-   		"<!doctype html><title>Preview</title><h1>Hello from a sandbox</h1>" +
-   			"<pre id='status'></pre><script>fetch('api/status').then((r) => r.text())" +
-   			".then((text) => { document.getElementById('status').textContent = text; });</script>",
+   		JSON.stringify({ path: request.url, uptime: Math.round(process.uptime()) }),
    	);
-   }).listen(${port}, "0.0.0.0");
+   }).listen(8080, "0.0.0.0");
    `;
+   ```
 
-   export class MyContainer extends DurableObject<Env> {
-   	private ready = false;
+   </TypeScriptExample>
 
-   	private get container(): Container {
-   		const container = this.ctx.container;
+   The server must listen on `0.0.0.0`, because `getTcpPort()` cannot reach a server that listens only on `127.0.0.1`. Many development servers listen on `localhost` by default and provide an option to change the address. The server runs as the main process, so it must exit when it receives `SIGTERM`.
 
-   		if (!container) {
-   			throw new Error("The container binding is not configured");
-   		}
+2. In your Durable Object, start the server and wait until it responds:
 
-   		return container;
+   ```ts title="src/index.ts"
+   private ready = false;
+
+   private async startServer(): Promise<Container> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
    	}
 
-   	private async waitForServer(): Promise<boolean> {
-   		const deadline = Date.now() + 30_000;
-
-   		while (Date.now() < deadline) {
-   			try {
-   				const response = await this.container
-   					.getTcpPort(port)
-   					.fetch("http://container/", { signal: AbortSignal.timeout(1_000) });
-   				await response.body?.cancel();
-   				return true;
-   			} catch {
-   				await scheduler.wait(500);
-   			}
-   		}
-
-   		return false;
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["node", "--eval", server],
+   			enableInternet: false,
+   		});
+   		this.ready = false;
    	}
 
-   	async fetch(request: Request): Promise<Response> {
-   		if (!this.container.running) {
-   			this.container.start({
-   				image: "cloudflare/debian-trixie",
-   				entrypoint: ["node", "--eval", app],
-   				enableInternet: false,
-   			});
-   			this.ready = false;
-   		}
+   	await container.setInactivityTimeout(5 * 60 * 1000);
 
-   		await this.container.setInactivityTimeout(idleTimeout);
+   	const deadline = Date.now() + 30_000;
 
-   		if (!this.ready) {
-   			this.ready = await this.waitForServer();
-
-   			if (!this.ready) {
-   				return new Response("The preview did not start", { status: 503 });
-   			}
-   		}
-
+   	while (!this.ready && Date.now() < deadline) {
    		try {
-   			return await this.container.getTcpPort(port).fetch(request);
+   			const response = await container
+   				.getTcpPort(port)
+   				.fetch("http://container/", { signal: AbortSignal.timeout(1_000) });
+   			await response.body?.cancel();
+   			this.ready = true;
    		} catch {
-   			this.ready = false;
-   			return new Response("The preview is not responding", { status: 502 });
+   			await scheduler.wait(500);
    		}
    	}
 
-   	async stop(): Promise<void> {
-   		if (this.container.running) {
-   			await this.container.destroy();
-   		}
+   	return container;
+   }
+   ```
+
+   `start()` returns before the server listens, so the method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check. The five-minute inactivity timeout keeps the server running between visits. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
+
+3. Forward requests from the Durable Object's `fetch()` handler:
+
+   ```ts title="src/index.ts"
+   async fetch(request: Request): Promise<Response> {
+   	const container = await this.startServer();
+
+   	if (!this.ready) {
+   		return new Response("The preview did not start", { status: 503 });
    	}
+
+   	try {
+   		return await container.getTcpPort(port).fetch(request);
+   	} catch {
+   		this.ready = false;
+   		return new Response("The preview is not responding", { status: 502 });
+   	}
+   }
+   ```
+
+   The Durable Object forwards each request once, because a retry could send a `POST` twice. When the server stops responding, the Durable Object responds with `502` and checks the server again on the next request.
+
+4. Route preview paths from your Worker to the Durable Object:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   function forward(
+   	sandbox: DurableObjectStub<MyContainer>,
+   	request: Request,
+   	path: string | undefined,
+   ): Promise<Response> | Response {
+   	const url = new URL(request.url);
+
+   	if (!path) {
+   		url.pathname += "/";
+   		return Response.redirect(url.toString(), 308);
+   	}
+
+   	const target = new URL(path + url.search, "http://container");
+   	return sandbox.fetch(new Request(target, request));
    }
 
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/previews\/([^/]+)(\/.*)?$/.exec(url.pathname);
+   		const preview = /^\/previews\/([^/]+)(\/.*)?$/.exec(url.pathname);
 
-   		if (!match) {
+   		if (!preview) {
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
-   		const path = match[2];
-
-   		if (!path && request.method === "DELETE") {
-   			await sandbox.stop();
-   			return new Response(null, { status: 204 });
-   		}
-
-   		if (!path) {
-   			url.pathname += "/";
-   			return Response.redirect(url.toString(), 308);
-   		}
-
-   		const target = new URL(path + url.search, "http://container");
-   		return sandbox.fetch(new Request(target, request));
+   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(preview[1]));
+   		return forward(sandbox, request, preview[2]);
    	},
    } satisfies ExportedHandler<Env>;
    ```
 
    </TypeScriptExample>
 
-   Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests.
+   The server receives each path without the `/previews/<NAME>` prefix. Links that start with `/` leave the preview, so use relative links or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
 
-   The Durable Object sets a five-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
+   The route reads the sandbox name from the URL to keep the example short. Authenticate callers before they reach a preview, and serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/security/#output-carries-the-same-risk).
 
-2. Deploy the Worker:
+5. Deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-3. Open the preview named `ada` in your browser. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
-
-   ```txt
-   https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada/
-   ```
-
-   The page shows **Hello from a sandbox** and the server status. The first request waits until the server accepts connections.
-
-4. Request the server status:
+6. Request a page from the preview named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
 
    ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada/api/status
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada/hello
    ```
 
    ```json output
-   { "pid": 1, "uptime": 2 }
+   { "path": "/hello", "uptime": 0 }
    ```
 
-   Wait 30 seconds and send the same request again:
+   Wait a few seconds and send the same request again. The uptime increases, because the same server handles both requests:
 
    ```json output
-   { "pid": 1, "uptime": 32 }
+   { "path": "/hello", "uptime": 5 }
    ```
 
-   The process ID stays the same and the uptime increases. The same server handled both requests.
+</Steps>
 
-5. Delete the preview:
+## Keep WebSocket connections open
+
+The `fetch()` handler in the previous section passes WebSocket upgrade requests to the server, so WebSocket connections work. A connection that only passes through the Durable Object does not keep the sandbox running. When the inactivity timeout ends, Cloudflare stops the instance and the connection closes.
+
+To keep the sandbox running while a page has a connection open, accept both ends of the connection in the Durable Object:
+
+<Steps>
+
+1. Add a function that relays messages between the visitor and the server:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   function bridge(upstream: WebSocket): Response {
+   	const [client, server] = Object.values(new WebSocketPair());
+
+   	upstream.binaryType = "arraybuffer";
+   	server.binaryType = "arraybuffer";
+   	upstream.accept();
+   	server.accept();
+
+   	// A listener that throws drops the connection, so these never throw.
+   	const relay = (from: WebSocket, to: WebSocket) => {
+   		from.addEventListener("message", (event) => {
+   			try {
+   				to.send(event.data);
+   			} catch {
+   				from.close(1011, "The other side closed");
+   			}
+   		});
+   		from.addEventListener("close", (event) => {
+   			// 1005 and 1006 report a missing or abnormal close and cannot be sent.
+   			const code =
+   				event.code === 1005 || event.code === 1006 ? 1000 : event.code;
+   			try {
+   				to.close(code, event.reason);
+   			} catch {}
+   		});
+   	};
+
+   	relay(server, upstream);
+   	relay(upstream, server);
+
+   	return new Response(null, { status: 101, webSocket: client });
+   }
+   ```
+
+   </TypeScriptExample>
+
+   Binary messages arrive as `Blob` objects unless `binaryType` is `"arraybuffer"`.
+
+2. In the Durable Object's `fetch()` handler, bridge responses that open a WebSocket:
+
+   ```ts title="src/index.ts" {2-3}
+   try {
+   	const response = await container.getTcpPort(port).fetch(request);
+   	return response.webSocket ? bridge(response.webSocket) : response;
+   } catch {
+   ```
+
+</Steps>
+
+An accepted connection keeps the Durable Object active, so the sandbox keeps running while any page has a connection open, even when no messages arrive. After the last connection closes, the inactivity timeout applies again.
+
+## Use hot reloading with a development server
+
+Development servers such as [Vite](https://vite.dev/) reload the page over a WebSocket. With the bridge from the previous section, the reload connection reaches the server. Two server settings decide whether hot reloading works:
+
+- The server checks the `Host` header of each request. Vite rejects hostnames that it does not know, so add the preview hostname to [`server.allowedHosts`](https://vite.dev/config/server-options#server-allowedhosts). Under `/previews/<NAME>/`, requests arrive with the `Host` header `container`.
+- The server builds absolute URLs for its assets and for the reload connection from its base path. Under `/previews/<NAME>/`, those URLs leave the preview. [Serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/), where paths reach the server unchanged.
+
+For example, a Vite configuration for previews on their own hostnames under `example-previews.com`:
+
+```js title="vite.config.js"
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	server: {
+		host: "0.0.0.0",
+		port: 8080,
+		allowedHosts: [".example-previews.com"],
+	},
+});
+```
+
+## Share a preview with a link
+
+Give someone access to one preview for a limited time. The Durable Object stores random tokens with an expiry time, and the Worker forwards requests under `/shared/<NAME>/<TOKEN>/` only while the token is valid.
+
+<Steps>
+
+1. Add methods that create and check tokens to your Durable Object:
+
+   ```ts title="src/index.ts"
+   async share(ttl: number): Promise<string> {
+   	const token = crypto.randomUUID();
+   	await this.ctx.storage.put(`share:${token}`, Date.now() + ttl);
+   	return token;
+   }
+
+   async isShared(token: string): Promise<boolean> {
+   	const key = `share:${token}`;
+   	const expires = await this.ctx.storage.get<number>(key);
+
+   	if (expires !== undefined && expires <= Date.now()) {
+   		await this.ctx.storage.delete(key);
+   		return false;
+   	}
+
+   	return expires !== undefined;
+   }
+   ```
+
+2. In your Worker's `fetch()` handler, add routes that create a link and serve shared previews, before the `404` response:
+
+   ```ts title="src/index.ts"
+   const share = /^\/shares\/([^/]+)$/.exec(url.pathname);
+
+   if (share && request.method === "POST") {
+   	const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(share[1]));
+   	const token = await sandbox.share(60 * 60 * 1000);
+   	return Response.json({ url: `${url.origin}/shared/${share[1]}/${token}/` });
+   }
+
+   const shared = /^\/shared\/([^/]+)\/([^/]+)(\/.*)?$/.exec(url.pathname);
+
+   if (shared) {
+   	const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(shared[1]));
+
+   	if (!(await sandbox.isShared(shared[2]))) {
+   		return new Response("Not found", { status: 404 });
+   	}
+
+   	return forward(sandbox, request, shared[3]);
+   }
+   ```
+
+   Only the owner of a preview should create links to it, so authenticate the `POST` request. The shared route needs no authentication: the token is the permission.
+
+3. Deploy the Worker, then create a link to the preview named `ada`:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/shares/ada --request POST
+   ```
+
+   ```json output
+   {
+   	"url": "https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/shared/ada/<TOKEN>/"
+   }
+   ```
+
+   Open the URL in a browser. The preview loads for one hour. After that, and for any other token or preview name, the Worker responds with `404`.
+
+</Steps>
+
+Anyone with the link can open the preview until it expires. Tokens belong to one preview name. To revoke a link early, delete its key from Durable Object storage.
+
+## Stop a preview
+
+Stop the server when the preview is no longer needed, instead of waiting for the inactivity timeout:
+
+<Steps>
+
+1. Add a method that stops the container to your Durable Object:
+
+   ```ts title="src/index.ts"
+   async stop(): Promise<void> {
+   	if (this.ctx.container?.running) {
+   		await this.ctx.container.destroy();
+   	}
+
+   	this.ready = false;
+   }
+   ```
+
+2. In your Worker, call it for `DELETE /previews/<NAME>`, before forwarding:
+
+   ```ts title="src/index.ts"
+   if (!preview[2] && request.method === "DELETE") {
+   	await sandbox.stop();
+   	return new Response(null, { status: 204 });
+   }
+   ```
+
+3. Deploy the Worker, and stop the preview named `ada`:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada --request DELETE
    ```
 
-   The Worker responds with `204` and stops the Linux instance. The next request to `/previews/ada/` starts a new server with an uptime of `0`.
+   The Worker responds with `204`. The next request to the preview starts a new server, with an uptime of `0`.
 
 </Steps>
 
-## How requests reach the preview
+## Related resources
 
-The Worker removes `/previews/<NAME>` from the path and sends the request to that preview's Durable Object. The Durable Object uses `getTcpPort()` to forward the request to port `8080` in the Linux instance.
-
-The instance does not expose a public port. Requests from the Internet reach the server only through your Worker, so the Worker can authenticate callers before it forwards them.
-
-The server listens on `0.0.0.0`. A server that listens only on `127.0.0.1` does not receive requests from `getTcpPort()`.
-
-After it starts an instance, the Durable Object sends `GET /` to the server until the server responds. Any HTTP response counts as ready. If the server does not respond within 30 seconds, the Durable Object responds with `503`.
-
-The Durable Object forwards each visitor request once. Retrying a request that fails could send a `POST` or other request twice. If the server stops responding, the Durable Object responds with `502` and checks the server again on the next request. If the server exits, the instance stops, and the next request starts a new one.
-
-## Adapt the preview
-
-Replace the `entrypoint` with the command that starts your web server. Configure the server to listen on `0.0.0.0` and port `8080`. Many development servers listen on `localhost` by default and provide a host option.
-
-The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, configure your application's base path, or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
-
-Your server runs as the main process, so it must exit promptly on `SIGTERM`, as the example server does. For when an instance stops, refer to [Sandbox lifetime](/sandbox/lifetime/#what-stops-an-instance).
-
-When the instance stops, changes to its filesystem are lost. To keep a workspace between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
-
-## Next steps
-
-- To run a repository's tests in a sandbox, refer to [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/).
-- To stream a command's output instead of serving HTTP, refer to [Stream command output](/sandbox/commands/stream-command-output/).
-- To connect over TCP instead of HTTP, refer to [`getTcpPort`](/durable-objects/api/container/#gettcpport).
+- [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/)
+- [Sandbox lifetime](/sandbox/lifetime/)
+- [Sandbox security](/sandbox/security/)
+- [`getTcpPort()`](/durable-objects/api/container/#gettcpport)
