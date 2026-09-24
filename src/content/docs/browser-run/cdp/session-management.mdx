@@ -21,9 +21,9 @@ When your code runs in a Worker, you can use the typed [Browser binding API](/br
 ## Step 1: Acquire a browser session
 
 Create a new browser session using the `POST /devtools/browser` endpoint. The session will remain active for the specified keep-alive time (in this example, 10 minutes).
-browser-run
+
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser"
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-run/devtools/browser"
 	method="POST"
 	headers={{
 		Authorization: "Bearer {api_token}",
@@ -34,9 +34,9 @@ browser-run
 />
 
 ```json
-{browser-run
+{
 	"sessionId": "1909cef7-23e8-4394-bc31-27404bf4348f",
-	"webSocketDebuggerUrl": "wss://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/devtools/browser/1909cef7-23e8-4394-bc31-27404bf4348f"
+	"webSocketDebuggerUrl": "wss://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/devtools/browser/1909cef7-23e8-4394-bc31-27404bf4348f"
 }
 ```
 
@@ -45,9 +45,9 @@ Save the `sessionId` from the response. You will use it in subsequent requests.
 ## Step 2: Create a tab with a specific URL
 
 Open a new tab in your browser session and navigate to a specific URL using the `PUT /devtools/browser/{session_id}/json/new` endpoint.
-browser-run
+
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser/SESSION_ID/json/new"
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-run/devtools/browser/SESSION_ID/json/new"
 	method="PUT"
 	headers={{
 		Authorization: "Bearer {api_token}",
@@ -72,9 +72,9 @@ browser-run
 ## Step 3: List all targets
 
 List all targets (tabs) in your session to verify the tab was created and get the `devtoolsFrontendUrl`.
-browser-run
+
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser/SESSION_ID/json/list"
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-run/devtools/browser/SESSION_ID/json/list"
 	method="GET"
 	headers={{
 		Authorization: "Bearer {api_token}",
@@ -115,9 +115,9 @@ Once opened, the DevTools UI will load and you can:
 ## Step 5: Clean up
 
 When you are done, close the browser session to release resources.
-browser-run
+
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-rendering/devtools/browser/SESSION_ID"
+	url="https://api.cloudflare.com/client/v4/accounts/ACCOUNT_ID/browser-run/devtools/browser/SESSION_ID"
 	method="DELETE"
 	headers={{
 		Authorization: "Bearer {api_token}",
