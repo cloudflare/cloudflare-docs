@@ -547,11 +547,7 @@ The task files live in `/workspace/task`, outside the repository, so they do not
 
 ### Keep the sandbox running
 
-Requests to the container keep the sandbox running. A process that runs inside the container does not. Without requests, the container stops after the [inactivity timeout](/durable-objects/api/container/#setinactivitytimeout), and Claude Code stops with it.
-
-`startTask()` schedules an [alarm](/durable-objects/api/alarms/) that runs every minute while the task runs. Each alarm checks the task through the container, which counts as a request. The alarm stops rescheduling itself when the task ends, and the container then stops after 30 minutes without requests.
-
-A new Durable Object instance does not keep the timeout that an earlier instance set. The constructor sets it again whenever it finds the container running.
+Claude Code running in the container does not keep the container running. `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute while it runs, and stops rescheduling when the task ends. The constructor sets the 30-minute inactivity timeout again whenever it finds the container running. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
 
 ### Read the outcome
 

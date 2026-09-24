@@ -357,7 +357,7 @@ Run `exit` in the shell, and the session ends. The tmux client exits, and the Du
 
 The Durable Object does not abort `exec()` for a client that has already exited, because signaling an exited process records an internal error in [Workers Logs](/workers/observability/logs/workers-logs/).
 
-An open terminal keeps the sandbox running, even when nobody types. After the last terminal closes, the Linux instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout). When it stops, every tmux session ends, and files that are not in a [snapshot](/sandbox/files/save-and-restore-a-workspace/) are lost.
+An open terminal keeps the sandbox running, even when nobody types. When the Linux instance stops, every tmux session ends. For what stops an instance and which files remain, refer to [Sandbox lifetime](/sandbox/lifetime/).
 
 ## Adapt the terminal
 

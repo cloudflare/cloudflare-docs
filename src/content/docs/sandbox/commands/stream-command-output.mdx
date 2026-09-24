@@ -177,7 +177,7 @@ The Worker reads standard output and standard error at the same time. If one str
 
 When the client disconnects, the next write fails and `writer.closed` rejects. The Worker then calls `kill()`, which sends `SIGTERM` to the process that `exec()` started. The keep-alive comment makes that write happen even when the process writes nothing.
 
-The sandbox starts with `sleep infinity` as its main process. If the main process exits, the Linux instance stops and ends every running command. `exec()` waits for a new instance to start, so the Worker can run the command right after `start()`.
+The sandbox starts with `sleep infinity` as its main process, because the Linux instance stops when its main process exits. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#what-stops-an-instance). `exec()` waits for a new instance to start, so the Worker can run the command right after `start()`.
 
 ## Adapt the stream
 

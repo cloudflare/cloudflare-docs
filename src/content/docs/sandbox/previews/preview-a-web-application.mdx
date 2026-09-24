@@ -163,7 +163,7 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
 
    Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests.
 
-   [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for five minutes after the Durable Object becomes inactive. Without it, Cloudflare stops the instance shortly after the last request. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
+   The Durable Object sets a five-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#set-the-timeout-on-every-request).
 
 2. Deploy the Worker:
 
@@ -223,7 +223,7 @@ Replace the `entrypoint` with the command that starts your web server. Configure
 
 The server receives paths without the `/previews/<NAME>` prefix. Links and requests that start with `/` leave the preview. Use relative URLs, configure your application's base path, or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
 
-When Cloudflare stops an instance, the main process receives `SIGTERM` and must exit promptly. A process that runs as process ID 1 must handle `SIGTERM` to exit on that signal. The example server exits when it receives `SIGTERM`.
+Your server runs as the main process, so it must exit promptly on `SIGTERM`, as the example server does. For when an instance stops, refer to [Sandbox lifetime](/sandbox/lifetime/#what-stops-an-instance).
 
 When the instance stops, changes to its filesystem are lost. To keep a workspace between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
