@@ -325,6 +325,49 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark)
 
 </Tabs>
 
+## Snapshot API
+
+The snapshot API lets a Durable Object capture its SQLite storage as a snapshot, and restore that snapshot into another Durable Object. Snapshots work only for [SQLite-backed Durable Objects](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class).
+
+A snapshot is an opaque, non-serializable `DurableObjectSnapshot`. Pass it to another Durable Object over [RPC](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/); do not store it or attempt to inspect its contents.
+
+Snapshot and restore is the building block for higher-level workflows, such as seeding a preview Durable Object with production data, testing a schema migration on a copy, or splitting a subset of data into its own object. For a complete walkthrough, refer to [Snapshot and restore storage](/durable-objects/best-practices/snapshot-and-restore-durable-object-storage/).
+
+### `snapshot`
+
+<code>ctx.storage.snapshot(bookmark?: <Type text="string" />)</code>: <Type text="Promise<DurableObjectSnapshot>" />
+
+- Captures the calling Durable Object's storage as of the given [bookmark](#pitr-point-in-time-recovery-api), or as of now if no bookmark is given. The bookmark is subject to the same 30-day retention window as the [PITR API](#pitr-point-in-time-recovery-api).
+- To restore the snapshot into another Durable Object, pass it over RPC and call [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore) followed by [`ctx.abort()`](/durable-objects/api/state/#abort) on the destination.
+
+:::caution[Restore snapshots promptly]
+
+Complete the restore soon after creating a snapshot. A destination Durable Object that does not start a new session before the snapshot's retention window closes cannot recover, and the name or ID it was restoring into becomes permanently unusable.
+
+:::
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async snapshot(): Promise<DurableObjectSnapshot> {
+		return this.ctx.storage.snapshot();
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- An optional bookmark of type `string`, from [`getCurrentBookmark`](#getcurrentbookmark) or [`getBookmarkForTime`](#getbookmarkfortime). <MetaInfo text="Optional" />
+
+#### Return values
+
+- A `Promise<DurableObjectSnapshot>`.
+
 ## Synchronous KV API
 
 <Render file="api-sync-kv" product="durable-objects" />

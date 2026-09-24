@@ -1,0 +1,246 @@
+---
+title: Snapshot and restore storage
+description: Snapshot a Durable Object's storage and restore it into another Durable Object.
+pcx_content_type: concept
+sidebar:
+  order: 7
+products:
+  - durable-objects
+---
+
+import { TypeScriptExample } from "~/components";
+
+A [SQLite-backed Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) can capture its storage as a snapshot, and restore that snapshot into another Durable Object. Creating a snapshot does not depend on the size of the source database, and restoring bills the same as normal storage reads and writes.
+
+Snapshot and restore is the building block for higher-level workflows: seed a preview Durable Object with production data, test a schema migration on a copy, export data without adding load to the primary object, or split a subset of data into its own object.
+
+## How snapshot and restore works
+
+1. Call the source Durable Object to create a snapshot with [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot).
+2. Pass that snapshot to an RPC method on the destination Durable Object.
+3. The destination schedules the restore with [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore) and calls [`ctx.abort()`](/durable-objects/api/state/#abort).
+4. Call another method on the destination. That call starts a new session backed by the copied storage.
+
+`ctx.abort()` always throws, including when the restore succeeds, because it immediately terminates the destination's current session and that termination cannot be caught from inside the session. The caller making the RPC call can catch the propagated error. The following examples use a specific abort message so they do not mistake unrelated failures for a successful restore.
+
+Each example is a complete Worker module and assumes `MY_DURABLE_OBJECT` is configured as a Durable Object binding.
+
+:::note[Alarms are not restored]
+
+Restoring replaces the destination's entire SQLite database, but scheduled alarms on the destination are not carried over from the source.
+
+:::
+
+## Restore a snapshot into another Durable Object
+
+This is the smallest complete example. A Worker snapshots `production` and restores it into `preview`, then calls `getValue()` to start the restored destination session and read the copied data.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const RESTORE_SCHEDULED = "Snapshot restore scheduled";
+
+interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	async snapshot(): Promise<DurableObjectSnapshot> {
+		return this.ctx.storage.snapshot();
+	}
+
+	async copy(snapshot: DurableObjectSnapshot): Promise<void> {
+		await this.ctx.onNextSessionRestore(snapshot);
+		this.ctx.abort(RESTORE_SCHEDULED);
+	}
+
+	async getValue(key: string): Promise<unknown> {
+		return this.ctx.storage.get(key);
+	}
+}
+
+async function copyStorage(
+	source: DurableObjectStub<MyDurableObject>,
+	destination: DurableObjectStub<MyDurableObject>,
+): Promise<void> {
+	const snapshot = await source.snapshot();
+	try {
+		await destination.copy(snapshot);
+	} catch (error) {
+		if (error instanceof Error && error.message === RESTORE_SCHEDULED) {
+			return;
+		}
+		throw error;
+	}
+	throw new Error("copy() returned without resetting the destination");
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const source = env.MY_DURABLE_OBJECT.getByName("production");
+		const destination = env.MY_DURABLE_OBJECT.getByName("preview");
+
+		await copyStorage(source, destination);
+
+		// This starts a new destination session using the copied storage.
+		const greeting = await destination.getValue("greeting");
+		return Response.json({ greeting });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Create a preview Durable Object
+
+This example creates a Durable Object for a pull request, places it near Europe, and rewrites destination-specific metadata after the restore. Do not expose the preview to other traffic until `initializePreview()` succeeds.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const RESTORE_SCHEDULED = "Snapshot restore scheduled";
+
+interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	async snapshot(): Promise<DurableObjectSnapshot> {
+		return this.ctx.storage.snapshot();
+	}
+
+	async copy(snapshot: DurableObjectSnapshot): Promise<void> {
+		await this.ctx.onNextSessionRestore(snapshot);
+		this.ctx.abort(RESTORE_SCHEDULED);
+	}
+
+	initializePreview(name: string): void {
+		this.ctx.storage.kv.put("database:name", name);
+		this.ctx.storage.kv.put("database:objectId", this.ctx.id.toString());
+		this.ctx.storage.kv.put("database:isPreview", true);
+	}
+}
+
+async function copyStorage(
+	source: DurableObjectStub<MyDurableObject>,
+	destination: DurableObjectStub<MyDurableObject>,
+): Promise<void> {
+	const snapshot = await source.snapshot();
+	try {
+		await destination.copy(snapshot);
+	} catch (error) {
+		if (error instanceof Error && error.message === RESTORE_SCHEDULED) {
+			return;
+		}
+		throw error;
+	}
+	throw new Error("copy() returned without resetting the destination");
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const pullRequest = new URL(request.url).searchParams.get("pr");
+		if (!pullRequest) return new Response("Missing pr", { status: 400 });
+
+		const previewName = "preview-pr-" + pullRequest;
+		const source = env.MY_DURABLE_OBJECT.getByName("production");
+		const preview = env.MY_DURABLE_OBJECT.getByName(previewName, {
+			locationHint: "weur",
+		});
+
+		await copyStorage(source, preview);
+		await preview.initializePreview(previewName);
+
+		return Response.json({ previewName }, { status: 201 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The destination's constructor runs before `initializePreview()`. Write constructors that tolerate metadata copied from the source, or derive the object's identity from `ctx.id` instead of stored metadata.
+
+## Split a subset of data into a new object
+
+A snapshot always copies the whole SQLite database. To create a smaller, independent object, restore privately first, delete the data that does not belong, and expose the destination to traffic only after cleanup succeeds.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const RESTORE_SCHEDULED = "Snapshot restore scheduled";
+
+interface Env {
+	MY_DURABLE_OBJECT: DurableObjectNamespace<MyDurableObject>;
+}
+
+export class MyDurableObject extends DurableObject<Env> {
+	async snapshot(): Promise<DurableObjectSnapshot> {
+		return this.ctx.storage.snapshot();
+	}
+
+	async copy(snapshot: DurableObjectSnapshot): Promise<void> {
+		await this.ctx.onNextSessionRestore(snapshot);
+		this.ctx.abort(RESTORE_SCHEDULED);
+	}
+
+	keepOnlyTenant(tenantId: string): void {
+		this.ctx.storage.sql.exec(
+			"DELETE FROM records WHERE tenant_id != ?",
+			tenantId,
+		);
+		this.ctx.storage.kv.put("tenantId", tenantId);
+	}
+}
+
+async function copyStorage(
+	source: DurableObjectStub<MyDurableObject>,
+	destination: DurableObjectStub<MyDurableObject>,
+): Promise<void> {
+	try {
+		await destination.copy(await source.snapshot());
+	} catch (error) {
+		if (error instanceof Error && error.message === RESTORE_SCHEDULED) {
+			return;
+		}
+		throw error;
+	}
+	throw new Error("copy() returned without resetting the destination");
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const tenantId = new URL(request.url).searchParams.get("tenant");
+		if (!tenantId) return new Response("Missing tenant", { status: 400 });
+
+		const source = env.MY_DURABLE_OBJECT.getByName("all-tenants");
+		const destinationName = "tenant-" + tenantId;
+		const destination = env.MY_DURABLE_OBJECT.getByName(destinationName);
+
+		await copyStorage(source, destination);
+		await destination.keepOnlyTenant(tenantId);
+
+		return Response.json({ destination: destinationName });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Other uses
+
+Snapshot and restore is also the basis for:
+
+- **Testing a schema migration** — Restore production storage into a scratch Durable Object, run the migration against the copy, and validate the result before applying it to production.
+- **Exporting data** — Restore storage into an independent object and query it there, so expensive reads or formatting do not add load to the primary object.
+
+## Related resources
+
+- [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot)
+- [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore)
+- [`ctx.abort()`](/durable-objects/api/state/#abort)
