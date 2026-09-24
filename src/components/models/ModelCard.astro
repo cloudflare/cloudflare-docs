@@ -123,8 +123,8 @@ const decisionFacts = [
 					{model.author.charAt(0)}
 				</span>
 			)}
-			<div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
-				<h3 class="text-foreground group-hover/card:text-primary line-clamp-2 min-w-0 text-sm leading-snug font-semibold [overflow-wrap:anywhere]">
+			<div class="flex min-w-0 flex-1 items-center gap-2">
+				<h3 class="text-foreground group-hover/card:text-primary min-w-0 text-sm leading-snug font-semibold [overflow-wrap:anywhere]">
 					{model.shortName}
 				</h3>
 				{model.beta && (
@@ -142,7 +142,7 @@ const decisionFacts = [
 			</span>
 		</div>
 
-		<p class="text-muted-foreground line-clamp-3 h-[4.5rem] min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
+		<p class="text-muted-foreground min-h-[4.5rem] min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
 			{model.description}
 		</p>
 
