@@ -124,7 +124,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
    `running` reports whether the container is running, and reading it does not start the container. A Durable Object that listing wakes no longer has the inactivity timeout that `exec()` set, so `isRunning()` sets it again. Without that call, the sandbox stops shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
 
-4. Replace the `fetch` handler. It names each sandbox `<OWNER>/<SESSION>`, records the session before running a command, lists the sessions with their state, and removes a session after stopping its container:
+4. Add routes to your Worker that name each sandbox `<OWNER>/<SESSION>`, record the session before running a command, list the sessions with their state, and remove a session after stopping its container:
 
    ```ts title="src/index.ts"
    export default {

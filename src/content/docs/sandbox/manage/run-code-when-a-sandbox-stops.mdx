@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps } from "~/components";
 
-Run your own code when a sandbox stops, for example to update your records, notify the user, or release resources. The runtime does not wake a Durable Object when its container stops. Instead, [`monitor()`](/durable-objects/api/container/#monitor) reports the stop while the Durable Object is in memory, and a check on every request and alarm catches a stop that happened while it was not. An alarm that runs every minute also lets the Durable Object stop idle sandboxes itself, so it knows why each sandbox stopped.
+Run your own code when a sandbox stops, for example to update your records, notify the user, or release resources. Because the runtime does not wake a Durable Object when its container stops, the Durable Object watches the container while it is in memory, checks for a missed stop on every request and alarm, and stops idle sandboxes itself so that it knows why each one stopped.
 
 ## Prerequisites
 
@@ -83,7 +83,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0`, or when your code calls `destroy()` without a reason. It rejects with an error that has an `exitCode` property when the main process exits with another code, and with the reason passed to `destroy()`. A deploy or an eviction restarts the Durable Object and drops the earlier `monitor()` call, so the constructor calls it again when the container is still running. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
+   [`monitor()`](/durable-objects/api/container/#monitor) rejects with an `exitCode` when the main process fails, and with the reason passed to `destroy()`. A restarted Durable Object no longer has the earlier `monitor()` call, so the constructor calls it again. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
 
 3. Add a method that records a stop that `monitor()` missed:
 
@@ -161,7 +161,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
 
    The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`. Each alarm also sets the inactivity timeout again, because a Durable Object that restarted between alarms no longer has it.
 
-6. Replace the `fetch` handler, so that `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
+6. Add routes to your Worker, so that `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
 
    ```ts title="src/index.ts"
    export default {

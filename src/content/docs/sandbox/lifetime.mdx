@@ -56,7 +56,7 @@ Cloudflare does not wake the Durable Object when its instance stops. To record e
 
 Deploying a new version of your Worker restarts every Durable Object. A running Linux instance keeps running, and the next request reaches the same instance, with its files and processes. Outbound handlers that the Durable Object set up with [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps) remain in place and run the code of the new version.
 
-A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. To move a sandbox to the new image, call `destroy()` and start the instance again. Its files and processes end with the old instance.
+A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. A sandbox moves to a new image only when its instance stops, for example through `destroy()`, and a new instance starts. The files and processes of the old instance end with it.
 
 Requests, streamed responses, and WebSockets that the previous version was handling end during the deploy. A browser terminal disconnects and must connect again.
 
