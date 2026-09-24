@@ -53,9 +53,11 @@ For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [
 
 ## Test Cron Triggers
 
-Local Explorer can send one-off invocations to the [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) for your Worker. Configure at least one [Cron Trigger](/workers/configuration/cron-triggers/) for the active environment before using this interface.
+Local Explorer can send one-off invocations to the [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) for your Worker. It supports both configured Cron Triggers and ad hoc expressions.
 
 Cron Trigger testing requires Wrangler 4.139.0 or later, or Cloudflare Vite plugin 1.60.0 or later.
+
+To test a configured expression, define at least one [Cron Trigger](/workers/configuration/cron-triggers/) for the active environment. Ad hoc expressions do not require configuration.
 
 <Steps>
 1. In Local Explorer, select **Cron Triggers** > **Configured Crons**.
@@ -96,6 +98,8 @@ To retrieve the OpenAPI spec:
 ```sh
 curl http://localhost:8787/cdn-cgi/local/explorer/api
 ```
+
+The API includes `POST /cdn-cgi/local/explorer/api/local/scheduled?worker=<WORKER_NAME>` for scheduled invocations. The request targets an exact Worker and accepts a required cron expression and an optional scheduled time. For a request example, refer to [Test Cron Triggers locally](/workers/configuration/cron-triggers/#use-the-local-explorer-api).
 
 ### Use with AI agents
 
