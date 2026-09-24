@@ -11,7 +11,14 @@ tags:
 - Authentication
 ---
 
-import { Badge, Details, Tabs, TabItem, Render } from "~/components";
+import {
+	APIRequest,
+	Badge,
+	Details,
+	Tabs,
+	TabItem,
+	Render,
+} from "~/components";
 
 <Details header="Feature availability">
 
@@ -115,6 +122,27 @@ To view all available filters, type `warp-cli target list --help`.
 ## Revoke a user's session
 
 To revoke a user's access to all infrastructure targets, you can either [revoke the user from Zero Trust](/cloudflare-one/access-controls/access-settings/session-management/#per-user) or revoke their device. Cloudflare does not currently support revoking a user's session for a specific target.
+
+## Tag targets
+
+Attach key-value [resource tags](/resource-tagging/) to targets to organize and filter them or build [target criteria](#target-criteria) for your applications.
+
+To tag a target, you need an API token with the `Zero Trust Write` [permission](/fundamentals/api/reference/permissions/). No additional tag-specific permissions are required.
+
+To add tags to a target, make a `PUT` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/update/) endpoint. Include a `tags` object:
+
+<APIRequest
+	path="/accounts/{account_id}/infrastructure/targets/{target_id}"
+	method="PUT"
+	json={{
+		tags: {
+			environment: "production",
+			team: "platform",
+		},
+	}}
+/>
+
+Each target supports one value per tag key. For more information on managing tags, refer to [Resource Tagging](/resource-tagging/how-to/manage-tags/).
 
 ## Granular target permissions
 

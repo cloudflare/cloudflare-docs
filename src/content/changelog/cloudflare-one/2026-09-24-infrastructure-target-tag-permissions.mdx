@@ -1,0 +1,14 @@
+---
+title: Simplified permissions for tagging targets with Access for Infrastructure
+description: Tag targets with only the Zero Trust Write API token permission.
+date: 2026-09-24
+products:
+  - cloudflare-one
+  - access
+---
+
+You can now tag [targets](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#tag-targets) using only the `Zero Trust Write` API token permission. Previously, tagging targets through the API required both `Zero Trust Write` and `Tag Write` permissions on the API token.
+
+This change applies to inline target tagging through the [Infrastructure Access Targets API](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/update/). Tagging resources through the general [Resource Tagging API](/resource-tagging/) still requires the `Tag Admin`, `Tag Write`, or equivalent role.
+
+For more information, refer to [Tag targets](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#tag-targets).
