@@ -1,0 +1,19 @@
+src/styles/globals.css
+  s_a7fec1084deb42::t_00d0f537eaf043 60-61,161-162,420-421
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7aff24d0e983073c6fa61ba470ca2406bbbde7dc",
+  "prompts": {},
+  "sessions": {
+    "s_a7fec1084deb42": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2e9ea957ffecZBQkkJM9hA0n8",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
