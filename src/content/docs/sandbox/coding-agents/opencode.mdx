@@ -27,9 +27,9 @@ Give [OpenCode](https://opencode.ai) a GitHub repository and a prompt, let it ed
 
 <Steps>
 
-1. Replace the `Dockerfile`:
+1. Replace the `Dockerfile`. Only the highlighted lines differ from the tutorial's:
 
-   ```dockerfile title="Dockerfile"
+   ```dockerfile title="Dockerfile" ins={7-8}
    FROM node:24-trixie-slim
 
    RUN apt-get update \
