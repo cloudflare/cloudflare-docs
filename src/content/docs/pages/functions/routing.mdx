@@ -164,7 +164,7 @@ Wildcards match any number of path segments (slashes). For example, `/users/*` w
 
 :::
 
-#### Example configuration
+#### Example configurations
 
 Below is an example of a `_routes.json`.
 
@@ -188,7 +188,9 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 }
 ```
 
-A wildcard can also come before a file extension, and it matches at any depth. Use this when static files and Function routes share a path, such as an API that serves pre-rendered `.json` files beside routes a Function answers. With this `_routes.json`, `/api/users/1.json` and `/api/users/1/posts.json` are served as static assets without invoking the Function, while `/api/users/1` and `/api/search` invoke it:
+A wildcard can also appear before a file extension, and it matches at any depth. This is useful when static files and Function routes share a path, such as an API that serves pre-rendered `.json` files alongside routes handled by a Function.
+
+With the following `_routes.json`, `/api/users/1.json` and `/api/users/1/posts.json` are served as static assets without invoking the Function. `/api/users/1` and `/api/search` still invoke it.
 
 ```json
 {
@@ -197,6 +199,8 @@ A wildcard can also come before a file extension, and it matches at any depth. U
 	"exclude": ["/api/*.json"]
 }
 ```
+
+This rule excludes every `.json` path under `/api/`, including any `.json` response your Function generates dynamically. For example, a request to `/api/export.json` will not reach your Function, even if no matching static file exists.
 
 ## Fail open / closed
 
