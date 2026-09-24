@@ -9,7 +9,7 @@ products:
   - workers
   - containers
   - dynamic-workers
-reviewed: 2026-09-21
+reviewed: 2026-09-24
 ---
 
 import { CardGrid, Example, LinkTitleCard } from "~/components";
@@ -58,6 +58,12 @@ Your Worker can expose `listPullRequests()` for one account and repository while
 In [Code Mode](/agents/tools/codemode/), the model writes JavaScript against typed methods. A Dynamic Worker runs the code and returns its result, so intermediate values do not enter the model context.
 
 Use `load()` to create a new Dynamic Worker. Use `get()` with a stable ID when the same code may run again; the runtime can reuse a warm Dynamic Worker. You can also run a generated application with [scoped storage](/dynamic-workers/usage/durable-object-facets/). Adding storage does not give that application access to your other resources.
+
+## How each environment isolates code
+
+A Container instance runs in a [Firecracker](/containers/concepts/architecture/#container-runtime) microVM with its own kernel and network, so no other workload shares it. Your image runs as a Linux container inside that VM.
+
+V8, the JavaScript engine in Chrome, runs each Dynamic Worker in a sandbox that cannot read memory outside itself. The Workers runtime adds a process-level sandbox around it. For more information, refer to the [Workers security model](/workers/reference/security-model/).
 
 ## What you maintain
 
