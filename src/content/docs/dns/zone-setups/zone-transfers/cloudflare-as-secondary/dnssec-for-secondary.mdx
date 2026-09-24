@@ -112,3 +112,29 @@ Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/met
 3. Make sure Cloudflare nameservers are added at your registrar. You can see your Cloudflare nameservers on the dashboard by going to the [**DNS Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) page.
 
 4. Make sure there is a DS record added at your registrar. The DS record is obtained from your primary DNS provider (the signer of the zone) and is what indicates to DNS resolvers that your zone has DNSSEC enabled.
+
+---
+
+## Troubleshoot pre-signed DNSSEC
+
+### Verify that Cloudflare is serving pre-signed records
+
+After completing setup, confirm that Cloudflare is serving the pre-signed signatures from your primary rather than signing the zone itself.
+
+Query `DNSKEY` against one of your assigned Cloudflare secondary nameservers:
+
+```sh
+dig DNSKEY example.com @<cloudflare-secondary-ns>
+```
+
+Compare the key tag in the response with the key tag served by your primary nameserver. If the key tags match, Cloudflare is correctly serving the pre-signed records. If the key tags differ, Cloudflare is live-signing the zone with its own keys instead.
+
+### If Cloudflare is live-signing instead of serving pre-signed records
+
+Check each of the following:
+
+- **`dnssec_presigned` is set to `true`**: Use the [DNSSEC Details endpoint](/api/resources/dns/subresources/dnssec/methods/get/) to confirm the value in the API response.
+- **Zone transfers include DNSSEC records**: The AXFR from your primary must include `DNSKEY`, `RRSIG`, and `NSEC` (or `NSEC3`) records alongside the regular DNS records. If your primary is configured to transfer only non-DNSSEC records, Cloudflare has no pre-signed signatures to serve. Confirm by requesting a manual zone transfer from your primary and checking that `DNSKEY` and `RRSIG` records are present in the transferred data.
+- **Zone transfers are completing successfully**: Review your [zone transfer alerts](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/alerts/) to confirm that recent transfers from your primary have completed without error.
+
+If all three checks pass but Cloudflare is still live-signing — or if a sibling zone with the same configuration works correctly while this zone does not — [contact Cloudflare Support](/support/contacting-cloudflare-support/) and include your zone ID and the output of the [DNSSEC Details endpoint](/api/resources/dns/subresources/dnssec/methods/get/).
