@@ -29,7 +29,7 @@ Start a process that keeps running after the request ends, such as a development
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   const ROOT = "/run/processes";
+   const ROOT = "/var/lib/processes";
 
    // Runs the command in its own process group. Records its process ID when
    // it starts and its exit code when it ends.
@@ -66,6 +66,8 @@ Start a process that keeps running after the request ends, such as a development
    </TypeScriptExample>
 
    `setsid` starts the command in a new process group, so stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The exit code goes to a temporary file first and is then renamed, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+
+   Each process keeps its files in its own directory under `/var/lib/processes` on the instance's disk. The logs grow until the process ends. When the disk fills, the process's writes fail, so delete old process directories, or send output that must be kept to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
 2. Add a method to your Durable Object that starts a process:
 
