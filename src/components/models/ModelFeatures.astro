@@ -6,7 +6,11 @@
  * beta → Batch → request formats → partner → realtime → unit price →
  * dashboard pricing link.
  */
-import { modelCurrencyFormatter, type ModelView } from "~/util/models";
+import {
+	formatModelReasoning,
+	modelCurrencyFormatter,
+	type ModelView,
+} from "~/util/models";
 
 interface Props {
 	model: ModelView;
@@ -44,6 +48,10 @@ const hasProps = Object.keys(properties).length > 0;
 const price = Array.isArray(properties.price)
 	? (properties.price as { price: number; unit: string }[])
 	: null;
+const reasoning = formatModelReasoning(
+	properties.reasoning_effort,
+	properties.reasoning,
+);
 ---
 
 {hasProps && (
@@ -54,7 +62,7 @@ const price = Array.isArray(properties.price)
 				<th />
 			</tr>
 		</thead>
-		<tbody>
+		<tbody data-row-stripes="off">
 			{properties.planned_deprecation_date && (
 				<tr>
 					<td>
@@ -127,10 +135,23 @@ const price = Array.isArray(properties.price)
 					<td>Yes</td>
 				</tr>
 			)}
-			{properties.reasoning && (
+			{reasoning && (
 				<tr>
 					<td>Reasoning</td>
-					<td>{properties.reasoning_effort ?? "Yes"}</td>
+					<td>
+						{Array.isArray(reasoning) ? (
+							<span class="flex flex-wrap gap-x-4 gap-y-1">
+								{reasoning.map((effort) => (
+									<span>
+										<code>{effort.value}</code>
+										{effort.isDefault && " (default)"}
+									</span>
+								))}
+							</span>
+						) : (
+							reasoning
+						)}
+					</td>
 				</tr>
 			)}
 			{properties.vision && (
