@@ -25,17 +25,32 @@ const backup = await sandbox.backup("/workspace");
 await sandbox.restore(backup.key, "/workspace");
 ```
 
-| 0.12                                                           | 1.0                                                                                                  |
-| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `createBackup({ dir })`                                        | `backup(dir)`, which returns the object key and size                                                 |
-| `restoreBackup(backup)`                                        | `restore(key, dir)`, which replaces the directory                                                    |
-| `excludes`                                                     | `--exclude` options for `tar` in `backup()`                                                          |
-| `gitignore`                                                    | A file list from `git ls-files --cached --others --exclude-standard` passed to `tar`                 |
-| `ttl`                                                          | An [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on the backup prefix                   |
-| `name`                                                         | [Custom metadata](/r2/api/workers/workers-api-reference/#r2multipartoptions) on the multipart upload |
-| `multipart`, `compression`                                     | Remove them. The upload is always multipart, and `tar -z` compresses it.                             |
-| `BACKUP_BUCKET`                                                | An R2 binding. Keep the name or rename it.                                                           |
-| `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, R2 access keys | Remove them. The binding needs no credentials, and the container never holds them.                   |
-| `BackupCreateError`, `BackupRestoreError`                      | Errors that `backup()` and `restore()` throw when `tar` fails                                        |
+| 0.12                                                           | 1.0                                                                                                        |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `createBackup({ dir })`                                        | `backup(dir)`, which returns the object key and size                                                       |
+| `restoreBackup(backup)`                                        | `restore(key, dir)`, which replaces the directory                                                          |
+| `excludes`                                                     | `--exclude` options for `tar` in `backup()`                                                                |
+| `gitignore`                                                    | Exclude the paths that Git lists as ignored. Refer to [Leave out ignored files](#leave-out-ignored-files). |
+| `ttl`                                                          | An [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on the backup prefix                         |
+| `name`                                                         | [Custom metadata](/r2/api/workers/workers-api-reference/#r2multipartoptions) on the multipart upload       |
+| `multipart`, `compression`                                     | Remove them. The upload is always multipart, and `tar -z` compresses it.                                   |
+| `BACKUP_BUCKET`                                                | An R2 binding. Keep the name or rename it.                                                                 |
+| `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, R2 access keys | Remove them. The binding needs no credentials, and the container never holds them.                         |
+| `BackupCreateError`, `BackupRestoreError`                      | Errors that `backup()` and `restore()` throw when `tar` fails                                              |
 
 Backups that 0.12 created are SquashFS images at `backups/<ID>/data.sqsh` in the bucket, not `tar` archives. To restore one, install `squashfs-tools` in the image, write the file to the container, and extract it with `unsquashfs`.
+
+## Leave out ignored files
+
+0.12's `gitignore` option left out the files that `.gitignore` rules ignore. To do the same, replace the `tar` call in `backup()` so that Git lists the ignored paths and `tar` excludes them:
+
+```ts
+const script =
+	'cd "$1" && git -c safe.directory="$PWD" ls-files -z --others --ignored --exclude-standard --directory 2>/dev/null' +
+	" | sed -z 's#^#./#; s#/$##' | tr '\\0' '\\n' | tar --no-wildcards --anchored -X - -czf - .";
+const tar = await container.exec(["sh", "-c", script, "sh", dir], {
+	stderr: "ignore",
+});
+```
+
+The image needs Git, which `cloudflare/debian-trixie` does not include. As in 0.12, the backup keeps `.git` and empty directories, and includes every file when the directory is not in a Git repository or Git is missing. A file whose name contains a line break is not left out.
