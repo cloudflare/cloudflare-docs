@@ -1,0 +1,15 @@
+---
+title: Browser Run adds WebMCP to Kitesurf and moves to document.modelContext
+description: WebMCP now works in Kitesurf sessions, uses the document.modelContext API, and can be tested in the Chrome DevTools WebMCP panel.
+products:
+  - browser-run
+date: 2026-09-26
+---
+
+[WebMCP](/browser-run/features/webmcp/) now works in [Kitesurf](/browser-run/kitesurf/) sessions as well as [Lab sessions](/browser-run/features/webmcp/#get-started). Both backends use the `document.modelContext` API from the [WebMCP Community Group draft](https://webmachinelearning.github.io/webmcp/). Lab sessions no longer expose `navigator.modelContextTesting`.
+
+To list and run page tools:
+
+- **Chrome DevTools**: Use the **Application** > **WebMCP** panel in the live view of a Lab session or in the [Kitesurf playground](https://kitesurf.dev/).
+- **AI agents**: Start [Chrome DevTools MCP](/browser-run/features/webmcp/#using-an-ai-agent) with the `--category-experimental-webmcp` flag to add the `list_webmcp_tools` and `execute_webmcp_tool` tools.
+- **CDP clients**: Use the `WebMCP` CDP domain.
