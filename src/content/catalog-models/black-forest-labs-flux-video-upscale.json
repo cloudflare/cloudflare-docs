@@ -102,6 +102,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"precise": 0.07,
+				"creative": 0.1
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-24 14:41:58",
 	"schema": {
@@ -110,8 +119,8 @@
 			"type": "object",
 			"properties": {
 				"input_video": {
-					"description": "HTTP(S) URL or base64-encoded MP4 video, up to 20 seconds and 50MB.",
-					"type": "string"
+					"type": "string",
+					"description": "HTTP(S) URL or base64-encoded MP4 video, up to 20 seconds and 50MB."
 				},
 				"upscale_factor": {
 					"description": "Output scale relative to the source resolution, from 1.5x to 3x.",
@@ -153,9 +162,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Signed URL to the upscaled MP4. Download promptly before it expires.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Signed URL to the upscaled MP4. Download promptly before it expires."
 				}
 			},
 			"required": [

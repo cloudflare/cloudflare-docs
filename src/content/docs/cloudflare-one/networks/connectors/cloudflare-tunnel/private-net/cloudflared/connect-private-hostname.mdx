@@ -10,7 +10,8 @@ sidebar:
   order: 2
 ---
 
-import { Render, Details, GlossaryTooltip, TunnelHostnameRoutingDiagram } from "~/components";
+import { Render, Details, GlossaryTooltip } from "~/components";
+import TunnelHostnameRoutingDiagram from "~/components/cf/TunnelHostnameRoutingDiagram.astro";
 
 Instead of managing static IP lists and routes, you can connect users to private HTTP and non-HTTP applications using their hostnames (for example, `wiki.internal.local`). Private hostname routes are especially useful when the application has an unknown or ephemeral IP, which often occurs when infrastructure is provisioned by a third-party cloud provider.
 

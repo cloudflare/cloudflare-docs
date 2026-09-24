@@ -14,8 +14,8 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Per lyrics generation": 0.01,
-		"Per track": 0.15
+		"Per track": 0.15,
+		"Per lyrics generation": 0.01
 	},
 	"examples": [
 		{
@@ -202,6 +202,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"output_tracks": 0.15,
+				"output_lyrics": 0.01
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:20",
 	"schema": {
@@ -210,9 +219,9 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Description of the music style, mood, and scenario",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 2000,
+					"description": "Description of the music style, mood, and scenario"
 				},
 				"lyrics": {
 					"description": "Song lyrics, using \\n to separate lines",
@@ -271,13 +280,13 @@
 					]
 				},
 				"lyrics_optimizer": {
-					"description": "Automatically generate lyrics based on the prompt description",
 					"default": false,
+					"description": "Automatically generate lyrics based on the prompt description",
 					"type": "boolean"
 				},
 				"is_instrumental": {
-					"description": "Generate instrumental music (no vocals)",
 					"default": false,
+					"description": "Generate instrumental music (no vocals)",
 					"type": "boolean"
 				}
 			},
@@ -293,9 +302,9 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated audio file"
 				}
 			},
 			"required": [

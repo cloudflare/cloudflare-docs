@@ -47,7 +47,7 @@ Longest-prefix-match routing is the default route selection method. Other mechan
 
 ### Automatic Return Routing (ARR)
 
-[Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta) bypasses route lookup for return traffic.
+[Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing) bypasses route lookup for return traffic.
 
 When ARR is enabled:
 
@@ -55,7 +55,7 @@ When ARR is enabled:
 2. For return traffic, Cloudflare routes packets back to the tagged source connection directly, bypassing the routing table.
 3. This allows multiple sites to use identical private IP ranges without NAT or VRF configuration.
 
-ARR requires Unified Routing mode. For more information, refer to [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta).
+ARR requires Unified Routing mode. For more information, refer to [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing).
 
 ### Hostname Routes (Initial resolved IPs)
 

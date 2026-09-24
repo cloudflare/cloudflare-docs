@@ -151,7 +151,7 @@ Virtual Tunnel Interfaces (VTIs) cannot be configured on MX appliances.
 
 ### Cloudflare
 
-- This configuration requires the [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta) dataplane to support [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta).
+- This configuration requires the [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing) dataplane to support [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing).
 - You have already configured IPsec tunnels and static routes in the Cloudflare dashboard.
 - You have used the Cloudflare dashboard to obtain the local identifier (FQDN/hostname) and generate a pre-shared key for each IPsec tunnel.
 - You understand the importance of [MSS clamping](/cloudflare-wan/reference/mtu-mss/#mss-clamping) and adjusting it based on the traffic flows traversing the Cloudflare WAN IPsec tunnels.
@@ -207,7 +207,7 @@ The tunnel health probes are used in addition to Dead Peer Detection to determin
 
 Meraki reserves the IP address `192.0.2.3/32` (part of TEST-NET-1, defined in [RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737)) as the source IP for tunnel monitor probes. Refer to [Primary and secondary IPsec tunnels](https://documentation.meraki.com/SASE_and_SD-WAN/MX/Design_and_Configure/Configuration_Guides/Site-to-site_VPN/Primary_and_Secondary_IPsec_VPN_Tunnels) for details.
 
-As `192.0.2.3/32` falls outside the traditional [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, you must add it to the [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta) dataplane associated with your Cloudflare account.
+As `192.0.2.3/32` falls outside the traditional [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, you must add it to the [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing) dataplane associated with your Cloudflare account.
 
 Contact Cloudflare to request assistance with adding the `internal_authorized_prefixes` option to your account, with `192.0.2.3/32` included.
 

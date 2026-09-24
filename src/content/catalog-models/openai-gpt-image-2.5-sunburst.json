@@ -13,10 +13,10 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Input tokens (per 1M)": 5,
+		"Cached input image tokens (per 1M)": 3,
 		"Cached input tokens (per 1M)": 1.25,
 		"Input image tokens (per 1M)": 8,
-		"Cached input image tokens (per 1M)": 3,
+		"Input tokens (per 1M)": 5,
 		"Output image tokens (per 1M)": 30
 	},
 	"examples": [
@@ -140,6 +140,18 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_cached_image_tokens": 3,
+				"input_cached_tokens": 1.25,
+				"input_image_tokens": 8,
+				"input_tokens": 5,
+				"output_image_tokens": 30
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-10 23:35:47",
 	"schema": {

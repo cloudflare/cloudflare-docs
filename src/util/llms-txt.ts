@@ -14,6 +14,12 @@ export interface LlmsTxtPage {
 	};
 }
 
+/** Minimal model shape needed to render a Workers AI model page link. */
+export interface WorkersAiModelPage {
+	name: string;
+	description: string;
+}
+
 /**
  * Normalizes a resolved URL path so that `index.md` can be appended safely:
  * strips any `#fragment` (to be re-attached after `index.md`) and ensures a
@@ -57,4 +63,15 @@ export function formatPage(
 	const { path, fragment } = normalizeForIndexMd(resolved);
 	const line = `- [${e.data.title}](${base}${path}index.md${fragment})`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
+}
+
+/** Renders one generated Workers AI model page in the product llms.txt. */
+export function formatWorkersAiModel(
+	base: string,
+	model: WorkersAiModelPage,
+): string {
+	const slug = model.name.split("/").at(-1)!;
+	const description = model.description.replace(/\s+/g, " ").trim();
+	const line = `- [${model.name}](${base}/workers-ai/models/${slug}/index.md)`;
+	return description ? line.concat(`: ${description}`) : line;
 }

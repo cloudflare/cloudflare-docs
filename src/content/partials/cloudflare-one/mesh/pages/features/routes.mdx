@@ -2,7 +2,8 @@
 {}
 ---
 
-import { DashButton, Tabs, TabItem, APIRequest, GlossaryTooltip, Render, MeshHostnameRoutingDiagram } from "~/components";
+import { DashButton, Tabs, TabItem, APIRequest, GlossaryTooltip, Render } from "~/components";
+import MeshHostnameRoutingDiagram from "~/components/cf/MeshHostnameRoutingDiagram.astro";
 
 By default, a Mesh node is reachable only by its own [Mesh IP](/mesh/concepts/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add a route to the node. A Mesh node supports two types of routes:
 

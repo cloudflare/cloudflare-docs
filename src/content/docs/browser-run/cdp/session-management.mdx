@@ -16,6 +16,8 @@ Use the HTTP API to manage browser sessions and tabs without using WebSocket con
 
 The [API reference](/api/resources/browser_rendering/) documents all session management endpoints under `/devtools`.
 
+When your code runs in a Worker, you can use the typed [Browser binding API](/browser-run/reference/browser-binding-api/) instead of constructing HTTP requests. The binding exposes `acquire()`, `connectSession()`, `launch()`, and a nested `devtools` target for session and target management.
+
 ## Step 1: Acquire a browser session
 
 Create a new browser session using the `POST /devtools/browser` endpoint. The session will remain active for the specified keep-alive time (in this example, 10 minutes).

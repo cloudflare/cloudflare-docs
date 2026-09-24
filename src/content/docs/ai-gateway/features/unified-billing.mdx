@@ -100,7 +100,7 @@ Workers AI requests do not use provider credentials. This setting does not block
 
 Unified Billing works in two ways: through the AI binding or through the HTTP API. Both deduct credits from your account automatically without requiring provider API keys.
 
-To use credits for Workers AI, [configure the gateway's Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) as **Unified billing**. Workers AI requests routed through that gateway deduct from your prepaid credit balance in real time. In the AI binding, include the gateway ID in the third argument to `env.AI.run()`. For REST API requests, include the `cf-aig-gateway-id` header. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#frontier-models).
+To use credits for Workers AI, [configure the gateway's Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) as **Unified billing**. Workers AI requests routed through that gateway deduct from your prepaid credit balance in real time. In the AI binding, include the gateway ID in the third argument to `env.AI.run()`. For REST API requests, include the `cf-aig-gateway-id` header. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#paid-models).
 
 ### AI binding
 
@@ -161,58 +161,8 @@ Set [spend limit rules](/ai-gateway/features/spend-limits/) on individual gatewa
 
 ### Zero Data Retention (ZDR)
 
-Zero Data Retention (ZDR) routes Unified Billing traffic through provider endpoints that do not retain prompts or responses. Enable it with the gateway-level `zdr` setting, which maps to ZDR-capable upstream provider configurations. This setting only applies to Unified Billing requests that use Cloudflare-managed credentials. It does not apply to BYOK or other AI Gateway requests.
+Zero Data Retention (ZDR) routes Unified Billing traffic through provider endpoints that do not retain prompts or responses. ZDR only applies to Unified Billing requests that use Cloudflare-managed credentials. It does not apply to BYOK or other AI Gateway requests.
 
 ZDR does not control AI Gateway logging. To disable request/response logging in AI Gateway, update the logging settings separately in [Logging](/ai-gateway/observability/logging/).
 
-ZDR is currently supported for:
-
-- [OpenAI](/ai-gateway/usage/providers/openai/)
-- [Anthropic](/ai-gateway/usage/providers/anthropic/)
-
-If ZDR is enabled for a provider that does not support it, AI Gateway falls back to the standard (non-ZDR) Unified Billing configuration.
-
-#### Default configuration
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-To set ZDR as the default for Unified Billing in the dashboard:
-
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **AI** > **AI Gateway**.
-3. Select your gateway.
-4. Go to **Settings** and toggle **Zero Data Retention (ZDR)**.
-
-</TabItem> <TabItem label="API">
-
-To set ZDR as the default for Unified Billing using the API:
-
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-   - `AI Gateway - Read`
-   - `AI Gateway - Edit`
-2. Get your [Account ID](/fundamentals/account/find-account-and-zone-ids/).
-3. Send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to update the gateway and include `zdr: true` or `zdr: false` in the request body.
-
-</TabItem> </Tabs>
-
-#### Per-request override (`cf-aig-zdr`)
-
-Use the `cf-aig-zdr` header to override the gateway default for a single Unified Billing request. Set it to `true` to force ZDR, or `false` to disable ZDR for the request.
-
-```bash title="Unified Billing request with ZDR"
-# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
-# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions" \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --header "cf-aig-zdr: true" \
-  --data '{
-    "model": "openai/gpt-4.1-mini",
-    "messages": [
-      {
-        "role": "user",
-        "content": "Explain Zero Data Retention."
-      }
-    ]
-  }'
-```
+Refer to the [model catalog](/ai/models/) to check whether a model supports Zero Data Retention (ZDR).

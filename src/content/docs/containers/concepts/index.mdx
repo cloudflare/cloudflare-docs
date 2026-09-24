@@ -11,15 +11,12 @@ products:
 reviewed: 2026-08-21
 ---
 
-import {
-	CardGrid,
-	LinkCard,
-	ContainerConnectivity,
-	ContainerIsolation,
-	ContainerRequestPath,
-	ContainerLifecycle,
-	ContainerPlacement,
-} from "~/components";
+import { CardGrid, LinkCard } from "~/components";
+import { ContainerConnectivity } from "~/components/react/container/ContainerConnectivity";
+import { ContainerIsolation } from "~/components/react/container/ContainerIsolation";
+import { ContainerRequestPath } from "~/components/react/container/ContainerRequestPath";
+import { ContainerLifecycle } from "~/components/react/container/ContainerLifecycle";
+import { ContainerPlacement } from "~/components/react/container/ContainerPlacement";
 
 A Cloudflare Container runs your container image in a full Linux environment on Cloudflare's network, alongside a Worker. The Worker handles incoming HTTP requests, while the Container provides the runtime, binaries, and languages your application needs. Together, they let you run Linux workloads without managing the underlying infrastructure.
 

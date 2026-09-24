@@ -17,8 +17,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 0.75,
-		"Cached input tokens (per 1M)": 0.075,
-		"Output tokens (per 1M)": 3.75
+		"Output tokens (per 1M)": 3.75,
+		"Cached input tokens (per 1M)": 0.075
 	},
 	"examples": [
 		{
@@ -346,6 +346,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 0.75,
+				"output_tokens": 3.75,
+				"input_cached_tokens": 0.075
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-14 22:33:12",
 	"schema": {

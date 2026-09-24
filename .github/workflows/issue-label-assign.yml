@@ -6,7 +6,7 @@ name: Issue - Label and assign
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
 
 jobs:
   compile:

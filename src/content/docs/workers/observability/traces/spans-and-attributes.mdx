@@ -27,6 +27,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.script_name` - The name of your Worker
 - `cloudflare.script_tags` - Tags associated with your Worker deployment
 - `cloudflare.script_version.id` - The version identifier of your deployed Worker
+- `cloudflare.durable_object.id` - The Durable Object instance ID, set on root and child spans for Durable Object invocations
 - `cloudflare.invocation.sequence.number` - A counter added to every emitted span and log that can be used to distinguish which was emitted first when the timestamps are the same
 - `telemetry.sdk.language` - The programming language used, set to `javascript`
 - `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
@@ -147,7 +148,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
-- `cloudflare.jsrpc.method`
+- `jsrpc.method`
 
 #### [`Email Handler`](/email-service/api/route-emails/email-handler/)
 
@@ -162,6 +163,33 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 #### [`Alarm Handler`](/durable-objects/api/alarms/#alarm)
 
 - `cloudflare.scheduled_time`
+
+---
+
+### [RPC](/workers/runtime-apis/rpc/)
+
+Workers tracing emits these spans for RPC calls between Workers and from Workers to Durable Objects.
+
+#### RPC session
+
+A caller-side span that covers the lifetime of an RPC session. Calls that reuse the session appear under this span.
+
+This span has no additional RPC-specific attributes.
+
+#### RPC invocation
+
+A callee-side span that covers an RPC invocation in the target Worker or Durable Object.
+
+#### RPC call
+
+A caller-side or callee-side span for an individual method call or property access.
+
+Caller-side and callee-side spans use the execution color of the Worker or Durable Object where they run. The color change marks the execution boundary.
+
+- `jsrpc.method` - The method name or property path
+- `jsrpc.operation` - The operation type: `call` or `getProperty`
+- `jsrpc.target_kind` - The type of RPC target
+- `jsrpc.caller_span_id` - On callee-side spans, the corresponding caller-side `jsRpcCall` span ID
 
 ---
 

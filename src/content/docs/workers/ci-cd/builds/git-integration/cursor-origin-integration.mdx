@@ -1,0 +1,79 @@
+---
+pcx_content_type: reference
+title: Cursor Origin integration
+description: Learn how to manage your Cursor Origin integration for Workers Builds
+sidebar:
+  order: 4
+products:
+  - workers
+---
+
+[Cursor Origin](https://cursor.com/origin) is Cursor's Git hosting platform. Cloudflare supports connecting a Cursor Origin repository to your Cloudflare Worker. Workers Builds automatically builds and deploys your Worker when you push a change to the configured production branch. You can also enable [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds) to create [Previews](/workers/previews/) without deploying changes to production.
+
+## Features
+
+Beyond automatic builds and deployments, the Cloudflare Cursor Origin integration reports build activity in Origin so you can follow a deployment without leaving your repository.
+
+### Pull request comments
+
+When a commit is part of a pull request, Cloudflare posts a comment on the pull request with the build status and links to the build.
+
+When a preview build runs `wrangler preview`, the comment also includes a [Preview URL](/workers/previews/). This URL lets you test the code changes in an isolated copy of your Worker.
+
+Subsequent pushes to the same branch update the same Preview URL. Each deployment also gets an immutable Deployment URL for testing one exact deployment.
+
+### Check runs
+
+Cloudflare creates an Origin check run for each build triggered from the repository. Check runs show whether a build is queued, in progress, or complete. Select the check run details to open the build in the Cloudflare dashboard.
+
+If multiple Workers are connected to one repository, such as in a [monorepo](/workers/ci-cd/builds/advanced-setups/#monorepos), each triggered build appears as a separate check run.
+
+When you use [build watch paths](/workers/ci-cd/builds/build-watch-paths/), Cloudflare only creates check runs for Workers whose configured paths trigger a build.
+
+## Install the Cloudflare app
+
+To install the Cloudflare app for Cursor Origin:
+
+1. Open the [Cloudflare app in Cursor](https://cursor.com/codebase/settings/apps/public/cloudflare).
+2. Select **Install**.
+3. Choose the Origin owner and grant access to either all repositories or selected repositories.
+4. Follow the prompts to connect the installation to your Cloudflare account and configure the Worker build.
+
+## Manage access
+
+You can manage the Cloudflare app from [Cursor codebase settings](https://cursor.com/codebase/settings/apps).
+
+### Team access
+
+The Cursor workspace administrator who installs the app chooses the user or team that owns the repositories Cloudflare can access. The administrator can grant access to all repositories owned by that user or team, or limit access to selected repositories.
+
+Cloudflare recommends granting access only to repositories that you intend to connect to Workers Builds.
+
+### Change repository access
+
+To change the repositories available to Cloudflare:
+
+1. Open [Cursor codebase settings](https://cursor.com/codebase/settings/apps).
+2. Select the Cloudflare app.
+3. Update the repositories that the installation can access.
+
+Removing a repository from the installation disables new builds for Workers connected to that repository. Previous deployments continue to run on Cloudflare.
+
+### Remove access
+
+To remove Cloudflare's access to all repositories owned by the selected Origin user or team, uninstall the Cloudflare app from [Cursor codebase settings](https://cursor.com/codebase/settings/apps).
+
+Uninstalling the app disables new builds for every Worker connected through that installation. Previous deployments continue to run on Cloudflare.
+
+If you only want to stop automatic builds for one Worker, [disconnect the Git repository](/workers/ci-cd/builds/#disconnecting-builds) from the Worker instead.
+
+### Reinstall the Cloudflare Cursor Origin app
+
+If the Origin connection cannot access a repository or receive new changes, reinstall the app:
+
+1. Open [Cursor codebase settings](https://cursor.com/codebase/settings/apps).
+2. Select the Cloudflare app and uninstall it.
+3. Open the [Cloudflare app in Cursor](https://cursor.com/codebase/settings/apps/public/cloudflare).
+4. Select **Install**, choose the Origin owner, and grant repository access.
+5. Follow the prompts to reconnect the installation to Cloudflare.
+6. Retry the build.

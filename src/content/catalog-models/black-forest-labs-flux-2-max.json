@@ -134,6 +134,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"first_output_megapixel": 0.07,
+				"subsequent_output_megapixel": 0.03,
+				"input_megapixel": 0.03
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-27 23:12:31",
 	"schema": {
@@ -142,8 +152,8 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt for image generation or editing.",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt for image generation or editing."
 				},
 				"seed": {
 					"description": "Optional seed for reproducible generation.",
@@ -197,9 +207,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "URL to the generated image",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated image"
 				}
 			},
 			"required": [

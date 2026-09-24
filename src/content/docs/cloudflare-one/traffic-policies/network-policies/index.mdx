@@ -68,6 +68,7 @@ API value: `allow`
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
+- [Traffic Destination](#traffic-destination)
 - [Traffic Source](#traffic-source)
 - [Virtual Network](#virtual-network)
 
@@ -121,6 +122,7 @@ API value: `block`
 - [Source Internal IP](#source-internal-ip)
 - [Source IP](#source-ip)
 - [Source Port](#source-port)
+- [Traffic Destination](#traffic-destination)
 - [Traffic Source](#traffic-source)
 - [Virtual Network](#virtual-network)
 
@@ -353,6 +355,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 ### Source Port
 
 <Render file="gateway/selectors/source-port" product="cloudflare-one" />
+
+### Traffic Destination <Badge text="Beta" variant="caution"/>
+
+The method used to off-ramp traffic from Cloudflare. Use this selector to apply policies based on how traffic leaves Gateway.
+
+| UI name             | API example                      |
+| ------------------- | -------------------------------- |
+| Traffic Destination | `net.offramp.type == "internet"` |
+
+Available values: `internet` (Internet), `cloudflare_wan` (Cloudflare WAN), `cloudflare_tunnel` (Cloudflare Tunnel), `device_client` (Cloudflare One Client), `mesh` (Mesh).
 
 ### Traffic Source <Badge text="Beta" variant="caution"/>
 

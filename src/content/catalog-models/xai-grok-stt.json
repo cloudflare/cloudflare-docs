@@ -343,6 +343,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"input_audio_minutes": 0.001667,
+				"input_audio_minutes_streaming": 0.003334
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-03 20:26:49",
 	"schema": {
@@ -421,8 +430,8 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "Full transcript text.",
-					"type": "string"
+					"type": "string",
+					"description": "Full transcript text."
 				},
 				"language": {
 					"description": "Detected language name (e.g. \"English\", \"French\").",

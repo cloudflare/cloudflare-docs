@@ -17,11 +17,11 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"@480p non-video input (per second)": 0.1028,
-		"@720p non-video input (per second)": 0.2312,
+		"Default (per second)": 0.2312,
 		"@480p video input (per second)": 0.4304,
 		"@720p video input (per second)": 0.9676,
-		"Default (per second)": 0.2312
+		"@480p non-video input (per second)": 0.1028,
+		"@720p non-video input (per second)": 0.2312
 	},
 	"examples": [
 		{
@@ -177,14 +177,26 @@
 	"metadata": {
 		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, adaptive",
 		"Max Duration": "30 seconds",
+		"Max Reference Audio Clips": "10",
 		"Max Reference Images": "30",
 		"Max Reference Videos": "10",
-		"Max Reference Audio Clips": "10",
 		"Native Audio": "Yes",
 		"Resolutions": "480p, 720p"
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.2312,
+				"480p_video_in": 0.4304,
+				"720p_video_in": 0.9676,
+				"480p_non_video_in": 0.1028,
+				"720p_non_video_in": 0.2312
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-07 19:10:41",
 	"schema": {
@@ -195,7 +207,7 @@
 				"prompt": {
 					"description": "Text prompt describing the video to generate. Optional when at least one reference image, video, or audio clip is provided (Seedance 2.5 supports audio-only input).",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 25000
 				},
 				"image": {
 					"description": "First-frame reference image (HTTP(S) URL or base64 data URI) for image-to-video",
@@ -230,8 +242,8 @@
 					}
 				},
 				"duration": {
-					"description": "Generated video duration in seconds. Supported range: 4-30, or -1 for automatic selection. For multimodal reference-to-video requests that edit an input reference video, only -1 is supported and the output duration is kept close to the input.",
 					"default": 5,
+					"description": "Generated video duration in seconds. Supported range: 4-30, or -1 for automatic selection. For multimodal reference-to-video requests that edit an input reference video, only -1 is supported and the output duration is kept close to the input.",
 					"anyOf": [
 						{
 							"type": "number",
@@ -245,8 +257,8 @@
 					]
 				},
 				"resolution": {
-					"description": "Video resolution",
 					"default": "720p",
+					"description": "Video resolution",
 					"type": "string",
 					"enum": [
 						"480p",
@@ -254,8 +266,8 @@
 					]
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio. \"adaptive\" automatically matches the aspect ratio of the provided reference image or video when applicable. First/last-frame generation always uses \"adaptive\"; any supplied value is overridden.",
 					"default": "adaptive",
+					"description": "Video aspect ratio. \"adaptive\" automatically matches the aspect ratio of the provided reference image or video when applicable. First/last-frame generation always uses \"adaptive\"; any supplied value is overridden.",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -268,14 +280,14 @@
 					]
 				},
 				"fps": {
-					"description": "Frame rate (frames per second)",
 					"default": 24,
+					"description": "Frame rate (frames per second)",
 					"type": "number",
 					"const": 24
 				},
 				"camera_fixed": {
-					"description": "Whether to fix camera position. Not currently supported by the provider; has no effect.",
 					"default": false,
+					"description": "Whether to fix camera position. Not currently supported by the provider; has no effect.",
 					"type": "boolean"
 				},
 				"generate_audio": {
@@ -283,8 +295,8 @@
 					"type": "boolean"
 				},
 				"watermark": {
-					"description": "Whether to add a watermark to the output video",
 					"default": false,
+					"description": "Whether to add a watermark to the output video",
 					"type": "boolean"
 				},
 				"seed": {
@@ -294,8 +306,8 @@
 					"maximum": 9007199254740991
 				},
 				"output_format": {
-					"description": "Output video container format. \"mp4\" offers the best compatibility and smaller file size; \"mov\" preserves higher color fidelity for professional post-production workflows at the cost of a larger file.",
 					"default": "mp4",
+					"description": "Output video container format. \"mp4\" offers the best compatibility and smaller file size; \"mov\" preserves higher color fidelity for professional post-production workflows at the cost of a larger file.",
 					"type": "string",
 					"enum": [
 						"mp4",
@@ -303,8 +315,8 @@
 					]
 				},
 				"use_virtual_avatar": {
-					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
 					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
 					"type": "boolean"
 				}
 			},
@@ -325,9 +337,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

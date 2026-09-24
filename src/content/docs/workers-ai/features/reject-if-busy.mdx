@@ -1,0 +1,91 @@
+---
+pcx_content_type: concept
+title: Reject busy requests
+description: Fail synchronous inference requests when capacity is unavailable.
+sidebar:
+  order: 5
+products:
+  - workers-ai
+---
+
+import { TypeScriptExample } from "~/components";
+
+Set `rejectIfBusy` when your application should not wait in a capacity queue. Workers AI rejects the synchronous inference request if capacity is unavailable.
+
+## Send a REST request
+
+For the native REST API, add `rejectIfBusy` to the request `options` object:
+
+```bash
+curl --request POST \
+  --url "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/run/@cf/google/gemma-4-26b-a4b-it" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain what a capacity queue is."
+      }
+    ],
+    "options": {
+      "rejectIfBusy": true
+    }
+  }'
+```
+
+## Use the Workers binding
+
+For the Workers AI binding, pass `rejectIfBusy` in the third argument to `env.AI.run()`:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run(
+	"@cf/google/gemma-4-26b-a4b-it",
+	{
+		messages: [
+			{
+				role: "user",
+				content: "Explain what a capacity queue is.",
+			},
+		],
+	},
+	{ rejectIfBusy: true },
+);
+```
+
+</TypeScriptExample>
+
+Do not add `rejectIfBusy` to the model input object. The binding only applies this option from the third argument.
+
+## Call Chat Completions
+
+For OpenAI-compatible Chat Completions, add `options` at the top level of the request body:
+
+```bash
+curl --request POST \
+  --url "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai/v1/chat/completions" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Explain what a capacity queue is."
+      }
+    ],
+    "options": {
+      "rejectIfBusy": true
+    }
+  }'
+```
+
+OpenAI clients that preserve custom fields can send this option. Clients that remove unknown fields do not apply it, so requests proceed normally.
+
+## Handle capacity errors
+
+Rejected requests return HTTP status `429` and internal error code `3040`. The error message is `Capacity temporarily exceeded, please try again.`
+
+Refer to [Workers AI errors](/workers-ai/platform/errors/) for error details.

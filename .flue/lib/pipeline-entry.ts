@@ -11,9 +11,12 @@
  * check for spam-filter events (to decide whether a codeowner skips the
  * INGEST gate). These are a handful of sub-second API calls.
  *
- * Routing (ports the 0.11 `orchestrate` workflow):
+ * Routing:
  *   - codeowner slash command → handled inline (auth, 👀/👍, kick workflow or
  *     set an R2 flag).
+ *   - changelog date check (pull_request events) → handled inline: reconciles
+ *     the changelog-date marker comment, then falls through to the routing
+ *     below for non-closed events (additive; never replaces review routing).
  *   - Dependabot PR event → `DEPENDABOT_REVIEW` (skips the spam gate).
  *   - spam-filter event (issue / non-Dependabot PR):
  *       · sender is a codeowner → skip the gate; kick `REVIEW_ORCHESTRATOR`
@@ -25,19 +28,20 @@
  * (`init().dispatch().read()` from inside Workflow steps) — there is no
  * worker-to-worker HTTP and no internal-auth surface.
  */
-import type { ReviewOrchestratorParams } from "../cloudflare";
 import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 import type { RebaseParams } from "../orchestrators/rebase-workflow";
 import type { IngestParams } from "../orchestrators/ingest-workflow";
 import {
 	addReactionToComment,
 	getInstallationToken,
+	getPullRequest,
 	isCodeOwner,
+	type GitHubPullRequest,
 } from "./github";
-import {
-	setAutoReviewDisabled,
-	setReviewLimitIgnored,
-} from "./code-review-state";
+import { setAutoReviewDisabled } from "./review/state";
+import { startReview, type ReviewWorkflowParams } from "./review/start";
+import { reconcileChangelogDateComment } from "./changelog-date-check";
+import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
 export interface PipelineEnv {
@@ -46,7 +50,7 @@ export interface PipelineEnv {
 	/** Personal/org token (read:org) for codeowner team-membership checks. */
 	GITHUB_ORG_TOKEN?: string;
 	/** App-owned Cloudflare Workflows. */
-	REVIEW_ORCHESTRATOR: Workflow<ReviewOrchestratorParams>;
+	REVIEW_ORCHESTRATOR: Workflow<ReviewWorkflowParams>;
 	DEPENDABOT_REVIEW: Workflow<DependabotReviewParams>;
 	REBASE: Workflow<RebaseParams>;
 	INGEST: Workflow<IngestParams>;
@@ -68,6 +72,15 @@ export async function startReviewPipeline(
 		return;
 	}
 
+	// ── 1.5 Changelog date check (additive; never replaces review routing) ──
+	// Runs inline like the codeowner commands: a handful of sub-second GitHub
+	// API calls. For `closed` events this removes the marker comment and stops
+	// (no other routing exists for closed); otherwise routing continues below.
+	if (c.isChangelogDateEvent) {
+		await runChangelogDateCheckSafely(env, c, number);
+		if (c.action === "closed") return;
+	}
+
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────
 	if (c.isDependabotReviewEvent) {
 		await env.DEPENDABOT_REVIEW.create({ params: { number } });
@@ -81,11 +94,12 @@ export async function startReviewPipeline(
 
 		// Codeowners skip the spam gate — their issues and PRs are never spam.
 		let codeowner = false;
+		let token: string | undefined;
 		if (c.senderLogin) {
 			try {
-				const token = await getInstallationToken(ghEnv);
+				token = await getInstallationToken(ghEnv);
 				codeowner = await isCodeOwner(
-					token,
+					token!,
 					env.GITHUB_ORG_TOKEN ?? "",
 					c.senderLogin,
 				);
@@ -99,7 +113,14 @@ export async function startReviewPipeline(
 		if (codeowner) {
 			// Skip the gate; kick the review directly for a non-draft PR.
 			if (c.isCodeReviewEvent && !draftSkipped) {
-				await env.REVIEW_ORCHESTRATOR.create({ params: { number } });
+				const pr = await getPullRequest(token!, number);
+				await startReview(env.REVIEW_ORCHESTRATOR, {
+					number,
+					headSha: pr.head.sha,
+					trigger: "auto",
+					action: c.action,
+					fullReview: false,
+				});
 				log("code-review", c, number, "review_kicked_codeowner_skip_spam");
 			} else {
 				log("spam-filter", c, number, "codeowner_skip_no_review");
@@ -161,27 +182,9 @@ async function handleCommand(
 	}
 
 	switch (c.command) {
-		case "ignore-review-limit": {
-			try {
-				await setReviewLimitIgnored(env.DOCS_FLUE_BUCKET, number, sender);
-			} catch (err) {
-				log(
-					"command:ignore-review-limit",
-					c,
-					number,
-					"command_write_failed",
-					err instanceof Error ? err.message : String(err),
-				);
-				return;
-			}
-			await addReactionToComment(token, commentId, "+1").catch(() => {});
-			log("command:ignore-review-limit", c, number, "ignore_review_limit_set");
-			return;
-		}
-
 		case "disable-auto-review": {
 			try {
-				await setAutoReviewDisabled(env.DOCS_FLUE_BUCKET, number, sender);
+				await setAutoReviewDisabled(env.DOCS_FLUE_BUCKET, number, true);
 			} catch (err) {
 				log(
 					"command:disable-auto-review",
@@ -194,6 +197,55 @@ async function handleCommand(
 			}
 			await addReactionToComment(token, commentId, "+1").catch(() => {});
 			log("command:disable-auto-review", c, number, "auto_review_disabled");
+			return;
+		}
+
+		case "draft-never-stale": {
+			let pr: GitHubPullRequest;
+			try {
+				pr = await getPullRequest(token, number);
+			} catch (err) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_pr_fetch_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+				return;
+			}
+			if (pr.state !== "open" || !pr.draft) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_ignored_not_draft",
+				);
+				return;
+			}
+			try {
+				await setDraftNeverStale(env.DOCS_FLUE_BUCKET, number, sender);
+			} catch (err) {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"command_write_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+				return;
+			}
+			await clearDraftStaleState(env.DOCS_FLUE_BUCKET, number).catch((err) => {
+				log(
+					"command:draft-never-stale",
+					c,
+					number,
+					"stale_state_clear_failed",
+					err instanceof Error ? err.message : String(err),
+				);
+			});
+			await addReactionToComment(token, commentId, "+1").catch(() => {});
+			log("command:draft-never-stale", c, number, "draft_never_stale_set");
 			return;
 		}
 
@@ -230,18 +282,50 @@ async function handleCommand(
 				log(`command:${c.command}`, c, number, "dependabot_review_kicked");
 				return;
 			}
-			await env.REVIEW_ORCHESTRATOR.create({
-				params: {
-					number,
-					forceFullReview: c.command === "full-review",
-					bypassReviewLimit: true,
-					triggerCommentId: commentId,
-					triggerEyesReactionId: eyes,
-				},
+			const pr = await getPullRequest(token, number);
+			await startReview(env.REVIEW_ORCHESTRATOR, {
+				number,
+				headSha: pr.head.sha,
+				trigger: "command",
+				fullReview: c.command === "full-review",
+				commentId,
+				...(eyes ? { eyesReactionId: eyes } : {}),
+				requestedBy: sender,
 			});
 			log(`command:${c.command}`, c, number, "review_kicked");
 			return;
 		}
+	}
+}
+
+// ── Changelog date check ─────────────────────────────────────────────────────
+
+/**
+ * The changelog date check is deterministic trusted TypeScript (no agent): a
+ * few sub-second GitHub API calls (PR fetch, PR files, per-file content,
+ * comment list, one comment write), so it runs inline like the codeowner
+ * commands. Failures are logged and never break the webhook response or the
+ * review routing that follows for non-closed events.
+ */
+async function runChangelogDateCheckSafely(
+	env: PipelineEnv,
+	c: WebhookClassification,
+	number: number,
+): Promise<void> {
+	const ghEnv = env as unknown as Record<string, string>;
+	try {
+		const token = await getInstallationToken(ghEnv);
+		const pr = await getPullRequest(token, number);
+		const result = await reconcileChangelogDateComment(token, pr);
+		log("changelog-date", c, number, `changelog_date_${result.action.kind}`);
+	} catch (err) {
+		log(
+			"changelog-date",
+			c,
+			number,
+			"changelog_date_check_failed",
+			err instanceof Error ? err.message : String(err),
+		);
 	}
 }
 

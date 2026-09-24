@@ -1,7 +1,7 @@
 /**
  * Pure GitHub-webhook classification.
  *
- * Extracted from the 0.11 `orchestrate` workflow so the routing decision is a
+ * Keeps the webhook routing decision as a
  * plain, unit-testable function with no transport, no GitHub API calls, and no
  * bindings. `app.ts` verifies the HMAC, calls `classifyWebhook`, and acts on
  * the result (dispatching the durable orchestrator or handling a codeowner
@@ -17,8 +17,8 @@ import {
 export type WebhookCommand =
 	| "review"
 	| "full-review"
-	| "ignore-review-limit"
 	| "disable-auto-review"
+	| "draft-never-stale"
 	| "rebase";
 
 export interface WebhookClassification {
@@ -36,6 +36,11 @@ export interface WebhookClassification {
 	isSpamFilterEvent: boolean;
 	/** Non-Dependabot PR event that should run code review (after the gate). */
 	isCodeReviewEvent: boolean;
+	/**
+	 * PR event that should run the changelog date check (new changelog files
+	 * dated in the past). Additive to review routing — it never replaces it.
+	 */
+	isChangelogDateEvent: boolean;
 	/** Whether the PR is a draft (code review is suppressed unless ready_for_review). */
 	isDraft: boolean;
 	/** Codeowner slash command, if the event is an actionable PR comment. */
@@ -53,6 +58,13 @@ const PR_REVIEW_ACTIONS = [
 	"ready_for_review",
 ];
 
+/**
+ * PR events that trigger the changelog date check: every review action (the
+ * check rides along with review routing) plus `closed` so the marker comment
+ * is removed when a PR merges or closes.
+ */
+const CHANGELOG_DATE_ACTIONS = [...PR_REVIEW_ACTIONS, "closed"];
+
 function asRecord(value: unknown): Record<string, unknown> | undefined {
 	return typeof value === "object" && value !== null
 		? (value as Record<string, unknown>)
@@ -67,10 +79,10 @@ function commandFromComment(
 			return "full-review";
 		case "/review":
 			return "review";
-		case "/ignore-review-limit":
-			return "ignore-review-limit";
 		case "/disable-auto-review":
 			return "disable-auto-review";
+		case "/draft-never-stale":
+			return "draft-never-stale";
 		case "/rebase":
 			return "rebase";
 		default:
@@ -108,6 +120,14 @@ export function classifyWebhook(
 
 	const isDependabotReviewEvent = isDependabotPr && isPrReviewAction;
 
+	// Dependabot PRs never add changelog entries; exclude them so the check
+	// runs only where a changelog file is plausible.
+	const isChangelogDateEvent =
+		!isDependabotPr &&
+		eventType === "pull_request" &&
+		action !== undefined &&
+		CHANGELOG_DATE_ACTIONS.includes(action);
+
 	const isDraft = pullRequest?.draft === true;
 
 	// Slash commands: issue_comment created on a PR.
@@ -133,6 +153,7 @@ export function classifyWebhook(
 		isDependabotReviewEvent,
 		isSpamFilterEvent,
 		isCodeReviewEvent,
+		isChangelogDateEvent,
 		isDraft,
 		command,
 		commentId,
@@ -147,6 +168,7 @@ export function isActionable(c: WebhookClassification): boolean {
 		c.isDependabotReviewEvent ||
 		c.isSpamFilterEvent ||
 		c.isCodeReviewEvent ||
+		c.isChangelogDateEvent ||
 		c.command !== null
 	);
 }

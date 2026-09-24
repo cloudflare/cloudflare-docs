@@ -18,7 +18,7 @@ Refer to [Traffic Steering](/cloudflare-one/networks/connectors/cloudflare-wan/r
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
 - BGP peering (beta)
-- [Automatic Return Routing (ARR)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta)
+- [Automatic Return Routing (ARR)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing)
 
 <Aside type="note" title="One page for all your routes">
 The dashboard **Routes** page shows the routes for all of your connectors — including Cloudflare Tunnel and Cloudflare Mesh — in a single table, not just Cloudflare WAN static routes. The following steps cover Cloudflare WAN static routes. Routes for other connector types appear in the same table and can be filtered by type.
@@ -265,9 +265,9 @@ Example:
 
 </TabItem> </Tabs>
 
-## Configure Automatic Return Routing (beta)
+## Configure Automatic Return Routing
 
-[Automatic Return Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing-beta) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires the new [Unified Routing mode (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta).
+[Automatic Return Routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#automatic-return-routing) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires [Unified Routing mode](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing).
 
 To enable ARR:
 
@@ -301,8 +301,8 @@ Create a `POST` request to create an [IPsec](/api/resources/magic_transit/subres
 
 BGP peering is available when using the following on-ramps:
 
-- [CNI with Dataplane v2](/network-interconnect/).
-- [IPsec and GRE tunnels (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/). Requires [Unified Routing (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode-beta).
+- [CNI with Dataplane v2](/network-interconnect/) (closed beta and not available to new customers).
+- [IPsec and GRE tunnels (beta)](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/). Requires [Unified Routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing).
 
 ### Choose an ASN for BGP peering
 
