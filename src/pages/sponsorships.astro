@@ -1,7 +1,6 @@
 ---
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
-import CornerMarks from "~/components/CornerMarks.astro";
 import PageHeader from "~/components/PageHeader.astro";
 import PageShell from "~/components/PageShell.astro";
 
@@ -18,8 +17,7 @@ export const prerender = true;
 			/>
 
 			<section class="mt-12 pt-10" aria-label="Sponsored projects">
-				<div class="sponsorship-grid border-border relative grid grid-cols-1 border-t border-l sm:grid-cols-2 lg:grid-cols-3">
-					<CornerMarks />
+				<div class="sponsorship-grid">
 					<div class="sponsorship">
 						<a
 							class="sponsorship-icon"
@@ -1810,24 +1808,42 @@ export const prerender = true;
 
 <style>
 	.sponsorship-grid {
-		align-items: stretch;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		margin: 0;
+	}
+
+	@media (max-width: 420px) {
+		.sponsorship-grid {
+			margin-left: -1em;
+			margin-right: -1em;
+		}
 	}
 
 	.sponsorship-grid .sponsorship {
-		position: relative;
 		display: flex;
 		flex-flow: column;
+		width: 16em;
 		text-align: left;
-		padding: 1.5rem;
-		border-right: 1px solid var(--color-border);
-		border-bottom: 1px solid var(--color-border);
-		background: var(--color-background);
+		margin: 0.75em;
+		background: var(--nb-card);
 		text-decoration: none;
-		transition: background-color 0.15s ease;
 	}
 
-	.sponsorship-grid .sponsorship:hover {
-		background: color-mix(in oklab, var(--color-muted) 40%, transparent);
+	@media (max-width: 48em) {
+		.sponsorship-grid .sponsorship {
+			font-size: 0.8em;
+			width: 14em;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.sponsorship-grid .sponsorship {
+			width: auto;
+			font-size: 0.95em;
+		}
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-icon {
@@ -1861,6 +1877,7 @@ export const prerender = true;
 
 	.sponsorship-grid .sponsorship .sponsorship-title {
 		display: block;
+		padding: 0 1.5em;
 		text-decoration: none;
 	}
 
@@ -1869,12 +1886,18 @@ export const prerender = true;
 		margin: 0;
 	}
 
+	@media (max-width: 48em) {
+		.sponsorship-grid .sponsorship .sponsorship-title > h3 {
+			font-size: 1.25em;
+		}
+	}
+
 	.sponsorship-grid .sponsorship .sponsorship-title:not(:hover) {
 		color: inherit;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-description {
-		padding: 0.5em 0;
+		padding: 0.5em 1.5em;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-description > :last-child {
@@ -1888,7 +1911,7 @@ export const prerender = true;
 
 	.sponsorship-grid .sponsorship .sponsorship-links > a {
 		color: #0055dc;
-		padding: 0.375em 0;
+		padding: 0.375em 1.5em;
 		display: block;
 		overflow: hidden;
 		text-overflow: ellipsis;
