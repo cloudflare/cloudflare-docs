@@ -1,0 +1,253 @@
+---
+title: Back up a directory to R2
+description: Stream a directory from a Linux sandbox to an R2 bucket as a compressed archive, and restore it into the same sandbox or a new one.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+  - r2
+reviewed: 2026-09-24
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Keep one directory from a sandbox in your own R2 bucket, such as a project before an agent changes it. The Durable Object streams a `tar` archive of the directory to R2 with a multipart upload, and restores it by streaming the object back into `tar`. R2 keeps each backup until you delete it.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+## Back up and restore a directory
+
+<Steps>
+
+1. Create a bucket for the backups:
+
+   <PackageManagers type="exec" pkg="wrangler" args="r2 bucket create sandbox-backups" />
+
+2. In `wrangler.jsonc`, bind the bucket to your Worker, then generate types:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"r2_buckets": [
+   		{
+   			"binding": "BACKUPS",
+   			"bucket_name": "sandbox-backups",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+3. Add a function that splits a stream into parts for a multipart upload:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   // R2 requires every part except the last to be the same size, and at
+   // least 5 MiB.
+   const PART_SIZE = 10 * 1024 * 1024;
+
+   async function* parts(stream: ReadableStream<Uint8Array>) {
+   	let part = new Uint8Array(PART_SIZE);
+   	let length = 0;
+   	let count = 0;
+
+   	for await (const chunk of stream) {
+   		for (let offset = 0; offset < chunk.length; ) {
+   			const size = Math.min(PART_SIZE - length, chunk.length - offset);
+   			part.set(chunk.subarray(offset, offset + size), length);
+   			length += size;
+   			offset += size;
+
+   			if (length === PART_SIZE) {
+   				yield part;
+   				count++;
+   				part = new Uint8Array(PART_SIZE);
+   				length = 0;
+   			}
+   		}
+   	}
+
+   	if (length > 0 || count === 0) {
+   		yield part.subarray(0, length);
+   	}
+   }
+   ```
+
+   </TypeScriptExample>
+
+   A streamed `put()` needs the object's length before the upload starts, and the length of a `tar` archive is unknown until `tar` finishes. A multipart upload sends the archive one part at a time, so the Worker holds at most one 10 MiB part in memory.
+
+4. Add a method to your Durable Object that backs up a directory:
+
+   ```ts title="src/index.ts"
+   async backup(dir: string) {
+   	const container = this.ctx.container;
+
+   	if (!container?.running) {
+   		return undefined;
+   	}
+
+   	const key = `backups/${crypto.randomUUID()}.tar.gz`;
+   	const tar = await container.exec(["tar", "-czf", "-", "-C", dir, "."], {
+   		stderr: "ignore",
+   	});
+   	const upload = await this.env.BACKUPS.createMultipartUpload(key);
+
+   	try {
+   		const uploaded: R2UploadedPart[] = [];
+
+   		for await (const part of parts(tar.stdout!)) {
+   			uploaded.push(await upload.uploadPart(uploaded.length + 1, part));
+   		}
+
+   		// tar exits with 1 when a file changed while it was read.
+   		const exitCode = await tar.exitCode;
+
+   		if (exitCode > 1) {
+   			throw new Error(`tar exited with code ${exitCode}`);
+   		}
+
+   		const object = await upload.complete(uploaded);
+   		return { key, size: object.size };
+   	} catch (error) {
+   		await upload.abort();
+   		throw error;
+   	}
+   }
+   ```
+
+   When `tar` fails, such as for a directory that does not exist, the method aborts the upload, so R2 keeps no partial object. To leave out files, add `tar` options before `-C`, such as `--exclude=node_modules`, which matches at any depth.
+
+5. Add a method that restores a backup, starting the container if it is not running:
+
+   ```ts title="src/index.ts"
+   async restore(key: string, dir: string) {
+   	const object = await this.env.BACKUPS.get(key);
+   	const container = this.ctx.container;
+
+   	if (!object || !container) {
+   		return false;
+   	}
+
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
+   		});
+   	}
+
+   	await container.setInactivityTimeout(10 * 60 * 1000);
+
+   	// Replace the directory with the archive from standard input.
+   	const script = 'rm -rf -- "$1" && mkdir -p -- "$1" && tar -xzf - -C "$1"';
+   	const tar = await container.exec(["sh", "-c", script, "sh", dir], {
+   		stdin: object.body,
+   	});
+   	const exitCode = await tar.exitCode;
+
+   	if (exitCode !== 0) {
+   		throw new Error(`tar exited with code ${exitCode}`);
+   	}
+
+   	return true;
+   }
+   ```
+
+   Restoring replaces the directory, so files that are not in the backup are removed. The archive keeps symbolic links and file permissions.
+
+6. Add routes to your Worker that back up and restore `/workspace`:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/(backup|restore)$/.exec(
+   			url.pathname,
+   		);
+
+   		if (!match || request.method !== "POST") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const [, name, action] = match;
+   		const sandbox = env.MY_CONTAINER.getByName(name);
+
+   		if (action === "backup") {
+   			const backup = await sandbox.backup("/workspace");
+   			return backup
+   				? Response.json(backup)
+   				: new Response("The sandbox is not running", { status: 409 });
+   		}
+
+   		const key = url.searchParams.get("key") ?? "";
+   		return (await sandbox.restore(key, "/workspace"))
+   			? new Response(null, { status: 204 })
+   			: new Response("Backup not found", { status: 404 });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   A backup holds every file in the directory, including credentials written in the sandbox. Authenticate callers first, and restore a backup only into sandboxes that belong to the same user. For more information, refer to [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox).
+
+7. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+8. With files in `/workspace` of the sandbox named `ada`, back up the directory. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/backup --request POST
+   ```
+
+   ```json output
+   {
+   	"key": "backups/9bf0aa4e-e433-466d-84db-fe207fe58dcf.tar.gz",
+   	"size": 26004405
+   }
+   ```
+
+9. Restore the backup into a new sandbox named `grace`. Replace `<KEY>` with the key from the response:
+
+   ```sh
+   curl "https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/grace/restore?key=<KEY>" --request POST
+   ```
+
+   The request responds with `204`, and `/workspace` in `grace` has the files from `ada`.
+
+</Steps>
+
+## Delete old backups
+
+To delete backups after a time, add an [object lifecycle rule](/r2/buckets/object-lifecycles/) to the bucket for the `backups/` prefix. For example, to delete backups after seven days:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="r2 bucket lifecycle add sandbox-backups delete-old-backups backups/ --expire-days 7"
+/>
+
+## Related resources
+
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the whole filesystem instead of one directory.
+- [Use multipart uploads](/r2/objects/upload-objects/#multipart-upload): R2 multipart upload limits.
