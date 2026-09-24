@@ -20,6 +20,6 @@ A coding agent reads a repository, edits files, and runs commands until its task
 
 When the agent runs inside the sandbox, as Claude Code, Codex, OpenCode, and Pi do, your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach.
 
-Devin, Cursor, and Claude Managed Agents run their agent loop in the vendor's own service and send the commands and file edits to sandboxes in your Cloudflare account. Each vendor's template gives every session its own sandbox. In the Devin and Cursor templates, the sandbox also holds the vendor's credential, because the vendor's worker process runs inside it.
+Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in the vendor's own service and send the commands and file edits to sandboxes in your Cloudflare account. Each vendor's template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the sandbox also holds a vendor credential, because the vendor's worker process runs inside it.
 
 <DirectoryListing />

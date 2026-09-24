@@ -714,7 +714,7 @@
 # Sandbox
 /sandbox/platform/beta-info/ /sandbox/sdk/platform/ 301
 /sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
-/sandbox/guides/openai-agents-api/ /sandbox/tutorials/openai-agents-api/ 301
+/sandbox/guides/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
 /sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
 /sandbox/tutorials/ai-code-executor/ /sandbox/sdk/tutorials/ai-code-executor/ 301
 /sandbox/tutorials/analyze-data-with-ai/ /sandbox/sdk/tutorials/analyze-data-with-ai/ 301
@@ -729,6 +729,7 @@
 /sandbox/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
 /sandbox/sdk/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
 /sandbox/tutorials/openai-agents/ /sandbox/sdk/tutorials/openai-agents/ 301
+/sandbox/tutorials/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
 /sandbox/tutorials/persistent-storage/ /sandbox/sdk/tutorials/persistent-storage/ 301
 /sandbox/tutorials/workers-ai-code-interpreter/ /sandbox/sdk/tutorials/workers-ai-code-interpreter/ 301
 # D1
