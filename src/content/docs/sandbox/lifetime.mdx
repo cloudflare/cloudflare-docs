@@ -91,7 +91,7 @@ accDescr: A named sandbox starts one Linux instance. The instance saves its writ
 
 Restores are explicit. Cloudflare does not choose a snapshot when a sandbox starts. Your application decides when to save a snapshot, stores it, for example in the Durable Object's storage, and passes it to the next `start()`. Changes made after the last snapshot exist only in the current instance, so save another snapshot before the instance stops.
 
-The coding agent's repository, dependencies, and edits return from a snapshot. The development server does not, so the agent starts it again. To save and restore a workspace, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+The coding agent's repository, dependencies, and edits return from a snapshot. The development server does not, so the agent starts it again. To save and restore a workspace, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/). To save a sandbox each time it stops for inactivity, refer to [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/).
 
 ## Mounted buckets outlive every instance
 
