@@ -562,7 +562,8 @@ entries:
   - name: cf.schema_validation.learned.query.undeclared_parameters
     data_type: Array<String>
     categories: [Request]
-    keywords: [request, schema validation, learned profile, query, undeclared parameter]
+    keywords:
+      [request, schema validation, learned profile, query, undeclared parameter]
     summary: Names of query parameters detected in the request but [not declared in the learned schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
     description: |-
       Query parameter names are URL-decoded.
@@ -626,7 +627,8 @@ entries:
   - name: cf.schema_validation.uploaded.query.undeclared_parameters
     data_type: Array<String>
     categories: [Request]
-    keywords: [request, schema validation, uploaded schema, query, undeclared parameter]
+    keywords:
+      [request, schema validation, uploaded schema, query, undeclared parameter]
     summary: Names of query parameters detected in the request but [not declared in the uploaded schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
     description: |-
       Query parameter names are URL-decoded.
