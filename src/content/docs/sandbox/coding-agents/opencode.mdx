@@ -11,7 +11,7 @@ products:
   - durable-objects
   - ai-gateway
   - workers
-reviewed: 2026-09-23
+reviewed: 2026-09-24
 ---
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
@@ -20,13 +20,8 @@ Give [OpenCode](https://opencode.ai) a GitHub repository and a prompt, let it ed
 
 ## Prerequisites
 
-- Complete [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/) and use its `sandbox-coding-agent` project. This guide replaces the image, the model, and the parts of the Worker that are specific to the agent.
+- The `sandbox-coding-agent` project from [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/). This page replaces the image, the model, and the parts of the Durable Object that are specific to the agent.
 - Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
-
-:::caution
-The Worker does not authenticate requests. Anyone with the URL can run OpenCode and spend your AI Gateway credits. Authenticate callers before you share the URL.
-For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
-:::
 
 ## Switch the Worker to OpenCode
 
@@ -118,6 +113,16 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    	}
    ```
 
+   `opencode run` runs one task without an interactive terminal:
+
+   - `--format json` writes one JSON event per line to the events file.
+   - `--auto` approves every tool call that OpenCode's configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what OpenCode's commands can reach.
+   - `--model` selects the AI Gateway model from `MODEL`.
+
+   OpenCode's built-in `cloudflare-ai-gateway` provider reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the gateway's universal endpoint, which is the gateway path itself with no suffix. The runner's `Outbound` entrypoint allows that exact path as well as the paths under it. OpenCode does not start without a token, so `CLOUDFLARE_API_TOKEN` is a placeholder, and the `Outbound` entrypoint replaces the token header with the gateway token.
+
+   The `OPENCODE_DISABLE_*` variables make OpenCode use the model list built into the binary and turn off its update check, default plugins, language server downloads, and sharing. OpenCode still tries to install `@opencode-ai/plugin` from npm in the background. That request gets a `403` response from the `Outbound` entrypoint, and OpenCode continues.
+
 5. Replace the `outcome()` method:
 
    ```ts title="src/sandbox.ts"
@@ -155,6 +160,8 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    		return { state: "failed", error };
    	}
    ```
+
+   OpenCode exits with a nonzero code on any model or session error, so the exit code decides the outcome. A successful task returns the last `text` event. A failed task returns the message from the last `error` event, such as the gateway's message for a rejected token or missing Unified Billing credits.
 
 6. Deploy the Worker:
 
@@ -200,22 +207,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
 </Steps>
 
-## How OpenCode runs in the sandbox
+## Related resources
 
-`opencode run` runs one task without an interactive terminal. The command sets these options:
-
-- `--format json` writes one JSON event per line to the events file.
-- `--auto` approves every tool call that OpenCode's configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what OpenCode's commands can reach.
-- `--model` selects the AI Gateway model from `MODEL`.
-
-OpenCode's built-in `cloudflare-ai-gateway` provider reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the gateway's universal endpoint, which is the gateway path itself with no suffix. The tutorial's `Outbound` entrypoint allows that exact path as well as the paths under it. OpenCode does not start without a token, so `CLOUDFLARE_API_TOKEN` is a placeholder, and the `Outbound` entrypoint replaces the token header with the gateway token.
-
-The `OPENCODE_DISABLE_*` variables make OpenCode use the model list built into the binary and turn off its update check, default plugins, language server downloads, and sharing. OpenCode still tries to install `@opencode-ai/plugin` from npm in the background. That request gets a `403` response from the `Outbound` entrypoint, and OpenCode continues.
-
-OpenCode exits with a nonzero code on any model or session error, so the exit code decides the outcome. A successful task returns the last `text` event. A failed task returns the message from the last `error` event. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. Gateway errors, such as a rejected token or missing Unified Billing credits, appear in `error` with the gateway's message.
-
-## Next steps
-
-- Learn how the Worker starts the sandbox, runs the task, and keeps the sandbox running. Refer to [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/).
-- Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
-- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
+- [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/): how the runner starts the sandbox, runs the task, and reads the diff.
+- [OpenCode documentation](https://opencode.ai/docs/)

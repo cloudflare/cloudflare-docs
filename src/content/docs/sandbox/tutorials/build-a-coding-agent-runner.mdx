@@ -1,18 +1,17 @@
 ---
-title: Run Claude Code in a sandbox
-description: Clone a GitHub repository into a Linux sandbox, run Claude Code on a task, and read its changes as a diff.
+title: Build a coding agent runner
+description: Build a Worker that clones a GitHub repository into a Linux sandbox, runs Claude Code on a task in the background, and returns its changes as a diff.
 pcx_content_type: tutorial
 difficulty: Intermediate
 sidebar:
-  order: 1
-  label: Claude Code
+  order: 2
 products:
   - sandbox
   - containers
   - durable-objects
   - ai-gateway
   - workers
-reviewed: 2026-09-23
+reviewed: 2026-09-24
 ---
 
 import {
@@ -23,7 +22,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-In this tutorial, you will build a Worker that runs [Claude Code](https://code.claude.com/docs/en/overview) on a GitHub repository in a Linux sandbox. You send a prompt, Claude Code edits the repository inside the sandbox, and you read its changes as a diff.
+In this tutorial, you will build a Worker that runs a coding agent on a GitHub repository in a Linux sandbox. You send a prompt, the agent edits the repository inside the sandbox, and you read its changes as a diff. The runner uses [Claude Code](https://code.claude.com/docs/en/overview). The pages in [Coding agents](/sandbox/coding-agents/) switch it to other agents.
 
 Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, so the token never enters the sandbox. The sandbox can reach only your gateway and `github.com`.
 
@@ -547,7 +546,7 @@ The task files live in `/workspace/task`, outside the repository, so they do not
 
 ### Keep the sandbox running
 
-Claude Code running in the container does not keep the container running. `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute while it runs, and stops rescheduling when the task ends. The constructor sets the 30-minute inactivity timeout again whenever it finds the container running. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
+A running process does not keep the container running, so `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute until it ends. Each check keeps the container running. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/).
 
 ### Read the outcome
 
@@ -791,11 +790,12 @@ If the model request fails, the task state is `failed` and `error` contains the 
 - `Failed to authenticate. API Error: 401 Unauthorized` means the gateway rejected the token. Check that the token belongs to the account and gateway in `wrangler.jsonc`. Claude Code retries a failing model request 10 times, so this error takes about three minutes to appear.
 - `API Error: 402 Insufficient wholesale credits` means the gateway uses Unified Billing and the account has no credits. Add credits, or store an Anthropic API key in the gateway.
 
-You built a Worker that runs Claude Code on a repository in a sandbox. The sandbox holds the repository and Claude Code, and your Worker holds the gateway token and decides where the sandbox can connect.
+You built a Worker that runs a coding agent on a repository in a sandbox. The sandbox holds the repository and the agent, and your Worker holds the gateway token and decides where the sandbox can connect.
 
 ## Next steps
 
+- Run another agent in the same Worker. Refer to [Codex](/sandbox/coding-agents/codex/), [OpenCode](/sandbox/coding-agents/opencode/), or [Pi](/sandbox/coding-agents/pi/).
 - Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
-- Clone private repositories by adding a GitHub token in the `Outbound` entrypoint. Refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
+- Clone private repositories with a token that stays in your Worker. Refer to [Clone a private repository](/sandbox/network/clone-a-private-repository/).
 - Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
 - Route Claude Code through AI Gateway from other environments. Refer to [Claude Code in AI Gateway](/ai-gateway/integrations/coding-agents/claude-code/).
