@@ -34,7 +34,7 @@ Key [Sandbox SDK methods](/sandbox/sdk/api/) map to individual HTTP endpoints. T
 
 Deploy the bridge Worker to your Cloudflare account:
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/worker)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge/worker)
 
 The button deploys the Worker and generates a `SANDBOX_API_KEY` secret for authentication. When deployment finishes, note your Worker URL and API key — every example on this page uses them.
 
@@ -53,7 +53,7 @@ If you prefer to deploy step by step, scaffold the project and deploy manually.
 1. Scaffold the bridge project:
 
 	```sh
-	npm create cloudflare -- sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker
+	npm create cloudflare -- sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker#v0
 	cd sandbox-bridge
 	```
 
@@ -306,9 +306,9 @@ Check the [sandbox-sdk releases](https://github.com/cloudflare/sandbox-sdk/relea
 
 The bridge source code and examples are available on GitHub:
 
-- [Bridge source](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge) — Worker, Dockerfile, deploy script, and OpenAPI schema.
-- [Workspace chat example](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/examples/workspace-chat) — Full-stack chat application with a file browser sidebar.
-- [Basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/examples/basic) — One-shot Python coding agent using the OpenAI Agents SDK.
+- [Bridge source](https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge) — Worker, Dockerfile, deploy script, and OpenAPI schema.
+- [Workspace chat example](https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge/examples/workspace-chat) — Full-stack chat application with a file browser sidebar.
+- [Basic example](https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge/examples/basic) — One-shot Python coding agent using the OpenAI Agents SDK.
 
 ## Related resources
 

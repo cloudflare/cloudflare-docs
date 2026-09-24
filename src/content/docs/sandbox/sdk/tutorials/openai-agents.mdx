@@ -40,7 +40,7 @@ The Sandbox environment comes pre-configured for Node.js and Python development,
 
 Deploy the bridge to your Cloudflare account:
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/worker)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge/worker)
 
 The button deploys the Worker and generates a `SANDBOX_API_KEY` secret for authentication. When deployment finishes, note your Worker URL and API key — you will need them in the next step.
 
@@ -53,7 +53,7 @@ If you prefer to deploy step by step:
 2. Scaffold the bridge project:
 
 	```sh
-	npm create cloudflare sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker
+	npm create cloudflare sandbox-bridge --template=cloudflare/sandbox-sdk/bridge/worker#v0
 	cd sandbox-bridge
 	```
 
@@ -252,7 +252,7 @@ The Cloudflare Sandbox provides more capabilities you can integrate into your ag
 
 ## Next steps
 
-- [Workspace chat example](https://github.com/cloudflare/sandbox-sdk/tree/main/bridge/examples/workspace-chat) — A full-stack chat application with a file browser sidebar, built with the OpenAI Agents SDK and Cloudflare Sandbox.
+- [Workspace chat example](https://github.com/cloudflare/sandbox-sdk/tree/v0/bridge/examples/workspace-chat) — A full-stack chat application with a file browser sidebar, built with the OpenAI Agents SDK and Cloudflare Sandbox.
 - [OpenAI Agents SDK documentation](https://openai.github.io/openai-agents-python/) — Learn about multi-agent handoffs, guardrails, tracing, and more.
 - [Sandbox bridge](/sandbox/sdk/bridge/) — Overview of the bridge Worker, usage examples, and configuration.
 - [HTTP API reference](/sandbox/sdk/bridge/http-api/) — Complete route reference for the bridge API.
