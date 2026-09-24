@@ -1,16 +1,16 @@
 ---
-title: Manage files in a sandbox
-description: Write, read, list, and delete files in a Linux sandbox from your Worker, and download a file that a command creates.
+title: Move files in and out of a sandbox
+description: Upload a file to a Linux sandbox from your Worker, run a command on it, and download the file the command creates.
 pcx_content_type: how-to
 sidebar:
   order: 1
-  label: Manage files
+  label: Move files
 products:
   - sandbox
   - workers
   - containers
   - durable-objects
-reviewed: 2026-09-23
+reviewed: 2026-09-24
 ---
 
 import {
@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Move files between your Worker and a Linux sandbox. This guide uploads a text file, lists its directory, compresses the file with a command in the sandbox, downloads the result, and deletes the directory.
+Give a command in a Linux sandbox an input file, and return the file it creates. This guide uploads a text file, compresses it with `gzip` in the sandbox, and downloads the compressed file through your Worker.
 
 The `Files` class from the `@cloudflare/sandbox` package runs each file operation inside the running container. It streams file contents in both directions and reports Linux errors, such as `ENOENT`, by name.
 
@@ -36,9 +36,9 @@ The example does not authenticate incoming requests. Authenticate callers before
 For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
 :::
 
-## Manage files from your Worker
+## Move files through your Worker
 
-`Files` runs a helper binary, `/usr/local/bin/sandbox-shim`, inside the container. The `cloudflare/sandbox` image contains that binary so you can copy it into your own image. The binary is statically linked, so it works with any `linux/amd64` base image.
+`Files` runs a helper binary in the container, so the image needs a copy of it. For the package requirements, refer to [`@cloudflare/sandbox`](/sandbox/reference/#requirements).
 
 <Steps>
 
@@ -155,25 +155,12 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    		await files.writeFile(path, contents, { cwd: workspace });
    	}
 
-   	async read(path: string): Promise<Response> {
-   		const files = await this.startSandbox();
-   		const info = await files.stat(path, { cwd: workspace });
+	async read(path: string): Promise<Response> {
+		const files = await this.startSandbox();
+		return files.readFile(path, { cwd: workspace });
+	}
 
-   		if (info.type === "directory") {
-   			return Response.json(
-   				await files.readDirectory(path, { cwd: workspace }),
-   			);
-   		}
-
-   		return files.readFile(path, { cwd: workspace });
-   	}
-
-   	async remove(path: string) {
-   		const files = await this.startSandbox();
-   		await files.remove(path, { cwd: workspace, recursive: true });
-   	}
-
-   	async compress(path: string) {
+	async compress(path: string) {
    		await this.startSandbox();
 
    		const process = await this.container.exec(
@@ -201,40 +188,31 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
-   		const route = match[2];
-   		const path = workspacePath(match[3] ?? "");
+		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+		const route = match[2];
+		const path = workspacePath(match[3] ?? "");
 
-   		if (path === null) {
-   			return new Response("Invalid path", { status: 400 });
-   		}
+		if (!path) {
+			return new Response("Invalid path", { status: 400 });
+		}
 
-   		try {
-   			if (route === "files" && request.method === "GET") {
-   				return await sandbox.read(path || ".");
-   			}
+		try {
+			if (route === "files" && request.method === "GET") {
+				return await sandbox.read(path);
+			}
 
-   			if (!path) {
-   				return new Response("A file path is required", { status: 400 });
-   			}
-
-   			if (route === "files" && request.method === "PUT") {
+			if (route === "files" && request.method === "PUT") {
    				if (!request.body) {
    					return new Response("A request body is required", {
    						status: 400,
    					});
    				}
 
-   				await sandbox.write(path, request.body);
-   				return new Response(null, { status: 204 });
-   			}
+				await sandbox.write(path, request.body);
+				return new Response(null, { status: 204 });
+			}
 
-   			if (route === "files" && request.method === "DELETE") {
-   				await sandbox.remove(path);
-   				return new Response(null, { status: 204 });
-   			}
-
-   			if (route === "compress" && request.method === "POST") {
+			if (route === "compress" && request.method === "POST") {
    				const result = await sandbox.compress(path);
    				return Response.json(result, {
    					status: result.exitCode === 0 ? 200 : 500,
@@ -294,7 +272,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
    Each sandbox name in the URL maps to one Durable Object and its Linux instance. File paths in the URL resolve against `/workspace` through the `cwd` option.
 
-   `Files` does not start the container. `startSandbox()` starts it before each operation. `read()` calls `stat()` first, then lists a directory with `readDirectory()` or streams a file with `readFile()`. `write()` creates missing parent directories, then streams the request body into the file.
+   `Files` does not start the container. `startSandbox()` starts it before each operation. `write()` creates missing parent directories, then streams the request body into the file. `read()` streams the file back with `readFile()`.
 
    Files exist only while the Linux instance runs. The Durable Object sets a 10-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/).
 
@@ -313,17 +291,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
    The Worker creates `/workspace/reports/names.txt` and responds with `204 No Content`.
 
-7. List the `reports` directory:
-
-   ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports
-   ```
-
-   ```json output
-   [{ "name": "names.txt", "type": "file" }]
-   ```
-
-8. Compress the file with `gzip` in the sandbox:
+7. Compress the file with `gzip` in the sandbox:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/compress/reports/names.txt \
@@ -334,7 +302,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    { "path": "reports/names.txt.gz", "exitCode": 0, "stderr": "" }
    ```
 
-9. Download the compressed file and decompress it:
+8. Download the compressed file and decompress it:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports/names.txt.gz \
@@ -347,36 +315,15 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    Grace Hopper
    ```
 
-10. Delete the `reports` directory, then request it again:
-
-    ```sh
-    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports \
-      --request DELETE
-    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports
-    ```
-
-    ```txt output
-    ENOENT: reports
-    ```
-
 </Steps>
 
 A command in the sandbox creates the compressed file, and the download streams its bytes back through your Worker. A different sandbox name, such as `grace`, starts a separate Linux instance with its own `/workspace`.
 
 ## Handle file errors
 
-`Files` throws `SandboxFileError` when Linux rejects an operation. The error's `code` property holds the Linux error name, such as `ENOENT` for a missing path or `EISDIR` for a write to a directory. `SandboxFileError.is()` recognizes the error after it crosses the Durable Object RPC boundary, so the Worker can map it to an HTTP status.
+The Worker maps the Linux error name in each `SandboxFileError` to an HTTP status, such as `404` for `ENOENT`. `SandboxFileError.is()` recognizes the error after it crosses the Durable Object RPC boundary.
 
-`writeFile()` opens the file before it reads the request body. If an upload fails partway through, the file can remain partially written. When other code must never read a partial file, write to a temporary path and rename it:
-
-```ts
-await files.writeFile(`${path}.partial`, contents, { cwd: workspace });
-await files.rename(`${path}.partial`, path, { cwd: workspace });
-```
-
-`readFile()` returns a streaming response. An error can occur while the body streams, after the Worker has sent the status code.
-
-`SandboxProtocolError` means `Files` could not complete its exchange with `sandbox-shim`. Check that the `cloudflare/sandbox` tag in the `Dockerfile` matches the installed package version. `Files` does not wrap other failures, such as a stopped container or a canceled request.
+An upload that fails partway through can leave a partially written file, and a download can fail after the Worker has sent the status code. For every error, and for writing through a temporary file, refer to the [Files API](/sandbox/reference/files/#errors).
 
 ## Limit which paths callers reach
 
