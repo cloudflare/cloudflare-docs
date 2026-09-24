@@ -476,9 +476,7 @@ To follow output, `logs()` streams `tail -F --pid`, which ends when the process 
 
 ## Keep the sandbox running
 
-The container keeps running for `INACTIVITY_TIMEOUT_MS` after the Durable Object's last request. A running process does not count as a request. While any process runs, the Durable Object's [alarm](/durable-objects/api/alarms/) checks every process each minute. Each check is a request, so the container keeps running until the last process ends.
-
-The inactivity timeout does not survive a Durable Object restart, and the Durable Object can restart between alarms. `status()` sets the timeout again on every request.
+A running process does not keep the container running. While any process runs, the Durable Object's [alarm](/durable-objects/api/alarms/) checks every process each minute, and `status()` sets the inactivity timeout on every call, so the container keeps running until the last process ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
 
 The alarm also reports processes that end. For each one, it writes a log that [Workers Logs](/workers/observability/logs/workers-logs/) records:
 

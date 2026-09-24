@@ -21,7 +21,7 @@ Give each sandbox a workspace that can return after its Linux instance stops. Th
 Container snapshots are in public beta. Features and behavior may change.
 :::
 
-For the distinction between a saved filesystem and a running Linux instance, refer to [Sandbox persistence](/sandbox/persistence/).
+For the distinction between a saved filesystem and a running Linux instance, refer to [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 :::caution
 The example does not authenticate incoming requests. Authenticate callers before production so other people cannot read, change, or restore another sandbox's workspace.
@@ -224,7 +224,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 
    Each sandbox name in the URL maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
 
-   Files that are not in a snapshot exist only while the Linux instance runs. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for 10 minutes after the Durable Object becomes inactive, so the file written in one request is still there when the next request saves it. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
+   The Durable Object sets a 10-minute inactivity timeout on every request, so the file written in one request is still there when the next request saves it. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#set-the-timeout-on-every-request).
 
 2. Deploy the Worker:
 
@@ -330,11 +330,7 @@ The final request starts a new Linux instance from the saved snapshot. The sandb
 
 ## Snapshot behavior
 
-`snapshotContainer()` captures the state of the container's writable root filesystem. It does not capture files from separately mounted filesystems. Finish filesystem writes before you create the snapshot.
-
-Starting with a snapshot creates a new instance that uses the saved filesystem. The new instance runs the `entrypoint` configured in this guide. A snapshot does not restore running processes, memory, terminal sessions, or network connections.
-
-Restores are explicit. If the sandbox changes after its last snapshot, create another snapshot before the instance stops. Otherwise, the next instance starts from the previous saved state.
+A snapshot saves the writable root filesystem, without mounted directories, memory, or running processes, so finish filesystem writes before you create it. For what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 If a stored snapshot cannot be restored, the request fails with an error such as `Snapshot "<SNAPSHOT_ID>" was not found.` Later requests fail the same way until the stored ID changes. The example does not fall back to the image, because that would show an empty workspace under a sandbox name that should keep its files.
 

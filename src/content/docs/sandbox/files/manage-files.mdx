@@ -296,7 +296,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
    `Files` does not start the container. `startSandbox()` starts it before each operation. `read()` calls `stat()` first, then lists a directory with `readDirectory()` or streams a file with `readFile()`. `write()` creates missing parent directories, then streams the request body into the file.
 
-   Files exist only while the Linux instance runs. [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) keeps the instance running for 10 minutes after the Durable Object becomes inactive. The Durable Object sets the timeout on every request because the setting does not survive a Durable Object restart.
+   Files exist only while the Linux instance runs. The Durable Object sets a 10-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/).
 
 5. Deploy the Worker:
 
