@@ -1,0 +1,186 @@
+---
+title: Change commands and file calls
+description: Replace @cloudflare/sandbox 0.12 exec(), session, timeout, file, and watch calls with container.exec() and Files.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In 1.0, your Durable Object runs commands with [`exec()`](/durable-objects/api/container/#exec) on `this.ctx.container`, and reads and writes files with [`Files`](/sandbox/reference/files/) from `@cloudflare/sandbox`. The migration is done when no code calls a 0.12 method to run a command or touch a file.
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `container` is `this.ctx.container` in your Durable Object, and `files` is `new Files(container)`.
+
+## Pass each command as an array
+
+`exec()` takes the executable and its arguments as an array, and starts one process without a shell. Pipes, redirects, and variables need a shell, so start `sh -c` for them:
+
+```ts
+// Was: await sandbox.exec("npm test");
+await container.exec(["npm", "test"]);
+
+await container.exec(["sh", "-c", "npm test 2>&1 | tee /tmp/test.log"]);
+```
+
+## Read the result
+
+`exec()` returns a running process. `output()` waits for the process to exit and returns its output as bytes. Read `exitCode` where 0.12 code read `success`:
+
+```ts
+const process = await container.exec(["npm", "test"], { cwd: "/workspace" });
+const result = await process.output();
+const stdout = new TextDecoder().decode(result.stdout);
+const passed = result.exitCode === 0;
+```
+
+## Stream output
+
+To stream output, return the process's `stdout` as a response body. This replaces `stream: true`, `onOutput`, and `execStream()`. Pass `stderr: "combined"` to send standard error in the same stream, and set `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
+
+```ts
+const process = await container.exec(["npm", "test"], {
+	cwd: "/workspace",
+	stderr: "combined",
+});
+
+return new Response(process.stdout, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+The body contains the command's own output, not server-sent events. Read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/how-to/stream-command-output/).
+
+## Replace sessions
+
+A 0.12 session kept a working directory and environment variables across calls. Keep them in an object, and pass the object to each call:
+
+```ts
+// Was: const build = await sandbox.createSession({ cwd: "/workspace/app", env: { CI: "1" } });
+const build = { cwd: "/workspace/app", env: { CI: "1" } };
+
+await container.exec(["npm", "ci"], build);
+await container.exec(["npm", "test"], build);
+```
+
+A command cannot change the directory or variables of later commands. A `cd` or `export` lasts until its command exits. Run steps that depend on each other in one `sh -c` command.
+
+`exec()` does not inherit the `env` passed to `start()`. Pass the variables each command needs in its own `env`.
+
+To keep sessions apart, give each one its own sandbox name.
+
+## Replace timeouts
+
+Pass an `AbortSignal` from a timer, and clear the timer when the command exits. This replaces `timeout` and `commandTimeoutMs`.
+
+```ts
+const abort = new AbortController();
+const timer = setTimeout(() => abort.abort(), 60_000);
+
+try {
+	const process = await container.exec(["npm", "test"], {
+		signal: abort.signal,
+	});
+	const result = await process.output();
+
+	if (result.exitCode === 137) {
+		// The timer fired and killed the command.
+	}
+} finally {
+	clearTimeout(timer);
+}
+```
+
+When the signal fires, the process receives `SIGKILL`. `output()` still resolves, with exit code `137`. Check the exit code, because the command can make changes before it is killed.
+
+Do not pass `AbortSignal.timeout()` to `exec()` for a command that can finish first. The timeout still fires after the process exits, and signaling a process that has exited records an internal error. `Files` and `S3Mounts` accept `AbortSignal.timeout()`, because they stop following the signal when the operation ends.
+
+## Change each file call
+
+Each 0.12 file call has a `Files` replacement:
+
+| 0.12                                              | 1.0                                                            |
+| ------------------------------------------------- | -------------------------------------------------------------- |
+| `readFile(path)`, then `.content`                 | `await (await files.readFile(path)).text()`                    |
+| `readFile(path, { encoding: "base64" })`          | `await (await files.readFile(path)).arrayBuffer()`             |
+| `readFileStream(path)`                            | `(await files.readFile(path)).body`                            |
+| `writeFile(path, base64, { encoding: "base64" })` | `await files.writeFile(path, bytes)`                           |
+| `exists(path)`                                    | `files.stat(path)`, and catch `SandboxFileError` with `ENOENT` |
+| `listFiles(path)`                                 | `files.readDirectory(path)`                                    |
+| `listFiles(path, { recursive: true })`            | A walk over `readDirectory()`                                  |
+| `mkdir(path, { recursive: true })`                | `files.mkdir(path, { recursive: true })`                       |
+| `deleteFile(path)`                                | `files.remove(path)`                                           |
+| `renameFile()`, `moveFile()`                      | `files.rename(source, destination)`                            |
+
+A failed call throws `SandboxFileError`. Its `code` is the Linux error name, such as `ENOENT` or `EACCES`:
+
+```ts
+import { SandboxFileError } from "@cloudflare/sandbox";
+
+try {
+	await files.stat("/workspace/package.json");
+} catch (cause) {
+	if (SandboxFileError.is(cause) && cause.code === "ENOENT") {
+		// The file does not exist.
+	} else {
+		throw cause;
+	}
+}
+```
+
+`readDirectory()` lists one level, including hidden entries. To list a tree, walk it yourself. This walk does not follow symbolic links to directories:
+
+```ts
+import type { Files } from "@cloudflare/sandbox";
+
+async function* walk(files: Files, directory: string): AsyncGenerator<string> {
+	for (const entry of await files.readDirectory(directory)) {
+		const path = `${directory}/${entry.name}`;
+		yield path;
+
+		if (entry.type === "directory") {
+			yield* walk(files, path);
+		}
+	}
+}
+```
+
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` is faster.
+
+`files.rename()` fails with `EXDEV` across filesystems. To move a file to another filesystem, copy it with `container.exec(["cp", "-a", source, destination])`, then remove the source.
+
+For more examples, refer to [Manage files](/sandbox/how-to/manage-files/).
+
+## Replace file watching
+
+Run a watcher in the container, and stream its output while the request is open. This replaces `watch()` and `checkChanges()`. Add `inotify-tools` to the `apt-get install` line in your `Dockerfile`, then return the watcher's output:
+
+```ts
+const abort = new AbortController();
+const timer = setTimeout(() => abort.abort(), 10 * 60 * 1000);
+
+const watcher = await container.exec(
+	[
+		"inotifywait",
+		"-m",
+		"-r",
+		"-e",
+		"create,modify,delete,move",
+		"--format",
+		"%e %w%f",
+		"/workspace",
+	],
+	{ signal: abort.signal },
+);
+
+const stopTimer = () => clearTimeout(timer);
+watcher.exitCode.then(stopTimer, stopTimer);
+
+return new Response(watcher.stdout, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+Each line is an event and a path, such as `MODIFY /workspace/src/index.ts`. The watcher stops, and the stream ends, when the timer fires. The watcher also exits when the client disconnects. Clearing the timer when the watcher exits keeps the timer from signaling a process that has already exited.
