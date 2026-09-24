@@ -1282,6 +1282,7 @@ The following options are available:
   - Sets how the Durable Object class runs its containers. The options are `"default"` and `"durable_object"`. The default is `"default"`.
   - With `"durable_object"`, each Durable Object starts its own container with [`start()`](/durable-objects/api/container/#start) on `this.ctx.container` and chooses the image when it starts. This policy is required for `images` and for [container snapshots](/durable-objects/api/container/#snapshotcontainer).
   - With `"durable_object"`, Wrangler supports only `name`, `class_name`, `scheduling_policy`, and `images` from this list, and rejects the other options.
+  - With `"durable_object"`, `wrangler dev` runs the containers locally with Wrangler 4.136.0 or later. Earlier versions do not attach `this.ctx.container`, or reject images that do not declare a port with `EXPOSE`.
 - `images` <Type text="Record<string, object>" /> <MetaInfo text="optional" />
   - Named images that a Durable Object can start when `scheduling_policy` is `"durable_object"`. With other scheduling policies, Wrangler warns and ignores `images`.
   - Each key is an image name of 1 to 128 characters, with at most 100 images. Each value sets exactly one of `dockerfile` or `image`:
