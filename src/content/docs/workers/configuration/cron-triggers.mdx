@@ -196,11 +196,13 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) or the [Cloudflare Vite plugin](/workers/vite-plugin/) to test Cron Triggers locally. You can use Local Explorer or send an HTTP request.
 
-Cron Trigger testing in Local Explorer requires Wrangler 4.137.0 or later, or Cloudflare Vite plugin 1.58.0 or later.
+Cron Trigger testing in Local Explorer requires Wrangler 4.139.0 or later, or Cloudflare Vite plugin 1.60.0 or later.
 
 ### Use Local Explorer
 
 [Local Explorer](/workers/local-development/local-explorer/) displays the exact Cron Triggers configured for the active environment. It can also test ad hoc expressions without changing your configuration.
+
+To test a configured expression, define at least one Cron Trigger for the active environment. You can test an ad hoc expression without configuring one.
 
 <Steps>
 1. Start your local development server and open Local Explorer.
@@ -214,7 +216,11 @@ To test an expression that is not configured, select **Cron Triggers** > **Ad-Ho
 
 ### Use an HTTP request
 
-Your local development server exposes `/cdn-cgi/local/scheduled`. If you use the Cloudflare Vite plugin, send requests to your Vite port. Vite uses port `5173` by default.
+Your local development server exposes two endpoints for scheduled invocations. If you use the Cloudflare Vite plugin, send requests to your Vite port. Vite uses port `5173` by default.
+
+#### Use the scheduled route
+
+Send a request to `/cdn-cgi/local/scheduled` to invoke a scheduled handler.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/local/scheduled"
@@ -248,6 +254,21 @@ Optionally, you can also pass a `time` query parameter to override `controller.s
 ```sh
 curl "http://localhost:8787/cdn-cgi/local/scheduled?cron=*+*+*+*+*&time=1745856238000"
 ```
+
+#### Use the Local Explorer API
+
+To target an exact Worker available to Local Explorer, send a `POST` request to `/cdn-cgi/local/explorer/api/local/scheduled?worker=<WORKER_NAME>`. The `worker` query parameter must match the exact Worker name.
+
+The JSON body requires a non-empty `cron` field. The optional `scheduled_time` field sets `controller.scheduledTime` using epoch milliseconds.
+
+```sh
+curl -X POST \
+  "http://localhost:8787/cdn-cgi/local/explorer/api/local/scheduled?worker=my-worker" \
+  -H "Content-Type: application/json" \
+  --data '{"cron":"0 * * * *","scheduled_time":1745856238000}'
+```
+
+The response uses the Local Explorer API envelope. Its `result` includes the handler `outcome` and `noRetry` value.
 
 ## View past events
 
