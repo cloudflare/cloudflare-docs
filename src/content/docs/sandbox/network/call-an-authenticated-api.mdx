@@ -1,6 +1,6 @@
 ---
 title: Call an authenticated API from a sandbox
-description: Use a Container or Dynamic Worker to call an authenticated API without exposing the access token to sandboxed code.
+description: Let code in a Container or Dynamic Worker call an authenticated API without giving it the access token.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -11,7 +11,7 @@ products:
   - dynamic-workers
   - containers
   - durable-objects
-reviewed: 2026-09-21
+reviewed: 2026-09-24
 ---
 
 import {
@@ -21,29 +21,20 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Keep credentials in your Worker. Give the sandbox a narrow way to use them.
-
-This guide calls the GitHub API endpoint for the authenticated user. The response contains the username associated with your access token. The sandbox never receives the token.
-
-:::caution
-The examples do not authenticate incoming requests. Authenticate callers before production so they cannot consume your GitHub API quota.
-For more information, refer to [Sandbox security](/sandbox/security/).
-:::
+Let code in a sandbox call an API that needs a token, such as the GitHub API, while the token stays in your Worker. The sandbox gets a narrow way to use the token: a Worker entrypoint that checks each request and adds the token before sending it on.
 
 ## Prerequisites
 
-- Complete [Run a Linux command](/sandbox/get-started/containers/) or [Run JavaScript](/sandbox/get-started/dynamic-workers/).
-- Create a GitHub access token that can read your profile.
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`, or a Worker that loads Dynamic Workers with a Worker Loader binding named `LOADER`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/) or [Run JavaScript](/sandbox/get-started/dynamic-workers/).
+- A GitHub access token that can read your profile.
 
-## Store the access token
-
-Declare the secret so `wrangler types` includes it in `Env`. Then store its value with Wrangler.
+## Store the token
 
 <Steps>
 
-1. In your project, add `secrets` to `wrangler.jsonc`. Keep the existing Container or Worker Loader configuration:
+1. In `wrangler.jsonc`, declare the token as a secret, then generate types:
 
-   <WranglerConfig removeSchema>
+   <WranglerConfig>
 
    ```jsonc
    {
@@ -55,34 +46,26 @@ Declare the secret so `wrangler types` includes it in `Env`. Then store its valu
 
    </WranglerConfig>
 
-2. Regenerate the Worker types:
-
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-3. Store your GitHub access token when Wrangler prompts for it:
+2. Store the token when Wrangler prompts for it:
 
-   <PackageManagers
-   	type="exec"
-   	pkg="wrangler"
-   	args="secret put GITHUB_TOKEN"
-   />
+   <PackageManagers type="exec" pkg="wrangler" args="secret put GITHUB_TOKEN" />
 
 </Steps>
 
-Complete the procedure for your sandbox environment.
+## Call the API from a Container
 
-## Containers
-
-Route one hostname through your Worker. The Worker checks the request and adds the token before forwarding it to GitHub.
+The container sends its request to `api.github.com` as usual. The Durable Object intercepts HTTPS requests to that hostname and delivers them to an entrypoint in your Worker, which adds the token.
 
 <Steps>
 
-1. Replace `src/index.ts` with the following Worker:
+1. Add an entrypoint to your Worker that accepts one GitHub API request and adds the token:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+   import { WorkerEntrypoint } from "cloudflare:workers";
 
    export class GitHubGateway extends WorkerEntrypoint<Env> {
    	async fetch(request: Request): Promise<Response> {
@@ -107,106 +90,97 @@ Route one hostname through your Worker. The Worker checks the request and adds t
    		});
    	}
    }
-
-   export class MyContainer extends DurableObject<Env> {
-   	async getUsername(): Promise<string> {
-   		const container = this.ctx.container;
-
-   		if (!container) {
-   			throw new Error("Container is not configured");
-   		}
-
-   		await container.interceptOutboundHttps(
-   			"api.github.com",
-   			this.ctx.exports.GitHubGateway,
-   		);
-
-   		if (!container.running) {
-   			container.start({
-   				image: "cloudflare/debian-trixie",
-   				entrypoint: ["sleep", "infinity"],
-   				enableInternet: false,
-   			});
-   		}
-
-   		const process = await container.exec(
-   			[
-   				"node",
-   				"--input-type=module",
-   				"--eval",
-   				`const response = await fetch("https://api.github.com/user");
-   if (!response.ok) throw new Error("GitHub request failed");
-   const user = await response.json();
-   console.log(user.login);`,
-   			],
-   			{
-   				env: {
-   					NODE_EXTRA_CA_CERTS:
-   						"/etc/cloudflare/certs/cloudflare-containers-ca.crt",
-   				},
-   			},
-   		);
-   		const output = await process.output();
-
-   		if (output.exitCode !== 0) {
-   			throw new Error(new TextDecoder().decode(output.stderr));
-   		}
-
-   		return new TextDecoder().decode(output.stdout).trim();
-   	}
-   }
-
-   export default {
-   	async fetch(_request: Request, env: Env): Promise<Response> {
-   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
-   		const username = await sandbox.getUsername();
-   		return Response.json({ username });
-   	},
-   } satisfies ExportedHandler<Env>;
    ```
 
    </TypeScriptExample>
 
-2. Deploy the Worker:
+   The entrypoint allows only `GET /user`, so code in the sandbox cannot use the token for anything else. Allow each request your code needs, and nothing more.
+
+2. Add a method to your Durable Object that intercepts `api.github.com` and runs code that calls it:
+
+   ```ts title="src/index.ts"
+   async getUsername(): Promise<string> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	await container.interceptOutboundHttps(
+   		"api.github.com",
+   		this.ctx.exports.GitHubGateway,
+   	);
+
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
+   		});
+   	}
+
+   	const process = await container.exec(
+   		[
+   			"node",
+   			"--input-type=module",
+   			"--eval",
+   			`const response = await fetch("https://api.github.com/user");
+   if (!response.ok) throw new Error("GitHub request failed");
+   console.log((await response.json()).login);`,
+   		],
+   		{
+   			env: {
+   				NODE_EXTRA_CA_CERTS: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   			},
+   		},
+   	);
+   	const output = await process.output();
+
+   	if (output.exitCode !== 0) {
+   		throw new Error(new TextDecoder().decode(output.stderr));
+   	}
+
+   	return new TextDecoder().decode(output.stdout).trim();
+   }
+   ```
+
+   The intercept terminates TLS with a certificate that the container's CA certificate signs, so the command receives the certificate's path instead of the token. Node.js reads it from `NODE_EXTRA_CA_CERTS`. With `enableInternet: false`, the container can reach only the hostnames you intercept.
+
+3. Add a route to your Worker that returns the username:
+
+   ```ts title="src/index.ts"
+   if (url.pathname === "/username") {
+   	const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   	return Response.json({ username: await sandbox.getUsername() });
+   }
+   ```
+
+4. Deploy the Worker, then send a request to `/username` on the `workers.dev` URL that Wrangler prints:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-3. Send a request to the `workers.dev` URL that Wrangler prints:
-
    ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/username
+   ```
+
+   ```json output
+   { "username": "octocat" }
    ```
 
 </Steps>
 
-The response contains the GitHub username:
+## Call the API from a Dynamic Worker
 
-```json output
-{ "username": "octocat" }
-```
-
-The command receives the CA certificate path, not the GitHub token. With `enableInternet: false`, the container cannot connect directly to the public Internet. Its request to `api.github.com` passes through `GitHubGateway`, which accepts only `GET /user` and adds the token inside your Worker.
-
-## Dynamic Workers
-
-Pass a method into the sandbox instead of the token. The method calls one fixed GitHub endpoint from your Worker.
+A Dynamic Worker gets a method that calls one fixed GitHub endpoint, instead of the token.
 
 <Steps>
 
-1. Replace `src/index.ts` with the following Worker:
+1. Add an entrypoint to your Worker with a method that calls GitHub with the token:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
    import { WorkerEntrypoint } from "cloudflare:workers";
-
-   type GitHubUser = {
-   	login: string;
-   };
-
-   type CodeEntrypoint = WorkerEntrypoint & {
-   	run(): Promise<string>;
-   };
 
    export class GitHub extends WorkerEntrypoint<Env> {
    	async getUsername(): Promise<string> {
@@ -223,70 +197,65 @@ Pass a method into the sandbox instead of the token. The method calls one fixed 
    			throw new Error(`GitHub returned ${response.status}`);
    		}
 
-   		const user = await response.json<GitHubUser>();
+   		const user = await response.json<{ login: string }>();
    		return user.login;
    	}
    }
-
-   export default {
-   	async fetch(
-   		_request: Request,
-   		env: Env,
-   		ctx: ExecutionContext,
-   	): Promise<Response> {
-   		const sandbox = env.LOADER.load({
-   			compatibilityDate: "$today",
-   			mainModule: "code.js",
-   			modules: {
-   				"code.js": `
-   					import { WorkerEntrypoint } from "cloudflare:workers";
-
-   					export class Code extends WorkerEntrypoint {
-   						async run() {
-   							return this.env.GITHUB.getUsername();
-   						}
-   					}
-   				`,
-   			},
-   			env: {
-   				GITHUB: ctx.exports.GitHub,
-   			},
-   			globalOutbound: null,
-   		});
-
-   		const username = await sandbox
-   			.getEntrypoint<CodeEntrypoint>("Code")
-   			.run();
-   		return Response.json({ username });
-   	},
-   } satisfies ExportedHandler<Env>;
    ```
 
    </TypeScriptExample>
 
-2. Deploy the Worker:
+2. In your Worker's `fetch()` handler, pass the entrypoint to the Dynamic Worker as a binding. The handler needs its `ctx` argument for `ctx.exports`:
+
+   ```ts title="src/index.ts"
+   const sandbox = env.LOADER.load({
+   	compatibilityDate: "$today",
+   	mainModule: "code.js",
+   	modules: {
+   		"code.js": `
+   			import { WorkerEntrypoint } from "cloudflare:workers";
+
+   			export class Code extends WorkerEntrypoint {
+   				async run() {
+   					return this.env.GITHUB.getUsername();
+   				}
+   			}
+   		`,
+   	},
+   	env: {
+   		GITHUB: ctx.exports.GitHub({ props: {} }),
+   	},
+   	globalOutbound: null,
+   });
+
+   const username = await sandbox
+   	.getEntrypoint<WorkerEntrypoint & { run(): Promise<string> }>("Code")
+   	.run();
+   return Response.json({ username });
+   ```
+
+   Calling `ctx.exports.GitHub()` creates a stub that the Dynamic Worker can receive. The code calls `this.env.GITHUB.getUsername()`, and the method reads the token in your Worker. `globalOutbound: null` blocks every other `fetch()` and `connect()` call from the Dynamic Worker.
+
+3. Deploy the Worker, then send a request to the `workers.dev` URL that Wrangler prints:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
-
-3. Send a request to the `workers.dev` URL that Wrangler prints:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
    ```
 
+   ```json output
+   { "username": "octocat" }
+   ```
+
 </Steps>
 
-The response contains the GitHub username:
+Authenticate callers to your Worker first, so other people cannot use your token's quota. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
 
-```json output
-{ "username": "octocat" }
-```
+## Related resources
 
-The `GitHub` entrypoint reads `GITHUB_TOKEN` in your Worker. The sandbox receives the `getUsername()` capability, not the token. Setting `globalOutbound` to `null` blocks all other `fetch()` and `connect()` calls from the sandbox.
-
-## Next steps
-
-- To intercept other Container destinations, refer to [`interceptOutboundHttp`](/durable-objects/api/container/#interceptoutboundhttp) and [`interceptOutboundHttps`](/durable-objects/api/container/#interceptoutboundhttps).
-- To expose other methods to a Dynamic Worker, refer to [Bindings](/dynamic-workers/usage/bindings/).
-- To restrict or audit requests from a Dynamic Worker, refer to [Egress control](/dynamic-workers/usage/egress-control/).
-- To rotate or manage the token, refer to [Secrets](/workers/configuration/secrets/).
+- [Clone a private repository](/sandbox/network/clone-a-private-repository/): the same pattern for Git.
+- [`interceptOutboundHttps`](/durable-objects/api/container/#interceptoutboundhttps): intercept other Container destinations.
+- [Bindings](/dynamic-workers/usage/bindings/): pass other methods to a Dynamic Worker.
+- [Egress control](/dynamic-workers/usage/egress-control/): restrict or audit requests from a Dynamic Worker.
+- [Secrets](/workers/configuration/secrets/): rotate or manage the token.
