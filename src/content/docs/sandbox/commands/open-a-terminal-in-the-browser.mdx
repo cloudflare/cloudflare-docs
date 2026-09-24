@@ -174,7 +174,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
    The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because signaling an exited process records an internal error.
 
-   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. To run it as another Linux user, pass numeric IDs in the [`user` option of `exec()`](/durable-objects/api/container/#exec), such as `user: "1000:1000"`.
+   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/durable-objects/api/container/#exec), such as `user: "1000:1000"`, changes the shell's Linux user but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/security/#everything-in-one-sandbox-is-shared).
 
 4. Add the terminal page:
 

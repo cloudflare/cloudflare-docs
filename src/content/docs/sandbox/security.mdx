@@ -21,7 +21,7 @@ Isolation does not limit what the code does inside its own sandbox. The safe ass
 
 Every process in a Container runs on the same Linux system. The processes can read the same files, see each other, and connect to the same `localhost` ports. Code loaded into one Dynamic Worker shares its memory in the same way.
 
-A separate Linux user can keep a command away from files that user cannot read. That user still shares the network and every destination the sandbox can reach. To choose the user for a command, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
+A separate Linux user does not keep a command away from files. In a deployed sandbox, every process has the same Linux capabilities as `root`, so file permissions do not restrict it, and it can switch back to `root`. For more information, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
 
 The sandbox is therefore the smallest unit of trust. When two users share a sandbox, each user's code can read the other's work. A sandbox for each user, or for each job, keeps one user's code away from another user's files and credentials.
 

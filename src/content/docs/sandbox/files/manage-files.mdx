@@ -208,7 +208,7 @@ function workspacePath(path: string): string | null {
 
 </TypeScriptExample>
 
-The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. To open files as another Linux user, pass numeric IDs in the `user` option, such as `user: "1000:1000"`.
+The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. The `user` option, such as `user: "1000:1000"`, does not narrow access either. It sets the owner of files that `Files` creates, but the helper can still open files that user has no permission for. For more information, refer to [Sandbox security](/sandbox/security/#everything-in-one-sandbox-is-shared).
 
 ## Related resources
 

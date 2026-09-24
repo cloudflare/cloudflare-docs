@@ -47,7 +47,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
 
    </TypeScriptExample>
 
-   The server must listen on `0.0.0.0`, because `getTcpPort()` cannot reach a server that listens only on `127.0.0.1`. Many development servers listen on `localhost` by default and provide an option to change the address. The server runs as the main process, so it must exit when it receives `SIGTERM`.
+   The server must listen on `0.0.0.0`, because `getTcpPort()` cannot reach a server that listens only on `127.0.0.1`. Many development servers listen on `localhost` by default and provide an option to change the address. The server runs as the main process, so it must exit when it receives `SIGTERM`. Servers built on Python's `http.server` module, such as `python3 -m http.server`, exit on startup after you deploy, because they look up the container's hostname. For a Python command that serves files, refer to [Differences after you deploy](/containers/guides/local-dev/#the-hostname-is-longer-than-a-dns-label).
 
 2. In your Durable Object, start the server and wait until it responds:
 
