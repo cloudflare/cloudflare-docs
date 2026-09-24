@@ -224,7 +224,7 @@ Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandb
 
    Each sandbox name in the URL maps to one Durable Object. The Durable Object stores the latest snapshot ID and uses it on the next start.
 
-   The Durable Object sets a 10-minute inactivity timeout on every request, so the file written in one request is still there when the next request saves it. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#set-the-timeout-on-every-request).
+   The Durable Object sets a 10-minute inactivity timeout on every request, so the file written in one request is still there when the next request saves it. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
 
 2. Deploy the Worker:
 
