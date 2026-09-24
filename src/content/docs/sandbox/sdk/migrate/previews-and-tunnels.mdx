@@ -45,3 +45,5 @@ To keep a tunnel, run `cloudflared` in the container yourself. Install it in the
 | `CLOUDFLARE_API_TOKEN` and related variables | Your own secrets, if your Worker creates tunnels with the Cloudflare API                                                                                   |
 
 A tunnel token lets anyone who holds it run the tunnel, and every process in the sandbox can read it. Create one tunnel for each sandbox.
+
+0.12 started named tunnels again after the container restarted. Start `cloudflared` again for each new container, with the same token.
