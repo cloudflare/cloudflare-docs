@@ -18,9 +18,37 @@ Schema Profile detections populate these fields after an applicable profile beco
 | `cf.schema_validation.learned.violated`  | <Type text="Boolean" /> | Learned Schema Profile | `true` when an evaluated request violates the learned profile. | Security Analytics and Custom Rules |
 | `cf.schema_validation.uploaded.violated` | <Type text="Boolean" /> | Uploaded schema        | `true` when an evaluated request violates the supplied schema. | Security Analytics and Custom Rules |
 
+## Violated parameters
+
+The following fields identify the names of Schema Profile violations by request location.
+
+| Field                                                        | Type                            | Source                 | Meaning                                | Available in |
+| ------------------------------------------------------------ | ------------------------------- | ---------------------- | -------------------------------------- | ------------ |
+| `cf.schema_validation.learned.path.violated_parameters`     | <Type text="Array<String>" /> | Learned Schema Profile | Names of violating path parameters.    | Custom Rules |
+| `cf.schema_validation.learned.query.violated_parameters`    | <Type text="Array<String>" /> | Learned Schema Profile | Names of violating query parameters.   | Custom Rules |
+| `cf.schema_validation.learned.headers.violated_parameters`  | <Type text="Array<String>" /> | Learned Schema Profile | Names of violating request headers.    | Custom Rules |
+| `cf.schema_validation.learned.cookies.violated_parameters`  | <Type text="Array<String>" /> | Learned Schema Profile | Names of violating cookies.            | Custom Rules |
+| `cf.schema_validation.learned.body.violated_parameters`     | <Type text="Array<String>" /> | Learned Schema Profile | JSON path of a request body violation. | Custom Rules |
+| `cf.schema_validation.uploaded.path.violated_parameters`    | <Type text="Array<String>" /> | Uploaded schema        | Names of violating path parameters.    | Custom Rules |
+| `cf.schema_validation.uploaded.query.violated_parameters`   | <Type text="Array<String>" /> | Uploaded schema        | Names of violating query parameters.   | Custom Rules |
+| `cf.schema_validation.uploaded.headers.violated_parameters` | <Type text="Array<String>" /> | Uploaded schema        | Names of violating request headers.    | Custom Rules |
+| `cf.schema_validation.uploaded.cookies.violated_parameters` | <Type text="Array<String>" /> | Uploaded schema        | Names of violating cookies.            | Custom Rules |
+| `cf.schema_validation.uploaded.body.violated_parameters`    | <Type text="Array<String>" /> | Uploaded schema        | JSON path of a request body violation. | Custom Rules |
+
+For body violations, the array contains the first detected violation's JSON path. A value of `$` identifies the body without a more specific path.
+
+## Undeclared query parameters
+
+These fields contain URL-decoded query parameter names presented in a request but not declared in the schema.
+
+| Field                                                        | Type                            | Source                 | Meaning                                                                            | Available in |
+| ------------------------------------------------------------ | ------------------------------- | ---------------------- | ---------------------------------------------------------------------------------- | ------------ |
+| `cf.schema_validation.learned.query.undeclared_parameters`  | <Type text="Array<String>" /> | Learned Schema Profile | Names of query parameters present in the request but not declared in the schema. | Custom Rules |
+| `cf.schema_validation.uploaded.query.undeclared_parameters` | <Type text="Array<String>" /> | Uploaded schema        | Names of query parameters present in the request but not declared in the schema. | Custom Rules |
+
 ## Violation details
 
-Sampled violations in Profile Analysis contain four structured fields:
+Sampled violations in Profile Analysis contain four structured fields that report the first detected violation for the request:
 
 | Field          | Type                   | Meaning                                                                                           |
 | -------------- | ---------------------- | ------------------------------------------------------------------------------------------------- |
@@ -28,8 +56,6 @@ Sampled violations in Profile Analysis contain four structured fields:
 | `error_class`  | <Type text="String" /> | Stable, broad category for grouping similar violations.                                           |
 | `error_detail` | <Type text="String" /> | Optional specific reason within the error class.                                                  |
 | `target`       | <Type text="String" /> | Optional parameter, header, cookie, or `$`-prefixed JSON body path associated with the violation. |
-
-These values provide context in sampled logs. Schema Validation reports the first detected failure for each request.
 
 ### Error classes
 
