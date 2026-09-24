@@ -1,6 +1,6 @@
 ---
 title: Sandboxes on Cloudflare
-description: Execute untrusted or generated code in isolated Workers or Linux virtual machines.
+description: Execute untrusted or generated code in Linux virtual machines or isolated Workers.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -38,6 +38,57 @@ A sandbox is an isolated place to run untrusted or generated code. The code cann
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
 Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the application that already handles your traffic.
+
+---
+
+## Containers
+
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
+
+The isolation comes from [Firecracker](/containers/concepts/architecture/#container-runtime). Each instance is a microVM with its own kernel and network, so no other workload shares it. Your image runs as a Linux container inside that VM.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyContainer extends DurableObject<Env> {
+	async exec(argv: string[]) {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		if (!container.running) {
+			container.start({
+				image: "cloudflare/debian-trixie",
+				entrypoint: ["sleep", "infinity"],
+				enableInternet: false,
+			});
+		}
+
+		const process = await container.exec(argv);
+		const output = await process.output();
+		return {
+			stdout: new TextDecoder().decode(output.stdout),
+			exitCode: output.exitCode,
+		};
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+		return Response.json(await sandbox.exec(["uname", "-a"]));
+	},
+};
+```
+
+</TypeScriptExample>
+
+<LinkButton variant="primary" href="/sandbox/get-started/containers/">
+	Run a Linux command
+</LinkButton>
 
 ---
 
@@ -99,63 +150,12 @@ export default {
 
 ---
 
-## Containers
-
-[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
-
-The isolation comes from [Firecracker](/containers/concepts/architecture/#container-runtime). Each instance is a microVM with its own kernel and network, so no other workload shares it. Your image runs as a Linux container inside that VM.
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export class MyContainer extends DurableObject<Env> {
-	async exec(argv: string[]) {
-		const container = this.ctx.container;
-		if (!container) {
-			throw new Error("The container binding is not configured");
-		}
-
-		if (!container.running) {
-			container.start({
-				image: "cloudflare/debian-trixie",
-				entrypoint: ["sleep", "infinity"],
-				enableInternet: false,
-			});
-		}
-
-		const process = await container.exec(argv);
-		const output = await process.output();
-		return {
-			stdout: new TextDecoder().decode(output.stdout),
-			exitCode: output.exitCode,
-		};
-	}
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const sandbox = env.MY_CONTAINER.getByName("sandbox");
-		return Response.json(await sandbox.exec(["uname", "-a"]));
-	},
-};
-```
-
-</TypeScriptExample>
-
-<LinkButton variant="primary" href="/sandbox/get-started/containers/">
-	Run a Linux command
-</LinkButton>
-
----
-
 ## In these docs
 
 <CardGrid>
 
 <LinkTitleCard title="Get started" href="/sandbox/get-started/" icon="rocket">
-	Run JavaScript or a Linux command in your first sandbox.
+	Run a Linux command or JavaScript in your first sandbox.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -163,7 +163,7 @@ export default {
 	href="/sandbox/choose-an-environment/"
 	icon="seti:info"
 >
-	Decide whether each job needs APIs you pass in or a Linux environment.
+	Decide whether each job needs a Linux environment or only APIs you pass in.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -260,14 +260,6 @@ Run models on Cloudflare, then execute the code they generate in a sandbox.
 </LinkTitleCard>
 
 <LinkTitleCard
-	title="Dynamic Workers pricing"
-	href="/dynamic-workers/pricing/"
-	icon="seti:shell"
->
-	Requests, CPU time, and unique Dynamic Workers created per day.
-</LinkTitleCard>
-
-<LinkTitleCard
 	title="Containers pricing"
 	href="/containers/platform/pricing/"
 	icon="seti:shell"
@@ -277,6 +269,14 @@ Run models on Cloudflare, then execute the code they generate in a sandbox.
 
 <LinkTitleCard title="Limits" href="/containers/platform/limits/" icon="error">
 	Container instance types, image size, and other platform limits.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Dynamic Workers pricing"
+	href="/dynamic-workers/pricing/"
+	icon="seti:shell"
+>
+	Requests, CPU time, and unique Dynamic Workers created per day.
 </LinkTitleCard>
 
 </CardGrid>
