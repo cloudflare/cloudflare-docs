@@ -75,7 +75,7 @@ interface Env {
 }
 
 // Only render pages you control. This prevents the Worker from becoming
-// an open browser-rendering proxy for arbitrary websites.
+// an open browser-run proxy for arbitrary websites.
 const ALLOWED_HOSTNAMES = new Set(["example.com", "www.example.com"]);
 
 const getTargetUrl = (request: Request) => {

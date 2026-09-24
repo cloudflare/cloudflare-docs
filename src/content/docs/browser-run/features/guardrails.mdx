@@ -83,7 +83,7 @@ export async function startGuardedSession(env: Env) {
 Use the REST API to acquire a guarded session outside Workers. This request assumes `$ACCOUNT_ID` is set and `$CLOUDFLARE_API_TOKEN` has Browser Rendering Write permission.
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/browser"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
 	method="POST"
 	headers={{
 		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
