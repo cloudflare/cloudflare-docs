@@ -1,0 +1,47 @@
+---
+title: Fork a Durable Object with snapshot and restore
+description: Create an independent copy of a Durable Object for previews, testing, and more.
+products:
+  - durable-objects
+date: 2026-09-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can now fork a [SQLite-backed Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) into a new, independent Durable Object with its own storage, using a new snapshot and restore API. This solves a common problem for applications built on Durable Objects: getting a safe, isolated copy of an object's data without touching the original or blocking it with extra load.
+
+Use this to:
+
+- **Spin up a preview environment per pull request**, seeded with a copy of production data.
+- **Test a schema migration** against a copy before running it on the real object.
+- **Export data** by querying an independent copy, so large or slow reads do not compete with live traffic on the primary object.
+- **Split a tenant into its own object**, for example to isolate a customer's data or scale it independently.
+
+To fork an object, take a snapshot on the source with [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot), pass it to the destination over RPC, and restore it with [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore) and [`ctx.abort()`](/durable-objects/api/state/#abort):
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const RESTORE_SCHEDULED = "Snapshot restore scheduled";
+
+export class MyDurableObject extends DurableObject {
+	async snapshot(): Promise<DurableObjectSnapshot> {
+		return this.ctx.storage.snapshot();
+	}
+
+	async copy(snapshot: DurableObjectSnapshot): Promise<void> {
+		await this.ctx.onNextSessionRestore(snapshot);
+		this.ctx.abort(RESTORE_SCHEDULED);
+	}
+}
+```
+
+</TypeScriptExample>
+
+`ctx.abort()` always throws, even when the restore succeeds, because it immediately terminates the destination's current session. The aborted session's own code cannot catch that error, but the caller of the RPC method that invoked it can, so catch a specific message to tell a successful restore apart from an unrelated failure.
+
+The forked object gets its own name or ID and can diverge freely from the source from that point on. Restoring replaces its entire SQLite database, scheduled alarms on it are not carried over, and snapshots follow the same 30-day retention window as [point-in-time recovery bookmarks](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api) — restore soon after creating a snapshot.
+
+For complete examples, refer to [Snapshot and restore storage](/durable-objects/best-practices/snapshot-and-restore-durable-object-storage/).

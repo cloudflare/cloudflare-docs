@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-You can capture a [SQLite-backed Durable Object's](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) storage as a snapshot, then restore that snapshot into another Durable Object. Creating a snapshot does not depend on the size of the source database, and restoring bills the same as normal storage reads and writes.
+You can capture a [SQLite-backed Durable Object's](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) storage as a snapshot, then restore that snapshot into another Durable Object. This is how you fork a Durable Object into an independent copy that can diverge from the source. Creating a snapshot does not depend on the size of the source database, and restoring bills the same as normal storage reads and writes.
 
 Use snapshot and restore as the building block for higher-level workflows, such as seeding a preview Durable Object with production data, testing a schema migration on a copy, exporting data without adding load to the primary object, or splitting a subset of data into its own object.
 
