@@ -12,14 +12,24 @@
 import TOML from "@iarna/toml";
 import { parse as jsoncParse } from "jsonc-parser";
 import { parse } from "node-html-parser";
+import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
 import { Code } from "../ui/code";
 import { TabItem, Tabs } from "../ui/tabs";
 
 interface Props {
 	removeSchema?: boolean;
+	cfConfig?: string;
 }
 
-const { removeSchema = false } = Astro.props;
+const { removeSchema = false, cfConfig } = Astro.props;
+const normalizedCfConfig = cfConfig?.trim();
+const today = new Date().toISOString().split("T")[0]!;
+
+if (cfConfig !== undefined && !normalizedCfConfig) {
+	throw new Error(
+		`[WranglerConfig] cfConfig must not be empty (on "${Astro.url.pathname}").`,
+	);
+}
 
 const slot = await Astro.slots.render("default");
 // `blockTextElements: {}` — by default node-html-parser keeps <pre> content
@@ -36,7 +46,9 @@ if (!codeEl) {
 let code = codeEl.text;
 
 const hadTodayMagicString = /\$today/i.test(code);
-code = code.replaceAll(/\$today/gi, new Date().toISOString().split("T")[0]!);
+code = code.replaceAll(/\$today/gi, today);
+const hadCfTodayMagicString = /\$today/i.test(normalizedCfConfig ?? "");
+let renderedCfConfig = normalizedCfConfig?.replaceAll(/\$today/gi, today);
 
 const language =
 	html.querySelector("[data-language]")?.attributes["data-language"];
@@ -51,9 +63,13 @@ if (!language) {
  */
 function injectCompatDateComment(src: string, commentPrefix: string): string {
 	return src.replace(
-		/^(\s*)(.*compatibility_date.*)/m,
+		/^(\s*)(.*compatibility_?date.*)/im,
 		`$1${commentPrefix} Set this to today's date\n$1$2`,
 	);
+}
+
+if (renderedCfConfig && hadCfTodayMagicString) {
+	renderedCfConfig = injectCompatDateComment(renderedCfConfig, "//");
 }
 
 let toml: string;
@@ -77,11 +93,33 @@ if (hadTodayMagicString) {
 }
 ---
 
-<Tabs syncKey="wranglerConfig">
-	<TabItem label="wrangler.jsonc">
-		<Code lang="jsonc" code={json} />
-	</TabItem>
-	<TabItem label="wrangler.toml">
-		<Code lang="toml" code={toml} />
-	</TabItem>
-</Tabs>
+{renderedCfConfig ? (
+	<CliPreferenceSwitch>
+		<Fragment slot="wrangler">
+			<Tabs syncKey="wranglerConfig">
+				<TabItem label="wrangler.jsonc">
+					<Code lang="jsonc" code={json} />
+				</TabItem>
+				<TabItem label="wrangler.toml">
+					<Code lang="toml" code={toml} />
+				</TabItem>
+			</Tabs>
+		</Fragment>
+		<Fragment slot="cf">
+			<Code
+				lang="ts"
+				code={renderedCfConfig}
+				meta={'title="cloudflare.config.ts"'}
+			/>
+		</Fragment>
+	</CliPreferenceSwitch>
+) : (
+	<Tabs syncKey="wranglerConfig">
+		<TabItem label="wrangler.jsonc">
+			<Code lang="jsonc" code={json} />
+		</TabItem>
+		<TabItem label="wrangler.toml">
+			<Code lang="toml" code={toml} />
+		</TabItem>
+	</Tabs>
+)}

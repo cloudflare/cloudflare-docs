@@ -10,6 +10,22 @@
             "value": "262144"
         },
         {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
+            "property_id": "reasoning",
+            "value": "true"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -28,22 +44,6 @@
                     "currency": "USD"
                 }
             ]
-        },
-        {
-            "property_id": "function_calling",
-            "value": "true"
-        },
-        {
-            "property_id": "reasoning",
-            "value": "true"
-        },
-        {
-            "property_id": "terms",
-            "value": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE"
-        },
-        {
-            "property_id": "vision",
-            "value": "true"
         }
     ],
     "id": "c29c7295-ff20-4b9b-bdcc-25136c19b21d",
@@ -418,25 +418,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -1012,6 +993,7 @@
                                                                             "enum": [
                                                                                 "text",
                                                                                 "image_url",
+                                                                                "video_url",
                                                                                 "input_audio",
                                                                                 "file"
                                                                             ]
@@ -1033,6 +1015,14 @@
                                                                                         "high"
                                                                                     ],
                                                                                     "default": "auto"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "video_url": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "url": {
+                                                                                    "type": "string"
                                                                                 }
                                                                             }
                                                                         },
@@ -1675,25 +1665,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2512,25 +2483,6 @@
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
                                             },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
-                                            },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
                                                 "anyOf": [
@@ -3105,6 +3057,7 @@
                                                                                         "enum": [
                                                                                             "text",
                                                                                             "image_url",
+                                                                                            "video_url",
                                                                                             "input_audio",
                                                                                             "file"
                                                                                         ]
@@ -3126,6 +3079,14 @@
                                                                                                     "high"
                                                                                                 ],
                                                                                                 "default": "auto"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "video_url": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                            "url": {
+                                                                                                "type": "string"
                                                                                             }
                                                                                         }
                                                                                     },
@@ -3768,25 +3729,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -4716,23 +4658,6 @@
                             "anyOf": [
                                 {
                                     "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
                                 },
                                 {
                                     "type": "null"

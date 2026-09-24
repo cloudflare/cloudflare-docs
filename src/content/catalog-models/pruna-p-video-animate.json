@@ -12,6 +12,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.03,
+		"@720p (per second)": 0.03,
+		"@1080p (per second)": 0.06
+	},
 	"examples": [
 		{
 			"name": "Motion Transfer",
@@ -62,6 +67,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"default": 0.03,
+				"720p": 0.03,
+				"1080p": 0.06
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:53:19",
 	"schema": {
@@ -70,21 +85,21 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI.",
-					"type": "string"
+					"type": "string",
+					"description": "Source RGB video (.mp4) used as the motion and audio source. HTTP(S) URL or data URI."
 				},
 				"image": {
-					"description": "Reference image of the subject to animate. HTTP(S) URL or data URI.",
-					"type": "string"
+					"type": "string",
+					"description": "Reference image of the subject to animate. HTTP(S) URL or data URI."
 				},
 				"turbo": {
-					"description": "Turbo mode: faster generation for slightly lower quality.",
 					"default": false,
+					"description": "Turbo mode: faster generation for slightly lower quality.",
 					"type": "boolean"
 				},
 				"resolution": {
-					"description": "Target resolution.",
 					"default": "720p",
+					"description": "Target resolution.",
 					"type": "string",
 					"enum": [
 						"720p",
@@ -92,18 +107,18 @@
 					]
 				},
 				"save_audio": {
-					"description": "Save the video with audio.",
 					"default": true,
+					"description": "Save the video with audio.",
 					"type": "boolean"
 				},
 				"ignore_audio": {
-					"description": "Ignore source audio during generation.",
 					"default": false,
+					"description": "Ignore source audio during generation.",
 					"type": "boolean"
 				},
 				"target_fps": {
-					"description": "Target FPS for the working video.",
 					"default": "original",
+					"description": "Target FPS for the working video.",
 					"type": "string",
 					"enum": [
 						"24",
@@ -112,8 +127,8 @@
 					]
 				},
 				"instruction_prompt": {
-					"description": "Further instruction on how the reference subject should be animated.",
 					"default": "",
+					"description": "Further instruction on how the reference subject should be animated.",
 					"type": "string"
 				},
 				"seed": {
@@ -123,8 +138,8 @@
 					"maximum": 9007199254740991
 				},
 				"disable_safety_checker": {
-					"description": "Disable safety checker for generated videos.",
 					"default": false,
+					"description": "Disable safety checker for generated videos.",
 					"type": "boolean"
 				}
 			},
@@ -146,9 +161,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "Presigned URL for the animated video.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the animated video."
 				}
 			},
 			"required": [

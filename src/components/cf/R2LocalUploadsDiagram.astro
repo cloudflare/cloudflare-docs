@@ -14,23 +14,21 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 	data-loop={loop}
 >
 	<div class="diagram-wrapper">
-		{
-			mode === "comparison" && (
-				<div class="toggle-container">
-					<span class="toggle-label" id="local-uploads-label">
-						Local uploads
-					</span>
-					<label class="toggle-switch" aria-labelledby="local-uploads-label">
-						<input
-							type="checkbox"
-							class="toggle-input"
-							aria-labelledby="local-uploads-label"
-						/>
-						<span class="toggle-slider" />
-					</label>
-				</div>
-			)
-		}
+		{mode === "comparison" && (
+			<div class="toggle-container">
+				<span class="toggle-label" id="local-uploads-label">
+					Local uploads
+				</span>
+				<label class="toggle-switch" aria-labelledby="local-uploads-label">
+					<input
+						type="checkbox"
+						class="toggle-input"
+						aria-labelledby="local-uploads-label"
+					/>
+					<span class="toggle-slider" />
+				</label>
+			</div>
+		)}
 		<div class="diagram-container">
 			<!-- Client node -->
 			<div class="flow-node" data-step="1">
@@ -90,7 +88,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="160"
 						y2="20"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<!-- Horizontal bar - left half (metadata) -->
 					<line
 						class="split-line horizontal-left metadata-path"
@@ -99,7 +98,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="160"
 						y2="20"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<!-- Horizontal bar - right half (object data) -->
 					<line
 						class="split-line horizontal-right data-path"
@@ -108,7 +108,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="235"
 						y2="20"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<!-- Left branch (metadata) -->
 					<line
 						class="split-line left-branch-top metadata-path"
@@ -117,7 +118,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="85"
 						y2="50"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<!-- Right branch (object data) -->
 					<line
 						class="split-line right-branch-top data-path"
@@ -126,14 +128,15 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="235"
 						y2="50"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<!-- Labels positioned on the lines -->
-					<text x="85" y="67" text-anchor="middle" class="svg-label"
-						>Object metadata</text
-					>
-					<text x="235" y="67" text-anchor="middle" class="svg-label"
-						>Object data</text
-					>
+					<text x="85" y="67" text-anchor="middle" class="svg-label">
+						Object metadata
+					</text>
+					<text x="235" y="67" text-anchor="middle" class="svg-label">
+						Object data
+					</text>
 					<!-- Continue lines to bucket -->
 					<line
 						class="split-line left-branch-bottom metadata-path"
@@ -142,7 +145,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="85"
 						y2="100"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 					<line
 						class="split-line right-branch-bottom data-path"
 						x1="235"
@@ -150,7 +154,8 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 						x2="235"
 						y2="100"
 						stroke="currentColor"
-						stroke-width="2"></line>
+						stroke-width="2"
+					></line>
 				</svg>
 			</div>
 
@@ -236,9 +241,7 @@ const { mode = "comparison", autoPlay = true, loop = true } = Astro.props;
 									stroke-width="2"
 								>
 									<circle cx="12" cy="12" r="10"></circle>
-									<path
-										d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-									></path>
+									<path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
 								</svg>
 							</div>
 							<span class="component-name">Metadata Service</span>

@@ -26,6 +26,17 @@ Our Network Vector Rendering (NVR) technology sends drawing instructions to the 
 - Netflix and Spotify Web Player are unavailable.
 - H.265/HEVC (a video compression format) is not a supported video format at this time.
 
+## Single active window
+
+Browser Isolation supports one active window at a time. All tabs and windows in the same local browser (for example, all Chrome tabs) share a single isolated session. Within that session, the remote browser actively renders and processes only the tab or window currently in focus. Browser Isolation deactivates background tabs and windows until you switch to them.
+
+This means that workflows requiring simultaneous activity across multiple windows are unavailable.
+
+For example:
+- Audio or video playing in one isolated window will pause when you switch to a different isolated window.
+- Real-time content (such as live dashboards or streaming media) will not update in background windows.
+- Applications that rely on multi-window communication or synchronization are not supported.
+
 ## Browser compatibility
 
 | Browser                                      | Compatibility |
@@ -36,6 +47,14 @@ Our Network Vector Rendering (NVR) technology sends drawing instructions to the 
 | Microsoft Edge (Chromium-based)              | ✅            |
 | Other Chromium-based browsers (Opera, Brave) | ✅            |
 | Internet Explorer 11 and below               | ❌            |
+
+### iOS
+
+On iOS, Apple WebKit requires direct user interaction before the local browser can pass keyboard input into the remote browser. This means users should tap twice to begin entering text in an isolated session.
+
+The first tap focuses the text field. The second tap starts text entry.
+
+Browser Isolation shows an inline prompt over the focused text field when this interaction is required. If the text field is too small to display the full prompt, Browser Isolation displays a keyboard icon in the center of the field instead.
 
 ### Brave
 

@@ -22,23 +22,16 @@ const { header, href, cta } = Astro.props;
 const title = cta ?? `Use ${header}`;
 ---
 
-<div
-	class="feature group border-border relative my-0! border-t py-4 transition-colors motion-reduce:transition-none"
->
-	{
-		/* after:* stretches the header link over the whole row so it's fully clickable. */
-	}
+<div class="feature group border-border relative my-0! border-t py-4 transition-colors motion-reduce:transition-none">
+	{/* after:* stretches the header link over the whole row so it's fully clickable. */}
 	<a
 		href={href}
 		class="text-foreground! focus-visible:outline-ring block text-base font-semibold no-underline after:absolute after:inset-0 after:content-[''] hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
-		>{header}</a
 	>
-	{
-		/* Description sits outside the header link; its own links are raised above the stretched overlay. */
-	}
-	<div
-		class="feature-description text-foreground/90 mt-1.5 text-base leading-relaxed [&_a]:relative [&_a]:z-[1]"
-	>
+		{header}
+	</a>
+	{/* Description sits outside the header link; its own links are raised above the stretched overlay. */}
+	<div class="feature-description text-foreground/90 mt-1.5 text-base leading-relaxed [&_a]:relative [&_a]:z-[1]">
 		<slot />
 	</div>
 	<span

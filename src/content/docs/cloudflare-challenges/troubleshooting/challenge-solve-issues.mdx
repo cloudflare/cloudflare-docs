@@ -8,10 +8,13 @@ tags:
   - Debugging
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
+
+:::note
+Challenge Pages are issued through the Cloudflare Challenge Platform, which uses the same underlying technology as Turnstile. The troubleshooting steps on this page apply to both Turnstile widgets and Challenge Pages failures.
+:::
 
 ## Challenge loops
 
@@ -47,6 +50,19 @@ Given that these DNS host lookup failures are **expected** and **non-fatal** for
 
 Follow the steps below to ensure that your environment is properly configured.
 
-<Render file="troubleshooting-steps" product="turnstile"/>
+<Render file="troubleshooting-steps" product="turnstile" />
+
+## Collect diagnostic information
+
+If the issue persists, collect the following information before contacting the website administrator or Cloudflare Support:
+
+- A HAR file captured while reproducing the issue. For challenge loops, enable **Preserve log** in your browser's developer tools before reproducing the problem. You may also need to select **Disable cache**.
+- A browser console log export captured during the same session.
+
+For step-by-step instructions, refer to [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/).
+
+## WebView and mobile app implementations
+
+If the challenge fails only inside a native app's WebView, review the required WebView settings in [Mobile implementation](/turnstile/get-started/mobile-implementation/). Common causes include disabled JavaScript, missing DOM storage or cookie support, blocked access to `challenges.cloudflare.com`, and a User Agent that changes during the session.
 
 If none of the above resolves your issue, contact the website administrator with the [error code](/turnstile/troubleshooting/client-side-errors/error-codes/) and Ray ID or submit a [feedback report](/turnstile/troubleshooting/feedback-reports/) through the Turnstile widget by selecting **Submit Feedback**.

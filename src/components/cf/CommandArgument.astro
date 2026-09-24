@@ -1,0 +1,46 @@
+---
+import { renderMarkdown } from "~/util/markdown";
+import MetaInfo from "./MetaInfo.astro";
+import Type from "./Type.astro";
+import {
+	formatCommandArgumentName,
+	type CommandArgumentDefinition,
+} from "./command-reference";
+
+interface Props {
+	key: string;
+	definition: CommandArgumentDefinition;
+}
+
+const { key, definition } = Astro.props;
+const type = definition.type ?? definition.choices;
+const description = definition.description ?? definition.describe;
+const sanitizedDescription = description
+	? description.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+	: "";
+const name = formatCommandArgumentName(key, definition);
+const typeText =
+	type === undefined
+		? ""
+		: typeof type === "string"
+			? type
+			: type.map((value) => `"${value}"`).join(" | ");
+
+let aliasText;
+if (definition.alias) {
+	aliasText = Array.isArray(definition.alias)
+		? `aliases: --${definition.alias.join(", --")}`
+		: `alias: --${definition.alias}`;
+}
+---
+
+<li>
+	<code>{name}</code>
+	{typeText && <Type text={typeText} />}{" "}
+	{aliasText && <MetaInfo text={aliasText} />}
+	{definition.demandOption && <MetaInfo text="required" />}
+	{definition.default !== undefined && (
+		<MetaInfo text={`default: ${definition.default}`} />
+	)}
+	<Fragment set:html={renderMarkdown(sanitizedDescription)} />
+</li>
