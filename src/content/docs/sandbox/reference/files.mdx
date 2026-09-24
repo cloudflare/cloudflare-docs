@@ -110,6 +110,13 @@ Creates a file, or truncates an existing file, then streams `content` into it.
 - The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
 - An error from the `content` stream rejects the call unchanged.
 
+When other code must never read a partial file, write to a temporary path and rename it:
+
+```ts
+await files.writeFile(`${path}.partial`, content, { cwd });
+await files.rename(`${path}.partial`, path, { cwd });
+```
+
 ### `stat`
 
 ```ts
@@ -141,6 +148,25 @@ Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandb
 - `path` can be a symbolic link to a directory. Entry types do not follow symbolic links.
 - The method does not recurse or return metadata for each entry.
 - A file at `path` rejects with `ENOTDIR`. An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
+
+To list a tree, walk it. This walk does not follow symbolic links to directories:
+
+```ts
+import type { Files } from "@cloudflare/sandbox";
+
+async function* walk(files: Files, directory: string): AsyncGenerator<string> {
+	for (const entry of await files.readDirectory(directory)) {
+		const path = `${directory}/${entry.name}`;
+		yield path;
+
+		if (entry.type === "directory") {
+			yield* walk(files, path);
+		}
+	}
+}
+```
+
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` is faster.
 
 ### `mkdir`
 
