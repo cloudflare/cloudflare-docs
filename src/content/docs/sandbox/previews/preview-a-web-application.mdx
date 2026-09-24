@@ -314,7 +314,7 @@ Give someone access to one preview for a limited time. The Durable Object stores
    }
    ```
 
-   Only the owner of a preview should create links to it, so authenticate the `POST` request. The shared route needs no authentication: the token is the permission.
+   Only the owner of a preview should create links to it, so authenticate the `POST` request. Code in a preview runs on this hostname and can send requests to this route with the visitor's cookies. Serve the route from another hostname, or authenticate it with a credential that pages in the browser cannot send, such as a secret that your application's backend adds. The shared route needs no authentication: the token is the permission.
 
 3. Deploy the Worker, then create a link to the preview named `ada`:
 
