@@ -10,7 +10,7 @@ products:
   - workers
   - containers
   - durable-objects
-reviewed: 2026-09-23
+reviewed: 2026-09-24
 ---
 
 import {
@@ -20,19 +20,12 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. This guide routes a wildcard hostname to your Worker, sends each preview hostname to the sandbox with the same name, and keeps the control API on your Worker's own hostname.
-
-Code in a preview runs in the visitor's browser. On its own hostname, that code runs in a separate origin, so it cannot read your application's pages or the storage of another preview.
+Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser. On its own hostname, that code runs in a separate origin, so it cannot read your application's pages or the storage of another preview. Paths also reach the server unchanged, so applications do not need a base path.
 
 ## Prerequisites
 
-- Complete [Preview a web application](/sandbox/previews/preview-a-web-application/). Use the `sandbox-linux` project and the Worker from that guide.
-- Add a domain for previews to Cloudflare, such as `example-previews.com`, with Cloudflare managing its DNS. Use a domain that your application does not use.
-
-:::caution
-The example does not authenticate incoming requests. Authenticate callers before production so other people cannot open or stop previews. Authenticate preview visitors on the preview hostname, and do not send your application's session cookie there.
-For more information, refer to [Sandbox security](/sandbox/security/#output-carries-the-same-risk).
-:::
+- A Durable Object whose `fetch()` handler forwards requests to a web server in its container. To build one, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
+- A domain for previews on Cloudflare, such as `example-previews.com`, with Cloudflare managing its DNS. Use a domain that your application does not use.
 
 ## Route preview hostnames to your Worker
 
@@ -42,20 +35,12 @@ For more information, refer to [Sandbox security](/sandbox/security/#output-carr
 
    The record lets Cloudflare receive requests for every preview hostname. The Worker route handles those requests, so the address in the record is never contacted.
 
-2. Replace `wrangler.jsonc`. Replace `example-previews.com` with your preview domain:
+2. In `wrangler.jsonc`, add the preview domain as a variable and route its subdomains to the Worker. Replace `example-previews.com` with your preview domain:
 
    <WranglerConfig>
 
    ```jsonc
    {
-   	"$schema": "node_modules/wrangler/config-schema.json",
-   	"name": "sandbox-linux",
-   	"main": "src/index.ts",
-   	"compatibility_date": "$today",
-   	"observability": {
-   		"enabled": true,
-   	},
-   	"upload_source_maps": true,
    	"vars": {
    		"PREVIEW_DOMAIN": "example-previews.com",
    	},
@@ -66,38 +51,18 @@ For more information, refer to [Sandbox security](/sandbox/security/#output-carr
    		},
    	],
    	"workers_dev": true,
-   	"containers": [
-   		{
-   			"class_name": "MyContainer",
-   			"scheduling_policy": "durable_object",
-   		},
-   	],
-   	"durable_objects": {
-   		"bindings": [
-   			{
-   				"class_name": "MyContainer",
-   				"name": "MY_CONTAINER",
-   			},
-   		],
-   	},
-   	"migrations": [
-   		{
-   			"new_sqlite_classes": ["MyContainer"],
-   			"tag": "v1",
-   		},
-   	],
    }
    ```
 
    </WranglerConfig>
 
-   The route sends every preview hostname to the Worker. Wrangler turns off the `workers.dev` URL when `routes` is set, so `workers_dev: true` keeps it for the control API.
+   Wrangler turns off the `workers.dev` URL when `routes` is set. `workers_dev: true` keeps it for requests that manage previews.
 
 3. Generate types for the new variable:
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-4. In `src/index.ts`, keep the `MyContainer` class and replace the `export default` object with the following:
+4. In your Worker's `fetch()` handler, send each preview hostname to the Durable Object with the same name:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -119,14 +84,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#output-carr
    			return env.MY_CONTAINER.getByName(name).fetch(new Request(url, request));
    		}
 
-   		// Other hostnames serve the control API.
-   		const match = /^\/previews\/([a-z0-9-]{1,63})$/.exec(url.pathname);
-
-   		if (match && request.method === "DELETE") {
-   			await env.MY_CONTAINER.getByName(match[1]).stop();
-   			return new Response(null, { status: 204 });
-   		}
-
+   		// Other hostnames manage previews.
    		return new Response("Not found", { status: 404 });
    	},
    } satisfies ExportedHandler<Env>;
@@ -134,31 +92,25 @@ For more information, refer to [Sandbox security](/sandbox/security/#output-carr
 
    </TypeScriptExample>
 
+   The Worker accepts only sandbox names that are valid DNS labels. It forwards the original URL with the `http:` scheme, so the server receives the full path and the preview hostname in the `Host` header.
+
+   Every request to a preview hostname goes to the preview. Keep routes that manage previews, such as stopping one, on other hostnames, so code in a preview cannot call them from its own origin. Authenticate preview visitors on the preview hostname, and do not send your application's session cookie there.
+
 5. Deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-</Steps>
-
-## Open two previews
-
-<Steps>
-
-1. Open the preview named `ada` in your browser. Replace `example-previews.com` with your preview domain:
+6. Open the preview named `ada` in your browser, and store a value in its browser console. Replace `example-previews.com` with your preview domain:
 
    ```txt
    https://ada.example-previews.com/
    ```
 
-   The page shows **Hello from a sandbox** and the server status.
-
-2. In the browser console on that page, store a value:
-
    ```js
    localStorage.setItem("name", "ada");
    ```
 
-3. Open the preview named `grace`, and read the value in its browser console:
+7. Open the preview named `grace`, and read the value in its browser console:
 
    ```txt
    https://grace.example-previews.com/
@@ -170,37 +122,20 @@ For more information, refer to [Sandbox security](/sandbox/security/#output-carr
 
    The console prints `null`. Each preview hostname is a separate origin, so `grace` cannot read the storage of `ada`.
 
-4. Stop the preview named `ada` through the control API. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
-
-   ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada --request DELETE
-   ```
-
-   The Worker responds with `204` and stops the Linux instance.
-
 </Steps>
 
-## How the Worker routes requests
+## Serve previews under a subdomain
 
-The Worker takes the sandbox name from the part of the hostname before the preview domain. It accepts only names that are valid DNS labels, and sends each request to the Durable Object with that name.
+[Universal SSL](/ssl/edge-certificates/universal-ssl/) covers a domain and its first-level subdomains, such as `ada.example-previews.com`. It does not cover deeper hostnames such as `ada.previews.example.com`. To serve previews under a subdomain, add [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) for it.
 
-The Worker forwards the original URL with the `http:` scheme. The path is unchanged, so links that start with `/` stay in the preview, and applications do not need a base path. The server receives the preview hostname in the `Host` header.
+A preview domain that your application also uses shares cookies with it. Browsers send a cookie set with `Domain=example.com` to every subdomain, including every preview under `previews.example.com`.
 
-Requests to a preview hostname always go to the preview, including `DELETE` requests. The control API answers only on other hostnames, such as the `workers.dev` URL, so code in a preview cannot reach it on the preview's own origin.
+## Set cookies on preview hostnames
 
-## Certificates for preview hostnames
+Code in one preview can set a cookie with `Domain=example-previews.com`, and every other preview then receives that cookie. Set cookies on preview hostnames without a `Domain` attribute, and do not trust a cookie because it arrived on a preview hostname.
 
-[Universal SSL](/ssl/edge-certificates/universal-ssl/) covers a domain and its first-level subdomains, so it covers `ada.example-previews.com`. It does not cover deeper hostnames such as `ada.previews.example.com`. To serve previews under a subdomain, use [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+## Related resources
 
-## Cookies on preview domains
-
-A separate origin does not separate every cookie. Browsers send a cookie set with a `Domain` attribute to every subdomain of that domain:
-
-- A cookie that your application sets with `Domain=example.com` reaches every preview under `previews.example.com`. A preview domain that your application does not use avoids this.
-- Code in one preview can set a cookie with `Domain=example-previews.com`. Every other preview then receives that cookie. Set cookies on preview hostnames without a `Domain` attribute, and do not trust a cookie because it arrived on a preview hostname.
-
-## Next steps
-
-- To start the preview server and forward requests to it, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
-- For how preview output fits the rest of a sandbox's security, refer to [Sandbox security](/sandbox/security/#output-carries-the-same-risk).
-- For route pattern rules, refer to [Routes](/workers/configuration/routing/routes/).
+- [Preview a web application](/sandbox/previews/preview-a-web-application/)
+- [Sandbox security](/sandbox/security/#output-carries-the-same-risk)
+- [Routes](/workers/configuration/routing/routes/)
