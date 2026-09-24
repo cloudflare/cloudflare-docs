@@ -1,18 +1,21 @@
 ---
-title: Run Cursor Cloud Agents on Cloudflare via self-hosted machines
-pcx_content_type: tutorial
-difficulty: Beginner
+title: Run Cursor Cloud Agents in a sandbox
+description: Deploy Cursor self-hosted machines that run each assigned session in its own Linux sandbox on Containers.
+pcx_content_type: how-to
 sidebar:
   order: 6
-description: Deploy Cursor self-hosted machines that run each assigned session in its own Linux sandbox on Containers.
+  label: Cursor
 products:
   - sandbox
   - containers
+  - durable-objects
+  - r2
+reviewed: 2026-09-24
 ---
 
 import { Steps } from "~/components";
 
-Run Cursor Cloud Agents on Cloudflare via [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in an isolated container backed by Cloudflare Containers.
+Run Cursor Cloud Agents on Cloudflare through [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
 
 Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
 
@@ -174,17 +177,21 @@ A cache miss performs a normal Git clone. It does not prevent the agent from sta
 
 ## How the template works
 
-The template manages one container for each assigned Cursor session:
+The template manages one container for each assigned Cursor session.
 
-- **List:** A cron trigger runs every five minutes. The Worker lists sessions waiting for `CURSOR_POOL`.
-- **Stream:** The Worker holds Cursor's server-sent events stream open until the next scheduled run.
-- **Assign:** The Worker accepts a waiting session with a unique worker ID. Cursor assigns that session exclusively to the Worker, which prevents duplicate processing.
-- **Start:** A Durable Object starts one container with the session environment and repository information.
-- **Stop:** The container exits after the configured idle timeout. The Durable Object also enforces a maximum run lifetime.
+A cron trigger runs the Worker every five minutes. Each run lists the sessions that wait for `CURSOR_POOL`, then keeps Cursor's server-sent events stream open until shortly before the next run, so the Worker also receives sessions that arrive between runs.
 
-The container opens an outbound connection to Cursor. The container does not require an inbound port or public IP address.
+The Worker claims each session with a unique worker ID. Cursor assigns a claimed session only to that Worker, which prevents duplicate processing. A Durable Object for the session then starts one container with the session environment and repository information.
 
-The Worker only exposes its health and optional snapshot routes. Cursor remains responsible for the agent loop and session orchestration.
+The container stops after five minutes without work, or after `WORKER_IDLE_RELEASE_TIMEOUT_SECONDS` if you set that variable. The Durable Object also stops the container after eight hours, or after `MAX_RUN_LIFETIME_SECONDS` if you set that variable.
+
+The container opens an outbound connection to Cursor, so it does not require an inbound port or public IP address. The Worker only exposes its health and optional snapshot routes. Cursor remains responsible for the agent loop and session orchestration.
+
+## Security
+
+Each session runs in its own container, so sessions do not share files or processes. The container receives the `CURSOR_API_KEY` service-account key, because the Cursor worker needs it. It also receives `GIT_USERNAME`, `GIT_TOKEN`, and `SNAPSHOT_AUTH_TOKEN` if you set them. Code that runs in a session can read these values. Give `GIT_TOKEN` access only to the repositories that the agents use.
+
+For more information, refer to [Sandbox security](/sandbox/security/).
 
 ## Monitor the deployment
 
