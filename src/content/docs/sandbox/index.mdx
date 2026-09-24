@@ -46,6 +46,18 @@ Cloudflare provides two sandbox environments. Both are accessible through a [Wor
 
 Each instance is a microVM with its own kernel and network, so no other workload shares it.
 
+A Durable Object in your Worker starts the instance from an image and runs a command in it:
+
+```ts
+container.start({
+	image: "cloudflare/debian-trixie",
+	entrypoint: ["sleep", "infinity"],
+	enableInternet: false,
+});
+const process = await container.exec(["uname", "-a"]);
+const output = await process.output();
+```
+
 <LinkButton variant="primary" href="/sandbox/get-started/containers/">
 	Run a Linux command
 </LinkButton>
@@ -58,18 +70,31 @@ Each instance is a microVM with its own kernel and network, so no other workload
 
 That code cannot see your application's memory. It can access your application only through the methods and data you pass, and your Worker decides whether it can reach the Internet.
 
+Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it:
+
+```ts
+const sandbox = env.LOADER.load({
+	compatibilityDate: "$today",
+	mainModule: "code.js",
+	modules: { "code.js": untrustedModule },
+	globalOutbound: null,
+});
+const entrypoint = sandbox.getEntrypoint<CodeEntrypoint>("Code");
+const result = await entrypoint.evaluate();
+```
+
 <LinkButton variant="primary" href="/sandbox/get-started/dynamic-workers/">
 	Run JavaScript
 </LinkButton>
 
 ---
 
-## In these docs
+## Learn
 
 <CardGrid>
 
-<LinkTitleCard title="Get started" href="/sandbox/get-started/" icon="rocket">
-	Run a Linux command or JavaScript in your first sandbox.
+<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="rocket">
+	Build complete applications that run untrusted code in sandboxes.
 </LinkTitleCard>
 
 <LinkTitleCard
@@ -88,6 +113,21 @@ That code cannot see your application's memory. It can access your application o
 	Understand what keeps a Linux sandbox running, what stops it, and which files
 	a snapshot brings back.
 </LinkTitleCard>
+
+<LinkTitleCard
+	title="Sandbox security"
+	href="/sandbox/security/"
+	icon="ph:shield-check"
+>
+	Decide what each sandbox holds, because its code can use everything you place
+	inside it.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Guides
+
+<CardGrid>
 
 <LinkTitleCard title="Run commands" href="/sandbox/commands/" icon="seti:shell">
 	Run tests, stream output, keep processes running, and open a terminal.
@@ -130,10 +170,6 @@ That code cannot see your application's memory. It can access your application o
 	sandbox your model credentials.
 </LinkTitleCard>
 
-<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="rocket">
-	Build complete applications that run untrusted code in sandboxes.
-</LinkTitleCard>
-
 </CardGrid>
 
 ---
@@ -162,67 +198,8 @@ Run models on Cloudflare, then execute the code they generate in a sandbox.
 
 ## More resources
 
-<CardGrid>
-
-<LinkTitleCard
-	title="Deploy Containers"
-	href="/containers/guides/deploy/"
-	icon="rocket"
->
-	Deploy from your machine or Workers Builds.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Local development"
-	href="/containers/guides/local-dev/"
-	icon="laptop"
->
-	Run containers on your machine with `wrangler dev`.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Logs"
-	href="/workers/observability/logs/workers-logs/"
-	icon="document"
->
-	Read logs from your Worker, Durable Objects, and containers.
-</LinkTitleCard>
-
-<LinkTitleCard title="Code Mode" href="/agents/tools/codemode/" icon="rocket">
-	Run model-generated JavaScript against typed tools in a sandbox.
-</LinkTitleCard>
-
-<LinkTitleCard title="Sandbox SDK 0.x" href="/sandbox/sdk/" icon="open-book">
-	For existing `@cloudflare/sandbox` 0.x apps: commands, files, and preview
-	URLs.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Workers security model"
-	href="/workers/reference/security-model/"
-	icon="seti:lock"
->
-	V8 isolates, process sandboxes, and the APIs a Worker can use.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Containers pricing"
-	href="/containers/platform/pricing/"
-	icon="seti:shell"
->
-	vCPU, memory, disk, and egress for container instances.
-</LinkTitleCard>
-
-<LinkTitleCard title="Limits" href="/containers/platform/limits/" icon="error">
-	Container instance types, image size, and other platform limits.
-</LinkTitleCard>
-
-<LinkTitleCard
-	title="Dynamic Workers pricing"
-	href="/dynamic-workers/pricing/"
-	icon="seti:shell"
->
-	Requests, CPU time, and unique Dynamic Workers created per day.
-</LinkTitleCard>
-
-</CardGrid>
+| Topic              | Links                                                                                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deploy and debug   | [Deploy Containers](/containers/guides/deploy/), [Local development](/containers/guides/local-dev/), [Logs](/workers/observability/logs/workers-logs/)                           |
+| Pricing and limits | [Containers pricing](/containers/platform/pricing/), [Container limits](/containers/platform/limits/), [Dynamic Workers pricing](/dynamic-workers/pricing/)                      |
+| Related            | [Code Mode](/agents/tools/codemode/), [Workers security model](/workers/reference/security-model/), [Sandbox SDK 0.x](/sandbox/sdk/) for existing `@cloudflare/sandbox` 0.x apps |
