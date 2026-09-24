@@ -363,7 +363,17 @@ class MyContainer extends DurableObject {
 
 #### Return values
 
-- A promise that resolves when the container exits.
+- A promise that settles when the container stops:
+  - It resolves when the main process exits with code `0`, or when `destroy()` stops the container without an error value.
+  - It rejects with an `Error` that has an `exitCode` property when the main process exits with another code.
+  - It rejects with the value passed to `destroy()`, when there is one.
+  - It rejects with an error that describes the failure when the container stops for another reason.
+
+#### Errors
+
+- `monitor()` throws an `Error` when this Durable Object instance has not started a container and did not find one running when it started. After a container stops, `monitor()` still returns the result of that container's lifecycle.
+
+A restarted Durable Object, such as after a deploy, no longer has an earlier `monitor()` promise. If `running` is `true` when the Durable Object starts, call `monitor()` again to observe the running container.
 
 ### `snapshotContainer`
 
