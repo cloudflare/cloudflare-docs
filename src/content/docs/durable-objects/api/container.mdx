@@ -442,7 +442,9 @@ if (info) {
 
 ### `interceptOutboundHttp`
 
-`interceptOutboundHttp` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Can be called before or after starting the container. Open connections pick up the new handler without being dropped.
+`interceptOutboundHttp` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Call it before or after `start()`. An intercept lasts until the container stops, so register intercepts again for each new container. Registering a target again replaces its handler, and open connections pick up the new handler without being dropped.
+
+A container accepts up to 64 distinct targets across `interceptOutboundHttp()`, `interceptOutboundHttps()`, and `interceptAllOutboundHttp()`. The `*` target and the `interceptAllOutboundHttp()` rule each count as one target, and a hostname intercepted for both HTTP and HTTPS counts as two. Registering an existing target again does not count. An intercept cannot be removed while the container runs.
 
 ```js
 const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
@@ -471,6 +473,10 @@ In a container started with `enableInternet: false`, DNS answers from the interc
 
 - None.
 
+#### Exceptions
+
+- The call fails with an `Error` when the container already has 64 targets and `target` is a new one. The message reads `You can't configure more than 128 egress interceptors`, because each target uses two entries. Intercepts registered earlier keep working.
+
 ### `interceptAllOutboundHttp`
 
 `interceptAllOutboundHttp` routes outbound HTTP requests on port `80` from the container through a `WorkerEntrypoint`, regardless of destination.
@@ -488,6 +494,10 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 #### Return values
 
 - A promise that resolves once the intercept rule is installed.
+
+#### Exceptions
+
+- The call fails with an `Error` when the container already has 64 targets and none of them is the `interceptAllOutboundHttp()` rule. Refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
 
 ### `interceptOutboundHttps`
 
@@ -518,6 +528,10 @@ Only HTTPS on port `443` is intercepted. Matching uses the hostname the client s
 #### Return values
 
 - None.
+
+#### Exceptions
+
+- The call fails with an `Error` when the container already has 64 targets and `target` is a new one. Refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
 
 ## Related resources
 
