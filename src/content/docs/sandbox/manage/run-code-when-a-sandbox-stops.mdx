@@ -98,9 +98,11 @@ Run your own code when a sandbox stops, for example to update your records, noti
 
    A stop that happened while the Durable Object was not in memory has no exit code, so its reason is `unknown`.
 
-4. Replace `exec()`. It checks for a missed stop, watches a container it starts, records the activity, and schedules the next check:
+4. Replace `exec()`. It checks for a missed stop, watches a container it starts, schedules the next check, and records activity when the command finishes:
 
    ```ts title="src/index.ts"
+   busy = 0;
+
    async exec(argv: string[]) {
    	const container = this.ctx.container;
    	if (!container) {
@@ -123,14 +125,28 @@ Run your own code when a sandbox stops, for example to update your records, noti
    	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
 
-   	const process = await container.exec(argv);
-   	const output = await process.output();
-   	return {
-   		stdout: new TextDecoder().decode(output.stdout),
-   		exitCode: output.exitCode,
-   	};
+   	this.busy++;
+   	try {
+   		const process = await container.exec(argv);
+   		const output = await process.output();
+   		return {
+   			stdout: new TextDecoder().decode(output.stdout),
+   			exitCode: output.exitCode,
+   		};
+   	} finally {
+   		this.busy--;
+   		const record = await this.ctx.storage.get<SandboxRecord>("sandbox");
+   		if (record?.state === "running") {
+   			await this.ctx.storage.put<SandboxRecord>("sandbox", {
+   				...record,
+   				lastActivity: Date.now(),
+   			});
+   		}
+   	}
    }
    ```
+
+   `busy` counts the commands that are running, so a command that runs longer than the idle limit is not stopped. A request in progress keeps the Durable Object in memory, so the count does not need storage.
 
 5. Add an alarm handler that checks the sandbox and stops it when it has been idle too long, and methods that return the record and stop the sandbox:
 
@@ -142,7 +158,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    		return;
    	}
 
-   	if (Date.now() - record.lastActivity > IDLE_LIMIT_MS) {
+   	if (this.busy === 0 && Date.now() - record.lastActivity > IDLE_LIMIT_MS) {
    		await this.ctx.container?.destroy("idle");
    		return;
    	}
