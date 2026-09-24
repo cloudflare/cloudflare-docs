@@ -71,9 +71,9 @@ Both user token and account token template URLs use the same permission encoding
 [{ "key": "permission_name", "type": "read|edit|revoke|run|purge" }]
 ```
 
-The two token types resolve these entries differently, as described below.
+The two token types resolve these entries differently, as described in the following sections.
 
-For **account token URLs**, each `key` can be either a short permission key (for example, `dns`) or a [permission group ID](#use-permission-group-ids). Using the permission group ID is the most reliable option, since it maps to exactly one group. See [Use permission group IDs](#use-permission-group-ids).
+For **account token URLs**, each `key` can be either a short permission key (for example, `dns`) or a [permission group ID](#use-permission-group-ids). Using the permission group ID is the most reliable option, since it maps to exactly one group. Refer to [Use permission group IDs](#use-permission-group-ids).
 
 For **user token URLs**, each `key` must be a short permission key that matches a group `name` exactly, and the `type` must be `edit` (not `write`), `read`, `revoke`, `run`, or `purge`. Permission group IDs are not supported, and any entry that does not match is dropped silently.
 
