@@ -30,7 +30,7 @@ Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflar
 
 2. Open Local Explorer in your browser:
    - **Wrangler**: press `e` in your terminal.
-   - **Vite plugin**: Navigate directly to `/cdn-cgi/local/explorer` on your dev server's route and port.
+   - **Vite plugin**: Go directly to `/cdn-cgi/local/explorer` on your dev server's route and port.
 </Steps>
 
 Local Explorer is available by default and detects the bindings defined in your [Wrangler configuration](/workers/wrangler/configuration/) automatically.
@@ -63,9 +63,28 @@ To test a configured expression, define at least one [Cron Trigger](/workers/con
 1. In Local Explorer, select **Cron Triggers** > **Configured Crons**.
 2. Under **Scheduled time**, select _Now_. To test another time, select **Add preset** and enter a UTC date and time or epoch milliseconds.
 3. Select **Trigger** next to a configured cron expression.
-4. Review the outcome and `noRetry()` status. To inspect logs and traces, select **Observability** > **Traces**.
+4. Review the outcome, `noRetry()` status, dispatched expression, and scheduled time.
 5. (Optional) To test another expression, select **Cron Triggers** > **Ad-Hoc Triggers**. Select **Add trigger**, enter or build an expression, and then select **Trigger**.
 </Steps>
+
+Full invocation logs are available in the development session that owns the Worker. That session must have **Observability** turned on.
+
+### Build an ad hoc expression
+
+Under **Ad-Hoc Triggers**, select **Expression** to enter an exact expression. Select **Build expression** to create a common five-field UTC expression. The exact expression shown in the row is always dispatched.
+
+The builder supports minute, hour, day-of-month, and month intervals. It also supports daily, selected-weekday, and monthly schedules. Use these Quartz-like options for more specific schedules:
+
+| Option | Behavior                                  |
+| ------ | ----------------------------------------- |
+| `L`    | Select the last day or last named weekday |
+| `W`    | Select the nearest weekday                |
+| `LW`   | Select the last weekday of the month      |
+| `#`    | Select an occurrence of a named weekday   |
+
+Step values start at the field minimum and reset at its boundary. Day steps start on day `1`, and month steps start in January. Dates `29` through `31` do not run in months without that date.
+
+Switching to **Build expression** does not replace the current expression. Changing a valid builder field regenerates the expression. To use syntax that the builder does not provide, select **Expression** and enter it directly.
 
 Ad hoc triggers and scheduled time presets are stored in your browser. Local Explorer scopes them to the local project and Worker. They do not change your Wrangler configuration or deployed Cron Triggers.
 
