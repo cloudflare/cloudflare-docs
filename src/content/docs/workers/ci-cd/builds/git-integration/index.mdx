@@ -10,30 +10,31 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-Cloudflare supports connecting your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/) and [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/) repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
+Cloudflare supports connecting your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/), [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/), or [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/) (Cursor's Git hosting platform) repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
 
-Adding a Git integration also lets you monitor build statuses directly in your Git provider using [pull request comments](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment), [check runs](/workers/ci-cd/builds/git-integration/github-integration/#check-run), or [commit statuses](/workers/ci-cd/builds/git-integration/gitlab-integration/#commit-status), so you can manage deployments without leaving your workflow.
+Adding a Git integration also lets you monitor build statuses directly in your Git provider. [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#features) and [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/#features) use pull request comments and check runs, while [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#features) uses commit statuses, so you can manage deployments without leaving your workflow.
 
 ## Supported Git Providers
 
-Cloudflare supports connecting Cloudflare Workers to your GitHub and GitLab repositories. Workers Builds does not currently support connecting self-hosted instances of GitHub or GitLab.
+Cloudflare supports connecting Cloudflare Workers to your GitHub, GitLab, and Cursor Origin repositories. Workers Builds does not currently support connecting self-hosted instances of GitHub or GitLab.
 
 If you are using a different Git provider (e.g. Bitbucket), you can use an [external CI/CD provider (e.g. GitHub Actions)](/workers/ci-cd/external-cicd/) and deploy using [Wrangler CLI](/workers/wrangler/commands/general/#deploy).
 
 ## Add a Git Integration
 
-Workers Builds provides direct integration with GitHub and GitLab accounts, including both individual and organization accounts, that are _not_ self-hosted.
+Workers Builds provides direct integration with GitHub and GitLab accounts that are _not_ self-hosted, as well as Cursor Origin user and team repositories.
 
-If you do not have a Git account linked to your Cloudflare account, you will be prompted to set up an installation to GitHub or GitLab when [connecting a repository](/workers/ci-cd/builds/#get-started) for the first time, or when adding a new Git account. Follow the prompts and authorize the Cloudflare Git integration.
+When connecting a GitHub or GitLab repository for the first time, follow the prompts in the Cloudflare dashboard to authorize the Git provider. To connect Cursor Origin, install the [Cloudflare app in Cursor](https://cursor.com/codebase/settings/apps/public/cloudflare) and follow the installation prompts.
 
-![Git providers](~/assets/images/workers/platform/ci-cd/workers-git-provider.png)
+![Connect a Git repository in Workers Builds](~/assets/images/workers/platform/ci-cd/builds-git-repo-connect.png)
 
 You can check the following pages to see if your Git integration has been installed:
 
 - [GitHub Applications page](https://github.com/settings/installations) (if you are in an organization, select **Switch settings context** to access your GitHub organization settings)
 - [GitLab Authorized Applications page](https://gitlab.com/-/profile/applications)
+- [Cursor codebase settings](https://cursor.com/codebase/settings/apps)
 
-For details on providing access to organization accounts, see [GitHub organizational access](/workers/ci-cd/builds/git-integration/github-integration/#organizational-access) and [GitLab organizational access](/workers/ci-cd/builds/git-integration/gitlab-integration/#organizational-access).
+For details on managing provider access, refer to the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#organizational-access), [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#organizational-access), and [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/#team-access) integration guides.
 
 ## Manage a Git Integration
 
@@ -49,4 +50,4 @@ To manage your Git installation:
 4. Under **Git Repository**, select **Manage**.
 </Steps>
 
-This can be useful for managing repository access or troubleshooting installation issues by reinstalling. For more details, see the [GitHub](/workers/ci-cd/builds/git-integration/github-integration) and [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration) guides for how to manage your installation.
+This can be useful for managing repository access or troubleshooting installation issues by reinstalling. For more details on how to manage your installation, refer to the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/), [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/), and [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/) guides.

@@ -81,49 +81,41 @@ const selectedLabel = productMatch
 
 <PageHeader title={heading} tagline={tagline} />
 
-{
-	/* Controls toolbar — horizontal padding matches the feed's --body-x (the
+{/* Controls toolbar — horizontal padding matches the feed's --body-x (the
     entry text indent) so the controls line up with the entry titles/body:
-    0 below md, 3.5rem at md, 4rem at lg. */
-}
-<div
-	class="mt-12 mb-12 flex flex-wrap items-center gap-3 pt-10 md:px-14 lg:px-16"
->
-	{
-		showFilter && products.length > 0 && (
-			<div class="w-full max-w-xs sm:w-auto sm:min-w-[15rem]">
-				<Combobox
-					size="lg"
-					aria-label="Filter changelog by product"
-					value={selectedHref}
-					displayValue={selectedLabel}
-					placeholder="Search products…"
-					emptyText="No products found."
-					data-changelog-product-nav
-				>
-					<ComboboxOption value="/changelog/">All products</ComboboxOption>
-					{filteredGroups.length > 0 && (
-						<ComboboxGroup>
-							<ComboboxGroupLabel>Product groups</ComboboxGroupLabel>
-							{filteredGroups.map((group) => (
-								<ComboboxOption value={group.href}>
-									{group.label}
-								</ComboboxOption>
-							))}
-						</ComboboxGroup>
-					)}
+    0 below md, 3.5rem at md, 4rem at lg. */}
+<div class="mt-12 mb-12 flex flex-wrap items-center gap-3 pt-10 md:px-14 lg:px-16">
+	{showFilter && products.length > 0 && (
+		<div class="w-full max-w-xs sm:w-auto sm:min-w-[15rem]">
+			<Combobox
+				size="lg"
+				aria-label="Filter changelog by product"
+				value={selectedHref}
+				displayValue={selectedLabel}
+				placeholder="Search products…"
+				emptyText="No products found."
+				data-changelog-product-nav
+			>
+				<ComboboxOption value="/changelog/">All products</ComboboxOption>
+				{filteredGroups.length > 0 && (
 					<ComboboxGroup>
-						<ComboboxGroupLabel>Products</ComboboxGroupLabel>
-						{products.map((product) => (
-							<ComboboxOption value={`/changelog/product/${product.id}/`}>
-								{product.data.entry?.title ?? product.id}
-							</ComboboxOption>
+						<ComboboxGroupLabel>Product groups</ComboboxGroupLabel>
+						{filteredGroups.map((group) => (
+							<ComboboxOption value={group.href}>{group.label}</ComboboxOption>
 						))}
 					</ComboboxGroup>
-				</Combobox>
-			</div>
-		)
-	}
+				)}
+				<ComboboxGroup>
+					<ComboboxGroupLabel>Products</ComboboxGroupLabel>
+					{products.map((product) => (
+						<ComboboxOption value={`/changelog/product/${product.id}/`}>
+							{product.data.entry?.title ?? product.id}
+						</ComboboxOption>
+					))}
+				</ComboboxGroup>
+			</Combobox>
+		</div>
+	)}
 
 	<div class="ml-auto flex items-center gap-2">
 		<LinkButton

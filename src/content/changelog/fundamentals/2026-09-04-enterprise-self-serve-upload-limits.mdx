@@ -1,0 +1,16 @@
+---
+title: Enterprise customers can self-serve CDN upload limits up to 5 GB
+description: Enterprise customers can now raise a zone's maximum CDN request body size to 5 GB from the Cloudflare dashboard without contacting Support.
+products:
+  - fundamentals
+  - workers
+date: 2026-09-04
+---
+
+Enterprise customers can now configure a zone's CDN **Maximum Upload Size** up to 5 GB directly from the **Network** page in the Cloudflare dashboard. This removes the need to contact your account team or Cloudflare Support when applications need to accept request bodies larger than 500 MB and no greater than 5 GB.
+
+The default maximum upload size remains 500 MB. Upload limits above 5 GB still require additional configuration through your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+Very large uploads may reach connection or read timeouts before reaching the configured size limit. Make sure clients and origins allow enough time to complete the transfer when increasing this setting.
+
+Refer to [Cache upload limits](/cache/concepts/default-cache-behavior/#upload-limits) and [Workers request body size limits](/workers/platform/limits/#request-and-response-limits) for details.

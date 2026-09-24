@@ -4,31 +4,14 @@
  * and tears down the server. Used by `pnpm run flue:evals`.
  */
 import { spawn } from "node:child_process";
-import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { loadEnvValue } from "./dotenv";
 
 const PORT = 5173;
 const HOST = "localhost";
 const FLUE_DIR = join(import.meta.dirname, "..");
 
-function loadDotenvValue(key: string): string | undefined {
-	for (const file of [".env.local", ".env"]) {
-		try {
-			const content = readFileSync(join(FLUE_DIR, file), "utf-8");
-			for (const line of content.split("\n")) {
-				const match = line.match(new RegExp(`^${key}=(.+)$`));
-				if (match) return match[1].trim();
-			}
-		} catch {
-			// file may not exist
-		}
-	}
-	return undefined;
-}
-
-const TOKEN =
-	process.env.DOCS_FLUE_INTERNAL_TOKEN ??
-	loadDotenvValue("DOCS_FLUE_INTERNAL_TOKEN");
+const TOKEN = loadEnvValue("DOCS_FLUE_INTERNAL_TOKEN");
 if (!TOKEN) {
 	console.error(
 		"DOCS_FLUE_INTERNAL_TOKEN not found in process.env or .flue/.env(.local)",

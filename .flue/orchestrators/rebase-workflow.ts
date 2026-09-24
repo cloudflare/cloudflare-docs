@@ -1,8 +1,8 @@
 /**
  * RebaseWorkflow — durable /rebase pipeline (D6).
  *
- * Cloudflare `WorkflowEntrypoint` that replaces the 0.11 `workflows/rebase.ts`.
- * Re-exported from `cloudflare.ts` (picked up by `export * from cloudflare.ts`);
+ * Cloudflare `WorkflowEntrypoint`. Re-exported from `cloudflare.ts` (picked up by
+ * `export * from cloudflare.ts`);
  * bound as `REBASE` in `wrangler.jsonc`. Kicked from `pipeline-entry.ts` for the
  * `/rebase` codeowner command.
  *
@@ -16,35 +16,38 @@
  *   3. resolve  — AI-assisted conflict resolution (`resolveConflictsWithAI`
  *      driving the rebase-conflict-resolver agent) + `applyResolution` on high
  *      confidence. Medium/low → halted-confidence.
- *   4. trigger  — on any successful rebase, kick a fresh full review via
- *      `REVIEW_ORCHESTRATOR.create({ forceFullReview, bypassReviewLimit })`.
+ *   4. trigger  — on any successful rebase, kick a fresh full review.
  *
  * All GitHub side-effects (comments, reactions, refs, commits) stay in trusted
  * TS; the agent only reasons and submits (D5).
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
-import type { ReviewOrchestratorParams } from "../cloudflare";
+import RebaseConflictResolver, {
+	CONFLICT_RESOLUTION_DATA,
+} from "../agents/rebase-conflict-resolver";
+import { agentStep } from "../lib/agents/agent-step";
+import { SPECIALIST_DURABILITY } from "../lib/agents/durability";
 import {
 	addReactionToComment,
+	createIssueComment,
 	getInstallationToken,
 	getIssueComments,
 	getPullRequest,
 	pollForBranchUpdate,
 	removeReactionFromComment,
+	updateIssueComment,
 	updatePullRequestBranch,
-	type GitHubIssueComment,
 } from "../lib/github";
-import { partitionComments, type RebaseStatus } from "../lib/code-review-state";
-import {
-	postOrUpdateComment,
-	renderRebaseStatusUpdate,
-} from "../lib/code-review-render";
 import {
 	applyResolution,
+	ConflictResolutionFromModelSchema,
 	resolveConflictsWithAI,
 } from "../lib/rebase-conflict";
-import { runRebaseConflictAgent } from "../lib/run-rebase-conflict";
+import { startReview, type ReviewWorkflowParams } from "../lib/review/start";
+import { findBotReviewComment } from "../lib/review/bot-comment";
+import { renderRebaseStatus, type RebaseStatus } from "../lib/review/render";
+import { loadState } from "../lib/review/state";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
 export interface RebaseParams {
@@ -55,19 +58,20 @@ export interface RebaseParams {
 }
 
 interface RebaseEnv {
-	REVIEW_ORCHESTRATOR: Workflow<ReviewOrchestratorParams>;
+	REVIEW_ORCHESTRATOR: Workflow<ReviewWorkflowParams>;
+	DOCS_FLUE_BUCKET: R2Bucket;
 	[key: string]: unknown;
 }
 
 /** Locate the shared code-review bot comment on the PR (holds the rebase status line). */
-async function findBotComment(
-	token: string,
-	prNumber: number,
-): Promise<GitHubIssueComment | null> {
-	const { botComment } = partitionComments(
-		await getIssueComments(token, prNumber),
-	);
-	return botComment;
+async function findBotComment(token: string, prNumber: number, env: RebaseEnv) {
+	let knownId: number | undefined;
+	try {
+		knownId = (await loadState(env.DOCS_FLUE_BUCKET, prNumber)).state.commentId;
+	} catch {
+		// A stale state read must not prevent status publication.
+	}
+	return findBotReviewComment(await getIssueComments(token, prNumber), knownId);
 }
 
 /** Post/update the rebase status line into the shared bot comment. */
@@ -77,15 +81,17 @@ async function postRebaseStatus(
 	status: RebaseStatus,
 	detail: string | undefined,
 	senderLogin: string,
+	env: RebaseEnv,
 ): Promise<void> {
-	const botComment = await findBotComment(token, prNumber);
-	const body = renderRebaseStatusUpdate(
+	const botComment = await findBotComment(token, prNumber, env);
+	const body = renderRebaseStatus(
 		status,
 		detail,
 		senderLogin,
-		botComment?.body ?? null,
+		botComment?.body ?? undefined,
 	);
-	await postOrUpdateComment(token, prNumber, botComment, body);
+	if (botComment) await updateIssueComment(token, botComment.id, body);
+	else await createIssueComment(token, prNumber, body);
 }
 
 /**
@@ -169,6 +175,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"halted-wrong-base",
 					pr.base.ref,
 					senderLogin,
+					env,
 				);
 				await swapReaction(
 					token,
@@ -188,6 +195,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"halted-fork",
 					undefined,
 					senderLogin,
+					env,
 				);
 				await swapReaction(
 					token,
@@ -204,6 +212,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 				"in-progress",
 				undefined,
 				senderLogin,
+				env,
 			);
 
 			return { phase: "proceed", priorSha: pr.head.sha };
@@ -252,6 +261,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"failed",
 					attempt.message,
 					senderLogin,
+					env,
 				);
 				await swapReaction(
 					token,
@@ -288,6 +298,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"complete",
 					undefined,
 					senderLogin,
+					env,
 				);
 				await swapReaction(
 					token,
@@ -309,20 +320,32 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 		}
 
 		// ── 3b. Conflict: AI-assisted resolution + apply ────────────────────────
-		const resolve = await step.do<{
+		const resolve: {
 			result: "applied" | "halted" | "failed";
 			confidence?: string;
 			reason?: string;
 			error?: string;
-		}>("resolve-and-apply", async () => {
+		} = await (async () => {
 			const token = await getInstallationToken(ghEnv);
 			try {
 				const pr = await getPullRequest(token, prNumber);
-				const resolution = await resolveConflictsWithAI(token, pr, (input) =>
-					runRebaseConflictAgent(
-						input,
-						`${event.instanceId}:rebase-conflict:${pr.head.sha}`,
-					),
+				const resolution = await resolveConflictsWithAI(
+					token,
+					pr,
+					async (input) => {
+						const result = await agentStep(step, {
+							name: "rebase-conflict",
+							agent: RebaseConflictResolver,
+							id: `${event.instanceId}:rebase-conflict:${pr.head.sha}`,
+							message:
+								"Resolve the merge conflicts between this PR and production, then submit the result.",
+							initialData: input,
+							dataName: CONFLICT_RESOLUTION_DATA,
+							schema: ConflictResolutionFromModelSchema,
+							readTimeoutMs: SPECIALIST_DURABILITY.timeoutMs,
+						});
+						return result.ok ? result.value : null;
+					},
 				);
 
 				if (resolution.confidence === "high") {
@@ -333,6 +356,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 						"complete",
 						undefined,
 						senderLogin,
+						env,
 					).catch(() => {});
 					await swapReaction(
 						token,
@@ -350,6 +374,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"halted-confidence",
 					resolution.reason,
 					senderLogin,
+					env,
 				);
 				await swapReaction(
 					token,
@@ -370,6 +395,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 					"failed",
 					`AI conflict resolution failed: ${message}`,
 					senderLogin,
+					env,
 				).catch(() => {});
 				await swapReaction(
 					token,
@@ -379,7 +405,7 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 				).catch(() => {});
 				return { result: "failed", error: message };
 			}
-		});
+		})();
 
 		if (resolve.result === "applied") {
 			await this.triggerFullReview(step, env, prNumber, "ai_rebase_complete");
@@ -423,12 +449,15 @@ export class RebaseWorkflow extends WorkflowEntrypoint<
 	): Promise<void> {
 		await step.do(`trigger-review-${context}`, async () => {
 			try {
-				await env.REVIEW_ORCHESTRATOR.create({
-					params: {
-						number: prNumber,
-						forceFullReview: true,
-						bypassReviewLimit: true,
-					},
+				const token = await getInstallationToken(
+					env as unknown as Record<string, string>,
+				);
+				const pr = await getPullRequest(token, prNumber);
+				await startReview(env.REVIEW_ORCHESTRATOR, {
+					number: prNumber,
+					headSha: pr.head.sha,
+					trigger: "command",
+					fullReview: true,
 				});
 				return { triggered: true };
 			} catch (err) {

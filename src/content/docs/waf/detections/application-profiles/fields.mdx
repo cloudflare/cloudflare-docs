@@ -9,7 +9,7 @@ sidebar:
   label: Fields
 ---
 
-import { Type } from "~/components";
+import { Details, Type } from "~/components";
 
 Schema Profile detections populate these fields after an applicable profile becomes available:
 
@@ -17,6 +17,64 @@ Schema Profile detections populate these fields after an applicable profile beco
 | ---------------------------------------- | ----------------------- | ---------------------- | -------------------------------------------------------------- | ----------------------------------- |
 | `cf.schema_validation.learned.violated`  | <Type text="Boolean" /> | Learned Schema Profile | `true` when an evaluated request violates the learned profile. | Security Analytics and Custom Rules |
 | `cf.schema_validation.uploaded.violated` | <Type text="Boolean" /> | Uploaded schema        | `true` when an evaluated request violates the supplied schema. | Security Analytics and Custom Rules |
+
+## Violation details
+
+Sampled violations in Profile Analysis contain four structured fields:
+
+| Field          | Type                   | Meaning                                                                                           |
+| -------------- | ---------------------- | ------------------------------------------------------------------------------------------------- |
+| `location`     | <Type text="String" /> | Request component containing the violation: `path`, `query`, `header`, `cookie`, or `body`.       |
+| `error_class`  | <Type text="String" /> | Stable, broad category for grouping similar violations.                                           |
+| `error_detail` | <Type text="String" /> | Optional specific reason within the error class.                                                  |
+| `target`       | <Type text="String" /> | Optional parameter, header, cookie, or `$`-prefixed JSON body path associated with the violation. |
+
+These values provide context in sampled logs. Schema Validation reports the first detected failure for each request.
+
+### Error classes
+
+The `error_class` field can have the following values:
+
+| Value                    | Meaning                                                                    |
+| ------------------------ | -------------------------------------------------------------------------- |
+| `missing_required`       | A required parameter, body, or header was absent.                          |
+| `invalid_type`           | A value had the wrong OpenAPI or JSON type.                                |
+| `invalid_encoding`       | Bytes or text did not use the expected encoding.                           |
+| `invalid_syntax`         | Request syntax was invalid, such as malformed JSON.                        |
+| `invalid_media_type`     | A media type did not match the schema.                                     |
+| `unsupported_media_type` | A media type or media type parameter is unsupported.                       |
+| `duplicate_value`        | A value that accepts one entry appeared more than once.                    |
+| `too_many_values`        | A collection contained more values than the validator accepts.             |
+| `constraint_violation`   | A value violated an OpenAPI or JSON Schema constraint.                     |
+| `body_size`              | The request body could not be validated because of its size or truncation. |
+
+### Error details
+
+The `error_detail` field adds context when the error class alone is insufficient. The field is empty when the class, location, and target identify the failure.
+
+<Details header="Error detail values">
+
+| Detail family       | Possible values                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Expected type       | `expected:array`, `expected:boolean`, `expected:integer`, `expected:null`, `expected:number`, `expected:object`, `expected:string`, `expected:one_of`                                                                                                                                                                                                               |
+| Encoding and syntax | `invalid_utf8`, `invalid_ascii`, `invalid_json`, `invalid_form_urlencoded`                                                                                                                                                                                                                                                                                          |
+| Media type          | `invalid_content_type`, `invalid_media_type`, `unsupported_media_type_parameter`                                                                                                                                                                                                                                                                                    |
+| Schema constraint   | `invalid_length`, `invalid_object_property_count`, `invalid_array_item_count`, `not`, `all_of`, `any_of`, `one_of`, `invalid_enum_variant`, `forbidden_value`, `missing_required_property`, `number_too_small`, `number_too_big`, `number_not_in_range`, `string_length_not_in_range`, `different_const_value`, `multiple_of`, `pattern_no_match`, `value_too_deep` |
+| Format constraint   | `format_violation:<format>`, where `<format>` identifies the OpenAPI format. Current formats include `uuid`, `email`, `date-time`, `date`, `time`, `hostname`, `ipv4`, `ipv6`, `uri`, `uri-reference`, `iri`, `iri-reference`, `int32`, `int64`, `uint64`, `byte`, `float`, and `double`.                                                                           |
+
+</Details>
+
+### Targets
+
+The `target` value depends on the violation location:
+
+| Location                     | Target                                                |
+| ---------------------------- | ----------------------------------------------------- |
+| `path`, `query`, or `cookie` | Parameter name                                        |
+| `header`                     | Header name, such as `content-type`                   |
+| `body`                       | `$`-prefixed JSON path, such as `$.items[0].quantity` |
+
+The target is empty for failures that apply to the entire request body. It can also be empty when Cloudflare cannot safely report a target.
 
 ## Availability
 

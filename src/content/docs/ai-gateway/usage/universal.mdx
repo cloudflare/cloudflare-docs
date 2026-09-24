@@ -127,7 +127,7 @@ config:{
 ```
 
 - `maxAttempts`: Maximum number of retry attempts (up to 5).
-- `retryDelay`: Delay before retrying, in milliseconds (maximum of 5 seconds).
+- `retryDelay`: Delay before retrying, in milliseconds (maximum of 60 seconds).
 - `backoff`: Backoff method — `constant`, `linear`, or `exponential`.
 
 On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes. Each provider can have different retry settings.

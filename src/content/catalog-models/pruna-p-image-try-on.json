@@ -12,6 +12,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.015,
+		"Per input image": 0.008
+	},
 	"examples": [
 		{
 			"name": "Single Garment",
@@ -99,6 +103,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"output_image_count": 0.015,
+				"input_image_count": 0.008
+			}
+		}
+	],
 	"banner": {
 		"id": "97503cbc-cf25-4782-b55e-03aa37f6c7e3",
 		"title": "70% off P-Image-Try-On",
@@ -113,21 +126,21 @@
 			"type": "object",
 			"properties": {
 				"person_image": {
-					"description": "Image of the person to dress. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...).",
-					"type": "string"
+					"type": "string",
+					"description": "Image of the person to dress. A publicly reachable HTTP(S) URL or a base64 data URI (data:image/...;base64,...)."
 				},
 				"garment_images": {
-					"description": "Garment reference images to fit onto the person. Each entry is an HTTP(S) URL or a base64 data URI. Up to 6 recommended, up to 11 supported.",
 					"minItems": 1,
 					"maxItems": 11,
 					"type": "array",
 					"items": {
 						"type": "string"
-					}
+					},
+					"description": "Garment reference images to fit onto the person. Each entry is an HTTP(S) URL or a base64 data URI. Up to 6 recommended, up to 11 supported."
 				},
 				"prompt": {
-					"description": "Experimental guidance for non-flatlay garment images, e.g. which garment from which image to use.",
 					"default": "",
+					"description": "Experimental guidance for non-flatlay garment images, e.g. which garment from which image to use.",
 					"type": "string"
 				},
 				"seed": {
@@ -137,13 +150,13 @@
 					"maximum": 9007199254740991
 				},
 				"turbo": {
-					"description": "Run faster with additional optimizations. Not recommended for more than 4 garments.",
 					"default": false,
+					"description": "Run faster with additional optimizations. Not recommended for more than 4 garments.",
 					"type": "boolean"
 				},
 				"output_format": {
-					"description": "Format of the saved output image.",
 					"default": "jpg",
+					"description": "Format of the saved output image.",
 					"type": "string",
 					"enum": [
 						"webp",
@@ -152,8 +165,8 @@
 					]
 				},
 				"output_quality": {
-					"description": "Quality for jpg/webp outputs, from 0 to 100.",
 					"default": 95,
+					"description": "Quality for jpg/webp outputs, from 0 to 100.",
 					"type": "integer",
 					"minimum": 0,
 					"maximum": 100
@@ -163,8 +176,8 @@
 					"type": "string"
 				},
 				"preserve_input_size": {
-					"description": "Return the output at the original input resolution.",
 					"default": true,
+					"description": "Return the output at the original input resolution.",
 					"type": "boolean"
 				}
 			},
@@ -184,9 +197,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Presigned URL for the generated try-on image.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the generated try-on image."
 				}
 			},
 			"required": [

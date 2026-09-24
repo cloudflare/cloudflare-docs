@@ -1,19 +1,15 @@
 /**
  * Rebase conflict resolution — trusted domain logic (D6).
  *
- * Ported near-verbatim from the 0.11 `workflows/rebase.ts` helpers
+ * Helpers for AI-assisted rebase conflict resolution.
  * `resolveConflictsWithAI` and `applyResolution`. All the deterministic parts —
  * conflict detection, the four-case rename read/write path mapping, the
  * file-cap / binary / conflict-cap short-circuits, and the Git Data API tree
  * build with production-moved and PR-branch-moved guards — stay in ordinary
  * TypeScript exactly as they were in production.
  *
- * The only change: the inline `session.skill("rebase-conflict", …)` call is
- * lifted out behind a `runAgent` callback so the AI round trip lives in the 2.0
- * agent + driver (`agents/rebase-conflict-resolver.ts`,
- * `lib/run-rebase-conflict.ts`). `resolveConflictsWithAI` prepares the three
- * versions of each conflicting file, hands them to `runAgent`, then applies the
- * same high-confidence completeness downgrade the workflow relied on.
+ * `resolveConflictsWithAI` prepares the three versions of each conflicting file,
+ * hands them to `runAgent`, then applies a high-confidence completeness check.
  */
 import * as v from "valibot";
 import {
@@ -71,6 +67,13 @@ export interface ConflictFileForAgent {
 	baseVersion: string | null;
 	prVersion: string | null;
 	productionVersion: string | null;
+}
+
+export function isDeleteModifyConflict(f: ConflictFileForAgent): boolean {
+	return (
+		f.baseVersion !== null &&
+		(f.prVersion === null) !== (f.productionVersion === null)
+	);
 }
 
 /** Input handed to the rebase-conflict-resolver agent at dispatch time. */
@@ -420,11 +423,7 @@ export async function resolveConflictsWithAI(
 	// intentionally removed. baseVersion !== null with exactly one side null
 	// means one side deleted while the other modified. Mutual deletes
 	// (both null) are not a conflict.
-	const deleteModifyConflicts = conflictFiles.filter(
-		(f) =>
-			f.baseVersion !== null &&
-			(f.prVersion === null) !== (f.productionVersion === null),
-	);
+	const deleteModifyConflicts = conflictFiles.filter(isDeleteModifyConflict);
 	if (deleteModifyConflicts.length > 0) {
 		return {
 			confidence: "low",

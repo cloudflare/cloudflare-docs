@@ -1,0 +1,21 @@
+---
+title: Add Mesh participants with guided onboarding
+description: Deploy Mesh nodes with guided setup, find client installers and your organization name, and manage every participant from one table.
+products:
+  - cloudflare-one
+date: 2026-09-23
+---
+
+[Cloudflare Mesh](/mesh/) now makes it faster to add and manage participants from the dashboard. Select **Add participant** from **Networking** > **Mesh** to deploy a [Mesh node](/mesh/get-started/) or find the information needed to connect a [client device](/mesh/guides/connect-client-devices/).
+
+![Adding a Cloudflare Mesh node through the guided dashboard workflow](~/assets/images/changelog/cloudflare-one/guided-participant-onboarding-clicks.gif)
+
+The updated dashboard includes the following improvements:
+
+- **More Mesh node deployment options** — Install a node on Linux, Kubernetes, Docker Compose, or Docker CLI. The dashboard provides requirements, commands, configuration, and links for each method. Refer to [Run Mesh in Docker / Kubernetes](/mesh/guides/run-mesh-in-containers/) for container deployment details.
+- **Client device installation guidance** — Access platform-specific [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) installers, mobile QR codes, and your Cloudflare One organization name. Use the organization name to log in from the client after installation.
+- **Unified participant management** — View [Mesh nodes and enrolled client devices](/mesh/guides/connect-client-devices/#1-enroll-the-cloudflare-one-client) in one table. Search devices, filter participants by type or status, open device details, and load additional results from each participant source. If one source fails, participants from the other source remain available while you retry the request.
+
+You must still install the Cloudflare One Client, log in to your organization, and test the connection.
+
+For complete setup instructions, refer to [Get started with Cloudflare Mesh](/mesh/get-started/).

@@ -190,7 +190,7 @@ The following error codes may be returned when sending emails:
 | `E_TOO_MANY_ATTACHMENTS`        | Too many attachments in `attachments` array | `attachments` array exceeds 32 entries                                                     |
 | `E_SENDER_NOT_VERIFIED`         | Sender domain not verified                  | Attempting to send from unverified domain                                                  |
 | `E_RECIPIENT_NOT_ALLOWED`       | Recipient not in allowed list               | Recipient address not in `allowed_destination_addresses`                                   |
-| `E_RECIPIENT_SUPPRESSED`        | Recipient is on suppression list            | Email address has bounced or reported your emails as spam                                  |
+| `E_RECIPIENT_SUPPRESSED`        | Suppressed recipient while dropping is off  | At least one recipient is suppressed and **Drop suppressed recipients** is off             |
 | `E_SENDER_DOMAIN_NOT_AVAILABLE` | Domain not available for sending            | Domain not onboarded to Email Service                                                      |
 | `E_CONTENT_TOO_LARGE`           | Email content exceeds size limit            | Total message size exceeds the maximum                                                     |
 | `E_DELIVERY_FAILED`             | Could not deliver the email                 | SMTP delivery failure, recipient server rejection                                          |
@@ -204,6 +204,8 @@ The following error codes may be returned when sending emails:
 | `E_HEADER_NAME_INVALID`         | Header name invalid                         | Invalid characters or exceeds 100 byte limit                                               |
 | `E_HEADERS_TOO_LARGE`           | Headers payload too large                   | Total custom headers exceed 16 KB limit                                                    |
 | `E_HEADERS_TOO_MANY`            | Too many headers                            | More than 20 allowlisted (non-X) custom headers                                            |
+
+**Drop suppressed recipients** is off by default. When you [turn on the setting](/email-service/configuration/domains/#drop-suppressed-recipients), Email Service removes suppressed recipients and processes the remaining recipients.
 
 ## Legacy `EmailMessage` API
 

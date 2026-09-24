@@ -1,0 +1,429 @@
+<figure
+	class="sfu-architecture not-content"
+	aria-label="A browser, device, or native endpoint exchanges WebRTC media and DataChannels with Realtime SFU. The endpoint exchanges application signaling with your backend. Your backend calls Realtime SFU through the HTTPS API and exchanges application state."
+>
+	<div class="sfua-stage">
+		<div class="sfua-system">
+			<div class="sfua-card sfua-card--endpoint">
+				<span class="sfua-icon" aria-hidden="true">
+					<svg viewBox="0 0 20 20" fill="none">
+						<rect x="2.5" y="4" width="11" height="8.5" rx="1.5"></rect>
+						<path d="M5 16h6M8 12.5V16"></path>
+						<rect x="14.5" y="7" width="3" height="7.5" rx="0.75"></rect>
+					</svg>
+				</span>
+				<strong>Browser, device, or native endpoint</strong>
+			</div>
+
+			<div class="sfua-bridge sfua-bridge--media">
+				<span class="sfua-bridge-label">WebRTC media and DataChannels</span>
+				<span class="sfua-line sfua-line--to-sfu" aria-hidden="true"></span>
+			</div>
+
+			<div class="sfua-card sfua-card--sfu">
+				<span class="sfua-icon" aria-hidden="true">
+					<svg viewBox="0 0 20 20" fill="none">
+						<circle cx="10" cy="10" r="7"></circle>
+						<path d="M3 10h14M10 3c2 2 3 4.25 3 7s-1 5-3 7M10 3c-2 2-3 4.25-3 7s1 5 3 7"></path>
+					</svg>
+				</span>
+				<strong>Realtime SFU</strong>
+			</div>
+
+			<div class="sfua-bridge sfua-bridge--signaling">
+				<span class="sfua-bridge-label">Application signaling</span>
+				<span
+					class="sfua-line sfua-line--vertical sfua-line--control"
+					aria-hidden="true"
+				></span>
+			</div>
+
+			<div class="sfua-bridge sfua-bridge--api">
+				<span class="sfua-bridge-label">HTTPS API</span>
+				<span
+					class="sfua-line sfua-line--diagonal sfua-line--control sfua-line--to-sfu"
+					aria-hidden="true"
+				></span>
+			</div>
+
+			<div class="sfua-card sfua-card--backend">
+				<span class="sfua-icon" aria-hidden="true">
+					<svg viewBox="0 0 20 20" fill="none">
+						<rect x="3" y="3.5" width="14" height="5" rx="1.5"></rect>
+						<rect x="3" y="11.5" width="14" height="5" rx="1.5"></rect>
+						<path d="M6 6h.01M6 14h.01M9 6h5M9 14h5"></path>
+					</svg>
+				</span>
+				<strong>Your backend</strong>
+			</div>
+
+			<div class="sfua-bridge sfua-bridge--state">
+				<span class="sfua-line sfua-line--control" aria-hidden="true"></span>
+			</div>
+
+			<div class="sfua-card sfua-card--state">
+				<span class="sfua-icon" aria-hidden="true">
+					<svg viewBox="0 0 20 20" fill="none">
+						<ellipse cx="10" cy="5" rx="6.5" ry="2.5"></ellipse>
+						<path d="M3.5 5v5c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5V5"></path>
+						<path d="M3.5 10v5c0 1.4 2.9 2.5 6.5 2.5s6.5-1.1 6.5-2.5v-5"></path>
+					</svg>
+				</span>
+				<strong>Application state</strong>
+			</div>
+		</div>
+
+		<div class="sfua-mobile-links" aria-hidden="true">
+			<div>
+				<span>Browser, device, or native endpoint</span>
+				<small>↔ WebRTC media and DataChannels</small>
+				<span>Realtime SFU</span>
+			</div>
+			<div>
+				<span>Browser, device, or native endpoint</span>
+				<small>↔ Application signaling</small>
+				<span>Your backend</span>
+			</div>
+			<div>
+				<span>Your backend</span>
+				<small>↔ HTTPS API</small>
+				<span>Realtime SFU</span>
+			</div>
+			<div>
+				<span>Your backend</span>
+				<small>↔</small>
+				<span>Application state</span>
+			</div>
+		</div>
+	</div>
+</figure>
+
+<style>
+	.sfu-architecture {
+		--sfua-panel: #fbfbfb;
+		--sfua-dot: rgb(0 0 0 / 8%);
+		--sfua-card: #ffffff;
+		--sfua-border: #e3e3e6;
+		--sfua-line: #c1c1c8;
+		--sfua-joint: #ffffff;
+		--sfua-text: #1a1a1c;
+		--sfua-muted: #8a8a90;
+		--sfua-accent: #f6821f;
+		--sfua-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .sfu-architecture {
+		--sfua-panel: #121213;
+		--sfua-dot: rgb(255 255 255 / 9%);
+		--sfua-card: #1b1b1d;
+		--sfua-border: #38383c;
+		--sfua-line: #4d4d54;
+		--sfua-joint: #1b1b1d;
+		--sfua-text: #f3f3f5;
+		--sfua-muted: #9a9aa2;
+	}
+
+	.sfua-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--sfua-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--sfua-dot) 1px, transparent 1px),
+			var(--sfua-panel);
+		background-size: 16px 16px;
+	}
+
+	.sfua-system {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.5fr) minmax(0, 1fr);
+		grid-template-rows: minmax(7rem, 1fr) 5rem minmax(7rem, 1fr);
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
+	}
+
+	.sfua-card {
+		display: flex;
+		min-width: 0;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem;
+		border: 1px solid var(--sfua-border);
+		border-radius: 0.625rem;
+		background: var(--sfua-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.sfua-card--endpoint {
+		grid-area: 1 / 1;
+	}
+
+	.sfua-card--sfu {
+		grid-area: 1 / 3;
+		border-color: color-mix(
+			in srgb,
+			var(--sfua-accent) 55%,
+			var(--sfua-border)
+		);
+		background: var(--sfua-accent-soft);
+	}
+
+	.sfua-card--backend {
+		grid-area: 3 / 1;
+	}
+
+	.sfua-card--state {
+		grid-area: 3 / 3;
+	}
+
+	.sfua-icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 1.75rem;
+		height: 1.75rem;
+		color: var(--sfua-muted);
+	}
+
+	.sfua-card--sfu .sfua-icon {
+		color: var(--sfua-accent);
+	}
+
+	.sfua-icon svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.sfua-card strong {
+		color: var(--sfua-text);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.sfua-bridge {
+		position: relative;
+		display: flex;
+		min-width: 0;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sfua-bridge--media {
+		grid-area: 1 / 2;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.sfua-bridge--signaling {
+		grid-area: 2 / 1;
+	}
+
+	.sfua-bridge--api {
+		grid-area: 2 / 2;
+	}
+
+	.sfua-bridge--state {
+		grid-area: 3 / 2;
+	}
+
+	.sfua-bridge-label {
+		position: relative;
+		z-index: 2;
+		max-width: 7rem;
+		padding: 0.15rem 0.4rem;
+		border: 1px solid var(--sfua-border);
+		border-radius: 9999px;
+		background: var(--sfua-panel);
+		color: var(--sfua-text);
+		font-size: 0.5625rem;
+		font-weight: 600;
+		line-height: 1.25;
+		text-align: center;
+	}
+
+	.sfua-bridge--signaling .sfua-bridge-label {
+		position: absolute;
+		left: calc(50% + 0.5rem);
+		max-width: none;
+		white-space: nowrap;
+	}
+
+	.sfua-bridge--api .sfua-bridge-label {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.sfua-line {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 2px;
+		background: var(--sfua-line);
+	}
+
+	.sfua-line--vertical {
+		width: 2px;
+		height: 100%;
+	}
+
+	.sfua-line--control {
+		background: repeating-linear-gradient(
+			90deg,
+			var(--sfua-line) 0 5px,
+			transparent 5px 9px
+		);
+	}
+
+	.sfua-line--vertical.sfua-line--control {
+		background: repeating-linear-gradient(
+			180deg,
+			var(--sfua-line) 0 5px,
+			transparent 5px 9px
+		);
+	}
+
+	.sfua-line--diagonal {
+		position: absolute;
+		width: 8.6rem;
+		transform: rotate(-35.5deg);
+	}
+
+	.sfua-line::before,
+	.sfua-line::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		box-sizing: border-box;
+		width: 7px;
+		height: 7px;
+		border-top: 1.5px solid var(--sfua-line);
+		border-right: 1.5px solid var(--sfua-line);
+		z-index: 1;
+	}
+
+	.sfua-line::before {
+		left: -1px;
+		transform: translateY(-50%) rotate(-135deg);
+	}
+
+	.sfua-line::after {
+		right: -1px;
+		transform: translateY(-50%) rotate(45deg);
+	}
+
+	.sfua-line--vertical::before,
+	.sfua-line--vertical::after {
+		left: 50%;
+		right: auto;
+	}
+
+	.sfua-line--vertical::before {
+		top: -1px;
+		transform: translateX(-50%) rotate(-45deg);
+	}
+
+	.sfua-line--vertical::after {
+		top: auto;
+		bottom: -1px;
+		transform: translateX(-50%) rotate(135deg);
+	}
+
+	.sfua-line--to-sfu::after {
+		border-color: var(--sfua-accent);
+	}
+
+	.sfua-mobile-links {
+		display: none;
+	}
+
+	@container (max-width: 40rem) {
+		.sfua-stage {
+			padding-inline: 0.75rem;
+		}
+
+		.sfua-system {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-rows: auto;
+			gap: 0.65rem;
+			max-width: 360px;
+		}
+
+		.sfua-card {
+			grid-area: auto;
+			min-height: 5rem;
+			padding: 0.75rem;
+		}
+
+		.sfua-bridge {
+			display: none;
+		}
+
+		.sfua-mobile-links {
+			display: grid;
+			gap: 0.5rem;
+			max-width: 360px;
+			margin: 1rem auto 0;
+		}
+
+		.sfua-mobile-links div {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+			align-items: center;
+			gap: 0.4rem;
+			color: var(--sfua-muted);
+			font-size: 0.5625rem;
+			line-height: 1.3;
+			text-align: center;
+		}
+
+		.sfua-mobile-links small {
+			position: relative;
+			padding: 0.15rem 0.4rem;
+			border: 1px solid var(--sfua-border);
+			border-radius: 9999px;
+			background: var(--sfua-panel);
+			color: var(--sfua-text);
+			font-size: inherit;
+			font-weight: 600;
+		}
+
+		.sfua-mobile-links small::before,
+		.sfua-mobile-links small::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			width: 0.4rem;
+			height: 1px;
+			background: var(--sfua-line);
+		}
+
+		.sfua-mobile-links small::before {
+			right: 100%;
+		}
+
+		.sfua-mobile-links small::after {
+			left: 100%;
+		}
+	}
+
+	@container (max-width: 380px) {
+		.sfua-system {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>
