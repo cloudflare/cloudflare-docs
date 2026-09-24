@@ -202,18 +202,24 @@ Use `startSpan` when you want to measure an operation whose start and end happen
 ```ts
 import { tracing } from "cloudflare:workers";
 
-const span = tracing.startSpan("cache-warmup");
-span.setAttribute("cache.keys", keys.length);
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		// ...
+		const span = tracing.startSpan("cache-warmup");
+		span.setAttribute("cache.keys", keys.length);
 
-try {
-	await warmCache(keys);
-	span.setAttribute("cache.warmup.status", "complete");
-} catch (err) {
-	span.recordException(err as Error);
-	throw err;
-} finally {
-	span.end();
-}
+		try {
+			await warmCache(keys);
+			span.setAttribute("cache.warmup.status", "complete");
+		} catch (err) {
+			span.recordException(err as Error);
+			throw err;
+		} finally {
+			span.end();
+		}
+		// ...
+	},
+};
 ```
 
 ### `tracing.getActiveSpan()`
@@ -224,7 +230,7 @@ Returns the span that is currently active on the async context.
 
 **Behavior:**
 
-- Inside a request, returns the `Span` that is currently considered active. If no spans have been explicitly created with `enterSpan` or `startActiveSpan` or the system itself, it will ruturn the root span of the current invocation. You can use it to add attributes or record exceptions on the root span.
+- Inside a request, returns the `Span` that is currently considered active. If no spans have been explicitly created with `enterSpan` or `startActiveSpan` or the system itself, it will return the root span of the current invocation. You can use it to add attributes or record exceptions on the root span.
 - Returns `undefined` outside a request, such as in the top-level scope of your module, or in code that runs in an async context captured outside a request.
 - Spans created with `startSpan` never become active, so `getActiveSpan` never returns them.
 
@@ -238,7 +244,7 @@ import { tracing } from "cloudflare:workers";
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		const user = await authenticate(request, env);
-		
+
 		// No custom span is active, so this annotates the root span
 		tracing.getActiveSpan()?.setAttributes({
 			"user.id": user.id,
@@ -327,7 +333,9 @@ await tracing.startActiveSpan("chargeCard", async (span) => {
 		span.end();
 	}
 });
+```
 
+```ts
 // Strings and plain objects are also accepted
 span.recordException("Upstream returned an empty body");
 span.recordException({ code: "RATE_LIMITED", message: "Too many requests" });
@@ -353,9 +361,9 @@ tracing.enterSpan("process", (span) => {
 
 #### `span.end()`
 
-Ends the span and submits its attributes to the tracing system. This method is idempotent — calling it multiple times has no effect after the first call. After `end()` is called, `span.isTraced` returns `false` and any further method calls to annotate the span are silently ignored, including calls from in-flight async work that has not yet completed.
+Ends the span and submits its attributes to the tracing system. This method is idempotent. Calling it multiple times has no effect after the first call. After `end()` is called, `span.isTraced` returns `false` and any further method calls to annotate the span are silently ignored, including calls from in-flight async work that has not yet completed.
 
-- For spans created with `enterSpan`, you do not need to call `end()` — the runtime calls it automatically. Calling `end()` yourself is safe but has no effect since the runtime has already ended the span.
+- For spans created with `enterSpan`, you do not need to call `end()`. The runtime calls it automatically. Calling `end()` yourself is safe, but could end the span early.
 - For spans created with `startActiveSpan` or `startSpan`, you **must** call `end()` to submit the span.
 - For the root span returned by `getActiveSpan()` outside any custom span, `end()` has no effect. The runtime ends the root span when the invocation completes.
 
@@ -467,14 +475,28 @@ The same API is available on the handler context as `ctx.tracing`, with the same
 
 ## Choosing a span creation method
 
-|                      | `enterSpan`                                                                       | `startActiveSpan`                                                            | `startSpan`                                                                          |
-| -------------------- | --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Span ends            | Automatically, when the callback returns, throws, or its returned promise settles | Manually, when you call `span.end()`                                         | Manually, when you call `span.end()`                                                 |
-| Active context scope | During the callback                                                               | During the callback                                                          | Never active                                                                         |
-| Use case             | Most instrumentation — sync and async work that fits within a single callback     | Operations that outlive the callback, such as stream pipelines               | Timing an operation with no nested spans, when you manage the start and end yourself |
-| Error handling       | Span auto-ends on throw                                                           | Span stays open on throw. Call `span.end()` or rely on the runtime backstop  | Span stays open on throw. Call `span.end()` or rely on the runtime backstop          |
+|                      | `enterSpan`                                                                       | `startActiveSpan`                                                           | `startSpan`                                                                          |
+| -------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Span ends            | Automatically, when the callback returns, throws, or its returned promise settles | Manually, when you call `span.end()`                                        | Manually, when you call `span.end()`                                                 |
+| Active context scope | During the callback                                                               | During the callback                                                         | Never active                                                                         |
+| Use case             | Most instrumentation — sync and async work that fits within a single callback     | Operations that outlive the callback, such as stream pipelines              | Timing an operation with no nested spans, when you manage the start and end yourself |
+| Error handling       | Span auto-ends on throw                                                           | Span stays open on throw. Call `span.end()` or rely on the runtime backstop | Span stays open on throw. Call `span.end()` or rely on the runtime backstop          |
 
 `enterSpan` and `startActiveSpan` set the span as the active context parent **only during the callback**. After the callback returns, the span is no longer the active parent. With `enterSpan`, this distinction does not matter because the span is also ended. With `startActiveSpan`, the span remains open but is no longer the context parent — new spans created after the callback returns are not children of this span. `startSpan` never sets the span as the active context parent, so no spans are ever created as its children.
+
+## Data limits
+
+The runtime limits how much data you can add to a custom span:
+
+- **Span names are truncated to 64 bytes.**
+- **Each span can hold approximately 64 KB of attribute and exception data.** Attribute keys and values, and the `code`, `name`, `message`, and `stack` of recorded exceptions, all count toward this limit.
+
+After a span reaches its data limit, the runtime ignores further `setAttribute`, `setAttributes`, and `recordException` calls on that span. It adds two attributes to the span so you can tell that data was dropped:
+
+| Attribute                    | Value                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| `cloudflare.warning.type`    | `span_data_limit_exceeded`                                                  |
+| `cloudflare.warning.message` | A description of the attribute or exception that was dropped, and its size. |
 
 ## Limitations
 
