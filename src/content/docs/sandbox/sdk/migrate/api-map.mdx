@@ -1,0 +1,214 @@
+---
+title: Sandbox SDK 0.x API map
+description: Every public API of @cloudflare/sandbox 0.12, and what replaces it in @cloudflare/sandbox 1.0, on this.ctx.container, or in your own code.
+pcx_content_type: reference
+sidebar:
+  order: 20
+  label: API map
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+Each public API of `@cloudflare/sandbox` 0.12 has a replacement in 1.0, on the container, or in code you write, or it is no longer needed. For the migration steps, refer to [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
+
+In the tables, `container` is `this.ctx.container` in your Durable Object, and `files` is a [`Files`](/sandbox/reference/files/) instance. The **Kind** column uses these values:
+
+| Kind    | Meaning                                                      |
+| ------- | ------------------------------------------------------------ |
+| Native  | Call `container` or another platform API directly.           |
+| Package | Use `Files` or `S3Mounts` from `@cloudflare/sandbox` 1.0.    |
+| Pattern | Write it yourself. When a page shows how, the note links it. |
+| Product | Use another Cloudflare product.                              |
+| Removed | Not needed. The note says what to do instead.                |
+
+## Class, identity, and lifetime
+
+For the steps, refer to [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/). These APIs create a sandbox and control how long its container runs:
+
+| 0.12                                                                             | Kind    | Replacement                                                                                                                      | Notes                                                                                                      |
+| -------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `class X extends Sandbox`, `export { Sandbox }`                                  | Removed | `class X extends DurableObject`                                                                                                  | Construct `Files` or `S3Mounts` from `container`.                                                          |
+| `getSandbox(ns, id, options)`                                                    | Native  | [`env.NS.getByName(id)`](/durable-objects/api/namespace/#getbyname)                                                              | Validate names yourself.                                                                                   |
+| `normalizeId`, `setSandboxName()`                                                | Removed | Lowercase names yourself                                                                                                         | Needed only when names become hostnames.                                                                   |
+| `sleepAfter`, `setSleepAfter()`                                                  | Native  | [`container.setInactivityTimeout(ms)`](/durable-objects/api/container/#setinactivitytimeout)                                     | At most 6 hours. Call it on every request.                                                                 |
+| `keepAlive`, `setKeepAlive()`                                                    | Pattern | An [alarm](/durable-objects/api/alarms/) that sends the container a request while work remains                                   | Refer to [Keep the sandbox running](/sandbox/commands/run-background-processes/#keep-the-sandbox-running). |
+| `renewActivityTimeout()`                                                         | Native  | Any request to the Durable Object                                                                                                | The timeout counts from when the Durable Object becomes inactive.                                          |
+| `containerTimeouts`, `setContainerTimeouts()`                                    | Removed | `AbortSignal`                                                                                                                    |                                                                                                            |
+| `transport`, `setTransport()`, `SANDBOX_TRANSPORT`                               | Removed | Not needed                                                                                                                       | `container.exec()` and `Files` reach the container directly. Remove the setting.                           |
+| `labels`, `setLabels()`                                                          | Native  | [`container.start({ labels })`](/durable-objects/api/container/#start)                                                           |                                                                                                            |
+| `configure()`                                                                    | Removed | Options on each call                                                                                                             |                                                                                                            |
+| `setEnvVars()`, class `envVars`                                                  | Native  | `container.start({ env })` or `container.exec(argv, { env })`                                                                    | `exec()` does not inherit `start()` variables.                                                             |
+| Class `entrypoint`, `enableInternet`                                             | Native  | `container.start({ entrypoint, enableInternet })`                                                                                | `enableInternet` defaults to `false`. It defaulted to `true` in 0.12.                                      |
+| Class `defaultPort`, `requiredPorts`                                             | Native  | [`container.getTcpPort(port)`](/durable-objects/api/container/#gettcpport)                                                       |                                                                                                            |
+| `start()`                                                                        | Native  | [`container.start({ image })`](/durable-objects/api/container/#start)                                                            | Does not wait for the container.                                                                           |
+| `startAndWaitForPorts()`, `waitForPort()`                                        | Pattern | Retry `getTcpPort(port).fetch()`                                                                                                 | [Preview a web application](/sandbox/previews/preview-a-web-application/) shows a readiness check.         |
+| `stop()`, `destroy()`                                                            | Native  | [`container.signal()`](/durable-objects/api/container/#signal), [`container.destroy()`](/durable-objects/api/container/#destroy) |                                                                                                            |
+| `getState()`                                                                     | Native  | [`container.running`](/durable-objects/api/container/#running), [`container.monitor()`](/durable-objects/api/container/#monitor) |                                                                                                            |
+| `onStart`, `onStop`, `onError`, `onActivityExpired`                              | Pattern | Your code around `start()` and `monitor()`                                                                                       |                                                                                                            |
+| `schedule()`, `listSchedules()`, `getSchedule()`, `deleteSchedules()`, `alarm()` | Native  | [Durable Object alarms](/durable-objects/api/alarms/)                                                                            | One alarm per object. Store your own schedule if you need several.                                         |
+| `fetch()`, `containerFetch()`                                                    | Native  | `container.getTcpPort(port).fetch()`                                                                                             |                                                                                                            |
+
+## Commands
+
+For the steps, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/). These APIs run commands:
+
+| 0.12                                                 | Kind    | Replacement                                                             | Notes                                                                                                                                    |
+| ---------------------------------------------------- | ------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `exec(command, options)`                             | Native  | [`container.exec(argv, options)`](/durable-objects/api/container/#exec) | `output()` returns bytes and `exitCode`. `success` is `exitCode === 0`.                                                                  |
+| `stream`, `onOutput`, `onComplete`, `onError`        | Native  | Read `stdout` and `stderr`, and await `exitCode`                        |                                                                                                                                          |
+| `execStream()`                                       | Native  | The `stdout` stream from `container.exec(argv)`                         | Set `Content-Type: text/event-stream` on the response. Refer to [Stream output](/sandbox/sdk/migrate/commands-and-files/#stream-output). |
+| `timeout`, `signal`                                  | Native  | `signal` from a timer you clear                                         | The process exits with code `137`. Refer to [Replace timeouts](/sandbox/sdk/migrate/commands-and-files/#replace-timeouts).               |
+| `cwd`, `env`                                         | Native  | The same options                                                        |                                                                                                                                          |
+| `encoding`                                           | Removed | Decode bytes yourself                                                   |                                                                                                                                          |
+| `isExecResult()`, `isProcess()`, `isProcessStatus()` | Removed | Not needed                                                              | `exec()` returns an `ExecProcess`. TypeScript types replace the guards.                                                                  |
+
+## Processes
+
+For the steps, refer to [Move background processes](/sandbox/sdk/migrate/background-processes/). Each replacement builds on the process directories from [Run background processes](/sandbox/commands/run-background-processes/). These APIs run and manage background processes:
+
+| 0.12                                                     | Kind    | Replacement                                                               | Notes                                                                                                      |
+| -------------------------------------------------------- | ------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `startProcess()`                                         | Pattern | A wrapper that writes the process ID, output, and exit code to files      | `processId` becomes the directory name.                                                                    |
+| `Process.getStatus()`, `getProcess()`, `listProcesses()` | Pattern | A status check with `kill -0`                                             |                                                                                                            |
+| `getProcessLogs()`, `Process.getLogs()`                  | Pattern | `cat` on the log files                                                    |                                                                                                            |
+| `streamProcessLogs()`                                    | Pattern | Stream `tail -F --pid`                                                    | Raw lines, not JSON events.                                                                                |
+| `Process.waitForLog()`                                   | Pattern | Poll the log files with `grep -E`                                         | The pattern is an extended regular expression.                                                             |
+| `Process.waitForExit()`                                  | Pattern | Poll for the exit code file                                               | Refer to [Adapt the processes](/sandbox/commands/run-background-processes/#adapt-the-processes).           |
+| `Process.waitForPort()`                                  | Pattern | Retry `getTcpPort(port).fetch()`                                          | [Preview a web application](/sandbox/previews/preview-a-web-application/) shows a readiness check.         |
+| `Process.kill()`, `killProcess()`                        | Pattern | Signal the process group                                                  | Reaches the processes it started.                                                                          |
+| `killAllProcesses()`, `cleanupCompletedProcesses()`      | Pattern | Signal each running process, and remove the directories of ended ones     |                                                                                                            |
+| `onStart`, `onOutput`, `onError`                         | Pattern | Code after `start()`, following the log, and checking for exit code `127` |                                                                                                            |
+| `onExit`, `autoCleanup`                                  | Pattern | A Durable Object alarm that checks each process                           | Refer to [Keep the sandbox running](/sandbox/commands/run-background-processes/#keep-the-sandbox-running). |
+
+## Sessions
+
+For the steps, refer to [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions). These APIs keep state between commands:
+
+| 0.12                                                 | Kind    | Replacement                  | Notes                                |
+| ---------------------------------------------------- | ------- | ---------------------------- | ------------------------------------ |
+| `createSession()`, `getSession()`, `deleteSession()` | Removed | `cwd` and `env` on each call |                                      |
+| `enableDefaultSession`                               | Removed | `cwd` and `env` on each call | `cd` and `export` do not carry over. |
+| `isolation`                                          | Removed | Separate sandboxes           |                                      |
+| `commandTimeoutMs`                                   | Removed | `AbortSignal`                |                                      |
+
+`ExecutionSession` methods map like the top-level methods.
+
+## Files
+
+For the steps, refer to [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call). These APIs read and write files:
+
+| 0.12                                                                          | Kind    | Replacement                                                        | Notes                                                                                                                          |
+| ----------------------------------------------------------------------------- | ------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `readFile()`, `readFileStream()`                                              | Package | [`files.readFile()`](/sandbox/reference/files/#readfile)           | Returns a `Response`. Use `.text()`, `.arrayBuffer()`, or the body.                                                            |
+| `writeFile()`                                                                 | Package | [`files.writeFile()`](/sandbox/reference/files/#writefile)         | Pass a string, bytes, a `Blob`, or a stream. No base64.                                                                        |
+| `mkdir()`                                                                     | Package | [`files.mkdir()`](/sandbox/reference/files/#mkdir)                 |                                                                                                                                |
+| `deleteFile()`                                                                | Package | [`files.remove()`](/sandbox/reference/files/#remove)               | Also removes directories with `recursive: true`.                                                                               |
+| `renameFile()`, `moveFile()`                                                  | Package | [`files.rename()`](/sandbox/reference/files/#rename)               | Fails with `EXDEV` across filesystems.                                                                                         |
+| `listFiles()`                                                                 | Package | [`files.readDirectory()`](/sandbox/reference/files/#readdirectory) | One level. Includes hidden entries.                                                                                            |
+| `listFiles({ recursive: true })`                                              | Pattern | Walk `readDirectory()`                                             | Refer to [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call).                              |
+| `exists()`                                                                    | Package | [`files.stat()`](/sandbox/reference/files/#stat)                   | Catch `SandboxFileError` with `ENOENT`.                                                                                        |
+| File metadata                                                                 | Package | `files.stat()`, `files.lstat()`                                    |                                                                                                                                |
+| `watch()`, `checkChanges()`                                                   | Pattern | `inotifywait -m` through `container.exec()`                        | Refer to [Replace file watching](/sandbox/sdk/migrate/commands-and-files/#replace-file-watching).                              |
+| `collectFile()`, `streamFile()`                                               | Removed | The `Response` body                                                |                                                                                                                                |
+| `parseSSEStream()`, `responseToAsyncIterable()`, `asyncIterableToSSEStream()` | Removed | The `ReadableStream` objects on `ExecProcess`                      | To send output to a browser as server-sent events, refer to [Stream command output](/sandbox/commands/stream-command-output/). |
+| `WriteFileResult`, `ReadFileResult`, and other result types                   | Removed | `void`, `Response`, or `SandboxFileStat`                           | Failures throw `SandboxFileError`.                                                                                             |
+
+## Ports, preview URLs, and tunnels
+
+These APIs make a server in the container reachable from outside it:
+
+| 0.12                                                                                                  | Kind    | Replacement                                                   | Notes                                                                                                       |
+| ----------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `exposePort()`, `unexposePort()`, `getExposedPorts()`, `isPortExposed()`                              | Pattern | Tokens in Durable Object storage                              |                                                                                                             |
+| `validatePortToken()`                                                                                 | Pattern | A token check in the Durable Object's `fetch()`               |                                                                                                             |
+| `proxyToSandbox()`, `SandboxEnv`                                                                      | Pattern | Route by hostname to `getByName()`                            | Refer to [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/). |
+| `wsConnect(request, port)`                                                                            | Native  | `container.getTcpPort(port).fetch(request)`                   | WebSockets pass through.                                                                                    |
+| `tunnels.get(port)`, `tunnels.list()`, `tunnels.destroy()`                                            | Pattern | `cloudflared tunnel --url` in the container                   | Needs `enableInternet: true`.                                                                               |
+| `tunnels.get(port, { name })`                                                                         | Pattern | Preview URLs, or `cloudflared tunnel run` with a tunnel token | Create one tunnel for each sandbox.                                                                         |
+| `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_TUNNEL_ACCOUNT_ID`, `CLOUDFLARE_ZONE_ID` | Removed | Your own secrets, if you create tunnels from the Worker       |                                                                                                             |
+
+## Terminals
+
+For a replacement built on tmux, refer to [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/). These APIs connect a browser terminal to a shell:
+
+| 0.12                                        | Kind    | Replacement                                                              | Notes                                                                   |
+| ------------------------------------------- | ------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `terminal()`, `proxyTerminal()`             | Pattern | A tmux client on `container.exec(argv, { pty })`, bridged to a WebSocket |                                                                         |
+| `session.terminal()`                        | Pattern | A tmux session for each name                                             | `cwd` and `env` become the `-c` and `-e` options of `tmux new-session`. |
+| Terminal reconnect and replay               | Pattern | tmux keeps the session, and the page reconnects                          | tmux redraws the screen and keeps scrollback.                           |
+| `@cloudflare/sandbox/xterm`, `SandboxAddon` | Pattern | xterm.js with a WebSocket that the page reopens                          |                                                                         |
+
+## Outbound network and Git
+
+To keep credentials in your Worker, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/). These APIs control the requests that code in the container sends:
+
+| 0.12                                                                                                                                             | Kind    | Replacement                                                                                                | Notes                                                                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `outbound`, `outboundByHost`, `outboundHandlers`, `outboundProxies`, `outboundProxy`                                                             | Pattern | One `WorkerEntrypoint` that picks a handler from stored rules                                              |                                                                                                                                                                   |
+| `setOutboundHandler()`, `setOutboundByHost()`, `setOutboundByHosts()`, `removeOutboundByHost()`                                                  | Pattern | Change the stored rules                                                                                    | The next request follows them.                                                                                                                                    |
+| `interceptHttps`                                                                                                                                 | Native  | [`container.interceptOutboundHttps("*", fetcher)`](/durable-objects/api/container/#interceptoutboundhttps) | Pass variables such as `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` that point to the container's certificate authority file to each `exec()` call.                  |
+| `allowedHosts`, `deniedHosts`, `setAllowedHosts()`, `setDeniedHosts()`, `allowHost()`, `denyHost()`, `removeAllowedHost()`, `removeDeniedHost()` | Pattern | `allow` and `deny` lists in the stored rules                                                               | Keep `enableInternet: false`.                                                                                                                                     |
+| `ContainerProxy`                                                                                                                                 | Removed | Export your own entrypoint                                                                                 |                                                                                                                                                                   |
+| `gitCheckout()`                                                                                                                                  | Pattern | `container.exec(["git", "clone", …])`                                                                      | Refer to [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/). For private repositories, add credentials in an outbound handler. |
+
+## Bucket mounts
+
+For the replacement, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/) and the [`S3Mounts` reference](/sandbox/reference/s3-mounts/). These APIs mount object storage in the container:
+
+| 0.12                                                                                                             | Kind    | Replacement                                                                | Notes                                                                                                                   |
+| ---------------------------------------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `mountBucket()` with an S3 endpoint                                                                              | Package | `S3Mounts.mount()` with `S3Gateway`                                        | Credentials stay in the Worker.                                                                                         |
+| `prefix`, `readOnly`, `s3fsOptions`                                                                              | Package | `keyPrefix`, `access`, `s3fsOptions`                                       | `keyPrefix` has no leading `/`. `s3fsOptions` is an object.                                                             |
+| `credentials`, `R2_*` and `AWS_*` variables                                                                      | Package | `S3Gateway` credentials                                                    | Not read from the environment.                                                                                          |
+| `credentialProxy`, `provider`                                                                                    | Removed | Not needed                                                                 | Credentials always stay in the Worker. 0.12 added `nomixupload` for R2. Pass it in `s3fsOptions` to keep that behavior. |
+| `mountBucket()` with an R2 binding                                                                               | Package | `S3Mounts.mount()` with `S3Gateway` and the R2 S3 endpoint                 | Use an R2 API token.                                                                                                    |
+| `localBucket`                                                                                                    | Package | `S3Mounts` under `wrangler dev` with a local S3-compatible server          | Needs Wrangler 4.137.0 or later.                                                                                        |
+| `unmountBucket()`                                                                                                | Package | `S3Mounts.unmount()`                                                       |                                                                                                                         |
+| `BucketMountError`, `BucketUnmountError`, `InvalidMountConfigError`, `MissingCredentialsError`, `S3FSMountError` | Package | [`SandboxS3MountError`](/sandbox/reference/s3-mounts/#sandboxs3mounterror) |                                                                                                                         |
+
+## Backups
+
+To save the whole filesystem instead, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/). These APIs save and restore directories:
+
+| 0.12                                                               | Kind    | Replacement                                                | Notes                                                          |
+| ------------------------------------------------------------------ | ------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
+| `createBackup()`, `restoreBackup()`                                | Pattern | `tar` in the container, streamed to and from an R2 binding | For the whole filesystem, use `container.snapshotContainer()`. |
+| `name`, `ttl`, `gitignore`, `excludes`, `compression`              | Pattern | Options in your backup code                                | An alarm deletes expired backups.                              |
+| `multipart`, `localBucket`                                         | Removed | One upload through an R2 binding                           | `wrangler dev` simulates the binding locally.                  |
+| `BACKUP_BUCKET`                                                    | Native  | An R2 binding                                              | Keep the name or rename it.                                    |
+| `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, R2 access keys     | Removed | The R2 binding                                             | The container never holds bucket credentials.                  |
+| `BackupCreateError`, `BackupRestoreError`, and other backup errors | Pattern | `tar` exit codes and R2 binding errors                     |                                                                |
+| Backups made by 0.12                                               | Pattern | `unsquashfs` on `backups/<id>/data.sqsh`                   |                                                                |
+
+## Code interpreter and subpath packages
+
+These APIs came from the code interpreter and the package's subpath exports:
+
+| 0.12                                                             | Kind    | Replacement                            | Notes                                                                                                    |
+| ---------------------------------------------------------------- | ------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `runCode()`, `runCodeStream()`, code contexts, `CodeInterpreter` | Product | [Dynamic Workers](/dynamic-workers/)   | For one script, `container.exec(["python3", …])`.                                                        |
+| `@cloudflare/sandbox/opencode`                                   | Pattern | Run `opencode` with `container.exec()` | Refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).                                  |
+| `@cloudflare/sandbox/openai`                                     | Removed | Your own `Shell` and `Editor`          | Implement the OpenAI Agents SDK interfaces with `container.exec()` and `Files`.                          |
+| `@cloudflare/sandbox/bridge`, `WarmPool`                         | Removed | Your own Worker routes                 | For a warm pool, start sandboxes under spare names ahead of time, and give one name to each new session. |
+
+## Images
+
+0.12 published container images for the `Sandbox` class to build on:
+
+| 0.12                                                             | Kind    | Replacement                  | Notes                                                                                                                    |
+| ---------------------------------------------------------------- | ------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `cloudflare/sandbox`, `-python`, `-opencode`, and `-musl` images | Removed | Your own `linux/amd64` image | Copy `sandbox-shim` into it if you use `Files` or `S3Mounts`. Refer to [Requirements](/sandbox/reference/#requirements). |
+
+## Errors and clients
+
+These APIs report failures and talk to the container:
+
+| 0.12                                                                                                    | Kind    | Replacement                              | Notes                                                                                                                                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ContainerUnavailableError`, `OperationInterruptedError`, `RPCTransportError`, `SessionTerminatedError` | Removed | Native errors from `container`           | Not wrapped.                                                                                                                                                                                                      |
+| `ProcessExitedBeforeReadyError`, `ProcessReadyTimeoutError`                                             | Pattern | The results of your readiness check      | Refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).                                                                                                                               |
+| `isPlatformTransientError()`, `isDurableObjectCodeUpdateReset()`                                        | Removed | `error.retryable` and `error.overloaded` | Retry idempotent calls with a new stub when `retryable` is `true`, and never when `overloaded` is `true`. The package does not retry. Refer to [Error handling](/durable-objects/best-practices/error-handling/). |
+| `SandboxClient` and the other clients                                                                   | Removed | `container` and `Files`                  | Call them from your Durable Object.                                                                                                                                                                               |
+| `SANDBOX_LOG_LEVEL`, `SANDBOX_LOG_FORMAT`                                                               | Removed | Your own logs                            | The package does not log. Log from your Worker and read the logs in [Workers Logs](/workers/observability/logs/workers-logs/).                                                                                    |

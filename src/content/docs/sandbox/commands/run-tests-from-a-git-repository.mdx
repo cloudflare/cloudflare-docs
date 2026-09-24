@@ -1,0 +1,198 @@
+---
+title: Run tests from a Git repository
+description: Clone a public Git repository into a fresh Linux sandbox, install its dependencies, and return the test results from your Worker.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Run a repository's tests in a fresh Linux sandbox, such as for each pull request or each change an agent makes. The Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the Linux instance.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+<Render product="containers" file="docker-setup" />
+
+## Run the test suite
+
+<Steps>
+
+1. Create a `Dockerfile` in the project root with Git and the runtime your tests need. This one adds Git to Debian Trixie with Node.js 24:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install --yes --no-install-recommends ca-certificates git \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   CMD ["sleep", "infinity"]
+   ```
+
+   `sleep infinity` keeps the container running between commands.
+
+2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"tests": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+3. Add a method to your Durable Object that clones a repository, installs its dependencies, and runs its tests:
+
+   ```ts title="src/index.ts"
+   async runTests(repository: string, revision: string) {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	container.start({
+   		image: container.images.tests,
+   		enableInternet: true,
+   	});
+
+   	const decoder = new TextDecoder();
+   	const run = async (stage: string, argv: string[], cwd?: string) => {
+   		// `timeout` stops the command and every process it started.
+   		const process = await container.exec(
+   			["timeout", "--kill-after=5", "600", ...argv],
+   			{ cwd },
+   		);
+   		const output = await process.output();
+
+   		return {
+   			stage,
+   			stdout: decoder.decode(output.stdout),
+   			stderr: decoder.decode(output.stderr),
+   			exitCode: output.exitCode,
+   		};
+   	};
+
+   	try {
+   		const clone = await run("clone", [
+   			"git",
+   			"clone",
+   			"--depth=1",
+   			`--branch=${revision}`,
+   			repository,
+   			"/workspace",
+   		]);
+
+   		if (clone.exitCode !== 0) {
+   			return clone;
+   		}
+
+   		const install = await run(
+   			"install",
+   			["npm", "ci", "--no-audit", "--no-fund"],
+   			"/workspace",
+   		);
+
+   		if (install.exitCode !== 0) {
+   			return install;
+   		}
+
+   		return await run("test", ["npm", "test", "--", "--silent"], "/workspace");
+   	} finally {
+   		if (container.running) {
+   			await container.destroy();
+   		}
+   	}
+   }
+   ```
+
+   Each stage runs under GNU coreutils `timeout`. A stage that runs longer than 10 minutes stops, together with every process it started, and returns exit code `124`. The `finally` block stops the Linux instance after the run.
+
+   `enableInternet: true` lets `git` and `npm` download the repository and its packages. It also lets the repository's install and test scripts reach the Internet, so do not pass credentials into this sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+
+4. Add a route to your Worker that runs the tests in a new sandbox:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		if (request.method !== "POST") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(crypto.randomUUID());
+   		const result = await sandbox.runTests(
+   			"https://github.com/cloudflare/workers-oauth-provider.git",
+   			"v0.0.6",
+   		);
+
+   		return Response.json(result, {
+   			status: result.exitCode === 0 ? 200 : 500,
+   		});
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   A random sandbox name gives each run a new Linux instance, so one run cannot see files from another. The example runs the tests of version `v0.0.6` of Cloudflare's public [`workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) repository. Replace the repository, revision, and `npm` commands with your own. `exec()` does not start a shell, so keep each argument in its own array entry.
+
+5. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+6. Send a `POST` request to the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --request POST
+   ```
+
+   The response includes the test output and exit code:
+
+   ```json output
+   {
+   	"stage": "test",
+   	"stdout": "...\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n...",
+   	"stderr": "",
+   	"exitCode": 0
+   }
+   ```
+
+   When a stage fails, the Worker responds with `500`, and `stage` names the stage that failed.
+
+</Steps>
+
+## Related resources
+
+- [Stream command output](/sandbox/commands/stream-command-output/): show test output while the tests run.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep installed dependencies between runs.
+- [Handle outbound traffic](/containers/guides/outbound-traffic/): allow only the Git server and package registry instead of the whole Internet.
+- [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox): why an access token in a clone URL is readable by the repository's code.

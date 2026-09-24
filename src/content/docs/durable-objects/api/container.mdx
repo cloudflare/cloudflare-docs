@@ -16,6 +16,7 @@ import {
 	Type,
 	MetaInfo,
 	TypeScriptExample,
+	WranglerConfig,
 } from "~/components";
 
 ## Description
@@ -54,12 +55,47 @@ export class MyDurableObject extends DurableObject {
 	this.ctx.container.running;
 ````
 
+### `images`
+
+`images` returns the named images configured for the Durable Object class as a `Record<string, string>`. Each key is a name from `images` in the class's Wrangler `containers` entry. Each value is the image reference to pass to [`start()`](#start). The object is empty when the class has no named images.
+
+Named images require `scheduling_policy: "durable_object"`. Wrangler builds or resolves each image when you deploy.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"workspace": {
+					"dockerfile": "./Dockerfile",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+```js
+this.ctx.container.start({
+	image: this.ctx.container.images.workspace,
+	enableInternet: false,
+});
+```
+
 ## Methods
 
 ### `start`
 
 `start` boots a container. This method does not block until the container is fully started.
 You may want to confirm the container is ready to accept requests before using it.
+
+`start()` validates its options before it returns. A failure after that, such as a container that cannot start, rejects the promise returned by [`monitor()`](#monitor).
 
 ```js
 this.ctx.container.start({
@@ -73,14 +109,28 @@ this.ctx.container.start({
 
 #### Parameters
 
-- `options` (optional): An object with the following properties:
-  - `env`: An object containing environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
-  - `entrypoint`: An array of strings representing the command to run in the container.
-  - `enableInternet`: A boolean indicating whether to enable internet access for the container.
+- `options` (`ContainerStartupOptions`, optional) — startup configuration:
+  - `image` (`string`) — image reference to start, such as a value from [`images`](#images). Cannot be combined with `containerSnapshot`.
+  - `containerSnapshot` (`{ id: string }`) — snapshot to start from, created by [`snapshotContainer()`](#snapshotcontainer). Cannot be combined with `image`.
+  - `instance` (`string | { vcpu: number; memoryMib: number; diskMb: number }`) — compute size. Use `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, or `"standard-4"`, or custom resources. `memoryMib` is in mebibytes and `diskMb` is in megabytes. Both must be positive integers. For sizes and limits, refer to [Limits](/containers/platform/limits/).
+  - `entrypoint` (`string[]`) — command to run in the container instead of the image default.
+  - `enableInternet` (`boolean`, default `false`) — allows the container to make outbound requests to the Internet.
+  - `env` (`Record<string, string>`) — environment variables for the entrypoint process. This is useful for passing configuration values or secrets to the container. Processes started with [`exec()`](#exec) do not receive these variables.
+  - `labels` (`Record<string, string>`) — up to 10 labels that [`inspect()`](#inspect) returns. Label names are 1 to 16 bytes. Label values are at most 64 bytes. Names and values cannot contain control characters.
+
+`image`, `containerSnapshot`, and `instance` apply to containers with `scheduling_policy: "durable_object"`. These containers require `image` or `containerSnapshot`.
 
 #### Return values
 
 - None.
+
+#### Exceptions
+
+- `start()` throws an `Error` when the container is already running.
+- `start()` throws a `TypeError` when both `image` and `containerSnapshot` are set, when either is empty, or when `instance` names an unknown type.
+- `start()` throws a `RangeError` when a custom `instance` value is missing or invalid.
+- `start()` throws an `Error` when `labels` break the limits above, when an environment variable name contains `=`, or when an environment variable name or value contains a null character.
+- When a container with `scheduling_policy: "durable_object"` starts without `image` or `containerSnapshot`, `monitor()` rejects.
 
 ### `exec`
 
@@ -130,8 +180,16 @@ export class MyContainer extends Container {
   - `stdout` (`"pipe" | "ignore"`, default `"pipe"`) — captures or discards standard output.
   - `stderr` (`"pipe" | "ignore" | "combined"`, default `"pipe"`) — captures, discards, or merges standard error into standard output. The `"combined"` value requires `stdout: "pipe"`. Combined output does not guarantee ordering between its source streams.
   - `cwd` (`string`) — working directory for the process.
-  - `env` (`Record<string, string>`) — environment additions and overrides. The process inherits existing Container variables. Matching keys use the per-execution value.
-  - `user` (`string`) — image user for the process.
+  - `env` (`Record<string, string>`) — environment variables for the process. The process does not inherit variables from `start()` or from the image. It receives the image's `PATH` unless `env` sets `PATH`.
+  - `user` (`string`) — numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user.
+  - `signal` (`AbortSignal`) — aborting the signal sends `SIGKILL` to the process. Processes that it started keep running. An already-aborted signal makes `exec()` throw an `AbortError`.
+  - `pty` (`boolean | { cols?: number; rows?: number }`) — runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
+
+:::caution
+Pass both IDs in `user`. A user ID without a group ID runs the process as `root`. A user or group name rejects with an internal error.
+:::
+
+With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, which is the default. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
 
 #### Return values
 
@@ -143,23 +201,33 @@ An `ExecProcess` has these fields and methods:
 - `stdout` (`ReadableStream | null`) — readable standard output when piped.
 - `stderr` (`ReadableStream | null`) — readable standard error when piped separately.
 - `pid` (`number`) — process identifier.
+- `isPty` (`boolean`) — whether the process runs attached to a pseudo-terminal.
 - `exitCode` (`Promise<number>`) — resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
 - `output()` (`Promise<ExecOutput>`) — reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
 - `kill(signal?: number)` (`void`) — queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
+- `resize(cols: number, rows: number)` (`void`) — changes the pseudo-terminal size. Both values must be from `1` through `65535`.
 
-With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
+With `stderr: "combined"` or `pty`, `ExecProcess` has no `stderr` stream, and `ExecOutput.stderr` is an empty `ArrayBuffer`. Read both output channels from `stdout`.
 
 `output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
 
 `exec` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
+:::caution
+Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits records an internal error. `AbortSignal.timeout()` still fires after the process exits, so pass a signal from an `AbortController` and clear its timer when `exitCode` resolves.
+:::
+
+`kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running in the container. `exitCode` resolves when that process exits, but `output()` and the output streams wait until every process that holds the output exits. To stop a command and every process it started, run it under GNU coreutils `timeout`, for example `["timeout", "--kill-after=5", "60", "bash", "-c", command]`. The command then exits with code `124` when it runs longer than 60 seconds.
+
 #### Exceptions
 
 - `exec()` throws when the Container is not running.
-- `exec()` throws a `TypeError` when `cmd` is empty, an option mode is invalid, or `stderr: "combined"` is used with `stdout: "ignore"`.
+- `exec()` throws a `TypeError` when `cmd` is empty, an option mode is invalid, `stderr: "combined"` is used with `stdout: "ignore"`, or `pty` is used with a `stderr` value other than `"combined"`.
+- `exec()` throws an `AbortError` when `signal` is already aborted.
 - `exec()` rejects if the runtime cannot create or start the process.
 - Environment variable names cannot contain `=` or null characters. Environment values, `cwd`, and `user` cannot contain null characters.
 - `kill()` throws a `RangeError` when the signal is outside the supported range.
+- `resize()` throws a `TypeError` when the process does not have a pseudo-terminal, and a `RangeError` when a dimension is out of range.
 
 For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
 
@@ -231,6 +299,40 @@ try {
 
 - `TcpPort`: a `TcpPort` object representing the TCP port. This object can be used to send requests to the container over TCP and HTTP.
 
+### `setInactivityTimeout`
+
+`setInactivityTimeout` sets how long a container keeps running after its Durable Object becomes inactive. If the Durable Object handles another request before the timeout ends, it controls the same running container. Otherwise, Cloudflare stops the container.
+
+Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive. Set a timeout when a long-running process, such as a development server or a workspace, must still be running for later requests.
+
+The timeout does not survive a Durable Object restart. Call `setInactivityTimeout` on every request that uses the container, not only after `start()`.
+
+```js
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		entrypoint: ["node", "server.js"],
+	});
+}
+
+// Keep the container running for 5 minutes after this Durable Object becomes inactive.
+await this.ctx.container.setInactivityTimeout(5 * 60 * 1000);
+```
+
+The [`Container` class](/containers/reference/container-class/) manages container lifetime with [`sleepAfter`](/containers/reference/container-class/#sleepafter). Use `sleepAfter` when your class extends `Container`.
+
+#### Parameters
+
+- `durationMs` (`number | bigint`): time in milliseconds that the container keeps running after the Durable Object becomes inactive. The value must be greater than `0` and at most 6 hours (`21600000`).
+
+#### Return values
+
+- A promise that resolves once the timeout is configured.
+
+#### Exceptions
+
+- `setInactivityTimeout()` throws a `TypeError` when `durationMs` is `0` or less.
+- The returned promise rejects when `durationMs` is greater than 6 hours.
+
 ### `monitor`
 
 `monitor` returns a promise that resolves when a container exits and errors if a container errors. This is useful for setting up
@@ -263,6 +365,71 @@ class MyContainer extends DurableObject {
 
 - A promise that resolves when the container exits.
 
+### `snapshotContainer`
+
+`snapshotContainer` saves the filesystem of a running container as a snapshot. Start a new container from the snapshot with [`start({ containerSnapshot: { id } })`](#start).
+
+:::note[Public beta]
+Container snapshots are in public beta. Features and behavior may change.
+:::
+
+```ts
+snapshotContainer(options: { name?: string }): Promise<ContainerSnapshot>
+```
+
+The snapshot captures the container's writable root filesystem. It does not capture memory, running processes, or separately mounted filesystems. A container started from the snapshot runs its entrypoint again. Snapshots require `scheduling_policy: "durable_object"`.
+
+```js
+const snapshot = await this.ctx.container.snapshotContainer({
+	name: "workspace",
+});
+await this.ctx.storage.put("snapshotId", snapshot.id);
+```
+
+The Worker API has no method to list snapshots. Store the returned `id`, for example in Durable Object storage. For a complete example, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+
+#### Parameters
+
+- `options` (`{ name?: string }`) — snapshot options. Pass `{}` when you do not set a name.
+  - `name` (`string`, optional) — name stored with the snapshot.
+
+#### Return values
+
+- A promise that resolves when the snapshot is written, with a `ContainerSnapshot`:
+  - `id` (`string`) — snapshot ID to pass to `start()`.
+  - `size` (`number`) — snapshot size in bytes.
+  - `name` (`string | undefined`) — the name passed in `options`.
+
+#### Exceptions
+
+- `snapshotContainer()` throws an `Error` when the container is not running.
+- `snapshotContainer()` throws a `TypeError` when `options` is omitted.
+
+### `inspect`
+
+`inspect` returns information about the running container.
+
+```ts
+inspect(): Promise<ContainerInfo | null>
+```
+
+```js
+const info = await this.ctx.container.inspect();
+if (info) {
+	console.log(info.labels);
+}
+```
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- A promise that resolves to `null` when no container is running, including after a failed start or after `destroy()`. Otherwise, it resolves to a `ContainerInfo`:
+  - `labels` (`Record<string, string>`) — labels passed to `start()`.
+  - `image` (`string`) — image reference, when the runtime reports one. The value can be an empty string.
+
 ### `interceptOutboundHttp`
 
 `interceptOutboundHttp` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Can be called before or after starting the container. Open connections pick up the new handler without being dropped.
@@ -283,6 +450,8 @@ await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
 await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 ```
 
+In a container started with `enableInternet: false`, DNS answers from the intercepts instead of a public resolver. `A` and `AAAA` lookups for an intercepted hostname get a placeholder address, so the request reaches the intercept. `interceptAllOutboundHttp` and the `*` hostname make every name resolve, even names that do not exist. IP address and CIDR targets add no DNS answers. Other lookups time out, including every lookup before the first hostname intercept.
+
 #### Parameters
 
 - `target` (string): A hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
@@ -294,7 +463,9 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 
 ### `interceptAllOutboundHttp`
 
-`interceptAllOutboundHttp` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
+`interceptAllOutboundHttp` routes outbound HTTP requests on port `80` from the container through a `WorkerEntrypoint`, regardless of destination.
+
+Connections to other ports are not intercepted. When the container started with `enableInternet: true`, they reach the Internet directly. To send every request through your Worker, start the container with `enableInternet: false`.
 
 ```js
 await this.ctx.container.interceptAllOutboundHttp(worker);
@@ -302,7 +473,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 #### Parameters
 
-- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle all outbound HTTP requests.
+- `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle outbound HTTP requests.
 
 #### Return values
 
@@ -323,13 +494,15 @@ this.ctx.container.interceptOutboundHttps("api.example.com", worker);
 // Match a hostname glob pattern
 this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 
-// Intercept all HTTPS traffic
+// Intercept HTTPS to every hostname
 this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
+Only HTTPS on port `443` is intercepted. Matching uses the hostname the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while `*` is intercepted.
+
 #### Parameters
 
-- `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `target` (string): A hostname or hostname glob pattern to match. Use `*` to intercept HTTPS to every hostname.
 - `worker` (WorkerEntrypoint): A `WorkerEntrypoint` instance to handle matching requests.
 
 #### Return values

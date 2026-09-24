@@ -1,0 +1,138 @@
+---
+title: Run JavaScript
+description: POST JavaScript to your Worker and read the sandboxed result.
+pcx_content_type: get-started
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - dynamic-workers
+  - workers
+reviewed: 2026-09-21
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+## Run JavaScript
+
+<Steps>
+
+1. Create a Worker project:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args={"sandbox-dynamic-worker --category=hello-world --type=hello-world --lang=ts --no-deploy"}
+   />
+
+2. Change into the project directory:
+
+   ```sh
+   cd sandbox-dynamic-worker
+   ```
+
+3. Replace `wrangler.jsonc` to add a Worker Loader binding:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "sandbox-dynamic-worker",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
+   	"worker_loaders": [
+   		{
+   			"binding": "LOADER",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Generate types for the binding:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+5. Replace `src/index.ts`. The Worker reads `code` from the JSON body and runs it in the sandbox:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import type { WorkerEntrypoint } from "cloudflare:workers";
+
+   type CodeEntrypoint = WorkerEntrypoint & {
+   	evaluate(): Promise<unknown>;
+   };
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const { code } = (await request.json()) as { code: string };
+
+   		const sandbox = env.LOADER.load({
+   			compatibilityDate: "$today",
+   			mainModule: "code.js",
+   			modules: {
+   				"code.js": `
+   					import { WorkerEntrypoint } from "cloudflare:workers";
+
+   					export class Code extends WorkerEntrypoint {
+   						evaluate() {
+   							${code}
+   						}
+   					}
+   				`,
+   			},
+   			globalOutbound: null,
+   		});
+
+   		const result = await sandbox
+   			.getEntrypoint<CodeEntrypoint>("Code")
+   			.evaluate();
+   		return Response.json({ result });
+   	},
+   };
+   ```
+
+   </TypeScriptExample>
+
+   `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`.
+
+6. Run `wrangler dev`:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+7. POST JavaScript to the URL Wrangler prints. The default is `http://localhost:8787`:
+
+   ```sh
+   curl http://localhost:8787 --request POST --json '{
+     "code": "const users = [{ name: \"Ada\", role: \"admin\" }, { name: \"Grace\", role: \"user\" }]; return users.filter((u) => u.role === \"admin\").map((u) => u.name);"
+   }'
+   ```
+
+</Steps>
+
+The response body is `{"result":["Ada"]}`. The Worker ran the JavaScript you sent.
+
+## Next steps
+
+- Pass APIs and data into the sandbox. Refer to [Bindings](/dynamic-workers/usage/bindings/).
+- Run a Linux command. Refer to [Run a Linux command](/sandbox/get-started/containers/).
+- Use the [Loader API](/dynamic-workers/getting-started/) for `load()` and `get()`.

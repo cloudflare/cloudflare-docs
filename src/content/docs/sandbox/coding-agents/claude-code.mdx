@@ -1,0 +1,801 @@
+---
+title: Run Claude Code in a sandbox
+description: Clone a GitHub repository into a Linux sandbox, run Claude Code on a task, and read its changes as a diff.
+pcx_content_type: tutorial
+difficulty: Intermediate
+sidebar:
+  order: 1
+  label: Claude Code
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+reviewed: 2026-09-23
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+In this tutorial, you will build a Worker that runs [Claude Code](https://code.claude.com/docs/en/overview) on a GitHub repository in a Linux sandbox. You send a prompt, Claude Code edits the repository inside the sandbox, and you read its changes as a diff.
+
+Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, so the token never enters the sandbox. The sandbox can reach only your gateway and `github.com`.
+
+You will learn how to:
+
+- Keep model credentials in your Worker while an agent runs in a sandbox.
+- Allow a sandbox to reach only the hostnames a task needs.
+- Run a task that lasts several minutes in the background and keep the sandbox running until it ends.
+- Read the agent's outcome and changes after the task ends.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+<Render product="containers" file="docker-setup" />
+
+You also need:
+
+- An [authenticated AI Gateway](/ai-gateway/configuration/authentication/) and a gateway token with the **Run** permission.
+- Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
+- Your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/).
+
+## 1. Create the project
+
+<Steps>
+
+1. Create a Worker project:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args={"sandbox-coding-agent --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
+   />
+
+2. Change into the project directory:
+
+   ```sh
+   cd sandbox-coding-agent
+   ```
+
+3. Install the [`@cloudflare/sandbox`](/sandbox/reference/) package and [Zod](https://zod.dev/):
+
+   <PackageManagers pkg="@cloudflare/sandbox zod" />
+
+4. Create a `Dockerfile` in the project root:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   RUN npm install --global @anthropic-ai/claude-code@2.1.280
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The image contains Claude Code, Git, and the tools Claude Code uses to search files. Install everything the agent needs when you build the image, because the sandbox cannot download packages at run time. The installation runs the Claude Code package's own install script, which puts its native binary in place.
+
+   Pin the Claude Code version. Its command-line flags and event format can change between releases. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
+
+   `CMD` keeps the container running between requests.
+
+5. Replace `wrangler.jsonc`. Replace `<ACCOUNT_ID>` with your account ID, and `default` with your gateway ID if it is different:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "sandbox-coding-agent",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"compatibility_flags": ["nodejs_compat"],
+   	"observability": {
+   		"enabled": true,
+   	},
+   	"upload_source_maps": true,
+   	"vars": {
+   		"AI_GATEWAY_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"AI_GATEWAY_ID": "default",
+   		"MODEL": "claude-sonnet-5",
+   	},
+   	"secrets": {
+   		"required": ["AI_GATEWAY_TOKEN"],
+   	},
+   	"containers": [
+   		{
+   			"class_name": "AgentSandbox",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"agent": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [
+   			{
+   				"class_name": "AgentSandbox",
+   				"name": "SANDBOX",
+   			},
+   		],
+   	},
+   	"migrations": [
+   		{
+   			"new_sqlite_classes": ["AgentSandbox"],
+   			"tag": "v1",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   Each sandbox is an `AgentSandbox` Durable Object with its own container. Wrangler builds the `Dockerfile` when you deploy, and the Durable Object starts the built image as `this.ctx.container.images.agent`. `MODEL` is an Anthropic model ID that your gateway can serve. `secrets.required` makes `wrangler deploy` fail if the gateway token is missing.
+
+6. Generate types for the bindings, variables, and secret:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+</Steps>
+
+## 2. Allow only the gateway and GitHub
+
+Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through this entrypoint in your Worker. Without Internet access, it cannot reach other ports:
+
+<TypeScriptExample filename="src/outbound.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const gatewayHost = "gateway.ai.cloudflare.com";
+
+export class Outbound extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		const gatewayPath = `/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}`;
+
+		if (
+			url.hostname === gatewayHost &&
+			(url.pathname === gatewayPath ||
+				url.pathname.startsWith(`${gatewayPath}/`))
+		) {
+			const headers = new Headers(request.headers);
+			headers.delete("x-api-key");
+			headers.set(
+				"cf-aig-authorization",
+				`Bearer ${this.env.AI_GATEWAY_TOKEN}`,
+			);
+			return fetch(new Request(request, { headers }));
+		}
+
+		if (url.hostname === "github.com") {
+			return fetch(request);
+		}
+
+		return new Response(
+			`${url.hostname} is not reachable from this sandbox\n`,
+			{ status: 403 },
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The entrypoint allows two destinations:
+
+- Requests to your gateway under your account ID and gateway ID. The Worker removes the placeholder API key that Claude Code sends and adds the gateway token. AI Gateway then calls Anthropic with the credentials it holds. If the Worker left the placeholder in place, AI Gateway would forward it to Anthropic and the model request would fail.
+- Requests to `github.com`, so Git can clone public repositories.
+
+Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+
+## 3. Run Claude Code in the sandbox
+
+Create `src/sandbox.ts`. The `AgentSandbox` Durable Object clones a repository, runs one Claude Code task at a time, and reports the task's state and the repository diff:
+
+<TypeScriptExample filename="src/sandbox.ts">
+
+```ts
+import { Files, SandboxFileError } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+import { z } from "zod";
+
+const repositoryDirectory = "/workspace/repo";
+const taskDirectory = "/workspace/task";
+const eventsPath = `${taskDirectory}/events.jsonl`;
+const stderrPath = `${taskDirectory}/stderr.log`;
+const exitCodePath = `${taskDirectory}/exit-code`;
+const pidPath = `${taskDirectory}/pid`;
+const inactivityTimeout = 30 * 60 * 1000;
+const taskCheckInterval = 60 * 1000;
+const taskKey = "task";
+
+const caPath = "/etc/cloudflare/certs/cloudflare-containers-ca.crt";
+const trustEnv = {
+	NODE_EXTRA_CA_CERTS: caPath,
+	GIT_SSL_CAINFO: caPath,
+	CURL_CA_BUNDLE: caPath,
+	SSL_CERT_FILE: caPath,
+};
+
+const taskScript = `"$@" >${eventsPath} 2>${stderrPath}
+printf '%s\\n' "$?" >${exitCodePath}.tmp && mv ${exitCodePath}.tmp ${exitCodePath}`;
+
+const ResultEvent = z.object({
+	type: z.literal("result"),
+	subtype: z.string(),
+	is_error: z.boolean(),
+	result: z.string().optional(),
+});
+
+export type TaskStatus =
+	| { state: "none" }
+	| { state: "running" }
+	| { state: "lost" }
+	| { state: "succeeded"; result: string }
+	| { state: "failed"; error: string };
+
+export type CommandResult = {
+	exitCode: number;
+	stdout: string;
+	stderr: string;
+};
+
+export class AgentSandbox extends DurableObject<Env> {
+	private readonly container: Container;
+	private readonly files: Files;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		const container = ctx.container;
+
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		this.container = container;
+		this.files = new Files(container);
+
+		if (container.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(inactivityTimeout),
+			);
+		}
+	}
+
+	async cloneRepository(
+		repository: string,
+		ref: string | undefined,
+	): Promise<CommandResult> {
+		await this.startSandbox();
+		const branch = ref === undefined ? [] : ["--branch", ref];
+
+		return this.run(
+			[
+				"git",
+				"clone",
+				"--depth",
+				"1",
+				...branch,
+				"--",
+				repository,
+				repositoryDirectory,
+			],
+			"/workspace",
+			trustEnv,
+		);
+	}
+
+	startTask(prompt: string): Promise<"started" | "busy"> {
+		return this.ctx.blockConcurrencyWhile(async () => {
+			await this.startSandbox();
+
+			if ((await this.taskStatus()).state === "running") {
+				return "busy";
+			}
+
+			await this.files.remove(taskDirectory, { recursive: true, force: true });
+			await this.files.mkdir(taskDirectory);
+
+			const task = await this.container.exec(
+				["/bin/sh", "-c", taskScript, "agent", ...this.agentCommand(prompt)],
+				{
+					cwd: repositoryDirectory,
+					env: { ...trustEnv, ...this.agentEnv() },
+					stdout: "ignore",
+					stderr: "ignore",
+				},
+			);
+
+			await this.files.writeFile(pidPath, String(task.pid));
+			this.ctx.storage.kv.put(taskKey, "started");
+			await this.ctx.storage.setAlarm(Date.now() + taskCheckInterval);
+			return "started";
+		});
+	}
+
+	async alarm(): Promise<void> {
+		if (!this.container.running) {
+			return;
+		}
+
+		if ((await this.taskStatus()).state === "running") {
+			await this.ctx.storage.setAlarm(Date.now() + taskCheckInterval);
+			return;
+		}
+
+		this.ctx.storage.kv.delete(taskKey);
+	}
+
+	async readTask(): Promise<TaskStatus> {
+		if (!this.container.running) {
+			return this.ctx.storage.kv.get(taskKey) === undefined
+				? { state: "none" }
+				: { state: "lost" };
+		}
+
+		return this.taskStatus();
+	}
+
+	async readDiff(): Promise<CommandResult> {
+		await this.startSandbox();
+
+		return this.run(
+			["/bin/sh", "-c", "git add --intent-to-add . && git diff"],
+			repositoryDirectory,
+			{},
+		);
+	}
+
+	private agentCommand(prompt: string): string[] {
+		return [
+			"claude",
+			"--print",
+			"--output-format",
+			"stream-json",
+			"--verbose",
+			"--dangerously-skip-permissions",
+			"--no-session-persistence",
+			"--model",
+			this.env.MODEL,
+			"--",
+			prompt,
+		];
+	}
+
+	private agentEnv(): Record<string, string> {
+		return {
+			ANTHROPIC_BASE_URL: `https://gateway.ai.cloudflare.com/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}/anthropic`,
+			ANTHROPIC_API_KEY: "provided-by-worker",
+			CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1",
+			IS_SANDBOX: "1",
+		};
+	}
+
+	private async startSandbox(): Promise<void> {
+		if (this.container.running) {
+			return;
+		}
+
+		this.ctx.storage.kv.delete(taskKey);
+		this.container.start({
+			image: this.container.images.agent,
+			instance: "standard-1",
+			enableInternet: false,
+		});
+		await this.container.interceptAllOutboundHttp(this.ctx.exports.Outbound);
+		await this.container.interceptOutboundHttps("*", this.ctx.exports.Outbound);
+		await this.container.setInactivityTimeout(inactivityTimeout);
+	}
+
+	private async taskStatus(): Promise<TaskStatus> {
+		const exitCode = await this.readOptionalText(exitCodePath);
+
+		if (exitCode !== undefined) {
+			return this.outcome(Number.parseInt(exitCode, 10));
+		}
+
+		const pid = await this.readOptionalText(pidPath);
+
+		if (pid === undefined) {
+			return { state: "none" };
+		}
+
+		const probe = await this.run(
+			["/bin/sh", "-c", 'kill -0 "$1"', "probe", pid.trim()],
+			"/",
+			{},
+		);
+
+		return probe.exitCode === 0 ? { state: "running" } : { state: "lost" };
+	}
+
+	private async outcome(exitCode: number): Promise<TaskStatus> {
+		let result: z.infer<typeof ResultEvent> | undefined;
+		const events = await this.files.readFile(eventsPath);
+
+		for await (const line of readLines(events.body)) {
+			const parsed = ResultEvent.safeParse(parseJson(line));
+
+			if (parsed.success) {
+				result = parsed.data;
+			}
+		}
+
+		if (result === undefined) {
+			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
+			return {
+				state: "failed",
+				error: `claude exited with ${exitCode}: ${stderr.slice(-2000)}`,
+			};
+		}
+
+		if (result.is_error) {
+			return { state: "failed", error: result.result ?? result.subtype };
+		}
+
+		return { state: "succeeded", result: result.result ?? "" };
+	}
+
+	private async readOptionalText(path: string): Promise<string | undefined> {
+		try {
+			return await (await this.files.readFile(path)).text();
+		} catch (error) {
+			if (SandboxFileError.is(error) && error.code === "ENOENT") {
+				return undefined;
+			}
+
+			throw error;
+		}
+	}
+
+	private async run(
+		command: string[],
+		cwd: string,
+		env: Record<string, string>,
+	): Promise<CommandResult> {
+		const process = await this.container.exec(command, { cwd, env });
+		const output = await process.output();
+		const decoder = new TextDecoder();
+
+		return {
+			exitCode: output.exitCode,
+			stdout: decoder.decode(output.stdout),
+			stderr: decoder.decode(output.stderr),
+		};
+	}
+}
+
+function parseJson(line: string): unknown {
+	try {
+		return JSON.parse(line);
+	} catch {
+		return undefined;
+	}
+}
+
+async function* readLines(
+	body: ReadableStream<Uint8Array> | null,
+): AsyncGenerator<string> {
+	if (body === null) {
+		return;
+	}
+
+	const decoder = new TextDecoder();
+	let buffered = "";
+
+	for await (const chunk of body) {
+		buffered += decoder.decode(chunk, { stream: true });
+		const lines = buffered.split("\n");
+		buffered = lines.pop() ?? "";
+		yield* lines;
+	}
+
+	buffered += decoder.decode();
+
+	if (buffered !== "") {
+		yield buffered;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific to Claude Code. The other pages in [Coding agents](/sandbox/coding-agents/) replace those parts to run a different agent in the same Worker.
+
+### Start the sandbox
+
+`startSandbox()` starts the container from the image Wrangler built, with no direct Internet access. The `standard-1` [instance type](/containers/platform/limits/#instance-types) gives Claude Code and the repository room to work. Choose a size that fits your agent and your repositories.
+
+After each start, the Durable Object sends HTTP and HTTPS requests on ports `80` and `443` from the container to the `Outbound` entrypoint. The interception lasts for one container run, so `startSandbox()` sets it up every time it starts the container. For more information, refer to [`interceptOutboundHttps()`](/durable-objects/api/container/#interceptoutboundhttps).
+
+Your Worker reads HTTPS traffic from the container by re-signing it with a Cloudflare certificate authority. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests.
+
+### Run Claude Code in the background
+
+A Claude Code task can run for several minutes, longer than a request should wait. `startTask()` starts the task and returns. The client then checks the task's state with later requests.
+
+Claude Code runs without its own permission prompts. The sandbox limits what its commands can reach, and nothing outside the sandbox depends on what Claude Code does inside it. The command sets these options:
+
+- `--print` runs Claude Code without an interactive terminal.
+- `--output-format stream-json --verbose` writes one JSON event per line, including a final `result` event.
+- `--dangerously-skip-permissions` lets Claude Code run commands and edit files without asking. Claude Code requires `IS_SANDBOX=1` to allow this as `root`.
+- `ANTHROPIC_BASE_URL` sends model requests to your gateway's Anthropic endpoint.
+- `ANTHROPIC_API_KEY` is a placeholder. Claude Code does not start without an API key, and the `Outbound` entrypoint removes the key from each request.
+- `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` turns off update checks, telemetry, and error reporting, so Claude Code calls only your gateway.
+
+Claude Code still reads a `CLAUDE.md` file in the repository, so the repository's own instructions apply to the task.
+
+The process writes its output to files instead of sending it back to the Durable Object. A process with piped output receives `SIGPIPE` after the request that started it ends, which stops Claude Code in the middle of its task. The shell wrapper writes the exit code to a temporary file and then renames it, so the Durable Object never reads a partial exit code.
+
+The task files live in `/workspace/task`, outside the repository, so they do not appear in the diff. `blockConcurrencyWhile()` makes two requests that start a task at the same time run one after the other, so the second request sees the first task and returns `busy`.
+
+### Keep the sandbox running
+
+Claude Code running in the container does not keep the container running. `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute while it runs, and stops rescheduling when the task ends. The constructor sets the 30-minute inactivity timeout again whenever it finds the container running. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
+
+### Read the outcome
+
+The task has one of these states:
+
+- `running` while the Claude Code process exists.
+- `succeeded` with Claude Code's final reply.
+- `failed` with an error message.
+- `lost` when the process or its container stopped before Claude Code recorded an exit code.
+- `none` when no task has run in this container.
+
+Claude Code exits successfully even when a model request fails. The outcome comes from the `is_error` field of the final `result` event instead of the exit code. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. When there is no `result` event, the task fails with the end of Claude Code's standard error output.
+
+While no exit code exists, the Durable Object checks whether the process still exists with `kill -0`. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary.
+
+`readDiff()` marks new files with `git add --intent-to-add` so that `git diff` includes them.
+
+## 4. Route requests
+
+Replace `src/index.ts` with the following Worker. It exports both classes and maps each route to a method on the sandbox named in the URL:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { z } from "zod";
+
+export { Outbound } from "./outbound";
+export { AgentSandbox } from "./sandbox";
+
+const sandboxName = /^[a-z0-9][a-z0-9-]{0,62}$/;
+
+const RepositoryRequest = z.object({
+	url: z.url({ protocol: /^https$/, hostname: /^github\.com$/ }),
+	ref: z.string().min(1).optional(),
+});
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const match = /^\/sandboxes\/([^/]+)\/(repository|task|diff)$/.exec(
+			url.pathname,
+		);
+
+		if (!match) {
+			return new Response("Not found", { status: 404 });
+		}
+
+		const [, name, resource] = match;
+
+		if (!sandboxName.test(name)) {
+			return new Response(
+				"The sandbox name must be 1-63 lowercase letters, digits, or hyphens",
+				{ status: 400 },
+			);
+		}
+
+		const sandbox = env.SANDBOX.getByName(name);
+
+		try {
+			if (resource === "repository" && request.method === "POST") {
+				const body = RepositoryRequest.safeParse(
+					await request.json().catch(() => null),
+				);
+
+				if (!body.success) {
+					return new Response(
+						'Send {"url": "https://github.com/OWNER/REPOSITORY"}',
+						{ status: 400 },
+					);
+				}
+
+				const result = await sandbox.cloneRepository(
+					body.data.url,
+					body.data.ref,
+				);
+				return Response.json(result, {
+					status: result.exitCode === 0 ? 200 : 502,
+				});
+			}
+
+			if (resource === "task" && request.method === "POST") {
+				const prompt = await request.text();
+
+				if (prompt.trim() === "") {
+					return new Response("Send a prompt", { status: 400 });
+				}
+
+				if ((await sandbox.startTask(prompt)) === "busy") {
+					return new Response("A task is already running", { status: 409 });
+				}
+
+				return Response.json({ state: "running" }, { status: 202 });
+			}
+
+			if (resource === "task" && request.method === "GET") {
+				return Response.json(await sandbox.readTask());
+			}
+
+			if (resource === "diff" && request.method === "GET") {
+				const result = await sandbox.readDiff();
+
+				if (result.exitCode !== 0) {
+					return Response.json(result, { status: 502 });
+				}
+
+				return new Response(result.stdout, {
+					headers: { "content-type": "text/plain" },
+				});
+			}
+
+			return new Response("Method not allowed", { status: 405 });
+		} catch (error) {
+			console.error("Sandbox request failed", error);
+			return new Response("Sandbox request failed", { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The Worker accepts only `https://github.com/` repository URLs, because the `Outbound` entrypoint blocks every other Git server. The routes are:
+
+- `POST /sandboxes/<NAME>/repository` clones a repository into the sandbox.
+- `POST /sandboxes/<NAME>/task` starts Claude Code with the request body as its prompt.
+- `GET /sandboxes/<NAME>/task` returns the task's state.
+- `GET /sandboxes/<NAME>/diff` returns the changes in the repository.
+
+## 5. Deploy
+
+:::caution
+The Worker does not authenticate requests. Anyone with the URL can run Claude Code and spend your AI Gateway credits. Authenticate callers before you share the URL.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+<Steps>
+
+1. Create a file named `.secrets.json` with your gateway token:
+
+   ```json title=".secrets.json"
+   { "AI_GATEWAY_TOKEN": "<AI_GATEWAY_TOKEN>" }
+   ```
+
+2. Deploy the Worker with the secret:
+
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="deploy --secrets-file .secrets.json"
+   />
+
+   Wrangler builds the image with Docker, pushes it to your account, and uploads the Worker with the `AI_GATEWAY_TOKEN` secret.
+
+3. Delete the secrets file:
+
+   ```sh
+   rm .secrets.json
+   ```
+
+4. Save the `workers.dev` URL that Wrangler prints in a shell variable:
+
+   ```sh
+   WORKER_URL=https://sandbox-coding-agent.<YOUR_SUBDOMAIN>.workers.dev
+   ```
+
+</Steps>
+
+## 6. Run a task
+
+<Steps>
+
+1. Clone GitHub's `Hello-World` repository into a sandbox named `agent-1`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/agent-1/repository" \
+   	--json '{"url": "https://github.com/octocat/Hello-World"}'
+   ```
+
+   The first request starts the container, so it can take about a minute. Git writes its progress to standard error:
+
+   ```json output
+   {
+   	"exitCode": 0,
+   	"stdout": "",
+   	"stderr": "Cloning into '/workspace/repo'...\n"
+   }
+   ```
+
+2. Start a task:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/agent-1/task" \
+   	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
+   ```
+
+   The Worker responds with `202` and the task's state:
+
+   ```json output
+   { "state": "running" }
+   ```
+
+3. Check the task until its state is `succeeded` or `failed`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/agent-1/task"
+   ```
+
+   A finished task includes Claude Code's final reply:
+
+   ```json output
+   {
+   	"state": "succeeded",
+   	"result": "Created `NOTES.md` with a one-sentence summary. Left uncommitted as requested."
+   }
+   ```
+
+   The reply differs on each run. This task takes a few seconds, and larger tasks take minutes. You do not need to keep checking for the task to finish, because the alarm keeps the sandbox running until Claude Code exits.
+
+4. Read the changes:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/agent-1/diff"
+   ```
+
+   The response is a `git diff` of the repository. The new file appears because `readDiff()` marks it with `--intent-to-add`:
+
+   ```diff output
+   diff --git a/NOTES.md b/NOTES.md
+   new file mode 100644
+   index 0000000..95da11e
+   --- /dev/null
+   +++ b/NOTES.md
+   @@ -0,0 +1 @@
+   +This repository is a minimal test/example repo containing only a "Hello World!" README file.
+   ```
+
+</Steps>
+
+If the model request fails, the task state is `failed` and `error` contains the message from AI Gateway:
+
+- `Failed to authenticate. API Error: 401 Unauthorized` means the gateway rejected the token. Check that the token belongs to the account and gateway in `wrangler.jsonc`. Claude Code retries a failing model request 10 times, so this error takes about three minutes to appear.
+- `API Error: 402 Insufficient wholesale credits` means the gateway uses Unified Billing and the account has no credits. Add credits, or store an Anthropic API key in the gateway.
+
+You built a Worker that runs Claude Code on a repository in a sandbox. The sandbox holds the repository and Claude Code, and your Worker holds the gateway token and decides where the sandbox can connect.
+
+## Next steps
+
+- Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+- Clone private repositories by adding a GitHub token in the `Outbound` entrypoint. Refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
+- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
+- Route Claude Code through AI Gateway from other environments. Refer to [Claude Code in AI Gateway](/ai-gateway/integrations/coding-agents/claude-code/).

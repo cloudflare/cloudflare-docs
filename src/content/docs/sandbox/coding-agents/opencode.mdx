@@ -1,0 +1,221 @@
+---
+title: Run OpenCode in a sandbox
+description: Run the OpenCode coding agent on a GitHub repository in a Linux sandbox and read its changes as a diff.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  label: OpenCode
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+reviewed: 2026-09-23
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Give [OpenCode](https://opencode.ai) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. OpenCode calls models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+
+## Prerequisites
+
+- Complete [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/) and use its `sandbox-coding-agent` project. This guide replaces the image, the model, and the parts of the Worker that are specific to the agent.
+- Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
+
+:::caution
+The Worker does not authenticate requests. Anyone with the URL can run OpenCode and spend your AI Gateway credits. Authenticate callers before you share the URL.
+For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+:::
+
+## Switch the Worker to OpenCode
+
+<Steps>
+
+1. Replace the `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
+   	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The image installs the baseline x64 OpenCode binary directly. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. When you build an `amd64` image on another architecture, the build runs under an emulator, so the package can pick the wrong binary. The baseline binary runs on every x64 CPU.
+
+   OpenCode searches files with `rg` from the image. Without `ripgrep`, it tries to download `rg` from GitHub. Pin the OpenCode version, because its model list and event format can change between releases.
+
+2. In `wrangler.jsonc`, set `MODEL` to an OpenCode model ID for AI Gateway:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"AI_GATEWAY_ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"AI_GATEWAY_ID": "default",
+   		"MODEL": "cloudflare-ai-gateway/anthropic/claude-sonnet-5",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+   OpenCode model IDs for AI Gateway have the form `cloudflare-ai-gateway/<PROVIDER>/<MODEL>`. OpenCode uses the model list built into the pinned release. To print that list, run `opencode models cloudflare-ai-gateway` with the same OpenCode version.
+
+3. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for the OpenCode events that carry the reply and errors:
+
+   ```ts title="src/sandbox.ts"
+   const OpencodeEvent = z.union([
+   	z.object({ type: z.literal("text"), part: z.object({ text: z.string() }) }),
+   	z.object({
+   		type: z.literal("error"),
+   		error: z.object({
+   			name: z.string(),
+   			data: z.object({ message: z.string().optional() }).optional(),
+   		}),
+   	}),
+   ]);
+   ```
+
+4. Replace the `agentCommand()` and `agentEnv()` methods:
+
+   ```ts title="src/sandbox.ts"
+   	private agentCommand(prompt: string): string[] {
+   		return [
+   			"opencode",
+   			"run",
+   			"--format",
+   			"json",
+   			"--auto",
+   			"--model",
+   			this.env.MODEL,
+   			"--",
+   			prompt,
+   		];
+   	}
+
+   	private agentEnv(): Record<string, string> {
+   		return {
+   			CLOUDFLARE_API_TOKEN: "provided-by-worker",
+   			CLOUDFLARE_ACCOUNT_ID: this.env.AI_GATEWAY_ACCOUNT_ID,
+   			CLOUDFLARE_GATEWAY_ID: this.env.AI_GATEWAY_ID,
+   			OPENCODE_DISABLE_MODELS_FETCH: "1",
+   			OPENCODE_DISABLE_AUTOUPDATE: "1",
+   			OPENCODE_DISABLE_DEFAULT_PLUGINS: "1",
+   			OPENCODE_DISABLE_LSP_DOWNLOAD: "1",
+   			OPENCODE_DISABLE_SHARE: "1",
+   		};
+   	}
+   ```
+
+5. Replace the `outcome()` method:
+
+   ```ts title="src/sandbox.ts"
+   	private async outcome(exitCode: number): Promise<TaskStatus> {
+   		let text = "";
+   		let error: string | undefined;
+   		const events = await this.files.readFile(eventsPath);
+
+   		for await (const line of readLines(events.body)) {
+   			const parsed = OpencodeEvent.safeParse(parseJson(line));
+
+   			if (!parsed.success) {
+   				continue;
+   			}
+
+   			if (parsed.data.type === "text") {
+   				text = parsed.data.part.text;
+   			} else {
+   				error = parsed.data.error.data?.message ?? parsed.data.error.name;
+   			}
+   		}
+
+   		if (exitCode === 0) {
+   			return { state: "succeeded", result: text };
+   		}
+
+   		if (error === undefined) {
+   			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
+   			return {
+   				state: "failed",
+   				error: `opencode exited with ${exitCode}: ${stderr.slice(-2000)}`,
+   			};
+   		}
+
+   		return { state: "failed", error };
+   	}
+   ```
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   The `AI_GATEWAY_TOKEN` secret from the tutorial stays in place. A running container keeps the image it started with, so use a new sandbox name for OpenCode.
+
+</Steps>
+
+## Run a task
+
+<Steps>
+
+1. Clone a repository into a sandbox named `opencode-1`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/opencode-1/repository" \
+   	--json '{"url": "https://github.com/octocat/Hello-World"}'
+   ```
+
+2. Start a task:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/opencode-1/task" \
+   	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
+   ```
+
+3. Check the task until its state is `succeeded` or `failed`:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/opencode-1/task"
+   ```
+
+   A `succeeded` task includes OpenCode's last text reply.
+
+4. Read the changes:
+
+   ```sh
+   curl "$WORKER_URL/sandboxes/opencode-1/diff"
+   ```
+
+   The diff shows the new `NOTES.md` file.
+
+</Steps>
+
+## How OpenCode runs in the sandbox
+
+`opencode run` runs one task without an interactive terminal. The command sets these options:
+
+- `--format json` writes one JSON event per line to the events file.
+- `--auto` approves every tool call that OpenCode's configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what OpenCode's commands can reach.
+- `--model` selects the AI Gateway model from `MODEL`.
+
+OpenCode's built-in `cloudflare-ai-gateway` provider reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the gateway's universal endpoint, which is the gateway path itself with no suffix. The tutorial's `Outbound` entrypoint allows that exact path as well as the paths under it. OpenCode does not start without a token, so `CLOUDFLARE_API_TOKEN` is a placeholder, and the `Outbound` entrypoint replaces the token header with the gateway token.
+
+The `OPENCODE_DISABLE_*` variables make OpenCode use the model list built into the binary and turn off its update check, default plugins, language server downloads, and sharing. OpenCode still tries to install `@opencode-ai/plugin` from npm in the background. That request gets a `403` response from the `Outbound` entrypoint, and OpenCode continues.
+
+OpenCode exits with a nonzero code on any model or session error, so the exit code decides the outcome. A successful task returns the last `text` event. A failed task returns the message from the last `error` event. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. Gateway errors, such as a rejected token or missing Unified Billing credits, appear in `error` with the gateway's message.
+
+## Next steps
+
+- Learn how the Worker starts the sandbox, runs the task, and keeps the sandbox running. Refer to [Run Claude Code in a sandbox](/sandbox/coding-agents/claude-code/).
+- Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).

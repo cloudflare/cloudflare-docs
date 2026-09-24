@@ -1,0 +1,311 @@
+---
+title: Files API
+description: Reference for the Files class in @cloudflare/sandbox, which reads and writes files in a running container.
+pcx_content_type: reference
+sidebar:
+  order: 1
+  label: Files
+products:
+  - sandbox
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+`Files` reads and writes files in a running container. Each method starts a helper process in the container through [`exec()`](/durable-objects/api/container/#exec) and waits for it to finish. `Files` does not start or stop the container. It follows Linux path rules and does not restrict which paths a caller can open.
+
+<TypeScriptExample>
+
+```ts
+import { Files } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+export class MyContainer extends DurableObject<Env> {
+	// The container must already be running.
+	async readInput(): Promise<Response> {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		const files = new Files(container);
+		await files.mkdir("/workspace", { recursive: true });
+		await files.writeFile("/workspace/input.txt", "hello\n");
+		return files.readFile("/workspace/input.txt");
+	}
+}
+```
+
+</TypeScriptExample>
+
+For a complete Worker, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
+
+## Requirements
+
+`Files` has the [package requirements](/sandbox/reference/#requirements) and no others.
+
+## Constructor
+
+```ts
+new Files(container: Pick<Container, "exec">)
+```
+
+- `container` — the container from `this.ctx.container`, or any object with a compatible `exec()` method.
+
+## Paths
+
+- A path is absolute, or relative to the `cwd` option.
+- A relative path requires `cwd`. `cwd` must be absolute.
+- A path cannot be empty or contain a null character.
+- An invalid path or `cwd` throws `TypeError` before the helper process starts.
+- `cwd` is also the working directory of the helper process. The directory must exist, even when the path is absolute.
+- Paths resolve through symbolic links as they do in Linux, except where a method states otherwise.
+
+## Options
+
+Every method accepts `FileOperationOptions`:
+
+| Option   | Type          | Description                                                                                                                                                                                                                                                                                                          |
+| -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cwd`    | `string`      | Absolute directory that resolves a relative path. For `rename()`, it resolves both paths.                                                                                                                                                                                                                            |
+| `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user.                                                                                                                                                                           |
+| `signal` | `AbortSignal` | Cancels the operation, and kills its helper process if the operation is still running. A signal that fires after the operation finishes, such as `AbortSignal.timeout()`, has no effect. An aborted signal rejects the call with `AbortError`. Cancellation can leave the partial effects described for each method. |
+
+:::caution
+Pass both IDs in `user`. A user ID without a group ID runs the helper as `root`. A user or group name rejects with an internal error.
+:::
+
+`mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`.
+
+## Methods
+
+### `readFile`
+
+```ts
+readFile(path: string, options?: FileOperationOptions): Promise<Response>
+```
+
+Streams the bytes of a file.
+
+- Returns a `Response` with status `200` and no `Content-Type` header. The body applies backpressure to the helper process.
+- Rejects with `SandboxFileError` when the file cannot be opened, such as `ENOENT` for a missing file or `EISDIR` for a directory.
+- An error after the file opens errors the response body instead of rejecting the call.
+
+### `writeFile`
+
+```ts
+writeFile(
+	path: string,
+	content: FileContent,
+	options?: FileOperationOptions,
+): Promise<void>
+```
+
+Creates a file, or truncates an existing file, then streams `content` into it.
+
+- `content` is a [`FileContent`](#filecontent) value.
+- The parent directory must exist. A missing parent rejects with `ENOENT`. A directory at `path` rejects with `EISDIR`.
+- The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
+- An error from the `content` stream rejects the call unchanged.
+
+`rename()` replaces an existing destination in one step, so a file written to a temporary path and then renamed is never visible partially written:
+
+```ts
+await files.writeFile(`${path}.partial`, content, { cwd });
+await files.rename(`${path}.partial`, path, { cwd });
+```
+
+### `stat`
+
+```ts
+stat(path: string, options?: FileOperationOptions): Promise<SandboxFileStat>
+```
+
+Returns [`SandboxFileStat`](#sandboxfilestat) metadata for a path. Follows a symbolic link at the end of the path.
+
+### `lstat`
+
+```ts
+lstat(path: string, options?: FileOperationOptions): Promise<SandboxFileStat>
+```
+
+Returns [`SandboxFileStat`](#sandboxfilestat) metadata for a path without following a symbolic link at the end of the path. For a symbolic link, `type` is `"symlink"` and `size` is the length of the link target.
+
+### `readDirectory`
+
+```ts
+readDirectory(
+	path: string,
+	options?: FileOperationOptions,
+): Promise<SandboxDirectoryEntry[]>
+```
+
+Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandboxdirectoryentry) values.
+
+- Entries are in the order Linux returns them. The list is not sorted and does not include `.` or `..`.
+- `path` can be a symbolic link to a directory. Entry types do not follow symbolic links.
+- The method does not recurse or return metadata for each entry.
+- A file at `path` rejects with `ENOTDIR`. An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
+
+A recursive listing is a walk over `readDirectory()`. This walk does not follow symbolic links to directories:
+
+```ts
+import type { Files } from "@cloudflare/sandbox";
+
+async function* walk(files: Files, directory: string): AsyncGenerator<string> {
+	for (const entry of await files.readDirectory(directory)) {
+		const path = `${directory}/${entry.name}`;
+		yield path;
+
+		if (entry.type === "directory") {
+			yield* walk(files, path);
+		}
+	}
+}
+```
+
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` is faster.
+
+### `mkdir`
+
+```ts
+mkdir(path: string, options?: MkdirOptions): Promise<void>
+```
+
+Creates a directory.
+
+- Without `recursive`, the parent must exist. A missing parent rejects with `ENOENT`. An existing file or directory at `path` rejects with `EEXIST`.
+- With `recursive: true`, the method creates missing parents and accepts an existing directory at `path`. A file in the path rejects with `ENOTDIR`.
+- A failed recursive call can leave the parents it created.
+
+`MkdirOptions` is `FileOperationOptions` with `recursive?: boolean`. The default is `false`.
+
+### `rename`
+
+```ts
+rename(
+	source: string,
+	destination: string,
+	options?: FileOperationOptions,
+): Promise<void>
+```
+
+Renames a file, directory, or symbolic link with Linux `rename` rules.
+
+- An existing file at `destination` is replaced.
+- Renaming a directory onto a non-empty directory rejects with `ENOTEMPTY`.
+- Renaming across filesystems rejects with `EXDEV`. The method does not copy and delete.
+- `SandboxFileError` from this method sets both `path` and `destination`.
+
+### `remove`
+
+```ts
+remove(path: string, options?: RemoveOptions): Promise<void>
+```
+
+Removes a file or symbolic link. A symbolic link is removed, not its target.
+
+- A directory requires `recursive: true`. Without it, a directory rejects with `EISDIR`, even when `force` is `true`.
+- With `recursive: true`, the method removes the directory tree. It does not follow symbolic links inside the tree.
+- With `force: true`, a missing target resolves instead of rejecting with `ENOENT`. `force` ignores no other error.
+- A failed recursive call can leave part of the tree.
+
+`RemoveOptions` is `FileOperationOptions` with `recursive?: boolean` and `force?: boolean`. Both default to `false`.
+
+## Types
+
+### `FileContent`
+
+```ts
+type FileContent =
+	string | ArrayBuffer | ArrayBufferView | Blob | ReadableStream<Uint8Array>;
+```
+
+A string is written as UTF-8.
+
+### `SandboxFileStat`
+
+| Field        | Type              | Description                                                                                          |
+| ------------ | ----------------- | ---------------------------------------------------------------------------------------------------- |
+| `type`       | `SandboxFileType` | File type                                                                                            |
+| `size`       | `bigint`          | Size in bytes                                                                                        |
+| `mode`       | `number`          | Linux mode, including the file type bits. A regular file with permissions `644` has mode `0o100644`. |
+| `uid`        | `number`          | Owner user ID                                                                                        |
+| `gid`        | `number`          | Owner group ID                                                                                       |
+| `accessedAt` | `Date`            | Last access time                                                                                     |
+| `modifiedAt` | `Date`            | Last content modification time                                                                       |
+| `changedAt`  | `Date`            | Last metadata change time                                                                            |
+
+`JSON.stringify()` and `Response.json()` throw `TypeError` for a `bigint`. Convert `size` with `Number()` or `String()` before serializing a `SandboxFileStat`. `bigint` and `Date` values pass through Durable Object RPC unchanged.
+
+### `SandboxDirectoryEntry`
+
+| Field  | Type              | Description                                       |
+| ------ | ----------------- | ------------------------------------------------- |
+| `name` | `string`          | Entry name                                        |
+| `type` | `SandboxFileType` | Entry type. A symbolic link has type `"symlink"`. |
+
+### `SandboxFileType`
+
+```ts
+type SandboxFileType =
+	| "file"
+	| "directory"
+	| "symlink"
+	| "blockDevice"
+	| "characterDevice"
+	| "fifo"
+	| "socket";
+```
+
+## Errors
+
+### `SandboxFileError`
+
+Linux rejected a file operation.
+
+| Field         | Type                 | Description                                                                                                   |
+| ------------- | -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `name`        | `"SandboxFileError"` | Error name                                                                                                    |
+| `code`        | `string`             | Linux error name, such as `ENOENT`. `UNKNOWN` when the runtime has no name for the error.                     |
+| `operation`   | `string`             | Method that failed: `readFile`, `writeFile`, `stat`, `lstat`, `readDirectory`, `mkdir`, `rename`, or `remove` |
+| `path`        | `string`             | Path passed to the method. For `rename()`, the source path.                                                   |
+| `destination` | `string`             | Destination path. Set only by `rename()`. `undefined` for every other method.                                 |
+| `detail`      | `string`             | Error description from the helper                                                                             |
+
+The `message` has the form `<operation> '<path>': <detail>`, for example `readFile 'notes.txt': No such file or directory (os error 2)`.
+
+`SandboxFileError` is not a class. Use `SandboxFileError.is(error)` instead of `instanceof`. It recognizes errors thrown in the same Worker and errors returned through Durable Object RPC.
+
+### `SandboxProtocolError`
+
+`Files` could not complete its exchange with the helper binary. A `cloudflare/sandbox` image tag that does not match the installed package version can cause this error.
+
+| Field    | Type                       | Description       |
+| -------- | -------------------------- | ----------------- |
+| `name`   | `"SandboxProtocolError"`   | Error name        |
+| `code`   | `"SANDBOX_PROTOCOL_ERROR"` | Error code        |
+| `detail` | `string`                   | Error description |
+
+Use `SandboxProtocolError.is(error)` to recognize the error.
+
+### Other errors
+
+`Files` does not wrap errors from the runtime or from its inputs.
+
+| Condition                                    | Error                                                          |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| Invalid path or `cwd`                        | `TypeError`                                                    |
+| The container is not running                 | `Error` from `exec()`                                          |
+| The image does not contain the helper binary | `Error` from `exec()` that names `/usr/local/bin/sandbox-shim` |
+| `cwd` does not exist                         | The same `Error` as a missing helper binary                    |
+| `signal` is aborted                          | `AbortError`                                                   |
+| The `content` stream of `writeFile()` errors | The stream's error                                             |
+
+## Related resources
+
+- [Move files in and out of a sandbox](/sandbox/files/manage-files/)
+- [Durable Object Container](/durable-objects/api/container/)
+- [Sandbox lifetime](/sandbox/lifetime/)

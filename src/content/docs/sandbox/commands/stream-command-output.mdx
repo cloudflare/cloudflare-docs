@@ -1,0 +1,204 @@
+---
+title: Stream command output
+description: Send stdout and stderr from a command in a Linux sandbox to a browser as server-sent events while the command runs.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Show the output of a build, a test run, or another command in a browser while the command runs. The Durable Object sends standard output and standard error as [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), reports the exit code, and stops the command when the client disconnects.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+## Stream a command
+
+<Steps>
+
+1. Add a method to your Durable Object that runs a command and returns its output as an event stream:
+
+   ```ts title="src/index.ts"
+   async stream(argv: string[]): Promise<Response> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
+   		});
+   	}
+
+   	const process = await container.exec(argv);
+   	const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+   	const writer = writable.getWriter();
+   	const encoder = new TextEncoder();
+
+   	const send = (event: string, data: unknown) =>
+   		writer.write(
+   			encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+   		);
+
+   	const forward = async (
+   		stream: ReadableStream<Uint8Array>,
+   		event: "stdout" | "stderr",
+   	) => {
+   		for await (const text of stream.pipeThrough(new TextDecoderStream())) {
+   			await send(event, text);
+   		}
+   	};
+
+   	// Stop the process when the client disconnects.
+   	writer.closed.catch(() => process.kill());
+
+   	// Detect a disconnected client while the process writes nothing.
+   	const heartbeat = setInterval(() => {
+   		writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
+   	}, 5_000);
+
+   	const pump = async () => {
+   		try {
+   			await Promise.all([
+   				forward(process.stdout!, "stdout"),
+   				forward(process.stderr!, "stderr"),
+   			]);
+   			await send("exit", { exitCode: await process.exitCode });
+   			await writer.close();
+   		} catch {
+   			process.kill();
+   		} finally {
+   			clearInterval(heartbeat);
+   		}
+   	};
+
+   	// Keep streaming after this method returns the response.
+   	void pump();
+
+   	return new Response(readable, {
+   		headers: {
+   			"Content-Type": "text/event-stream",
+   			"Cache-Control": "no-cache",
+   		},
+   	});
+   }
+   ```
+
+   The method returns the response before the command finishes, and `pump()` writes each chunk as the process produces it. It reads standard output and standard error at the same time, because a stream that nobody reads can pause a process that keeps writing to it. `TextDecoderStream` keeps characters that span two chunks intact.
+
+   When the client disconnects, the next write fails and the method calls `kill()`, which sends `SIGTERM` to the command. The keep-alive comment every five seconds makes that write happen while the command is silent.
+
+2. Add a route to your Worker that streams a command your application chooses:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   const build = [
+   	"sh",
+   	"-c",
+   	'for i in 1 2 3; do echo "step $i"; sleep 1; done; echo "warning: almost done" >&2; exit 3',
+   ];
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([^/]+)\/build$/.exec(url.pathname);
+
+   		if (!match || request.method !== "GET") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		return sandbox.stream(build);
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   The example command writes a line each second, writes a warning to standard error, and exits with code `3`. Replace it with your build or test command. The Worker chooses the command instead of reading one from the request. For more information, refer to [Sandbox security](/sandbox/security/).
+
+3. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+4. Stream the command in the sandbox named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/build --no-buffer
+   ```
+
+   The events arrive about one second apart:
+
+   ```txt output
+   event: stdout
+   data: "step 1\n"
+
+   event: stdout
+   data: "step 2\n"
+
+   event: stdout
+   data: "step 3\n"
+
+   event: stderr
+   data: "warning: almost done\n"
+
+   event: exit
+   data: {"exitCode":3}
+   ```
+
+</Steps>
+
+## Read the stream in a browser
+
+Each event has a type and a JSON-encoded `data` value. A `stdout` or `stderr` event can hold part of a line or several lines, so append the text instead of treating each event as a line. The `exit` event comes last. Lines that start with `:` are comments, which clients ignore.
+
+The route answers `GET` requests, so a page can read it with `EventSource`:
+
+```js
+const output = document.querySelector("pre");
+const events = new EventSource("/sandboxes/ada/build");
+
+for (const type of ["stdout", "stderr"]) {
+	events.addEventListener(type, (event) => {
+		output.textContent += JSON.parse(event.data);
+	});
+}
+
+events.addEventListener("exit", (event) => {
+	output.textContent += `\nExit code ${JSON.parse(event.data).exitCode}\n`;
+	events.close();
+});
+```
+
+`EventSource` reconnects when a stream ends, which would run the command again. The page calls `close()` on the `exit` event to prevent that.
+
+## Stop a command after a time limit
+
+`SIGTERM` reaches only the process that `exec()` started. When that process starts others, such as the commands in an `sh -c` script, they keep running after a disconnect, and the output streams stay open until they exit.
+
+To stop a command and every process it started after a time limit, run it under GNU coreutils `timeout`:
+
+```ts
+const build = ["timeout", "--kill-after=5", "60", "sh", "-c", "npm test"];
+```
+
+The command exits with code `124` when it runs longer than 60 seconds. For more information, refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
+
+## Related resources
+
+- [Execute commands](/containers/guides/execute-commands/): combine standard error with standard output, send standard input, and handle exit codes.
+- [Run background processes](/sandbox/commands/run-background-processes/): commands that outlive the request.
+- [`exec()`](/durable-objects/api/container/#exec)

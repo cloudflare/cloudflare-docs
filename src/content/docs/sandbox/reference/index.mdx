@@ -1,0 +1,115 @@
+---
+title: "@cloudflare/sandbox"
+description: Install @cloudflare/sandbox and prepare the container image and Worker that its classes require.
+pcx_content_type: reference
+sidebar:
+  order: 12
+  label: Package
+  group:
+    label: Reference
+products:
+  - sandbox
+  - containers
+  - durable-objects
+reviewed: 2026-09-23
+---
+
+import {
+	DirectoryListing,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+`@cloudflare/sandbox` works with a container you start from a Durable Object. Its classes run helper processes in the running container through [`exec()`](/durable-objects/api/container/#exec). The package does not start, stop, or monitor the container.
+
+## Install
+
+<PackageManagers pkg="@cloudflare/sandbox" />
+
+## Requirements
+
+Every class in the package has these requirements. A class page lists any others.
+
+- The container image contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version:
+
+  ```dockerfile
+  COPY --from=docker.io/cloudflare/sandbox:<VERSION> /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+  ```
+
+  The helper is a statically linked `linux/amd64` binary. It runs in any `linux/amd64` image.
+
+- The Worker has the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag. The package reads Linux error names through `node:os`.
+- The container is running when a method is called.
+
+## Example configuration
+
+This configuration meets every requirement. The `Dockerfile` copies the helper into a Debian Trixie image with Node.js 24, and `sleep infinity` keeps the container running:
+
+```dockerfile title="Dockerfile"
+FROM node:24-trixie-slim
+
+COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+RUN mkdir /workspace
+CMD ["sleep", "infinity"]
+```
+
+The Wrangler configuration sets `nodejs_compat` and builds the `Dockerfile` as the image named `workspace`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat"],
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"workspace": {
+					"dockerfile": "./Dockerfile",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The Durable Object starts the `workspace` image and passes the container to a class from the package:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Files } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+export class MyContainer extends DurableObject<Env> {
+	async files(): Promise<Files> {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		if (!container.running) {
+			container.start({
+				image: container.images.workspace,
+				enableInternet: false,
+			});
+		}
+
+		await container.setInactivityTimeout(10 * 60 * 1000);
+		return new Files(container);
+	}
+}
+```
+
+</TypeScriptExample>
+
+For more information about building images, refer to [`images`](/durable-objects/api/container/#images).
+
+## Classes
+
+<DirectoryListing />

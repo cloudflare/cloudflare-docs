@@ -1,0 +1,92 @@
+---
+title: Move background processes
+description: Replace @cloudflare/sandbox 0.12 startProcess(), process status, logs, waits, and kills with process directories that your Durable Object manages.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In 0.12, `startProcess()` returned a `Process`, and the container kept a table of processes that any later request could query. In 1.0, your Durable Object keeps that table as a directory for each process in the container. [Run background processes](/sandbox/commands/run-background-processes/) builds it. This page maps each 0.12 call to the methods from that guide.
+
+Like the 0.12 table, the directories last as long as the container.
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then copy the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) into your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
+
+## Start processes
+
+Replace `startProcess()` with `start()`. The command is an array. To keep a 0.12 command string, run it with `["sh", "-c", command]`.
+
+```ts
+// Was: const process = await sandbox.startProcess("npm run dev", { processId: "dev" });
+const process = await sandbox.start("dev", ["npm", "run", "dev"]);
+```
+
+`start()` returns `undefined` when the ID is in use, where 0.12 threw an error.
+
+To pass the 0.12 `cwd` and `env` options, add them to the `exec()` call in `start()`. `exec()` does not inherit the `env` passed to `container.start()`. The 0.12 `sessionId` option becomes `cwd` and `env`, as in [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
+
+## Check status
+
+Replace `getProcess()`, `listProcesses()`, and `Process.getStatus()` with `get()` and `list()`. Each 0.12 status maps to a state:
+
+| 0.12 status | State                                                         |
+| ----------- | ------------------------------------------------------------- |
+| `starting`  | `starting`                                                    |
+| `running`   | `running`, with `pid`                                         |
+| `completed` | `exited`, with `exitCode` `0`                                 |
+| `failed`    | `exited`, with another `exitCode` less than `128`             |
+| `killed`    | `exited`, with `128` plus the signal number, such as `143`    |
+| `error`     | `exited`, with `exitCode` `127` if the command does not exist |
+| None        | `lost`, when the process ended without recording an exit code |
+
+`start()` throws an error when the container cannot run the process at all. If you need the 0.12 `endTime`, record it in Durable Object storage when the alarm sees the process end.
+
+## Read logs
+
+Replace `getProcessLogs()` and `Process.getLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. Replace `streamProcessLogs()` with `logs()` and `follow` set to `true`.
+
+```ts
+// Was: const { stdout, stderr } = await sandbox.getProcessLogs("dev");
+const stdout = await (await sandbox.logs("dev", "stdout", false))?.text();
+const stderr = await (await sandbox.logs("dev", "stderr", false))?.text();
+```
+
+The followed stream carries the process's output, not JSON `LogEvent` objects. Remove `parseSSEStream()` and read the text. Follow standard output and standard error as separate streams. The stream ends when the process exits, and `get()` returns the exit code, which 0.12 sent as an `exit` event.
+
+## Wait
+
+Replace `Process.waitForLog()` with `waitForLog()`:
+
+```ts
+// Was: const { line } = await process.waitForLog(/listening on \d+/, 30_000);
+const result = await sandbox.waitForLog("dev", "listening on [0-9]+", 30_000);
+
+if (result?.state !== "matched") {
+	throw new Error(`The dev server did not start: ${result?.state}`);
+}
+```
+
+The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. Replace `\d` with `[0-9]`, `\s` with `[[:space:]]`, and `\w` with `[[:alnum:]_]`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
+
+Replace `Process.waitForExit()` with the `waitForExit()` method from [Adapt the processes](/sandbox/commands/run-background-processes/#adapt-the-processes). Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/preview-a-web-application/).
+
+## Stop processes and react to exits
+
+Replace `killProcess()` and `Process.kill()` with `stop()`, which signals the whole process group. Stopping `npm run dev` also stops the `node` process it started.
+
+Replace `killAllProcesses()` with a loop that calls `stop()` for each process whose state is `running`. Replace `cleanupCompletedProcesses()` with a loop that deletes the directory of each process whose state is `exited` or `lost`.
+
+The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12. For more information, refer to [Keep the sandbox running](/sandbox/commands/run-background-processes/#keep-the-sandbox-running).
+
+| 0.12          | Replacement                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| `onStart`     | Your code after `start()` returns                                    |
+| `onExit`      | The alarm's `process.ended` branch                                   |
+| `onOutput`    | Follow the output with `logs()`                                      |
+| `onError`     | Catch errors from `start()`, and handle exit code `127` in the alarm |
+| `autoCleanup` | Delete the directory in the alarm, after handling the exit           |
+| `keepAlive`   | The alarm, which reschedules itself while any process runs           |

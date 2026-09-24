@@ -163,7 +163,7 @@ The `main` key is optional for assets-only Workers.
 - `compatibility_flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. Refer to [types of routes](#types-of-routes).
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enables Version URLs and `workers.dev` Preview URLs. If omitted, Wrangler does not change an existing setting. If no setting exists, its initial value depends on `workers_dev`. Refer to [Version URLs](/workers/versions-and-deployments/version-urls/) and [Previews](/workers/previews/).
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
@@ -362,7 +362,7 @@ Example:
 Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. To keep the `workers.dev` URL alongside routes, set `workers_dev` to `true`. For more information, refer to [`workers.dev`](/workers/configuration/routing/workers-dev/).
 
 <WranglerConfig>
 
@@ -1274,9 +1274,26 @@ The following options are available:
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
     build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
+  - Not supported when `scheduling_policy` is `"durable_object"`. Use `images` instead.
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
     and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
+- `scheduling_policy` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets how the Durable Object class runs its containers. The options are `"default"` and `"durable_object"`. The default is `"default"`.
+  - With `"durable_object"`, each Durable Object starts its own container with [`start()`](/durable-objects/api/container/#start) on `this.ctx.container` and chooses the image when it starts. This policy is required for `images` and for [container snapshots](/durable-objects/api/container/#snapshotcontainer).
+  - With `"durable_object"`, Wrangler supports only `name`, `class_name`, `scheduling_policy`, and `images` from this list, and rejects the other options.
+- `images` <Type text="Record<string, object>" /> <MetaInfo text="optional" />
+  - Named images that a Durable Object can start when `scheduling_policy` is `"durable_object"`. With other scheduling policies, Wrangler warns and ignores `images`.
+  - Each key is an image name of 1 to 128 characters, with at most 100 images. Each value sets exactly one of `dockerfile` or `image`:
+    - `dockerfile` <Type text="string" />
+      - The path to a `Dockerfile` that `wrangler deploy` builds and pushes.
+    - `build_context` <Type text="string" /> <MetaInfo text="optional" />
+      - The build context for `dockerfile`, relative to the Wrangler configuration file. Defaults to the directory of the `Dockerfile`.
+    - `build_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+      - Variables for `dockerfile` that are available only while the image builds.
+    - `image` <Type text="string" />
+      - A digest-pinned image in your account's Cloudflare Registry, in the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`. Cannot be combined with `build_context` or `build_vars`.
+  - In the Durable Object, `this.ctx.container.images.<NAME>` returns the image reference to pass to `start()`. For more information, refer to [`images`](/durable-objects/api/container/#images).
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
@@ -1347,6 +1364,44 @@ The following options are available:
 ```
 
 </WranglerConfig>
+
+The following configuration sets `scheduling_policy` to `"durable_object"` and gives the class one image that Wrangler builds from a `Dockerfile`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"workspace": {
+					"dockerfile": "./Dockerfile",
+				},
+			},
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MY_CONTAINER",
+				"class_name": "MyContainer",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MyContainer"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Each Durable Object then passes `this.ctx.container.images.workspace` to `start()`.
 
 ### Custom Instance Types
 

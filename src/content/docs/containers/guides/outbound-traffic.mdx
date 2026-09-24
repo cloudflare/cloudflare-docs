@@ -32,7 +32,7 @@ export class MyContainer extends Container {
 }
 ```
 
-When `enableInternet` is `false`, only traffic you explicitly allow later on this page through `allowedHosts` or outbound handlers can leave the container. Only ports `80`, `443`, and DNS are available, and DNS queries use Cloudflare's DNS servers.
+When `enableInternet` is `false`, only traffic you explicitly allow later on this page through `allowedHosts` or outbound handlers can leave the container. Only ports `80` and `443` are available. DNS answers `A` and `AAAA` lookups for intercepted hostnames with a placeholder address, which routes the request to your Worker. Other lookups time out.
 
 :::note
 `enableInternet` takes effect when the container starts. Changes to `outbound` handlers and related outbound policies can affect a live-running container without restarting it.
@@ -64,6 +64,10 @@ export class MyContainer extends Container {
 }
 ```
 
+:::caution
+`deniedHosts` applies to HTTP on port `80` and, with `interceptHttps = true`, HTTPS on port `443`. While `enableInternet` is `true`, connections to other ports skip it. To block a destination on every port, set `enableInternet = false` and allow only what the container needs.
+:::
+
 You can also disable internet access by default, but allow specific hosts and IPs:
 
 ```js
@@ -86,7 +90,7 @@ export class MyContainer extends Container {
 
 Outbound handlers are programmable egress proxies that run on the same machine as the container. They have access to all Workers bindings.
 
-Use `outbound` to intercept all HTTP and HTTPS traffic:
+Use `outbound` to intercept HTTP requests on port `80` and HTTPS requests on port `443`:
 
 ```js
 import { Container, ContainerProxy } from "@cloudflare/containers";
@@ -302,7 +306,7 @@ HTTP communication to the outbound handler is encrypted by the networking stack.
 
 Outbound handlers only intercept HTTP and HTTPS traffic. Traffic on ports other than `80` and `443` is never routed through `outbound` or `outboundByHost`.
 
-If you set `enableInternet = false`, that traffic is denied. DNS queries are the one exception, but they only go to Cloudflare's DNS servers. That prevents using arbitrary DNS destinations for data exfiltration.
+If you set `enableInternet = false`, that traffic is denied. DNS is answered inside the container network instead of by a public resolver. `A` and `AAAA` lookups for intercepted hostnames get a placeholder address, and other lookups time out. Queries never leave the container network, so DNS cannot carry data out.
 
 ## Change policies at runtime
 
@@ -360,7 +364,7 @@ Requests are evaluated in this order:
 ## Low-level API
 
 To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific hostname glob, IP, or CIDR range,
-or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
+or `interceptAllOutboundHttp` for all HTTP on port `80`. Both accept a `WorkerEntrypoint`.
 
 ```js
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -399,7 +403,7 @@ For HTTPS, `interceptOutboundHttps` works the same way as `interceptOutboundHttp
 // Intercept a specific hostname
 this.ctx.container.interceptOutboundHttps("foo.com", worker);
 
-// Intercept all traffic
+// Intercept HTTPS to every hostname
 this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
@@ -412,6 +416,6 @@ The `Container` class calls these methods automatically when you use the functio
 ## Related resources
 
 - [Connect to Workers bindings](/containers/configuration/workers-connections/) — Access KV, R2, Durable Objects, and other bindings from a container
-- [Control outbound traffic (Sandboxes)](/sandbox/guides/outbound-traffic/) — Sandbox SDK API for outbound handlers
+- [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/) — Add a credential to a sandbox's requests in an outbound handler
 - [Environment variables and secrets](/containers/configuration/environment-variables/) — Configure secrets and environment variables
 - [Durable Object interface](/durable-objects/api/container/) — Full `ctx.container` API reference

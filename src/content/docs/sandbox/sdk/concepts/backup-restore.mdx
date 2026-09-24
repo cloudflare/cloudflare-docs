@@ -1,0 +1,49 @@
+---
+title: Directory backups
+description: Sandbox SDK 0.x restores a directory backup as a copy-on-write overlay in production and by extracting the archive in local development.
+pcx_content_type: concept
+sidebar:
+  order: 8
+products:
+  - sandbox
+head:
+  - tag: title
+    content: "Directory backups (Sandbox SDK 0.x)"
+---
+
+import { Render } from "~/components";
+
+<Render file="sdk-0x-note" product="sandbox" params={{ href: "/sandbox/lifetime/", title: "Sandbox lifetime" }} />
+
+Backup and restore snapshot a sandbox directory into an R2 archive, then bring that tree back later. The public API is the same in production and in `wrangler dev`. The restore mechanism is not.
+
+Use backups when you want a project directory such as `/workspace` to return later. Use [bucket mounts](/sandbox/sdk/guides/mount-buckets/) when a separate storage path such as `/data` should persist independently of the sandbox filesystem.
+
+## Production restore
+
+In production, `restoreBackup()` mounts the squashfs archive with FUSE overlayfs:
+
+- The backup is a read-only lower layer.
+- New writes go to a writable upper layer.
+- The original archive in R2 does not change.
+- Restoring the same handle again discards the upper layer.
+
+The overlay exists only while the container is running. When the sandbox sleeps or the container restarts, the mount is gone and the directory is empty. Store the `DirectoryBackup` handle and restore again.
+
+## Local restore
+
+With `localBucket: true`, `wrangler dev` extracts the archive with `unsquashfs`. The target directory is replaced. There is no overlay, so local restore does not reproduce production FUSE behavior.
+
+## Cross-device renames
+
+Overlayfs treats the lower and upper layers as different devices. A rename that moves a directory from the restored lower layer into the writable upper layer can fail with `EXDEV` (`cross-device link not permitted`).
+
+Vite does this with `node_modules/.vite/deps`. Omit that directory from the backup, or delete it after restore.
+
+For the procedure, refer to [Exclude generated caches](/sandbox/sdk/guides/backup-restore/#exclude-generated-caches).
+
+## Related resources
+
+- [Backup and restore](/sandbox/sdk/guides/backup-restore/) - Create, restore, and exclude caches
+- [Backups API](/sandbox/sdk/api/backups/) - Method signatures and options
+- [Sandbox lifecycle](/sandbox/sdk/concepts/sandboxes/) - What happens when a sandbox sleeps

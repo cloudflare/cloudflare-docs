@@ -1,0 +1,228 @@
+---
+title: Move to your own Durable Object
+description: Replace the Sandbox class from @cloudflare/sandbox 0.12 with a Durable Object that starts its own container.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Moving a 0.12 application to 1.0 starts with the class that owns the container. In 0.12, you export the `Sandbox` class from the package. In 1.0, you write a Durable Object class that starts the container and calls it through `this.ctx.container`. Every application does this step before the other migration pages.
+
+This page migrates the 0.12 minimal template, which runs a command at `/run` and writes and reads a file at `/file`. The migration is done when both routes return the same results from the new code, and no container runs the old image.
+
+## Migrate the class
+
+<Steps>
+
+1. Install version 1 of the package:
+
+   <PackageManagers pkg="@cloudflare/sandbox@1" />
+
+2. Replace the `FROM docker.io/cloudflare/sandbox` line in your `Dockerfile` with a base image that has the tools your commands use, and copy the `sandbox-shim` helper into it:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends ca-certificates git python3 \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use, or replace the `FROM` line with another base image. `Files` needs the helper. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
+
+3. Change the Wrangler configuration. Keep the class name `Sandbox` and its binding. Durable Objects keep their names and storage, so `env.Sandbox.getByName("my-sandbox")` reaches the object that `getSandbox(env.Sandbox, "my-sandbox")` reached. If you passed `normalizeId: true` to `getSandbox()`, lowercase each name yourself before you call `getByName()`.
+
+   The 0.12 template has this configuration:
+
+   <WranglerConfig>
+
+   ```jsonc title="Before"
+   {
+   	"compatibility_flags": ["nodejs_compat"],
+   	"containers": [
+   		{
+   			"class_name": "Sandbox",
+   			"image": "./Dockerfile",
+   			"instance_type": "lite",
+   			"max_instances": 1,
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }],
+   	},
+   	"migrations": [{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" }],
+   }
+   ```
+
+   </WranglerConfig>
+
+   Change it to this configuration. Replace `my-worker-sandbox-v2` with a name that your account does not use yet:
+
+   <WranglerConfig>
+
+   ```jsonc title="After"
+   {
+   	"compatibility_flags": ["nodejs_compat"],
+   	"containers": [
+   		{
+   			"class_name": "Sandbox",
+   			"name": "my-worker-sandbox-v2",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"sandbox": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }],
+   	},
+   	"exports": {
+   		"Sandbox": { "type": "durable-object", "storage": "sqlite" },
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+   The new configuration makes these changes:
+
+   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`. The `Dockerfile` moves to `images`, and the instance size moves to `start()`.
+   - The container application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application. The deploy then fails after the new Worker version is already live, and that version runs against the old containers.
+   - `exports` replaces `migrations`. A class created with `new_sqlite_classes` uses `"storage": "sqlite"`. After you deploy with `exports`, you cannot return to `migrations`. For more information, refer to [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+   - `nodejs_compat` stays, because `@cloudflare/sandbox` 1.0 requires it.
+
+4. Generate types for the new configuration:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+5. Replace `export { Sandbox } from "@cloudflare/sandbox"` with your own class, and replace `getSandbox()` with `getByName()`. The template's `src/index.ts` becomes:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { Files } from "@cloudflare/sandbox";
+   import { DurableObject } from "cloudflare:workers";
+
+   // Replaces sleepAfter: "10m".
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+   export class Sandbox extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	private async ensureRunning(): Promise<void> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "lite",
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   		}
+
+   		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	}
+
+   	async run() {
+   		await this.ensureRunning();
+
+   		const process = await this.container.exec([
+   			"sh",
+   			"-c",
+   			'echo "2 + 2 = $((2 + 2))"',
+   		]);
+   		const result = await process.output();
+   		const decoder = new TextDecoder();
+
+   		return {
+   			output: decoder.decode(result.stdout),
+   			error: decoder.decode(result.stderr),
+   			exitCode: result.exitCode,
+   			success: result.exitCode === 0,
+   		};
+   	}
+
+   	async file(): Promise<string> {
+   		await this.ensureRunning();
+
+   		const files = new Files(this.container);
+   		await files.writeFile("/workspace/hello.txt", "Hello, Sandbox!");
+   		const file = await files.readFile("/workspace/hello.txt");
+
+   		return file.text();
+   	}
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const sandbox = env.Sandbox.getByName("my-sandbox");
+
+   		if (url.pathname === "/run") {
+   			return Response.json(await sandbox.run());
+   		}
+
+   		if (url.pathname === "/file") {
+   			return Response.json({ content: await sandbox.file() });
+   		}
+
+   		return new Response("Try /run or /file");
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   The Worker calls the class's own methods over RPC. The class starts the container when it is not running, and calls [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout) on every request, which replaces `sleepAfter`. The timeout accepts at most 6 hours. To keep a container running longer without requests, set a Durable Object alarm that calls it again.
+
+   Remove `enableInternet: true` if your commands do not need the Internet.
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   On its next request, each Durable Object starts a container from the new image in the new application. Containers that 0.12 started keep running in the old application, with no Durable Object attached.
+
+7. Find the old application in the list. Its name is the one Wrangler generated from your Worker and class names, such as `my-worker-sandbox`:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers list" />
+
+8. Delete the old application. Replace `<OLD_APPLICATION_ID>` with its ID from the list:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers delete <OLD_APPLICATION_ID>" />
+
+</Steps>
+
+Request `/run` and `/file` on your Worker. `/run` returns the output of `echo` with exit code `0`, and `/file` returns `Hello, Sandbox!`. `wrangler containers list` shows only the new application.
+
+## Next steps
+
+- To move your commands and file calls, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/).
+- To move the rest of your code, follow the page for each feature your application uses in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
+- If you used `proxyToSandbox()` for preview URLs, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
+- For the methods on `this.ctx.container`, refer to the [Container API](/durable-objects/api/container/).

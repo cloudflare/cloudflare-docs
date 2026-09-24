@@ -15,7 +15,7 @@ An enterprise AI agent workspace gives employees a persistent environment for co
 
 Employees use a workspace to produce documents, presentations, spreadsheets, research, workflows, source code, and apps. These outputs outlive the conversation. An employee can review, share, export, or keep improving them with AI.
 
-The architecture uses [Cloudflare Workers](/workers/) and the [Agents SDK](/agents/) for orchestration, [Durable Objects](/durable-objects/) for state, [AI Gateway](/ai-gateway/) for model governance, and [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) for enterprise tools. [Dynamic Workers](/dynamic-workers/), [Sandbox SDK](/sandbox/) containers, and [Browser Run](/browser-run/) handle work that needs more than model inference.
+The architecture uses [Cloudflare Workers](/workers/) and the [Agents SDK](/agents/) for orchestration, [Durable Objects](/durable-objects/) for state, [AI Gateway](/ai-gateway/) for model governance, and [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/) for enterprise tools. [Dynamic Workers](/dynamic-workers/), [Sandbox SDK](/sandbox/sdk/) containers, and [Browser Run](/browser-run/) handle work that needs more than model inference.
 
 Unlike an [enterprise vibe coding platform](/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform/), the result is not always a deployed application. Source code and apps are two output types among documents, data, analysis, and repeatable workflows.
 
@@ -86,7 +86,7 @@ Treat model output, tool output, and generated code as untrusted. Apply controls
 - [AI Gateway](/ai-gateway/)
 - [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/)
 - [Dynamic Workers](/dynamic-workers/)
-- [Sandbox SDK](/sandbox/)
+- [Sandbox SDK](/sandbox/sdk/)
 - [Browser Run](/browser-run/)
 - [AI Vibe Coding Platform](/reference-architecture/diagrams/ai/ai-vibe-coding-platform/)
 - [Enterprise AI Vibe Coding Platform](/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform/)

@@ -222,7 +222,7 @@ export class MyContainer extends Container {
 
 ## Set the process context
 
-Use `cwd`, `env`, and `user` to set the process context. The process inherits the Container environment set by `envVars`. Per-execution `env` values add variables or override matching keys.
+Use `cwd`, `env`, and `user` to set the process context. The process receives only the variables in `env`, plus the image's `PATH`. It does not inherit `envVars` or other variables set in the image. To give a command a value from `envVars`, pass it in `env` as well.
 
 This example uses `sh` because it needs expansion and redirection. It also captures standard output and standard error separately.
 
@@ -231,11 +231,6 @@ This example uses `sh` because it needs expansion and redirection. It also captu
 import { Container } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
-	envVars = {
-		BASE_VALUE: "inherited",
-		MODE: "default",
-	};
-
 	async inspectWorkspace() {
 		if (!this.ctx.container.running) {
 			await this.start();
@@ -245,7 +240,7 @@ export class MyContainer extends Container {
 			[
 				"sh",
 				"-c",
-				'printf "%s:%s:%s:%s" "$PWD" "$BASE_VALUE" "$MODE" "$EXTRA_VALUE"; printf "diagnostic" >&2',
+				'printf "%s:%s:%s" "$PWD" "$MODE" "$EXTRA_VALUE"; printf "diagnostic" >&2',
 			],
 			{
 				cwd: "/workspace",
@@ -267,7 +262,7 @@ export class MyContainer extends Container {
 ```
 </TypeScriptExample>
 
-The `user` option sets the user name or numeric user ID (UID) for the process. The Container runtime resolves user names from the container image.
+The `user` option sets the numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user. For current limitations, refer to [`exec()`](/durable-objects/api/container/#exec).
 
 ## Combine standard error
 
@@ -302,7 +297,7 @@ export class MyContainer extends Container {
 ```
 </TypeScriptExample>
 
-The merged stream does not guarantee ordering between source streams. In this mode, `process.stderr` is `null`, and `output.stderr` is an empty `ArrayBuffer`. This example assumes Bash exists in the image.
+The merged stream does not guarantee ordering between source streams. In this mode, `process.stderr` is `undefined`, and `output.stderr` is an empty `ArrayBuffer`. This example assumes Bash exists in the image.
 
 ## Handle nonzero exits
 
@@ -449,6 +444,25 @@ export class MyContainer extends Container {
 </TypeScriptExample>
 
 Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pass another signal when the process requires it. A process can handle or ignore a signal, so this is not a hard execution deadline. Observe completion through `exitCode`, and do not infer a specific exit code from a signal.
+
+The signal reaches only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit. To stop a command and every process it started, run it under GNU coreutils `timeout`. The image must include `timeout`.
+
+```ts
+const process = await this.ctx.container.exec([
+	"timeout",
+	"--kill-after=5",
+	"30",
+	"bash",
+	"-c",
+	"npm test",
+]);
+const output = await process.output();
+
+// The exit code is 124 when the command runs longer than 30 seconds.
+console.log(output.exitCode);
+```
+
+`timeout` sends `SIGTERM` to the command and every process it started. With `--kill-after=5`, it sends `SIGKILL` five seconds later if they are still running.
 
 ## Coordinate operations
 
