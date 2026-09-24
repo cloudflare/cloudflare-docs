@@ -360,6 +360,49 @@ Instance-level retention settings take precedence over Workflow binding settings
 
 :::
 
+## Declare Workflows in `exports`
+
+:::note
+Requires Wrangler 4.139.0 or above.
+:::
+
+You can declare the Workflows a Worker defines in the `exports` field of your Wrangler configuration. Use this when the Worker that defines a Workflow does not need a binding to it, for example:
+
+- The Workflow runs on a [schedule](/workflows/build/trigger-workflows/#schedule-a-workflow-directly).
+- Another Worker calls the Workflow through a [cross-script binding](#cross-script-calls).
+
+Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `type` to `"workflow"` and `name` to the name of the Workflow:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "billing-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "billing-workflow",
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, and `default_retention`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+
+You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+:::caution
+`wrangler dev` does not run Workflows declared only in `exports`. To develop a Workflow locally, also declare it as a `workflows` binding.
+:::
+
 ## NonRetryableError
 
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
