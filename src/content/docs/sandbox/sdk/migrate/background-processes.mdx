@@ -10,11 +10,11 @@ products:
   - durable-objects
 ---
 
-In 0.12, `startProcess()` returned a `Process`, and the container kept a table of processes that any later request could query. In 1.0, your Durable Object keeps that table as a directory for each process in the container. [Run background processes](/sandbox/how-to/run-background-processes/) builds it. This page maps each 0.12 call to the methods from that guide.
+In 0.12, `startProcess()` returned a `Process`, and the container kept a table of processes that any later request could query. In 1.0, your Durable Object keeps that table as a directory for each process in the container. [Run background processes](/sandbox/commands/run-background-processes/) builds it. This page maps each 0.12 call to the methods from that guide.
 
 Like the 0.12 table, the directories last as long as the container.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then copy the scripts and methods from [Run background processes](/sandbox/how-to/run-background-processes/) into your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then copy the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) into your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
 
 ## Start processes
 
@@ -72,7 +72,7 @@ if (result?.state !== "matched") {
 
 The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. Replace `\d` with `[0-9]`, `\s` with `[[:space:]]`, and `\w` with `[[:alnum:]_]`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
 
-Replace `Process.waitForExit()` with the `waitForExit()` method from [Adapt the processes](/sandbox/how-to/run-background-processes/#adapt-the-processes). Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+Replace `Process.waitForExit()` with the `waitForExit()` method from [Adapt the processes](/sandbox/commands/run-background-processes/#adapt-the-processes). Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/preview-a-web-application/).
 
 ## Stop processes and react to exits
 
@@ -80,7 +80,7 @@ Replace `killProcess()` and `Process.kill()` with `stop()`, which signals the wh
 
 Replace `killAllProcesses()` with a loop that calls `stop()` for each process whose state is `running`. Replace `cleanupCompletedProcesses()` with a loop that deletes the directory of each process whose state is `exited` or `lost`.
 
-The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12. For more information, refer to [Keep the sandbox running](/sandbox/how-to/run-background-processes/#keep-the-sandbox-running).
+The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12. For more information, refer to [Keep the sandbox running](/sandbox/commands/run-background-processes/#keep-the-sandbox-running).
 
 | 0.12          | Replacement                                                          |
 | ------------- | -------------------------------------------------------------------- |

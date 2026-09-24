@@ -3,7 +3,7 @@ title: Mount an R2 bucket
 description: Mount a prefix of an R2 bucket in a Linux sandbox without giving the sandbox your credentials.
 pcx_content_type: how-to
 sidebar:
-  order: 8
+  order: 2
 products:
   - sandbox
   - workers
@@ -331,10 +331,10 @@ To mount a bucket from another S3-compatible service, change `endpoint`, `region
 
 To use short-lived credentials, pass `credentials: { type: "provider", fetcher }`. `S3Gateway` requests credentials from the fetcher for each storage request. Refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
 
-To keep the files on the sandbox's own disk between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/how-to/save-and-restore-a-workspace/). Snapshots do not include mounted directories.
+To keep the files on the sandbox's own disk between instances, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/). Snapshots do not include mounted directories.
 
 ## Next steps
 
 - For every option and error, refer to the [S3Mounts API](/sandbox/reference/s3-mounts/).
-- To read and write files on the sandbox's own disk, refer to [Manage files](/sandbox/how-to/manage-files/).
+- To read and write files on the sandbox's own disk, refer to [Manage files](/sandbox/files/manage-files/).
 - For the S3 operations that R2 supports, refer to [S3 API compatibility](/r2/api/s3/api/).

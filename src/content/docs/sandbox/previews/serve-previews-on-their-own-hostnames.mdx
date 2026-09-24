@@ -3,7 +3,7 @@ title: Serve previews on their own hostnames
 description: Give each sandbox preview its own hostname, so code in one preview cannot use your application's cookies or another preview's storage.
 pcx_content_type: how-to
 sidebar:
-  order: 4.5
+  order: 2
   label: Preview on separate hostnames
 products:
   - sandbox
@@ -26,7 +26,7 @@ Code in a preview runs in the visitor's browser. On its own hostname, that code 
 
 ## Prerequisites
 
-- Complete [Preview a web application](/sandbox/how-to/preview-a-web-application/). Use the `sandbox-linux` project and the Worker from that guide.
+- Complete [Preview a web application](/sandbox/previews/preview-a-web-application/). Use the `sandbox-linux` project and the Worker from that guide.
 - Add a domain for previews to Cloudflare, such as `example-previews.com`, with Cloudflare managing its DNS. Use a domain that your application does not use.
 
 :::caution
@@ -201,6 +201,6 @@ A separate origin does not separate every cookie. Browsers send a cookie set wit
 
 ## Next steps
 
-- To start the preview server and forward requests to it, refer to [Preview a web application](/sandbox/how-to/preview-a-web-application/).
+- To start the preview server and forward requests to it, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
 - For how preview output fits the rest of a sandbox's security, refer to [Sandbox security](/sandbox/security/#output-carries-the-same-risk).
 - For route pattern rules, refer to [Routes](/workers/configuration/routing/routes/).
