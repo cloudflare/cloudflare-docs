@@ -6,16 +6,16 @@ products:
 date: 2026-09-24
 ---
 
-Local Explorer can now send one-off Cron Trigger invocations to the `scheduled()` handler for a Worker during local development. This removes the need to construct request URLs when testing handler behavior.
+Local Explorer can now send one-off Cron Trigger invocations to a Worker's `scheduled()` handler during local development. This removes the need to construct request URLs when testing handler behavior.
 
 The browser interface supports the following tasks:
 
 - Invoke configured cron expressions
-- Build ad hoc expressions
+- Build ad-hoc expressions
 - Set reusable scheduled times
 - Inspect outcomes and `noRetry()` status
 
-Ad hoc triggers and scheduled time presets stay in your browser. They do not change your Wrangler configuration or deployed Cron Triggers. Full invocation logs and traces remain available in the Local Explorer **Observability** views.
+Ad-hoc triggers and scheduled time presets stay in your browser. They do not write to your Wrangler configuration or deployment. Full logs and traces remain available in the Local Explorer **Observability** views.
 
 The Local Explorer API exposes the same operation for tools and AI agents. The request targets an exact Worker name and accepts a cron expression and optional scheduled time:
 
