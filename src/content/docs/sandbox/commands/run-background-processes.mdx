@@ -1,6 +1,6 @@
 ---
 title: Run background processes
-description: Start a long-running process in a Linux sandbox from one request, then check its status, read its output, wait for it, and stop it from later requests.
+description: Start a process in a Linux sandbox that keeps running after the request ends, then check it, read its output, and stop it from later requests.
 pcx_content_type: how-to
 sidebar:
   order: 3
@@ -14,281 +14,233 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Start a long-running process, such as a development server, a build, or an agent, from one request, and manage it from later requests. This guide starts a process that keeps running after the request ends, then checks its status, reads and follows its output, waits for a log line, and stops it.
+Start a process that keeps running after the request ends, such as a development server, a build, or an agent, and manage it from later requests. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
 
 ## Prerequisites
 
-Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
 
-:::caution
-The example runs any command in the request body and does not authenticate incoming requests. Authenticate callers before production, and run only commands your application chooses.
-For more information, refer to [Sandbox security](/sandbox/security/).
-:::
-
-## Run a background process
+## Run a process in the background
 
 <Steps>
 
-1. Replace `src/index.ts` with the following Worker:
+1. Add the shell scripts that run a process and report its state:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { DurableObject } from "cloudflare:workers";
-
-   // Each process gets a directory with process.json, pid, stdout.log,
-   // stderr.log, and exit-code once the process ends.
    const ROOT = "/run/processes";
-   const INACTIVITY_TIMEOUT_MS = 10 * 60_000;
-   const CHECK_INTERVAL_MS = 60_000;
-   const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,62}$/;
-   const SIGNALS = ["TERM", "INT", "HUP", "KILL"];
 
-   // Reserves the directory and records the process. Exits with 17 if the
-   // ID is in use.
-   const CREATE_SCRIPT = `mkdir -p ${ROOT} || exit 1
-   mkdir "$1" 2>/dev/null || { [ -d "$1" ] && exit 17; exit 1; }
-   printf '%s' "$2" >"$1/process.json"`;
-
-   // Runs the command in its own process group, records its PID, and
-   // records its exit code when it ends.
-   const RUN_SCRIPT = `dir=$1; shift
+   // Runs the command in its own process group. Records its process ID when
+   // it starts and its exit code when it ends.
+   const RUN = `dir=$1; shift
    setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
    echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
-   // Prints a status line and the process.json line for each directory.
-   // With no arguments, it checks every process.
-   const STATUS_SCRIPT = `[ "$#" -eq 0 ] && set -- ${ROOT}/*
-   for dir in "$@"; do
-     [ -f "$dir/process.json" ] || continue
-     if [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
-     elif [ ! -e "$dir/pid" ]; then echo starting
-     elif kill -0 "$(cat "$dir/pid")" 2>/dev/null; then echo "running $(cat "$dir/pid")"
-     elif [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
-     else echo lost
-     fi
-     cat "$dir/process.json"
-     echo
-   done`;
-
-   // Prints the first matching line and exits with 0, or exits with 3 if
-   // the process ends without printing one.
-   const WAIT_SCRIPT = `dir=$1; pattern=$2
-   while :; do
-     exited=false; [ -e "$dir/exit-code" ] && exited=true
-     line=$(grep -h -m 1 -E -e "$pattern" "$dir/stdout.log" "$dir/stderr.log" 2>/dev/null | head -n 1)
-     [ -n "$line" ] && { printf '%s\\n' "$line"; exit 0; }
-     $exited && exit 3
-     sleep 0.2
-   done`;
+   // Prints the state of the process that owns the directory.
+   const STATUS = `dir=$1
+   if [ ! -d "$dir" ]; then echo missing
+   elif [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
+   elif [ ! -e "$dir/pid" ]; then echo starting
+   elif kill -0 "$(cat "$dir/pid")" 2>/dev/null; then echo "running $(cat "$dir/pid")"
+   elif [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
+   else echo lost
+   fi`;
 
    type Status =
-   	| { state: "starting" }
+   	| { state: "starting" | "lost" }
    	| { state: "running"; pid: number }
-   	| { state: "exited"; exitCode: number }
-   	| { state: "lost" };
+   	| { state: "exited"; exitCode: number };
 
-   interface ProcessInfo {
-   	id: string;
-   	argv: string[];
-   	startedAt: string;
-   	status: Status;
+   async function run(container: Container, argv: string[], signal?: AbortSignal) {
+   	const process = await container.exec(argv, { signal });
+   	const output = await process.output();
+
+   	return {
+   		exitCode: output.exitCode,
+   		stdout: new TextDecoder().decode(output.stdout),
+   	};
    }
+   ```
 
-   export class MyContainer extends DurableObject<Env> {
-   	private get container(): Container {
-   		const container = this.ctx.container;
+   </TypeScriptExample>
 
-   		if (!container) {
-   			throw new Error("The container binding is not configured");
-   		}
+   `setsid` starts the command in a new process group, so stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The exit code goes to a temporary file first and is then renamed, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
-   		return container;
+2. Add a method to your Durable Object that starts a process:
+
+   ```ts title="src/index.ts"
+   async startProcess(id: string, argv: string[]): Promise<boolean> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
    	}
 
-   	async start(id: string, argv: string[]): Promise<ProcessInfo | undefined> {
-   		if (!this.container.running) {
-   			this.container.start({
-   				image: "cloudflare/debian-trixie",
-   				entrypoint: ["sleep", "infinity"],
-   				enableInternet: false,
-   			});
-   		}
-
-   		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-
-   		const dir = `${ROOT}/${id}`;
-   		const startedAt = new Date().toISOString();
-   		const record = JSON.stringify({ id, argv, startedAt });
-   		const created = await this.shell(CREATE_SCRIPT, [dir, record]);
-
-   		if (created.exitCode === 17) {
-   			return undefined;
-   		}
-   		if (created.exitCode !== 0) {
-   			throw new Error(`Could not create ${dir}`);
-   		}
-
-   		// Ignore the wrapper's output so the process outlives this request.
-   		await this.container.exec(["sh", "-c", RUN_SCRIPT, "sh", dir, ...argv], {
-   			stdout: "ignore",
-   			stderr: "ignore",
-   		});
-
-   		await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
-   		return { id, argv, startedAt, status: { state: "starting" } };
-   	}
-
-   	async list(): Promise<ProcessInfo[]> {
-   		return this.status([]);
-   	}
-
-   	async get(id: string): Promise<ProcessInfo | undefined> {
-   		const [process] = await this.status([`${ROOT}/${id}`]);
-   		return process;
-   	}
-
-   	async logs(id: string, stream: string, follow: boolean) {
-   		const process = await this.get(id);
-
-   		if (!process) {
-   			return undefined;
-   		}
-
-   		const path = `${ROOT}/${id}/${stream}.log`;
-   		const argv =
-   			follow && process.status.state === "running"
-   				? ["tail", "-n", "+1", "-F", "--pid", `${process.status.pid}`, path]
-   				: ["cat", path];
-   		const output = await this.container.exec(argv, { stderr: "ignore" });
-
-   		// Other content types can arrive all at once when the stream ends.
-   		return new Response(output.stdout, {
-   			headers: { "Content-Type": "text/event-stream" },
+   	if (!container.running) {
+   		container.start({
+   			image: "cloudflare/debian-trixie",
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
    		});
    	}
 
-   	async waitForLog(id: string, pattern: string, timeoutMs: number) {
-   		if (!(await this.get(id))) {
-   			return undefined;
-   		}
+   	await container.setInactivityTimeout(10 * 60 * 1000);
 
-   		const dir = `${ROOT}/${id}`;
-   		const result = await this.shell(WAIT_SCRIPT, [dir, pattern], timeoutMs);
+   	// mkdir fails when another process already uses the ID.
+   	const dir = `${ROOT}/${id}`;
+   	await run(container, ["mkdir", "-p", ROOT]);
+   	const created = await run(container, ["mkdir", dir]);
 
-   		if (result.exitCode === 0) {
-   			return { state: "matched", line: result.stdout.trimEnd() };
-   		}
-   		if (result.exitCode === 3) {
-   			return { state: "exited" };
-   		}
-   		return { state: "timed-out" };
+   	if (created.exitCode !== 0) {
+   		return false;
    	}
 
-   	async stop(id: string, signal: string): Promise<boolean> {
-   		const process = await this.get(id);
+   	// Ignoring the output lets the process outlive this request.
+   	await container.exec(["sh", "-c", RUN, "sh", dir, ...argv], {
+   		stdout: "ignore",
+   		stderr: "ignore",
+   	});
 
-   		if (process?.status.state !== "running") {
-   			return false;
-   		}
-
-   		// A negative PID signals the whole process group.
-   		const group = `-${process.status.pid}`;
-   		const result = await this.shell('kill -s "$1" -- "$2"', [signal, group]);
-   		return result.exitCode === 0;
-   	}
-
-   	// While any process runs, check every process each minute. Each check
-   	// is a request to the container, which keeps it running.
-   	async alarm(): Promise<void> {
-   		if (!this.container.running) {
-   			return;
-   		}
-
-   		let running = false;
-
-   		for (const process of await this.list()) {
-   			const { state } = process.status;
-   			const key = `reported:${process.id}:${process.startedAt}`;
-
-   			if (state === "running" || state === "starting") {
-   				running = true;
-   			} else if (this.ctx.storage.kv.get(key) === undefined) {
-   				console.log({ event: "process.ended", ...process });
-   				this.ctx.storage.kv.put(key, true);
-   			}
-   		}
-
-   		if (running) {
-   			await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
-   		}
-   	}
-
-   	private async status(dirs: string[]): Promise<ProcessInfo[]> {
-   		if (!this.container.running) {
-   			return [];
-   		}
-
-   		// Every request that uses the container checks status first. Set the
-   		// timeout each time, because it does not survive a restart.
-   		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-
-   		const { stdout } = await this.shell(STATUS_SCRIPT, dirs);
-   		const lines = stdout.split("\n");
-   		const processes: ProcessInfo[] = [];
-
-   		for (let index = 0; index + 1 < lines.length; index += 2) {
-   			const record = JSON.parse(lines[index + 1]);
-   			processes.push({ ...record, status: parseStatus(lines[index]) });
-   		}
-
-   		return processes;
-   	}
-
-   	// Runs a shell script and waits for it. The timer is cleared when the
-   	// script ends, because a signal that fires after the process exits
-   	// records an internal error.
-   	private async shell(script: string, args: string[], timeoutMs?: number) {
-   		const abort = new AbortController();
-   		const timer = timeoutMs
-   			? setTimeout(() => abort.abort(), timeoutMs)
-   			: undefined;
-
-   		try {
-   			const process = await this.container.exec(
-   				["sh", "-c", script, "sh", ...args],
-   				{ signal: abort.signal },
-   			);
-   			const output = await process.output();
-   			return {
-   				exitCode: output.exitCode,
-   				stdout: new TextDecoder().decode(output.stdout),
-   			};
-   		} finally {
-   			clearTimeout(timer);
-   		}
-   	}
+   	await this.ctx.storage.put(`process:${id}`, argv);
+   	await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   	return true;
    }
+   ```
 
-   function parseStatus(line: string): Status {
-   	const [state, value] = line.split(" ");
+3. Add a method that reports a process's state:
+
+   ```ts title="src/index.ts"
+   async status(id: string): Promise<Status | undefined> {
+   	const container = this.ctx.container;
+
+   	if (!container?.running) {
+   		return undefined;
+   	}
+
+   	await container.setInactivityTimeout(10 * 60 * 1000);
+
+   	const { stdout } = await run(container, [
+   		"sh",
+   		"-c",
+   		STATUS,
+   		"sh",
+   		`${ROOT}/${id}`,
+   	]);
+   	const [state, value] = stdout.trim().split(" ");
 
    	if (state === "running") {
    		return { state, pid: Number(value) };
    	}
+
    	if (state === "exited") {
    		return { state, exitCode: Number(value) };
    	}
-   	if (state === "starting") {
+
+   	if (state === "starting" || state === "lost") {
    		return { state };
    	}
-   	return { state: "lost" };
+
+   	return undefined;
    }
+   ```
+
+   `kill -0` checks that the process exists without sending it a signal. A process is `lost` when it ended without recording an exit code, for example because something sent `SIGKILL` to the script that records it.
+
+4. Add a method that returns a process's output, and follows it while the process runs:
+
+   ```ts title="src/index.ts"
+   async logs(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
+   	const status = await this.status(id);
+
+   	if (!status) {
+   		return undefined;
+   	}
+
+   	const path = `${ROOT}/${id}/${stream}.log`;
+   	const argv =
+   		status.state === "running"
+   			? ["tail", "-n", "+1", "-F", "--pid", `${status.pid}`, path]
+   			: ["cat", path];
+   	const process = await this.ctx.container!.exec(argv, { stderr: "ignore" });
+
+   	return new Response(process.stdout, {
+   		headers: { "Content-Type": "text/event-stream" },
+   	});
+   }
+   ```
+
+   `tail --pid` stops following when the process exits. The `text/event-stream` content type makes clients receive each line as it arrives, because other types can arrive all at once when the stream ends.
+
+5. Add a method that stops a process:
+
+   ```ts title="src/index.ts"
+   async stop(id: string): Promise<boolean> {
+   	const status = await this.status(id);
+
+   	if (status?.state !== "running") {
+   		return false;
+   	}
+
+   	// `kill` is a shell built-in. A negative ID signals the process group.
+   	const { exitCode } = await run(this.ctx.container!, [
+   		"sh",
+   		"-c",
+   		'kill -s TERM -- "$1"',
+   		"sh",
+   		`-${status.pid}`,
+   	]);
+   	return exitCode === 0;
+   }
+   ```
+
+   A process stopped by a signal exits with `128` plus the signal number, such as `143` for `SIGTERM`.
+
+6. Add an alarm handler that keeps the sandbox running while any process runs:
+
+   ```ts title="src/index.ts"
+   async alarm(): Promise<void> {
+   	let running = false;
+
+   	for (const [key, argv] of await this.ctx.storage.list<string[]>({
+   		prefix: "process:",
+   	})) {
+   		const id = key.slice("process:".length);
+   		const status = await this.status(id);
+
+   		if (status?.state === "running" || status?.state === "starting") {
+   			running = true;
+   		} else {
+   			console.log({ event: "process.ended", id, argv, status });
+   			await this.ctx.storage.delete(key);
+   		}
+   	}
+
+   	if (running) {
+   		await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   	}
+   }
+   ```
+
+   A running process does not keep the container running. The alarm checks every process each minute, and each check sets the inactivity timeout again, so the container keeps running until the last process ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
+
+   When a process ends, the alarm writes a `process.ended` log to [Workers Logs](/workers/observability/logs/workers-logs/) within a minute. Replace the `console.log()` call with what your application does next, such as sending a notification.
+
+7. Add routes to your Worker that call the methods:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   const command = [
+   	"sh",
+   	"-c",
+   	"echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done",
+   ];
 
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/processes(?:\/([^/]+))?(?:\/(logs|wait))?$/.exec(
+   		const match = /^\/processes\/([a-z0-9-]{1,63})(\/logs)?$/.exec(
    			url.pathname,
    		);
 
@@ -296,231 +248,163 @@ For more information, refer to [Sandbox security](/sandbox/security/).
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const [, id, action] = match;
-   		const method = request.method;
+   		const [, id, logs] = match;
    		const sandbox = env.MY_CONTAINER.getByName("sandbox");
 
-   		if (id === undefined) {
-   			if (method === "POST") {
-   				const body = (await request.json()) as { id?: string; argv: string[] };
-   				const processId = body.id ?? crypto.randomUUID();
-
-   				if (!ID_PATTERN.test(processId)) {
-   					return new Response("Invalid process ID", { status: 400 });
-   				}
-
-   				const process = await sandbox.start(processId, body.argv);
-   				return process
-   					? Response.json(process, { status: 201 })
-   					: new Response("Process ID is in use", { status: 409 });
-   			}
-
-   			return Response.json(await sandbox.list());
+   		if (logs) {
+   			const stream =
+   				url.searchParams.get("stream") === "stderr" ? "stderr" : "stdout";
+   			const response = await sandbox.logs(id, stream);
+   			return response ?? new Response("Not found", { status: 404 });
    		}
 
-   		if (!ID_PATTERN.test(id)) {
-   			return new Response("Process not found", { status: 404 });
+   		if (request.method === "POST") {
+   			return (await sandbox.startProcess(id, command))
+   				? new Response(null, { status: 201 })
+   				: new Response("The process ID is in use", { status: 409 });
    		}
 
-   		if (action === "logs") {
-   			const stream = url.searchParams.get("stream") ?? "stdout";
-
-   			if (stream !== "stdout" && stream !== "stderr") {
-   				return new Response("Unsupported stream", { status: 400 });
-   			}
-
-   			const follow = url.searchParams.has("follow");
-   			const logs = await sandbox.logs(id, stream, follow);
-   			return logs ?? new Response("Process not found", { status: 404 });
-   		}
-
-   		if (action === "wait") {
-   			const { pattern, timeoutMs = 30_000 } = (await request.json()) as {
-   				pattern: string;
-   				timeoutMs?: number;
-   			};
-   			const result = await sandbox.waitForLog(id, pattern, timeoutMs);
-   			return result
-   				? Response.json(result)
-   				: new Response("Process not found", { status: 404 });
-   		}
-
-   		if (method === "DELETE") {
-   			const signal = url.searchParams.get("signal") ?? "TERM";
-
-   			if (!SIGNALS.includes(signal)) {
-   				return new Response("Unsupported signal", { status: 400 });
-   			}
-
-   			return (await sandbox.stop(id, signal))
+   		if (request.method === "DELETE") {
+   			return (await sandbox.stop(id))
    				? new Response(null, { status: 202 })
-   				: new Response("Process is not running", { status: 409 });
+   				: new Response("The process is not running", { status: 409 });
    		}
 
-   		const process = await sandbox.get(id);
-   		return process
-   			? Response.json(process)
-   			: new Response("Process not found", { status: 404 });
+   		const status = await sandbox.status(id);
+   		return status
+   			? Response.json(status)
+   			: new Response("Not found", { status: 404 });
    	},
    } satisfies ExportedHandler<Env>;
    ```
 
    </TypeScriptExample>
 
-2. Deploy the Worker:
+   The example command prints `ready`, then prints a line each second for five minutes. Replace it with your command. The route accepts only process IDs that are safe in a path, because each ID becomes a directory name.
+
+8. Deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-3. Save the `workers.dev` URL that Wrangler prints:
+9. Start a process named `ticker`, then check it. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
 
    ```sh
-   WORKER_URL=https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker --request POST
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker
    ```
 
-4. Start a process named `ticker`. It prints `ready`, then prints a line each second for five minutes:
-
-   ```sh
-   curl "$WORKER_URL/processes" --json '{
-     "id": "ticker",
-     "argv": ["sh", "-c", "echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done"]
-   }'
-   ```
-
-   The response has status `201` and the process's status:
+   The first request responds with `201`, and a second `POST` with the same ID responds with `409`. The status includes the process ID:
 
    ```json output
-   {"id":"ticker","argv":["sh","-c","echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done"],"startedAt":"2026-09-24T11:46:15.139Z","status":{"state":"starting"}}
+   { "state": "running", "pid": 354 }
    ```
 
-   Starting another process with the same ID returns `409`. Omit `id` to get a random one.
+10. Follow the output:
 
-5. Wait for the process to print `ready`. The pattern is an extended regular expression:
+    ```sh
+    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs --no-buffer
+    ```
 
-   ```sh
-   curl "$WORKER_URL/processes/ticker/wait" --json '{"pattern":"^ready$","timeoutMs":30000}'
-   ```
+    ```txt output
+    ready
+    tick 1
+    tick 2
+    ```
 
-   ```json output
-   {"state":"matched","line":"ready"}
-   ```
+    New lines appear each second. Add `?stream=stderr` to read standard error.
 
-   The state is `exited` if the process ends without printing a matching line, and `timed-out` if the timeout passes first.
+11. In another terminal, stop the process, then check it again:
 
-6. Check the process:
+    ```sh
+    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker --request DELETE
+    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker
+    ```
 
-   ```sh
-   curl "$WORKER_URL/processes/ticker"
-   ```
+    The `DELETE` request responds with `202`, and the followed output ends:
 
-   The status now includes the process ID:
-
-   ```json output
-   {"id":"ticker","argv":["sh","-c","echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done"],"startedAt":"2026-09-24T11:46:15.139Z","status":{"state":"running","pid":6}}
-   ```
-
-   To list every process, send a `GET` request to `$WORKER_URL/processes`.
-
-7. Read the output so far, then follow it:
-
-   ```sh
-   curl "$WORKER_URL/processes/ticker/logs"
-   curl --no-buffer "$WORKER_URL/processes/ticker/logs?follow"
-   ```
-
-   The first command prints the output and exits. The second prints the output, then prints each new line as the process writes it, until the process exits. Add `stream=stderr` to the query string to read standard error.
-
-8. Stop the process:
-
-   ```sh
-   curl --request DELETE "$WORKER_URL/processes/ticker"
-   ```
-
-   The response has status `202`. The followed output ends, and the process's status becomes `exited` with exit code `143`:
-
-   ```json output
-   {"id":"ticker","argv":["sh","-c","echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done"],"startedAt":"2026-09-24T11:46:15.139Z","status":{"state":"exited","exitCode":143}}
-   ```
-
-   Add `?signal=INT`, `HUP`, or `KILL` to send another signal.
+    ```json output
+    { "state": "exited", "exitCode": 143 }
+    ```
 
 </Steps>
 
-## How the Worker tracks processes
+## Wait for a log line
 
-The process object that `exec()` returns belongs to the request that started the process, so a later request cannot use it. Instead, each process gets a directory in `/run/processes`, and later requests read the files in it.
+A development server prints a line, such as `ready`, when it accepts requests. To wait for that line before you use the server, check the log files until a line matches or the process exits:
 
-`start()` creates the directory with a non-recursive `mkdir`, which fails if another request already used the ID. It then runs `RUN_SCRIPT` with its output set to `"ignore"`, so the process keeps running after the request ends. The script does the following:
+<Steps>
 
-- `setsid` starts the process in a new process group. The inner shell records its PID, which is also the group ID, then replaces itself with the command.
-- The command's standard output and standard error go to `stdout.log` and `stderr.log`.
-- When the command exits, the script writes the exit code to a temporary file and renames it to `exit-code`, so a reader never sees a partial file.
+1. Add the script that checks the logs:
 
-Do not start the command with `&` instead. A shell starts background jobs with `SIGINT` ignored, so the process could not be interrupted.
+   <TypeScriptExample filename="src/index.ts">
 
-`STATUS_SCRIPT` reports one of these states for each process:
+   ```ts
+   // Prints the first matching line and exits with 0, or exits with 3 when
+   // the process ends without printing one.
+   const WAIT = `dir=$1; pattern=$2
+   while :; do
+     exited=false; [ -e "$dir/exit-code" ] && exited=true
+     line=$(grep -h -m 1 -E -e "$pattern" "$dir/stdout.log" "$dir/stderr.log" 2>/dev/null | head -n 1)
+     [ -n "$line" ] && { printf '%s\\n' "$line"; exit 0; }
+     $exited && exit 3
+     sleep 0.2
+   done`;
+   ```
 
-| State      | Meaning                                                                                                             |
-| ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| `starting` | The process has not recorded its PID yet.                                                                           |
-| `running`  | The PID is alive. `kill -0` checks it without sending a signal.                                                     |
-| `exited`   | The process recorded an exit code. A command that does not exist exits with `127`.                                  |
-| `lost`     | The process ended without recording an exit code, for example because something killed `RUN_SCRIPT` with `SIGKILL`. |
+   </TypeScriptExample>
 
-A process stopped by a signal exits with `128` plus the signal number: `143` for `SIGTERM`, `130` for `SIGINT`, and `137` for `SIGKILL`.
+   Do not pipe `tail -F` into `grep -m 1` instead: `tail` keeps running after `grep` exits, until the next line arrives.
 
-`stop()` signals the process group, so the processes that the command started stop too. For example, `npm run dev` starts a separate `node` process.
+2. Add a method that runs the script with a time limit:
 
-`WAIT_SCRIPT` checks the log files with `grep` five times a second until a line matches or the process exits. Do not pipe `tail -F` into `grep -m 1` instead, because `tail` keeps running after `grep` exits, until the next line arrives. The `shell()` helper stops the wait with an `AbortController` timer and clears the timer when the wait ends. A signal that fires after the process exits records an internal error, so do not pass `AbortSignal.timeout()` to `exec()`.
+   ```ts title="src/index.ts"
+   async waitForLog(id: string, pattern: string, timeoutMs: number) {
+   	const container = this.ctx.container;
 
-To follow output, `logs()` streams `tail -F --pid`, which ends when the process exits. For a process that has already exited, it runs `cat`, because `tail --pid` needs a running process.
+   	if (!container?.running) {
+   		return undefined;
+   	}
 
-## Keep the sandbox running
+   	const abort = new AbortController();
+   	const timer = setTimeout(() => abort.abort(), timeoutMs);
 
-A running process does not keep the container running. While any process runs, the Durable Object's [alarm](/durable-objects/api/alarms/) checks every process each minute, and `status()` sets the inactivity timeout on every call, so the container keeps running until the last process ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#activity-keeps-an-instance-running).
+   	try {
+   		const result = await run(
+   			container,
+   			["sh", "-c", WAIT, "sh", `${ROOT}/${id}`, pattern],
+   			abort.signal,
+   		);
 
-The alarm also reports processes that end. For each one, it writes a log that [Workers Logs](/workers/observability/logs/workers-logs/) records:
+   		if (result.exitCode === 0) {
+   			return { state: "matched", line: result.stdout.trimEnd() };
+   		}
 
-```json
-{
-	"event": "process.ended",
-	"id": "ticker",
-	"argv": [
-		"sh",
-		"-c",
-		"echo ready; for i in $(seq 1 300); do echo tick $i; sleep 1; done"
-	],
-	"startedAt": "2026-09-24T11:46:15.139Z",
-	"status": { "state": "exited", "exitCode": 143 }
-}
-```
+   		return { state: result.exitCode === 3 ? "exited" : "timed-out" };
+   	} finally {
+   		clearTimeout(timer);
+   	}
+   }
+   ```
 
-Replace the `console.log()` call with what your application does when a process ends, such as sending a notification or starting the next step. The alarm runs up to one minute after the process exits.
+   The method clears the timer when the wait ends, because an abort signal that fires after the process exits records an internal error. For the same reason, do not pass `AbortSignal.timeout()` to `exec()`.
 
-## Adapt the processes
+3. Call it after `startProcess()`, for example with the pattern `^ready`:
 
-To wait for a process to exit, add a method to `MyContainer` that runs a loop on the process's `exit-code` file. The script prints the exit code. The wait exits with `137` when the timeout passes first.
+   ```ts title="src/index.ts"
+   const ready = await sandbox.waitForLog(id, "^ready", 30_000);
+   ```
 
-```ts
-const WAIT_FOR_EXIT_SCRIPT = `while [ ! -e "$1/exit-code" ]; do sleep 0.2; done
-cat "$1/exit-code"`;
+   ```json output
+   { "state": "matched", "line": "ready" }
+   ```
 
-async waitForExit(id: string, timeoutMs: number) {
-	return this.shell(WAIT_FOR_EXIT_SCRIPT, [`${ROOT}/${id}`], timeoutMs);
-}
-```
+   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, and `timed-out` when the time limit passes first.
 
-To wait until a server in a process accepts requests, retry a request to its port. Refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
+</Steps>
 
-To pass environment variables to a process, add an `env` option to the `exec()` call in `start()`. `exec()` does not inherit the `env` passed to `container.start()`.
+## Related resources
 
-The directories of processes that ended stay until the container stops. To remove them, delete the directory of each process whose state is `exited` or `lost`.
-
-Processes end when the container stops, and their directories go with its disk. Keep output that must last in Durable Object storage or in a [mounted bucket](/sandbox/files/mount-an-r2-bucket/). Log files grow until the process ends, so rotate them for processes that write a lot.
-
-The example sets `enableInternet: false`, so processes cannot download packages or reach other services. To route requests to chosen hosts through your Worker, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
-
-## Next steps
-
-- To stream the output of a command that the request waits for, refer to [Stream command output](/sandbox/commands/stream-command-output/).
-- To serve a long-running process over HTTP, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
-- For every `exec()` option, refer to the [Durable Object container API](/durable-objects/api/container/#exec).
+- [Stream command output](/sandbox/commands/stream-command-output/): commands that finish while the request is open.
+- [Preview a web application](/sandbox/previews/preview-a-web-application/): a web server as the main process.
+- [Sandbox lifetime](/sandbox/lifetime/)
+- [Durable Object alarms](/durable-objects/api/alarms/)
