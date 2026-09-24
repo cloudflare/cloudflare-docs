@@ -1,13 +1,14 @@
 ---
-title: Run Codex with Cloudflare Containers using the OpenAI Agents API
-pcx_content_type: tutorial
-difficulty: Beginner
+title: Run Codex with the OpenAI Agents API in a sandbox
+description: Deploy a self-hosted OpenAI Agents API environment that runs each Codex session in its own Linux sandbox on Containers.
+pcx_content_type: how-to
 sidebar:
-  order: 6
-description: Deploy a Cloudflare execution environment that can be used by Codex via the OpenAI Agents API.
+  order: 8
+  label: OpenAI Agents API
 products:
   - sandbox
   - containers
+  - durable-objects
 ---
 
 import { CURL, Details, Steps } from "~/components";
@@ -353,11 +354,11 @@ Run `npm run deploy` from `openai/agents-api` to build and deploy the updated im
 The runnable example is intentionally minimal. Review these defaults before adapting it for production:
 
 - **Secrets:** The controller key, webhook secret, and `EXECUTOR_CLIENT_SECRET` remain Worker secrets. The restricted executor key is passed into the container as `CODEX_API_KEY`, where processes inside the container can read it. Refer to [Container environment variables and secrets](/containers/examples/env-vars-and-secrets/) for other ways to configure container instances.
-- **Network access:** The example enables outbound Internet access so `codex exec-server` can reach OpenAI. Use [Container outbound traffic controls](/containers/platform-details/outbound-traffic/) to restrict destinations or inject credentials for other services.
+- **Network access:** The example enables outbound Internet access so `codex exec-server` can reach OpenAI. Use [Container outbound traffic controls](/containers/guides/outbound-traffic/) to restrict destinations or inject credentials for other services.
 - **Files:** `/workspace` uses ephemeral container storage. Use a [read-only R2 FUSE mount](/containers/examples/r2-fuse-mount/#mounting-buckets-as-read-only) when an agent needs durable source files that it should not modify.
 - **Worker access:** OpenAI must be able to reach `/webhook` without an interactive Access login. The Worker verifies OpenAI's webhook signature, and the manual cleanup endpoint requires `EXECUTOR_CLIENT_SECRET`. If you protect other routes with Cloudflare Access, use [path-specific policies](/cloudflare-one/access-controls/policies/app-paths/) that leave `/webhook` reachable.
 
-For more information, refer to [Containers architecture](/containers/platform-details/architecture/).
+For more information, refer to [Containers architecture](/containers/concepts/architecture/).
 
 ## Related resources
 
