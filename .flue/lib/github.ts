@@ -202,6 +202,29 @@ export async function getIssueComment(
 	return (await res.json()) as GitHubIssueComment;
 }
 
+/**
+ * Fetch an issue comment, or undefined when it no longer exists (HTTP 404).
+ * Used by callers that must tolerate a comment deleted between the webhook
+ * and the fetch, such as the comment spam gate running concurrently with a
+ * redelivery of the same event.
+ */
+export async function findIssueComment(
+	token: string,
+	commentId: number,
+): Promise<GitHubIssueComment | undefined> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return undefined;
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get issue comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubIssueComment;
+}
+
 /** Delete an issue comment. A 404 is treated as success (already gone). */
 export async function deleteIssueComment(
 	token: string,
@@ -362,7 +385,9 @@ export interface GitHubIssueComment {
 	body: string | null;
 	created_at: string;
 	updated_at: string;
+	html_url?: string;
 	user: GitHubUser | null;
+	author_association?: string;
 }
 
 export interface GitHubPullRequestReview {
