@@ -32,7 +32,7 @@ export class MyContainer extends Container {
 }
 ```
 
-When `enableInternet` is `false`, only traffic you explicitly allow later on this page through `allowedHosts` or outbound handlers can leave the container. Only ports `80`, `443`, and DNS are available, and DNS queries use Cloudflare's DNS servers.
+When `enableInternet` is `false`, only traffic you explicitly allow later on this page through `allowedHosts` or outbound handlers can leave the container. Only ports `80` and `443` are available. DNS answers `A` and `AAAA` lookups for intercepted hostnames with a placeholder address, which routes the request to your Worker. Other lookups time out.
 
 :::note
 `enableInternet` takes effect when the container starts. Changes to `outbound` handlers and related outbound policies can affect a live-running container without restarting it.
@@ -306,7 +306,7 @@ HTTP communication to the outbound handler is encrypted by the networking stack.
 
 Outbound handlers only intercept HTTP and HTTPS traffic. Traffic on ports other than `80` and `443` is never routed through `outbound` or `outboundByHost`.
 
-If you set `enableInternet = false`, that traffic is denied. DNS queries are the one exception, but they only go to Cloudflare's DNS servers. That prevents using arbitrary DNS destinations for data exfiltration.
+If you set `enableInternet = false`, that traffic is denied. DNS is answered inside the container network instead of by a public resolver. `A` and `AAAA` lookups for intercepted hostnames get a placeholder address, and other lookups time out. Queries never leave the container network, so DNS cannot carry data out.
 
 ## Change policies at runtime
 
