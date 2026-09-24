@@ -316,7 +316,7 @@ For a complete walkthrough, refer to [Snapshot and restore storage](/durable-obj
 
 :::caution[`abort` always throws, even when the restore succeeds]
 
-`onNextSessionRestore` only schedules the restore, it does not perform it. The following call to `abort` always throws, including when the restore succeeds, because `abort` immediately terminates the current session. Catch the specific message passed to `abort` to tell a successful restore apart from an unrelated failure.
+`onNextSessionRestore` only schedules the restore; it does not perform it. The following call to `abort` immediately terminates the current session and always throws, including when the restore succeeds. Code in that session cannot catch the error, but the caller of the RPC method that invoked it receives the error and can catch it there. Catch the specific message passed to `abort` to tell a successful restore apart from an unrelated failure.
 
 :::
 
@@ -347,7 +347,7 @@ export class MyDurableObject extends DurableObject {
 
 ### `abort`
 
-Calling `abort` immediately resets a Durable Object. The runtime logs a JavaScript `Error` with the message passed to `abort`. Application code cannot catch this error.
+Calling `abort` immediately resets a Durable Object. The runtime logs a JavaScript `Error` with the message passed to `abort`. Code running in the aborted session cannot catch this error, but the caller of the RPC method that invoked `abort` receives the error and can catch it there.
 
 By default, an alarm interrupted by `abort` retries after the Durable Object resets. A Durable Object can run an alarm concurrently with another request, and that request can call `abort` while the alarm is still running.
 

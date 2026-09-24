@@ -10,20 +10,20 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-A [SQLite-backed Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) can capture its storage as a snapshot, and restore that snapshot into another Durable Object. Creating a snapshot does not depend on the size of the source database, and restoring bills the same as normal storage reads and writes.
+You can capture a [SQLite-backed Durable Object's](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) storage as a snapshot, then restore that snapshot into another Durable Object. Creating a snapshot does not depend on the size of the source database, and restoring bills the same as normal storage reads and writes.
 
-Snapshot and restore is the building block for higher-level workflows: seed a preview Durable Object with production data, test a schema migration on a copy, export data without adding load to the primary object, or split a subset of data into its own object.
+Use snapshot and restore as the building block for higher-level workflows, such as seeding a preview Durable Object with production data, testing a schema migration on a copy, exporting data without adding load to the primary object, or splitting a subset of data into its own object.
 
 ## How snapshot and restore works
 
 1. Call the source Durable Object to create a snapshot with [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot).
 2. Pass that snapshot to an RPC method on the destination Durable Object.
-3. The destination schedules the restore with [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore) and calls [`ctx.abort()`](/durable-objects/api/state/#abort).
-4. Call another method on the destination. That call starts a new session backed by the copied storage.
+3. In that method, schedule the restore with [`ctx.onNextSessionRestore()`](/durable-objects/api/state/#onnextsessionrestore) and call [`ctx.abort()`](/durable-objects/api/state/#abort).
+4. Call another method on the destination. That call starts a new session backed by the restored storage.
 
-`ctx.abort()` always throws, including when the restore succeeds, because it immediately terminates the destination's current session and that termination cannot be caught from inside the session. The caller making the RPC call can catch the propagated error. The following examples use a specific abort message so they do not mistake unrelated failures for a successful restore.
+`ctx.abort()` always throws, including when the restore succeeds, because it immediately terminates the destination's current session. Code running in that session cannot catch the error, but you can catch it at the call site that made the RPC call to the destination. Use a specific abort message so your code does not mistake an unrelated failure for a successful restore.
 
-Each example is a complete Worker module and assumes `MY_DURABLE_OBJECT` is configured as a Durable Object binding.
+Each example below is a complete Worker module and assumes you have configured `MY_DURABLE_OBJECT` as a Durable Object binding.
 
 :::note[Alarms are not restored]
 
@@ -162,7 +162,7 @@ export default {
 
 </TypeScriptExample>
 
-The destination's constructor runs before `initializePreview()`. Write constructors that tolerate metadata copied from the source, or derive the object's identity from `ctx.id` instead of stored metadata.
+The destination's constructor runs before `initializePreview()`. Write your constructors so they tolerate metadata copied from the source, or derive the object's identity from `ctx.id` instead of stored metadata.
 
 ## Split a subset of data into a new object
 
@@ -234,10 +234,10 @@ export default {
 
 ## Other uses
 
-Snapshot and restore is also the basis for:
+You can also use snapshot and restore for:
 
 - **Testing a schema migration** — Restore production storage into a scratch Durable Object, run the migration against the copy, and validate the result before applying it to production.
-- **Exporting data** — Restore storage into an independent object and query it there, so expensive reads or formatting do not add load to the primary object.
+- **Exporting data** — Restore storage into an independent object and query it there, so your expensive reads or formatting do not add load to the primary object.
 
 ## Related resources
 
