@@ -14,24 +14,24 @@ In 0.12, `startProcess()` returned a `Process`, and the container kept a table o
 
 Like the 0.12 table, the directories last as long as the container.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then copy the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) into your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then add the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) to your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
 
 ## Start processes
 
-Replace `startProcess()` with `start()`. The command is an array. To keep a 0.12 command string, run it with `["sh", "-c", command]`.
+Replace `startProcess()` with `startProcess()` from the guide, which takes an ID and an array of arguments. To keep a 0.12 command string, run it with `["sh", "-c", command]`.
 
 ```ts
 // Was: const process = await sandbox.startProcess("npm run dev", { processId: "dev" });
-const process = await sandbox.start("dev", ["npm", "run", "dev"]);
+const started = await sandbox.startProcess("dev", ["npm", "run", "dev"]);
 ```
 
-`start()` returns `undefined` when the ID is in use, where 0.12 threw an error.
+`startProcess()` returns `false` when the ID is in use, where 0.12 threw an error.
 
-To pass the 0.12 `cwd` and `env` options, add them to the `exec()` call in `start()`. `exec()` does not inherit the `env` passed to `container.start()`. The 0.12 `sessionId` option becomes `cwd` and `env`, as in [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
+To pass the 0.12 `cwd` and `env` options, add them to the `exec()` call in `startProcess()`. `exec()` does not inherit the `env` passed to `container.start()`. The 0.12 `sessionId` option becomes `cwd` and `env`, as in [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
 
 ## Check status
 
-Replace `getProcess()`, `listProcesses()`, and `Process.getStatus()` with `get()` and `list()`. Each 0.12 status maps to a state:
+Replace `getProcess()` and `Process.getStatus()` with `status()`. Each 0.12 status maps to a state:
 
 | 0.12 status | State                                                         |
 | ----------- | ------------------------------------------------------------- |
@@ -43,19 +43,19 @@ Replace `getProcess()`, `listProcesses()`, and `Process.getStatus()` with `get()
 | `error`     | `exited`, with `exitCode` `127` if the command does not exist |
 | None        | `lost`, when the process ended without recording an exit code |
 
-`start()` throws an error when the container cannot run the process at all. If you need the 0.12 `endTime`, record it in Durable Object storage when the alarm sees the process end.
+`status()` returns `undefined` for an ID that no process used. To replace `listProcesses()`, list the `process:` keys that `startProcess()` stores in Durable Object storage, and call `status()` for each. If you need the 0.12 `endTime`, record it in storage when the alarm sees the process end.
 
 ## Read logs
 
-Replace `getProcessLogs()` and `Process.getLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. Replace `streamProcessLogs()` with `logs()` and `follow` set to `true`.
+Replace `getProcessLogs()`, `Process.getLogs()`, and `streamProcessLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. It returns the output so far for a process that has exited, and follows the output of a running process until it exits.
 
 ```ts
 // Was: const { stdout, stderr } = await sandbox.getProcessLogs("dev");
-const stdout = await (await sandbox.logs("dev", "stdout", false))?.text();
-const stderr = await (await sandbox.logs("dev", "stderr", false))?.text();
+const stdout = await (await sandbox.logs("dev", "stdout"))?.text();
+const stderr = await (await sandbox.logs("dev", "stderr"))?.text();
 ```
 
-The followed stream carries the process's output, not JSON `LogEvent` objects. Remove `parseSSEStream()` and read the text. Follow standard output and standard error as separate streams. The stream ends when the process exits, and `get()` returns the exit code, which 0.12 sent as an `exit` event.
+The stream carries the process's output, not JSON `LogEvent` objects. Remove `parseSSEStream()` and read the text. When the stream ends, `status()` returns the exit code, which 0.12 sent as an `exit` event.
 
 ## Wait
 
@@ -72,21 +72,21 @@ if (result?.state !== "matched") {
 
 The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. Replace `\d` with `[0-9]`, `\s` with `[[:space:]]`, and `\w` with `[[:alnum:]_]`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
 
-Replace `Process.waitForExit()` with the `waitForExit()` method from [Adapt the processes](/sandbox/commands/run-background-processes/#adapt-the-processes). Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/preview-a-web-application/).
+Replace `Process.waitForExit()` with `status()` calls until the state is `exited` or `lost`. Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/preview-a-web-application/).
 
 ## Stop processes and react to exits
 
-Replace `killProcess()` and `Process.kill()` with `stop()`, which signals the whole process group. Stopping `npm run dev` also stops the `node` process it started.
+Replace `killProcess()` and `Process.kill()` with `stop()`, which sends `SIGTERM` to the whole process group. Stopping `npm run dev` also stops the `node` process it started. To send another signal, change `TERM` in `stop()`.
 
-Replace `killAllProcesses()` with a loop that calls `stop()` for each process whose state is `running`. Replace `cleanupCompletedProcesses()` with a loop that deletes the directory of each process whose state is `exited` or `lost`.
+Replace `killAllProcesses()` with a loop that calls `stop()` for each stored process ID. Replace `cleanupCompletedProcesses()` with `rm -rf` on the directory of each process whose state is `exited` or `lost`.
 
-The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12. For more information, refer to [Keep the sandbox running](/sandbox/commands/run-background-processes/#keep-the-sandbox-running).
+The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12.
 
-| 0.12          | Replacement                                                          |
-| ------------- | -------------------------------------------------------------------- |
-| `onStart`     | Your code after `start()` returns                                    |
-| `onExit`      | The alarm's `process.ended` branch                                   |
-| `onOutput`    | Follow the output with `logs()`                                      |
-| `onError`     | Catch errors from `start()`, and handle exit code `127` in the alarm |
-| `autoCleanup` | Delete the directory in the alarm, after handling the exit           |
-| `keepAlive`   | The alarm, which reschedules itself while any process runs           |
+| 0.12          | Replacement                                                    |
+| ------------- | -------------------------------------------------------------- |
+| `onStart`     | Your code after `startProcess()` returns                       |
+| `onExit`      | The alarm's `process.ended` branch                             |
+| `onOutput`    | Follow the output with `logs()`                                |
+| `onError`     | Catch errors from `startProcess()`, and handle exit code `127` |
+| `autoCleanup` | Delete the directory in the alarm, after handling the exit     |
+| `keepAlive`   | The alarm, which reschedules itself while any process runs     |
