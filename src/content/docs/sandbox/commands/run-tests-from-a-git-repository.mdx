@@ -1,6 +1,6 @@
 ---
 title: Run tests from a Git repository
-description: Clone a public Git repository into a Linux sandbox, install its dependencies, and return the test results.
+description: Clone a public Git repository into a fresh Linux sandbox, install its dependencies, and return the test results from your Worker.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -9,70 +9,88 @@ products:
   - workers
   - containers
   - durable-objects
-reviewed: 2026-09-22
+reviewed: 2026-09-24
 ---
 
-import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-Run tests for a public Git repository in a fresh Linux sandbox. This guide clones a tagged repository, installs its dependencies, runs its test script, and removes the Linux instance.
+Run a repository's tests in a fresh Linux sandbox, such as for each pull request or each change an agent makes. The Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the Linux instance.
 
 ## Prerequisites
 
-Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
 
-:::caution
-The example does not authenticate incoming requests. Authenticate callers before production so other people cannot start test runs.
-For more information, refer to [Sandbox security](/sandbox/security/).
-:::
+<Render product="containers" file="docker-setup" />
 
 ## Run the test suite
 
-The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) repository. Its test suite uses Node.js and npm.
-
 <Steps>
 
-1. Replace `src/index.ts` with the following Worker:
+1. Create a `Dockerfile` in the project root with Git and the runtime your tests need. This one adds Git to Debian Trixie with Node.js 24:
 
-   <TypeScriptExample filename="src/index.ts">
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
 
-   ```ts
-   import { DurableObject } from "cloudflare:workers";
+   RUN apt-get update \
+   	&& apt-get install --yes --no-install-recommends ca-certificates git \
+   	&& rm -rf /var/lib/apt/lists/*
 
-   const repository =
-   	"https://github.com/cloudflare/workers-oauth-provider.git";
-   const revision = "v0.0.6";
-   const workspace = "/workspace/repository";
+   CMD ["sleep", "infinity"]
+   ```
 
-   type ProcessResult = {
-   	stage: "setup" | "clone" | "install" | "test";
-   	stdout: string;
-   	stderr: string;
-   	exitCode: number;
-   };
+   `sleep infinity` keeps the container running between commands.
 
-   export class MyContainer extends DurableObject<Env> {
-   	private get container(): Container {
-   		const container = this.ctx.container;
+2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry:
 
-   		if (!container) {
-   			throw new Error("The container binding is not configured");
-   		}
+   <WranglerConfig>
 
-   		return container;
+   ```jsonc
+   {
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"tests": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+3. Add a method to your Durable Object that clones a repository, installs its dependencies, and runs its tests:
+
+   ```ts title="src/index.ts"
+   async runTests(repository: string, revision: string) {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
    	}
 
-   	private async run(
-   		stage: ProcessResult["stage"],
-   		argv: string[],
-   		cwd?: string,
-   	): Promise<ProcessResult> {
+   	container.start({
+   		image: container.images.tests,
+   		enableInternet: true,
+   	});
+
+   	const decoder = new TextDecoder();
+   	const run = async (stage: string, argv: string[], cwd?: string) => {
    		// `timeout` stops the command and every process it started.
-   		const process = await this.container.exec(
+   		const process = await container.exec(
    			["timeout", "--kill-after=5", "600", ...argv],
-   			cwd ? { cwd } : undefined,
+   			{ cwd },
    		);
    		const output = await process.output();
-   		const decoder = new TextDecoder();
 
    		return {
    			stage,
@@ -80,81 +98,61 @@ The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oa
    			stderr: decoder.decode(output.stderr),
    			exitCode: output.exitCode,
    		};
-   	}
+   	};
 
-   	async runTests(): Promise<ProcessResult> {
-   		try {
-   			this.container.start({
-   				image: "cloudflare/debian-trixie",
-   				entrypoint: ["sleep", "infinity"],
-   				enableInternet: true,
-   			});
+   	try {
+   		const clone = await run("clone", [
+   			"git",
+   			"clone",
+   			"--depth=1",
+   			`--branch=${revision}`,
+   			repository,
+   			"/workspace",
+   		]);
 
-   			const update = await this.run("setup", ["apt-get", "update"]);
+   		if (clone.exitCode !== 0) {
+   			return clone;
+   		}
 
-   			if (update.exitCode !== 0) {
-   				return update;
-   			}
+   		const install = await run(
+   			"install",
+   			["npm", "ci", "--no-audit", "--no-fund"],
+   			"/workspace",
+   		);
 
-   			const installGit = await this.run("setup", [
-   				"apt-get",
-   				"install",
-   				"--yes",
-   				"git",
-   			]);
+   		if (install.exitCode !== 0) {
+   			return install;
+   		}
 
-   			if (installGit.exitCode !== 0) {
-   				return installGit;
-   			}
-
-   			const clone = await this.run("clone", [
-   				"git",
-   				"clone",
-   				"--depth",
-   				"1",
-   				"--branch",
-   				revision,
-   				repository,
-   				workspace,
-   			]);
-
-   			if (clone.exitCode !== 0) {
-   				return clone;
-   			}
-
-   			const installDependencies = await this.run(
-   				"install",
-   				["npm", "ci", "--no-audit", "--no-fund"],
-   				workspace,
-   			);
-
-   			if (installDependencies.exitCode !== 0) {
-   				return installDependencies;
-   			}
-
-   			return await this.run(
-   				"test",
-   				["npm", "test", "--", "--silent"],
-   				workspace,
-   			);
-   		} finally {
-   			if (this.container.running) {
-   				await this.container.destroy();
-   			}
+   		return await run("test", ["npm", "test", "--", "--silent"], "/workspace");
+   	} finally {
+   		if (container.running) {
+   			await container.destroy();
    		}
    	}
    }
+   ```
 
+   Each stage runs under GNU coreutils `timeout`. A stage that runs longer than 10 minutes stops, together with every process it started, and returns exit code `124`. The `finally` block stops the Linux instance after the run.
+
+   `enableInternet: true` lets `git` and `npm` download the repository and its packages. It also lets the repository's install and test scripts reach the Internet, so do not pass credentials into this sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+
+4. Add a route to your Worker that runs the tests in a new sandbox:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		if (request.method !== "POST") {
-   			return new Response("Send a POST request to run the tests", {
-   				status: 405,
-   			});
+   			return new Response("Not found", { status: 404 });
    		}
 
    		const sandbox = env.MY_CONTAINER.getByName(crypto.randomUUID());
-   		const result = await sandbox.runTests();
+   		const result = await sandbox.runTests(
+   			"https://github.com/cloudflare/workers-oauth-provider.git",
+   			"v0.0.6",
+   		);
 
    		return Response.json(result, {
    			status: result.exitCode === 0 ? 200 : 500,
@@ -165,15 +163,13 @@ The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oa
 
    </TypeScriptExample>
 
-   The Debian image includes Node.js 24 but does not include Git. The sandbox installs Git before cloning the repository. Each request gets a new sandbox. The `finally` block stops its Linux instance after the test run.
+   A random sandbox name gives each run a new Linux instance, so one run cannot see files from another. The example runs the tests of version `v0.0.6` of Cloudflare's public [`workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) repository. Replace the repository, revision, and `npm` commands with your own. `exec()` does not start a shell, so keep each argument in its own array entry.
 
-   `run()` wraps each command in GNU coreutils `timeout`. A stage that runs longer than 10 minutes stops, together with every process it started, and returns exit code `124`.
-
-2. Deploy the Worker:
+5. Deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-3. Send a `POST` request to the `workers.dev` URL that Wrangler prints:
+6. Send a `POST` request to the `workers.dev` URL that Wrangler prints:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev --request POST
@@ -183,30 +179,20 @@ The example uses version `v0.0.6` of Cloudflare's public [`cloudflare/workers-oa
 
    ```json output
    {
-     "stage": "test",
-     "stdout": "...\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n...",
-     "stderr": "",
-     "exitCode": 0
+   	"stage": "test",
+   	"stdout": "...\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n...",
+   	"stderr": "",
+   	"exitCode": 0
    }
    ```
 
+   When a stage fails, the Worker responds with `500`, and `stage` names the stage that failed.
+
 </Steps>
 
-An exit code of `0` means the test script completed successfully. If setup, cloning, dependency installation, or testing returns a nonzero exit code, the Worker responds with `500`. The `stage` field identifies the failed operation.
+## Related resources
 
-:::caution[Repository code can access the Internet]
-`enableInternet: true` lets setup and test processes reach the public Internet. Installation and test scripts can make outbound requests. Do not pass credentials into this sandbox.
-:::
-
-## Adapt the test run
-
-To use another repository, change `repository` and `revision`. Replace the `npm ci` and `npm test` argument arrays with the commands for your project. Keep the executable and each argument in separate array entries because `exec()` does not start a shell.
-
-The example buffers standard output and standard error with `output()`. For test suites with large output, consume both streams instead. For more information, refer to [Execute commands](/containers/guides/execute-commands/).
-
-This example covers public repositories. Do not place an access token in the repository URL because code in the sandbox can read it.
-
-## Next steps
-
-- To keep installed dependencies between Linux instances, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
-- To let code call a protected service without receiving its credential, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
+- [Stream command output](/sandbox/commands/stream-command-output/): show test output while the tests run.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep installed dependencies between runs.
+- [Handle outbound traffic](/containers/guides/outbound-traffic/): allow only the Git server and package registry instead of the whole Internet.
+- [Sandbox security](/sandbox/security/#code-can-read-what-you-put-in-its-sandbox): why an access token in a clone URL is readable by the repository's code.
