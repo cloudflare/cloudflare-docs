@@ -163,7 +163,7 @@ Code in a preview runs in the visitor's browser under your Worker's hostname. Se
 
    Each preview name maps to one Durable Object and one Linux instance. The web server is the instance's main process, so it keeps running between requests.
 
-   The Durable Object sets a five-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#set-the-timeout-on-every-request).
+   The Durable Object sets a five-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
 
 2. Deploy the Worker:
 

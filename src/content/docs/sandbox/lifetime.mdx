@@ -28,13 +28,13 @@ A Linux instance keeps running while its Durable Object is active. The Durable O
 
 After the Durable Object becomes inactive, the instance keeps running for the time set with [`setInactivityTimeout()`](/durable-objects/api/container/#setinactivitytimeout), up to 6 hours. A request that arrives within that time reaches the same instance, with its files and processes. When the time ends, Cloudflare stops the instance. Without a timeout, Cloudflare stops the instance shortly after the Durable Object becomes inactive.
 
-Code that runs inside the instance does not count as activity. A build, a test suite, or an agent that works longer than the inactivity timeout stops with the instance when no requests arrive. To keep long work running, schedule a Durable Object [alarm](/durable-objects/api/alarms/) that runs more often than the timeout and checks the work. [Run background processes](/sandbox/commands/run-background-processes/) uses an alarm that runs every minute.
+Code that runs inside the instance does not count as activity. A build, a test suite, or an agent that works longer than the inactivity timeout stops with the instance when no requests arrive. A Durable Object [alarm](/durable-objects/api/alarms/) that runs more often than the timeout and checks the work keeps the instance running until the work ends. [Run background processes](/sandbox/commands/run-background-processes/) uses an alarm that runs every minute.
 
-## Set the timeout on every request
+## The timeout does not survive a restart
 
 The inactivity timeout belongs to the running Durable Object, not to the sandbox name. A Durable Object can restart while its Linux instance keeps running, for example between two alarms. After a restart, the Durable Object no longer has the timeout, and the instance stops shortly after the Durable Object next becomes inactive.
 
-Call `setInactivityTimeout()` on every request that uses the instance, including alarms. A timeout set only after `start()` lasts until the first restart.
+A timeout set only after `start()` therefore lasts until the first restart. A timeout set on every request that uses the instance, including alarms, is in place whenever the Durable Object becomes inactive. The sandbox examples set it on every request for this reason.
 
 ## What stops an instance
 

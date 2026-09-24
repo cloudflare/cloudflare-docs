@@ -110,7 +110,7 @@ Creates a file, or truncates an existing file, then streams `content` into it.
 - The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
 - An error from the `content` stream rejects the call unchanged.
 
-When other code must never read a partial file, write to a temporary path and rename it:
+`rename()` replaces an existing destination in one step, so a file written to a temporary path and then renamed is never visible partially written:
 
 ```ts
 await files.writeFile(`${path}.partial`, content, { cwd });
@@ -149,7 +149,7 @@ Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandb
 - The method does not recurse or return metadata for each entry.
 - A file at `path` rejects with `ENOTDIR`. An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
 
-To list a tree, walk it. This walk does not follow symbolic links to directories:
+A recursive listing is a walk over `readDirectory()`. This walk does not follow symbolic links to directories:
 
 ```ts
 import type { Files } from "@cloudflare/sandbox";

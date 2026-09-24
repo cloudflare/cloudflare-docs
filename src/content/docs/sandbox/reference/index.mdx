@@ -42,11 +42,9 @@ Every class in the package has these requirements. A class page lists any others
 - The Worker has the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag. The package reads Linux error names through `node:os`.
 - The container is running when a method is called.
 
-## Set up a project
+## Example configuration
 
-The how-to guides that use the package add these three pieces to a Worker with a Durable Object that starts a container.
-
-A `Dockerfile` copies the helper into the base image your code needs. This one uses Debian Trixie with Node.js 24 and keeps the container running with `sleep infinity`:
+This configuration meets every requirement. The `Dockerfile` copies the helper into a Debian Trixie image with Node.js 24, and `sleep infinity` keeps the container running:
 
 ```dockerfile title="Dockerfile"
 FROM node:24-trixie-slim
@@ -57,7 +55,7 @@ RUN mkdir /workspace
 CMD ["sleep", "infinity"]
 ```
 
-The Wrangler configuration turns on `nodejs_compat` and builds the `Dockerfile` as a named image:
+The Wrangler configuration sets `nodejs_compat` and builds the `Dockerfile` as the image named `workspace`:
 
 <WranglerConfig>
 
@@ -80,7 +78,7 @@ The Wrangler configuration turns on `nodejs_compat` and builds the `Dockerfile` 
 
 </WranglerConfig>
 
-The Durable Object starts the built image, then passes the container to a class from the package:
+The Durable Object starts the `workspace` image and passes the container to a class from the package:
 
 <TypeScriptExample filename="src/index.ts">
 
