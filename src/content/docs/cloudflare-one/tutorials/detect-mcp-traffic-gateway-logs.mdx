@@ -314,7 +314,7 @@ When analyzing Gateway logs, it is helpful to differentiate between two types of
 
 | Traffic type       | Characteristics                                                                                      | Risk level  | Action                    |
 | ------------------ | ---------------------------------------------------------------------------------------------------- | ----------- | ------------------------- |
-| MCP Portal traffic | `httpHost` matches your portal domain (for example, `mcp.yourcompany.com` or `mcp-portal.pages.dev`) | Authorized  | Monitor                   |
+| MCP Portal traffic | `httpHost` matches your portal domain (for example, `mcp.yourcompany.com`) | Authorized  | Monitor                   |
 | Shadow MCP traffic | `httpHost` does not match any portal domain (for example, `mcp.datadog.com`, `api.stripe.com/mcp`)   | Investigate | Block, redirect or review |
 
 Extend the query processing from [Process the query results](#3-process-the-query-results) to classify traffic by comparing hostnames against your list of approved portal domains:
@@ -324,7 +324,7 @@ Extend the query processing from [Process the query results](#3-process-the-quer
 ```ts
 const portalDomains = [
 	"mcp.yourcompany.com",
-	"mcp-portal.pages.dev",
+	"mcp-portal.example.com",
 	"approved-mcp.example.com",
 ];
 
