@@ -1,0 +1,194 @@
+---
+title: Clone a private repository
+description: Clone a private GitHub repository into a Linux sandbox without giving the sandbox the access token.
+pcx_content_type: how-to
+sidebar:
+  order: 1.5
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Clone a private repository into a sandbox, such as for an agent that works on your code, while the access token stays in your Worker. A token in the clone URL would be readable by every command in the sandbox. Instead, the Durable Object intercepts Git's HTTPS requests to `github.com` and delivers them to an entrypoint in your Worker, which checks each request and adds the token.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+- A GitHub access token with read access to the repository's contents.
+
+<Render product="containers" file="docker-setup" />
+
+## Clone the repository
+
+<Steps>
+
+1. Create a `Dockerfile` in the project root with Git:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install --yes --no-install-recommends ca-certificates git \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   CMD ["sleep", "infinity"]
+   ```
+
+2. In `wrangler.jsonc`, name the repository, declare the token as a secret, and build the `Dockerfile` as a named image. Replace `<OWNER>/<REPOSITORY>` with your repository:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"REPOSITORY": "<OWNER>/<REPOSITORY>",
+   	},
+   	"secrets": {
+   		"required": ["GITHUB_TOKEN"],
+   	},
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"git": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+3. Store the token when Wrangler prompts for it:
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put GITHUB_TOKEN" />
+
+4. Add an entrypoint to your Worker that accepts only the requests that fetch the repository, and adds the token:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   export class GitGateway extends WorkerEntrypoint<Env> {
+   	async fetch(request: Request): Promise<Response> {
+   		const url = new URL(request.url);
+   		const repository = `/${this.env.REPOSITORY}.git`;
+   		const fetchesRepository =
+   			(request.method === "GET" &&
+   				url.pathname === `${repository}/info/refs` &&
+   				url.search === "?service=git-upload-pack") ||
+   			(request.method === "POST" &&
+   				url.pathname === `${repository}/git-upload-pack`);
+
+   		if (url.hostname !== "github.com" || !fetchesRepository) {
+   			return new Response("Forbidden", { status: 403 });
+   		}
+
+   		const headers = new Headers(request.headers);
+   		const credentials = btoa(`x-access-token:${this.env.GITHUB_TOKEN}`);
+   		headers.set("Authorization", `Basic ${credentials}`);
+
+   		return fetch(new Request(request, { headers }));
+   	}
+   }
+   ```
+
+   </TypeScriptExample>
+
+   `git-upload-pack` serves clones and fetches. The entrypoint rejects every other request, including `git-receive-pack` and other repositories, so code in the sandbox cannot push or read other repositories, even when the token allows it.
+
+5. Add a method to your Durable Object that intercepts `github.com` and clones the repository:
+
+   ```ts title="src/index.ts"
+   async clone(): Promise<string> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	await container.interceptOutboundHttps(
+   		"github.com",
+   		this.ctx.exports.GitGateway,
+   	);
+
+   	if (!container.running) {
+   		container.start({
+   			image: container.images.git,
+   			enableInternet: false,
+   		});
+   	}
+
+   	const process = await container.exec(
+   		[
+   			"git",
+   			"clone",
+   			"--depth=1",
+   			`https://github.com/${this.env.REPOSITORY}.git`,
+   			"/workspace",
+   		],
+   		{
+   			env: {
+   				GIT_SSL_CAINFO: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   			},
+   		},
+   	);
+   	const output = await process.output();
+
+   	return new TextDecoder().decode(output.stderr);
+   }
+   ```
+
+   The intercept terminates TLS with a certificate that the container's CA certificate signs. Git reads that certificate from `GIT_SSL_CAINFO`, and prints its progress to standard error. With `enableInternet: false`, the container can reach only the hostnames you intercept.
+
+6. Add a route to your Worker that clones the repository:
+
+   ```ts title="src/index.ts"
+   if (url.pathname === "/clone" && request.method === "POST") {
+   	const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   	return new Response(await sandbox.clone());
+   }
+   ```
+
+   Authenticate callers first, so other people cannot read the repository through the sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+
+7. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+8. Send a `POST` request to `/clone` on the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/clone --request POST
+   ```
+
+   ```txt output
+   Cloning into '/workspace'...
+   ```
+
+   The repository is in `/workspace`, and `git remote get-url origin` prints the URL without a token. A `git push` from the sandbox fails with `403`.
+
+</Steps>
+
+## Related resources
+
+- [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/): install and test a cloned repository.
+- [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/): the same pattern for an API.
+- [`interceptOutboundHttps`](/durable-objects/api/container/#interceptoutboundhttps)
