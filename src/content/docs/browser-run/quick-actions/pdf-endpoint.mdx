@@ -17,7 +17,7 @@ The `/pdf` endpoint instructs the browser to generate a PDF of a webpage or cust
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf
 ```
 
 ## Required fields
@@ -41,7 +41,7 @@ You must provide either `url` or `html`:
 Navigate to `https://example.com/` and inject custom CSS and an external stylesheet. Then return the rendered page as a PDF.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -98,7 +98,7 @@ export default {
 If you have raw HTML you want to generate a PDF from, use the `html` option. You can still apply custom styles using the `addStyleTag` parameter.
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -128,7 +128,7 @@ Navigate to `https://example.com`, setting additional HTTP headers and configuri
 The `goToOptions` parameter exposes most of [Puppeteer's API](https://pptr.dev/api/puppeteer.gotooptions).
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -153,7 +153,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 The options `rejectResourceTypes` and `rejectRequestPattern` can be used to block requests during rendering. The opposite can also be done, _only_ allow certain requests using `allowResourceTypes` and `allowRequestPattern`.
 
 ```bash
-curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf \
+curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -169,7 +169,7 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-r
 You can customize page headers and footers with HTML templates using the `headerTemplate` and `footerTemplate` options. Enable `displayHeaderFooter` to include them in your output. This example generates an A5 PDF with a branded header, a footer message, and page numbering.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -193,7 +193,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 You can include dynamic placeholders such as `title`, `date`, `pageNumber`, and `totalPages` in the header or footer to display metadata on each page. This example produces an A4 PDF with a company-branded header, current date and title, and page numbering in the footer.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/pdf' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

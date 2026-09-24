@@ -85,7 +85,7 @@ The recording is finalized when the browser session closes, whether you call `br
 When connecting to Browser Run from any environment using the [CDP endpoint](/browser-run/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
 
 ```txt
-wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?recording=true&keep_alive=600000
 ```
 
 For example, to enable session recording in an MCP client, add `recording=true` to the `--wsEndpoint` URL in your client configuration:
@@ -93,12 +93,12 @@ For example, to enable session recording in an MCP client, add `recording=true` 
 ```json
 {
 	"mcpServers": {
-		"browser-rendering": {
+		"browser-run": {
 			"command": "npx",
 			"args": [
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?recording=true&keep_alive=600000",
 				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			]
 		}

@@ -18,7 +18,7 @@ The `/crawl` endpoint is available via the REST API. [Create a custom API Token]
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<account_id>/browser-rendering/crawl
+https://api.cloudflare.com/client/v4/accounts/<account_id>/browser-run/crawl
 ```
 
 ## Required fields
@@ -50,7 +50,7 @@ Users on the Workers Free plan are subject to additional crawl-specific restrict
 Send a `POST` request with a `url` to start a crawl job. The API responds immediately with a job `id` you will use to retrieve results. Refer to [optional parameters](/browser-run/quick-actions/crawl-endpoint/#optional-parameters) for additional customization options.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -72,7 +72,7 @@ Example response:
 To check the status or request the results of your crawl job, use the job `id` you received:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -96,7 +96,7 @@ async function waitForCrawl(accountId, jobId, apiToken) {
 
 	for (let i = 0; i < maxAttempts; i++) {
 		const response = await fetch(
-			`https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-rendering/crawl/${jobId}?limit=1`,
+			`https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-run/crawl/${jobId}?limit=1`,
 			{
 				headers: {
 					Authorization: `Bearer ${apiToken}`,
@@ -127,7 +127,7 @@ Once the job reaches a terminal status, fetch the full results without the `limi
 Example with query parameters:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -179,7 +179,7 @@ This information is only available in the crawl results (step 2) — the [initia
 To view only errored records, filter by `status=errored`:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=errored' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/{job_id}?status=errored' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -190,7 +190,7 @@ The record's `status` field contains the HTTP status code returned by the origin
 To cancel a crawl job that is currently in progress, use the job `id` you received:
 
 ```bash
-curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -232,7 +232,7 @@ When `render` is `true` (the default), crawl jobs also support all standard Brow
 The `skipped` status applies to URLs that the crawler discovered and evaluated individually, but then chose not to fetch because they were excluded by your crawl configuration, such as `includeExternalLinks`, `includeSubdomains`, or `includePatterns`/`excludePatterns`. To view these URLs, query the crawl job results with `status=skipped`.
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=skipped' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/{job_id}?status=skipped' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -249,7 +249,7 @@ Crawls that use `render: true` use a headless browser and are billed under typic
 ### Example with all optional parameters
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -287,7 +287,7 @@ Visit the [Browser Run API reference](/api/resources/browser_rendering/subresour
 Crawl only documentation pages and exclude specific sections:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -312,7 +312,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default. Refer to the [`/json` endpoint](/browser-run/quick-actions/json-endpoint/) to learn more.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -348,7 +348,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Fetch static HTML without rendering for faster crawling of static sites:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -364,7 +364,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Crawl pages behind HTTP authentication or with custom headers:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -380,7 +380,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 You can also use cookies or custom headers for token-based authentication:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -397,7 +397,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Crawl single-page applications that load content dynamically:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -420,7 +420,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Speed up crawling by blocking images and media. `rejectResourceTypes` is only available when `render` is `true` (the default).
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -516,7 +516,7 @@ This means:
 To crawl a site that disallows AI training but allows search, set `crawlPurposes` to only the purposes you need:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -543,7 +543,7 @@ A crawl is rejected when your declared `contentUse` level is more permissive tha
 To crawl a site that sets `use=reference`, set `contentUse` to `reference`:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

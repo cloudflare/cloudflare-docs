@@ -35,12 +35,12 @@ Add to `claude_desktop_config.json` (Claude Desktop) or `~/.claude.json` (Claude
 ```json
 {
 	"mcpServers": {
-		"browser-rendering": {
+		"browser-run": {
 			"command": "npx",
 			"args": [
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?keep_alive=600000",
 				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			]
 		}
@@ -55,13 +55,13 @@ Add to `.opencode.jsonc`:
 ```json
 {
 	"mcp": {
-		"browser-rendering": {
+		"browser-run": {
 			"type": "local",
 			"command": [
 				"npx",
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?keep_alive=600000",
 				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			],
 			"enabled": true
@@ -77,12 +77,12 @@ Add to `~/.cursor/mcp.json`:
 ```json
 {
 	"mcpServers": {
-		"browser-rendering": {
+		"browser-run": {
 			"command": "npx",
 			"args": [
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?keep_alive=600000",
 				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			]
 		}
