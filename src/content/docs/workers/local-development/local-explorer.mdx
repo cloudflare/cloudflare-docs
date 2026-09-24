@@ -4,7 +4,7 @@ title: Local Explorer
 sidebar:
   order: 5
 head: []
-description: Browse and edit local binding data, and invoke email or scheduled handlers from your browser during development.
+description: Browse and edit local binding data, and invoke scheduled handlers from your browser during development.
 products:
   - workers
 ---
@@ -30,7 +30,7 @@ Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflar
 
 2. Open Local Explorer in your browser:
    - **Wrangler**: press `e` in your terminal.
-   - **Vite plugin**: go directly to `/cdn-cgi/local/explorer` using your development server route and port.
+   - **Vite plugin**: Navigate directly to `/cdn-cgi/local/explorer` on your dev server's route and port.
 </Steps>
 
 Local Explorer is available by default and detects the bindings defined in your [Wrangler configuration](/workers/wrangler/configuration/) automatically.
@@ -96,19 +96,6 @@ To retrieve the OpenAPI spec:
 ```sh
 curl http://localhost:8787/cdn-cgi/local/explorer/api
 ```
-
-### Dispatch a scheduled invocation
-
-Send a `POST` request to `/local/scheduled` to invoke the `scheduled()` handler for a Worker. The `worker` query parameter must match the exact Worker name available to Local Explorer.
-
-```sh
-curl -X POST \
-  "http://localhost:8787/cdn-cgi/local/explorer/api/local/scheduled?worker=my-worker" \
-  -H "Content-Type: application/json" \
-  --data '{"cron":"0 * * * *","scheduled_time":1745856238000}'
-```
-
-The `cron` field is required. The optional `scheduled_time` field sets `controller.scheduledTime` with epoch milliseconds. The response includes the handler outcome and `noRetry()` status.
 
 ### Use with AI agents
 
