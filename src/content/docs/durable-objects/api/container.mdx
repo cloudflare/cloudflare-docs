@@ -450,6 +450,8 @@ await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
 await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 ```
 
+In a container started with `enableInternet: false`, DNS answers from the intercepts instead of a public resolver. `A` and `AAAA` lookups for an intercepted hostname get a placeholder address, so the request reaches the intercept. `interceptAllOutboundHttp` and the `*` hostname make every name resolve, even names that do not exist. IP address and CIDR targets add no DNS answers. Other lookups time out, including every lookup before the first hostname intercept.
+
 #### Parameters
 
 - `target` (string): A hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
