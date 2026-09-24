@@ -1,80 +1,85 @@
 ---
-title: Set up Claude Managed Agents
-pcx_content_type: tutorial
-difficulty: Beginner
+title: Run Claude Managed Agents in a sandbox
 description: Run Claude Managed Agents with sandboxes on Dynamic Workers and Containers in your Cloudflare account.
+pcx_content_type: how-to
 sidebar:
   order: 7
+  label: Claude Managed Agents
 products:
   - sandbox
   - containers
   - agents
 tags:
   - AI
+reviewed: 2026-09-24
 ---
 
 import { LinkButton } from "~/components";
 
-Cloudflare provides a self-managed environment for [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview). The agent loop runs on the Anthropic platform, while Cloudflare provides the runtime — sandboxes, egress control, browser access, email, and custom tools — that the agent's actions execute in.
-
-This integration ships as an open-source deployment template. Fork the repo, deploy it to your Cloudflare account, and customize it as needed.
+[Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview) runs its agent loop on the Anthropic platform. A self-managed environment moves the place where the agent's actions run into your Cloudflare account. Cloudflare publishes an open-source template for that environment: fork it, deploy it to your account, and change it as you need.
 
 <LinkButton variant="secondary" href="https://github.com/cloudflare/claude-managed-agents">
-	Get Started
+	Get the template
 </LinkButton>
 
-## What you get
-
-Deploy a Workers-based control plane that gives you:
-
-- **Two sandbox backends** — Each agent can run on a full MicroVM ([Containers](/containers/)) or a lightweight isolate ([Dynamic Workers](/dynamic-workers/)). MicroVMs give the agent a full Linux environment with bash and arbitrary processes. Isolates cold-start in milliseconds and costs a fraction of a container session.
-- **Private service connectivity** — Connect agents to private internal services over [Workers VPC](/workers-vpc/) and [Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) without exposing them to the public internet.
-- **Egress control** — Run all agent traffic through customizable proxies. Inject credentials into outbound requests without the agent ever seeing them, restrict access to specific domains, or write arbitrary proxy middleware.
-- **Agent Email** — Give each agent session its own email address for sending and receiving messages with [Cloudflare Email Service](/email-service).
-- **Browser Run tools** — Give agents headless browsers powered by [Browser Run](/browser-run/) for web fetches, screenshots, and CDP control. Session recordings provide an audit trail of every browser action.
-- **Image generation** — Generate images with [Workers AI](/workers-ai/).
-- **Custom tools** — Extend agents with your own tools by adding a function definition to a single file. Tools run in the Workers runtime with access to all your bindings. No additional infrastructure required.
-- **Dashboard** — A built-in UI for managing agents, viewing sessions, inspecting logs, and SSH-ing into running MicroVM sandboxes.
+:::caution
+The template is alpha software. It is not yet stable and may contain bugs.
+:::
 
 ## How it works
 
-When a Claude agent starts a session, Anthropic sends a webhook to the Workers-based control plane running in your Cloudflare account. The control plane gives each session its own sandbox, routes outbound traffic through a per-session egress policy, and persists state across session sleeps.
+When an agent session starts or ends, Anthropic sends a webhook to a Worker that the template deploys in your account. The Worker gives each session its own sandbox, applies an egress policy to its outbound traffic, saves the sandbox state while the session sleeps, and shuts the sandbox down when the session ends.
 
-Anthropic describes this as decoupling the brain from the hands — the agent loop runs on Anthropic (the brain), but the infrastructure for running and executing code (the hands) runs on Cloudflare.
+Each agent runs in one of two sandbox types:
 
-## When to use this
+- A Linux sandbox on [Containers](/containers/) gives the agent a shell and any process it needs to run. The template builds these sandboxes with [Sandbox SDK 0.x](/sandbox/sdk/).
+- A [Dynamic Worker](/dynamic-workers/) starts in milliseconds and costs less than a container session, but runs code in the Workers runtime without a Linux shell or processes.
+
+For more information about the trade-offs, refer to [Choose a sandbox environment](/sandbox/choose-an-environment/).
+
+## What the template adds
+
+The template also gives agents access to other Cloudflare products:
+
+- Agents reach private services over [Workers VPC](/workers-vpc/) and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) without exposing those services to the Internet.
+- Outbound traffic passes through proxies that you configure. A proxy can add credentials to requests without the agent seeing them, restrict the domains an agent can reach, or run your own code on each request.
+- Each session can have its own email address for sending and receiving messages with [Email Service](/email-service/).
+- Agents can use headless browsers from [Browser Run](/browser-run/) to fetch pages, take screenshots, and control a browser over the Chrome DevTools Protocol.
+- Agents can generate images with [Workers AI](/workers-ai/).
+- You add a tool by adding a function to one file. Tools run in the Worker with access to all of its bindings.
+- A dashboard lists agents and sessions, shows logs, and opens a shell in a running Linux sandbox.
+
+## When to use it
 
 Use a self-managed Cloudflare environment when you need:
 
 - Control over the sandbox infrastructure your agents run in
 - Secure connections to private internal services
 - Custom egress policies for credential injection and domain restrictions
-- Custom tools that use Cloudflare bindings (R2, D1, KV, Vectorize, and others)
-- The ability to choose between MicroVM and isolate backends per agent
+- Custom tools that use Cloudflare bindings, such as R2, D1, KV, and Vectorize
+- A choice between Linux sandboxes and Dynamic Workers for each agent
 
-## Get started
+## Deploy the template
 
-Follow the [onboarding guide](https://github.com/cloudflare/claude-managed-agents#onboarding-guide) in the repository to deploy the control plane to your account. The guide walks through creating an Anthropic environment, setting secrets, provisioning storage, deploying the Worker, and configuring webhooks.
+Follow the [onboarding guide](https://github.com/cloudflare/claude-managed-agents#onboarding-guide) in the repository. You can deploy with a **Deploy to Cloudflare** button, which builds the template in Workers Builds, or run `npm run deploy` from your terminal. The guide walks through creating an Anthropic environment and webhook, setting secrets, applying D1 migrations, provisioning R2 credentials for snapshots, and securing the dashboard.
 
 :::note
-
-You need a Workers Paid plan or Enterprise account. [Containers](/containers/) (used by MicroVM sandboxes) and Worker Loader bindings (used by isolate code execution and egress proxies) require the paid plan.
-
+You need a Workers Paid plan or an Enterprise account. Linux sandboxes use [Containers](/containers/), and Dynamic Workers and the egress proxies use Worker Loader bindings. Both require the Workers Paid plan.
 :::
 
-## Key documentation
+## Template documentation
 
-The repository includes detailed documentation on each capability:
+The repository documents each capability:
 
 | Topic | What it covers |
 | --- | --- |
-| [Connecting to private services](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/connecting-to-private-services.md) | Reach services in other clouds, on-prem, or on your laptop with Workers VPC bindings |
-| [Applying egress policies](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/applying-egress-policies.md) | Inject credentials and lock down agent sessions. Set up allow/deny lists, header injection, custom Worker proxies, and VPC routing |
-| [Isolate vs VM-based sandboxes](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/isolate-vs-vm-sandboxes.md) | Pick the best agent execution environment |
-| [Agent email](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/agent-email.md) | Give agents their own email addresses and sending abilities |
-| [Browser rendering tools](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/browser-rendering-tools.md) | Observable agent browser interactions with Browser Run |
-| [Adding custom tools](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/adding-custom-tools.md) | New tools are declared in a single file — [`src/tools/custom-tools.ts`](https://github.com/cloudflare/claude-managed-agents/blob/main/src/tools/custom-tools.ts) |
-| [Customizing sandboxes](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/customizing-sandboxes.md) | Change `Dockerfile` and `instance_type` knobs for the MicroVM backend |
-| [Snapshots and state persistence](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/snapshots-and-state-persistence.md) | State persistence across both sandbox types |
-| [Architecture](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/architecture.md) | Request lifecycle from webhook ingress through dispatch to either sandbox backend, and every Worker binding the control plane uses |
-| [Securing access](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/securing-access.md) | Secure access to the CMA control plane |
+| [Connecting to private services](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/connecting-to-private-services.md) | Reach services in other clouds, on-premises, or on your laptop with Workers VPC bindings |
+| [Applying egress policies](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/applying-egress-policies.md) | Allow and deny lists, header injection, custom Worker proxies, and VPC routing |
+| [Choosing a sandbox type](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/isolate-vs-vm-sandboxes.md) | When to run an agent in a Dynamic Worker or a Linux sandbox |
+| [Agent email](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/agent-email.md) | Email addresses and sending for agents |
+| [Browser tools](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/browser-rendering-tools.md) | Browser Run tools for agents |
+| [Adding custom tools](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/adding-custom-tools.md) | Declaring new tools in [`src/tools/custom-tools.ts`](https://github.com/cloudflare/claude-managed-agents/blob/main/src/tools/custom-tools.ts) |
+| [Customizing sandboxes](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/customizing-sandboxes.md) | The `Dockerfile` and `instance_type` of Linux sandboxes |
+| [Snapshots and state persistence](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/snapshots-and-state-persistence.md) | How both sandbox types keep their state while a session sleeps |
+| [Architecture](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/architecture.md) | The request path from webhook to sandbox, and every binding the Worker uses |
+| [Securing access](https://github.com/cloudflare/claude-managed-agents/blob/main/docs/securing-access.md) | Securing the dashboard and API |
