@@ -1,0 +1,231 @@
+---
+title: Run Python code
+description: Run Python code, such as code a model writes, in a Linux sandbox with the Python version and packages you choose, and return its output.
+pcx_content_type: how-to
+sidebar:
+  order: 1.5
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Run Python code in a Linux sandbox and return what it prints, such as analysis code that a model writes. The image sets the Python version and the packages the code can import, and each run's files stay in the sandbox for the next run.
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
+
+<Render product="containers" file="docker-setup" />
+
+## Run Python code
+
+<Steps>
+
+1. Create a `Dockerfile` in the project root with Python and the packages the code can import:
+
+   ```dockerfile title="Dockerfile"
+   FROM python:3.13-slim
+
+   RUN pip install --no-cache-dir numpy pandas matplotlib
+
+   WORKDIR /workspace
+
+   CMD ["sleep", "infinity"]
+   ```
+
+   Installing packages in the image makes them available as soon as the sandbox starts, without Internet access in the sandbox.
+
+2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry, then generate types:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"python": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+3. Add a method to your Durable Object that runs Python code:
+
+   ```ts title="src/index.ts"
+   async runPython(code: string) {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	if (!container.running) {
+   		container.start({
+   			image: container.images.python,
+   			enableInternet: false,
+   		});
+   	}
+
+   	await container.setInactivityTimeout(10 * 60 * 1000);
+
+   	// `python3 -` reads the code from standard input.
+   	const process = await container.exec(
+   		["timeout", "--kill-after=5", "60", "python3", "-"],
+   		{ stdin: new Response(code).body!, cwd: "/workspace" },
+   	);
+   	const output = await process.output();
+   	const decoder = new TextDecoder();
+
+   	return {
+   		stdout: decoder.decode(output.stdout),
+   		stderr: decoder.decode(output.stderr),
+   		exitCode: output.exitCode,
+   	};
+   }
+   ```
+
+   Standard input has no size limit, unlike a command-line argument. GNU coreutils `timeout` stops code that runs longer than 60 seconds, and the run returns exit code `124`. An exception prints a traceback to standard error and returns exit code `1`.
+
+   Each run starts a new Python process, so variables do not carry over. Files that the code writes in `/workspace` stay until the Linux instance stops, so a later run can read them. `enableInternet: false` keeps the code off the Internet.
+
+4. Add a route to your Worker that runs the request body as Python code:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/python$/.exec(url.pathname);
+
+   		if (!match || request.method !== "POST") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
+   		return Response.json(await sandbox.runPython(await request.text()));
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   The code can read every file in its sandbox, so give each user their own sandbox name, and authenticate callers first. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+
+5. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+6. Create a file named `sales.py` with code that uses `pandas`:
+
+   ```python title="sales.py"
+   import pandas as pd
+
+   sales = pd.DataFrame({"city": ["Lisbon", "Austin", "Lisbon"], "units": [3, 5, 4]})
+   print(sales.groupby("city")["units"].sum())
+   ```
+
+7. Run it in the sandbox named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/python --data-binary @sales.py
+   ```
+
+   ```json output
+   {
+   	"stdout": "city\nAustin    5\nLisbon    7\nName: units, dtype: int64\n",
+   	"stderr": "",
+   	"exitCode": 0
+   }
+   ```
+
+</Steps>
+
+## Return a chart
+
+To return an image, such as a `matplotlib` chart, have the code save it in `/workspace`, then read the file in another request:
+
+<Steps>
+
+1. Add a method to your Durable Object that reads a file from `/workspace`:
+
+   ```ts title="src/index.ts"
+   async readFile(name: string) {
+   	const container = this.ctx.container;
+
+   	if (!container?.running) {
+   		return null;
+   	}
+
+   	const process = await container.exec(["cat", "--", name], {
+   		cwd: "/workspace",
+   		stderr: "ignore",
+   	});
+   	const output = await process.output();
+   	return output.exitCode === 0 ? output.stdout : null;
+   }
+   ```
+
+2. In your Worker's `fetch()` handler, after the line that parses `url`, add a route that returns the chart:
+
+   ```ts title="src/index.ts"
+   const chart = /^\/sandboxes\/([a-z0-9-]+)\/chart\.png$/.exec(url.pathname);
+
+   if (chart) {
+   	const png = await env.MY_CONTAINER.getByName(chart[1]).readFile("chart.png");
+   	return png
+   		? new Response(png, { headers: { "Content-Type": "image/png" } })
+   		: new Response("Not found", { status: 404 });
+   }
+   ```
+
+3. Run code that saves a chart, then open `/sandboxes/ada/chart.png` in your browser:
+
+   ```python title="chart.py"
+   import matplotlib
+
+   matplotlib.use("Agg")
+   import matplotlib.pyplot as plt
+
+   plt.bar(["Austin", "Lisbon"], [5, 7])
+   plt.savefig("chart.png")
+   ```
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/python --data-binary @chart.py
+   ```
+
+   `matplotlib.use("Agg")` draws without a display. For larger files and uploads, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
+
+</Steps>
+
+## Run another language
+
+To run another language, start from an image that has it, and change the command that reads standard input. For example, use `FROM ruby:3.4-slim` and `["ruby", "-"]`, or `FROM node:24-slim` and `["node", "-"]`.
+
+## Related resources
+
+- [Build an AI code interpreter](/sandbox/tutorials/build-an-ai-code-interpreter/): run code that a model writes in a Dynamic Worker.
+- [Stream command output](/sandbox/commands/stream-command-output/): show output while long code runs.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files in `/workspace` after the Linux instance stops.
