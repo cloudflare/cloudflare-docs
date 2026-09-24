@@ -515,11 +515,125 @@ entries:
     keywords: [request, schema validation, learned profile]
     summary: Returns `true` when an evaluated request [violates the learned profile](/waf/detections/application-profiles/fields/).
 
+  - name: cf.schema_validation.learned.path.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, path, parameter]
+    summary: Names of path parameters detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["accountId"]
+    example_block: |-
+      any(cf.schema_validation.learned.path.violated_parameters[*] == "accountId")
+
+  - name: cf.schema_validation.learned.query.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, query, parameter]
+    summary: Names of query parameters detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["bookingId"]
+
+  - name: cf.schema_validation.learned.headers.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, header, parameter]
+    summary: Names of request headers detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["x-api-key"]
+
+  - name: cf.schema_validation.learned.cookies.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, cookie, parameter]
+    summary: Names of cookies detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["session"]
+
+  - name: cf.schema_validation.learned.body.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, body, parameter]
+    summary: The JSON path of a detected request body [violation of the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    description: |-
+      Body validation reports the first detected violation. A value of `$` identifies the body without a more specific path.
+    example_value: |-
+      ["$"]
+
+  - name: cf.schema_validation.learned.query.undeclared_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, query, undeclared parameter]
+    summary: Names of query parameters detected in the request but [not declared in the learned schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
+    description: |-
+      Query parameter names are URL-decoded.
+    example_value: |-
+      ["utm"]
+    example_block: |-
+      any(cf.schema_validation.learned.query.undeclared_parameters[*] == "utm")
+
   - name: cf.schema_validation.uploaded.violated
     data_type: Boolean
     categories: [Request]
     keywords: [request, schema validation, uploaded schema]
     summary: Returns `true` when an evaluated request [violates the supplied schema](/waf/detections/application-profiles/fields/).
+
+  - name: cf.schema_validation.uploaded.path.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, path, parameter]
+    summary: Names of path parameters detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["accountId"]
+
+  - name: cf.schema_validation.uploaded.query.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, query, parameter]
+    summary: Names of query parameters detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["bookingId"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.query.violated_parameters[*] == "bookingId")
+
+  - name: cf.schema_validation.uploaded.headers.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, header, parameter]
+    summary: Names of request headers detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["x-api-key"]
+
+  - name: cf.schema_validation.uploaded.cookies.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, cookie, parameter]
+    summary: Names of cookies detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["session"]
+
+  - name: cf.schema_validation.uploaded.body.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, body, parameter]
+    summary: The JSON path of a detected request body [violation of the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    description: |-
+      Body validation reports the first detected violation. A value of `$` identifies the body without a more specific path.
+    example_value: |-
+      ["$"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.body.violated_parameters[*] == "$")
+
+  - name: cf.schema_validation.uploaded.query.undeclared_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, query, undeclared parameter]
+    summary: Names of query parameters detected in the request but [not declared in the uploaded schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
+    description: |-
+      Query parameter names are URL-decoded.
+    example_value: |-
+      ["utm"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.query.undeclared_parameters[*] == "utm")
 
   - name: cf.api_gateway.fallthrough_detected
     data_type: Boolean
