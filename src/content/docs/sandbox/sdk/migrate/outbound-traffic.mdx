@@ -1,0 +1,40 @@
+---
+title: Move outbound rules
+description: Replace @cloudflare/sandbox 0.12 allowedHosts, deniedHosts, outbound handlers, and gitCheckout() with outbound interception in your Durable Object.
+pcx_content_type: how-to
+sidebar:
+  order: 7
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In 0.12, the `Sandbox` class read `allowedHosts`, `deniedHosts`, and `outbound` handlers, and `ContainerProxy` applied them. In 1.0, your Durable Object sends the container's HTTP and HTTPS requests to a `WorkerEntrypoint` with `interceptOutboundHttp()` and `interceptOutboundHttps()`, and the entrypoint decides what happens to each request.
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. For blocking, allow lists, handlers, and certificates, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/).
+
+## Change the defaults
+
+0.12 allowed Internet access by default. In 1.0, a container has no Internet access unless `start()` passes `enableInternet: true`. With `enableInternet: false`, the container reaches only the hostnames you intercept.
+
+| 0.12                                                    | 1.0                                                                                                     |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `enableInternet = false` with `allowedHosts`            | `enableInternet: false`, and an entrypoint that forwards allowed hostnames and returns `403` for others |
+| `deniedHosts` with Internet access                      | An entrypoint that returns `403` for denied hostnames and forwards the rest                             |
+| `outbound`, `outboundByHost`, `outboundHandlers`        | One `WorkerEntrypoint` that picks the handler for each hostname                                         |
+| `setOutboundByHost()`, `setAllowedHosts()`, and similar | Rules in Durable Object storage that the entrypoint reads on each request                               |
+| `interceptHttps`                                        | `interceptOutboundHttps("*", entrypoint)`                                                               |
+| `ContainerProxy`                                        | Remove it. Export your own entrypoint.                                                                  |
+
+An intercepted HTTPS request carries a certificate that the container's CA certificate signs. Pass the certificate's path to each command that makes HTTPS requests, such as `NODE_EXTRA_CA_CERTS` for Node.js and `GIT_SSL_CAINFO` for Git. The path is `/etc/cloudflare/certs/cloudflare-containers-ca.crt`.
+
+## Add credentials to requests
+
+0.12 handlers added credentials to outbound requests. In 1.0, the entrypoint does the same with your Worker's secrets, so the container never holds them. [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/) shows an entrypoint that allows one API request and adds a token.
+
+## Replace gitCheckout()
+
+Replace `gitCheckout()` with `git clone` through `exec()`, as in [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/). The image needs Git.
+
+For a private repository, do not put the token in the clone URL, where every process in the sandbox can read it. [Clone a private repository](/sandbox/network/clone-a-private-repository/) adds the token in an entrypoint that allows only fetches of one repository.

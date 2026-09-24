@@ -1,0 +1,41 @@
+---
+title: Move backups
+description: Replace @cloudflare/sandbox 0.12 createBackup() and restoreBackup() with tar archives that your Durable Object streams to and from R2.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - r2
+---
+
+In 0.12, `createBackup()` archived a directory and uploaded it to the bucket in `BACKUP_BUCKET`, and `restoreBackup()` brought it back. In 1.0, your Durable Object streams a `tar` archive of the directory to an R2 binding with a multipart upload, and streams it back into `tar` to restore. [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/) builds this.
+
+To save the whole filesystem instead of one directory, use a Container snapshot. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `sandbox` is the stub that `getByName()` returns.
+
+```ts
+// Was: const backup = await sandbox.createBackup({ dir: "/workspace" });
+const backup = await sandbox.backup("/workspace");
+
+// Was: await sandbox.restoreBackup(backup);
+await sandbox.restore(backup.key, "/workspace");
+```
+
+| 0.12                                                           | 1.0                                                                                                  |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `createBackup({ dir })`                                        | `backup(dir)`, which returns the object key and size                                                 |
+| `restoreBackup(backup)`                                        | `restore(key, dir)`, which replaces the directory                                                    |
+| `excludes`                                                     | `--exclude` options for `tar` in `backup()`                                                          |
+| `gitignore`                                                    | A file list from `git ls-files --cached --others --exclude-standard` passed to `tar`                 |
+| `ttl`                                                          | An [R2 object lifecycle rule](/r2/buckets/object-lifecycles/) on the backup prefix                   |
+| `name`                                                         | [Custom metadata](/r2/api/workers/workers-api-reference/#r2multipartoptions) on the multipart upload |
+| `multipart`, `compression`                                     | Remove them. The upload is always multipart, and `tar -z` compresses it.                             |
+| `BACKUP_BUCKET`                                                | An R2 binding. Keep the name or rename it.                                                           |
+| `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, R2 access keys | Remove them. The binding needs no credentials, and the container never holds them.                   |
+| `BackupCreateError`, `BackupRestoreError`                      | Errors that `backup()` and `restore()` throw when `tar` fails                                        |
+
+Backups that 0.12 created are SquashFS images at `backups/<ID>/data.sqsh` in the bucket, not `tar` archives. To restore one, install `squashfs-tools` in the image, write the file to the container, and extract it with `unsquashfs`.

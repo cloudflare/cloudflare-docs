@@ -1,0 +1,47 @@
+---
+title: Move preview URLs and tunnels
+description: Replace @cloudflare/sandbox 0.12 exposePort(), proxyToSandbox(), wsConnect(), and tunnels with requests that your Worker forwards to the container.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In 0.12, `exposePort()` created a preview URL with a token in its hostname, and `proxyToSandbox()` routed requests for those hostnames to the sandbox. In 1.0, your Worker routes each request to a Durable Object, and the Durable Object forwards it to the port with `getTcpPort(port).fetch()`. [Preview a web application](/sandbox/previews/preview-a-web-application/) builds this.
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `sandbox` is the stub that `getByName()` returns.
+
+## Replace preview URLs
+
+Replace `exposePort()` and `proxyToSandbox()` with the Worker route and Durable Object `fetch()` handler from [Forward requests to the server](/sandbox/previews/preview-a-web-application/#forward-requests-to-the-server). A preview needs no call before it works: the route forwards requests as soon as the server listens.
+
+| 0.12                                  | 1.0                                                                                                                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `exposePort(port, { hostname })`      | A route such as `/sandboxes/<NAME>/` that forwards to `getTcpPort(port).fetch()`                                                                                          |
+| `proxyToSandbox(request, env)`        | The Worker route. For hostnames such as `<NAME>.example.com`, refer to [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/). |
+| `token`, `validatePortToken()`        | `share()` and `isShared()` from [Share a preview with a link](/sandbox/previews/preview-a-web-application/#share-a-preview-with-a-link)                                   |
+| `unexposePort()`, `getExposedPorts()` | Delete or list the `share:` tokens in Durable Object storage                                                                                                              |
+| `wsConnect(request, port)`            | The WebSocket bridge from [Keep WebSocket connections open](/sandbox/previews/preview-a-web-application/#keep-websocket-connections-open)                                 |
+
+0.12 preview URLs had the port, the sandbox ID, and the token in the hostname, such as `8080-sandbox-id-token.example.com`. Those URLs stop working after you deploy 1.0. Give users the new URLs.
+
+A WebSocket that passes through the Durable Object without the bridge does not keep the container running, so an idle connection can close. The bridge accepts both ends in the Durable Object.
+
+## Replace tunnels
+
+0.12 `tunnels.get()` ran `cloudflared` in the container and returned a public URL. Preview URLs replace most tunnels, because the Worker already routes requests to the container without an outbound connection from it.
+
+To keep a tunnel, run `cloudflared` in the container yourself. Install it in the image, and start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare:
+
+| 0.12                                         | 1.0                                                                                                                                                        |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tunnels.get(port)`                          | `cloudflared tunnel --url http://localhost:<PORT>` as a [background process](/sandbox/commands/run-background-processes/). It prints the quick tunnel URL. |
+| `tunnels.get(port, { name })`                | `cloudflared tunnel run --token <TOKEN>` with a [tunnel that you create](/cloudflare-one/networks/connectors/cloudflare-tunnel/) for the sandbox.          |
+| `tunnels.list()`                             | The `cloudflared` processes that the sandbox runs                                                                                                          |
+| `tunnels.destroy(port)`                      | Stop the `cloudflared` process. Delete a named tunnel with the Cloudflare API.                                                                             |
+| `CLOUDFLARE_API_TOKEN` and related variables | Your own secrets, if your Worker creates tunnels with the Cloudflare API                                                                                   |
+
+A tunnel token lets anyone who holds it run the tunnel, and every process in the sandbox can read it. Create one tunnel for each sandbox.

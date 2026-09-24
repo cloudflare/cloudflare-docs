@@ -1,0 +1,28 @@
+---
+title: Move browser terminals
+description: Replace @cloudflare/sandbox 0.12 terminal() and SandboxAddon with a tmux session that your Durable Object bridges to a WebSocket.
+pcx_content_type: how-to
+sidebar:
+  order: 6
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In 0.12, `sandbox.terminal(request)` attached a WebSocket to a shell, and the `SandboxAddon` for xterm.js reconnected it and replayed output. In 1.0, your Durable Object runs a tmux client with `exec(argv, { pty })` and bridges it to a WebSocket. tmux keeps the shell running between connections. [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/) builds this.
+
+Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then add the image, the Durable Object `fetch()` handler, and the page from that guide.
+
+| 0.12                                        | 1.0                                                                                                            |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `sandbox.terminal(request, { cols, rows })` | Forward the WebSocket request to the Durable Object, which reads `cols` and `rows` from the query string       |
+| `session.terminal(request)`                 | A tmux session for each name, set with `?session=<NAME>`. Pass the 0.12 session's `cwd` and `env` to `exec()`. |
+| `proxyTerminal()`                           | The Worker route that forwards `/sandboxes/<NAME>/terminal` to the Durable Object                              |
+| Reconnect and output replay                 | The page reopens the WebSocket, and tmux redraws the screen and keeps scrollback                               |
+| `@cloudflare/sandbox/xterm`, `SandboxAddon` | xterm.js with the fit add-on, and a WebSocket that the page manages                                            |
+| Resize control message                      | A JSON text message with `cols` and `rows`                                                                     |
+
+The image needs tmux. Add it to your `Dockerfile`.
+
+Keystrokes and output travel as binary WebSocket messages, and only resize messages are text. Remove the 0.12 status message handling from your page.
