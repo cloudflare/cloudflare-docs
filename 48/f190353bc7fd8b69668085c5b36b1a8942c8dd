@@ -1,0 +1,19 @@
+src/pages/sponsorships.astro
+  s_374571157631c1::t_733a2e23b1fcaa 20,1811-1822,1828,1830-1831,1835-1846,1880,1889-1894,1900,1914
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "48f190353bc7fd8b69668085c5b36b1a8942c8dd",
+  "prompts": {},
+  "sessions": {
+    "s_374571157631c1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2e2ac06fffed5Hc2KJfTv555V",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
