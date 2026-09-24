@@ -1,6 +1,6 @@
 ---
 title: Move files in and out of a sandbox
-description: Upload a file to a Linux sandbox from your Worker, run a command on it, and download the file the command creates.
+description: Stream a file from your Worker into a Linux sandbox, run a command on it, and stream the file the command creates back to the caller.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -21,24 +21,15 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give a command in a Linux sandbox an input file, and return the file it creates. This guide uploads a text file, compresses it with `gzip` in the sandbox, and downloads the compressed file through your Worker.
-
-The `Files` class from the `@cloudflare/sandbox` package runs each file operation inside the running container. It streams file contents in both directions and reports Linux errors, such as `ENOENT`, by name.
+Stream a file from your Worker into a Linux sandbox, run a command on it, and stream the file the command creates back to the caller. This guide compresses an uploaded file with `gzip`. The `Files` class from the `@cloudflare/sandbox` package moves the files, and [`exec()`](/durable-objects/api/container/#exec) runs the command.
 
 ## Prerequisites
 
-Complete [Run a Linux command](/sandbox/get-started/containers/). Use the `sandbox-linux` project from that guide.
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/containers/).
 
 <Render product="containers" file="docker-setup" />
 
-:::caution
-The example does not authenticate incoming requests. Authenticate callers before production so other people cannot read or change sandbox files.
-For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
-:::
-
-## Move files through your Worker
-
-`Files` runs a helper binary in the container, so the image needs a copy of it. For the package requirements, refer to [`@cloudflare/sandbox`](/sandbox/reference/#requirements).
+## Run a command on an uploaded file
 
 <Steps>
 
@@ -46,7 +37,7 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
    <PackageManagers pkg="@cloudflare/sandbox" />
 
-2. Create a `Dockerfile` in the project root:
+2. Copy the `Files` helper binary into your image. If your project has no `Dockerfile`, create one in the project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -57,25 +48,15 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    CMD ["sleep", "infinity"]
    ```
 
-   This image uses Debian Trixie with Node.js 24, like the get-started guide. Replace the `FROM` line with the base image your code needs. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
+   Use the `cloudflare/sandbox` tag that matches the installed package version. Replace the `FROM` line with the base image your commands need.
 
-   `CMD` keeps the container running so later requests can reach the same files.
-
-3. Replace `wrangler.jsonc` so Wrangler builds the image:
+3. In `wrangler.jsonc`, add the `nodejs_compat` flag and build the `Dockerfile` as a named image in your `containers` entry:
 
    <WranglerConfig>
 
    ```jsonc
    {
-   	"$schema": "node_modules/wrangler/config-schema.json",
-   	"name": "sandbox-linux",
-   	"main": "src/index.ts",
-   	"compatibility_date": "$today",
    	"compatibility_flags": ["nodejs_compat"],
-   	"observability": {
-   		"enabled": true,
-   	},
-   	"upload_source_maps": true,
    	"containers": [
    		{
    			"class_name": "MyContainer",
@@ -87,51 +68,28 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    			},
    		},
    	],
-   	"durable_objects": {
-   		"bindings": [
-   			{
-   				"class_name": "MyContainer",
-   				"name": "MY_CONTAINER",
-   			},
-   		],
-   	},
-   	"migrations": [
-   		{
-   			"new_sqlite_classes": ["MyContainer"],
-   			"tag": "v1",
-   		},
-   	],
    }
    ```
 
    </WranglerConfig>
 
-   Wrangler builds the `Dockerfile` when you deploy. The Durable Object passes the built image to `start()` as `this.ctx.container.images.workspace`. `Files` uses the `nodejs_compat` flag to read Linux error names.
-
-4. Replace `src/index.ts` with the following Worker:
+4. In your Durable Object, start the `workspace` image before each file operation. `Files` works with a running container and does not start one:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { Files, SandboxFileError } from "@cloudflare/sandbox";
+   import { Files } from "@cloudflare/sandbox";
    import { DurableObject } from "cloudflare:workers";
 
    const workspace = "/workspace";
-   const idleTimeout = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
-   	private get container(): Container {
+   	private async startSandbox(): Promise<Container> {
    		const container = this.ctx.container;
 
    		if (!container) {
    			throw new Error("The container binding is not configured");
    		}
-
-   		return container;
-   	}
-
-   	private async startSandbox(): Promise<Files> {
-   		const container = this.container;
 
    		if (!container.running) {
    			container.start({
@@ -140,173 +98,81 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
    			});
    		}
 
-   		await container.setInactivityTimeout(idleTimeout);
-   		return new Files(container);
+   		await container.setInactivityTimeout(10 * 60 * 1000);
+   		return container;
    	}
-
-   	async write(path: string, contents: ReadableStream<Uint8Array>) {
-   		const files = await this.startSandbox();
-   		const parent = path.split("/").slice(0, -1).join("/");
-
-   		if (parent) {
-   			await files.mkdir(parent, { cwd: workspace, recursive: true });
-   		}
-
-   		await files.writeFile(path, contents, { cwd: workspace });
-   	}
-
-	async read(path: string): Promise<Response> {
-		const files = await this.startSandbox();
-		return files.readFile(path, { cwd: workspace });
-	}
-
-	async compress(path: string) {
-   		await this.startSandbox();
-
-   		const process = await this.container.exec(
-   			["gzip", "--keep", "--force", path],
-   			{ cwd: workspace },
-   		);
-   		const output = await process.output();
-
-   		return {
-   			path: `${path}.gz`,
-   			exitCode: output.exitCode,
-   			stderr: new TextDecoder().decode(output.stderr),
-   		};
-   	}
-   }
-
-   export default {
-   	async fetch(request: Request, env: Env): Promise<Response> {
-   		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([^/]+)\/(files|compress)(?:\/(.*))?$/.exec(
-   			url.pathname,
-   		);
-
-   		if (!match) {
-   			return new Response("Not found", { status: 404 });
-   		}
-
-		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
-		const route = match[2];
-		const path = workspacePath(match[3] ?? "");
-
-		if (!path) {
-			return new Response("Invalid path", { status: 400 });
-		}
-
-		try {
-			if (route === "files" && request.method === "GET") {
-				return await sandbox.read(path);
-			}
-
-			if (route === "files" && request.method === "PUT") {
-   				if (!request.body) {
-   					return new Response("A request body is required", {
-   						status: 400,
-   					});
-   				}
-
-				await sandbox.write(path, request.body);
-				return new Response(null, { status: 204 });
-			}
-
-			if (route === "compress" && request.method === "POST") {
-   				const result = await sandbox.compress(path);
-   				return Response.json(result, {
-   					status: result.exitCode === 0 ? 200 : 500,
-   				});
-   			}
-
-   			return new Response("Method not allowed", { status: 405 });
-   		} catch (error) {
-   			return fileErrorResponse(error);
-   		}
-   	},
-   } satisfies ExportedHandler<Env>;
-
-   // Keep request paths relative to /workspace.
-   function workspacePath(encoded: string): string | null {
-   	let path: string;
-
-   	try {
-   		path = decodeURIComponent(encoded);
-   	} catch {
-   		return null;
-   	}
-
-   	if (
-   		path.startsWith("/") ||
-   		path.includes("\0") ||
-   		path.split("/").includes("..")
-   	) {
-   		return null;
-   	}
-
-   	return path;
-   }
-
-   const statusByCode: Record<string, number> = {
-   	ENOENT: 404,
-   	EACCES: 403,
-   	EPERM: 403,
-   	EEXIST: 409,
-   	EISDIR: 409,
-   	ENOTDIR: 409,
-   };
-
-   function fileErrorResponse(error: unknown): Response {
-   	if (SandboxFileError.is(error)) {
-   		return new Response(`${error.code}: ${error.path}\n`, {
-   			status: statusByCode[error.code] ?? 500,
-   		});
-   	}
-
-   	console.error(error);
-   	return new Response("The sandbox request failed", { status: 500 });
    }
    ```
 
    </TypeScriptExample>
 
-   Each sandbox name in the URL maps to one Durable Object and its Linux instance. File paths in the URL resolve against `/workspace` through the `cwd` option.
+5. Add a method that writes the upload, runs the command, and returns the output file:
 
-   `Files` does not start the container. `startSandbox()` starts it before each operation. `write()` creates missing parent directories, then streams the request body into the file. `read()` streams the file back with `readFile()`.
+   ```ts title="src/index.ts"
+   async compress(upload: ReadableStream<Uint8Array>): Promise<Response> {
+   	const container = await this.startSandbox();
+   	const files = new Files(container);
+   	const name = crypto.randomUUID();
 
-   Files exist only while the Linux instance runs. The Durable Object sets a 10-minute inactivity timeout on every request. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/).
+   	await files.writeFile(name, upload, { cwd: workspace });
 
-5. Deploy the Worker:
+   	const process = await container.exec(["gzip", "--force", name], {
+   		cwd: workspace,
+   	});
+   	const output = await process.output();
+
+   	if (output.exitCode !== 0) {
+   		throw new Error(new TextDecoder().decode(output.stderr));
+   	}
+
+   	return files.readFile(`${name}.gz`, { cwd: workspace });
+   }
+   ```
+
+   `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back. The Durable Object names each upload with a random ID, so a caller cannot choose a path and two uploads do not collide.
+
+   A Linux failure, such as a full disk, throws `SandboxFileError` with the Linux error name in `code`. For every error, refer to [Files errors](/sandbox/reference/files/#errors).
+
+6. Send uploads to the method from your Worker's `fetch` handler:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([^/]+)\/compress$/.exec(url.pathname);
+
+   		if (!match || request.method !== "POST" || !request.body) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		return sandbox.compress(request.body);
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   The route reads the sandbox name from the URL to keep the example short. Derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+
+7. Deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-6. Upload a file to the sandbox named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+8. Upload a file to the sandbox named `ada`, and save the response. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
 
    ```sh
    printf 'Ada Lovelace\nGrace Hopper\n' | curl \
-     https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports/names.txt \
-     --request PUT \
-     --data-binary @-
-   ```
-
-   The Worker creates `/workspace/reports/names.txt` and responds with `204 No Content`.
-
-7. Compress the file with `gzip` in the sandbox:
-
-   ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/compress/reports/names.txt \
-     --request POST
-   ```
-
-   ```json output
-   { "path": "reports/names.txt.gz", "exitCode": 0, "stderr": "" }
-   ```
-
-8. Download the compressed file and decompress it:
-
-   ```sh
-   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/files/reports/names.txt.gz \
+     https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/compress \
+     --data-binary @- \
      --output names.txt.gz
+   ```
+
+9. Decompress the response:
+
+   ```sh
    gunzip --stdout names.txt.gz
    ```
 
@@ -317,23 +183,35 @@ For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox
 
 </Steps>
 
-A command in the sandbox creates the compressed file, and the download streams its bytes back through your Worker. A different sandbox name, such as `grace`, starts a separate Linux instance with its own `/workspace`.
+The compressed files stay in `/workspace` until the Linux instance stops. To delete one sooner, call `files.remove()` after the caller has read the response.
 
-## Handle file errors
+## Accept paths from callers
 
-The Worker maps the Linux error name in each `SandboxFileError` to an HTTP status, such as `404` for `ENOENT`. `SandboxFileError.is()` recognizes the error after it crosses the Durable Object RPC boundary.
+When callers choose paths, such as in a file browser, resolve their paths against one directory in your Worker. `Files` follows Linux path rules and opens any path in the sandbox. This check keeps request paths relative to the `cwd` you pass:
 
-An upload that fails partway through can leave a partially written file, and a download can fail after the Worker has sent the status code. For every error, and for writing through a temporary file, refer to the [Files API](/sandbox/reference/files/#errors).
+<TypeScriptExample filename="src/index.ts">
 
-## Limit which paths callers reach
+```ts
+function workspacePath(path: string): string | null {
+	if (
+		path === "" ||
+		path.startsWith("/") ||
+		path.includes("\0") ||
+		path.split("/").includes("..")
+	) {
+		return null;
+	}
 
-`Files` follows Linux path rules and opens any path in the sandbox. Your Worker decides which paths a caller can request. The example resolves request paths against `/workspace` and rejects absolute paths and `..` segments.
+	return path;
+}
+```
 
-The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points to another path in the same sandbox. To open files as another Linux user, pass numeric user and group IDs in the `user` option, such as `user: "1000:1000"`.
+</TypeScriptExample>
 
-## Next steps
+The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. To open files as another Linux user, pass numeric IDs in the `user` option, such as `user: "1000:1000"`.
 
-- For every `Files` method, option, and error, refer to [Files API](/sandbox/reference/files/).
-- To keep files after the Linux instance stops, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
-- To run a project's commands in the workspace, refer to [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/).
-- To return command output while it runs, refer to [Stream command output](/sandbox/commands/stream-command-output/).
+## Related resources
+
+- [Files API](/sandbox/reference/files/): every method, including `readDirectory()`, `rename()`, and `remove()`.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the Linux instance stops.
+- [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): write files that other systems read.
