@@ -23,9 +23,13 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
+You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code in a local [`workerd`](https://github.com/cloudflare/workerd) process. `workerd` also powers the hosted Workers platform.
 
 [By default](/workers/local-development/#defaults), your Worker's bindings [connect to locally simulated resources](/workers/local-development/#bindings-during-local-development), but can be configured to interact with the real, production resource with [remote bindings](/workers/local-development/#remote-bindings).
+
+## Security considerations
+
+<Render file="local-development-security" product="workers" />
 
 ## Core concepts
 
