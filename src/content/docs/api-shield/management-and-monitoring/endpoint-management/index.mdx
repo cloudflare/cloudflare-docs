@@ -12,7 +12,7 @@ import { GlossaryTooltip, Plan, Steps, DashButton } from "~/components";
 
 <Plan type="all" />
 
-Endpoint Management content uses the current [Web Assets](/security/web-assets/) dashboard. Go to **Web Assets** > **Operations** to manage <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip>.
+Endpoint Management uses the [Web Assets](/security/web-assets/) dashboard. Go to **Web Assets** > **Operations** to manage <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip>.
 
 An operation is Cloudflare's term for an endpoint identified by HTTP method, hostname pattern, and path pattern. Web Assets continuously discovers operations, and you can add them manually.
 
@@ -156,7 +156,7 @@ You can view detailed metrics from the last 24 hours or seven days.
 
 ## Using the Cloudflare API
 
-You can manage operations through the Cloudflare API. For more information, refer to the [operations API documentation](/api/resources/api_gateway/subresources/discovery/subresources/operations/methods/list/).
+You can manage saved operations through the Cloudflare API. For more information, refer to the [operations API documentation](/api/resources/api_gateway/subresources/operations/methods/list/).
 
 ## Sensitive Data Detection
 
@@ -166,7 +166,7 @@ API Shield alerts you to sensitive data in responses from full operations. Your 
 
 Sensitive Data Detection is available to Enterprise customers on our Advanced application security plan.
 
-After you turn on Sensitive Data Detection, API Shield queries WAF events from the last seven days. Web Assets marks operations that have matched sensitive responses.
+After you turn on Sensitive Data Detection, Web Assets marks operations whose responses matched the Sensitive Data Detection ruleset during the past week.
 
 Open the operation details to review the detected sensitive data types. Select **Explore Events** to view matched events in Security Events.
 

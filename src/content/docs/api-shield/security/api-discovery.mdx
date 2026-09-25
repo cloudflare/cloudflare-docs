@@ -14,26 +14,26 @@ Most development teams struggle to keep track of their APIs. Cloudflare API Disc
 
 ## Process
 
-Cloudflare produces a map of <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip> by grouping similar request paths together (path normalization).
+Cloudflare produces a map of <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip> by applying heuristic path normalization to qualifying sampled traffic. The heuristics group requests by path structure and variable-like segment patterns.
 
 For example, you might have thousands of APIs, but a lot of the calls look similar, such as:
 
 - `api.example.com/profile/238`
 - `api.example.com/profile/392`
 
-Both paths serve a similar purpose — retrieving user profiles — but they are not identical. To simplify your endpoints, these examples might both map to `api.example.com/profile/*`.
+Discovery might group both paths as `api.example.com/profile/{var1}`. Generated `{varN}` placeholders identify variable-like segments. They do not assign semantic names.
 
-API Discovery runs this process across all your traffic, generating a simple map of endpoints that might look like:
+The resulting endpoint map might look like:
 
-```
-/api/login/{customer_identifier}
+```txt
+/api/login/{var1}
 /api/auth
-/api/account/{customer_identifier}
+/api/account/{var1}
 /api/password_reset
 /api/logout
 ```
 
-Similarly, if you have multiple subdomains that share the same set of endpoints, Cloudflare consolidates subdomains:
+Cloudflare can also consolidate common normalized operations across compatible subdomains. Operations unique to one hostname can remain on that hostname.
 
 ```txt
 us-api.example.com/api/v1/users/{var1}
@@ -42,17 +42,19 @@ fr-api.example.com/api/v1/users/{var1}
 jp-api.example.com/api/v1/users/{var1}
 ```
 
-Cloudflare consolidates these to `{hostVar1}.example.com/api/v1/users/{var1}`.
+Cloudflare may consolidate these common operations to `{hostVar1}.example.com/api/v1/users/{var1}`.
 
 For more technical details, refer to the [blog post](https://blog.cloudflare.com/ml-api-discovery-and-schema-learning/).
 
 ### Discovered operations
 
-Web Assets adds discovered API endpoints to the operation inventory as candidate operations. Candidate operations provide context for matching, logging, detections, and rules before you manually review them.
+Discovery results can appear as candidate or shadow operations. Candidate operations are matched at the edge. Shadow operations are not.
 
-You do not need to promote every discovered operation. Promote an operation to move it to the `full` state and start profile learning. Full operations support persisted API profiles, risk findings, and protections that require a known API endpoint.
+When a request matches a published candidate, the match can provide operation context for logs, rules, analytics, and applicable detections. You do not need to save every discovered operation.
 
-To promote a discovered operation:
+You do not need to save every discovered operation. Save an operation to move it to the `full` state. Full operations support persisted API profiles, risk findings, and protections that require a known API endpoint.
+
+To save a discovered operation:
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Web Assets** page.
@@ -63,23 +65,21 @@ To promote a discovered operation:
 4. Select **Learn profile**.
 </Steps>
 
-Cloudflare moves the operation to the `full` state. The row action then changes to **Profile learned**. For more information, refer to [Promote an operation](/security/web-assets/manage-operations/#promote-an-operation).
+Cloudflare moves the operation to the `full` state. The row action then displays **Learning profile**, which does not indicate that learning is complete. For more information, refer to [Start profile learning](/security/web-assets/manage-operations/#start-profile-learning).
 
-### Machine learning-based discovery
+### Unified Discovery
 
-Your API endpoints are discovered with both session identifier-based discovery and machine learning-based discovery.
+Unified Discovery uses multiple signals, including machine learning and configured session identifiers, to identify API traffic. Configuring a session identifier is optional.
 
-To access machine learning-based discovery:
+To review Unified Discovery results:
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
-2. Go to the **Discovery** tab.
-3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each discovery method.
+2. Go to the **Operations** tab.
+3. Select the **Discovered** quick filter, which applies the **Candidate** and **Shadow** state filters. You can also select both states manually.
 </Steps>
-
-If all of your zone's API traffic contains the <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. Machine learning-based discovery can identify API traffic regardless of whether your API uses a session identifier.
 
 You can direct any feedback about your API Discovery results to your account team.
 
@@ -87,7 +87,9 @@ You can direct any feedback about your API Discovery results to your account tea
 
 API Discovery requires an active API Shield subscription at both the account and zone level. If your subscription is active at the account level but not assigned to the zone, Discovery will not run for that zone.
 
-For an endpoint to appear in Discovery results, every request must meet the following conditions:
+API Discovery analyzes sampled proxied traffic. Eligible requests use supported HTTP methods, use paths outside `/cdn-cgi`, and contain qualifying Unified Discovery signals.
+
+For an endpoint to appear in Discovery results, qualifying sampled traffic must meet the following conditions:
 
 - The request must return a `2xx` response code from the Cloudflare edge.
 - The request must not originate directly from a Cloudflare Worker. Traffic sent through the Cloudflare traffic simulator or other Worker-based test harnesses will not be counted toward Discovery thresholds.
@@ -97,4 +99,4 @@ For more information, refer to [Discovery requirements](/security/web-assets/man
 
 ## Availability
 
-API Discovery is only available for Enterprise customers. If you are an Enterprise customer interested in this product, contact your account team.
+API Discovery requires the paid API Shield add-on, which is available to Enterprise customers. Contact your account team for more information.
