@@ -12,9 +12,17 @@ products:
 reviewed: 2026-09-24
 ---
 
+import { SandboxLifetime } from "~/components/react/sandbox/SandboxLifetime";
+
 A Linux sandbox has three parts, and each part lasts a different length of time. Your Worker reaches the sandbox by name. The name reaches a [Durable Object](/durable-objects/), and the Durable Object starts a Linux instance in [Containers](/containers/). The name and the Durable Object last as long as your application uses them. A Linux instance runs only while something keeps it running.
 
 Consider a coding agent that clones a repository, installs its dependencies, edits files, and starts a development server, then waits an hour for its next instruction. The agent reaches the same sandbox by name. Whether the repository and the server are still there depends on whether the Linux instance kept running, and on whether the application saved a snapshot.
+
+<SandboxLifetime client:visible>
+
+The coding agent's sandbox, from top to bottom: the name, the Durable Object, whose storage keeps a snapshot ID, the Linux instance, which runs the development server and holds the repository and edits on its disk, and a mounted R2 bucket. When the instance stops, its processes and disk files end. The name, the Durable Object, and the objects in the bucket remain. A new instance started from the snapshot has the repository and edits on its disk, and no development server runs until the agent starts it again.
+
+</SandboxLifetime>
 
 ## The name and the Durable Object remain
 
@@ -77,17 +85,6 @@ Container snapshots are in public beta. The API and behavior may change.
 :::
 
 [`snapshotContainer()`](/durable-objects/api/container/#snapshotcontainer) saves the writable root filesystem of a running instance. It does not save separately mounted filesystems, memory, or processes. Starting with a snapshot creates a new instance with the saved files, and the new instance runs its entrypoint. The processes that were running do not continue.
-
-```mermaid
-flowchart LR
-accTitle: A workspace moving between Linux instances
-accDescr: A named sandbox starts one Linux instance. The instance saves its writable root filesystem in a snapshot and stops. The same named sandbox uses that snapshot to start a new Linux instance, whose configured command starts again.
-	N["Named sandbox"] --> I1["Linux instance<br/>files and running processes"]
-	I1 -->|"snapshot files"| S["Filesystem snapshot"]
-	I1 -->|"stops"| E["Memory and processes end"]
-	N --> I2["New Linux instance<br/>configured command starts"]
-	S -->|"restore files"| I2
-```
 
 Restores are explicit. Cloudflare does not choose a snapshot when a sandbox starts. Your application decides when to save a snapshot, stores it, for example in the Durable Object's storage, and passes it to the next `start()`. Changes made after the last snapshot exist only in the current instance, so save another snapshot before the instance stops.
 
