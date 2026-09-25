@@ -11,7 +11,7 @@ products:
 
 import { Steps } from "~/components";
 
-Use the Durable Object Container API when you want direct control over a container's lifecycle. The API is available as `this.ctx.container` inside a Durable Object with a container binding. It does not provide all the helpers of the `Container` class.
+The Durable Object Container API lets your Durable Object coordinate container compute with persistent storage, alarms, and request handling. Access it as `this.ctx.container` inside a Durable Object with a container binding. When migrating from the `Container` class, replace its helpers with application code where needed.
 
 Before changing code, identify the features your application uses. Keep the existing implementation if you depend on a helper that you cannot replace yet. For an API comparison, refer to [Choose an API](/containers/api/#choose-an-api).
 

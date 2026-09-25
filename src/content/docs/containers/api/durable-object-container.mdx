@@ -18,7 +18,7 @@ The API documented on this page is available on `this.ctx.container` inside any 
 If your application uses the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 
 :::note
-We recommend starting new applications with the Durable Object Container API. If you prefer built-in lifecycle helpers, use the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers`. The class adds routing, readiness checks, lifecycle hooks, activity tracking, and scheduling. To compare both APIs, refer to [Containers APIs](/containers/api/).
+We recommend starting new applications with the Durable Object Container API. It lets you run container workloads alongside the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control when the container starts, receives traffic, and stops, while the Durable Object manages application state and coordination. For existing applications that use the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 :::
 
 Your Durable Object also has access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) through `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
@@ -398,7 +398,7 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 ## Related resources
 
 - [Containers APIs](/containers/api/) — compare direct runtime control with the `Container` class
-- [Container class reference](/containers/api/container-class/) — use higher-level lifecycle helpers
+- [Container class reference](/containers/api/container-class/) — reference for existing `Container` class applications
 - [Containers overview](/containers/)
 - [Get started with Containers](/containers/get-started/)
 - [SQLite storage API](/durable-objects/api/sqlite-storage-api/) — persist state across container restarts

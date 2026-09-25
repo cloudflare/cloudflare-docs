@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
 title: API
-description: Choose between the Durable Object Container API and the higher-level Container class.
+description: Use the Durable Object Container API for new applications and compare it with the Container class.
 sidebar:
   order: 6
 products:
@@ -13,7 +13,7 @@ import { CardGrid, LinkTitleCard, TypeScriptExample } from "~/components";
 
 Containers provide two APIs for managing a container from a Durable Object. Both APIs address the same container runtime.
 
-For new applications, we recommend the Durable Object Container API. It gives you direct control over the container lifecycle and access to Durable Object features such as storage, alarms, and request routing. Use the `Container` class when you prefer built-in lifecycle helpers.
+For new applications, we recommend the Durable Object Container API. It lets you combine container workloads with the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control the container lifecycle while your Durable Object coordinates application state. The `Container` class remains documented for existing applications.
 
 <CardGrid>
 
@@ -30,8 +30,8 @@ For new applications, we recommend the Durable Object Container API. It gives yo
 	href="/containers/api/container-class/"
 	icon="seti:typescript"
 >
-	Use a higher-level class built on Durable Objects, with routing, readiness
-	checks, lifecycle hooks, and scheduling.
+	Reference the class and its routing, readiness checks, lifecycle hooks,
+	and scheduling for existing applications.
 </LinkTitleCard>
 
 </CardGrid>
@@ -40,7 +40,7 @@ For new applications, we recommend the Durable Object Container API. It gives yo
 
 ### Durable Object Container API
 
-The Durable Object Container API is recommended for new applications. Inside a Durable Object, use `ctx.container` to control the container runtime directly. You can manage startup, shutdown, networking, and resource usage and add readiness checks, custom request routing, or lifecycle policies when needed.
+Inside a Durable Object, use `ctx.container` to control the container runtime directly. You can manage startup, shutdown, networking, and resource usage while using Durable Object storage and alarms for state and coordination. Add readiness checks, custom request routing, or lifecycle policies when needed.
 
 This Durable Object starts its configured container when it receives a request. Starting a container does not mean its ports are ready.
 
@@ -72,7 +72,7 @@ For request routing, use [`getTcpPort()`](/containers/api/durable-object-contain
 
 ### Container class
 
-The `Container` class builds on Durable Objects and the runtime API. Choose it when you prefer built-in request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers reduce application code by handling common Durable Object lifecycle tasks for you. Some features still use Durable Object storage and alarms.
+The `Container` class builds on Durable Objects and the runtime API. Existing applications may use its request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers handle common Durable Object lifecycle tasks. Some features still use Durable Object storage and alarms.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -102,6 +102,6 @@ The following table compares both options:
 | Stop inactive containers   | [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout)                                                                                                         | [`sleepAfter`](/containers/api/container-class/#sleepafter) and [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired)                                                                                                              |
 | Schedule callbacks         | [`ctx.storage.setAlarm()`](/durable-objects/api/alarms/#setalarm) (Durable Object API)                                                                                                             | [`schedule()`](/containers/api/container-class/#schedule)                                                                                                                                                                                                |
 
-Use the Durable Object Container API for latency-sensitive workloads or workloads that need a smaller storage footprint.
+For new applications, use the Durable Object Container API to combine direct container control with Durable Object storage and coordination. It also supports latency-sensitive workloads and applications that need a smaller storage footprint.
 
 If your application uses the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).

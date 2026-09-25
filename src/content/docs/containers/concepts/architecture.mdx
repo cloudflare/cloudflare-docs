@@ -46,7 +46,7 @@ An inactivity timeout, `signal()`, `destroy()`, a rollout, or a process exit can
 
 The `ctx.container.running` property becomes `true` before the process is ready to accept traffic. Check port readiness before you send the first request.
 
-You can manage this lifecycle through the [Durable Object Container API](/containers/api/durable-object-container/) or the higher-level [`Container` class](/containers/api/container-class/). To compare both options, refer to [Containers APIs](/containers/api/).
+For new applications, manage this lifecycle through the [Durable Object Container API](/containers/api/durable-object-container/). It lets the Durable Object coordinate container compute with persistent state and alarms. Existing applications may use the [`Container` class](/containers/api/container-class/). To compare both APIs, refer to [Containers APIs](/containers/api/).
 
 ## Lifecycle of a request
 
