@@ -57,6 +57,9 @@
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
@@ -2645,7 +2648,7 @@
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/downloads/ /cloudflare-one/connections/connect-networks/downloads/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
