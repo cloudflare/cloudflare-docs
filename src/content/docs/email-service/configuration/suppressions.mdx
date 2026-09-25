@@ -12,7 +12,7 @@ import { DashButton, Steps } from "~/components";
 
 Manage recipients that Email Service must not contact. For suppression scope, triggers, and expiration rules, refer to [Suppression lists](/email-service/concepts/suppressions/).
 
-Each entry has a scope. An `account` entry applies to every sending domain and subdomain in the account. A `sending_domain` entry applies only to mail from one exact sender domain. For details, refer to [Suppression scope](/email-service/concepts/suppressions/#suppression-scope).
+Each suppression has a scope. An `account` suppression applies to every sending domain and subdomain in the account. A `sending_domain` suppression applies to one sending domain only. For details, refer to [Suppression scope](/email-service/concepts/suppressions/#suppression-scope).
 
 ## View suppressions
 
@@ -24,33 +24,34 @@ Each entry has a scope. An `account` entry applies to every sending domain and s
 2. Select **Suppressions**.
 </Steps>
 
-The table displays each recipient, reason, creation time, and expiration. **Never** means the entry has no scheduled expiration.
+The table displays each recipient, reason, scope, creation time, and expiration. **Never** means the entry has no scheduled expiration.
 
 ## Add a suppression
 
 <Steps>
 1. In **Suppressions**, enter the recipient email address.
 2. Select an expiration preset, a custom future time, or **Never**.
-3. Select **Add**.
+3. In **Scope**, select **Account** or **Sending domain**. For **Sending domain**, select one of your sending domains or enter a domain.
+4. Select **Add**.
 </Steps>
 
-Entries created in the dashboard have the `manual` reason and the `account` scope. They apply to every sending domain in the account. To add an entry for one sending domain, [use the API](#add-a-suppression-for-one-sending-domain).
+Entries created in the dashboard have the `manual` reason. You cannot change the scope of an existing entry. To change it, delete the entry and add a new one.
 
 ## Import suppressions
 
 You can paste addresses or upload `.csv`, `.json`, or `.txt` files. Supported file contents are:
 
-- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>` or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row.
-- `.json`: Use an array of address strings or objects. Each object requires `email` and can include an RFC 3339 `expires_at` timestamp.
+- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>`, `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`, or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>,<SCOPE>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row. `<SCOPE>` is `account` or a sending domain, such as `mail.myappexample.com`. Leave a column empty to use the default.
+- `.json`: Use an array of address strings or objects. Each object requires `email` and can include an RFC 3339 `expires_at` timestamp and a `scope`. `scope` is `account`, a sending domain, or a scope object such as `{ "type": "sending_domain", "value": "mail.myappexample.com" }`.
 
 <Steps>
 1. In **Suppressions**, select **Import**.
 2. Upload a supported file or paste the addresses.
-3. Choose a default expiration for entries that omit one.
+3. In **Defaults**, choose an expiration and a scope for entries that do not set their own.
 4. Select **Import**. Larger imports run in batches, so keep the dialog open until every batch finishes.
 </Steps>
 
-Imported entries have the `account` scope.
+The import removes duplicate entries that have the same address and scope.
 
 ## Remove a suppression
 
@@ -71,7 +72,7 @@ Every entry in an API response includes a `scope` object:
 ```
 
 ```json
-{ "type": "sending_domain", "value": "mail.example.com" }
+{ "type": "sending_domain", "value": "mail.myappexample.com" }
 ```
 
 ### Add a suppression for one sending domain
@@ -84,7 +85,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/email/sending/sup
   --header "Content-Type: application/json" \
   --data '{
     "email": "user@example.net",
-    "scope": { "type": "sending_domain", "value": "mail.example.com" }
+    "scope": { "type": "sending_domain", "value": "mail.myappexample.com" }
   }'
 ```
 
@@ -98,19 +99,19 @@ Bulk imports accept the same optional `scope` on each item. The API removes dupl
 
 The list returns `sending_domain` entries first, then `account` entries. Entries are sorted newest first within each scope. To list one scope only, use these query parameters:
 
-| Parameter     | Description                                                                           |
-| ------------- | ------------------------------------------------------------------------------------- |
-| `scope_type`  | `account` or `sending_domain`.                                                        |
-| `scope_value` | One sending domain, such as `mail.example.com`. Requires `scope_type=sending_domain`. |
+| Parameter     | Description                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| `scope_type`  | `account` or `sending_domain`.                                                             |
+| `scope_value` | One sending domain, such as `mail.myappexample.com`. Requires `scope_type=sending_domain`. |
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/email/sending/suppressions?scope_type=sending_domain&scope_value=mail.example.com" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/email/sending/suppressions?scope_type=sending_domain&scope_value=mail.myappexample.com" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 A `scope_value` without `scope_type=sending_domain` returns `400` with the `scope_value_requires_type` error code.
 
-To find every entry for one address, use the `email` parameter. One address can have an `account` entry and one entry for each sending domain.
+To find every suppression for one address, use the `email` parameter. The results can include one `account` suppression and one `sending_domain` suppression for each sending domain.
 
 ### Change the scope of an entry
 
@@ -122,4 +123,4 @@ Deleting a hard-bounce or complaint suppression permits delivery attempts to an 
 
 ## Limits
 
-Each address can have one active `account` entry and one active entry for each sending domain. For page size, import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).
+Each address can have one active `account` suppression and one active `sending_domain` suppression for each sending domain. For page size, import, and rate limits, refer to [Suppression list limits](/email-service/platform/limits/#suppression-list-limits).
