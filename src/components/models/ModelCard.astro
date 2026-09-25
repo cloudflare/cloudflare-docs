@@ -15,7 +15,6 @@ import ModelBadges from "./ModelBadges.astro";
 import { authorData } from "~/components/models/data";
 import {
 	facetValues,
-	formatCompactTokens,
 	formatModelPricing,
 	pinnedModelNames,
 	type ModelCardData,
@@ -45,14 +44,7 @@ const pinnedIndex = pinnedModelNames.indexOf(model.name);
 const isPinned = pinnedIndex >= 0;
 // Author logo; initial-letter tile when the author id is unmapped.
 const authorLogo = authorData[model.author]?.logo;
-const contextWindow = formatCompactTokens(model.properties.context_window);
-const maxOutputTokens = formatCompactTokens(model.properties.max_output_tokens);
 const pricing = formatModelPricing(model.pricing);
-const decisionFacts = [
-	contextWindow ? `Context: ${contextWindow}` : null,
-	maxOutputTokens ? `Maximum output: ${maxOutputTokens}` : null,
-	pricing.length > 0 ? "Pricing listed" : null,
-].filter((value): value is string => value !== null);
 ---
 
 <div
@@ -80,7 +72,7 @@ const decisionFacts = [
 	data-model-capabilities={model.capabilities.join(", ")}
 	data-model-tags={model.tags.join(", ")}
 	data-model-zdr={model.properties.zdr === "true" ? "Yes" : "No"}
-	class={cellClass}
+	class:list={[cellClass, "gap-4"]}
 >
 	<div
 		data-corner-marks
@@ -92,7 +84,7 @@ const decisionFacts = [
 	<a
 		href={href}
 		class:list={[
-			"group/card hover:bg-muted/30 focus-visible:outline-ring relative flex h-full min-w-0 flex-col p-5 pb-16 text-inherit! no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2",
+			"group/card hover:bg-muted/30 focus-visible:outline-ring relative flex min-w-0 flex-1 flex-col p-5 pb-3 text-inherit! no-underline transition-colors duration-150 focus-visible:outline-2 focus-visible:-outline-offset-2",
 		]}
 	>
 		{isPinned && (
@@ -123,8 +115,8 @@ const decisionFacts = [
 					{model.author.charAt(0)}
 				</span>
 			)}
-			<div class="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
-				<h3 class="text-foreground group-hover/card:text-primary line-clamp-2 min-w-0 text-sm leading-snug font-semibold [overflow-wrap:anywhere]">
+			<div class="flex min-w-0 flex-1 items-center gap-2">
+				<h3 class="text-foreground group-hover/card:text-primary min-w-0 text-sm leading-snug font-semibold [overflow-wrap:anywhere]">
 					{model.shortName}
 				</h3>
 				{model.beta && (
@@ -142,20 +134,15 @@ const decisionFacts = [
 			</span>
 		</div>
 
-		<p class="text-muted-foreground line-clamp-3 h-[4.5rem] min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
+		<p class="text-muted-foreground line-clamp-4 h-24 min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
 			{model.description}
 		</p>
-
-		<ModelBadges model={model} />
 	</a>
-	<div class="pointer-events-none absolute right-3 bottom-3 left-5 z-20 flex items-center justify-between gap-3">
-		{decisionFacts.length > 0 && (
-			<ul class="text-muted-foreground flex min-w-0 list-none flex-wrap gap-x-3 gap-y-1 p-0 text-xs">
-				{decisionFacts.map((fact) => (
-					<li class="m-0">{fact}</li>
-				))}
-			</ul>
-		)}
+	<div
+		data-model-card-footer
+		class="pointer-events-none z-20 flex items-center justify-between gap-3 pr-3 pb-3 pl-5"
+	>
+		<ModelBadges model={model} maxVisible={1} />
 		<button
 			type="button"
 			data-model-compare
