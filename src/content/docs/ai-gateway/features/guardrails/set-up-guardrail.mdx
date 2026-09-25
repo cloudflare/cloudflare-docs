@@ -30,6 +30,22 @@ Use the [Update a Gateway](/api/resources/ai_gateway/methods/update/) endpoint t
 <APIRequest
 	path="/accounts/{account_id}/ai-gateway/gateways/{id}"
 	method="PUT"
+	json={{
+		rate_limiting_interval: 0,
+		rate_limiting_limit: 0,
+		collect_logs: true,
+		cache_ttl: 0,
+		cache_invalidate_on_update: false,
+		guardrails: {
+			prompt: {
+				P1: "BLOCK",
+				S9: "BLOCK",
+			},
+			response: {
+				S9: "BLOCK",
+			},
+		},
+	}}
 />
 
 This example blocks prompt injection (`P1`) in prompts and indiscriminate weapons (`S9`) in prompts and responses:
@@ -67,7 +83,6 @@ When a request is blocked by guardrails, you will receive a structured error res
 - **Prompt blocked**
   - `"code": 2016`
   - `"message": "Prompt blocked due to security configurations"`
-
 - **Response blocked**
   - `"code": 2017`
   - `"message": "Response blocked due to security configurations"`
