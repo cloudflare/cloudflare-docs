@@ -72,7 +72,7 @@ const pricing = formatModelPricing(model.pricing);
 	data-model-capabilities={model.capabilities.join(", ")}
 	data-model-tags={model.tags.join(", ")}
 	data-model-zdr={model.properties.zdr === "true" ? "Yes" : "No"}
-	class={cellClass}
+	class:list={[cellClass, "gap-4"]}
 >
 	<div
 		data-corner-marks

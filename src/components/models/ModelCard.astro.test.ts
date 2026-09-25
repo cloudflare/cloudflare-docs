@@ -45,6 +45,7 @@ describe("ModelCard", () => {
 			props: { model, index: 0, cols: 3 },
 		});
 		const root = parse(html);
+		const card = root.querySelector("[data-models-cell]");
 		const link = root.querySelector("a");
 		const title = root.querySelector("h3");
 		const titleRow = title?.parentNode;
@@ -66,6 +67,7 @@ describe("ModelCard", () => {
 		expect(description?.getAttribute("class")).toContain(
 			"[overflow-wrap:anywhere]",
 		);
+		expect(card?.getAttribute("class")).toContain("gap-4");
 		expect(link?.getAttribute("class")).toContain("flex-1");
 		expect(link?.getAttribute("class")).not.toContain("pb-16");
 		expect(compareRow?.getAttribute("class")).not.toContain("absolute");
