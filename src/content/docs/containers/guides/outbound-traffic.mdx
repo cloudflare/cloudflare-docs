@@ -357,7 +357,7 @@ Requests are evaluated in this order:
 5. Instance-level handlers set with `setOutboundHandler()` are checked before the class-level `outbound` handler.
 6. If no handler matches, the request can still egress to the public internet when it matched `allowedHosts` or `enableInternet = true`. Otherwise, it is denied.
 
-## Low-level API
+## Direct API
 
 To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific hostname glob, IP, or CIDR range,
 or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
