@@ -1,0 +1,30 @@
+---
+pcx_content_type: troubleshooting
+title: Error 421
+source: null
+description: Troubleshoot HTTP 421 error responses.
+products:
+  - support
+---
+
+## 421 Misdirected Request
+
+The `421 Misdirected Request` status code indicates that the request was directed to a server that is not able to produce a response for the combination of scheme and authority included in the request URI.
+
+For more details, refer to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#section-15.5.20).
+
+### Common use cases
+
+This error commonly occurs in HTTP/2 and HTTP/3 environments where connection reuse or alternative service selection is involved. A server may return a `421` response when:
+
+- A single HTTP/2 connection is reused (coalesced) across multiple origins, but the server is not configured to respond for one of those origins.
+- The client selected an alternative service (via the `Alt-Svc` header) that cannot handle the request for that specific scheme and host combination.
+
+Upon receiving a `421`, the client may retry the request on a new connection.
+
+### Cloudflare-specific information
+
+Cloudflare may forward a `421` response from the origin server when connection coalescing or alternative service routing results in a misdirected request. If you receive this error:
+
+- Verify that your origin server is correctly configured to serve all domains sharing the same connection or alternative service.
+- If using HTTP/2 or HTTP/3, ensure your TLS certificate covers all affected hostnames (for example, use a wildcard or SAN certificate).
