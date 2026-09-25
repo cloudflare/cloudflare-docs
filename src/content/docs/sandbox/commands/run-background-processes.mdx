@@ -149,10 +149,19 @@ Start a process that keeps running after the request ends, such as a development
 
    `kill -0` checks that the process exists without sending it a signal. A process is `lost` when it ended without recording an exit code, for example because something sent `SIGKILL` to the script that records it.
 
-4. Add a method that returns a process's output, and follows it while the process runs:
+4. Add methods that return a process's output so far, and follow it while the process runs:
 
    ```ts title="src/index.ts"
-   async logs(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
+   async logs(id: string, stream: "stdout" | "stderr"): Promise<string | undefined> {
+   	if (!(await this.status(id))) {
+   		return undefined;
+   	}
+
+   	const path = `${ROOT}/${id}/${stream}.log`;
+   	return (await run(this.ctx.container!, ["cat", path])).stdout;
+   }
+
+   async follow(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
    	const status = await this.status(id);
 
    	if (!status) {
@@ -165,14 +174,56 @@ Start a process that keeps running after the request ends, such as a development
    			? ["tail", "-n", "+1", "-F", "--pid", `${status.pid}`, path]
    			: ["cat", path];
    	const process = await this.ctx.container!.exec(argv, { stderr: "ignore" });
+   	const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+   	const writer = writable.getWriter();
+   	const encoder = new TextEncoder();
 
-   	return new Response(process.stdout, {
-   		headers: { "Content-Type": "text/event-stream" },
+   	let exited = false;
+   	const markExited = () => {
+   		exited = true;
+   	};
+   	process.exitCode.then(markExited, markExited);
+
+   	// Signaling a process that has exited records an internal error.
+   	const stop = () => {
+   		if (!exited) process.kill();
+   	};
+
+   	// Stop following when the client disconnects.
+   	writer.closed.catch(stop);
+
+   	// Detect a disconnected client while the log is quiet.
+   	const heartbeat = setInterval(() => {
+   		writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
+   	}, 5_000);
+
+   	const pump = async () => {
+   		try {
+   			for await (const text of process.stdout!.pipeThrough(
+   				new TextDecoderStream(),
+   			)) {
+   				await writer.write(encoder.encode(`data: ${JSON.stringify(text)}\n\n`));
+   			}
+   			await writer.close();
+   		} catch {
+   			stop();
+   		} finally {
+   			clearInterval(heartbeat);
+   		}
+   	};
+
+   	void pump();
+
+   	return new Response(readable, {
+   		headers: {
+   			"Content-Type": "text/event-stream",
+   			"Cache-Control": "no-cache",
+   		},
    	});
    }
    ```
 
-   `tail --pid` stops following when the process exits. The `text/event-stream` content type makes clients receive each line as it arrives, because other types can arrive all at once when the stream ends.
+   `follow()` sends the output so far, then new output until the process exits, when `tail --pid` stops. Each `data` event holds a JSON-encoded chunk of output, which can be part of a line or several lines, so a page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser). A disconnected client is noticed only when a write fails, so the comment every five seconds stops `tail` even when the log is quiet. Without it, `tail` keeps running until the process exits.
 
 5. Add a method that stops a process:
 
@@ -256,8 +307,16 @@ Start a process that keeps running after the request ends, such as a development
    		if (logs) {
    			const stream =
    				url.searchParams.get("stream") === "stderr" ? "stderr" : "stdout";
-   			const response = await sandbox.logs(id, stream);
-   			return response ?? new Response("Not found", { status: 404 });
+
+   			if (url.searchParams.has("follow")) {
+   				const response = await sandbox.follow(id, stream);
+   				return response ?? new Response("Not found", { status: 404 });
+   			}
+
+   			const output = await sandbox.logs(id, stream);
+   			return output === undefined
+   				? new Response("Not found", { status: 404 })
+   				: new Response(output);
    		}
 
    		if (request.method === "POST") {
@@ -301,19 +360,24 @@ Start a process that keeps running after the request ends, such as a development
    { "state": "running", "pid": 354 }
    ```
 
-10. Follow the output:
+10. Read the output so far, then follow it:
 
     ```sh
-    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs --no-buffer
+    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs
+    curl "https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs?follow" --no-buffer
     ```
+
+    The first request prints the lines so far and ends. The second prints them as events, then a new event each second:
 
     ```txt output
-    ready
-    tick 1
-    tick 2
+    data: "ready\n"
+
+    data: "tick 1\n"
+
+    data: "tick 2\n"
     ```
 
-    New lines appear each second. Add `?stream=stderr` to read standard error.
+    Add `stream=stderr` to the query to read standard error.
 
 11. In another terminal, stop the process, then check it again:
 

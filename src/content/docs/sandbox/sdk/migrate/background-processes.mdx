@@ -47,15 +47,15 @@ Replace `getProcess()` and `Process.getStatus()` with `status()`. Each 0.12 stat
 
 ## Read logs
 
-Replace `getProcessLogs()`, `Process.getLogs()`, and `streamProcessLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. It returns the output so far for a process that has exited, and follows the output of a running process until it exits.
+Replace `getProcessLogs()` and `Process.getLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. It returns the output so far, whether or not the process is still running.
 
 ```ts
 // Was: const { stdout, stderr } = await sandbox.getProcessLogs("dev");
-const stdout = await (await sandbox.logs("dev", "stdout"))?.text();
-const stderr = await (await sandbox.logs("dev", "stderr"))?.text();
+const stdout = await sandbox.logs("dev", "stdout");
+const stderr = await sandbox.logs("dev", "stderr");
 ```
 
-The stream carries the process's output, not JSON `LogEvent` objects. Remove `parseSSEStream()` and read the text. When the stream ends, `status()` returns the exit code, which 0.12 sent as an `exit` event.
+Replace `streamProcessLogs()` with `follow()`, which follows the output of a running process until it exits. It sends server-sent events, but each `data` field holds a JSON-encoded chunk of output, not a `LogEvent` object, and there is no `exit` event. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field. When the stream ends, `status()` returns the exit code.
 
 ## Wait
 
@@ -86,7 +86,7 @@ The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which c
 | ------------- | -------------------------------------------------------------- |
 | `onStart`     | Your code after `startProcess()` returns                       |
 | `onExit`      | The alarm's `process.ended` branch                             |
-| `onOutput`    | Follow the output with `logs()`                                |
+| `onOutput`    | Follow the output with `follow()`                              |
 | `onError`     | Catch errors from `startProcess()`, and handle exit code `127` |
 | `autoCleanup` | Delete the directory in the alarm, after handling the exit     |
 | `keepAlive`   | The alarm, which reschedules itself while any process runs     |
