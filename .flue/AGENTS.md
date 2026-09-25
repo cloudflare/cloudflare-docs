@@ -120,6 +120,14 @@ Codeowner commands are authorized in the pipeline entry:
 
 `/review` and `/full-review` route Dependabot PRs to `DEPENDABOT_REVIEW`. `/draft-never-stale` only applies to open draft PRs. Draft PRs skip automatic review; commands can still run. `DOCS_FLUE_REVIEW_MODE=log` is the default and only logs rendered output. `comment` updates the singleton summary comment.
 
+## Spam Gates
+
+The item gate (`INGEST`) evaluates new issues and non-Dependabot PRs and closes items the `spam-filter` agent flags as spam or clearly off-topic at medium/high confidence. The comment gate (`COMMENT_SPAM`) evaluates new `issue_comment` events and deletes comments the `comment-spam-filter` agent flags as spam at **high** confidence only. Off-topic content is never deletable at the comment level — support questions and short reactions are normal conversation. Both gates fail open: an agent error is treated as not spam. All side effects live in trusted code; agents only return structured verdicts.
+
+The comment gate skips comments from authors with write access (`OWNER`, `MEMBER`, or `COLLABORATOR` via `author_association`), any `[bot]` account, the item's own author, and exact-match slash commands (payload-derived, zero API calls in the classifier). Codeowners are skipped via an API check inside the workflow, keeping the webhook fast. The gate runs on comments on open and closed items alike.
+
+Before deleting, the workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
+
 ## Replay And Evals
 
 `pnpm run flue:replay --pr <number>` runs the real-PR replay harness. Run `pnpm run flue:dev` first. It reads `DOCS_FLUE_INTERNAL_TOKEN` and optional `FLUE_BASE_URL` (default `http://localhost:5173`) from the environment or `.flue/.env(.local)`. `--pr` accepts any PR number or a comma-separated list, such as `--pr 33622,33305`; omit it to replay every PR in `bin/replay-prs.json`, and use `--concurrency <number>` to run several at once.
@@ -151,7 +159,7 @@ pnpm run flue:evals
 | Reset local Worker state | `pnpm run flue:reset:local`                          |
 | Focused tests            | `pnpm --dir .flue exec vitest run <file>`            |
 
-`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`.
+`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`. Migration `v13` creates `FlueCommentSpamFilterAgent` for the comment spam gate.
 
 Because `wrangler.jsonc` declares `secrets.required`, local dev loads only those secrets from `.flue/.env(.local)` and drops every other key. `vite.config.ts` forwards the non-secret settings in `LOCAL_DEV_SETTINGS` (review mode, recommendations mode, and debounce) as Worker vars during `vite dev` only, and logs them at startup. Restart `flue dev` after editing these values. `flue:dev:wrangler` does not forward them.
 

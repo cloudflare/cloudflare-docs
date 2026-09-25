@@ -57,6 +57,11 @@
 			"binding": "INGEST",
 			"class_name": "IngestWorkflow",
 		},
+		{
+			"name": "cloudflare-docs-flue-comment-spam",
+			"binding": "COMMENT_SPAM",
+			"class_name": "CommentSpamWorkflow",
+		},
 	],
 	"migrations": [
 		{
@@ -203,6 +208,13 @@
 				"FlueStyleGuideReviewerAgent",
 				"FlueReviewJudgeAgent",
 			],
+		},
+		{
+			// v13: Comment spam gate. New agent DO class evaluating issue comments
+			// for spam; trusted CommentSpamWorkflow deletes on high-confidence
+			// verdicts and writes an R2 audit record first.
+			"tag": "v13",
+			"new_sqlite_classes": ["FlueCommentSpamFilterAgent"],
 		},
 	],
 	"triggers": {

@@ -23,6 +23,9 @@
  *         directly for a non-draft PR.
  *       · otherwise → `INGEST`, which runs the spam gate and, for a clean
  *         non-draft PR, kicks the review itself.
+ *   - comment spam event (issue_comment created by a non-exempt author) →
+ *     `COMMENT_SPAM`, which re-checks exemptions (including codeowner) and
+ *     deletes high-confidence spam comments.
  *
  * The durable orchestrators drive the specialist Flue agents via bindings
  * (`init().dispatch().read()` from inside Workflow steps) — there is no
@@ -31,6 +34,7 @@
 import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 import type { RebaseParams } from "../orchestrators/rebase-workflow";
 import type { IngestParams } from "../orchestrators/ingest-workflow";
+import type { CommentSpamParams } from "./comment-spam";
 import {
 	addReactionToComment,
 	getInstallationToken,
@@ -54,6 +58,7 @@ export interface PipelineEnv {
 	DEPENDABOT_REVIEW: Workflow<DependabotReviewParams>;
 	REBASE: Workflow<RebaseParams>;
 	INGEST: Workflow<IngestParams>;
+	COMMENT_SPAM: Workflow<CommentSpamParams>;
 	[key: string]: unknown;
 }
 
@@ -139,6 +144,23 @@ export async function startReviewPipeline(
 			},
 		});
 		log("ingest", c, number, "ingest_kicked");
+		return;
+	}
+
+	// ── 4. Comment spam gate (issue comments) ───────────────────────────────
+	// Payload-derived exemptions (write access, bots, item author, slash
+	// commands) were already applied by the classifier; the codeowner check
+	// runs inside the durable workflow so the webhook stays fast.
+	if (c.isCommentSpamEvent) {
+		if (c.commentId === undefined) return;
+		await env.COMMENT_SPAM.create({
+			params: {
+				commentId: c.commentId,
+				parentNumber: number,
+				isPullRequest: c.commentIsOnPullRequest,
+			},
+		});
+		log("comment-spam", c, number, "comment_spam_kicked");
 		return;
 	}
 
