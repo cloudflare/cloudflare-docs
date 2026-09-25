@@ -27,7 +27,7 @@ Use Docker-in-Docker when you need to:
 
 ## Create a Docker-enabled image
 
-Cloudflare Containers run without root privileges, so you must use the rootless Docker image. Create a custom Dockerfile that combines the sandbox binary with Docker:
+Create a custom Dockerfile that combines the sandbox binary with Docker. The Docker daemon runs as `root`:
 
 ```dockerfile title="Dockerfile"
 FROM docker:dind-rootless
@@ -97,7 +97,6 @@ console.log(run.stdout); // "Hello from Docker!"
 Docker-in-Docker in Cloudflare Containers has the following limitations:
 
 - **No iptables** - Network isolation features that rely on iptables are not available
-- **Rootless mode only** - You cannot use privileged containers or features requiring root
 - **Ephemeral storage** - Built images and containers are lost when the sandbox sleeps. You must persist them manually.
 
 ## Related resources
