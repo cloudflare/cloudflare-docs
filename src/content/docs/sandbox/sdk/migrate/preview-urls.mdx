@@ -277,7 +277,7 @@ Your Durable Objects keep the `portTokens` key when you deploy the switch in pla
 
 | Request | Result |
 | --- | --- |
-| A URL that 0.12 issued | Returns `503` until a server listens on its port in the new container, and then reaches that server. |
+| A URL that 0.12 issued | Returns `503` until a server listens on its port in the new container, and then reaches that server. For a short time after the deploy, it can still reach the 0.12 server. |
 | Any URL after a container starts again | Reaches the server without another `exposePort()` call. 0.12 returned `410` until you exposed the port again. |
 | A wrong token, or a port without a token | Returns `404`. |
 | A URL after `unexposePort()` | Returns `404`. |

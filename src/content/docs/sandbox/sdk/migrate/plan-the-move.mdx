@@ -44,7 +44,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
 | Part | At the switch |
 | --- | --- |
-| Running containers | Keep running in the old container application, with no Durable Object attached. |
+| Running containers | Keep running in the old container application. For a short time after the deploy, your Durable Object still reports `running` as `true`, and `exec()` and `getTcpPort()` reach the 0.12 container. After that, `running` is `false`, and your code starts a 1.0 container. |
 | Files | Stay in the old containers. New containers start without them. |
 | Running commands | End shortly after. A command that returns its result when it finishes fails with HTTP 500. Streamed output stops with HTTP 200 and no error. |
 | WebSockets | Stop delivering data. Clients receive no close frame. |
