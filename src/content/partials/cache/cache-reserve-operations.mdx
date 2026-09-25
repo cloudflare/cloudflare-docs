@@ -16,10 +16,6 @@ Class B operations are performed when data needs to be fetched from Cache Reserv
 
 Asset purges are free operations.
 
-Cache Reserve will be instantly purged along with edge cache when you send a purge by URL request. Refer to [cache configurations](/cache/how-to/purge-cache/) for details.
+[Purging](/cache/how-to/purge-cache/) content forces a cache miss in both Cache Reserve and the edge cache, regardless of purge type. The next request for that content is fetched from your origin and written to Cache Reserve again, which is a Class A operation.
 
-Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to [revalidate](/cache/concepts/cache-responses/#revalidated) on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
-
-:::note
-Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.
-:::
+[Invalidating](/cache/guides/invalidate-cache/) content keeps it in Cache Reserve and marks it for revalidation. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin. Invalidated content remains stored and continues to incur storage costs.

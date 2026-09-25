@@ -1,0 +1,33 @@
+---
+title: Purge now forces a cache miss for Cache Reserve content
+description: Purging by tag, hostname, prefix, or everything now forces a cache miss for Cache Reserve content instead of revalidating it. To keep revalidating content, use invalidation.
+products:
+  - cache
+date: 2026-09-24
+---
+
+Purge requests now force a cache miss for [Cache Reserve](/cache/advanced-configuration/cache-reserve/) content, regardless of purge type. Previously, purging by cache tag, hostname, prefix, or everything marked matching Cache Reserve content for revalidation. Purging by URL already removed content from Cache Reserve and is unchanged.
+
+This change applies to purge requests from the API and the dashboard. Cache Reserve now handles purges the same way as the edge cache.
+
+## Cost impact
+
+After a purge, the next request for affected content is a Cache Reserve miss. Your origin must deliver the content in full, even if it has not changed. Cloudflare then writes the content to Cache Reserve again, which is billed as a [Class A operation](/cache/advanced-configuration/cache-reserve/#pricing).
+
+If you frequently purge Cache Reserve content by tag, hostname, prefix, or everything, review the effect on your origin egress and Cache Reserve usage.
+
+## Keep revalidating Cache Reserve content
+
+To keep content in Cache Reserve and revalidate it instead, send the same request to the new `invalidate_cache` endpoint. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin again.
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"tags":["product-images"]}'
+```
+
+In the dashboard, use **Invalidate Cache** on the **Caching** > **Configuration** page.
+
+Unlike the previous purge behavior, invalidation can serve stale content during revalidation if your cache settings allow it. For details, refer to [Invalidate cached content](/cache/guides/invalidate-cache/).
