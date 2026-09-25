@@ -453,7 +453,19 @@ export class AgentSandbox extends DurableObject<Env> {
 			{},
 		);
 
-		return probe.exitCode === 0 ? { state: "running" } : { state: "lost" };
+		if (probe.exitCode === 0) {
+			return { state: "running" };
+		}
+
+		// The task can finish after the first read. Its wrapper writes the
+		// exit code before it exits, so read it again.
+		const lateExitCode = await this.readOptionalText(exitCodePath);
+
+		if (lateExitCode !== undefined) {
+			return this.outcome(Number.parseInt(lateExitCode, 10));
+		}
+
+		return { state: "lost" };
 	}
 
 	private async outcome(exitCode: number): Promise<TaskStatus> {
@@ -592,7 +604,7 @@ The task has one of these states:
 
 Claude Code exits successfully even when a model request fails. The outcome comes from the `is_error` field of the final `result` event instead of the exit code. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. When there is no `result` event, the task fails with the end of Claude Code's standard error output.
 
-While no exit code exists, the Durable Object checks whether the process still exists with `kill -0`. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary.
+While no exit code exists, the Durable Object checks whether the process still exists with `kill -0`. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
 
 `readDiff()` marks new files with `git add --intent-to-add` so that `git diff` includes them.
 
