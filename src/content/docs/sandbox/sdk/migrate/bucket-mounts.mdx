@@ -28,7 +28,6 @@ await new S3Mounts(container, this.ctx.exports.S3Gateway).mount({
 	},
 	keyPrefix: "jobs/ada",
 	access: "read-write",
-	s3fsOptions: { nomixupload: true },
 });
 ```
 
@@ -38,7 +37,7 @@ await new S3Mounts(container, this.ctx.exports.S3Gateway).mount({
 | `mountBucket()` with an R2 binding name                      | `S3Mounts.mount()` with the R2 S3 endpoint and an [R2 API token](/r2/api/tokens/)                                           |
 | `prefix`                                                     | `keyPrefix`, without the leading `/`                                                                                        |
 | `readOnly`                                                   | `access: "read-only"`                                                                                                       |
-| `s3fsOptions` array                                          | `s3fsOptions` object. For R2, pass `nomixupload: true`, which 0.12 added for you.                                           |
+| `s3fsOptions` array                                          | `s3fsOptions` object. `S3Mounts` always sets `nomixupload`, which 0.12 added only for R2, and rejects it in `s3fsOptions`.  |
 | `credentials`, `R2_*` and `AWS_*` variables                  | `credentials` in the mount request. `S3Mounts` does not read the environment.                                               |
 | `credentialProxy`, `provider`                                | Remove them. Credentials always stay in the Worker.                                                                         |
 | `localBucket`                                                | `S3Mounts` under `wrangler dev` with MinIO. Refer to [Develop locally](/sandbox/files/mount-an-r2-bucket/#develop-locally). |
