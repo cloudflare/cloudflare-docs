@@ -117,7 +117,7 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
 5. Add a method to your Durable Object that intercepts `github.com` and clones the repository:
 
    ```ts title="src/index.ts"
-   async clone(): Promise<string> {
+   async clone(): Promise<{ exitCode: number; stderr: string }> {
    	const container = this.ctx.container;
 
    	if (!container) {
@@ -152,7 +152,10 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
    	);
    	const output = await process.output();
 
-   	return new TextDecoder().decode(output.stderr);
+   	return {
+   		exitCode: output.exitCode,
+   		stderr: new TextDecoder().decode(output.stderr),
+   	};
    }
    ```
 
@@ -163,9 +166,12 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
    ```ts title="src/index.ts"
    if (url.pathname === "/clone" && request.method === "POST") {
    	const sandbox = env.MY_CONTAINER.getByName("sandbox");
-   	return new Response(await sandbox.clone());
+   	const { exitCode, stderr } = await sandbox.clone();
+   	return new Response(stderr, { status: exitCode === 0 ? 200 : 500 });
    }
    ```
+
+   When Git fails, the route responds with `500` and Git's error. A second request fails this way while the running sandbox still has the clone in `/workspace`.
 
    Authenticate callers first, so other people cannot read the repository through the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
