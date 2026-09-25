@@ -1,6 +1,6 @@
 ---
 title: Move background processes
-description: Replace @cloudflare/sandbox 0.12 startProcess(), process status, logs, waits, and kills with process directories that your Durable Object manages.
+description: Replace @cloudflare/sandbox 0.12 startProcess(), Process objects, process logs, waits, and kills with Durable Object methods that take a process ID.
 pcx_content_type: how-to
 sidebar:
   order: 7
@@ -10,83 +10,240 @@ products:
   - durable-objects
 ---
 
-In 0.12, `startProcess()` returned a `Process`, and the container kept a table of processes that any later request could query. In 1.0, your Durable Object keeps that table as a directory for each process in the container. [Run background processes](/sandbox/commands/run-background-processes/) builds it. This page maps each 0.12 call to the methods from that guide.
+import { Steps } from "~/components";
 
-Like the 0.12 table, the directories last as long as the container.
+In Sandbox SDK 0.12, `startProcess()` returns a `Process` object, and the container keeps a table of processes that later requests query. In 1.0, your Durable Object keeps a directory for each process in the container. Each `Process` method becomes a Durable Object method that takes the process ID.
 
-Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first, then add the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) to your Durable Object class. On this page, `sandbox` is the stub that `getByName()` returns.
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` and `INACTIVITY_TIMEOUT_MS` constants from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `getProcess()`, `getProcessLogs()`, `streamProcessLogs()`, `killProcess()`, `killAllProcesses()`, `cleanupCompletedProcesses()`, and the process callbacks. It does not cover commands that finish while the request is open. For those, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/).
+
+## Add the process methods
+
+<Steps>
+
+1. Add the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) to your class, including the alarm handler and `waitForLog()` from [Wait for a log line](/sandbox/commands/run-background-processes/#wait-for-a-log-line).
+
+2. Change `startProcess()` to start the container with `ensureRunning()`, and to run each process with the working directory and environment that 0.12 gave it:
+
+   ```ts title="src/index.ts" ins={2,16,17}
+   async startProcess(id: string, argv: string[]): Promise<boolean> {
+   	await this.ensureRunning();
+
+   	// mkdir fails when another process already uses the ID.
+   	const dir = `${ROOT}/${id}`;
+   	await run(this.container, ["mkdir", "-p", ROOT]);
+   	const created = await run(this.container, ["mkdir", dir]);
+
+   	if (created.exitCode !== 0) {
+   		return false;
+   	}
+
+   	// Ignoring the output lets the process outlive this request.
+   	const command = ["sh", "-c", RUN, "sh", dir, ...argv];
+   	await this.container.exec(command, {
+   		cwd: "/workspace",
+   		env: ENV,
+   		stdout: "ignore",
+   		stderr: "ignore",
+   	});
+
+   	await this.ctx.storage.put(`process:${id}`, argv);
+   	await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   	return true;
+   }
+   ```
+
+   0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, and does not inherit the variables that `start()` sets, even when the image sets `WORKDIR`.
+
+3. In `status()`, replace `10 * 60 * 1000` with `INACTIVITY_TIMEOUT_MS`, so that each check keeps your inactivity timeout.
+
+</Steps>
+
+On this page, `sandbox` is the stub that `getByName()` returns.
 
 ## Start processes
 
-Replace `startProcess()` with `startProcess()` from the guide, which takes an ID and an array of arguments. To keep a 0.12 command string, run it with `["sh", "-c", command]`.
+0.12 ran each command string in `bash`. To keep a string, run it with `["bash", "-c", command]`:
 
-```ts
-// Was: const process = await sandbox.startProcess("npm run dev", { processId: "dev" });
-const started = await sandbox.startProcess("dev", ["npm", "run", "dev"]);
+```ts title="src/index.ts (0.12)"
+const process = await sandbox.startProcess("npm run dev", {
+	processId: "dev",
+});
 ```
 
-`startProcess()` returns `false` when the ID is in use, where 0.12 threw an error.
+```ts title="src/index.ts (1.0)"
+const started = await sandbox.startProcess("dev", [
+	"bash",
+	"-c",
+	"npm run dev",
+]);
+```
 
-To pass the 0.12 `cwd` and `env` options, add them to the `exec()` call in `startProcess()`. `exec()` does not inherit the `env` passed to `container.start()`. The 0.12 `sessionId` option becomes `cwd` and `env`, as in [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
+Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_6snsuw`, use `crypto.randomUUID()`. The ID becomes a directory name, so use only characters that are safe in a path.
 
-## Check status
+`startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one.
 
-Replace `getProcess()` and `Process.getStatus()` with `status()`. Each 0.12 status maps to a state:
+Remove the `timeout` option. 0.12 did not stop a background process when the time passed. To limit how long a process runs, start it with `timeout`, such as `["timeout", "300", "npm", "test"]`, which exits with code `124` when the time passes. For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
 
-| 0.12 status | State                                                         |
-| ----------- | ------------------------------------------------------------- |
-| `starting`  | `starting`                                                    |
-| `running`   | `running`, with `pid`                                         |
-| `completed` | `exited`, with `exitCode` `0`                                 |
-| `failed`    | `exited`, with another `exitCode` less than `128`             |
-| `killed`    | `exited`, with `128` plus the signal number, such as `143`    |
-| `error`     | `exited`, with `exitCode` `127` if the command does not exist |
-| None        | `lost`, when the process ended without recording an exit code |
+## Check and list processes
 
-`status()` returns `undefined` for an ID that no process used. To replace `listProcesses()`, add a Durable Object method that lists the process directories with `run(container, ["ls", "/var/lib/processes"])` and calls `status()` for each. The `process:` keys in Durable Object storage are not a complete list, because the alarm deletes a key within a minute of its process ending. The directory stays until you delete it. If you need the 0.12 `endTime`, record it in storage when the alarm sees the process end.
+Replace `getProcess()` and `Process.getStatus()` with `status()`, which returns `undefined` for an ID that no process uses. Each 0.12 status maps to a 1.0 state:
+
+| 0.12 status | 1.0 state |
+| --- | --- |
+| `starting` | `starting` |
+| `running` | `running`, with `pid` |
+| `completed` | `exited`, with `exitCode` `0` |
+| `failed` | `exited`, with another `exitCode` |
+| `killed` | `exited`, with `exitCode` `143` after `SIGTERM` or `137` after `SIGKILL` |
+| `error` | `startProcess()` throws |
+| — | `lost`, when the process ended without recording an exit code |
+
+To replace `listProcesses()`, add a method that lists the process directories:
+
+```ts title="src/index.ts"
+async listProcesses(): Promise<{ id: string; status: Status }[]> {
+	if (!this.container.running) {
+		return [];
+	}
+
+	const { stdout } = await run(this.container, ["ls", ROOT]);
+	const processes = [];
+
+	for (const id of stdout.split("\n").filter((line) => line !== "")) {
+		const status = await this.status(id);
+
+		if (status) {
+			processes.push({ id, status });
+		}
+	}
+
+	return processes;
+}
+```
+
+The directories stay until you delete them, as ended processes stayed in the 0.12 table. The alarm deletes each `process:` key in storage within a minute of its process ending, so the keys list only running processes.
 
 ## Read logs
 
-Replace `getProcessLogs()` and `Process.getLogs()` with `logs()`. Call it once for `stdout` and once for `stderr`. It returns the output so far, whether or not the process is still running.
+Replace `getProcessLogs()` and `Process.getLogs()` with a `logs()` call for each stream:
 
-```ts
-// Was: const { stdout, stderr } = await sandbox.getProcessLogs("dev");
+```ts title="src/index.ts (0.12)"
+const { stdout, stderr } = await sandbox.getProcessLogs("dev");
+```
+
+```ts title="src/index.ts (1.0)"
 const stdout = await sandbox.logs("dev", "stdout");
 const stderr = await sandbox.logs("dev", "stderr");
 ```
 
-Replace `streamProcessLogs()` with `follow()`, which follows the output of a running process until it exits. It sends server-sent events, but each `data` field holds a JSON-encoded chunk of output, not a `LogEvent` object, and there is no `exit` event. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field. When the stream ends, `status()` returns the exit code.
+Replace `streamProcessLogs()` with `follow()`, which returns a `Response` that follows one stream until the process exits. Each `data` field holds a JSON-encoded chunk of output, where 0.12 sent `LogEvent` objects. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field. `follow()` sends no `exit` event, so call `status()` for the exit code when the stream ends.
 
-## Wait
+## Wait for output or exit
 
-Replace `Process.waitForLog()` with `waitForLog()`:
+Replace `Process.waitForLog()` with `waitForLog()`. It returns a state, where 0.12 threw an error:
 
-```ts
-// Was: const { line } = await process.waitForLog(/listening on \d+/, 30_000);
-const result = await sandbox.waitForLog("dev", "listening on [0-9]+", 30_000);
+```ts title="src/index.ts (0.12)"
+const { line } = await process.waitForLog("ready.", 30_000);
+```
+
+```ts title="src/index.ts (1.0)" ins={7-9}
+const result = await sandbox.waitForLog(
+	"dev",
+	literal("ready."),
+	30_000,
+);
 
 if (result?.state !== "matched") {
-	throw new Error(`The dev server did not start: ${result?.state}`);
+	throw new Error(`The server did not start: ${result?.state}`);
 }
 ```
 
-The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. GNU `grep`, which Debian images include, does not support `\d`, so replace it with `[0-9]`. It accepts `\s` and `\w`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
+The state is `timed-out` where 0.12 threw `ProcessReadyTimeoutError`, and `exited` where it threw `ProcessExitedBeforeReadyError`.
 
-Replace `Process.waitForExit()` with `status()` calls until the state is `exited` or `lost`. Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/).
+The pattern is a `grep -E` extended regular expression. 0.12 matched a string pattern as written, so pass each string pattern through a function that escapes it:
 
-## Stop processes and react to exits
+```ts title="src/index.ts"
+// Escapes a 0.12 string pattern, so that it matches as written.
+function literal(text: string): string {
+	return text.replace(/[\\^$.|?*+()[\]{}]/g, "\\$&");
+}
+```
 
-Replace `killProcess()` and `Process.kill()` with `stop()`, which sends `SIGTERM` to the whole process group. Stopping `npm run dev` also stops the `node` process it started. To send another signal, change `TERM` in `stop()`.
+Without it, the pattern `[ok]` matches any line that contains `o` or `k`. Pass a 0.12 `RegExp` as its `source`, and replace `\d` with `[0-9]`, which `grep` requires.
 
-Replace `killAllProcesses()` with a loop that calls `stop()` for each stored process ID. Replace `cleanupCompletedProcesses()` with `rm -rf` on each listed directory whose process is `exited` or `lost`.
+To replace `Process.waitForExit()`, add a method that checks the status until the process ends:
 
-The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12.
+```ts title="src/index.ts"
+async waitForExit(id: string, timeoutMs: number) {
+	const deadline = Date.now() + timeoutMs;
+	let status = await this.status(id);
 
-| 0.12          | Replacement                                                    |
-| ------------- | -------------------------------------------------------------- |
-| `onStart`     | Your code after `startProcess()` returns                       |
-| `onExit`      | The alarm's `process.ended` branch                             |
-| `onOutput`    | Follow the output with `follow()`                              |
-| `onError`     | Catch errors from `startProcess()`, and handle exit code `127` |
-| `autoCleanup` | Delete the directory in the alarm, after handling the exit     |
-| `keepAlive`   | The alarm, which reschedules itself while any process runs     |
+	while (
+		(status?.state === "running" || status?.state === "starting") &&
+		Date.now() < deadline
+	) {
+		await scheduler.wait(500);
+		status = await this.status(id);
+	}
+
+	return status;
+}
+```
+
+The method returns the state `running` when the time passes first. Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/#forward-requests-to-the-server).
+
+## Stop processes
+
+Replace `Process.kill()` and `killProcess()` with `stop()`:
+
+```ts title="src/index.ts (0.12)"
+await sandbox.killProcess("dev");
+```
+
+```ts title="src/index.ts (1.0)"
+await sandbox.stop("dev");
+```
+
+`stop()` sends `SIGTERM` to the process group, which reaches the processes that the command started. 0.12 sent `SIGKILL` 5 seconds later to any process still running, and ignored the `signal` argument. To stop a process that ignores `SIGTERM`, change `TERM` to `KILL` in `stop()`.
+
+Replace `killAllProcesses()` with a `stop()` call for each running process that `listProcesses()` returns. Remove `cleanupCompletedProcesses()` and the `autoCleanup` option, which did nothing in 0.12. To delete the directory of an ended process, run `rm -rf` on it.
+
+## Replace callbacks
+
+The alarm from Run background processes checks each process every minute, and keeps the container running while any process runs. Each 0.12 callback moves to your own code:
+
+| 0.12 | 1.0 |
+| --- | --- |
+| `onStart` | Your code after `startProcess()` returns `true`. |
+| `onOutput` | `follow()`, or `logs()` for the output so far. |
+| `onExit` | The alarm's `process.ended` branch, within a minute of the exit. For the exit at once, call `waitForExit()`. |
+| `onError` | A `startProcess()` call that throws or returns `false`. |
+
+## Start processes again after the switch
+
+1.0 does not see processes that 0.12 started. `status()` returns `undefined` for their IDs, and `listProcesses()` leaves them out. The 0.12 process table ends with its container. Start each process that your application needs after the switch, such as in the method that first calls `ensureRunning()`.
+
+## Check the processes
+
+After you deploy the switch, start a process with the ID of a 0.12 process, such as `dev`. `startProcess()` returns `true`, and `status("dev")` reports it:
+
+```json output
+{ "state": "running", "pid": 142 }
+```
+
+`logs("dev", "stdout")` returns the output from `/workspace`, with the variables from `ENV`. After `stop("dev")`, `listProcesses()` returns the exit code:
+
+```json output
+[{ "id": "dev", "status": { "state": "exited", "exitCode": 143 } }]
+```
+
+## Related resources
+
+- [Run background processes](/sandbox/commands/run-background-processes/)
+- [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
+- [Durable Object alarms](/durable-objects/api/alarms/)
