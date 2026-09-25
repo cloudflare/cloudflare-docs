@@ -12,12 +12,12 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 A scheduling policy determines where you configure a Container image and instance size. It also determines how image updates apply. Choose the policy when you create the Container application.
 
-| Policy | Configure image and instance size | Image updates | Best for |
-| - | - | - | - |
-| `default` | In Wrangler configuration | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size |
-| `durable_object` | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance | Sandboxes, agent environments, and other workloads that need per-instance configuration |
+| Policy           | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
+| ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `default`        | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |
+| `durable_object` | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance                                              | Sandboxes, agent environments, and other workloads that need per-instance configuration |
 
-The scheduling policy is immutable. To use a different policy, create a new Container application. Deleting and recreating an application also replaces its Container instances.
+The scheduling policy is immutable. To use a different policy, create a new Container application. Deleting and recreating an application also replaces its Container instances. To move an existing application, refer to [Move from the default scheduling policy](/containers/configuration/scheduling-policy/move-from-default/).
 
 :::note
 The `durable_object` scheduling policy is in public beta.
