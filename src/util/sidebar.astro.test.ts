@@ -18,7 +18,7 @@ vi.mock("astro:content", async (importOriginal) => {
 	};
 });
 
-const ARROW = " \u2197";
+const ARROW = " \u2197\uFE0E";
 
 const run = (tree: SidebarItem[]) =>
 	externalAppLinksTransform({
