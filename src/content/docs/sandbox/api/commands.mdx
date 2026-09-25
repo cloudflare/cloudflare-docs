@@ -37,7 +37,6 @@ const result = await sandbox.exec(command: string, options?: ExecOptions): Promi
   - `timeout` - Maximum execution time in milliseconds
   - `env` - Environment variables for this command: `Record<string, string | undefined>`
   - `cwd` - Working directory for this command
-  - `stdin` - Data to pass to the command's standard input (enables arbitrary input without shell injection risks)
 
 **Returns**: `Promise<ExecuteResponse>` with `success`, `stdout`, `stderr`, `exitCode`
 
@@ -66,17 +65,6 @@ await sandbox.exec('node app.js', {
   }
 });
 
-// Pass input via stdin (no shell injection risks)
-const result = await sandbox.exec('cat', {
-  stdin: 'Hello, world!'
-});
-console.log(result.stdout); // "Hello, world!"
-
-// Process user input safely
-const userInput = 'user@example.com\nsecret123';
-await sandbox.exec('python process_login.py', {
-  stdin: userInput
-});
 ```
 </TypeScriptExample>
 
@@ -97,7 +85,7 @@ const stream = await sandbox.execStream(command: string, options?: ExecOptions):
 **Parameters**:
 
 - `command` - The command to execute
-- `options` - Same as `exec()` (including `stdin` support)
+- `options` - Same as `exec()`
 
 **Returns**: `Promise<ReadableStream>` emitting `ExecEvent` objects (`start`, `stdout`, `stderr`, `complete`, `error`)
 
@@ -118,17 +106,6 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
     case 'error':
       console.error('Failed:', event.error);
       break;
-  }
-}
-
-// Stream with stdin input
-const inputStream = await sandbox.execStream('python -c "import sys; print(sys.stdin.read())"', {
-  stdin: 'Data from Workers!'
-});
-
-for await (const event of parseSSEStream<ExecEvent>(inputStream)) {
-  if (event.type === 'stdout') {
-    console.log('Python received:', event.data);
   }
 }
 ```
@@ -176,11 +153,6 @@ console.log('Started with PID:', server.pid);
 const app = await sandbox.startProcess('node app.js', {
   cwd: '/workspace/my-app',
   env: { NODE_ENV: 'production', PORT: '3000' }
-});
-
-// Start process with stdin input (useful for interactive applications)
-const interactive = await sandbox.startProcess('python interactive_app.py', {
-  stdin: 'initial_config\nstart_mode\n'
 });
 ```
 </TypeScriptExample>
@@ -294,74 +266,6 @@ await new Promise(resolve => setTimeout(resolve, 5000));
 
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Server logs:', logs);
-```
-</TypeScriptExample>
-
-## Standard input (stdin)
-
-All command execution methods support passing data to a command's standard input via the `stdin` option. This enables secure processing of user input without shell injection risks.
-
-### How stdin works
-
-When you provide the `stdin` option:
-1. The input data is written to a temporary file inside the container
-2. The command receives this data through its standard input stream
-3. The temporary file is automatically cleaned up after execution
-
-This approach prevents shell injection attacks that could occur when embedding user data directly in commands.
-
-<TypeScriptExample>
-```
-// Safe: User input goes through stdin, not shell parsing
-const userInput = 'user@domain.com; rm -rf /';
-const result = await sandbox.exec('python validate_email.py', {
-  stdin: userInput
-});
-
-// Instead of unsafe: `python validate_email.py "${userInput}"`
-// which could execute the embedded `rm -rf /` command
-```
-</TypeScriptExample>
-
-### Common patterns
-
-**Processing form data:**
-
-<TypeScriptExample>
-```
-const formData = JSON.stringify({
-  username: 'john_doe',
-  email: 'john@example.com'
-});
-
-const result = await sandbox.exec('python process_form.py', {
-  stdin: formData
-});
-```
-</TypeScriptExample>
-
-**Interactive command-line tools:**
-
-<TypeScriptExample>
-```
-// Simulate user responses to prompts
-const responses = 'yes\nmy-app\n1.0.0\n';
-const result = await sandbox.exec('npm init', {
-  stdin: responses
-});
-```
-</TypeScriptExample>
-
-**Data transformation:**
-
-<TypeScriptExample>
-```
-const csvData = 'name,age,city\nJohn,30,NYC\nJane,25,LA';
-const result = await sandbox.exec('python csv_processor.py', {
-  stdin: csvData
-});
-
-console.log('Processed data:', result.stdout);
 ```
 </TypeScriptExample>
 
