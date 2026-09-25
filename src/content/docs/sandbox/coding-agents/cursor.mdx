@@ -14,6 +14,7 @@ reviewed: 2026-09-24
 ---
 
 import { Steps } from "~/components";
+import { VendorAgentConnections } from "~/components/react/sandbox/VendorAgentConnections";
 
 Run Cursor Cloud Agents on Cloudflare through [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
 
@@ -178,6 +179,12 @@ A cache miss performs a normal Git clone. It does not prevent the agent from sta
 ## How the template works
 
 The template manages one container for each assigned Cursor session.
+
+<VendorAgentConnections vendor="cursor" client:visible>
+
+Your Worker connects to Cursor on a cron trigger and claims sessions. It sends each session to its own Durable Object, which starts and stops a container. The Cursor worker in the container connects to Cursor and runs the session. Every connection to Cursor starts on Cloudflare, so nothing connects in.
+
+</VendorAgentConnections>
 
 A cron trigger runs the Worker every five minutes. Each run lists the sessions that wait for `CURSOR_POOL`, then keeps Cursor's server-sent events stream open until shortly before the next run, so the Worker also receives sessions that arrive between runs.
 

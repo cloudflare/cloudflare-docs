@@ -13,6 +13,7 @@ reviewed: 2026-09-24
 ---
 
 import { PackageManagers, Steps } from "~/components";
+import { VendorAgentConnections } from "~/components/react/sandbox/VendorAgentConnections";
 
 [Devin](https://docs.devin.ai/cloud/outposts/overview) runs its agent loop in its own service. A Devin Outpost moves the machine that each session works on, where Devin runs commands, edits files, and opens a browser, to infrastructure that you choose. The Devin Outpost template runs each session in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
 
@@ -128,6 +129,12 @@ A cron trigger runs the Worker once a minute. During each run, the Worker asks D
 | `terminated`         | Stops the sandbox and forgets its snapshot.                                               |
 
 The Durable Object only starts and stops its container. Inside the sandbox, the Devin CLI (`devin worker start`) claims the session and runs it.
+
+<VendorAgentConnections vendor="devin" client:visible>
+
+Your Worker connects to Devin on a cron trigger and lists sessions. It sends each session to its own Durable Object, which starts and stops a container. The Devin CLI in the container connects to Devin, claims the session, and runs it. Every connection to Devin starts on Cloudflare, so nothing connects in.
+
+</VendorAgentConnections>
 
 When Devin suspends a session, the Devin CLI exits and the sandbox keeps running until the Durable Object saves a snapshot of its disk. When the session continues, the sandbox starts from that snapshot and the Devin CLI claims the session again. The snapshot keeps the session's files and installed packages. It does not keep running processes. If the Devin CLI exits while the session is still running, the template saves a snapshot and starts a new sandbox from it.
 
