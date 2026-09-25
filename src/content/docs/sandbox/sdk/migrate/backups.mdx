@@ -38,6 +38,8 @@ await sandbox.restore(backup.key, "/workspace");
 | `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, R2 access keys | Remove them. The binding needs no credentials, and the container never holds them.                         |
 | `BackupCreateError`, `BackupRestoreError`                      | Errors that `backup()` and `restore()` throw when `tar` fails                                              |
 
+A lifecycle rule sets one age, in days, for every backup under the prefix, and R2 deletes an expired backup up to a day later. 0.12 set `ttl` for each backup, in seconds, and refused to restore an expired one. To keep that behavior, store the expiry time in the upload's custom metadata and check it in `restore()`.
+
 Backups that 0.12 created are SquashFS images at `backups/<ID>/data.sqsh` in the bucket, not `tar` archives. To restore one, install `squashfs-tools` in the image, write the file to the container, and extract it with `unsquashfs`.
 
 ## Leave out ignored files

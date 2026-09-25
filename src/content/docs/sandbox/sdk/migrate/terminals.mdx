@@ -14,15 +14,15 @@ In 0.12, `sandbox.terminal(request)` attached a WebSocket to a shell, and the `S
 
 Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then add the image, the Durable Object `fetch()` handler, and the page from that guide.
 
-| 0.12                                        | 1.0                                                                                                            |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `sandbox.terminal(request, { cols, rows })` | Forward the WebSocket request to the Durable Object, which reads `cols` and `rows` from the query string       |
-| `session.terminal(request)`                 | A tmux session for each name, set with `?session=<NAME>`. Pass the 0.12 session's `cwd` and `env` to `exec()`. |
-| `proxyTerminal()`                           | The Worker route that forwards `/sandboxes/<NAME>/terminal` to the Durable Object                              |
-| Reconnect and output replay                 | The page reopens the WebSocket, and tmux redraws the screen and keeps scrollback                               |
-| `@cloudflare/sandbox/xterm`, `SandboxAddon` | xterm.js with the fit add-on, and a WebSocket that the page manages                                            |
-| Resize control message                      | A JSON text message with `cols` and `rows`                                                                     |
+| 0.12                                        | 1.0                                                                                                                                                                                             |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `sandbox.terminal(request, { cols, rows })` | Forward the WebSocket request to the Durable Object, which reads `cols` and `rows` from the query string                                                                                        |
+| `session.terminal(request)`                 | A tmux session for each name, set with `?session=<NAME>`. Pass the 0.12 session's `cwd` and `env` as the `-c` and `-e` options of `tmux new-session`. They apply when tmux creates the session. |
+| `proxyTerminal()`                           | The Worker route that forwards `/sandboxes/<NAME>/terminal` to the Durable Object                                                                                                               |
+| Reconnect and output replay                 | The page reopens the WebSocket, and tmux redraws the screen and keeps scrollback                                                                                                                |
+| `@cloudflare/sandbox/xterm`, `SandboxAddon` | xterm.js with the fit add-on, and a WebSocket that the page manages                                                                                                                             |
+| Resize control message                      | A JSON text message with `cols` and `rows`                                                                                                                                                      |
 
 The image needs tmux. Add it to your `Dockerfile`.
 
-Keystrokes and output travel as binary WebSocket messages, and only resize messages are text. Remove the 0.12 status message handling from your page.
+Keystrokes and output travel as binary WebSocket messages, and only resize messages are text. 0.12 sent status messages as text. In 1.0, the socket's `open` event replaces `ready`. Close code `1000` replaces `exit`: the reason carries the shell's exit code, and the same code means the person detached, so the session may still be running. An HTTP error status instead of `101` replaces `error`.
