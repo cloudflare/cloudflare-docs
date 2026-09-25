@@ -82,6 +82,14 @@ The next incoming request or event starts the cycle again.
 A Durable Object incurs charges only when it is **actively running in-memory**, or when it is **idle in-memory and non-hibernateable** (indicated as green rectangles in the diagram).
 :::
 
+## Client disconnects
+
+A Durable Object keeps running a request after its client disconnects, for example when the browser that called your Worker closes the connection. This applies to RPC methods and to `fetch()`. The method runs to completion, including `finally` blocks, and its result is discarded. Workers Observability records the invocation with the outcome `canceled`.
+
+To stop work when the client disconnects, turn on the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag and listen for `abort` on `request.signal` in `fetch()`. RPC methods do not receive a signal.
+
+A Worker's `fetch()` handler and a `WorkerEntrypoint` RPC method stop when the client disconnects. Refer to [the RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/#end-of-event-handler--execution-context).
+
 ## Shutdown behavior
 
 Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:

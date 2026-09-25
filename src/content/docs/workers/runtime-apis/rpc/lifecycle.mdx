@@ -105,7 +105,7 @@ export default {
 };
 ```
 
-A Worker invoked via RPC also has an execution context. The context begins when an RPC method on a `WorkerEntrypoint` is invoked. If no stubs are passed in the parameters or results of this RPC, the context ends (the event is "done") when the RPC returns. However, if any stubs are passed, then the execution context is implicitly extended until all such stubs are disposed (and all calls made through them have returned). As with HTTP, if the client disconnects, the server's execution context is canceled immediately, regardless of whether stubs still exist. A client that is itself another Worker is considered to have disconnected when its own execution context ends. Again, the context can be extended with [`ctx.waitUntil()`](/workers/runtime-apis/context).
+A Worker invoked via RPC also has an execution context. The context begins when an RPC method on a `WorkerEntrypoint` is invoked. If no stubs are passed in the parameters or results of this RPC, the context ends (the event is "done") when the RPC returns. However, if any stubs are passed, then the execution context is implicitly extended until all such stubs are disposed (and all calls made through them have returned). As with HTTP, if the client disconnects, the server's execution context is canceled immediately, regardless of whether stubs still exist. A Durable Object does not stop in this case. Refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects). A client that is itself another Worker is considered to have disconnected when its own execution context ends. Again, the context can be extended with [`ctx.waitUntil()`](/workers/runtime-apis/context).
 
 ### Stubs received as parameters in an RPC call
 
