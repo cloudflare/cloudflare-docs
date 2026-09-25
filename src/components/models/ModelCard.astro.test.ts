@@ -72,9 +72,19 @@ describe("ModelCard", () => {
 		expect(compareRow?.textContent).toContain("Third-party");
 		expect(compareRow?.textContent).toContain("+2");
 		expect(compareRow?.textContent).toContain("Compare");
-		expect(
-			compareRow?.querySelector('[title="Function calling, Reasoning"]'),
-		).not.toBeNull();
+		const overflowBadge = compareRow?.querySelector(
+			'[data-model-badge-tooltip="Function calling, Reasoning"]',
+		);
+		const badgeListClasses = compareRow
+			?.querySelector("ul")
+			?.getAttribute("class");
+		expect(badgeListClasses).toContain("cursor-default");
+		expect(badgeListClasses).toContain("gap-y-0.5");
+		expect(overflowBadge).not.toBeNull();
+		expect(overflowBadge?.getAttribute("aria-label")).toBe(
+			"2 more: Function calling, Reasoning",
+		);
+		expect(overflowBadge?.getAttribute("tabindex")).toBe("0");
 		expect(compareRow?.textContent).not.toContain("Context:");
 		expect(compareRow?.textContent).not.toContain("Maximum output:");
 		expect(compareRow?.textContent).not.toContain("Pricing listed");
