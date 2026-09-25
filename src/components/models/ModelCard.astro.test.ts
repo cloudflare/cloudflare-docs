@@ -66,5 +66,6 @@ describe("ModelCard", () => {
 		expect(link?.getAttribute("class")).toContain("flex-1");
 		expect(link?.getAttribute("class")).not.toContain("pb-16");
 		expect(compareRow?.getAttribute("class")).not.toContain("absolute");
+		expect(compareRow?.textContent.trim()).toBe("Compare");
 	});
 });
