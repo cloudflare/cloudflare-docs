@@ -4,6 +4,8 @@
 
 import { Steps, DashButton } from "~/components";
 
+You can configure up to 10 session identifiers.
+
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
@@ -15,10 +17,12 @@ import { Steps, DashButton } from "~/components";
    :::note
    The session identifier cookie must comply with RFC 6265. Otherwise, it will be rejected.
 
-   If you are using a JWT claim, choose the [Token Configuration](/api-shield/security/jwt-validation/api/#token-configurations) that will verify the JWT. Token Configurations are required to use JWT claims as session identifiers. Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information.
+   If you are using a JWT claim, choose the [Token Configuration](/api-shield/security/jwt-validation/api/#token-configurations) that will verify the JWT, then specify the claim using a supported [RFC 9535 JSONPath](https://www.rfc-editor.org/rfc/rfc9535.html) expression. Token Configurations are required to use JWT claims as session identifiers. Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information.
    :::
 6. Enter the name of the session identifier.
 7. Select **Save**.
 </Steps>
 
-After setting up session identifiers and allowing some time for Cloudflare to learn your traffic patterns, you can view your per endpoint and per session rate limiting recommendations, as well as enforce per endpoint and per session rate limits by creating new rules. Session identifiers will allow you to view API Discovery results from session ID-based discovery and session traffic patterns in Sequence Analytics.
+API Shield generates rate limiting recommendations for eligible saved operations. Recommendations require API Shield access, a configured session identifier that matches operation traffic, sufficient data, and completed processing. After these requirements are met, you can view per-operation and per-session recommendations and create rate limiting rules.
+
+Unified Discovery can use configured session identifiers as one signal when identifying API traffic. Session identifiers also support session traffic analysis in [Sequence Analytics](/api-shield/security/sequence-analytics/).

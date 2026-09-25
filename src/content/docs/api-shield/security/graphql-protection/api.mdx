@@ -5,8 +5,8 @@ description: Use the GraphQL API to configure query size and depth limits for yo
 products:
   - api-shield
 sidebar:
-   order: 2
-   label: API
+  order: 2
+  label: API
 head:
   - tag: title
     content: Configure GraphQL malicious query protection
@@ -158,6 +158,6 @@ For example, you can deploy the following rule via the API or the dashboard to b
 
 :::note
 
-You are not able to configure which endpoints the GraphQL parsing runs on. Requests are parsed if they are targeting a path ending in `/graphql`.
+You are not able to configure which endpoints the GraphQL parsing runs on. Requests are parsed if they target a path with the case-sensitive `/graphql` suffix.
 
 :::

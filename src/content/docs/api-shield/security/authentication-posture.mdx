@@ -12,15 +12,15 @@ tags:
 
 import { GlossaryTooltip, Render, Steps, DashButton } from "~/components";
 
-Authentication Posture detects API endpoints with missing or inconsistent authentication and alerts you to potential misconfigurations.
+Authentication Posture detects API endpoints where all or some successful requests lack a configured session identifier and alerts you to potential misconfigurations.
 
-For example, a security team member may expect that their API endpoints `/api/v1/users` and `/api/v1/orders` require authentication. However, bugs in origin API authentication policies can create broken authentication vulnerabilities — allowing unauthenticated access to protected resources. Authentication Posture details the authentication status of successful requests to your API endpoints, alerting to potential misconfigurations.
+For example, a security team member may expect that their API endpoints `/api/v1/users` and `/api/v1/orders` require authentication. However, bugs in origin API authentication policies can create broken authentication vulnerabilities — allowing unauthenticated access to protected resources. Authentication Posture does not validate credentials. Instead, it reports whether configured session identifiers are present on successful requests to help you identify potential misconfigurations.
 
-Consider a typical e-commerce application. Users can browse items and prices without logging in. However, to retrieve order details via `GET /api/v1/orders/{order_id}`, users must log in and pass an Authorization HTTP header with all requests. Cloudflare alerts you via [Security Center Insights](/security/security-insights/) and [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/) if successful requests reach this endpoint or any other endpoint without authentication when <GlossaryTooltip term="session identifier">session identifiers</GlossaryTooltip> are configured.
+Consider a typical e-commerce application. Users can browse items and prices without logging in. However, to retrieve order details via `GET /api/v1/orders/{order_id}`, users must log in and pass an Authorization HTTP header with all requests. Cloudflare alerts you via [Security Center Insights](/security/security-insights/) and [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/) if successful requests reach this endpoint or any other endpoint without a configured <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip>.
 
 ## Process
 
-After configuring [session identifiers](/api-shield/get-started/#session-identifiers), API Shield continuously scans your traffic for successful requests without authentication and labels your endpoints on a daily basis. Refer to the table below for the labeling methodology.
+After configuring [session identifiers](/api-shield/get-started/#session-identifiers), API Shield scans successful requests for the presence of those identifiers and updates endpoint labels approximately once a day. Refer to the table below for the labeling methodology.
 
 <Render file="label-methodology" product="api-shield" />
 
@@ -30,7 +30,7 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
 1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
-2. Go to the **Endpoints** tab.
+2. Go to the **Operations** tab.
 3. Filter your endpoints by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
 4. Select an endpoint to see its authentication posture details on the endpoint details page.
 5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
@@ -43,6 +43,8 @@ The authentication-over-time chart shows a detailed breakdown over time of how c
 Work with your development team to understand which authentication policies may need to be corrected on your API to stop unauthenticated traffic.
 
 ### Stop unauthenticated traffic with Cloudflare
+
+In this context, an unauthenticated request is one that does not include a configured API Shield session identifier.
 
 To block unauthenticated requests, create a [custom rule](/waf/custom-rules/) using the `cf.api_gateway.auth_id_present` field. This field evaluates to `true` when the configured API Shield session identifiers are present on a request. You can also match on absence to detect unauthenticated traffic. Add a host and path match to scope the rule to specific endpoints.
 
