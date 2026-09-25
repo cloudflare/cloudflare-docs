@@ -61,8 +61,19 @@ Show the output of a build, a test run, or another command in a browser while th
    		}
    	};
 
+   	let exited = false;
+   	const markExited = () => {
+   		exited = true;
+   	};
+   	process.exitCode.then(markExited, markExited);
+
+   	// Signaling a process that has exited records an internal error.
+   	const stop = () => {
+   		if (!exited) process.kill();
+   	};
+
    	// Stop the process when the client disconnects.
-   	writer.closed.catch(() => process.kill());
+   	writer.closed.catch(stop);
 
    	// Detect a disconnected client while the process writes nothing.
    	const heartbeat = setInterval(() => {
@@ -78,7 +89,7 @@ Show the output of a build, a test run, or another command in a browser while th
    			await send("exit", { exitCode: await process.exitCode });
    			await writer.close();
    		} catch {
-   			process.kill();
+   			stop();
    		} finally {
    			clearInterval(heartbeat);
    		}
