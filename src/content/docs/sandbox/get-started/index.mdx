@@ -75,12 +75,12 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    			},
    		],
    	},
-   	"migrations": [
-   		{
-   			"new_sqlite_classes": ["MyContainer"],
-   			"tag": "v1",
+   	"exports": {
+   		"MyContainer": {
+   			"type": "durable-object",
+   			"storage": "sqlite",
    		},
-   	],
+   	},
    }
    ```
 
