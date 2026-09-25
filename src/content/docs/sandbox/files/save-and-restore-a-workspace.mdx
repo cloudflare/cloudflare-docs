@@ -82,7 +82,7 @@ Container snapshots are in public beta. Features and behavior may change.
    async note(line?: string) {
    	const container = await this.startSandbox();
    	const script = line
-   		? 'mkdir -p /workspace && echo "$1" >> /workspace/notes.txt'
+   		? 'mkdir -p /workspace && printf "%s\n" "$1" >> /workspace/notes.txt && cat /workspace/notes.txt'
    		: "cat /workspace/notes.txt";
    	const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
    	const output = await process.output();
