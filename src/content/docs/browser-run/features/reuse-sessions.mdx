@@ -21,8 +21,8 @@ This feature applies to Browser Sessions ([Puppeteer](/browser-run/puppeteer/), 
 
 There are two approaches to reusing sessions:
 
-- **Disconnect and reconnect** (covered in this page): Use `browser.disconnect()` instead of `browser.close()` to keep the browser alive, then reconnect to it on the next request. Best for stateless workloads where any available browser session will do.
-- **[Durable Objects](/browser-run/how-to/browser-run-with-do/)**: Persist a long-running browser inside a Durable Object for stateful session management. Best when you need to maintain state across requests or route specific users to specific browser instances.
+- **Shared browser session** (covered in this page): Connect multiple clients to a running browser. Create a separate browser context for each request to isolate cookies and storage.
+- **[Durable Objects](/browser-run/how-to/browser-run-with-do/)**: Persist a browser for stateful session management. Use this approach to route users to specific sessions or coordinate conflicting operations.
 
 ## 1. Create a Worker project
 
@@ -51,6 +51,10 @@ In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/br
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
+:::note
+Concurrent connections require `@cloudflare/puppeteer` version 1.1.0 or later. Older versions use the legacy single-connection workflow.
+:::
+
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
 
 :::note
@@ -76,14 +80,24 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 ## 4. Code
 
-The script below starts by fetching the current running sessions. If there are any that do not already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that is done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
+The script lists active browser sessions and selects one to reuse. Multiple clients can connect to the same session concurrently. Each `puppeteer.connect()` call creates an independent Chrome DevTools Protocol (CDP) connection.
+
+Each request creates a browser context to isolate its pages, cookies, and storage. When the request finishes, the script closes the context. It then calls `browser.disconnect()` to close its CDP connection without terminating the shared browser.
+
+The selected session might expire before the connection completes. If the connection fails, the script launches a new session.
 
 Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-run/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
 <TypeScriptExample>
 
 ```ts
-import puppeteer from "@cloudflare/puppeteer";
+import puppeteer, {
+	type ActiveSession,
+	type Browser,
+	type BrowserWorker,
+} from "@cloudflare/puppeteer";
+
+const MAX_CONCURRENT_CONTEXTS = 4; // adjust according to average workload
 
 interface Env {
 	MYBROWSER: Fetcher;
@@ -95,69 +109,80 @@ export default {
 		let reqUrl = url.searchParams.get("url") || "https://example.com";
 		reqUrl = new URL(reqUrl).toString(); // normalize
 
-		// Pick random session from open sessions
+		// Pick a random active session
 		let sessionId = await this.getRandomSession(env.MYBROWSER);
-		let browser, launched;
+		let browser;
+		let launched = false;
 		if (sessionId) {
 			try {
-				browser = await puppeteer.connect(env.MYBROWSER, sessionId);
+				const candidate = await puppeteer.connect(env.MYBROWSER, sessionId);
+				if (await this.hasCapacity(candidate)) {
+					browser = candidate;
+				} else {
+					await candidate.disconnect();
+				}
 			} catch (e) {
-				// another worker may have connected first
+				// The session may have closed after it was listed
 				console.log(`Failed to connect to ${sessionId}. Error ${e}`);
 			}
 		}
 		if (!browser) {
-			// No open sessions, launch new session
+			// No active session was available, so launch a new session
 			browser = await puppeteer.launch(env.MYBROWSER);
 			launched = true;
 		}
 
-		sessionId = browser.sessionId(); // get current session id
+		sessionId = browser.sessionId();
+		const context = await browser.createBrowserContext();
 
-		// Do your work here
-		const page = await browser.newPage();
-		const response = await page.goto(reqUrl);
-		const html = await response!.text();
+		try {
+			const page = await context.newPage();
+			const response = await page.goto(reqUrl);
+			const html = await response!.text();
 
-		// All work done, so free connection (IMPORTANT!)
-		browser.disconnect();
-
-		return new Response(
-			`${launched ? "Launched" : "Connected to"} ${sessionId} \n-----\n` + html,
-			{
-				headers: {
-					"content-type": "text/plain",
+			return new Response(
+				`${launched ? "Launched" : "Connected to"} ${sessionId} \n-----\n` +
+					html,
+				{
+					headers: {
+						"content-type": "text/plain",
+					},
 				},
-			},
-		);
+			);
+		} finally {
+			await context.close();
+			await browser.disconnect();
+		}
 	},
 
-	// Pick random free session
-	// Other custom logic could be used instead
-	async getRandomSession(endpoint: puppeteer.BrowserWorker): Promise<string> {
-		const sessions: puppeteer.ActiveSession[] =
-			await puppeteer.sessions(endpoint);
+	async hasCapacity(browser: Browser): Promise<boolean> {
+		const client = await browser.target().createCDPSession();
+		try {
+			const { browserContextIds } = await client.send(
+				"Target.getBrowserContexts",
+			);
+			return browserContextIds.length < MAX_CONCURRENT_CONTEXTS;
+		} finally {
+			await client.detach();
+		}
+	},
+
+	// Other selection logic could be used instead
+	async getRandomSession(endpoint: BrowserWorker): Promise<string | undefined> {
+		const sessions: ActiveSession[] = await puppeteer.sessions(endpoint);
 		console.log(`Sessions: ${JSON.stringify(sessions)}`);
-		const sessionsIds = sessions
-			.filter((v) => {
-				return !v.connectionId; // remove sessions with workers connected to them
-			})
-			.map((v) => {
-				return v.sessionId;
-			});
-		if (sessionsIds.length === 0) {
+		if (sessions.length === 0) {
 			return;
 		}
 
-		const sessionId =
-			sessionsIds[Math.floor(Math.random() * sessionsIds.length)];
-
-		return sessionId!;
+		return sessions[Math.floor(Math.random() * sessions.length)].sessionId;
 	},
 };
 ```
 
 </TypeScriptExample>
+
+Do not call `browser.close()` when other clients share the session. This method terminates the browser and disconnects every client. Browser contexts isolate request state, but they do not coordinate browser-wide operations.
 
 Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-run/puppeteer/#session-management).
 
