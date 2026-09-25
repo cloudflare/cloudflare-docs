@@ -633,7 +633,6 @@
 # Containers API
 /containers/container-package/ /containers/api/container-class/ 301
 /containers/durable-object-methods/ /containers/api/durable-object-container/ 301
-/containers/examples/durable-object-interface/ https://github.com/cloudflare/containers-demos 301
 /containers/container-class/ /containers/api/container-class/ 301
 /containers/reference/container-class/ /containers/api/container-class/ 301
 /containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301

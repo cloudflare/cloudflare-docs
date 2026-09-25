@@ -1,22 +1,21 @@
 ---
-title: Migrate to the Durable Object Container API
-description: Move an application from the Container class or Sandbox SDK to direct container control inside a Durable Object.
+title: Migrate from the Container class to the Durable Object Container API
+description: Replace Container class lifecycle and routing helpers with direct container control inside a Durable Object.
 pcx_content_type: how-to
 sidebar:
   order: 7
 products:
   - containers
   - durable-objects
-  - sandbox
 ---
 
 import { Steps } from "~/components";
 
-Use the Durable Object Container API when you want direct control over a container's lifecycle. The API is available as `this.ctx.container` inside a Durable Object with a container binding. It does not provide all the helpers of the `Container` class or Sandbox SDK.
+Use the Durable Object Container API when you want direct control over a container's lifecycle. The API is available as `this.ctx.container` inside a Durable Object with a container binding. It does not provide all the helpers of the `Container` class.
 
 Before changing code, identify the features your application uses. Keep the existing implementation if you depend on a helper that you cannot replace yet. For an API comparison, refer to [Choose an API](/containers/api/#choose-an-api).
 
-## Migrate from the Container class
+## Replace Container class helpers
 
 The `Container` class extends `DurableObject`. Replace its inherited lifecycle and routing helpers with application code that uses `ctx.container`.
 
@@ -24,7 +23,7 @@ The `Container` class extends `DurableObject`. Replace its inherited lifecycle a
 
 1. In your Worker, change the class to extend `DurableObject` from `cloudflare:workers`. Keep the exported class name if you want to retain its existing container definition and Durable Object binding. Do not add a new Durable Object migration solely because you changed the base class. Refer to [Wrangler configuration](/containers/configuration/wrangler/).
 2. Replace `start()` and `stop()` calls with [`ctx.container.start()`](/containers/api/durable-object-container/#start) and [`signal()`](/containers/api/durable-object-container/#signal) or [`destroy()`](/containers/api/durable-object-container/#destroy), as appropriate. Do not assume `start()` waits for a port to become ready.
-3. Replace `defaultPort`, `containerFetch()`, and automatic `fetch()` routing with [`getTcpPort(port).fetch()`](/containers/api/durable-object-container/#gettcpport) and your own request routing. Check port readiness before forwarding requests. Refer to the [stateless application example](/containers/examples/stateless/) for a complete pattern.
+3. Replace `defaultPort`, `containerFetch()`, and automatic `fetch()` routing with [`getTcpPort(port).fetch()`](/containers/api/durable-object-container/#gettcpport) and your own request routing. Check port readiness before forwarding requests.
 4. Replace `sleepAfter` with [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout). Replace lifecycle hooks and `schedule()` with application code, [`monitor()`](/containers/api/durable-object-container/#monitor), and [Durable Object alarms](/durable-objects/api/alarms/) where appropriate.
 5. Test startup, concurrent requests, readiness, idle shutdown, and recovery after a container restart. Then remove `@cloudflare/containers` only if no other code imports it.
 
@@ -32,18 +31,4 @@ The `Container` class extends `DurableObject`. Replace its inherited lifecycle a
 
 Keep the same image in the `containers` section of your Wrangler configuration unless you intend to change the container application itself. The direct API still runs the image associated with its Durable Object class.
 
-## Migrate from the Sandbox SDK
-
-The Sandbox SDK builds higher-level execution, filesystem, process, and service APIs on Containers. Moving to the direct API changes your application architecture. This is not the [Sandbox SDK 1.0 migration](/sandbox/1-0-preview/migrate/), which keeps your application on the SDK.
-
-<Steps>
-
-1. Inventory the Sandbox SDK methods your Worker uses. In particular, identify command execution, file operations, sessions, exposed services, and persistence or backup features. Refer to the [Sandbox SDK API](/sandbox/api/) for their current behavior.
-2. Replace the exported SDK `Sandbox` class with a Durable Object class of your own. Update the class names in both the `containers` definition and `durable_objects.bindings` in Wrangler. Preserve an existing migration record; follow [Durable Object migration rules](/durable-objects/reference/durable-objects-migrations/) when renaming or replacing a class. Do not assume a new class inherits existing Sandbox Durable Object storage.
-3. Replace `getSandbox()` calls with a Durable Object namespace lookup, such as `env.MY_CONTAINER.getByName(id)`. Keep the same application-level instance identifiers if their mapping matters to your users. Route requests or call your own Durable Object RPC methods instead of SDK methods.
-4. Start the configured image with [`ctx.container.start()`](/containers/api/durable-object-container/#start). Use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) for network traffic and [`exec()`](/containers/api/durable-object-container/#exec) for processes inside a running container. The direct API does not provide SDK filesystem, session, interpreter, or backup methods; implement the behavior you need in your Worker or container before removing the SDK.
-5. Verify command results, service readiness, data recovery, and per-user isolation in a separate test environment. Remove `@cloudflare/sandbox` only after you have replaced every SDK feature your application needs.
-
-</Steps>
-
-For a working direct-API request-routing example, refer to [Stateless instances](/containers/examples/stateless/). For process handling and output, refer to [Execute commands](/containers/guides/execute-commands/) and the [`exec()` reference](/containers/api/durable-object-container/#exec).
+For process handling and output, refer to [Execute commands](/containers/guides/execute-commands/) and the [`exec()` reference](/containers/api/durable-object-container/#exec).

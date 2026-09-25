@@ -53,7 +53,10 @@ interface Env {}
 
 export class MyContainer extends DurableObject<Env> {
 	fetch(): Response {
-		const container = this.ctx.container!;
+		const container = this.ctx.container;
+		if (!container) {
+			return new Response("No container is configured", { status: 500 });
+		}
 		if (container.running) {
 			return new Response("Container is running");
 		}
@@ -65,7 +68,7 @@ export class MyContainer extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-For request routing with a readiness check, refer to the [stateless application example](/containers/examples/stateless/). For all methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/).
+For request routing, use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) after checking port readiness. For all methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/).
 
 ### Container class
 
@@ -101,4 +104,4 @@ The following table compares both options:
 
 Use the Durable Object Container API for latency-sensitive workloads or workloads that need a smaller storage footprint.
 
-For an existing application, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/) for paths from the `Container` class and Sandbox SDK.
+If your application uses the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
