@@ -1,6 +1,6 @@
 ---
 title: Migrate from Sandbox SDK 0.x
-description: Move an application from the Sandbox class in @cloudflare/sandbox 0.12 to a Durable Object that starts its own container and uses @cloudflare/sandbox 1.0.
+description: Move a Sandbox SDK 0.x application to your own Durable Object that starts a container, and find the work each 0.x feature needs.
 pcx_content_type: navigation
 sidebar:
   order: 1
@@ -13,29 +13,130 @@ products:
   - durable-objects
 ---
 
-import { DirectoryListing } from "~/components";
+Sandbox SDK 1.0 works with a container you start from a Durable Object. To move an application from 0.x, you replace the `Sandbox` class with a Durable Object class you write. You also replace each 0.x feature your application uses with code in that class.
 
-`@cloudflare/sandbox` 0.12 gives you a `Sandbox` Durable Object class that owns the container and runs commands for you. In 1.0, your own Durable Object starts the container through `this.ctx.container` and runs commands with [`exec()`](/durable-objects/api/container/#exec). This guide uses the `Files` and `S3Mounts` classes from [`@cloudflare/sandbox`](/sandbox/reference/) 1.0 where 0.12 had methods for files and bucket mounts.
+## Support for Sandbox SDK 0.x
 
-## What changes
+Sandbox SDK 0.x receives bug and security fixes until 2026-11-14. It receives no new features.
 
-Moving to 1.0 changes these behaviors:
+After that date, deployed 0.x applications keep running, and `@cloudflare/sandbox` 0.x stays on npm. Only the fixes stop.
 
-- 0.12 started the container on the first call to a sandbox. In 1.0, your Durable Object starts it with `start()`.
-- `exec()` takes an array of arguments and starts one process without a shell. A `cd` or `export` in one call does not carry over to the next call.
-- A container has no Internet access unless `start()` passes `enableInternet: true`. 0.12 allowed Internet access by default.
-- The package has no timeouts. Pass an `AbortSignal` to stop an operation.
-- You choose the container image. `Files` and `S3Mounts` need the `sandbox-shim` helper in it.
-- Files in containers that 0.12 started do not carry over. Copy the files you need before you deploy. Backups that 0.12 created stay in your bucket, and you can [convert them](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) after you deploy.
-- Preview URLs, background processes, terminals, backups, and outbound rules become code in your Worker. The page for each feature shows that code.
-- `runCode()` and code contexts have no replacement in the package. Run JavaScript in a [Dynamic Worker](/dynamic-workers/), or run an interpreter such as `python3` with `exec()`.
+This guide compares 1.0 with 0.12, the last 0.x release. If your application uses an earlier release, upgrade to `@cloudflare/sandbox` 0.12.10 and the `docker.io/cloudflare/sandbox:0.12.10` image first.
 
-## Migrate
+## Why move
 
-Start with [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/), which every application needs. Then follow the pages for the features your application uses.
+Sandbox SDK 1.0 changes how sandboxes start and what a deploy does to them:
 
-<DirectoryListing />
+- A sandbox starts faster. On a prepared image, the median time from `start()` to the first command is under 600 ms. In 0.x, it was about 4 s.
+- Your Durable Object chooses the image and instance type each time it starts a sandbox. In 0.x, the Wrangler configuration set one image and one instance type for every sandbox.
+- A deploy keeps running sandboxes running. In 0.x, a deploy that changes the image [replaces running containers](/containers/configuration/rollouts/).
+- A first sandbox needs no Dockerfile. `cloudflare/debian-trixie` starts a Debian Trixie VM with Node.js 24.
+- [Snapshots](/sandbox/files/save-and-restore-a-workspace/) save the disk of a sandbox and start another sandbox from it. Snapshots are in public beta.
 
-For every 0.12 API and what replaces it, refer to the [API map](/sandbox/sdk/migrate/api-map/).
+For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
-To stay on 0.x and stop using its deprecated features, refer to the [2026 deprecation migration guide](/sandbox/sdk/guides/2026-deprecation/).
+## What changes in your code
+
+In 0.x, the `Sandbox` class did work that your own code does in 1.0:
+
+- Your Durable Object starts the container with `start()` and keeps it running with `setInactivityTimeout()`.
+- Each command is an array of arguments that runs without a shell. A `cd` or `export` does not carry over to the next command.
+- A container has no Internet access unless `start()` passes `enableInternet: true`.
+- Preview URLs, background processes, terminals, backups, and outbound rules become code in your Worker.
+- The package sets no timeouts and retries nothing. Pass an `AbortSignal` to stop an operation.
+
+Some 0.x features have no equivalent in 1.0. Replace them with these alternatives:
+
+| 0.x feature | Alternative in 1.0 |
+| --- | --- |
+| `runCode()` and code contexts | JavaScript in a [Dynamic Worker](/dynamic-workers/), or [Python through `exec()`](/sandbox/commands/run-python-code/) |
+| Sessions | `cwd` and `env` on each `exec()` call |
+| `watch()` and `checkChanges()` | A watcher such as `inotifywait` that runs through `exec()` |
+| `gitCheckout()` | `git clone` through `exec()` |
+| Tunnels | `cloudflared` in the container, or a preview URL |
+| `SandboxAddon` from `@cloudflare/sandbox/xterm` | Reconnect code in your page |
+| R2 mounts through a binding | [An R2 API token](/sandbox/files/mount-an-r2-bucket/) with `S3Mounts` |
+| `WarmPool`, and the `bridge`, `openai`, and `opencode` subpaths | — |
+
+## Plan for a one-way switch
+
+:::caution
+The deploy that moves your class to `scheduling_policy: "durable_object"` cannot be undone. After that deploy, 0.x code cannot start containers for the class, even after `wrangler rollback`.
+:::
+
+You can move in one of two ways:
+
+| Way | What happens | Suits |
+| --- | --- | --- |
+| In place | One deploy moves every sandbox to 1.0. Commands that are running in 0.x containers end, and files in those containers do not carry over. | Sandboxes that are short-lived or cheap to create again |
+| Side by side | A 1.0 class runs next to the 0.x class in the same Worker. Your code moves each sandbox, and you delete the 0.x class when none remain. | Long-lived sandboxes that users return to |
+
+Neither way can split traffic with a gradual deployment, because every version in a gradual deployment must declare the same container applications. Rehearse the move on a staging Worker before you deploy it to production. For the in-place steps, refer to [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/).
+
+## Find the pages your application needs
+
+Every application needs the first two pages in the table. To find the others, search your source directory for 0.x calls:
+
+```sh
+grep -rhow \
+	-e getSandbox -e sleepAfter -e keepAlive \
+	-e onStart -e onStop -e onActivityExpired \
+	-e createSession -e watch \
+	-e startProcess -e streamProcessLogs \
+	-e exposePort -e proxyToSandbox -e wsConnect \
+	-e tunnels -e terminal -e SandboxAddon \
+	-e outboundByHost -e setOutboundHandler \
+	-e allowedHosts -e deniedHosts -e gitCheckout \
+	-e mountBucket -e createBackup -e restoreBackup \
+	-e runCode -e createCodeContext \
+	src | sort | uniq -c
+```
+
+The command prints each name it finds and how often it appears. Some names, such as `watch` and `terminal`, can also match code that does not use the SDK. The 0.12 `codex-app-server` template prints:
+
+```txt output
+      6 getSandbox
+      1 gitCheckout
+      1 outboundByHost
+      2 proxyToSandbox
+      2 sleepAfter
+      1 startProcess
+```
+
+Each name leads to one page:
+
+| 0.x code | Page | Work in 1.0 |
+| --- | --- | --- |
+| `Sandbox`, `getSandbox()`, `sleepAfter`, `keepAlive`, `onStart()`, `onStop()`, `onActivityExpired()` | [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) | Write the class |
+| `exec()`, `createSession()`, `readFile()`, `writeFile()`, `listFiles()`, `watch()` | [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/) | Change calls |
+| `startProcess()`, `streamProcessLogs()` | [Move background processes](/sandbox/sdk/migrate/background-processes/) | Add code |
+| `exposePort()`, `proxyToSandbox()`, `wsConnect()`, `tunnels` | [Move preview URLs and tunnels](/sandbox/sdk/migrate/previews-and-tunnels/) | Add code |
+| `terminal()`, `SandboxAddon` | [Move browser terminals](/sandbox/sdk/migrate/terminals/) | Add code |
+| `outboundByHost`, `setOutboundHandler()`, `allowedHosts`, `deniedHosts`, `gitCheckout()` | [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/) | Add code |
+| `mountBucket()` | [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/) | Change calls |
+| `createBackup()`, `restoreBackup()` | [Move backups](/sandbox/sdk/migrate/backups/) | Add code |
+| `runCode()`, `createCodeContext()` | [Run Python code](/sandbox/commands/run-python-code/), or [Dynamic Workers](/dynamic-workers/) | Use another tool |
+| `FROM docker:dind-rootless` in a `Dockerfile` | [Docker-in-Docker](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker) | Change the image |
+
+For every 0.x API and its replacement, refer to the [API map](/sandbox/sdk/migrate/api-map/).
+
+## Order of work
+
+Move an application in this order:
+
+1. Search your code, and note the pages your application needs.
+2. On a staging Worker, [move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/).
+3. Follow the page for each other feature your search found.
+4. Test the staging Worker with your own checks.
+5. Deploy the Worker to production.
+
+## Stay on 0.x until you move
+
+Until you move, pin `@cloudflare/sandbox` to `0.12.10` and your image to `docker.io/cloudflare/sandbox:0.12.10`. The [deprecation changelog entry](/changelog/post/2026-06-09-deprecating-sandbox-sdk-features/) lists 0.x features to avoid in new work: the HTTP and WebSocket transports, `exposePort()`, default sessions, and separate streaming methods.
+
+## Related resources
+
+- [API map](/sandbox/sdk/migrate/api-map/)
+- [`@cloudflare/sandbox` reference](/sandbox/reference/)
+- [Durable Object Container API](/durable-objects/api/container/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)

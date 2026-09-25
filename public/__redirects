@@ -716,6 +716,9 @@
 /sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
 /sandbox/guides/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
 /sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
+/sandbox/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
+/sandbox/sdk/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
+/sandbox/1-0-preview/migrate/ /sandbox/sdk/migrate/ 301
 /sandbox/tutorials/ /sandbox/sdk/tutorials/ 301
 /sandbox/concepts/architecture/ /sandbox/sdk/concepts/architecture/ 301
 /sandbox/concepts/backup-restore/ /sandbox/sdk/concepts/backup-restore/ 301
