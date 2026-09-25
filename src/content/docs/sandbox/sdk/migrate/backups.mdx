@@ -21,9 +21,15 @@ Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-objec
 // Was: const backup = await sandbox.createBackup({ dir: "/workspace" });
 const backup = await sandbox.backup("/workspace");
 
+if (!backup) {
+	throw new Error("The sandbox is not running");
+}
+
 // Was: await sandbox.restoreBackup(backup);
 await sandbox.restore(backup.key, "/workspace");
 ```
+
+`backup()` returns `undefined` when the sandbox is not running. `restore()` returns `false` when no backup has the key, where 0.12 threw `BackupNotFoundError`.
 
 | 0.12                                                           | 1.0                                                                                                        |
 | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
