@@ -18,9 +18,28 @@ To add or remove entries, refer to [Manage suppressions](/email-service/configur
 
 ## Suppression scope
 
-Suppressions are account-scoped. Once an email address is on the suppression list, Email Service suppresses sends to that address from every domain in your account.
+Each suppression has a scope. The scope controls which sending domains the entry blocks:
 
-If you need separate suppression lists for different use cases, consider using separate Cloudflare accounts.
+| Scope            | Blocks the recipient for                                                    |
+| ---------------- | --------------------------------------------------------------------------- |
+| `account`        | Every sending domain and subdomain in your account                          |
+| `sending_domain` | Mail whose sender address uses one exact domain, such as `mail.example.com` |
+
+The sending domain is the domain of the sender address. This is the `from` address for the [REST API](/email-service/api/send-emails/rest-api/) and [Workers binding](/email-service/api/send-emails/workers-api/), and the envelope `MAIL FROM` address for [SMTP](/email-service/api/send-emails/smtp/).
+
+A `sending_domain` entry matches only its exact domain. An entry for `example.com` does not block mail from `mail.example.com`, and an entry for `mail.example.com` does not block mail from `example.com`.
+
+Email Service suppresses a recipient when an `account` entry exists for the address, or when a `sending_domain` entry exists for the address and the sender domain. One address can have one `account` entry and one entry for each sending domain. Each entry has its own reason and expiration.
+
+Use `sending_domain` entries when one account sends mail for several brands or customers. A bounce or complaint from one customer's mail then does not block the same recipient for your other customers.
+
+### Automatic suppressions and scope
+
+Bounce and complaint suppressions use the `sending_domain` scope. Each entry uses the domain of the sender address of the message that bounced or received the complaint.
+
+Email Service creates an `account` entry instead when it cannot identify the sending domain. For example, this happens when a complaint does not match a delivered message.
+
+Entries created before sending-domain scope was available have the `account` scope. They remain active until they expire or you delete them.
 
 ## Suppression rules
 
@@ -44,6 +63,8 @@ Manual suppressions allow you to add application-level decisions that Email Serv
 
 You select the expiration when creating the entry. An entry without an expiration remains active until you delete it.
 
+Manual entries use the `account` scope by default. Through the API, you can create a manual entry for one sending domain instead. Email Service does not check that your account sends from that domain. An entry for a domain that you do not send from never blocks mail.
+
 ### Spam complaints
 
 Email providers send feedback reports when recipients mark messages as spam. Cloudflare validates these reports before creating complaint suppressions.
@@ -56,7 +77,9 @@ We recommend changing or deleting one only after the recipient opts in again thr
 
 A hard bounce is a permanent rejection of one delivery attempt. Some addresses become valid again after their owner fixes the mailbox or domain.
 
-Email Service creates a suppression without an expiration when the mailbox or domain does not exist. It also does this when a recipient-side issue persists across repeated delivery attempts without a successful delivery.
+Email Service creates a suppression without an expiration when the mailbox or domain does not exist. It also does this when a recipient-side issue persists across repeated delivery attempts without a successful delivery. Email Service counts these attempts separately for each sending domain.
+
+Because bounce suppressions use the `sending_domain` scope, a recipient that bounces for one domain can still receive delivery attempts from your other domains. Each domain gets its own suppression when the recipient bounces for it.
 
 Other eligible hard-bounce suppressions last seven days.
 
@@ -83,6 +106,7 @@ Suppressed recipients do not count toward your [monthly quota](/email-service/pl
 ## Best practices
 
 - Add manual suppressions for unsubscribes.
+- Use the `account` scope when a recipient must not receive mail from any of your domains. Use the `sending_domain` scope when the decision applies to one brand or customer only.
 - Require recipients to opt in again through your application.
 - Verify addresses before deleting suppressions.
 - Investigate patterns across repeated bounces.
