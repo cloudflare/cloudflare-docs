@@ -1,6 +1,6 @@
 ---
 title: Move tunnels
-description: Replace @cloudflare/sandbox 0.12 tunnels with cloudflared processes that run in the container.
+description: Replace @cloudflare/sandbox 0.12 tunnels with cloudflared processes that your Durable Object starts, and keep the named tunnels that 0.12 created.
 pcx_content_type: how-to
 sidebar:
   order: 9
@@ -10,22 +10,347 @@ products:
   - durable-objects
 ---
 
-In Sandbox SDK 0.12, `tunnels.get()` ran `cloudflared` in the container and returned a public URL. Preview URLs replace most tunnels, because the Worker already routes requests to the container without an outbound connection from it. For preview URLs, refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/).
+import { Steps } from "~/components";
 
-Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first.
+In Sandbox SDK 0.12, `tunnels.get()` runs `cloudflared` in the container and returns a public URL. A quick tunnel gets a random `trycloudflare.com` URL, and a named tunnel gets a hostname such as `ada.example.com` in your account. In 1.0, your Durable Object starts `cloudflared` with `exec()`. Named tunnels that 0.12 created stay in your account, and keep their hostnames once `cloudflared` runs again.
 
-## Replace tunnels
+Your Worker already routes requests to the container, so most tunnels can become preview URLs instead. For those, refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/).
 
-To keep a tunnel, run `cloudflared` in the container yourself. Install it in the image, and start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare:
+## Before you start
 
-| 0.12                                         | 1.0                                                                                                                                                        |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `tunnels.get(port)`                          | `cloudflared tunnel --url http://localhost:<PORT>` as a [background process](/sandbox/commands/run-background-processes/). It prints the quick tunnel URL. |
-| `tunnels.get(port, { name })`                | `cloudflared tunnel run --token <TOKEN>` with a [tunnel that you create](/cloudflare-one/networks/connectors/cloudflare-tunnel/) for the sandbox.          |
-| `tunnels.list()`                             | The `cloudflared` processes that the sandbox runs                                                                                                          |
-| `tunnels.destroy(port)`                      | Stop the `cloudflared` process. Delete a named tunnel with the Cloudflare API.                                                                             |
-| `CLOUDFLARE_API_TOKEN` and related variables | Your own secrets, if your Worker creates tunnels with the Cloudflare API                                                                                   |
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `cloudflared` connects out to Cloudflare, so `ensureRunning()` must start the container with `enableInternet: true`. The code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
-A tunnel token lets anyone who holds it run the tunnel, and every process in the sandbox can read it. Create one tunnel for each sandbox.
+This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. Remove the `SANDBOX_TRANSPORT` variable, which 0.12 tunnels required.
 
-After a container restarted, 0.12 started a named tunnel again on the next `tunnels.get()` for its port. Start `cloudflared` again for each new container, with the same token.
+## Run cloudflared from your Durable Object
+
+<Steps>
+
+1. Copy `cloudflared` into your image. Add this line to your `Dockerfile`, after the `FROM` line:
+
+   ```dockerfile title="Dockerfile"
+   COPY --from=docker.io/cloudflare/cloudflared:2026.3.0 \
+   	/usr/local/bin/cloudflared /usr/local/bin/cloudflared
+   ```
+
+   0.12 also ran version 2026.3.0. `cloudflared` needs the `ca-certificates` package, which the `Dockerfile` from Replace the Sandbox class installs.
+
+2. Add the scripts that run and stop `cloudflared` to the top level of `src/index.ts`:
+
+   ```ts title="src/index.ts"
+   const ROOT = "/var/lib/tunnels";
+   const QUICK_URL = "https://[a-z0-9-]+\\.trycloudflare\\.com";
+
+   // Runs cloudflared in its own process group, and records its PID.
+   const RUN = `dir=$1; shift
+   mkdir -p "$dir"
+   setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" \\
+   	cloudflared tunnel --no-autoupdate "$@" >"$dir/log" 2>&1`;
+
+   // Prints "connected" and any quick tunnel URL, or "exited".
+   const STATUS = `dir=$1
+   if grep -q 'Registered tunnel connection' "$dir/log" 2>/dev/null
+   then
+   	echo connected $(grep -o -m1 -E '${QUICK_URL}' "$dir/log")
+   elif [ -e "$dir/pid" ] && ! kill -0 "$(cat "$dir/pid")" 2>/dev/null
+   then
+   	echo exited
+   fi`;
+
+   // Prints the port and URL of each connected quick tunnel.
+   const LIST = `status=$1
+   for dir in ${ROOT}/*/; do
+   	[ -d "$dir" ] || continue
+   	set -- $(sh -c "$status" sh "$dir")
+   	[ "$1" = connected ] && [ -n "$2" ] &&
+   		echo "$(basename "$dir") $2"
+   done`;
+
+   // Stops the process group, and deletes the directory.
+   const STOP = `dir=$1
+   [ -e "$dir/pid" ] && kill -- "-$(cat "$dir/pid")" 2>/dev/null
+   rm -rf "$dir"`;
+
+   async function run(
+   	container: Container,
+   	argv: string[],
+   ): Promise<string> {
+   	const process = await container.exec(argv);
+   	const output = await process.output();
+   	return new TextDecoder().decode(output.stdout).trim();
+   }
+   ```
+
+   Each tunnel keeps its process ID and log in a directory named after its port. `setsid` starts `cloudflared` in its own process group, so that `STOP` can end it. `cloudflared` logs `Registered tunnel connection` once the tunnel serves requests.
+
+3. Add a method that starts `cloudflared` and waits for it to connect, and a method that opens a quick tunnel, to your Durable Object class:
+
+   ```ts title="src/index.ts"
+   private async startTunnel(
+   	port: number,
+   	args: string[],
+   	env: Record<string, string> = {},
+   ): Promise<string> {
+   	const dir = `${ROOT}/${port}`;
+   	await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+
+   	// Ignoring the output lets cloudflared outlive this request.
+   	const argv = ["sh", "-c", RUN, "sh", dir, ...args];
+   	await this.container.exec(argv, {
+   		env,
+   		stdout: "ignore",
+   		stderr: "ignore",
+   	});
+
+   	const deadline = Date.now() + 30_000;
+
+   	while (Date.now() < deadline) {
+   		const status = await run(this.container, [
+   			"sh",
+   			"-c",
+   			STATUS,
+   			"sh",
+   			dir,
+   		]);
+
+   		if (status.startsWith("connected")) {
+   			return status.slice("connected".length).trim();
+   		}
+
+   		if (status === "exited") {
+   			const log = await run(this.container, [
+   				"tail",
+   				`${dir}/log`,
+   			]);
+   			throw new Error(`cloudflared exited: ${log}`);
+   		}
+
+   		await scheduler.wait(500);
+   	}
+
+   	await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+   	throw new Error("The tunnel did not connect within 30 seconds");
+   }
+
+   async openTunnel(port: number): Promise<string> {
+   	await this.ensureRunning();
+   	const url = `http://localhost:${port}`;
+   	return this.startTunnel(port, ["--url", url]);
+   }
+   ```
+
+   `openTunnel()` replaces `tunnels.get(port)`. It stops any `cloudflared` that already serves the port, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. A quick tunnel ends with its container, as in 0.12, and the next call returns a new URL.
+
+4. Add methods that list and close quick tunnels:
+
+   ```ts title="src/index.ts"
+   async listTunnels(): Promise<{ port: number; url: string }[]> {
+   	if (!this.container.running) {
+   		return [];
+   	}
+
+   	const output = await run(this.container, [
+   		"sh",
+   		"-c",
+   		LIST,
+   		"sh",
+   		STATUS,
+   	]);
+
+   	return output
+   		.split("\n")
+   		.filter((line) => line !== "")
+   		.map((line) => {
+   			const [port, url] = line.split(" ");
+   			return { port: Number(port), url };
+   		});
+   }
+
+   async closeTunnel(port: number): Promise<void> {
+   	if (this.container.running) {
+   		const dir = `${ROOT}/${port}`;
+   		await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+   	}
+   }
+   ```
+
+   `listTunnels()` replaces `tunnels.list()` for quick tunnels, and `closeTunnel()` replaces `tunnels.destroy()`. After `closeTunnel()`, the URL returns `530`.
+
+</Steps>
+
+## Keep named tunnels that 0.12 created
+
+0.12 recorded each named tunnel in Durable Object storage, under the `tunnels` and `tunnels:meta` keys: the tunnel ID, its hostname, your account and zone, and its DNS record. The keys stay when you deploy the switch in place, so 1.0 can run the same tunnel again.
+
+<Steps>
+
+1. Keep the `CLOUDFLARE_API_TOKEN` secret that 0.12 used. The code fetches each tunnel's run token and deletes tunnels and DNS records with it, which needs the Cloudflare Tunnel Edit and DNS Edit permissions that 0.12 also needed. The code reads the account and zone that 0.12 stored, so it does not use `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_TUNNEL_ACCOUNT_ID`, or `CLOUDFLARE_ZONE_ID`. For `wrangler types` to add the secret to `Env`, also set it in `.dev.vars`.
+
+2. Add the types and a function that calls the Cloudflare API to the top level of `src/index.ts`:
+
+   ```ts title="src/index.ts"
+   type Tunnels = Record<string, { id: string; hostname: string }>;
+   type TunnelsMeta = Record<
+   	string,
+   	{ accountId?: string; zoneId?: string; dnsRecordId?: string }
+   >;
+   type ApiBody<T> = { result: T; errors: unknown[] };
+
+   async function cloudflare<T>(
+   	env: Env,
+   	path: string,
+   	init: RequestInit = {},
+   ): Promise<T> {
+   	const url = `https://api.cloudflare.com/client/v4${path}`;
+   	const response = await fetch(url, {
+   		...init,
+   		headers: {
+   			Authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
+   		},
+   	});
+   	const body = await response.json<ApiBody<T>>();
+
+   	if (!response.ok) {
+   		const errors = JSON.stringify(body.errors);
+   		throw new Error(`Cloudflare API: ${errors}`);
+   	}
+
+   	return body.result;
+   }
+   ```
+
+3. Add methods that run and delete a named tunnel to your Durable Object class:
+
+   ```ts title="src/index.ts"
+   private async namedTunnel(port: number) {
+   	const { storage } = this.ctx;
+   	const tunnels = await storage.get<Tunnels>("tunnels");
+   	const meta = await storage.get<TunnelsMeta>("tunnels:meta");
+   	const tunnel = tunnels?.[port];
+
+   	return tunnel && { ...tunnel, ...meta?.[port] };
+   }
+
+   async resumeTunnel(port: number): Promise<string | undefined> {
+   	const tunnel = await this.namedTunnel(port);
+
+   	if (!tunnel?.accountId) {
+   		return undefined;
+   	}
+
+   	const { accountId, id } = tunnel;
+   	const token = await cloudflare<string>(
+   		this.env,
+   		`/accounts/${accountId}/cfd_tunnel/${id}/token`,
+   	);
+
+   	await this.ensureRunning();
+   	// TUNNEL_TOKEN keeps the token out of the process list.
+   	await this.startTunnel(
+   		port,
+   		["run", "--url", `http://localhost:${port}`],
+   		{ TUNNEL_TOKEN: token },
+   	);
+
+   	return `https://${tunnel.hostname}`;
+   }
+
+   async deleteTunnel(port: number): Promise<void> {
+   	const tunnel = await this.namedTunnel(port);
+
+   	if (!tunnel?.accountId) {
+   		return;
+   	}
+
+   	const { accountId, id, zoneId, dnsRecordId } = tunnel;
+   	await this.closeTunnel(port);
+   	await cloudflare(
+   		this.env,
+   		`/accounts/${accountId}/cfd_tunnel/${id}`,
+   		{ method: "DELETE" },
+   	);
+
+   	if (zoneId && dnsRecordId) {
+   		await cloudflare(
+   			this.env,
+   			`/zones/${zoneId}/dns_records/${dnsRecordId}`,
+   			{ method: "DELETE" },
+   		);
+   	}
+
+   	await this.ctx.storage.transaction(async (txn) => {
+   		const tunnels = (await txn.get<Tunnels>("tunnels")) ?? {};
+   		const meta =
+   			(await txn.get<TunnelsMeta>("tunnels:meta")) ?? {};
+   		delete tunnels[port];
+   		delete meta[port];
+   		await txn.put({ tunnels, "tunnels:meta": meta });
+   	});
+   }
+   ```
+
+   0.12 stored the account for named tunnels only, so both methods skip a port whose stored tunnel is a quick tunnel, and `resumeTunnel()` returns `undefined` for it.
+
+   Call `resumeTunnel()` after each `start()`, for each port that your application serves through a named tunnel. 0.12 started a named tunnel again only on the next `tunnels.get()` for its port. Until `cloudflared` runs, the hostname returns [error 1033](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1033/).
+
+   `deleteTunnel()` replaces `tunnels.destroy()` for a named tunnel. It deletes the tunnel, its DNS record, and its storage entries. 0.12 `destroy()` did this for every tunnel of a sandbox, so call `deleteTunnel()` for each stored port when you end a sandbox.
+
+</Steps>
+
+:::caution
+Code in the sandbox can read the run token from the environment of the `cloudflared` process, as it could in 0.12. Anyone with the token can run the tunnel and serve its hostname. Keep one tunnel for each sandbox, as 0.12 did.
+:::
+
+## Find tunnels that 0.12 left behind
+
+After an in-place switch, no 0.12 `destroy()` runs, so tunnels and DNS records for sandboxes that no longer exist stay in your account. 0.12 names each tunnel `sandbox-<DURABLE_OBJECT_ID>-<NAME>`, and tags it with `createdBy: "sandbox-sdk"` metadata. List those tunnels:
+
+```sh
+API=https://api.cloudflare.com/client/v4
+
+curl --get "$API/accounts/$ACCOUNT_ID/cfd_tunnel" \
+	--data is_deleted=false --data per_page=100 \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" |
+	jq -r '.result[]
+		| select(.metadata.createdBy == "sandbox-sdk")
+		| "\(.id) \(.name) \(.status)"'
+```
+
+0.12 gives each DNS record the comment `sandbox-<DURABLE_OBJECT_ID>`. List those records:
+
+```sh
+curl --get "$API/zones/$ZONE_ID/dns_records" \
+	--data comment.startswith=sandbox- \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" |
+	jq -r '.result[] | "\(.id) \(.name) \(.comment)"'
+```
+
+A tunnel with the status `down` has no running `cloudflared`. For each sandbox that you no longer keep, [delete its tunnel](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/delete/) and [its DNS record](/api/resources/dns/subresources/records/methods/delete/).
+
+## Serve new named hostnames
+
+To give new sandboxes their own hostnames, serve the hostnames from your Worker, as [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/) describes. They have the same `<NAME>.<ZONE>` shape, and the sandbox runs no `cloudflared` and holds no token. To keep creating tunnels, create each with the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) and add a DNS record for it, as 0.12 did.
+
+## Check the tunnels
+
+With a server listening on port `8080`, call `openTunnel(8080)`, and request the URL it returns. The response comes from your server.
+
+After you deploy the switch, request the hostname of a named tunnel that 0.12 created:
+
+```sh
+curl https://ada.example.com/ --write-out "%{http_code}\n"
+```
+
+```txt output
+error code: 1033
+530
+```
+
+Call `resumeTunnel(8080)`, and send the request again. The response comes from your server. After `deleteTunnel(8080)`, the tunnel and its DNS record no longer appear in the lists from the previous section.
+
+## Related resources
+
+- [Move preview URLs](/sandbox/sdk/migrate/preview-urls/)
+- [Quick tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
+- [Run background processes](/sandbox/commands/run-background-processes/)
