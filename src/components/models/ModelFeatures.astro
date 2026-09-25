@@ -213,9 +213,17 @@ const reasoning = formatModelReasoning(
 					<td>Pricing</td>
 					<td>
 						<ul class="m-0 list-none p-0">
-							{catalogPricing.map((line) => (
-								<li class="m-0">{line}</li>
-							))}
+							{catalogPricing.map((line) => {
+								const separator = line.lastIndexOf(": ");
+								const label = line.slice(0, separator);
+								const cost = line.slice(separator + 2);
+								return (
+									<li class="m-0 flex justify-between gap-4">
+										<span class="text-muted-foreground">{label}</span>
+										<span class="shrink-0 text-right">{cost}</span>
+									</li>
+								);
+							})}
 						</ul>
 					</td>
 				</tr>

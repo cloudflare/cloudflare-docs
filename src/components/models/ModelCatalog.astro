@@ -326,7 +326,29 @@ const facetMatchMaps = Object.fromEntries(
 			heading.scope = "row";
 			heading.classList.add("text-muted-foreground", "font-medium");
 			row.append(heading);
-			for (const entry of values) row.append(tableCell("td", entry));
+			for (const entry of values) {
+				const cell = tableCell("td", label === "Pricing" ? "" : entry);
+				if (label === "Pricing") {
+					for (const line of entry.split("\n")) {
+						const separator = line.lastIndexOf(": ");
+						if (separator < 0) {
+							cell.append(line);
+							continue;
+						}
+						const pricingLine = document.createElement("div");
+						pricingLine.className = "flex justify-between gap-4";
+						const pricingLabel = document.createElement("span");
+						pricingLabel.className = "text-muted-foreground";
+						pricingLabel.textContent = line.slice(0, separator);
+						const pricingCost = document.createElement("span");
+						pricingCost.className = "shrink-0 text-right";
+						pricingCost.textContent = line.slice(separator + 2);
+						pricingLine.append(pricingLabel, pricingCost);
+						cell.append(pricingLine);
+					}
+				}
+				row.append(cell);
+			}
 			comparisonBody.append(row);
 		}
 	}
