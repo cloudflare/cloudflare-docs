@@ -38,7 +38,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5ww8tss0mj6ofw",
 				"object": "chat.completion",
-				"model": "union-alpha",
+				"model": "unbiased/pareto",
 				"choices": [
 					{
 						"index": 0,
@@ -97,7 +97,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwcpm6hxi7lsb",
 				"object": "chat.completion",
-				"model": "union-alpha",
+				"model": "unbiased/pareto",
 				"choices": [
 					{
 						"index": 0,
@@ -152,7 +152,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwj1mqcjfe7xb",
 				"object": "chat.completion",
-				"model": "union-alpha",
+				"model": "unbiased/pareto",
 				"choices": [
 					{
 						"index": 0,
@@ -215,7 +215,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwqlruoazrxij",
 				"object": "chat.completion",
-				"model": "union-alpha",
+				"model": "unbiased/pareto",
 				"choices": [
 					{
 						"index": 0,
@@ -270,7 +270,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wx6hq2jpgslxe",
 				"object": "chat.completion",
-				"model": "union-alpha",
+				"model": "unbiased/pareto",
 				"choices": [
 					{
 						"index": 0,
