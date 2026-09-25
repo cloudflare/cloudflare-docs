@@ -12,7 +12,7 @@ products:
 
 In 0.12, the `Sandbox` class read `allowedHosts`, `deniedHosts`, and `outbound` handlers, and `ContainerProxy` applied them. In 1.0, your Durable Object sends the container's HTTP and HTTPS requests to a `WorkerEntrypoint` with `interceptOutboundHttp()` and `interceptOutboundHttps()`, and the entrypoint decides what happens to each request.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. For the interception methods and their limits, refer to [`interceptOutboundHttp()`](/durable-objects/api/container/#interceptoutboundhttp).
+Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first. For the interception methods and their limits, refer to [`interceptOutboundHttp()`](/durable-objects/api/container/#interceptoutboundhttp).
 
 ## Change the defaults
 

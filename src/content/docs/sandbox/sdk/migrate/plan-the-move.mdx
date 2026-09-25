@@ -18,7 +18,7 @@ Your sandboxes switch from Sandbox SDK 0.12 to 1.0 at one deploy, and you cannot
 ## Before you start
 
 - Your application runs `@cloudflare/sandbox` 0.12.10.
-- Your 1.0 class is written. For the class, refer to [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/).
+- Your 1.0 class is written. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 - You have a staging copy of the Worker with its own Wrangler configuration file. Set a different Worker `name` and a different `name` for each container in that file, because the `--name` option of `wrangler deploy` does not rename container applications.
 
 ## Choose a path
@@ -120,6 +120,6 @@ The keys that 0.12 wrote stay in each Durable Object's storage and do nothing. I
 ## Related resources
 
 - [Move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/)
-- [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/)
+- [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/)
 - [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/)
 - [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/)

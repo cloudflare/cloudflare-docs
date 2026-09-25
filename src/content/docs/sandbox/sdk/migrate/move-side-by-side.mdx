@@ -17,7 +17,7 @@ A Sandbox SDK 1.0 class can run next to your 0.12 class in the same Worker. Your
 ## Before you start
 
 - Your application runs `@cloudflare/sandbox` 0.12.10, with a class and binding named `Sandbox`.
-- Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/).
+- Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 - You have a staging copy of the Worker with its own Wrangler configuration file, a different Worker `name`, and a different `name` for each container.
 
 The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A 0.12 container keeps its files only while it runs, so a stopped 0.12 sandbox has nothing to copy. The archive travels base64-encoded in one RPC message, which is limited to 32 MiB. For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
@@ -252,6 +252,6 @@ Send a request for a sandbox whose 0.12 container runs and has files in `/worksp
 ## Related resources
 
 - [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/)
-- [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/)
+- [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/)
 - [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/)
 - [Durable Object Container API](/durable-objects/api/container/)

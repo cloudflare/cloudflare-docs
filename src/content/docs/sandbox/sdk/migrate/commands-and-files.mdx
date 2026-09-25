@@ -12,7 +12,7 @@ products:
 
 In 1.0, your Durable Object runs commands with [`exec()`](/durable-objects/api/container/#exec) on `this.ctx.container`, and reads and writes files with [`Files`](/sandbox/reference/files/) from `@cloudflare/sandbox`. The migration is done when no code calls a 0.12 method to run a command or touch a file.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `container` is `this.ctx.container` in your Durable Object, and `files` is `new Files(container)`.
+Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first. On this page, `container` is `this.ctx.container` in your Durable Object, and `files` is `new Files(container)`.
 
 ## Pass each command as an array
 

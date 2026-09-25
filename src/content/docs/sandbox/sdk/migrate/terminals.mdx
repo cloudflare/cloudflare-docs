@@ -12,7 +12,7 @@ products:
 
 In 0.12, `sandbox.terminal(request)` attached a WebSocket to a shell, and the `SandboxAddon` for xterm.js reconnected it and replayed output. In 1.0, your Durable Object runs a tmux client with `exec(argv, { pty })` and bridges it to a WebSocket. tmux keeps the shell running between connections. [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/) builds this.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first, then add the image, the Durable Object `fetch()` handler, and the page from that guide.
+Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first, then add the image, the Durable Object `fetch()` handler, and the page from that guide.
 
 | 0.12                                        | 1.0                                                                                                                                                                                             |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

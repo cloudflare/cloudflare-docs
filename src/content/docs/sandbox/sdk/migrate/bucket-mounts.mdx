@@ -13,7 +13,7 @@ products:
 
 In 0.12, `mountBucket()` mounted a bucket with `s3fs`, and the container held the bucket credentials unless you used an R2 binding. In 1.0, `S3Mounts` mounts a prefix with `s3fs`, and `S3Gateway` in your Worker signs every storage request, so the container never holds credentials. [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/) builds this.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. Your image needs FUSE, `s3fs`, and `sandbox-shim`. Refer to [Requirements](/sandbox/reference/#requirements).
+Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first. Your image needs FUSE, `s3fs`, and `sandbox-shim`. Refer to [Requirements](/sandbox/reference/#requirements).
 
 ```ts
 // Was: await sandbox.mountBucket("my-bucket", "/data", { endpoint, prefix: "/jobs/ada/" });

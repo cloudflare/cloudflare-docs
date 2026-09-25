@@ -1,0 +1,249 @@
+---
+title: Replace the Sandbox class
+description: Replace the Sandbox class from @cloudflare/sandbox 0.12, or your subclass of it, with a Durable Object class that starts its own container.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+In Sandbox SDK 0.12, the `Sandbox` class from the package is your Durable Object, and your Worker calls its methods through `getSandbox()`. In 1.0, you write the Durable Object class. It starts the container through `this.ctx.container`, and your Worker calls the methods you give it.
+
+## Before you start
+
+Your application runs `@cloudflare/sandbox` 0.12.10. This page replaces the `Sandbox` class, whether you export it from the package or extend it, along with `getSandbox()` and its options, class fields such as `sleepAfter` and `envVars`, and the hooks `onStart()`, `onStop()`, `onError()`, and `onActivityExpired()`.
+
+The page ends with the Worker running under `wrangler dev`. The deploy that switches your sandboxes to 1.0 cannot be undone. Before you deploy, follow [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
+
+## Replace the class
+
+<Steps>
+
+1. Install version 1 of the package:
+
+   <PackageManagers pkg="@cloudflare/sandbox@1" />
+
+2. Replace the `FROM docker.io/cloudflare/sandbox` line in your `Dockerfile` with a base image that has the tools your commands use, and copy the `sandbox-shim` helper into it:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends ca-certificates git python3 \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mounts` need `sandbox-shim`, and its tag matches the `@cloudflare/sandbox` version you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
+
+3. Change the `containers` entry for your class in the Wrangler configuration. Keep your class name and its binding, so each name reaches the Durable Object and storage it reached in 0.12. Replace `my-worker-mysandbox-v2` with a name that your account does not use yet:
+
+   <WranglerConfig>
+
+   ```jsonc title="After"
+   {
+   	"containers": [
+   		{
+   			"class_name": "MySandbox",
+   			"name": "my-worker-mysandbox-v2",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"sandbox": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   The new entry makes these changes:
+
+   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`, so remove them. The `Dockerfile` moves to `images`, and the instance type moves to `start()`.
+   - The container application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application, and the deploy fails after the new Worker version is already live.
+   - Leave `durable_objects` and your `migrations` or `exports` as they are. The class keeps its name, so it needs no class migration.
+
+   Also remove `SANDBOX_TRANSPORT`, `SANDBOX_INSTANCE_TIMEOUT_MS`, `SANDBOX_PORT_TIMEOUT_MS`, and `SANDBOX_POLL_INTERVAL_MS` from `vars`, and keep `nodejs_compat`, which 1.0 requires.
+
+4. Check your compatibility date.
+
+   :::note
+   `this.ctx.exports` is `undefined` before compatibility date `2025-11-17`, unless you add the `enable_ctx_exports` compatibility flag. The migration pages for outbound rules and bucket mounts use it. Several 0.12 templates set `2025-05-06`.
+   :::
+
+5. Generate types for the new configuration:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+6. Write the class. A 0.12 subclass with a lifetime, environment variables, and an `onStart()` hook looks like this:
+
+   ```ts title="src/index.ts (0.12)"
+   import { getSandbox, Sandbox } from "@cloudflare/sandbox";
+
+   export class MySandbox extends Sandbox<Env> {
+   	sleepAfter = "30m";
+   	envVars = { NODE_ENV: "test" };
+
+   	override async onStart() {
+   		await this.ctx.storage.put("startedAt", Date.now());
+   	}
+   }
+   ```
+
+   In 1.0, the class extends `DurableObject` and starts the container itself:
+
+   ```ts title="src/index.ts (1.0)"
+   import { DurableObject } from "cloudflare:workers";
+
+   // Replaces sleepAfter and envVars.
+   const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000;
+   const ENV = { NODE_ENV: "test" };
+
+   export class MySandbox extends DurableObject<Env> {
+   	private get container(): Container {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		return container;
+   	}
+
+   	private async ensureRunning(): Promise<void> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   			// Replaces onStart().
+   			await this.ctx.storage.put("startedAt", Date.now());
+   		}
+
+   		// Call it on every request.
+   		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	}
+   }
+   ```
+
+   `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout accepts at most 6 hours. Remove `enableInternet: true` if your commands do not need the Internet.
+
+7. Replace each class field and `getSandbox()` option that your code sets:
+
+   | 0.12 | 1.0 |
+   | --- | --- |
+   | `sleepAfter` | `setInactivityTimeout()` on every request. |
+   | `keepAlive` | An [alarm](/durable-objects/api/alarms/) that calls `setInactivityTimeout()` again while work remains. |
+   | `envVars`, `setEnvVars()` | `env` on `start()` for the main process, and `env` on each `exec()` call. Commands do not inherit the `start()` variables. |
+   | `entrypoint` | `entrypoint` on `start()`, or `CMD` in the image. |
+   | `enableInternet` | `enableInternet` on `start()`, which every call must pass. 0.12 defaulted to `true`. |
+   | `labels`, `setLabels()` | `labels` on `start()`. |
+   | `defaultPort`, `requiredPorts` | `this.container.getTcpPort(port)`. Refer to [Move preview URLs and tunnels](/sandbox/sdk/migrate/previews-and-tunnels/). |
+   | `allowedHosts`, `deniedHosts`, `outboundByHost`, `outbound`, `interceptHttps` | Refer to [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). |
+   | `normalizeId` | Lowercase the name before `getByName()`. |
+   | `containerTimeouts` | An `AbortSignal` on the calls that need a deadline. Refer to [Replace timeouts](/sandbox/sdk/migrate/commands-and-files/#replace-timeouts). |
+   | `enableDefaultSession` | Nothing. Each `exec()` call is its own process. Refer to [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions). |
+   | `transport`, `pingEndpoint` | Nothing. Remove them. |
+
+8. Replace the hooks your subclass overrides:
+
+   - `onStart()`: run the code after `start()`, as in the class from the previous step.
+   - `onStop()` and `onError()`: watch the container with [`monitor()`](/durable-objects/api/container/#monitor), and catch errors where you call `start()` and `exec()`.
+   - `onActivityExpired()`: no code runs before the inactivity timeout stops the container. To run code first, keep your own idle deadline in an alarm, and call `this.container.destroy()` when it passes. For an example that saves the sandbox before it stops, refer to [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/).
+
+   To watch the container, call a method like this one after `start()`:
+
+   ```ts title="src/index.ts"
+   private watch(): void {
+   	this.container.monitor().then(
+   		() => console.log("Exited with code 0"),
+   		(error: unknown) => console.error("Stopped", error),
+   	);
+   }
+   ```
+
+   `monitor()` resolves when the main process exits with code `0`, and rejects when it fails or `destroy()` stops the container. The call ends when the Durable Object restarts, so it can miss a stop. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+
+9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
+
+   ```ts title="src/index.ts (0.12)"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const id = new URL(request.url).pathname.slice(1);
+   		const sandbox = getSandbox(env.MY_SANDBOX, id, {
+   			normalizeId: true,
+   		});
+   		const result = await sandbox.exec("npm test", {
+   			cwd: "/workspace/app",
+   		});
+
+   		return Response.json({
+   			exitCode: result.exitCode,
+   			output: result.stdout,
+   		});
+   	},
+   };
+   ```
+
+   In 1.0, the stub has only the methods your class defines. Add a method to `MySandbox`, and call it from the Worker:
+
+   ```ts title="src/index.ts (1.0)"
+   async test(): Promise<{ exitCode: number; output: string }> {
+   	await this.ensureRunning();
+
+   	const process = await this.container.exec(["npm", "test"], {
+   		cwd: "/workspace/app",
+   		env: ENV,
+   	});
+   	const result = await process.output();
+
+   	return {
+   		exitCode: result.exitCode,
+   		output: new TextDecoder().decode(result.stdout),
+   	};
+   }
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const id = new URL(request.url).pathname.slice(1);
+   		// Replaces normalizeId: true.
+   		const sandbox = env.MY_SANDBOX.getByName(id.toLowerCase());
+
+   		return Response.json(await sandbox.test());
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   Methods that your 0.12 subclass already defines keep working the same way. Inside them, replace `this.exec()` and other package calls with calls on `this.container`. For each kind of call, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/) and the feature pages in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
+
+</Steps>
+
+## Check the class
+
+Start the Worker locally:
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+Wrangler builds the image when it starts. Send a request to each route that uses a sandbox. The first request for each name starts a container and waits for it. Each route returns what it returned on 0.12.
+
+## Next steps
+
+- To deploy the new class, follow [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
+- To change `exec()`, file calls, and sessions, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/).
+- For the methods on `this.ctx.container`, refer to the [Container API](/durable-objects/api/container/).

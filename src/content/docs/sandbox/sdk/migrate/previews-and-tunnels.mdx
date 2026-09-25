@@ -12,7 +12,7 @@ products:
 
 In 0.12, `exposePort()` created a preview URL with a token in its hostname, and `proxyToSandbox()` routed requests for those hostnames to the sandbox. In 1.0, your Worker routes each request to a Durable Object, and the Durable Object forwards it to the port with `getTcpPort(port).fetch()`. [Preview a web application](/sandbox/previews/) builds this.
 
-Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `sandbox` is the stub that `getByName()` returns.
+Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first. On this page, `sandbox` is the stub that `getByName()` returns.
 
 ## Replace preview URLs
 
