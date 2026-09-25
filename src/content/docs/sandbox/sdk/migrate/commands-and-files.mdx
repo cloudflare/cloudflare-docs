@@ -183,4 +183,4 @@ return new Response(watcher.stdout, {
 });
 ```
 
-Each line is an event and a path, such as `MODIFY /workspace/src/index.ts`. The watcher stops, and the stream ends, when the timer fires. The watcher also exits when the client disconnects. Clearing the timer when the watcher exits keeps the timer from signaling a process that has already exited.
+Each line is an event and a path, such as `MODIFY /workspace/src/index.ts`. As in [Stream output](#stream-output), the lines are not server-sent events, so read them with `fetch()`. The watcher stops, and the stream ends, when the timer fires. If the client disconnects first, the watcher exits the next time it writes an event, because the write fails. A quiet directory keeps it running until the timer fires. Clearing the timer when the watcher exits keeps the timer from signaling a process that has already exited.
