@@ -94,9 +94,7 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
    	"durable_objects": {
    		"bindings": [{ "class_name": "Sandbox", "name": "Sandbox" }],
    	},
-   	"exports": {
-   		"Sandbox": { "type": "durable-object", "storage": "sqlite" },
-   	},
+   	"migrations": [{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" }],
    }
    ```
 
@@ -106,7 +104,7 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
 
    - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`. The `Dockerfile` moves to `images`, and the instance size moves to `start()`.
    - The container application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application. The deploy then fails after the new Worker version is already live, and that version runs against the old containers.
-   - `exports` replaces `migrations`. A class created with `new_sqlite_classes` uses `"storage": "sqlite"`. After you deploy with `exports`, you cannot return to `migrations`. For more information, refer to [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+   - `migrations` stays as it is, because the class keeps its name. If your Worker declares its classes with `exports` in the Wrangler configuration instead, keep that unchanged.
    - `nodejs_compat` stays, because `@cloudflare/sandbox` 1.0 requires it.
 
 4. Generate types for the new configuration:
@@ -206,7 +204,7 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-   You cannot go back to 0.12 after this deploy. `wrangler rollback` and a deploy of the 0.12 configuration both fail, because the class is in `exports`. A 0.12 version that keeps `exports` deploys, but it cannot start containers. Try the migration on a copy of the Worker with another name first.
+   You cannot go back to 0.12 after this deploy, because the Durable Object namespace now starts its containers from the new application. A `wrangler rollback` to the 0.12 version, or a deploy of the 0.12 configuration, either fails or deploys code that cannot start containers. Try the migration on a copy of the Worker with another name first.
 
    Requests that use a container when the new version goes live end shortly after. A command that returns its output when it finishes fails, and streamed output stops without an error. Deploy when no long commands run.
 
