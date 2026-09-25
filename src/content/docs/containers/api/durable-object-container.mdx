@@ -15,6 +15,8 @@ Each [container](/containers/) is managed and proxied by a Durable Object. The D
 
 The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
 
+If your application uses the `Container` class or Sandbox SDK, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
+
 :::note
 We recommend starting new applications with the Durable Object Container API. If you prefer built-in lifecycle helpers, use the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers`. The class adds routing, readiness checks, lifecycle hooks, activity tracking, and scheduling. To compare both APIs, refer to [Containers APIs](/containers/api/).
 :::
@@ -68,29 +70,17 @@ You may want to confirm the container is ready to accept requests before using i
 <TypeScriptExample omitTabs>
 
 ```ts
-this.ctx.container.start({
-	image: "registry.cloudflare.com/<ACCOUNT_ID>/my-container:latest",
-	env: {
-		FOO: "bar",
-	},
-	enableInternet: false,
-	entrypoint: ["node", "server.js"],
-});
+this.ctx.container.start();
 ```
 
 </TypeScriptExample>
 
 #### Parameters
 
-- `options` (optional): Omit to use the image configured in Wrangler. When provided, set `enableInternet` and either `image` or `containerSnapshot`, but not both:
-  - `image`: The container image to run. Specify this when selecting an image at runtime.
-  - `containerSnapshot`: A snapshot to restore instead of starting from an image. Provide its `id`.
-  - `enableInternet`: Whether the container can access the Internet.
+- `options` (optional): An object with the existing startup options:
   - `env`: Environment variables to pass to the container.
   - `entrypoint`: The command and arguments to run in the container.
-  - `instance`: The instance type (`lite` or `standard-1` through `standard-4`) or a resource configuration with `vcpu`, `memoryMib`, and `diskMb`.
-  - `labels`: String key-value labels associated with the container.
-  - `directorySnapshots`: Directory snapshot restore configurations. Each entry accepts a `snapshot` and optional `mountPoint`, or a `mountPoint` alone.
+  - `enableInternet`: Whether to allow outbound Internet access.
 
 #### Return values
 
