@@ -18,7 +18,7 @@ const model: ModelCardData = {
 	source: 2,
 	task: "Text Generation",
 	description:
-		"A deliberately long model description that exceeds two lines and must remain fully visible in the model card instead of being clipped by a presentation-only line clamp.",
+		"A deliberately long model description that exceeds four lines and must be clipped before it overlaps the model facts and comparison control.",
 	tags: [],
 	capabilities: [],
 	beta: true,
@@ -36,15 +36,17 @@ const truncationClasses = (className: string | undefined): string[] =>
 		);
 
 describe("ModelCard", () => {
-	test("does not emit truncation classes for titles and descriptions", async () => {
+	test("wraps titles and clamps descriptions to four lines", async () => {
 		const container = await AstroContainer.create();
 		const html = await container.renderToString(ModelCard, {
 			props: { model, index: 0, cols: 3 },
 		});
 		const root = parse(html);
+		const link = root.querySelector("a");
 		const title = root.querySelector("h3");
 		const titleRow = title?.parentNode;
 		const description = root.querySelector("a > p");
+		const compareRow = root.querySelector("[data-model-compare]")?.parentNode;
 		const descriptionClasses =
 			description?.getAttribute("class")?.split(/\s+/) ?? [];
 
@@ -54,11 +56,15 @@ describe("ModelCard", () => {
 		expect(title?.getAttribute("class")).toContain("min-w-0");
 		expect(title?.getAttribute("class")).toContain("[overflow-wrap:anywhere]");
 		expect(description?.textContent).toBe(model.description);
-		expect(truncationClasses(description?.getAttribute("class"))).toEqual([]);
-		expect(descriptionClasses).toContain("min-h-[4.5rem]");
-		expect(descriptionClasses).not.toContain("h-[4.5rem]");
+		expect(truncationClasses(description?.getAttribute("class"))).toEqual([
+			"line-clamp-4",
+		]);
+		expect(descriptionClasses).toContain("h-24");
 		expect(description?.getAttribute("class")).toContain(
 			"[overflow-wrap:anywhere]",
 		);
+		expect(link?.getAttribute("class")).toContain("flex-1");
+		expect(link?.getAttribute("class")).not.toContain("pb-16");
+		expect(compareRow?.getAttribute("class")).not.toContain("absolute");
 	});
 });
