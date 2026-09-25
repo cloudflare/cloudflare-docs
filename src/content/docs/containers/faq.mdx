@@ -146,16 +146,16 @@ For implementation details, refer to [Environment variables and secrets](/contai
 
 ## Can I run Docker inside a container (Docker-in-Docker)?
 
-Yes. Use the `docker:dind-rootless` base image since Containers run without root privileges.
-
-You must disable iptables when starting the Docker daemon because Containers do not support iptables manipulation:
+Yes. Use the `docker:dind` image, and start the Docker daemon with iptables and IP forwarding disabled:
 
 ```dockerfile title="Dockerfile"
-FROM docker:dind-rootless
+FROM docker:dind
 
-# Start dockerd with iptables disabled, then run your app
-ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /path/to/your-app"]
+# Start dockerd with iptables and IP forwarding disabled, then run your app
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false & exec /path/to/your-app"]
 ```
+
+Containers do not support iptables manipulation. Containers with `scheduling_policy: "durable_object"` also cannot turn on IP forwarding, so without `--ip-forward=false` the Docker daemon exits on them. Rootless Docker, which the `docker:dind-rootless` image runs unless its Dockerfile switches to `USER root`, does not start in Containers, because it cannot set up its runtime directory or its network.
 
 If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
 
@@ -173,7 +173,7 @@ exec /path/to/your-app
 
 <Render file="dind-network-host-caveat" product="containers" />
 
-For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
+For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind). It runs the Docker daemon as `root` from `docker:dind-rootless`. On containers with `scheduling_policy: "durable_object"`, add `--ip-forward=false` to its `dockerd` flags.
 
 ## How do I allow or disallow egress from my container?
 
