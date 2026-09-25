@@ -1,15 +1,15 @@
 ---
 title: Spam filtering
-description: Build spam detection for Email Service with keyword analysis, domain reputation checks, and AI-based filtering.
+description: Filter email with subject keywords and trusted-domain heuristics.
 pcx_content_type: example
-summary: Implement intelligent spam detection with keyword analysis, domain reputation, and machine learning techniques
+summary: Filter email with subject keywords and trusted-domain heuristics
 sidebar:
   order: 2
 products:
   - email-service
 ---
 
-Build spam filtering systems with keyword matching, domain validation, and intelligent detection methods for effective email security.
+This example scores incoming email using subject keywords and sender-domain heuristics.
 
 ## Basic spam filter
 
@@ -153,9 +153,9 @@ function getScoreRange(score: number): string {
 }
 ```
 
-## Advanced spam detection with AI
+## Optional Workers AI integration
 
-For more sophisticated spam detection, you can enhance the basic filter using [Workers AI](/workers-ai/) to analyze email content with machine learning models. This approach can identify subtle spam patterns that keyword-based filters might miss.
+The basic spam filter uses simple heuristic checks. You can optionally use [Workers AI](/workers-ai/) to analyze email content.
 
 ## Next steps
 
