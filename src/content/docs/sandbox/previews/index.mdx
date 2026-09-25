@@ -133,20 +133,21 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
    		return Response.redirect(url.toString(), 308);
    	}
 
-   	const target = new URL(path + url.search, "http://container");
+   	// Prefix the host, so that a path such as //example.com/ stays a path.
+   	const target = new URL(`http://container${path}${url.search}`);
    	return sandbox.fetch(new Request(target, request));
    }
 
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const preview = /^\/previews\/([^/]+)(\/.*)?$/.exec(url.pathname);
+   		const preview = /^\/previews\/([a-z0-9-]+)(\/.*)?$/.exec(url.pathname);
 
    		if (!preview) {
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(preview[1]));
+   		const sandbox = env.MY_CONTAINER.getByName(preview[1]);
    		return forward(sandbox, request, preview[2]);
    	},
    } satisfies ExportedHandler<Env>;
@@ -156,7 +157,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
 
    The server receives each path without the `/previews/<NAME>` prefix. Links that start with `/` leave the preview, so use relative links or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
 
-   The route reads the sandbox name from the URL to keep the example short. Authenticate callers before they reach a preview, and serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk).
+   The route reads the sandbox name from the URL to keep the example short. It accepts only lowercase letters, digits, and hyphens, so an encoded `/` cannot reach a sandbox that another route names, such as `<OWNER>/<SESSION>`. Authenticate callers before they reach a preview, and serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk).
 
 5. Deploy the Worker:
 
@@ -296,18 +297,18 @@ Give someone access to one preview for a limited time. The Durable Object stores
 2. In your Worker's `fetch()` handler, add routes that create a link and serve shared previews, before the `404` response:
 
    ```ts title="src/index.ts"
-   const share = /^\/shares\/([^/]+)$/.exec(url.pathname);
+   const share = /^\/shares\/([a-z0-9-]+)$/.exec(url.pathname);
 
    if (share && request.method === "POST") {
-   	const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(share[1]));
+   	const sandbox = env.MY_CONTAINER.getByName(share[1]);
    	const token = await sandbox.share(60 * 60 * 1000);
    	return Response.json({ url: `${url.origin}/shared/${share[1]}/${token}/` });
    }
 
-   const shared = /^\/shared\/([^/]+)\/([^/]+)(\/.*)?$/.exec(url.pathname);
+   const shared = /^\/shared\/([a-z0-9-]+)\/([^/]+)(\/.*)?$/.exec(url.pathname);
 
    if (shared) {
-   	const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(shared[1]));
+   	const sandbox = env.MY_CONTAINER.getByName(shared[1]);
 
    	if (!(await sandbox.isShared(shared[2]))) {
    		return new Response("Not found", { status: 404 });

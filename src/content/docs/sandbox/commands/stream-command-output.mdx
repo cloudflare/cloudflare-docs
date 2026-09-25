@@ -114,13 +114,13 @@ Show the output of a build, a test run, or another command in a browser while th
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([^/]+)\/build$/.exec(url.pathname);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/build$/.exec(url.pathname);
 
    		if (!match || request.method !== "GET") {
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
    		return sandbox.stream(build);
    	},
    } satisfies ExportedHandler<Env>;

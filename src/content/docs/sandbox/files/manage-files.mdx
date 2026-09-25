@@ -141,13 +141,13 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([^/]+)\/compress$/.exec(url.pathname);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/compress$/.exec(url.pathname);
 
    		if (!match || request.method !== "POST" || !request.body) {
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
    		return sandbox.compress(request.body);
    	},
    } satisfies ExportedHandler<Env>;

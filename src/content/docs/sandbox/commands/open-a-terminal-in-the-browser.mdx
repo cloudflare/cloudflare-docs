@@ -284,13 +284,13 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([^/]+)\/(terminal)?$/.exec(url.pathname);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/(terminal)?$/.exec(url.pathname);
 
    		if (!match) {
    			return new Response("Not found", { status: 404 });
    		}
 
-   		const sandbox = env.MY_CONTAINER.getByName(decodeURIComponent(match[1]));
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
 
    		if (match[2]) {
    			return sandbox.fetch(request);
