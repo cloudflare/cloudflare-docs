@@ -206,7 +206,11 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-   On its next request, each Durable Object starts a container from the new image in the new application. Containers that 0.12 started keep running in the old application, with no Durable Object attached.
+   You cannot go back to 0.12 after this deploy. `wrangler rollback` and a deploy of the 0.12 configuration both fail, because the class is in `exports`. A 0.12 version that keeps `exports` deploys, but it cannot start containers. Try the migration on a copy of the Worker with another name first.
+
+   Requests that use a container when the new version goes live end shortly after. A command that returns its output when it finishes fails, and streamed output stops without an error. Deploy when no long commands run.
+
+   On its next request, each Durable Object starts a container from the new image in the new application. Containers that 0.12 started keep running in the old application, with no Durable Object attached, until you delete it.
 
 7. Find the old application in the list. Its name is the one Wrangler generated from your Worker and class names, such as `my-worker-sandbox`:
 
@@ -215,6 +219,8 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
 8. Delete the old application. Replace `<OLD_APPLICATION_ID>` with its ID from the list:
 
    <PackageManagers type="exec" pkg="wrangler" args="containers delete <OLD_APPLICATION_ID>" />
+
+   Deleting it stops the containers that 0.12 started and deletes their files. Durable Objects and their storage stay, and the new application keeps running.
 
 </Steps>
 

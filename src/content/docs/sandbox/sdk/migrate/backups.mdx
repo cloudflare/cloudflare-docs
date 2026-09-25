@@ -46,7 +46,52 @@ await sandbox.restore(backup.key, "/workspace");
 
 A lifecycle rule sets one age, in days, for every backup under the prefix, and R2 deletes an expired backup up to a day later. 0.12 set `ttl` for each backup, in seconds, and refused to restore an expired one. To keep that behavior, store the expiry time in the upload's custom metadata and check it in `restore()`.
 
-Backups that 0.12 created are SquashFS images at `backups/<ID>/data.sqsh` in the bucket, not `tar` archives. To restore one, install `squashfs-tools` in the image, write the file to the container, and extract it with `unsquashfs`.
+## Convert backups that 0.12 created
+
+Backups that 0.12 created are SquashFS images at `backups/<ID>/data.sqsh` in the bucket, not `tar` archives. They stay in the bucket after you deploy 1.0, and Durable Object storage keeps any backup objects that you saved there. To keep one, restore it once and back it up again as a `tar` archive.
+
+1. Keep the R2 binding to the bucket that 0.12 wrote to. On this page it is `BACKUP_BUCKET`.
+2. Add `squashfs-tools` to the `apt-get install` line in your `Dockerfile`.
+3. Add a method that restores a 0.12 backup into its directory and backs the directory up again. Replace `this.backup()` with the `backup()` method from [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/):
+
+   ```ts title="src/index.ts"
+   async convert(backup: { id: string; dir: string }) {
+   	const object = await this.env.BACKUP_BUCKET.get(
+   		`backups/${backup.id}/data.sqsh`,
+   	);
+   	const container = this.ctx.container;
+
+   	if (!object || !container?.running) {
+   		return undefined;
+   	}
+
+   	// unsquashfs needs the whole image on disk. /var/tmp is on the disk;
+   	// /run is a small in-memory filesystem.
+   	const script =
+   		'cat > "$1" && rm -rf -- "$2" &&' +
+   		' unsquashfs -mem 64M -no-progress -d "$2" "$1";' +
+   		' code=$?; rm -f -- "$1"; exit $code';
+   	const unsquashfs = await container.exec(
+   		["sh", "-c", script, "sh", `/var/tmp/${backup.id}.sqsh`, backup.dir],
+   		{ stdin: object.body, stdout: "ignore" },
+   	);
+   	const exitCode = await unsquashfs.exitCode;
+
+   	if (exitCode !== 0) {
+   		throw new Error(`unsquashfs exited with code ${exitCode}`);
+   	}
+
+   	return this.backup(backup.dir);
+   }
+   ```
+
+   The container needs free disk space for the image and the extracted files together. Without `-mem 64M`, `unsquashfs` asks for more memory than a `lite` instance has and fails with `FATAL ERROR: Requested memory size too large`.
+
+4. Where your code called `restoreBackup()` with a 0.12 backup object, call `convert()` with it once the container runs. Save the key that `convert()` returns in place of the 0.12 object. Delete the 0.12 object only after `convert()` returns a key.
+
+The converted directory keeps its files, empty directories, symbolic links, hard links, and permissions. Modification times keep whole seconds only, because SquashFS does not store fractions of a second.
+
+After a backup is converted, delete `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` from the bucket. A lifecycle rule on the `backups/` prefix would also delete the new `tar` backups, which share the prefix.
 
 ## Leave out ignored files
 

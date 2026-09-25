@@ -26,7 +26,7 @@ Moving to 1.0 changes these behaviors:
 - A container has no Internet access unless `start()` passes `enableInternet: true`. 0.12 allowed Internet access by default.
 - The package has no timeouts. Pass an `AbortSignal` to stop an operation.
 - You choose the container image. `Files` and `S3Mounts` need the `sandbox-shim` helper in it.
-- Files in containers that 0.12 started do not carry over. Copy the files you need before you deploy.
+- Files in containers that 0.12 started do not carry over. Copy the files you need before you deploy. Backups that 0.12 created stay in your bucket, and you can [convert them](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) after you deploy.
 - Preview URLs, background processes, terminals, backups, and outbound rules become code in your Worker. The page for each feature shows that code.
 - `runCode()` and code contexts have no replacement in the package. Run JavaScript in a [Dynamic Worker](/dynamic-workers/), or run an interpreter such as `python3` with `exec()`.
 
