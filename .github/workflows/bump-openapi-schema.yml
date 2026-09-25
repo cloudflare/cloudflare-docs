@@ -116,10 +116,12 @@ jobs:
           fi
 
           # Rebuild the branch from the current production tip so the PR only
-          # ever contains the lock change.
+          # ever contains the lock change. --force discards the working-tree
+          # lock (saved above), which git would otherwise refuse to overwrite
+          # if the lock differs between the checked-out commit and the tip.
           cp openapi.lock.json "$RUNNER_TEMP/openapi.lock.json"
           git fetch --no-tags --depth=1 origin "+refs/heads/$BASE:refs/remotes/origin/$BASE"
-          git checkout -B "$BRANCH" "origin/$BASE"
+          git checkout --force -B "$BRANCH" "origin/$BASE"
           cp "$RUNNER_TEMP/openapi.lock.json" openapi.lock.json
 
           if git diff --quiet -- openapi.lock.json; then
