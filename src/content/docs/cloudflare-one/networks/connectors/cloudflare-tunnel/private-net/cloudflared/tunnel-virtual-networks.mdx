@@ -214,8 +214,6 @@ In this example, "private network" refers to a distinct environment (such as sta
              ```txt
              tunnel: <Tunnel-UUID>
              credentials-file: /root/.cloudflared/credentials-file.json
-             warp-routing:
-                enabled: true
              ```
 
           7. Run your tunnel.
@@ -307,3 +305,4 @@ When you visit `10.128.0.3/32`, the Cloudflare One Client will route your reques
 3. Choose the virtual network you want to connect to, for example `staging-vnet`.
 
 When you visit `10.128.0.3/32`, the Cloudflare One Client will route your request to the staging environment.
+
