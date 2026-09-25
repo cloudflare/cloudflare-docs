@@ -7,7 +7,6 @@ export interface AgentData {
 	vendor: string;
 	slug: string;
 	icon: string;
-	iconFile?: string;
 	description: string;
 	capabilities: {
 		ide: boolean;

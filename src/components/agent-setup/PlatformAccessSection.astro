@@ -3,12 +3,6 @@ import CornerMarks from "~/components/CornerMarks.astro";
 import PlatformAccessDetails from "./PlatformAccessDetails.astro";
 import McpServerList from "./McpServerList.astro";
 import SkillsList from "./SkillsList.astro";
-
-interface Props {
-	docsOnlyMcp?: boolean;
-}
-
-const { docsOnlyMcp = false } = Astro.props;
 ---
 
 <div>
@@ -39,45 +33,30 @@ const { docsOnlyMcp = false } = Astro.props;
 		</PlatformAccessDetails>
 
 		<PlatformAccessDetails header="MCP servers">
-			{docsOnlyMcp ? (
-				<>
-					<p class="text-foreground font-medium">
-						Current Cloudflare documentation without authentication.
-					</p>
-					<p>
-						The public Cloudflare docs MCP server gives your agent access to
-						current product documentation. Configure the{" "}
-						<code>cloudflare-docs</code> entry in your agent's MCP settings.
-					</p>
-				</>
-			) : (
-				<>
-					<p class="text-foreground font-medium">
-						Live access to the Cloudflare API, docs, and observability.
-					</p>
-					<p>
-						MCP servers provide typed tools to call into Cloudflare at runtime.
-						There are two options:{" "}
-						<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a> —
-						a single server that covers the entire Cloudflare API (2,500+
-						endpoints in ~1,000 tokens) — or a set of focused, domain-specific
-						servers hosted in the{" "}
-						<a
-							href="https://github.com/cloudflare/mcp-server-cloudflare"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							cloudflare/mcp-server-cloudflare
-						</a>{" "}
-						repo. The full catalog is also in the{" "}
-						<a href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/">
-							MCP servers for Cloudflare
-						</a>{" "}
-						docs.
-					</p>
-					<McpServerList />
-				</>
-			)}
+			<p class="text-foreground font-medium">
+				Live access to the Cloudflare API, docs, and observability.
+			</p>
+			<p>
+				MCP servers provide typed tools to call into Cloudflare at runtime.
+				There are two options:{" "}
+				<a href="https://blog.cloudflare.com/code-mode-mcp/">Code Mode</a> — a
+				single server that covers the entire Cloudflare API (2,500+ endpoints in
+				~1,000 tokens) — or a set of focused, domain-specific servers hosted in
+				the{" "}
+				<a
+					href="https://github.com/cloudflare/mcp-server-cloudflare"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					cloudflare/mcp-server-cloudflare
+				</a>{" "}
+				repo. The full catalog is also in the{" "}
+				<a href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/">
+					MCP servers for Cloudflare
+				</a>{" "}
+				docs.
+			</p>
+			<McpServerList />
 		</PlatformAccessDetails>
 
 		<PlatformAccessDetails header="Wrangler CLI">
