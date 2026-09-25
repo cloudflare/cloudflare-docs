@@ -20,8 +20,27 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
 
 Give a person a live shell in a Linux sandbox from a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
+
+<BrowserTerminal
+	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
+	lines={[
+		"root@fbed6b5a41ac5bf7fa2b2db27f4d6a8268aab85bdaf6be012a2e881812eb617d:~# stty size",
+		"21 95",
+		'root@fbed6b5a41ac5bf7fa2b2db27f4d6a8268aab85bdaf6be012a2e881812eb617d:~# for i in $(seq 1 600); do echo "line $i"; sleep 1; done',
+		"line 1",
+		"line 2",
+		"line 3",
+		"line 4",
+		"line 5",
+	]}
+	status={{
+		left: "[main] 0:sleep*",
+		right: '"fbed6b5a41ac5bf7fa2b2" 02:45 25-Sep-26',
+	}}
+/>
 
 ## Prerequisites
 
