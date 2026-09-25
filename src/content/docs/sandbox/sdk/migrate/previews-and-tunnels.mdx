@@ -26,7 +26,7 @@ Replace `exposePort()` and `proxyToSandbox()` with the Worker route and Durable 
 | `unexposePort()`, `getExposedPorts()` | Delete or list the `share:` tokens in Durable Object storage                                                                                                              |
 | `wsConnect(request, port)`            | The WebSocket bridge from [Keep WebSocket connections open](/sandbox/previews/preview-a-web-application/#keep-websocket-connections-open)                                 |
 
-0.12 preview URLs had the port, the sandbox ID, and the token in the hostname, such as `8080-sandbox-id-token.example.com`. Those URLs stop working after you deploy 1.0. Give users the new URLs.
+0.12 preview URLs had the port, the sandbox ID, and the token in the hostname, such as `8080-sandbox-id-token.example.com`. Those URLs stop working after you deploy 1.0. Give users the new URLs. To keep that URL shape, the [share workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/share-workspace) serves `<PORT>-<NAME>-<TOKEN>` hostnames. It also starts quick tunnels.
 
 A WebSocket that passes through the Durable Object without the bridge does not keep the container running, so an idle connection can close. The bridge accepts both ends in the Durable Object.
 
