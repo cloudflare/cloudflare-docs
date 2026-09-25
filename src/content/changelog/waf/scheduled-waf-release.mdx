@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2026-09-15
-description: WAF managed ruleset changes scheduled for 2026-09-15
-date: 2026-09-08
+title: WAF Release - Scheduled changes for 2026-09-29
+description: WAF managed ruleset changes scheduled for 2026-09-29
+date: 2026-09-22
 publish_future_dated_entry: true
 ---
 
@@ -21,43 +21,69 @@ import { RuleID } from "~/components";
 	</thead>
 	<tbody>
 		<tr>
-			<td>2026-09-08</td>
-			<td>2026-09-15</td>
+			<td>2026-09-22</td>
+			<td>2026-09-29</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="b2170b7b1a2c4b8eba0b498eca453d31" />
+				<RuleID id="f2445b9131214302a11477a2cb14ded8" />
 			</td>
-			<td>SSRF - Cloud - 3</td>
+			<td>Broken Access Control - Directory Traversal</td>
 			<td>
 				This is a new detection.
 			</td>
 		</tr>
 		<tr>
-			<td>2026-09-08</td>
-			<td>2026-09-15</td>
+			<td>2026-09-22</td>
+			<td>2026-09-29</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="02c818297e6d42aaa55e67f5e540f17f" />
+				<RuleID id="5c1ba1fdb0a742d4beaaefd00364bd7e" />
 			</td>
-			<td>Version Control - Information Disclosure - Beta</td>
+			<td>HTTP Request Smuggling - Request Body Anomaly - Beta</td>
 			<td>
-				This rule will be merged into the original rule "Version Control - Information Disclosure" (ID:{" "}<RuleID id="23548ee2b36547a1be09bb2c0550c529" />).
+				This rule will be merged into the original rule "HTTP/2 Request Smuggling - Request Body Anomaly" (ID:{" "}<RuleID id="a80f214f0947435dabb2ba2d1489d892" />).
 			</td>
 		</tr>
 		<tr>
-			<td>2026-09-08</td>
-			<td>2026-09-15</td>
+			<td>2026-09-22</td>
+			<td>2026-09-29</td>
+			<td>Disabled</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="09055ff9f80046419a3c0be5d498a69a" />
+			</td>
+			<td>Command Injection - Generic 8 - body - Beta</td>
+			<td>
+			  This rule will be merged into the original rule "Command Injection - Generic 8 - body" (ID:{" "}<RuleID id="5b3ce84c099040c6a25cee2d413592e2" />).
+			</td>
+		</tr>
+		<tr>
+			<td>2026-09-22</td>
+			<td>2026-09-29</td>
 			<td>Log</td>
 			<td>N/A</td>
 			<td>
-				<RuleID id="93793848937f4f988f1dfdabba458b4b" />
+				<RuleID id="e6fd9291701d4fea96741ba1a056caff" />
 			</td>
-			<td>Command Injection - Generic 10</td>
+			<td>Command Injection - Generic 8 - uri - Beta</td>
+			<td>
+			  This rule will be merged into the original rule "Command Injection - Generic 8 - uri" (ID:{" "}<RuleID id="ff8df24181aa4573a81be531ee159e2e" />).
+			</td>
+		</tr>
+		<tr>
+			<td>2026-09-22</td>
+			<td>2026-09-29</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="c825487afc274e34966052bb87ae8cfc" />
+			</td>
+			<td>GitLab - Path Traversal- CVE:CVE-2026-85706</td>
 			<td>
 				This is a new detection.
 			</td>
-		</tr>
+		</tr>		
 	</tbody>
 </table>

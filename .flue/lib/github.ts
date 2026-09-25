@@ -1,6 +1,6 @@
 import { createAppAuth } from "@octokit/auth-app";
 
-const REPO = "cloudflare/cloudflare-docs";
+export const REPO = "cloudflare/cloudflare-docs";
 
 export interface PullRequestFile {
 	filename: string;
@@ -42,10 +42,31 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
+	created_at: string;
+	updated_at: string;
 	labels: { name: string }[];
 	base: { ref: string; sha: string; repo: { full_name: string } };
 	/** head.repo can be null when the fork has been deleted. */
 	head: { ref: string; sha: string; repo: { full_name: string } | null };
+}
+
+/** List every open pull request in the repository (drafts included). */
+export async function listOpenPullRequests(
+	token: string,
+): Promise<GitHubPullRequest[]> {
+	return fetchAllPages<GitHubPullRequest>(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls?state=open&per_page=100`,
+		"list open pull requests",
+	);
+}
+
+/** List every open draft pull request in the repository. */
+export async function listOpenDraftPullRequests(
+	token: string,
+): Promise<GitHubPullRequest[]> {
+	const pullRequests = await listOpenPullRequests(token);
+	return pullRequests.filter((pullRequest) => pullRequest.draft);
 }
 
 export async function getInstallationToken(
@@ -138,11 +159,16 @@ export async function closeIssue(
 	}
 }
 
-export async function postComment(
+/**
+ * Create a comment on an issue/PR and return the created comment's id.
+ * Unlike `postComment` (which returns void), this is used when the caller needs
+ * to persist the comment id for later updates.
+ */
+export async function createIssueComment(
 	token: string,
 	issueNumber: number,
 	body: string,
-): Promise<void> {
+): Promise<number> {
 	const res = await fetch(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments`,
 		{
@@ -156,6 +182,50 @@ export async function postComment(
 			`Failed to post comment on ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
+	const data = (await res.json()) as { id: number };
+	return data.id;
+}
+
+export async function getIssueComment(
+	token: string,
+	commentId: number,
+): Promise<GitHubIssueComment> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get issue comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubIssueComment;
+}
+
+/** Delete an issue comment. A 404 is treated as success (already gone). */
+export async function deleteIssueComment(
+	token: string,
+	commentId: number,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{
+			method: "DELETE",
+			headers: apiHeaders(token),
+		},
+	);
+	if (res.ok || res.status === 404) return;
+	throw new Error(
+		`Failed to delete comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+	);
+}
+
+export async function postComment(
+	token: string,
+	issueNumber: number,
+	body: string,
+): Promise<void> {
+	await createIssueComment(token, issueNumber, body);
 }
 
 export async function getIssue(
@@ -192,6 +262,26 @@ export async function getPullRequest(
 		);
 	}
 	return (await res.json()) as GitHubPullRequest;
+}
+
+/** Close a pull request without applying an issue-only state reason. */
+export async function closePullRequest(
+	token: string,
+	pullNumber: number,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}`,
+		{
+			method: "PATCH",
+			headers: apiHeaders(token),
+			body: JSON.stringify({ state: "closed" }),
+		},
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to close PR ${pullNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
 }
 
 /**
@@ -275,25 +365,152 @@ export interface GitHubIssueComment {
 	user: GitHubUser | null;
 }
 
+export interface GitHubPullRequestReview {
+	id: number;
+	body: string | null;
+	submitted_at: string | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export interface GitHubPullRequestReviewComment {
+	id: number;
+	body: string | null;
+	created_at: string;
+	path: string;
+	line: number | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export async function listPullRequestReviews(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReview[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/reviews?per_page=100`,
+		`list reviews for ${pullNumber}`,
+	);
+}
+
+export async function listPullRequestReviewComments(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReviewComment[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/comments?per_page=100`,
+		`list review comments for ${pullNumber}`,
+	);
+}
+
 export async function getIssueComments(
 	token: string,
 	issueNumber: number,
 ): Promise<GitHubIssueComment[]> {
-	// Fetch newest comments first so recent human replies aren't missed on
-	// busy PRs that exceed the 100-comment page limit.
+	// Fetch every page so marker comments remain discoverable on busy PRs.
+	// GitHub's default ordering is oldest-first, matching existing callers.
+	const comments = await fetchAllPages<GitHubIssueComment>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100`,
+		`get comments for ${issueNumber}`,
+	);
+	return comments;
+}
+
+export interface GitHubIssueEvent {
+	id: number;
+	event: string;
+	created_at: string;
+	actor: GitHubUser | null;
+}
+
+/** Every issue event for an issue or PR, oldest first, across all pages. */
+export async function listIssueEvents(
+	token: string,
+	issueNumber: number,
+): Promise<GitHubIssueEvent[]> {
+	return fetchAllPages<GitHubIssueEvent>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/events?per_page=100`,
+		`list events for ${issueNumber}`,
+	);
+}
+
+export interface GitHubBranchActivity {
+	id: number;
+	activity_type: string;
+	timestamp: string;
+	actor: GitHubUser | null;
+}
+
+/**
+ * The first page (newest first, up to 100 entries) of repository activity for
+ * one branch of this repository. Branch names containing `/`, `#`, and other
+ * special characters are percent-encoded by the query builder. Throws on HTTP
+ * failure.
+ */
+export async function listBranchActivity(
+	token: string,
+	ref: string,
+): Promise<GitHubBranchActivity[]> {
+	const query = new URLSearchParams({
+		ref: `refs/heads/${ref}`,
+		direction: "desc",
+		per_page: "100",
+	});
 	const res = await fetch(
-		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/comments?per_page=100&direction=desc`,
+		`https://api.github.com/repos/${REPO}/activity?${query}`,
 		{ headers: apiHeaders(token) },
 	);
 	if (!res.ok) {
 		throw new Error(
-			`Failed to get comments for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+			`Failed to list activity for ${ref} (HTTP ${res.status}): ${await res.text()}`,
 		);
 	}
-	// Reverse so callers get oldest-first order (consistent with previous behavior
-	// and safe for findLast() / botComment detection).
-	const comments = (await res.json()) as GitHubIssueComment[];
-	return comments.reverse();
+	return (await res.json()) as GitHubBranchActivity[];
+}
+
+export interface GitHubCommitSummary {
+	/** `commit.committer.date` */
+	committedAt: string;
+	/** The GitHub account linked to the commit author, when GitHub knows it. */
+	author: GitHubUser | null;
+}
+
+/**
+ * The committer date and the GitHub-linked author for one commit. Works for
+ * fork PR head SHAs. Throws on HTTP failure, or when the commit has no
+ * committer date.
+ */
+export async function getCommitSummary(
+	token: string,
+	sha: string,
+): Promise<GitHubCommitSummary> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get commit ${sha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		commit?: { committer?: { date?: string } };
+		author?: { login: string; type?: string } | null;
+	};
+	const committedAt = data.commit?.committer?.date;
+	if (!committedAt) {
+		throw new Error(`Commit ${sha} has no committer date`);
+	}
+	return {
+		committedAt,
+		author: data.author
+			? { login: data.author.login, type: data.author.type }
+			: null,
+	};
 }
 
 export async function updateIssueComment(
@@ -506,11 +723,15 @@ export async function isCodeOwner(
 		if (mention.includes("/")) {
 			// Team mention: @org/team — check membership using org token (needs read:org)
 			const [org, team] = mention.split("/");
-			const memberRes = await fetch(
-				`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
-				{ headers: apiHeaders(orgToken) },
-			);
-			if (memberRes.ok) return true;
+			try {
+				if (await isGitHubTeamMember(orgToken, org, team, username)) {
+					return true;
+				}
+			} catch {
+				// Keep isCodeOwner's silent-false semantics: an ambiguous
+				// membership response must never grant or block on an unresolved
+				// lookup, so a failed check is treated as "not a codeowner".
+			}
 		} else {
 			// Direct user mention
 			if (mention.toLowerCase() === username.toLowerCase()) return true;
@@ -518,6 +739,62 @@ export async function isCodeOwner(
 	}
 
 	return false;
+}
+
+/**
+ * Thrown when a GitHub team-membership check returns an ambiguous result
+ * (HTTP 401/403/5xx) instead of a definitive member or non-member. The
+ * reviewer-recommendation queue treats this class as always retryable so a
+ * misconfigured org token surfaces in retries/DLQ rather than silently
+ * disabling comment behavior.
+ */
+export class TeamMembershipCheckError extends Error {
+	constructor(
+		org: string,
+		team: string,
+		username: string,
+		status: number,
+		detail: string,
+	) {
+		super(
+			`Failed to check ${org}/${team} membership for ${username} (HTTP ${status}): ${detail}`,
+		);
+		this.name = "TeamMembershipCheckError";
+	}
+}
+
+/**
+ * Check whether `username` is an active member of the GitHub `org/team` using
+ * the org token (read:org). Definitive outcomes only: an active membership
+ * (HTTP 200, `state: "active"`) returns true; a pending invitation (200,
+ * `state: "pending"`) and no relationship (404) return false. Any other status
+ * (401/403/5xx) throws `TeamMembershipCheckError` so callers can fail closed
+ * rather than act on an ambiguous membership decision.
+ */
+export async function isGitHubTeamMember(
+	orgToken: string,
+	org: string,
+	team: string,
+	username: string,
+): Promise<boolean> {
+	const res = await fetch(
+		`https://api.github.com/orgs/${org}/teams/${team}/memberships/${username}`,
+		{ headers: apiHeaders(orgToken) },
+	);
+	if (res.status === 404) return false;
+	if (!res.ok) {
+		throw new TeamMembershipCheckError(
+			org,
+			team,
+			username,
+			res.status,
+			await res.text(),
+		);
+	}
+	const data = (await res.json()) as { state?: string };
+	// HTTP 200 also covers invited-but-not-accepted users, whose state is
+	// "pending". Only an active membership is a definitive member.
+	return data.state === "active";
 }
 
 // ── Rebase / Git Data API ─────────────────────────────────────────────────────

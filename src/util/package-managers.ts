@@ -5,6 +5,7 @@ export type CommandType =
 export interface CommandOptions {
 	args?: string;
 	dev?: boolean;
+	global?: boolean;
 	comment?: string;
 	prefix?: string;
 }
@@ -53,13 +54,21 @@ const commands: Record<
 
 export const MANAGERS: Manager[] = ["npm", "yarn", "pnpm", "bun"];
 
+const globalAddCommands: Record<Manager, string> = {
+	npm: "npm install --global",
+	yarn: "yarn global add",
+	pnpm: "pnpm add --global",
+	bun: "bun add --global",
+};
+
 export function getCommand(
 	mgr: Manager,
 	type: CommandType,
 	pkg?: string,
-	{ args, dev = false, comment, prefix }: CommandOptions = {},
+	{ args, dev = false, global = false, comment, prefix }: CommandOptions = {},
 ): string | undefined {
-	let cmd = commands[mgr][type];
+	let cmd =
+		global && type === "add" ? globalAddCommands[mgr] : commands[mgr][type];
 	if (cmd === undefined) return undefined;
 	if (prefix) cmd = `${prefix} ${cmd}`;
 	if (comment) cmd = `# ${comment.replaceAll("{PKG}", mgr)}\n${cmd}`;
@@ -90,4 +99,14 @@ export function getTabs(
 	return MANAGERS.filter((mgr) => commands[mgr][type] !== undefined).map(
 		(mgr) => ({ mgr, cmd: getCommand(mgr, type, pkg, options)! }),
 	);
+}
+
+export function getCfCommand(
+	command: string,
+	{ comment, prefix }: Pick<CommandOptions, "comment" | "prefix"> = {},
+): string {
+	let rendered = command.replaceAll("{PKG}", "cf");
+	if (prefix) rendered = `${prefix} ${rendered}`;
+	if (comment) rendered = `# ${comment.replaceAll("{PKG}", "cf")}\n${rendered}`;
+	return rendered;
 }

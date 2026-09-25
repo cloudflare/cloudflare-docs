@@ -1,6 +1,8 @@
 ---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import SplashLayout from "~/layouts/SplashLayout.astro";
 import BackgroundLines from "~/components/BackgroundLines.astro";
+import CornerMarks from "~/components/CornerMarks.astro";
 import PageHeader from "~/components/PageHeader.astro";
 import PageShell from "~/components/PageShell.astro";
 
@@ -17,7 +19,176 @@ export const prerender = true;
 			/>
 
 			<section class="mt-12 pt-10" aria-label="Sponsored projects">
-				<div class="sponsorship-grid">
+				<div class="sponsorship-grid border-border relative grid grid-cols-1 border-t border-l sm:grid-cols-2 lg:grid-cols-6">
+					<CornerMarks />
+					<div class="sponsorship sponsorship-featured">
+						<a
+							class="sponsorship-icon"
+							aria-label="Visit Astro"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://astro.build/"
+						>
+							<svg
+								viewBox="0 0 256 323"
+								xmlns="http://www.w3.org/2000/svg"
+								aria-hidden="true"
+							>
+								<defs>
+									<linearGradient
+										id="astro-flame"
+										x1="0%"
+										x2="116.842%"
+										y1="91.269%"
+										y2="41.115%"
+									>
+										<stop offset="0%" stop-color="#d83333" />
+										<stop offset="100%" stop-color="#f041ff" />
+									</linearGradient>
+								</defs>
+								<path
+									fill="url(#astro-flame)"
+									d="M83.261 275.039c-14.588-13.336-18.847-41.355-12.769-61.653c10.539 12.796 25.14 16.852 40.265 19.138c23.35 3.533 46.28 2.212 67.97-8.46c2.482-1.22 4.775-2.848 7.486-4.492c2.035 5.903 2.565 11.864 1.854 17.932c-1.728 14.776-9.082 26.191-20.777 34.842c-4.677 3.461-9.626 6.555-14.456 9.82c-14.839 10.026-18.853 21.786-13.277 38.894c.132.417.25.833.55 1.85c-7.576-3.39-13.11-8.328-17.327-14.818c-4.453-6.852-6.572-14.431-6.684-22.63c-.056-3.99-.056-8.018-.592-11.95c-1.31-9.591-5.813-13.886-14.296-14.134c-8.705-.252-15.591 5.127-17.417 13.604c-.14.649-.342 1.291-.544 2.047z"
+								/>
+								<path
+									fill="var(--nb-foreground)"
+									d="M0 210.001s43.197-21.041 86.515-21.041l32.66-101.078c1.224-4.889 4.794-8.21 8.824-8.21s7.601 3.321 8.824 8.21l32.66 101.078C220.787 188.96 256 210 256 210S182.624 10.117 182.481 9.716C180.375 3.806 176.821 0 172.027 0H83.98c-4.793 0-8.204 3.806-10.454 9.716C73.367 10.109 0 210 0 210"
+								/>
+							</svg>
+						</a>
+						<a
+							class="sponsorship-title"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://astro.build/"
+						>
+							<h3>Astro</h3>
+						</a>
+						<div class="sponsorship-description">
+							<p>A web framework for building fast, content-driven websites.</p>
+						</div>
+						<div class="sponsorship-links">
+							<a
+								class="sponsorship-link-site more group"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://astro.build/"
+							>
+								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
+							</a>
+							<a
+								class="sponsorship-link-github"
+								aria-label="View Astro on GitHub"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://github.com/withastro/astro"
+							>
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
+							</a>
+						</div>
+					</div>
+					<div class="sponsorship sponsorship-featured">
+						<a
+							class="sponsorship-icon"
+							aria-label="Visit Vite"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://vite.dev/"
+						>
+							<svg
+								viewBox="0 0 256 257"
+								xmlns="http://www.w3.org/2000/svg"
+								aria-hidden="true"
+							>
+								<defs>
+									<linearGradient
+										id="vite-body"
+										x1="-.828%"
+										x2="57.636%"
+										y1="7.652%"
+										y2="78.411%"
+									>
+										<stop offset="0%" stop-color="#41d1ff" />
+										<stop offset="100%" stop-color="#bd34fe" />
+									</linearGradient>
+									<linearGradient
+										id="vite-bolt"
+										x1="43.376%"
+										x2="50.316%"
+										y1="2.242%"
+										y2="89.03%"
+									>
+										<stop offset="0%" stop-color="#ffea83" />
+										<stop offset="8.333%" stop-color="#ffdd35" />
+										<stop offset="100%" stop-color="#ffa800" />
+									</linearGradient>
+								</defs>
+								<path
+									fill="url(#vite-body)"
+									d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.5 6.5 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62"
+								/>
+								<path
+									fill="url(#vite-bolt)"
+									d="M185.432.063L96.44 17.501a3.27 3.27 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113"
+								/>
+							</svg>
+						</a>
+						<a
+							class="sponsorship-title"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://vite.dev/"
+						>
+							<h3>Vite</h3>
+						</a>
+						<div class="sponsorship-description">
+							<p>
+								A fast development server and build tool for modern web
+								projects.
+							</p>
+						</div>
+						<div class="sponsorship-links">
+							<a
+								class="sponsorship-link-site more group"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://vite.dev/"
+							>
+								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
+							</a>
+							<a
+								class="sponsorship-link-github"
+								aria-label="View Vite on GitHub"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://github.com/vitejs/vite"
+							>
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
+							</a>
+						</div>
+					</div>
 					<div class="sponsorship">
 						<a
 							class="sponsorship-icon"
@@ -54,20 +225,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://yarnpkg.com/en/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Yarn on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/yarnpkg/yarn"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -114,20 +297,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://momentjs.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Moment.js on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/moment/moment/"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -245,20 +440,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://d3js.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View D3 on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/d3/d3"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -295,20 +502,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://unpkg.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View UNPKG on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/unpkg/unpkg"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -365,20 +584,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://html5boilerplate.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View HTML5 Boilerplate on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/h5bp/html5-boilerplate"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -419,20 +650,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://cdnjs.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View cdnjs on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/cdnjs/cdnjs"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -472,20 +715,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://webpack.js.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Webpack on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/webpack/webpack"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -525,20 +780,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://nodejs.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Node.js on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/nodejs/node"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -579,20 +846,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://reactjs.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View React on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/facebook/react/"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -627,20 +906,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://git-scm.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View git on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/git/git"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -705,20 +996,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://www.kali.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Kali Linux on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/offensive-security"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -759,20 +1062,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://clickhouse.tech/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View ClickHouse on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/ClickHouse/ClickHouse"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -961,20 +1276,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://phalcon.io/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Phalcon on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/phalcon/cphalcon/"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1084,20 +1411,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://www.jsdelivr.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View JsDelivr on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/jsdelivr/jsdelivr"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1136,20 +1475,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://freecodecamp.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View freeCodeCamp on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/freeCodeCamp/freeCodeCamp"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1267,20 +1618,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://uppy.io/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Uppy on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/transloadit/uppy"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1316,20 +1679,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://redux.js.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Redux on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/reactjs/redux/"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1366,20 +1741,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://jquery.com"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View jQuery on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/jquery/jquery"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1458,20 +1845,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://select2.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Select2 on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/select2/select2"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1515,20 +1914,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://gulpjs.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Gulp on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/gulpjs/gulp"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1568,20 +1979,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://impress.js.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View impress.js on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/impress/impress.js"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1619,20 +2042,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://expressjs.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Express on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/expressjs/express"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1675,20 +2110,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://revealjs.com/#/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View REVEAL.JS on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/hakimel/reveal.js"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1728,20 +2175,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://threejs.org/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View three.js on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/mrdoob/three.js/"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1783,20 +2242,32 @@ export const prerender = true;
 						</div>
 						<div class="sponsorship-links">
 							<a
-								class="sponsorship-link-site more"
+								class="sponsorship-link-site more group"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://getbootstrap.com/"
 							>
 								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
 							</a>
 							<a
-								class="sponsorship-link-github more"
+								class="sponsorship-link-github"
+								aria-label="View Bootstrap on GitHub"
 								target="_blank"
 								rel="noopener noreferrer"
 								href="https://github.com/twbs/bootstrap"
 							>
-								Code on GitHub
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
 							</a>
 						</div>
 					</div>
@@ -1808,46 +2279,39 @@ export const prerender = true;
 
 <style>
 	.sponsorship-grid {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-		margin: 0;
+		align-items: stretch;
 	}
 
-	@media (max-width: 420px) {
-		.sponsorship-grid {
-			margin-left: -1em;
-			margin-right: -1em;
+	@media (min-width: 64rem) {
+		.sponsorship-grid > .sponsorship {
+			grid-column: span 2;
+		}
+
+		.sponsorship-grid > .sponsorship-featured {
+			grid-column: span 3;
 		}
 	}
 
 	.sponsorship-grid .sponsorship {
+		position: relative;
 		display: flex;
 		flex-flow: column;
-		width: 16em;
 		text-align: left;
-		margin: 0.75em;
-		background: var(--nb-card);
+		padding: 1.5rem;
+		border-right: 1px solid var(--color-border);
+		border-bottom: 1px solid var(--color-border);
+		background: var(--color-background);
 		text-decoration: none;
+		transition: background-color 0.15s ease;
 	}
 
-	@media (max-width: 48em) {
-		.sponsorship-grid .sponsorship {
-			font-size: 0.8em;
-			width: 14em;
-		}
-	}
-
-	@media (max-width: 420px) {
-		.sponsorship-grid .sponsorship {
-			width: auto;
-			font-size: 0.95em;
-		}
+	.sponsorship-grid .sponsorship:hover {
+		background: color-mix(in oklab, var(--color-muted) 40%, transparent);
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-icon {
 		position: relative;
+		margin-bottom: 12px;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-icon:after {
@@ -1855,40 +2319,49 @@ export const prerender = true;
 		display: block;
 		height: 0;
 		width: 100%;
-		padding-bottom: 66%;
+		padding-bottom: 30%;
 	}
 
-	.sponsorship-grid .sponsorship .sponsorship-icon:hover {
-		opacity: 0.8;
+	.sponsorship-grid .sponsorship-featured .sponsorship-icon:after {
+		height: 6rem;
+		padding-bottom: 0;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-icon svg {
 		position: absolute;
 		top: 0;
 		left: 0;
-		right: 0;
 		bottom: 0;
-		height: 6em;
-		width: 6em;
-		margin: auto;
+		height: 4.5em;
+		width: 4.5em;
+		margin: auto 0;
 		max-width: 100%;
 		max-height: 100%;
+		filter: grayscale(1);
+		transition: filter 0.15s ease;
+	}
+
+	.sponsorship-grid .sponsorship:hover .sponsorship-icon svg,
+	.sponsorship-grid .sponsorship:focus-within .sponsorship-icon svg {
+		filter: grayscale(0);
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-title {
 		display: block;
-		padding: 0 1.5em;
 		text-decoration: none;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-title > h3 {
+		color: var(--color-foreground);
+		margin: 0.75rem 0 0.5rem;
+		font-size: 1rem;
+		line-height: 1.375;
 		font-weight: 500;
-		margin: 0;
 	}
 
-	@media (max-width: 48em) {
+	@media (min-width: 48rem) {
 		.sponsorship-grid .sponsorship .sponsorship-title > h3 {
-			font-size: 1.25em;
+			font-size: 1.125rem;
 		}
 	}
 
@@ -1897,7 +2370,8 @@ export const prerender = true;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-description {
-		padding: 0.5em 1.5em;
+		color: var(--color-muted-foreground);
+		padding: 0.5em 0;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-description > :last-child {
@@ -1906,12 +2380,11 @@ export const prerender = true;
 
 	.sponsorship-grid .sponsorship .sponsorship-links {
 		margin-top: auto;
-		padding-bottom: 1.125em;
 	}
 
 	.sponsorship-grid .sponsorship .sponsorship-links > a {
 		color: #0055dc;
-		padding: 0.375em 1.5em;
+		padding: 0.375em 0;
 		display: block;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -1923,5 +2396,61 @@ export const prerender = true;
 	.sponsorship-grid .sponsorship .sponsorship-links > a:hover {
 		background: #0055dc;
 		color: #fff;
+	}
+
+	.sponsorship-grid .sponsorship .sponsorship-links > a.sponsorship-link-site {
+		color: var(--color-muted-foreground);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: fit-content;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		text-underline-offset: 4px;
+		overflow: visible;
+	}
+
+	.sponsorship-grid
+		.sponsorship
+		.sponsorship-links
+		> a.sponsorship-link-site:hover {
+		background: transparent;
+		color: var(--color-muted-foreground);
+		text-decoration: underline;
+	}
+
+	.sponsorship-grid
+		.sponsorship
+		.sponsorship-links
+		> a.sponsorship-link-github {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		justify-content: center;
+		gap: 0.375rem;
+		height: 2.75rem;
+		padding: 0 0.75rem;
+		color: var(--color-muted-foreground);
+		transition: opacity 0.15s ease;
+	}
+
+	.sponsorship-grid
+		.sponsorship
+		.sponsorship-links
+		> a.sponsorship-link-github:hover {
+		background: transparent;
+		color: var(--color-muted-foreground);
+		opacity: 0.75;
+	}
+
+	.sponsorship-grid
+		.sponsorship
+		.sponsorship-links
+		> a.sponsorship-link-github:focus-visible {
+		outline: 2px solid var(--color-foreground);
+		outline-offset: 2px;
 	}
 </style>

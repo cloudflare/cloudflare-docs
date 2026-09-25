@@ -63,5 +63,10 @@
 		"deeplink": "/?to=/:account/r2/:bucket/settings",
 		"name": "Bucket settings",
 		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"deeplink": "/?to=/:account/r2/metrics",
+		"name": "R2 Metrics",
+		"parent": ["Storage & databases", "R2 object storage"]
 	}
 ]

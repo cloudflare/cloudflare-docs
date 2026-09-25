@@ -177,6 +177,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "runwayml",
+			"pricing": {
+				"default": 0.336
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-15 19:47:34",
 	"schema": {
@@ -185,14 +193,14 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the edit to apply to the input video",
 					"type": "string",
 					"minLength": 1,
-					"maxLength": 1000
+					"maxLength": 1000,
+					"description": "Text prompt describing the edit to apply to the input video"
 				},
 				"video_uri": {
-					"description": "HTTPS URL, Runway URI, or data URI of the source video to edit (\u226430 seconds)",
-					"type": "string"
+					"type": "string",
+					"description": "HTTPS URL, Runway URI, or data URI of the source video to edit (\u226430 seconds)"
 				},
 				"keyframes": {
 					"description": "Timed guidance images placed at specific points in the input video. Each entry has a uri and either seconds (absolute timestamp) or at (fractional position). Up to 5.",
@@ -205,14 +213,14 @@
 								"type": "object",
 								"properties": {
 									"uri": {
-										"description": "HTTPS URL, Runway URI, or data URI of the guidance image",
-										"type": "string"
+										"type": "string",
+										"description": "HTTPS URL, Runway URI, or data URI of the guidance image"
 									},
 									"seconds": {
-										"description": "Absolute timestamp in seconds from the start of the input video",
 										"type": "number",
 										"minimum": 0,
-										"maximum": 30
+										"maximum": 30,
+										"description": "Absolute timestamp in seconds from the start of the input video"
 									}
 								},
 								"required": [
@@ -225,14 +233,14 @@
 								"type": "object",
 								"properties": {
 									"uri": {
-										"description": "HTTPS URL, Runway URI, or data URI of the guidance image",
-										"type": "string"
+										"type": "string",
+										"description": "HTTPS URL, Runway URI, or data URI of the guidance image"
 									},
 									"at": {
-										"description": "Position as a fraction [0.0, 1.0] of the input video duration",
 										"type": "number",
 										"minimum": 0,
-										"maximum": 1
+										"maximum": 1,
+										"description": "Position as a fraction [0.0, 1.0] of the input video duration"
 									}
 								},
 								"required": [
@@ -253,11 +261,10 @@
 						"type": "object",
 						"properties": {
 							"uri": {
-								"description": "HTTPS URL, Runway URI, or data URI of the keyframe image",
-								"type": "string"
+								"type": "string",
+								"description": "HTTPS URL, Runway URI, or data URI of the keyframe image"
 							},
 							"position": {
-								"description": "Where in the output video this image applies: \"first\", \"last\", { type: \"timestamp\", timestampSeconds }, or { type: \"position\", positionPercentage }",
 								"anyOf": [
 									{
 										"type": "string",
@@ -274,9 +281,9 @@
 												"const": "timestamp"
 											},
 											"timestampSeconds": {
-												"description": "Absolute timestamp in seconds from the start of the output video",
 												"type": "number",
-												"minimum": 0
+												"minimum": 0,
+												"description": "Absolute timestamp in seconds from the start of the output video"
 											}
 										},
 										"required": [
@@ -293,10 +300,10 @@
 												"const": "position"
 											},
 											"positionPercentage": {
-												"description": "Position as a fraction [0.0, 1.0] of the total video duration",
 												"type": "number",
 												"minimum": 0,
-												"maximum": 1
+												"maximum": 1,
+												"description": "Position as a fraction [0.0, 1.0] of the total video duration"
 											}
 										},
 										"required": [
@@ -305,7 +312,8 @@
 										],
 										"additionalProperties": false
 									}
-								]
+								],
+								"description": "Where in the output video this image applies: \"first\", \"last\", { type: \"timestamp\", timestampSeconds }, or { type: \"position\", positionPercentage }"
 							}
 						},
 						"required": [
@@ -353,9 +361,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the edited video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the edited video"
 				}
 			},
 			"required": [

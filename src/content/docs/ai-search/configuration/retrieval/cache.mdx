@@ -72,7 +72,7 @@ Set `cache_ttl` when creating or updating an instance to control how long the in
 To clear all cached responses for an instance immediately, use the purge cache operation:
 
 ```sh
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/instances/$INSTANCE_NAME/purge_cache" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/ai-search/namespaces/default/instances/$INSTANCE_NAME/purge_cache" \
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 

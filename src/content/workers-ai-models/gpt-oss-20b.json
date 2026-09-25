@@ -31,6 +31,19 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "low",
+                    "medium",
+                    "high"
+                ],
+                "default_effort": "medium",
+                "mandatory": true,
+                "default_enabled": true
+            }
         }
     ],
     "id": "188a4e1e-253e-46d0-9616-0bf8c149763f",
@@ -442,12 +455,13 @@
                             "properties": {
                                 "effort": {
                                     "type": "string",
-                                    "description": "Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
                                     "enum": [
                                         "low",
                                         "medium",
                                         "high"
-                                    ]
+                                    ],
+                                    "description": "Reasoning effort. Supported levels: low, medium, high. Reasoning cannot be disabled.",
+                                    "default": "medium"
                                 },
                                 "summary": {
                                     "type": "string",
@@ -491,12 +505,13 @@
                                         "properties": {
                                             "effort": {
                                                 "type": "string",
-                                                "description": "Constrains effort on reasoning for reasoning models. Currently supported values are low, medium, and high. Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.",
                                                 "enum": [
                                                     "low",
                                                     "medium",
                                                     "high"
-                                                ]
+                                                ],
+                                                "description": "Reasoning effort. Supported levels: low, medium, high. Reasoning cannot be disabled.",
+                                                "default": "medium"
                                             },
                                             "summary": {
                                                 "type": "string",

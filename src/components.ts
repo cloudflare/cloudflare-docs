@@ -1,6 +1,15 @@
+// Reusable components barrel — import via `import { X } from "~/components"`.
+// Add a component here only when it is reused across many pages. One-off or
+// page-specific components (diagrams, product widgets) should be deep-imported
+// from their source path instead, e.g.
+// `import SomeDiagram from "~/components/cf/SomeDiagram.astro"`.
+// See .agents/references/style-guide.md for the full convention.
+
 export { Aside } from "./components/ui/aside";
 export { Card } from "./components/ui/card";
 export { CardGrid } from "./components/ui/card-grid";
+export { default as GuideCard } from "./components/GuideCard.astro";
+export { default as GuideCardGrid } from "./components/GuideCardGrid.astro";
 export { PackageManagers } from "./components/ui/package-managers";
 export { Step, Steps } from "./components/ui/steps";
 export { TabItem, Tabs } from "./components/ui/tabs";
@@ -12,6 +21,8 @@ export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
+export { default as CfCommand } from "./components/cf/CfCommand.astro";
+export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
 export { default as Description } from "./components/cf/Description.astro";
@@ -46,37 +57,13 @@ export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinitio
 export { default as WranglerCommand } from "./components/cf/WranglerCommand.astro";
 export { default as AnchorHeading } from "./components/cf/AnchorHeading.astro";
 export { default as PagesBuildPreset } from "./components/cf/PagesBuildPreset.astro";
-export { default as PagesBuildPresetsTable } from "./components/cf/PagesBuildPresetsTable.astro";
-export { default as ComponentsUsage } from "./components/cf/ComponentsUsage.astro";
-export { default as GranularControlApplicationsList } from "./components/cf/GranularControlApplicationsList.astro";
 export { default as ProductAvailabilityText } from "./components/cf/ProductAvailabilityText.astro";
 export { default as AvailableNotifications } from "./components/cf/AvailableNotifications.astro";
-export { default as ExtraFlagDetails } from "./components/cf/ExtraFlagDetails.astro";
-export { default as FourCardGrid } from "./components/cf/FourCardGrid.astro";
-export { default as ListCard } from "./components/cf/ListCard.astro";
 export { default as Stream } from "./components/cf/Stream.astro";
-export { default as PagesBuildEnvironment } from "./components/cf/PagesBuildEnvironment.astro";
-export { default as PagesBuildEnvironmentLanguages } from "./components/cf/PagesBuildEnvironmentLanguages.astro";
-export { default as PagesBuildEnvironmentTools } from "./components/cf/PagesBuildEnvironmentTools.astro";
 export { default as WARPReleases } from "./components/cf/WARPReleases.astro";
-export { default as WARPRelease } from "./components/cf/WARPRelease.astro";
-export { default as CompatibilityFlags } from "./components/cf/CompatibilityFlags.astro";
-export { default as AiSearchIndexingDiagram } from "./components/AiSearchIndexingDiagram.astro";
-export { default as AiSearchNamespacesDiagram } from "./components/AiSearchNamespacesDiagram.astro";
-export { default as AiSearchOverviewDiagram } from "./components/AiSearchOverviewDiagram.astro";
-export { default as AiSearchQueryingDiagram } from "./components/AiSearchQueryingDiagram.astro";
-export { default as AiSearchVoiceDiagram } from "./components/AiSearchVoiceDiagram.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
-export { default as WorkersArchitectureDiagram } from "./components/cf/WorkersArchitectureDiagram.astro";
-export { default as WorkersIsolateDiagram } from "./components/cf/WorkersIsolateDiagram.astro";
-export { default as AnimatedWorkflowDiagram } from "./components/cf/AnimatedWorkflowDiagram.astro";
-export { default as AgentsPlatformDiagram } from "./components/cf/AgentsPlatformDiagram.astro";
-export { default as R2LocalUploadsDiagram } from "./components/cf/R2LocalUploadsDiagram.astro";
-export { default as WorkersVPCEgressDiagram } from "./components/cf/WorkersVPCEgressDiagram.astro";
-export { default as WorkersVPCOverviewDiagram } from "./components/cf/WorkersVPCOverviewDiagram.astro";
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
-export { AgentPrimitivesDiagram } from "./components/react/diagram-showcase/AgentPrimitivesDiagram";
 export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
 export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
 export { ContainerConnectivity } from "./components/react/container/ContainerConnectivity";
@@ -84,3 +71,7 @@ export { ContainerIsolation } from "./components/react/container/ContainerIsolat
 export { ContainerRequestPath } from "./components/react/container/ContainerRequestPath";
 export { ContainerLifecycle } from "./components/react/container/ContainerLifecycle";
 export { ContainerPlacement } from "./components/react/container/ContainerPlacement";
+export { TunnelOutbound } from "./components/react/tunnel/TunnelOutbound";
+export { TunnelIdentity } from "./components/react/tunnel/TunnelIdentity";
+export { TunnelQuickNested } from "./components/react/tunnel/TunnelQuickNested";
+export { TunnelTraffic } from "./components/react/tunnel/TunnelTraffic";

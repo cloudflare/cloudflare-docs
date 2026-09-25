@@ -14,11 +14,11 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"@480p non-video input (per second)": 0.06,
+		"Default (per second)": 0.12,
 		"@480p video input (per second)": 0.132,
-		"@720p non-video input (per second)": 0.12,
 		"@720p video input (per second)": 0.286,
-		"Default (per second)": 0.12
+		"@480p non-video input (per second)": 0.06,
+		"@720p non-video input (per second)": 0.12
 	},
 	"examples": [
 		{
@@ -143,6 +143,18 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.12,
+				"480p_video_in": 0.132,
+				"720p_video_in": 0.286,
+				"480p_non_video_in": 0.06,
+				"720p_non_video_in": 0.12
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:04",
 	"schema": {
@@ -151,9 +163,9 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video to generate",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 2000,
+					"description": "Text prompt describing the video to generate"
 				},
 				"image": {
 					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
@@ -176,15 +188,15 @@
 					}
 				},
 				"duration": {
-					"description": "Video duration in seconds",
 					"default": 5,
+					"description": "Video duration in seconds",
 					"type": "integer",
 					"minimum": 4,
 					"maximum": 12
 				},
 				"resolution": {
-					"description": "Video resolution",
 					"default": "720p",
+					"description": "Video resolution",
 					"type": "string",
 					"enum": [
 						"480p",
@@ -192,8 +204,8 @@
 					]
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio. Ignored if an image is used.",
 					"default": "16:9",
+					"description": "Video aspect ratio. Ignored if an image is used.",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -206,14 +218,14 @@
 					]
 				},
 				"fps": {
-					"description": "Frame rate (frames per second)",
 					"default": 24,
+					"description": "Frame rate (frames per second)",
 					"type": "number",
 					"const": 24
 				},
 				"camera_fixed": {
-					"description": "Whether to fix camera position",
 					"default": false,
+					"description": "Whether to fix camera position",
 					"type": "boolean"
 				},
 				"generate_audio": {
@@ -221,8 +233,8 @@
 					"type": "boolean"
 				},
 				"watermark": {
-					"description": "Whether to add a watermark to the output video",
 					"default": false,
+					"description": "Whether to add a watermark to the output video",
 					"type": "boolean"
 				},
 				"seed": {
@@ -232,8 +244,8 @@
 					"maximum": 9007199254740991
 				},
 				"use_virtual_avatar": {
-					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
 					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
 					"type": "boolean"
 				}
 			},
@@ -254,9 +266,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

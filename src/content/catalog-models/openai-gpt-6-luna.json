@@ -1,0 +1,667 @@
+{
+	"model_id": "openai/gpt-6-luna",
+	"provider_id": "openai",
+	"name": "GPT-6 Luna",
+	"description": "GPT-6 Luna is OpenAI's most efficient GPT-6 model, built for focused, high-volume tasks.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Multimodal",
+		"Computer Use"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Short-context input (per 1M)": 0.1,
+		"Short-context cached input (per 1M)": 0.01,
+		"Short-context cache write (per 1M)": 0.125,
+		"Short-context output (per 1M)": 0.5,
+		"Long-context input (per 1M)": 0.2,
+		"Long-context cached input (per 1M)": 0.02,
+		"Long-context cache write (per 1M)": 0.25,
+		"Long-context output (per 1M)": 0.75
+	},
+	"examples": [
+		{
+			"name": "Operational Reasoning",
+			"description": "Use reasoning effort for a complex operational decision",
+			"input": {
+				"input": "A service has 99.9% monthly availability and just had 31 minutes of downtime. Has it exceeded the monthly error budget for a 30-day month? Show the calculation briefly.",
+				"max_output_tokens": 512,
+				"reasoning": {
+					"effort": "high"
+				}
+			},
+			"output": {
+				"text": "No. A 30-day month has 43,200 minutes, so a 99.9% availability target allows **43.2 minutes** of downtime.\n\n**31 minutes < 43.2 minutes** \u2014 the service is within its error budget, with **12.2 minutes** remaining."
+			},
+			"raw_response": {
+				"id": "resp_0834f111f7f68c6e006ab2cf91391887d1b9ed77f9003d8001",
+				"object": "response",
+				"created_at": 1790103441,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "daybreak_blue"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1790103442,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6-luna",
+				"moderation": null,
+				"output": [
+					{
+						"id": "rs_0834f111f7f68c6e006ab2cf91a3dc87d194f310e59b05b545",
+						"type": "reasoning",
+						"content": [],
+						"encrypted_content": "gAAAAABqss-TspJODH9IZcFL8SzWTp9z3qvEH482IoLj1OmrPlxluS5KGNZRrU1yGjrek9eQ7K6QzWND5RagCGsxWPN3ZK7lFfa8HWjztExHY-locYCrFDRWniTGdOmjF0dAUcm_5L5laGAhFa5qiRByPmSSapXvxyhbYx1Qs-_SjUxRF7rvxFIisGHm4XeHSuTMLUaVGk3okdDMWwxJDZrPjOk66JLwvZ_D8n345Iw6WG7L6iS30KsEhOuKVxkdkl0H_T_2fDaGxaJfOIr0WCSFjM62vvZNw6Gi9-zf8tzupmjORta_cLu9YDNSklYSNio-rUS-2RMlfJA1RvFQPKIx8347HtpYUYqHBNFRlNA-Az99fWBdGffyNtYL2vuItF4X0UJ1tDN_KtuFil7qLPJMGHTdXI7_-2YzNw9u-rmeeR9tnp3zbCertjlHMsTAcT0fbuLh_ob-GCDSg0pR8Ac5fsJv75nRqIMVixC_e7sL_5sGDAsJDi-24_nUAtU84zCPinglfdiYNvwBoEOgZQ-bYT8K3DZ-Z6dJaupCz_ncOtsFIvvEehM2JzcVdKkhUv6ilUst-J-RoMEzb3HzpKZE2Y6Ry3R-VDvLOda2HL-DrmbK4zW_o8X5-Yp5I-XXIomnt3yxMRYyH5WI66HkMQAFQtiP7ukmQEpI-_ItySu48cro2tpY3tBnRBJAvAU45yGDm9EhG6F_jThXyEav90yADc4GfJw82gZDzrnmQ0Oki8U0jEfPUipKztlsstiLw06Da5IF6cBxhOMiNq2TbB4j5o3bG48HSxAzwgu8xHHSR00_IWMEFO49l6lWpO9W0FWN9OdeaMKkRFQ8cGNIZCqDgYvkw3x0NlbOtjm_TqIQMRVM7vfsdujWSwb1iidy6BEYde7TVAmEg_D0jk7tq9JPIQIngvbxeWXpE2zmvEGrgDqD9y8d-dF2svsxMegzFpZjVowcWRPhJXcySYsMnPrIYqM8bCmXPhSXoBgmTqvWO8BCBJUPvRLPAkJSUU4JTI3GAsN4XAKVm-NaQghf4t5ofeZkIRx9sc1jkz1KfEZ_hH02_89s_A8u2GaiCREYGisKBd9ZuvtDu2WxzIsqud1YKqn9epw-ZC5zCkS0MfZW5rZGmBmu2K6Zia2swsBgs3mypZPh4ihYkkeuAxs_eX1nFtCW-tdYGFcCKVRBf3tvbA2XRgcfgNr9LH6kmbWSBM53kjxLI5L6hR-CDBJ9lWuWoal1R3GzWL9-uIbU4i4ailowQwcgQ2o8Lnnq_jZTs-yurDDyThIVKeo_ZkrmniqyReoVlwYZYRWKaKsSV6i95J-GosOjqM4BoVZGB0tvebNbEOz4tGzKPmoDFI6ckl4Jede1l3dYWAobbPgGab7pp4QgmerdWhiIyK2-kRrDsocrazxjIv0hEqOZha1jwN_cWqmfPTgfmv7jIHZ9Be0S8xrQdd11Qwwyik1OPyJlYte3Ru1IO6FDcCRNbAE3yFBE9pSU8kOKIg==",
+						"summary": []
+					},
+					{
+						"id": "msg_0834f111f7f68c6e006ab2cf925fd487d1b67ccd2ee1e2dfe5",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "No. A 30-day month has 43,200 minutes, so a 99.9% availability target allows **43.2 minutes** of downtime.\n\n**31 minutes < 43.2 minutes** \u2014 the service is within its error budget, with **12.2 minutes** remaining."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "high",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 44,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cached_tokens": 0
+					},
+					"output_tokens": 151,
+					"output_tokens_details": {
+						"reasoning_tokens": 84
+					},
+					"total_tokens": 195
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6-luna',\n  {\n    input:\n      'A service has 99.9% monthly availability and just had 31 minutes of downtime. Has it exceeded the monthly error budget for a 30-day month? Show the calculation briefly.',\n    max_output_tokens: 512,\n    reasoning: { effort: 'high' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6-luna\",\n  \"input\": \"A service has 99.9% monthly availability and just had 31 minutes of downtime. Has it exceeded the monthly error budget for a 30-day month? Show the calculation briefly.\",\n  \"max_output_tokens\": 512,\n  \"reasoning\": {\n    \"effort\": \"high\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Migration Safeguards",
+			"description": "Generate a concise answer through Chat Completions",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "List three practical safeguards for a production API migration."
+					}
+				],
+				"max_completion_tokens": 256
+			},
+			"output": {
+				"text": "1. **Preserve compatibility:** Version the API or support old and new contracts during the transition; document breaking changes and give clients a migration window.\n2. **Roll out gradually:** Test in staging, then use a canary or percentage-based rollout with monitoring for errors, latency, and client failures.\n3. **Plan validation and rollback:** Verify key workflows and data before and after cutover, keep backups or a reversible migration path, and define clear rollback triggers."
+			},
+			"raw_response": {
+				"id": "chatcmpl-EQzy7Or5tZ9ZdoXfjhVAYfwDEj28S",
+				"object": "chat.completion",
+				"created": 1790103443,
+				"model": "gpt-6-luna",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "1. **Preserve compatibility:** Version the API or support old and new contracts during the transition; document breaking changes and give clients a migration window.\n2. **Roll out gradually:** Test in staging, then use a canary or percentage-based rollout with monitoring for errors, latency, and client failures.\n3. **Plan validation and rollback:** Verify key workflows and data before and after cutover, keep backups or a reversible migration path, and define clear rollback triggers.",
+							"refusal": null,
+							"annotations": []
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 16,
+					"completion_tokens": 128,
+					"total_tokens": 144,
+					"prompt_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0,
+						"audio_tokens": 0
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 25,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					}
+				},
+				"service_tier": "default",
+				"system_fingerprint": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6-luna',\n  {\n    messages: [\n      { role: 'user', content: 'List three practical safeguards for a production API migration.' },\n    ],\n    max_completion_tokens: 256,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6-luna\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"List three practical safeguards for a production API migration.\"\n    }\n  ],\n  \"max_completion_tokens\": 256\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/models/gpt-6-luna",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-6-luna.png",
+	"metadata": {
+		"API": "Responses, Chat Completions",
+		"Architecture": "Transformer",
+		"Input modalities": "Text, image",
+		"Knowledge cutoff": "May 18, 2026"
+	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"long_context_threshold_tokens": 272000,
+				"short_context_input_tokens": 0.1,
+				"short_context_input_cached_tokens": 0.01,
+				"short_context_input_cache_creation_tokens": 0.125,
+				"short_context_output_tokens": 0.5,
+				"long_context_input_tokens": 0.2,
+				"long_context_input_cached_tokens": 0.02,
+				"long_context_input_cache_creation_tokens": 0.25,
+				"long_context_output_tokens": 0.75
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-23 21:02:44",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}

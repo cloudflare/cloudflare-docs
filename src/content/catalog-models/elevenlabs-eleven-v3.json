@@ -66,6 +66,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "elevenlabs",
+			"pricing": {
+				"input_characters": 0.0001
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-24 20:20:34",
 	"schema": {
@@ -74,15 +82,15 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to convert into speech.",
 					"type": "string",
 					"minLength": 1,
-					"maxLength": 10000
+					"maxLength": 10000,
+					"description": "The text to convert into speech."
 				},
 				"voice_id": {
-					"description": "The ElevenLabs voice ID to use for generation.",
 					"type": "string",
-					"minLength": 1
+					"minLength": 1,
+					"description": "The ElevenLabs voice ID to use for generation."
 				},
 				"output_format": {
 					"type": "string",
@@ -165,8 +173,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file.",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated audio file."
 				}
 			},
 			"required": [

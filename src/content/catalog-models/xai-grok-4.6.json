@@ -397,6 +397,19 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"under_200k_per_1m_input_tokens": 2,
+				"under_200k_per_1m_input_cached_tokens": 0.5,
+				"under_200k_per_1m_output_tokens": 6,
+				"over_200k_per_1m_input_tokens": 4,
+				"over_200k_per_1m_input_cached_tokens": 1,
+				"over_200k_per_1m_output_tokens": 12
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-12 17:59:07",
 	"schema": {

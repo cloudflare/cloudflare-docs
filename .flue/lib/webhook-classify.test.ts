@@ -56,6 +56,44 @@ describe("classifyWebhook — code review + spam filter", () => {
 	});
 });
 
+describe("classifyWebhook — changelog date check", () => {
+	it.each(["opened", "reopened", "synchronize", "ready_for_review", "closed"])(
+		"marks %s as a changelog date event",
+		(action) => {
+			const c = classifyWebhook("pull_request", {
+				action,
+				pull_request: { number: 40, user: { login: "octocat" } },
+			});
+			expect(c.isChangelogDateEvent).toBe(true);
+			expect(isActionable(c)).toBe(true);
+		},
+	);
+
+	it("ignores non-changelog-date PR actions", () => {
+		const c = classifyWebhook("pull_request", {
+			action: "labeled",
+			pull_request: { number: 41, user: { login: "octocat" } },
+		});
+		expect(c.isChangelogDateEvent).toBe(false);
+	});
+
+	it("excludes Dependabot PRs", () => {
+		const c = classifyWebhook("pull_request", {
+			action: "synchronize",
+			pull_request: { number: 42, user: { login: "dependabot[bot]" } },
+		});
+		expect(c.isChangelogDateEvent).toBe(false);
+	});
+
+	it("ignores issue events", () => {
+		const c = classifyWebhook("issues", {
+			action: "opened",
+			issue: { number: 43 },
+		});
+		expect(c.isChangelogDateEvent).toBe(false);
+	});
+});
+
 describe("classifyWebhook — Dependabot", () => {
 	it("routes a Dependabot PR to the dependabot review path", () => {
 		const c = classifyWebhook("pull_request", {
@@ -81,8 +119,8 @@ describe("classifyWebhook — slash commands", () => {
 	it.each([
 		["/review", "review"],
 		["/full-review", "full-review"],
-		["/ignore-review-limit", "ignore-review-limit"],
 		["/disable-auto-review", "disable-auto-review"],
+		["/draft-never-stale", "draft-never-stale"],
 		["/rebase", "rebase"],
 	])("recognizes %s", (body, expected) => {
 		const c = classifyWebhook("issue_comment", base(body));
@@ -102,6 +140,12 @@ describe("classifyWebhook — slash commands", () => {
 		const c = classifyWebhook("issue_comment", base("thanks!"));
 		expect(c.command).toBeNull();
 		expect(isActionable(c)).toBe(false);
+	});
+
+	it("ignores the removed review-limit command", () => {
+		expect(
+			classifyWebhook("issue_comment", base("/ignore-review-limit")).command,
+		).toBeNull();
 	});
 
 	it("ignores commands on issues (not PRs)", () => {

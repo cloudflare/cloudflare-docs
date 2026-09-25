@@ -144,7 +144,11 @@ const authorName = model.authorName;
 const requiresWorkersPaid =
 	model.properties.require_workers_paid === true ||
 	model.properties.require_workers_paid === "true";
-const hasReasoningEffortGuidance = model.name === "@cf/zai-org/glm-5.2";
+const hasGlm52ReasoningEffortGuidance = model.name === "@cf/zai-org/glm-5.2";
+const hasNemotronReasoningEffortGuidance =
+	model.name === "@cf/nvidia/nemotron-3-120b-a12b";
+const hasReasoningEffortGuidance =
+	hasGlm52ReasoningEffortGuidance || hasNemotronReasoningEffortGuidance;
 
 // `hasSchema`: input must have at least one key.
 const hasSchema = Object.keys(model.schema.input).length > 0;
@@ -345,7 +349,7 @@ const headings: MarkdownHeading[] = [
 
 	<ModelFeatures model={model} />
 
-	{hasReasoningEffortGuidance && (
+	{hasGlm52ReasoningEffortGuidance && (
 		<Fragment>
 			<AnchorHeading
 				depth={2}
@@ -373,6 +377,57 @@ const headings: MarkdownHeading[] = [
 				This is the same mapping used by Z.ai's API, and{" "}
 				<a href="https://docs.z.ai/api-reference/llm/chat-completion#body-one-of-0-reasoning-effort">
 					in their <code>reasoning_effort</code> documentation
+				</a>
+				.
+			</p>
+		</Fragment>
+	)}
+
+	{hasNemotronReasoningEffortGuidance && (
+		<Fragment>
+			<AnchorHeading
+				depth={2}
+				title="Reasoning effort"
+				slug="reasoning-effort"
+			/>
+			<p>
+				Nemotron supports normal reasoning, low reasoning, and reasoning turned
+				off. It does not currently select these modes from the top-level
+				<code>reasoning_effort</code> field. Pass the corresponding options
+				through <code>chat_template_kwargs</code> instead.
+			</p>
+			<p>
+				To use low reasoning, set both <code>enable_thinking</code> and
+				<code>low_effort</code>:
+			</p>
+			<Code
+				code={`response = client.chat.completions.create(
+    model="@cf/nvidia/nemotron-3-120b-a12b",
+    messages=[{"role": "user", "content": "What is the capital of Japan?"}],
+    max_tokens=16000,
+    temperature=1.0,
+    top_p=0.95,
+    extra_body={
+        "chat_template_kwargs": {
+            "enable_thinking": True,
+            "low_effort": True,
+        }
+    },
+)`}
+				lang="python"
+			/>
+			<p>
+				The low-effort option appends <code>{`{reasoning effort: low}`}</code>{" "}
+				to the latest user message. To turn reasoning off, set
+				<code>enable_thinking</code> to <code>False</code>. For coding agents,
+				set
+				<code>force_nonempty_content</code> to <code>True</code> in the same
+				<code>chat_template_kwargs</code> object.
+			</p>
+			<p>
+				For more information, refer to{" "}
+				<a href="https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8#api-client">
+					NVIDIA's Nemotron API client example
 				</a>
 				.
 			</p>

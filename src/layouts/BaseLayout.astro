@@ -16,6 +16,7 @@ import AgentDirective from "@/components/AgentDirective.astro";
 import Footer from "@/components/Footer.astro";
 import PageHead from "@/components/PageHead.astro";
 import type { PageMeta } from "@/components/PageHead.astro";
+import CliPreferenceRestore from "@/components/ui/cli-preference/CliPreferenceRestore.astro";
 import type { BasePageProps } from "@cloudflare/nimbus-docs/types";
 
 type Props = BasePageProps & {
@@ -122,6 +123,28 @@ const llmsUrl = Astro.site
 				window.__nbApplyTheme = applyTheme;
 			})();
 		</script>
+		<style is:inline>
+			[data-nb-cli-control]:not([data-nb-cli-ready]) [data-nb-cli-toggle] {
+				transition: none !important;
+			}
+
+			[data-nb-cli-preference-scope] [data-nb-cli-variant="cf"] {
+				display: none;
+			}
+
+			html[data-nb-cli-preference="cf"]
+				[data-nb-cli-preference-scope]
+				[data-nb-cli-variant="wrangler"] {
+				display: none;
+			}
+
+			html[data-nb-cli-preference="cf"]
+				[data-nb-cli-preference-scope]
+				[data-nb-cli-variant="cf"] {
+				display: block;
+			}
+		</style>
+		<CliPreferenceRestore />
 		<PageHead
 			title={title}
 			description={description}

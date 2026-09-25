@@ -628,6 +628,17 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "assemblyai",
+			"pricing": {
+				"input_audio_minutes": 0.0035,
+				"input_audio_minutes_speaker_diarization": 0.0003,
+				"input_audio_minutes_keyterms": 0.00083,
+				"input_audio_minutes_medical": 0.0025
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-25 14:29:37",
 	"schema": {

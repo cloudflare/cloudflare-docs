@@ -52,7 +52,7 @@ The first deploy can take several minutes while the image provisions.
 
 For production, use `wrangler deploy` so the package and image can update together.
 
-Non-production Workers Builds defaults to `wrangler versions upload`, which does not publish a new image. [Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for these Workers (they implement Durable Objects). Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
+Non-production Workers Builds defaults to `wrangler versions upload`, which does not publish a new image. [Version URLs](/workers/versions-and-deployments/version-urls/) are not generated for these Workers (they implement Durable Objects). Test with `wrangler dev`, or with a staging Worker or [environment](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) that runs `wrangler deploy`.
 
 More detail: [Before production](/containers/guides/deploy/#before-production).
 

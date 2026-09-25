@@ -13,8 +13,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 1.74,
-		"Cached input tokens (per 1M)": 0.145,
-		"Output tokens (per 1M)": 3.48
+		"Output tokens (per 1M)": 3.48,
+		"Cached input tokens (per 1M)": 0.145
 	},
 	"examples": [
 		{
@@ -10970,6 +10970,16 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "fireworks",
+			"pricing": {
+				"input_tokens": 1.74,
+				"output_tokens": 3.48,
+				"input_cached_tokens": 0.145
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-08 18:17:18",
 	"schema": {

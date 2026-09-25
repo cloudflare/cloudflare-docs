@@ -1,0 +1,24 @@
+---
+title: RFC 8509 root key trust anchor sentinel support
+description: 1.1.1.1 supports RFC 8509 root key trust anchor sentinels to help diagnose DNSSEC root key rollovers.
+date: 2026-09-24
+---
+
+1.1.1.1 now supports [RFC 8509](https://datatracker.ietf.org/doc/html/rfc8509) root key trust anchor sentinels. They let you check whether the responding resolver trusts a DNSSEC root key ahead of a key rollover.
+
+To check for KSK-2024 (key tag 38696), query DNSSEC-signed names in `dnstest.dev`:
+
+```sh
+# On a sentinel-aware resolver that trusts KSK-2024:
+
+# Returns NOERROR with an A answer.
+dig @1.1.1.1 root-key-sentinel-is-ta-38696.dnstest.dev. A +noall +comments +answer
+
+# Returns SERVFAIL without an answer.
+dig @1.1.1.1 root-key-sentinel-not-ta-38696.dnstest.dev. A +noall +comments +answer
+
+# CD bypasses sentinel processing and returns the original A answer.
+dig @1.1.1.1 root-key-sentinel-not-ta-38696.dnstest.dev. A +cdflag +noall +comments +answer
+```
+
+For background on DNSSEC validation, refer to [DNSKEY](/1.1.1.1/encryption/dnskey/).

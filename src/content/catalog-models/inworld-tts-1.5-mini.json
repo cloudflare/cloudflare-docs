@@ -140,6 +140,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "inworld",
+			"pricing": {
+				"input_characters": 0.000015
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:16",
 	"schema": {
@@ -148,13 +156,13 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to be synthesized into speech. Maximum input of 2,000 characters.",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 2000,
+					"description": "The text to be synthesized into speech. Maximum input of 2,000 characters."
 				},
 				"voice_id": {
-					"description": "The ID of the voice to use for synthesizing speech. Defaults to Dennis.",
 					"default": "Dennis",
+					"description": "The ID of the voice to use for synthesizing speech. Defaults to Dennis.",
 					"type": "string",
 					"enum": [
 						"Loretta",
@@ -255,8 +263,8 @@
 					]
 				},
 				"output_format": {
-					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
 					"default": "mp3",
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, and flac. Defaults to mp3.",
 					"type": "string",
 					"enum": [
 						"mp3",
@@ -284,15 +292,15 @@
 					"maximum": 1.5
 				},
 				"temperature": {
-					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
 					"default": 1,
+					"description": "Determines the degree of randomness when sampling audio tokens. Defaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values = more expressive, lower values = more deterministic.",
 					"type": "number",
 					"minimum": 0.01,
 					"maximum": 2
 				},
 				"timestamp_type": {
-					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
 					"default": "none",
+					"description": "Controls timestamp metadata returned with the audio. \"word\" returns word-level timing, \"character\" returns character-level timing. Note: adds latency. Defaults to none.",
 					"type": "string",
 					"enum": [
 						"none",
@@ -319,8 +327,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated audio file"
 				}
 			},
 			"required": [

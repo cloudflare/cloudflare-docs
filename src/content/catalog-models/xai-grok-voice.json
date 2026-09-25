@@ -70,6 +70,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"total_audio_minutes": 0.05,
+				"input_text_messages": 0.004
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-08 18:08:26",
 	"schema": {
@@ -89,8 +98,8 @@
 			"type": "object",
 			"properties": {
 				"url": {
-					"description": "WebSocket URL for the realtime connection (e.g., wss://...)",
-					"type": "string"
+					"type": "string",
+					"description": "WebSocket URL for the realtime connection (e.g., wss://...)"
 				},
 				"headers": {
 					"description": "Optional headers to include when establishing the WebSocket connection (e.g., Authorization)",
