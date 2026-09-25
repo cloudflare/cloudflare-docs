@@ -218,8 +218,8 @@ const reasoning = formatModelReasoning(
 								const label = line.slice(0, separator);
 								const cost = line.slice(separator + 2);
 								return (
-									<li class="m-0 flex justify-between gap-4">
-										<span class="text-muted-foreground">{label}</span>
+									<li class="border-border m-0 flex justify-between gap-4 border-b py-2 first:pt-0 last:border-b-0 last:pb-0">
+										<span>{label}</span>
 										<span class="shrink-0 text-right">{cost}</span>
 									</li>
 								);

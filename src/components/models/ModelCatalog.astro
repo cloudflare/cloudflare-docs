@@ -336,9 +336,9 @@ const facetMatchMaps = Object.fromEntries(
 							continue;
 						}
 						const pricingLine = document.createElement("div");
-						pricingLine.className = "flex justify-between gap-4";
+						pricingLine.className =
+							"border-border flex justify-between gap-4 border-b py-2 first:pt-0 last:border-b-0 last:pb-0";
 						const pricingLabel = document.createElement("span");
-						pricingLabel.className = "text-muted-foreground";
 						pricingLabel.textContent = line.slice(0, separator);
 						const pricingCost = document.createElement("span");
 						pricingCost.className = "shrink-0 text-right";
