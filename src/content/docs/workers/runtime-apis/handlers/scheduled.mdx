@@ -14,11 +14,17 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 :::note[Testing scheduled() handlers in local development]
 
-You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/local/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
+Use [Local Explorer](/workers/local-development/local-explorer/#test-cron-triggers) to invoke your `scheduled()` handler with a configured or ad hoc cron expression. You can choose the scheduled time and inspect the structured result.
+
+Cron Trigger testing requires Wrangler 4.139.0 or later, or Cloudflare Vite plugin 1.60.0 or later. Configure at least one Cron Trigger to select a configured expression. Ad hoc expressions do not require configuration.
+
+For scripted tests, send an HTTP request to `/cdn-cgi/local/scheduled`. Pass `?format=json` to return the structured scheduled handler result.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/local/scheduled?format=json"
 ```
+
+To target an exact Worker, use `POST /cdn-cgi/local/explorer/api/local/scheduled?worker=<WORKER_NAME>`. For request fields and an example, refer to [Test Cron Triggers locally](/workers/configuration/cron-triggers/#use-the-local-explorer-api).
 
 :::
 
