@@ -1,0 +1,57 @@
+---
+title: Changes in Sandbox SDK 1.0
+description: Sandbox SDK 1.0 moves the work of the 0.x Sandbox class into a Durable Object that you write, which decides lifetime, network access, and state.
+pcx_content_type: concept
+sidebar:
+  order: 2
+  label: Changes in 1.0
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { SandboxSdkVersions } from "~/components/react/sandbox/SandboxSdkVersions";
+
+In Sandbox SDK 0.x, the `Sandbox` class from the package is your Durable Object. It starts the container, keeps it running, and sends each call to a server inside the container. In 1.0, you write the Durable Object class, and it calls the container directly through `this.ctx.container`.
+
+<SandboxSdkVersions client:visible>
+
+In 0.x, the `Sandbox` class from the package starts the container, keeps it running, and manages previews and backups, and the container runs the SDK server and bash sessions from the `cloudflare/sandbox` image. In 1.0, your own Durable Object does the same jobs, and the container runs your image and your commands, plus the `sandbox-shim` helper when you use `Files`.
+
+</SandboxSdkVersions>
+
+Your class can call the platform directly because `this.ctx.container` does what the 0.x SDK server did. It runs commands, connects to ports, intercepts outbound requests, and saves snapshots. The package keeps only small helpers, such as the `Files` class.
+
+Decisions that depend on your application stay in your code: how long a sandbox runs, what it can reach, and what happens when a call fails. For example, a cancelled command may already have changed files, and only your application knows whether running it again is safe.
+
+## Where each 0.x feature goes
+
+Each 0.x feature moves to one of three places, depending on which part of 0.x did its work:
+
+- The `Sandbox` class handles lifetime, preview URLs, tunnels, backups, and process tracking. In 1.0, these become code in your Durable Object class, which keeps any records it needs in its own storage.
+- The SDK server runs commands, sessions, and file calls. In 1.0, these become `exec()` calls, or calls to the `Files` class, which runs the `sandbox-shim` helper through `exec()`.
+- Wrangler configuration and class properties set the image, Internet access, and outbound rules. In 1.0, these become options to `start()` and outbound handlers that your class registers.
+
+Some 0.x features have no equivalent. For each 0.x API and its replacement, refer to the [API map](/sandbox/sdk/migrate/api-map/).
+
+## Decisions your code makes
+
+A container has no Internet access unless `start()` passes `enableInternet: true`. To allow one destination, your class registers an outbound handler for its hostname. The handler can add a credential that the container never sees. For more information, refer to [Sandbox security](/sandbox/concepts/security/).
+
+No shell reads a command. `exec()` takes an array of arguments and starts that process, so text passed as an argument cannot start a second command. A shell runs only when you start one, such as `["sh", "-c", "npm ci && npm test"]`. Each call also sets its own `cwd` and `env`, because no session carries them from one call to the next.
+
+Your class decides how long a sandbox runs by setting the inactivity timeout on each request. A deploy does not replace running containers, so a new image applies only to containers that start later. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
+
+Your image provides every tool that your commands use. The 0.x image includes Python and Git, and `cloudflare/debian-trixie` includes neither. `Files` and `S3Mounts` also need the `sandbox-shim` helper in the image. For the `COPY` line, refer to [`@cloudflare/sandbox` requirements](/sandbox/reference/#requirements).
+
+The package writes nothing to Durable Object storage. A preview token, a process record, or a snapshot ID exists only if your class stores it. The keys that 0.x wrote stay in storage, and 1.0 code ignores them.
+
+The package also retries nothing and sets no time limits. To stop a command that runs too long, pass an `AbortSignal` to `exec()`.
+
+## Related resources
+
+- [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/)
+- [API map](/sandbox/sdk/migrate/api-map/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
+- [Sandbox security](/sandbox/concepts/security/)

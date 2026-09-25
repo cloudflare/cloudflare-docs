@@ -1,6 +1,6 @@
 "use client";
 
-// Sandbox SDK 0.12 and 1.0 side by side (How Sandbox SDK 1.0 differs page).
+// Sandbox SDK 0.12 and 1.0 side by side (Changes in Sandbox SDK 1.0 page).
 // Both columns list the same jobs: starting the container, keeping it
 // running, previews, and backups. In 0.12 the package's Sandbox class does
 // them and a server from the package's image runs commands. In 1.0 your own
