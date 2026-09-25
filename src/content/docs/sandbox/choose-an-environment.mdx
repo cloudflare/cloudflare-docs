@@ -12,7 +12,8 @@ products:
 reviewed: 2026-09-24
 ---
 
-import { CardGrid, Example, LinkTitleCard } from "~/components";
+import { CardGrid, LinkTitleCard } from "~/components";
+import { SandboxEnvironments } from "~/components/react/sandbox/SandboxEnvironments";
 
 Your application may need to run code it did not create. A test runner, build tool, or server may expect Linux, while a small task may need only APIs you provide. Cloudflare supports both kinds of work, and your [Worker](/workers/) chooses the environment for each job.
 
@@ -22,20 +23,11 @@ A [Container](/containers/) runs a Linux image you provide. A command can use th
 
 A [Dynamic Worker](/dynamic-workers/) receives the modules, methods, and values you pass to it. It does not inherit your application's bindings, credentials, or data. Set `globalOutbound` to `null` to block direct access to the Internet.
 
-```mermaid
-flowchart LR
-accTitle: What each sandbox environment contains
-accDescr: Credentials and policy stay in your Worker. The Worker starts a Container where a command uses a Linux userspace, or passes methods and data to generated JavaScript in a Dynamic Worker.
-	W["Your Worker<br/>credentials and policy"]
-	subgraph C["Container"]
-		X["Command"] -->|"uses"| L["Linux userspace<br/>runtimes, filesystem, processes"]
-	end
-	subgraph D["Dynamic Worker"]
-		J["Generated JavaScript"] -->|"calls"| G["Methods and data"]
-	end
-	W -->|"starts a Container and sends a command"| X
-	W -->|"passes"| G
-```
+<SandboxEnvironments client:visible>
+
+Your Worker keeps credentials and policy. It starts a Container, which runs a command in your Linux image and can use runtimes, packages, files, and processes. It also passes methods and values to a Dynamic Worker, which runs generated code and does not inherit your bindings, data, or credentials.
+
+</SandboxEnvironments>
 
 ## Run code that expects Linux
 
@@ -75,11 +67,7 @@ With a Dynamic Worker, you define each method and scope the data it returns. Whe
 
 Choose again when the job changes. The same Worker can start both environments.
 
-<Example title="A coding agent using both environments">
-
 A coding agent can answer questions about a repository through scoped methods in a Dynamic Worker. When the agent proposes a patch, its Worker can start a Container and run the repository test suite. The Container handles the Linux command while the Dynamic Worker handles work expressed through APIs.
-
-</Example>
 
 Use a Container when the code expects Linux. When methods and data provide everything a job needs, a Dynamic Worker starts faster and receives only what you pass. Your Worker coordinates both.
 
