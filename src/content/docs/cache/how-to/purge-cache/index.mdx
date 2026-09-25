@@ -16,9 +16,7 @@ Cloudflare's Instant Purge ensures that updates to your content are reflected im
 
 To purge cached content using the Cloudflare API, refer to [Purge Cached Content](/api/resources/cache/methods/purge/).
 
-To mark content stale instead of removing it, [invalidate cached content](/cache/guides/invalidate-cache/). Invalidation retains cached bodies for revalidation on the next request.
-
-Your cache settings determine whether Cloudflare can serve stale content.
+To mark content as stale instead of removing it, [invalidate cached content](/cache/guides/invalidate-cache/). Cloudflare revalidates invalidated content on the next request and reuses content that has not changed.
 
 :::note
 A successful purge request returns `HTTP 200`. This indicates that Cloudflare received the request — it does not confirm that Cloudflare cached the targeted content or evicted any content. To verify a purge, request the asset after purging and confirm that [`CF-Cache-Status`](/cache/concepts/cache-responses/) is no longer `HIT`.
@@ -29,6 +27,8 @@ If versioning is active on your zone and multiple environments are configured, y
 :::
 
 ## Availability and limits
+
+[Invalidation](/cache/guides/invalidate-cache/) requests count toward the same limits as purge requests.
 
 |  | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |

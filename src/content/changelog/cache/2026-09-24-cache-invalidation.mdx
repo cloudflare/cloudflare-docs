@@ -1,0 +1,29 @@
+---
+title: Invalidate cached content instead of purging it
+description: Mark cached content as stale so Cloudflare revalidates it with your origin and reuses content that has not changed.
+products:
+  - cache
+date: 2026-09-24
+---
+
+You can now invalidate cached content instead of purging it. Invalidation marks matching content as stale. On the next request, Cloudflare revalidates the content with your origin. If your origin responds with `304 Not Modified`, Cloudflare reuses the cached content instead of downloading it again.
+
+Use invalidation to refresh a group of assets when only some of them have changed. For example, invalidate all content that shares a cache tag. Cloudflare reuses unchanged assets instead of downloading them again.
+
+Invalidation supports the same selectors as purge: URLs, cache tags, hostnames, URL prefixes, and everything. To invalidate content, send a `POST` request to the new `invalidate_cache` endpoint:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/invalidate_cache" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"tags":["product-images"]}'
+```
+
+In the dashboard, use **Invalidate Cache** on the **Caching** > **Configuration** page.
+
+Invalidation requests count toward the same rate limits as purge requests. Your cache settings determine whether Cloudflare serves stale content while it revalidates. To stop serving cached content, purge it instead.
+
+Purge behavior for Cache Reserve also changes with this release. For details, refer to [Cache Reserve purge behavior](/cache/advanced-configuration/cache-reserve/#purge-behavior).
+
+For more information, refer to [Invalidate cached content](/cache/guides/invalidate-cache/).
