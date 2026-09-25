@@ -1,0 +1,193 @@
+---
+pcx_content_type: how-to
+title: Move from the default scheduling policy
+description: Replace a Container application that uses the default scheduling policy with a Durable Object-managed application.
+sidebar:
+  order: 1
+products:
+  - containers
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+You cannot change the scheduling policy of an existing Container application. To move from the `default` policy to the `durable_object` policy, create a replacement Container application and cut traffic over to it.
+
+The replacement application must use a new Durable Object class and namespace. The old and replacement applications cannot attach to the same Durable Object namespace.
+
+:::caution
+
+This process does not transfer existing Container instances, their filesystems, or Durable Object storage. The `default` scheduling policy does not support snapshots, so you cannot use a Container snapshot to transfer its filesystem.
+
+If the existing Durable Objects contain data, design an application-specific transfer process before continuing.
+
+:::
+
+## Configuration changes
+
+Map the existing application configuration to its `durable_object` equivalent:
+
+| `default` policy                                                           | `durable_object` policy                                                  |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `image`                                                                    | A named `images` entry, selected with `ctx.container.start()`            |
+| `image_build_context`                                                      | `build_context` on the named image                                       |
+| `image_vars`                                                               | `build_vars` on the named image                                          |
+| `instance_type`                                                            | The `instance` option in `ctx.container.start()`                         |
+| Application-wide image rollouts                                            | Application code that stops and starts each Container                    |
+| `observability`                                                            | Keep in Wrangler configuration, subject to `durable_object` restrictions |
+| `unsafe.configuration.experimental_flags`                                  | Keep in Wrangler configuration                                           |
+| `max_instances`, placement constraints, rollout settings, and SSH settings | Not supported on the replacement application                             |
+
+For the complete field compatibility list, refer to [Wrangler configuration](/workers/wrangler/configuration/#containers).
+
+## Move the application
+
+<Steps>
+
+1. **Create a replacement Durable Object class.**
+
+   Add a new SQLite-backed Durable Object class and binding. Keep the existing class and binding so that you can route traffic back to them.
+
+   Use the Durable Object lifecycle configuration already used by your Worker. If the Worker uses the legacy `migrations` array, append a migration with the replacement class in `new_sqlite_classes`. If it uses `exports`, declare the replacement class there. Do not switch between `migrations` and `exports` as part of this process.
+
+2. **Add a replacement Container application.**
+
+   Keep the existing application and add a differently named application with the `durable_object` policy. The following example uses the legacy `migrations` array:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+       "name": "sandbox-worker",
+       "main": "src/index.ts",
+       "compatibility_date": "$today",
+       "containers": [
+           {
+               "name": "sandbox-default",
+               "class_name": "LegacySandbox",
+               "scheduling_policy": "default",
+               "image": "./container/Dockerfile",
+               "instance_type": "standard-2",
+               "max_instances": 10,
+           },
+           {
+               "name": "sandbox-durable-object",
+               "class_name": "DurableSandbox",
+               "scheduling_policy": "durable_object",
+               "images": {
+                   "base": {
+                       "dockerfile": "./container/Dockerfile",
+                   },
+               },
+           },
+       ],
+       "durable_objects": {
+           "bindings": [
+               {
+                   "name": "LEGACY_SANDBOX",
+                   "class_name": "LegacySandbox",
+               },
+               {
+                   "name": "DURABLE_SANDBOX",
+                   "class_name": "DurableSandbox",
+               },
+           ],
+       },
+       "migrations": [
+           {
+               "tag": "v1",
+               "new_sqlite_classes": ["LegacySandbox"],
+           },
+           {
+               "tag": "v2",
+               "new_sqlite_classes": ["DurableSandbox"],
+           },
+       ],
+   }
+   ```
+
+   </WranglerConfig>
+
+3. **Move startup configuration into the replacement class.**
+
+   Select the image and instance size when the replacement Durable Object starts its Container:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   export class DurableSandbox extends DurableObject {
+       startContainer() {
+           if (this.ctx.container.running) {
+               return;
+           }
+
+           this.ctx.container.start({
+               image: this.ctx.container.images.base,
+               instance: "standard-2",
+           });
+       }
+   }
+   ```
+
+   </TypeScriptExample>
+
+   Move other supported startup settings, such as `env`, `entrypoint`, and `enableInternet`, into the same call. Add an application-specific readiness check before sending traffic to the Container.
+
+4. **Deploy and validate the replacement application.**
+
+   Deploy both applications:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   Start a replacement Container without changing production routing. Confirm that the image, instance size, environment, entrypoint, network access, and readiness behavior match the existing application.
+
+5. **Cut traffic over to the replacement namespace.**
+
+   Update the Worker routing logic to resolve Container IDs through the replacement Durable Object binding. New Durable Object IDs refer to the replacement namespace and do not access storage from the old namespace.
+
+   For example, you can use a feature flag to select the binding while keeping the same logical name:
+
+   ```ts
+   const binding = useReplacement
+       ? env.DURABLE_SANDBOX
+       : env.LEGACY_SANDBOX;
+   const sandbox = binding.getByName(sandboxName);
+   ```
+
+   If Durable Object state must move, complete the application-specific transfer before routing all traffic to the replacement namespace.
+
+6. **Observe the replacement application.**
+
+   Keep the old application, class, and binding during the observation period. To roll back, route traffic to the old Durable Object binding again.
+
+   Writes made after cutover stay in the replacement namespace. If the application accepts writes, plan how to reconcile that data before rolling back.
+
+7. **Delete the old Container application.**
+
+   After the rollback period, remove the old Container entry and routing code from the Worker configuration. Deploy the updated Worker. Keep the old Durable Object class and binding until you no longer need its stored data.
+
+   Removing the entry from Wrangler configuration does not delete the existing Container application. List the applications and copy the old application ID:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers list" />
+
+   Delete the old application:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers delete <OLD_APPLICATION_ID>" />
+
+   This command deletes the application and its Container instances.
+
+   Delete the old Durable Object class only when its stored data is no longer needed. Deleting a Durable Object class permanently deletes its namespace and stored data. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/) or [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/) for the applicable cleanup process.
+
+</Steps>
+
+## Related resources
+
+- [Scheduling Policies](/containers/configuration/scheduling-policy/)
+- [Image Management](/containers/guides/image-management/)
+- [Durable Object Container API](/durable-objects/api/container/)
