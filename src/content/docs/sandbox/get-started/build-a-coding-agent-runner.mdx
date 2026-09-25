@@ -145,12 +145,12 @@ You also need:
    			},
    		],
    	},
-   	"migrations": [
-   		{
-   			"new_sqlite_classes": ["AgentSandbox"],
-   			"tag": "v1",
+   	"exports": {
+   		"AgentSandbox": {
+   			"type": "durable-object",
+   			"storage": "sqlite",
    		},
-   	],
+   	},
    }
    ```
 
