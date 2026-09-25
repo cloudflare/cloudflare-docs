@@ -610,6 +610,9 @@ export { AgentSandbox } from "./sandbox";
 
 const sandboxName = /^[a-z0-9][a-z0-9-]{0,62}$/;
 
+// Linux rejects a command argument of 128 KiB or more, including its NUL byte.
+const maxPromptBytes = 128 * 1024 - 1;
+
 const RepositoryRequest = z.object({
 	url: z.url({ protocol: /^https$/, hostname: /^github\.com$/ }),
 	ref: z.string().min(1).optional(),
@@ -666,6 +669,12 @@ export default {
 					return new Response("Send a prompt", { status: 400 });
 				}
 
+				if (new TextEncoder().encode(prompt).byteLength > maxPromptBytes) {
+					return new Response("Send a prompt smaller than 128 KiB", {
+						status: 413,
+					});
+				}
+
 				if ((await sandbox.startTask(prompt)) === "busy") {
 					return new Response("A task is already running", { status: 409 });
 				}
@@ -703,7 +712,7 @@ export default {
 The Worker accepts only `https://github.com/` repository URLs, because the `Outbound` entrypoint blocks every other Git server. The routes are:
 
 - `POST /sandboxes/<NAME>/repository` clones a repository into the sandbox.
-- `POST /sandboxes/<NAME>/task` starts Claude Code with the request body as its prompt.
+- `POST /sandboxes/<NAME>/task` starts Claude Code with the request body as its prompt. The prompt becomes one argument of the `claude` command, so a prompt of 128 KiB or more gets a `413` response.
 - `GET /sandboxes/<NAME>/task` returns the task's state.
 - `GET /sandboxes/<NAME>/diff` returns the changes in the repository.
 
