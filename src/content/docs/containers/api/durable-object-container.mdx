@@ -15,7 +15,7 @@ Each [container](/containers/) is managed and proxied by a Durable Object. The D
 
 The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
 
-If your application uses the `Container` class or Sandbox SDK, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
+If your application uses the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 
 :::note
 We recommend starting new applications with the Durable Object Container API. If you prefer built-in lifecycle helpers, use the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers`. The class adds routing, readiness checks, lifecycle hooks, activity tracking, and scheduling. To compare both APIs, refer to [Containers APIs](/containers/api/).
@@ -33,13 +33,14 @@ import { DurableObject } from "cloudflare:workers";
 interface Env {}
 
 export class MyDurableObject extends DurableObject<Env> {
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		ctx.blockConcurrencyWhile(async () => {
-			if (!ctx.container!.running) {
-				ctx.container!.start();
-			}
-		});
+	start(): void {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("No container is configured for this Durable Object");
+		}
+		if (!container.running) {
+			container.start();
+		}
 	}
 }
 ```
@@ -286,19 +287,15 @@ callbacks to handle container status changes in your Workers code.
 
 ```ts
 class MyContainer extends DurableObject {
-	constructor(ctx, env) {
-		super(ctx, env);
-		function onContainerExit() {
-			console.log("Container exited");
-		}
-
-		// the "err" value can be customized by the destroy() method
-		async function onContainerError(err) {
-			console.log("Container errored", err);
-		}
-
-		this.ctx.container.start();
-		this.ctx.container.monitor().then(onContainerExit).catch(onContainerError);
+	startAndMonitor() {
+		const container = this.ctx.container;
+		container.start();
+		this.ctx.waitUntil(
+			container
+				.monitor()
+				.then(() => console.log("Container exited"))
+				.catch((error) => console.error("Container errored", error)),
+		);
 	}
 }
 ```

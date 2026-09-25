@@ -10,113 +10,24 @@ products:
   - containers
 ---
 
-import { TabItem, Tabs, TypeScriptExample } from "~/components";
+WebSocket requests are automatically forwarded to a container using the default `fetch`
+method on the `Container` class:
 
-Forward an incoming WebSocket upgrade request through the Durable Object to the listening port on the Container.
-
-For the direct API example, expose a `GET /health` endpoint on port 8080 that returns a successful response when the application is ready. Keep the WebSocket endpoint separate from the health check.
-
-<Tabs>
-	<TabItem label="Durable Object Container API">
-
-<TypeScriptExample filename="src/index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-interface Env {
-	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
-}
-
-export class MyContainer extends DurableObject<Env> {
-	private ready: Promise<void> | undefined;
-
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		ctx.blockConcurrencyWhile(() =>
-			ctx.container!.setInactivityTimeout(2 * 60 * 1000),
-		);
-	}
-
-	async fetch(request: Request): Promise<Response> {
-		const container = this.ctx.container!;
-		if (!container.running) {
-			this.ready = undefined;
-		}
-		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
-			this.ready = undefined;
-			throw error;
-		});
-		await this.ready;
-
-		const url = new URL(request.url);
-		url.protocol = "http:";
-		url.host = "container";
-		const forwarded = new Request(url, request);
-		forwarded.headers.delete("host");
-		return container.getTcpPort(8080).fetch(forwarded);
-	}
-
-	private async startAndWaitForPort(): Promise<void> {
-		const container = this.ctx.container!;
-		if (!container.running) {
-			container.start();
-		}
-
-		const port = container.getTcpPort(8080);
-		let lastError: unknown;
-		for (let attempt = 0; attempt < 100; attempt++) {
-			try {
-				const response = await port.fetch("http://container/health");
-				if (!response.ok) {
-					throw new Error(`Health check returned ${response.status}`);
-				}
-				return;
-			} catch (error) {
-				lastError = error;
-				await scheduler.wait(200);
-			}
-		}
-		throw new Error("Container did not become ready on port 8080", {
-			cause: lastError,
-		});
-	}
-}
-
-export default {
-	fetch(request: Request, env: Env): Promise<Response> {
-		return env.MY_CONTAINER.getByName("default").fetch(request);
-	},
-};
-```
-</TypeScriptExample>
-
-	</TabItem>
-	<TabItem label="Container class">
-
-<TypeScriptExample filename="src/index.ts">
-```ts
+```js
 import { Container, getContainer } from "@cloudflare/containers";
 
-interface Env {
-	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
-}
-
-export class MyContainer extends Container<Env> {
+export class MyContainer extends Container {
 	defaultPort = 8080;
 	sleepAfter = "2m";
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	async fetch(request, env) {
 		// gets default instance and forwards websocket from outside Worker
 		return getContainer(env.MY_CONTAINER).fetch(request);
 	},
 };
 ```
-</TypeScriptExample>
-
-	</TabItem>
-</Tabs>
 
 View a full example in the [Container class repository](https://github.com/cloudflare/containers/tree/main/examples/websocket).
 {/* TODO: Add more advanced examples - like kicking off a WS request then passing messages to container from the WS */}

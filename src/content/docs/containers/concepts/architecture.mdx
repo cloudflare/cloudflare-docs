@@ -40,7 +40,7 @@ flowchart LR
     end
 ```
 
-A Container can only be accessed through its Durable Object. A Worker sends a request to the Durable Object, which accesses the Container through `ctx.container`.
+A Container can only be accessed through its [Durable Object](/durable-objects/). A Worker sends a request to the Durable Object, which accesses the Container through `ctx.container`.
 
 An inactivity timeout, `signal()`, `destroy()`, a rollout, or a process exit can stop the instance. If startup fails or the process exits early, the instance returns to the stopped state.
 
@@ -120,7 +120,7 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-With the Durable Object Container API, call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to let the runtime stop an inactive container. You can also stop a container with [`signal()`](/containers/api/durable-object-container/#signal) or [`destroy()`](/containers/api/durable-object-container/#destroy).
+With the Durable Object Container API, call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to let the runtime stop the container after the Durable Object becomes inactive. The Durable Object becomes inactive when it stops receiving requests; the timeout can keep the container available while the Durable Object sleeps. You can also stop a container with [`signal()`](/containers/api/durable-object-container/#signal) or [`destroy()`](/containers/api/durable-object-container/#destroy).
 
 The `Container` class sets [`sleepAfter`](/containers/api/container-class/#sleepafter) to 10 minutes by default. Its [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) implementation calls [`stop()`](/containers/api/container-class/#stop). You can change the duration or override the hook.
 
