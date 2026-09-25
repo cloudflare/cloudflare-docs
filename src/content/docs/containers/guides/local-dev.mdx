@@ -67,11 +67,11 @@ you are using in your container code.
 
 ## Differences after you deploy
 
-Local containers run in Docker, so some code works locally and fails after you deploy.
+Local containers run in Docker. Deployed containers with `scheduling_policy: "durable_object"` differ from them in two ways, so some code works locally and fails after you deploy.
 
 ### The hostname is longer than a DNS label
 
-A deployed container's hostname is 64 characters, one more than a DNS label allows, and it does not resolve. Locally, the hostname is the 12-character Docker container ID. Code that looks up its own hostname can fail only after you deploy.
+In a deployed container with `scheduling_policy: "durable_object"`, the hostname is 64 characters, one more than a DNS label allows, and it does not resolve. Locally, the hostname is the 12-character Docker container ID. Code that looks up its own hostname can fail only after you deploy.
 
 For example, `python3 -m http.server` and other servers built on Python's `http.server` module, such as `wsgiref`, exit on startup with this error:
 
@@ -87,7 +87,7 @@ python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer((""
 
 ### Other Linux users keep root capabilities
 
-Locally, Docker gives a process that runs as another Linux user no capabilities, so file permissions apply to it. In a deployed container, every process has the same Linux capabilities as `root`, whatever its user. For more information, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
+Locally, Docker gives a process that runs as another Linux user no capabilities, so file permissions apply to it. In a deployed container with `scheduling_policy: "durable_object"`, every process has the same Linux capabilities as `root`, whatever its user. For more information, refer to the [`exec()` `user` option](/durable-objects/api/container/#exec).
 
 ## Troubleshooting
 
