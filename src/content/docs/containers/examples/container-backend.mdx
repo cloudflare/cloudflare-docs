@@ -10,7 +10,13 @@ products:
   - containers
 ---
 
-import { WranglerConfig, Details } from "~/components";
+import {
+	WranglerConfig,
+	Details,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+} from "~/components";
 
 A common pattern is to serve a static frontend application (e.g., React, Vue, Svelte) using Static Assets,
 then pass backend requests to a containerized backend application.
@@ -25,8 +31,9 @@ For a full example, see the [Static Frontend + Container Backend Template](https
 <WranglerConfig>
 ```json
 {
-  "name": "cron-container",
+  "name": "static-frontend-container-backend",
   "main": "src/index.ts",
+  "compatibility_date": "$today",
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
@@ -138,18 +145,113 @@ Your Worker needs to be able to both serve static assets and route requests to t
 In this case, we will pass requests to one of three container instances if the route starts with `/api`,
 and all other requests will be served as static assets.
 
-```javascript
+For the direct API example, expose `GET /health` on port 8080. Return a successful response only when the backend is ready.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const INSTANCE_COUNT = 3;
+
+interface Env {
+	ASSETS: Fetcher;
+	BACKEND: DurableObjectNamespace<Backend>;
+}
+
+export class Backend extends DurableObject<Env> {
+	private ready: Promise<void> | undefined;
+
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			this.ready = undefined;
+		}
+		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
+			this.ready = undefined;
+			throw error;
+		});
+		await this.ready;
+
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return container.getTcpPort(8080).fetch(forwarded);
+	}
+
+	private async startAndWaitForPort(): Promise<void> {
+		const container = this.ctx.container!;
+		await container.setInactivityTimeout(2 * 60 * 60 * 1000);
+		if (!container.running) {
+			container.start();
+		}
+		this.ctx.waitUntil(
+			container
+				.monitor()
+				.then(() => console.log("Backend container exited"))
+				.catch((error: unknown) =>
+					console.error("Backend container errored:", error),
+				),
+		);
+
+		const port = container.getTcpPort(8080);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 100; attempt++) {
+			try {
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(200);
+			}
+		}
+		throw new Error("Backend did not become ready on port 8080", {
+			cause: lastError,
+		});
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (new URL(request.url).pathname.startsWith("/api")) {
+			const index = Math.floor(Math.random() * INSTANCE_COUNT);
+			return env.BACKEND.getByName(`instance-${index}`).fetch(request);
+		}
+
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
 import { Container, getRandom } from "@cloudflare/containers";
 
 const INSTANCE_COUNT = 3;
 
-class Backend extends Container {
+interface Env {
+	ASSETS: Fetcher;
+	BACKEND: DurableObjectNamespace<Backend>;
+}
+
+export class Backend extends Container<Env> {
 	defaultPort = 8080; // pass requests to port 8080 in the container
 	sleepAfter = "2h"; // only sleep a container if it hasn't gotten requests in 2 hours
 }
 
 export default {
-	async fetch(request, env) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
 		if (url.pathname.startsWith("/api")) {
 			const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
@@ -160,10 +262,13 @@ export default {
 	},
 };
 ```
+</TypeScriptExample>
+
+	</TabItem>
+</Tabs>
 
 :::note
-This example uses `getRandom`, which randomly selects one of a fixed number of Container
-instances for each request.
+Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
 
 In the future, we will provide improved latency-aware load balancing and autoscaling.
 
@@ -188,7 +293,7 @@ import (
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r \*http.Request) {
+func handler(w http.ResponseWriter, r *http.Request) {
 	widgets := []map[string]interface{}{
 		{"id": 1, "name": "Widget A"},
 		{"id": 2, "name": "Sprocket B"},
@@ -202,10 +307,31 @@ func handler(w http.ResponseWriter, r \*http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
 	http.HandleFunc("/api/widgets", handler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
+```
+
+</Details>
+
+The health endpoint lets the Worker wait for the backend before forwarding requests. Build the backend image with this Dockerfile in the project root:
+
+<Details header="Dockerfile">
+
+```dockerfile
+FROM golang:1.25-alpine AS build
+WORKDIR /app
+COPY server.go .
+RUN CGO_ENABLED=0 go build -o /server server.go
+
+FROM alpine:3.20
+COPY --from=build /server /server
+EXPOSE 8080
+CMD ["/server"]
 ```
 
 </Details>
