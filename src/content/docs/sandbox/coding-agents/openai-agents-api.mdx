@@ -288,7 +288,7 @@ curl --fail-with-body \
   "$WORKER_URL/executors/$SESSION_ID"
 ```
 
-Deleting an OpenAI session does not send a webhook to the Worker. The Worker stops a container and clears its snapshot when it receives an `agent.session.failed` webhook, when a session lookup returns `404 Not Found`, or when you call the cleanup endpoint. An idle session that still exists keeps its snapshot for its next environment connection.
+Deleting an OpenAI session does not send a webhook to the Worker. The Worker stops a container and deletes its record of the container's snapshot when it receives an `agent.session.failed` webhook, when a session lookup returns `404 Not Found`, or when you call the cleanup endpoint. An idle session that still exists keeps its snapshot for its next environment connection.
 
 ## Session lifecycle
 
@@ -319,7 +319,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
 When a session goes idle, the Worker snapshots the container's filesystem before it stops the container. The next environment connection starts from that snapshot, so the files in `/workspace` come back. Running processes and memory do not. If the snapshot fails, the Worker leaves the container running and schedules another lifecycle check. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
-A snapshot lasts only as long as its session. Failed or deleted sessions and the cleanup endpoint clear it. With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with an empty `/workspace`. Keep files that must outlast a session somewhere else, such as an R2 bucket. For more information, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
+A session uses its snapshot only while the session lasts. Failed or deleted sessions and the cleanup endpoint delete the Worker's record of the snapshot, so the next session starts from the image. The Worker does not delete the snapshot itself. With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with an empty `/workspace`. Keep files that must outlast a session somewhere else, such as an R2 bucket. For more information, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
 
 ## Add tools to the container
 
