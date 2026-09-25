@@ -66,7 +66,7 @@ Check the following requirements before you invalidate content:
 
 - **Origin validators**: To reuse cached content, your origin must return an `ETag` or `Last-Modified` header and support conditional requests.
 - **API token**: For API requests, use a token with the **Cache Purge** permission for the zone.
-- **Rate limits**: Invalidation requests count toward the same [purge limits](/cache/how-to/purge-cache/#availability-and-limits) as purge requests.
+- **Rate limits**: Invalidation requests count toward the purge limits for your account. For details, refer to [Limits](#limits).
 
 ## Invalidate using the dashboard
 
@@ -169,6 +169,19 @@ curl --request POST \
 To find the environment ID, refer to [Purge zone versions via API](/cache/how-to/purge-cache/purge-zone-versions/). For production, use the zone-level endpoint.
 
 A request to invalidate everything in a non-production environment applies only to that environment. The same request to the zone-level endpoint applies to all environments.
+
+## Limits
+
+Invalidation requests count toward the same account-level [purge limits](/cache/how-to/purge-cache/#availability-and-limits) as purge requests. The limits that apply depend on how you select content:
+
+| Selector                                           | Limits that apply                                                                                                                        |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| URLs                                               | [Single-file purge limits](/cache/how-to/purge-cache/#single-file-purge-limits)                                                          |
+| Cache tags, hostnames, URL prefixes, or everything | [Hostname, tag, prefix URL, and purge everything limits](/cache/how-to/purge-cache/#hostname-tag-prefix-url-and-purge-everything-limits) |
+
+Purge and invalidation requests draw from the same limits. Heavy use of one reduces the capacity available for the other. Like purge limits, these limits apply per account and are shared by zones on the same plan.
+
+Each invalidation request can include the same maximum number of items as a purge request.
 
 ## Verify an invalidation
 
