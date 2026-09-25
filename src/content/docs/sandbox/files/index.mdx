@@ -15,6 +15,19 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Move files between your Worker and a Linux sandbox, keep files after its container stops with a snapshot or a backup in R2, and mount an R2 bucket in the sandbox.
+Move files between your Worker and a Linux sandbox, and keep files after the sandbox's Linux instance stops. Files on the instance's disk end with the instance. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#files-and-processes-end-with-the-instance).
 
 <DirectoryListing descriptions />
+
+## Choose how to keep files
+
+Each way to keep files saves something different and stores it in a different place:
+
+| Guide                                                                                     | What it keeps                                                         | Where the files go                          |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------------------------- |
+| [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/) | The writable root filesystem, when your application asks              | A Container snapshot                        |
+| [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/)              | The writable root filesystem, before the sandbox stops for inactivity | A Container snapshot                        |
+| [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/)                    | One directory, as a compressed archive                                | Your R2 bucket, restorable into any sandbox |
+| [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/)                                  | Files the code writes under the mount path                            | Your R2 bucket, while the code writes them  |
+
+Snapshots bring back the whole disk, including installed packages. A backup or a mount keeps only the files you choose, in a bucket you control. Container snapshots are in public beta.

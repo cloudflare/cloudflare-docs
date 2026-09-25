@@ -15,7 +15,9 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Add credentials in your Worker so the sandbox never holds them, and decide which services code in a sandbox can reach.
+Any process in a sandbox can read a token that the sandbox holds. Keep the token in your Worker instead, and give the sandbox only the access it needs. A Dynamic Worker calls a method that your Worker passes it, and the method adds the token. A Container sends its requests for a hostname you choose through your Worker, which adds the token to each one.
+
+A Container that starts with `enableInternet: false` reaches only the hostnames you intercept. A Dynamic Worker loaded with `globalOutbound: null` cannot make its own requests, and reaches your application only through the methods you pass.
 
 <DirectoryListing descriptions />
 

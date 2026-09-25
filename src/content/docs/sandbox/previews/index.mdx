@@ -15,6 +15,8 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Open a web server that runs in a Linux sandbox in your browser, on your Worker's hostname or on a hostname for each preview.
+A web server in a Linux sandbox has no public port. Your Worker forwards requests to it, so each request passes through code you control.
+
+Start with [Preview a web application](/sandbox/previews/preview-a-web-application/), which serves each preview under a path on your Worker's hostname. Before other people open previews, [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/), so code in one preview cannot use your application's cookies or another preview's storage.
 
 <DirectoryListing descriptions />

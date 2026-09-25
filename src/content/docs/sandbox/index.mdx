@@ -32,11 +32,13 @@ Start a sandbox and run untrusted or generated code
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run untrusted or generated code. The code cannot directly read your application's memory or data. Your Worker decides which application APIs and data the code receives and whether it can reach the public Internet. A Container also provides an isolated Linux filesystem and processes.
+A sandbox is an isolated place to run untrusted or generated code. The code cannot directly read your application's memory or data. Your Worker decides which application APIs and data the code receives and whether it can reach the public Internet.
 
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
 Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the application that already handles your traffic.
+
+If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/sandbox/sdk/), or move it to the current version with [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
 
 ---
 
@@ -68,7 +70,7 @@ const output = await process.output();
 
 [Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, Python, or WebAssembly. Compile TypeScript to JavaScript before loading it.
 
-That code cannot see your application's memory. It can access your application only through the methods and data you pass, and your Worker decides whether it can reach the Internet.
+The Workers runtime runs each Dynamic Worker apart from your Worker and from other Dynamic Workers. It reaches your application only through the methods and data you pass.
 
 Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it:
 
@@ -167,8 +169,8 @@ const result = await entrypoint.evaluate();
 	href="/sandbox/coding-agents/"
 	icon="laptop"
 >
-	Run coding agents such as Claude Code on a repository without giving the
-	sandbox your model credentials.
+	Run coding agents such as Claude Code, Codex, and Devin in a sandbox that
+	belongs to one task.
 </LinkTitleCard>
 
 </CardGrid>
@@ -199,8 +201,9 @@ Run models on Cloudflare, then execute the code they generate in a sandbox.
 
 ## More resources
 
-| Topic              | Links                                                                                                                                                                            |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Deploy and debug   | [Deploy Containers](/containers/guides/deploy/), [Local development](/containers/guides/local-dev/), [Logs](/workers/observability/logs/workers-logs/)                           |
-| Pricing and limits | [Containers pricing](/containers/platform/pricing/), [Container limits](/containers/platform/limits/), [Dynamic Workers pricing](/dynamic-workers/pricing/)                      |
-| Related            | [Code Mode](/agents/tools/codemode/), [Workers security model](/workers/reference/security-model/), [Sandbox SDK 0.x](/sandbox/sdk/) for existing `@cloudflare/sandbox` 0.x apps |
+| Topic              | Links                                                                                                                                                                 |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deploy and debug   | [Deploy Containers](/containers/guides/deploy/), [Local development](/containers/guides/local-dev/), [Logs](/workers/observability/logs/workers-logs/)                |
+| Reference          | [`@cloudflare/sandbox`](/sandbox/reference/), [Durable Object container API](/durable-objects/api/container/), [Dynamic Workers API](/dynamic-workers/api-reference/) |
+| Pricing and limits | [Containers pricing](/containers/platform/pricing/), [Container limits](/containers/platform/limits/), [Dynamic Workers pricing](/dynamic-workers/pricing/)           |
+| Related            | [Code Mode](/agents/tools/codemode/), [Workers security model](/workers/reference/security-model/)                                                                    |

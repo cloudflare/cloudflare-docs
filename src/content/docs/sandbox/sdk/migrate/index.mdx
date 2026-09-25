@@ -15,7 +15,7 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-`@cloudflare/sandbox` 0.12 gives you a `Sandbox` Durable Object class that owns the container and runs commands for you. In 1.0, your own Durable Object starts the container through `this.ctx.container` and runs commands with [`exec()`](/durable-objects/api/container/#exec). [`@cloudflare/sandbox`](/sandbox/reference/) 1.0 works with a container you start from a Durable Object. This guide uses its `Files` and `S3Mounts` classes where 0.12 had methods for files and bucket mounts.
+`@cloudflare/sandbox` 0.12 gives you a `Sandbox` Durable Object class that owns the container and runs commands for you. In 1.0, your own Durable Object starts the container through `this.ctx.container` and runs commands with [`exec()`](/durable-objects/api/container/#exec). This guide uses the `Files` and `S3Mounts` classes from [`@cloudflare/sandbox`](/sandbox/reference/) 1.0 where 0.12 had methods for files and bucket mounts.
 
 ## What changes
 

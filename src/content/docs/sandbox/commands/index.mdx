@@ -15,7 +15,7 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Run commands in a Linux sandbox from your Worker: Python code, a test suite, a command whose output streams to a browser, a process that keeps running after the request ends, or an interactive shell.
+Each guide starts from a Worker with a Durable Object that starts a container, and runs commands in the container with `exec()`. The guides differ in what happens to the output and how long the command runs.
 
 <DirectoryListing descriptions />
 

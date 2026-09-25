@@ -20,7 +20,18 @@ A coding agent reads a repository, edits files, and runs commands until its task
 
 ## The agent runs in your sandbox
 
-When the agent runs inside the sandbox, as Claude Code, Codex, OpenCode, and Pi do, your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach. The pages for these four agents start from the runner that [Build a coding agent runner](/sandbox/tutorials/build-a-coding-agent-runner/) builds, and replace the parts that are specific to the agent.
+When the agent runs inside the sandbox, as Claude Code, Codex, OpenCode, and Pi do, your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach.
+
+The guides for these four agents change the parts of one runner that are specific to the agent. Build the runner first:
+
+<LinkTitleCard
+	title="Build a coding agent runner"
+	href="/sandbox/tutorials/build-a-coding-agent-runner/"
+	icon="rocket"
+	description="Build a Worker that runs Claude Code on a GitHub repository in a sandbox and returns its changes as a diff."
+/>
+
+Then switch the runner to another agent:
 
 <CardGrid>
 	<LinkTitleCard
