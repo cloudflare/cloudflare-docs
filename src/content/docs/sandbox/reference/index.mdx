@@ -87,12 +87,12 @@ The Wrangler configuration sets `nodejs_compat`, builds the `Dockerfile` as the 
 			},
 		],
 	},
-	"migrations": [
-		{
-			"new_sqlite_classes": ["MyContainer"],
-			"tag": "v1",
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
