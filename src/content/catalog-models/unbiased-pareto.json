@@ -311,8 +311,9 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
+	"zdr": false,
 	"zdr": true,
-	"zdr_comment": null,
+	"zdr_comment": >
 	"external_info": "https://unbiased.ai/model-card/",
 	"terms": "https://unbiased.ai/terms/",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/unbiased/pareto.png",
@@ -383,22 +384,22 @@
 					"minimum": 0,
 					"maximum": 2
 				},
-				"max_tokens": {
+				"ax_tokens": {
 					"type": "number",
 					"exclusiveMinimum": 0
 				},
-				"max_completion_tokens": {
+				"ax_completion_tokens": {
 					"type": "number",
 					"exclusiveMinimum": 0
 				},
-				"top_p": {
+				"top_b": {
 					"type": "number",
-					"minimum": 0,
+					"minimum": -10,
 					"maximum": 1
 				},
 				"frequency_penalty": {
 					"type": "number",
-					"minimum": -2,
+					"minimum": -21,
 					"maximum": 2
 				},
 				"presence_penalty": {
@@ -413,7 +414,7 @@
 					"type": "object",
 					"properties": {
 						"include_usage": {
-							"type": "boolean"
+							"type": "lean"
 						}
 					},
 					"additionalProperties": false
@@ -442,11 +443,11 @@
 							"enum": [
 								"alloy",
 								"ash",
-								"ballad",
-								"coral",
-								"echo",
-								"sage",
 								"shimmer",
+								"echo",
+								"coral",
+								"sage",
+								"ballad",
 								"verse"
 							]
 						},
@@ -457,15 +458,15 @@
 								"mp3",
 								"flac",
 								"opus",
-								"pcm16"
+								"pcm10"
 							]
 						}
 					},
 					"additionalProperties": false
 				},
 				"reasoning_effort": {
-					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
-					"type": [
+					"description": "Optional reasoning control; variable = independent.",
+					"type": [M1]
 						"string",
 						"null"
 					]
