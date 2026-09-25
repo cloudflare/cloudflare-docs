@@ -55,12 +55,16 @@ RUN mkdir /workspace
 CMD ["sleep", "infinity"]
 ```
 
-The Wrangler configuration sets `nodejs_compat` and builds the `Dockerfile` as the image named `workspace`:
+The Wrangler configuration sets `nodejs_compat`, builds the `Dockerfile` as the image named `workspace`, and declares `MyContainer` as a Durable Object class:
 
 <WranglerConfig>
 
 ```jsonc
 {
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "sandbox-files",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"containers": [
 		{
@@ -71,6 +75,20 @@ The Wrangler configuration sets `nodejs_compat` and builds the `Dockerfile` as t
 					"dockerfile": "./Dockerfile",
 				},
 			},
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "MyContainer",
+				"name": "MY_CONTAINER",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["MyContainer"],
+			"tag": "v1",
 		},
 	],
 }

@@ -67,11 +67,11 @@ new Files(container: Pick<Container, "exec">)
 
 Every method accepts `FileOperationOptions`:
 
-| Option   | Type          | Description                                                                                                                                                                                                                                                                                                          |
-| -------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cwd`    | `string`      | Absolute directory that resolves a relative path. For `rename()`, it resolves both paths.                                                                                                                                                                                                                            |
-| `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user.                                                                                                                                                                           |
-| `signal` | `AbortSignal` | Cancels the operation, and kills its helper process if the operation is still running. A signal that fires after the operation finishes, such as `AbortSignal.timeout()`, has no effect. An aborted signal rejects the call with `AbortError`. Cancellation can leave the partial effects described for each method. |
+| Option   | Type          | Description                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cwd`    | `string`      | Absolute directory that resolves a relative path. For `rename()`, it resolves both paths.                                                                                                                                                                                                                                                                                                                                             |
+| `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user.                                                                                                                                                                                                                                                                                            |
+| `signal` | `AbortSignal` | Cancels the operation, and kills its helper process if the operation is still running. A signal that fires after the operation finishes, such as `AbortSignal.timeout()`, has no effect. An aborted signal rejects the call with the abort reason: an `AbortError` when `abort()` is called without a reason, or a `TimeoutError` from `AbortSignal.timeout()`. Cancellation can leave the partial effects described for each method. |
 
 :::caution
 Pass both IDs in `user`. A user ID without a group ID runs the helper as `root`. A user or group name rejects with an internal error.
@@ -301,7 +301,7 @@ Use `SandboxProtocolError.is(error)` to recognize the error.
 | The container is not running                 | `Error` from `exec()`                                          |
 | The image does not contain the helper binary | `Error` from `exec()` that names `/usr/local/bin/sandbox-shim` |
 | `cwd` does not exist                         | The same `Error` as a missing helper binary                    |
-| `signal` is aborted                          | `AbortError`                                                   |
+| `signal` is aborted                          | The abort reason                                               |
 | The `content` stream of `writeFile()` errors | The stream's error                                             |
 
 ## Related resources

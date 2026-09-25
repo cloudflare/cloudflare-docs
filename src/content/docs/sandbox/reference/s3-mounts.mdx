@@ -212,13 +212,13 @@ A mounted directory maps files to objects in the bucket. It does not behave like
 
 A mount operation failed.
 
-| Field       | Type                    | Description                                          |
-| ----------- | ----------------------- | ---------------------------------------------------- |
-| `name`      | `"SandboxS3MountError"` | Error name                                           |
-| `code`      | `string`                | Error code                                           |
-| `operation` | `string`                | Method that failed: `mount`, `inspect`, or `unmount` |
-| `path`      | `string`                | Path passed to the method                            |
-| `detail`    | `string`                | Error description from the helper                    |
+| Field       | Type                      | Description                                          |
+| ----------- | ------------------------- | ---------------------------------------------------- |
+| `name`      | `"SandboxS3MountError"`   | Error name                                           |
+| `code`      | `SandboxS3MountErrorCode` | One of the codes below                               |
+| `operation` | `S3MountOperation`        | Method that failed: `mount`, `inspect`, or `unmount` |
+| `path`      | `string`                  | Path passed to the method                            |
+| `detail`    | `string`                  | Error description from the helper                    |
 
 | Code                    | Meaning                                                               |
 | ----------------------- | --------------------------------------------------------------------- |
@@ -226,6 +226,8 @@ A mount operation failed.
 | `S3_MOUNT_BUSY`         | A process is using the path                                           |
 | `S3_MOUNT_FAILED`       | `s3fs`, FUSE, or another step of the operation failed                 |
 | `S3_MOUNT_INCOMPATIBLE` | The path has state from an unsupported version                        |
+
+The package exports the `SandboxS3MountErrorCode` and `S3MountOperation` types, which list these codes and methods.
 
 `SandboxS3MountError` is not a class. Use `SandboxS3MountError.is(error)` instead of `instanceof`. It recognizes errors thrown in the same Worker and errors returned through Durable Object RPC.
 
