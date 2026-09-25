@@ -19,8 +19,15 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+import { PreviewHostname } from "~/components/react/sandbox/PreviewHostname";
 
 Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser. On its own hostname, that code runs in a separate origin, so it cannot read your application's pages or the storage of another preview. Paths also reach the server unchanged, so applications do not need a base path.
+
+<PreviewHostname>
+
+In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route `*.example-previews.com/*` send the request to your Worker. Your Worker reads the sandbox name `ada` and calls `getByName("ada")`, and a name that is not a valid DNS label gets a `404`. The path `/app/` reaches the web server in the container unchanged, with the preview hostname in the `Host` header.
+
+</PreviewHostname>
 
 ## Prerequisites
 
