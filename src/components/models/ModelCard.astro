@@ -137,10 +137,12 @@ const pricing = formatModelPricing(model.pricing);
 		<p class="text-muted-foreground line-clamp-4 h-24 min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
 			{model.description}
 		</p>
-
-		<ModelBadges model={model} />
 	</a>
-	<div class="pointer-events-none z-20 flex items-center justify-between gap-3 pr-3 pb-3 pl-5">
+	<div
+		data-model-card-footer
+		class="pointer-events-none z-20 flex items-center justify-between gap-3 pr-3 pb-3 pl-5"
+	>
+		<ModelBadges model={model} maxVisible={1} />
 		<button
 			type="button"
 			data-model-compare

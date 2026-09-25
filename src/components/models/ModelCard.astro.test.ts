@@ -20,10 +20,13 @@ const model: ModelCardData = {
 	description:
 		"A deliberately long model description that exceeds four lines and must be clipped before it overlaps the model facts and comparison control.",
 	tags: [],
-	capabilities: [],
+	capabilities: ["Function calling", "Reasoning"],
 	beta: true,
-	properties: {},
-	propertiesList: [],
+	properties: { function_calling: "true", reasoning: "true" },
+	propertiesList: [
+		{ property_id: "function_calling", value: "true" },
+		{ property_id: "reasoning", value: "true" },
+	],
 };
 
 const truncationClasses = (className: string | undefined): string[] =>
@@ -46,7 +49,7 @@ describe("ModelCard", () => {
 		const title = root.querySelector("h3");
 		const titleRow = title?.parentNode;
 		const description = root.querySelector("a > p");
-		const compareRow = root.querySelector("[data-model-compare]")?.parentNode;
+		const compareRow = root.querySelector("[data-model-card-footer]");
 		const descriptionClasses =
 			description?.getAttribute("class")?.split(/\s+/) ?? [];
 
@@ -66,6 +69,14 @@ describe("ModelCard", () => {
 		expect(link?.getAttribute("class")).toContain("flex-1");
 		expect(link?.getAttribute("class")).not.toContain("pb-16");
 		expect(compareRow?.getAttribute("class")).not.toContain("absolute");
-		expect(compareRow?.textContent.trim()).toBe("Compare");
+		expect(compareRow?.textContent).toContain("Third-party");
+		expect(compareRow?.textContent).toContain("+2");
+		expect(compareRow?.textContent).toContain("Compare");
+		expect(
+			compareRow?.querySelector('[title="Function calling, Reasoning"]'),
+		).not.toBeNull();
+		expect(compareRow?.textContent).not.toContain("Context:");
+		expect(compareRow?.textContent).not.toContain("Maximum output:");
+		expect(compareRow?.textContent).not.toContain("Pricing listed");
 	});
 });

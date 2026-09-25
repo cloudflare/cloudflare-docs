@@ -10,9 +10,10 @@ import { CAPABILITY_PROPERTIES, type ModelCardData } from "~/util/models";
 
 interface Props {
 	model: ModelCardData;
+	maxVisible?: number;
 }
 
-const { model } = Astro.props;
+const { model, maxVisible } = Astro.props;
 
 type BadgeDef = {
 	variant: "default" | "caution" | "danger";
@@ -53,10 +54,14 @@ for (const { property_id, value } of model.propertiesList) {
 }
 
 const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
+const visibleBadges =
+	maxVisible === undefined ? badges : badges.slice(0, maxVisible);
+const remainingBadges =
+	maxVisible === undefined ? [] : badges.slice(maxVisible);
 ---
 
-<ul class="m-0 flex list-none flex-wrap items-center gap-x-1.5 p-0">
-	{badges.map((badge) => (
+<ul class="pointer-events-auto m-0 flex list-none flex-wrap items-center gap-x-1.5 p-0">
+	{visibleBadges.map((badge) => (
 		<li class="m-0">
 			<Badge
 				text={badge.text}
@@ -66,4 +71,14 @@ const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
 			/>
 		</li>
 	))}
+	{remainingBadges.length > 0 && (
+		<li class="m-0">
+			<Badge
+				text={`+${remainingBadges.length}`}
+				variant="default"
+				size="small"
+				title={remainingBadges.map((badge) => badge.text).join(", ")}
+			/>
+		</li>
+	)}
 </ul>
