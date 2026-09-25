@@ -353,7 +353,7 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
   :::caution
 	If the tunnel is to an Azure VPN gateway, the tunnel interface address must not be in the link-local range. Azure will not initiate BGP sessions to peers using link-local addresses. Use an RFC 1918 address for your tunnel interface address instead.
   :::
-- Hold time must be greater than 0 seconds (BGP `KEEPALIVE` messages are required). Cloudflare recommends at least 45 seconds. Cloudflare advertises a hold time of 90 seconds for GRE/IPsec tunnels. If you set a value greater than 90 seconds, the negotiated hold time will be 90 seconds, according to the standard way BGP has of negotiating hold times.
+- Hold time must be 30 seconds or greater. Cloudflare recommends at least 90 seconds. Cloudflare advertises a hold time of 240 seconds, so if you set a value greater than 240 seconds, the negotiated hold time will be 240 seconds.
 - Connect retry time should be low (for example, five or 10 seconds).
 - Your CPE may advertise up to 5,000 prefixes on one BGP session.
 - MD5 authentication is optional. You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
