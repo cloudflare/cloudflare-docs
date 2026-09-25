@@ -10,6 +10,7 @@ import type {
 	SidebarTransform,
 } from "@cloudflare/nimbus-docs/types";
 import { getDirectoryEntryBySection } from "~/util/directory";
+import { EXTERNAL_LINK_ARROW } from "./external-link-arrow";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,
@@ -86,8 +87,6 @@ export function getCfRouteNavigation(
 		resolveLabel: breadcrumbLabelResolver,
 	});
 }
-
-const EXTERNAL_LINK_ARROW = " \u2197";
 
 // Append the external-link arrow, unless already present.
 function appendExternalArrow(label: string): string {

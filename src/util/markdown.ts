@@ -15,7 +15,7 @@ import { markdownToHtml } from "satteri";
 import { NodeType, parse } from "node-html-parser";
 import type { HTMLElement, Node, TextNode } from "node-html-parser";
 import he from "he";
-import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
+import { stripExternalLinkArrow } from "./external-link-arrow";
 
 const FRAGMENT_FEATURES = {
 	smartPunctuation: false,
@@ -126,10 +126,10 @@ const PHRASING_TAGS = new Set([
 export function stripMarkdownToText(source: string): string {
 	const dom = parse(renderMarkdown(source));
 
-	return dom.childNodes
-		.map((node) => he.decode(node.innerText))
-		.filter((text) => text.trim().length > 0)
-		.join("\n\n")
-		.replaceAll(EXTERNAL_LINK_ARROW, "")
-		.trim();
+	return stripExternalLinkArrow(
+		dom.childNodes
+			.map((node) => he.decode(node.innerText))
+			.filter((text) => text.trim().length > 0)
+			.join("\n\n"),
+	).trim();
 }
