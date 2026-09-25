@@ -31,7 +31,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
 ## Prerequisites
 
-- A Durable Object whose `fetch()` handler forwards requests to a web server in its container. To build one, refer to [Preview a web application](/sandbox/previews/preview-a-web-application/).
+- A Durable Object whose `fetch()` handler forwards requests to a web server in its container. To build one, refer to [Preview a web application](/sandbox/previews/).
 - A domain for previews on Cloudflare, such as `example-previews.com`, with Cloudflare managing its DNS. Use a domain that your application does not use.
 
 ## Route preview hostnames to your Worker
@@ -143,7 +143,7 @@ Code in one preview can set a cookie with `Domain=example-previews.com`, and eve
 
 ## Related resources
 
-- [Preview a web application](/sandbox/previews/preview-a-web-application/)
+- [Preview a web application](/sandbox/previews/)
 - [Preview workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/preview-workspace): a deployable Worker that runs a Vite development server on each sandbox's own hostname.
 - [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk)
 - [Routes](/workers/configuration/routing/routes/)

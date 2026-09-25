@@ -60,8 +60,14 @@ const process = await container.exec(["uname", "-a"]);
 const output = await process.output();
 ```
 
-<LinkButton variant="primary" href="/sandbox/get-started/containers/">
+<LinkButton variant="primary" href="/sandbox/get-started/">
 	Run a Linux command
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="/sandbox/get-started/build-a-coding-agent-runner/"
+>
+	Build a coding agent runner
 </LinkButton>
 
 ---
@@ -88,20 +94,22 @@ const result = await entrypoint.evaluate();
 <LinkButton variant="primary" href="/sandbox/get-started/dynamic-workers/">
 	Run JavaScript
 </LinkButton>
+<LinkButton
+	variant="secondary"
+	href="/sandbox/get-started/build-an-ai-code-interpreter/"
+>
+	Build an AI code interpreter
+</LinkButton>
 
 ---
 
-## Learn
+## Concepts
 
 <CardGrid>
 
-<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="rocket">
-	Build complete applications that run untrusted code in sandboxes.
-</LinkTitleCard>
-
 <LinkTitleCard
 	title="Choose a sandbox environment"
-	href="/sandbox/concepts/choose-an-environment/"
+	href="/sandbox/concepts/"
 	icon="seti:info"
 >
 	Decide whether each job needs a Linux environment or only APIs you pass in.

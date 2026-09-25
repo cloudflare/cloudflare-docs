@@ -716,6 +716,7 @@
 /sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
 /sandbox/guides/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
 /sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
+/sandbox/tutorials/ /sandbox/sdk/tutorials/ 301
 /sandbox/concepts/architecture/ /sandbox/sdk/concepts/architecture/ 301
 /sandbox/concepts/backup-restore/ /sandbox/sdk/concepts/backup-restore/ 301
 /sandbox/concepts/containers/ /sandbox/sdk/concepts/containers/ 301
@@ -726,8 +727,8 @@
 /sandbox/tutorials/ai-code-executor/ /sandbox/sdk/tutorials/ai-code-executor/ 301
 /sandbox/tutorials/analyze-data-with-ai/ /sandbox/sdk/tutorials/analyze-data-with-ai/ 301
 /sandbox/tutorials/automated-testing-pipeline/ /sandbox/sdk/tutorials/automated-testing-pipeline/ 301
-/sandbox/tutorials/claude-code/ /sandbox/tutorials/build-a-coding-agent-runner/ 301
-/sandbox/sdk/tutorials/claude-code/ /sandbox/tutorials/build-a-coding-agent-runner/ 301
+/sandbox/tutorials/claude-code/ /sandbox/get-started/build-a-coding-agent-runner/ 301
+/sandbox/sdk/tutorials/claude-code/ /sandbox/get-started/build-a-coding-agent-runner/ 301
 /sandbox/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
 /sandbox/sdk/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
 /sandbox/tutorials/code-review-bot/ /sandbox/sdk/tutorials/code-review-bot/ 301

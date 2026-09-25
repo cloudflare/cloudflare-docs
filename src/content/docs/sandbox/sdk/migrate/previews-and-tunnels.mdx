@@ -10,21 +10,21 @@ products:
   - durable-objects
 ---
 
-In 0.12, `exposePort()` created a preview URL with a token in its hostname, and `proxyToSandbox()` routed requests for those hostnames to the sandbox. In 1.0, your Worker routes each request to a Durable Object, and the Durable Object forwards it to the port with `getTcpPort(port).fetch()`. [Preview a web application](/sandbox/previews/preview-a-web-application/) builds this.
+In 0.12, `exposePort()` created a preview URL with a token in its hostname, and `proxyToSandbox()` routed requests for those hostnames to the sandbox. In 1.0, your Worker routes each request to a Durable Object, and the Durable Object forwards it to the port with `getTcpPort(port).fetch()`. [Preview a web application](/sandbox/previews/) builds this.
 
 Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/) first. On this page, `sandbox` is the stub that `getByName()` returns.
 
 ## Replace preview URLs
 
-Replace `exposePort()` and `proxyToSandbox()` with the Worker route and Durable Object `fetch()` handler from [Forward requests to the server](/sandbox/previews/preview-a-web-application/#forward-requests-to-the-server). A preview needs no call before it works: the route forwards requests as soon as the server listens.
+Replace `exposePort()` and `proxyToSandbox()` with the Worker route and Durable Object `fetch()` handler from [Forward requests to the server](/sandbox/previews/#forward-requests-to-the-server). A preview needs no call before it works: the route forwards requests as soon as the server listens.
 
 | 0.12                                  | 1.0                                                                                                                                                                       |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `exposePort(port, { hostname })`      | A route such as `/sandboxes/<NAME>/` that forwards to `getTcpPort(port).fetch()`                                                                                          |
 | `proxyToSandbox(request, env)`        | The Worker route. For hostnames such as `<NAME>.example.com`, refer to [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/). |
-| `token`, `validatePortToken()`        | `share()` and `isShared()` from [Share a preview with a link](/sandbox/previews/preview-a-web-application/#share-a-preview-with-a-link)                                   |
+| `token`, `validatePortToken()`        | `share()` and `isShared()` from [Share a preview with a link](/sandbox/previews/#share-a-preview-with-a-link)                                                             |
 | `unexposePort()`, `getExposedPorts()` | Delete or list the `share:` tokens in Durable Object storage                                                                                                              |
-| `wsConnect(request, port)`            | The WebSocket bridge from [Keep WebSocket connections open](/sandbox/previews/preview-a-web-application/#keep-websocket-connections-open)                                 |
+| `wsConnect(request, port)`            | The WebSocket bridge from [Keep WebSocket connections open](/sandbox/previews/#keep-websocket-connections-open)                                                           |
 
 0.12 preview URLs had the port, the sandbox ID, and the token in the hostname, such as `8080-sandbox-id-token.example.com`. Those URLs stop working after you deploy 1.0. Give users the new URLs. To keep that URL shape, the [share workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/share-workspace) serves `<PORT>-<NAME>-<TOKEN>` hostnames. It also starts quick tunnels.
 

@@ -13,10 +13,14 @@ products:
   - durable-objects
 ---
 
-import { DirectoryListing } from "~/components";
+Each guide starts from a Worker with a Durable Object that starts a container, and runs commands in the container with `exec()`. The guides differ in how the output reaches the caller and in what ends the command:
 
-Each guide starts from a Worker with a Durable Object that starts a container, and runs commands in the container with `exec()`. The guides differ in what happens to the output and how long the command runs.
-
-<DirectoryListing descriptions />
+| Guide                                                                                 | How the output reaches the caller             | The command runs until                          |
+| ------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
+| [Run Python code](/sandbox/commands/run-python-code/)                                 | In the response, after the code exits         | The code exits                                  |
+| [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/) | In the response, after the tests finish       | The tests finish                                |
+| [Stream command output](/sandbox/commands/stream-command-output/)                     | As server-sent events, while the command runs | It exits, or the client disconnects             |
+| [Run background processes](/sandbox/commands/run-background-processes/)               | In files that later requests read             | It exits, or a later request stops it           |
+| [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/)   | In an interactive terminal, over a WebSocket  | You run `exit`, or your Worker ends the session |
 
 For every option that `exec()` accepts, refer to [Execute commands](/containers/guides/execute-commands/) in the Containers documentation.
