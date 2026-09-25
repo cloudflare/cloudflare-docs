@@ -3,6 +3,16 @@ link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
 entries:
+  - publish_date: "2026-09-10"
+    title: Hyperdrive raises Workers Paid connection limit
+    description: |-
+      Customers on a Workers Paid plan can configure up to 1,500 origin database connections per Hyperdrive configuration.
+
+      The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database. You can configure this value via the dashboard, Wrangler, or the REST API.
+
+      We recommend setting this value lower than your origin database's connection limit.
+
+      Refer to [Hyperdrive limits](/hyperdrive/platform/limits/) for details.
   - publish_date: "2025-12-04"
     title: Connect to remote databases during local development with wrangler dev
     description: |-

@@ -58,7 +58,7 @@ There are two limits to consider here.
 - Origin database's connection limit, set by the origin database provider. This is the maximum number of direct database connections that can be made to the origin database.
 - Hyperdrive's origin connection limit, set by Hyperdrive. This is the maximum number of database connections that Hyperdrive can make to your origin database (in this case, Prisma Postgres).
 
-Hyperdrive's origin connection limit should be lower than the Prisma Postgres connection limit, since Hyperdrive's origin connection limit is a soft limit, and Hyperdrive may create more connections if there are network disruptions that prevent existing connections from being used.
+Hyperdrive's origin connection limit should be lower than the Prisma Postgres connection limit.
 :::
 
 <Tabs>
