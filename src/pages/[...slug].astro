@@ -14,6 +14,7 @@ import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
 import { getOgImage } from "~/util/og";
+import { getEffectiveSchemaId } from "~/util/openapi-schema";
 import { getDirectoryEntryBySection } from "~/util/directory";
 import {
 	pageHasRuntimeHeadings,
@@ -27,14 +28,27 @@ const NOINDEX_PRODUCTS = ["email-security"];
 export const prerender = true;
 export const getStaticPaths = (async (...args: Parameters<GetStaticPaths>) => {
 	const paths = await getDocsStaticPaths(...args);
+	// APIRequest output on docs pages is derived from the pinned OpenAPI schema
+	// rather than the page's MDX, so the schema id must ride along in the
+	// incremental-build cacheKey or a schema bump would serve stale curl examples.
+	const schemaId = await getEffectiveSchemaId();
 	// Docs pages whose URLs are owned by a custom route (not the catch-all).
 	// These remain in the docs collection for sidebar metadata but should not
 	// be rendered by [...slug].astro to avoid route conflicts.
 	const blocklist = new Set(["waf/change-log/changelog"]);
-	return paths.filter((p) => {
-		const slug = p.params.slug;
-		return !(typeof slug === "string" && blocklist.has(slug));
-	});
+	return (
+		paths
+			.filter((p) => {
+				const slug = p.params.slug;
+				return !(typeof slug === "string" && blocklist.has(slug));
+			})
+			// A path without a cacheKey opts out of reuse; keep it that way.
+			.map((p) =>
+				p.cacheKey === undefined
+					? p
+					: { ...p, cacheKey: `${p.cacheKey}:openapi-${schemaId}` },
+			)
+	);
 }) satisfies GetStaticPaths;
 
 const { entry, Content, headings } = await getDocsPageProps(Astro);

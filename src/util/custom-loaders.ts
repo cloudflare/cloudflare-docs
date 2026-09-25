@@ -21,8 +21,19 @@ const MAX_DOWNLOAD_ATTEMPTS = 3;
 // cleanup can delete a sibling call's freshly-written output.
 const inFlightDownloads = new Map<string, Promise<void>>();
 
+/** Non-2xx response from a download; `status` lets callers special-case 404s. */
+export class HttpError extends Error {
+	constructor(
+		message: string,
+		readonly status: number,
+	) {
+		super(message);
+		this.name = "HttpError";
+	}
+}
+
 /**
- * Resolve the repo-root `.tmp/` directory used for downloaded artifacts.
+ * Resolve the repo-root directory (the one holding `package.json`).
  *
  * The tsx prebuild scripts and the bundled prerender resolve `import.meta.url`
  * to different locations (source files vs `dist/.prerender/chunks/`), so the
@@ -30,18 +41,21 @@ const inFlightDownloads = new Map<string, Promise<void>>();
  * `package.json` is found. Falls back to the current working directory for
  * runtimes where `import.meta.url` is not a `file://` URL (e.g. Vitest).
  */
-export const getDotTmpPath = () => {
+export const getRepoRoot = (): string => {
 	try {
 		const moduleDir = dirname(fileURLToPath(import.meta.url));
 		const root = findRepoRoot(moduleDir);
 		if (root) {
-			return join(root, ".tmp");
+			return root;
 		}
 	} catch {
 		// not a file:// URL (e.g. under Vitest)
 	}
-	return join(process.cwd(), ".tmp");
+	return process.cwd();
 };
+
+/** Repo-root `.tmp/` directory used for downloaded artifacts. */
+export const getDotTmpPath = () => join(getRepoRoot(), ".tmp");
 
 const findRepoRoot = (startDir: string): string | undefined => {
 	let dir = startDir;
@@ -130,8 +144,9 @@ const downloadWithRetry = async (
 			});
 
 			if (!response.ok) {
-				throw new Error(
+				throw new HttpError(
 					`Failed to download ${url}: HTTP ${response.status} ${response.statusText}`,
+					response.status,
 				);
 			}
 
@@ -161,7 +176,9 @@ const downloadWithRetry = async (
 		} catch (err) {
 			fs.rmSync(destination, { force: true });
 			fs.rmSync(`${destination}.tmp`, { force: true });
-			if (attempt === MAX_DOWNLOAD_ATTEMPTS) {
+			// A 404 is not transient; retrying only delays the error.
+			const notFound = err instanceof HttpError && err.status === 404;
+			if (notFound || attempt === MAX_DOWNLOAD_ATTEMPTS) {
 				throw err;
 			}
 			console.warn(

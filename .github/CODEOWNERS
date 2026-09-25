@@ -17,6 +17,7 @@
 /src/scripts/webmcp.ts @cloudflare/ai-search @cloudflare/content-engineering
 /src/util/api.ts @cloudflare/content-engineering
 /src/util/search.ts @cloudflare/ai-search @cloudflare/content-engineering
+/openapi.lock.json @cloudflare/content-engineering
 package.json @cloudflare/content-engineering
 
 # 1.1.1.1
