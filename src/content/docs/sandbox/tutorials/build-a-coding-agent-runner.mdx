@@ -15,6 +15,7 @@ reviewed: 2026-09-24
 ---
 
 import {
+	FileTree,
 	PackageManagers,
 	Render,
 	Steps,
@@ -25,6 +26,18 @@ import {
 In this tutorial, you will build a Worker that runs a coding agent on a GitHub repository in a Linux sandbox. You send a prompt, the agent edits the repository inside the sandbox, and you read its changes as a diff. The runner uses [Claude Code](https://code.claude.com/docs/en/overview). The pages in [Coding agents](/sandbox/coding-agents/) switch it to other agents.
 
 Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, so the token never enters the sandbox. The sandbox can reach only your gateway and `github.com`.
+
+When you finish, you can ask the agent to add a file to a repository and read its change:
+
+```diff output wrap
+diff --git a/NOTES.md b/NOTES.md
+new file mode 100644
+index 0000000..95da11e
+--- /dev/null
++++ b/NOTES.md
+@@ -0,0 +1 @@
++This repository is a minimal test/example repo containing only a "Hello World!" README file.
+```
 
 You will learn how to:
 
@@ -150,6 +163,19 @@ You also need:
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
 </Steps>
+
+The tutorial adds or replaces these files. You create `src/outbound.ts` and `src/sandbox.ts`, and replace `src/index.ts`, in the next three sections:
+
+<FileTree>
+
+- Dockerfile
+- wrangler.jsonc
+- src
+  - outbound.ts
+  - sandbox.ts
+  - index.ts
+
+</FileTree>
 
 ## 2. Allow only the gateway and GitHub
 

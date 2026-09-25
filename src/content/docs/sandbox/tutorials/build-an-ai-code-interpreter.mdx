@@ -23,6 +23,20 @@ import {
 
 In this tutorial, you will build a Worker that answers questions by running code. A [Workers AI](/workers-ai/) model writes JavaScript, a [Dynamic Worker](/dynamic-workers/) runs it without network access, and the model uses the result in its answer.
 
+When you finish, the Worker answers a question about prime numbers with the answer and the code the model ran:
+
+```json output wrap
+{
+	"answer": "There are 9,592 prime numbers below 100,000.",
+	"runs": [
+		{
+			"code": "function isPrime(n){if(n<2)return false; if(n%2===0) return n===2; for(let i=3;i*i<=n;i+=2){if(n%i===0) return false;} return true;} let count=0; for(let i=2;i<100000;i++){ if(isPrime(i)) count++; } return count;",
+			"output": { "result": 9592, "logs": [] }
+		}
+	]
+}
+```
+
 You will learn how to:
 
 - Run model-generated JavaScript in a Dynamic Worker with no network access and a CPU time limit.
