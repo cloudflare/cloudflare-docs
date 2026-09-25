@@ -1247,9 +1247,7 @@ Example:
 
 </WranglerConfig>
 
-:::caution
-`wrangler dev` does not run Workflows declared only in `exports`. To develop a Workflow locally, also declare it as a `workflows` binding.
-:::
+The Worker calls each Workflow declared in `exports` through [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports), keyed by class name.
 
 ## Assets
 
