@@ -60,7 +60,7 @@ new Files(container: Pick<Container, "exec">)
 - A relative path requires `cwd`. `cwd` must be absolute.
 - A path cannot be empty or contain a null character.
 - An invalid path or `cwd` throws `TypeError` before the helper process starts.
-- `cwd` is also the working directory of the helper process. The directory must exist, even when the path is absolute. A `cwd` that cannot be entered rejects with `SandboxFileError`, such as `ENOENT` when it does not exist.
+- A relative path is joined onto `cwd`, and Linux resolves the joined path. An absolute path ignores `cwd`. A `cwd` that does not exist rejects with `SandboxFileError` `ENOENT`, as a missing directory anywhere in a path does.
 - Paths resolve through symbolic links as they do in Linux, except where a method states otherwise.
 
 ## Options
