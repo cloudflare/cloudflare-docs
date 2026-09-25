@@ -1,0 +1,48 @@
+---
+title: Workers tracing — new getActiveSpan(), recordException(), startSpan(), and setAttributes() APIs
+description: Create spans without changing the active context, annotate the current span from anywhere, record exceptions, and set multiple attributes at once.
+products:
+  - workers
+date: 2026-09-25
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Custom spans](/workers/observability/traces/custom-spans/) in Workers now support more of the OpenTelemetry span API, so you can instrument more of your code and record errors directly on your spans.
+
+- **`tracing.startSpan(name)`** creates a span without making it the active span, and returns it. Other spans do not nest under it. Call `span.end()` when the operation is complete.
+- **`tracing.getActiveSpan()`** returns the currently active span. Use it to annotate the current span from helper functions and libraries without passing the span object through your code. Outside any custom span, it returns the invocation's root span.
+- **`span.recordException(exception)`** records an exception event on a span. It accepts an `Error`, a string, or an object with a `code`, `name`, or `message`.
+- **`span.setAttributes(attributes)`** sets multiple attributes at once. `setAttribute()` and `setAttributes()` now return the span, so you can chain calls.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const user = await authenticate(request, env);
+
+		// Annotate the invocation's root span
+		tracing.getActiveSpan()?.setAttributes({
+			"user.id": user.id,
+			"user.plan": user.plan,
+		});
+
+		const span = tracing.startSpan("load-profile");
+		try {
+			return Response.json(await loadProfile(env, user.id));
+		} catch (err) {
+			span.recordException(err as Error);
+			throw err;
+		} finally {
+			span.end();
+		}
+	},
+};
+```
+
+</TypeScriptExample>
+
+For more details, refer to the [custom spans documentation](/workers/observability/traces/custom-spans/).
