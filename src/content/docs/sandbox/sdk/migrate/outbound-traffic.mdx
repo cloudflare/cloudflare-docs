@@ -31,7 +31,7 @@ Do [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-objec
 
 Intercept all traffic with `interceptAllOutboundHttp()` and `interceptOutboundHttps("*", entrypoint)`, and let the entrypoint decide for each hostname. A container accepts up to 64 intercept targets and cannot remove one, so an intercept for each allowed hostname does not suit rules that change. Intercepts end when the container stops, so register them for each new container, with the stored rules.
 
-An intercepted HTTPS request carries a certificate that the container's CA certificate signs. Pass the certificate's path to each command that makes HTTPS requests, such as `NODE_EXTRA_CA_CERTS` for Node.js and `GIT_SSL_CAINFO` for Git. The path is `/etc/cloudflare/certs/cloudflare-containers-ca.crt`.
+An intercepted HTTPS request carries a certificate that the container's CA certificate signs. Pass the certificate's path, `/etc/cloudflare/certs/cloudflare-containers-ca.crt`, to each command that makes HTTPS requests, in the variable its tool reads: `NODE_EXTRA_CA_CERTS` for Node.js, `GIT_SSL_CAINFO` for Git, `CURL_CA_BUNDLE` for curl, and `SSL_CERT_FILE` for many other tools that use OpenSSL.
 
 ## Add credentials to requests
 
