@@ -1,0 +1,30 @@
+---
+title: Suppress recipients for one sending domain
+description: Email Sending suppressions can now apply to one sending domain instead of every sending domain in your account.
+products:
+  - email-service
+date: 2026-09-25
+---
+
+[Email Sending suppressions](/email-service/concepts/suppressions/) now have a **scope**. An entry can apply to your whole account, or to one sending domain only. This isolates suppressions when one account sends mail for several brands or customers.
+
+- **`account`**: Email Service suppresses the recipient for every sending domain in the account. This is the existing behavior and the default.
+- **`sending_domain`**: Email Service suppresses the recipient only when the sender address uses that exact domain. For example, an entry for `mail.example.com` does not block mail from `news.example.com`.
+
+Bounces and spam complaints now create `sending_domain` entries for the domain that sent the message. Existing entries keep the `account` scope and remain active.
+
+To add a suppression for one sending domain, pass `scope` when you create the entry:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/email/sending/suppressions \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "email": "user@example.net",
+    "scope": { "type": "sending_domain", "value": "mail.example.com" }
+  }'
+```
+
+The [suppressions API](/api/resources/email_sending/subresources/suppressions/) returns `scope` on every entry. To list the entries for one domain, use `scope_type=sending_domain&scope_value=mail.example.com`. If you omit `scope`, the API creates an `account` entry, so existing integrations continue to work.
+
+Refer to [Suppression lists](/email-service/concepts/suppressions/#suppression-scope) and [Manage suppressions](/email-service/configuration/suppressions/) for details.
