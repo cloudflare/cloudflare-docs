@@ -226,7 +226,7 @@ The entrypoint allows two destinations:
 - Requests to your gateway under your account ID and gateway ID. The Worker removes the placeholder API key that Claude Code sends and adds the gateway token. AI Gateway then calls Anthropic with the credentials it holds. If the Worker left the placeholder in place, AI Gateway would forward it to Anthropic and the model request would fail.
 - Requests to `github.com`, so Git can clone public repositories.
 
-Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 ## 3. Run Claude Code in the sandbox
 
@@ -572,7 +572,7 @@ The task files live in `/workspace/task`, outside the repository, so they do not
 
 ### Keep the sandbox running
 
-A running process does not keep the container running, so `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute until it ends. Each check keeps the container running. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/).
+A running process does not keep the container running, so `startTask()` schedules an [alarm](/durable-objects/api/alarms/) that checks the task every minute until it ends. Each check keeps the container running. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
 ### Read the outcome
 
@@ -705,7 +705,7 @@ The Worker accepts only `https://github.com/` repository URLs, because the `Outb
 
 :::caution
 The Worker does not authenticate requests. Anyone with the URL can run Claude Code and spend your AI Gateway credits. Authenticate callers before you share the URL.
-For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 :::
 
 <Steps>
@@ -824,5 +824,5 @@ You built a Worker that runs a coding agent on a repository in a sandbox. The sa
 - Deploy a finished runner for each agent. Refer to the [coding agents example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/coding-agents), which deploys one Worker for each agent instead of switching one Worker.
 - Keep a sandbox's files after its container stops. Refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 - Clone private repositories with a token that stays in your Worker. Refer to [Clone a private repository](/sandbox/network/clone-a-private-repository/).
-- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/security/).
+- Decide what one sandbox should hold. Refer to [Sandbox security](/sandbox/concepts/security/).
 - Route Claude Code through AI Gateway from other environments. Refer to [Claude Code in AI Gateway](/ai-gateway/integrations/coding-agents/claude-code/).

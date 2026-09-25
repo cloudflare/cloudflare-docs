@@ -3,7 +3,8 @@ title: Sandbox security
 description: Code in a sandbox can use everything your Worker places inside it, so each sandbox should hold only what that code may have.
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 3
+  label: Security
 products:
   - sandbox
   - workers
@@ -47,7 +48,7 @@ A sandbox keeps its files while its instance runs. A snapshot saves those files,
 
 So the name decides which sandbox, and which saved files, a request reaches. The name does not show who sent the request. Your Worker authenticates the caller and derives the sandbox name from that identity. Reusing a name or a snapshot for someone else gives them the earlier user's files. The how-to guides read the name from the URL only to keep the examples short.
 
-For more information about what a sandbox keeps between instances, refer to [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance).
+For more information about what a sandbox keeps between instances, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 ## Every opening is also a way out
 
@@ -63,8 +64,8 @@ A web preview goes further, because the browser runs it. When your Worker forwar
 
 ## Related resources
 
-- [Choose a sandbox environment](/sandbox/choose-an-environment/)
-- [Sandbox lifetime](/sandbox/lifetime/)
+- [Choose a sandbox environment](/sandbox/concepts/choose-an-environment/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
 - [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/)
 - [Preview a web application](/sandbox/previews/preview-a-web-application/)
 - [Workers security model](/workers/reference/security-model/)

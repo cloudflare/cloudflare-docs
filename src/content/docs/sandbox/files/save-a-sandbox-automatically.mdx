@@ -3,7 +3,7 @@ title: Save a sandbox automatically
 description: Save a Linux sandbox's filesystem in a Container snapshot before it stops for inactivity, and restore the files on the next request.
 pcx_content_type: how-to
 sidebar:
-  order: 3.5
+  order: 3
   badge:
     text: Beta
 products:
@@ -167,7 +167,7 @@ Container snapshots are in public beta. Features and behavior may change.
    };
    ```
 
-   Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, and give each user their own sandbox name. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+   Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, and give each user their own sandbox name. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 6. Deploy the Worker:
 
@@ -210,6 +210,6 @@ Container snapshots are in public beta. Features and behavior may change.
 ## Related resources
 
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): save when your application decides, copy a sandbox, and start a sandbox over.
-- [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance): what a snapshot saves, and what a restored instance starts with.
+- [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance): what a snapshot saves, and what a restored instance starts with.
 - [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/)
 - [`snapshotContainer()`](/durable-objects/api/container/#snapshotcontainer)

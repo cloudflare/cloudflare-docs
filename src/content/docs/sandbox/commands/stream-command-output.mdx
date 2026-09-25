@@ -3,7 +3,7 @@ title: Stream command output
 description: Send stdout and stderr from a command in a Linux sandbox to a browser as server-sent events while the command runs.
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 3
 products:
   - sandbox
   - workers
@@ -128,7 +128,7 @@ Show the output of a build, a test run, or another command in a browser while th
 
    </TypeScriptExample>
 
-   The example command writes a line each second, writes a warning to standard error, and exits with code `3`. Replace it with your build or test command. The Worker chooses the command instead of reading one from the request. For more information, refer to [Sandbox security](/sandbox/security/).
+   The example command writes a line each second, writes a warning to standard error, and exits with code `3`. Replace it with your build or test command. The Worker chooses the command instead of reading one from the request. For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 3. Deploy the Worker:
 

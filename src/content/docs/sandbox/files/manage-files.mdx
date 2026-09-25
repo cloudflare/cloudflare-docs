@@ -155,7 +155,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
    </TypeScriptExample>
 
-   The route reads the sandbox name from the URL to keep the example short. Derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+   The route reads the sandbox name from the URL to keep the example short. Derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 7. Deploy the Worker:
 
@@ -208,7 +208,7 @@ function workspacePath(path: string): string | null {
 
 </TypeScriptExample>
 
-The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. The `user` option, such as `user: "1000:1000"`, does not narrow access either. It sets the owner of files that `Files` creates, but the helper can still open files that user has no permission for. For more information, refer to [Sandbox security](/sandbox/security/#everything-in-one-sandbox-is-shared).
+The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. The `user` option, such as `user: "1000:1000"`, does not narrow access either. It sets the owner of files that `Files` creates, but the helper can still open files that user has no permission for. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
 ## Related resources
 

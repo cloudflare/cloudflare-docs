@@ -1,12 +1,12 @@
 ---
-title: Control network access from a sandbox
-description: Decide which services code in a sandbox can reach, and add credentials in your Worker so the sandbox never holds them.
+title: Credentials and network access
+description: Add credentials in your Worker so the sandbox never holds them, and decide which services code in a sandbox can reach.
 pcx_content_type: navigation
 sidebar:
-  order: 9
+  order: 8
   label: Overview
   group:
-    label: Control network access
+    label: Credentials and network
 products:
   - sandbox
   - containers
@@ -15,6 +15,8 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Decide which services code in a sandbox can reach, and add credentials in your Worker so the sandbox never holds them. The Containers and Dynamic Workers guides cover every outbound option for each environment.
+Add credentials in your Worker so the sandbox never holds them, and decide which services code in a sandbox can reach.
 
 <DirectoryListing descriptions />
+
+For every outbound option in each environment, refer to [Handle outbound traffic](/containers/guides/outbound-traffic/) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.

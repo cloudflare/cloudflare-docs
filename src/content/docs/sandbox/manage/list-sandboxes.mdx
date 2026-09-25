@@ -122,7 +122,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
    }
    ```
 
-   `running` reports whether the container is running, and reading it does not start the container. A Durable Object that listing wakes no longer has the inactivity timeout that `exec()` set, so `isRunning()` sets it again. Without that call, the sandbox stops shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
+   `running` reports whether the container is running, and reading it does not start the container. A Durable Object that listing wakes no longer has the inactivity timeout that `exec()` set, so `isRunning()` sets it again. Without that call, the sandbox stops shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 4. Add routes to your Worker that name each sandbox `<OWNER>/<SESSION>`, record the session before running a command, list the sessions with their state, and remove a session after stopping its container:
 
@@ -174,7 +174,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
    Listing calls the Durable Object of every session in parallel. A sandbox whose container stopped stays in the list with `running: false` until the Worker removes its session.
 
-   Authenticate callers first, and derive the owner from their identity rather than from the URL. Otherwise anyone can list, use, or stop another user's sandboxes. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+   Authenticate callers first, and derive the owner from their identity rather than from the URL. Otherwise anyone can list, use, or stop another user's sandboxes. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 5. Deploy the Worker:
 
@@ -229,7 +229,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/containers/appl
 
 ## Related resources
 
-- [Sandbox lifetime](/sandbox/lifetime/): what keeps a sandbox running, and what stops it.
+- [Sandbox lifetime](/sandbox/concepts/lifetime/): what keeps a sandbox running, and what stops it.
 - [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/): record when and why each sandbox stops.
 - [`destroy()`](/durable-objects/api/container/#destroy)
 - [SQLite storage API](/durable-objects/api/sqlite-storage-api/)

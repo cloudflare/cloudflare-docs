@@ -19,7 +19,7 @@ Use a sandbox when an agent needs to:
 - Work on the same files across several turns of a conversation.
 - Run untrusted or model-generated code away from the agent's storage and credentials.
 
-When the model writes JavaScript that only needs the APIs you pass in, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a Container. For more information about choosing, refer to [Choose a sandbox environment](/sandbox/choose-an-environment/).
+When the model writes JavaScript that only needs the APIs you pass in, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a Container. For more information about choosing, refer to [Choose a sandbox environment](/sandbox/concepts/choose-an-environment/).
 
 ## How it works
 
@@ -187,7 +187,7 @@ The model reads everything that `run_command` returns. A file, package, or web p
 
 Every user who talks to the same agent instance shares its sandbox. Give each user their own agent instance when their files must stay apart.
 
-For more information, refer to [Sandbox security](/sandbox/security/).
+For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 ## Related resources
 
@@ -199,7 +199,7 @@ For more information, refer to [Sandbox security](/sandbox/security/).
 
 <LinkCard
 	title="Choose a sandbox environment"
-	href="/sandbox/choose-an-environment/"
+	href="/sandbox/concepts/choose-an-environment/"
 	description="Decide whether generated code needs APIs you pass in or a Linux system."
 />
 

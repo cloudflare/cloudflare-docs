@@ -3,7 +3,7 @@ title: Open a terminal in the browser
 description: Connect a browser terminal to an interactive shell in a Linux sandbox over a WebSocket.
 pcx_content_type: how-to
 sidebar:
-  order: 4
+  order: 5
   label: Open a terminal
 products:
   - sandbox
@@ -193,7 +193,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
    The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because signaling an exited process records an internal error.
 
-   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/durable-objects/api/container/#exec), such as `user: "1000:1000"`, changes the shell's Linux user but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/security/#everything-in-one-sandbox-is-shared).
+   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/durable-objects/api/container/#exec), such as `user: "1000:1000"`, changes the shell's Linux user but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
 4. Add the terminal page:
 
@@ -305,7 +305,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
    </TypeScriptExample>
 
-   Anyone who opens the page gets a `root` shell in the sandbox named in the URL. Authenticate callers first, and derive the sandbox name from the caller's identity. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+   Anyone who opens the page gets a `root` shell in the sandbox named in the URL. Authenticate callers first, and derive the sandbox name from the caller's identity. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 6. Deploy the Worker:
 

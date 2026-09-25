@@ -198,7 +198,7 @@ The container opens an outbound connection to Cursor, so it does not require an 
 
 Each session runs in its own container, so sessions do not share files or processes. The container receives the `CURSOR_API_KEY` service-account key, because the Cursor worker needs it. It also receives `GIT_USERNAME`, `GIT_TOKEN`, and `SNAPSHOT_AUTH_TOKEN` if you set them. Code that runs in a session can read these values. Give `GIT_TOKEN` access only to the repositories that the agents use.
 
-For more information, refer to [Sandbox security](/sandbox/security/).
+For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 ## Monitor the deployment
 

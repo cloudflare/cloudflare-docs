@@ -3,7 +3,7 @@ title: Run tests from a Git repository
 description: Clone a public Git repository into a fresh Linux sandbox, install its dependencies, and return the test results from your Worker.
 pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 2
 products:
   - sandbox
   - workers
@@ -135,7 +135,7 @@ Run a repository's tests in a fresh Linux sandbox, such as for each pull request
 
    Each stage runs under GNU coreutils `timeout`. A stage that runs longer than 10 minutes stops, together with every process it started, and returns exit code `124`. The `finally` block stops the Linux instance after the run.
 
-   `enableInternet: true` lets `git` and `npm` download the repository and its packages. It also lets the repository's install and test scripts reach the Internet, so do not pass credentials into this sandbox. For more information, refer to [Sandbox security](/sandbox/security/#every-opening-is-also-a-way-out).
+   `enableInternet: true` lets `git` and `npm` download the repository and its packages. It also lets the repository's install and test scripts reach the Internet, so do not pass credentials into this sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 4. Add a route to your Worker that runs the tests in a new sandbox:
 

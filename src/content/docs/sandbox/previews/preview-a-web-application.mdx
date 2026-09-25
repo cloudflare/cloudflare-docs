@@ -90,7 +90,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
    }
    ```
 
-   `start()` returns before the server listens, so the method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check. The five-minute inactivity timeout keeps the server running between visits. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#the-timeout-does-not-survive-a-restart).
+   `start()` returns before the server listens, so the method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check. The five-minute inactivity timeout keeps the server running between visits. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 3. Forward requests from the Durable Object's `fetch()` handler:
 
@@ -153,7 +153,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
 
    The server receives each path without the `/previews/<NAME>` prefix. Links that start with `/` leave the preview, so use relative links or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
 
-   The route reads the sandbox name from the URL to keep the example short. Authenticate callers before they reach a preview, and serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/security/#output-carries-the-same-risk).
+   The route reads the sandbox name from the URL to keep the example short. Authenticate callers before they reach a preview, and serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk).
 
 5. Deploy the Worker:
 
@@ -374,6 +374,6 @@ Stop the server when the preview is no longer needed, instead of waiting for the
 ## Related resources
 
 - [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/)
-- [Sandbox lifetime](/sandbox/lifetime/)
-- [Sandbox security](/sandbox/security/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
+- [Sandbox security](/sandbox/concepts/security/)
 - [`getTcpPort()`](/durable-objects/api/container/#gettcpport)

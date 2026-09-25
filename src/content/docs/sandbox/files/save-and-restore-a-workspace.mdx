@@ -3,7 +3,7 @@ title: Save and restore a sandbox with snapshots
 description: Save a sandbox's filesystem as a Container snapshot, stop its Linux instance, and restore the files in a new instance.
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 2
   label: Save and restore a workspace
   badge:
     text: Beta
@@ -74,7 +74,7 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   A snapshot saves the writable root filesystem, without mounted directories, memory, or running processes, so finish writing files before you save. For what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance).
+   A snapshot saves the writable root filesystem, without mounted directories, memory, or running processes, so finish writing files before you save. For what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 3. Add a method that adds a line to a file and returns the file, so you can check what a restore brings back:
 
@@ -129,7 +129,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
    </TypeScriptExample>
 
-   Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, so other people cannot read or restore another sandbox's files. For more information, refer to [Sandbox security](/sandbox/security/#the-sandbox-name-decides-what-a-request-reaches).
+   Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, so other people cannot read or restore another sandbox's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 5. Deploy the Worker:
 
@@ -228,5 +228,5 @@ Deleting the stored ID does not delete the snapshot, so a sandbox that copied it
 - [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/): save before a sandbox stops for inactivity, and save checkpoints while it is in use.
 - [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/): keep one directory in your own bucket instead of the whole filesystem.
 - [Checkpoint workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/checkpoint-workspace): a deployable Worker that saves, restores, and copies sandboxes.
-- [Sandbox lifetime](/sandbox/lifetime/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
 - [Durable Object container API](/durable-objects/api/container/)

@@ -317,7 +317,7 @@ Deleting an OpenAI session does not send a webhook to the Worker. The Worker sto
 Container snapshots are in public beta. Features and behavior may change.
 :::
 
-When a session goes idle, the Worker snapshots the container's filesystem before it stops the container. The next environment connection starts from that snapshot, so the files in `/workspace` come back. Running processes and memory do not. If the snapshot fails, the Worker leaves the container running and schedules another lifecycle check. For more information, refer to [Sandbox lifetime](/sandbox/lifetime/#snapshots-carry-files-to-the-next-instance).
+When a session goes idle, the Worker snapshots the container's filesystem before it stops the container. The next environment connection starts from that snapshot, so the files in `/workspace` come back. Running processes and memory do not. If the snapshot fails, the Worker leaves the container running and schedules another lifecycle check. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 A snapshot lasts only as long as its session. Failed or deleted sessions and the cleanup endpoint clear it. With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with an empty `/workspace`. Keep files that must outlast a session somewhere else, such as an R2 bucket. For more information, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
 
@@ -349,7 +349,7 @@ The template is a minimal example. Review these defaults before you adapt it for
 - The container has Internet access so that `codex exec-server` can reach OpenAI. Every command the agent runs has the same access. To restrict destinations or add credentials to requests from your Worker, refer to [Outbound traffic](/containers/guides/outbound-traffic/).
 - OpenAI must reach `/webhook` without an interactive Access login. The Worker checks the signature on each webhook, and the cleanup endpoint requires `EXECUTOR_CLIENT_SECRET`. If you protect other routes with Cloudflare Access, use [path-specific policies](/cloudflare-one/access-controls/policies/app-paths/) that leave `/webhook` reachable.
 
-For more information about what a sandbox exposes to the code inside it, refer to [Sandbox security](/sandbox/security/).
+For more information about what a sandbox exposes to the code inside it, refer to [Sandbox security](/sandbox/concepts/security/).
 
 ## Related resources
 
