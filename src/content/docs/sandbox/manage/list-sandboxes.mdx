@@ -24,7 +24,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
 <Steps>
 
-1. In `wrangler.jsonc`, add a Durable Object class for the registry and a migration that creates it:
+1. In `wrangler.jsonc`, add a binding for the registry class, and declare the class in `exports`:
 
    <WranglerConfig>
 
@@ -42,20 +42,22 @@ List the sandboxes that belong to one user, for example to show their open sessi
    			},
    		],
    	},
-   	"migrations": [
-   		{
-   			"new_sqlite_classes": ["MyContainer"],
-   			"tag": "v1",
+   	"exports": {
+   		"MyContainer": {
+   			"type": "durable-object",
+   			"storage": "sqlite",
    		},
-   		{
-   			"new_sqlite_classes": ["SandboxDirectory"],
-   			"tag": "v2",
+   		"SandboxDirectory": {
+   			"type": "durable-object",
+   			"storage": "sqlite",
    		},
-   	],
+   	},
    }
    ```
 
    </WranglerConfig>
+
+   If your Worker declares its classes with a `migrations` array instead, add a migration with a new `tag` and `"new_sqlite_classes": ["SandboxDirectory"]`. For more information, refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
