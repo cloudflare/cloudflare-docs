@@ -41,7 +41,7 @@ Entries created in the dashboard have the `manual` reason. You cannot change the
 
 You can paste addresses or upload `.csv`, `.json`, or `.txt` files. Supported file contents are:
 
-- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>`, `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`, or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>,<SCOPE>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row. `<SCOPE>` is `account` or a sending domain, such as `mail.myappexample.com`. Leave a column empty to use the default.
+- `.csv` or `.txt`: Put one entry on each line as `<EMAIL_ADDRESS>`, `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>`, or `<EMAIL_ADDRESS>,<EXPIRATION_TIMESTAMP>,<SCOPE>`. Use an [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) timestamp and omit the header row. `<SCOPE>` is `account` or a sending domain.
 - `.json`: Use an array of address strings or objects. Each object requires `email` and can include an RFC 3339 `expires_at` timestamp and a `scope`. `scope` is `account`, a sending domain, or a scope object such as `{ "type": "sending_domain", "value": "mail.myappexample.com" }`.
 
 <Steps>
@@ -50,8 +50,6 @@ You can paste addresses or upload `.csv`, `.json`, or `.txt` files. Supported fi
 3. In **Defaults**, choose an expiration and a scope for entries that do not set their own.
 4. Select **Import**. Larger imports run in batches, so keep the dialog open until every batch finishes.
 </Steps>
-
-The import removes duplicate entries that have the same address and scope.
 
 ## Remove a suppression
 
@@ -99,10 +97,10 @@ Bulk imports accept the same optional `scope` on each item. The API removes dupl
 
 The list returns `sending_domain` entries first, then `account` entries. Entries are sorted newest first within each scope. To list one scope only, use these query parameters:
 
-| Parameter     | Description                                                                                |
-| ------------- | ------------------------------------------------------------------------------------------ |
-| `scope_type`  | `account` or `sending_domain`.                                                             |
-| `scope_value` | One sending domain, such as `mail.myappexample.com`. Requires `scope_type=sending_domain`. |
+| Parameter     | Description                                               |
+| ------------- | --------------------------------------------------------- |
+| `scope_type`  | `account` or `sending_domain`.                            |
+| `scope_value` | One sending domain. Requires `scope_type=sending_domain`. |
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/email/sending/suppressions?scope_type=sending_domain&scope_value=mail.myappexample.com" \
