@@ -13,6 +13,8 @@ products:
 reviewed: 2026-09-23
 ---
 
+import { SandboxCredentials } from "~/components/react/sandbox/SandboxCredentials";
+
 A sandbox runs code you do not trust. A model might generate the code, a user might write it, or a package might bring it in as a dependency. Cloudflare isolates the sandbox from your Worker and from other sandboxes. For more information about that isolation, refer to [Sandboxes on Cloudflare](/sandbox/).
 
 Isolation does not limit what the code does inside its own sandbox. The safe assumption is that the code uses everything it can reach there, including the files, credentials, and network access your Worker provides.
@@ -28,6 +30,12 @@ The sandbox is therefore the smallest unit of trust. When two users share a sand
 ## Code can read what you put in its sandbox
 
 Consider a coding agent that clones a private repository, installs its dependencies, and runs its tests. If your Worker puts a token in the clone URL, Git saves that URL in the repository's `.git/config` file. The tests, and every dependency they load, run with the same access as the agent. Any of that code can read the token.
+
+<SandboxCredentials client:visible>
+
+Inside a coding agent's sandbox, the agent runs `git pull`, and code from a test dependency reads `.git/config`. With the token in the clone URL, the dependency reads the token from that file. With the token in your Worker, the file holds no token, your Worker adds the token to requests for `github.com`, and `git pull` still works.
+
+</SandboxCredentials>
 
 Environment variables, command arguments, and files your Worker writes work the same way. Once a value is in the sandbox, all the code there can read it and send it anywhere the sandbox can reach.
 
