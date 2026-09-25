@@ -114,3 +114,64 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
      "certVerified": "NONE",
    },
    ```
+
+---
+
+## Certificate quota reached
+
+Cloudflare enforces limits on the number of certificates you can have active at one time. The limit and the error you see depend on the certificate type.
+
+### Cloudflare-managed client certificates
+
+Each zone can have up to 100 active Cloudflare-managed client certificates by default. If you reach this limit, [revoke](/ssl/client-certificates/revoke-client-certificate/) certificates that are no longer needed — revoking a certificate frees its slot immediately. Deleting a certificate without revoking it first does not release the slot.
+
+Enterprise zones with [API Shield](/api-shield/) can raise this limit to 100,000 client certificates. Contact your account team to request an increase.
+
+### Bring your own CA (BYOCA)
+
+Each Enterprise account can upload up to five CA certificates. This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+
+If you exceed this quota, the API returns:
+
+```
+Error 1489: Hit maximum CA cert allocation.
+```
+
+To free a slot, delete a CA certificate you no longer need. Before deleting a CA, you must first remove all hostname associations that reference it. Contact your account team to request a quota increase.
+
+:::note[Cloudflare Access uses a separate quota]
+CA certificates uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota that does not count against the five-CA BYOCA limit. If you see error `12130` ("maximum number of certificates has been reached") in Access, this relates to the Access certificate quota, not the BYOCA quota.
+:::
+
+---
+
+## BYOCA upload failures
+
+When uploading a CA certificate for [bring your own CA (BYOCA)](/ssl/client-certificates/byo-ca/), Cloudflare validates the certificate against a set of requirements. Upload failures are most commonly caused by one of the following.
+
+### Uploading a leaf certificate instead of a CA certificate
+
+The certificate you upload must be a CA certificate — that is, it must have `Basic Constraints: CA=TRUE` in its extensions. It is the certificate that directly issued your client certificates, not a client certificate itself.
+
+For example, if your certificate chain is `Root CA → Intermediate CA → Client certificate`, you should upload the Intermediate CA, not the client certificate or the full chain.
+
+To confirm whether a certificate is a CA certificate, run:
+
+```sh
+openssl x509 -in certificate.pem -noout -text | grep -A1 "Basic Constraints"
+```
+
+The output should include `CA:TRUE`. If it shows `CA:FALSE` or the field is absent, the certificate is not a CA certificate and cannot be uploaded.
+
+### Unsupported signature algorithm
+
+The CA certificate must use one of the following signature algorithms:
+
+- `SHA1WithRSA`, `SHA256WithRSA`, `SHA384WithRSA`, `SHA512WithRSA`
+- `ECDSAWithSHA1`, `ECDSAWithSHA256`, `ECDSAWithSHA384`, `ECDSAWithSHA512`
+
+If the CA certificate uses a different algorithm, re-issue it using a supported one.
+
+### Malformed PEM content
+
+The `certificates` field in the upload request must contain valid, properly delimited PEM content. Ensure the certificate starts with `-----BEGIN CERTIFICATE-----` and ends with `-----END CERTIFICATE-----`. Do not include private keys or certificate signing requests in this field.
