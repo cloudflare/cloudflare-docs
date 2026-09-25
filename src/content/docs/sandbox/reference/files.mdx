@@ -60,7 +60,7 @@ new Files(container: Pick<Container, "exec">)
 - A relative path requires `cwd`. `cwd` must be absolute.
 - A path cannot be empty or contain a null character.
 - An invalid path or `cwd` throws `TypeError` before the helper process starts.
-- `cwd` is also the working directory of the helper process. The directory must exist, even when the path is absolute.
+- `cwd` is also the working directory of the helper process. The directory must exist, even when the path is absolute. A `cwd` that cannot be entered rejects with `SandboxFileError`, such as `ENOENT` when it does not exist.
 - Paths resolve through symbolic links as they do in Linux, except where a method states otherwise.
 
 ## Options
@@ -70,14 +70,10 @@ Every method accepts `FileOperationOptions`:
 | Option   | Type          | Description                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cwd`    | `string`      | Absolute directory that resolves a relative path. For `rename()`, it resolves both paths.                                                                                                                                                                                                                                                                                                                                             |
-| `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user.                                                                                                                                                                                                                                                                                            |
+| `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user. A user ID alone, or a user or group name, throws `TypeError`.                                                                                                                                                                                                                              |
 | `signal` | `AbortSignal` | Cancels the operation, and kills its helper process if the operation is still running. A signal that fires after the operation finishes, such as `AbortSignal.timeout()`, has no effect. An aborted signal rejects the call with the abort reason: an `AbortError` when `abort()` is called without a reason, or a `TimeoutError` from `AbortSignal.timeout()`. Cancellation can leave the partial effects described for each method. |
 
-:::caution
-Pass both IDs in `user`. A user ID without a group ID runs the helper as `root`. A user or group name rejects with an internal error.
-:::
-
-`mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`.
+`mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`. An option a method does not accept, or an option of the wrong type, throws `TypeError` before the helper process starts. No other options reach `exec()`.
 
 ## Methods
 
@@ -297,10 +293,9 @@ Use `SandboxProtocolError.is(error)` to recognize the error.
 
 | Condition                                    | Error                                                          |
 | -------------------------------------------- | -------------------------------------------------------------- |
-| Invalid path or `cwd`                        | `TypeError`                                                    |
+| Invalid path, `cwd`, or other option         | `TypeError`                                                    |
 | The container is not running                 | `Error` from `exec()`                                          |
 | The image does not contain the helper binary | `Error` from `exec()` that names `/usr/local/bin/sandbox-shim` |
-| `cwd` does not exist                         | The same `Error` as a missing helper binary                    |
 | `signal` is aborted                          | The abort reason                                               |
 | The `content` stream of `writeFile()` errors | The stream's error                                             |
 
