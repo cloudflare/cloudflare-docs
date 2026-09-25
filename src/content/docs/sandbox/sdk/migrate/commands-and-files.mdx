@@ -85,7 +85,7 @@ try {
 	});
 	const result = await process.output();
 
-	if (result.exitCode === 137) {
+	if (abort.signal.aborted) {
 		// The timer fired and killed the command.
 	}
 } finally {
@@ -93,7 +93,7 @@ try {
 }
 ```
 
-When the signal fires, the process receives `SIGKILL`. `output()` still resolves, with exit code `137`. Check the exit code, because the command can make changes before it is killed.
+When the signal fires, the process receives `SIGKILL`. `output()` still resolves, with exit code `137`. Check `abort.signal.aborted` to tell that the timer fired, because any `SIGKILL`, such as from the out-of-memory killer, also gives exit code `137`. The command can make changes before it is killed.
 
 Do not pass `AbortSignal.timeout()` to `exec()` for a command that can finish first. The timeout still fires after the process exits, and signaling a process that has exited records an internal error. `Files` and `S3Mounts` accept `AbortSignal.timeout()`, because they stop following the signal when the operation ends.
 
