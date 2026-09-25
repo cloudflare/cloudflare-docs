@@ -43,7 +43,7 @@ Replace `getProcess()` and `Process.getStatus()` with `status()`. Each 0.12 stat
 | `error`     | `exited`, with `exitCode` `127` if the command does not exist |
 | None        | `lost`, when the process ended without recording an exit code |
 
-`status()` returns `undefined` for an ID that no process used. To replace `listProcesses()`, list the `process:` keys that `startProcess()` stores in Durable Object storage, and call `status()` for each. If you need the 0.12 `endTime`, record it in storage when the alarm sees the process end.
+`status()` returns `undefined` for an ID that no process used. To replace `listProcesses()`, add a Durable Object method that lists the process directories with `run(container, ["ls", "/var/lib/processes"])` and calls `status()` for each. The `process:` keys in Durable Object storage are not a complete list, because the alarm deletes a key within a minute of its process ending. The directory stays until you delete it. If you need the 0.12 `endTime`, record it in storage when the alarm sees the process end.
 
 ## Read logs
 
@@ -78,7 +78,7 @@ Replace `Process.waitForExit()` with `status()` calls until the state is `exited
 
 Replace `killProcess()` and `Process.kill()` with `stop()`, which sends `SIGTERM` to the whole process group. Stopping `npm run dev` also stops the `node` process it started. To send another signal, change `TERM` in `stop()`.
 
-Replace `killAllProcesses()` with a loop that calls `stop()` for each stored process ID. Replace `cleanupCompletedProcesses()` with `rm -rf` on the directory of each process whose state is `exited` or `lost`.
+Replace `killAllProcesses()` with a loop that calls `stop()` for each stored process ID. Replace `cleanupCompletedProcesses()` with `rm -rf` on each listed directory whose process is `exited` or `lost`.
 
 The 0.12 callbacks and `autoCleanup` move to the Durable Object's alarm, which checks every process each minute while any runs. The alarm also keeps the container running, which `keepAlive` did in 0.12.
 
