@@ -11,7 +11,7 @@ date: 2026-09-25
 - **`account`**: The suppression applies to every sending domain and subdomain in your account. This is the default.
 - **`sending_domain`**: The suppression applies to one sending domain only. A suppression for `mail.myappexample.com` does not block mail from `myappexample.com`.
 
-Bounce and complaint suppressions now use the `sending_domain` scope, with the sending domain of the message that bounced or received the complaint.
+Most importantly, Email Sending now automatically creates bounce and complaint suppressions at the sending-domain level. This provides greater granularity by preventing an issue with one sending domain from suppressing the recipient across your entire account.
 
 To add a suppression for one sending domain in the dashboard, go to **Email Sending** > **Suppressions** and select **Sending domain** in **Scope**. Imports can also set a scope for each row or a default scope.
 
