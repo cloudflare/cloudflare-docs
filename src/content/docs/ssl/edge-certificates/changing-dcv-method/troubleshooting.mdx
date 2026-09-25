@@ -136,6 +136,7 @@ Certificate authorities perform domain validation from multiple geographic locat
 - `Certificate authority was unable to verify domain ownership from multiple geographic location
 [...truncated]
 
+
 ---
 
 ## DCV token values changed
@@ -167,19 +168,27 @@ To avoid managing DCV tokens manually, consider using [Delegated DCV](/ssl/edge-
 
 ---
 
-## HTTP DCV falling back to TXT
+## Validation method changed to TXT
 
-This section applies only when you are using HTTP DCV in a [partial DNS setup](/dns/zone-setups/partial-setup/) and managing DCV tokens manually.
+If you expected HTTP DCV but received a TXT token instead — or if you configured HTTP DCV and later found it had changed to TXT — one of the following conditions applies:
 
-If you configured [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) but the verification response now shows a TXT token, your validation method has automatically fallen back to TXT.
+### HTTP DCV not available for your certificate
 
-This fallback occurs after HTTP DCV fails continuously for a period that depends on the certificate validity period:
+Some certificate configurations cannot use HTTP DCV regardless of your preference:
+
+- **Wildcard hostnames**: ACME certificate authorities cannot complete HTTP DCV for wildcard SANs (for example, `*.example.com`). Any certificate containing a wildcard hostname uses TXT-based DCV.
+- **China Network zones**: Zones with [China Network](/china-network/) enabled — including JDCloud-broadcast zones — use TXT-based DCV only. HTTP DCV is not available for these zones.
+- **Dedicated certificates**: Dedicated certificate types do not support HTTP DCV.
+
+### HTTP DCV configured but falling back to TXT over time
+
+If you are using HTTP DCV in a [partial DNS setup](/dns/zone-setups/partial-setup/) and managing DCV tokens manually, Cloudflare falls back to TXT after HTTP DCV fails continuously for a period that depends on the certificate validity period:
 
 <Render file="http-to-txt-schedule" product="ssl" />
 
 Once the fallback occurs, Cloudflare generates TXT tokens that you must place manually at your authoritative DNS provider. To understand why HTTP DCV is failing, refer to [Blocked validation URL](#blocked-validation-url) and [Redirection](#redirection).
 
-### Certificate renewal behaviour
+### Certificate renewal falling back to TXT
 
 At certificate renewal, Cloudflare always attempts HTTP DCV first, regardless of the method used at initial issuance. Renewal completes automatically via HTTP only if all of the following conditions are met:
 
