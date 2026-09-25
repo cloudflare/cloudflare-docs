@@ -1,0 +1,328 @@
+---
+title: Move preview URLs
+description: Keep @cloudflare/sandbox 0.12 preview URLs working on 1.0 by replacing exposePort(), proxyToSandbox(), and wsConnect() with code that reads the tokens 0.12 stored.
+pcx_content_type: how-to
+sidebar:
+  order: 8
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { Steps } from "~/components";
+
+In Sandbox SDK 0.12, `exposePort()` stores a token for each port in Durable Object storage, and `proxyToSandbox()` routes hostnames such as `8080-ada-<TOKEN>.example.com` to the server on that port. In 1.0, your Worker routes those hostnames, and your Durable Object checks the token and forwards the request with `getTcpPort()`. The code on this page reads the tokens where 0.12 stored them, so the preview URLs that your users already have keep working.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class and keeps its name and its `Sandbox` binding. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+This page replaces `exposePort()`, `unexposePort()`, `getExposedPorts()`, `isPortExposed()`, `validatePortToken()`, `proxyToSandbox()`, and `wsConnect()`. Keep the wildcard DNS record, the certificate, and the Worker route that serve your preview hostnames. 1.0 uses them unchanged.
+
+This page does not cover the server that a preview reaches. To start it, refer to [Move background processes](/sandbox/sdk/migrate/background-processes/).
+
+## Replace the preview calls
+
+<Steps>
+
+1. Add these declarations to the top level of `src/index.ts`:
+
+   ```ts title="src/index.ts"
+   type PortToken = { token: string; name?: string };
+   type Stored = Record<string, string | PortToken>;
+
+   // The key where 0.12 stored preview tokens.
+   const PORT_TOKENS = "portTokens";
+
+   function previewUrl(
+   	port: number,
+   	name: string,
+   	token: string,
+   	hostname: string,
+   ): string {
+   	return `https://${port}-${name}-${token}.${hostname}/`;
+   }
+
+   // 16 characters from [a-z0-9_], as 0.12 generated them.
+   function generateToken(): string {
+   	const bytes = crypto.getRandomValues(new Uint8Array(12));
+   	return btoa(String.fromCharCode(...bytes))
+   		.replace(/[+/]/g, "_")
+   		.toLowerCase();
+   }
+   ```
+
+2. Add a method that reads the tokens, and `exposePort()`, to your Durable Object class:
+
+   ```ts title="src/index.ts"
+   private async readPortTokens(): Promise<Record<string, PortToken>> {
+   	const stored = await this.ctx.storage.get<Stored>(PORT_TOKENS);
+   	const tokens: Record<string, PortToken> = {};
+
+   	// Early 0.12 versions stored the token as a string.
+   	for (const [port, value] of Object.entries(stored ?? {})) {
+   		tokens[port] =
+   			typeof value === "string" ? { token: value } : value;
+   	}
+
+   	return tokens;
+   }
+
+   async exposePort(
+   	sandboxName: string,
+   	port: number,
+   	options: { hostname: string; name?: string; token?: string },
+   ) {
+   	if (!Number.isInteger(port) || port < 1024 || port > 65535) {
+   		throw new Error(`Invalid port number: ${port}`);
+   	}
+
+   	if (options.token && !/^[a-z0-9_]{1,16}$/.test(options.token)) {
+   		throw new Error(`Invalid token: ${options.token}`);
+   	}
+
+   	const tokens = await this.readPortTokens();
+   	const token =
+   		options.token ?? tokens[port]?.token ?? generateToken();
+   	tokens[port] = { token, name: options.name };
+   	await this.ctx.storage.put(PORT_TOKENS, tokens);
+
+   	return {
+   		url: previewUrl(port, sandboxName, token, options.hostname),
+   		port,
+   		name: options.name,
+   	};
+   }
+   ```
+
+   The method stores tokens in the format that 0.12 used, and returns the URL that 0.12 returned. It does not start the container, as 0.12 did. 0.12 read the sandbox name from its own storage, so pass the name from your Worker:
+
+   ```ts title="src/index.ts"
+   const sandbox = env.Sandbox.getByName(name);
+   const { url } = await sandbox.exposePort(name, 8080, {
+   	hostname: "example.com",
+   });
+   ```
+
+3. Add the other port methods to the class:
+
+   ```ts title="src/index.ts"
+   async unexposePort(port: number): Promise<void> {
+   	const tokens = await this.readPortTokens();
+   	delete tokens[port];
+   	await this.ctx.storage.put(PORT_TOKENS, tokens);
+   }
+
+   async getExposedPorts(sandboxName: string, hostname: string) {
+   	const tokens = await this.readPortTokens();
+
+   	return Object.entries(tokens).map(([port, { token }]) => ({
+   		url: previewUrl(Number(port), sandboxName, token, hostname),
+   		port: Number(port),
+   		status: "active" as const,
+   	}));
+   }
+
+   async isPortExposed(port: number): Promise<boolean> {
+   	const tokens = await this.readPortTokens();
+   	return port in tokens;
+   }
+
+   async validatePortToken(
+   	port: number,
+   	token: string,
+   ): Promise<boolean> {
+   	const tokens = await this.readPortTokens();
+   	const expected = tokens[port]?.token;
+
+   	if (expected === undefined) {
+   		return false;
+   	}
+
+   	// Compare in constant time, so timing does not reveal the token.
+   	const encoder = new TextEncoder();
+   	const a = encoder.encode(expected);
+   	const b = encoder.encode(token);
+
+   	if (a.byteLength !== b.byteLength) {
+   		return false;
+   	}
+
+   	return crypto.subtle.timingSafeEqual(a, b);
+   }
+   ```
+
+   0.12 `getExposedPorts()` and `isPortExposed()` reported a port only after `exposePort()` ran in the current container. These methods report every stored port, because the Durable Object forwards requests to any stored port. 0.12 `destroy()` also deleted the tokens. Where your code calls `destroy()` to end a sandbox, also call `this.ctx.storage.delete(PORT_TOKENS)`.
+
+4. Route preview hostnames in your Worker. In 0.12, `proxyToSandbox()` runs before your other routes:
+
+   ```ts title="src/index.ts (0.12)"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const proxied = await proxyToSandbox(request, env);
+
+   		if (proxied) {
+   			return proxied;
+   		}
+
+   		// Your other routes.
+   	},
+   };
+   ```
+
+   In 1.0, the Worker reads the port, the sandbox name, and the token from the hostname, and checks the token:
+
+   ```ts title="src/index.ts (1.0)" ins={1-9,13-26}
+   // <port>-<sandbox name>-<token>, as 0.12 issued preview hostnames.
+   const PREVIEW = /^(\d{4,5})-([a-z0-9-]{1,63})-([a-z0-9_]{1,63})\./;
+
+   // The Durable Object forwards to the port in this header.
+   function toPort(request: Request, port: number): Request {
+   	const headers = new Headers(request.headers);
+   	headers.set("X-Sandbox-Port", String(port));
+   	return new Request(request, { headers });
+   }
+
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const preview = PREVIEW.exec(url.hostname);
+
+   		if (preview) {
+   			const [, portText, name, token] = preview;
+   			const port = Number(portText);
+   			const sandbox = env.Sandbox.getByName(name);
+
+   			if (!(await sandbox.validatePortToken(port, token))) {
+   				return new Response("Not found", { status: 404 });
+   			}
+
+   			return sandbox.fetch(toPort(request, port));
+   		}
+
+   		// Your other routes.
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   The expression splits the first label as 0.12 did: the port ends at the first hyphen, and the token starts after the last hyphen, because tokens contain no hyphens. A wrong token or a port without a token gets `404`, as in 0.12. `toPort()` replaces any `X-Sandbox-Port` header that the visitor sent. The Durable Object trusts that header, so send requests to its `fetch()` only through `toPort()`.
+
+5. Forward the request from the Durable Object's `fetch()` handler:
+
+   ```ts title="src/index.ts"
+   async fetch(request: Request): Promise<Response> {
+   	const container = this.ctx.container;
+   	const port = Number(request.headers.get("X-Sandbox-Port"));
+
+   	// Preview requests do not start the container.
+   	if (!container?.running) {
+   		return new Response("The sandbox is not running", {
+   			status: 503,
+   		});
+   	}
+
+   	// Use the timeout that your other methods set.
+   	await container.setInactivityTimeout(30 * 60 * 1000);
+
+   	const url = new URL(request.url);
+   	url.protocol = "http:";
+   	const forwarded = new Request(url, request);
+   	forwarded.headers.delete("X-Sandbox-Port");
+
+   	try {
+   		const tcpPort = container.getTcpPort(port);
+   		const response = await tcpPort.fetch(forwarded);
+
+   		if (response.webSocket) {
+   			return bridge(response.webSocket);
+   		}
+
+   		return response;
+   	} catch {
+   		return new Response("Nothing is listening on this port", {
+   			status: 503,
+   		});
+   	}
+   }
+   ```
+
+   Copy the `bridge()` function from [Keep WebSocket connections open](/sandbox/previews/#keep-websocket-connections-open). A WebSocket that only passes through the Durable Object does not keep the container running, so the bridge accepts both ends.
+
+   The server receives the preview hostname in the `Host` header. 0.12 sent `localhost:<PORT>` and put the preview hostname in `X-Forwarded-Host`. If your server checks either header, as Vite does with [`server.allowedHosts`](https://vite.dev/config/server-options#server-allowedhosts), update its configuration.
+
+6. Replace each `wsConnect()` call in your Worker. In 0.12, it connects a WebSocket to a port:
+
+   ```ts title="src/index.ts (0.12)"
+   if (request.headers.get("Upgrade") === "websocket") {
+   	return getSandbox(env.Sandbox, name).wsConnect(request, 8080);
+   }
+   ```
+
+   In 1.0, send the request through `toPort()` to the same `fetch()` handler:
+
+   ```ts title="src/index.ts (1.0)" ins={2}
+   if (request.headers.get("Upgrade") === "websocket") {
+   	return env.Sandbox.getByName(name).fetch(toPort(request, 8080));
+   }
+   ```
+
+   The request does not start the container, so start the server before a page connects. Keep the checks that run before the call, because this route has no token.
+
+</Steps>
+
+## What happens to live previews
+
+Your Durable Objects keep the `portTokens` key when you deploy the switch in place. After the switch, preview URLs behave as follows:
+
+| Request | Result |
+| --- | --- |
+| A URL that 0.12 issued | Returns `503` until a server listens on its port in the new container, and then reaches that server. |
+| Any URL after a container starts again | Reaches the server without another `exposePort()` call. 0.12 returned `410` until you exposed the port again. |
+| A wrong token, or a port without a token | Returns `404`. |
+| A URL after `unexposePort()` | Returns `404`. |
+
+If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), the tokens stay in the 0.12 class. Add a method to the 0.12 subclass that returns them. The 0.12 class already has a private `readPortTokens()` method, so use another name:
+
+```ts title="src/index.ts"
+exportPortTokens(): Promise<unknown> {
+	return this.ctx.storage.get("portTokens");
+}
+```
+
+In `copyFrom0x()`, copy them before the `isRunning()` check, so that URLs also move for sandboxes whose 0.12 container has stopped:
+
+```ts title="src/index.ts"
+const tokens = await this.env.Sandbox.getByName(name).exportPortTokens();
+
+if (tokens) {
+	await this.ctx.storage.put("portTokens", tokens);
+}
+```
+
+In the Worker's preview route, get the stub with `await sandboxFor(env, name)`.
+
+## Check preview URLs
+
+Deploy to your staging Worker, and start a server in a sandbox that had a preview URL in 0.12. Request that URL:
+
+```sh
+curl https://8080-ada-<TOKEN>.example.com/
+```
+
+The response comes from your server. Request the same port with a wrong token:
+
+```sh
+curl https://8080-ada-wrong.example.com/ --write-out " %{http_code}\n"
+```
+
+```txt output
+Not found 404
+```
+
+## Related resources
+
+- [Preview a web application](/sandbox/previews/)
+- [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/)
+- [Move tunnels](/sandbox/sdk/migrate/tunnels/)
+- [`getTcpPort()`](/durable-objects/api/container/#gettcpport)

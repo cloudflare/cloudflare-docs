@@ -152,7 +152,7 @@ The page ends with the Worker running under `wrangler dev`. The deploy that swit
    | `entrypoint` | `entrypoint` on `start()`, or `CMD` in the image. |
    | `enableInternet` | `enableInternet` on `start()`, which every call must pass. 0.12 defaulted to `true`. |
    | `labels`, `setLabels()` | `labels` on `start()`. |
-   | `defaultPort`, `requiredPorts` | `this.container.getTcpPort(port)`. Refer to [Move preview URLs and tunnels](/sandbox/sdk/migrate/previews-and-tunnels/). |
+   | `defaultPort`, `requiredPorts` | `this.container.getTcpPort(port)`. Refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/). |
    | `allowedHosts`, `deniedHosts`, `outboundByHost`, `outbound`, `interceptHttps` | Refer to [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). |
    | `normalizeId` | Lowercase the name before `getByName()`. |
    | `containerTimeouts` | An `AbortSignal` on the calls that need a deadline. Refer to [Replace timeouts](/sandbox/sdk/migrate/commands-and-files/#replace-timeouts). |
