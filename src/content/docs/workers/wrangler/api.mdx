@@ -658,6 +658,8 @@ This will print the following output: `MY_VARIABLE = test`.
 
 All supported bindings found in your [Wrangler configuration file](/workers/wrangler/configuration/) are available to you via `env`.
 
+`getPlatformProxy` does not run your Worker's code. It ignores the Workflows declared in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of your Wrangler configuration.
+
 The bindings supported by `getPlatformProxy` are:
 
 - [Environment variables](/workers/configuration/environment-variables/)

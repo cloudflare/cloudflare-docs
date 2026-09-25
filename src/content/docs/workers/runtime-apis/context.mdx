@@ -94,6 +94,7 @@ To use `ctx.exports`, you must use [the `enable_ctx_exports` compatibility flag]
 
 - For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
 - For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
+- For each top-level export that `extends WorkflowEntrypoint` (and which has been declared as a Workflow in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of your Wrangler configuration), `ctx.exports` automatically contains a [Workflow binding](/workflows/build/workers-api/#workflow). Refer to [Call a Workflow through `ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports).
 
 For example:
 
