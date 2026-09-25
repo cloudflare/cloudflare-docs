@@ -39,6 +39,23 @@ Before you begin, you need:
 
 You can create, preview, attach, and manage transformers through the Cloudflare dashboard or the API.
 
+### Existing Logpush filters
+
+Each Logpush job can have either a transformer or [filters](/logs/logpush/logpush-job/filters/), but not both. When you attach a transformer to a filtered job in the Cloudflare dashboard, Transformer Studio converts the existing filter to an equivalent SQL predicate.
+
+Copy the predicate into the transformer's `WHERE` clause to preserve the filtering behavior. When you confirm the attachment, Transformer Studio removes the job filter and attaches the transformer.
+
+The API does not convert Logpush filters to SQL. To migrate a filtered job through the API, convert the filter to an equivalent SQL predicate and add it to the transformer's `WHERE` clause. Then clear `filter` and set `transformer_id` in the same Logpush job update request:
+
+```json
+{
+  "filter": "",
+  "transformer_id": 42
+}
+```
+
+If you set `transformer_id` without clearing the existing filter, the API returns a `400` response.
+
 ### Transformer Studio (UI)
 
 Transformer Studio is the workspace that includes a SQL editor where you write, preview, and manage Transformers. Open it from the Logpush page in the Cloudflare dashboard.
@@ -289,6 +306,7 @@ Delivered record:
 | `413` | (request entity too large)                                    | The SQL query exceeds 250 KB. Shorten the query.                                                                                 |
 | `400` | `transformer N not found for this account`                    | The transformer ID does not exist, or belongs to a different account.                                                            |
 | `400` | `transformer N dataset "X" does not match job dataset "Y"`    | The transformer's `FROM` table does not match the job's dataset.                                                                 |
+| `400` | `a job cannot have both a filter and a transformer configured; use one or the other` | Clear the job's `filter` in the same request that sets `transformer_id`.                                                          |
 
 ### Runtime failures
 
