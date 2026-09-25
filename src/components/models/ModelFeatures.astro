@@ -3,10 +3,10 @@
  * ModelFeatures — the per-model "Model Info" table. Rows render in a fixed
  * order: deprecation → context window → terms → info → max input tokens →
  * output dimensions → function calling → reasoning → vision → zdr → lora →
- * beta → Batch → request formats → partner → realtime → unit price →
- * dashboard pricing link.
+ * beta → Batch → request formats → partner → realtime → unit price → pricing.
  */
 import {
+	formatModelPricing,
 	formatModelReasoning,
 	modelCurrencyFormatter,
 	type ModelView,
@@ -27,11 +27,7 @@ for (const { property_id, value } of model.propertiesList) {
 }
 
 const isCatalog = model.dataSource === "catalog";
-// Catalog dashboard pricing deep link; model_id is "provider/name".
-const dashPricingUrl =
-	isCatalog && model.modelId
-		? `https://dash.cloudflare.com/?to=/:account/ai/models/${model.modelId}`
-		: null;
+const catalogPricing = isCatalog ? formatModelPricing(model.pricing) : [];
 
 // `requestFormats` lives on the resolved model (catalog-only) rather than the
 // properties array because Property.value is string-only. Identifiers like
@@ -212,14 +208,15 @@ const reasoning = formatModelReasoning(
 					</td>
 				</tr>
 			)}
-			{dashPricingUrl && (
+			{catalogPricing.length > 0 && (
 				<tr>
 					<td>Pricing</td>
 					<td>
-						<a href={dashPricingUrl} target="_blank" rel="noreferrer">
-							View pricing in the Cloudflare dashboard
-							<span class="external-link"> ↗</span>
-						</a>
+						<ul class="m-0 list-none p-0">
+							{catalogPricing.map((line) => (
+								<li class="m-0">{line}</li>
+							))}
+						</ul>
 					</td>
 				</tr>
 			)}
