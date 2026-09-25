@@ -40,7 +40,7 @@ Inside a coding agent's sandbox, the agent runs `git pull`, and code from a test
 
 Environment variables, command arguments, and files your Worker writes work the same way. Once a value is in the sandbox, all the code there can read it and send it anywhere the sandbox can reach.
 
-Credentials are safer outside the sandbox. A Container can send its request without the credential, and an outbound handler in your Worker adds the credential after the request leaves the sandbox. A Dynamic Worker can receive a method that uses the credential in your Worker and returns only the result. The code uses the service without holding the key. The method or handler also decides which requests to make, so it limits what the code can do with the service. For both patterns, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
+Credentials are safer outside the sandbox. A Container can send its request without the credential, and an outbound handler in your Worker adds the credential after the request leaves the sandbox. Add it only when the request uses HTTPS. The handler fetches with the scheme the container used, so a credential added to a plain HTTP request would cross the Internet unencrypted. A Dynamic Worker can receive a method that uses the credential in your Worker and returns only the result. The code uses the service without holding the key. The method or handler also decides which requests to make, so it limits what the code can do with the service. For both patterns, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
 
 ## The sandbox name decides what a request reaches
 

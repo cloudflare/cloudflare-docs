@@ -193,6 +193,12 @@ export class Outbound extends WorkerEntrypoint<Env> {
 		const url = new URL(request.url);
 		const gatewayPath = `/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}`;
 
+		if (url.protocol !== "https:") {
+			return new Response(`${url.hostname} is reachable only over HTTPS\n`, {
+				status: 403,
+			});
+		}
+
 		if (
 			url.hostname === gatewayHost &&
 			(url.pathname === gatewayPath ||
@@ -226,7 +232,7 @@ The entrypoint allows two destinations:
 - Requests to your gateway under your account ID and gateway ID. The Worker removes the placeholder API key that Claude Code sends and adds the gateway token. AI Gateway then calls Anthropic with the credentials it holds. If the Worker left the placeholder in place, AI Gateway would forward it to Anthropic and the model request would fail.
 - Requests to `github.com`, so Git can clone public repositories.
 
-Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
+Both are HTTPS only. The Worker fetches with the scheme the container used, so a plain HTTP request to the gateway would send the gateway token unencrypted. Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 ## 3. Run Claude Code in the sandbox
 
