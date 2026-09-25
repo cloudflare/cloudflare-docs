@@ -70,7 +70,7 @@ if (result?.state !== "matched") {
 }
 ```
 
-The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. Replace `\d` with `[0-9]`, `\s` with `[[:space:]]`, and `\w` with `[[:alnum:]_]`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
+The pattern is a `grep -E` extended regular expression, not a JavaScript `RegExp`. GNU `grep`, which Debian images include, does not support `\d`, so replace it with `[0-9]`. It accepts `\s` and `\w`. 0.12 threw an error on a timeout. `waitForLog()` returns the state `timed-out`, or `exited` if the process ended without printing a matching line.
 
 Replace `Process.waitForExit()` with `status()` calls until the state is `exited` or `lost`. Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/).
 
