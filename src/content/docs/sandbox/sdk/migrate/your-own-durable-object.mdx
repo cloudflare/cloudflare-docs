@@ -3,7 +3,7 @@ title: Move to your own Durable Object
 description: Replace the Sandbox class from @cloudflare/sandbox 0.12 with a Durable Object that starts its own container.
 pcx_content_type: how-to
 sidebar:
-  order: 3
+  order: 5
 products:
   - sandbox
   - containers
@@ -200,7 +200,7 @@ This page migrates the 0.12 minimal template, which runs a command at `/run` and
 
    Remove `enableInternet: true` if your commands do not need the Internet.
 
-6. Deploy the Worker:
+6. Before you deploy, prepare your code and clients as [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/) describes. Then deploy the Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

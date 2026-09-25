@@ -1,0 +1,125 @@
+---
+title: Plan the move to Sandbox SDK 1.0
+description: Choose how to switch live Sandbox SDK 0.12 sandboxes to 1.0, prepare your code for the deploy that cannot be undone, and remove what 0.12 leaves behind.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  label: Plan the move
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+Your sandboxes switch from Sandbox SDK 0.12 to 1.0 at one deploy, and you cannot undo that deploy. This page helps you choose how to reach it, and then moves every sandbox in one deploy.
+
+## Before you start
+
+- Your application runs `@cloudflare/sandbox` 0.12.10.
+- Your 1.0 class is written. For the class, refer to [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/).
+- You have a staging copy of the Worker with its own Wrangler configuration file. Set a different Worker `name` and a different `name` for each container in that file, because the `--name` option of `wrangler deploy` does not rename container applications.
+
+## Choose a path
+
+You can move in one of two ways:
+
+| Path | What happens | Suits |
+| --- | --- | --- |
+| In place | One deploy moves every sandbox to 1.0. Commands that run in 0.12 containers end, and files in those containers do not carry over. | Sandboxes that are short-lived or cheap to create again |
+| [Side by side](/sandbox/sdk/migrate/move-side-by-side/) | A 1.0 class runs next to the 0.12 class in the same Worker. Your code moves each sandbox, and you delete the 0.12 class when none remain. | Long-lived sandboxes that users return to |
+
+Neither path can split traffic with a gradual deployment. Wrangler rejects a deployment that mixes the two versions with this error:
+
+```txt output wrap
+All Worker Versions in a multi-version deployment must declare identical Durable Object-managed Container applications.
+```
+
+Rehearse your path on the staging Worker, with sandboxes running in it, before you follow it in production. The rest of this page moves in place. For the other path, refer to [Move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/).
+
+## What the switch does to live sandboxes
+
+The switch happens when the deploy that moves your class to `scheduling_policy: "durable_object"` goes live. Each part of a 0.12 sandbox changes as follows:
+
+| Part | At the switch |
+| --- | --- |
+| Running containers | Keep running in the old container application, with no Durable Object attached. |
+| Files | Stay in the old containers. New containers start without them. |
+| Running commands | End shortly after. A command that returns its result when it finishes fails with HTTP 500. Streamed output stops with HTTP 200 and no error. |
+| WebSockets | Stop delivering data. Clients receive no close frame. |
+| Pending alarms | Call your 1.0 `alarm()` handler once for each sandbox that was active. |
+| `schedule()` callbacks | Never run. |
+| 0.12 storage keys | Stay in Durable Object storage, unused. |
+
+## Move every sandbox in one deploy
+
+<Steps>
+
+1. Make your `alarm()` handler check its own state before it acts. 0.12 keeps an alarm set while a container runs, and after the switch that alarm calls your handler. If the handler throws, the platform retries it with backoff:
+
+   ```ts title="src/index.ts"
+   async alarm(): Promise<void> {
+   	// A 0.12 alarm can call this handler once after the switch.
+   	const due = await this.ctx.storage.get<number>("nextCheckpoint");
+
+   	if (due === undefined || due > Date.now()) {
+   		return;
+   	}
+
+   	await this.checkpoint();
+   }
+   ```
+
+   If your class has no `alarm()` handler, each pending alarm fails once with an internal error in your logs and then clears.
+
+2. Replace `schedule()` calls. 0.12 stores scheduled callbacks in a table that 1.0 does not read. Set the next run with `this.ctx.storage.setAlarm()` from your class, and do the work in `alarm()`. For more information, refer to [Alarms](/durable-objects/api/alarms/).
+
+3. Prepare clients for sockets that go silent. Open terminals and preview WebSockets stop receiving data at the switch, and the browser does not see them close. Have your client reconnect when a socket receives nothing for a set time, or tell users to reload after the deploy.
+
+4. Save the files that users need. Each 0.12 container keeps its files until you delete the old application, but no 1.0 sandbox can read them. Before you deploy, save the files with 0.12 `createBackup()`. After the switch, restore them as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+
+5. Upload and deploy the 1.0 version to the staging Worker first, as steps 6 and 7 describe, with sandboxes running and a client connected. Check that your application's own requests work after the switch.
+
+6. Upload the 1.0 version:
+
+   <PackageManagers type="exec" pkg="wrangler" args="versions upload" />
+
+   The upload builds the 1.0 image and creates the new container application. The version that serves traffic does not change. Note the version ID that Wrangler prints.
+
+7. Deploy the version when no long commands run.
+
+   :::caution
+   You cannot undo this deploy. After it, a `wrangler rollback` to a 0.12 version either fails or deploys 0.12 code that cannot start containers. If something breaks, fix it and deploy again.
+   :::
+
+   Replace `<VERSION_ID>` with the ID from the upload:
+
+   <PackageManagers type="exec" pkg="wrangler" args="versions deploy <VERSION_ID>@100% -y" />
+
+</Steps>
+
+## Check the move
+
+Send your application's own requests to a sandbox, such as a command and a file read. Each Durable Object starts a 1.0 container on its first request. List the container applications in your account:
+
+<PackageManagers type="exec" pkg="wrangler" args="containers list" />
+
+The list shows the new application with the `name` you set. The old application is still there. Wrangler named it from your Worker and class names, such as `my-worker-sandbox`.
+
+## Clean up
+
+Delete the old container application. Replace `<OLD_APPLICATION_ID>` with its ID from the list:
+
+<PackageManagers type="exec" pkg="wrangler" args="containers delete <OLD_APPLICATION_ID>" />
+
+The old application runs its containers, and bills for them, until you delete it. Deleting it stops the containers that 0.12 started and deletes their files. Durable Objects and their storage stay.
+
+The keys that 0.12 wrote stay in each Durable Object's storage and do nothing. If you delete them, name each key in a `delete()` call. Do not call `deleteAll()`, which also deletes your own keys and any 0.12 backup handles that you still need to convert.
+
+## Related resources
+
+- [Move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/)
+- [Move to your own Durable Object](/sandbox/sdk/migrate/your-own-durable-object/)
+- [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/)
+- [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/)
