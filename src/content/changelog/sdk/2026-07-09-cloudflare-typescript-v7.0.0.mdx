@@ -1,0 +1,155 @@
+---
+title: Cloudflare TypeScript SDK v7.0.0 Released
+description: Major release with zero runtime dependencies, Web fetch API adoption, named path parameters, a migration CLI, new resources, and tree-shaking support.
+products:
+  - sdk
+date: 2026-07-09
+---
+
+Full Changelog: [v6.5.0...v7.0.0](https://github.com/cloudflare/cloudflare-typescript/compare/v6.5.0...v7.0.0)
+
+This is a major version release of the Cloudflare TypeScript SDK. It drops all runtime dependencies, adopts the builtin Web fetch API on all platforms, introduces named path parameters to eliminate argument-order mistakes, and ships a migration CLI to automate the upgrade.
+
+**Please read through the breaking changes below and the [Migration Guide](https://github.com/cloudflare/cloudflare-typescript/blob/main/MIGRATION.md) before upgrading.**
+
+```sh
+npx cloudflare migrate ./your/src/folders
+```
+
+> **Known limitations of the migration tool:** it is not idempotent — run it once only. If you have already manually updated some call sites to v7 style, those may be incorrectly transformed. Review the diff carefully before committing.
+
+## Breaking Changes
+
+### Zero Runtime Dependencies
+
+All runtime dependencies (`node-fetch`, `agentkeepalive`, `form-data-encoder`, `formdata-node`, `abort-controller`) have been removed. The SDK now uses the builtin Web fetch API on all platforms.
+
+### Named Path Parameters (232 methods)
+
+Methods with multiple path parameters now use named instead of positional arguments for all but the _last_ path parameter, preventing accidental argument-order mistakes. For methods with 3+ path parameters, intermediate parameters move into the options object.
+
+```ts
+// Before (v6.x)
+client.accounts.members.get(memberId, { account_id: '...' });
+client.customHostnames.certificatePack.certificates.update(
+  customHostnameId, certificatePackId, certificateId, { ...params }
+);
+
+// After (v7.0.0)
+client.accounts.members.get(memberID, { account_id: '...' });
+client.customHostnames.certificatePack.certificates.update(
+  certificateID, { custom_hostname_id: '...', certificate_pack_id: '...', ...params }
+);
+```
+
+See the [Migration Guide](https://github.com/cloudflare/cloudflare-typescript/blob/main/MIGRATION.md) for the complete list of affected methods.
+
+### Parameter Name Casing (`camelCase` → `UPPER_ID`)
+
+Path parameter argument names are standardized to `UPPER_ID` format across 792 methods (e.g. `policyId` → `policyID`). This is a TypeScript compilation change if you were using named or destructured parameters.
+
+### Web Types for Responses and Errors
+
+If you accessed `node-fetch`-specific properties on response objects, switch to standardized Web API alternatives:
+
+```ts
+// Before (v6.x)
+const res = await client.example.retrieve('id').asResponse();
+res.body.pipe(process.stdout);
+
+// After (v7.0.0)
+import { Readable } from 'node:stream';
+const res = await client.example.retrieve('id').asResponse();
+Readable.fromWeb(res.body).pipe(process.stdout);
+```
+
+The `headers` property on `APIError` is now an instance of the Web `Headers` class (previously `Record<string, string | null | undefined>`).
+
+### Removed and Changed Client Options
+
+- **`httpAgent`** removed — use the new **`fetchOptions`** option instead.
+- **`defaultHeaders`** type changed from `Core.Headers` to `HeadersLike`.
+- **`fetch`** type changed from `Core.Fetch` to `Fetch`.
+
+### Method Renames (`Id` → `ID`)
+
+| Resource | Old Method | New Method |
+| --- | --- | --- |
+| `vectorize.indexes` | `deleteByIds()` | `deleteByIDs()` |
+| `vectorize.indexes` | `getByIds()` | `getByIDs()` |
+| `realtimeKit.meetings` | `getMeetingById()` | `getMeetingByID()` |
+| `realtimeKit.meetings` | `replaceMeetingById()` | `replaceMeetingByID()` |
+| `realtimeKit.meetings` | `updateMeetingById()` | `updateMeetingByID()` |
+| `realtimeKit.presets` | `getPresetById()` | `getPresetByID()` |
+| `realtimeKit.sessions` | `getParticipantDataFromPeerId()` | `getParticipantDataFromPeerID()` |
+| `realtimeKit.webhooks` | `getWebhookById()` | `getWebhookByID()` |
+| `realtimeKit.livestreams` | `getActiveLivestreamsForLivestreamId()` | `getActiveLivestreamsForLivestreamID()` |
+| `realtimeKit.livestreams` | `getLivestreamSessionDetailsForSessionId()` | `getLivestreamSessionDetailsForSessionID()` |
+| `realtimeKit.livestreams` | `getLivestreamSessionForLivestreamId()` | `getLivestreamSessionForLivestreamID()` |
+
+### Return Type Changes
+
+| Resource | Method | Old Return Type | New Return Type |
+| --- | --- | --- | --- |
+| `zeroTrust.devices.dexTests` | `create()` | `DEXTestCreateResponse` | `SchemaHTTP` |
+| `zeroTrust.devices.dexTests` | `update()` | `DEXTestUpdateResponse` | `SchemaHTTP` |
+| `zeroTrust.devices.dexTests` | `list()` | `DEXTestListResponsesV4PagePaginationArray` | `SchemaHTTPSV4PagePaginationArray` |
+| `zeroTrust.devices.dexTests` | `get()` | `DEXTestGetResponse` | `SchemaHTTP` |
+
+Removed types: `DEXTestCreateResponse`, `DEXTestUpdateResponse`, `DEXTestListResponse`, `DEXTestGetResponse` — use `SchemaHTTP` / `SchemaHTTPS` instead.
+
+### Removed `fileFromPath` Helper
+
+```ts
+// Before (v6.x)
+import { fileFromPath } from 'cloudflare';
+const file = await fileFromPath('path/to/file');
+
+// After (v7.0.0)
+import fs from 'node:fs';
+const file = fs.createReadStream('path/to/file');
+```
+
+### Other Breaking Changes
+
+- **`APIClient` replaced by `BaseCloudflare`** — import from `cloudflare/client` instead of `cloudflare/core`.
+- **Page classes converted to type aliases** — per-method pagination classes (e.g. `AccountsV4PagePaginationArray`) are now type aliases; runtime `instanceof` checks will break.
+- **`cloudflare/src` import paths removed** — replace `cloudflare/src/...` imports with `cloudflare/...`.
+- **Internal restructuring** — `src/core.ts` split into `src/core/` modules; `src/_shims/` replaced by `src/internal/`. Update any deep imports from `cloudflare/core` or `cloudflare/_shims`.
+
+## New Features
+
+### New Client Options
+
+- **`fetchOptions`** — pass additional `RequestInit` options to every `fetch` call (e.g. `signal`, `keepalive`, `cache`). Per-request values override the client-level default.
+- **`logLevel`** / **`logger`** — configure SDK logging. Defaults to `process.env['CLOUDFLARE_LOG']` or `'warn'`. Use `logLevel: 'debug'` for request/response tracing.
+
+### New Resources and Methods
+
+- **`registrar.registrations`** — `create()`, `list()`, `edit()`, `get()` for domain registrations.
+- **`accounts.logs.audit.history()`** and **`productCategories()`** — audit log history and category endpoints.
+- **`organizations.logs.audit.history()`** — org-level audit log history.
+- **`emailRouting.unlock()`** and **`emailRouting.addresses.edit()`** — email routing management.
+- **`browserRendering.accessibilityTree.create()`** — accessibility tree generation.
+
+### Tree-Shaking Support
+
+A new `createClient` function and `PartialCloudflare` type are exported from `cloudflare/tree-shakable`. Every resource now exports a `Base*` variant (e.g. `BaseZones`) for selective imports, reducing bundle size:
+
+```ts
+import { createClient } from 'cloudflare/tree-shakable';
+import { Zones } from 'cloudflare/resources/zones/zones';
+
+const client = createClient({ resources: [Zones] });
+```
+
+## Bug Fixes
+
+- **workflows:** moved Workflow payload types into a `Payload` namespace to avoid `TS2717` duplicate identifier errors.
+
+## Get Started
+
+- [TypeScript SDK v7.0.0 on npm](https://www.npmjs.com/package/cloudflare/v/7.0.0)
+- [TypeScript SDK documentation](https://developers.cloudflare.com/api/sdks/typescript/)
+- [Migration Guide](https://github.com/cloudflare/cloudflare-typescript/blob/main/MIGRATION.md)
+- [Full Changelog](https://github.com/cloudflare/cloudflare-typescript/blob/main/CHANGELOG.md)
