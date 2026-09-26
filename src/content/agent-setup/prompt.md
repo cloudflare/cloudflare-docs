@@ -76,7 +76,7 @@ Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
 OAuth triggers automatically on first Cloudflare tool use.
 
-### Cursor, GitHub Copilot, and all other agents
+### Cursor and GitHub Copilot
 
 Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
 
@@ -105,6 +105,72 @@ Once done, tell the user:
 
 ---
 
+## Install for Vibe
+
+From the project root, install skills for the current project:
+
+```
+npx -y skills add cloudflare/skills --skill '*' --yes
+```
+
+Back up `~/.vibe/config.toml` before editing it, and preserve unrelated settings. Update entries with the same name instead of adding duplicates. Add these entries:
+
+```toml
+[[mcp_servers]]
+name = "cloudflare"
+transport = "streamable-http"
+url = "https://mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-docs"
+transport = "streamable-http"
+url = "https://docs.mcp.cloudflare.com/mcp"
+
+[[mcp_servers]]
+name = "cloudflare-bindings"
+transport = "streamable-http"
+url = "https://bindings.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-builds"
+transport = "streamable-http"
+url = "https://builds.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-observability"
+transport = "streamable-http"
+url = "https://observability.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+```
+
+Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the servers that access their Cloudflare account:
+
+```
+/mcp login cloudflare
+/mcp login cloudflare-bindings
+/mcp login cloudflare-builds
+/mcp login cloudflare-observability
+```
+
+The `cloudflare-docs` server is public and does not require authentication.
+
+---
+
 ## Resources
 
 For MCP setup guides and troubleshooting, refer to each agent's official documentation:
@@ -114,6 +180,7 @@ For MCP setup guides and troubleshooting, refer to each agent's official documen
 - Devin Desktop: `https://docs.devin.ai/desktop/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
+- Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
 - Skills: `https://github.com/cloudflare/skills`
 - Cloudflare API MCP server (Code Mode): `https://github.com/cloudflare/mcp`
 - Other Cloudflare MCP servers: `https://github.com/cloudflare/mcp-server-cloudflare`
