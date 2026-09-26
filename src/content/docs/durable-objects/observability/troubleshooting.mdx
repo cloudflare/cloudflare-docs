@@ -47,6 +47,26 @@ Reset in error messages refers to in-memory state. Any durable state that has al
 
 Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
 
+### Connection closed: this Durable Object instance is no longer active. Reconnect or retry the request.
+
+This error means the connection between your Worker and the Durable Object was interrupted by the platform. It is unrelated to your own Worker code or deployments, and it has its `.retryable` property set to `true`.
+
+Cloudflare automatically retries eligible `DurableObjectStub.fetch()` calls when the runtime can safely replay the request. Remote procedure call (RPC) methods are not automatically retried.
+
+If your code receives this error, create a new [`DurableObjectStub`](/durable-objects/api/stub/). Retry the operation only if it is idempotent, and apply exponential backoff between attempts.
+
+Reusing the stub that threw this error fails immediately. For more information, refer to [Error handling](/durable-objects/best-practices/error-handling/).
+
+### Durable Object connection closed because the object was reset.
+
+This error means the Durable Object's connection was interrupted by the platform while a WebSocket was open. The WebSocket closes, and the client must reconnect.
+
+Do not rely on this text appearing as the WebSocket close reason. Build clients to reconnect after any unexpected closure.
+
+Hibernation itself does not close WebSocket connections.
+
+Keep any state that must survive a reconnect in [storage](/durable-objects/best-practices/access-durable-objects-storage/) rather than in memory.
+
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
 To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](/support/contacting-cloudflare-support/).
