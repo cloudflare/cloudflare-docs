@@ -1,0 +1,101 @@
+---
+title: Notification consumers
+description: Send Cloudflare Queues messages to email, PagerDuty, and webhook notification destinations.
+pcx_content_type: configuration
+sidebar:
+  order: 4.5
+products:
+  - queues
+---
+
+import { DashButton, Steps } from "~/components";
+
+:::note[Beta]
+
+Notification consumers are in beta.
+
+:::
+
+A notification consumer sends queue messages to destinations through [Cloudflare Notifications](/notifications/). Supported destinations include email addresses, PagerDuty services, and webhooks.
+
+A queue can have one active consumer. Remove any existing consumer before adding a notification consumer.
+
+## Availability
+
+Notification consumer destinations have the same availability as Cloudflare Notifications:
+
+- Email destinations are available on all plans.
+- Webhooks require an account with at least one zone on a Professional plan or higher.
+- PagerDuty requires an account with at least one zone on a Business plan or higher.
+
+Before selecting a webhook or PagerDuty destination, configure it in Cloudflare Notifications. Refer to [Configure webhooks](/notifications/get-started/configure-webhooks/) or [Configure PagerDuty](/notifications/get-started/configure-pagerduty/).
+
+## Delivery behavior
+
+Each notification contains one queue message. For `text` and `json` messages, the notification displays the message body as decoded text. JSON is not reformatted.
+
+For `bytes` and `v8` messages, the notification replaces the body with a notice that binary data cannot be rendered. If a message has no content type, email notifications omit its body. Webhook and PagerDuty notifications include an empty body.
+
+Notification consumers use a fixed batch size of `1`. Failed submissions have a 10-second retry delay and a limit of 100 retries. These settings cannot be changed.
+
+Queues acknowledges a message after Cloudflare Notifications accepts the notification event. Queues does not wait for delivery to the configured destinations. After the retry limit is exceeded, Queues sends the message to the configured [Dead Letter Queue](/queues/configuration/dead-letter-queues/) or drops it if no Dead Letter Queue is configured.
+
+Messages from [Event subscriptions](/queues/event-subscriptions/) include the source product's display name and the Event Subscription ID.
+
+## Add a notification consumer
+
+You can add a notification consumer in the dashboard or with Wrangler. At least one destination is required.
+
+### Dashboard
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Queues**.
+
+   <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select a queue, then go to **Settings** > **Consumers**.
+3. Select **Add**, then select _Notification_ as the consumer type.
+4. Add one or more email, PagerDuty, or webhook destinations.
+5. (Optional) Select a Dead Letter Queue.
+6. Select **Add**.
+
+</Steps>
+
+### Wrangler
+
+To add a notification consumer, run:
+
+```sh
+npx wrangler queues consumer notification add $QUEUE_NAME --email user@example.com --pagerduty $PAGERDUTY_INTEGRATION_ID --webhook $WEBHOOK_ID --dead-letter-queue $DLQ_NAME
+```
+
+The `--email`, `--pagerduty`, and `--webhook` options can be repeated. You can omit destination options that you do not need.
+
+Wrangler configuration files do not support notification consumers.
+
+## List notification destinations
+
+The queue's **Settings** > **Consumers** page lists its notification destinations. To list the notification consumer with Wrangler, run:
+
+```sh
+npx wrangler queues consumer notification list $QUEUE_NAME
+```
+
+Add `--json` to return the consumer configuration as JSON.
+
+## Edit notification destinations
+
+You can edit notification destinations in the dashboard. Go to the queue's **Settings** > **Consumers** page, then select **Edit** for the notification consumer.
+
+Saving an edit replaces all previously configured destinations. Include every destination that should remain attached to the consumer.
+
+## Remove a notification consumer
+
+To remove a notification consumer in the dashboard, go to the queue's **Settings** > **Consumers** page. Select **Delete** for the consumer, then confirm the deletion.
+
+To remove the notification consumer with Wrangler, run:
+
+```sh
+npx wrangler queues consumer notification remove $QUEUE_NAME
+```

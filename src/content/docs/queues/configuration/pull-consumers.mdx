@@ -21,14 +21,15 @@ import {
 
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
-## How to choose between push or pull consumer
+## Choose a consumer type
 
-Deciding whether to configure a push-based consumer or a pull-based consumer will depend on how you are using your queues, as well as the configuration of infrastructure upstream from your queue consumer.
+Choose a consumer based on how and where you process messages.
 
-- **Starting with a [push-based consumer](/queues/reference/how-queues-works/#consumers) is the easiest way to get started and consume from a queue**. A push-based consumer runs on Workers, and by default, will automatically scale up and consume messages as they are written to the queue.
+- Start with a [consumer Worker](/queues/reference/how-queues-works/#consumers) to automatically process and scale as messages arrive.
 - Use a pull-based consumer if you need to consume messages from existing infrastructure outside of Cloudflare Workers, and/or where you need to carefully control how fast messages are consumed. A pull-based consumer must explicitly make a call to pull (and then acknowledge) messages from the queue, only when it is ready to do so.
+- Use a [notification consumer](/queues/configuration/notification-consumers/) to send messages to email, PagerDuty, or webhook destinations.
 
-You can remove and attach a new consumer on a queue at any time, allowing you to change from a pull-based to a push-based consumer if your requirements change.
+You can remove and attach a new consumer at any time.
 
 :::note[Retrieve an API bearer token]
 
@@ -45,7 +46,7 @@ To configure a pull-based consumer and receive messages from a queue, you need t
 
 ## 1. Enable HTTP pull
 
-You can enable HTTP pull or change a queue from push-based to pull-based via the `wrangler` CLI or via the [Cloudflare dashboard](https://dash.cloudflare.com/). Enabling HTTP pull from a [Wrangler configuration file](/workers/wrangler/configuration/) is no longer supported.
+You can enable HTTP pull or change a queue's consumer via the `wrangler` CLI or the [Cloudflare dashboard](https://dash.cloudflare.com/). Enabling HTTP pull from a [Wrangler configuration file](/workers/wrangler/configuration/) is no longer supported.
 
 :::note
 If you have specified `type = "http_pull"` in your Wrangler configuration file, remove and redeploy. Your Worker will retain access to the HTTP pull endpoint, and HTTP pull will remain enabled on your queue.
@@ -59,7 +60,7 @@ You can enable a pull-based consumer on any existing queue by using the `wrangle
 npx wrangler queues consumer http add $QUEUE-NAME
 ```
 
-If you have an existing push-based consumer, you will need to remove that first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration:
+If you have an existing consumer, you will need to remove it first. `wrangler` will return an error if you attempt to call `consumer http add` on a queue with an existing consumer configuration. For example, remove a consumer Worker with:
 
 ```sh
 wrangler queues consumer worker remove $QUEUE-NAME $SCRIPT_NAME
