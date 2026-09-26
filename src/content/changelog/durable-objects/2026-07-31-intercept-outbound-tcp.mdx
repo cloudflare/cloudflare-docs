@@ -1,0 +1,71 @@
+---
+title: Proxy outbound TCP traffic and connect to Hyperdrive from Durable Object containers
+description: The Durable Object Container API now supports `interceptOutboundTcp` for routing outbound TCP connections through a `WorkerEntrypoint`.
+products:
+  - durable-objects
+date: 2026-07-31
+---
+
+You can now use `interceptOutboundTcp` to route outbound TCP connections from a container through a `WorkerEntrypoint`. The Worker's `connect()` handler receives the raw TCP stream, allowing you to proxy traffic, inspect bytes, or route database connections through [Hyperdrive](/hyperdrive/).
+
+`interceptOutboundTcp` matches connections by `host:port`, IP address, or `IP:port`. You can call it before or after starting the container, and any existing open connections pick up the new handler without being dropped.
+
+The following example proxies a container's outbound TCP connection to the original destination while logging the number of bytes forwarded through a `TransformStream`:
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import { connect } from "cloudflare:sockets";
+
+export class TcpProxy extends WorkerEntrypoint {
+	async connect(socket, address) {
+		const upstream = connect(address);
+
+		const inspector = new TransformStream({
+			transform(chunk, controller) {
+				console.log(`Forwarding ${chunk.byteLength} bytes to ${address}`);
+				controller.enqueue(chunk);
+			},
+		});
+
+		await Promise.all([
+			socket.readable.pipeThrough(inspector).pipeTo(upstream.writable),
+			upstream.readable.pipeTo(socket.writable),
+		]);
+	}
+}
+```
+
+The following example routes a container's database connection through Hyperdrive, which handles connection pooling and query caching:
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import { connect } from "cloudflare:sockets";
+
+export class HyperdriveProxy extends WorkerEntrypoint {
+	async connect(socket, address) {
+		const upstream = connect({
+			hostname: this.env.HYPERDRIVE.host,
+			port: this.env.HYPERDRIVE.port,
+		});
+
+		await Promise.all([
+			socket.readable.pipeTo(upstream.writable),
+			upstream.readable.pipeTo(socket.writable),
+		]);
+	}
+}
+```
+
+Wire up the proxy inside your Durable Object:
+
+```ts
+// Proxy outbound TCP to api.example.com:8080
+const worker = this.ctx.exports.TcpProxy({ props: {} });
+this.ctx.container.interceptOutboundTcp("api.example.com:8080", worker);
+
+// Route Postgres traffic through Hyperdrive
+const dbProxy = this.ctx.exports.HyperdriveProxy({ props: {} });
+this.ctx.container.interceptOutboundTcp("postgres.example.com:5432", dbProxy);
+```
+
+For full API details, refer to the [`interceptOutboundTcp` documentation](/durable-objects/api/container/#interceptoutboundtcp).
