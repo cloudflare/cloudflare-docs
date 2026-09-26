@@ -16,7 +16,7 @@ In Sandbox SDK 0.12, `exec()` runs each command string in a long-lived `bash` se
 
 Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Call `ensureRunning()` at the start of each method that runs a command.
 
-This page replaces `exec()`, `execStream()`, `createSession()`, `getSession()`, `deleteSession()`, and the `timeout` and `commandTimeoutMs` options. For file calls, refer to [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call). For `startProcess()`, refer to [Move background processes](/sandbox/sdk/migrate/background-processes/).
+This page replaces `exec()`, `execStream()`, `createSession()`, `getSession()`, `deleteSession()`, and the `timeout` and `commandTimeoutMs` options. For file calls, refer to [Change file calls](/sandbox/sdk/migrate/files/). For `startProcess()`, refer to [Move background processes](/sandbox/sdk/migrate/background-processes/).
 
 ## Run commands
 
@@ -165,5 +165,5 @@ pwd=/workspace NODE_ENV=test
 
 - [`exec()`](/durable-objects/api/container/#exec)
 - [Stream command output](/sandbox/commands/stream-command-output/)
-- [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call)
+- [Change file calls](/sandbox/sdk/migrate/files/)
 - [Move background processes](/sandbox/sdk/migrate/background-processes/)
