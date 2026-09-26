@@ -8,6 +8,8 @@ sidebar:
   order: 2
 ---
 
+import { APIRequest, TabItem, Tabs } from "~/components";
+
 :::note[Availability]
 Requires Cloudflare CASB.
 
@@ -26,6 +28,8 @@ After you configure a webhook destination, you can test delivery from the **Webh
 
 ## Create a webhook
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Webhooks**.
 2. Select **Create webhook**.
 3. Enter a **Name** for the webhook.
@@ -35,6 +39,50 @@ After you configure a webhook destination, you can test delivery from the **Webh
 7. (Optional) Select **Test delivery** to validate the destination before saving.
 8. Select **Save**.
 
+</TabItem> <TabItem label="API">
+
+Make a `POST` request to the [Create a webhook](/api/resources/zero_trust/subresources/casb/subresources/posture/subresources/webhooks/methods/create/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/data-security/posture/webhooks"
+	method="POST"
+	json={{
+		label: "Send to SIEM",
+		destination_url: "https://example.com/webhook",
+		authentication_type: "Bearer Auth",
+		headers: [{ key: "Authorization", value: "Bearer <TOKEN>" }],
+	}}
+/>
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+   - `Zero Trust Write`
+
+2. Create a webhook using the [`cloudflare_zero_trust_casb_webhook`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_casb_webhook) resource:
+
+   ```tf
+   variable "siem_token" {
+     type      = string
+     sensitive = true
+   }
+
+   resource "cloudflare_zero_trust_casb_webhook" "siem" {
+     account_id          = var.cloudflare_account_id
+     label               = "Send to SIEM"
+     destination_url     = "https://example.com/webhook"
+     authentication_type = "Bearer Auth"
+     headers = [{
+       key   = "Authorization"
+       value = "Bearer ${var.siem_token}"
+     }]
+   }
+   ```
+
+   For HMAC signing, set `authentication_type = "HMAC-Signing"` and provide `signing_secret` instead of `headers`.
+
+</TabItem> </Tabs>
+
 Cloudflare only accepts destination URLs that use `https://` and are publicly reachable. URLs that resolve to localhost, loopback, private, or other reserved addresses are rejected.
 
 ## Authentication methods
@@ -42,10 +90,10 @@ Cloudflare only accepts destination URLs that use `https://` and are publicly re
 CASB webhooks support the following authentication methods:
 
 - **None**: Use this option if your destination does not require authentication.
-- **Basic Auth**: Use this option when your destination expects HTTP Basic authentication.
-- **Bearer Auth**: Use this option when your destination expects a bearer token.
-- **Static Headers**: Use this option when your destination requires one or more fixed custom headers. Header names must be unique.
-- **HMAC-Signing**: Use this option when your destination validates signed requests. You must provide a signing secret.
+- **Basic Auth**: Use this option when your destination expects HTTP Basic authentication. Requires an `Authorization` header with a value that starts with `Basic `.
+- **Bearer Auth**: Use this option when your destination expects a bearer token. Requires an `Authorization` header with a value that starts with `Bearer `.
+- **Static Headers**: Use this option when your destination requires one or more fixed custom headers. Requires at least one header. Header names must be unique.
+- **HMAC-Signing**: Use this option when your destination validates signed requests. Requires a `signing_secret`.
 
 ## Test delivery
 
@@ -56,6 +104,8 @@ A successful test indicates that Cloudflare reached the destination URL and that
 Test delivery does not send a live finding instance from your environment.
 
 ## Edit, turn off, or delete a webhook
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To update an existing webhook:
 
@@ -68,7 +118,68 @@ To turn a webhook off or on, use the status toggle on the **Webhooks** page.
 
 To delete a webhook, open the webhook menu and select **Delete**.
 
+</TabItem> <TabItem label="API">
+
+To update a webhook, make a `PUT` request to the [Update a webhook](/api/resources/zero_trust/subresources/casb/subresources/posture/subresources/webhooks/methods/update/) endpoint. Include `label`, `destination_url`, `authentication_type`, and `status`. To turn the webhook off, set `status` to `disabled`:
+
+<APIRequest
+	path="/accounts/{account_id}/data-security/posture/webhooks/{webhook_id}"
+	method="PUT"
+	json={{
+		label: "Send to SIEM",
+		destination_url: "https://example.com/webhook",
+		authentication_type: "Bearer Auth",
+		status: "disabled",
+	}}
+/>
+
+To delete a webhook, make a `DELETE` request to the [Delete a webhook](/api/resources/zero_trust/subresources/casb/subresources/posture/subresources/webhooks/methods/delete/) endpoint:
+
+<APIRequest
+	path="/accounts/{account_id}/data-security/posture/webhooks/{webhook_id}"
+	method="DELETE"
+/>
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+To update a webhook, change its attributes and run `terraform apply`. To turn the webhook off, set `status = "disabled"`.
+
+To delete a webhook, remove the resource from your configuration and run `terraform apply`, or target the resource for destruction:
+
+```sh
+terraform destroy -target=cloudflare_zero_trust_casb_webhook.siem
+```
+
+</TabItem> </Tabs>
+
 When you edit an existing webhook, Cloudflare does not display saved header values or signing secrets. To replace a stored value, enter a new value and save the webhook again.
+
+## Manage existing webhooks with Terraform
+
+### Import a webhook
+
+To bring a webhook created in the dashboard or API under Terraform management, import it using your account ID and the webhook ID:
+
+```sh
+terraform import cloudflare_zero_trust_casb_webhook.siem '<ACCOUNT_ID>/<WEBHOOK_ID>'
+```
+
+Cloudflare does not return header values or signing secrets. After you import a webhook, set these values in your configuration so that Terraform can manage them.
+
+### Look up webhooks
+
+Use the [`cloudflare_zero_trust_casb_webhook`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zero_trust_casb_webhook) data source to read a single webhook, or [`cloudflare_zero_trust_casb_webhooks`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/zero_trust_casb_webhooks) to list all webhooks in an account:
+
+```tf
+data "cloudflare_zero_trust_casb_webhook" "siem" {
+	account_id = var.cloudflare_account_id
+	webhook_id = "<WEBHOOK_ID>"
+}
+
+data "cloudflare_zero_trust_casb_webhooks" "all" {
+	account_id = var.cloudflare_account_id
+}
+```
 
 ## Send a posture finding instance to a webhook
 
