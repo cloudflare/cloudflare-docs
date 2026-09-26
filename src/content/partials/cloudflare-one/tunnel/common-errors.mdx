@@ -8,13 +8,14 @@ params:
   - noTLSVerifyURL
   - httpsOriginURL
   - ulimitsURL
+  - namedServicesURL
 ---
 
 import { Render } from "~/components";
 
 ## I see `cloudflared service is already installed`.
 
-If you see this error when installing a remotely-managed tunnel, ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, add additional routes to your existing tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
+This error means a service with that name is already installed. To run another remotely-managed tunnel on the same host, <a href={props.namedServicesURL}>install a service with a different name</a>. To replace an existing service, uninstall it first. Use `--service-name` to target a named service. Without that flag, `cloudflared service uninstall` targets the default service.
 
 ## I see `An A, AAAA, or CNAME record with that host already exists`.
 

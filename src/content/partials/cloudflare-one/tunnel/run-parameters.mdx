@@ -7,6 +7,7 @@ params:
   - tunnelPermissionsURL
   - createRemoteTunnelURL
   - faqURL
+  - namedServicesURL
 ---
 
 import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
@@ -15,7 +16,7 @@ This page lists the configuration flags for the `cloudflared tunnel run` command
 
 ## Add run parameters to tunnel service
 
-Remotely-managed tunnels run as a service on your OS. To add run parameters to the tunnel service file:
+If you run a remotely-managed tunnel as a service, you can add run parameters to its service definition. These steps apply to the default service. Do not use them for <a href={props.namedServicesURL}>named services</a>: their definitions have fixed arguments that `cloudflared` checks when you uninstall them.
 
 <Tabs> <TabItem label="Linux">
 
@@ -37,7 +38,7 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
    [Service]
    TimeoutStartSec=0
    Type=notify
-   ExecStart=/usr/local/bin/cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token <TOKEN VALUE>
+   ExecStart=/usr/local/bin/cloudflared --no-autoupdate tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token-file /etc/cloudflared/token
    Restart=on-failure
    RestartSec=5s
 
@@ -66,12 +67,12 @@ On Linux, Cloudflare Tunnel installs itself as a system service using `systemctl
      Memory: 16.3M
         CPU: 136ms
      CGroup: /system.slice/cloudflared.service
-             └─2157 /usr/bin/cloudflared tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token eyJhIjoi...
+             └─2157 /usr/bin/cloudflared --no-autoupdate tunnel --loglevel info --logfile /var/log/cloudflared/cloudflared.log run --token-file /etc/cloudflared/token
    ```
 
 </TabItem> <TabItem label="macOS">
 
-On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`. By default, the agent will be called `com.cloudflare.cloudflared`. To configure your tunnel on macOS:
+On macOS, `cloudflared` runs as a launch agent when installed without `sudo` or a launch daemon when installed with `sudo`. Both use the label `com.cloudflare.cloudflared`. To edit the default launch daemon:
 
 1. Stop the `cloudflared` service.
 
@@ -103,8 +104,8 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
                <string>--loglevel</string>
                <string>debug</string>
                <string>run</string>
-               <string>--token</string>
-               <string><TOKEN VALUE> </string>
+               <string>--token-file</string>
+               <string>/Library/Application Support/com.cloudflare.cloudflared/token</string>
            </array>
    ```
 
@@ -122,7 +123,7 @@ On macOS, Cloudflare Tunnel installs itself as a launch agent using `launchctl`.
 
 </TabItem> <TabItem label="Windows">
 
-On Windows, Cloudflare Tunnel installs itself as a system service using the Registry Editor. By default, the service will be named `cloudflared`. To configure your tunnel on Windows:
+On Windows, `cloudflared` installs a system service named `Cloudflared` by default. To edit its run parameters in the Registry Editor:
 
 1. Open the Registry Editor.
 
@@ -133,10 +134,12 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 4. Modify **Value data** with the desired configuration flag. For example,
 
    ```txt
-   C:\Program Files (x86)\cloudflared\.\cloudflared.exe tunnel --loglevel info --logfile <PATH> run --token <TOKEN VALUE>
+   "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --loglevel info --logfile <PATH> run --token-file C:\ProgramData\cloudflared\token
    ```
 
 ![Modify cloudflared service in the Registry Editor](~/assets/images/cloudflare-one/connections/connect-apps/remote-management-windows.png)
+
+If you change `ImagePath`, restore its original value before using `cloudflared service uninstall`. The installer checks the service command before removing it.
 
 </TabItem> </Tabs>
 
@@ -150,7 +153,7 @@ On Windows, Cloudflare Tunnel installs itself as a system service using the Regi
 
 Configures the frequency of `cloudflared` updates.
 
-Built-in automatic updates are enabled when `cloudflared` is installed as a standalone binary and runs as a service. They are not available on Windows, for package-manager installations, or when `cloudflared` runs interactively in a terminal. When an update is available, `cloudflared` restarts to use the new version. The updater does not wait for the replacement process to connect to Cloudflare before shutting down the old process. Active connections may be interrupted. To control when updates occur, use [`no-autoupdate`](#no-autoupdate).
+Built-in automatic updates are enabled when `cloudflared` is installed as a standalone binary and runs as the default service. They are not available on Windows, for package-manager installations, or when `cloudflared` runs interactively in a terminal. Named macOS services run with `--no-autoupdate`, and named Linux services do not install an update timer. When an update is available, `cloudflared` restarts to use the new version. The updater does not wait for the replacement process to connect to Cloudflare before shutting down the old process. Active connections may be interrupted. To control when updates occur, use [`no-autoupdate`](#no-autoupdate).
 
 ### `config`
 

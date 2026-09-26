@@ -143,7 +143,11 @@ To connect a private network through your tunnel, [add a tunnel route](/api/reso
 
 Install `cloudflared` on your server and run the tunnel using the `token` value obtained in [2. Create a tunnel](#2-create-a-tunnel). You can also get the tunnel token using the [Cloudflare Tunnel token](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/) endpoint.
 
-<Render file="tunnel/install-and-run-tunnel" product="cloudflare-one" />
+<Render
+  file="tunnel/install-and-run-tunnel"
+  product="cloudflare-one"
+  params={{ namedServicesURL: "/tunnel/guides/named-services/" }}
+/>
 
 ## 5. Verify tunnel status
 

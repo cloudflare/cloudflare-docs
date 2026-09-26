@@ -16,6 +16,10 @@ import { TabItem, Tabs, Render, APIRequest, DashButton } from "~/components";
 
 A remotely-managed tunnel only requires the tunnel token to run. Anyone with access to the token will be able to run the tunnel.
 
+When you run `cloudflared service install <TUNNEL_TOKEN>`, the installer saves the token in a restricted file. The service reads it with `--token-file`, so the token does not appear in the running service's command line. Each [named service](/tunnel/guides/named-services/) has its own token file.
+
+The token may still be visible while the install command runs or remain in your shell history. Treat the installation command as a secret. `--token-file` and `TUNNEL_TOKEN_FILE` apply to `cloudflared tunnel run`, not to `cloudflared service install`. If you run `cloudflared` without the service installer, use [`--token-file`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#token-file) to keep the token out of the run command.
+
 ## Get the tunnel token
 
 To get the token for a remotely-managed tunnel:
@@ -131,7 +135,7 @@ To rotate a tunnel token:
 
 	After refreshing the token, `cloudflared` can no longer establish new connections to Cloudflare using the old token. However, existing connectors will remain active and the tunnel will continue serving traffic.
 
-2. On half of your `cloudflared` replicas, reinstall the `cloudflared` service with the new token. For example, on a Linux host:
+2. On half of your `cloudflared` replicas, reinstall the `cloudflared` service with the new token. For a named service, use the same `--service-name` value when uninstalling and installing. For example, on a Linux host with the default service:
 
    ```sh
 	 sudo cloudflared service uninstall
@@ -166,7 +170,7 @@ If your tunnel token is compromised, we recommend taking the following steps:
 
    This will clean up any unauthorized connections and prevent users from connecting to your network.
 
-3. On each `cloudflared` replica, update `cloudflared` to use the new token. For example, on a Linux host:
+3. On each `cloudflared` replica, update `cloudflared` to use the new token. If you use a named service, specify its name on both commands. For example, on a Linux host with the default service:
 
    ```sh
 	 sudo cloudflared service uninstall

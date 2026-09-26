@@ -1,6 +1,6 @@
 ---
-{}
-
+params:
+  - namedServicesURL
 ---
 
 import { Tabs, TabItem } from "~/components";
@@ -48,3 +48,5 @@ import { Tabs, TabItem } from "~/components";
         	```
 
 </TabItem>  </Tabs>
+
+If a `cloudflared` service already runs on the host, <a href={props.namedServicesURL}>install a named service</a> for an additional remotely-managed tunnel.

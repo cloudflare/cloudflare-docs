@@ -1,0 +1,137 @@
+---
+title: Run multiple cloudflared services
+pcx_content_type: how-to
+description: Run multiple remotely-managed tunnels as separate cloudflared services on one host.
+products:
+  - tunnel
+sidebar:
+  order: 8
+---
+
+import { TabItem, Tabs } from "~/components";
+
+A named `cloudflared` service lets you run more than one remotely-managed tunnel on the same host. Each service runs a separate `cloudflared` process and uses its own tunnel token. You can also use different service names to run multiple replicas of the same tunnel on one host.
+
+Before you start, [create a remotely-managed tunnel](/tunnel/get-started/) and [get its token](/tunnel/reference/tunnel-tokens/). Named services require a token and do not use locally-managed tunnel credentials.
+
+## Install a named service
+
+Choose a unique name for each service on the host. Names must start with a letter or number and may contain letters, numbers, dots, underscores, and hyphens. Do not end a name with a dot.
+
+<Tabs>
+<TabItem label="Linux">
+
+Named services require systemd. To install and start a service named `app-one`, run:
+
+```sh
+sudo cloudflared service install --service-name app-one <TUNNEL_TOKEN>
+```
+
+The systemd service is named `cloudflared-app-one.service`. To check its status, run `sudo systemctl status cloudflared-app-one.service`.
+
+Named Linux services do not have their own automatic update timer. Restart each named service after updating `cloudflared`.
+
+</TabItem>
+<TabItem label="macOS">
+
+To install and start a service at boot, run:
+
+```sh
+sudo cloudflared service install --service-name app-one <TUNNEL_TOKEN>
+```
+
+The launchd service is named `com.cloudflare.cloudflared.app-one`. To run it only while you are logged in, omit `sudo` when installing.
+
+Named macOS services do not automatically update. Restart each named service after updating `cloudflared`.
+
+</TabItem>
+<TabItem label="Windows">
+
+In Command Prompt as an administrator, install and start the service:
+
+```txt
+cloudflared.exe service install --service-name app-one <TUNNEL_TOKEN>
+```
+
+The Windows service is named `app-one`. To check its status, run `sc.exe query app-one`.
+
+</TabItem>
+</Tabs>
+
+To install another service, repeat the command with a different service name and the token for the tunnel you want to run.
+
+The installer saves each token in a restricted file and starts the service with `--token-file`. The token is still passed to the install command, so it may be visible while that command runs or remain in your shell history. For details, refer to [Tunnel tokens](/tunnel/reference/tunnel-tokens/).
+
+## Uninstall a named service
+
+Use the same service name you used during installation. Uninstalling a named service removes its token file without affecting other `cloudflared` services on the host.
+
+<Tabs>
+<TabItem label="Linux">
+
+```sh
+sudo cloudflared service uninstall --service-name app-one
+```
+
+</TabItem>
+<TabItem label="macOS">
+
+If you installed the service with `sudo`, run:
+
+```sh
+sudo cloudflared service uninstall --service-name app-one
+```
+
+If you installed it without `sudo`, omit `sudo` when uninstalling.
+
+</TabItem>
+<TabItem label="Windows">
+
+In Command Prompt as an administrator, run:
+
+```txt
+cloudflared.exe service uninstall --service-name app-one
+```
+
+</TabItem>
+</Tabs>
+
+Omit `--service-name` only when you want to uninstall the default `cloudflared` service.
+
+## Restart a named service
+
+After updating `cloudflared`, restart each named service to use the new version.
+
+<Tabs>
+<TabItem label="Linux">
+
+```sh
+sudo systemctl restart cloudflared-app-one.service
+```
+
+</TabItem>
+<TabItem label="macOS">
+
+If you installed the service with `sudo`, run:
+
+```sh
+sudo launchctl kickstart -k system/com.cloudflare.cloudflared.app-one
+```
+
+If you installed it without `sudo`, run:
+
+```sh
+launchctl kickstart -k gui/$(id -u)/com.cloudflare.cloudflared.app-one
+```
+
+</TabItem>
+<TabItem label="Windows">
+
+In PowerShell as an administrator, run:
+
+```powershell
+Restart-Service -Name app-one
+```
+
+</TabItem>
+</Tabs>
