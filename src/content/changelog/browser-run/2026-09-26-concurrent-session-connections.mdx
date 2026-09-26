@@ -1,0 +1,37 @@
+---
+title: Connect multiple clients to one Browser Run session
+description: Browser Run sessions now accept concurrent connections, so multiple Workers can share one browser.
+products:
+  - browser-run
+date: 2026-09-26
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Browser Run](/browser-run/) sessions now accept multiple concurrent connections. Before, a session accepted only one connection at a time, and other Workers had to wait until that connection closed. Now multiple Workers can connect to the same browser at the same time.
+
+Each `puppeteer.connect()` call opens its own Chrome DevTools Protocol (CDP) connection. Create a separate browser context for each request to keep its pages, cookies, and storage apart from other clients.
+
+<TypeScriptExample>
+
+```ts
+const browser = await puppeteer.connect(env.MYBROWSER, sessionId);
+const context = await browser.createBrowserContext();
+
+try {
+	const page = await context.newPage();
+	await page.goto("https://example.com");
+	// ...
+} finally {
+	await context.close();
+	await browser.disconnect(); // keep the shared browser running
+}
+```
+
+</TypeScriptExample>
+
+Sharing sessions means fewer new browsers to launch, less cold-start time, and fewer [concurrent browsers](/browser-run/limits/) counted against your limits.
+
+Concurrent connections require `@cloudflare/puppeteer` version 1.1.0 or later.
+
+Refer to [Reuse sessions](/browser-run/features/reuse-sessions/) for a full example.
