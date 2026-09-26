@@ -201,15 +201,15 @@ package.json @cloudflare/content-engineering
 
 # browser-run
 
-/src/assets/images/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/content/changelog/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/content/docs/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/content/partials/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/content/release-notes/browser-run.yaml @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/assets/images/changelog/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/browser-run.yaml @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/src/icons/browser-run.svg @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
-/public/images/browser-run/ @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/assets/images/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/content/changelog/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/content/docs/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/content/partials/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/content/release-notes/browser-run.yaml @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/assets/images/changelog/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/browser-run.yaml @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/src/icons/browser-run.svg @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
+/public/images/browser-run/ @BernardoPe @celso @jonnyparris @kathayl @mchenco @meddulla @omarmosid @Refaerds @ruifigueira @simonabadoiu @cloudflare/product-owners
 
 # byoip
 
