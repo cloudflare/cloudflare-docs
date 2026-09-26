@@ -9,11 +9,49 @@ products:
   - browser-run
 ---
 
-import { Render, CURL, Example } from "~/components";
+import { Render, CURL, Example, TypeScriptExample } from "~/components";
 
 [WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) is a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
 
 ## Get started
+
+### Author a WebMCP tool
+
+Site authors register tools with `document.modelContext`. This authoring API is separate from the Browser Run DevTools testing API, `navigator.modelContextTesting`.
+
+The registration method returns a Promise. Await it when you expose a tool:
+
+<TypeScriptExample>
+
+```ts
+await document.modelContext.registerTool({
+	name: "search-products",
+	description: "Search the product catalog",
+	inputSchema: {
+		type: "object",
+		properties: {
+			query: {
+				type: "string",
+				description: "The product name or category to search for",
+			},
+		},
+		required: ["query"],
+	},
+	async execute({ query }) {
+		const response = await fetch(
+			`/api/products?q=${encodeURIComponent(query)}`,
+		);
+		if (!response.ok) {
+			throw new Error(`Product search failed: ${response.status}`);
+		}
+		return response.json();
+	},
+});
+```
+
+</TypeScriptExample>
+
+Use `navigator.modelContextTesting` in a Browser Run lab session to inspect and invoke the tools that a site registers.
 
 ### Manual testing with DevTools
 
@@ -222,7 +260,7 @@ You can now view the live browser session and interact with it.
 ## Limitations
 
 - Lab sessions use Chrome 146 beta, which may have stability issues.
-- WebMCP APIs (`navigator.modelContext`, `navigator.modelContextTesting`) only work in lab sessions.
+- In Browser Run, WebMCP and the `navigator.modelContextTesting` testing API are only available in lab sessions.
 - Lab sessions count against your regular [rate limits](/browser-run/limits/) and [pricing](/browser-run/pricing/).
 - The `lab` parameter is not yet supported in `@cloudflare/puppeteer` or `@cloudflare/playwright`. Acquire the session manually and connect with `sessionId`.
 
