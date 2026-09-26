@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 820 360">
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,sans-serif}.label{font-size:12px;font-weight:600;fill:#1a1a1a}.phase,.sublabel{font-size:11px}.sublabel{fill:#6b7280}.phase{font-weight:600}.request{font-size:11px;font-weight:600;fill:#9a3412}.alive{font-size:11px;font-weight:600;fill:#166534}.io,.stop{font-size:11px;font-weight:600;fill:#0369a1}
+  </style>
+  <defs>
+    <marker id="time-arrow" markerHeight="6" markerWidth="8" orient="auto" refX="7" refY="3">
+      <path fill="#d1d5db" d="m0 0 8 3-8 3z"/>
+    </marker>
+  </defs>
+  <rect width="820" height="360" fill="#fafafa" rx="8"/>
+  <path stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)" d="M200 38h570"/>
+  <text x="780" y="42" class="sublabel">time</text>
+
+  <text x="40" y="82" class="label">Incoming request</text>
+  <rect width="85" height="28" x="200" y="64" fill="#fff7ed" stroke="#fb923c" rx="4"/>
+  <text x="242.5" y="82" class="request" text-anchor="middle">processing</text>
+  <path stroke="#ea580c" stroke-dasharray="4 3" stroke-width="1.5" d="M285 54v250"/>
+  <text x="295" y="66" class="sublabel" style="fill:#c2410c">request ends</text>
+  <text x="295" y="80" class="sublabel" style="fill:#c2410c">caller disconnects</text>
+
+  <text x="40" y="132" class="label">Service binding fetch</text>
+  <path fill="#eff6ff" stroke="#93c5fd" d="M249 116h172q4 0 4 4v20q0 4-4 4H249q-4 0-4-4v-20q0-4 4-4z"/>
+  <text x="335" y="134" class="io" text-anchor="middle">pending · up to 15 min</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" d="M425 108v196"/>
+  <text x="425" y="104" class="stop" text-anchor="middle">fetch stops preventing eviction</text>
+
+  <text x="40" y="182" class="label">Durable Object RPC</text>
+  <path fill="#eff6ff" stroke="#93c5fd" d="M379 166h172q4 0 4 4v20q0 4-4 4H379q-4 0-4-4v-20q0-4 4-4z"/>
+  <text x="465" y="184" class="io" text-anchor="middle">pending · up to 15 min</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" d="M555 158v146"/>
+  <text x="555" y="154" class="stop" text-anchor="middle">RPC stops preventing eviction</text>
+
+  <text x="40" y="232" class="label">container.monitor()</text>
+  <path fill="#eff6ff" stroke="#93c5fd" d="M509 216h172q4 0 4 4v20q0 4-4 4H509q-4 0-4-4v-20q0-4 4-4z"/>
+  <text x="595" y="234" class="io" text-anchor="middle">pending · up to 15 min</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" d="M685 208v96"/>
+  <text x="685" y="204" class="stop" text-anchor="middle">monitor() stops preventing eviction</text>
+
+  <text x="40" y="282" class="label">Durable Object</text>
+  <path fill="#f0fdf4" stroke="#86efac" d="M204 266h481v28H204q-4 0-4-4v-20q0-4 4-4z"/>
+  <text x="442" y="284" class="alive" text-anchor="middle">pending operations prevent eviction</text>
+  <path fill="#f3f4f6" stroke="#d1d5db" stroke-dasharray="4 3" d="M685 266h75v28h-75z"/>
+  <text x="722.5" y="278" class="sublabel" text-anchor="middle">70–140s</text>
+  <text x="722.5" y="290" class="sublabel" text-anchor="middle">idle</text>
+  <path stroke="#6b7280" stroke-dasharray="4 3" stroke-width="1.5" d="M760 256v48"/>
+  <text x="760" y="314" class="sublabel" text-anchor="middle">may be evicted</text>
+
+  <text x="40" y="328" class="sublabel">Starting another operation can extend time in memory. No 15-minute limit applies to the entire invocation.</text>
+  <text x="40" y="346" class="sublabel">Standard eviction rules resume when no operation prevents eviction.</text>
+</svg>

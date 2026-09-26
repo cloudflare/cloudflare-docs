@@ -1,0 +1,29 @@
+---
+title: Pending I/O operations allow Durable Objects to continue long-running work without a connected client
+description: Each I/O operation prevents eviction until it completes or has run for 15 minutes, whichever comes first.
+products:
+  - durable-objects
+date: 2026-09-15
+---
+
+Durable Objects remain active while handling a request from a connected client. This change applies when no client is connected, such as when an agent continues a submitted job after its client disconnects.
+
+Alarms already prevent eviction for their first 15 minutes. Pending operations started by an alarm can prevent eviction after that period ends.
+
+Pending [service binding](/workers/runtime-apis/bindings/service-bindings/) requests now keep Durable Objects running while they wait for a response. Pending calls to another Durable Object through remote procedure call (RPC) or `fetch()`, as well as `this.ctx.container.monitor()`, now also keep the Durable Object running.
+
+Promises passed to `this.ctx.waitUntil()` and some storage operations, such as `this.ctx.storage.put()`, also receive this protection.
+
+Previously, Cloudflare could shut down an idle Durable Object while one of these operations remained pending without a connected client. This could stop unfinished work.
+
+This change helps you run long-running tasks such as agents. An agent can call tools through service bindings, coordinate with other Durable Objects, or wait for a container process without relying on the original client to remain connected.
+
+Outbound `fetch()` requests to external services, TCP sockets, and outbound WebSockets already keep Durable Objects running.
+
+Each pending operation prevents idle shutdown for up to 15 minutes. Starting another operation later can extend the total run beyond 15 minutes. There is no limit on a Durable Object invocation's overall wall time.
+
+![Timeline showing a service binding fetch, Durable Object RPC, and monitor() each preventing eviction for up to 15 minutes. Later operations extend time in memory.](~/assets/images/durable-objects/pending-io-keep-alive.svg)
+
+Duration charges continue while an operation prevents eviction.
+
+For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
