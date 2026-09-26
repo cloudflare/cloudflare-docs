@@ -38,7 +38,7 @@ Give [Codex](https://developers.openai.com/codex/cli) a GitHub repository and a 
 
    RUN npm install --global --ignore-scripts @openai/codex@0.156.1
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]

@@ -38,7 +38,7 @@ Give the [Pi](https://github.com/earendil-works/pi) coding agent a GitHub reposi
 
    RUN npm install --global --ignore-scripts @earendil-works/pi-coding-agent@0.87.1
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]

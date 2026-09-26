@@ -26,7 +26,7 @@ The page ends with the Worker running under `wrangler dev`. The deploy that swit
 
 1. Install version 1 of the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox@1" />
+   <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
 2. Replace the `FROM docker.io/cloudflare/sandbox` line in your `Dockerfile` with a base image that has the tools your commands use, and copy the `sandbox-shim` helper into it:
 
@@ -37,7 +37,7 @@ The page ends with the Worker running under `wrangler dev`. The deploy that swit
    	&& apt-get install -y --no-install-recommends ca-certificates git python3 \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]

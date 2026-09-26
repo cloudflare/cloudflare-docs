@@ -36,7 +36,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as a job's input
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox" />
+   <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
 2. Create a `Dockerfile` in the project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mounts` uses:
 
@@ -47,7 +47,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as a job's input
    	&& apt-get install -y --no-install-recommends ca-certificates fuse3 s3fs \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    CMD ["sleep", "infinity"]
    ```

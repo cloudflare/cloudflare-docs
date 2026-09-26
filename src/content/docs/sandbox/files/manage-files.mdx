@@ -35,14 +35,14 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox" />
+   <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
 2. Copy the `Files` helper binary into your image. If your project has no `Dockerfile`, create one in the project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    RUN mkdir /workspace
    CMD ["sleep", "infinity"]
