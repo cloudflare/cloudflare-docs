@@ -1,0 +1,36 @@
+---
+title: Custom Container instance types no longer have a disk to memory ratio limit
+description: Allocate up to 20 GB of disk to any custom Container instance type, independent of its memory.
+products:
+  - containers
+date: 2026-09-25
+---
+
+import { WranglerConfig } from "~/components";
+
+[Containers](/containers/) custom instance types no longer limit disk based on memory. Previously, a custom instance type could have a maximum of 2 GB of disk for each 1 GiB of memory. You can now allocate up to the 20 GB disk maximum to any custom instance type.
+
+Use this to run workloads that need more disk than memory, such as workloads with large container images, datasets, or build caches. The maximum image size is the same as the instance disk space, so more disk also lets you deploy larger images.
+
+For example, a custom instance type with 1 vCPU and 3 GiB of memory was previously limited to 6 GB of disk. It can now use 20 GB:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"image": "./Dockerfile",
+			"instance_type": {
+				"vcpu": 1,
+				"memory_mib": 3072,
+				"disk_mb": 20000,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+The other custom instance type constraints do not change, including the minimum of 3 GiB of memory per vCPU. For the full list, refer to [Custom Instance Types](/containers/platform/limits/#custom-instance-types).
