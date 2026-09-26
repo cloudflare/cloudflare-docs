@@ -73,7 +73,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
    </WranglerConfig>
 
-4. In your Durable Object, start the `workspace` image before each file operation. `Files` works with a running container and does not start one:
+4. In `src/index.ts`, replace the `MyContainer` class with one that starts the `workspace` image before each file operation. `Files` works with a running container and does not start one:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -106,7 +106,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
    </TypeScriptExample>
 
-5. Add a method that writes the upload, runs the command, and returns the output file:
+5. Add a method to `MyContainer` that writes the upload, runs the command, and returns the output file:
 
    ```ts title="src/index.ts"
    async compress(upload: ReadableStream<Uint8Array>): Promise<Response> {
@@ -133,7 +133,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
    A Linux failure, such as a full disk, throws `SandboxFileError` with the Linux error name in `code`. For every error, refer to [Files errors](/sandbox/reference/files/#errors).
 
-6. Send uploads to the method from your Worker's `fetch` handler:
+6. Replace the Worker's default export with a `fetch` handler that sends uploads to the method:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -167,6 +167,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
    printf 'Ada Lovelace\nGrace Hopper\n' | curl \
      https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/compress \
      --data-binary @- \
+     --fail-with-body \
      --output names.txt.gz
    ```
 

@@ -54,6 +54,8 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    <PackageManagers type="exec" pkg="wrangler" args="r2 bucket create sandbox-backups" />
 
+   If Wrangler offers to add the bucket to your configuration, answer no. The next step adds the binding.
+
 4. In `wrangler.jsonc`, add the `nodejs_compat` flag, build the `Dockerfile` as a named image in your `containers` entry, and bind the bucket:
 
    <WranglerConfig>
@@ -87,7 +89,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-5. In `src/index.ts`, export `DirectoryBackupGateway`, and give your Durable Object methods that start the `workspace` image and create `DirectoryBackups`:
+5. In `src/index.ts`, export `DirectoryBackupGateway`, and replace the `MyContainer` class with one whose methods start the `workspace` image and create `DirectoryBackups`:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -138,7 +140,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    The container sends the backup through `DirectoryBackupGateway`, which writes it to the `BACKUPS` bucket. The container never receives R2 credentials, and it can reach only the object of the operation in progress.
 
-6. Add a method that adds a line to a file in the project and returns the file, so you can check what a restore brings back:
+6. Add a method to `MyContainer` that adds a line to a file in the project and returns the file, so you can check what a restore brings back:
 
    ```ts title="src/index.ts"
    async note(line?: string) {
@@ -153,7 +155,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    }
    ```
 
-7. Add a method that backs up the project and stores the backup record:
+7. Add a method to `MyContainer` that backs up the project and stores the backup record:
 
    ```ts title="src/index.ts"
    async backup() {
@@ -167,7 +169,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    `backup()` returns a record with the object's ID, size, and SHA-256. The package keeps no list of backups, so the Durable Object stores the record. A caller refers to a backup only by its ID, so a request cannot point a restore at another object in the bucket. Stop the commands that write to the directory first, because `backup()` saves each file as it reads it.
 
-8. Add a method that looks up a record and restores it:
+8. Add a method to `MyContainer` that looks up a record and restores it:
 
    ```ts title="src/index.ts"
    async restore(id: string) {
@@ -185,7 +187,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    `restore()` replaces the directory, so files that are not in the backup are removed. It checks the object against the record's SHA-256 before it replaces anything, and a restore that fails leaves the directory as it was. An object that was deleted or changed throws `SandboxBackupError`, with the code `BACKUP_NOT_FOUND` or `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackups errors](/sandbox/reference/directory-backups/#errors).
 
-9. Add routes to your Worker that write a note, back up the project, and restore a backup:
+9. Replace the Worker's default export with routes that write a note, back up the project, and restore a backup:
 
    <TypeScriptExample filename="src/index.ts">
 

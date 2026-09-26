@@ -86,11 +86,7 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
    </WranglerConfig>
 
-4. Generate types for the binding:
-
-   <PackageManagers type="exec" pkg="wrangler" args="types" />
-
-5. Replace `src/index.ts`. The Worker reads `argv` from the JSON body and runs it in Linux:
+4. Replace `src/index.ts`. The Worker reads `argv` from the JSON body and runs it in Linux:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -133,6 +129,10 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    </TypeScriptExample>
 
    `cloudflare/debian-trixie` is Debian Trixie with Node.js 24. The `sleep infinity` entrypoint keeps the Linux instance running so it can accept commands. `enableInternet: false` blocks the public Internet.
+
+5. Generate types for the binding. Wrangler reads the `MyContainer` class from `src/index.ts` to type `env.MY_CONTAINER`:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
 
 6. Run `wrangler dev`:
 
