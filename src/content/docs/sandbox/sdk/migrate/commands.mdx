@@ -1,0 +1,169 @@
+---
+title: Change command calls
+description: Replace @cloudflare/sandbox 0.12 exec(), execStream(), sessions, and command timeouts with container.exec() in your Durable Object.
+pcx_content_type: how-to
+sidebar:
+  order: 6
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In Sandbox SDK 0.12, `exec()` runs each command string in a long-lived `bash` session that starts in `/workspace`. In 1.0, your Durable Object calls [`exec()`](/durable-objects/api/container/#exec) on the container, which starts one process for each call. Nothing carries over from one call to the next.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Call `ensureRunning()` at the start of each method that runs a command.
+
+This page replaces `exec()`, `execStream()`, `createSession()`, `getSession()`, `deleteSession()`, and the `timeout` and `commandTimeoutMs` options. For file calls, refer to [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call). For `startProcess()`, refer to [Move background processes](/sandbox/sdk/migrate/background-processes/).
+
+## Run commands
+
+Pass the command as an array of arguments, with the working directory and variables that 0.12 gave it:
+
+```ts title="src/index.ts (0.12)"
+const result = await sandbox.exec("npm test");
+
+if (!result.success) {
+	console.error(result.stderr);
+}
+```
+
+```ts title="src/index.ts (1.0)" ins={2,3}
+const process = await this.container.exec(["npm", "test"], {
+	cwd: "/workspace",
+	env: ENV,
+});
+const result = await process.output();
+
+if (result.exitCode !== 0) {
+	console.error(new TextDecoder().decode(result.stderr));
+}
+```
+
+`exec()` starts in `/`, and does not inherit the variables that `start()` sets, even when the image sets `WORKDIR`. `output()` waits for the process to exit, and returns its output as bytes. A non-zero exit code does not throw, as in 0.12.
+
+`exec()` runs the command without a shell. For pipes, redirects, and variables, run the 0.12 string with `bash`:
+
+```ts title="src/index.ts"
+const process = await this.container.exec(
+	["bash", "-c", "npm test 2>&1 | tee /tmp/test.log"],
+	{ cwd: "/workspace", env: ENV },
+);
+```
+
+When the executable does not exist, `exec()` throws an error such as ``Command `npm` was not found in the container``, where 0.12 `bash` returned exit code `127`. A command that runs through `bash -c` still returns `127`.
+
+## Stream output
+
+Return the process's `stdout` as a response body. This replaces `execStream()`, and `exec()` with `stream: true` and `onOutput`:
+
+```ts title="src/index.ts (0.12)"
+const stream = await sandbox.execStream("npm test");
+
+return new Response(stream, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+```ts title="src/index.ts (1.0)" ins={4}
+const process = await this.container.exec(["npm", "test"], {
+	cwd: "/workspace",
+	env: ENV,
+	stderr: "combined",
+});
+
+return new Response(process.stdout, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+`stderr: "combined"` sends standard error in the same stream. Keep `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
+
+0.12 sent JSON events that `parseSSEStream()` decoded. The 1.0 body holds the command's own output, so read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/commands/stream-command-output/).
+
+## Replace sessions
+
+A 0.12 session kept a working directory and variables across calls. Keep them in an object, and pass it to each call:
+
+```ts title="src/index.ts (0.12)"
+const build = await sandbox.createSession({
+	cwd: "/workspace/app",
+	env: { CI: "1" },
+});
+
+await build.exec("npm ci");
+await build.exec("npm test");
+```
+
+```ts title="src/index.ts (1.0)"
+const build = { cwd: "/workspace/app", env: { ...ENV, CI: "1" } };
+
+const install = await this.container.exec(["npm", "ci"], build);
+await install.exitCode;
+
+const test = await this.container.exec(["npm", "test"], build);
+const result = await test.output();
+```
+
+`exec()` resolves when the process starts, so wait for `exitCode` before the next step.
+
+In 0.12, a `cd` or `export` in one `exec()` call carried into the next call, including in the default session. In 1.0, it lasts until its command exits. Run steps that depend on each other in one command, such as `["bash", "-c", "cd app && npm ci && npm test"]`.
+
+`ExecutionSession` methods map like the top-level methods. Remove `deleteSession()`, which has nothing to delete. To keep the work of two sessions apart, as the `isolation` option did, give each one its own sandbox name.
+
+## Replace timeouts
+
+Start the command with `timeout`, which stops the command and every process it started:
+
+```ts title="src/index.ts (0.12)"
+const result = await sandbox.exec("npm test", { timeout: 60_000 });
+```
+
+```ts title="src/index.ts (1.0)"
+const process = await this.container.exec(
+	["timeout", "--kill-after=5", "60", "bash", "-c", "npm test"],
+	{ cwd: "/workspace", env: ENV },
+);
+const result = await process.output();
+const timedOut = result.exitCode === 124;
+```
+
+The command exits with code `124` when it runs longer than 60 seconds. `--kill-after=5` sends `SIGKILL` to a command that is still running 5 seconds later.
+
+0.12 threw `CommandError` with the message `Command timeout after 60000ms`, and the command kept running. In 1.0, a command that times out stops, so it cannot change files after the error.
+
+To cancel a command from your code instead, pass an `AbortSignal`. For how to clear its timer, refer to [`exec()`](/durable-objects/api/container/#exec).
+
+## Check the commands
+
+Run a command with and without the options, from a method on your class:
+
+```ts title="src/index.ts"
+const command = [
+	"sh",
+	"-c",
+	'echo "pwd=$(pwd) NODE_ENV=${NODE_ENV:-unset}"',
+];
+
+const bare = await this.container.exec(command);
+const withOptions = await this.container.exec(command, {
+	cwd: "/workspace",
+	env: ENV,
+});
+```
+
+The output of `bare` shows the defaults, and the output of `withOptions` shows what 0.12 gave each command:
+
+```txt output
+pwd=/ NODE_ENV=unset
+pwd=/workspace NODE_ENV=test
+```
+
+## Related resources
+
+- [`exec()`](/durable-objects/api/container/#exec)
+- [Stream command output](/sandbox/commands/stream-command-output/)
+- [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call)
+- [Move background processes](/sandbox/sdk/migrate/background-processes/)

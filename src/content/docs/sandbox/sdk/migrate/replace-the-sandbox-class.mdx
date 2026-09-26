@@ -155,8 +155,8 @@ The page ends with the Worker running under `wrangler dev`. The deploy that swit
    | `defaultPort`, `requiredPorts` | `this.container.getTcpPort(port)`. Refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/). |
    | `allowedHosts`, `deniedHosts`, `outboundByHost`, `outbound`, `interceptHttps` | Refer to [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). |
    | `normalizeId` | Lowercase the name before `getByName()`. |
-   | `containerTimeouts` | An `AbortSignal` on the calls that need a deadline. Refer to [Replace timeouts](/sandbox/sdk/migrate/commands-and-files/#replace-timeouts). |
-   | `enableDefaultSession` | Nothing. Each `exec()` call is its own process. Refer to [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions). |
+   | `containerTimeouts` | An `AbortSignal` on the calls that need a deadline. Refer to [Replace timeouts](/sandbox/sdk/migrate/commands/#replace-timeouts). |
+   | `enableDefaultSession` | Nothing. Each `exec()` call is its own process. Refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions). |
    | `transport`, `pingEndpoint` | Nothing. Remove them. |
 
 8. Replace the hooks your subclass overrides:
@@ -230,7 +230,7 @@ The page ends with the Worker running under `wrangler dev`. The deploy that swit
    } satisfies ExportedHandler<Env>;
    ```
 
-   Methods that your 0.12 subclass already defines keep working the same way. Inside them, replace `this.exec()` and other package calls with calls on `this.container`. For each kind of call, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/) and the feature pages in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
+   Methods that your 0.12 subclass already defines keep working the same way. Inside them, replace `this.exec()` and other package calls with calls on `this.container`. For each kind of call, refer to [Change command calls](/sandbox/sdk/migrate/commands/) and the feature pages in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
 
 </Steps>
 
@@ -245,5 +245,6 @@ Wrangler builds the image when it starts. Send a request to each route that uses
 ## Next steps
 
 - To deploy the new class, follow [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
-- To change `exec()`, file calls, and sessions, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/).
+- To change `exec()` and sessions, refer to [Change command calls](/sandbox/sdk/migrate/commands/).
+- To change file calls, refer to [Change each file call](/sandbox/sdk/migrate/commands-and-files/#change-each-file-call).
 - For the methods on `this.ctx.container`, refer to the [Container API](/durable-objects/api/container/).

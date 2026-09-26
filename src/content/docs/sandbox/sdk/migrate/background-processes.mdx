@@ -18,7 +18,7 @@ In Sandbox SDK 0.12, `startProcess()` returns a `Process` object, and the contai
 
 Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` and `INACTIVITY_TIMEOUT_MS` constants from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 
-This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `getProcess()`, `getProcessLogs()`, `streamProcessLogs()`, `killProcess()`, `killAllProcesses()`, `cleanupCompletedProcesses()`, and the process callbacks. It does not cover commands that finish while the request is open. For those, refer to [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/).
+This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `getProcess()`, `getProcessLogs()`, `streamProcessLogs()`, `killProcess()`, `killAllProcesses()`, `cleanupCompletedProcesses()`, and the process callbacks. It does not cover commands that finish while the request is open. For those, refer to [Change command calls](/sandbox/sdk/migrate/commands/).
 
 ## Add the process methods
 
@@ -86,7 +86,7 @@ Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_
 
 `startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one.
 
-Remove the `timeout` option. 0.12 did not stop a background process when the time passed. To limit how long a process runs, start it with `timeout`, such as `["timeout", "300", "npm", "test"]`, which exits with code `124` when the time passes. For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands-and-files/#replace-sessions).
+Remove the `timeout` option. 0.12 did not stop a background process when the time passed. To limit how long a process runs, start it with `timeout`, such as `["timeout", "300", "npm", "test"]`, which exits with code `124` when the time passes. For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
 
 ## Check and list processes
 
@@ -244,6 +244,6 @@ After you deploy the switch, start a process with the ID of a 0.12 process, such
 ## Related resources
 
 - [Run background processes](/sandbox/commands/run-background-processes/)
-- [Change commands and file calls](/sandbox/sdk/migrate/commands-and-files/)
+- [Change command calls](/sandbox/sdk/migrate/commands/)
 - [Sandbox lifetime](/sandbox/concepts/lifetime/)
 - [Durable Object alarms](/durable-objects/api/alarms/)
