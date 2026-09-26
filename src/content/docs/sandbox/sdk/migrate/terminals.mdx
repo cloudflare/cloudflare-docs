@@ -1,6 +1,6 @@
 ---
 title: Move browser terminals
-description: Replace @cloudflare/sandbox 0.12 terminal() and SandboxAddon with a tmux session that your Durable Object bridges to a WebSocket.
+description: Replace @cloudflare/sandbox 0.12 terminal(), session.terminal(), proxyTerminal(), and SandboxAddon with a tmux session that your Durable Object attaches to a WebSocket.
 pcx_content_type: how-to
 sidebar:
   order: 11
@@ -10,19 +10,225 @@ products:
   - durable-objects
 ---
 
-In 0.12, `sandbox.terminal(request)` attached a WebSocket to a shell, and the `SandboxAddon` for xterm.js reconnected it and replayed output. In 1.0, your Durable Object runs a tmux client with `exec(argv, { pty })` and bridges it to a WebSocket. tmux keeps the shell running between connections. [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/) builds this.
+import { Steps } from "~/components";
 
-Do [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) first, then add the image, the Durable Object `fetch()` handler, and the page from that guide.
+In Sandbox SDK 0.12, `terminal()` attaches a WebSocket to a shell that the container keeps for each session, and `SandboxAddon` reconnects the browser to it. In 1.0, your Durable Object attaches each WebSocket to a [tmux](https://github.com/tmux/tmux/wiki) session with `exec(argv, { pty })`, and tmux keeps the shell running between connections.
 
-| 0.12                                        | 1.0                                                                                                                                                                                             |
-| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sandbox.terminal(request, { cols, rows })` | Forward the WebSocket request to the Durable Object, which reads `cols` and `rows` from the query string                                                                                        |
-| `session.terminal(request)`                 | A tmux session for each name, set with `?session=<NAME>`. Pass the 0.12 session's `cwd` and `env` as the `-c` and `-e` options of `tmux new-session`. They apply when tmux creates the session. |
-| `proxyTerminal()`                           | The Worker route that forwards `/sandboxes/<NAME>/terminal` to the Durable Object                                                                                                               |
-| Reconnect and output replay                 | The page reopens the WebSocket, and tmux redraws the screen and keeps scrollback                                                                                                                |
-| `@cloudflare/sandbox/xterm`, `SandboxAddon` | xterm.js with the fit add-on, and a WebSocket that the page manages                                                                                                                             |
-| Resize control message                      | A JSON text message with `cols` and `rows`                                                                                                                                                      |
+## Before you start
 
-The image needs tmux. Add it to your `Dockerfile`.
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 
-Keystrokes and output travel as binary WebSocket messages, and only resize messages are text. 0.12 sent status messages as text. In 1.0, the socket's `open` event replaces `ready`. Close code `1000` replaces `exit`: the reason carries the shell's exit code, and the same code means the person detached, so the session may still be running. An HTTP error status instead of `101` replaces `error`.
+This page replaces `terminal()`, `session.terminal()`, `proxyTerminal()`, and `SandboxAddon` from `@cloudflare/sandbox/xterm`. It does not cover sessions for commands. For those, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
+
+## Attach terminals to tmux
+
+<Steps>
+
+1. Add tmux to your `Dockerfile`:
+
+   ```dockerfile title="Dockerfile" ins={3,6-8}
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends \
+   		ca-certificates git python3 tmux \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   # Scroll back with the mouse wheel, and keep more history.
+   RUN printf 'set -g mouse on\nset -g history-limit 50000\n' \
+   	> /etc/tmux.conf
+   ```
+
+2. Add the `fetch()` handler from [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/#open-a-terminal) to your class. Replace its `container` constant, `start()` call, and `setInactivityTimeout()` call with `ensureRunning()`, and start the shell where 0.12 did:
+
+   ```ts title="src/index.ts" ins={1,11-12}
+   await this.ensureRunning();
+
+   const abort = new AbortController();
+   const tmux = await this.container.exec(
+   	["tmux", "new-session", "-A", "-s", session],
+   	{
+   		pty: {
+   			cols: Number(url.searchParams.get("cols")) || 80,
+   			rows: Number(url.searchParams.get("rows")) || 24,
+   		},
+   		env: { ...ENV, TERM: "xterm-256color" },
+   		cwd: "/workspace",
+   		signal: abort.signal,
+   	},
+   );
+   ```
+
+   0.12 started each shell in `/workspace`, with the variables from `envVars` and from the `ENV` lines of the image. `exec()` inherits neither, so add any image variables that your shells need to `ENV`.
+
+3. Send the message that 0.12 clients wait for, right after `accept()`:
+
+   ```ts title="src/index.ts" ins={4-5}
+   server.binaryType = "arraybuffer";
+   server.accept();
+
+   // 0.12 clients wait for this message before they send their size.
+   server.send(JSON.stringify({ type: "ready" }));
+   ```
+
+   `SandboxAddon`, and clients written for the 0.12 messages, stay in the `connecting` state until `{"type":"ready"}` arrives, and then send the window size. The handler already reads `cols` and `rows` from the 0.12 resize message, which also carries `"type": "resize"`. With this message, a page loaded before the switch keeps working when it reconnects.
+
+4. If your page opens sessions that `createSession()` gave their own working directory and variables, pass them to tmux:
+
+   ```ts title="src/index.ts"
+   // The working directory and variables of each 0.12 session
+   // that browsers open by name.
+   type SessionOptions = { cwd: string; env: Record<string, string> };
+
+   const SESSIONS: Record<string, SessionOptions> = {
+   	build: { cwd: "/workspace/app", env: { DEBUG: "1" } },
+   };
+   ```
+
+   In the handler, build the tmux command from the session name, and pass `argv` to `exec()` in place of the array:
+
+   ```ts title="src/index.ts"
+   const argv = ["tmux", "new-session", "-A", "-s", session];
+   const options = SESSIONS[session];
+
+   if (options) {
+   	argv.push("-c", options.cwd);
+
+   	for (const [name, value] of Object.entries(options.env)) {
+   		argv.push("-e", `${name}=${value}`);
+   	}
+   }
+   ```
+
+   tmux applies `-c` and `-e` when it creates the session. A request without `?session=` opens the session `main`, which replaces the 0.12 default session. The handler accepts names of lowercase letters, digits, and hyphens, and tmux does not accept `.` or `:` in a name, so rename 0.12 sessions that use other characters.
+
+   To run another command instead of `bash`, as the 0.12 `shell` option did, refer to [Run another command in the terminal](/sandbox/commands/open-a-terminal-in-the-browser/#run-another-command-in-the-terminal).
+
+</Steps>
+
+## Forward the WebSocket
+
+In 0.12, the Worker passes the WebSocket request to `terminal()`:
+
+```ts title="src/index.ts (0.12)"
+const sandbox = getSandbox(env.MY_SANDBOX, id);
+const sessionId = url.searchParams.get("session");
+
+if (sessionId) {
+	const session = await sandbox.getSession(sessionId);
+	return session.terminal(request);
+}
+
+return sandbox.terminal(request, { cols: 80, rows: 24 });
+```
+
+In 1.0, the Worker forwards the request to the Durable Object, and the `session` query parameter goes with it:
+
+```ts title="src/index.ts (1.0)"
+return env.MY_SANDBOX.getByName(id.toLowerCase()).fetch(request);
+```
+
+Replace `proxyTerminal(stub, sessionId, request)` with the same `fetch()` call, with the session in the `session` query parameter. The handler reads the size from the `cols` and `rows` query parameters, and uses 80 by 24 without them. A request without a WebSocket upgrade gets HTTP `426`, where 0.12 threw an error.
+
+## Replace SandboxAddon
+
+1.0 has no `@cloudflare/sandbox/xterm` module. In 0.12, the page loads `SandboxAddon` into xterm.js:
+
+```ts title="terminal.ts (0.12)"
+import { SandboxAddon } from "@cloudflare/sandbox/xterm";
+
+const addon = new SandboxAddon({
+	getWebSocketUrl: ({ sandboxId, sessionId, origin }) => {
+		const params = new URLSearchParams({ id: sandboxId });
+		if (sessionId) params.set("session", sessionId);
+		return `${origin}/ws/terminal?${params}`;
+	},
+	onStateChange: (state) => console.log(state),
+});
+
+terminal.loadAddon(addon);
+addon.connect({ sandboxId: "my-sandbox", sessionId: "build" });
+```
+
+In 1.0, the page opens the WebSocket itself, and reconnects when it closes:
+
+```ts title="terminal.ts (1.0)"
+const encoder = new TextEncoder();
+let socket: WebSocket;
+let attempts = 0;
+
+const send = (data: string | Uint8Array) => {
+	if (socket.readyState === WebSocket.OPEN) socket.send(data);
+};
+
+const connect = () => {
+	const url = new URL("/ws/terminal", location.href);
+	url.protocol = location.protocol === "https:" ? "wss:" : "ws:";
+	url.searchParams.set("id", "my-sandbox");
+	url.searchParams.set("session", "build");
+	url.searchParams.set("cols", String(terminal.cols));
+	url.searchParams.set("rows", String(terminal.rows));
+
+	socket = new WebSocket(url);
+	socket.binaryType = "arraybuffer";
+
+	socket.addEventListener("open", () => {
+		attempts = 0;
+		// tmux redraws the whole screen when a client attaches.
+		terminal.reset();
+	});
+	socket.addEventListener("message", (event) => {
+		// Skip the ready message.
+		if (typeof event.data === "string") return;
+		terminal.write(new Uint8Array(event.data));
+	});
+	socket.addEventListener("close", (event) => {
+		// Code 1000 means the shell exited or the person detached.
+		if (event.code === 1000 || attempts >= 10) return;
+		const delay = Math.min(1000 * 2 ** attempts++, 30_000);
+		setTimeout(connect, delay);
+	});
+};
+
+connect();
+terminal.onData((data) => send(encoder.encode(data)));
+terminal.onResize(({ cols, rows }) => {
+	send(JSON.stringify({ cols, rows }));
+});
+```
+
+The addon's states map to socket events. `connecting` lasts until the `open` event, `connected` starts with it, and `disconnected` follows a `close` event that the page does not retry. An HTTP error in place of the upgrade arrives as a `close` event with code `1006`. Like the addon, the page retries after 1 second, doubles the delay, and stops after 10 attempts.
+
+## What changes at the terminal
+
+A reconnected page shows the screen that tmux redraws, where 0.12 replayed up to 256 KiB of earlier output. Earlier output stays in the tmux history, so people scroll back with the mouse wheel and press `q` to leave the history.
+
+When the shell exits, the socket closes with code `1000`, and the reason carries the exit code, such as `Terminal closed with code 0`. The next connection starts a new shell. 0.12 kept the ended terminal, so later connections showed its old output and ran nothing until the container restarted. Detaching with `CTRL + B` then `D` also closes the socket with code `1000`, and the session keeps running.
+
+Browsers that open the same session share one screen, as they did in 0.12.
+
+## Terminals open at the switch
+
+The switch ends the 0.12 shells and their output. Open terminals stop receiving data, and the browser does not see them close, so `SandboxAddon` does not reconnect. Ask people to reload the page after the deploy, or add the read timeout from [Plan the move](/sandbox/sdk/migrate/plan-the-move/). After a reload, the Durable Object creates a new tmux session.
+
+## Check the terminal
+
+After you deploy the switch, open a terminal for a sandbox and make the window 100 columns by 30 rows. In the browser's developer tools, the first message on the WebSocket is `{"type":"ready"}`. Run this command in the terminal:
+
+```sh
+echo pwd=$(pwd) NODE_ENV=$NODE_ENV; stty size
+```
+
+The shell starts in `/workspace` with the variables from `ENV`, and tmux takes one row for its status line:
+
+```txt output
+pwd=/workspace NODE_ENV=test
+29 100
+```
+
+Start a loop that prints a line every second, and reload the page. The count has kept going. Run `exit`. The WebSocket closes with code `1000` and the reason `Terminal closed with code 0`, and the page does not reconnect.
+
+## Related resources
+
+- [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/)
+- [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/)
+- [Plan the move](/sandbox/sdk/migrate/plan-the-move/)
+- [xterm.js documentation](https://xtermjs.org/docs/)
