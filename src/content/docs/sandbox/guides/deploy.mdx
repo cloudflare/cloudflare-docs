@@ -42,7 +42,7 @@ Do not mix a stable package with a `@next` image, or the reverse.
 1. Start Docker if `image` is a Dockerfile path. Registry image references do not need Docker at deploy time.
 2. From the project root:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
 3. Confirm the Worker URL responds, then exercise a sandbox route.
 

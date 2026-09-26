@@ -152,7 +152,7 @@ You need a Cloudflare Workers project, an OpenAPI 3.x document, and a host-side 
 
 4. Deploy the Worker:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
 5. In an MCP client, connect to `https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/mcp`. Include the bearer token required by your Worker.
 

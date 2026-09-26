@@ -1,7 +1,7 @@
 ---
 pcx_content_type: navigation
-title: Wrangler commands
-description: Wrangler CLI commands for creating and managing Hyperdrive configurations.
+title: CLI commands
+description: CLI commands for creating and managing Hyperdrive configurations.
 sidebar:
   order: 12
 products:
@@ -10,6 +10,10 @@ products:
 
 import { WranglerNamespace } from "~/components";
 
-The following [Wrangler commands](/workers/wrangler/) apply to Hyperdrive.
+Use [Wrangler](/workers/wrangler/) or the Cloudflare CLI to create and manage Hyperdrive configurations.
 
-<WranglerNamespace namespace="hyperdrive" />
+:::note
+The Wrangler and Cloudflare CLI command families are not one-to-one. For example, `wrangler hyperdrive create` accepts a positional name and connection string, while `cf hyperdrive create` uses named origin fields. The Cloudflare CLI also includes `replace` and `restart`, while Wrangler includes `planetscale signature`. Use the syntax shown for your selected CLI instead of translating flags directly.
+:::
+
+<WranglerNamespace namespace="hyperdrive" cfNamespace="hyperdrive" />
