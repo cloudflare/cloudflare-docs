@@ -8,7 +8,14 @@ products:
   - durable-objects
 ---
 
-import { Tabs, TabItem, GlossaryTooltip, Type, MetaInfo } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Type,
+	MetaInfo,
+	TypeScriptExample,
+} from "~/components";
 
 ## Description
 
@@ -299,9 +306,48 @@ If no parameter or a parameter of `0` is provided and a timeout has been previou
 
 - An `Array<string>` of tags.
 
+### `onNextSessionRestore`
+
+`onNextSessionRestore` schedules a Durable Object to restore its SQLite storage from a snapshot the next time it starts a new session. Call [`abort`](/durable-objects/api/state/#abort) immediately afterward to reset the Durable Object and start that new session, which performs the restore.
+
+The snapshot must come from [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot), and can be created by any [SQLite-backed Durable Object](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), including one in a different Durable Object namespace. Restoring replaces the destination's entire SQLite database, including both SQL tables and key-value data. Scheduled alarms on the destination are not carried over.
+
+For a complete walkthrough, refer to [Snapshot and restore storage](/durable-objects/best-practices/snapshot-and-restore-durable-object-storage/).
+
+:::caution[`abort` always throws, even when the restore succeeds]
+
+`onNextSessionRestore` only schedules the restore; it does not perform it. The following call to `abort` immediately terminates the current session and always throws, including when the restore succeeds. Code in that session cannot catch the error, but the caller of the RPC method that invoked it receives the error and can catch it there. Catch the specific message passed to `abort` to tell a successful restore apart from an unrelated failure.
+
+:::
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const RESTORE_SCHEDULED = "Snapshot restore scheduled";
+
+export class MyDurableObject extends DurableObject {
+	async copy(snapshot: DurableObjectSnapshot): Promise<void> {
+		await this.ctx.onNextSessionRestore(snapshot);
+		this.ctx.abort(RESTORE_SCHEDULED);
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- A required `DurableObjectSnapshot`, created by [`ctx.storage.snapshot()`](/durable-objects/api/sqlite-storage-api/#snapshot).
+
+#### Return values
+
+- A `Promise<string>` containing a bookmark that represents the point in time immediately before the restore. Use this bookmark to undo the restore later.
+
 ### `abort`
 
-Calling `abort` immediately resets a Durable Object. The runtime logs a JavaScript `Error` with the message passed to `abort`. Application code cannot catch this error.
+Calling `abort` immediately resets a Durable Object. The runtime logs a JavaScript `Error` with the message passed to `abort`. Code running in the aborted session cannot catch this error, but the caller of the RPC method that invoked `abort` receives the error and can catch it there.
 
 By default, an alarm interrupted by `abort` retries after the Durable Object resets. A Durable Object can run an alarm concurrently with another request, and that request can call `abort` while the alarm is still running.
 
