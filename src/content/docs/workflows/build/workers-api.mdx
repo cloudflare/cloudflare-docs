@@ -360,6 +360,104 @@ Instance-level retention settings take precedence over Workflow binding settings
 
 :::
 
+## Declare Workflows in `exports`
+
+:::note
+Requires Wrangler 4.139.0 or above.
+:::
+
+You can declare the Workflows a Worker defines in the `exports` field of your Wrangler configuration, instead of in a `workflows` binding:
+
+- The Worker that declares the Workflow calls it through [`ctx.exports`](#call-a-workflow-through-ctxexports).
+- Other Workers call the Workflow through a [cross-script binding](#cross-script-calls). Set `script_name` to the Worker that declares the export, and `class_name` to the key of the export.
+
+Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `type` to `"workflow"` and `name` to the name of the Workflow:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "billing-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "billing-workflow",
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, and `default_retention`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+
+You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+### Call a Workflow through `ctx.exports`
+
+:::note
+Local development requires one of the following, depending on your tooling:
+
+- Wrangler A.B.C or above
+- `@cloudflare/vite-plugin` D.E.F or above
+- `@cloudflare/vitest-plugin` G.H.I or above
+
+:::
+
+Each Workflow declared in `exports` is available on [`ctx.exports`](/workers/runtime-apis/context/#exports), keyed by class name. It has the same API as a [Workflow binding](#workflow), so the Worker does not need a `workflows` binding to call it.
+
+The following Worker creates an instance of `MyWorkflow` through `ctx.exports`, and gets the status of an existing instance:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import {
+	WorkflowEntrypoint,
+	WorkflowEvent,
+	WorkflowStep,
+} from "cloudflare:workers";
+
+type Params = { name: string };
+
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		return await step.do("greet", async () => `Hello, ${event.payload.name}!`);
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const id = new URL(request.url).searchParams.get("id");
+
+		// Get the status of an existing instance
+		if (id !== null) {
+			const instance = await ctx.exports.MyWorkflow.get(id);
+			return Response.json(await instance.status());
+		}
+
+		// Create a new instance
+		const instance = await ctx.exports.MyWorkflow.create({
+			params: { name: "World" },
+		});
+		return Response.json({ id: instance.id });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/workers/#types) to type `ctx.exports.MyWorkflow` as `Workflow<Params>`.
+
+A `workflows` binding and a `workflow` export with the same `name` share their instances. This includes instances created before you declared the Workflow in `exports`, so you can move a Workflow from a binding to an export without losing its instances.
+
+To test a Workflow declared in `exports` with the Vitest integration, refer to [Introspect Workflows declared in `exports`](/workers/testing/vitest-integration/test-apis/#introspect-workflows-declared-in-exports).
+
 ## NonRetryableError
 
 - <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />

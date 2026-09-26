@@ -509,3 +509,52 @@ Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
         ```
 
       When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
+
+#### Introspect Workflows declared in `exports`
+
+:::note
+Requires `@cloudflare/vitest-plugin` G.H.I or above.
+:::
+
+`introspectWorkflow()` and `introspectWorkflowInstance()` need a Workflow binding from `env`. They throw an error if you pass a Workflow from [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports).
+
+To introspect a Workflow declared in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of your Wrangler configuration, add a test-only binding to it in the `miniflare.workflows` option:
+
+```ts title="vitest.config.ts"
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			wrangler: {
+				configPath: "./wrangler.jsonc",
+			},
+			miniflare: {
+				// Test-only binding to the Workflow declared in `exports`
+				workflows: {
+					MY_WORKFLOW: { name: "my-workflow", className: "MyWorkflow" },
+				},
+			},
+		}),
+	],
+});
+```
+
+The introspector also captures instances that your Worker creates through `ctx.exports`:
+
+```ts
+import { env, exports } from "cloudflare:workers";
+import { introspectWorkflow } from "cloudflare:test";
+
+it("introspects instances created through ctx.exports", async () => {
+	await using introspector = await introspectWorkflow(env.MY_WORKFLOW);
+
+	// The Worker creates an instance through `ctx.exports.MyWorkflow`
+	await exports.default.fetch("https://example.com/");
+
+	const instances = await introspector.get();
+	expect(instances).toHaveLength(1);
+	await instances[0].waitForStatus("complete");
+});
+```

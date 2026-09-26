@@ -1,0 +1,37 @@
+---
+title: Call Workflows declared in `exports` through `ctx.exports`
+description: Workflows declared in the `exports` field of your Wrangler configuration are available on `ctx.exports`, including in local development.
+products:
+  - workflows
+  - workers
+date: 2026-09-25
+---
+
+import { TypeScriptExample } from "~/components";
+
+A Worker can now call the Workflows it declares in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of its Wrangler configuration through [`ctx.exports`](/workers/runtime-apis/context/#exports). You no longer need a `workflows` binding to call a Workflow from the Worker that defines it.
+
+Each Workflow is keyed by class name, and has the same API as a Workflow binding:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const instance = await ctx.exports.MyWorkflow.create({
+			params: { name: "World" },
+		});
+		return Response.json({ id: instance.id });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+A `workflows` binding and a `workflow` export with the same `name` share their instances. You can move a Workflow from a binding to an export without losing its instances.
+
+`wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), and the [Workers Vitest integration](/workers/testing/vitest-integration/) run Workflows on `ctx.exports` locally. Local development requires Wrangler A.B.C, `@cloudflare/vite-plugin` D.E.F, or `@cloudflare/vitest-plugin` G.H.I or above.
+
+In Vitest, `introspectWorkflow()` and `introspectWorkflowInstance()` still need a Workflow binding. To introspect a Workflow declared in `exports`, add a [test-only binding](/workers/testing/vitest-integration/test-apis/#introspect-workflows-declared-in-exports) to it.
+
+For more information, refer to [Call a Workflow through `ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports).

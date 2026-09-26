@@ -210,7 +210,8 @@ The `main` key is optional for assets-only Workers.
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 * `exports` <Type text="object"/> <MetaInfo text="optional"/>
-  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
+  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Durable Object entries are mutually exclusive with `migrations`.
+  - Declares the Workflows this Worker defines. Refer to [Workflow exports](#workflow-exports).
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Legacy imperative configuration that maps a Durable Object from a class name to a runtime state. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
@@ -665,7 +666,7 @@ Example:
 
 :::note
 
-`migrations` is the legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer the declarative [`exports`](#exports) field. `migrations` and `exports` are mutually exclusive.
+`migrations` is the legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer the declarative [`exports`](#exports) field. `migrations` and Durable Object entries in `exports` are mutually exclusive.
 
 :::
 
@@ -1199,6 +1200,54 @@ Example:
 ```
 
 </WranglerConfig>
+
+#### Workflow exports
+
+:::note
+Requires Wrangler 4.139.0 or above.
+:::
+
+The `exports` field declares the Workflows this Worker defines, without a binding. Refer to [Declare Workflows in `exports`](/workflows/build/workers-api/#declare-workflows-in-exports).
+
+Each Workflow entry in `exports` is keyed by the name of a class that extends `WorkflowEntrypoint`. The fields on each entry are:
+
+- `type` <Type text="string" /> <MetaInfo text="required" />
+  - For Workflow entries, set this to `"workflow"`.
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Workflow. Two entries in `exports` cannot use the same name.
+- `limits` <Type text="object" /> <MetaInfo text="optional" />
+  - `steps` <Type text="number" /> <MetaInfo text="optional" /> — The maximum number of steps a Workflow instance can run. Refer to [Workflow step limits](/workflows/build/workers-api/#workflow-step-limits).
+- `schedules` <Type text="string | string[]" /> <MetaInfo text="optional" />
+  - One or more cron schedules that create new instances of this Workflow automatically. Refer to [Schedule a Workflow directly](/workflows/build/trigger-workflows/#schedule-a-workflow-directly).
+- `default_retention` <Type text="object" /> <MetaInfo text="optional" />
+  - How long to retain the state of instances of this Workflow after they finish. Accepts the same `success_retention` and `error_retention` fields as the [`workflows` binding](#workflows).
+
+A Workflow can be declared both as a `workflows` binding and as an export. Both declarations must use the same class, and cannot set the same field to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "my-workflow",
+			"limits": {
+				"steps": 25000,
+			},
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+The Worker calls each Workflow declared in `exports` through [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports), keyed by class name.
 
 ## Assets
 
