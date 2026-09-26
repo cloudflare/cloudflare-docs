@@ -1,0 +1,107 @@
+---
+pcx_content_type: navigation
+title: API
+description: Use the Durable Object Container API for new applications and compare it with the Container class.
+sidebar:
+  order: 6
+products:
+  - containers
+  - durable-objects
+---
+
+import { CardGrid, LinkTitleCard, TypeScriptExample } from "~/components";
+
+Containers provide two APIs for managing a container from a Durable Object. Both APIs address the same container runtime.
+
+For new applications, we recommend the Durable Object Container API. It lets you combine container workloads with the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control the container lifecycle while your Durable Object coordinates application state. The `Container` class remains documented for existing applications.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Durable Object Container API"
+	href="/containers/api/durable-object-container/"
+	icon="seti:typescript"
+>
+	Start, stop, monitor, and connect to a container through `ctx.container`.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Container class"
+	href="/containers/api/container-class/"
+	icon="seti:typescript"
+>
+	Reference the class and its routing, readiness checks, lifecycle hooks,
+	and scheduling for existing applications.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Choose an API
+
+### Durable Object Container API
+
+Inside a Durable Object, use `ctx.container` to control the container runtime directly. You can manage startup, shutdown, networking, and resource usage while using Durable Object storage and alarms for state and coordination. Add readiness checks, custom request routing, or lifecycle policies when needed.
+
+This Durable Object starts its configured container when it receives a request. Starting a container does not mean its ports are ready.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+export class MyContainer extends DurableObject<Env> {
+	fetch(): Response {
+		const container = this.ctx.container;
+		if (!container) {
+			return new Response("No container is configured", { status: 500 });
+		}
+		if (container.running) {
+			return new Response("Container is running");
+		}
+		container.start();
+		return new Response("Container is starting", { status: 202 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+For request routing, use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) after checking port readiness. For all methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/).
+
+### Container class
+
+The `Container` class builds on Durable Objects and the runtime API. Existing applications may use its request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers handle common Durable Object lifecycle tasks. Some features still use Durable Object storage and alarms.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Container } from "@cloudflare/containers";
+
+export class MyContainer extends Container {
+	defaultPort = 8080;
+	sleepAfter = "10m";
+}
+```
+
+</TypeScriptExample>
+
+For all properties and methods, refer to the [Container class API](/containers/api/container-class/).
+
+The following table compares both options:
+
+| Requirement                | Durable Object Container API                                                                                                                                                                       | `Container` class                                                                                                                                                                                                                                        |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Start and stop a container | [`start()`](/containers/api/durable-object-container/#start), [`signal()`](/containers/api/durable-object-container/#signal), and [`destroy()`](/containers/api/durable-object-container/#destroy) | [`start()`](/containers/api/container-class/#start), [`stop()`](/containers/api/container-class/#stop), and [`destroy()`](/containers/api/container-class/#destroy)                                                                                      |
+| Send and proxy traffic     | [`getTcpPort(port).fetch()`](/containers/api/durable-object-container/#gettcpport) and [`getTcpPort(port).connect()`](/containers/api/durable-object-container/#gettcpport)                        | [`fetch()`](/containers/api/container-class/#fetch) and [`containerFetch()`](/containers/api/container-class/#containerfetch)                                                                                                                            |
+| Execute another process    | [`exec()`](/containers/api/durable-object-container/#exec)                                                                                                                                         | [`ctx.container.exec()`](/containers/api/container-class/#execute-commands)                                                                                                                                                                              |
+| Check port readiness       | Use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) in application code                                                                                                     | [`startAndWaitForPorts()`](/containers/api/container-class/#startandwaitforports) and [`waitForPort()`](/containers/api/container-class/#waitforport)                                                                                                    |
+| Handle concurrent starts   | Coordinate calls to [`start()`](/containers/api/durable-object-container/#start) when needed                                                                                                       | Handled by [`start()`](/containers/api/container-class/#start) and [`startAndWaitForPorts()`](/containers/api/container-class/#startandwaitforports)                                                                                                     |
+| Run lifecycle hooks        | [`monitor()`](/containers/api/durable-object-container/#monitor) and application code                                                                                                              | [`onStart()`](/containers/api/container-class/#onstart), [`onStop()`](/containers/api/container-class/#onstop), [`onError()`](/containers/api/container-class/#onerror), and [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) |
+| Stop inactive containers   | [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout)                                                                                                         | [`sleepAfter`](/containers/api/container-class/#sleepafter) and [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired)                                                                                                              |
+| Schedule callbacks         | [`ctx.storage.setAlarm()`](/durable-objects/api/alarms/#setalarm) (Durable Object API)                                                                                                             | [`schedule()`](/containers/api/container-class/#schedule)                                                                                                                                                                                                |
+
+For new applications, use the Durable Object Container API to combine direct container control with Durable Object storage and coordination. It also supports latency-sensitive workloads and applications that need a smaller storage footprint.
+
+If your application uses the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).

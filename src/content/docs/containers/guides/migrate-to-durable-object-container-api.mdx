@@ -1,0 +1,34 @@
+---
+title: Migrate from the Container class to the Durable Object Container API
+description: Replace Container class lifecycle and routing helpers with direct container control inside a Durable Object.
+pcx_content_type: how-to
+sidebar:
+  order: 7
+products:
+  - containers
+  - durable-objects
+---
+
+import { Steps } from "~/components";
+
+The Durable Object Container API lets your Durable Object coordinate container compute with persistent storage, alarms, and request handling. Access it as `this.ctx.container` inside a Durable Object with a container binding. When migrating from the `Container` class, replace its helpers with application code where needed.
+
+Before changing code, identify the features your application uses. Keep the existing implementation if you depend on a helper that you cannot replace yet. For an API comparison, refer to [Choose an API](/containers/api/#choose-an-api).
+
+## Replace Container class helpers
+
+The `Container` class extends `DurableObject`. Replace its inherited lifecycle and routing helpers with application code that uses `ctx.container`.
+
+<Steps>
+
+1. In your Worker, change the class to extend `DurableObject` from `cloudflare:workers`. Keep the exported class name if you want to retain its existing container definition and Durable Object binding. Do not add a new Durable Object migration solely because you changed the base class. Refer to [Wrangler configuration](/containers/configuration/wrangler/).
+2. Replace `start()` and `stop()` calls with [`ctx.container.start()`](/containers/api/durable-object-container/#start) and [`signal()`](/containers/api/durable-object-container/#signal) or [`destroy()`](/containers/api/durable-object-container/#destroy), as appropriate. Do not assume `start()` waits for a port to become ready.
+3. Replace `defaultPort`, `containerFetch()`, and automatic `fetch()` routing with [`getTcpPort(port).fetch()`](/containers/api/durable-object-container/#gettcpport) and your own request routing. Check port readiness before forwarding requests.
+4. Replace `sleepAfter` with [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout). Replace lifecycle hooks and `schedule()` with application code, [`monitor()`](/containers/api/durable-object-container/#monitor), and [Durable Object alarms](/durable-objects/api/alarms/) where appropriate.
+5. Test startup, concurrent requests, readiness, idle shutdown, and recovery after a container restart. Then remove `@cloudflare/containers` only if no other code imports it.
+
+</Steps>
+
+Keep the same image in the `containers` section of your Wrangler configuration unless you intend to change the container application itself. The direct API still runs the image associated with its Durable Object class.
+
+For process handling and output, refer to [Execute commands](/containers/guides/execute-commands/) and the [`exec()` reference](/containers/api/durable-object-container/#exec).

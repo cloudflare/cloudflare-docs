@@ -357,7 +357,7 @@ Requests are evaluated in this order:
 5. Instance-level handlers set with `setOutboundHandler()` are checked before the class-level `outbound` handler.
 6. If no handler matches, the request can still egress to the public internet when it matched `allowedHosts` or `enableInternet = true`. Otherwise, it is denied.
 
-## Low-level API
+## Direct API
 
 To configure outbound interception directly on `ctx.container`, use `interceptOutboundHttp` for a specific hostname glob, IP, or CIDR range,
 or `interceptAllOutboundHttp` for all traffic. Both accept a `WorkerEntrypoint`.
@@ -414,4 +414,4 @@ The `Container` class calls these methods automatically when you use the functio
 - [Connect to Workers bindings](/containers/configuration/workers-connections/) — Access KV, R2, Durable Objects, and other bindings from a container
 - [Control outbound traffic (Sandboxes)](/sandbox/guides/outbound-traffic/) — Sandbox SDK API for outbound handlers
 - [Environment variables and secrets](/containers/configuration/environment-variables/) — Configure secrets and environment variables
-- [Durable Object interface](/durable-objects/api/container/) — Full `ctx.container` API reference
+- [Durable Object Container API](/containers/api/durable-object-container/) — Full `ctx.container` API reference

@@ -641,10 +641,14 @@
 /constellation/ /workers-ai/ 301
 # Containers
 /containers/beta-info/ /containers/faq/ 301
-/containers/container-package/ /containers/reference/container-class/ 301
-/containers/durable-object-methods/ /durable-objects/api/container/ 301
+# Containers API
+/containers/container-package/ /containers/api/container-class/ 301
+/containers/durable-object-methods/ /containers/api/durable-object-container/ 301
+/containers/container-class/ /containers/api/container-class/ 301
+/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
+/durable-objects/api/container/ /containers/api/durable-object-container/ 301
 # Containers IA rework: loose pages folded into core sections
-/containers/container-class/ /containers/reference/container-class/ 301
 /containers/local-dev/ /containers/guides/local-dev/ 301
 /containers/deploy/ /containers/guides/deploy/ 301
 /containers/execute-commands/ /containers/guides/execute-commands/ 301
@@ -663,7 +667,7 @@
 /containers/platform-details/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
 /containers/platform-details/limits/ /containers/platform/limits/ 301
 /containers/platform-details/image-management/ /containers/guides/image-management/ 301
-/containers/platform-details/durable-object-methods/ /durable-objects/api/container/ 301
+/containers/platform-details/durable-object-methods/ /containers/api/durable-object-container/ 301
 /containers/platform-details/ /containers/concepts/architecture/ 301
 # Containers IA rework: Configuration section + Local Development to Guides + Wrangler pages to Reference
 /containers/reference/local-dev/ /containers/guides/local-dev/ 301
