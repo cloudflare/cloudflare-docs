@@ -38,7 +38,7 @@ const puppeteer = require("puppeteer-core");
 const ACCOUNT_ID = process.env.CF_ACCOUNT_ID || "<ACCOUNT_ID>";
 const API_TOKEN = process.env.CF_API_TOKEN || "<API_TOKEN>";
 
-const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-rendering/devtools/browser?keep_alive=600000`;
+const browserWSEndpoint = `wss://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/browser-run/devtools/browser?keep_alive=600000`;
 
 async function main() {
 	const browser = await puppeteer.connect({
