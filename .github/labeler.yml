@@ -1203,7 +1203,6 @@ product:workflows:
       - any-glob-to-any-file:
           - src/content/docs/workflows/**
           - src/content/partials/workflows/**
-          - src/content/release-notes/workflows.yaml
           - src/content/changelog/workflows/**
           - src/assets/images/changelog/workflows/**
 

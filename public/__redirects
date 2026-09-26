@@ -116,6 +116,7 @@
 /network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
 /rules/changelog/index.xml /changelog/rss/rules.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
+/workflows/reference/changelog/index.xml /changelog/rss/workflows.xml 301
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/ /waf/change-log/changelog/ 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
@@ -2521,6 +2522,7 @@
 /workers-ai/markdown-conversion/ /workers-ai/features/markdown-conversion/ 301
 # workflows
 /workflows/get-started/cli-quick-start/ /workflows/get-started/guide/ 301
+/workflows/reference/changelog/ /changelog/product/workflows/ 301
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 /workflows/tutorials/ /workflows/examples 301
 # workers KV
