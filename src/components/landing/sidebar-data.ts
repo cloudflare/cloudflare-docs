@@ -229,6 +229,7 @@ export const sidebarSections: SidebarSection[] = [
 				icon: "analytics",
 				collapsed: true,
 				nodes: [
+					link("Observability", "/observability/"),
 					link("Analytics", "/analytics/"),
 					link("Web Analytics", "/web-analytics/"),
 					link("Logs", "/logs/"),
