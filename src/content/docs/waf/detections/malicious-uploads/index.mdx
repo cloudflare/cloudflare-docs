@@ -82,7 +82,7 @@ This means a request whose content was only partly scanned can produce the same 
 :::note[Notes]
 
 - The AV scanner will not scan some particular types of files, namely the following:
-  - Password-protected archives
+  - Password-protected files. Refer to [Encrypted content](#encrypted-content) for supported file types.
   - Archives with more than three recursion levels
   - Archives with more than 300 files
   - PGP-encrypted files
@@ -90,6 +90,19 @@ This means a request whose content was only partly scanned can produce the same 
 - In rare cases, the AV scanner may time out and fail to analyze a content object. When this happens, the `cf.waf.content_scan.has_failed` field will be set to true. This field refers to scans that were attempted but did not complete. It is not set for content that the scanner did not reach because of the 50 MB size limit.
 
 :::
+
+## Encrypted content
+
+Content scanning detects when a content object is password-protected (encrypted), for the following file types:
+
+- ZIP archives
+- RAR archives
+- PDF files
+- Microsoft Office files (`.docx`, `.doc`, `.xlsx`, `.xls`, `.pptx`, `.ppt`)
+
+When content scanning detects an encrypted content object, it sets `cf.waf.content_scan.has_encrypted_obj` to `true`. The scanner cannot determine whether encrypted content is malicious, so the content object's result in `cf.waf.content_scan.obj_results` is reported as `not scanned`, and `cf.waf.content_scan.has_failed` is not set for encrypted content.
+
+To block or challenge encrypted uploads, use `cf.waf.content_scan.has_encrypted_obj` in a custom rule.
 
 ## Custom scan expressions
 
@@ -118,6 +131,7 @@ When content scanning is enabled, you can use the following fields in WAF rules:
 | Number of malicious content objects <br/> [`cf.waf.content_scan.num_malicious_obj`][3] <br/> <Type text="Integer" /> | The number of malicious content objects detected in the request (zero or greater).                                                                                   |
 | Content scan has failed <br/> [`cf.waf.content_scan.has_failed`][4] <br/> <Type text="Boolean" />                    | Indicates whether the file scanner was unable to scan any of the content objects detected in the request.                                                            |
 | Content scan truncated <br/> [`cf.waf.content_scan.truncated`][9] <br/> <Type text="Boolean" />                      | Indicates whether the request body exceeded the size limit for content scanning and was truncated before scanning, meaning the scan results may be incomplete. Refer to [Size limit](#size-limit).                   |
+| Has encrypted content object <br/> [`cf.waf.content_scan.has_encrypted_obj`][10] <br/> <Type text="Boolean" />       | Indicates whether the request contains at least one password-protected (encrypted) content object. Refer to [Encrypted content](#encrypted-content).                |
 | Number of content objects <br/> [`cf.waf.content_scan.num_obj`][5] <br/> <Type text="Integer" />                     | The number of content objects detected in the request (zero or greater).                                                                                             |
 | Content object size <br/> [`cf.waf.content_scan.obj_sizes`][6] <br/> <Type text="Array<Integer>" />                  | An array of file sizes in bytes, in the order the content objects were detected in the request.                                                                      |
 | Content object type <br/> [`cf.waf.content_scan.obj_types`][7] <br/> <Type text="Array<String>" />                   | An array of file types in the order the content objects were detected in the request.                                                                                |
@@ -132,5 +146,6 @@ When content scanning is enabled, you can use the following fields in WAF rules:
 [7]: /ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_types/
 [8]: /ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.obj_results/
 [9]: /ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.truncated/
+[10]: /ruleset-engine/rules-language/fields/reference/cf.waf.content_scan.has_encrypted_obj/
 
 For examples of rule expressions using these fields, refer to [Example rules](/waf/detections/malicious-uploads/example-rules/).
