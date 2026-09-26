@@ -1,0 +1,57 @@
+---
+title: Snapshot and restore Container state
+description: Persist point-in-time container filesystem with snapshot APIs in public beta.
+products:
+  - containers
+date: 2026-09-30
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Containers](/containers/) now support snapshot APIs in public beta for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
+
+Use `snapshotContainer()` to capture the full container filesystem. The example uses the [Durable Object Container API](/durable-objects/api/container/). Create snapshots from a container that is already running:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async saveSnapshot() {
+		const containerSnapshot = await this.ctx.container.snapshotContainer({});
+
+		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Later, load the saved snapshot handle and restore it with `start()`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async restoreSnapshot() {
+		const containerSnapshot =
+			await this.ctx.storage.get<ContainerSnapshot>("containerSnapshot");
+
+		if (!containerSnapshot) {
+			return;
+		}
+
+		this.ctx.container.start({ containerSnapshot });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Snapshots are immutable, so create a new snapshot to persist filesystem changes made after a restore.
+
+For more information, refer to [Snapshots](/containers/guides/snapshots/) and [Durable Object Container](/durable-objects/api/container/).

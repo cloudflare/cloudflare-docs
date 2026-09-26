@@ -22,47 +22,61 @@ import {
 
 Each [container](/containers/) is managed by a Durable Object. The [`Container` class](/containers/reference/container-class/) from `@cloudflare/containers` extends `DurableObject` and handles lifecycle management, port readiness, and sleep timeouts for you. The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM.
 
-The low-level API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
+The Durable Object Container API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it when you need direct control over the container process or cannot use the `Container` class.
 
 Because the `Container` class extends `DurableObject`, you also have access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) via `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs.
 
+The following example uses the image configured by an application with the [`default` scheduling policy](/containers/configuration/scheduling-policy/#use-the-default-scheduling-policy):
+
 <TypeScriptExample filename="index.ts">
+
 ```ts
+import { DurableObject } from "cloudflare:workers";
+
 export class MyDurableObject extends DurableObject {
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 
-    	// boot the container when starting the DO
-    	this.ctx.blockConcurrencyWhile(async () => {
-    		this.ctx.container.start();
-    });
-    }
-
+		// Start the container when this Durable Object is activated.
+		this.ctx.blockConcurrencyWhile(async () => {
+			this.ctx.container.start();
+		});
+	}
 }
+```
 
-````
 </TypeScriptExample>
-
 
 ## Attributes
 
+### `images`
+
+`images` is a read-only map of the named images configured for a Container application that uses the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). Each value is a digest-pinned image reference prepared by Wrangler.
+
+```ts
+this.ctx.container.images.base;
+```
+
+Pass a value from this map as the `image` option to [`start()`](#start).
+
 ### `running`
 
-`running` returns `true` if the container is currently running. It does not ensure that the container has fully started and ready to accept requests.
+`running` returns `true` if the container is currently running. It does not ensure that the container has fully started and is ready to accept requests.
 
 ```js
-	this.ctx.container.running;
-````
+this.ctx.container.running;
+```
 
 ## Methods
 
 ### `start`
 
-`start` boots a container. This method does not block until the container is fully started.
-You may want to confirm the container is ready to accept requests before using it.
+`start` boots a container. This method returns before the container is fully started. Confirm that the container is ready to accept requests before using it.
 
-```js
+```ts
 this.ctx.container.start({
+	image: this.ctx.container.images.base,
+	instance: "standard-2",
 	env: {
 		FOO: "bar",
 	},
@@ -77,10 +91,13 @@ this.ctx.container.start({
   - `env`: An object containing environment variables to pass to the container. This is useful for passing configuration values or secrets to the container.
   - `entrypoint`: An array of strings representing the command to run in the container.
   - `enableInternet`: A boolean indicating whether to enable internet access for the container.
+  - `image`: The image reference to start. For a Container application that uses the `durable_object` scheduling policy, pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a reference from [`ctx.container.images`](#images). Omit this option when restoring a snapshot.
+  - `instance`: The instance size to use for a Container application that uses the `durable_object` scheduling policy. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
+  - `containerSnapshot`: A full container snapshot to restore before the container starts. You cannot use `containerSnapshot` and `image` in the same call.
 
 #### Return values
 
-- None.
+- None. Startup continues asynchronously.
 
 ### `exec`
 
@@ -162,6 +179,34 @@ With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `Arr
 - `kill()` throws a `RangeError` when the signal is outside the supported range.
 
 For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
+
+### `snapshotContainer`
+
+`snapshotContainer` creates a point-in-time snapshot of the full running container filesystem.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const snapshot = await this.ctx.container.snapshotContainer({
+	name: "before-upgrade",
+});
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- `options`: An object with the following properties:
+  - `name` (optional string): A human-friendly name for the snapshot.
+
+#### Return values
+
+- A promise that resolves to a `ContainerSnapshot` object with `id`, `size`, and optional `name` properties.
+
+#### Notes
+
+- Container snapshots are immutable.
+- Snapshot handles currently have an implicit 30-day time-to-live that refreshes when you restore them.
 
 ### `destroy`
 
@@ -343,3 +388,4 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 - [Get started with Containers](/containers/get-started/)
 - [SQLite storage API](/durable-objects/api/sqlite-storage-api/) — persist state across container restarts
 - [Durable Objects](/durable-objects/) — the underlying platform that powers Containers
+- [Snapshots](/containers/guides/snapshots/)
