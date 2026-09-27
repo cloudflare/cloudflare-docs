@@ -220,7 +220,7 @@ async setOutboundByHost(
 }
 ```
 
-Registering the entrypoint again replaces the rules of a running container. Write the other setters the same way. Each one passes a new value to `updateRules()`:
+Registering the entrypoint again replaces the rules of a running container, and open connections pick up the new rules without being dropped. Write the other setters the same way. Each one passes a new value to `updateRules()`:
 
 | 0.12                                                      | Value to pass                                                       |
 | --------------------------------------------------------- | ------------------------------------------------------------------- |
