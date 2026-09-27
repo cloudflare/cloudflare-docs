@@ -206,7 +206,21 @@ MySandbox.outboundByHost = {
 
 ## HTTPS traffic
 
-Sandboxes intercept HTTPS traffic by default — `interceptHttps` is set to `true` on the Sandbox class.
+Sandboxes intercept HTTPS traffic only when your class sets `interceptHttps` to `true`. It defaults to `false`, and then `allowedHosts`, `deniedHosts`, and outbound handlers apply to HTTP only. HTTPS requests reach every host while `enableInternet` is `true`, and fail while it is `false`.
+
+<TypeScriptExample>
+
+```ts
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy };
+
+export class MySandbox extends Sandbox {
+	interceptHttps = true;
+	deniedHosts = ["some-nefarious-website.com"];
+}
+```
+
+</TypeScriptExample>
 
 When HTTPS interception is active, an ephemeral CA file is created at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` once the sandbox starts.
 
