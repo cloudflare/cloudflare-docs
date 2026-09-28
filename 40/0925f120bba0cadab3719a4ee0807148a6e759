@@ -1,0 +1,19 @@
+src/content/changelog/durable-objects/2026-09-24-durable-object-name-search-limit.mdx
+  s_1c76ae2bf94860::t_cc264d1171b207 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "400925f120bba0cadab3719a4ee0807148a6e759",
+  "prompts": {},
+  "sessions": {
+    "s_1c76ae2bf94860": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2d898ceeffeUeaNXVDLn1H391",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Ashley Peacock <apeacock@cloudflare.com>"
+    }
+  }
+}
