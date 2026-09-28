@@ -23,6 +23,9 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+const CHANGELOG_OG_PATH = /^\/changelog\/post\/.+\/og\.png$/;
+const PRODUCTION_ORIGIN = "https://developers.cloudflare.com";
+
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
 // from dot-prefixed directories, so this must be handled directly in the worker.
@@ -74,7 +77,9 @@ function withRobotsHeaders(response: Response): Response {
 	});
 }
 
-function injectRobotsMeta(response: Response): Response {
+// Pages are built with the production origin; point social images at this
+// preview so they show the PR's images.
+function rewriteHtml(response: Response, origin: string): Response {
 	const contentType = response.headers.get("Content-Type") ?? "";
 	if (!contentType.includes("text/html")) return response;
 	return new HTMLRewriter()
@@ -85,11 +90,20 @@ function injectRobotsMeta(response: Response): Response {
 				});
 			},
 		})
+		.on(`meta[property$="image"][content^="${PRODUCTION_ORIGIN}/"]`, {
+			element(meta) {
+				const content = meta.getAttribute("content") ?? "";
+				meta.setAttribute(
+					"content",
+					origin + content.slice(PRODUCTION_ORIGIN.length),
+				);
+			},
+		})
 		.transform(response);
 }
 
-function hardenResponse(response: Response): Response {
-	return injectRobotsMeta(withRobotsHeaders(response));
+function hardenResponse(response: Response, origin: string): Response {
+	return rewriteHtml(withRobotsHeaders(response), origin);
 }
 
 // --- End preview anti-indexing ---
@@ -133,7 +147,7 @@ function rewriteRedirectForMarkdown(
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		const response = await this.handleRequest(request);
-		return hardenResponse(response);
+		return hardenResponse(response, new URL(request.url).origin);
 	}
 
 	private async handleRequest(request: Request): Promise<Response> {
@@ -168,6 +182,11 @@ export default class extends WorkerEntrypoint<Env> {
 					"Content-Type": "text/plain; charset=utf-8",
 				},
 			});
+		}
+
+		if (CHANGELOG_OG_PATH.test(pathname)) {
+			const { changelogOg } = await import("./changelog-og");
+			return changelogOg(request, this.env, this.ctx, { cache: false });
 		}
 
 		if (pathname === "/.well-known/api-catalog") {

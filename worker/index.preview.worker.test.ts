@@ -1,4 +1,4 @@
-import { SELF } from "cloudflare:test";
+import { SELF, env } from "cloudflare:test";
 import { describe, it, expect } from "vitest";
 import { parse } from "node-html-parser";
 
@@ -131,5 +131,37 @@ describe("Preview anti-indexing", () => {
 			expect(response.status).toBe(404);
 			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
 		});
+	});
+});
+
+describe("Preview changelog OG images", () => {
+	const PREVIEW = "https://my-branch.preview.developers.cloudflare.com";
+	const POST = "/changelog/post/2025-02-11-custom-errors-beta/";
+
+	it("renders the card fresh on every request without storing it", async () => {
+		for (let i = 0; i < 2; i++) {
+			const response = await SELF.fetch(`${PREVIEW}${POST}og.png`);
+			expect(response.status).toBe(200);
+			expect(response.headers.get("Content-Type")).toBe("image/png");
+			expect(response.headers.get("X-OG-Image")).toMatch(/^rendered; /);
+			expect(response.headers.get("Cache-Control")).toBe("public, max-age=300");
+			await response.arrayBuffer();
+		}
+		const { objects } = await (env as unknown as Env).PRIVATE_ASSETS.list({
+			prefix: "og/",
+		});
+		expect(objects).toEqual([]);
+	});
+
+	it("points social images at the preview origin", async () => {
+		const html = await (await SELF.fetch(`${PREVIEW}${POST}`)).text();
+		const meta = parse(html);
+		for (const property of ["og:image", "twitter:image", "image"]) {
+			expect(
+				meta
+					.querySelector(`meta[property="${property}"]`)
+					?.getAttribute("content"),
+			).toMatch(new RegExp(`^${PREVIEW}${POST}og\\.png\\?v=[0-9a-f]{16}$`));
+		}
 	});
 });

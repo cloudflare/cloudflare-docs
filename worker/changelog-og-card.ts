@@ -1,12 +1,7 @@
 // Changelog entry social card: a satori element tree, rendered by
 // worker/changelog-og.ts.
 
-export interface ChangelogCard {
-	title: string;
-	/** YYYY-MM-DD */
-	date: string;
-	product: string;
-}
+import type { ChangelogCard } from "../src/util/changelog-og";
 
 type Style = Record<string, string | number>;
 type Child = CardNode | string;

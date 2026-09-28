@@ -99,7 +99,7 @@ export default class extends WorkerEntrypoint<Env> {
 		// Loaded on demand so the renderer never costs regular requests.
 		if (CHANGELOG_OG_PATH.test(pathname)) {
 			const { changelogOg } = await import("./changelog-og");
-			return changelogOg(request, this.env);
+			return changelogOg(request, this.env, this.ctx);
 		}
 
 		if (pathname === "/.well-known/api-catalog") {
