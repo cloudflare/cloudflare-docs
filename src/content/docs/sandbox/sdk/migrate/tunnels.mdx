@@ -180,7 +180,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
 ## Keep named tunnels that 0.12 created
 
-0.12 recorded each named tunnel in Durable Object storage, under the `tunnels` and `tunnels:meta` keys: the tunnel ID, its hostname, your account and zone, and its DNS record. The keys stay when you deploy the switch in place, so 1.0 can run the same tunnel again.
+0.12 recorded each named tunnel in Durable Object storage, under the `tunnels` and `tunnels:meta` keys: the tunnel ID, its hostname, your account and zone, and its DNS record. The keys stay when you deploy the switch in place, so 1.0 can run the same tunnel again. If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the keys into the 1.0 class.
 
 <Steps>
 

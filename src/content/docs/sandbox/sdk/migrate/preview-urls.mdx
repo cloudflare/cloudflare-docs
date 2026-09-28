@@ -282,25 +282,7 @@ Your Durable Objects keep the `portTokens` key when you deploy the switch in pla
 | A wrong token, or a port without a token | Returns `404`. |
 | A URL after `unexposePort()` | Returns `404`. |
 
-If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), the tokens stay in the 0.12 class. Add a method to the 0.12 subclass that returns them. The 0.12 class already has a private `readPortTokens()` method, so use another name:
-
-```ts title="src/index.ts"
-exportPortTokens(): Promise<unknown> {
-	return this.ctx.storage.get("portTokens");
-}
-```
-
-In `copyFrom0x()`, copy them before the `isRunning()` check, so that URLs also move for sandboxes whose 0.12 container has stopped:
-
-```ts title="src/index.ts"
-const tokens = await this.env.Sandbox.getByName(name).exportPortTokens();
-
-if (tokens) {
-	await this.ctx.storage.put("portTokens", tokens);
-}
-```
-
-In the Worker's preview route, get the stub with `await sandboxFor(env, name)`.
+If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the tokens into the 1.0 class. In the Worker's preview route, get the stub with `await sandboxFor(env, name)`.
 
 ## Check preview URLs
 
