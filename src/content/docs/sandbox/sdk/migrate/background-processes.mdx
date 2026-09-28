@@ -84,7 +84,9 @@ const started = await sandbox.startProcess("dev", [
 
 Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_6snsuw`, use `crypto.randomUUID()`. The ID becomes a directory name, so use only characters that are safe in a path.
 
-`startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one.
+`startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one. It also returns `false` for the ID of a process that has ended, because the process directory stays. To start that ID again, delete its directory first, as [Stop processes](#stop-processes) describes.
+
+`python3 -m http.server`, which 0.12 ran as a preview server, exits on startup in a 1.0 container. For the cause and a replacement, refer to [The hostname is longer than a DNS label](/containers/guides/local-dev/#the-hostname-is-longer-than-a-dns-label).
 
 Remove the `timeout` option. 0.12 did not stop a background process when the time passed. To limit how long a process runs, start it with `timeout`, such as `["timeout", "300", "npm", "test"]`, which exits with code `124` when the time passes. For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
 
