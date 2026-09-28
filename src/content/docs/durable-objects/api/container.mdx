@@ -489,6 +489,8 @@ In a container started with `enableInternet: false`, DNS answers from the interc
 
 Connections to other ports are not intercepted. When the container started with `enableInternet: true`, they reach the Internet directly. To send every request through your Worker, start the container with `enableInternet: false`.
 
+Register hostname intercepts before `interceptAllOutboundHttp()`. A hostname that [`interceptOutboundHttp()`](#interceptoutboundhttp) registers first keeps its requests, including after you register this rule again. A hostname registered after this rule never receives requests, because this rule handles them.
+
 ```js
 await this.ctx.container.interceptAllOutboundHttp(worker);
 ```
