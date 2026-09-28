@@ -15,6 +15,12 @@ Each [container](/containers/) is managed and proxied by a Durable Object. The D
 
 The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
 
+:::note[API coverage]
+
+This page documents lifecycle, networking, and process-control APIs. Named images, runtime instance sizing, inspection, and snapshot APIs are outside the scope of this page.
+
+:::
+
 :::note
 We recommend starting new applications with the Durable Object Container API. It lets you run container workloads alongside the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control when the container starts, receives traffic, and stops, while the Durable Object manages application state and coordination. For existing applications that use the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 :::
@@ -82,10 +88,10 @@ this.ctx.container.start();
 
 #### Parameters
 
-- `options` (`object`, optional): Container startup options:
+- `options` (`ContainerStartupOptions`, optional): Container startup options:
   - `env` (`Record<string, string>`, optional): Environment variables to pass to the container.
   - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
-  - `enableInternet` (`boolean`, optional): Whether to allow outbound Internet access.
+  - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
 
 #### Return values
 
@@ -147,6 +153,8 @@ export class MyDurableObject extends DurableObject<Env> {
   - `cwd` (`string`, optional): Working directory for the process.
   - `env` (`Record<string, string>`, optional): Environment additions and overrides. The process inherits existing container variables. Matching keys use the per-execution value.
   - `user` (`string`, optional): Image user for the process.
+  - `signal` (`AbortSignal`, optional): Signal used to abort the process.
+  - `pty` (`boolean | { cols?: number; rows?: number }`, optional): Enables a pseudoterminal. Set `cols` and `rows` to configure its initial dimensions.
 
 #### Return values
 
@@ -158,9 +166,11 @@ An `ExecProcess` has these fields and methods:
 - `stdout` (`ReadableStream | null`): Readable standard output when piped.
 - `stderr` (`ReadableStream | null`): Readable standard error when piped separately.
 - `pid` (`number`): Process identifier.
+- `isPty` (`boolean`): Whether the process uses a pseudoterminal.
 - `exitCode` (`Promise<number>`): Resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
 - `output()` (`Promise<ExecOutput>`): Reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
 - `kill(signal?: number)` (`void`): Queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
+- `resize(cols: number, rows: number)` (`void`): Resizes the pseudoterminal to the specified number of columns and rows.
 
 With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
 
@@ -180,19 +190,19 @@ For task-oriented examples, refer to [Execute commands](/containers/guides/execu
 
 ### `destroy`
 
-`destroy()` stops the container and can pass a custom error message to the `monitor()` error callback.
+`destroy()` stops the container and can pass a custom rejection reason to `monitor()`.
 
 <TypeScriptExample>
 
 ```ts
-this.ctx.container.destroy("Manually Destroyed");
+await this.ctx.container.destroy("Manually Destroyed");
 ```
 
 </TypeScriptExample>
 
 #### Parameters
 
-- `error` (`string`, optional): Error message passed to the `monitor()` error handler for logging or debugging.
+- `error` (`any`, optional): Rejection reason passed to `monitor()`. A string is commonly used for logging or debugging.
 
 #### Return values
 
@@ -284,7 +294,7 @@ try {
 
 #### Return values
 
-- `TcpPort`: Object used to send requests to the container over TCP or HTTP.
+- `Fetcher`: Object used to send HTTP requests or TCP connections to the container port.
 
 ### `monitor`
 
@@ -319,7 +329,7 @@ class MyDurableObject extends DurableObject {
 
 ### `interceptOutboundHttp`
 
-`interceptOutboundHttp()` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `WorkerEntrypoint`. Call it before or after starting the container. Open connections use the new handler without being dropped.
+`interceptOutboundHttp()` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `Fetcher`. Call it before or after starting the container. Open connections use the new handler without being dropped.
 
 <TypeScriptExample>
 
@@ -327,10 +337,10 @@ class MyDurableObject extends DurableObject {
 const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
 
 // Match a specific hostname
-this.ctx.container.interceptOutboundHttp("api.example.com", worker);
+await this.ctx.container.interceptOutboundHttp("api.example.com", worker);
 
 // Match a hostname glob pattern
-this.ctx.container.interceptOutboundHttp("*.example.com", worker);
+await this.ctx.container.interceptOutboundHttp("*.example.com", worker);
 
 // Match an IP:port
 await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
@@ -343,16 +353,16 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 
 #### Parameters
 
-- `target` (`string`): Hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
-- `worker` (`WorkerEntrypoint`): `WorkerEntrypoint` instance that handles matching requests.
+- `addr` (`string`): Hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles matching requests.
 
 #### Return values
 
-- `void`: No return value.
+- `Promise<void>`: Resolves when the intercept rule is installed.
 
 ### `interceptAllOutboundHttp`
 
-`interceptAllOutboundHttp()` routes all outbound HTTP requests from the container through a `WorkerEntrypoint`, regardless of destination.
+`interceptAllOutboundHttp()` routes all outbound HTTP requests from the container through a `Fetcher`, regardless of destination.
 
 <TypeScriptExample>
 
@@ -364,7 +374,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 #### Parameters
 
-- `worker` (`WorkerEntrypoint`): `WorkerEntrypoint` instance that handles all outbound HTTP requests.
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles all outbound HTTP requests.
 
 #### Return values
 
@@ -372,7 +382,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 ### `interceptOutboundHttps`
 
-`interceptOutboundHttps()` routes outbound HTTPS requests matching a hostname or hostname glob through a `WorkerEntrypoint`. It works like `interceptOutboundHttp()` but handles HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception.
+`interceptOutboundHttps()` routes outbound HTTPS requests matching a hostname or hostname glob through a `Fetcher`. It works like `interceptOutboundHttp()` but handles HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception.
 
 Hostname globs support `*` to match any sequence of characters.
 
@@ -382,25 +392,25 @@ Hostname globs support `*` to match any sequence of characters.
 const worker = this.ctx.exports.MyWorker({ props: {} });
 
 // Match a specific hostname
-this.ctx.container.interceptOutboundHttps("api.example.com", worker);
+await this.ctx.container.interceptOutboundHttps("api.example.com", worker);
 
 // Match a hostname glob pattern
-this.ctx.container.interceptOutboundHttps("*.example.com", worker);
+await this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 
 // Intercept all HTTPS traffic
-this.ctx.container.interceptOutboundHttps("*", worker);
+await this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
 </TypeScriptExample>
 
 #### Parameters
 
-- `target` (`string`): Hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
-- `worker` (`WorkerEntrypoint`): `WorkerEntrypoint` instance that handles matching requests.
+- `addr` (`string`): Hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles matching requests.
 
 #### Return values
 
-- `void`: No return value.
+- `Promise<void>`: Resolves when the intercept rule is installed.
 
 ## Related resources
 
