@@ -34,11 +34,3 @@ The `Container` class extends `DurableObject`. Replace its inherited lifecycle a
 Keep the same image in the `containers` section of your Wrangler configuration unless you intend to change the container application itself. The direct API still runs the image associated with its Durable Object class.
 
 For process handling and output, refer to [Execute commands](/containers/guides/execute-commands/) and the [`exec()` reference](/containers/api/durable-object-container/#exec).
-
-:::note[Incremental migration]
-You can use an incremental migration to test direct runtime calls before the final cutover. First, deploy and test the existing `Container` class implementation.
-
-Next, deploy a bridge that still extends `Container`. Add routes that use `this.ctx.container` directly, and migrate helpers incrementally. Both paths use the same Durable Object and container, which preserves storage without requiring a second container application.
-
-After the direct routes pass your tests, change the class to extend `DurableObject`. Migrate scheduling last because the `Container` class owns `alarm()`. Let scheduled work finish before cutover, or store an application-owned job marker for the new `alarm()` handler.
-:::
