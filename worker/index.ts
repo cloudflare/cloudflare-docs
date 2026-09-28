@@ -12,6 +12,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
+const CHANGELOG_OG_PATH = /^\/changelog\/post\/.+\/og\.png$/;
+
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
 // from dot-prefixed directories, so this must be handled directly in the worker.
@@ -92,6 +94,12 @@ export default class extends WorkerEntrypoint<Env> {
 			/image-resizing/.test(request.headers.get("via") ?? "")
 		) {
 			return this.env.ASSETS.fetch(request);
+		}
+
+		// Loaded on demand so the renderer never costs regular requests.
+		if (CHANGELOG_OG_PATH.test(pathname)) {
+			const { changelogOg } = await import("./changelog-og");
+			return changelogOg(request, this.env);
 		}
 
 		if (pathname === "/.well-known/api-catalog") {
