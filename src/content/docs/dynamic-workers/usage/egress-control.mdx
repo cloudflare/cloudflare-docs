@@ -62,7 +62,7 @@ export default {
 				// The dynamic Worker's fetch() and connect() calls
 				// are routed through HttpGateway instead of going
 				// to the network directly.
-				globalOutbound: ctx.exports.HttpGateway(),
+				globalOutbound: ctx.exports.HttpGateway,
 			};
 		});
 
