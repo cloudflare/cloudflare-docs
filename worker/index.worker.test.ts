@@ -279,7 +279,9 @@ describe("Cloudflare Docs", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
 
-				expect(image).toBe("https://developers.cloudflare.com/og-docs.png");
+				expect(image).toMatch(
+					/^https:\/\/developers\.cloudflare\.com\/workers\/og\.png\?v=[0-9a-f]{16}$/,
+				);
 			});
 		});
 

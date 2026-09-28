@@ -134,9 +134,11 @@ describe("Preview anti-indexing", () => {
 	});
 });
 
-describe("Preview changelog OG images", () => {
+describe.each([
+	["changelog", "/changelog/post/2025-02-11-custom-errors-beta/"],
+	["docs", "/workers/tutorials/upload-assets-with-r2/"],
+])("Preview %s OG images", (_, POST) => {
 	const PREVIEW = "https://my-branch.preview.developers.cloudflare.com";
-	const POST = "/changelog/post/2025-02-11-custom-errors-beta/";
 	const escapeRegExp = (value: string) =>
 		value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 

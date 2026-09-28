@@ -5,15 +5,15 @@ import {
 } from "cloudflare:test";
 import { expect, it } from "vitest";
 import inter from "@fontsource/inter/files/inter-latin-500-normal.woff";
-import { handleChangelogOg } from "./changelog-og-handler";
-import { changelogOgVersion } from "../src/util/changelog-og";
+import { handleOg } from "../route";
+import { changelogOgVersion } from "../../../src/util/og/changelog";
 
 const bindings = env as unknown as Env;
 const ORIGIN = "https://developers.cloudflare.com";
 
 async function serve(url: string) {
 	const ctx = createExecutionContext();
-	const response = await handleChangelogOg(new Request(url), bindings, ctx);
+	const response = await handleOg(new Request(url), bindings, ctx);
 	await waitOnExecutionContext(ctx);
 	return response;
 }

@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import {
 	CHANGELOG_OG_TEMPLATE_VERSION,
 	changelogOgVersion,
-} from "./changelog-og";
+} from "../changelog";
 
 const card = {
 	title: "Workers KV bulk reads",
@@ -12,6 +12,18 @@ const card = {
 };
 
 describe("changelogOgVersion", () => {
+	// Live in production; changing the hash would re-render every card and
+	// invalidate social platforms' cached previews.
+	test("matches the published version of a real post", async () => {
+		expect(
+			await changelogOgVersion({
+				title: "Subscribe to Browser Run crawl events",
+				date: "2026-09-25",
+				product: "Browser Run",
+			}),
+		).toBe("b554776c08c16fc5");
+	});
+
 	test("is stable for the same card", async () => {
 		expect(await changelogOgVersion(card)).toBe(await changelogOgVersion(card));
 	});

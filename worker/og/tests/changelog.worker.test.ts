@@ -6,11 +6,11 @@ import {
 } from "cloudflare:test";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { parse } from "node-html-parser";
-import * as cardRenderer from "./changelog-og-card";
+import * as layout from "../layout";
 import inter from "@fontsource/inter/files/inter-latin-500-normal.woff";
-import { readChangelogCard } from "./changelog-og";
-import { handleChangelogOg } from "./changelog-og-handler";
-import { changelogOgVersion } from "../src/util/changelog-og";
+import { readChangelogCard } from "../cards/changelog";
+import { handleOg } from "../route";
+import { changelogOgVersion } from "../../../src/util/og/changelog";
 
 const bindings = env as unknown as Env;
 const ORIGIN = "https://developers.cloudflare.com";
@@ -23,7 +23,7 @@ const CARD = {
 
 async function serve(url: string, overrides: Partial<Env> = {}) {
 	const ctx = createExecutionContext();
-	const response = await handleChangelogOg(
+	const response = await handleOg(
 		new Request(url),
 		{ ...bindings, ...overrides },
 		ctx,
@@ -220,11 +220,11 @@ describe("changelog OG images", () => {
 	});
 
 	it("falls back when rendering throws", async () => {
-		vi.spyOn(cardRenderer, "changelogCard").mockImplementationOnce(() => {
+		vi.spyOn(layout, "canvas").mockImplementationOnce(() => {
 			throw new Error("Render failed");
 		});
 		const ctx = createExecutionContext();
-		const response = await handleChangelogOg(
+		const response = await handleOg(
 			new Request(`${ORIGIN}${POST}og.png?v=render-failed`),
 			bindings,
 			ctx,
