@@ -30,8 +30,8 @@ For new applications, we recommend the Durable Object Container API. It lets you
 	href="/containers/api/container-class/"
 	icon="seti:typescript"
 >
-	Reference the class and its routing, readiness checks, lifecycle hooks,
-	and scheduling for existing applications.
+	Reference the class and its routing, readiness checks, lifecycle hooks, and
+	scheduling for existing applications.
 </LinkTitleCard>
 
 </CardGrid>
@@ -72,7 +72,7 @@ For request routing, use [`getTcpPort()`](/containers/api/durable-object-contain
 
 ### Container class
 
-The `Container` class builds on Durable Objects and the runtime API. Existing applications may use its request proxying, readiness checks, lifecycle hooks, and scheduling. These helpers handle common Durable Object lifecycle tasks. Some features still use Durable Object storage and alarms.
+The `Container` class extends `DurableObject` and wraps the container runtime API with convenience methods. Existing applications can use these methods for request proxying, readiness checks, lifecycle hooks, and scheduling. Durable Object storage and alarms remain available when needed.
 
 <TypeScriptExample filename="src/index.ts">
 
