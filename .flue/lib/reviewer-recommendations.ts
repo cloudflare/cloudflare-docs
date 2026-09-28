@@ -418,8 +418,9 @@ function proseText(value: string): string {
 }
 
 /**
- * Display suggested contacts, or the expanded CODEOWNERS fallback roster when
- * no suggestion exists. Display-only, never @-mentioned.
+ * Display suggested contacts. Areas without a suggestion return an empty
+ * string so the caller renders "_No suggestions_"; the expanded CODEOWNERS
+ * roster is not shown because those owners are not suggestions.
  */
 function contactsCell(area: RecommendationArea): string {
 	if (isCodeownersOnlyContactPattern(area.codeownersPattern)) {
@@ -427,17 +428,9 @@ function contactsCell(area: RecommendationArea): string {
 		if (owners.length === 0) return "_No CODEOWNERS available_";
 		return `${owners.map(codeSpan).join(", ")}<br/><sub>CODEOWNERS only · not notified</sub>`;
 	}
-	if (area.suggestedPeople.length > 0) {
-		return area.suggestedPeople
-			.map((person) => codeSpan(person.login))
-			.join(", ");
-	}
-	const logins = area.fallbackOwners ?? [];
-	if (logins.length === 0) return "";
-	const rendered = logins.map(codeSpan).join(", ");
-	const omitted = Math.max(0, (area.totalOwners ?? 0) - logins.length);
-	const roster = omitted > 0 ? `${rendered} + ${omitted} more` : rendered;
-	return `${roster}<br/><sub>CODEOWNERS fallback · not notified</sub>`;
+	return area.suggestedPeople
+		.map((person) => codeSpan(person.login))
+		.join(", ");
 }
 
 /**
@@ -489,10 +482,6 @@ function recommendationDisplayKey(state: ReviewerRecommendationState): string {
 							const suggestions = codeownersOnly
 								? []
 								: area.suggestedPeople.map((person) => person.login);
-							const fallbackOwners =
-								!codeownersOnly && !area.satisfied && suggestions.length === 0
-									? (area.fallbackOwners ?? [])
-									: [];
 							return {
 								name: areaName(area),
 								totalPaths: area.totalPaths,
@@ -506,9 +495,6 @@ function recommendationDisplayKey(state: ReviewerRecommendationState): string {
 									: {
 											codeownersOnly,
 											suggestions,
-											fallbackOwners,
-											totalOwners:
-												fallbackOwners.length > 0 ? (area.totalOwners ?? 0) : 0,
 										},
 								satisfyingApprovers: area.satisfied
 									? area.satisfyingApprovers
