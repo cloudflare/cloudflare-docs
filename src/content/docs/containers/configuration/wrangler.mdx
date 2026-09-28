@@ -1,6 +1,6 @@
 ---
 title: Wrangler configuration
-description: Configure a Container, its Durable Object binding, and its migration in Wrangler.
+description: Configure a Container, its Durable Object binding, and its class export in Wrangler.
 pcx_content_type: configuration
 sidebar:
   order: 0
@@ -15,7 +15,7 @@ Define Containers in the Wrangler configuration file for your Worker. Each Conta
 
 ## Minimal configuration
 
-A Container application requires a Container definition, a Durable Object binding, and a Durable Object migration:
+A new Container application requires a Container definition, a Durable Object binding, and a Durable Object class export:
 
 <WranglerConfig>
 
@@ -40,12 +40,12 @@ A Container application requires a Container definition, a Durable Object bindin
 			},
 		],
 	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyContainer"],
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
@@ -55,9 +55,15 @@ The configuration uses three sections:
 
 1. **`containers`** defines the container image and associates it with a Durable Object class through `class_name`.
 2. **`durable_objects.bindings`** makes the Durable Object namespace available to Worker code. In this example, access it through `env.MY_CONTAINER`.
-3. **`migrations`** creates the SQLite-backed Durable Object class. Use `new_sqlite_classes`, not `new_classes`, for a Container.
+3. **`exports`** declares the Durable Object class and provisions it with SQLite storage.
 
-The `class_name` in `containers` and `durable_objects.bindings`, and the class listed in `migrations.new_sqlite_classes`, must match the exported Durable Object class in your Worker.
+The `class_name` in `containers` and `durable_objects.bindings`, and the key in `exports`, must match the exported Durable Object class in your Worker.
+
+:::note[Existing applications]
+
+Existing applications that use the legacy `migrations` array can continue to use it. Do not configure `exports` and `migrations` together. To switch an existing application to `exports`, refer to [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+
+:::
 
 ## Container settings
 

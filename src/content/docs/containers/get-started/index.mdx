@@ -95,12 +95,12 @@ Your [Wrangler configuration file](/containers/configuration/wrangler/) defines 
 			},
 		],
 	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyContainer"],
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
@@ -112,7 +112,7 @@ Important points about this config:
 - `class_name` must be a [Durable Object class name](/durable-objects/api/base/).
 - `max_instances` declares the maximum number of simultaneously running container instances
   that will run.
-- The Durable Object must use [`new_sqlite_classes`](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) not `new_classes`.
+- The `exports` entry declares the Durable Object class with SQLite storage. Existing applications that use the legacy `migrations` array can continue to use it, but `exports` and `migrations` cannot be combined.
 
 ### The Container Image
 
