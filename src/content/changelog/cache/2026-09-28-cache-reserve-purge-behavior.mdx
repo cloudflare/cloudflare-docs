@@ -3,7 +3,7 @@ title: Purge now forces a cache miss for Cache Reserve content
 description: Purging by tag, hostname, prefix, or everything now forces a cache miss for Cache Reserve content instead of revalidating it. To keep revalidating content, use invalidation.
 products:
   - cache
-date: 2026-09-24
+date: 2026-09-28
 ---
 
 Purge requests now force a cache miss for [Cache Reserve](/cache/advanced-configuration/cache-reserve/) content, regardless of purge type. Previously, purging by cache tag, hostname, prefix, or everything marked matching Cache Reserve content for revalidation. Purging by URL already removed content from Cache Reserve and is unchanged.

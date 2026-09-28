@@ -3,7 +3,7 @@ title: Invalidate cached content instead of purging it
 description: Mark cached content as stale so Cloudflare revalidates it with your origin and reuses content that has not changed.
 products:
   - cache
-date: 2026-09-24
+date: 2026-09-28
 ---
 
 You can now invalidate cached content instead of purging it. Invalidation marks matching content as stale. On the next request, Cloudflare revalidates the content with your origin. If your origin responds with `304 Not Modified`, Cloudflare reuses the cached content instead of downloading it again.
