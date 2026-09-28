@@ -9,7 +9,7 @@ products:
   - durable-objects
 ---
 
-import { CardGrid, LinkTitleCard, TypeScriptExample } from "~/components";
+import { CardGrid, LinkTitleCard, TabItem, Tabs } from "~/components";
 
 Containers provide two APIs for managing a container from a Durable Object. Both APIs address the same container runtime.
 
@@ -38,15 +38,16 @@ For new applications, we recommend the Durable Object Container API. It lets you
 
 ## Choose an API
 
-### Durable Object Container API
-
 Inside a Durable Object, use `ctx.container` to control the container runtime directly. You can manage startup, shutdown, networking, and resource usage while using Durable Object storage and alarms for state and coordination. Add readiness checks, custom request routing, or lifecycle policies when needed.
 
-This Durable Object starts its configured container when it receives a request. Starting a container does not mean its ports are ready.
+The `Container` class extends `DurableObject` and wraps the container runtime API with convenience methods. Existing applications can use these methods for request proxying, readiness checks, lifecycle hooks, and scheduling. Durable Object storage and alarms remain available when needed.
 
-<TypeScriptExample filename="src/index.ts">
+The following examples compare the starting structure for each API:
 
-```ts
+<Tabs>
+<TabItem label="Durable Object Container API">
+
+```ts title="src/index.ts"
 import { DurableObject } from "cloudflare:workers";
 
 interface Env {}
@@ -66,17 +67,11 @@ export class MyContainer extends DurableObject<Env> {
 }
 ```
 
-</TypeScriptExample>
+</TabItem>
 
-For request routing, use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) after checking port readiness. For all methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/).
+<TabItem label="Container class">
 
-### Container class
-
-The `Container` class extends `DurableObject` and wraps the container runtime API with convenience methods. Existing applications can use these methods for request proxying, readiness checks, lifecycle hooks, and scheduling. Durable Object storage and alarms remain available when needed.
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
+```ts title="src/index.ts"
 import { Container } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
@@ -85,9 +80,11 @@ export class MyContainer extends Container {
 }
 ```
 
-</TypeScriptExample>
+</TabItem>
 
-For all properties and methods, refer to the [Container class API](/containers/api/container-class/).
+</Tabs>
+
+Starting a container through the Durable Object Container API does not mean its ports are ready. For request routing, use [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport) after checking port readiness. For all direct methods, refer to the [Durable Object Container API](/containers/api/durable-object-container/). For convenience methods, refer to the [Container class API](/containers/api/container-class/).
 
 The following table compares both options:
 

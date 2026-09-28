@@ -1,0 +1,28 @@
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	"name": "container-api-migration-workbench",
+	"main": "./src/index.ts",
+	"compatibility_date": "2026-09-28",
+	"workers_dev": true,
+	"containers": [
+		{
+			"class_name": "MigrationWorkbench",
+			"image": "../../container/Dockerfile",
+			"max_instances": 5,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "MIGRATION_WORKBENCH",
+				"class_name": "MigrationWorkbench",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["MigrationWorkbench"],
+		},
+	],
+}
