@@ -56,7 +56,7 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
    </WranglerConfig>
 
-   Remove `BACKUP_BUCKET_NAME`, `BACKUP_BUCKET_ENDPOINT`, `R2_ACCESS_KEY_ID`, and `R2_SECRET_ACCESS_KEY` from your variables and secrets. The container never receives bucket credentials in 1.0.
+   After you delete the 0.12 class, remove `BACKUP_BUCKET_NAME` and `BACKUP_BUCKET_ENDPOINT` from your variables, and `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` from your secrets unless a bucket mount uses them. The container never receives bucket credentials for backups in 1.0.
 
 4. Add these declarations to the top level of `src/index.ts`:
 
