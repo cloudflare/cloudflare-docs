@@ -47,6 +47,8 @@ grep -rhow \
 	-e allowedHosts -e deniedHosts -e gitCheckout \
 	-e mountBucket -e createBackup -e restoreBackup \
 	-e runCode -e createCodeContext \
+	-e sandbox/opencode -e sandbox/openai \
+	-e sandbox/bridge -e WarmPool \
 	src | sort | uniq -c
 ```
 
@@ -76,7 +78,8 @@ Each name leads to one page:
 | `mountBucket()` | [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/) | Change calls |
 | `createBackup()`, `restoreBackup()` | [Move backups](/sandbox/sdk/migrate/backups/) | Add code |
 | `runCode()`, `createCodeContext()` | [Run Python code](/sandbox/commands/run-python-code/), or [Dynamic Workers](/dynamic-workers/) | Use another tool |
-| `FROM docker:dind-rootless` in a `Dockerfile` | [Docker-in-Docker](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker) | Change the image |
+| `sandbox/opencode`, `sandbox/openai`, `sandbox/bridge`, `WarmPool` | [Move other 0.x features](/sandbox/sdk/migrate/other-features/) | Add or remove code |
+| `FROM docker:dind-rootless` in a `Dockerfile` | [Run Docker inside the sandbox](/sandbox/sdk/migrate/other-features/#run-docker-inside-the-sandbox) | Change the image |
 
 Work through the pages on your staging Worker, test it with your own checks, and then deploy to production. For every 0.x API and its replacement, including features with no equivalent in 1.0, refer to the [API map](/sandbox/sdk/migrate/api-map/).
 
