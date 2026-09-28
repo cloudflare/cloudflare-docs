@@ -86,11 +86,11 @@ Workers Caching is **your Worker's cache**, not your zone's cache. It uses your 
 | Custom tiered cache topologies                                                                            | Workers Caching uses a generic tiered cache topology by default. Because a Worker can execute anywhere, a fixed custom topology does not apply — future integrations with [Smart Placement](/workers/configuration/placement/) may tailor tiering further. |
 | [Rulesets](/ruleset-engine/) that modify request or response before cache                                 | Transform the request or response in your Worker's code before returning it.                                                                                                                                                                               |
 
-To influence your Worker's cache, change your Worker. `Cache-Control` headers, `ctx.props`, service binding composition, and [`ctx.cache.purge()`](/workers/cache/purge/) cover the configuration surface.
+To influence your Worker's cache, change your Worker. `Cache-Control` headers, `ctx.props`, service binding composition, [`ctx.cache.purge()`](/workers/cache/purge/), and [`ctx.cache.invalidate()`](/workers/cache/purge/#invalidate-cached-responses) cover the configuration surface.
 
 ### Cache API (`caches.default`)
 
-The [Cache API](/workers/runtime-apis/cache/) is a separate programmatic cache store. It is independent of Workers Caching — operations on one do not affect the other, and `ctx.cache.purge()` is what invalidates Workers-Caching entries.
+The [Cache API](/workers/runtime-apis/cache/) is a separate programmatic cache store. It is independent of Workers Caching — operations on one do not affect the other, and `ctx.cache.purge()` and `ctx.cache.invalidate()` are what purge or invalidate Workers Caching entries.
 
 For new Workers, prefer Workers Caching. The Cache API, by design, is a lower-level primitive:
 
