@@ -12,6 +12,7 @@
 	},
 	"rules": [
 		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true },
+		{ "type": "Data", "globs": ["**/*.woff"], "fallthrough": true },
 	],
 	"assets": {
 		"directory": "./dist",
@@ -19,7 +20,11 @@
 		"not_found_handling": "404-page",
 		"run_worker_first": true,
 	},
-	"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }],
+	"r2_buckets": [
+		{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" },
+		// Private: assets we serve but can't publish in this repo (e.g. licensed fonts).
+		{ "binding": "PRIVATE_ASSETS", "bucket_name": "cloudflare-docs-private" },
+	],
 	"observability": {
 		"enabled": true,
 	},

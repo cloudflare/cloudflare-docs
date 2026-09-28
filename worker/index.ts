@@ -3,6 +3,7 @@ import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleChangelogOg } from "./changelog-og-handler";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -11,6 +12,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 });
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
+
+const CHANGELOG_OG_PATH = /^\/changelog\/post\/.+\/og\.png$/;
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
@@ -92,6 +95,10 @@ export default class extends WorkerEntrypoint<Env> {
 			/image-resizing/.test(request.headers.get("via") ?? "")
 		) {
 			return this.env.ASSETS.fetch(request);
+		}
+
+		if (CHANGELOG_OG_PATH.test(pathname)) {
+			return handleChangelogOg(request, this.env, this.ctx);
 		}
 
 		if (pathname === "/.well-known/api-catalog") {
