@@ -67,7 +67,7 @@ Purge forces a cache miss for matching Cache Reserve content. For details, refer
 Check the following requirements before you invalidate content:
 
 - **Origin validators**: To reuse cached content, your origin must return an `ETag` or `Last-Modified` header and support conditional requests.
-- **API token**: For API requests, use a token with the **Cache Purge** permission for the zone.
+- **Permissions**: For API requests, use a token with the **Cache Purge** permission for the zone. To invalidate from the dashboard, your role must include the same permission.
 - **Rate limits**: Invalidation requests count toward the purge limits for your account. For details, refer to [Limits](#limits).
 
 ## Invalidate using the dashboard
