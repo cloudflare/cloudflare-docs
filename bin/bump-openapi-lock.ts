@@ -365,7 +365,7 @@ const main = async (): Promise<void> => {
 	const newSha = latest.source_sha;
 
 	if (lock?.sha === newSha && lock.sha256) {
-		// Re-check the pin against middlecache weekly so a replaced snapshot
+		// Re-check the pin against middlecache daily so a replaced snapshot
 		// is noticed before a build trips over it.
 		const manifest = await fetchVersionManifest(newSha);
 		if (manifest.files["openapi.tar.gz"].sha256 !== lock.sha256) {

@@ -1,16 +1,18 @@
 name: Bump OpenAPI schema
 
-# Weekly PR updating openapi.lock.json to the newest versioned schema snapshot
-# in middlecache, so upstream schema changes reach the docs through review
-# instead of breaking every open PR at once. The PR needs a content-engineering
-# approval (see .github/CODEOWNERS); CI on the PR is the validation that every
-# <APIRequest> still resolves against the new schema.
+# Daily check for the newest versioned schema snapshot in middlecache. The PR
+# flow only runs when the snapshot SHA differs from the checked-in pin, and
+# skips a bump branch whose pin already matches the generated lock. This lets
+# upstream schema changes reach the docs through review instead of breaking
+# every open PR at once. The PR needs a content-engineering approval (see
+# .github/CODEOWNERS); CI on the PR validates every <APIRequest> against the
+# new schema.
 
 on:
   schedule:
-    # Mondays 14:00 UTC — after the daily middlecache graduation (~23:13 UTC),
-    # so the run sees a complete weekend of upstream schema changes.
-    - cron: "0 14 * * 1"
+    # Daily at 14:00 UTC, after the previous day's middlecache graduation
+    # (~23:13 UTC), so the run sees the latest completed snapshot.
+    - cron: "0 14 * * *"
   workflow_dispatch:
 
 permissions:
@@ -97,11 +99,22 @@ jobs:
 
           open_pr=$(gh pr list --head "$BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
 
-          # The bump branch is reused across weeks. Only rewrite it when every
-          # non-merge commit on it is bot-authored; merges of production (the
-          # "Update branch" button) are safe to discard.
           remote_sha=$(git ls-remote --heads origin "refs/heads/$BRANCH" | cut -f1)
           if [ -n "$remote_sha" ]; then
+            git fetch --no-tags --depth=1 origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+
+            # Production stays on the old pin until the PR merges. Avoid
+            # rewriting or reopening the same bump when its pin is unchanged.
+            if branch_pin=$(git show "origin/$BRANCH:openapi.lock.json" 2>/dev/null | jq -cS '{sha, sha256}') && \
+              current_pin=$(jq -cS '{sha, sha256}' openapi.lock.json) && \
+              [ "$branch_pin" = "$current_pin" ]; then
+              echo "$BRANCH already has the current pin; no PR update needed."
+              exit 0
+            fi
+
+            # The bump branch is reused across days. Only rewrite it when every
+            # non-merge commit on it is bot-authored; merges of production (the
+            # "Update branch" button) are safe to discard.
             human_commits=$(gh api "repos/$GH_REPO/compare/$BASE...$BRANCH" \
               | jq --arg bot "$BOT_EMAIL" '[.commits[] | select((.parents | length) == 1) | select(.commit.author.email != $bot)] | length')
             if [ "$human_commits" -gt 0 ]; then
