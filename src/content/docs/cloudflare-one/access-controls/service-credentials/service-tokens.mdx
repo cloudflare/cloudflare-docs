@@ -85,6 +85,30 @@ To authenticate using a single header:
    curl -H "Authorization: {\"cf-access-client-id\": \"<CLIENT_ID>\", \"cf-access-client-secret\": \"<CLIENT_SECRET>\"}" https://app.example.com
    ```
 
+## Enforce strict service token authentication
+
+Strict service token authentication gives automated clients consistent responses and prevents fallback to user authentication. When this setting is on, Access applies the following behavior to requests that include service token credentials:
+
+- Access returns `401` when the token cannot authenticate. It returns `403` when the token is valid but not authorized.
+- Only Service Auth and Bypass policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
+- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Cloudflare One Client and Cloudflare Browser Isolation applications are exempt from this behavior.
+- Access rejects duplicate or incomplete service token headers. Access also rejects requests that contain credentials in both the standard headers and a configured custom header.
+
+Failed requests produce [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication) when Access recognizes the Client ID. Access creates a log when a token is expired, disabled, or not authorized for the application. It also logs requests with an incorrect Client Secret. Access does not log malformed headers or an unknown Client ID.
+
+Zero Trust organizations created on or after October 5, 2026 use strict service token authentication by default. You cannot turn off the setting for these organizations.
+
+For an existing organization, send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		strict_service_token_auth: true,
+	}}
+/>
+
 ## Rotate service token secrets
 
 Rotate a service token secret when you suspect exposure or as part of regular credential rotation. The Client ID remains the same, but Access generates a new Client Secret.

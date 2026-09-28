@@ -1,0 +1,26 @@
+---
+title: Stricter authentication for Access service tokens
+description: Give automated clients consistent responses and prevent fallback to user authentication.
+date: 2026-09-28
+products:
+  - access
+---
+
+import { CURL } from "~/components";
+
+Cloudflare Access now supports strict service token authentication. Requests with invalid credentials return `401`, while valid tokens without permission return `403`. Access no longer redirects these requests to the login page.
+
+Strict authentication prevents Allow policies from authorizing service token requests. It also stops returning a `CF_Authorization` cookie to the client and rejects incomplete or ambiguous service token headers. Failed requests for recognized service tokens appear in Access authentication logs.
+
+Zero Trust organizations created on or after October 5, 2026 use strict service token authentication by default and cannot turn it off. Existing organizations can turn it on through the API:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		strict_service_token_auth: true,
+	}}
+/>
+
+For behavior and configuration details, refer to [Enforce strict service token authentication](/cloudflare-one/access-controls/service-credentials/service-tokens/#enforce-strict-service-token-authentication).
