@@ -15,12 +15,6 @@ Each [container](/containers/) is managed and proxied by a Durable Object. The D
 
 The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
 
-:::note[API coverage]
-
-This page documents lifecycle, networking, and process-control APIs. Named images, runtime instance sizing, inspection, and snapshot APIs are outside the scope of this page.
-
-:::
-
 :::note
 We recommend starting new applications with the Durable Object Container API. It lets you run container workloads alongside the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control when the container starts, receives traffic, and stops, while the Durable Object manages application state and coordination. For existing applications that use the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 :::
