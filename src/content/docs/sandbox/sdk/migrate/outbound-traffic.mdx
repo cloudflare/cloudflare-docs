@@ -1,0 +1,314 @@
+---
+title: Move outbound rules
+description: Replace @cloudflare/sandbox 0.12 allowedHosts, deniedHosts, outbound handlers, the runtime outbound setters, and gitCheckout() with an entrypoint that your Durable Object registers for each container.
+pcx_content_type: how-to
+sidebar:
+  order: 12
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { Steps } from "~/components";
+
+In Sandbox SDK 0.12, `ContainerProxy` applies the outbound fields of your `Sandbox` class to each request that the container sends. In 1.0, your Durable Object registers your own `WorkerEntrypoint` for HTTP and HTTPS requests from the container, and the entrypoint applies the same rules in the same order.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` and `INACTIVITY_TIMEOUT_MS` constants from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). The entrypoint uses `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag. 0.12 outbound rules needed it too.
+
+This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHosts`, `outbound`, `outboundByHost`, `outboundHandlers`, their aliases `outboundProxy` and `outboundProxies`, the runtime setters such as `allowHost()` and `setOutboundByHost()`, and `gitCheckout()`. Remove `ContainerProxy` from your imports and from the exports of your Worker. The handlers that 0.12 added for bucket mounts are covered in [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/).
+
+## Apply the rules in an entrypoint
+
+<Steps>
+
+1. Copy the outbound fields of your 0.12 class into constants, and give each handler a name:
+
+   ```ts title="src/index.ts"
+   type Handler = { method: string; params?: unknown };
+
+   type OutboundHandler = (
+   	request: Request,
+   	env: Env,
+   	params: unknown,
+   ) => Response | Promise<Response>;
+
+   // The outbound fields of your 0.12 class.
+   const ENABLE_INTERNET = false;
+   const ALLOWED_HOSTS: string[] | undefined = [
+   	"github.com",
+   	"registry.npmjs.org",
+   	"api.example.com",
+   ];
+   const DENIED_HOSTS: string[] | undefined = undefined;
+   const OUTBOUND_BY_HOST: Record<string, Handler> = {
+   	"api.example.com": { method: "withToken" },
+   };
+   const OUTBOUND: Handler | undefined = undefined;
+
+   // Your 0.12 handlers, by name.
+   const HANDLERS: Record<string, OutboundHandler> = {
+   	withToken: (request, env) => {
+   		const headers = new Headers(request.headers);
+   		headers.set("Authorization", `Bearer ${env.API_TOKEN}`);
+   		return fetch(new Request(request, { headers }));
+   	},
+   };
+   ```
+
+   If your 0.12 class did not set `enableInternet`, set `ENABLE_INTERNET` to `true`, the 0.12 default. For a field that your class did not set, use `{}` for `OUTBOUND_BY_HOST` and `undefined` for the other constants.
+
+   Put every function from `outboundHandlers`, `outboundByHost`, and `outbound` in `HANDLERS`, and refer to them by name in `OUTBOUND_BY_HOST` and `OUTBOUND`. A 0.12 handler takes `(request, env, ctx)`. Change it to take `(request, env, params)`, and read `params` where it read `ctx.params`.
+
+2. Add `WorkerEntrypoint` to your `cloudflare:workers` import, and add the entrypoint, which checks each request in the order that 0.12 used:
+
+   ```ts title="src/index.ts"
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   // The shape that 0.12 stored under OUTBOUND_CONFIGURATION.
+   type StoredRules = {
+   	outboundByHostOverrides?: Record<string, Handler>;
+   	outboundHandlerOverride?: Handler;
+   	allowedHosts?: string[];
+   	deniedHosts?: string[];
+   };
+
+   // "*" matches any run of characters, as in 0.12.
+   function matches(pattern: string, hostname: string): boolean {
+   	const escaped = pattern
+   		.split("*")
+   		.map((part) => part.replace(/[.+?^${}()|[\]\\]/g, "\\$&"));
+   	return new RegExp(`^${escaped.join(".*")}$`).test(hostname);
+   }
+
+   function lookup(
+   	handlers: Record<string, Handler> | undefined,
+   	hostname: string,
+   ): Handler | undefined {
+   	return (
+   		handlers?.[hostname] ??
+   		Object.entries(handlers ?? {}).find(([pattern]) =>
+   			matches(pattern, hostname),
+   		)?.[1]
+   	);
+   }
+
+   export class Outbound extends WorkerEntrypoint<Env, StoredRules> {
+   	async fetch(request: Request): Promise<Response> {
+   		const rules = this.ctx.props;
+   		const allowed = rules.allowedHosts ?? ALLOWED_HOSTS;
+   		const denied = rules.deniedHosts ?? DENIED_HOSTS;
+   		const url = new URL(request.url);
+   		const hostname = url.hostname.replace(/\.+$/, "");
+   		const listed = (patterns: string[]) =>
+   			patterns.some((pattern) => matches(pattern, hostname));
+   		const blocked = new Response("Origin is disallowed", {
+   			status: 520,
+   		});
+
+   		if (denied && listed(denied)) {
+   			return blocked;
+   		}
+
+   		if (allowed && !listed(allowed)) {
+   			return blocked;
+   		}
+
+   		const handler = [
+   			lookup(rules.outboundByHostOverrides, hostname),
+   			lookup(OUTBOUND_BY_HOST, hostname),
+   			rules.outboundHandlerOverride,
+   			OUTBOUND,
+   		].find((handler) => handler && HANDLERS[handler.method]);
+
+   		if (handler) {
+   			const run = HANDLERS[handler.method];
+   			return run(request, this.env, handler.params);
+   		}
+
+   		if (allowed || ENABLE_INTERNET) {
+   			return fetch(request);
+   		}
+
+   		return blocked;
+   	}
+   }
+   ```
+
+   The entrypoint blocks denied hostnames, then hostnames outside the allowed list. It then runs the first handler that matches: a hostname handler that the sandbox set at runtime, a hostname handler from your class, a catch-all handler set at runtime, and the catch-all handler of your class. With no handler, it sends the request to the Internet when you set an allowed list or allow the Internet. A blocked request gets status `520` with the body `Origin is disallowed`, as in 0.12, in case code in the container checks for it.
+
+   The props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. A handler name that is not in `HANDLERS` is skipped, as in 0.12. This skips the handlers that 0.12 stored for bucket mounts.
+
+3. Add the certificate variables to `ENV`, and register the entrypoint each time the container starts:
+
+   ```ts title="src/index.ts" ins={1-3,6-7,9-11,16-25,33,37-39}
+   const RULES = "OUTBOUND_CONFIGURATION";
+   const CA = "/etc/cloudflare/certs/cloudflare-containers-ca.crt";
+   const BUNDLE = "/etc/ssl/certs/ca-certificates.crt";
+   const ENV = {
+   	NODE_ENV: "test",
+   	NODE_EXTRA_CA_CERTS: CA,
+   	REQUESTS_CA_BUNDLE: BUNDLE,
+   };
+   // Wait for the certificate, then add it to the system bundle.
+   const CA_READY = `until [ -s ${CA} ]; do sleep 0.1; done`;
+   const TRUST = ["sh", "-c", `${CA_READY}; cat ${CA} >> ${BUNDLE}`];
+
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private rules(): StoredRules {
+   		return this.ctx.storage.kv.get<StoredRules>(RULES) ?? {};
+   	}
+
+   	private async intercept(): Promise<void> {
+   		const props = this.rules();
+   		const outbound = this.ctx.exports.Outbound({ props });
+   		await this.container.interceptAllOutboundHttp(outbound);
+   		await this.container.interceptOutboundHttps("*", outbound);
+   	}
+
+   	private async ensureRunning(): Promise<void> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				enableInternet: ENABLE_INTERNET,
+   			});
+   			// Replaces onStart().
+   			await this.ctx.storage.put("startedAt", Date.now());
+   			await this.intercept();
+   			const trust = await this.container.exec(TRUST);
+   			await trust.exitCode;
+   		}
+
+   		// Call it on every request.
+   		await this.container.setInactivityTimeout(
+   			INACTIVITY_TIMEOUT_MS,
+   		);
+   	}
+   }
+   ```
+
+   `// ...` stands for the `container` getter and your other methods. `rules()` reads the key where 0.12 stored the rules that each sandbox set at runtime, so those rules keep applying after the switch. If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the key into the 1.0 class. The intercepts send every request on port `80`, and every HTTPS request on port `443`, to the entrypoint. `enableInternet` keeps the 0.12 value, and still decides connections on other ports. An intercept lasts until the container stops, so `ensureRunning()` registers it for each new container. A container that already runs when you deploy keeps the intercepts it started with.
+
+   A hostname intercept that you register after `intercept()` never receives requests, because the entrypoint keeps them. Register other intercepts, such as bucket mounts, before `intercept()`. Refer to [If you moved outbound rules](/sandbox/sdk/migrate/bucket-mounts/#if-you-moved-outbound-rules).
+
+   If your class uses `DirectoryBackups` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) after `start()` and before your `intercept()`. Otherwise every backup and restore fails with `HTTP 530`, because your `Outbound` entrypoint receives backup requests from the container. Call it only when `ensureRunning()` starts the container, not on every request.
+
+   The intercept signs HTTPS responses with a certificate that the container trusts only after this step. 0.12 appended it to the system bundle and set variables for tools that do not read the bundle. The `TRUST` command does the first, and `ENV` sets the variables for Node.js and Python `requests`. curl and Git read the bundle. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
+
+</Steps>
+
+## Replace the runtime setters
+
+Add methods that update the stored rules, and register the entrypoint again with them:
+
+```ts title="src/index.ts"
+private async updateRules(change: StoredRules): Promise<void> {
+	this.ctx.storage.kv.put(RULES, { ...this.rules(), ...change });
+
+	if (this.container.running) {
+		await this.intercept();
+	}
+}
+
+async allowHost(hostname: string): Promise<void> {
+	const hosts = this.rules().allowedHosts ?? ALLOWED_HOSTS ?? [];
+	await this.updateRules({ allowedHosts: [...hosts, hostname] });
+}
+
+async setOutboundByHost(
+	hostname: string,
+	method: string,
+	params?: unknown,
+): Promise<void> {
+	const hosts = { ...this.rules().outboundByHostOverrides };
+	hosts[hostname] = { method, params };
+	await this.updateRules({ outboundByHostOverrides: hosts });
+}
+```
+
+Registering the entrypoint again replaces the rules of a running container, and open connections pick up the new rules without being dropped. Write the other setters the same way. Each one passes a new value to `updateRules()`:
+
+| 0.12                                                      | Value to pass                                                       |
+| --------------------------------------------------------- | ------------------------------------------------------------------- |
+| `setAllowedHosts(hosts)`, `setDeniedHosts(hosts)`         | `allowedHosts` or `deniedHosts`, set to `hosts`                     |
+| `denyHost()`, `removeAllowedHost()`, `removeDeniedHost()` | `deniedHosts` or `allowedHosts`, with the hostname added or removed |
+| `setOutboundByHosts()`, `removeOutboundByHost()`          | `outboundByHostOverrides`, with the hostnames added or removed      |
+| `setOutboundHandler(method, params)`                      | `outboundHandlerOverride`, set to `{ method, params }`              |
+
+Like 0.12, each list that a sandbox sets replaces the class list for that sandbox.
+
+## What changes for requests
+
+0.12 checked HTTPS requests only when your class set `interceptHttps = true`. Without it, HTTPS requests to allowed hostnames failed when `enableInternet` was `false`, and HTTPS requests to denied hostnames succeeded when it was `true`. The entrypoint checks every HTTPS request, so commands that relied on either behavior now follow your rules.
+
+Handlers that your class declared as static fields, such as `static outboundByHost = { … }`, never ran in 0.12 when TypeScript compiled class fields as definitions, the default for target ES2022 and later. The field skipped the setter that registers the handlers, so requests to those hostnames went to the Internet or got `520`. In 1.0, the handlers run.
+
+HTTPS requests to an IP address, such as `https://203.0.113.10/`, fail while `*` is intercepted and `enableInternet` is `false`. Use a hostname.
+
+## Replace gitCheckout()
+
+In 0.12, `gitCheckout()` clones a repository into `/workspace`:
+
+```ts title="src/index.ts (0.12)"
+const repo = "https://github.com/octocat/Hello-World";
+await sandbox.gitCheckout(repo, { depth: 1 });
+```
+
+In 1.0, run `git clone` in a Durable Object method:
+
+```ts title="src/index.ts (1.0)"
+async clone(url: string, dir: string): Promise<void> {
+	await this.ensureRunning();
+
+	const git = ["git", "clone", "--filter=blob:none", "--depth", "1"];
+	const clone = await this.container.exec(
+		["timeout", "-k", "5", "600", ...git, url, dir],
+		{ cwd: "/workspace", env: ENV },
+	);
+	const output = await clone.output();
+
+	if (output.exitCode !== 0) {
+		throw new Error(new TextDecoder().decode(output.stderr));
+	}
+}
+```
+
+0.12 cloned with `--filter=blob:none` into `/workspace/<repository name>`, and stopped the clone after 600 seconds. Pass `--branch` for the `branch` option. To read the branch that 0.12 returned, run `git branch --show-current` with `cwd` set to the clone. The image needs Git, and your rules must allow the hostname of the Git server, such as `github.com`. To clone a private repository without giving the sandbox a token, refer to [Clone a private repository](/sandbox/network/clone-a-private-repository/).
+
+## Check the rules
+
+After you deploy the switch, run these commands in a sandbox whose image has `curl` and Git. A hostname that your rules block returns the 0.12 response:
+
+```sh
+curl -s -w ' %{http_code}\n' https://example.com/
+```
+
+```txt output
+Origin is disallowed 520
+```
+
+An allowed hostname works over HTTPS without a certificate option on the command:
+
+```sh
+git ls-remote https://github.com/octocat/Hello-World HEAD
+```
+
+```txt output
+7fd1a60b01f91b314f59955a4e4d4e80d8edf11d	HEAD
+```
+
+In a sandbox that called `allowHost()` in 0.12, requests to that hostname still succeed after the switch.
+
+## Related resources
+
+- [Durable Object container API](/containers/api/durable-object-container/#interceptoutboundhttp)
+- [Handle outbound traffic](/containers/configuration/outbound-traffic/)
+- [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/)
+- [Clone a private repository](/sandbox/network/clone-a-private-repository/)
+- [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/)
