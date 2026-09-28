@@ -14,7 +14,7 @@ import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
-import { handleChangelogOg } from "./changelog-og-handler";
+import { handleOg } from "./og/route";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -24,7 +24,6 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
 
-const CHANGELOG_OG_PATH = /^\/changelog\/post\/.+\/og\.png$/;
 const PRODUCTION_ORIGIN = "https://developers.cloudflare.com";
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
@@ -185,8 +184,8 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (CHANGELOG_OG_PATH.test(pathname)) {
-			return handleChangelogOg(request, this.env, this.ctx, { cache: false });
+		if (pathname.endsWith("/og.png")) {
+			return handleOg(request, this.env, this.ctx, { cache: false });
 		}
 
 		if (pathname === "/.well-known/api-catalog") {

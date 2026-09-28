@@ -13,7 +13,8 @@ import {
 import { config } from "virtual:nimbus/config";
 import { docsSidebarTransform, getCfBreadcrumbs } from "../util/sidebar";
 import { components } from "../mdx-components";
-import { getOgImage } from "~/util/og";
+import { OG_CARD_META, docsOgImage, resolveDocsCard } from "~/util/og";
+import { DEFAULT_OG_IMAGE } from "~/util/page-head";
 import { getEffectiveSchemaId } from "~/util/openapi-schema";
 import { getDirectoryEntryBySection } from "~/util/directory";
 import {
@@ -117,14 +118,11 @@ const markdownPath = `/${entry.id}/index.md`;
 const markdownUrl = Astro.site
 	? new URL(markdownPath, Astro.site).href
 	: markdownPath;
-const socialImage = entry.data.socialImage ?? (await getOgImage(entry));
-
 // `external_link` pages (e.g. the per-product "REST API" stubs pointing to
 // `/api/`) build at their own path but redirect to the target. The sidebar
 // already links straight to `external_link` via nimbus-docs; PageHead
 // emits the direct-hit meta refresh and noindex metadata.
 const externalLink = entry.data.external_link;
-const head = entry.data.head ?? [];
 const sectionProduct = await getDirectoryEntryBySection(sectionSegment);
 const productRefs = (entry.data.products ?? []).map((product) =>
 	typeof product === "string"
@@ -135,6 +133,33 @@ const additionalProducts = await getEntries(productRefs);
 const additionalProductNames = additionalProducts.flatMap((product) =>
 	product?.data.name ? [product.data.name] : [],
 );
+// Generated social card, unless the page sets its own image or only redirects.
+// The Worker renders exactly the `og-card` tag, from the same values PageHead
+// emits (og:title, pcx_product).
+const ogCard =
+	entry.data.socialImage || externalLink
+		? undefined
+		: resolveDocsCard({
+				title: entry.data.title,
+				tutorial: entry.data.pcx_content_type === "tutorial",
+				difficulty: entry.data.difficulty,
+				primaryProduct: sectionProduct?.data.entry?.title,
+				products: additionalProductNames,
+			});
+const socialImage =
+	entry.data.socialImage ??
+	(ogCard ? await docsOgImage(Astro.url.pathname, ogCard) : DEFAULT_OG_IMAGE);
+const head = [
+	...(entry.data.head ?? []),
+	...(ogCard
+		? [
+				{
+					tag: "meta" as const,
+					attrs: { name: OG_CARD_META, content: JSON.stringify(ogCard) },
+				},
+			]
+		: []),
+];
 // Parity: only enrich the title with ` · <suffix>` when the section is backed
 // by a `directory` entry (mirrors production Head.astro's `if (product)`).
 // Otherwise leave titleSuffix undefined so PageHead uses ` | Cloudflare Docs`.

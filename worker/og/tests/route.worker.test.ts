@@ -4,9 +4,9 @@ import {
 	waitOnExecutionContext,
 } from "cloudflare:test";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { handleChangelogOg } from "./changelog-og-handler";
+import { handleOg } from "../route";
 
-vi.mock("./changelog-og", () => {
+vi.mock("../serve", () => {
 	throw new Error("Renderer module failed to initialize");
 });
 
@@ -16,7 +16,7 @@ const URL =
 
 async function serve() {
 	const ctx = createExecutionContext();
-	const response = await handleChangelogOg(new Request(URL), bindings, ctx);
+	const response = await handleOg(new Request(URL), bindings, ctx);
 	await waitOnExecutionContext(ctx);
 	return response;
 }

@@ -1,16 +1,15 @@
-// Changelog entry social card: a satori element tree, rendered by
-// worker/changelog-og.ts.
+// Shared drawing primitives for social cards: satori element trees.
 
-import type { ChangelogCard } from "../src/util/changelog-og";
+import type { Measure, TitleFont } from "./fonts";
 
 type Style = Record<string, string | number>;
 type Child = CardNode | string;
-interface CardNode {
+export interface CardNode {
 	type: string;
 	props: { style?: Style; children?: Child | Child[]; [attr: string]: unknown };
 }
 
-const el = (style: Style, children?: Child | Child[]): CardNode => ({
+export const el = (style: Style, children?: Child | Child[]): CardNode => ({
 	type: "div",
 	props: { style: { display: "flex", ...style }, children },
 });
@@ -20,14 +19,6 @@ const LABEL = "#8f8f8f";
 const DASH = "#cccccc";
 const MONO = "IBM Plex Mono";
 
-export type TitleFont = "FT Kunst Grotesk" | "Inter";
-/** Advance width in px of `text` set in `font` at `fontSize`. */
-export type Measure = (
-	text: string,
-	font: TitleFont,
-	fontSize: number,
-) => number;
-
 // The Kunst Grotesk cut covers Latin letters but little punctuation, and
 // satori falls back per line segment rather than per glyph, so any word Kunst
 // can't fully draw is set in Inter instead.
@@ -36,17 +27,21 @@ const KUNST_GLYPHS =
 const fontFor = (text: string): TitleFont =>
 	KUNST_GLYPHS.test(text) ? "FT Kunst Grotesk" : "Inter";
 
-const M = 96;
+export const M = 96;
 const TITLE_WIDTH = 1000;
 const TRACKING = -0.02;
 const ELLIPSIS = "\u2026";
-// The display-title scale: 76 → 66 → 56, stepping down on measured overflow.
-const TIERS = [
-	{ fontSize: 76, lineHeight: 1.08, maxLines: 2 },
-	{ fontSize: 66, lineHeight: 1.12, maxLines: 2 },
-	{ fontSize: 56, lineHeight: 1.16, maxLines: 3 },
-];
-const SMALLEST = TIERS[TIERS.length - 1];
+
+/**
+ * A character-count guess (`steps`) picks the starting tier, and measured
+ * overflow steps down through `tiers`.
+ */
+export interface TitleScale {
+	steps: readonly [number, number];
+	tiers: readonly { fontSize: number; lineHeight: number; maxLines: number }[];
+	/** Truncate words wider than a line with `…` instead of letting them overflow. */
+	truncateLongWords?: boolean;
+}
 
 const LOGO_SVG =
 	'<svg width="66" height="30" viewBox="0 0 341 156" fill="none" xmlns="http://www.w3.org/2000/svg">' +
@@ -74,27 +69,41 @@ function wrap(words: string[], lineWidth: (line: string[]) => number) {
 	return lines;
 }
 
-// As in the tinytools card, a character-count guess picks the starting tier and
-// measured overflow steps it down. Lines are broken here with real glyph
-// metrics (satori's own line-clamp misreports flow height).
-export function layoutTitle(raw: string, measure: Measure) {
+// Lines are broken here with real glyph metrics (satori's own line-clamp
+// misreports flow height).
+export function layoutTitle(raw: string, measure: Measure, scale: TitleScale) {
 	const title = raw.replace(/`/g, "").replace(/\s+/g, " ").trim();
-	const words = title.split(" ").filter(Boolean);
-	const start = title.length > 60 ? 2 : title.length > 45 ? 1 : 0;
+	const [short, long] = scale.steps;
+	const start = title.length > long ? 2 : title.length > short ? 1 : 0;
+	const smallest = scale.tiers[scale.tiers.length - 1];
+	let words = title.split(" ").filter(Boolean);
+	if (scale.truncateLongWords) {
+		const { wordWidth } = tierMetrics(smallest.fontSize, measure);
+		words = words.map((word) => {
+			if (wordWidth(word) <= TITLE_WIDTH) return word;
+			let kept = word;
+			while (kept.length > 1 && wordWidth(kept + ELLIPSIS) > TITLE_WIDTH) {
+				kept = kept.slice(0, -1);
+			}
+			return kept + ELLIPSIS;
+		});
+	}
 
-	for (const tier of TIERS.slice(start)) {
+	for (const tier of scale.tiers.slice(start)) {
 		const { lineWidth, space } = tierMetrics(tier.fontSize, measure);
 		const lines = wrap(words, lineWidth);
-		if (lines.length <= tier.maxLines) {
-			return { ...tier, lines, space, truncated: false };
-		}
+		const fits =
+			lines.length <= tier.maxLines &&
+			(!scale.truncateLongWords ||
+				lines.every((line) => lineWidth(line) <= TITLE_WIDTH));
+		if (fits) return { ...tier, lines, space, truncated: false };
 	}
 
 	const { wordWidth, lineWidth, space } = tierMetrics(
-		SMALLEST.fontSize,
+		smallest.fontSize,
 		measure,
 	);
-	const kept = wrap(words, lineWidth).slice(0, SMALLEST.maxLines);
+	const kept = wrap(words, lineWidth).slice(0, smallest.maxLines);
 	const last = kept[kept.length - 1];
 	while (
 		last.length > 1 &&
@@ -102,8 +111,10 @@ export function layoutTitle(raw: string, measure: Measure) {
 	) {
 		last.pop();
 	}
-	return { ...SMALLEST, lines: kept, space, truncated: true };
+	return { ...smallest, lines: kept, space, truncated: true };
 }
+
+type TitleFit = ReturnType<typeof layoutTitle>;
 
 // Consecutive words in the same font share one text run so satori spaces them
 // natively; only a font change needs its own box, spaced by the measured gap.
@@ -176,101 +187,138 @@ const MONO_LABEL: Style = {
 	textTransform: "uppercase",
 };
 
-export function changelogCard(
-	{ title, date, product }: ChangelogCard,
-	measure: Measure,
-) {
-	const fit = layoutTitle(title, measure);
-	const [, month, day] = date.split("-");
-
-	return el(
-		{ position: "relative", width: 1200, height: 630, background: "#fff" },
-		[
-			...FRAME,
-			// Header logo, its corner inset matching the left margin.
-			el({ position: "absolute", top: M, left: M }, [
-				{
-					type: "img",
-					props: {
-						src: `data:image/svg+xml,${encodeURIComponent(LOGO_SVG)}`,
-						width: 66,
-						height: 30,
-					},
+/** The 1200×630 paper with its frame and the header logo. */
+export const canvas = (children: CardNode[]) =>
+	el({ position: "relative", width: 1200, height: 630, background: "#fff" }, [
+		...FRAME,
+		// Header logo, its corner inset matching the left margin.
+		el({ position: "absolute", top: M, left: M }, [
+			{
+				type: "img",
+				props: {
+					src: `data:image/svg+xml,${encodeURIComponent(LOGO_SVG)}`,
+					width: 66,
+					height: 30,
 				},
-			]),
-			// The title centers in its band; the dimension line and pill hold
-			// fixed positions so every card shares the same geometry.
+			},
+		]),
+		...children,
+	]);
+
+/** The title, centered in its band between the logo and the dimension line. */
+export const titleBand = (fit: TitleFit) =>
+	el(
+		{
+			position: "absolute",
+			top: 140,
+			left: M,
+			right: M,
+			height: 260,
+			flexDirection: "column",
+			justifyContent: "center",
+		},
+		[
 			el(
 				{
-					position: "absolute",
-					top: 140,
-					left: M,
-					right: M,
-					height: 260,
 					flexDirection: "column",
-					justifyContent: "center",
+					maxWidth: TITLE_WIDTH,
+					fontSize: fit.fontSize,
+					lineHeight: fit.lineHeight,
+					fontWeight: 500,
+					letterSpacing: `${TRACKING}em`,
+					color: INK,
 				},
-				[
-					el(
-						{
-							flexDirection: "column",
-							maxWidth: TITLE_WIDTH,
-							fontSize: fit.fontSize,
-							lineHeight: fit.lineHeight,
-							fontWeight: 500,
-							letterSpacing: `${TRACKING}em`,
-							color: INK,
-						},
-						fit.lines.map((line, i) =>
-							titleLine(
-								line,
-								fit.truncated && i === fit.lines.length - 1,
-								fit.space,
-							),
-						),
+				fit.lines.map((line, i) =>
+					titleLine(
+						line,
+						fit.truncated && i === fit.lines.length - 1,
+						fit.space,
 					),
-				],
-			),
-			el({ position: "absolute", top: 415, left: M, width: 1008, height: 10 }, [
-				dashes("horizontal", { left: 0, right: 0, top: 4 }),
-				el({ ...PIN, left: -5, top: 0 }),
-				el({ ...PIN, right: -5, top: 0 }),
-				el(
-					{
-						...MONO_LABEL,
-						position: "absolute",
-						left: 18,
-						top: -9,
-						padding: "0 12px",
-						background: "#fff",
-						fontSize: 26,
-						lineHeight: "28px",
-						letterSpacing: "0.16em",
-						color: LABEL,
-					},
-					`${month}.${day}`,
 				),
-			]),
-			// Product pill, anchored clear of the zone X overlays with the title.
-			...(product
-				? [
-						el({ position: "absolute", bottom: 120, left: M }, [
-							el(
-								{
-									...MONO_LABEL,
-									padding: "15px 26px",
-									background: "#fff",
-									border: "1.5px solid #d4d4d4",
-									borderRadius: 999,
-									fontSize: 24,
-									letterSpacing: "0.12em",
-									color: INK,
-								},
-								product,
-							),
-						]),
-					]
-				: []),
+			),
 		],
 	);
+
+/** A pinned dashed rule across the content width, optionally labeled. */
+export const dimensionLine = (top: number, label?: string) =>
+	el({ position: "absolute", top, left: M, width: 1008, height: 10 }, [
+		dashes("horizontal", { left: 0, right: 0, top: 4 }),
+		el({ ...PIN, left: -5, top: 0 }),
+		el({ ...PIN, right: -5, top: 0 }),
+		...(label
+			? [
+					el(
+						{
+							...MONO_LABEL,
+							position: "absolute",
+							left: 18,
+							top: -9,
+							padding: "0 12px",
+							background: "#fff",
+							fontSize: 26,
+							lineHeight: "28px",
+							letterSpacing: "0.16em",
+							color: LABEL,
+						},
+						label,
+					),
+				]
+			: []),
+	]);
+
+const PILL = { fontSize: 24, tracking: 0.12, chrome: 26 * 2 + 1.5 * 2 };
+const PILL_GAP = 12;
+const PILL_BUDGET = 1008;
+
+/**
+ * Pills that fit the row in priority order: the first that doesn't fit is
+ * dropped with everything after it; a first pill wider than the row is
+ * truncated with `…` so it is never lost.
+ */
+export function fitPills(labels: string[], measure: Measure) {
+	const width = (label: string) => {
+		const text = label.toUpperCase();
+		return (
+			measure(text, "IBM Plex Mono", PILL.fontSize) +
+			text.length * PILL.tracking * PILL.fontSize +
+			PILL.chrome
+		);
+	};
+	const kept: string[] = [];
+	let used = 0;
+	for (const label of labels) {
+		const gap = kept.length ? PILL_GAP : 0;
+		if (used + gap + width(label) <= PILL_BUDGET) {
+			kept.push(label);
+			used += gap + width(label);
+		} else if (!kept.length) {
+			let text = label;
+			while (text.length > 1 && width(text + ELLIPSIS) > PILL_BUDGET) {
+				text = text.slice(0, -1);
+			}
+			return [text + ELLIPSIS];
+		} else break;
+	}
+	return kept;
 }
+
+/** Pills anchored clear of the zone X overlays with the title. */
+export const pillRow = (labels: string[], style: Style = {}) =>
+	el(
+		{ position: "absolute", bottom: 120, left: M, ...style },
+		labels.map((label) =>
+			el(
+				{
+					...MONO_LABEL,
+					padding: "15px 26px",
+					background: "#fff",
+					border: "1.5px solid #d4d4d4",
+					borderRadius: 999,
+					fontSize: 24,
+					letterSpacing: "0.12em",
+					color: INK,
+				},
+				label,
+			),
+		),
+	);
