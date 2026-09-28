@@ -60,6 +60,14 @@ Usage beyond the included amounts is billed at these rates:
 
 Image processing tokens share the 5 million token ingestion allotment. Optical character recognition (OCR) is available on every account. OCR usage is billed as image processing ingestion tokens.
 
+### How ingestion tokens are counted
+
+AI Search counts ingestion tokens the same way for every instance, regardless of the embedding model you choose:
+
+- Tokens are counted on the final chunks that AI Search indexes, after parsing and chunking. Because [chunk overlap](/ai-search/configuration/indexing/chunking/) repeats text between neighboring chunks, overlapping text is counted in each chunk it appears in.
+- Each chunk is tokenized with the `cl100k_base` tokenizer. You can estimate usage for your own content with any `cl100k_base` implementation, such as [tiktoken](https://github.com/openai/tiktoken).
+- For images and scanned documents processed with OCR, the extracted text is also counted as image processing tokens, in addition to base ingestion.
+
 Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
 
 Storage, vector indexing, and [Browser Run](/browser-run/pricing/) usage for website crawling are included with AI Search. They are not billed separately.
