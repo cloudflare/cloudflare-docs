@@ -19,10 +19,9 @@ const { cli } = Astro.props;
 	{cli === "cf" ? (
 		<>
 			<p>
-				Use the Cloudflare CLI for consistent, API-shaped commands that inspect
-				and manage resources across Cloudflare. The bundled{" "}
-				<strong>cloudflare</strong> Skill teaches the agent when to reach for
-				it.
+				Use the <a href="/cf/">Cloudflare CLI</a> to inspect and manage
+				resources across Cloudflare. The bundled <strong>cloudflare</strong>{" "}
+				Skill teaches the agent when to reach for it.
 			</p>
 			<aside class="border-border bg-muted/40 rounded-md border p-3">
 				<p class="text-foreground m-0 mb-1 text-xs font-semibold tracking-wide uppercase">
@@ -45,20 +44,13 @@ const { cli } = Astro.props;
 			</p>
 			<aside class="border-border bg-muted/40 rounded-md border p-3">
 				<p class="text-foreground m-0 mb-1 text-xs font-semibold tracking-wide uppercase">
-					What&rsquo;s next
+					Cloudflare CLI (beta)
 				</p>
 				<p class="text-muted-foreground m-0 text-sm leading-relaxed">
-					The unified <code>cf</code> CLI is in technical preview &mdash; a
-					next-generation CLI that covers every Cloudflare product with
-					consistent verbs and ergonomic output for agents. Try it with{" "}
-					<code>npx cf</code>.{" "}
-					<a
-						href="https://blog.cloudflare.com/cf-cli-local-explorer/"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Read the announcement &rarr;
-					</a>
+					The <a href="/cf/">Cloudflare CLI</a>, <code>cf</code>, covers the
+					public Cloudflare API and prints JSON output. Install it with{" "}
+					<code>npm install -g cf</code>, then follow{" "}
+					<a href="/cf/agents/">Use cf with AI agents</a>.
 				</p>
 			</aside>
 		</>

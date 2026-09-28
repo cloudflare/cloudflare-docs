@@ -71,7 +71,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 <TipsList>
 
 - The Cloudflare API MCP server uses Code Mode — Cascade writes JavaScript to reach any of 2,500+ endpoints in ~1,000 tokens.
-- Use `@`-mention to include your `wrangler.jsonc` in Cascade prompts — Cascade uses this to understand your current bindings when generating code.
+- Use `@`-mention to include your `wrangler.jsonc` or `cloudflare.config.ts` in Cascade prompts — Cascade uses this to understand your current bindings when generating code.
 - Add the observability MCP server to let Cascade automatically check Workers logs and debug deployments without leaving the IDE.
 
 </TipsList>
@@ -86,17 +86,25 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		documentation](https://docs.devin.ai/desktop/cascade/skills) for where
 		Cascade discovers and loads Skills.
 	</FAQItem>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
 		All three complement each other. Cloudflare Skills teach Cascade the
 		patterns and conventions for Workers development. The Cloudflare API MCP
 		server handles platform operations (DNS, WAF, Zero Trust, R2 buckets).
-		Wrangler in Devin Desktop's integrated terminal covers local dev and deploys.
-		Cascade coordinates between them naturally.
+		Wrangler in Devin Desktop's integrated terminal covers local dev and
+		deploys. For tasks across the whole Cloudflare API, Cascade can also use the
+		[Cloudflare CLI](/cf/), `cf`. Cascade coordinates between them naturally.
+	</FAQItem>
+	<FAQItem question="Can Cascade use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with `npm install -g cf`,
+		sign in with `cf auth login`, and tell Cascade to prefer it in your Devin
+		Desktop rules or `AGENTS.md`. Refer to [Use cf with AI agents](/cf/agents/).
 	</FAQItem>
 	<FAQItem question="Can Cascade deploy to Cloudflare?">
-		Yes. Cascade can run `npx wrangler deploy` in the integrated terminal, and
-		with the MCP server configured it can also call the Cloudflare API directly
-		for managed deploys and resource creation.
+		Yes. Cascade can run `npx wrangler deploy`, or `cf deploy` in projects that
+		use `cloudflare.config.ts`, in the integrated terminal, and with the MCP
+		server configured it can also call the Cloudflare API directly for managed
+		deploys and resource creation.
 	</FAQItem>
 </FAQList>
 

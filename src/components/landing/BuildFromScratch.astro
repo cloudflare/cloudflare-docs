@@ -6,6 +6,14 @@ import { LinkButton } from "@/components/ui/link-button";
 import SectionHeading from "./SectionHeading.astro";
 import TabBar from "./TabBar.astro";
 
+interface Props {
+	cli?: "wrangler" | "cf";
+}
+
+const { cli = "wrangler" } = Astro.props;
+const sectionId = cli === "cf" ? "build-cf" : "build";
+const headingId = `${sectionId}-heading`;
+
 const primitives = [
 	{
 		id: "compute",
@@ -40,7 +48,10 @@ const primitives = [
 		heading: "The AI inference platform",
 		description:
 			"Run AI inference globally with one API call, build agents, and search across your data — no GPUs to manage, no capacity planning.",
-		command: "npx wrangler ai models",
+		command:
+			cli === "cf"
+				? "cf ai run @cf/meta/llama-3.1-8b-instruct --help"
+				: "npx wrangler ai models",
 		cta: { label: "Browse available models", href: "/workers-ai/models/" },
 		tags: [
 			{ label: "Workers AI", href: "/workers-ai/" },
@@ -61,7 +72,8 @@ const primitives = [
 		heading: "Make your database feel instant, everywhere",
 		description:
 			"Serverless SQL, globally distributed key-value, and global database acceleration — query directly from Workers with no connection management.",
-		command: "npx wrangler d1 create my-database",
+		command:
+			cli === "cf" ? "cf d1 --help" : "npx wrangler d1 create my-database",
 		cta: { label: "Get started with D1", href: "/d1/get-started/" },
 		tags: [
 			{ label: "R2", href: "/r2/" },
@@ -96,8 +108,8 @@ const primitives = [
 ];
 ---
 
-<section class="pt-10 pb-6 lg:pt-14" aria-labelledby="build-heading" id="build">
-	<SectionHeading id="build-heading" class="mb-8">
+<section class="pt-10 pb-6 lg:pt-14" aria-labelledby={headingId} id={sectionId}>
+	<SectionHeading id={headingId} class="mb-8">
 		Powerful primitives, seamlessly integrated
 	</SectionHeading>
 
@@ -105,7 +117,7 @@ const primitives = [
 		<CornerMarks />
 
 		<TabBar
-			name="build"
+			name={sectionId}
 			variant="underline"
 			aria-label="Build primitives"
 			tabs={primitives.map((p) => ({ id: p.id, label: p.label }))}
@@ -114,9 +126,9 @@ const primitives = [
 		{primitives.map((p, i) => (
 			<div
 				role="tabpanel"
-				id={`build-panel-${p.id}`}
-				aria-labelledby={`build-tab-${p.id}`}
-				data-tabbar="build"
+				id={`${sectionId}-panel-${p.id}`}
+				aria-labelledby={`${sectionId}-tab-${p.id}`}
+				data-tabbar={sectionId}
 				data-tab-id={p.id}
 				hidden={i !== 0}
 				class="bg-card p-5 sm:p-8"
@@ -138,7 +150,7 @@ const primitives = [
 					</p>
 
 					<CommandBlock
-						id={`build-cmd-${p.id}`}
+						id={`${sectionId}-cmd-${p.id}`}
 						command={p.command}
 						rounded
 						class="mb-6 max-w-[680px]"

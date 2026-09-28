@@ -25,6 +25,7 @@ export { default as CfCommand } from "./components/cf/CfCommand.astro";
 export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
+export { default as AnnotatedConfigExplorer } from "./components/config-explorer/AnnotatedConfigExplorer.astro";
 export { default as Description } from "./components/cf/Description.astro";
 export { default as Details } from "./components/cf/Details.astro";
 export { default as MetaInfo } from "./components/cf/MetaInfo.astro";
