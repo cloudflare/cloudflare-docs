@@ -139,7 +139,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    }
    ```
 
-   `openTunnel()` replaces `tunnels.get(port)`. It stops any `cloudflared` that already serves the port, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. A quick tunnel ends with its container, as in 0.12, and the next call returns a new URL.
+   `openTunnel()` replaces `tunnels.get(port)`. It stops any `cloudflared` that already serves the port, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. Each call returns a new URL, where 0.12 returned the tunnel that already served the port. To keep a URL, look it up with `listTunnels()` from the next step before you call `openTunnel()`. A quick tunnel ends with its container, as in 0.12.
 
 4. Add methods that list and close quick tunnels:
 

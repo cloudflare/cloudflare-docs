@@ -426,7 +426,7 @@ A kernel is a Python process that runs each call's code with IPython, and keeps 
    | `results[i].text`, `html`, `png`, `jpeg`, `svg`, `latex`, `markdown`, `javascript`, `json` | The same keys. 0.12 returned each format as its own result, such as one `html` result and one `text` result for a pandas DataFrame. The kernel returns one result with both keys. |
    | `results[i].formats()` | `Object.keys(results[i])`. |
    | `results[i].chart`, `results[i].data` | Not returned. The 0.12 Python interpreter did not set them. |
-   | `logs.stdout`, `logs.stderr` | The same, with one string for each call. |
+   | `logs.stdout`, `logs.stderr` | The same, with one string for each call. 0.12 also wrote the value of the last line to `stdout`, such as `Out[0]: 215`. The kernel returns that value only in `results`. |
    | `error.name`, `error.message`, `error.traceback` | The same. `error` is `null` when the code succeeds, not `undefined`. |
    | `executionCount` | The same. |
 
