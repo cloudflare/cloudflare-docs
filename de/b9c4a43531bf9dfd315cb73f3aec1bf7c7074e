@@ -1,0 +1,23 @@
+src/content/changelog/browser-run/2026-09-24-webmcp-api.mdx
+  s_02150bead85cd9::t_ac58de8ce402b3 1-8,10-15
+  s_02150bead85cd9::t_34fb77ffa72202 9
+src/content/docs/browser-run/features/webmcp.mdx
+  s_02150bead85cd9::t_2e823af34bf191 16-20,22,104-105,111-113,119,122,141,179-188,191-194
+  s_02150bead85cd9::t_c3dfca8e573303 21,29,50,52,56,58-59,66-67,70,72-73,76-83,127,129,134,136,162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "deb9c4a43531bf9dfd315cb73f3aec1bf7c7074e",
+  "prompts": {},
+  "sessions": {
+    "s_02150bead85cd9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2c0a441cffeNWhALKFxzso34h",
+        "model": "gpt-6-luna"
+      },
+      "human_author": "bpereira <bpereira@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+src/components/landing/sidebar-data.ts
+  s_087c7ce1ebf930::t_729df4aa28dd60 68-70
+  s_087c7ce1ebf930::t_a0c60e076486ff 67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "57199ee6817a1509bcb290b3a4eb977cf9466cd1",
+  "prompts": {},
+  "sessions": {
+    "s_087c7ce1ebf930": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a024a7-5b67-7722-897c-b05d0576a381",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}
