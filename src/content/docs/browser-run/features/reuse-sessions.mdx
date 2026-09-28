@@ -86,7 +86,7 @@ Each request creates a browser context to isolate its pages, cookies, and storag
 
 A listed session might expire before the connection completes or have no remaining capacity. The script tries the other sessions before launching a new one.
 
-Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-run/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
+If the browser receives no commands for longer than the idle [limit](/browser-run/limits/), it closes automatically. Send enough requests to keep it alive.
 
 <TypeScriptExample>
 
