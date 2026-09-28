@@ -160,14 +160,17 @@ Each mount registers an intercept for its own hostname. The intercept receives r
 
 Mount the prefix in `ensureRunning()`, after `start()` and before `intercept()`:
 
-```ts title="src/index.ts" ins={8-9}
+```ts title="src/index.ts" ins={11-12}
 private async ensureRunning(): Promise<void> {
 	if (!this.container.running) {
 		this.container.start({
 			image: this.container.images.sandbox,
+			instance: "standard-1",
 			env: ENV,
 			enableInternet: ENABLE_INTERNET,
 		});
+		// Replaces onStart().
+		await this.ctx.storage.put("startedAt", Date.now());
 		// Mount before the catch-all intercept.
 		await this.mountData();
 		await this.intercept();
@@ -175,6 +178,7 @@ private async ensureRunning(): Promise<void> {
 		await trust.exitCode;
 	}
 
+	// Call it on every request.
 	await this.container.setInactivityTimeout(
 		INACTIVITY_TIMEOUT_MS,
 	);

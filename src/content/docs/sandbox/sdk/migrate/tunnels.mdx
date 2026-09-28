@@ -35,20 +35,20 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
    0.12 also ran version 2026.3.0. `cloudflared` needs the `ca-certificates` package, which the `Dockerfile` from Replace the Sandbox class installs.
 
-2. Add the scripts that run and stop `cloudflared` to the top level of `src/index.ts`:
+2. Add the scripts that run and stop `cloudflared` to the top level of `src/index.ts`. The names differ from the ones in [Run background processes](/sandbox/commands/run-background-processes/), so a class can have both:
 
    ```ts title="src/index.ts"
-   const ROOT = "/var/lib/tunnels";
+   const TUNNEL_ROOT = "/var/lib/tunnels";
    const QUICK_URL = "https://[a-z0-9-]+\\.trycloudflare\\.com";
 
    // Runs cloudflared in its own process group, and records its PID.
-   const RUN = `dir=$1; shift
+   const RUN_TUNNEL = `dir=$1; shift
    mkdir -p "$dir"
    setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" \\
    	cloudflared tunnel --no-autoupdate "$@" >"$dir/log" 2>&1`;
 
    // Prints "connected" and any quick tunnel URL, or "exited".
-   const STATUS = `dir=$1
+   const TUNNEL_STATUS = `dir=$1
    if grep -q 'Registered tunnel connection' "$dir/log" 2>/dev/null
    then
    	echo connected $(grep -o -m1 -E '${QUICK_URL}' "$dir/log")
@@ -59,7 +59,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
    // Prints the port and URL of each connected quick tunnel.
    const LIST = `status=$1
-   for dir in ${ROOT}/*/; do
+   for dir in ${TUNNEL_ROOT}/*/; do
    	[ -d "$dir" ] || continue
    	set -- $(sh -c "$status" sh "$dir")
    	[ "$1" = connected ] && [ -n "$2" ] &&
@@ -71,7 +71,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    [ -e "$dir/pid" ] && kill -- "-$(cat "$dir/pid")" 2>/dev/null
    rm -rf "$dir"`;
 
-   async function run(
+   async function capture(
    	container: Container,
    	argv: string[],
    ): Promise<string> {
@@ -91,11 +91,11 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    	args: string[],
    	env: Record<string, string> = {},
    ): Promise<string> {
-   	const dir = `${ROOT}/${port}`;
-   	await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+   	const dir = `${TUNNEL_ROOT}/${port}`;
+   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
 
    	// Ignoring the output lets cloudflared outlive this request.
-   	const argv = ["sh", "-c", RUN, "sh", dir, ...args];
+   	const argv = ["sh", "-c", RUN_TUNNEL, "sh", dir, ...args];
    	await this.container.exec(argv, {
    		env,
    		stdout: "ignore",
@@ -105,10 +105,10 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    	const deadline = Date.now() + 30_000;
 
    	while (Date.now() < deadline) {
-   		const status = await run(this.container, [
+   		const status = await capture(this.container, [
    			"sh",
    			"-c",
-   			STATUS,
+   			TUNNEL_STATUS,
    			"sh",
    			dir,
    		]);
@@ -118,7 +118,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    		}
 
    		if (status === "exited") {
-   			const log = await run(this.container, [
+   			const log = await capture(this.container, [
    				"tail",
    				`${dir}/log`,
    			]);
@@ -128,7 +128,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    		await scheduler.wait(500);
    	}
 
-   	await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
    	throw new Error("The tunnel did not connect within 30 seconds");
    }
 
@@ -149,12 +149,12 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    		return [];
    	}
 
-   	const output = await run(this.container, [
+   	const output = await capture(this.container, [
    		"sh",
    		"-c",
    		LIST,
    		"sh",
-   		STATUS,
+   		TUNNEL_STATUS,
    	]);
 
    	return output
@@ -167,10 +167,12 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    }
 
    async closeTunnel(port: number): Promise<void> {
-   	if (this.container.running) {
-   		const dir = `${ROOT}/${port}`;
-   		await run(this.container, ["sh", "-c", STOP, "sh", dir]);
+   	if (!this.container.running) {
+   		return;
    	}
+
+   	const dir = `${TUNNEL_ROOT}/${port}`;
+   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
    }
    ```
 

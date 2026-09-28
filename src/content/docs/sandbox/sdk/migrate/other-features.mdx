@@ -143,15 +143,18 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
 
 2. Register the entrypoint in `ensureRunning()`, after `start()`:
 
-   ```ts title="src/index.ts" ins={9-14}
+   ```ts title="src/index.ts" ins={12-17}
    private async ensureRunning(): Promise<void> {
    	if (!this.container.running) {
    		this.container.start({
    			image: this.container.images.sandbox,
    			instance: "standard-1",
    			env: ENV,
+   			// 0.12 allowed Internet access by default.
    			enableInternet: true,
    		});
+   		// Replaces onStart().
+   		await this.ctx.storage.put("startedAt", Date.now());
    		await this.container.interceptOutboundHttp(
    			"my.kv",
    			this.ctx.exports.KvGateway({
@@ -160,6 +163,7 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
    		);
    	}
 
+   	// Call it on every request.
    	await this.container.setInactivityTimeout(
    		INACTIVITY_TIMEOUT_MS,
    	);
