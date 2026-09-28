@@ -39,11 +39,11 @@ A `304 Not Modified` response does not refresh cache tags set by [Cache Response
 
 ### Stale content during revalidation
 
-Your cache settings determine whether visitors receive stale content while Cloudflare revalidates:
+Your cache settings and your origin's health determine whether visitors receive stale content while Cloudflare revalidates:
 
 - With `stale-while-revalidate`, Cloudflare can serve stale content while it revalidates in the background.
-- With `stale-if-error`, Cloudflare can serve stale content if your origin returns an error.
-- Without these directives, requests wait for revalidation to complete.
+- Without `stale-while-revalidate`, requests wait for revalidation to complete.
+- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve stale content even if the response has no `stale-if-error` directive, for as long as the content stays in cache. To limit this, set `stale-if-error` in the response. To prevent it, set `stale-if-error=0`.
 
 For content that is still fresh, these stale windows start when you invalidate it, not when it would have expired. Invalidation never extends a stale window that has already ended.
 
