@@ -214,14 +214,35 @@ function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
 	});
 }
 
-// Append the external-link arrow to internal cross-section redirects
-// (relative `external_link` → same-tab `type: "link"` flagged `_neverActive`).
-function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
+const BASIN_PRODUCT_LINKS = new Set([
+	"/basin-pipelines/",
+	"/basin-catalog/",
+	"/basin-sql/",
+]);
+
+// Internal cross-section redirects are same-tab links by default. Basin's
+// product links open in new tabs so readers can keep the Basin overview open.
+function markInternalRedirects(
+	items: SidebarItem[],
+	sectionSlug?: string,
+): SidebarItem[] {
 	return items.map((item) => {
 		if (item.type === "group") {
-			return { ...item, children: markInternalRedirects(item.children) };
+			return {
+				...item,
+				children: markInternalRedirects(item.children, sectionSlug),
+			};
 		}
 		if (item.type === "link" && item._neverActive) {
+			if (sectionSlug === "basin" && BASIN_PRODUCT_LINKS.has(item.href)) {
+				return {
+					type: "external",
+					label: appendExternalArrow(item.label),
+					href: item.href,
+					badge: item.badge,
+					order: item.order,
+				};
+			}
 			return {
 				...item,
 				label: appendExternalArrow(item.label),
@@ -334,7 +355,7 @@ export const docsSidebarTransform: SidebarTransform = async (ctx) => {
 		tree: isolated,
 	});
 	const withExternal = markExternalAppLinks(withAgentResources);
-	const withRedirects = markInternalRedirects(withExternal);
+	const withRedirects = markInternalRedirects(withExternal, ctx.sectionSlug);
 	const betaUrls = await getBetaBadgeUrls();
 	return applyBadges(withRedirects, betaUrls);
 };

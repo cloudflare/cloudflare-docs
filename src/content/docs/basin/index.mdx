@@ -11,16 +11,13 @@ products:
   - basin
 ---
 
-import {
-	Description,
-	Feature,
-	PackageManagers,
-} from "~/components";
+import { Description, Feature, PackageManagers } from "~/components";
 import ChangelogSection from "~/components/landing/ChangelogSection.astro";
 
 <Description>
-	Collect, transform, manage, and query analytics data with a serverless platform
-	built on [Apache Iceberg](https://iceberg.apache.org/) and [R2](/r2/).
+	Collect, transform, manage, and query analytics data with a serverless
+	platform built on [Apache Iceberg](https://iceberg.apache.org/) and
+	[R2](/r2/).
 </Description>
 
 :::note
@@ -34,11 +31,11 @@ Basin is an end-to-end analytics data platform that brings ingestion, table mana
 title: Basin data flow
 ---
 flowchart LR
-	sources["Applications, infrastructure,<br/>devices, and Cloudflare services"]
-	pipelines["Basin Pipelines<br/>Ingest and transform events"]
-	storage["Basin Catalog and R2<br/>Store and manage tables"]
-	query["Basin SQL and external engines<br/>Query and analyze data"]
-	sources --> pipelines --> storage --> query
+	pipelines["Basin Pipelines"]
+	catalog["Basin Catalog<br/>Apache Iceberg tables"]
+	sql["Basin SQL &<br/>compatible external engines"]
+	pipelines -->|processes and ingests events| catalog
+	catalog -->|queried by| sql
 ```
 
 With Basin, you can expect to:
@@ -55,7 +52,7 @@ To build your first request analytics workflow, follow the [Basin CLI guide](/ba
 
 ## Ingest with Basin Pipelines
 
-[Basin Pipelines](/basin-pipelines/) receives events through HTTP endpoints or [Workers bindings](/workers/runtime-apis/bindings/). It transforms events with SQL and writes Iceberg tables or files to R2.
+Use <a href="/basin-pipelines/" target="_blank" rel="noopener noreferrer" aria-label="Basin Pipelines (opens in a new tab)">Basin Pipelines</a> to receive events through HTTP endpoints or [Workers bindings](/workers/runtime-apis/bindings/). It transforms events with SQL and writes Iceberg tables or files to R2.
 
 Run the setup command to configure a stream, sink, and pipeline:
 
@@ -64,6 +61,7 @@ Run the setup command to configure a stream, sink, and pipeline:
 <Feature
 	header="Basin Pipelines documentation"
 	href="/basin-pipelines/"
+	target="_blank"
 	cta="Explore Basin Pipelines"
 >
 	Configure streaming ingestion, SQL transformations, and R2 destinations.
@@ -73,7 +71,7 @@ Run the setup command to configure a stream, sink, and pipeline:
 
 ## Manage your data with Basin Catalog
 
-[Basin Catalog](/basin-catalog/) manages Iceberg metadata in your R2 bucket. It provides an Iceberg REST catalog and automatic table maintenance.
+Use <a href="/basin-catalog/" target="_blank" rel="noopener noreferrer" aria-label="Basin Catalog (opens in a new tab)">Basin Catalog</a> to manage Iceberg metadata in your R2 bucket. It provides an Iceberg REST catalog and automatic table maintenance.
 
 Enable Basin Catalog on an existing R2 bucket:
 
@@ -86,6 +84,7 @@ Enable Basin Catalog on an existing R2 bucket:
 <Feature
 	header="Basin Catalog documentation"
 	href="/basin-catalog/"
+	target="_blank"
 	cta="Explore Basin Catalog"
 >
 	Manage catalogs, maintain tables, and connect compatible Iceberg engines.
@@ -95,7 +94,7 @@ Enable Basin Catalog on an existing R2 bucket:
 
 ## Query your data with Basin SQL
 
-[Basin SQL](/basin-sql/) runs distributed online analytical processing (OLAP) queries across catalog tables. It uses Cloudflare's global network without requiring query clusters.
+Use <a href="/basin-sql/" target="_blank" rel="noopener noreferrer" aria-label="Basin SQL (opens in a new tab)">Basin SQL</a> to run distributed online analytical processing (OLAP) queries across catalog tables. It uses Cloudflare's global network without requiring query clusters.
 
 Query a table in your warehouse with SQL:
 
@@ -110,6 +109,7 @@ Query a table in your warehouse with SQL:
 <Feature
 	header="Basin SQL documentation"
 	href="/basin-sql/"
+	target="_blank"
 	cta="Explore Basin SQL"
 >
 	Run SQL queries, review supported syntax, and monitor query usage.

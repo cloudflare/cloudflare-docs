@@ -32,10 +32,10 @@ const run = (tree: SidebarItem[]) =>
 		currentSlug: "test/page",
 	});
 
-const runDocs = (tree: SidebarItem[]) =>
+const runDocs = (tree: SidebarItem[], sectionSlug = "test") =>
 	docsSidebarTransform({
 		tree,
-		sectionSlug: "test",
+		sectionSlug,
 		currentSlug: "test/page",
 	});
 
@@ -127,4 +127,40 @@ describe("docsSidebarTransform badges", () => {
 			expect(item.badge).toBeUndefined();
 		},
 	);
+});
+
+describe("docsSidebarTransform Basin links", () => {
+	test.each(["/basin-pipelines/", "/basin-catalog/", "/basin-sql/"])(
+		"opens the %s sidebar redirect in a new tab",
+		async (href) => {
+			const [item] = await runDocs(
+				[link({ label: "Basin product", href, _neverActive: true })],
+				"basin",
+			);
+			expect(item).toMatchObject({
+				type: "external",
+				label: `Basin product${ARROW}`,
+				href,
+			});
+		},
+	);
+
+	test("keeps other Basin redirects in the same tab", async () => {
+		const [item] = await runDocs(
+			[link({ label: "Other", href: "/other/", _neverActive: true })],
+			"basin",
+		);
+		expect(item).toMatchObject({ type: "link", label: `Other${ARROW}` });
+	});
+
+	test("keeps links to Basin products from other sections in the same tab", async () => {
+		const [item] = await runDocs([
+			link({
+				label: "Basin SQL",
+				href: "/basin-sql/",
+				_neverActive: true,
+			}),
+		]);
+		expect(item).toMatchObject({ type: "link", label: `Basin SQL${ARROW}` });
+	});
 });
