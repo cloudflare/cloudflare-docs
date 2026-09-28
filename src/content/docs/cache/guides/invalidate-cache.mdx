@@ -35,6 +35,8 @@ If the cached response includes an `ETag` or `Last-Modified` header, Cloudflare 
 
 Invalidation does not guarantee that content is reused. Cloudflare fetches the full response if the content is no longer cached or your origin does not support conditional requests.
 
+A `304 Not Modified` response does not refresh cache tags set by [Cache Response Rules](/cache/how-to/cache-response-rules/). Cache tags from your origin's `Cache-Tag` header are updated only if your origin includes that header in the `304` response. To refresh cache tags otherwise, purge the content.
+
 ### Stale content during revalidation
 
 Your cache settings determine whether visitors receive stale content while Cloudflare revalidates:
