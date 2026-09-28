@@ -31,6 +31,10 @@ An HTTP `422` response begins with `Input was invalid:` and describes the valida
 - Multiple SQL statements.
 - Unsupported SQL syntax or functions.
 
+## Introspection errors
+
+The [introspection endpoint](/analytics/sql-api/datasets/#discover-datasets) returns the same status codes as query execution, but its `422` causes relate to introspection parameters rather than SQL syntax. See [Errors](/analytics/sql-api/datasets/#errors) for the causes specific to introspection.
+
 ## Retry behavior
 
 Retry `429`, `500`, `503`, and `507` responses only when repeating the query is safe for your application. Use bounded exponential backoff with jitter. If a `429` response includes `Retry-After`, do not retry before that interval has elapsed. For `Unable to authorize` or `Unable to resolve account information`, first verify that the account or zone identifier is correct. Contact Cloudflare Support if the error persists after bounded retries.

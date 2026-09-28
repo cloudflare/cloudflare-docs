@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-Each SQL API dataset has a schema-qualified name. The prefix identifies what one row represents and how you should interpret the data.
+Each SQL API dataset has a schema-qualified name. The prefix identifies what one row represents and how you should interpret the data:
 
 | Prefix    | Row meaning                                                                                                                             |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,7 +43,18 @@ ORDER BY timestamp DESC
 LIMIT 100
 ```
 
-Each state dataset defines which aggregate functions are meaningful for its values. The API rejects aggregate functions that are not supported by the selected state dataset.
+Each state dataset defines which aggregate functions are meaningful for its values. The API rejects aggregate functions that are not supported by the selected state dataset. [Introspection](#discover-datasets) lists these as `valid_aggregations` on the dataset's `kind`:
+
+```json
+{
+	"kind": {
+		"states": {
+			"sampling": "unsampled",
+			"valid_aggregations": ["count", "max"]
+		}
+	}
+}
+```
 
 ## Log datasets
 
@@ -66,9 +77,11 @@ Query a Workers Analytics Engine dataset as `events.analyticsEngine.<DATASET_NAM
 
 This interface uses the Analytics SQL API endpoint and SQL dialect. It is separate from the [Workers Analytics Engine SQL API](/analytics/analytics-engine/sql-api/).
 
+[Introspection](#discover-datasets) discovers Workers Analytics Engine dataset names from the account's own data, up to a limit of 1,000 distinct names by default (truncated silently beyond that, with no time bound: a dataset remains listed for as long as any of its data is retained). This differs from `include_custom_attributes`, which only looks at the preceding seven days. Passing the bare `events.analyticsEngine` namespace as `dataset_name`, with no `<DATASET_NAME>` suffix, returns every Workers Analytics Engine dataset the account has, rather than being rejected as an unknown name.
+
 ## Discover datasets
 
-Use the introspection endpoint to list the datasets in the SQL API catalog:
+Use the introspection endpoint to list the datasets in the SQL API catalog. The catalog is not a fixed list: datasets can appear or disappear depending on the deployment and, for Workers Analytics Engine and Log Explorer datasets, on the account. Query the catalog rather than hard-coding dataset names, and do not treat a dataset's absence from one response as proof that it can never appear.
 
 ```bash
 curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
@@ -76,7 +89,7 @@ curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
   --data-urlencode "account_tag=<ACCOUNT_TAG>"
 ```
 
-The response contains dataset names, titles, descriptions, and kinds, sorted by name. Columns are omitted by default.
+The response contains dataset names, titles, descriptions, and kinds, sorted by name. Columns are omitted by default. A `kind`'s `sampling` is either `unsampled` or `adaptive`.
 
 ```json
 {
@@ -95,6 +108,8 @@ The response contains dataset names, titles, descriptions, and kinds, sorted by 
 }
 ```
 
+### Query parameters
+
 The endpoint accepts the following query parameters:
 
 | Parameter         | Type    | Required | Description                                                                               |
@@ -103,6 +118,10 @@ The endpoint accepts the following query parameters:
 | `dataset_name`    | string  | No       | Exact, case-sensitive schema-qualified dataset name to return.                            |
 | `include_columns` | boolean | No       | Set to `true` to include column names, descriptions, and data types. Defaults to `false`. |
 | `include_custom_attributes` | boolean | No | Set to `true` to discover custom attribute names and types from account data. Requires a nonempty `dataset_name`. |
+| `include_wae`     | boolean | No       | Set to `false` to omit Workers Analytics Engine datasets, which are discovered from the account's own data. Defaults to `true`.           |
+| `include_lex`     | boolean | No       | Set to `false` to omit Log Explorer datasets, which are listed only for accounts that have them. Defaults to `true`.                      |
+
+### Columns
 
 To inspect one dataset and its columns, provide both optional parameters:
 
@@ -143,6 +162,38 @@ curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
 }
 ```
 
-An unknown `dataset_name` returns an empty `datasets` array.
+A column's `data_type` is one of `String`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Int64`, `Float64`, `Date`, `DateTime`, `DateTime64(3)`, `Array(<scalar type>)` (for example `Array(String)`), or `Json`.
 
-Introspection normally returns static catalog metadata without querying the underlying data store. Setting `include_custom_attributes=true` queries the preceding seven days of the selected dataset within the specified account. Each custom-attribute type is capped at the service's configured attribute limit, so the response might not include every historical custom attribute. A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.
+### Custom attributes
+
+Introspection normally returns static catalog metadata without querying the underlying data store. Setting `include_custom_attributes=true` queries the preceding seven days of the selected dataset within the specified account:
+
+- Each custom-attribute type is capped at the service's configured attribute limit (1,000 by default), so the response might not include every historical custom attribute.
+- Truncation is silent: the response gives no indication that the limit was reached.
+- A custom attribute's `data_type` is one of `String`, `Float64`, or `Bool`, a smaller set than the column `data_type` values listed above.
+- `custom_attributes` is omitted, not returned as an empty array, for a dataset that has no custom attributes to discover.
+
+### Log Explorer availability
+
+Log Explorer datasets include an `availability` field alongside `kind`, listing the scopes where the account has enabled the dataset:
+
+```json
+{
+	"availability": [
+		{ "scope": "account" },
+		{ "scope": "zone", "zone": "<ZONE_TAG>" }
+	]
+}
+```
+
+`availability` is omitted for datasets that are not backed by Log Explorer.
+
+### Errors
+
+Introspection uses the same [HTTP status codes as the rest of the SQL API](/analytics/sql-api/errors/). The following `422` causes are specific to introspection:
+
+- `account_tag` is invalid or unknown.
+- `include_custom_attributes=true` was set without a nonempty `dataset_name`.
+- The supplied criteria, such as `dataset_name`, match no dataset. A dataset that exists but is not describable in this deployment returns the identical error, with a message naming the criteria that matched nothing, so the two cases cannot be told apart.
+
+A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.
