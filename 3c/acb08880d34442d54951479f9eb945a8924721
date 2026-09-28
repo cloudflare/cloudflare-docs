@@ -1,0 +1,19 @@
+src/content/docs/workers/configuration/cloudflare-access.mdx
+  s_896d6c8cfe150c::t_53869c5b5d62ee 9,54,57-61,111,114-116,258-326
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3cacb08880d34442d54951479f9eb945a8924721",
+  "prompts": {},
+  "sessions": {
+    "s_896d6c8cfe150c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_022150fa1ffeErSJh4vP3pUqYh",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "chythra-w1 <chythra-w1@users.noreply.github.com>"
+    }
+  }
+}

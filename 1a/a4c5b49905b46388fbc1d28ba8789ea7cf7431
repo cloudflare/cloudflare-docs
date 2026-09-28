@@ -1,0 +1,39 @@
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_e0b9f423686126::t_75b3c6ad5aa33c 15,19,21,23,55,272,274,386
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_e57ddcfe949855::t_3b07b0402c3a15 15,398,400,406,437,515,575,577,875,904,916
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_e57ddcfe949855::t_47c4f1fc9bdfce 4,15,17-20,22,26,28,30,43,45,50,77,107,111-123,135-142,166-167,172,174,176,185,206,227,290,333
+src/content/docs/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2.mdx
+  s_e57ddcfe949855::t_d549a6cb2fee18 3,13,19-25,37,39,41,47,51,94,96-98,112,120,150,156-165,167,201-202,207,209,220,226,232,240,243,245,247,253,255,267,274,276,282,289-292,294,296,336,338,354,356,372,378,380,390
+src/content/docs/agents/model-context-protocol/guides/remote-mcp-server.mdx
+  s_e57ddcfe949855::t_55ba24560f81b3 24-31
+src/content/docs/agents/model-context-protocol/protocol/tools.mdx
+  s_e0b9f423686126::t_2c066fb86cb972 17,33,148,173
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_e0b9f423686126::t_8edc9a21dd2f2e 43,90,92,94,96,317,319
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1aa4c5b49905b46388fbc1d28ba8789ea7cf7431",
+  "prompts": {},
+  "sessions": {
+    "s_e0b9f423686126": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f8033-abc7-749a-a944-8cf7bb5b97d6",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_e57ddcfe949855": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f84f1-b147-710d-816c-99862717efb2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

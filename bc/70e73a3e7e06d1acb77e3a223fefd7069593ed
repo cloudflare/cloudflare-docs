@@ -1,0 +1,21 @@
+public/__redirects
+  s_3da153ffcecb7a::t_5bf2adbb32ec03 2638-2655,2729,2928,2979
+src/content/docs/cloudflare-one/email-security/settings/detection-settings/additional-detections.mdx
+  s_3da153ffcecb7a::t_eea26a1a55f4d7 8,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bc70e73a3e7e06d1acb77e3a223fefd7069593ed",
+  "prompts": {},
+  "sessions": {
+    "s_3da153ffcecb7a": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "dd7fc2e1-d834-4c74-91c5-b20660d16f30",
+        "model": "unknown"
+      },
+      "human_author": "krystyna <krystyna@cloudflare.com>"
+    }
+  }
+}

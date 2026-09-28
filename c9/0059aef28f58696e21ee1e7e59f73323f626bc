@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "c90059aef28f58696e21ee1e7e59f73323f626bc",
+  "prompts": {
+    "a5fbb40650f21e72": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1bfc16fc0ffe2pQFhyAWUfa1hH",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "Nuno Pereira",
+      "messages": [],
+      "total_additions": 710,
+      "total_deletions": 606,
+      "accepted_lines": 710,
+      "overriden_lines": 0
+    }
+  }
+}

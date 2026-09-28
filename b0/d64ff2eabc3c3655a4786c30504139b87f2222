@@ -1,0 +1,19 @@
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_90de8aa6df6bc1::t_b84e9a1e8c3c42 197,200-255,258,260,266-301
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b0d64ff2eabc3c3655a4786c30504139b87f2222",
+  "prompts": {},
+  "sessions": {
+    "s_90de8aa6df6bc1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f93e8-0720-7778-a066-738c64cde4bc",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

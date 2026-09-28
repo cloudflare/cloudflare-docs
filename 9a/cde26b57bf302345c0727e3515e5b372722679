@@ -1,0 +1,21 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "9acde26b57bf302345c0727e3515e5b372722679",
+  "prompts": {
+    "c291592a01582357": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1d891e3a5ffeTJzhFTI01W7QMk",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}

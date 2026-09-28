@@ -1,0 +1,19 @@
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_5f2f274121db70 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a1964d240694bb2becbc15637b7038bed6fe622e",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "unknown"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

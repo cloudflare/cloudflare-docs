@@ -1,0 +1,19 @@
+src/content/docs/ruleset-engine/reference/phases-list.mdx
+  s_1c82e7a621819d::t_acd16c0d142923 35-56,60-61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e7166a479654bce5777043e6e0073af5339c53f0",
+  "prompts": {},
+  "sessions": {
+    "s_1c82e7a621819d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_00058364affeZSO312Dijm4tgo",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Elie Mitrani <emitrani@cloudflare.com>"
+    }
+  }
+}
