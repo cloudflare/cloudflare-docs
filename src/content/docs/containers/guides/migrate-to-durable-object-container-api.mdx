@@ -9,13 +9,18 @@ products:
   - durable-objects
 ---
 
-import { Steps } from "~/components";
+import { CopyPromptButton, Steps } from "~/components";
 
 The Durable Object Container API lets your Durable Object coordinate container compute with persistent storage, alarms, and request handling. Access it as `this.ctx.container` inside a Durable Object with a container binding. When migrating from the `Container` class, replace its helpers with application code where needed.
 
 Before changing code, identify which helpers your application uses. Some helpers require application code to preserve their existing behavior. For an API comparison, refer to [Choose an API](/containers/api/#choose-an-api).
 
 You can migrate the implementation without replacing the Durable Object. Keep the Worker name, exported class name, binding, container image, and existing migration tags unchanged. Changing the TypeScript base class does not require a new Durable Object migration.
+
+<CopyPromptButton
+	prompt="Fetch and execute the appropriate instructions to migrate this application from the Container class to the Durable Object Container API from https://developers.cloudflare.com/containers/guides/migrate-to-durable-object-container-api/index.md"
+	tooltip="Migrates your application to the Durable Object Container API"
+/>
 
 ## Replace Container class helpers
 
