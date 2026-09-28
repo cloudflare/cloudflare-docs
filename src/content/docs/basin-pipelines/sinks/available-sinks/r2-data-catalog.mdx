@@ -14,7 +14,9 @@ Basin Catalog sinks write processed data from pipelines as [Apache Iceberg](http
 
 To create a Basin Catalog sink, run the `basin pipelines sinks create` command and specify the sink type, target bucket, namespace, and table name:
 
-<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create my-sink --type r2-data-catalog --bucket my-bucket --namespace my_namespace --table my_table --catalog-token YOUR_CATALOG_TOKEN"} />
+<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create my-sink --type basin-catalog --bucket my-bucket --namespace my_namespace --table my_table --catalog-token YOUR_CATALOG_TOKEN"} />
+
+Use `basin-catalog` for new sinks. The legacy `r2-data-catalog` value also remains valid, and existing sink configurations do not need to change.
 
 The sink will create the specified namespace and table if they do not exist. Sinks cannot be created for existing Iceberg tables.
 

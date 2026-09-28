@@ -72,7 +72,7 @@ You will need API tokens to interact with Cloudflare services.
 Export your new token as an environment variable:
 
 ```bash
-export WRANGLER_R2_SQL_AUTH_TOKEN= #paste your token here
+export WRANGLER_BASIN_SQL_AUTH_TOKEN= #paste your token here
 ```
 
 If this is your first time using Wrangler, make sure to log in.
@@ -152,7 +152,7 @@ Basin Catalog can automatically compact tables for you. In production event stre
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Wrangler CLI'>
 
-<PackageManagers type="exec" pkg="wrangler" args={"basin catalog compaction enable fraud-pipeline --token $WRANGLER_R2_SQL_AUTH_TOKEN"} />
+<PackageManagers type="exec" pkg="wrangler" args={"basin catalog compaction enable fraud-pipeline --token $WRANGLER_BASIN_SQL_AUTH_TOKEN"} />
 
 </TabItem>
 <TabItem label='Dashboard'>
@@ -248,7 +248,7 @@ Input Schema:
 
 Create a sink that writes data to your R2 bucket as Apache Iceberg tables:
 
-<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create raw_events_sink --type \"r2-data-catalog\" --bucket \"fraud-pipeline\" --roll-interval 30 --namespace \"fraud_detection\" --table \"transactions\" --catalog-token $WRANGLER_R2_SQL_AUTH_TOKEN"} />
+<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create raw_events_sink --type \"basin-catalog\" --bucket \"fraud-pipeline\" --roll-interval 30 --namespace \"fraud_detection\" --table \"transactions\" --catalog-token $WRANGLER_BASIN_SQL_AUTH_TOKEN"} />
 
 :::note
 This creates a `sink` configuration that will write to the Iceberg table `fraud_detection.transactions` in your Basin Catalog every 30 seconds. Basin Pipelines automatically appends an `__ingest_ts` column that is used to partition the table by `DAY`.
@@ -342,7 +342,7 @@ from datetime import datetime, timezone, timedelta
 
 # Configuration - exported from the prior steps
 STREAM_ENDPOINT = os.environ["STREAM_ENDPOINT"]# From the stream you created
-API_TOKEN = os.environ["WRANGLER_R2_SQL_AUTH_TOKEN"] #the same one created earlier
+API_TOKEN = os.environ["WRANGLER_BASIN_SQL_AUTH_TOKEN"] #the same one created earlier
 EVENTS_TO_SEND = 1000 # Feel free to adjust this
 
 def generate_transaction():
@@ -495,7 +495,7 @@ Now you can analyze your fraud detection data using Basin SQL. Here are some exa
 
 Create a new sink that will write the filtered data to a new Apache Iceberg table in Basin Catalog:
 
-<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create fraud_filter_sink --type \"r2-data-catalog\" --bucket \"fraud-pipeline\" --roll-interval 30 --namespace \"fraud_detection\" --table \"fraud_transactions\" --catalog-token $WRANGLER_R2_SQL_AUTH_TOKEN"} />
+<PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks create fraud_filter_sink --type \"basin-catalog\" --bucket \"fraud-pipeline\" --roll-interval 30 --namespace \"fraud_detection\" --table \"fraud_transactions\" --catalog-token $WRANGLER_BASIN_SQL_AUTH_TOKEN"} />
 
 Now you will create a new SQL query to process data from the original `raw_events_stream` stream and only write flagged transactions that are over the `amount` of 1,000.
 

@@ -136,31 +136,31 @@ Next, create one [sink](/basin-pipelines/sinks/) per destination table. Each sin
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin pipelines sinks create bsky_post_sink --type r2-data-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_post --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
+	args="basin pipelines sinks create bsky_post_sink --type basin-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_post --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
 />
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin pipelines sinks create bsky_like_sink --type r2-data-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_like --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
+	args="basin pipelines sinks create bsky_like_sink --type basin-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_like --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
 />
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin pipelines sinks create bsky_repost_sink --type r2-data-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_repost --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
+	args="basin pipelines sinks create bsky_repost_sink --type basin-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_repost --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
 />
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin pipelines sinks create bsky_follow_sink --type r2-data-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_follow --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
+	args="basin pipelines sinks create bsky_follow_sink --type basin-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_follow --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
 />
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin pipelines sinks create bsky_block_sink --type r2-data-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_block --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
+	args="basin pipelines sinks create bsky_block_sink --type basin-catalog --bucket bluesky-pipeline --namespace bluesky --table bsky_block --catalog-token YOUR_CATALOG_TOKEN --roll-interval 60"
 />
 
 Now create one pipeline whose SQL contains multiple `INSERT` statements, one per route. Each statement filters the stream by `event_type` and projects only the columns that matter for its table.
@@ -423,7 +423,7 @@ The first data lands a few minutes after the first events arrive, while the pipe
 Set your Basin SQL token, then query each table. Replace `YOUR_WAREHOUSE_NAME` with the warehouse name you noted in step 3.
 
 ```sh
-export WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_CATALOG_TOKEN
+export WRANGLER_BASIN_SQL_AUTH_TOKEN=YOUR_CATALOG_TOKEN
 ```
 
 Count the rows in the likes table:
