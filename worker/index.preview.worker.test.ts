@@ -137,6 +137,8 @@ describe("Preview anti-indexing", () => {
 describe("Preview changelog OG images", () => {
 	const PREVIEW = "https://my-branch.preview.developers.cloudflare.com";
 	const POST = "/changelog/post/2025-02-11-custom-errors-beta/";
+	const escapeRegExp = (value: string) =>
+		value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 	it("renders the card fresh on every request without storing it", async () => {
 		for (let i = 0; i < 2; i++) {
@@ -161,7 +163,11 @@ describe("Preview changelog OG images", () => {
 				meta
 					.querySelector(`meta[property="${property}"]`)
 					?.getAttribute("content"),
-			).toMatch(new RegExp(`^${PREVIEW}${POST}og\\.png\\?v=[0-9a-f]{16}$`));
+			).toMatch(
+				new RegExp(
+					`^${escapeRegExp(PREVIEW)}${escapeRegExp(POST)}og\\.png\\?v=[0-9a-f]{16}$`,
+				),
+			);
 		}
 	});
 });
