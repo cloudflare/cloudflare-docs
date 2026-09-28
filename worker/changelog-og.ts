@@ -7,7 +7,6 @@ import {
 	changelogOgVersion,
 	type ChangelogCard,
 } from "../src/util/changelog-og";
-import { CHANGELOG_OG_IMAGE } from "../src/util/page-head";
 
 const KUNST_GROTESK_KEY = "fonts/KunstGrotesk-Medium.ttf";
 const STORE_PREFIX = "og/changelog";
@@ -19,19 +18,23 @@ let kunstGrotesk: ArrayBuffer | undefined;
 // Kunst Grotesk is licensed, so it lives in the PRIVATE_ASSETS bucket rather
 // than this repo. Without it (local dev, tests, forks) titles are set in Inter.
 async function loadTitleFont(env: Env) {
+	if (kunstGrotesk) return kunstGrotesk;
 	try {
-		kunstGrotesk ??= await (
+		const data = await (
 			await env.PRIVATE_ASSETS.get(KUNST_GROTESK_KEY)
 		)?.arrayBuffer();
-	} catch (error) {
-		console.error(`Could not read ${KUNST_GROTESK_KEY}`, error);
-	}
-	if (!kunstGrotesk) {
+		if (data) {
+			face(data);
+			kunstGrotesk = data;
+			return data;
+		}
 		console.warn(
 			`${KUNST_GROTESK_KEY} missing from PRIVATE_ASSETS; using Inter`,
 		);
+	} catch (error) {
+		console.warn(`Could not load ${KUNST_GROTESK_KEY}; using Inter`, error);
 	}
-	return kunstGrotesk ?? inter;
+	return inter;
 }
 
 const satoriFonts = (titleFont: ArrayBuffer) =>
@@ -147,7 +150,7 @@ const png = (body: ArrayBuffer, cacheControl: string, diagnostic: string) =>
  * Serves /changelog/post/<id>/og.png. Card content always comes from the
  * entry's deployed page; the `v` query parameter only decides caching. Kunst
  * renders are stored in R2 by content version, so each card renders once.
- * Any failure after the page is found serves the static changelog card.
+ * The route handler serves the static card on failure; missing entries return 404.
  *
  * With `cache: false` (PR previews) every request renders from the deployed
  * page, and nothing is read from or written to the edge cache or R2 store.
@@ -160,60 +163,60 @@ export async function changelogOg(
 ): Promise<Response> {
 	const url = new URL(request.url);
 	const cacheKey = new Request(url);
-	const cached = cache ? await caches.default.match(cacheKey) : undefined;
+
+	const cached = cache
+		? await caches.default.match(cacheKey).catch((error) => {
+				console.error("Could not read OG cache", error);
+				return undefined;
+			})
+		: undefined;
 	if (cached) return cached;
 
-	const [page, titleFont] = await Promise.all([
-		env.ASSETS.fetch(new URL(url.pathname.slice(0, -"og.png".length), url)),
-		loadTitleFont(env),
-	]);
-	if (!page.ok) return new Response("Not found", { status: 404 });
+	const page = await env.ASSETS.fetch(
+		new URL(url.pathname.slice(0, -"og.png".length), url),
+	);
+	if (page.status === 404) return new Response("Not found", { status: 404 });
+	if (!page.ok) throw new Error(`Changelog asset returned ${page.status}`);
 
-	try {
-		const card = await readChangelogCard(page);
-		if (!card) throw new Error("changelog entry metadata not found");
+	const card = await readChangelogCard(page);
+	if (!card) throw new Error("changelog entry metadata not found");
 
-		const version = await changelogOgVersion(card);
-		const key = `${STORE_PREFIX}/${version}.png`;
-		const stored = cache
-			? await env.PRIVATE_ASSETS.get(key).catch((error) => {
-					console.error(`Could not read ${key}`, error);
-					return null;
-				})
-			: null;
+	const version = await changelogOgVersion(card);
+	const key = `${STORE_PREFIX}/${version}.png`;
+	const stored = cache
+		? await env.PRIVATE_ASSETS.get(key).catch((error) => {
+				console.error(`Could not read ${key}`, error);
+				return null;
+			})
+		: null;
+	const titleFont = stored ? undefined : await loadTitleFont(env);
 
-		// Only Kunst renders are stored or cached long-term, so a transient
-		// font miss never pins an Inter card to a version.
-		const kunst = stored !== null || titleFont !== inter;
-		const image = stored
-			? await stored.arrayBuffer()
-			: await render(card, titleFont);
-		if (cache && !stored && kunst) {
-			ctx.waitUntil(
-				env.PRIVATE_ASSETS.put(key, image, {
-					httpMetadata: { contentType: "image/png" },
-				}).catch((error) => console.error(`Could not store ${key}`, error)),
-			);
-		}
-
-		const font = kunst ? "kunst" : "inter";
-		const current = cache && kunst && url.searchParams.get("v") === version;
-		if (current) {
-			ctx.waitUntil(
-				caches.default.put(
-					cacheKey,
-					png(image, IMMUTABLE, `cached; font=${font}`),
-				),
-			);
-		}
-		return png(
-			image,
-			current ? IMMUTABLE : REVALIDATE,
-			`${stored ? "stored" : "rendered"}; font=${font}`,
+	// Only Kunst renders are stored or cached long-term, so a transient
+	// font miss never pins an Inter card to a version.
+	const kunst = stored !== null || titleFont !== inter;
+	const image = stored
+		? await stored.arrayBuffer()
+		: await render(card, titleFont ?? inter);
+	if (cache && !stored && kunst) {
+		ctx.waitUntil(
+			env.PRIVATE_ASSETS.put(key, image, {
+				httpMetadata: { contentType: "image/png" },
+			}).catch((error) => console.error(`Could not store ${key}`, error)),
 		);
-	} catch (error) {
-		console.error(`Could not render ${url.pathname}`, error);
-		const fallback = await env.ASSETS.fetch(new URL(CHANGELOG_OG_IMAGE, url));
-		return png(await fallback.arrayBuffer(), REVALIDATE, "fallback");
 	}
+
+	const font = kunst ? "kunst" : "inter";
+	const current = cache && kunst && url.searchParams.get("v") === version;
+	if (current) {
+		ctx.waitUntil(
+			caches.default
+				.put(cacheKey, png(image, IMMUTABLE, `cached; font=${font}`))
+				.catch((error) => console.error("Could not store OG cache", error)),
+		);
+	}
+	return png(
+		image,
+		current ? IMMUTABLE : REVALIDATE,
+		`${stored ? "stored" : "rendered"}; font=${font}`,
+	);
 }

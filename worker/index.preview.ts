@@ -14,6 +14,7 @@ import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleChangelogOg } from "./changelog-og-handler";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -185,8 +186,7 @@ export default class extends WorkerEntrypoint<Env> {
 		}
 
 		if (CHANGELOG_OG_PATH.test(pathname)) {
-			const { changelogOg } = await import("./changelog-og");
-			return changelogOg(request, this.env, this.ctx, { cache: false });
+			return handleChangelogOg(request, this.env, this.ctx, { cache: false });
 		}
 
 		if (pathname === "/.well-known/api-catalog") {
