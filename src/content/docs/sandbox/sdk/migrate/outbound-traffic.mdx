@@ -197,6 +197,8 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    A hostname intercept that you register after `intercept()` never receives requests, because the entrypoint keeps them. Register other intercepts, such as bucket mounts, before `intercept()`. Refer to [If you moved outbound rules](/sandbox/sdk/migrate/bucket-mounts/#if-you-moved-outbound-rules).
 
+   If your class uses `DirectoryBackups` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) after `start()` and before your `intercept()`. Otherwise every backup and restore fails with `HTTP 530`, because your `Outbound` entrypoint receives the container's backup requests. Call it only when `ensureRunning()` starts the container, not on every request.
+
    The intercept signs HTTPS responses with a certificate that the container trusts only after this step. 0.12 appended it to the system bundle and set variables for tools that do not read the bundle. The `TRUST` command does the first, and `ENV` sets the variables for Node.js and Python `requests`. curl and Git read the bundle. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
 
 </Steps>
