@@ -52,7 +52,7 @@ In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/br
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
 :::note
-Concurrent connections require `@cloudflare/puppeteer` version 1.1.0 or later. Older versions use the legacy single-connection workflow.
+Concurrent connections require `@cloudflare/puppeteer` version 1.1.0 or later. For Playwright, they require `@cloudflare/playwright` version 1.3.0 or later. Older versions use the legacy single-connection workflow.
 :::
 
 ## 3. Configure the [Wrangler configuration file](/workers/wrangler/configuration/)
@@ -80,11 +80,11 @@ Your Worker configuration must include the `nodejs_compat` compatibility flag an
 
 ## 4. Code
 
-The script lists active browser sessions and selects one to reuse. Multiple clients can connect to the same session concurrently. Each `puppeteer.connect()` call creates an independent Chrome DevTools Protocol (CDP) connection.
+The script lists active browser sessions and starts with one selected at random. Multiple clients can connect to the same session concurrently. Each `puppeteer.connect()` call creates an independent Chrome DevTools Protocol (CDP) connection.
 
 Each request creates a browser context to isolate its pages, cookies, and storage. When the request finishes, the script closes the context. It then calls `browser.disconnect()` to close its CDP connection without terminating the shared browser.
 
-The selected session might expire before the connection completes. If the connection fails, the script launches a new session.
+A listed session might expire before the connection completes or have no remaining capacity. The script tries the other sessions before launching a new one.
 
 Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-run/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
@@ -109,17 +109,22 @@ export default {
 		let reqUrl = url.searchParams.get("url") || "https://example.com";
 		reqUrl = new URL(reqUrl).toString(); // normalize
 
-		// Pick a random active session
-		let sessionId = await this.getRandomSession(env.MYBROWSER);
+		// Start with a random active session, then try the remaining sessions
+		const sessionIds = await this.getSessionIds(env.MYBROWSER);
 		let browser;
 		let launched = false;
-		if (sessionId) {
+		for (const sessionId of sessionIds) {
 			try {
 				const candidate = await puppeteer.connect(env.MYBROWSER, sessionId);
-				if (await this.hasCapacity(candidate)) {
-					browser = candidate;
-				} else {
-					await candidate.disconnect();
+				try {
+					if (await this.hasCapacity(candidate)) {
+						browser = candidate;
+						break;
+					}
+				} finally {
+					if (candidate !== browser) {
+						await candidate.disconnect();
+					}
 				}
 			} catch (e) {
 				// The session may have closed after it was listed
@@ -132,7 +137,7 @@ export default {
 			launched = true;
 		}
 
-		sessionId = browser.sessionId();
+		const sessionId = browser.sessionId();
 		const context = await browser.createBrowserContext();
 
 		try {
@@ -167,15 +172,18 @@ export default {
 		}
 	},
 
-	// Other selection logic could be used instead
-	async getRandomSession(endpoint: BrowserWorker): Promise<string | undefined> {
+	async getSessionIds(endpoint: BrowserWorker): Promise<string[]> {
 		const sessions: ActiveSession[] = await puppeteer.sessions(endpoint);
 		console.log(`Sessions: ${JSON.stringify(sessions)}`);
 		if (sessions.length === 0) {
-			return;
+			return [];
 		}
 
-		return sessions[Math.floor(Math.random() * sessions.length)].sessionId;
+		const startIndex = Math.floor(Math.random() * sessions.length);
+		return [
+			...sessions.slice(startIndex),
+			...sessions.slice(0, startIndex),
+		].map((session) => session.sessionId);
 	},
 };
 ```
@@ -184,7 +192,7 @@ export default {
 
 Do not call `browser.close()` when other clients share the session. This method terminates the browser and disconnects every client. Browser contexts isolate request state, but they do not coordinate browser-wide operations.
 
-Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-run/puppeteer/#session-management).
+Besides `puppeteer.sessions()`, Puppeteer provides other [session management methods](/browser-run/puppeteer/#session-management).
 
 ## 5. Test
 
