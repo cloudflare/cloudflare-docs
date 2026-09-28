@@ -79,7 +79,7 @@ return new Response(process.stdout, {
 });
 ```
 
-`stderr: "combined"` sends standard error in the same stream. Keep `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
+`stderr: "combined"` sends standard error in the same stream. Lines that the command writes to the two streams close together can arrive out of order. To keep the order, redirect in a shell instead, such as `["sh", "-c", "npm test 2>&1"]`. Keep `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
 
 0.12 sent JSON events that `parseSSEStream()` decoded. The 1.0 body holds the command's own output, so read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/commands/stream-command-output/).
 

@@ -329,6 +329,8 @@ curl --get "$API/zones/$ZONE_ID/dns_records" \
 
 A tunnel with the status `down` has no running `cloudflared`. For each sandbox that you no longer keep, [delete its tunnel](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/delete/) and [its DNS record](/api/resources/dns/subresources/records/methods/delete/).
 
+If you [moved sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), the tunnels that `copyFrom0x()` moved keep the ID of the 0.12 Durable Object in their names and comments, and still serve the 1.0 class. Decide by hostname which tunnels to delete, not by Durable Object ID.
+
 ## Serve new named hostnames
 
 To give new sandboxes their own hostnames, serve the hostnames from your Worker, as [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/) describes. They have the same `<NAME>.<ZONE>` shape, and the sandbox runs no `cloudflared` and holds no token. To keep creating tunnels, create each with the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) and add a DNS record for it, as 0.12 did.

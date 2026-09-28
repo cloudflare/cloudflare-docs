@@ -32,7 +32,7 @@ The other migration pages say to remove 0.12 exports, variables, and secrets, su
 
    <PackageManagers pkg="@cloudflare/sandbox@rc sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
 
-   In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
+   Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
 
 2. Give the 0.12 class a method that reports whether its container runs, and one that returns the storage that your 1.0 code reads. If your code exports the class from the package, replace that export with a subclass:
 
@@ -72,7 +72,7 @@ The other migration pages say to remove 0.12 exports, variables, and secrets, su
    CMD ["sleep", "infinity"]
    ```
 
-   The copy step needs `tar`, `gzip`, and `base64`, which this image includes. Add the tools your commands use.
+   The copy step needs `tar`, `gzip`, and `base64`, which this image includes. Add the tools your commands use. The other migration pages add lines to your `Dockerfile`, such as the `cloudflared` copy on Move tunnels. Add those lines to `Dockerfile.v1`.
 
 4. Add the 1.0 class to the Wrangler configuration, with its own container, binding, and migration. Leave the `Sandbox` entries as they are. Replace `my-worker-sandbox-v1` with a name that your account does not use yet:
 

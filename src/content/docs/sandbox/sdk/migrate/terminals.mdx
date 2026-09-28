@@ -79,7 +79,7 @@ This page replaces `terminal()`, `session.terminal()`, `proxyTerminal()`, and `S
    type SessionOptions = { cwd: string; env: Record<string, string> };
 
    const SESSIONS: Record<string, SessionOptions> = {
-   	build: { cwd: "/workspace/app", env: { DEBUG: "1" } },
+   	build: { cwd: "/workspace/app", env: { CI: "1" } },
    };
    ```
 
