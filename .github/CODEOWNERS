@@ -445,13 +445,13 @@ package.json @cloudflare/content-engineering
 
 # email-service
 
-/src/content/docs/email-service/ @DiogoSantoss @cloudflare/product-owners
-/src/content/changelog/email-service/ @DiogoSantoss @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/changelog/email-service/ @DiogoSantoss @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/email-service/ @DiogoSantoss @cloudflare/product-owners
-/src/content/partials/email-service/ @DiogoSantoss @cloudflare/product-owners
-/src/content/directory/email-service.yaml @DiogoSantoss @cloudflare/product-owners
-/src/icons/email-service.svg @DiogoSantoss @cloudflare/product-owners
+/src/content/docs/email-service/ @DiogoSantoss @rpots @cloudflare/product-owners
+/src/content/changelog/email-service/ @DiogoSantoss @rpots @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/changelog/email-service/ @DiogoSantoss @rpots @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/email-service/ @DiogoSantoss @rpots @cloudflare/product-owners
+/src/content/partials/email-service/ @DiogoSantoss @rpots @cloudflare/product-owners
+/src/content/directory/email-service.yaml @DiogoSantoss @rpots @cloudflare/product-owners
+/src/icons/email-service.svg @DiogoSantoss @rpots @cloudflare/product-owners
 
 # firewall
 
