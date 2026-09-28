@@ -149,7 +149,7 @@ if (!this.ctx.container.running) {
 	this.ctx.container.start({ image: this.ctx.container.images.sandbox });
 	await this.#backups().intercept();
 	await this.ctx.container.interceptAllOutboundHttp(
-		this.ctx.exports.Outbound(),
+		this.ctx.exports.Outbound({ props: {} }),
 	);
 }
 ```
