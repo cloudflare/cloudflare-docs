@@ -78,14 +78,16 @@ Check the following requirements before you invalidate content:
 
    <DashButton url="/?to=/:account/:zone/caching/configuration" />
 
-2. If your zone has multiple environments, choose the environment in **Invalidate Cache**.
-3. In **Invalidate Cache**, select **Custom Invalidation**. If you chose an environment, select **Select Content** instead.
+2. If your zone uses [Version Management](/version-management/), select the **Global** tab. Then, in **Invalidate Cache**, choose the environment under **Choose the environment**. The dashboard preselects an environment, so check the selection before you continue.
+3. In **Invalidate Cache**, select **Custom Invalidation**. If your zone uses Version Management, this button is labeled **Select Content**.
 4. Under **Select content by**, choose **URL**, **Hostname**, **Tag**, or **Prefix**, and enter the values to invalidate.
 5. Select **Invalidate**.
 
 </Steps>
 
-To invalidate all cached content, select **Invalidate Everything**, and then confirm. For a specific environment, choose **Everything** under **Select content by** instead. Invalidating everything in the Production environment applies to all environments.
+To invalidate all cached content, select **Invalidate Everything**, and then confirm. If your zone uses Version Management, **Invalidate Everything** is not available. Instead, choose **Everything: All cached content** under **Select content by**, and then select **Invalidate**. The dashboard does not ask you to confirm this option. Invalidating everything in the Production environment applies to all environments.
+
+If your [cache key](/cache/how-to/cache-keys/) includes the visitor's device type or country, Enterprise zones can invalidate those variants of a URL from the dashboard. Select **URL**, and then set the device type or country under **Advanced (custom cache keys)**. For other cache key headers, use the API.
 
 ## Invalidate using the API
 
