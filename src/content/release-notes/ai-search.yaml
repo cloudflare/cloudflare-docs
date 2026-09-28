@@ -3,6 +3,46 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-09-30"
+    title: AI Search is generally available
+    description: |-
+      AI Search is generally available. Usage-based billing begins on November 1, 2026. Refer to [Limits & pricing](/ai-search/platform/limits-pricing/) for rates and included monthly usage.
+  - publish_date: "2026-09-28"
+    title: Hybrid search is on by default for new instances
+    description: |-
+      New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default, combining semantic vector retrieval with full-text matching.
+  - publish_date: "2026-09-28"
+    title: Multimodal embeddings and image queries
+    description: |-
+      AI Search supports multimodal embedding models and image queries for search and chat through the REST API and public endpoint. Refer to [Supported models](/ai-search/configuration/models/supported-models/).
+  - publish_date: "2026-09-28"
+    title: OCR and larger file limits
+    description: |-
+      OCR is available on every account. Plain-text or code files and PDFs with OCR enabled can be up to 10 MiB. PDFs without OCR and other supported formats are limited to 4 MiB. Refer to [Limits & pricing](/ai-search/platform/limits-pricing/).
+  - publish_date: "2026-09-28"
+    title: Workers AI embeddings and reranking are included
+    description: |-
+      Managed Workers AI embedding and reranking calls are included in [AI Search pricing](/ai-search/platform/limits-pricing/) and no longer appear on your Workers AI bill or in your AI Gateway logs.
+  - publish_date: "2026-09-28"
+    title: Source type inference
+    description: |-
+      AI Search can infer an instance type from an HTTP or HTTPS URL or an existing R2 bucket when `type` is omitted. Refer to [Data sources](/ai-search/configuration/data-source/).
+  - publish_date: "2026-09-28"
+    title: Clear crawler status for blocked sites
+    description: |-
+      Website crawls pause with a clear status when `robots.txt` or Content Signals block indexing. Refer to [Website data sources](/ai-search/configuration/data-source/website/).
+  - publish_date: "2026-09-28"
+    title: Consistent namespace search ranking
+    description: |-
+      Namespace search consistently applies reranking, `match_threshold`, and metadata boosts. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).
+  - publish_date: "2026-09-28"
+    title: AI Gateway custom metadata on public search and MCP
+    description: |-
+      Public search, chat, and MCP requests can attach custom metadata for attribution in AI Gateway logs. Refer to [Public endpoint search](/ai-search/api/search/public-endpoint/).
+  - publish_date: "2026-09-28"
+    title: Resumable large-file indexing
+    description: |-
+      AI Search saves embedding checkpoints so interrupted large-file indexing resumes instead of restarting. Refer to [Index syncing](/ai-search/configuration/indexing/syncing/).
   - publish_date: "2026-08-25"
     title: Larger custom metadata values
     description: |-
@@ -38,7 +78,7 @@ entries:
   - publish_date: "2026-06-18"
     title: Migration to managed infrastructure complete
     description: |-
-      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are now included; [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) are still billed separately.
+      All AI Search instances have finished migrating to managed infrastructure. Every instance now includes built-in storage, a built-in vector index, and built-in web crawling, so the [current limits](/ai-search/platform/limits-pricing/#limits) apply across all instances. Storage, vector indexing, and Browser Run usage for crawling are included. Managed Workers AI embedding and reranking calls are also included in AI Search pricing. Generation, query rewriting, and external providers continue to use your account and gateway.
       If your instance previously crawled a website, the dedicated R2 bucket AI Search created in your account is no longer used and can be deleted.
   - publish_date: "2026-06-10"
     title: Manage AI Search namespaces with Wrangler CLI

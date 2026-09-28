@@ -92,7 +92,7 @@ The namespace binding (`ai_search_namespaces`), not the single-instance `ai_sear
 
 ## 4. Write the agent
 
-Create `src/server.ts`. The agent provisions an AI Search instance with [hybrid search](/ai-search/configuration/indexing/hybrid-search/) enabled the first time it runs, seeds it with a document, and exposes two tools: `search_knowledge_base` retrieves content, and `save_resolution` writes new content back.
+Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The agent also updates an existing vector-only instance, seeds new instances with a document, and exposes two tools: `search_knowledge_base` retrieves content, and `save_resolution` writes new content back.
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -114,16 +114,13 @@ export class SearchAgent extends AIChatAgent {
 	// Guard so the one-time instance setup runs only once per running agent.
 	private ready = false;
 
-	// Create the agent's instance with hybrid search enabled, then seed it so
-	// the first query has content. create() throws if the instance already
-	// exists, so the try/catch makes this idempotent.
+	// Create the agent's instance, which uses hybrid search by default, then seed
+	// it so the first query has content. Update an existing vector-only instance.
 	private async ensureInstance() {
 		if (this.ready) return;
 		try {
-			// index_method with both vector and keyword enables hybrid search.
 			await this.env.AI_SEARCH.create({
 				id: INSTANCE_NAME,
-				index_method: { vector: true, keyword: true },
 			});
 			// upload() queues the file; indexing runs in the background. Poll the
 			// item status until it is searchable so the first query has content.
@@ -138,7 +135,9 @@ export class SearchAgent extends AIChatAgent {
 				info = await instance.items.get(id).info();
 			}
 		} catch {
-			// Instance already exists.
+			await this.env.AI_SEARCH.get(INSTANCE_NAME).update({
+				index_method: { vector: true, keyword: true },
+			});
 		}
 		this.ready = true;
 	}

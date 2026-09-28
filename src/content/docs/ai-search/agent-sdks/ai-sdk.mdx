@@ -78,7 +78,7 @@ This binds the `default` [namespace](/ai-search/concepts/namespaces/) to `env.AI
 
 ## 4. Create an instance and index content
 
-Add a `/setup` route that creates an instance and uploads a document. Enable [hybrid search](/ai-search/configuration/indexing/hybrid-search/) at creation by setting `index_method` to index both vectors and keywords.
+Add a `/setup` route that creates an instance and uploads a document. New instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The update path also turns on hybrid search for an existing vector-only instance.
 
 The `create()` method is on the namespace binding (`env.AI_SEARCH`), not on the provider client. Creating an instance that already exists throws, so the following code creates it and, on the next run, updates it instead.
 
@@ -99,14 +99,15 @@ Cloudflare caches static assets at the edge. Use Cache Rules to control what is
 cached, set an Edge Cache TTL to control how long objects stay in cache, and
 purge the cache after a deploy.`;
 
-// Create the instance with hybrid search, or update it if it already exists.
+// New instances use hybrid search by default. Update an existing vector-only
+// instance to index both vectors and keywords.
 async function ensureInstance(env: Env) {
-	// index_method with both vector and keyword enables hybrid search.
-	const hybrid = { index_method: { vector: true, keyword: true } };
 	try {
-		await env.AI_SEARCH.create({ id: INSTANCE_NAME, ...hybrid });
+		await env.AI_SEARCH.create({ id: INSTANCE_NAME });
 	} catch {
-		await env.AI_SEARCH.get(INSTANCE_NAME).update(hybrid);
+		await env.AI_SEARCH.get(INSTANCE_NAME).update({
+			index_method: { vector: true, keyword: true },
+		});
 	}
 }
 

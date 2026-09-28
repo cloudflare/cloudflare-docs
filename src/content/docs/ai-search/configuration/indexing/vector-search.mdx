@@ -18,19 +18,9 @@ AI Search instances include a built-in vector index powered by [Vectorize](/vect
 
 The [embedding model](/ai-search/configuration/models/) determines the vector dimensions for the vector index. The embedding model is set when creating an instance and cannot be changed after creation.
 
-## Disable vector search
+## Index method defaults
 
-Vector search is the default index method for all instances. To switch to [keyword search](/ai-search/configuration/indexing/keyword-search/) only, set `index_method.vector` to `false`. At least one of `vector` or `keyword` must be `true`.
-
-```ts
-const instance = await env.AI_SEARCH.create({
-	id: "my-instance",
-	index_method: {
-		vector: false,
-		keyword: true,
-	},
-});
-```
+Vector indexing is always enabled. New instances also enable keyword indexing, so they use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. Existing instances retain their stored index method setting.
 
 ## Per-request overrides
 

@@ -22,6 +22,8 @@ When enabled, AI Search will:
 
 Reranking helps improve accuracy, especially for large or noisy datasets where vector similarity alone may not produce the optimal ordering.
 
+Workers AI reranking runs under AI Search's account. It does not appear in your AI Gateway logs or analytics and is not billed separately to your Workers AI usage. AI Search pricing covers these calls.
+
 ## Configuration
 
 When you make a `/search` or `/chat/completions` request using the [Workers binding](/ai-search/api/search/workers-binding/) or [REST API](/ai-search/api/search/rest-api/), you can enable or disable reranking per request and specify the reranking model.

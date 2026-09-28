@@ -41,10 +41,10 @@ await instance.items.upload(
 	"# FAQ\n\nQ: How do I reset my password?\nA: Go to Settings > Security...",
 );
 
-// Upload from an ArrayBuffer
+// Upload from a Blob
 const pdfResponse = await fetch("https://example.com/guide.pdf");
-const pdfBuffer = await pdfResponse.arrayBuffer();
-await instance.items.upload("guide.pdf", pdfBuffer);
+const pdfBlob = await pdfResponse.blob();
+await instance.items.upload("guide.pdf", pdfBlob);
 
 // Upload from a ReadableStream
 await instance.items.upload("doc.txt", request.body);
@@ -55,7 +55,7 @@ await instance.items.upload("doc.txt", request.body);
 Attach [custom metadata](/ai-search/configuration/indexing/metadata/) to a document for filtering in search queries. Custom metadata fields must be defined on the instance first using the [update()](/ai-search/api/instances/workers-binding/#update) method or at creation time.
 
 ```ts
-await instance.items.upload("guide.pdf", pdfBuffer, {
+await instance.items.upload("guide.pdf", pdfBlob, {
 	metadata: {
 		category: "onboarding",
 		language: "en",
@@ -66,11 +66,11 @@ await instance.items.upload("guide.pdf", pdfBuffer, {
 
 #### Parameters
 
-| Parameter          | Type                                   | Required | Description                                                                                                                                                                |
-| ------------------ | -------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`             | string                                 | Yes      | The filename for the uploaded document. Used as the item key.                                                                                                              |
-| `content`          | ReadableStream, ArrayBuffer, or string | Yes      | The document content. Maximum file size is 4 MB. Pass a string for plain text or markdown, an `ArrayBuffer` for binary files, or a `ReadableStream` for streaming uploads. |
-| `options.metadata` | Record&lt;string, string&gt;           | No       | Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.                                                 |
+| Parameter          | Type                              | Required | Description                                                                                                                                                                                         |
+| ------------------ | --------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`             | string                            | Yes      | The filename for the uploaded document. Used as the item key. Maximum 128 characters.                                                                                                               |
+| `content`          | ReadableStream, Blob, or string   | Yes      | The document content. PDF uploads and plain-text or code files can be up to 10 MiB, but PDFs larger than 4 MiB are indexed only when OCR is enabled. Other supported formats can be up to 4 MiB. Pass a `Blob` for binary files or a `ReadableStream` for streaming uploads. |
+| `options.metadata` | Record&lt;string, string&gt;       | No       | Custom metadata key-value pairs to attach to the item. Use for filtering in search queries. Maximum 5 fields per instance.                                                                          |
 
 #### Response
 
@@ -101,10 +101,10 @@ const results = await instance.search({
 
 Same as [`items.upload()`](#parameters), with additional polling options:
 
-| Parameter                | Type   | Required | Description                                                                            |
-| ------------------------ | ------ | -------- | -------------------------------------------------------------------------------------- |
-| `options.pollIntervalMs` | number | No       | How often to check the item status, in milliseconds. Defaults to `1000`.               |
-| `options.timeoutMs`      | number | No       | Maximum time to wait for processing to complete, in milliseconds. Defaults to `30000`. |
+| Parameter                | Type   | Required | Description                                                                                                      |
+| ------------------------ | ------ | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `options.pollIntervalMs` | number | No       | How often to check the item status, in milliseconds. Defaults to `1000`.                                         |
+| `options.timeoutMs`      | number | No       | Maximum time to wait for processing to complete, in milliseconds. Defaults to `120000`. Maximum `300000`. |
 
 #### Response
 
@@ -137,14 +137,15 @@ for (const item of result) {
 
 #### Parameters
 
-| Parameter  | Type   | Required | Description                                                                                       |
-| ---------- | ------ | -------- | ------------------------------------------------------------------------------------------------- |
+| Parameter         | Type   | Required | Description                                                                                       |
+| ----------------- | ------ | -------- | ------------------------------------------------------------------------------------------------- |
 | `page`     | number | No       | The page number to return. Defaults to `1`.                                                       |
 | `per_page` | number | No       | The number of items per page. Defaults to `20`. Maximum `50`.                                     |
 | `status`   | string | No       | Filter by processing status: `queued`, `running`, `completed`, `error`, `skipped`, or `outdated`. |
 | `sort_by`  | string | No       | Sort order for items: `status` (default) or `modified_at`.                                        |
-| `search`   | string | No       | Search items by text content.                                                                     |
+| `search`   | string | No       | Search item keys.                                                                                 |
 | `source`   | string | No       | Filter by source identifier (for example, `builtin` for uploaded files).                          |
+| `metadata_filter` | string | No       | Filter by metadata using a JSON-encoded Vectorize metadata filter.                                |
 
 #### Response
 
@@ -239,3 +240,26 @@ const file = await instance.items.get("item-id-123").download();
 | `contentType` | string         | The MIME type of the file (for example, `application/pdf`). |
 | `size`        | number         | The file size in bytes.                                     |
 | `body`        | ReadableStream | A readable stream of the file contents.                     |
+
+#### `items.get().logs()`
+
+Returns processing logs for an item.
+
+```ts
+const logs = await instance.items.get("item-id-123").logs({ limit: 50 });
+```
+
+The options are `limit` (1–100, default `50`) and an opaque pagination `cursor`. The response contains `result` log entries and `result_info` with `count`, `per_page`, `cursor`, and `truncated`.
+
+#### `items.get().chunks()`
+
+Returns indexed chunks for an item.
+
+```ts
+const chunks = await instance.items.get("item-id-123").chunks({
+	limit: 20,
+	offset: 0,
+});
+```
+
+The options are `limit` (1–100, default `20`) and `offset` (default `0`). Each result contains `id`, `text`, `start_byte`, `end_byte`, and optional item details. The response also includes `result_info` with `count`, `total`, `limit`, and `offset`.
