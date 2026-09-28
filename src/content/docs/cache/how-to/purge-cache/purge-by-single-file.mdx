@@ -33,7 +33,7 @@ Single-file purge works for most resources, but there are situations where it ca
 
 ### Custom cache keys
 
-If you use [Cache Rules](/cache/how-to/cache-rules/) to set a [custom cache key](/cache/how-to/cache-keys/) that includes headers, cookies, or other request properties, single-file purge via the dashboard will not invalidate the cached resource. This is because the dashboard cannot send those values in a purge request. Custom cache keys that only change how the query string is handled (for example, ignoring the query string) generally work with dashboard single-file purge.
+If you use [Cache Rules](/cache/how-to/cache-rules/) to set a [custom cache key](/cache/how-to/cache-keys/) that includes headers, cookies, or other request properties, single-file purge via the dashboard will not remove the cached resource. This is because the dashboard cannot send those values in a purge request. Custom cache keys that only change how the query string is handled (for example, ignoring the query string) generally work with dashboard single-file purge.
 
 **What to do instead:**
 

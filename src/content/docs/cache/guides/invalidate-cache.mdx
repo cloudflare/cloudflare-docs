@@ -16,12 +16,12 @@ Invalidation is sometimes called soft purge.
 
 Purge and invalidation accept the same selectors: URLs, cache tags, hostnames, URL prefixes, or everything. They differ in what happens to matching content:
 
-| Behavior       | Purge                                      | Invalidate                             |
-| -------------- | ------------------------------------------ | -------------------------------------- |
-| Cached content | Removed                                    | Kept and marked as stale               |
-| Next request   | Fetches the full response from your origin | Revalidates with your origin           |
-| Stale content  | Not served                                 | Served if your cache settings allow it |
-| API endpoint   | `purge_cache`                              | `invalidate_cache`                     |
+| Behavior       | Purge                                      | Invalidate                                                 |
+| -------------- | ------------------------------------------ | ---------------------------------------------------------- |
+| Cached content | Removed                                    | Kept and marked as stale                                   |
+| Next request   | Fetches the full response from your origin | Revalidates with your origin                               |
+| Stale content  | Not served                                 | Can be served while revalidating or when your origin fails |
+| API endpoint   | `purge_cache`                              | `invalidate_cache`                                         |
 
 Use purge when cached content must not be served again. Update or remove the content at your origin before you purge it. Otherwise, the next request can cache the old version again.
 
@@ -31,9 +31,13 @@ Use invalidation to refresh content that might not have changed, such as a group
 
 Invalidation does not fetch new content in advance. Instead, the next request for invalidated content triggers revalidation.
 
-If the cached response includes an `ETag` or `Last-Modified` header, Cloudflare sends a conditional request to your origin. If your origin responds with `304 Not Modified`, Cloudflare reuses the cached content and sets a new time to live (TTL). If your origin returns new cacheable content, Cloudflare replaces the cached content.
+To revalidate, Cloudflare sends your origin a conditional request. The request uses the `ETag` or `Last-Modified` header that your origin sent with the content. Your origin's response determines what happens next:
 
-Invalidation does not guarantee that content is reused. Cloudflare fetches the full response if the content is no longer cached or your origin does not support conditional requests.
+- If your origin responds with `304 Not Modified`, Cloudflare reuses the cached content and sets a new time to live (TTL).
+- If your origin returns new cacheable content, Cloudflare replaces the cached content.
+- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve the cached content stale. For details, refer to [Stale content during revalidation](#stale-content-during-revalidation).
+
+Invalidation does not guarantee that content is reused. Cloudflare fetches the full response if the content is no longer cached, your origin sent neither header, or your origin does not support conditional requests.
 
 A `304 Not Modified` response does not refresh cache tags set by [Cache Response Rules](/cache/how-to/cache-response-rules/). Cache tags from your origin's `Cache-Tag` header are updated only if your origin includes that header in the `304` response. To refresh cache tags otherwise, purge the content.
 
@@ -43,24 +47,32 @@ Your cache settings and your origin's health determine whether visitors receive 
 
 - With `stale-while-revalidate`, Cloudflare can serve stale content while it revalidates in the background.
 - Without `stale-while-revalidate`, requests wait for revalidation to complete.
-- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve stale content even if the response has no `stale-if-error` directive, for as long as the content stays in cache. To limit this, set `stale-if-error` in the response. To prevent it, set `stale-if-error=0`.
+- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve stale content for as long as the content stays in cache. This happens even if the response has no `stale-if-error` directive. To limit this, set `stale-if-error` in the response. To prevent it, set `stale-if-error=0`.
 
-For content that is still fresh, these stale windows start when you invalidate it, not when it would have expired. Invalidation never extends a stale window that has already ended.
+For content that is still fresh, `stale-while-revalidate` and `stale-if-error` windows start when you invalidate it, not when it would have expired. Invalidation never extends a stale window that has already ended.
 
-For example, if you invalidate a cached response with the following headers before it expires, Cloudflare can serve it stale for up to 30 seconds after the invalidation while it revalidates:
+For example, suppose you invalidate a cached response with the following headers before it expires:
 
 ```http
 Cache-Control: public, max-age=3600, stale-while-revalidate=30
 ETag: "product-v1"
 ```
 
-Other directives and Cache Rules settings can prevent Cloudflare from serving stale content. For details, refer to [Revalidation](/cache/concepts/revalidation/).
+Cloudflare can serve this response stale for up to 30 seconds after the invalidation while it revalidates. The response has no `stale-if-error` directive. If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve the response stale beyond those 30 seconds. It can do so for as long as the response stays in cache.
+
+Other directives and Cache Rules settings can prevent Cloudflare from serving stale content while it revalidates. For details, refer to [Revalidation](/cache/concepts/revalidation/).
 
 ### Cache Reserve
 
-Invalidation keeps matching content in [Cache Reserve](/cache/advanced-configuration/cache-reserve/). If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin again. Invalidated content remains stored, so it continues to incur Cache Reserve storage costs.
+Invalidation keeps matching content in [Cache Reserve](/cache/advanced-configuration/cache-reserve/), where it continues to incur storage costs. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin again.
+
+Compared with purging, invalidation reduces origin egress but not Cache Reserve operations. Updating the stored content after a `304` response is a Class A operation. Invalidating by URL also updates the stored content when you send the request, which is a Class A operation. For details, refer to [Cache Reserve operations](/cache/advanced-configuration/cache-reserve/#operations).
 
 Purge forces a cache miss for matching Cache Reserve content. For details, refer to [Cache Reserve purge behavior](/cache/advanced-configuration/cache-reserve/#purge-behavior).
+
+### Workers Cache
+
+Invalidation from the dashboard or the `invalidate_cache` endpoint does not affect [Workers Cache](/workers/cache/). Workers Cache belongs to your Worker, not to your zone. To remove responses from a Worker's cache, call [`ctx.cache.purge()`](/workers/cache/purge/) from the Worker.
 
 ## Before you begin
 
@@ -85,7 +97,9 @@ Check the following requirements before you invalidate content:
 
 </Steps>
 
-To invalidate all cached content, select **Invalidate Everything**, and then confirm. If your zone uses Version Management, **Invalidate Everything** is not available. Instead, choose **Everything: All cached content** under **Select content by**, and then select **Invalidate**. The dashboard does not ask you to confirm this option. Invalidating everything in the Production environment applies to all environments.
+To invalidate all cached content, select **Invalidate Everything**, and then confirm.
+
+If your zone uses Version Management, **Invalidate Everything** is not available. Instead, choose **Everything: All cached content** under **Select content by**, and then select **Invalidate**. The dashboard does not ask you to confirm this option. Invalidating everything in the Production environment applies to all environments.
 
 If your [cache key](/cache/how-to/cache-keys/) includes the visitor's device type or country, Enterprise zones can invalidate those variants of a URL from the dashboard. Select **URL**, and then set the device type or country under **Advanced (custom cache keys)**. For other cache key headers, use the API.
 
@@ -97,7 +111,7 @@ To invalidate content, send a `POST` request to the `invalidate_cache` endpoint:
 https://api.cloudflare.com/client/v4/zones/{zone_id}/invalidate_cache
 ```
 
-The request body uses the same format as the corresponding purge request. The endpoint determines whether Cloudflare purges or invalidates the content.
+The request body uses the same format as the corresponding [purge request](/api/resources/cache/methods/purge/). The endpoint determines whether Cloudflare purges or invalidates the content.
 
 In the following examples, replace `$ZONE_ID` with your [zone ID](/fundamentals/account/find-account-and-zone-ids/) and `$CLOUDFLARE_API_TOKEN` with your [API token](/fundamentals/api/get-started/create-token/).
 
@@ -189,7 +203,7 @@ Each invalidation request can include the same maximum number of items as a purg
 
 ## Verify an invalidation
 
-To verify revalidation, use a cacheable test URL whose origin returns an `ETag` or `Last-Modified` header. Keep the content unchanged at your origin during the test. To observe revalidation directly, omit `stale-while-revalidate` from the test response and set a positive TTL.
+To verify an invalidation, use a cacheable test URL whose origin returns an `ETag` or `Last-Modified` header. Keep the content unchanged at your origin during the test. To observe revalidation directly, omit `stale-while-revalidate` from the test response and set a positive TTL.
 
 <Steps>
 
@@ -202,22 +216,24 @@ To verify revalidation, use a cacheable test URL whose origin returns an `ETag` 
      "https://www.example.com/images/product.jpg"
    ```
 
-4. In your origin logs, confirm that Cloudflare sent a conditional request and received a `304` response.
+4. In your origin logs, confirm that Cloudflare sent a conditional request and that your origin returned `304`.
 
 </Steps>
 
 For cached content, expect the following results:
 
-| Result                                                | `CF-Cache-Status`         |
-| ----------------------------------------------------- | ------------------------- |
-| Your origin confirms that the content has not changed | `REVALIDATED`, then `HIT` |
-| Your origin returns new content                       | `EXPIRED`, then `HIT`     |
-| Cloudflare serves stale content while revalidating    | `UPDATING`, then `HIT`    |
-| The content is no longer cached                       | `MISS`                    |
+| Result                                                 | `CF-Cache-Status`         |
+| ------------------------------------------------------ | ------------------------- |
+| Your origin confirms that the content has not changed  | `REVALIDATED`, then `HIT` |
+| Your origin returns new content                        | `EXPIRED`, then `HIT`     |
+| Your origin sends no `ETag` or `Last-Modified` header  | `EXPIRED`, then `HIT`     |
+| Cloudflare serves stale content while revalidating     | `UPDATING`, then `HIT`    |
+| Your origin returns a `5xx` error or cannot be reached | `STALE`                   |
+| The content is no longer cached                        | `MISS`                    |
 
-When your origin returns `304`, Cloudflare can still return `200 OK` to the visitor with the cached content.
+Without an `ETag` or `Last-Modified` header from your origin, Cloudflare has nothing to revalidate with, so it fetches the full response. When your origin returns `304`, Cloudflare can still return `200 OK` to the visitor with the cached content.
 
-Tiered Cache and concurrent requests can affect which status you observe. Use your origin logs to confirm revalidation. For status definitions, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
+With [Tiered Cache](/cache/how-to/tiered-cache/), a lower-tier data center revalidates with its upper-tier data center. A visitor can see `EXPIRED` or `MISS` even when your origin returned `304`. Concurrent requests can also affect which status you observe. Use your origin logs to confirm revalidation. For status definitions, refer to [Cloudflare cache responses](/cache/concepts/cache-responses/).
 
 ## Troubleshoot invalidation
 
@@ -231,4 +247,8 @@ If the content was also purged after it was cached, the purge takes precedence, 
 
 ### Visitors receive stale content
 
-Check the `stale-while-revalidate` and `stale-if-error` directives in your origin responses, and check your Cache Rules settings. To stop serving cached content, [purge](/cache/how-to/purge-cache/) it instead.
+While Cloudflare revalidates, it serves stale content only if the cached response includes `stale-while-revalidate`. You can turn this off with the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules.
+
+If your origin returns a `5xx` error or cannot be reached, Cloudflare serves invalidated content stale by default, for as long as it stays in cache. The Cache Rules setting does not change this. To limit how long Cloudflare serves stale content when your origin fails, set `stale-if-error` in your origin responses. To prevent it, set `stale-if-error=0`.
+
+To stop serving cached content, [purge](/cache/how-to/purge-cache/) it instead.
