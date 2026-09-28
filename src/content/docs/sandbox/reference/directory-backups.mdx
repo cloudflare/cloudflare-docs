@@ -113,6 +113,7 @@ restore(backup: DirectoryBackup, options?: DirectoryRestoreOptions): Promise<voi
 Replaces the target directory with the backup's contents. The target is `options.dir`, or the record's `dir` when `options.dir` is omitted.
 
 - The target's parent directory must exist. The target does not need to exist.
+- The target must not be a mount point or contain one, such as an [`S3Mounts`](/sandbox/reference/s3-mounts/) mount. `restore()` fails with `EBUSY`, also when a mount appears during the restore. Unmount first, for example with `S3Mounts.unmount()`, and mount again after the restore.
 - `restore()` extracts the backup into a new directory beside the target. It checks the object's size and SHA-256 against the record, then swaps the new directory into place in one rename. A restore that fails or is canceled leaves the target as it was.
 - `restore()` deletes the old directory before it returns.
 - A process whose working directory is inside the old directory keeps the old directory. A file that a process opened before the swap stays open, and the process does not see the restored file.
@@ -251,7 +252,7 @@ Linux rejected the operation in the container. `operation` is `backup` or `resto
 
 | Code      | Condition                                                                                                      |
 | --------- | -------------------------------------------------------------------------------------------------------------- |
-| `EBUSY`   | The restore target is a mount point                                                                            |
+| `EBUSY`   | The restore target is a mount point or has one inside it                                                       |
 | `EINVAL`  | An `exclude` pattern is invalid                                                                                |
 | `ENOENT`  | The backup's `dir` or the restore target's parent does not exist                                               |
 | `ENOSPC`  | The restore would fill the filesystem                                                                          |
