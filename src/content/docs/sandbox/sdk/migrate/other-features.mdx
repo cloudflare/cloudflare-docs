@@ -1,0 +1,572 @@
+---
+title: Move other 0.x features
+description: Replace @cloudflare/sandbox 0.12 Docker-in-Docker images, binding handlers, the opencode and openai subpaths, the bridge, and WarmPool in your own Durable Object.
+pcx_content_type: how-to
+sidebar:
+  order: 15
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Some Sandbox SDK 0.12 features have no class in 1.0. This page replaces each of them with code in your Durable Object, or names what to use instead. Each section stands alone, so follow only the sections for the features that your application uses.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). A class that you reach through `this.ctx.exports` needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
+
+Each 0.12 feature has one section:
+
+| 0.12 feature | Section |
+| --- | --- |
+| Docker in a `docker:dind-rootless` image | [Run Docker inside the sandbox](#run-docker-inside-the-sandbox) |
+| `outboundByHost` handlers that read bindings | [Reach Workers bindings from the container](#reach-workers-bindings-from-the-container) |
+| `@cloudflare/sandbox/opencode` | [Start an OpenCode server](#start-an-opencode-server) |
+| `@cloudflare/sandbox/openai` | [Give OpenAI agents a shell and an editor](#give-openai-agents-a-shell-and-an-editor) |
+| `@cloudflare/sandbox/bridge` | [Replace the bridge](#replace-the-bridge) |
+| `WarmPool` | [Remove WarmPool](#remove-warmpool) |
+
+## Run Docker inside the sandbox
+
+The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`, and copies in the musl build of the 0.x server. On a 1.0 container, its Docker daemon exits with `failed to set IP forwarding '/proc/sys/net/ipv4/ip_forward' = '1': open /proc/sys/net/ipv4/ip_forward: read-only file system`.
+
+<Steps>
+
+1. Replace your `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM docker:dind
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false > /var/log/dockerd.log 2>&1 & exec sleep infinity"]
+   ```
+
+   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files` or `S3Mounts`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
+
+2. Keep `enableInternet: true` in `start()`, so that Docker can pull images. 0.12 allowed Internet access by default.
+
+3. Wait for Docker, and run containers with `--network=host`:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "docker-sandbox");
+   const run = await sandbox.exec(
+   	"docker run --rm --network=host alpine:3.22 " +
+   		"echo Hello from Docker",
+   );
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   private async waitForDocker(): Promise<void> {
+   	const wait = await this.container.exec([
+   		"timeout",
+   		"30",
+   		"sh",
+   		"-c",
+   		"until docker version > /dev/null 2>&1; do sleep 0.2; done",
+   	]);
+
+   	if ((await wait.exitCode) !== 0) {
+   		throw new Error("Docker did not start within 30 seconds");
+   	}
+   }
+
+   async runImage(): Promise<string> {
+   	await this.ensureRunning();
+   	await this.waitForDocker();
+
+   	const run = await this.container.exec(
+   		[
+   			"docker",
+   			"run",
+   			"--rm",
+   			"--network=host",
+   			"alpine:3.22",
+   			"echo",
+   			"Hello from Docker",
+   		],
+   		{ env: ENV },
+   	);
+   	const result = await run.output();
+   	return new TextDecoder().decode(result.stdout);
+   }
+   ```
+
+   The Docker daemon starts after the container does, so the first command waits for it. Without `--network=host`, `docker run` fails with `failed to disable IPv6 on container's interface eth0`. A `docker build` step that uses the network, such as a package install, also needs `docker build --network=host`. An inner container started this way shares the sandbox's network access.
+
+4. Call `runImage()` from your Worker. It returns `Hello from Docker`. The first call also pulls `alpine:3.22`, and Docker writes its progress to `stderr`.
+
+</Steps>
+
+For more information, refer to [Docker-in-Docker in the Containers FAQ](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker).
+
+## Reach Workers bindings from the container
+
+In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my.kv`, and read Workers bindings from its `env` argument. In 1.0, a `WorkerEntrypoint` answers them, and your Durable Object registers it for that hostname.
+
+<Steps>
+
+1. Replace each handler with a `WorkerEntrypoint`, and export it from your Worker's main module:
+
+   ```ts title="src/index.ts (0.12)"
+   MySandbox.outboundByHost = {
+   	"my.kv": async (request: Request, env: Env) => {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value ? 200 : 404,
+   		});
+   	},
+   };
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   type KvProps = { containerId: string };
+
+   export class KvGateway extends WorkerEntrypoint<Env, KvProps> {
+   	async fetch(request: Request): Promise<Response> {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await this.env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value === null ? 404 : 200,
+   		});
+   	}
+   }
+   ```
+
+   `this.env` has the same bindings as the `env` argument. Where a 0.12 handler read `ctx.containerId`, read `this.ctx.props.containerId`.
+
+2. Register the entrypoint in `ensureRunning()`, after `start()`:
+
+   ```ts title="src/index.ts" ins={9-14}
+   private async ensureRunning(): Promise<void> {
+   	if (!this.container.running) {
+   		this.container.start({
+   			image: this.container.images.sandbox,
+   			instance: "standard-1",
+   			env: ENV,
+   			enableInternet: true,
+   		});
+   		await this.container.interceptOutboundHttp(
+   			"my.kv",
+   			this.ctx.exports.KvGateway({
+   				props: { containerId: this.ctx.id.toString() },
+   			}),
+   		);
+   	}
+
+   	await this.container.setInactivityTimeout(
+   		INACTIVITY_TIMEOUT_MS,
+   	);
+   }
+   ```
+
+   `this.ctx.id.toString()` is the value that 0.12 passed as `containerId`, so keys and paths built from it stay the same. The intercept also works with `enableInternet: false`. Register one entrypoint for each hostname.
+
+   If your class also uses the `Outbound` entrypoint from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/), add the handler to its `HANDLERS` map instead. A hostname intercept that you register after `interceptAllOutboundHttp()` receives no requests.
+
+3. Request the hostname from the container. After you store `hello from KV` under the key `greeting`, this command prints the value:
+
+   ```sh
+   node -e 'fetch("http://my.kv/greeting").then(async (r) => console.log(r.status, await r.text()))'
+   ```
+
+   ```txt output
+   200 hello from KV
+   ```
+
+</Steps>
+
+## Start an OpenCode server
+
+In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returned an OpenCode SDK client that reached it through the sandbox. In 1.0, your Durable Object starts the server and creates the client, with a `fetch` function that connects to the server's port.
+
+<Steps>
+
+1. Install OpenCode in your `Dockerfile`, as in [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/#switch-the-worker-to-opencode):
+
+   ```dockerfile title="Dockerfile"
+   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
+   	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
+   ```
+
+   The 0.12 `opencode` image included OpenCode. Start the container with the `standard-1` instance type or larger, as `ensureRunning()` does. On `lite`, the server did not answer requests within 30 seconds.
+
+2. Install the OpenCode SDK in your Worker project:
+
+   <PackageManagers pkg="@opencode-ai/sdk@1.18.32" />
+
+3. Replace `createOpencode()` with a method that starts the server once for each container:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "my-agent");
+   const { client } = await createOpencode(sandbox, {
+   	directory: "/workspace",
+   	config: OPENCODE_CONFIG,
+   });
+   const session = await client.session.create({ title: "Fix tests" });
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import {
+   	createOpencodeClient,
+   	type OpencodeClient,
+   } from "@opencode-ai/sdk/v2/client";
+
+   const OPENCODE_PORT = 4096;
+
+   // Your OpenCode configuration, without apiKey values.
+   const OPENCODE_CONFIG = {};
+
+   // Starts the server in the background and returns.
+   const OPENCODE = [
+   	"sh",
+   	"-c",
+   	"setsid -f opencode serve --port 4096 --hostname 0.0.0.0" +
+   		" > /var/log/opencode.log 2>&1",
+   ];
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   private opencodeReady = false;
+
+   private async openCode(): Promise<OpencodeClient> {
+   	await this.ensureRunning();
+   	const port = this.container.getTcpPort(OPENCODE_PORT);
+
+   	if (!this.opencodeReady) {
+   		const start = await this.container.exec(OPENCODE, {
+   			cwd: "/workspace",
+   			env: {
+   				...ENV,
+   				OPENCODE_CONFIG_CONTENT:
+   					JSON.stringify(OPENCODE_CONFIG),
+   				ANTHROPIC_API_KEY: this.env.ANTHROPIC_API_KEY,
+   			},
+   		});
+   		await start.exitCode;
+
+   		const deadline = Date.now() + 30_000;
+
+   		while (!this.opencodeReady && Date.now() < deadline) {
+   			try {
+   				const response = await port.fetch(
+   					"http://opencode/",
+   					{ signal: AbortSignal.timeout(1_000) },
+   				);
+   				await response.body?.cancel();
+   				this.opencodeReady = true;
+   			} catch {
+   				await scheduler.wait(500);
+   			}
+   		}
+
+   		if (!this.opencodeReady) {
+   			throw new Error(
+   				"OpenCode did not start within 30 seconds",
+   			);
+   		}
+   	}
+
+   	return createOpencodeClient({
+   		baseUrl: "http://opencode",
+   		fetch: (request) => port.fetch(request),
+   	});
+   }
+
+   async createSession(title: string): Promise<string> {
+   	const client = await this.openCode();
+   	const session = await client.session.create({ title });
+
+   	if (!session.data) {
+   		throw new Error("OpenCode did not create the session");
+   	}
+
+   	return session.data.id;
+   }
+   ```
+
+   0.12 passed `config` to OpenCode as `OPENCODE_CONFIG_CONTENT`, and copied each provider's `apiKey` to a variable such as `ANTHROPIC_API_KEY`. The method sets both itself, so remove `apiKey` from the configuration and store the key as a secret. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
+
+   Set `this.opencodeReady = false` in `ensureRunning()` after `start()`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
+
+4. Serve the OpenCode web UI from your Durable Object's `fetch()`:
+
+   ```ts title="src/index.ts"
+   async fetch(request: Request): Promise<Response> {
+   	const url = new URL(request.url);
+   	const accept = request.headers.get("Accept") ?? "";
+   	const page =
+   		accept.includes("text/html") || url.pathname === "/";
+
+   	// The UI calls the server at the origin in ?url=.
+   	if (
+   		request.method === "GET" &&
+   		page &&
+   		!url.searchParams.has("url")
+   	) {
+   		url.searchParams.set("url", url.origin);
+   		return Response.redirect(url.toString(), 302);
+   	}
+
+   	await this.openCode();
+   	// The container port accepts only http: URLs.
+   	url.protocol = "http:";
+   	return this.container
+   		.getTcpPort(OPENCODE_PORT)
+   		.fetch(new Request(url, request));
+   }
+   ```
+
+   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so forward every path of a hostname to the Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
+
+5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open the Worker's URL in a browser. It redirects to `/?url=` and loads OpenCode.
+
+</Steps>
+
+## Give OpenAI agents a shell and an editor
+
+In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran an OpenAI agent's commands and file edits in a sandbox, while the agent ran in your Worker. In 1.0, you write both classes over `container.exec()` and `Files`, and run the agent in your Durable Object, where the container is.
+
+<Steps>
+
+1. Add a `Shell` that runs each command with `bash` in `/workspace`:
+
+   ```ts title="src/index.ts"
+   import { Files } from "@cloudflare/sandbox";
+   import {
+   	Agent,
+   	applyDiff,
+   	applyPatchTool,
+   	run,
+   	shellTool,
+   	type ApplyPatchOperation,
+   	type ApplyPatchResult,
+   	type Editor,
+   	type Shell,
+   	type ShellAction,
+   	type ShellResult,
+   } from "@openai/agents";
+
+   class SandboxShell implements Shell {
+   	constructor(private readonly container: Container) {}
+
+   	async run(action: ShellAction): Promise<ShellResult> {
+   		const timeoutMs = action.timeoutMs ?? 60_000;
+   		const seconds = String(Math.ceil(timeoutMs / 1000));
+   		const limit = ["timeout", "--kill-after=5", seconds];
+   		const output: ShellResult["output"] = [];
+   		const decoder = new TextDecoder();
+
+   		for (const command of action.commands) {
+   			const process = await this.container.exec(
+   				[...limit, "bash", "-c", command],
+   				{ cwd: "/workspace", env: ENV },
+   			);
+   			const result = await process.output();
+   			const timedOut = result.exitCode === 124;
+
+   			output.push({
+   				stdout: decoder.decode(result.stdout),
+   				stderr: decoder.decode(result.stderr),
+   				outcome: timedOut
+   					? { type: "timeout" }
+   					: { type: "exit", exitCode: result.exitCode },
+   			});
+
+   			// 0.12 also skipped the rest after a timeout.
+   			if (timedOut) {
+   				break;
+   			}
+   		}
+
+   		return {
+   			output,
+   			providerData: { working_directory: "/workspace" },
+   		};
+   	}
+   }
+   ```
+
+   `timeout` stops the command and every process it started. The command then exits with code `124`. 0.12 set no time limit when the action had no `timeoutMs`, and this class sets 60 seconds.
+
+2. Add an `Editor` that applies the agent's patches with `Files`:
+
+   ```ts title="src/index.ts"
+   type Operation<T> = Extract<ApplyPatchOperation, { type: T }>;
+
+   class SandboxEditor implements Editor {
+   	constructor(private readonly files: Files) {}
+
+   	private path(path: string): string {
+   		return path.startsWith("/") ? path : `/workspace/${path}`;
+   	}
+
+   	async createFile(
+   		operation: Operation<"create_file">,
+   	): Promise<ApplyPatchResult> {
+   		const path = this.path(operation.path);
+   		const parent = path.slice(0, path.lastIndexOf("/"));
+   		await this.files.mkdir(parent, { recursive: true });
+   		const content = applyDiff("", operation.diff, "create");
+   		await this.files.writeFile(path, content);
+   		return {
+   			status: "completed",
+   			output: `Created ${operation.path}`,
+   		};
+   	}
+
+   	async updateFile(
+   		operation: Operation<"update_file">,
+   	): Promise<ApplyPatchResult> {
+   		const path = this.path(operation.path);
+   		const file = await this.files.readFile(path);
+   		const current = await file.text();
+   		const content = applyDiff(current, operation.diff);
+   		await this.files.writeFile(path, content);
+   		return {
+   			status: "completed",
+   			output: `Updated ${operation.path}`,
+   		};
+   	}
+
+   	async deleteFile(
+   		operation: Operation<"delete_file">,
+   	): Promise<ApplyPatchResult> {
+   		await this.files.remove(this.path(operation.path));
+   		return {
+   			status: "completed",
+   			output: `Deleted ${operation.path}`,
+   		};
+   	}
+   }
+   ```
+
+   A failed call throws `SandboxFileError`. The 0.12 `Editor` caught errors and returned `status: "failed"`, and both 0.12 classes kept a `results` list. Catch errors or log results in each method if your code used them.
+
+3. Run the agent in a method of your class:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, `session-${sessionId}`);
+   const agent = new Agent({
+   	name: "Sandbox agent",
+   	instructions: INSTRUCTIONS,
+   	tools: [
+   		shellTool({ shell: new Shell(sandbox) }),
+   		applyPatchTool({
+   			editor: new Editor(sandbox, "/workspace"),
+   		}),
+   	],
+   });
+   const result = await run(agent, input);
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   async runAgent(input: string): Promise<string | undefined> {
+   	await this.ensureRunning();
+
+   	const shell = new SandboxShell(this.container);
+   	const editor = new SandboxEditor(new Files(this.container));
+   	const agent = new Agent({
+   		name: "Sandbox agent",
+   		instructions: INSTRUCTIONS,
+   		tools: [shellTool({ shell }), applyPatchTool({ editor })],
+   	});
+   	const result = await run(agent, input);
+   	return result.finalOutput;
+   }
+   ```
+
+   The Worker calls `runAgent()` on the stub that `getByName()` returns. The Agents SDK reads `OPENAI_API_KEY` from the environment, as it did in your Worker.
+
+4. Check both classes without a model by calling them directly. `shell.run({ commands: ["pwd", "sleep 10"], timeoutMs: 2000 })` returns the working directory, then a timeout:
+
+   ```json output
+   {
+   	"output": [
+   		{
+   			"stdout": "/workspace\n",
+   			"stderr": "",
+   			"outcome": { "type": "exit", "exitCode": 0 }
+   		},
+   		{
+   			"stdout": "",
+   			"stderr": "",
+   			"outcome": { "type": "timeout" }
+   		}
+   	],
+   	"providerData": { "working_directory": "/workspace" }
+   }
+   ```
+
+   `editor.createFile({ type: "create_file", path: "notes/todo.md", diff: "+first\n+second\n" })` returns `{ "status": "completed", "output": "Created notes/todo.md" }`. `/workspace/notes/todo.md` then contains the lines `first` and `second`.
+
+</Steps>
+
+## Replace the bridge
+
+The 0.12 bridge, `bridge()` from `@cloudflare/sandbox/bridge`, served an HTTP API over `Sandbox` calls for clients outside Workers, and checked a `SANDBOX_API_KEY` bearer token. 1.0 has no bridge. Add a Worker route for each call that your client makes, and have the route call a method of your Durable Object. Check the token in your Worker, as the bridge did.
+
+Clients written for the bridge's API, such as `CloudflareSandboxClient` in the OpenAI Agents SDK for Python, work only with a 0.x bridge Worker. Keep that Worker on 0.x until your client calls your own routes.
+
+## Remove WarmPool
+
+Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept 0.x sandboxes started ahead of time, because a 0.x start took seconds. On 1.0, a sandbox on a prepared image runs its first command in under 600 ms at the median.
+
+<Steps>
+
+1. Remove the `WarmPool` export from your Worker's main module, and its binding from `durable_objects` in the Wrangler configuration.
+
+2. Delete the class in the same way your Worker added it. If your Worker uses `migrations`, add a migration:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"migrations": [
+   		{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" },
+   		{ "new_sqlite_classes": ["WarmPool"], "tag": "v2" },
+   		{ "deleted_classes": ["WarmPool"], "tag": "v3" },
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   If your Worker uses `exports`, mark the class as deleted instead:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"exports": {
+   		"WarmPool": {
+   			"type": "durable-object",
+   			"state": "deleted",
+   		},
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+3. Remove the `WARM_POOL_TARGET`, `WARM_POOL_REFRESH_INTERVAL`, `WARM_POOL_MAX_INSTANCES`, and `WARM_POOL_SCALE_BATCH_SIZE` variables. `bridge()` filled the pool from its `scheduled()` handler, so remove the cron trigger too if nothing else uses it.
+
+</Steps>
+
+The sandboxes that the pool started are 0.12 sandboxes, so [Plan the move](/sandbox/sdk/migrate/plan-the-move/) covers them like any other.
+
+If your application still needs those last milliseconds, call `start()` for the sandbox that a user is about to use, for example when they open a session. Do not keep a pool of started sandboxes. Each one is billed while it waits, and your code must assign it to a session.
+
+## Related resources
+
+- [Docker-in-Docker in the Containers FAQ](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker)
+- [Durable Object Container API](/durable-objects/api/container/)
+- [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/)
+- [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/)
+- [`Files` API](/sandbox/reference/files/)
