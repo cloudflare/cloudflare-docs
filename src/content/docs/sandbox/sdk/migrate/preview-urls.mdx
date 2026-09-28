@@ -206,7 +206,7 @@ This page does not cover the server that a preview reaches. To start it, refer t
    } satisfies ExportedHandler<Env>;
    ```
 
-   The expression splits the first label as 0.12 did: the port ends at the first hyphen, and the token starts after the last hyphen, because tokens contain no hyphens. A wrong token or a port without a token gets `404`, as in 0.12. `toPort()` replaces any `X-Sandbox-Port` header that the visitor sent. The Durable Object trusts that header, so send requests to its `fetch()` only through `toPort()`.
+   The expression splits the first label as 0.12 did: the port ends at the first hyphen, and the token starts after the last hyphen, because tokens contain no hyphens. A wrong token or a port without a token gets `404`, as in 0.12. `toPort()` replaces any `X-Sandbox-Port` header that the visitor sent. The Durable Object trusts that header, so send requests to its `fetch()` only through `toPort()`, or remove the header first, as [Move browser terminals](/sandbox/sdk/migrate/terminals/#forward-the-websocket) does.
 
 5. Forward the request from the Durable Object's `fetch()` handler:
 

@@ -102,6 +102,19 @@ This page replaces `terminal()`, `session.terminal()`, `proxyTerminal()`, and `S
 
    To run another command instead of `bash`, as the 0.12 `shell` option did, refer to [Run another command in the terminal](/sandbox/commands/open-a-terminal-in-the-browser/#run-another-command-in-the-terminal).
 
+5. If your class forwards preview URLs from [Move preview URLs](/sandbox/sdk/migrate/preview-urls/), it already has a `fetch()` handler. Rename that handler to `forwardToPort()`, rename the terminal handler to `openTerminal()`, make both `private`, and add a `fetch()` handler that chooses one:
+
+   ```ts title="src/index.ts"
+   async fetch(request: Request): Promise<Response> {
+   	// Only the Worker's preview route sets this header.
+   	if (request.headers.has("X-Sandbox-Port")) {
+   		return this.forwardToPort(request);
+   	}
+
+   	return this.openTerminal(request);
+   }
+   ```
+
 </Steps>
 
 ## Forward the WebSocket
@@ -127,6 +140,16 @@ return env.MY_SANDBOX.getByName(id.toLowerCase()).fetch(request);
 ```
 
 Replace `proxyTerminal(stub, sessionId, request)` with the same `fetch()` call, with the session in the `session` query parameter. The handler reads the size from the `cols` and `rows` query parameters, and uses 80 by 24 without them. A request without a WebSocket upgrade gets HTTP `426`, where 0.12 threw an error.
+
+If your class also forwards preview URLs, remove the `X-Sandbox-Port` header before you forward the request. Otherwise a visitor who sends the header reaches a port without a preview token:
+
+```ts title="src/index.ts (1.0)"
+const headers = new Headers(request.headers);
+headers.delete("X-Sandbox-Port");
+
+const sandbox = env.MY_SANDBOX.getByName(id.toLowerCase());
+return sandbox.fetch(new Request(request, { headers }));
+```
 
 ## Replace SandboxAddon
 
