@@ -130,6 +130,30 @@ Deletes the backup's object. The container does not need to be running. Deleting
 
 `delete()` does not change the record that your code stores.
 
+### `intercept`
+
+```ts
+intercept(): Promise<void>
+```
+
+Routes the container's backup traffic to `DirectoryBackupGateway`, which refuses every request until a backup or restore starts. `intercept()` does not start the container.
+
+`backup()` and `restore()` add this route themselves. Call `intercept()` only when the Durable Object also calls [`interceptAllOutboundHttp()`](/durable-objects/api/container/#interceptalloutboundhttp): a catch-all receives the requests for every hostname that is routed after it, so the container's uploads and downloads would reach your catch-all instead of the gateway, and fail with `BACKUP_TRANSFER`.
+
+- Call `intercept()` right after you start the container, before `interceptAllOutboundHttp()`. Backups and restores in that container then keep their route.
+- Do not call `intercept()` while a backup or restore can be running. It replaces the running operation's access, and the operation fails.
+- A container that registered the catch-all first keeps sending backup traffic to it. Restart the container to use `intercept()`.
+
+```ts
+if (!this.ctx.container.running) {
+	this.ctx.container.start({ image: this.ctx.container.images.sandbox });
+	await this.#backups().intercept();
+	await this.ctx.container.interceptAllOutboundHttp(
+		this.ctx.exports.Outbound(),
+	);
+}
+```
+
 ## Types
 
 ### `DirectoryBackup`
@@ -210,7 +234,7 @@ When the Durable Object restarts during an operation, the call's result is lost,
 - The container cannot list, delete, complete, or create uploads, and cannot reach any other key. The Durable Object performs those steps itself, through RPC calls to the gateway.
 - The SHA-256 check detects an object that changed after the backup. It does not make the contents safe to run: a restore brings back whatever the directory held.
 
-The container reaches the gateway at `backups.sandbox.internal`, which `DirectoryBackups` routes with [`interceptOutboundHttp()`](/durable-objects/api/container/#interceptoutboundhttp). The first operation in a container adds that one intercept target, and later operations reuse it.
+The container reaches the gateway at `backups.sandbox.internal`, which `DirectoryBackups` routes with [`interceptOutboundHttp()`](/durable-objects/api/container/#interceptoutboundhttp). The first operation in a container, or [`intercept()`](#intercept), adds that one intercept target, and later operations reuse it.
 
 ## Limits
 
