@@ -28,6 +28,7 @@ export const DOCS_TITLE_SCALE: TitleScale = {
 		{ fontSize: 54, lineHeight: 1.18, maxLines: 3 },
 	],
 	truncateLongWords: true,
+	breakAfterColon: true,
 };
 
 export function docsCard({ title, pills }: DocsCard, measure: Measure) {

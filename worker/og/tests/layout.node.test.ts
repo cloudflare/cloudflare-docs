@@ -83,6 +83,22 @@ describe("docs title scale", () => {
 		).toBeLessThanOrEqual(1000);
 	});
 
+	test("breaks a wrapped title after its colon", () => {
+		expect(docsTitle("Workers: Metrics and analytics").lines).toEqual([
+			["Workers:"],
+			["Metrics", "and", "analytics"],
+		]);
+		expect(docsTitle("Workers: Get started").lines).toEqual([
+			["Workers:", "Get", "started"],
+		]);
+	});
+
+	test("ignores the colon when breaking there would add a line", () => {
+		const fit = docsTitle(`Go: ${title(48)}`);
+		expect(fit.lines).toHaveLength(2);
+		expect(fit.lines[0].length).toBeGreaterThan(1);
+	});
+
 	test("changelog keeps long words intact", () => {
 		const fit = layoutTitle(
 			"RtkWaitListParticipantUpdateEventListener",

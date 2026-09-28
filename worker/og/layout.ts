@@ -41,6 +41,8 @@ export interface TitleScale {
 	tiers: readonly { fontSize: number; lineHeight: number; maxLines: number }[];
 	/** Truncate words wider than a line with `…` instead of letting them overflow. */
 	truncateLongWords?: boolean;
+	/** Break a wrapped title after its first colon when that costs no extra line. */
+	breakAfterColon?: boolean;
 }
 
 const LOGO_SVG =
@@ -69,6 +71,23 @@ function wrap(words: string[], lineWidth: (line: string[]) => number) {
 	return lines;
 }
 
+// "Workers: Metrics and / analytics" reads better as "Workers: / Metrics and analytics".
+function wrapTitle(
+	words: string[],
+	lineWidth: (line: string[]) => number,
+	breakAfterColon = false,
+) {
+	const lines = wrap(words, lineWidth);
+	const colon = words.findIndex((word) => word.endsWith(":"));
+	if (!breakAfterColon || lines.length < 2 || colon < 0) return lines;
+	if (colon === words.length - 1) return lines;
+	const split = [
+		...wrap(words.slice(0, colon + 1), lineWidth),
+		...wrap(words.slice(colon + 1), lineWidth),
+	];
+	return split.length <= lines.length ? split : lines;
+}
+
 // Lines are broken here with real glyph metrics (satori's own line-clamp
 // misreports flow height).
 export function layoutTitle(raw: string, measure: Measure, scale: TitleScale) {
@@ -91,7 +110,7 @@ export function layoutTitle(raw: string, measure: Measure, scale: TitleScale) {
 
 	for (const tier of scale.tiers.slice(start)) {
 		const { lineWidth, space } = tierMetrics(tier.fontSize, measure);
-		const lines = wrap(words, lineWidth);
+		const lines = wrapTitle(words, lineWidth, scale.breakAfterColon);
 		const fits =
 			lines.length <= tier.maxLines &&
 			(!scale.truncateLongWords ||
@@ -103,7 +122,10 @@ export function layoutTitle(raw: string, measure: Measure, scale: TitleScale) {
 		smallest.fontSize,
 		measure,
 	);
-	const kept = wrap(words, lineWidth).slice(0, smallest.maxLines);
+	const kept = wrapTitle(words, lineWidth, scale.breakAfterColon).slice(
+		0,
+		smallest.maxLines,
+	);
 	const last = kept[kept.length - 1];
 	while (
 		last.length > 1 &&

@@ -56,6 +56,20 @@ describe("resolveDocsCard", () => {
 		).toEqual(["Secrets Store", "Workers"]);
 	});
 
+	test("generic titles get the primary product in front", () => {
+		const title = (title: string, primaryProduct?: string) =>
+			resolveDocsCard({ title, tutorial: false, primaryProduct }).title;
+		expect(title(" Get started ", "Workers")).toBe("Workers: Get started");
+		expect(title("PRICING", "KV")).toBe("KV: PRICING");
+		expect(title("Get started with KV", "KV")).toBe("Get started with KV");
+		expect(title("Get started")).toBe("Get started");
+		expect(title("Get started", " ")).toBe("Get started");
+		expect(title("Analytics", "Analytics")).toBe("Analytics");
+		expect(title("Reference", "Email security (formerly Area 1)")).toBe(
+			"Email security: Reference",
+		);
+	});
+
 	test("keeps at most four pills, difficulty first", () => {
 		expect(
 			tutorial({

@@ -22,6 +22,56 @@ export const docsOgVersion = (
 	templateVersion = DOCS_OG_TEMPLATE_VERSION,
 ) => ogHash([type, templateVersion, title, ...pills]);
 
+// Titles shared by many products. On their own they make identical cards, so
+// the card title gets the primary product in front: "Workers: Get started".
+export const GENERIC_TITLES = new Set([
+	"about",
+	"analytics",
+	"api",
+	"best practices",
+	"changelog",
+	"concepts",
+	"configuration",
+	"error codes",
+	"examples",
+	"faq",
+	"faqs",
+	"features",
+	"get started",
+	"getting started",
+	"glossary",
+	"guides",
+	"how to",
+	"limitations",
+	"limits",
+	"local development",
+	"metrics and analytics",
+	"migration guides",
+	"observability",
+	"overview",
+	"plans",
+	"platform",
+	"pricing",
+	"reference",
+	"release notes",
+	"rest api",
+	"security",
+	"setup",
+	"troubleshooting",
+	"tutorials",
+	"use cases",
+]);
+
+// The pill keeps the full name; the prefix drops asides like "(deprecated)".
+export function cardTitle(title: string, product?: string) {
+	const trimmed = title.trim();
+	const prefix = product?.replace(/\s*\([^)]*\)\s*$/, "").trim();
+	const generic =
+		GENERIC_TITLES.has(trimmed.toLowerCase()) &&
+		prefix?.toLowerCase() !== trimmed.toLowerCase();
+	return prefix && generic ? `${prefix}: ${trimmed}` : trimmed;
+}
+
 /**
  * Tutorials show difficulty then products; other pages show the primary
  * product. Labels are trimmed, empty ones dropped, and duplicates removed
@@ -53,7 +103,7 @@ export function resolveDocsCard({
 	}
 	return {
 		type: "docs",
-		title: title.trim(),
+		title: cardTitle(title, primaryProduct),
 		pills: pills.slice(0, MAX_PILLS),
 	};
 }
