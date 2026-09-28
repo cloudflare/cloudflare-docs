@@ -1,0 +1,65 @@
+---
+title: Sandbox SDK 0.x
+description: Documentation for existing applications on Sandbox SDK 0.x, the Sandbox class in @cloudflare/sandbox that runs commands, files, and services in a container.
+pcx_content_type: overview
+sidebar:
+  order: 12
+  label: Overview
+  group:
+    label: Sandbox SDK 0.x
+head:
+  - tag: title
+    content: Sandbox SDK 0.x
+products:
+  - sandbox
+  - workers
+  - containers
+---
+
+import { CardGrid, LinkTitleCard, Plan } from "~/components";
+
+<Plan type="workers-paid" />
+
+:::note
+These pages document `@cloudflare/sandbox` 0.x for existing applications. Version 1.0 is a different library that works with a container you start from a Durable Object. To start new work, refer to [Sandboxes](/sandbox/).
+:::
+
+Sandbox SDK 0.x gives your [Worker](/workers/) a `Sandbox` class built on [Containers](/containers/). A sandbox starts its container on first use, and its methods run commands, manage files, run background processes, and expose services in that container.
+
+## Maintain a 0.x application
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Getting started"
+	href="/sandbox/sdk/get-started/"
+	icon="rocket"
+>
+	Create a Worker that runs Python code in a 0.x sandbox.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="How-to guides"
+	href="/sandbox/sdk/guides/"
+	icon="seti:notebook"
+>
+	Run commands, manage files, expose services, and deploy with Sandbox SDK 0.x.
+</LinkTitleCard>
+
+<LinkTitleCard title="API reference" href="/sandbox/sdk/api/" icon="seti:json">
+	Look up the methods of the 0.x `Sandbox` class.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Tutorials"
+	href="/sandbox/sdk/tutorials/"
+	icon="open-book"
+>
+	Build complete applications with Sandbox SDK 0.x.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Coding agents
+
+Install [Cloudflare Skills](https://github.com/cloudflare/skills) for your agent ([Agent setup](/agent-setup/)). Use **`sandbox-stable`** with these Sandbox SDK docs.
