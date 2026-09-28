@@ -11,10 +11,5 @@
 		"jsxImportSource": "react"
 	},
 	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": [
-		"dist",
-		"worker",
-		".flue",
-		"examples/containers/container-api-migration"
-	]
+	"exclude": ["dist", "worker", ".flue"]
 }
