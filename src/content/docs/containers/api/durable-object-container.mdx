@@ -82,7 +82,7 @@ this.ctx.container.start();
 
 #### Parameters
 
-- `options` (`ContainerStartupOptions`, optional): Container startup options:
+- `options` (`object`, optional): Common container startup options:
   - `env` (`Record<string, string>`, optional): Environment variables to pass to the container.
   - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
@@ -147,8 +147,6 @@ export class MyDurableObject extends DurableObject<Env> {
   - `cwd` (`string`, optional): Working directory for the process.
   - `env` (`Record<string, string>`, optional): Environment additions and overrides. The process inherits existing container variables. Matching keys use the per-execution value.
   - `user` (`string`, optional): Image user for the process.
-  - `signal` (`AbortSignal`, optional): Signal used to abort the process.
-  - `pty` (`boolean | { cols?: number; rows?: number }`, optional): Enables a pseudoterminal. Set `cols` and `rows` to configure its initial dimensions.
 
 #### Return values
 
@@ -160,11 +158,9 @@ An `ExecProcess` has these fields and methods:
 - `stdout` (`ReadableStream | null`): Readable standard output when piped.
 - `stderr` (`ReadableStream | null`): Readable standard error when piped separately.
 - `pid` (`number`): Process identifier.
-- `isPty` (`boolean`): Whether the process uses a pseudoterminal.
 - `exitCode` (`Promise<number>`): Resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
 - `output()` (`Promise<ExecOutput>`): Reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
 - `kill(signal?: number)` (`void`): Queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
-- `resize(cols: number, rows: number)` (`void`): Resizes the pseudoterminal to the specified number of columns and rows.
 
 With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
 
@@ -184,7 +180,7 @@ For task-oriented examples, refer to [Execute commands](/containers/guides/execu
 
 ### `destroy`
 
-`destroy()` stops the container and can pass a custom rejection reason to `monitor()`.
+`destroy()` stops the container and can include an optional reason for the operation.
 
 <TypeScriptExample>
 
@@ -196,7 +192,7 @@ await this.ctx.container.destroy("Manually Destroyed");
 
 #### Parameters
 
-- `error` (`any`, optional): Rejection reason passed to `monitor()`. A string is commonly used for logging or debugging.
+- `error` (`any`, optional): Optional reason associated with the destroy operation. A string is commonly used for logging or debugging.
 
 #### Return values
 
@@ -297,7 +293,11 @@ try {
 <TypeScriptExample>
 
 ```ts
-class MyDurableObject extends DurableObject {
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+class MyDurableObject extends DurableObject<Env> {
 	startAndMonitor() {
 		const container = this.ctx.container;
 		container.start();
