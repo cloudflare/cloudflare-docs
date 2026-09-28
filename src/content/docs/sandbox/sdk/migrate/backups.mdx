@@ -139,6 +139,8 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
    `restore()` replaces the directory with the backup's files, so files that the backup left out, such as `node_modules`, are gone after a restore. In 0.12, the restored directory was a mount that ended with the container. In 1.0, the files stay in the container's filesystem.
 
+   A process whose working directory is inside the directory, such as a server started with `cwd: "/workspace/project"`, keeps the old, deleted directory after `restore()`. Restart it after the restore, or have it open files by absolute path. In 0.12, the restore mounted over the path, so such a process saw the restored files.
+
 8. Deploy the Worker, then back up and restore a directory through your Worker's existing routes. `createBackup()` returns a record like this one:
 
    ```json output
