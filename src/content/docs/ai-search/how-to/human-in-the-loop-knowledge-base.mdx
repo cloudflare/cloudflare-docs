@@ -196,7 +196,7 @@ The `name()` result (`aiSearch`) becomes the global the model's code calls, so t
 
 ## 4. Build the agent
 
-Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The agent also updates an existing vector-only instance. It then creates the Code Mode runtime with the connector and exposes it to the model as a single `codemode` tool. The `@callable()` methods let your client list pending approvals and approve, reject, or roll back a write.
+Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The example then creates the Code Mode runtime with the connector and exposes it to the model as a single `codemode` tool. The `@callable()` methods let your client list pending approvals and approve, reject, or roll back a write.
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -227,8 +227,7 @@ export class Chat extends AIChatAgent<Env> {
 	// In-memory guard, so the one-time setup runs once per instance lifetime.
 	private ready = false;
 
-	// Create the AI Search instance, which uses hybrid search by default, then
-	// seed it. Update an existing vector-only instance.
+	// Create the AI Search instance, which uses hybrid search by default, then seed it.
 	private async ensureInstance() {
 		if (this.ready) return;
 		try {
@@ -240,11 +239,7 @@ export class Chat extends AIChatAgent<Env> {
 				"getting-started.md",
 				SEED_DOC,
 			);
-		} catch {
-			await this.env.AI_SEARCH.get(INSTANCE_NAME).update({
-				index_method: { vector: true, keyword: true },
-			});
-		}
+		} catch {}
 		this.ready = true;
 	}
 

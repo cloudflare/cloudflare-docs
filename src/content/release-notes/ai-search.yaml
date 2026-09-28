@@ -8,7 +8,7 @@ entries:
     description: |-
       AI Search is generally available. Usage-based billing begins on November 1, 2026. Refer to [Limits & pricing](/ai-search/platform/limits-pricing/) for rates and included monthly usage.
   - publish_date: "2026-09-28"
-    title: Hybrid search is on by default for new instances
+    title: Hybrid search is on by default
     description: |-
       New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default, combining semantic vector retrieval with full-text matching.
   - publish_date: "2026-09-28"
@@ -39,10 +39,6 @@ entries:
     title: AI Gateway custom metadata on public search and MCP
     description: |-
       Public search, chat, and MCP requests can attach custom metadata for attribution in AI Gateway logs. Refer to [Public endpoint search](/ai-search/api/search/public-endpoint/).
-  - publish_date: "2026-09-28"
-    title: Resumable large-file indexing
-    description: |-
-      AI Search saves embedding checkpoints so interrupted large-file indexing resumes instead of restarting. Refer to [Index syncing](/ai-search/configuration/indexing/syncing/).
   - publish_date: "2026-08-25"
     title: Larger custom metadata values
     description: |-

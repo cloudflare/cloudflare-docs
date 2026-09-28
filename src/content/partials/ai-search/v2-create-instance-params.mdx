@@ -78,15 +78,9 @@ Configures which indexing methods are enabled for the instance. Determines wheth
 - `vector` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable vector-based semantic search. Defaults to `true`.
 - `keyword` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable keyword-based search. Defaults to `true` for new instances.
+  - Enable keyword-based search. Defaults to `true`.
 
 Set both to `true` for hybrid search.
-
----
-
-`hybrid_search_enabled` <Type text="boolean" /> <MetaInfo text="optional, deprecated" />
-
-Use `index_method` instead. This field defaults to `true` for new instances. Set it to `false` to create a vector-only instance. Existing instances retain their stored indexing setting.
 
 ---
 
@@ -122,7 +116,7 @@ Default retrieval configuration for the instance. These defaults can be overridd
 
 `sync_interval` <Type text="number" /> <MetaInfo text="optional" />
 
-Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `21600` (6 hours). The REST API also accepts `900` and `1800`; the Workers binding does not.
+Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `21600` (6 hours).
 
 ---
 
@@ -134,7 +128,7 @@ The UUID of the [service API token](/ai-search/configuration/indexing/service-ap
 
 `ai_gateway_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The AI Gateway ID for generation, query rewriting, and external-provider requests. Workers AI embedding and reranking requests run under AI Search. They do not appear in your AI Gateway logs or Workers AI bill.
+The AI Gateway ID for generation, query rewriting, and external-provider requests. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
 
 ---
 

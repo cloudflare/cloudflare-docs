@@ -76,12 +76,6 @@ try:
     client.aisearch.namespaces.instances.read(
         INSTANCE_NAME, account_id=ACCOUNT_ID, name=NAMESPACE
     )
-    client.aisearch.namespaces.instances.update(
-        INSTANCE_NAME,
-        account_id=ACCOUNT_ID,
-        name=NAMESPACE,
-        index_method={"vector": True, "keyword": True},
-    )
     print(f"Instance '{INSTANCE_NAME}' already exists.")
 except NotFoundError:
     client.aisearch.namespaces.instances.create(
@@ -92,7 +86,7 @@ except NotFoundError:
     print(f"Created instance '{INSTANCE_NAME}'.")
 ```
 
-The first positional argument to `create()` is the namespace name. The update call turns on hybrid search if the existing instance is vector-only.
+The first positional argument to `create()` is the namespace name.
 
 ## 4. Upload and index a file
 

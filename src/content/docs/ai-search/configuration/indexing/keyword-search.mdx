@@ -21,7 +21,7 @@ Set `index_method.keyword` to `true` when creating or updating an instance. You 
 
 At least one of `vector` or `keyword` must be `true`. Changing `index_method` triggers a full reindex of your content.
 
-The `keyword` field defaults to `true` for new instances. Existing instances keep their stored value. Legacy clients can use `hybrid_search_enabled` for compatibility.
+The `keyword` field defaults to `true`.
 
 ```ts
 const instance = await env.AI_SEARCH.create({

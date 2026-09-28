@@ -10,7 +10,7 @@ products:
 
 Hybrid search runs vector and keyword search in parallel and merges the results. It requires [keyword search](/ai-search/configuration/indexing/keyword-search/) to be enabled. For an overview of search modes, refer to [Search modes](/ai-search/concepts/search-modes/).
 
-Hybrid search is enabled by default for new instances. Existing instances keep their stored search configuration.
+Hybrid search is enabled by default.
 
 ## Enable hybrid search
 
@@ -27,7 +27,7 @@ const instance = await env.AI_SEARCH.create({
 });
 ```
 
-To opt out of hybrid search, set `index_method.keyword` to `false`. The keyword index is deleted. Legacy clients can set `hybrid_search_enabled` to `false` instead.
+To opt out of hybrid search, set `index_method.keyword` to `false`. The keyword index is deleted.
 
 For each search method, you can configure the following to adjust retrieval behavior:
 

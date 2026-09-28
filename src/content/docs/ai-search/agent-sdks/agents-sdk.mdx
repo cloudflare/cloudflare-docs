@@ -92,7 +92,7 @@ The namespace binding (`ai_search_namespaces`), not the single-instance `ai_sear
 
 ## 4. Write the agent
 
-Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The agent also updates an existing vector-only instance, seeds new instances with a document, and exposes two tools: `search_knowledge_base` retrieves content, and `save_resolution` writes new content back.
+Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The agent seeds new instances with a document and exposes two tools: `search_knowledge_base` retrieves content, and `save_resolution` writes new content back.
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -115,7 +115,7 @@ export class SearchAgent extends AIChatAgent {
 	private ready = false;
 
 	// Create the agent's instance, which uses hybrid search by default, then seed
-	// it so the first query has content. Update an existing vector-only instance.
+	// it so the first query has content.
 	private async ensureInstance() {
 		if (this.ready) return;
 		try {
@@ -134,11 +134,7 @@ export class SearchAgent extends AIChatAgent {
 				await new Promise((resolve) => setTimeout(resolve, 2_000));
 				info = await instance.items.get(id).info();
 			}
-		} catch {
-			await this.env.AI_SEARCH.get(INSTANCE_NAME).update({
-				index_method: { vector: true, keyword: true },
-			});
-		}
+		} catch {}
 		this.ready = true;
 	}
 

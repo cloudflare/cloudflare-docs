@@ -10,7 +10,7 @@ products:
 
 Every AI Search instance is connected to a Cloudflare [AI Gateway](/ai-gateway/). External-provider embedding and reranking calls run through your connected gateway. Query rewriting and response generation also run through your gateway.
 
-Workers AI embedding and reranking calls run under AI Search's account. These calls do not appear in your AI Gateway logs or analytics. They are covered by AI Search pricing and are not billed to your Workers AI usage.
+Workers AI embedding and reranking usage is included in AI Search usage. These calls do not appear in your AI Gateway logs or analytics and are not billed separately as Workers AI usage.
 
 To choose or change which gateway your instance uses, see [Models](/ai-search/configuration/models/).
 

@@ -60,12 +60,10 @@ Usage beyond the included amounts is billed at these rates:
 
 Image processing tokens share the 5 million token ingestion allotment. Optical character recognition (OCR) is available on every account. OCR usage is billed as image processing ingestion tokens.
 
-Workers AI embedding and reranking calls made by AI Search run under the AI Search account. They are included in AI Search pricing and do not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
+Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
 
 Storage, vector indexing, and [Browser Run](/browser-run/pricing/) usage for website crawling are included with AI Search. They are not billed separately.
 
 ## Historical billing
-
-Instances created before AI Search moved to managed infrastructure ran on Cloudflare services in your account. Older invoices may include separate charges for [R2](/r2/pricing/), [Vectorize](/vectorize/platform/pricing/), [Workers AI](/workers-ai/platform/pricing/), [AI Gateway](/ai-gateway/reference/pricing/), and [Browser Run](/browser-run/pricing/).
 
 If your instance crawled a website, those pages now live in built-in storage. The dedicated R2 bucket AI Search originally created in your account is no longer used. Objects left in it may still count toward [R2 storage usage](/r2/pricing/). AI Search no longer writes to this bucket, so you can delete it if you no longer need its contents.
