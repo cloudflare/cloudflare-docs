@@ -7,35 +7,35 @@ entries:
     title: AI Search is generally available
     description: |-
       AI Search is generally available. Usage-based billing begins on November 1, 2026. Refer to [Limits & pricing](/ai-search/platform/limits-pricing/) for rates and included monthly usage.
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Hybrid search is on by default
     description: |-
       New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default, combining semantic vector retrieval with full-text matching.
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Multimodal embeddings and image queries
     description: |-
       AI Search supports multimodal embedding models and image queries for search and chat through the REST API and public endpoint. Refer to [Supported models](/ai-search/configuration/models/supported-models/).
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: OCR and larger file limits
     description: |-
       OCR is available on every account. Plain-text or code files and PDFs with OCR enabled can be up to 10 MiB. PDFs without OCR and other supported formats are limited to 4 MiB. Refer to [Limits & pricing](/ai-search/platform/limits-pricing/).
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Workers AI embeddings and reranking are included
     description: |-
       Managed Workers AI embedding and reranking calls are included in [AI Search pricing](/ai-search/platform/limits-pricing/) and no longer appear on your Workers AI bill or in your AI Gateway logs.
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Source type inference
     description: |-
       AI Search can infer an instance type from an HTTP or HTTPS URL or an existing R2 bucket when `type` is omitted. Refer to [Data sources](/ai-search/configuration/data-source/).
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Clear crawler status for blocked sites
     description: |-
       Website crawls pause with a clear status when `robots.txt` or Content Signals block indexing. Refer to [Website data sources](/ai-search/configuration/data-source/website/).
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: Consistent namespace search ranking
     description: |-
       Namespace search consistently applies reranking, `match_threshold`, and metadata boosts. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).
-  - publish_date: "2026-09-28"
+  - publish_date: "2026-09-30"
     title: AI Gateway custom metadata on public search and MCP
     description: |-
       Public search, chat, and MCP requests can attach custom metadata for attribution in AI Gateway logs. Refer to [Public endpoint search](/ai-search/api/search/public-endpoint/).
