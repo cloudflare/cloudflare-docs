@@ -58,13 +58,9 @@ export class MyDurableObject extends DurableObject<Env> {
 
 `running` is `true` when the container is running. It does not confirm that the container is ready to accept requests.
 
-<TypeScriptExample>
-
-```ts
+```js
 this.ctx.container.running;
 ```
-
-</TypeScriptExample>
 
 ## Methods
 
@@ -72,13 +68,9 @@ this.ctx.container.running;
 
 `start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
 
-<TypeScriptExample>
-
-```ts
+```js
 this.ctx.container.start();
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -182,13 +174,9 @@ For task-oriented examples, refer to [Execute commands](/containers/guides/execu
 
 `destroy()` stops the container and can include an optional reason for the operation.
 
-<TypeScriptExample>
-
-```ts
+```js
 await this.ctx.container.destroy("Manually Destroyed");
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -202,14 +190,10 @@ await this.ctx.container.destroy("Manually Destroyed");
 
 `signal()` sends an inter-process communication (IPC) signal to the container, such as `SIGKILL` or `SIGTERM`. Use it to stop the container gracefully or forcefully.
 
-<TypeScriptExample>
-
-```ts
+```js
 const SIGTERM = 15;
 this.ctx.container.signal(SIGTERM);
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -227,13 +211,9 @@ this.ctx.container.signal(SIGTERM);
 setInactivityTimeout(durationMs: number | bigint): Promise<void>
 ```
 
-<TypeScriptExample>
-
-```ts
+```js
 await this.ctx.container.setInactivityTimeout(10 * 60 * 1000);
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -247,9 +227,7 @@ await this.ctx.container.setInactivityTimeout(10 * 60 * 1000);
 
 `getTcpPort()` returns a TCP port from the container. Use it to communicate with the container over TCP or HTTP.
 
-<TypeScriptExample>
-
-```ts
+```js
 const port = this.ctx.container.getTcpPort(8080);
 const res = await port.fetch("http://container/set-state", {
 	body: initialState,
@@ -257,11 +235,7 @@ const res = await port.fetch("http://container/set-state", {
 });
 ```
 
-</TypeScriptExample>
-
-<TypeScriptExample>
-
-```ts
+```js
 const conn = this.ctx.container.getTcpPort(8080).connect("10.0.0.1:8080");
 await conn.opened;
 
@@ -275,8 +249,6 @@ try {
 	return new Response("Failed to proxy request body", { status: 502 });
 }
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -325,9 +297,7 @@ class MyDurableObject extends DurableObject<Env> {
 
 `interceptOutboundHttp()` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `Fetcher`. Call it before or after starting the container. Open connections use the new handler without being dropped.
 
-<TypeScriptExample>
-
-```ts
+```js
 const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
 
 // Match a specific hostname
@@ -343,8 +313,6 @@ await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
 await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 ```
 
-</TypeScriptExample>
-
 #### Parameters
 
 - `addr` (`string`): Hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
@@ -358,13 +326,9 @@ await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 
 `interceptAllOutboundHttp()` routes all outbound HTTP requests from the container through a `Fetcher`, regardless of destination.
 
-<TypeScriptExample>
-
-```ts
+```js
 await this.ctx.container.interceptAllOutboundHttp(worker);
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
@@ -380,9 +344,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 Hostname globs support `*` to match any sequence of characters.
 
-<TypeScriptExample>
-
-```ts
+```js
 const worker = this.ctx.exports.MyWorker({ props: {} });
 
 // Match a specific hostname
@@ -394,8 +356,6 @@ await this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 // Intercept all HTTPS traffic
 await this.ctx.container.interceptOutboundHttps("*", worker);
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
