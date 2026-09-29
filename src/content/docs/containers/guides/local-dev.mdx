@@ -71,11 +71,11 @@ you are using in your container code.
 
 Local containers run in Docker. Deployed containers with `scheduling_policy: "durable_object"` differ from them in the following ways, so some code works locally and fails after you deploy.
 
-{/* Remove this section when the deployed hostname fits in a DNS label. */}
+{/* Remove this section when the deployed hostname fits in a DNS label and /etc/hosts lists it. */}
 
 ### The hostname is longer than a DNS label
 
-In a deployed container with `scheduling_policy: "durable_object"`, the hostname is 64 characters, one more than a DNS label allows, and it does not resolve. Locally, the hostname is the 12-character Docker container ID. Code that looks up its own hostname can fail only after you deploy.
+The hostname of a container is the name it uses for itself, which the `hostname` command prints. Nothing routes traffic to it. In a deployed container with `scheduling_policy: "durable_object"`, the hostname is 64 characters, one more than a DNS label allows, and `/etc/hosts` does not list it, so it does not resolve. Locally, the hostname is the 12-character Docker container ID, and `/etc/hosts` lists it. Code that looks up its own hostname can fail only after you deploy.
 
 For example, `python3 -m http.server` and other servers built on the Python `http.server` module, such as `wsgiref`, exit on startup with this error:
 
