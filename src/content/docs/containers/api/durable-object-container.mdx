@@ -102,7 +102,7 @@ this.ctx.container.start({
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
   - `image` (`string`, conditionally required) <Badge text="durable_object policy only" variant="note" size="small" />: Image reference to start. Required unless you pass `containerSnapshot`. Pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images).
   - `instance` (`string | object`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Instance size. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
-  - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Full container snapshot to restore before startup. Snapshot restore is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). You cannot pass both `containerSnapshot` and `image`.
+  - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Snapshot handle to restore before startup. Pass the `ContainerSnapshot` returned by [`snapshotContainer()`](#snapshotcontainer), or an object containing its `id`. You cannot pass both `containerSnapshot` and `image`.
   - `labels` (`Record<string, string>`, optional): Up to 10 labels that [`inspect()`](#inspect) returns. Label names must contain 1 to 16 bytes. Label values can contain up to 64 bytes. Names and values cannot contain control characters.
 
 #### Return values
@@ -239,7 +239,10 @@ const snapshot = await this.ctx.container.snapshotContainer({
 
 #### Return values
 
-- `Promise<ContainerSnapshot>`: Resolves with a snapshot containing `id`, `size`, and an optional `name`.
+- `Promise<ContainerSnapshot>`: Resolves with an opaque handle for the stored filesystem snapshot. The snapshot data is not returned to the Worker. The handle contains:
+  - `id` (`string`): Unique snapshot identifier. Pass the returned `ContainerSnapshot` to [`start()`](#start) as `containerSnapshot`, or store it for a later restore.
+  - `size` (`number`): Snapshot size in bytes.
+  - `name` (`string`, optional): Human-readable name supplied in `options`.
 
 Container snapshots are immutable. Snapshot handles currently have an implicit 30-day time-to-live that refreshes when you restore them. For the complete save and restore flow, refer to [Use snapshots](/containers/guides/snapshots/).
 
