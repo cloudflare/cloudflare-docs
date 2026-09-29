@@ -50,6 +50,9 @@ importers:
       '@cloudflare/ai-search-snippet':
         specifier: 0.0.43
         version: 0.0.43
+      '@cloudflare/config':
+        specifier: 0.20.0
+        version: 0.20.0
       '@cloudflare/nimbus-docs':
         specifier: 0.14.1
         version: 0.14.1(@astrojs/markdown-remark@7.3.1)(@types/node@26.6.2)(astro@7.3.3(@astrojs/markdown-remark@7.3.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@26.6.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tsx@4.23.15)
@@ -770,6 +773,9 @@ packages:
   '@cloudflare/ai-search-snippet@0.0.43':
     resolution: {integrity: sha512-NWT/0wULeX1YLQRDFm6rs8NAJz4YDYWbED628F0GpXF1w5PT09glR4CilIdGiovL9jflGneCD7/uLTrxWMkerQ==}
     engines: {node: '>=16.0.0'}
+
+  '@cloudflare/config@0.20.0':
+    resolution: {integrity: sha512-Dv/UDLkqsmvW95+CmM2nE55pdkLPWnJ63KDMjAFe/5KW1hc2SzJW4f8CUagqarivQugf5+oJMWYlHSmtA4KVlA==}
 
   '@cloudflare/kv-asset-handler@0.5.0':
     resolution: {integrity: sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg==}
@@ -6733,6 +6739,10 @@ snapshots:
       sisteransi: 1.0.5
 
   '@cloudflare/ai-search-snippet@0.0.43': {}
+
+  '@cloudflare/config@0.20.0':
+    dependencies:
+      zod: 4.4.3
 
   '@cloudflare/kv-asset-handler@0.5.0': {}
 

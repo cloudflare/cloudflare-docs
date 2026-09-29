@@ -4,6 +4,8 @@ export interface SidebarLink {
 	type: "link";
 	label: string;
 	href: string;
+	/** Product icon name (src/icons/<icon>.svg). */
+	icon?: string;
 }
 
 export interface SidebarGroup {
@@ -22,10 +24,11 @@ export interface SidebarSection {
 	nodes: SidebarNode[];
 }
 
-const link = (label: string, href: string): SidebarLink => ({
+const link = (label: string, href: string, icon?: string): SidebarLink => ({
 	type: "link",
 	label,
 	href,
+	icon,
 });
 
 export const sidebarSections: SidebarSection[] = [
@@ -63,6 +66,10 @@ export const sidebarSections: SidebarSection[] = [
 			},
 			link("Support", "/support/"),
 		],
+	},
+	{
+		heading: "Developer Tools",
+		nodes: [link("Cloudflare CLI", "/cf/", "cf")],
 	},
 	{
 		heading: "Build",

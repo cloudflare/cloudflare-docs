@@ -1,0 +1,716 @@
+---
+{}
+---
+
+import {
+	AnnotatedConfigExplorer,
+	PackageManagers,
+	Render,
+	TypeScriptExample,
+} from "~/components";
+
+`cloudflare.config.ts` is the typed configuration file for a Workers project.
+Its default export can define a Worker, Container applications, and account
+settings. Because the file is a TypeScript module, it can use imports,
+functions, environment variables, and asynchronous values.
+
+<Render file="beta-note" product="cf" />
+
+Loading `cloudflare.config.ts` requires Node.js 22.18 or later. Bun is not
+supported: when `cf` runs on Bun, loading the file fails with
+`cloudflare.config.ts loading is not supported on Bun`. Most `cf` commands load
+the nearest `cloudflare.config.ts`, including commands that only call the
+Cloudflare API, so this is the practical minimum for any `cf` command you run
+inside the project.
+
+Set `"type": "module"` in the project's `package.json`. Without it, Node.js
+prints a warning each time it loads the file. With `"type": "commonjs"`,
+loading fails with `Cannot use import statement outside a module`.
+
+## Create the minimum configuration
+
+Import the configuration helpers from `cf/config`. Add `cf` as a development
+dependency so the project can resolve that import. Projects created with
+[`cf init`](/cf/get-started/first-worker/) already include it.
+
+<PackageManagers type="add" pkg="cf" dev />
+
+A Worker requires `name` and `compatibilityDate`. A Worker that runs code also
+requires `entrypoint`.
+
+<AnnotatedConfigExplorer
+	id="config-minimum"
+	code={`import { defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "example-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+	},
+});`}
+/>
+
+The `cf-worker` import attribute lets TypeScript infer the Worker module,
+binding types, and exported classes.
+
+An assets-only Worker can omit `entrypoint`. Its build implementation must
+provide the asset source. A deployable build must contain a Worker bundle,
+static assets, or both.
+
+`cloudflare.config.ts` does not have an `assets.directory` field. In Vite
+projects, the static assets are the output of Vite's client build, which
+includes Vite's `publicDir` directory (`public` by default). Projects that build
+with Wrangler set the directory in a generated `wrangler.config.ts` file. For
+details, refer to [How cf runs your project](/cf/projects/#how-cf-runs-your-project).
+
+## Understand the default export
+
+Use `defineConfig()` for the default export. The helper returns the value you
+pass to it and preserves literal values for TypeScript inference.
+
+| Field              | Required               | Purpose                                    |
+| ------------------ | ---------------------- | ------------------------------------------ |
+| `accountId`        | No                     | Sets the default account for `cf` commands |
+| `complianceRegion` | No                     | Selects `public` or `fedramp-high`         |
+| `worker`           | Development and builds | Defines the Worker                         |
+| `containers`       | No                     | Defines Container applications             |
+
+`cf` API commands can read an account-only default export. The Cloudflare Vite
+plugin and Wrangler require `worker` for development and builds.
+
+Use the [configuration explorer](/cf/projects/config-explorer/) to inspect the
+generated fields, builder methods, and nested options.
+
+<AnnotatedConfigExplorer
+	id="config-default-export"
+	code={`import { bindings, defineConfig, triggers } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig(({ mode }) => {
+	const isStaging = mode === "staging";
+	return {
+		accountId: "<ACCOUNT_ID>",
+		complianceRegion: "public",
+		worker: {
+			name: isStaging ? "example-staging" : "example-worker",
+			entrypoint,
+			compatibilityDate: "<COMPATIBILITY_DATE>",
+			env: {
+				MESSAGE: bindings.text(isStaging ? "staging" : "production"),
+			},
+			triggers: [triggers.scheduled({ schedule: "0 * * * *" })],
+		},
+	};
+});`}
+/>
+
+## Evaluate configuration
+
+`defineConfig()`, `defineWorker()`, and `defineContainer()` each accept an
+object, a promise, or a function. A function can return an object or a promise.
+
+Functions receive this context:
+
+| Property    | Purpose                                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------------------- |
+| `mode`      | Identifies the selected mode, which [depends on the command](#select-a-mode) when you omit `--mode`  |
+| `isPreview` | Is `true` when the configuration is evaluated for a [Worker Preview](/cf/projects/#deploy-a-preview) |
+
+Return one complete configuration for each mode. Programmatic configuration
+does not merge environment blocks.
+
+## Reuse definitions
+
+Use `defineWorker()` when another configuration file needs to import a Worker
+definition. Use `defineContainer()` when a Durable Object export and the
+`containers` array need to reference the same Container.
+
+These helpers do not replace the default export. The default export must still
+use `defineConfig()`.
+
+## Configure the Worker
+
+The `worker` object supports these fields:
+
+| Field                | Required    | Purpose                                                                          |
+| -------------------- | ----------- | -------------------------------------------------------------------------------- |
+| `name`               | Yes         | Sets the Worker name                                                             |
+| `compatibilityDate`  | Yes         | Selects a Workers runtime compatibility date                                     |
+| `entrypoint`         | Conditional | Selects the Worker module                                                        |
+| `assets`             | No          | Sets runtime request behavior for built assets                                   |
+| `cache`              | No          | Configures Worker cache behavior                                                 |
+| `compatibilityFlags` | No          | Turns on runtime compatibility flags                                             |
+| `domains`            | No          | Publishes the Worker to custom domains                                           |
+| `env`                | No          | Declares bindings and inline values                                              |
+| `exports`            | No          | Configures named Worker, Durable Object, and Workflow exports                    |
+| `limits`             | No          | Sets CPU and subrequest limits                                                   |
+| `logpush`            | No          | Sends trace events to Workers Logpush                                            |
+| `observability`      | No          | Configures logs, traces, and sampling                                            |
+| `placement`          | No          | Configures smart or targeted placement                                           |
+| `previewUrls`        | No          | Controls [version preview URLs](/workers/versions-and-deployments/preview-urls/) |
+| `tailConsumers`      | No          | Sends events to Tail Workers                                                     |
+| `triggers`           | No          | Declares routes, queues, schedules, and sockets                                  |
+| `unsafe`             | No          | Passes unsupported metadata through to deployment                                |
+| `workersDev`         | No          | Controls the `workers.dev` route                                                 |
+
+The `assets` object controls runtime behavior only. It configures HTML
+handling, not-found handling, and whether matching requests run the Worker
+first. It does not select the asset source.
+
+Use `domains` for custom domains. Use `triggers.fetch()` for routes.
+
+## Use typed builder values
+
+The `bindings`, `triggers`, and `exports` builders return ordinary
+configuration objects. Each object has a literal `type` field that identifies
+its kind.
+
+The `type` field lets TypeScript select the valid options for each kind. For
+example, a queue trigger accepts batching options, while a scheduled trigger
+requires a cron expression. The configuration loader uses the same fields for
+runtime validation.
+
+Use builders instead of writing `type` fields directly. Builders preserve
+literal values and generic type arguments for Worker type inference.
+
+## Declare bindings
+
+Each key under `worker.env` becomes a binding name in Worker code. The builder
+method selects the binding's runtime type.
+
+This configuration declares inline values, a D1 database, a Queue, and a
+secret:
+
+<AnnotatedConfigExplorer
+	id="config-bindings"
+	code={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+type Job = {
+	id: string;
+	operation: "index" | "delete";
+};
+
+export default defineConfig({
+	worker: {
+		name: "example-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		env: {
+			API_ORIGIN: bindings.text("https://api.example.com"),
+			FEATURES: bindings.json({ search: true }),
+			DATABASE: bindings.d1({ name: "application-db" }),
+			JOBS: bindings.queue<Job>({ name: "application-jobs" }),
+			API_KEY: bindings.secret(),
+		},
+	},
+});`}
+/>
+
+The generated `Env` type contains these runtime types:
+
+| Binding      | Inferred runtime type       |
+| ------------ | --------------------------- |
+| `API_ORIGIN` | `"https://api.example.com"` |
+| `FEATURES`   | `{ search: true }`          |
+| `DATABASE`   | `D1Database`                |
+| `JOBS`       | `Queue<Job>`                |
+| `API_KEY`    | `string`                    |
+
+Your Worker receives the inferred type through `env`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(_request, env) {
+		await env.JOBS.send({
+			id: "example-job",
+			operation: "index",
+		});
+
+		const result = await env.DATABASE.prepare("SELECT 1").first();
+		return Response.json({
+			origin: env.API_ORIGIN,
+			search: env.FEATURES.search,
+			result,
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The Cloudflare Vite plugin writes `.cloudflare/types/index.d.ts` during
+development and builds. Outside the Vite workflow, `cf workers types` writes the
+same file.
+
+TypeScript wildcard patterns skip dot-prefixed directories, so include the
+generated directory explicitly. The `.ts` extensions in the examples on this
+page also need `allowImportingTsExtensions`:
+
+```json title="tsconfig.json"
+{
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+		"noEmit": true
+	},
+	"include": ["src", "cloudflare.config.ts", ".cloudflare/types"]
+}
+```
+
+The builder API includes these methods:
+
+| Area                 | Builder methods                                                                                           |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| Inline values        | `text`, `json`, `secret`                                                                                  |
+| Storage and data     | `d1`, `kv`, `r2`, `hyperdrive`, `analyticsEngineDataset`, `artifacts`, `pipeline`                         |
+| AI and media         | `ai`, `aiSearch`, `aiSearchNamespace`, `agentMemory`, `browser`, `images`, `media`, `stream`, `vectorize` |
+| Messaging            | `queue`, `sendEmail`                                                                                      |
+| Worker composition   | `assets`, `dispatchNamespace`, `durableObject`, `worker`, `workerLoader`, `workflow`                      |
+| Network and security | `mtlsCertificate`, `rateLimit`, `secretsStoreSecret`, `vpcNetwork`, `vpcService`                          |
+| Platform metadata    | `flagship`, `logfwdr`, `versionMetadata`                                                                  |
+
+Required options differ by binding. TypeScript completion shows the options
+for each builder.
+
+### Type cross-Worker bindings
+
+`bindings.worker()`, `bindings.durableObject()`, and `bindings.workflow()`
+accept a Worker name or a Worker definition. Import a Worker definition to
+validate its export names at compile time.
+
+For example, an API Worker can export its definition:
+
+<AnnotatedConfigExplorer
+	id="config-cross-worker-api"
+	filename="api/cloudflare.config.ts"
+	code={`import { defineConfig, defineWorker, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export const apiWorker = defineWorker({
+	name: "api-worker",
+	entrypoint,
+	compatibilityDate: "<COMPATIBILITY_DATE>",
+	exports: {
+		Admin: exports.worker(),
+		Counter: exports.durableObject({ storage: "sqlite" }),
+	},
+});
+
+export default defineConfig({ worker: apiWorker });`}
+/>
+
+A second Worker can import that definition:
+
+<AnnotatedConfigExplorer
+	id="config-cross-worker-web"
+	filename="web/cloudflare.config.ts"
+	code={`import { bindings, defineConfig } from "cf/config";
+import { apiWorker } from "../api/cloudflare.config.ts";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "web-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		env: {
+			API: bindings.worker({
+				worker: apiWorker,
+				exportName: "Admin",
+			}),
+			COUNTERS: bindings.durableObject({
+				worker: apiWorker,
+				exportName: "Counter",
+			}),
+		},
+	},
+});`}
+/>
+
+Import the other configuration file with its `.ts` extension. Node.js loads
+`cloudflare.config.ts` with its own module resolution, which does not add
+extensions. An import without the extension fails with a `Cannot find module`
+error (`ERR_MODULE_NOT_FOUND`). Because API commands also load the nearest
+configuration file, the error breaks ordinary API commands in that directory
+too.
+
+TypeScript rejects unknown export names. It also infers the `API` Remote
+Procedure Call (RPC) methods and the Durable Object stub type from the imported
+entrypoint.
+
+Use a Worker name when the target definition cannot be imported. TypeScript can
+validate the binding shape, but it cannot validate the remote export name.
+
+## Declare triggers
+
+Each `triggers` method returns a typed event declaration. Add these values to
+the `worker.triggers` array.
+
+<AnnotatedConfigExplorer
+	id="config-triggers"
+	code={`import { defineConfig, triggers } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "example-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		triggers: [
+			triggers.fetch({
+				pattern: "api.example.com/*",
+				zone: "example.com",
+			}),
+			triggers.queue({
+				name: "application-jobs",
+				maxBatchSize: 10,
+				maxRetries: 3,
+			}),
+			triggers.scheduled({ schedule: "0 * * * *" }),
+			triggers.email({ addresses: ["support@example.com"] }),
+			triggers.connect({ protocol: "tcp", port: 5432 }),
+		],
+	},
+});`}
+/>
+
+The builder provides these trigger methods:
+
+| Method      | Event                                          |
+| ----------- | ---------------------------------------------- |
+| `fetch`     | A route receives HTTP traffic                  |
+| `queue`     | A queue delivers messages                      |
+| `scheduled` | A cron schedule runs                           |
+| `email`     | Email Routing receives matching email          |
+| `connect`   | TCP or UDP traffic reaches the configured port |
+
+Set `protocol` to `"tcp"` or `"udp"` in `triggers.connect()`. UDP triggers also
+accept `idleTimeoutMs` and `maxPendingBytes`.
+
+Triggers control which events invoke a Worker. They do not create `env`
+bindings. TypeScript checks the options for each trigger, while Workers runtime
+types provide the handler signatures.
+
+## Declare exports
+
+The `worker.exports` map describes how the platform manages module exports.
+Each key must match the `default` export or a named class exported by the
+entrypoint.
+
+Use `exports.worker()` to configure a `WorkerEntrypoint`. It accepts an
+optional per-entrypoint cache setting. Use `exports.durableObject()` to declare
+a Durable Object class and its lifecycle state. Use `exports.workflow()` to
+declare a class that extends `WorkflowEntrypoint`.
+
+<AnnotatedConfigExplorer
+	id="config-exports"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "example-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			default: exports.worker({ cache: { enabled: false } }),
+			Admin: exports.worker({ cache: { enabled: true } }),
+			Counter: exports.durableObject({ storage: "sqlite" }),
+			OrderWorkflow: exports.workflow({
+				name: "order-workflow",
+				limits: { steps: 100 },
+				defaultRetention: {
+					successRetention: "3 days",
+					errorRetention: "7 days",
+				},
+			}),
+		},
+	},
+});`}
+/>
+
+The builders describe exported code. They do not create JavaScript exports. The
+entrypoint must still export `Admin`, `Counter`, and `OrderWorkflow`.
+
+`exports.workflow()` requires a `name`, which must be unique within the account.
+It also accepts `limits.steps`, `concurrency.limit`, `schedules` for cron
+schedules that start instances, and `defaultRetention`. Retention values accept
+milliseconds or a duration string, such as `"3 days"`.
+
+To bind to a Workflow, from the same Worker or another one, use
+`bindings.workflow()`. It requires the Workflow's `name`, the `worker` that
+defines it (a Worker name or a Worker definition), and the `exportName` of its
+class, such as
+`bindings.workflow({ name: "order-workflow", worker: "example-worker", exportName: "OrderWorkflow" })`.
+
+### Manage Durable Object lifecycle
+
+The `exports` map replaces an ordered Durable Object migration history. Keep
+live classes in the map. Add temporary tombstones when a class is deleted,
+renamed, or transferred.
+
+The key of each entry is the Durable Object class name. The `state` field
+selects the valid lifecycle options:
+
+| State                | Purpose                                                                    |
+| -------------------- | -------------------------------------------------------------------------- |
+| `created` or omitted | Declares a live class with `sqlite` or `legacy-kv` storage                 |
+| `deleted`            | Retires a namespace after its class is removed                             |
+| `renamed`            | Renames the key to the live class named by `renamedTo`                     |
+| `expecting-transfer` | Prepares the destination Worker to receive a namespace from `transferFrom` |
+| `transferred`        | Transfers ownership to the same-account Worker named by `transferredTo`    |
+
+Use `sqlite` for new classes. A live or incoming class that uses `sqlite` can
+attach a Container definition. You cannot attach a Container to a
+`legacy-kv` class or a tombstone.
+
+#### Distinguish exports from bindings
+
+Exports and bindings serve different purposes:
+
+| Configuration         | Purpose                                                               |
+| --------------------- | --------------------------------------------------------------------- |
+| `exports.Counter`     | Declares the class and manages its namespace lifecycle                |
+| `env.COUNTERS`        | Injects a namespace binding under `env.COUNTERS`                      |
+| `ctx.exports.Counter` | Accesses a class exported by the same Worker without an `env` binding |
+
+Live Durable Object exports become typed properties on `ctx.exports`. A Worker
+does not need an `env` binding to call its own class.
+
+<AnnotatedConfigExplorer
+	id="config-ctx-exports"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "counter-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		compatibilityFlags: ["enable_ctx_exports"],
+		exports: {
+			Counter: exports.durableObject({ storage: "sqlite" }),
+		},
+	},
+});`}
+/>
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class Counter extends DurableObject {
+	getValue() {
+		return this.ctx.storage.get<number>("value");
+	}
+}
+
+export default {
+	async fetch(_request, _env, ctx) {
+		const id = ctx.exports.Counter.idFromName("global");
+		const stub = ctx.exports.Counter.get(id);
+		return Response.json({ value: await stub.getValue() });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The generated types include live and incoming Durable Object exports.
+Tombstones do not appear on `ctx.exports`.
+
+#### Rename or delete a class
+
+A rename keeps the old name as a tombstone. The destination name must appear as
+a live entry in the same map. Remove the old class from the Worker code.
+
+<AnnotatedConfigExplorer
+	id="config-rename-delete"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "counter-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			Counter: exports.durableObject({ storage: "sqlite" }),
+			OldCounter: exports.durableObject({
+				state: "renamed",
+				renamedTo: "Counter",
+			}),
+			UnusedCounter: exports.durableObject({ state: "deleted" }),
+		},
+	},
+});`}
+/>
+
+Before you delete a namespace, remove every binding to that class. The uploaded
+Worker must not export a class marked as `deleted`.
+
+Deployment responses identify stale tombstones that are safe to remove. Keep
+each tombstone until it appears in that response, then remove it from the map.
+You do not need to retain the complete migration history.
+
+#### Transfer a class between Workers
+
+A namespace transfer uses two deployments. Both Workers must use the same
+Cloudflare account.
+
+First, deploy the destination Worker with an incoming live entry:
+
+<AnnotatedConfigExplorer
+	id="config-transfer-destination"
+	filename="destination/cloudflare.config.ts"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "destination-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			Counter: exports.durableObject({
+				state: "expecting-transfer",
+				storage: "sqlite",
+				transferFrom: "source-worker",
+			}),
+		},
+	},
+});`}
+/>
+
+Then deploy the source Worker with a transfer tombstone:
+
+<AnnotatedConfigExplorer
+	id="config-transfer-source"
+	filename="source/cloudflare.config.ts"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "source-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			Counter: exports.durableObject({
+				state: "transferred",
+				transferredTo: "destination-worker",
+			}),
+		},
+	},
+});`}
+/>
+
+Lifecycle changes take effect when a version is deployed, not when it is
+uploaded. Deploy an export-changing version to 100% of traffic before you split
+traffic with other versions. The platform rejects split deployments whose
+versions disagree about `exports`.
+
+### Attach a Container
+
+Define a Container once. Reference it from a Durable Object export and add it to
+the top-level `containers` array.
+
+<AnnotatedConfigExplorer
+	id="config-container"
+	code={`import { bindings, defineConfig, defineContainer, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+const imageProcessor = defineContainer({
+	name: "image-processor",
+	image: { dockerfile: "./Dockerfile" },
+	instanceType: "lite",
+	maxInstances: 1,
+});
+
+export default defineConfig({
+	worker: {
+		name: "image-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			ImageProcessor: exports.durableObject({
+				storage: "sqlite",
+				container: imageProcessor,
+			}),
+		},
+		env: {
+			IMAGE_PROCESSOR: bindings.durableObject({
+				worker: "image-worker",
+				exportName: "ImageProcessor",
+			}),
+		},
+	},
+	containers: [imageProcessor],
+});`}
+/>
+
+Container names must be unique. Each Container can be linked to only one
+Durable Object export.
+
+`cf deploy` applies supported Container application changes.
+`cf workers versions create` prepares images for Durable Object-managed
+Containers, but it does not apply Container applications.
+
+## Set account defaults
+
+Set `accountId` and `complianceRegion` at the top level of the default export.
+Supported compliance regions are `public` and `fedramp-high`.
+
+`CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_COMPLIANCE_REGION` take priority over
+these values. When neither the environment nor the configuration sets an
+account, `cf` uses the account it saved on an earlier command, or resolves one
+from your credentials. For the full order, refer to
+[Select an account](/cf/get-started/#select-an-account).
+
+`cf` searches from the current directory toward the filesystem root and uses
+the nearest `cloudflare.config.ts` file.
+
+When an API command reads account defaults, `cf` executes the module and
+resolves the default export. If the default export is a function, `cf` calls it
+with `isPreview: false` and the mode passed with `--mode`. Without `--mode`, the
+mode is `undefined`, while a Vite build of the same project uses `production`.
+`cf deploy`, `cf workers versions create`, and `cf workers triggers deploy`
+resolve the account the same way. Without `--mode`, they evaluate the
+configuration with an `undefined` mode, even when the Vite build used
+`production`. If `accountId` depends on the mode, pass `--mode` explicitly to
+every command.
+
+API commands do not evaluate nested `worker` or `containers` factories, and they
+do not validate Worker fields. Syntax errors, import errors, and top-level
+runtime errors in the module still break them.
+
+## Select a mode
+
+Pass `--mode <NAME>`, or `-m <NAME>`, to evaluate function-form configuration
+for a named mode. Project commands also pass the mode to the build:
+
+```sh
+cf build --mode staging
+cf deploy --mode staging
+```
+
+When you omit `--mode`, the default depends on the tool that evaluates the
+configuration:
+
+| Command                                                          | Default mode  |
+| ---------------------------------------------------------------- | ------------- |
+| `cf dev` with the Cloudflare Vite plugin                         | `development` |
+| `cf build`, `cf deploy`, and other commands that build with Vite | `production`  |
+| Commands that build with Wrangler                                | `undefined`   |
+| API commands, such as `cf d1 list`                               | `undefined`   |
+
+When `cf` runs a framework's own command, only Vite and Astro accept `--mode`.
+For other frameworks, the command stops with an error that says the detected
+command does not currently support `--mode`.
+
+Build Output records the mode in its root `config.json`. To deploy an existing
+build with `--prebuilt`, pass the recorded mode. For the rule and examples,
+refer to [Deploy a prebuilt build](/cf/projects/#deploy-a-prebuilt-build).
