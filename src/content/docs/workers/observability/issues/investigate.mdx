@@ -1,0 +1,97 @@
+---
+pcx_content_type: concept
+title: Investigate issues
+description: Use occurrences, stack traces, logs, traces, and application context to investigate failures detected by Workers Issues.
+sidebar:
+  order: 1
+products:
+  - workers
+---
+
+import { TypeScriptExample } from "~/components";
+
+You can investigate an issue by comparing its occurrences and reviewing the available diagnostic context.
+
+## Detected failures
+
+Issues can detect the following production failures:
+
+| Failure                   | Example                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| Uncaught exception        | An exception escapes a Worker handler.                                             |
+| Failed invocation         | The runtime ends an invocation because of a CPU, memory, or other error.           |
+| HTTP server error         | A Worker intentionally or unintentionally produces an HTTP `5xx` response.        |
+| Subrequest server error   | An origin or another service returns an HTTP `5xx` response to the Worker.         |
+| Application log           | Any console output, including caught `Error` objects and non-`Error` values.       |
+| Non-fetch handler failure | A scheduled, queue, or alarm handler fails.                                        |
+
+Issues detection does not require Workers Logs or tracing. Tracing is only required to add custom application context.
+
+## How failures are grouped
+
+Issues groups similar failures from the same Worker. Differences in error messages or stack traces can create separate issues.
+
+## Review issue details
+
+Open the [Issues overview](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/issues?status=active), then select an issue.
+
+The issue details page shows when the failure started, how often it occurred, and its current status.
+
+Select an occurrence to review its available diagnostic context:
+
+- The detected error and a stack trace, when available.
+- Logs and traces related to the failure.
+- The Worker version that produced the occurrence.
+- Invocation and request details.
+- Application context attached to the active trace span.
+
+The available context depends on the failure type and the telemetry captured for that invocation.
+
+![Issue details showing a handled checkout exception, stack trace, occurrence chart, and summary.](~/assets/images/workers-observability/issues/workers-issues-detail-synthetic-2000x925.png)
+
+## Add application context
+
+Cloudflare automatically captures platform context, but it does not know which application users, accounts, or sessions are relevant. Add these identifiers as attributes on the active span with the Workers runtime's built-in OpenTelemetry API. [Turn on tracing](/workers/observability/traces/#how-to-enable-tracing) before you access the active span.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { tracing } from "cloudflare:workers";
+
+export default {
+	async fetch(request: Request): Promise<Response> {
+		const { userId, accountId, sessionId } = await getAuthDetails(request);
+		const span = tracing.getActiveSpan();
+
+		span?.setAttribute("user.id", userId);
+		span?.setAttribute("account.id", accountId);
+		span?.setAttribute("session.id", sessionId);
+
+		return handleRequest(request);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+These attributes appear with related occurrences.
+
+![Issue context showing user, account, and session IDs with an execution trail and invocation metadata.](~/assets/images/workers-observability/issues/workers-issues-context-synthetic-2000x925.png)
+
+Do not add secrets, access tokens, or sensitive request content to span attributes, logs, or error messages. Handle application identifiers and personal data according to your privacy and data-handling policies.
+
+For more information about the runtime tracing API, refer to [Custom spans](/workers/observability/traces/custom-spans/).
+
+## Issue statuses
+
+| Status     | Behavior                                                                                  |
+| ---------- | ----------------------------------------------------------------------------------------- |
+| `Active`   | The issue is unresolved. New issues start with this status.                               |
+| `Resolved` | The issue is considered fixed. A newer occurrence changes the status back to `Active`.   |
+| `Ignored`  | The issue remains ignored when new occurrences arrive. Change the status to review it again. |
+
+Issues do not resolve automatically. Update the status after you investigate or deploy a fix. A delayed occurrence observed before an issue was resolved does not reopen it.
+
+## Retention
+
+Issues and occurrence details are retained for seven days. To turn off Issues through Wrangler, set `observability.issues.enabled` to `false` and deploy your Worker. Issues stops detecting new failures, and existing data remains available until its retention period expires.

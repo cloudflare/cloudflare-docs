@@ -68,5 +68,10 @@
 		"deeplink": "/?to=/:account/r2/metrics",
 		"name": "R2 Metrics",
 		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",
+		"name": "Issues",
+		"parent": ["Compute & AI", "Workers & Pages"]
 	}
 ]
