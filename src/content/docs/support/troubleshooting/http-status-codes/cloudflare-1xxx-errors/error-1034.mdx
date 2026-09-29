@@ -30,3 +30,23 @@ If you are using a SaaS provider that uses [Cloudflare for SaaS](/cloudflare-for
 1. Ensuring your DNS records point to the correct IP addresses or hostnames provided by your SaaS provider.
 2. Confirming that your domain has been properly registered and validated with the SaaS provider's platform.
 3. Contacting your SaaS provider's support team if you continue to experience this error after verifying your configuration.
+
+#### Zone routing through a BYOIP address map from a different account
+
+If your zone is a member of a Cloudflare [Address Map](/byoip/how-to/address-maps/) that contains IP addresses from a BYOIP prefix, and your Cloudflare account does not have access to that prefix, EIV will block all traffic to the zone with a `1034` error.
+
+This typically happens when:
+
+- Your zone was previously onboarded to a third-party CDN or SaaS service that uses Cloudflare's infrastructure with their own BYOIP prefix, and the zone membership was not cleaned up when you stopped using the service.
+- Your zone was moved between Cloudflare accounts after being enrolled in a BYOIP address map.
+
+**How to check**: Go to **Cloudflare Dashboard → Account Home → Network → Address Maps** and look for any address map that lists your affected zone as a member. If the IP addresses in that map match what your zone currently resolves to, and those IPs are not in [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/), this cause applies.
+
+**Resolution**:
+
+1. Go to **Cloudflare Dashboard → Account Home → Network → Address Maps**.
+2. Click the address map that contains your zone.
+3. In the **Memberships** tab, find your zone and click **Remove**.
+4. Wait 1–2 minutes for the change to propagate, then test your domain.
+
+If you cannot remove the zone yourself (for example, if the address map is owned by a third-party service that previously used your domain), contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the address map ID so we can investigate and assist.
