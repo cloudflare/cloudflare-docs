@@ -145,7 +145,7 @@ Your Worker needs to be able to both serve static assets and route requests to t
 In this case, we will pass requests to one of three container instances if the route starts with `/api`,
 and all other requests will be served as static assets.
 
-For the direct API example, expose `GET /health` on port 8080. Return a successful response only when the backend is ready.
+Because `container.start()` does not wait for readiness, the Durable Object Container API example polls `GET /health` on port 8080 before forwarding requests.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">

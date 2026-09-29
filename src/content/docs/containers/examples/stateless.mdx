@@ -14,7 +14,7 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 To proxy requests across a fixed number of Container instances, select an instance name and forward the request through its Durable Object.
 
-For the direct API example, expose a `GET /health` endpoint on port 8080 that returns a successful response when the application is ready.
+Because `container.start()` does not wait for readiness, the Durable Object Container API example polls `GET /health` on port 8080 before forwarding requests.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
