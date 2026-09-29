@@ -37,15 +37,24 @@ For a process that runs until the container stops, such as a development server 
    // Runs the command in its own process group. Records its process ID when
    // it starts and its exit code when it ends.
    const RUN = `dir=$1; shift
-   setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
+   setsid sh -c 'echo "$$ $(cat /proc/sys/kernel/random/boot_id)" >"$0/pid"; exec "$@"' \\
+   	"$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
    echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
+   // Defines current(), which reads the process ID in a directory into $pid
+   // when the process started in this instance.
+   const CURRENT = `current() {
+   	read -r pid boot 2>/dev/null <"$1/pid" &&
+   		[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ]
+   }`;
+
    // Prints the state of the process that owns the directory.
-   const STATUS = `dir=$1
+   const STATUS = `${CURRENT}
+   dir=$1
    if [ ! -d "$dir" ]; then echo missing
    elif [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
    elif [ ! -e "$dir/pid" ]; then echo starting
-   elif kill -0 "$(cat "$dir/pid")" 2>/dev/null; then echo "running $(cat "$dir/pid")"
+   elif current "$dir" && kill -0 "$pid" 2>/dev/null; then echo "running $pid"
    elif [ -e "$dir/exit-code" ]; then echo "exited $(cat "$dir/exit-code")"
    else echo lost
    fi`;
@@ -172,6 +181,8 @@ For a process that runs until the container stops, such as a development server 
    ```
 
    `kill -0` checks that the process exists without sending it a signal. A process is `lost` when it ended without recording an exit code, for example because something sent `SIGKILL` to the script that records it.
+
+   The process ID file also records the boot ID, which changes in every instance. A [snapshot](/sandbox/files/save-and-restore-a-workspace/) restores the file, and a new instance reuses the same process IDs, so a restored process ID can belong to an unrelated process. `current()` ignores a process ID from another instance, so a process that was running when the snapshot was taken is `lost`.
 
 4. Add methods that return the output of a process so far, and follow it while the process runs:
 

@@ -34,21 +34,32 @@ For a process that runs until it finishes, such as a build or an agent task, ref
    const SERVERS = "/var/lib/servers";
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
+   // Defines current(), which reads the process ID in a directory into $pid
+   // when the process started in this instance.
+   const CURRENT = `current() {
+   	read -r pid boot 2>/dev/null <"$1/pid" &&
+   		[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ]
+   }`;
+
    // Starts the server unless it already runs. The server runs in its own
    // process group, and writes its process ID and output to its directory.
-   const SERVE = `dir=$1; shift
-   pid=$(cat "$dir/pid" 2>/dev/null) && kill -0 "$pid" 2>/dev/null && exit 0
+   const SERVE = `${CURRENT}
+   dir=$1; shift
+   current "$dir" && kill -0 "$pid" 2>/dev/null && exit 0
    mkdir -p "$dir" && rm -f "$dir/pid"
-   setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/log" 2>&1`;
+   setsid sh -c 'echo "$$ $(cat /proc/sys/kernel/random/boot_id)" >"$0/pid"; exec "$@"' \\
+   	"$dir" "$@" >"$dir/log" 2>&1`;
 
    // Prints the end of the log and exits with 0 when the server has exited.
-   const EXITED = `pid=$(cat "$1/pid" 2>/dev/null) || exit 1
+   const EXITED = `${CURRENT}
+   current "$1" || exit 1
    kill -0 "$pid" 2>/dev/null && exit 1
    tail -n 20 "$1/log"`;
 
    // Stops the process group. Once the server exits, within 10 seconds,
    // removes its process ID.
-   const STOP = `pid=$(cat "$1/pid" 2>/dev/null) || exit 0
+   const STOP = `${CURRENT}
+   current "$1" || exit 0
    kill -s TERM -- "-$pid" 2>/dev/null
    timeout 10 sh -c 'while kill -0 "$0" 2>/dev/null; do sleep 0.1; done' "$pid" &&
    	rm -f "$1/pid"`;
@@ -120,6 +131,8 @@ For a process that runs until it finishes, such as a build or an agent task, ref
    </TypeScriptExample>
 
    `SERVE` starts nothing when the server in the directory already runs. Every request can call `startServer()`, and a new container, which has no server, gets one. This also covers a Durable Object that restarts while its container keeps running.
+
+   The process ID file also records the boot ID, which changes in every instance. A [snapshot](/sandbox/files/save-and-restore-a-workspace/) restores the file, and a new instance reuses the same process IDs, so a restored process ID can belong to an unrelated process. `current()` ignores a process ID from another instance.
 
    `setsid` starts the server in a new process group, so `STOP` also stops the processes that the server starts. The shell that runs `SERVE` stays in the container until the server exits. Do not start the server with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
