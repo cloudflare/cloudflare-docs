@@ -21,6 +21,7 @@ import {
 	Plan,
 	TabItem,
 	Tabs,
+	TypeScriptExample,
 	WranglerConfig,
 	LinkButton,
 } from "~/components";
@@ -46,26 +47,80 @@ With Containers you can run:
 
 Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write JavaScript:
 
+The container in this example exposes `GET /health` on port `4000` and returns a successful response when it is ready. Because `container.start()` returns immediately, the Durable Object waits for this endpoint before forwarding requests.
+
 <Tabs>
 	<TabItem label="Worker Code">
-		```js
-		import { Container, getContainer } from "@cloudflare/containers";
 
-    	export class MyContainer extends Container {
-    		defaultPort = 4000; // Port the container is listening on
-    		sleepAfter = "10m"; // Stop the instance if requests not sent for 10 minutes
-    	}
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
 
-    	export default {
-    		async fetch(request, env) {
-    			const { "session-id": sessionId } = await request.json();
-    			// Get the container instance for the given session ID
-    			const containerInstance = getContainer(env.MY_CONTAINER, sessionId);
-    			// Pass the request to the container instance on its default port
-    			return containerInstance.fetch(request);
-    		},
-    	};
-    	```
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+}
+
+export class MyContainer extends DurableObject<Env> {
+	private ready: Promise<void> | undefined;
+
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			this.ready = undefined;
+		}
+		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
+			this.ready = undefined;
+			throw error;
+		});
+		await this.ready;
+
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return container.getTcpPort(4000).fetch(forwarded);
+	}
+
+	private async startAndWaitForPort(): Promise<void> {
+		const container = this.ctx.container!;
+		await container.setInactivityTimeout(10 * 60 * 1000);
+		if (!container.running) {
+			container.start();
+		}
+
+		const port = container.getTcpPort(4000);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 100; attempt++) {
+			try {
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(200);
+			}
+		}
+		throw new Error("Container did not become ready on port 4000", {
+			cause: lastError,
+		});
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const containerRequest = request.clone();
+		const { "session-id": sessionId } = await request.json<{
+			"session-id": string;
+		}>();
+		return env.MY_CONTAINER.getByName(sessionId).fetch(containerRequest);
+	},
+};
+```
+</TypeScriptExample>
+
     </TabItem>
     <TabItem label="Worker Config">
     	<WranglerConfig>
