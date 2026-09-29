@@ -56,7 +56,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ### `images` <Badge text="durable_object policy only" variant="note" size="small" />
 
-`images` is a read-only map of named images configured for an application that uses the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). Each value is a digest-pinned image reference prepared by Wrangler.
+`images` is a read-only map generated from the [`images` field in the application's Wrangler configuration](/workers/wrangler/configuration/#durable_object-scheduling-policy). Wrangler builds or resolves each named image and exposes its digest-pinned reference under the same key. This attribute is available only for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
 
 ```js
 const image = this.ctx.container.images.base;
