@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Keep one directory from a sandbox in your own R2 bucket, such as a project that an agent works on. The `DirectoryBackups` class from the `@cloudflare/sandbox` package saves the directory as one object, and restores it as ordinary files. A backup does not depend on the Linux instance or the image, so it restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it.
+Keep one directory from a sandbox in your own R2 bucket, such as a project that an agent works on. The `DirectoryBackup` class from the `@cloudflare/sandbox` package saves the directory as one object, and restores it as ordinary files. A backup does not depend on the Linux instance or the image, so it restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it.
 
 ## Prerequisites
 
@@ -89,12 +89,15 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-5. In `src/index.ts`, export `DirectoryBackupGateway`, and update the `MyContainer` class so that its methods start the `workspace` image and create `DirectoryBackups`:
+5. In `src/index.ts`, export `DirectoryBackupGateway`, and update the `MyContainer` class so that its methods start the `workspace` image and create `DirectoryBackup`:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { type DirectoryBackup, DirectoryBackups } from "@cloudflare/sandbox";
+   import {
+   	DirectoryBackup,
+   	type DirectoryBackupRecord,
+   } from "@cloudflare/sandbox";
    import { DurableObject } from "cloudflare:workers";
 
    export { DirectoryBackupGateway } from "@cloudflare/sandbox";
@@ -138,8 +141,8 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    		return container;
    	}
 
-   	private backups(): DirectoryBackups {
-   		return new DirectoryBackups(
+   	private backups(): DirectoryBackup {
+   		return new DirectoryBackup(
    			this.container(),
    			this.ctx.exports.DirectoryBackupGateway,
    			{ binding: "BACKUPS", prefix: "backups/" },
@@ -185,7 +188,9 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    ```ts title="src/index.ts"
    async restore(id: string) {
-   	const backup = await this.ctx.storage.get<DirectoryBackup>(`backup:${id}`);
+   	const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
+   		`backup:${id}`,
+   	);
 
    	if (!backup) {
    		return false;
@@ -197,7 +202,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    }
    ```
 
-   `restore()` replaces the directory, so files that are not in the backup are removed. It checks the object against the SHA-256 in the record before it replaces anything, and a restore that fails leaves the directory as it was. An object that was deleted or changed throws `SandboxBackupError`, with the code `BACKUP_NOT_FOUND` or `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackups errors](/sandbox/reference/directory-backups/#errors).
+   `restore()` replaces the directory, so files that are not in the backup are removed. It checks the object against the SHA-256 in the record before it replaces anything, and a restore that fails leaves the directory as it was. An object that was deleted or changed throws `SandboxBackupError`, with the code `BACKUP_NOT_FOUND` or `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
 
 9. Replace the default export of the Worker with routes that write a note, back up the project, and restore a backup:
 
@@ -292,7 +297,9 @@ To delete a backup, delete its object and its record:
 
 ```ts title="src/index.ts"
 async deleteBackup(id: string) {
-	const backup = await this.ctx.storage.get<DirectoryBackup>(`backup:${id}`);
+	const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
+		`backup:${id}`,
+	);
 
 	if (backup) {
 		await this.backups().delete(backup);
@@ -307,6 +314,6 @@ A backup that fails does not leave an object. If the Durable Object restarts dur
 
 ## Related resources
 
-- [DirectoryBackups API](/sandbox/reference/directory-backups/): what a backup keeps, one operation at a time per container, cancellation, and every error.
+- [DirectoryBackup API](/sandbox/reference/directory-backups/): what a backup keeps, one operation at a time per container, cancellation, and every error.
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the whole filesystem instead of one directory.
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): read and write files that other systems use.

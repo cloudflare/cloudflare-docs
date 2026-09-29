@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give commands in a Linux sandbox a directory backed by R2, such as the input and output files of a job. The `S3Mounts` class from the `@cloudflare/sandbox` package mounts one prefix of a bucket with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request, so the sandbox never receives them.
+Give commands in a Linux sandbox a directory backed by R2, such as the input and output files of a job. The `S3Mount` class from the `@cloudflare/sandbox` package mounts one prefix of a bucket with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request, so the sandbox never receives them.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
    <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
-2. Create a `Dockerfile` in the project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mounts` uses:
+2. Create a `Dockerfile` in the project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mount` uses:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -94,14 +94,14 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
    <PackageManagers type="exec" pkg="wrangler" args="secret put S3_SECRET_ACCESS_KEY" />
 
-5. Import `S3Mounts`, and export `S3Gateway` from the main module of your Worker:
+5. Import `S3Mount`, and export `S3Gateway` from the main module of your Worker:
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   import { S3Mounts } from "@cloudflare/sandbox";
+   import { S3Mount } from "@cloudflare/sandbox";
 
-   // S3Mounts sends storage requests from the sandbox to this entrypoint.
+   // S3Mount sends storage requests from the sandbox to this entrypoint.
    export { S3Gateway } from "@cloudflare/sandbox";
    ```
 
@@ -145,7 +145,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	}
 
-   	await new S3Mounts(container, this.ctx.exports.S3Gateway).mount({
+   	await new S3Mount(container, this.ctx.exports.S3Gateway).mount({
    		mountPath: "/mnt/artifacts",
    		source: {
    			type: "s3",
@@ -200,7 +200,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    		return;
    	}
 
-   	await new S3Mounts(container, this.ctx.exports.S3Gateway).unmount(
+   	await new S3Mount(container, this.ctx.exports.S3Gateway).unmount(
    		"/mnt/artifacts",
    	);
    	await container.destroy();
@@ -308,7 +308,7 @@ Under `wrangler dev`, the container runs in Docker on your machine, and `S3Gatew
 
 ## Related resources
 
-- [S3Mounts API](/sandbox/reference/s3-mounts/): every option and error.
+- [S3Mount API](/sandbox/reference/s3-mounts/): every option and error.
 - [Artifact workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/artifact-workspace): a deployable Worker that mounts a prefix for each sandbox and processes a file in it.
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files on the sandbox disk between instances. Snapshots do not include mounted directories.
 - [S3 API compatibility](/r2/api/s3/api/): the S3 operations that R2 supports.
