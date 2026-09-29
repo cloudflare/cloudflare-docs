@@ -18,7 +18,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## List the sandboxes
 
@@ -95,13 +95,25 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
    `INSERT OR IGNORE` keeps the time of the first command when the same session runs again.
 
-3. In `MyContainer`, set an inactivity timeout whenever the Durable Object uses the container, and add methods that report and stop the container. Define the timeout at the top of the file:
+3. In `MyContainer`, set an inactivity timeout, and add methods that report and stop the container. Define the timeout at the top of the file, and add a constructor that sets it when a restarted Durable Object finds the container running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
    ```
 
-   In `exec()`, set the timeout after the `start()` block:
+   In `exec()`, set the timeout after `start()`, inside the `if (!container.running)` block:
 
    ```ts title="src/index.ts"
    await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
@@ -110,13 +122,8 @@ List the sandboxes that belong to one user, for example to show their open sessi
    Then add the two methods to `MyContainer`:
 
    ```ts title="src/index.ts"
-   async isRunning() {
-   	const container = this.ctx.container;
-   	if (!container?.running) {
-   		return false;
-   	}
-   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-   	return true;
+   isRunning() {
+   	return this.ctx.container?.running ?? false;
    }
 
    async destroy() {
@@ -124,7 +131,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
    }
    ```
 
-   `running` reports whether the container is running, and reading it does not start the container. A Durable Object that listing wakes no longer has the inactivity timeout that `exec()` set, so `isRunning()` sets it again. Without that call, the sandbox stops shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   `running` reports whether the container is running, and reading it does not start the container. Listing can reach a Durable Object that restarted after `exec()` set the timeout. The constructor sets the timeout again, so the sandbox does not stop shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 4. Add routes to your Worker that name each sandbox `<OWNER>/<SESSION>`, record the session before running a command, list the sessions with their state, and remove a session after stopping its container:
 

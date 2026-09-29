@@ -18,7 +18,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## Record each stop
 
@@ -47,7 +47,11 @@ Run your own code when a sandbox stops, for example to update your records, noti
    ```ts title="src/index.ts"
    constructor(ctx: DurableObjectState, env: Env) {
    	super(ctx, env);
-   	if (ctx.container?.running) {
+   	const container = ctx.container;
+   	if (container?.running) {
+   		void ctx.blockConcurrencyWhile(() =>
+   			container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   		);
    		this.watch();
    	}
    }
@@ -83,7 +87,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   [`monitor()`](/containers/api/durable-object-container/#monitor) rejects with an `exitCode` when the main process fails, and with the reason passed to `destroy()`. A restarted Durable Object no longer has the earlier `monitor()` call, so the constructor calls it again. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
+   [`monitor()`](/containers/api/durable-object-container/#monitor) rejects with an `exitCode` when the main process fails, and with the reason passed to `destroy()`. A restarted Durable Object no longer has the earlier `monitor()` call or the inactivity timeout, so the constructor sets both again. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
 
 3. Add a method that records a stop that `monitor()` missed:
 
@@ -116,13 +120,13 @@ Run your own code when a sandbox stops, for example to update your records, noti
    			entrypoint: ["sleep", "infinity"],
    			enableInternet: false,
    		});
+   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		this.watch();
    	}
    	await this.ctx.storage.put<SandboxRecord>("sandbox", {
    		state: "running",
    		lastActivity: Date.now(),
    	});
-   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
 
    	this.busy++;
@@ -162,7 +166,6 @@ Run your own code when a sandbox stops, for example to update your records, noti
    		await this.ctx.container?.destroy("idle");
    		return;
    	}
-   	await this.ctx.container?.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
    }
 
@@ -175,7 +178,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`. Each alarm also sets the inactivity timeout again, because a Durable Object that restarted between alarms no longer has it.
+   The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`.
 
 6. Add routes to your Worker, so that `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
 
