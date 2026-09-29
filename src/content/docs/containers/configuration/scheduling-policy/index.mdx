@@ -130,7 +130,7 @@ this.ctx.container.start({
 
 ### Configure named images
 
-Each key under a `durable_object` application's `containers[].images` configuration becomes a property on `ctx.container.images`. For example, `containers[].images.base` is available to the Durable Object as `ctx.container.images.base`. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. When you run `wrangler deploy`, Wrangler builds and uploads that image. You can also set `build_context` and `build_vars` for that image.
+Each key under `containers[].images` in your Wrangler configuration becomes a property on `ctx.container.images`. For example, `containers[].images.base` is available to the Durable Object as `ctx.container.images.base`. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. When you run `wrangler deploy`, Wrangler builds and uploads that image. You can also set `build_context` and `build_vars` for that image.
 
 Use `image` for a digest-pinned image in the Cloudflare managed registry. Use the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`.
 
