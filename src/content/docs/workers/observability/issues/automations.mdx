@@ -8,16 +8,16 @@ products:
   - workers
 ---
 
-import { DashButton, Steps } from "~/components";
+import { DashButton, Steps, Width } from "~/components";
 
 You can set up automations that send issues to a configured destination when matching issues meet a trigger condition.
 
 ## Trigger types
 
-| Trigger                       | Behavior                                                                                       |
-| ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| Occurrence threshold          | Runs once when an issue's occurrence count crosses the configured threshold.                   |
-| Recurrence after inactivity   | Runs when an existing issue returns after the configured period without a newer occurrence.    |
+| Trigger                     | Behavior                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------- |
+| Occurrence threshold        | Runs once when an issue's occurrence count crosses the configured threshold.                |
+| Recurrence after inactivity | Runs when an existing issue returns after the configured period without a newer occurrence. |
 
 An occurrence-threshold automation does not run for every occurrence after the threshold. A recurrence automation requires at least one earlier occurrence.
 
@@ -27,26 +27,42 @@ An occurrence-threshold automation does not run for every occurrence after the t
 
 1. Go to the **Issues** page.
 
-   <DashButton url="/?to=/:account/workers/services/view/:worker/production/issues?status=active" />
+   <DashButton url="/?to=/:account/observability/issues" />
 
-2. Select **Automations** > **Add automation**.
+2. Select **Automations**.
 
-3. Select an occurrence threshold or recurrence-after-inactivity trigger and enter its value.
+   <Width size="large">
+   ![Automations button on the Issues page.](~/assets/images/workers-observability/issues/automation-open.png)
+   </Width>
 
-4. Select an existing destination, or create a destination.
+3. Select **Add automation**.
 
-5. Turn on **Enabled**, and then select **Create**.
+   <Width size="large">
+   ![Automations dialog with the Add automation button.](~/assets/images/workers-observability/issues/automation-add.png)
+   </Width>
+
+4. Select an occurrence threshold or recurrence-after-inactivity trigger and enter its value.
+
+   <Width size="large">
+   ![Create automation form with an occurrence threshold trigger and value.](~/assets/images/workers-observability/issues/automation-trigger.png)
+   </Width>
+
+5. Select an existing destination, or create a destination.
+
+   <Width size="large">
+   ![Destination types available when creating an integration.](~/assets/images/workers-observability/issues/automation-destination.png)
+   </Width>
+
+6. Turn on **Enabled**, and then select **Create**.
 
 </Steps>
-
-![Automation setup flow showing how to open Automations, configure a trigger, select a destination, and set up a generic webhook.](~/assets/images/workers-observability/issues/automation-workflow-trimmed.png)
 
 ## Destinations
 
 | Destination type    | Use                                                                                         |
 | ------------------- | ------------------------------------------------------------------------------------------- |
 | Coding agent        | Send diagnostic context to an agent that can investigate a connected codebase.              |
-| Generic webhook     | Send an issue event to your HTTPS endpoint. You can add a webhook secret or use mutual TLS.  |
+| Generic webhook     | Send an issue event to your HTTPS endpoint. You can add a webhook secret or use mutual TLS. |
 | Chat                | Post an issue summary to a team channel for review and triage.                              |
 | Incident management | Create an incident or notify an on-call workflow when an issue meets its trigger condition. |
 
@@ -56,11 +72,11 @@ Claude Code, Cursor, and Devin are supported prebuilt coding-agent integrations.
 
 All coding-agent destinations require a display name. Configure the remaining fields for each integration:
 
-| Integration | Required fields | Optional fields | Setup documentation |
-| ----------- | --------------- | --------------- | ------------------- |
-| Claude Code | Routine ID and authorization token | None | [Add an API trigger](https://code.claude.com/docs/en/routines#add-an-api-trigger) |
-| Cursor | Automation webhook URL | Authorization header | [Webhook triggers](https://cursor.com/docs/cloud-agent/automations#webhook-triggers) |
-| Devin | Authorization token and organization ID | Repositories and playbook ID | [Authentication](https://docs.devin.ai/api-reference/authentication) and [Create playbooks](https://docs.devin.ai/product-guides/creating-playbooks) |
+| Integration | Required fields                         | Optional fields              | Setup documentation                                                                                                                                  |
+| ----------- | --------------------------------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Claude Code | Routine ID and authorization token      | None                         | [Add an API trigger](https://code.claude.com/docs/en/routines#add-an-api-trigger)                                                                    |
+| Cursor      | Automation webhook URL                  | Authorization header         | [Webhook triggers](https://cursor.com/docs/cloud-agent/automations#webhook-triggers)                                                                 |
+| Devin       | Authorization token and organization ID | Repositories and playbook ID | [Authentication](https://docs.devin.ai/api-reference/authentication) and [Create playbooks](https://docs.devin.ai/product-guides/creating-playbooks) |
 
 ### Generic webhooks
 
@@ -75,6 +91,10 @@ Generic webhooks use the standard Cloudflare Notifications webhook payload. For 
 1. When you create a destination, select **Generic Webhook**.
 
 2. Enter a name and an HTTPS endpoint URL.
+
+   <Width size="large">
+   ![Generic webhook destination form with name, URL, webhook secret, and mTLS fields.](~/assets/images/workers-observability/issues/automation-generic-webhook.png)
+   </Width>
 
 3. Enter a webhook secret or turn on mutual TLS (mTLS).
 
@@ -98,9 +118,9 @@ Open an issue or automation to review recent runs. A run can be pending, success
 
 ## Limits
 
-| Limit                            | Value               |
-| -------------------------------- | ------------------- |
-| Automations per account          | 50                  |
-| Minimum occurrence threshold     | 1                   |
-| Recurrence inactivity period     | 1 hour to 365 days  |
-| Completed automation-run history | 30 days             |
+| Limit                            | Value              |
+| -------------------------------- | ------------------ |
+| Automations per account          | 50                 |
+| Minimum occurrence threshold     | 1                  |
+| Recurrence inactivity period     | 1 hour to 365 days |
+| Completed automation-run history | 30 days            |
