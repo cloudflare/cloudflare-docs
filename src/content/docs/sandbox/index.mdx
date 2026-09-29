@@ -32,7 +32,7 @@ Start a sandbox and run untrusted or generated code
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run untrusted or generated code. The code cannot directly read the memory or data of your application. Your Worker decides which application APIs and data the code receives and whether it can reach the public Internet.
+A sandbox is an isolated place to run code. The code cannot directly read the memory or data of your application. Your Worker decides which application APIs and data the code receives, and whether the code can reach the public Internet.
 
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
@@ -72,7 +72,7 @@ const output = await process.output();
 
 [Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, Python, or WebAssembly. Compile TypeScript to JavaScript before loading it.
 
-The Workers runtime runs each Dynamic Worker apart from your Worker and from other Dynamic Workers. It reaches your application only through the methods and data you pass.
+The Workers runtime runs each Dynamic Worker apart from your Worker and from other Dynamic Workers. A Dynamic Worker reaches your application only through the methods and data you pass to it.
 
 Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it:
 

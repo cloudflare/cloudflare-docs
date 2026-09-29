@@ -10,7 +10,7 @@ products:
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent, and it is the base for a tool that runs the commands the model writes.
+Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent. The agent gives the model a tool that runs commands in the sandbox.
 
 Use a sandbox when an agent needs to:
 
@@ -20,14 +20,14 @@ Use a sandbox when an agent needs to:
 - Run untrusted or model-generated code away from the storage and credentials of the agent.
 
 :::note
-If the agent only needs to script methods that you define, such as methods that read or update your data, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a container. For more information, refer to [Choose a sandbox environment](/sandbox/concepts/).
+If the code that the model writes only calls methods that you define, such as methods that read or update your data, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a container. For more information, refer to [Choose a sandbox environment](/sandbox/concepts/).
 :::
 
 ## How it works
 
-Attaching a container to the [Durable Object](/durable-objects/) of an agent gives the agent a Linux sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
+Attaching a container to the [Durable Object](/durable-objects/) of an agent gives the agent a sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
 
-The sandbox runs in its own virtual machine. It cannot read the storage, environment variables, or bindings of the agent, and it cannot reach the Internet unless you allow it.
+The sandbox runs in its own virtual machine. It cannot read the storage, environment variables, or bindings of the agent. It reaches the Internet only when you allow it.
 
 ## Basic pattern
 
@@ -123,11 +123,13 @@ export default {
 
 `start()` boots the `cloudflare/debian-trixie` image, a Debian system with Node.js and npm. The default command of the image exits immediately, so the `sleep infinity` entrypoint keeps the container running between commands. `enableInternet: false` blocks outbound requests.
 
-`setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. The timeout does not survive a Durable Object restart, so the tool sets it before every command. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
+`setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. A Durable Object that restarts starts without the timeout. To cover restarts, the tool sets it before every command. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
 
-`timeout` stops a command, and every process it started, after 60 seconds. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model context.
+`timeout` stops a command, and every process it started, after 60 seconds. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
-Think gives every agent built-in [workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), which store files in the agent rather than in the sandbox. Without `beforeTurn()`, the model can write a file with a workspace tool that commands in the sandbox cannot see. `activeTools` limits the model to `run_command`, so all of its file work happens in the sandbox.
+The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model context.
+
+Think gives every agent built-in [workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), which store files in the agent. Commands in the sandbox cannot see those files. `activeTools` in `beforeTurn()` limits the model to `run_command`, so all of its file work happens in the sandbox.
 
 To add Python, Git, compilers, or other tools, build your own image and pass it to `start()`. For more information, refer to [`images`](/containers/api/durable-object-container/#images).
 
@@ -168,11 +170,11 @@ Attach a container to the agent class in `wrangler.jsonc`. The class also needs 
 
 </WranglerConfig>
 
-The [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which `scheduling_policy: "durable_object"` sets, lets the agent choose the image when it calls `start()`.
+`scheduling_policy: "durable_object"` sets the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which lets the agent choose the image when it calls `start()`.
 
 ## Network access
 
-The sandbox starts without Internet access, so commands such as `npm install` cannot download packages. Setting `enableInternet: true` allows every destination, and each destination gives commands from the model a way to send out whatever they can read.
+The sandbox starts without Internet access, so commands such as `npm install` cannot download packages. Setting `enableInternet: true` allows every destination. Commands that the model writes can then send anything they can read to any server on the Internet.
 
 To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route requests from the sandbox through an outbound handler in your Worker.
 

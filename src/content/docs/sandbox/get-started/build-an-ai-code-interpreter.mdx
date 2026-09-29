@@ -23,7 +23,7 @@ import {
 
 In this tutorial, you will build a Worker that answers questions by running code. A [Workers AI](/workers-ai/) model writes JavaScript, a [Dynamic Worker](/dynamic-workers/) runs it without network access, and the model uses the result in its answer.
 
-When you finish, the Worker answers a question about prime numbers with the answer and the code the model ran:
+When you finish, the Worker answers a question about prime numbers and returns the code the model ran:
 
 ```json output wrap
 {
@@ -179,14 +179,14 @@ The Dynamic Worker limits what the generated code can do:
 - `globalOutbound: null` makes `fetch()` and `connect()` throw, so the code has no network access.
 - The Dynamic Worker receives no `env`, so the code cannot call Workers AI or any other resource your Worker can reach.
 - `limits: { cpuMs: 50 }` stops code that uses more than 50 milliseconds of CPU time. Refer to [Custom resource limits](/dynamic-workers/usage/limits/).
-- The five-second timeout stops your Worker from waiting on code that waits without using CPU, such as a long `setTimeout()`. The timer runs in your Worker, so the generated code cannot change it.
+- If the code waits without using CPU, such as in a long `setTimeout()`, the five-second timeout stops your Worker from waiting for it. The timer runs in your Worker, so the generated code cannot change it.
 - Each call to `load()` creates a new Dynamic Worker, so values from one run are not available in the next.
 
 The generated code becomes the body of an async function, so it can use `await` and must `return` its result. A local `console` object collects `console.log()` output. The code can still change anything inside the Dynamic Worker, including the wrapper around it, but it cannot reach anything the Dynamic Worker does not receive.
 
 ## 3. Let the model run code
 
-Replace `src/index.ts`. The Worker gives the model a `runJavaScript` tool and returns the answer from the model with every piece of code it ran:
+Replace `src/index.ts`. The Worker gives the model a `runJavaScript` tool and returns the answer from the model with every piece of code the model ran:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -340,11 +340,9 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 </Steps>
 
-You built a Worker where a model writes JavaScript, a Dynamic Worker runs it without network access or bindings, and the model answers from the result.
-
 ## Next steps
 
-- Give sandboxed code access to specific APIs. Refer to [Bindings](/dynamic-workers/usage/bindings/).
+- Let generated code call methods that your Worker provides. Refer to [Bindings](/dynamic-workers/usage/bindings/).
 - Let a model call typed tools from generated code. Refer to [Code Mode](/agents/tools/codemode/).
 - Run shell commands or other Linux tools. Refer to [Run a Linux command](/sandbox/get-started/).
 - Choose a different model. Refer to [Workers AI models](/workers-ai/models/).

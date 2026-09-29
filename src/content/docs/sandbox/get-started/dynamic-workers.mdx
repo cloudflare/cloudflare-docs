@@ -114,7 +114,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    </TypeScriptExample>
 
-   `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`, and `limits` stops code that uses more than 50 milliseconds of CPU time. Code that waits without using CPU can still hold the request open. Before you run code from other people, also add a timeout, as [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/) does.
+   `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`. `limits` stops code that uses more than 50 milliseconds of CPU time. Code that waits without using CPU can still hold the request open, so add a timeout before you run code from other people. For an example, refer to [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/).
 
 6. Run `wrangler dev`:
 
@@ -134,6 +134,6 @@ The response body is `{"result":["Ada"]}`. The Worker ran the JavaScript you sen
 
 ## Next steps
 
-- Pass APIs and data into the sandbox. Refer to [Bindings](/dynamic-workers/usage/bindings/).
+- Let the code call methods that your Worker provides. Refer to [Bindings](/dynamic-workers/usage/bindings/).
 - Run a Linux command. Refer to [Run a Linux command](/sandbox/get-started/).
-- Use the [Loader API](/dynamic-workers/getting-started/) for `load()` and `get()`.
+- Use the [Loader API](/dynamic-workers/api-reference/) for `load()` and `get()`.
