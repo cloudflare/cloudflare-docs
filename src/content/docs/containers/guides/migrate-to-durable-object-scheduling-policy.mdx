@@ -52,11 +52,11 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
 
    Add a new SQLite-backed Durable Object class and binding. Keep the existing class and binding so that you can route traffic back to them.
 
-   Use the Durable Object lifecycle configuration already used by your Worker. If the Worker uses the legacy `migrations` array, append a migration with the replacement class in `new_sqlite_classes`. If it uses `exports`, declare the replacement class there. Do not switch between `migrations` and `exports` as part of this process.
+   Use the declarative `exports` field to define both SQLite-backed Durable Object classes. Keep the existing class exported while you add the replacement class.
 
 2. **Add a replacement Container application.**
 
-   Keep the existing application and add a differently named application with the `durable_object` policy. The following example uses the legacy `migrations` array:
+   Keep the existing application and add a differently named application with the `durable_object` policy:
 
    <WranglerConfig>
 
@@ -64,7 +64,7 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
    {
        "name": "sandbox-worker",
        "main": "src/index.ts",
-       "compatibility_date": "$today",
+       "compatibility_date": "2026-09-29",
        "containers": [
            {
                "name": "sandbox-default",
@@ -97,16 +97,16 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
                },
            ],
        },
-       "migrations": [
-           {
-               "tag": "v1",
-               "new_sqlite_classes": ["LegacySandbox"],
+       "exports": {
+           "LegacySandbox": {
+               "type": "durable-object",
+               "storage": "sqlite",
            },
-           {
-               "tag": "v2",
-               "new_sqlite_classes": ["DurableSandbox"],
+           "DurableSandbox": {
+               "type": "durable-object",
+               "storage": "sqlite",
            },
-       ],
+       },
    }
    ```
 

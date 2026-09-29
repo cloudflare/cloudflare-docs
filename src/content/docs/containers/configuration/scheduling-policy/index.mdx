@@ -59,7 +59,7 @@ Configure the policy. To use custom images, add the images that the Durable Obje
 {
 	"name": "agent-computer",
 	"main": "src/index.ts",
-	"compatibility_date": "$today",
+	"compatibility_date": "2026-09-29",
 	"containers": [
 		{
 			"class_name": "AgentComputer",
@@ -79,12 +79,12 @@ Configure the policy. To use custom images, add the images that the Durable Obje
 			},
 		],
 	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["AgentComputer"],
+	"exports": {
+		"AgentComputer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
@@ -120,9 +120,7 @@ export class AgentComputer extends DurableObject {
 
 If you do not need a custom image, start the [`cloudflare/debian-trixie` Cloudflare-managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) directly without adding a named image to Wrangler. It includes Node.js 24.20.0 on Debian Trixie slim:
 
-<TypeScriptExample filename="src/index.ts">
-
-```ts
+```js
 this.ctx.container.start({
 	image: "cloudflare/debian-trixie",
 	instance: "standard-2",
@@ -130,11 +128,9 @@ this.ctx.container.start({
 });
 ```
 
-</TypeScriptExample>
-
 ### Configure named images
 
-Each key in `images` is a name you choose. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. Wrangler builds and uploads the image. You can also set `build_context` and `build_vars` for that image.
+Each key under a `durable_object` application's `containers[].images` configuration becomes a property on `ctx.container.images`. For example, `containers[].images.base` is available to the Durable Object as `ctx.container.images.base`. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. Wrangler builds and uploads the image. You can also set `build_context` and `build_vars` for that image.
 
 Use `image` for a digest-pinned image in the Cloudflare managed registry. Use the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`.
 
