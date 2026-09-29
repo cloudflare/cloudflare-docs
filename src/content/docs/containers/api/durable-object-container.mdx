@@ -440,8 +440,6 @@ A `monitor()` promise belongs to one Durable Object instance. After a restart, s
 
 `interceptOutboundHttp()` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `Fetcher`. Call it before or after starting the container. An intercept lasts until the container stops, so register intercepts again for each new container. Registering a target again replaces its handler, and open connections use the new handler without being dropped.
 
-A container accepts up to 64 distinct targets across `interceptOutboundHttp()`, `interceptOutboundHttps()`, and `interceptAllOutboundHttp()`. The `*` target and the `interceptAllOutboundHttp()` rule each count as one target, and a hostname intercepted for both HTTP and HTTPS counts as two. Registering an existing target again does not count. An intercept cannot be removed while the container runs.
-
 ```js
 const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
 
@@ -454,8 +452,8 @@ await this.ctx.container.interceptOutboundHttp("*.example.com", worker);
 // Match an IP:port
 await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
 
-// Match a CIDR range (IPv4 and IPv6)
-await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
+// Match an IPv4 CIDR range. Register an IPv6 range separately.
+await this.ctx.container.interceptOutboundHttp("203.0.113.0/24", worker);
 ```
 
 In a container started with `enableInternet: false`, no public resolver answers DNS lookups. Lookups resolve as follows:
@@ -464,6 +462,22 @@ In a container started with `enableInternet: false`, no public resolver answers 
 - `interceptAllOutboundHttp()` and a `*` hostname target make every hostname resolve, including hostnames that do not exist.
 - IP address and CIDR targets add no DNS answers.
 - Every other lookup times out, including a lookup made before you register an intercept.
+
+#### Intercept limit
+
+{/* The runtime accepts a 129th entry because it checks the count before each append. Keep documenting 128. */}
+
+A container has 128 intercept entries, which `interceptOutboundHttp()`, `interceptOutboundHttps()`, and `interceptAllOutboundHttp()` share. Each new target uses entries as follows:
+
+- A hostname or hostname glob, including `*`, uses two entries, one for IPv4 and one for IPv6.
+- An IP address, IP:port, or CIDR range uses one entry.
+- The `interceptAllOutboundHttp()` rule uses two entries.
+
+A hostname intercepted for both HTTP and HTTPS is two targets and uses four entries. So a container can hold up to 64 hostname targets, or up to 128 IP address and CIDR targets. Registering an existing target again uses no more entries.
+
+An intercept cannot be removed while the container runs. To route a changing set of hostnames, register `interceptAllOutboundHttp()` or the `*` target once, and choose the behavior for each hostname inside the `WorkerEntrypoint`, for example from its props. Registering the rule again with new props replaces them.
+
+When a new target does not fit, awaiting the call throws an `Error` with the message `You can't configure more than 128 egress interceptors`. Intercepts registered earlier keep working.
 
 #### Parameters
 
@@ -476,9 +490,7 @@ In a container started with `enableInternet: false`, no public resolver answers 
 
 #### Exceptions
 
-{/* Remove the error message sentence when the runtime error states the 64-target limit. */}
-
-- Awaiting `interceptOutboundHttp()` throws an `Error` when the container already has 64 targets and `addr` is a new one. Intercepts registered earlier keep working. The error message reads `You can't configure more than 128 egress interceptors`, because each target uses two entries.
+- Awaiting `interceptOutboundHttp()` throws an `Error` when `addr` is new and the container does not have enough free entries for it. For more information, refer to [Intercept limit](#intercept-limit).
 
 ### `interceptAllOutboundHttp`
 
@@ -502,7 +514,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 #### Exceptions
 
-- Awaiting `interceptAllOutboundHttp()` throws an `Error` when the container already has 64 targets and none of them is the `interceptAllOutboundHttp()` rule. For the target limit, refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
+- Awaiting `interceptAllOutboundHttp()` throws an `Error` when the rule is not registered yet and the container does not have two free entries. For more information, refer to [Intercept limit](#intercept-limit).
 
 ### `interceptOutboundHttps`
 
@@ -536,7 +548,7 @@ Only HTTPS on port `443` is intercepted. Matching uses the hostname the client s
 
 #### Exceptions
 
-- Awaiting `interceptOutboundHttps()` throws an `Error` when the container already has 64 targets and `addr` is a new one. For the target limit, refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
+- Awaiting `interceptOutboundHttps()` throws an `Error` when `addr` is new and the container does not have enough free entries for it. For more information, refer to [Intercept limit](#intercept-limit).
 
 ## Related resources
 
