@@ -11,7 +11,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 [Containers](/containers/) now support the `durable_object` scheduling policy in public beta. This policy lets a Durable Object select the image and instance size for a Container at runtime instead of using one centrally managed configuration for the application.
 
-Configure the policy and one or more named images in Wrangler:
+To use custom images, configure the policy and one or more named images in Wrangler:
 
 <WranglerConfig>
 
@@ -46,6 +46,8 @@ this.ctx.container.start({
 ```
 
 </TypeScriptExample>
+
+The `durable_object` policy also supports the [`cloudflare/debian-trixie` Cloudflare-managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image), which includes Node.js 24.20.0 on Debian Trixie slim. Start it directly without configuring a named image.
 
 Durable Object-managed Container instances have independent lifecycles and do not participate in application-wide image rollouts.
 

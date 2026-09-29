@@ -51,7 +51,7 @@ When you change the image or instance type and deploy, Cloudflare rolls out that
 
 The `durable_object` policy moves per-instance decisions into your Durable Object. Wrangler associates the Container application with the Durable Object class, and your code supplies a startup image or snapshot and an optional instance size to `ctx.container.start()`.
 
-Configure the policy and the images that the Durable Object can start:
+Configure the policy. To use custom images, add the images that the Durable Object can start:
 
 <WranglerConfig>
 
@@ -115,6 +115,22 @@ export class AgentComputer extends DurableObject {
 </TypeScriptExample>
 
 `ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/containers/api/durable-object-container/#exec).
+
+### Use the Cloudflare-managed image
+
+If you do not need a custom image, start the [`cloudflare/debian-trixie` Cloudflare-managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) directly without adding a named image to Wrangler. It includes Node.js 24.20.0 on Debian Trixie slim:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+this.ctx.container.start({
+	image: "cloudflare/debian-trixie",
+	instance: "standard-2",
+	enableInternet: true,
+});
+```
+
+</TypeScriptExample>
 
 ### Configure named images
 
