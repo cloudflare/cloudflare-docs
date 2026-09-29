@@ -104,6 +104,7 @@ this.ctx.container.start({
   - `image` (`string`, conditionally required) <Badge text="durable_object policy only" variant="note" size="small" />: Image reference to start. Required unless you pass `containerSnapshot`. Pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images).
   - `instance` (`string | object`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Instance size. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
   - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Full container snapshot to restore before startup. Snapshot restore is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). You cannot pass both `containerSnapshot` and `image`.
+  - `labels` (`Record<string, string>`, optional): Up to 10 labels that [`inspect()`](#inspect) returns. Label names must contain 1 to 16 bytes. Label values can contain up to 64 bytes. Names and values cannot contain control characters.
 
 #### Return values
 
@@ -127,7 +128,9 @@ const containerInfo = await this.ctx.container.inspect();
 
 #### Return values
 
-- `Promise<ContainerInfo | null>`: Resolves with the running container information or `null`.
+- `Promise<ContainerInfo | null>`: Resolves with `null` when no container is running. Otherwise, it resolves with a `ContainerInfo` object containing:
+  - `image` (`string`): Image reference reported by the runtime. The value can be an empty string.
+  - `labels` (`Record<string, string>`): Labels passed to [`start()`](#start).
 
 ### `exec`
 
