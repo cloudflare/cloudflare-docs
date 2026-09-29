@@ -78,26 +78,31 @@ this.ctx.container.running;
 
 `start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
 
-<TypeScriptExample filename="index.ts">
+The required options depend on the application's scheduling policy.
 
-```ts
+**`default` scheduling policy:** The image and instance size come from Wrangler configuration, so `start()` does not require any options:
+
+```js
+this.ctx.container.start();
+```
+
+**`durable_object` scheduling policy:** Pass an image and explicitly choose whether to allow outbound Internet access. You can optionally select an instance size:
+
+```js
 this.ctx.container.start({
 	image: this.ctx.container.images.base,
-	instance: "standard-2",
 	enableInternet: true,
 });
 ```
 
-</TypeScriptExample>
-
 #### Parameters
 
-- `options` (`object`, optional): Common container startup options:
+- `options` (`object`, conditionally required): Startup options. Required for applications that use the `durable_object` scheduling policy and optional for applications that use the `default` scheduling policy.
   - `env` (`Record<string, string>`, optional): Environment variables to pass to the container.
   - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
-  - `image` (`string`, optional): Image reference to start. For an application that uses the `durable_object` scheduling policy, pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images). Omit this option when restoring a snapshot.
-  - `instance` (`string | object`, optional): Instance size for an application that uses the `durable_object` scheduling policy. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
+  - `image` (`string`, conditionally required) <Badge text="durable_object policy only" variant="note" size="small" />: Image reference to start. Required unless you pass `containerSnapshot`. Pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images).
+  - `instance` (`string | object`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Instance size. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
   - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Full container snapshot to restore before startup. Snapshot restore is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). You cannot pass both `containerSnapshot` and `image`.
 
 #### Return values
