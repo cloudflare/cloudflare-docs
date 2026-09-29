@@ -7,7 +7,7 @@ sidebar:
   order: 17
 ---
 
-import { Details } from "~/components";
+import { Details, Steps } from "~/components";
 
 ### API token
 
@@ -18,6 +18,36 @@ To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloud
 Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin**. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
 
 Cloudflare API tokens authenticate requests to Cloudflare APIs. Use these tokens only in your backend. Never expose an API token to your frontend or share it with an end user.
+
+</Details>
+
+### APIs
+
+<Details header="Why does the peer report endpoint return a 404 error for every participant ID?">
+
+The peer report endpoint requires a `peer_id`, not a `participant_id`. RealtimeKit creates a peer when a participant joins a meeting. Each time the participant rejoins or reloads the page, RealtimeKit creates a new peer with a new unique peer ID.
+
+To retrieve the peer report data:
+
+<Steps>
+1. Call the [Get session participant details](/api/resources/realtime_kit/subresources/sessions/methods/get_session_participant_details/) endpoint with `include_peer_events=true`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/participants/{participant_id}?include_peer_events=true
+   ```
+
+   The `peer_events` field in the response contains every peer ID associated with the participant.
+
+2. Call the [Get participant data from peer ID](/api/resources/realtime_kit/subresources/sessions/methods/get_participant_data_from_peer_id/) endpoint with a `peer_id` from `peer_events`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/peer-report/{peer_id}
+   ```
+
+   This endpoint returns call statistics for that peer.
+</Steps>
+
+Passing a `participant_id` to the peer report endpoint returns a `404` response with `No peer event exists for id <given-id>`.
 
 </Details>
 
