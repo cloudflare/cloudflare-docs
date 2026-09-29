@@ -14,6 +14,6 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-Your Worker reaches each sandbox by name, but the runtime does not record which names belong to which user. It also does not wake a Durable Object when its container stops. To show a user their sandboxes, or to act when a sandbox stops, your Worker keeps these records itself. These guides show how.
+Your Worker reaches each sandbox by name. The runtime does not record which names belong to which user, and it does not wake a Durable Object when its container stops. To list a user's sandboxes or act when a sandbox stops, your Worker keeps its own records.
 
 <DirectoryListing descriptions />

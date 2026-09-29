@@ -1,6 +1,6 @@
 ---
 title: Run code when a sandbox stops
-description: Record when and why a Linux sandbox stops, including stops that happen while no requests arrive.
+description: Record when and why a sandbox stops, including stops that happen while no requests arrive.
 pcx_content_type: how-to
 sidebar:
   order: 2
@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps } from "~/components";
 
-Run your own code when a sandbox stops, for example to update your records, notify the user, or release resources. Because the runtime does not wake a Durable Object when its container stops, the Durable Object watches the container while it is in memory, checks for a missed stop on every request and alarm, and stops idle sandboxes itself so that it knows why each one stopped.
+The runtime does not wake a Durable Object when its container stops. Your Durable Object watches the container while the Durable Object is in memory, and checks for a missed stop on every command and alarm. In this example, the Durable Object also stops idle sandboxes itself, so the record shows why each one stopped.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
 
 <Steps>
 
-1. At the top of `src/index.ts`, define how often the Durable Object checks the sandbox, how long a sandbox can go without requests, and the record it keeps:
+1. At the top of `src/index.ts`, define the check interval, the idle limit, the inactivity timeout, and the record the Durable Object keeps:
 
    ```ts title="src/index.ts"
    const CHECK_INTERVAL_MS = 60 * 1000;
@@ -40,7 +40,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   The Durable Object stops a sandbox after `IDLE_LIMIT_MS` without requests. The inactivity timeout is longer than the check interval, so the container keeps running between alarms. If the alarms stop, the timeout still stops the container.
+   The Durable Object stops a sandbox after `IDLE_LIMIT_MS` without requests. Keep the inactivity timeout longer than the check interval, so the container keeps running between alarms. If the alarms stop, the timeout still stops the container.
 
 2. In `MyContainer`, add a constructor, a method that watches the container, and a method that records the stop:
 
@@ -87,7 +87,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   [`monitor()`](/containers/api/durable-object-container/#monitor) rejects with an `exitCode` when the main process fails, and with the reason passed to `destroy()`. A restarted Durable Object no longer has the earlier `monitor()` call or the inactivity timeout, so the constructor sets both again. `onStop()` records a stop only once, even when two checks report it. Put your own code after the record is saved.
+   When the main process fails, [`monitor()`](/containers/api/durable-object-container/#monitor) rejects with an error that has an `exitCode`. When your code calls `destroy()` with a reason, `monitor()` rejects with that reason. A restarted Durable Object loses the earlier `monitor()` call and the inactivity timeout, so the constructor calls `watch()` and sets the timeout again. `onStop()` records each stop once, even when two checks report it. Put your own code after the record is saved.
 
 3. Add a method that records a stop that `monitor()` missed:
 
@@ -150,9 +150,9 @@ Run your own code when a sandbox stops, for example to update your records, noti
    }
    ```
 
-   `busy` counts the commands that are running, so a command that runs longer than the idle limit is not stopped. A request in progress keeps the Durable Object in memory, so the count does not need storage.
+   `busy` counts the commands that are running. The alarm does not stop the sandbox while a command is running, even when the command runs longer than the idle limit. A request in progress keeps the Durable Object in memory, so the count does not need storage.
 
-5. Add an alarm handler that checks the sandbox and stops it when it has been idle too long, and methods that return the record and stop the sandbox:
+5. Add an alarm handler that checks the sandbox and stops it after `IDLE_LIMIT_MS` without requests. Then add methods that return the record and stop the sandbox:
 
    ```ts title="src/index.ts"
    async alarm() {
@@ -180,7 +180,7 @@ Run your own code when a sandbox stops, for example to update your records, noti
 
    The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`.
 
-6. Add routes to your Worker, so that `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
+6. Add routes to your Worker. `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
 
    ```ts title="src/index.ts"
    export default {
@@ -238,7 +238,7 @@ The `reason` field shows how the sandbox stopped:
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `exited`            | The main process exited. `exitCode` holds its exit code.                                                                                         |
 | `idle` or `stopped` | Your Durable Object called `destroy()` with this reason.                                                                                         |
-| `unknown`           | The container stopped while the Durable Object was not in memory, and a later request or alarm found it stopped. The exit code is not available. |
+| `unknown`           | The container stopped while the Durable Object was not in memory, and a later command or alarm found it stopped. The exit code is not available. |
 | Any other text      | The error from `monitor()` when the container failed.                                                                                            |
 
 ## Related resources

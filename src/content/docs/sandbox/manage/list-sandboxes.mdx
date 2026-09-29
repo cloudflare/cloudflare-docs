@@ -1,6 +1,6 @@
 ---
 title: List a user's sandboxes
-description: Record each user's Linux sandboxes in a Durable Object, and report which of them are running.
+description: Record each user's sandboxes in a Durable Object, and report which ones are running.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-List the sandboxes that belong to one user, for example to show their open sessions. Your Worker records each sandbox in a registry, one Durable Object for each user, when the sandbox first runs a command. To report which sandboxes are running, the Worker asks the Durable Object of each sandbox, which knows whether its container is running.
+Each user gets a registry, a Durable Object that records the sandboxes of that user. In this example, the Worker adds a sandbox to the registry when the sandbox first runs a command. To report which sandboxes are running, the Worker asks the Durable Object of each sandbox whether its container is running.
 
 ## Prerequisites
 
@@ -131,7 +131,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
    }
    ```
 
-   `running` reports whether the container is running, and reading it does not start the container. Listing can reach a Durable Object that restarted after `exec()` set the timeout. The constructor sets the timeout again, so the sandbox does not stop shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   Reading `running` does not start the container. A listing request can wake a restarted Durable Object, which starts without the timeout that `exec()` set. The constructor sets the timeout again, so the sandbox does not stop shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 4. Add routes to your Worker that name each sandbox `<OWNER>/<SESSION>`, record the session before running a command, list the sessions with their state, and remove a session after stopping its container:
 
@@ -224,7 +224,7 @@ List the sandboxes that belong to one user, for example to show their open sessi
 
 ## List sandboxes across the account
 
-The registry lists only the sandboxes that your Worker recorded. To see every Linux sandbox that a Container application started, including sandboxes that failed or that the registry missed, use the Containers API. Its list of instances returns the name passed to `getByName()` and the state of each sandbox:
+The registry lists only the sandboxes that your Worker recorded. The Containers API lists every sandbox that a Container application started, including sandboxes that failed or that the registry missed. For each sandbox, the list of instances returns the name passed to `getByName()` and the state:
 
 ```sh
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/containers/applications/<APPLICATION_ID>/instances?name_prefix=ada/" \
