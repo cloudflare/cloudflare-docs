@@ -91,7 +91,7 @@ You also need:
 
    RUN npm install --global @anthropic-ai/claude-code@2.1.280
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
