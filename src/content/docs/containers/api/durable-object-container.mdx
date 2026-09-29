@@ -251,9 +251,9 @@ The Workers TypeScript types declare `stdin`, `stdout`, and `stderr` as `| null`
 
 `kill()` and `signal` reach only the process that `exec()` started. Processes that this process starts, such as the commands in a `bash -c` script, keep running. `output()` waits until they exit. To stop them too, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
-A process keeps running when the request that started it is canceled. If the client retries, a second copy of the command runs. For more information, refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects).
+Canceling the request that started a process does not stop the process. If the client retries, a second copy of the command runs.
 
-To stop the process when the client disconnects, pass the incoming request from your Worker to `fetch()` on the Durable Object stub. Then abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
+To stop the process when the client disconnects, turn on the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag in the Worker that defines the Durable Object, and call the Durable Object through `fetch()` on its stub. Then abort the `exec()` signal when `request.signal` aborts. RPC methods do not receive a request signal.
 
 <TypeScriptExample omitTabs>
 
