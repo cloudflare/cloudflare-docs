@@ -52,9 +52,7 @@ export class MyDurableObject extends DurableObject {
 
 </TypeScriptExample>
 
-:::note[Scheduling policy requirement]
 Snapshots are only supported for Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
-:::
 
 Snapshots are immutable, so create a new snapshot to persist filesystem changes made after a restore.
 
