@@ -14,7 +14,7 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 Forward an incoming WebSocket upgrade request through the Durable Object to the listening port on the Container.
 
-Because `container.start()` does not wait for readiness, the Durable Object Container API example polls `GET /health` on port 8080 before forwarding requests. Keep the WebSocket endpoint separate from the health check.
+Because `container.start()` does not wait for readiness, this example polls `GET /health` before forwarding requests. Keep the WebSocket endpoint separate from the health check.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
