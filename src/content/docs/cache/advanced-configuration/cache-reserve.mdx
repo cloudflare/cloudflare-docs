@@ -58,7 +58,7 @@ Purging by URL deletes the content from Cache Reserve. Purging by tag, hostname,
 
 [Invalidation](/cache/guides/invalidate-cache/) keeps matching content in Cache Reserve and marks it as stale. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it again. Updating the stored content after the `304` response is a Class A operation.
 
-To refresh metadata set by [Cache Response Rules](/cache/how-to/cache-response-rules/), such as cache tags, purge the affected content. Invalidation does not refresh this metadata.
+To refresh metadata set by [Cache Response Rules](/cache/how-to/cache-response-rules/), such as cache tags, purge the affected content. A `304 Not Modified` response to an invalidated request does not refresh this metadata.
 
 To remove all data from Cache Reserve, refer to [Cache Reserve clear button](#cache-reserve-clear-button).
 
