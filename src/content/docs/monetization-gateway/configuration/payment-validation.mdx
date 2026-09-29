@@ -20,13 +20,13 @@ Do not parse the token without verifying its signature. Reject requests when JWT
 
 Recommended libraries include:
 
-| Language | Library |
-| --- | --- |
-| JavaScript, TypeScript, and [Cloudflare Workers](/workers/) | `jose` |
-| Python | `PyJWT` with `cryptography` |
-| Java | Nimbus JOSE + JWT |
-| Go | `github.com/golang-jwt/jwt/v5` |
-| Rust | `jsonwebtoken` |
+| Language                                                    | Library                        |
+| ----------------------------------------------------------- | ------------------------------ |
+| JavaScript, TypeScript, and [Cloudflare Workers](/workers/) | `jose`                         |
+| Python                                                      | `PyJWT` with `cryptography`    |
+| Java                                                        | Nimbus JOSE + JWT              |
+| Go                                                          | `github.com/golang-jwt/jwt/v5` |
+| Rust                                                        | `jsonwebtoken`                 |
 
 :::caution
 If `PAYMENT-CONTEXT` is absent, treat the request as unpaid and unverified. Do not serve paid content or set `PAYMENT-SETTLEMENT`.
@@ -68,6 +68,8 @@ The following decoded example authorizes up to 100,000 atomic units:
 
 Calculate an actual amount where `0 <= actual <= authorized maximum`. Express the amount in atomic units.
 
+If the actual amount exceeds the authorized maximum, Monetization Gateway settles the authorized maximum instead. Nothing will be settled if the specified amount is zero.
+
 ## Report variable settlement
 
 Set `PAYMENT-SETTLEMENT` only for a successful `upto` response. Set it before sending response headers.
@@ -75,7 +77,7 @@ Set `PAYMENT-SETTLEMENT` only for a successful `upto` response. Set it before se
 Use a JSON value containing the actual amount as a string. This standalone example reports 1,000,000 atomic units:
 
 ```json
-{"amount":"1000000"}
+{ "amount": "1000000" }
 ```
 
 Do not set `PAYMENT-SETTLEMENT` when the response status is `400` or greater. Do not create a `PAYMENT-RESPONSE` header.

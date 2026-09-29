@@ -12,11 +12,11 @@ products:
 
 The protocol uses three client-facing headers. Each header contains Base64-encoded JSON.
 
-| Header | Direction | Purpose |
-| --- | --- | --- |
-| `PAYMENT-REQUIRED` | Gateway to client | Describes the resource and accepted payment options. |
-| `PAYMENT-SIGNATURE` | Client to gateway | Provides the signed payment authorization. |
-| `PAYMENT-RESPONSE` | Gateway to client | Reports the settlement result. |
+| Header              | Direction         | Purpose                                              |
+| ------------------- | ----------------- | ---------------------------------------------------- |
+| `PAYMENT-REQUIRED`  | Gateway to client | Describes the resource and accepted payment options. |
+| `PAYMENT-SIGNATURE` | Client to gateway | Provides the signed payment authorization.           |
+| `PAYMENT-RESPONSE`  | Gateway to client | Reports the settlement result.                       |
 
 ## Request a protected resource
 
@@ -51,7 +51,7 @@ After Base64 decoding, a fixed-price response has this general structure:
 			"asset": "<ASSET_IDENTIFIER>",
 			"amount": "25000",
 			"payTo": "<RECEIVING_WALLET>",
-			"maxTimeoutSeconds": 60,
+			"maxTimeoutSeconds": 3600,
 			"extra": {}
 		}
 	]
@@ -60,14 +60,14 @@ After Base64 decoding, a fixed-price response has this general structure:
 
 The `accepts` array tells the client how it can pay. Important fields include:
 
-| Field | Description |
-| --- | --- |
-| `scheme` | Payment scheme. Monetization Gateway uses `exact` for fixed pricing and `upto` for variable pricing. |
-| `network` | Blockchain network identifier in CAIP-2 format. |
-| `asset` | Asset identifier used for payment. |
-| `amount` | Fixed charge or maximum authorized charge in atomic units. |
-| `payTo` | Receiving wallet configured by the seller. |
-| `maxTimeoutSeconds` | Maximum time allowed for payment authorization. |
+| Field               | Description                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| `scheme`            | Payment scheme. Monetization Gateway uses `exact` for fixed pricing and `upto` for variable pricing. |
+| `network`           | Blockchain network identifier in CAIP-2 format.                                                      |
+| `asset`             | Asset identifier used for payment.                                                                   |
+| `amount`            | Fixed charge or maximum authorized charge in atomic units.                                           |
+| `payTo`             | Receiving wallet configured by the seller.                                                           |
+| `maxTimeoutSeconds` | Maximum time allowed for payment authorization.                                                      |
 
 ## Authorize payment
 

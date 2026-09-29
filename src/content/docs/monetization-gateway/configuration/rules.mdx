@@ -14,9 +14,9 @@ Rules determine which matching requests require payment. Each rule starts with a
 
 Choose which visitors the rule charges:
 
-| Audience | Behavior |
-| --- | --- |
-| Everyone | Charges all traffic matching the URL and advanced conditions. |
+| Audience      | Behavior                                                            |
+| ------------- | ------------------------------------------------------------------- |
+| Everyone      | Charges all traffic matching the URL and advanced conditions.       |
 | Verified Bots | Charges matching bots identified through [BotBase](/bots/botbase/). |
 
 ## Choose HTTP methods
@@ -27,20 +27,17 @@ By default, a rule charges `GET` requests. You can select multiple HTTP methods 
 
 Advanced conditions refine which requests the rule charges. You can match these request properties:
 
-| Property | Match input |
-| --- | --- |
-| Header | HTTP request header |
-| URI Query String | URL query string |
-| User Agent | User agent value |
-| X-Forwarded-For | `X-Forwarded-For` header value |
-| IP Source Address | Source IP address |
-| Continent | Request continent |
-| Country | Request country |
-| European Union | European Union location status |
-| Cookie Value | Request cookie value |
-| Body | Request body (Enterprise only) |
-| Body size | Request body size (Enterprise only) |
+| Property          | Match input                         |
+| ----------------- | ----------------------------------- |
+| Header            | HTTP request header                 |
+| URI Query String  | URL query string                    |
+| User Agent        | User agent value                    |
+| X-Forwarded-For   | `X-Forwarded-For` header value      |
+| IP Source Address | Source IP address                   |
+| Continent         | Request continent                   |
+| Country           | Request country                     |
+| European Union    | European Union location status      |
+| Cookie Value      | Request cookie value                |
+| Body              | Request body (Enterprise only)      |
+| Body size         | Request body size (Enterprise only) |
 
-## Override the wallet
-
-You can set a receiving wallet for each rule. This optional wallet overrides the default receiving wallet.
