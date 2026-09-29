@@ -10,20 +10,22 @@ products:
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-An agent can run commands in a Linux sandbox of its own. The sandbox is a [Container](/containers/) that the agent starts. The model runs shell commands through a tool, and the files it creates stay in the sandbox between turns while the container runs.
+Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent, and it is the base for a tool that runs the commands the model writes.
 
 Use a sandbox when an agent needs to:
 
-- Run shell commands or scripts that the model writes.
-- Build or test code with Node.js, compilers, or other Linux tools.
+- Run shell commands or scripts.
+- Build or test code with compilers and other Linux tools.
 - Work on the same files across several turns of a conversation.
 - Run untrusted or model-generated code away from the storage and credentials of the agent.
 
-When the model writes JavaScript that only needs the APIs you pass in, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a Container. For more information about choosing, refer to [Choose a sandbox environment](/sandbox/concepts/).
+:::note
+If the agent only needs to script methods that you define, such as methods that read or update your data, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a container. For more information, refer to [Choose a sandbox environment](/sandbox/concepts/).
+:::
 
 ## How it works
 
-An agent is a [Durable Object](/durable-objects/). When you attach a container to the agent class, each agent instance can start one Linux sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
+Attaching a container to the [Durable Object](/durable-objects/) of an agent gives the agent a Linux sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
 
 The sandbox runs in its own virtual machine. It cannot read the storage, environment variables, or bindings of the agent, and it cannot reach the Internet unless you allow it.
 
@@ -84,6 +86,7 @@ export class CodeAgent extends Think<Env> {
 				enableInternet: false,
 			});
 		}
+		// Keep the container for 10 minutes after the agent becomes inactive.
 		await container.setInactivityTimeout(10 * 60 * 1000);
 
 		// `timeout` stops the command and every process it started.
@@ -122,7 +125,7 @@ export default {
 
 `setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. The timeout does not survive a Durable Object restart, so the tool sets it before every command. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
 
-`timeout` stops a command that runs longer than 60 seconds and returns exit code `124`. A command that ignores the stop signal is killed five seconds later. The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model context.
+`timeout` stops a command, and every process it started, after 60 seconds. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model context.
 
 Think gives every agent built-in [workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), which store files in the agent rather than in the sandbox. Without `beforeTurn()`, the model can write a file with a workspace tool that commands in the sandbox cannot see. `activeTools` limits the model to `run_command`, so all of its file work happens in the sandbox.
 

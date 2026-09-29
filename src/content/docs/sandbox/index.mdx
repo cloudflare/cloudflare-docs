@@ -48,6 +48,8 @@ If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/
 
 Each instance is a microVM with its own kernel and network, so no other workload shares it.
 
+A sandbox container uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta.
+
 A Durable Object in your Worker starts the instance from an image and runs a command in it:
 
 ```ts
@@ -106,7 +108,8 @@ const result = await entrypoint.evaluate();
 	href="/sandbox/concepts/"
 	icon="seti:info"
 >
-	Decide whether each job needs a Linux environment or only APIs you pass in.
+	Decide whether a job needs Linux or only calls methods that your Worker
+	provides.
 </LinkTitleCard>
 
 <LinkTitleCard
