@@ -225,7 +225,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it misses a stop that happens before the next request. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it misses a stop that happens before the next request. While the call waits, the inactivity timeout does not start, so a watched container keeps running past the timeout. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running). For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
 

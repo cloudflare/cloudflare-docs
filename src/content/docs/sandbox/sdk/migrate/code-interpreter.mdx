@@ -278,7 +278,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    		const kill = await this.container.exec([
    			"sh",
    			"-c",
-   			'kill -INT "$(cat "$1/pid")"',
+   			`${CURRENT}\ncurrent "$1" && kill -INT "$pid"`,
    			"sh",
    			kernelDir(context),
    		]);
