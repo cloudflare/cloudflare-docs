@@ -82,7 +82,7 @@ this.ctx.container.running;
 
 `start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
 
-`start()` validates its options before it returns. A failure after that, such as a container that cannot start, rejects the promise returned by [`monitor()`](#monitor).
+`start()` returns after it validates its options. Use [`monitor()`](#monitor) to catch errors after that, including a container that fails to start.
 
 The required options depend on the application's scheduling policy.
 
@@ -111,7 +111,7 @@ this.ctx.container.start({
   - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Snapshot handle to restore before startup. Pass the `ContainerSnapshot` returned by [`snapshotContainer()`](#snapshotcontainer), or an object containing its `id`. You cannot pass both `containerSnapshot` and `image`.
   - `labels` (`Record<string, string>`, optional): Up to 10 labels that [`inspect()`](#inspect) returns. Label names must contain 1 to 16 bytes. Label values can contain up to 64 bytes. Names and values cannot contain control characters.
 
-An application that uses the `durable_object` scheduling policy requires `image` or `containerSnapshot`. Without either, the promise returned by `monitor()` rejects.
+`monitor()` rejects when a container that uses the `durable_object` scheduling policy starts without `image` or `containerSnapshot`.
 
 #### Return values
 
@@ -144,7 +144,7 @@ const containerInfo = await this.ctx.container.inspect();
 
 ### `exec`
 
-`exec()` starts another process inside an already-running container. It does not start a stopped container.
+`exec()` starts another process inside an already-running container. It does not start a stopped container. It waits for a container that is still starting.
 
 ```txt
 exec(
@@ -201,12 +201,20 @@ export class MyDurableObject extends DurableObject<Env> {
   - `signal` (`AbortSignal`, optional): Aborting the signal sends `SIGKILL` to the process. An already-aborted signal makes `exec()` throw an `AbortError`.
   - `pty` (`boolean | { cols?: number; rows?: number }`, optional): Runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
 
+The following call runs a command as user `1000` and group `1000`. The file it creates belongs to `1000:1000`:
+
+```ts
+const process = await this.ctx.container.exec(["touch", "/tmp/notes.txt"], {
+	user: "1000:1000",
+});
+```
+
 {/* Remove the first paragraph of this caution when exec() accepts a user ID without a group ID, and user and group names. */}
 
 :::caution
 Pass both IDs in `user`. A user ID without a group ID runs the process as `root`, and a user or group name makes `exec()` reject with an internal error.
 
-`user` does not restrict a process in a deployed container with the `durable_object` scheduling policy. Every process has the same Linux capabilities as `root`, regardless of user. File permissions do not stop the process, and it can switch back to `root`. The IDs set the owner of files that the process creates. In containers with the `default` scheduling policy, other users have no capabilities, and file permissions apply.
+`user` does not restrict a process in a deployed container with the `durable_object` scheduling policy. Every process has the same Linux capabilities as `root`, regardless of user. File permissions do not stop the process, and it can switch back to `root`. The IDs set the owner of files that the process creates. In containers with the [`default` scheduling policy](/containers/configuration/scheduling-policy/), other users have no capabilities, and file permissions apply.
 :::
 
 With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, which is the default. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
@@ -233,17 +241,51 @@ A stream that the process does not provide is `undefined`. For example, with `st
 
 The Workers TypeScript types declare `stdin`, `stdout`, and `stderr` as `| null`. Test for a stream, such as `if (process.stderr)`, instead of comparing with `null`.
 
-`output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
+`output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed.
+
+`output()` holds all of the output in the memory of the Durable Object, where it counts toward the [memory limit](/workers/platform/limits/#memory). When output can be large, read both streams concurrently instead. For more information, refer to [Stream large output](/containers/guides/execute-commands/#stream-large-output).
 
 #### Process lifetime
 
 `exec()` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
-`kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running, and `output()` waits until they exit. To stop them too, refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
+`kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running, and `output()` waits until they exit. To stop them too, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
 A process keeps running when the request that started it is canceled, so a client that retries starts a second copy of the command. For more information, refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects).
 
-To stop the process when the client disconnects, handle the request in the `fetch()` handler of the Durable Object, and abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
+To stop the process when the client disconnects, pass the incoming request from your Worker to `fetch()` on the Durable Object stub, and abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
+
+<TypeScriptExample omitTabs>
+
+```ts
+export class MyContainer extends DurableObject {
+	async fetch(request: Request) {
+		const container = this.ctx.container;
+		if (!container?.running) {
+			return new Response("The container is not running", { status: 503 });
+		}
+
+		const controller = new AbortController();
+		const abort = () => controller.abort();
+		request.signal.addEventListener("abort", abort);
+
+		const process = await container.exec(["sleep", "60"], {
+			signal: controller.signal,
+		});
+		// Stop forwarding the abort once the process exits.
+		void process.exitCode.then(() =>
+			request.signal.removeEventListener("abort", abort),
+		);
+
+		const output = await process.output();
+		return new Response(`Exit code: ${output.exitCode}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+{/* Remove this caution when signaling a process that has exited no longer raises an internal error. */}
 
 :::caution
 Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits raises an uncaught `internal error` in the Durable Object. `AbortSignal.timeout()` and `request.signal` can fire after the process exits, so do not pass them to `exec()` directly. Pass the signal of an `AbortController` instead. Once `exitCode` resolves, stop calling `abort()`, for example by clearing the timer or removing the `abort` listener from `request.signal`.
@@ -271,7 +313,11 @@ const snapshot = await this.ctx.container.snapshotContainer({
 });
 ```
 
+:::note
 The Worker API has no method to list snapshots. Store the returned `id`, for example in Durable Object storage.
+:::
+
+{/* Remove "Pass `{}`" and the TypeError for an omitted options object when snapshotContainer() accepts no argument. */}
 
 #### Parameters
 
@@ -329,15 +375,50 @@ this.ctx.container.signal(SIGTERM);
 
 `setInactivityTimeout()` sets how long a container keeps running after its Durable Object becomes inactive. If the Durable Object handles another request before the timeout ends, it controls the same running container. Otherwise, Cloudflare stops the container. Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive.
 
-The timeout does not survive a Durable Object restart. Call `setInactivityTimeout` on every request that uses the container, not only after `start()`. When your class extends the [`Container` class](/containers/api/container-class/), use [`sleepAfter`](/containers/api/container-class/#sleepafter) instead.
+Each Durable Object instance sets its own timeout. A Durable Object that restarts, for example after a deploy, starts without one. Set the timeout after `start()`, and set it again in the constructor when the container is already running.
 
 ```txt
 setInactivityTimeout(durationMs: number | bigint): Promise<void>
 ```
 
-```js
-await this.ctx.container.setInactivityTimeout(10 * 60 * 1000);
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container;
+		if (container?.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
+
+	async ensureRunning() {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("No container is configured for this Durable Object");
+		}
+		if (!container.running) {
+			container.start({
+				image: "cloudflare/debian-trixie",
+				entrypoint: ["sleep", "infinity"],
+				enableInternet: false,
+			});
+			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+		}
+	}
+}
 ```
+
+</TypeScriptExample>
 
 #### Parameters
 
@@ -351,6 +432,8 @@ await this.ctx.container.setInactivityTimeout(10 * 60 * 1000);
 
 - `setInactivityTimeout()` throws a `TypeError` when `durationMs` is `0` or less.
 - The returned promise rejects when `durationMs` is greater than 6 hours.
+
+Await the call inside a `try` block to handle both.
 
 ### `getTcpPort`
 

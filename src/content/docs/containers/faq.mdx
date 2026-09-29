@@ -156,7 +156,7 @@ FROM docker:dind
 ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false & exec /path/to/your-app"]
 ```
 
-This Dockerfile works with both scheduling policies. Containers with `scheduling_policy: "durable_object"` cannot turn on IP forwarding, so the Docker daemon exits on startup unless you pass `--ip-forward=false`.
+This Dockerfile works with both [scheduling policies](/containers/configuration/scheduling-policy/). Containers that use the `durable_object` policy cannot turn on IP forwarding, so the Docker daemon exits on startup unless you pass `--ip-forward=false`.
 
 Run the Docker daemon as `root`. Rootless Docker does not start in Containers, because it cannot set up its runtime directory or network.
 

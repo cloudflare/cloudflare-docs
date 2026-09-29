@@ -445,7 +445,11 @@ export class MyContainer extends Container {
 
 Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pass another signal when the process requires it. A process can handle or ignore a signal, so this is not a hard execution deadline. Observe completion through `exitCode`, and do not infer a specific exit code from a signal.
 
-The signal reaches only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit. To stop a command together with the processes it starts, run it under GNU coreutils `timeout`. The image must include `timeout`.
+### Stop the processes a command starts
+
+`kill()` signals only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit.
+
+To stop a command together with the processes it starts, run it under GNU coreutils `timeout`. The image must include `timeout`.
 
 <TypeScriptExample omitTabs>
 ```ts
