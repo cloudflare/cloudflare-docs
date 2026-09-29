@@ -1,3 +1,4 @@
+[SEAL:948b8f26632069b51bcc2fbcbbb4ed8c:BEGIN source="proxy_fetch"]
 ---
 title: Troubleshooting
 pcx_content_type: troubleshooting
@@ -141,7 +142,7 @@ If you exceed this limit, the API returns:
 To free a slot, you must first remove all hostname associations from the CA before deleting it. To increase your quota, contact your account team.
 
 :::note
-CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described above.
+CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described in [Bring your own CA (BYOCA)](#bring-your-own-ca-byoca).
 :::
 
 ---
@@ -178,3 +179,5 @@ If the CA certificate uses a different algorithm, re-issue it using a supported 
 ### Malformed PEM content
 
 The `certificates` field in the upload request must contain valid, properly delimited PEM content. Ensure the certificate starts with `-----BEGIN CERTIFICATE-----` and ends with `-----END CERTIFICATE-----`. Do not include private keys or certificate signing requests in this field.
+
+[SEAL:948b8f26632069b51bcc2fbcbbb4ed8c:END]
