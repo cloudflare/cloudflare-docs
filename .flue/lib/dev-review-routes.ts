@@ -3,12 +3,14 @@ import { getInstallationToken, getPullRequest } from "./github";
 import { RUN_ARTIFACTS, reviewMode } from "./review/run-context";
 import { getRunArtifact } from "./review/state";
 import type { ReviewWorkflowParams } from "./review/start";
+import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 
 export interface DevReviewEnv {
 	DOCS_FLUE_BUCKET: R2Bucket;
 	DOCS_FLUE_INTERNAL_TOKEN?: string;
 	DOCS_FLUE_REVIEW_MODE?: string;
 	REVIEW_ORCHESTRATOR: Workflow<ReviewWorkflowParams>;
+	DEPENDABOT_REVIEW: Workflow<DependabotReviewParams>;
 	[key: string]: unknown;
 }
 
@@ -42,6 +44,29 @@ devReviewRoutes.use("*", async (c, next) => {
 	)
 		return c.text("Unauthorized", 401);
 	await next();
+});
+
+// Replay a Dependabot review. Follows DOCS_FLUE_REVIEW_MODE: `log` returns the
+// rendered comment in the workflow output, `comment` updates the PR comment.
+devReviewRoutes.post("/dependabot/:number", async (c) => {
+	const env = c.env as unknown as DevReviewEnv;
+	const number = Number(c.req.param("number"));
+	if (!Number.isInteger(number) || number < 1)
+		return c.text("Invalid PR number", 400);
+	const id = `replay-dependabot-${number}-${Date.now()}`;
+	await env.DEPENDABOT_REVIEW.create({ id, params: { number, replay: true } });
+	return c.json({ id, mode: reviewMode(env) }, 202);
+});
+
+devReviewRoutes.get("/dependabot/status/:id", async (c) => {
+	const env = c.env as unknown as DevReviewEnv;
+	const instance = await env.DEPENDABOT_REVIEW.get(c.req.param("id"));
+	const status = await instance.status();
+	return c.json({
+		status: status.status,
+		output: status.output ?? null,
+		error: status.error ?? null,
+	});
 });
 
 devReviewRoutes.post("/:number", async (c) => {
