@@ -47,7 +47,7 @@ Your cache settings and your origin's health determine whether visitors receive 
 
 - With `stale-while-revalidate`, Cloudflare can serve stale content while it revalidates in the background.
 - Without `stale-while-revalidate`, requests wait for revalidation to complete.
-- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve stale content for as long as the content stays in cache. This happens even if the response has no `stale-if-error` directive. To limit this, set `stale-if-error` in the response. To prevent it, set `stale-if-error=0`.
+- If your origin returns a `5xx` error or cannot be reached, Cloudflare can serve stale content for as long as the content stays in cache. This happens even if the response has no `stale-if-error` directive. To limit this, set `stale-if-error` in the response. To prevent it, set `stale-if-error=0`. With [Origin Cache Control](/cache/concepts/cache-control/) enabled, `must-revalidate`, `proxy-revalidate`, and `s-maxage` also prevent it.
 
 For content that is still fresh, `stale-while-revalidate` and `stale-if-error` windows start when you invalidate it, not when it would have expired. Invalidation never extends a stale window that has already ended.
 
