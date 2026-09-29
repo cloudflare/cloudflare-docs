@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Give [Codex](https://developers.openai.com/codex/cli) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Codex calls OpenAI models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox to edit a GitHub repository from a prompt, then read its changes as a diff. Codex calls OpenAI models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ Give [Codex](https://developers.openai.com/codex/cli) a GitHub repository and a 
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs the Codex CLI instead of Claude Code. The npm package ships its native binaries as dependencies, so it installs without running install scripts. Pin the version, because the flags and event format of Codex can change between releases.
+   The image installs the Codex CLI instead of Claude Code. The npm package ships its native binaries as dependencies, so it installs without running install scripts. The image pins the version, because the flags and event format of Codex can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to an OpenAI model ID that your gateway can serve:
 

@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Give [Claude Code](https://code.claude.com/docs/en/overview) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox to edit a GitHub repository from a prompt, then read its changes as a diff. Claude Code calls Anthropic models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ Give [Claude Code](https://code.claude.com/docs/en/overview) a GitHub repository
    CMD ["sleep", "infinity"]
    ```
 
-   The installation runs the install script from the Claude Code package, which puts its native binary in place. Pin the version, because the flags and event format of Claude Code can change between releases.
+   The installation runs the install script from the Claude Code package, which puts its native binary in place. The image pins the version, because the flags and event format of Claude Code can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to an Anthropic model ID that your gateway can serve:
 

@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Give the [Pi](https://github.com/earendil-works/pi) coding agent a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. Pi calls models through [AI Gateway](/ai-gateway/) with its built-in provider. Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandbox to edit a GitHub repository from a prompt, then read its changes as a diff. Pi calls models through [AI Gateway](/ai-gateway/) with its built-in provider. Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ Give the [Pi](https://github.com/earendil-works/pi) coding agent a GitHub reposi
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs Pi instead of Claude Code. Pin the version, because the flags and event format of Pi can change between releases.
+   The image installs Pi instead of Claude Code. The image pins the version, because the flags and event format of Pi can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to a model ID from the `cloudflare-ai-gateway` provider in Pi:
 

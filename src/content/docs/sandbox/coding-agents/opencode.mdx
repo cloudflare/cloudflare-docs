@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Give [OpenCode](https://opencode.ai) a GitHub repository and a prompt, let it edit the repository inside a Linux sandbox, and read its changes as a diff. OpenCode calls models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
+Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub repository from a prompt, then read its changes as a diff. OpenCode calls models through [AI Gateway](/ai-gateway/). Your Worker adds the gateway token to those requests, and the sandbox can reach only your gateway and `github.com`.
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ Give [OpenCode](https://opencode.ai) a GitHub repository and a prompt, let it ed
 
    The image installs the baseline x64 OpenCode binary directly. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. When you build an `amd64` image on another architecture, the build runs under an emulator, so the package can pick the wrong binary. The baseline binary runs on every x64 CPU.
 
-   OpenCode searches files with `rg` from the image. Without `ripgrep`, it tries to download `rg` from GitHub. Pin the OpenCode version, because its model list and event format can change between releases.
+   OpenCode searches files with `rg` from the image. Without `ripgrep`, it tries to download `rg` from GitHub. The image pins the OpenCode version, because the model list and event format of OpenCode can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to an OpenCode model ID for AI Gateway:
 
