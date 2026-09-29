@@ -1,0 +1,158 @@
+src/components/cf/AutoconfigDiagram.astro
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 11,14-19
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 99
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 4-9
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 47-67,69-71
+  s_1e2ad8dfac2e6a::t_744ac3f0bbf37b 68
+src/content/docs/cf/commands.mdx
+  s_1e2ad8dfac2e6a::t_89a8070b784a3a 3,11-12,27,36,40-41,43-44,51,54,58,71-72,74-75,82-83,85-86,88-89,94,100-101,103-107,112,114-123,125-127,131-133,136-137,139-141,148-150
+src/icons/cf.svg
+  s_1e2ad8dfac2e6a::t_94ec16a45f6030 1
+src/components/config-explorer/annotated-config.node.test.ts
+  s_1e2ad8dfac2e6a::t_8194a5d4c17910 1-8,10-77,110-111
+  s_1e2ad8dfac2e6a::t_895d566dd76876 9,78-109
+src/content/docs/workers/configuration/cloudflare-config/index.mdx
+  s_1e2ad8dfac2e6a::t_2fc45acbc66ec3 3,12,14
+src/content/docs/cf/get-started.mdx
+  s_1e2ad8dfac2e6a::t_89a8070b784a3a 3,13-14,18-19,22-23,30,36,42,54,57-59,61-62,73,77
+  s_1e2ad8dfac2e6a::t_f5a949cefc3903 24-25
+package.json
+  s_1e2ad8dfac2e6a::t_ba0277552fdf5b 8,15,41,43,60
+src/content/docs/workers/build-output/index.mdx
+  s_1e2ad8dfac2e6a::t_2fc45acbc66ec3 12,14
+src/content/docs/cf/migrate-from-wrangler.mdx
+  s_1e2ad8dfac2e6a::t_744ac3f0bbf37b 28-29
+  s_1e2ad8dfac2e6a::t_fc4a877510c675 324,334-336
+  s_1e2ad8dfac2e6a::t_d3a5dd169b453b 128,235,275
+  s_1e2ad8dfac2e6a::t_5464146906ad12 3,17,19-20,22-25,34-35,37-38,43,59-61,82-84,86-87,135,137-164,170,172,174-176,180-201,205,213-214,216-218,221-225,238-239,242-251,258-259,263-265,267-271,278-290,298-299,311-312,319-323,325-333,347-349,361,370-372,374,376,378,386-389,392-394
+  s_1e2ad8dfac2e6a::t_f5a949cefc3903 21,47,51,55-57
+  s_1e2ad8dfac2e6a::t_49eefb2be0ff67 76-78
+  s_1e2ad8dfac2e6a::t_246c09c949fe51 58
+src/components/landing/Sidebar.astro
+  s_1e2ad8dfac2e6a::t_3b1821724c8fb0 56
+bin/generate-cf-config-reference.mjs
+  s_1e2ad8dfac2e6a::t_190906bd75e20d 1-307
+src/components/landing/BuildFromScratch.astro
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 75-76
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 9-13,16,51-54
+  s_2f2e2d59d69e15::t_9a7351d89b202b 14-15,111-112,120,130-132,154
+src/content/docs/cf/local-development/config-explorer.mdx
+  s_1e2ad8dfac2e6a::t_63095d04d55909 16,22-23
+  s_1e2ad8dfac2e6a::t_8ae6f8f5771b7c 12,14-15,18-21
+  s_1e2ad8dfac2e6a::t_89a8070b784a3a 1-11,13,17
+src/content/docs/cf/component-experiments.mdx
+  s_2f2e2d59d69e15::t_9a7351d89b202b 1-5,8-13,15-43,56-166,175-180,184,186-241
+  s_2f2e2d59d69e15::t_0843840ec57d3b 6-7
+  s_1e2ad8dfac2e6a::t_8ae6f8f5771b7c 14,185
+  s_1e2ad8dfac2e6a::t_4146668b1499a2 44-55
+  s_1e2ad8dfac2e6a::t_d3a5dd169b453b 167
+  s_1e2ad8dfac2e6a::t_ae847f88a856b7 173
+  s_1e2ad8dfac2e6a::t_b888321a313159 168-172,174,181-183
+src/components/config-explorer/annotated-config-explorer.ts
+  s_1e2ad8dfac2e6a::t_0e7e0c85a60cce 3-4,7,13,27-38,75,78-82,144-145,173-189,192-196,198-202,205-206,215,221-226,229,232,235,238-239
+  s_1e2ad8dfac2e6a::t_2acc72cbea351c 1-2,5-6,9-11,15,18-26,39,41-46,48-73,83-107,111-119,130-131,136,143,146-147,168-172,190-191,197,203-204,207-214,219-220,227-228,230-231,233-234,236-237,240-262
+  s_1e2ad8dfac2e6a::t_63095d04d55909 12,14,16-17,108-110,132-135,216-218
+  s_1e2ad8dfac2e6a::t_9b97004cd21d74 8,40,47,120-129,137-142,148-167
+  s_1e2ad8dfac2e6a::t_fb0a04467105e1 74,76-77
+src/components/agent-setup/PlatformAccessSection.astro
+  s_1e2ad8dfac2e6a::t_744ac3f0bbf37b 111
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 6-11,70-77,81-101,105-110,115-126
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 78-80,102-104,112-114
+src/content/partials/workers/build-output.mdx
+  s_1e2ad8dfac2e6a::t_26509c74cf8c48 106
+  s_1e2ad8dfac2e6a::t_8fc32789d2975d 111-112,147-148
+  s_1e2ad8dfac2e6a::t_f4296c65e09efe 1-105,107-110,113-146
+src/components/cf-experiments/ExperimentalCliConfig.astro
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 1-13,17,21-22
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 14-16,18-20
+src/components/landing/sidebar-data.ts
+  s_1e2ad8dfac2e6a::t_3b1821724c8fb0 7-8,27,31,72
+src/components/config-explorer/AnnotatedConfigExplorer.astro
+  s_1e2ad8dfac2e6a::t_e4e428c2075c62 2,4,29-30,44-52,54-74,76-78,80-84,86-91,98-99,101-146,148-178,180-189,191-194,196-199,203,270-271,484
+  s_1e2ad8dfac2e6a::t_b3d7e4587beeb3 1,5-28,31-43,53,147,179,190,195,200-202,204-269,272-274,279-281,284-349,351-405,407-451,453,457,462-483,485-488
+  s_1e2ad8dfac2e6a::t_9b97004cd21d74 276-278
+  s_1e2ad8dfac2e6a::t_10c3d9d77638b9 3
+  s_1e2ad8dfac2e6a::t_89cf77eb4ff345 283,452,454-456,458-461
+  s_1e2ad8dfac2e6a::t_775886f9fd55d3 75
+  s_1e2ad8dfac2e6a::t_c21c446bfb8745 275
+  s_1e2ad8dfac2e6a::t_11f2231679f87e 79,85,92-97,100
+  s_1e2ad8dfac2e6a::t_271feba252c9f0 282,350,406
+src/content/docs/cf/index.mdx
+  s_2f2e2d59d69e15::t_0843840ec57d3b 55,57
+  s_1e2ad8dfac2e6a::t_744ac3f0bbf37b 19
+  s_1e2ad8dfac2e6a::t_89a8070b784a3a 3,11-13,15-16,22,24-25,27-28,30,32-33,35-41,46-53,58-59
+src/components.ts
+  s_1e2ad8dfac2e6a::t_d210bd7690e897 17
+src/components/config-explorer/config-examples.ts
+  s_1e2ad8dfac2e6a::t_dc7be4f9b08e36 696
+  s_1e2ad8dfac2e6a::t_33c4b7e56fe172 1-695,697-775
+src/content/docs/cf/local-development/cloudflare-config.mdx
+  s_1e2ad8dfac2e6a::t_2fc45acbc66ec3 3,12,14
+src/components/ui/sidebar/SidebarLink.astro
+  s_1e2ad8dfac2e6a::t_3b1821724c8fb0 2,13-14,22,35
+src/components/cf-experiments/ExperimentalCliCommand.astro
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 1-64,80-84
+  s_2f2e2d59d69e15::t_c62e40238bc3b0 65-79
+src/content/partials/workers/cloudflare-config.mdx
+  s_1e2ad8dfac2e6a::t_bc00f1611601da 1-4,6-21,24,27-31,33-76,78-178,180-245,247-272,274-293,295-331,333-384,386-441,443-488,490-525,527-549,551-580,582-648
+  s_1e2ad8dfac2e6a::t_f5a949cefc3903 5,22-23,25-26,246
+  s_1e2ad8dfac2e6a::t_d3a5dd169b453b 32,77,179,273,294,332,385,442,489,526,550,581
+  s_1e2ad8dfac2e6a::t_f4296c65e09efe 649-651
+src/content/docs/cf/local-development/build-output.mdx
+  s_1e2ad8dfac2e6a::t_2fc45acbc66ec3 6,12,14
+src/content/docs/cf/local-development/index.mdx
+  s_1e2ad8dfac2e6a::t_89a8070b784a3a 12-14,20-21,25-26,30,36-40,51,57,63-64,70,80,86-88,103,106,109,113-114,118-123,128-130,133,136-140,142-143,145-147,149-151
+  s_1e2ad8dfac2e6a::t_26509c74cf8c48 76-79,124-126
+  s_1e2ad8dfac2e6a::t_fc4a877510c675 16-19,41-47
+  s_1e2ad8dfac2e6a::t_9a5e11e30a1796 101-102
+  s_1e2ad8dfac2e6a::t_e81aed61cd7f38 15,127
+src/components/config-explorer/config-examples.node.test.ts
+  s_1e2ad8dfac2e6a::t_740146b4074c66 1-77
+src/components/cf-experiments/ExperimentalCliNamespace.astro
+  s_2f2e2d59d69e15::t_5325b9a51509dc 39
+  s_2f2e2d59d69e15::t_038072e8b2bc0a 1-38,40
+src/components/config-explorer/annotated-config.ts
+  s_1e2ad8dfac2e6a::t_f9944b48e1c163 14,105
+  s_1e2ad8dfac2e6a::t_63095d04d55909 48-50
+  s_1e2ad8dfac2e6a::t_895d566dd76876 124-127
+  s_1e2ad8dfac2e6a::t_3703ce66b96f94 1-13,15-47,51-104,106-123,128-193
+bin/config-explorer-jsdoc.mjs
+  s_ec32857784cffb::t_bfcc0aeca136b5 1-40
+bin/config-explorer-jsdoc.node.test.ts
+  s_ec32857784cffb::t_ee407a80007fac 1-56
+pnpm-lock.yaml
+  s_1e2ad8dfac2e6a::t_269e74ff83a3fb 53-55,781-783,6259-6260,6263-6269,6676-6679,8353-8354,8364,8367-8368,8376,8385,12370,12376,12378,12385,12387,12393,12395,12399,12402,12406,12408,12417,12419,12424
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cd0d9314ab1cd3111855fecda3345dc13b0d1dcb",
+  "prompts": {},
+  "sessions": {
+    "s_1e2ad8dfac2e6a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0d32f-9c6d-7541-8909-289557c678b2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    },
+    "s_2f2e2d59d69e15": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08612-41be-7e32-bfd2-cf64724d57c9",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    },
+    "s_ec32857784cffb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05e0c-fcf6-7852-a9f8-3231f8472ff3",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}

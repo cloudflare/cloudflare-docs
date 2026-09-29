@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-challenges/troubleshooting/challenge-solve-issues.mdx
+  s_c17ce9c91edabe::t_eb4037f0790e43 13-17,53-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "681ed7100e30239a0554ee47db53c12782f6b2b6",
+  "prompts": {},
+  "sessions": {
+    "s_c17ce9c91edabe": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc2116061ffeHmgyb0y8BGZNZI",
+        "model": "@cf/moonshotai/kimi-k2.7-code"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}
