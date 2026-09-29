@@ -11,7 +11,7 @@ import { TypeScriptExample } from "~/components";
 
 [Containers](/containers/) now support snapshot APIs in public beta for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
 
-Use `snapshotContainer()` through the [Durable Object Container API](/containers/api/durable-object-container/) to capture the full container filesystem. Create snapshots from a container that is already running:
+Use `snapshotContainer()` through the [Durable Object Container API](/containers/api/durable-object-container/) to capture the full container filesystem. Create a snapshot from a running Container, store its handle, and pass that handle to `start()` when you restore it later:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -20,24 +20,14 @@ import { DurableObject } from "cloudflare:workers";
 
 export class MyDurableObject extends DurableObject {
 	async saveSnapshot() {
+		// Create a snapshot from the running Container.
 		const containerSnapshot = await this.ctx.container.snapshotContainer({});
 
 		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
 	}
-}
-```
 
-</TypeScriptExample>
-
-Later, load the saved snapshot handle and restore it with `start()`:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export class MyDurableObject extends DurableObject {
 	async restoreSnapshot() {
+		// Restore the saved snapshot later.
 		const containerSnapshot =
 			await this.ctx.storage.get<ContainerSnapshot>("containerSnapshot");
 
@@ -52,8 +42,6 @@ export class MyDurableObject extends DurableObject {
 
 </TypeScriptExample>
 
-Snapshots are only supported for Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
-
-Snapshots are immutable, so create a new snapshot to persist filesystem changes made after a restore.
+Snapshots are only supported for Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). Snapshots are immutable, so create a new snapshot to persist filesystem changes made after a restore.
 
 For more information, refer to [Snapshots](/containers/guides/snapshots/) and the [Durable Object Container API](/containers/api/durable-object-container/).
