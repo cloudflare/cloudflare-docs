@@ -13,7 +13,7 @@ products:
   - durable-objects
 ---
 
-Sandbox SDK 1.0 works with a container you start from a Durable Object. To move an application from 0.x, you replace the `Sandbox` class with a Durable Object class you write. You then replace each 0.x feature that your application uses. For why each feature moves into your class, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
+Sandbox SDK 1.0 works with a container you start from a Durable Object with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. To move an application from 0.x, you replace the `Sandbox` class with a Durable Object class you write. You then replace each 0.x feature that your application uses. For why each feature moves into your class, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
 
 Sandboxes on 1.0 start faster: on a prepared image, the median time from `start()` to the first command is under 600 ms, compared with about 4 s on 0.x. Each `start()` also chooses its own image, and a deploy does not restart running sandboxes.
 

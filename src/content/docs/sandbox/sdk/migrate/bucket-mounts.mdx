@@ -176,12 +176,10 @@ private async ensureRunning(): Promise<void> {
 		await this.intercept();
 		const trust = await this.container.exec(TRUST);
 		await trust.exitCode;
+		await this.container.setInactivityTimeout(
+			INACTIVITY_TIMEOUT_MS,
+		);
 	}
-
-	// Call it on every request.
-	await this.container.setInactivityTimeout(
-		INACTIVITY_TIMEOUT_MS,
-	);
 }
 ```
 

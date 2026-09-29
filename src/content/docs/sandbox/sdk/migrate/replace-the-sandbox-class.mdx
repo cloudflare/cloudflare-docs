@@ -114,6 +114,19 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    const ENV = { NODE_ENV: "test" };
 
    export class MySandbox extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		// A restarted Durable Object sets the timeout again.
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(
+   					INACTIVITY_TIMEOUT_MS,
+   				),
+   			);
+   		}
+   	}
+
    	private get container(): Container {
    		const container = this.ctx.container;
 
@@ -137,24 +150,22 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    			});
    			// Replaces onStart().
    			await this.ctx.storage.put("startedAt", Date.now());
+   			await this.container.setInactivityTimeout(
+   				INACTIVITY_TIMEOUT_MS,
+   			);
    		}
-
-   		// Call it on every request.
-   		await this.container.setInactivityTimeout(
-   			INACTIVITY_TIMEOUT_MS,
-   		);
    	}
    }
    ```
 
-   `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout accepts at most 6 hours. Remove `enableInternet: true` if your commands do not need the Internet.
+   `start()` returns before the container is ready, and the first `exec()` waits for it. Each Durable Object instance sets its own inactivity timeout, so the constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. Remove `enableInternet: true` if your commands do not need the Internet.
 
 7. Replace each class field and `getSandbox()` option that your code sets:
 
    | 0.12 | 1.0 |
    | --- | --- |
-   | `sleepAfter` | `setInactivityTimeout()` on every request. |
-   | `keepAlive` | An [alarm](/durable-objects/api/alarms/) that calls `setInactivityTimeout()` again while work remains. |
+   | `sleepAfter` | `setInactivityTimeout()` after `start()`, and again in the constructor. |
+   | `keepAlive` | An [alarm](/durable-objects/api/alarms/) that runs more often than the inactivity timeout while work remains. |
    | `envVars`, `setEnvVars()` | `env` on `start()` for the main process, and `env` on each `exec()` call. Commands do not inherit the `start()` variables. |
    | `entrypoint` | `entrypoint` on `start()`, or `CMD` in the image. |
    | `enableInternet` | `enableInternet` on `start()`, which every call must pass. 0.12 defaulted to `true`. |
