@@ -73,6 +73,7 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
    	}
 
    	add(session: string) {
+   		// Keep the time of the first command when the same session runs again
    		this.ctx.storage.sql.exec(
    			"INSERT OR IGNORE INTO sandboxes (session, created_at) VALUES (?, ?)",
    			session,
@@ -92,8 +93,6 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
    	}
    }
    ```
-
-   `INSERT OR IGNORE` keeps the time of the first command when the same session runs again.
 
 3. In `MyContainer`, set an inactivity timeout, and add methods that report and stop the container. Define the timeout at the top of the file, and add a constructor that sets it when a restarted Durable Object finds the container running:
 
@@ -122,16 +121,21 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
    Then add the two methods to `MyContainer`:
 
    ```ts title="src/index.ts"
-   isRunning() {
-   	return this.ctx.container?.running ?? false;
-   }
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   async destroy() {
-   	await this.ctx.container?.destroy();
+   	isRunning() {
+   		// Reading `running` does not start the container
+   		return this.ctx.container?.running ?? false;
+   	}
+
+   	async destroy() {
+   		await this.ctx.container?.destroy();
+   	}
    }
    ```
 
-   Reading `running` does not start the container. A listing request can wake a restarted Durable Object, which starts without the timeout that `exec()` set. The constructor sets the timeout again, so the sandbox does not stop shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   A listing request can wake a restarted Durable Object, which starts without the timeout that `exec()` set. The constructor sets the timeout again, so the sandbox does not stop shortly after the listing request ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 4. Add routes to your Worker that name each sandbox `<OWNER>/<SESSION>`, record the session before running a command, list the sessions with their state, and remove a session after stopping its container:
 
@@ -149,6 +153,7 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
 
    		if (request.method === "GET" && !session) {
    			const sessions = await directory.list();
+   			// Call the Durable Object of every session in parallel
    			const list = await Promise.all(
    				sessions.map(async (name) => ({
    					session: name,
@@ -181,11 +186,11 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
    };
    ```
 
-   Listing calls the Durable Object of every session in parallel. A sandbox whose container stopped stays in the list with `running: false` until the Worker removes its session.
+   A sandbox whose container stopped stays in the list with `running: false` until the Worker removes its session.
 
    Authenticate callers first, and derive the owner from their identity rather than from the URL. Otherwise anyone can list, use, or stop another user's sandboxes. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
-5. Deploy the Worker:
+5. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
