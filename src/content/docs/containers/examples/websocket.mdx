@@ -53,7 +53,7 @@ export class MyContainer extends DurableObject<Env> {
 		const container = this.ctx.container!;
 		await container.setInactivityTimeout(2 * 60 * 1000);
 		if (!container.running) {
-			container.start({ enableInternet: false });
+			container.start();
 		}
 
 		const port = container.getTcpPort(8080);
@@ -97,7 +97,6 @@ interface Env {
 
 export class MyContainer extends Container<Env> {
 	defaultPort = 8080;
-	enableInternet = false;
 	sleepAfter = "2m";
 }
 

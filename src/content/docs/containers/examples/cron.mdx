@@ -83,7 +83,7 @@ export class CronContainer extends DurableObject<Env> {
 		const container = this.ctx.container!;
 		if (!container.running) {
 			console.log("Starting scheduled task:", startTime);
-			container.start({ enableInternet: true });
+			container.start();
 		}
 		await container.monitor();
 	}
@@ -133,7 +133,6 @@ export default {
 	): Promise<void> {
 		const container = getContainer(env.CRON_CONTAINER);
 		await container.start({
-			enableInternet: true,
 			envVars: {
 				MESSAGE: `Start Time: ${new Date(controller.scheduledTime).toISOString()}`,
 			},
