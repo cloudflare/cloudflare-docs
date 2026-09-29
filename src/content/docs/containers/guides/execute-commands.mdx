@@ -152,7 +152,7 @@ Close the writer to send end-of-file (EOF). If you omit `stdin`, `exec()` closes
 
 ### Pass an RPC stream to standard input
 
-RPC methods can accept byte-oriented `ReadableStream` values whose underlying source uses `type: "bytes"`. A `Request` body meets this requirement. You can pass the received stream directly to `exec()` without buffering the entire stream in the Durable Object. For more information, refer to [Streams over RPC](/workers/runtime-apis/rpc/#readablestream-writeablestream-request-and-response).
+RPC methods can accept byte-oriented `ReadableStream` values whose underlying source uses `type: "bytes"`. A `Request` body meets this requirement. You can pass the received stream directly to `exec()` without buffering the entire stream in the Durable Object. For more information, refer to [Streams over RPC](/workers/runtime-apis/rpc/#readablestream-writablestream-request-and-response).
 
 <TypeScriptExample>
 ```ts
