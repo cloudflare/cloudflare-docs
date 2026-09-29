@@ -31,7 +31,6 @@ import StyleGuideReviewer from "./agents/style-guide-reviewer";
 import ConventionsReviewer from "./agents/conventions-reviewer";
 import ReviewJudge from "./agents/review-judge";
 import SpamFilter from "./agents/spam-filter";
-import CommentSpamFilter from "./agents/comment-spam-filter";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -215,7 +214,6 @@ const EVAL_AGENTS = [
 	ConventionsReviewer,
 	ReviewJudge,
 	SpamFilter,
-	CommentSpamFilter,
 ] as const;
 
 app.use("/eval/agents/*", async (c, next) => {

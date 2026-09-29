@@ -15,30 +15,28 @@
  *   1. spam-context — fetches the comment and parent item, then re-runs the
  *      exemption checks against fresh data (including the codeowner check).
  *      Skips without consulting the agent when any exemption matches.
- *   2. spam-verdict — dispatches the comment-spam-filter agent.
+ *   2. spam-verdict — asks the jev evaluation model (Workers AI).
  *   3. act — on a high-confidence spam verdict: writes an R2 audit record
  *      first, then deletes the comment. Every failure path fails open — an
  *      agent error or audit failure never deletes a comment.
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
-import CommentSpamFilter, {
-	COMMENT_SPAM_VERDICT_DATA,
-} from "../agents/comment-spam-filter";
-import { agentStep } from "../lib/agents/agent-step";
-import { SMALL_AGENT_DURABILITY } from "../lib/agents/durability";
 import {
 	buildCommentSpamAuditRecord,
+	evaluateCommentSpam,
 	getCommentSpamContext,
+	parseJevVerdict,
+	type AiRunner,
 	shouldDeleteComment,
 	spamDeletionAuditKey,
 	type CommentSpamParams,
 } from "../lib/comment-spam";
 import { deleteIssueComment, getInstallationToken } from "../lib/github";
-import { SpamVerdictSchema } from "../lib/spam-filter";
 
 interface CommentSpamEnv {
 	DOCS_FLUE_BUCKET: R2Bucket;
+	AI: AiRunner;
 	[key: string]: unknown;
 }
 
@@ -77,19 +75,25 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 		const context = fetched.context;
 
 		// ── 2. Agent verdict ────────────────────────────────────────────────────
-		const verdict = await agentStep(step, {
-			name: "comment-spam-filter",
-			agent: CommentSpamFilter,
-			id: `${event.instanceId}:comment-spam:${commentId}`,
-			message: "Evaluate this comment for spam and submit your verdict.",
-			initialData: {
-				comment: context.comment,
-				parent: context.parent,
+		// A jev failure is captured as a result (not thrown) so the act step
+		// fails open instead of retrying into a stuck workflow.
+		const verdict = await step.do<
+			| { ok: true; value: ReturnType<typeof parseJevVerdict> }
+			| { ok: false; error: string }
+		>(
+			"spam-verdict",
+			{ retries: { limit: 2, delay: "5 seconds", backoff: "exponential" } },
+			async () => {
+				try {
+					return {
+						ok: true,
+						value: await evaluateCommentSpam(this.env.AI, context),
+					};
+				} catch (error) {
+					return { ok: false, error: String(error) };
+				}
 			},
-			dataName: COMMENT_SPAM_VERDICT_DATA,
-			schema: SpamVerdictSchema,
-			readTimeoutMs: SMALL_AGENT_DURABILITY.timeoutMs,
-		});
+		);
 
 		// ── 3. Act ──────────────────────────────────────────────────────────────
 		const parent = context.parent;

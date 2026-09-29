@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	buildCommentSpamAuditRecord,
+	buildJevInput,
+	evaluateCommentSpam,
+	parseJevVerdict,
 	getCommentSpamContext,
 	shouldDeleteComment,
 	spamDeletionAuditKey,
@@ -219,5 +222,73 @@ describe("buildCommentSpamAuditRecord", () => {
 			deleted_at: "2026-09-24T01:02:03.000Z",
 			workflow_run_id: "run-123",
 		});
+	});
+});
+
+const jevResponse = (noul: number, choice: string) => ({
+	answers: {
+		is_spam: { type: "noul", noul },
+		category: { type: "choice", choice, confidence: 0.9, probabilities: {} },
+	},
+});
+
+describe("parseJevVerdict", () => {
+	it.each([
+		[0.95, "email_reply_artifact", true, "high"],
+		[0.8, "link_promo", true, "high"],
+		[0.79, "link_promo", true, "medium"],
+		[0.5, "gibberish", true, "medium"],
+		[0.49, "gibberish", false, "low"],
+		[0.99, "none", false, "low"],
+		[0.9, "unknown-category", false, "low"],
+	])("noul %s / %s -> spam %s, %s", (noul, category, isSpam, confidence) => {
+		const verdict = parseJevVerdict(jevResponse(noul, category));
+		expect(verdict.is_spam).toBe(isSpam);
+		expect(verdict.confidence).toBe(confidence);
+		expect(shouldDeleteComment(verdict)).toBe(isSpam && confidence === "high");
+	});
+
+	it.each([null, {}, { answers: {} }, { answers: { is_spam: { noul: "x" } } }])(
+		"throws on malformed response %j",
+		(response) => {
+			expect(() => parseJevVerdict(response)).toThrow();
+		},
+	);
+});
+
+describe("evaluateCommentSpam", () => {
+	const context: CommentSpamContext = {
+		comment: {
+			id: 5893607602,
+			body: "Confirm Approved\n\n> Reply to this email directly, view it on GitHub, or unsubscribe.",
+			url: "https://github.com/cloudflare/cloudflare-docs/pull/33799#issuecomment-5893607602",
+			author: "someone",
+			author_association: "NONE",
+		},
+		parent: {
+			kind: "pull_request",
+			number: 33799,
+			title: "Update auth flow",
+			state: "open",
+			url: "https://github.com/cloudflare/cloudflare-docs/pull/33799",
+			author: "pr-author",
+		},
+	};
+
+	it("sends the comment as state and returns the mapped verdict", async () => {
+		const run = vi
+			.fn()
+			.mockResolvedValue(jevResponse(0.93, "email_reply_artifact"));
+		const verdict = await evaluateCommentSpam({ run }, context);
+		expect(run).toHaveBeenCalledWith("typesafe/jev", buildJevInput(context));
+		expect(run.mock.calls[0][1].state.comment.body).toContain(
+			"Confirm Approved",
+		);
+		expect(shouldDeleteComment(verdict)).toBe(true);
+	});
+
+	it("propagates AI errors so the caller fails open", async () => {
+		const run = vi.fn().mockRejectedValue(new Error("boom"));
+		await expect(evaluateCommentSpam({ run }, context)).rejects.toThrow("boom");
 	});
 });

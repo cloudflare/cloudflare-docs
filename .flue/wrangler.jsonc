@@ -216,6 +216,12 @@
 			"tag": "v13",
 			"new_sqlite_classes": ["FlueCommentSpamFilterAgent"],
 		},
+		{
+			// v14: The comment spam verdict now comes from a direct jev call in
+			// trusted code, so the agent DO class is no longer needed.
+			"tag": "v14",
+			"deleted_classes": ["FlueCommentSpamFilterAgent"],
+		},
 	],
 	"triggers": {
 		"crons": ["0 5 * * *"],
