@@ -106,7 +106,20 @@ The Durable Object starts the `workspace` image and passes the container to a cl
 import { Files } from "@cloudflare/sandbox";
 import { DurableObject } from "cloudflare:workers";
 
+const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
 export class MyContainer extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container;
+		// A restarted Durable Object sets the timeout again.
+		if (container?.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
+
 	async files(): Promise<Files> {
 		const container = this.ctx.container;
 		if (!container) {
@@ -118,9 +131,9 @@ export class MyContainer extends DurableObject<Env> {
 				image: container.images.workspace,
 				enableInternet: false,
 			});
+			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 		}
 
-		await container.setInactivityTimeout(10 * 60 * 1000);
 		return new Files(container);
 	}
 }
