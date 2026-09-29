@@ -444,7 +444,14 @@ package.json @cloudflare/content-engineering
 /public/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
 
 # email-service
-# Needs CODEOWNERS
+
+/src/content/docs/email-service/ @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/product-owners
+/src/content/changelog/email-service/ @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/changelog/email-service/ @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/email-service/ @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/product-owners
+/src/content/partials/email-service/ @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/product-owners
+/src/content/directory/email-service.yaml @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/product-owners
+/src/icons/email-service.svg @DiogoSantoss @rpots @edevil @ttoino @mtourne @cloudflare/product-owners
 
 # firewall
 
