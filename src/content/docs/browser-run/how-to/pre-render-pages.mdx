@@ -186,7 +186,7 @@ The `waitUntil: "networkidle2"` option waits until the page has no more than two
 
 1. Deploy the Worker after local validation:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
 2. After deployment, request a rendered page from your Worker URL:
 

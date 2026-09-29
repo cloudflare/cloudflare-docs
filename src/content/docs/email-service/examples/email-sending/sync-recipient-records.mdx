@@ -103,8 +103,7 @@ interface Env {
 
 interface EmailSendingEvent {
 	type:
-		| "cf.email.sending.message.bounced"
-		| "cf.email.sending.message.complained";
+		"cf.email.sending.message.bounced" | "cf.email.sending.message.complained";
 	payload: {
 		eventId: string;
 		recipient: string;
@@ -169,7 +168,12 @@ The handler acknowledges each successful message. Failed operations move to the 
 
 Deploy the Worker and its queue consumer configuration:
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 
 Monitor the dead letter queue for failed events. Reprocess them after fixing the underlying error.
 

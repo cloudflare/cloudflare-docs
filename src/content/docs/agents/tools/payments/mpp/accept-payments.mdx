@@ -75,7 +75,7 @@ Add `mppx` middleware when you control the Worker application:
 
 4. Deploy the Worker:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
 5. Request the paid route without a payment:
 
@@ -173,7 +173,7 @@ Add the MPP transport to an [`McpAgent`](/agents/model-context-protocol/apis/age
 
 5. Deploy the Worker:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
    An unpaid `premium_search` call returns an MPP Challenge. A paid retry returns the tool result and an MPP Receipt in `_meta`.
 

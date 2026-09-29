@@ -575,7 +575,12 @@ export default {
 
 To deploy your Worker, run the following command:
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
 

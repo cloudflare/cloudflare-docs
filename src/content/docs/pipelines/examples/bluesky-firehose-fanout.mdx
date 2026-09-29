@@ -374,7 +374,12 @@ Generate types for your bindings:
 
 Deploy the Worker:
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 
 Open the Worker URL once to start the firehose. The cron trigger keeps it running:
 

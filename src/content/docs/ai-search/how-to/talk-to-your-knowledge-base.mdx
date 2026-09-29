@@ -281,7 +281,12 @@ Open the app in your browser, select **Start call** and allow microphone access,
 
 Deploy your agent to make it available on the Internet:
 
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 
 ## Talk to your knowledge base with multiple people
 

@@ -120,7 +120,7 @@ You need a Cloudflare Workers project and an existing `McpServer`.
 
 4. Deploy the Worker:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" cfCommand="cf deploy" />
 
 5. In an MCP client, connect to `https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/mcp`. Verify that the server exposes one tool named `code`.
 
