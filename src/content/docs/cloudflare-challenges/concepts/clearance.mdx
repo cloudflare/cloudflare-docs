@@ -21,10 +21,11 @@ The cookie contains **two types of clearance** that work together:
 - **Challenge clearance**: Granted when a visitor solves a Challenge (for example, Interstitial Challenge Pages or Turnstile with pre-clearance enabled).
 - **Precursor clearance**: Continuously updated based on session behavior.
 
-
 The cookie is securely tied to the specific visitor and device it was issued to, preventing reuse across machines.
 
-As an additional layer of security, Cloudflare recommends that customers [add a rate limiting rule](/waf/rate-limiting-rules/) based on the `cf_clearance` cookie value. This helps ensure that a single, valid cookie cannot be abused by one machine to send an excessive volume of requests.
+As an additional layer of security, customers with Advanced Rate Limiting can [add a rate limiting rule](/waf/rate-limiting-rules/) using the **Clearance UUID** (`http.request.clearance.uuid`) characteristic. This stable identifier lets the rule keep using the same counter when Cloudflare refreshes the encrypted `cf_clearance` cookie value, including updates from JavaScript Detections or Precursor.
+
+Use the counting expression `http.request.clearance.uuid ne ""` so that requests without a valid clearance cookie do not share an empty-value counter. If those requests also require rate limiting, create a separate rule with an appropriate characteristic, such as the source IP address.
 
 ### Challenge clearance
 
@@ -56,7 +57,6 @@ If Precursor determines that a session is suspicious:
 - The visitor may be **re-challenged**, even if the cookie has not expired.
 
 This creates a model where clearance is both **time-bound (Interstitial)** and **behavior-bound (Precursor)**.
-
 
 ## Pre-clearance support in Turnstile
 

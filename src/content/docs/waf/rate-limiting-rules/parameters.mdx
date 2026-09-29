@@ -48,6 +48,7 @@ Use one or more of the following characteristics:
 | N/A (implicitly included)                                   | `cf.colo.id`(mandatory)                                                                                                   | [Do not use in expressions](#do-not-use-cfcoloid-as-a-field-in-expressions)                                                                                                                                                                              |
 | IP                                                          | `ip.src`                                                                                                                  | [Incompatible with **IP with NAT support**](#incompatible-characteristics)                                                                                                                                                                               |
 | IP with NAT support                                         | `cf.unique_visitor_id`                                                                                                    | [Incompatible with **IP**](#incompatible-characteristics)                                                                                                                                                                                                |
+| **Clearance UUID**                                          | `http.request.clearance.uuid`                                                                                             | Available with Advanced Rate Limiting. Use `http.request.clearance.uuid ne ""` in the counting expression to exclude requests without a valid clearance cookie.                                                                                          |
 | **Header value of** (enter header name)                     | `http.request.headers["<header_name>"]`                                                                                   | [Use lowercased header name in API](#use-a-lowercased-header-name-for-api-users) and [Missing field versus empty value](#missing-field-versus-empty-value)                                                                                               |
 | **Cookie value of** (enter cookie name)                     | `http.request.cookies["<cookie_name>"]`                                                                                   | [Recommended configurations](#recommended-configurations-when-using-cookie-value-of) and [Missing field versus empty value](#missing-field-versus-empty-value)                                                                                           |
 | **Query value of** (enter parameter name)                   | `http.request.uri.args["<query_param_name>"]`                                                                             | [Missing field versus empty value](#missing-field-versus-empty-value)                                                                                                                                                                                    |
@@ -65,7 +66,7 @@ Use one or more of the following characteristics:
 | **Body size** (select operator, enter size)                 | `http.request.body.size`                                                                                                  |
 | **Custom** (enter expression)                               | Enter a custom expression. You can use a function such as `substring()` or `lower()`, or enter a more complex expression. | [Functions](/ruleset-engine/rules-language/functions/)                                                                                                                                                                                                   |
 
-The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
+The available characteristics depend on your Cloudflare plan. **Clearance UUID** is available with Advanced Rate Limiting. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
 :::caution
 For important details about these characteristics, refer to [Notes about rate limiting characteristics](#notes-about-rate-limiting-characteristics).
@@ -243,7 +244,7 @@ If you use the **Header value of** characteristic in an API request (with `http.
 
 ### Missing field versus empty value
 
-If you use the **Header value of**, **Cookie value of**, **Query value of**, **JSON string value of**, `lookup_json_integer(...)`, or **Form input value of** characteristic and the specific header/cookie/parameter/JSON key/form field name is not present in the request, the rate limiting rule may still apply to the request, depending on your counting expression.
+If you use the **Header value of**, **Cookie value of**, **Query value of**, **Clearance UUID**, **JSON string value of**, `lookup_json_integer(...)`, or **Form input value of** characteristic and the specific value is not present in the request, the rate limiting rule may still apply to the request, depending on your counting expression.
 
 If you do not filter out such requests, there will be a specific [request counter](/waf/rate-limiting-rules/request-rate/) for requests where the field is not present, which will be different from the request counter where the field is present with an empty value.
 
@@ -252,6 +253,8 @@ For example, to consider only requests where a specific HTTP header is present i
 `and len(http.request.headers["<header_name>"]) > 0`
 
 Where `<header_name>` is the same header name used as a rate limiting characteristic.
+
+For **Clearance UUID**, use `http.request.clearance.uuid ne ""`. This excludes requests without a valid `cf_clearance` cookie from the clearance counter. Use a separate rule if you also need to rate limit those requests.
 
 ### Recommended configurations when using Cookie value of
 
@@ -267,9 +270,6 @@ To use claims inside a JSON Web Token (JWT), you must first set up a [token vali
 ## Configuration restrictions
 
 - If the rule filter expression, defined in the **When incoming requests match** parameter, includes [custom lists](/waf/tools/lists/custom-lists/), you must enable the **Also apply rate limiting to cached assets** parameter.
-
 - The rule filter expression cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response).
-
 - The rule counting expression, defined in the **Increment counter when** parameter, cannot include both [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) and [custom lists](/waf/tools/lists/custom-lists/). If you use custom lists, you must enable the **Also apply rate limiting to cached assets** parameter.
-
 - When creating a rate limiting ruleset [at the account level](/waf/account/rate-limiting-rulesets/), the ruleset deployment expression (defining the scope) cannot contain [HTTP response fields](/ruleset-engine/rules-language/fields/reference/?field-category=Response) or [custom lists](/waf/tools/lists/custom-lists/).
