@@ -34,6 +34,7 @@ The `cloudflare/debian-trixie` managed image is available only with the `durable
 ```ts
 this.ctx.container.start({
 	image: "cloudflare/debian-trixie",
+	enableInternet: false,
 });
 ```
 
