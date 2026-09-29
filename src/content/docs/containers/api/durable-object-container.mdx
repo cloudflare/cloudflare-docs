@@ -98,7 +98,7 @@ this.ctx.container.start({
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
   - `image` (`string`, optional): Image reference to start. For an application that uses the `durable_object` scheduling policy, pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images). Omit this option when restoring a snapshot.
   - `instance` (`string | object`, optional): Instance size for an application that uses the `durable_object` scheduling policy. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
-  - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional): Full container snapshot to restore before startup. Snapshot restore is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). You cannot pass both `containerSnapshot` and `image`.
+  - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Full container snapshot to restore before startup. Snapshot restore is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). You cannot pass both `containerSnapshot` and `image`.
 
 #### Return values
 
