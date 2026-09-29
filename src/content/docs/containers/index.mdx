@@ -16,6 +16,7 @@ products:
 import {
 	CardGrid,
 	Description,
+	Details,
 	Feature,
 	LinkTitleCard,
 	Plan,
@@ -55,6 +56,7 @@ The container in this example exposes `GET /health` on port `4000` and returns a
 <TypeScriptExample filename="src/index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { startAndWaitForPort } from "./container-readiness";
 
 interface Env {
 	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
@@ -68,7 +70,10 @@ export class MyContainer extends DurableObject<Env> {
 		if (!container.running) {
 			this.ready = undefined;
 		}
-		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
+		this.ready ??= startAndWaitForPort(container, {
+			port: 4000,
+			inactivityTimeout: 10 * 60 * 1000,
+		}).catch((error: unknown) => {
 			this.ready = undefined;
 			throw error;
 		});
@@ -80,32 +85,6 @@ export class MyContainer extends DurableObject<Env> {
 		const forwarded = new Request(url, request);
 		forwarded.headers.delete("host");
 		return container.getTcpPort(4000).fetch(forwarded);
-	}
-
-	private async startAndWaitForPort(): Promise<void> {
-		const container = this.ctx.container!;
-		await container.setInactivityTimeout(10 * 60 * 1000);
-		if (!container.running) {
-			container.start();
-		}
-
-		const port = container.getTcpPort(4000);
-		let lastError: unknown;
-		for (let attempt = 0; attempt < 100; attempt++) {
-			try {
-				const response = await port.fetch("http://container/health");
-				if (!response.ok) {
-					throw new Error(`Health check returned ${response.status}`);
-				}
-				return;
-			} catch (error) {
-				lastError = error;
-				await scheduler.wait(200);
-			}
-		}
-		throw new Error("Container did not become ready on port 4000", {
-			cause: lastError,
-		});
 	}
 }
 
@@ -120,6 +99,49 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+<Details header="View `src/container-readiness.ts`">
+
+<TypeScriptExample filename="src/container-readiness.ts">
+```ts
+interface ReadinessOptions {
+	port: number;
+	inactivityTimeout: number;
+}
+
+type ContainerInstance = NonNullable<DurableObjectState["container"]>;
+
+export async function startAndWaitForPort(
+	container: ContainerInstance,
+	options: ReadinessOptions,
+): Promise<void> {
+	await container.setInactivityTimeout(options.inactivityTimeout);
+	if (!container.running) {
+		container.start();
+	}
+
+	const port = container.getTcpPort(options.port);
+	let lastError: unknown;
+	for (let attempt = 0; attempt < 100; attempt++) {
+		try {
+			const response = await port.fetch("http://container/health");
+			if (!response.ok) {
+				throw new Error(`Health check returned ${response.status}`);
+			}
+			return;
+		} catch (error) {
+			lastError = error;
+			await scheduler.wait(200);
+		}
+	}
+	throw new Error(`Container did not become ready on port ${options.port}`, {
+		cause: lastError,
+	});
+}
+```
+</TypeScriptExample>
+
+</Details>
 
     </TabItem>
     <TabItem label="Worker Config">
