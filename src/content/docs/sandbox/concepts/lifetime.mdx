@@ -37,6 +37,8 @@ An instance keeps running while its Durable Object is active. The Durable Object
 
 After the Durable Object becomes inactive, the instance keeps running for the time set with [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout), up to 6 hours. A request that arrives within that time reaches the same instance, with its files and processes. When the time ends, Cloudflare stops the instance. Without a timeout, Cloudflare stops the instance shortly after the Durable Object becomes inactive.
 
+A pending [`monitor()`](/containers/api/durable-object-container/#monitor) call keeps the Durable Object in memory, so the inactivity timeout starts only after the Durable Object leaves memory. When it leaves, the call ends, so `monitor()` does not report the stop that follows.
+
 Code that runs inside the instance does not count as activity. A build, a test suite, or an agent that works longer than the inactivity timeout stops with the instance when no requests arrive. A Durable Object [alarm](/durable-objects/api/alarms/) that runs more often than the timeout and checks the work keeps the instance running until the work ends.
 
 ## The timeout does not survive a restart
@@ -55,7 +57,7 @@ An instance stops when one of these happens:
 
 The main process is the entrypoint passed to `start()`, or the default command of the image. When it exits, the instance stops, and every command started with `exec()` ends with it. The default command of `cloudflare/debian-trixie` exits right away, so the sandbox examples start that image with `sleep infinity` as the entrypoint, or run a web server as the main process.
 
-When Cloudflare stops an instance, the main process receives `SIGTERM` and must exit promptly. A main process that runs as process ID 1 exits on `SIGTERM` only when it handles the signal.
+When the inactivity timeout ends, every process in the instance receives `SIGTERM`, and Cloudflare stops the instance shortly after, whether or not the processes exit. `destroy()` stops the instance at once, with no time for processes to clean up. Use `SIGTERM` only for cleanup that can fail, and save the files you need before the instance stops, for example in a [snapshot](#snapshots-carry-files-to-the-next-instance).
 
 After an instance stops, the next request that calls `start()` starts a new instance.
 
@@ -83,7 +85,7 @@ The disk of an instance holds the repository, installed packages, configuration 
 Container snapshots are in public beta. The API and behavior may change.
 :::
 
-[`snapshotContainer()`](/containers/api/durable-object-container/#snapshotcontainer) saves the writable root filesystem of a running instance. It does not save separately mounted filesystems, memory, or processes. Starting with a snapshot creates a new instance with the saved files, and the new instance runs its entrypoint. The processes that were running do not continue.
+[`snapshotContainer()`](/containers/api/durable-object-container/#snapshotcontainer) saves the writable root filesystem of a running instance. It does not save separately mounted filesystems, memory, or processes. Starting with a snapshot creates a new instance with the saved files, and the new instance runs its entrypoint. The processes that were running do not continue. The new instance reuses the same process IDs, so a process ID saved in a file can belong to another process after a restore. Files in `/run` are in memory, and a snapshot does not save them.
 
 Cloudflare does not restore a snapshot on its own. Your application decides when to save a snapshot. It stores the snapshot, for example in Durable Object storage, and passes it to the next `start()`. Changes made after the last snapshot exist only in the current instance, so save another snapshot before the instance stops.
 
