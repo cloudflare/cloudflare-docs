@@ -31,16 +31,17 @@ If the existing Durable Objects contain data, design an application-specific tra
 
 Map the existing application configuration to its `durable_object` equivalent:
 
-| `default` policy                                                           | `durable_object` policy                                                  |
-| -------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `image`                                                                    | A named `images` entry, selected with `ctx.container.start()`            |
-| `image_build_context`                                                      | `build_context` on the named image                                       |
-| `image_vars`                                                               | `build_vars` on the named image                                          |
-| `instance_type`                                                            | The `instance` option in `ctx.container.start()`                         |
-| Application-wide image rollouts                                            | Application code that stops and starts each Container                    |
-| `observability`                                                            | Keep in Wrangler configuration, subject to `durable_object` restrictions |
-| `unsafe.configuration.experimental_flags`                                  | Keep in Wrangler configuration                                           |
-| `max_instances`, placement constraints, rollout settings, and SSH settings | Not supported on the replacement application                             |
+| `default` policy                                                                                     | `durable_object` policy                                                  |
+| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `image`                                                                                              | A named `images` entry, selected with `ctx.container.start()`            |
+| `image_build_context`                                                                                | `build_context` on the named image                                       |
+| `image_vars`                                                                                         | `build_vars` on the named image                                          |
+| `instance_type`                                                                                      | The `instance` option in `ctx.container.start()`                         |
+| Application-wide image rollouts                                                                      | Application code that stops and starts each Container                    |
+| `observability`                                                                                      | Keep in Wrangler configuration, subject to `durable_object` restrictions |
+| `unsafe.configuration.experimental_flags`                                                            | Keep in Wrangler configuration                                           |
+| `ssh` and `authorized_keys`                                                                          | Keep in Wrangler configuration                                           |
+| `max_instances`, placement constraints, rollout settings, `wrangler_ssh`, and `trusted_user_ca_keys` | Not supported on the replacement application                             |
 
 For the complete field compatibility list, refer to [Wrangler configuration](/workers/wrangler/configuration/#containers).
 

@@ -10,22 +10,24 @@ products:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-A scheduling policy determines where you configure a Container image and instance size. It also determines how image updates and [rollouts](/containers/configuration/rollouts/) apply. Choose the policy when you create the Container application.
+A scheduling policy determines where you configure a Container image and [instance size](/containers/platform/limits/#instance-types). It also determines how image updates and [rollouts](/containers/configuration/rollouts/) apply. Choose the policy when you create the Container application.
+
+:::note
+The `durable_object` scheduling policy is in public beta.
+:::
 
 | Policy           | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
 | ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `default`        | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |
 | `durable_object` | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance                                              | Sandboxes, agent environments, and other workloads that need per-instance configuration |
 
-The scheduling policy is immutable. To use a different policy, create a new Container application. Deleting and recreating an application also replaces its Container instances. To move an existing application, refer to [Migrate to the Durable Object scheduling policy](/containers/guides/migrate-to-durable-object-scheduling-policy/).
+One Wrangler configuration can contain applications with both policies. This lets a Worker use centrally managed service Containers alongside Durable Object-managed sandboxes.
 
-:::note
-The `durable_object` scheduling policy is in public beta.
-:::
+The scheduling policy is immutable. To use a different policy, create a new Container application. Deleting an application also deletes its Container instances, so switching policies means replacing every running instance. To move an existing application, refer to [Migrate to the Durable Object scheduling policy](/containers/guides/migrate-to-durable-object-scheduling-policy/).
 
 ## Use the default scheduling policy
 
-With the `default` policy, Wrangler configuration defines one application-wide `image`, one `instance_type`, and settings such as `max_instances`. Omitting `scheduling_policy` selects `default`.
+With the `default` policy, Wrangler configuration defines one application-wide `image`, one [`instance_type`](/containers/platform/limits/#instance-types), and settings such as `max_instances`. Omitting `scheduling_policy` selects `default`.
 
 <WranglerConfig>
 
@@ -106,7 +108,7 @@ export class AgentComputer extends DurableObject {
 		this.ctx.container.start({
 			image: this.ctx.container.images.base,
 			instance: "standard-2",
-			enableInternet: true,
+			enableInternet: false,
 		});
 	}
 }
@@ -116,27 +118,33 @@ export class AgentComputer extends DurableObject {
 
 `ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/containers/api/durable-object-container/#exec).
 
+The `durable_object` policy does not support `max_instances`. Running instances count toward your [account limits](/containers/platform/limits/#account-limits).
+
 ### Use the Cloudflare-managed image
 
 If you do not need a custom image, start the [`cloudflare/debian-trixie` Cloudflare-managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) directly without adding a named image to Wrangler. It includes Node.js 24.20.0 on Debian Trixie slim:
 
-```js
+<TypeScriptExample filename="src/index.ts">
+
+```ts
 this.ctx.container.start({
 	image: "cloudflare/debian-trixie",
 	instance: "standard-2",
-	enableInternet: true,
+	enableInternet: false,
 });
 ```
+
+</TypeScriptExample>
 
 ### Configure named images
 
 Each key under `containers[].images` in your Wrangler configuration becomes a property on `ctx.container.images`. For example, `containers[].images.base` is available to the Durable Object as `ctx.container.images.base`. Each value must specify exactly one image source. Use `dockerfile` for a path to a Dockerfile. When you run `wrangler deploy`, Wrangler builds and uploads that image. You can also set `build_context` and `build_vars` for that image.
 
-Use `image` for a digest-pinned image in the Cloudflare managed registry. Use the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`.
+Use `image` for a digest-pinned image in the Cloudflare managed registry. Use the form `registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>`. Direct references to Docker Hub, Amazon ECR, or Google Artifact Registry are not supported. To use an image from another registry, [push it to the Cloudflare managed registry](/containers/guides/image-management/#use-an-external-image) first.
 
 A configuration can contain up to 100 named images. An image name must contain between 1 and 128 characters.
 
-The image map is uploaded with the Worker version. Updating the map does not restart or replace running Container instances. Your application selects an image from the map when it starts an instance.
+The image map is uploaded with the Worker version. Updating the map does not restart or replace running Container instances. Your application selects an image from the map when it starts an instance. During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), `ctx.container.images` reflects the image map of the Worker version that runs the Durable Object, so different Durable Objects can start different images until the deployment completes.
 
 ### Choose an instance size at runtime
 
@@ -148,7 +156,11 @@ Set `instance` in `ctx.container.start()` to one of the following [named instanc
 - `standard-3`
 - `standard-4`
 
-If you omit `instance`, the Container uses `lite`. You can also supply a custom instance object:
+The runtime does not accept `basic` or the legacy `dev` and `standard` aliases.
+
+If you omit `instance`, the Container uses `lite`. You can also supply a custom instance object that meets the [custom instance type constraints](/containers/platform/limits/#custom-instance-types):
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 this.ctx.container.start({
@@ -162,21 +174,25 @@ this.ctx.container.start({
 });
 ```
 
-The runtime uses camel case (`memoryMib` and `diskMb`). Wrangler's application-level `instance_type` object uses snake case (`memory_mib` and `disk_mb`) and only applies to the `default` policy. Refer to [Limits and Instance Types](/containers/platform/limits/).
+</TypeScriptExample>
+
+The runtime uses camel case (`memoryMib` and `diskMb`). Wrangler's application-level `instance_type` object uses snake case (`memory_mib` and `disk_mb`) and only applies to the `default` policy.
 
 ### Start from an image or snapshot
 
-Snapshot creation and restore are only supported for applications that use the `durable_object` scheduling policy. Applications that use the `default` policy cannot create or restore snapshots.
-
 For a new filesystem, pass `image` to `ctx.container.start()`. To restore a full filesystem snapshot, pass `containerSnapshot` instead. `image` and `containerSnapshot` are mutually exclusive because a snapshot already identifies the filesystem to restore.
+
+Snapshots are only supported with the `durable_object` policy. A snapshot is tied to the image it was created from. After you update an image, create new snapshots from Containers running that image.
 
 Refer to [Snapshots](/containers/guides/snapshots/) for the complete save and restore flow.
 
 ### Manage updates from application code
 
-Container instances that use the `durable_object` policy do not participate in application-wide image rollouts. A running instance continues to use its startup image. Your application decides when to stop that instance and start it with another configured image.
+Container instances that use the `durable_object` policy do not participate in application-wide image rollouts. A running instance continues to use its startup image. Your application decides when to stop that instance and start it with another configured image. For an example that compares the running image with the configured image, refer to [Roll out a named image update](/containers/guides/image-management/#roll-out-a-named-image-update).
 
-One Wrangler configuration can contain applications with both policies. This lets a Worker use centrally managed service Containers alongside Durable Object-managed sandboxes.
+### Configure SSH
+
+The `durable_object` policy supports the `ssh` and `authorized_keys` fields. Refer to [SSH](/containers/guides/ssh/).
 
 ## Related resources
 
