@@ -21,7 +21,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## Forward requests to the server
 
@@ -52,7 +52,27 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
 
    The server must listen on `0.0.0.0`, because `getTcpPort()` cannot reach a server that listens only on `127.0.0.1`. Many development servers listen on `localhost` by default and provide an option to change the address. The server runs as the main process, so it must exit when it receives `SIGTERM`. Servers built on the Python `http.server` module, such as `python3 -m http.server`, exit on startup after you deploy, because they look up the container hostname. For a Python command that serves files, refer to [Differences after you deploy](/containers/guides/local-dev/#the-hostname-is-longer-than-a-dns-label).
 
-2. In your Durable Object, start the server and wait until it responds:
+2. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   The five-minute inactivity timeout keeps the server running between visits. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+
+   Then start the server and wait until it responds:
 
    ```ts title="src/index.ts"
    private ready = false;
@@ -70,10 +90,9 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
    			entrypoint: ["node", "--eval", server],
    			enableInternet: false,
    		});
+   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		this.ready = false;
    	}
-
-   	await container.setInactivityTimeout(5 * 60 * 1000);
 
    	const deadline = Date.now() + 30_000;
 
@@ -93,7 +112,7 @@ Open a web server that runs in a sandbox, such as an application a coding agent 
    }
    ```
 
-   `start()` returns before the server listens, so the method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check. The five-minute inactivity timeout keeps the server running between visits. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   `start()` returns before the server listens, so the method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check.
 
 3. Forward requests from the `fetch()` handler of the Durable Object:
 
