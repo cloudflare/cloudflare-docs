@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `startProcess()` returns a `Process` object, and the container keeps a table of processes that later requests query. In 1.0, your Durable Object keeps a directory for each process in the container. Each `Process` method becomes a Durable Object method that takes the process ID.
+In Sandbox SDK 0.12, `startProcess()` returns a `Process` object, and the container keeps a table of processes that later requests query. In 1.0, your Durable Object keeps a directory in the container for each process. Each `Process` method becomes a Durable Object method that takes the process ID.
 
 ## Before you start
 
@@ -56,7 +56,7 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
    }
    ```
 
-   0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, and does not inherit the variables that `start()` sets, even when the image sets `WORKDIR`.
+   0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets.
 
 3. In `status()`, replace `10 * 60 * 1000` with `INACTIVITY_TIMEOUT_MS`, so that each check keeps your inactivity timeout.
 
@@ -84,11 +84,13 @@ const started = await sandbox.startProcess("dev", [
 
 Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_6snsuw`, use `crypto.randomUUID()`. The ID becomes a directory name, so use only characters that are safe in a path.
 
-`startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one. It also returns `false` for the ID of a process that has ended, because the process directory stays. To start that ID again, delete its directory first, as [Stop processes](#stop-processes) describes.
+`startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one. An ended process keeps its directory, so `startProcess()` also returns `false` for its ID. To start that ID again, delete the directory first, as [Stop processes](#stop-processes) describes.
 
 `python3 -m http.server`, which 0.12 ran as a preview server, exits on startup in a 1.0 container. For the cause and a replacement, refer to [The hostname is longer than a DNS label](/containers/guides/local-dev/#the-hostname-is-longer-than-a-dns-label).
 
-Remove the `timeout` option. 0.12 did not stop a background process when the time passed. To limit how long a process runs, start it with `timeout`, such as `["timeout", "300", "npm", "test"]`, which exits with code `124` when the time passes. For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
+Remove the `timeout` option, which did not stop a background process in 0.12. To limit how long a process runs, start it with the `timeout` command, such as `["timeout", "300", "npm", "test"]`. The command exits with code `124` when the time passes.
+
+For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
 
 ## Check and list processes
 
@@ -127,7 +129,7 @@ async listProcesses(): Promise<{ id: string; status: Status }[]> {
 }
 ```
 
-The directories stay until you delete them, as ended processes stayed in the 0.12 table. The alarm deletes each `process:` key in storage within a minute of its process ending, so the keys list only running processes.
+The directories stay until you delete them, as ended processes stayed in the 0.12 table. The alarm deletes the `process:` key of an ended process within a minute, so list the directories to find ended processes.
 
 ## Read logs
 
@@ -142,7 +144,9 @@ const stdout = await sandbox.logs("dev", "stdout");
 const stderr = await sandbox.logs("dev", "stderr");
 ```
 
-Replace `streamProcessLogs()` with `follow()`, which returns a `Response` that follows one stream until the process exits. Each `data` field holds a JSON-encoded chunk of output, where 0.12 sent `LogEvent` objects. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field. `follow()` sends no `exit` event, so call `status()` for the exit code when the stream ends.
+Replace `streamProcessLogs()` with `follow()`. It returns a `Response` that follows one stream until the process exits, and sends no `exit` event. When the stream ends, call `status()` for the exit code.
+
+Each `data` field holds a JSON-encoded chunk of output, where 0.12 sent `LogEvent` objects. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field.
 
 ## Wait for output or exit
 
@@ -196,7 +200,9 @@ async waitForExit(id: string, timeoutMs: number) {
 }
 ```
 
-The method returns the state `running` when the time passes first. Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/#forward-requests-to-the-server).
+When `timeoutMs` passes first, the method returns the state `running` or `starting`.
+
+Replace `Process.waitForPort()` with requests to the port, as in [Preview a web application](/sandbox/previews/#forward-requests-to-the-server).
 
 ## Stop processes
 

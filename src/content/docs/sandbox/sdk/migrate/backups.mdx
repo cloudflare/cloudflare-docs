@@ -13,7 +13,7 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-In Sandbox SDK 0.12, `createBackup()` saved a directory as a SquashFS image in the bucket bound as `BACKUP_BUCKET`, and `restoreBackup()` mounted that image over the directory. In 1.0, the `DirectoryBackup` class from `@cloudflare/sandbox` saves the directory to the same R2 binding as a compressed archive, and restores it as ordinary files. The code on this page keeps the 0.12 method names, options, and time to live, so the calls in your Worker barely change. The backups that 0.12 created convert to 1.0 backups the first time you restore them.
+Replace 0.12 `createBackup()` and `restoreBackup()` with Durable Object methods of the same names, built on `DirectoryBackup`. Your Worker calls them with the same options, and backups keep the 0.12 time to live. `DirectoryBackup` saves the directory to the same `BACKUP_BUCKET` binding as a compressed archive, and restores it as ordinary files. 0.12 saved a SquashFS image and mounted it over the directory. Backups that 0.12 created convert to 1.0 backups the first time you restore them.
 
 To save the whole filesystem instead of one directory, use a Container snapshot. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
@@ -142,7 +142,7 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
    `restore()` replaces the directory with the files in the backup, so files that the backup left out, such as `node_modules`, are gone after a restore. In 0.12, the restored directory was a mount that ended with the container. In 1.0, the files stay in the container filesystem.
 
-   A process whose working directory is inside the directory, such as a server started with `cwd: "/workspace/project"`, keeps the old, deleted directory after `restore()`. Restart it after the restore, or have it open files by absolute path. In 0.12, the restore mounted over the path, so such a process saw the restored files.
+   A process whose working directory is inside the directory keeps the old, deleted directory after `restore()`. A server started with `cwd: "/workspace/project"` is one such process. Restart the process after the restore, or have it open files by absolute path. In 0.12, the restore mounted over the path, so such a process saw the restored files.
 
 8. Deploy the Worker, then back up and restore a directory through the existing routes of your Worker. `createBackup()` returns a record like this one:
 
@@ -182,7 +182,7 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
 
 ## Convert backups that 0.12 created
 
-0.12 stored each backup as `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` in the bucket, with presigned uploads and with `localBucket: true` alike. The objects stay in the bucket after you deploy 1.0, and the backup objects that your code stored stay where it stored them. To keep a backup, convert it the first time it is restored: extract the SquashFS image into the directory, then back up the directory with `DirectoryBackup`.
+0.12 stored each backup as `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` in the bucket, with presigned uploads and with `localBucket: true` alike. These R2 objects stay in the bucket after you deploy 1.0, and the 0.12 backup objects that your code stored stay where they are. To keep a backup, convert it the first time your code restores it: extract the SquashFS image into the directory, then back up the directory with `DirectoryBackup`.
 
 <Steps>
 
@@ -233,7 +233,7 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
    }
    ```
 
-   The converted backup keeps the expiry time that 0.12 gave the original. The container needs free disk space for the image and the extracted files together. Debian 13 installs `squashfs-tools` 4.6.1, which extracts on a `lite` instance with its default settings. Version 4.7 and later, as in Alpine 3.23, ask for more memory than a `lite` instance has and fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command.
+   The converted backup keeps the expiry time that 0.12 gave the original. The container needs free disk space for the image and the extracted files together. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
 
 3. Where your code calls `restoreBackup()` with an object that 0.12 created, call `convert()` instead. A 0.12 object has no `format` field. `convert()` leaves the files in the directory, so it also does the restore. Store the record that it returns in place of the 0.12 object.
 

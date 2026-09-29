@@ -12,13 +12,15 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `tunnels.get()` runs `cloudflared` in the container and returns a public URL. A quick tunnel gets a random `trycloudflare.com` URL, and a named tunnel gets a hostname such as `ada.example.com` in your account. In 1.0, your Durable Object starts `cloudflared` with `exec()`. Named tunnels that 0.12 created stay in your account, and keep their hostnames once `cloudflared` runs again.
+In Sandbox SDK 0.12, `tunnels.get()` runs `cloudflared` in the container and returns a public URL. A quick tunnel gets a random `trycloudflare.com` URL, and a named tunnel gets a hostname in your account, such as `ada.example.com`. In 1.0, your Durable Object starts `cloudflared` with `exec()`. Named tunnels that 0.12 created stay in your account, and keep their hostnames once `cloudflared` runs again.
 
 Your Worker already routes requests to the container, so most tunnels can become preview URLs instead. For those, refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/).
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `cloudflared` connects out to Cloudflare, so `ensureRunning()` must start the container with `enableInternet: true`. The code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+`ensureRunning()` must start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare. Code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. Remove the `SANDBOX_TRANSPORT` variable, which 0.12 tunnels required.
 
@@ -139,7 +141,9 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    }
    ```
 
-   `openTunnel()` replaces `tunnels.get(port)`. It stops any `cloudflared` that already serves the port, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. Each call returns a new URL, where 0.12 returned the tunnel that already served the port. To keep a URL, look it up with `listTunnels()` from the next step before you call `openTunnel()`. A quick tunnel ends with its container, as in 0.12.
+   `openTunnel()` replaces `tunnels.get(port)`, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. A quick tunnel ends with its container, as in 0.12.
+
+   Each call stops any `cloudflared` that already serves the port, and returns a new URL. 0.12 returned the tunnel that already served the port. To keep a URL, look it up with `listTunnels()` from the next step before you call `openTunnel()`.
 
 4. Add methods that list and close quick tunnels:
 
@@ -182,11 +186,13 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
 ## Keep named tunnels that 0.12 created
 
-0.12 recorded each named tunnel in Durable Object storage, under the `tunnels` and `tunnels:meta` keys: the tunnel ID, its hostname, your account and zone, and its DNS record. The keys stay when you deploy the switch in place, so 1.0 can run the same tunnel again. If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the keys into the 1.0 class.
+0.12 recorded each named tunnel in Durable Object storage, under the `tunnels` and `tunnels:meta` keys. The keys hold the tunnel ID, its hostname, your account and zone, and its DNS record. They stay when you deploy the switch in place, so 1.0 can run the same tunnel again. If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the keys into the 1.0 class.
 
 <Steps>
 
-1. Keep the `CLOUDFLARE_API_TOKEN` secret that 0.12 used. The code fetches the run token of each tunnel and deletes tunnels and DNS records with it, which needs the Cloudflare Tunnel Edit and DNS Edit permissions that 0.12 also needed. The code reads the account and zone that 0.12 stored, so it does not use `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_TUNNEL_ACCOUNT_ID`, or `CLOUDFLARE_ZONE_ID`. For `wrangler types` to add the secret to `Env`, also set it in `.dev.vars`.
+1. Keep the `CLOUDFLARE_API_TOKEN` secret that 0.12 used, with the Cloudflare Tunnel Edit and DNS Edit permissions. The code uses it to fetch the run token of each tunnel, and to delete tunnels and DNS records. For `wrangler types` to add the secret to `Env`, also set it in `.dev.vars`.
+
+   The code reads the account and zone that 0.12 stored, and does not need `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_TUNNEL_ACCOUNT_ID`, or `CLOUDFLARE_ZONE_ID`.
 
 2. Add the types and a function that calls the Cloudflare API to the top level of `src/index.ts`:
 
@@ -291,7 +297,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    }
    ```
 
-   0.12 stored the account for named tunnels only, so both methods skip a port whose stored tunnel is a quick tunnel, and `resumeTunnel()` returns `undefined` for it.
+   Both methods skip a port whose stored tunnel is a quick tunnel, because 0.12 stored the account only for named tunnels. For that port, `resumeTunnel()` returns `undefined`.
 
    Call `resumeTunnel()` after each `start()`, for each port that your application serves through a named tunnel. 0.12 started a named tunnel again only on the next `tunnels.get()` for its port. Until `cloudflared` runs, the hostname returns [error 1033](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1033/).
 
@@ -333,7 +339,7 @@ If you [moved sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), 
 
 ## Serve new named hostnames
 
-To give new sandboxes their own hostnames, serve the hostnames from your Worker, as [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/) describes. They have the same `<NAME>.<ZONE>` shape, and the sandbox runs no `cloudflared` and holds no token. To keep creating tunnels, create each with the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) and add a DNS record for it, as 0.12 did.
+To give new sandboxes their own hostnames, serve the hostnames from your Worker, as [Serve previews on their own hostnames](/sandbox/previews/serve-previews-on-their-own-hostnames/) describes. These hostnames have the same `<NAME>.<ZONE>` shape as the hostnames of 0.12 named tunnels. The sandbox runs no `cloudflared` and holds no token. To keep creating tunnels, create each with the [Cloudflare Tunnel API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/create/) and add a DNS record for it, as 0.12 did.
 
 ## Check the tunnels
 

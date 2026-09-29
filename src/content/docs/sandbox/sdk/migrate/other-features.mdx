@@ -1,6 +1,6 @@
 ---
 title: Move other 0.x features
-description: Replace @cloudflare/sandbox 0.12 Docker-in-Docker images, binding handlers, the opencode and openai subpaths, the bridge, and WarmPool in your own Durable Object.
+description: Move @cloudflare/sandbox 0.12 Docker-in-Docker images, binding handlers, and the opencode, openai, and bridge subpaths to 1.0, and remove WarmPool.
 pcx_content_type: how-to
 sidebar:
   order: 15
@@ -12,7 +12,7 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Some Sandbox SDK 0.12 features have no class in 1.0. This page replaces each of them with code in your Durable Object, or names what to use instead. Each section stands alone, so follow only the sections for the features that your application uses.
+This page replaces or removes the Sandbox SDK 0.12 features that have no class in 1.0. Each section stands alone. Follow only the sections for the features that your application uses.
 
 ## Before you start
 
@@ -293,7 +293,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    }
    ```
 
-   0.12 passed `config` to OpenCode as `OPENCODE_CONFIG_CONTENT`, and copied the `apiKey` of each provider to a variable such as `ANTHROPIC_API_KEY`. The method sets both itself, so remove `apiKey` from the configuration and store the key as a secret. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
+   Remove `apiKey` from your OpenCode configuration, and store each key as a secret. Like 0.12, the method passes the configuration as `OPENCODE_CONFIG_CONTENT` and the key in a provider variable such as `ANTHROPIC_API_KEY`. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
 
    Set `this.opencodeReady = false` in `ensureRunning()` after `start()`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
 
@@ -325,7 +325,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    }
    ```
 
-   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so forward every path of a hostname to the Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
+   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so serve it at the root of a hostname and forward every path to the Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
 
 5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open the Worker URL in a browser. It redirects to `/?url=` and loads OpenCode.
 
@@ -449,7 +449,7 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    }
    ```
 
-   A failed call throws `SandboxFileError`. The 0.12 `Editor` caught errors and returned `status: "failed"`, and both 0.12 classes kept a `results` list. Catch errors or log results in each method if your code used them.
+   A failed `Files` call throws `SandboxFileError`. The 0.12 `Editor` caught errors and returned `status: "failed"`, and both 0.12 classes kept a `results` list. If your code relied on either, catch errors or record results in each method.
 
 3. Run the agent in a method of your class:
 

@@ -13,7 +13,7 @@ products:
 
 import { PackageManagers, Steps } from "~/components";
 
-Your sandboxes switch from Sandbox SDK 0.12 to 1.0 at one deploy, and you cannot undo that deploy. This page helps you choose how to reach it, and then moves every sandbox in one deploy.
+This page compares the two ways to move sandboxes from Sandbox SDK 0.12 to 1.0, and then moves every sandbox in one deploy. You cannot undo the deploy that switches your sandboxes to 1.0.
 
 ## Before you start
 
@@ -56,7 +56,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
 <Steps>
 
-1. Make your `alarm()` handler check its own state before it acts. 0.12 keeps an alarm set while a container runs, and after the switch that alarm calls your handler. If the handler throws, the platform retries it with backoff:
+1. Make your `alarm()` handler check its own state before it acts. 0.12 keeps an alarm set while a container runs, and after the switch that alarm calls your handler. If the handler throws, the platform retries it with backoff. In this example, the handler returns unless its `nextCheckpoint` time has passed:
 
    ```ts title="src/index.ts"
    async alarm(): Promise<void> {
@@ -77,9 +77,9 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
 3. Prepare clients for sockets that go silent. Open terminals and preview WebSockets stop receiving data at the switch, and the browser does not see them close. Have your client reconnect when a socket receives nothing for a set time, or tell users to reload after the deploy.
 
-4. Save the files that users need. Each 0.12 container keeps its files until you delete the old application, but no 1.0 sandbox can read them. Before you deploy, save the files with 0.12 `createBackup()`. After the switch, restore them as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+4. Save the files that users need. No 1.0 sandbox can read the files in a 0.12 container. Before you deploy, save the files with 0.12 `createBackup()`. After the switch, restore them as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
 
-5. Upload and deploy the 1.0 version to the staging Worker first, as steps 6 and 7 describe, with sandboxes running and a client connected. Check that requests from your application work after the switch.
+5. Rehearse on the staging Worker first. With sandboxes running there and a client connected, upload and deploy the 1.0 version to the staging Worker as steps 6 and 7 describe. Check that requests from your application work after the switch.
 
 6. Upload the 1.0 version:
 

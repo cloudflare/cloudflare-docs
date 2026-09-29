@@ -10,7 +10,7 @@ products:
   - durable-objects
 ---
 
-In Sandbox SDK 0.12, `exec()` runs each command string in a long-lived `bash` session that starts in `/workspace`. In 1.0, your Durable Object calls [`exec()`](/containers/api/durable-object-container/#exec) on the container, which starts one process for each call. Nothing carries over from one call to the next.
+Replace 0.12 command calls with [`exec()`](/containers/api/durable-object-container/#exec) on the container. In Sandbox SDK 0.12, `exec()` runs each command string in a long-lived `bash` session that starts in `/workspace`. In 1.0, each call starts one process, and nothing carries over from one call to the next.
 
 ## Before you start
 
@@ -42,7 +42,7 @@ if (result.exitCode !== 0) {
 }
 ```
 
-`exec()` starts in `/`, and does not inherit the variables that `start()` sets, even when the image sets `WORKDIR`. `output()` waits for the process to exit, and returns its output as bytes. A non-zero exit code does not throw, as in 0.12.
+`exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets. `output()` waits for the process to exit, and returns its output as bytes. As in 0.12, a non-zero exit code does not throw.
 
 `exec()` runs the command without a shell. For pipes, redirects, and variables, run the 0.12 string with `bash`:
 
@@ -53,11 +53,11 @@ const process = await this.container.exec(
 );
 ```
 
-When the executable does not exist, `exec()` throws an error such as ``Command `npm` was not found in the container``, where 0.12 `bash` returned exit code `127`. A command that runs through `bash -c` still returns `127`.
+When the executable does not exist, `exec()` throws an error such as ``Command `npm` was not found in the container``. 0.12 `bash` returned exit code `127` instead. A command that runs through `bash -c` still returns `127`.
 
 ## Stream output
 
-Return `stdout` from the process as a response body. This replaces `execStream()`, and `exec()` with `stream: true` and `onOutput`:
+To replace `execStream()`, or `exec()` with `stream: true` and `onOutput`, return `stdout` from the process as a response body:
 
 ```ts title="src/index.ts (0.12)"
 const stream = await sandbox.execStream("npm test");
@@ -79,9 +79,9 @@ return new Response(process.stdout, {
 });
 ```
 
-`stderr: "combined"` sends standard error in the same stream. Lines that the command writes to the two streams close together can arrive out of order. To keep the order, redirect in a shell instead, such as `["sh", "-c", "npm test 2>&1"]`. Keep `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
+`stderr: "combined"` sends standard error in the same stream. When the command writes to both streams at nearly the same time, lines can arrive out of order. To keep the order, redirect in a shell instead, such as `["sh", "-c", "npm test 2>&1"]`. Keep `Content-Type: text/event-stream`. With other content types, the response can arrive all at once when the process exits.
 
-0.12 sent JSON events that `parseSSEStream()` decoded. The 1.0 body holds the output of the command, so read it with `fetch()` and a stream reader, not `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/commands/stream-command-output/).
+0.12 sent JSON events that `parseSSEStream()` decoded. The 1.0 body holds the output of the command. Read it with `fetch()` and a stream reader instead of `EventSource`. To send each line as a server-sent event, refer to [Stream command output](/sandbox/commands/stream-command-output/).
 
 ## Replace sessions
 

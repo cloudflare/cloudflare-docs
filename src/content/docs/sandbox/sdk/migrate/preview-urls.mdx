@@ -1,6 +1,6 @@
 ---
 title: Move preview URLs
-description: Keep @cloudflare/sandbox 0.12 preview URLs working on 1.0 by replacing exposePort(), proxyToSandbox(), and wsConnect() with code that reads the tokens 0.12 stored.
+description: Keep @cloudflare/sandbox 0.12 preview URLs working on 1.0 by replacing exposePort(), proxyToSandbox(), and wsConnect() with code that reads the stored tokens.
 pcx_content_type: how-to
 sidebar:
   order: 9
@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `exposePort()` stores a token for each port in Durable Object storage, and `proxyToSandbox()` routes hostnames such as `8080-ada-<TOKEN>.example.com` to the server on that port. In 1.0, your Worker routes those hostnames, and your Durable Object checks the token and forwards the request with `getTcpPort()`. The code on this page reads the tokens where 0.12 stored them, so the preview URLs that your users already have keep working.
+In Sandbox SDK 0.12, `exposePort()` stores a token for each port in Durable Object storage. `proxyToSandbox()` routes hostnames such as `8080-ada-<TOKEN>.example.com` to the server on that port. In 1.0, your Worker routes those hostnames, and your Durable Object checks the token and forwards the request with `getTcpPort()`. The code on this page reads the tokens where 0.12 stored them, so the preview URLs that your users already have keep working.
 
 ## Before you start
 
@@ -96,7 +96,7 @@ This page does not cover the server that a preview reaches. To start it, refer t
    }
    ```
 
-   The method stores tokens in the format that 0.12 used, and returns the URL that 0.12 returned. It does not start the container, as 0.12 did. 0.12 read the sandbox name from its own storage, so pass the name from your Worker:
+   The method stores tokens in the format that 0.12 used, and returns the same URL as 0.12. Unlike 0.12, it does not start the container. 0.12 read the sandbox name from its own storage, so pass the name from your Worker:
 
    ```ts title="src/index.ts"
    const sandbox = env.Sandbox.getByName(name);
@@ -153,7 +153,9 @@ This page does not cover the server that a preview reaches. To start it, refer t
    }
    ```
 
-   0.12 `getExposedPorts()` and `isPortExposed()` reported a port only after `exposePort()` ran in the current container. These methods report every stored port, because the Durable Object forwards requests to any stored port. 0.12 `destroy()` also deleted the tokens. Where your code calls `destroy()` to end a sandbox, also call `this.ctx.storage.delete(PORT_TOKENS)`.
+   0.12 `getExposedPorts()` and `isPortExposed()` reported a port only after `exposePort()` ran in the current container. These methods report every stored port, because the Durable Object forwards requests to any stored port.
+
+   0.12 `destroy()` deleted the tokens. Where your code calls `destroy()` to end a sandbox, also call `this.ctx.storage.delete(PORT_TOKENS)`.
 
 4. Route preview hostnames in your Worker. In 0.12, `proxyToSandbox()` runs before your other routes:
 
@@ -206,7 +208,9 @@ This page does not cover the server that a preview reaches. To start it, refer t
    } satisfies ExportedHandler<Env>;
    ```
 
-   The expression splits the first label as 0.12 did: the port ends at the first hyphen, and the token starts after the last hyphen, because tokens contain no hyphens. A wrong token or a port without a token gets `404`, as in 0.12. `toPort()` replaces any `X-Sandbox-Port` header that the visitor sent. The Durable Object trusts that header, so send requests to its `fetch()` only through `toPort()`, or remove the header first, as [Move browser terminals](/sandbox/sdk/migrate/terminals/#forward-the-websocket) does.
+   The expression splits the first label as 0.12 did. The port ends at the first hyphen, and the token starts after the last hyphen. A wrong token, or a port without a token, gets `404`, as in 0.12.
+
+   The Durable Object trusts the `X-Sandbox-Port` header, and `toPort()` replaces any value that the visitor sent. Send requests to the `fetch()` handler of the Durable Object only through `toPort()`, or remove the header first, as [Move browser terminals](/sandbox/sdk/migrate/terminals/#forward-the-websocket) does.
 
 5. Forward the request from the `fetch()` handler of the Durable Object:
 
@@ -264,7 +268,7 @@ This page does not cover the server that a preview reaches. To start it, refer t
    }
    ```
 
-   The request does not start the container, so start the server before a page connects. Keep the checks that run before the call, because this route has no token.
+   The request does not start the container, so start the server before a page connects. Because this route has no token, keep the checks that your Worker runs before the call.
 
 </Steps>
 

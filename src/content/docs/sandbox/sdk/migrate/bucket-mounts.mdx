@@ -1,6 +1,6 @@
 ---
 title: Move bucket mounts
-description: Replace @cloudflare/sandbox 0.12 mountBucket() and unmountBucket() with S3Mount, which mounts the same prefix while S3Gateway in your Worker holds the credentials.
+description: Replace @cloudflare/sandbox 0.12 mountBucket() and unmountBucket() with S3Mount, which mounts the same prefix without bucket credentials in the container.
 pcx_content_type: how-to
 sidebar:
   order: 13
@@ -13,13 +13,13 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `mountBucket()` runs `s3fs` in the container, either with your bucket credentials in the container or through an R2 binding. In 1.0, `S3Mount` runs `s3fs`, and `S3Gateway` in your Worker signs each storage request, so the container never holds credentials.
+Move your 0.12 bucket mounts to `S3Mount`, which mounts the same bucket prefix without bucket credentials in the container. `S3Gateway` in your Worker signs each storage request. In 0.12, `mountBucket()` put the credentials in the container, or mounted through an R2 binding.
 
 ## Before you start
 
 Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mount` uses. `S3Mount` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
 
-This page replaces `mountBucket()`, `unmountBucket()`, their options, and their errors. [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/) builds the same mount from scratch, and this page links its configuration steps.
+This page replaces `mountBucket()`, `unmountBucket()`, their options, and their errors. To build the same mount in a new project, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
 
 ## Mount the bucket
 
@@ -48,7 +48,7 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 
    Then add the endpoint and name of the bucket as variables, and its credentials as secrets, as in steps 3 and 4 of [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/#mount-a-bucket-prefix). 0.12 read `AWS_*` and `R2_*` variables from the environment. `S3Mount` uses only the credentials that you pass to it.
 
-   If your 0.12 code mounted through an R2 binding, calling `mountBucket()` with the binding name and no `endpoint`, create an [R2 API token](/r2/api/tokens/) with the **Object Read & Write** permission for that bucket. 1.0 cannot mount a bucket through a binding.
+   1.0 cannot mount a bucket through an R2 binding. If your 0.12 code called `mountBucket()` with a binding name and no `endpoint`, create an [R2 API token](/r2/api/tokens/) with the **Object Read & Write** permission for that bucket.
 
 3. Replace `mountBucket()` with a method that mounts the prefix for the sandbox:
 
@@ -92,7 +92,7 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    }
    ```
 
-   `this.ctx.id.name` is the name that the Worker passed to `getByName()`, and `getSandbox()` in 0.12. The options change as follows:
+   `this.ctx.id.name` is the name that the Worker passed to `getByName()`, or to `getSandbox()` in 0.12. The options change as follows:
 
    | 0.12                          | 1.0                                                                                                                       |
    | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -143,7 +143,7 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    }
    ```
 
-   `S3_MOUNT_BUSY` means that a process still uses the path. Access stays denied, so stop the process and call `unmount()` again. The 0.12 errors map as follows:
+   `S3_MOUNT_BUSY` means that a process still uses the path. Requests to the path stay denied. Stop the process and call `unmount()` again. The 0.12 errors map as follows:
 
    | 0.12                                 | 1.0                                                                                                                       |
    | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
@@ -156,7 +156,7 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 
 ## If you moved outbound rules
 
-Each mount registers an intercept for its own hostname. The intercept receives requests only if you register it before the `interceptAllOutboundHttp()` call from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). Registered after it, the mount fails with `cannot verify the new FUSE connection`, because your `Outbound` entrypoint receives the storage requests. Registering the catch-all again later does not affect a mount that came first.
+Each mount registers an intercept for its own hostname. That intercept receives requests only if the mount runs before the `interceptAllOutboundHttp()` call from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). A mount after that call fails with `cannot verify the new FUSE connection`, because your `Outbound` entrypoint receives the storage requests. Registering the catch-all again later does not affect a mount that came first.
 
 Mount the prefix in `ensureRunning()`, after `start()` and before `intercept()`:
 
@@ -183,7 +183,7 @@ private async ensureRunning(): Promise<void> {
 }
 ```
 
-Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here, or open a new sandbox for it.
+Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here. To mount a path later, open a new sandbox.
 
 Each mount uses one of the [64 intercept targets](/containers/api/durable-object-container/#interceptoutboundhttp) of the container, and `unmount()` does not free it. Move outbound rules uses two. Give each job its own sandbox name instead of mounting a new prefix for each job in one container.
 

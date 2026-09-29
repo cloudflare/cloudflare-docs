@@ -12,13 +12,13 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-In Sandbox SDK 0.12, the `Sandbox` class from the package is your Durable Object, and your Worker calls its methods through `getSandbox()`. In 1.0, you write the Durable Object class. It starts the container through `this.ctx.container`, and your Worker calls the methods you give it.
+Replace the 0.12 `Sandbox` class with a Durable Object class that you write. In 0.12, your Worker calls package methods through `getSandbox()`. In 1.0, your class starts the container through `this.ctx.container`, and your Worker calls the methods that your class defines.
 
 ## Before you start
 
-Your application runs `@cloudflare/sandbox` 0.12.10. This page replaces the `Sandbox` class, whether you export it from the package or extend it, along with `getSandbox()` and its options, class fields such as `sleepAfter` and `envVars`, and the hooks `onStart()`, `onStop()`, `onError()`, and `onActivityExpired()`.
+Your application runs `@cloudflare/sandbox` 0.12.10. This page replaces the `Sandbox` class, whether you export it from the package or extend it. It also replaces `getSandbox()` and its options, class fields such as `sleepAfter` and `envVars`, and the hooks `onStart()`, `onStop()`, `onError()`, and `onActivityExpired()`.
 
-The page ends with the Worker running under `wrangler dev`. The deploy that switches your sandboxes to 1.0 cannot be undone. Before you deploy, follow [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
+The page ends with the Worker running under `wrangler dev`. You cannot undo the deploy that switches your sandboxes to 1.0. Before you deploy, follow [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
 
 The steps keep your class name, which moves every sandbox in place. To move sandboxes side by side, write the class under a new name, such as `SandboxV1`, and add its Wrangler configuration as [Move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/) describes.
 
@@ -46,7 +46,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    CMD ["sleep", "infinity"]
    ```
 
-   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mount` need `sandbox-shim`, and its tag matches the `@cloudflare/sandbox` version you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
+   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mount` need `sandbox-shim`. Match its tag to the `@cloudflare/sandbox` version that you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
 
 3. Change the `containers` entry for your class in the Wrangler configuration. Keep your class name and its binding, so each name reaches the Durable Object and storage it reached in 0.12. Replace `my-worker-mysandbox-v2` with a name that your account does not use yet:
 
@@ -89,7 +89,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-6. Write the class. A 0.12 subclass with a lifetime, environment variables, and an `onStart()` hook looks like this:
+6. Write the class. In this example, the 0.12 subclass sets a lifetime and environment variables, and overrides `onStart()`:
 
    ```ts title="src/index.ts (0.12)"
    import { getSandbox, Sandbox } from "@cloudflare/sandbox";
@@ -158,7 +158,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `start()` returns before the container is ready, and the first `exec()` waits for it. Each Durable Object instance sets its own inactivity timeout, so the constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. Remove `enableInternet: true` if your commands do not need the Internet.
+   `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout does not survive a Durable Object restart. The constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. If your commands do not need the Internet, set `enableInternet` to `false`.
 
 7. Replace each class field and `getSandbox()` option that your code sets:
 
@@ -194,7 +194,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0`, and rejects when it fails or `destroy()` stops the container. The call ends when the Durable Object restarts, so it can miss a stop. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it can miss a stop. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
 
@@ -248,7 +248,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    } satisfies ExportedHandler<Env>;
    ```
 
-   Methods that your 0.12 subclass already defines keep working the same way. Inside them, replace `this.exec()` and other package calls with calls on `this.container`. For each kind of call, refer to [Change command calls](/sandbox/sdk/migrate/commands/) and the feature pages in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
+   Move the methods that your 0.12 subclass defines into the 1.0 class. Your Worker calls them on the stub as it did in 0.12. Inside those methods, replace `this.exec()` and other package calls with calls on `this.container`. For each kind of call, refer to [Change command calls](/sandbox/sdk/migrate/commands/) and the feature pages in [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
 
 </Steps>
 

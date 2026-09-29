@@ -12,7 +12,7 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-A Sandbox SDK 1.0 class can run next to your 0.12 class in the same Worker. Your Worker moves each sandbox the first time a request reaches it, so commands and connections in other sandboxes keep running. You delete the 0.12 class when no sandbox needs it.
+Run a Sandbox SDK 1.0 class next to your 0.12 class in the same Worker, and move each sandbox the first time a request reaches it. Commands and connections in sandboxes that have not moved keep running. When no sandbox needs the 0.12 class, delete it.
 
 ## Before you start
 
@@ -20,9 +20,9 @@ A Sandbox SDK 1.0 class can run next to your 0.12 class in the same Worker. Your
 - Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 - You have a staging copy of the Worker with its own Wrangler configuration file, a different Worker `name`, and a different `name` for each container.
 
-The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A 0.12 container keeps its files only while it runs, so a stopped 0.12 sandbox has nothing to copy. The archive travels base64-encoded in one RPC message, which is limited to 32 MiB. For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A stopped 0.12 container has no files to copy. The archive travels base64-encoded in one RPC message, which is limited to 32 MiB. For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
 
-The other migration pages say to remove 0.12 exports, variables, and secrets, such as `ContainerProxy`, `SANDBOX_TRANSPORT`, and `R2_ACCESS_KEY_ID`. Keep them until you delete the 0.12 class, because the 0.12 class still reads them.
+Keep the 0.12 exports, variables, and secrets that other migration pages tell you to remove, such as `ContainerProxy`, `SANDBOX_TRANSPORT`, and `R2_ACCESS_KEY_ID`, until you delete the 0.12 class. The 0.12 class still reads them.
 
 ## Add the 1.0 class
 
@@ -72,7 +72,7 @@ The other migration pages say to remove 0.12 exports, variables, and secrets, su
    CMD ["sleep", "infinity"]
    ```
 
-   The copy step needs `tar`, `gzip`, and `base64`, which this image includes. Add the tools your commands use. The other migration pages add lines to your `Dockerfile`, such as the `cloudflared` copy on Move tunnels. Add those lines to `Dockerfile.v1`.
+   The copy step needs `tar`, `gzip`, and `base64`, which this image includes. Add the tools your commands use. When another migration page adds a line to your `Dockerfile`, such as the `cloudflared` copy on Move tunnels, add it to `Dockerfile.v1`.
 
 4. Add the 1.0 class to the Wrangler configuration, with its own container, binding, and migration. Leave the `Sandbox` entries as they are. Replace `my-worker-sandbox-v1` with a name that your account does not use yet:
 
@@ -179,7 +179,7 @@ The other migration pages say to remove 0.12 exports, variables, and secrets, su
    }
    ```
 
-   `ensureRunning()` and `container` are the helpers from your 1.0 class that start the container and return `this.ctx.container`. The method copies the 0.12 storage first, so preview URLs, named tunnels, and outbound rules also move for sandboxes whose 0.12 container has stopped. It stores `moved` before it stops the 0.12 container, so a failed copy runs again on the next request.
+   `ensureRunning()` and `container` are the helpers from your 1.0 class that start the container and return `this.ctx.container`. The method copies the 0.12 storage first, so preview URLs, named tunnels, and outbound rules move even when the 0.12 container has stopped. If the copy fails, the method throws before it stores `moved` or stops the 0.12 container, and the next request runs the copy again.
 
    0.12 `stop()` keeps the storage of the 0.12 class, and the tunnels and DNS records in your account. 0.12 `destroy()` deletes the preview tokens, the tunnel entries, and each named tunnel with its DNS record. Processes end with the 0.12 container, so start the ones your application needs in the 1.0 container, as [Move background processes](/sandbox/sdk/migrate/background-processes/#start-processes-again-after-the-switch) describes. To start the same commands, read them from `legacy.listProcesses()` before `stop()`.
 
@@ -260,7 +260,7 @@ Send a request for a sandbox whose 0.12 container runs and has files in `/worksp
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-5. Deleting the class does not delete its container application. Find the old application in the list. Wrangler named it from your Worker and class names, such as `my-worker-sandbox`:
+5. Deleting the class does not delete its container application. Wrangler named that application from your Worker and class names, such as `my-worker-sandbox`. List the applications to find it:
 
    <PackageManagers type="exec" pkg="wrangler" args="containers list" />
 

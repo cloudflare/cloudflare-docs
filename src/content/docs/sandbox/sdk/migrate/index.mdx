@@ -1,6 +1,6 @@
 ---
 title: Migrate from Sandbox SDK 0.x
-description: Move a Sandbox SDK 0.x application to your own Durable Object that starts a container, and find the work each 0.x feature needs.
+description: Move a Sandbox SDK 0.x application to a Durable Object class that you write, which starts its own container, and find the page for each 0.x feature that you use.
 pcx_content_type: navigation
 sidebar:
   order: 1
@@ -13,9 +13,9 @@ products:
   - durable-objects
 ---
 
-Sandbox SDK 1.0 works with a container you start from a Durable Object with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. To move an application from 0.x, you replace the `Sandbox` class with a Durable Object class you write. You then replace each 0.x feature that your application uses. For why each feature moves into your class, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
+To move an application from Sandbox SDK 0.x to 1.0, replace the `Sandbox` class with a Durable Object class that you write. Then replace each 0.x feature that your application uses. Your class starts a container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. For the reasons behind these changes, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
 
-Sandboxes on 1.0 start faster: on a prepared image, the median time from `start()` to the first command is under 600 ms, compared with about 4 s on 0.x. Each `start()` also chooses its own image, and a deploy does not restart running sandboxes.
+Sandboxes on 1.0 start faster. On a prepared image, the median time from `start()` to the first command is under 600 ms, compared with about 4 s on 0.x. Each `start()` call also chooses its own image, and a deploy does not restart running sandboxes.
 
 ## Support for Sandbox SDK 0.x
 
@@ -26,7 +26,7 @@ The migration pages compare 1.0 with 0.12, the last 0.x release. If your applica
 ## Plan for a one-way switch
 
 :::caution
-The deploy that moves your class to `scheduling_policy: "durable_object"` cannot be undone. After that deploy, 0.x code cannot start containers for the class, even after `wrangler rollback`.
+You cannot undo the deploy that moves your class to `scheduling_policy: "durable_object"`. After that deploy, 0.x code cannot start containers for the class, even after `wrangler rollback`.
 :::
 
 You can move every sandbox in one deploy, or run a 1.0 class next to the 0.x class and move sandboxes one at a time. Rehearse either way on a staging Worker first. To choose a way and prepare for the deploy, refer to [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).

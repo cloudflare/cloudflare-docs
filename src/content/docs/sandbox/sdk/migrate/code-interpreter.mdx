@@ -1,6 +1,6 @@
 ---
 title: Replace the code interpreter
-description: Replace @cloudflare/sandbox 0.12 runCode(), code contexts, and runCodeStream() with an IPython kernel in your container for Python and a Dynamic Worker for JavaScript.
+description: Replace @cloudflare/sandbox 0.12 runCode(), code contexts, and runCodeStream() with an IPython kernel for Python and a Dynamic Worker for JavaScript.
 pcx_content_type: how-to
 sidebar:
   order: 16
@@ -27,7 +27,7 @@ await sandbox.runCode("sales = [120, 95]");
 const execution = await sandbox.runCode("sum(sales)");
 ```
 
-If your code relies on this, or on contexts that you create, follow [Keep Python variables between calls](#keep-python-variables-between-calls). If the code in each call stands alone, start a new `python3` process for each call, as in [Run Python code](/sandbox/commands/run-python-code/). For the other 0.12 methods:
+If your code relies on this, or on contexts that you create, follow [Keep Python variables between calls](#keep-python-variables-between-calls). If the code in each call stands alone, start a new `python3` process for each call, as in [Run Python code](/sandbox/commands/run-python-code/). The other 0.12 methods have their own sections:
 
 | 0.12 | Section |
 | --- | --- |
@@ -297,7 +297,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    }
    ```
 
-   Call `this.kernels.clear()` in `ensureRunning()` after `start()`, because a new container has no kernels. A kernel started in under two seconds on `standard-1`. If your Durable Object restarts while the container runs, the new kernel exits because the port is in use, and the existing kernel answers with its variables.
+   Call `this.kernels.clear()` in `ensureRunning()` after `start()`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
 
 5. Add a `runCode()` method:
 
@@ -430,7 +430,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    | `error.name`, `error.message`, `error.traceback` | The same. `error` is `null` when the code succeeds, not `undefined`. |
    | `executionCount` | The same. |
 
-8. Deploy, and send two calls to one sandbox. With a Worker route at `/sandboxes/<name>/code` that passes the request body to `runCode()`:
+8. Deploy, and send two calls to one sandbox. In this example, a Worker route at `/sandboxes/<name>/code` passes the request body to `runCode()`:
 
    ```sh
    WORKER="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev"
@@ -497,7 +497,7 @@ Run JavaScript in a [Dynamic Worker](/dynamic-workers/) that your Worker loads, 
    );
    ```
 
-   `output` is `{ "result": 17, "logs": [] }`, and `logs` holds the `console.log()` output. The code runs as the body of an async function, so it must `return` its result. 0.12 returned the value of the last expression. The code has no network access. Refer to the tutorial for the limits that `runJavaScript()` sets.
+   `output` is `{ "result": 17, "logs": [] }`, and `logs` holds the `console.log()` output. The code runs as the body of an async function, so it must `return` its result. 0.12 returned the value of the last expression instead. The code has no network access. For the limits that `runJavaScript()` sets, refer to [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/#2-run-code-in-a-sandbox).
 
 </Steps>
 

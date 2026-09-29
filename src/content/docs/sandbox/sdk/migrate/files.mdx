@@ -10,7 +10,7 @@ products:
   - durable-objects
 ---
 
-In Sandbox SDK 0.12, file methods ran in the SDK server inside the container, which filled in details for you. It created missing directories, returned binary files as base64, and hid dotfiles. In 1.0, [`Files`](/sandbox/reference/files/) runs a small helper in the container for each call, and does only what the call asks.
+In Sandbox SDK 0.12, the SDK server in the container handled file calls. It created missing directories, returned binary files as base64, and hid dotfiles. In 1.0, [`Files`](/sandbox/reference/files/) runs a small helper in the container for each call, and does only what the call asks.
 
 ## Before you start
 
@@ -60,7 +60,7 @@ await files.mkdir("/workspace/app/src", { recursive: true });
 await files.writeFile("/workspace/app/src/index.js", code);
 ```
 
-Without `mkdir()`, `writeFile()` rejects with `SandboxFileError` code `ENOENT`. `writeFile()` accepts a string, bytes, a `Blob`, or a stream, so pass bytes where 0.12 took base64 with `encoding: "base64"`.
+Without `mkdir()`, `writeFile()` rejects with `SandboxFileError` code `ENOENT`. Where 0.12 took base64 with `encoding: "base64"`, pass bytes. `writeFile()` also accepts a string, a `Blob`, or a stream.
 
 0.12 wrote a stream to a temporary file and renamed it into place. `writeFile()` writes into the file directly, so a reader can see it partly written. To keep the 0.12 behavior, write to a temporary path and call `rename()`, as in [`writeFile`](/sandbox/reference/files/#writefile).
 
@@ -107,7 +107,7 @@ for (const entry of entries) {
 }
 ```
 
-`stat()` returns the size as a `bigint`, which `JSON.stringify()` cannot serialize, so convert it with `Number()`. Each call starts one helper process in the container. For a recursive listing, use the walk in [`readDirectory`](/sandbox/reference/files/#readdirectory).
+`stat()` returns the size as a `bigint`, which `JSON.stringify()` cannot serialize. Convert it with `Number()`. Each `Files` call starts one helper process in the container. For a recursive listing, use the walk in [`readDirectory`](/sandbox/reference/files/#readdirectory).
 
 ## Handle errors
 
@@ -134,14 +134,14 @@ try {
 }
 ```
 
-Two calls fail where 0.12 behaved differently:
+Two calls behave differently from 0.12:
 
 - `deleteFile()` refused a directory. `remove()` removes one with `recursive: true`, and rejects with `EISDIR` without it.
 - `renameFile()` and `moveFile()` ran `mv`, which copies across filesystems. `rename()` rejects with `EXDEV`, so copy with `container.exec(["cp", "-a", source, destination])`, then call `remove()`.
 
 ## Replace file watching
 
-Run a watcher in the container, and stream its output while the request is open. This replaces `watch()`. Add `inotify-tools` to the `apt-get install` line in your `Dockerfile`, then return the output of the watcher:
+To replace `watch()`, run `inotifywait` in the container, and stream its output while the request is open. Add `inotify-tools` to the `apt-get install` line in your `Dockerfile`, then return the output of the watcher:
 
 ```ts title="src/index.ts"
 const abort = new AbortController();
@@ -169,9 +169,11 @@ return new Response(watcher.stdout, {
 });
 ```
 
-Each line is an event and a path, such as `MODIFY /workspace/src/index.ts`. The lines are not server-sent events, so read them with `fetch()` and a stream reader. The watcher stops, and the stream ends, when the timer fires. If the client disconnects first, the watcher exits the next time it writes an event. Clearing the timer when the watcher exits keeps it from signaling a process that has already exited.
+Each line holds an event and a path, such as `MODIFY /workspace/src/index.ts`. The `text/event-stream` type keeps the response streaming, as in [Stream output](/sandbox/sdk/migrate/commands/#stream-output). The lines are not server-sent events, so read them with `fetch()` and a stream reader.
 
-0.12 resolved a relative path against `/workspace`, so pass an absolute path. Its `include` and `exclude` options took lists of glob patterns. `inotifywait` takes one regular expression for each, such as `--exclude '(\.log|/node_modules/.*)$'`, and uses only the last `--exclude`.
+The watcher stops, and the stream ends, when the timer fires. If the client disconnects first, the watcher exits the next time it writes an event. The code clears the timer when the watcher exits, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
+
+Pass `inotifywait` an absolute path, where 0.12 resolved a relative path against `/workspace`. The 0.12 `include` and `exclude` options took lists of glob patterns. `inotifywait` takes one regular expression for each, such as `--exclude '(\.log|/node_modules/.*)$'`, and uses only the last `--exclude`.
 
 `checkChanges()` has no replacement. The watcher reports only changes made while it runs, so read the files a client needs again when it reconnects.
 
@@ -179,7 +181,7 @@ Each line is an event and a path, such as `MODIFY /workspace/src/index.ts`. The 
 
 Write a file into a directory that does not exist yet, without `mkdir()`. The call rejects with `SandboxFileError` code `ENOENT`, and the message `writeFile '/workspace/new/deep/a.txt': No such file or directory (os error 2)`.
 
-After `mkdir()` with `recursive: true`, the write succeeds. `readDirectory()` of a directory with a dotfile returns it:
+After `mkdir()` with `recursive: true`, the write succeeds. Call `readDirectory()` on a directory that holds a dotfile. The result includes the dotfile:
 
 ```json output
 [
