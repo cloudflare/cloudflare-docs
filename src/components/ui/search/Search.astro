@@ -207,6 +207,17 @@ const aiSearchApiUrl =
 			this.modal?.open();
 		};
 
+		private openFromQueryParam = async () => {
+			const params = new URLSearchParams(window.location.search);
+			const term = (params.get("q") ?? params.get("query") ?? "").trim();
+			if (!term) return;
+			await customElements.whenDefined("search-modal-snippet");
+			const modal =
+				this.modal ??
+				this.querySelector<SearchModalSnippet>("search-modal-snippet");
+			await modal?.search(term);
+		};
+
 		private prepareModal = () => {
 			const dialog =
 				this.modal?.shadowRoot?.querySelector<HTMLElement>('[role="dialog"]');
@@ -265,6 +276,8 @@ const aiSearchApiUrl =
 			document.addEventListener("keydown", this.handleModalKeydown, {
 				capture: true,
 			});
+			document.addEventListener("astro:page-load", this.openFromQueryParam);
+			this.openFromQueryParam();
 			this.prepareModal();
 
 			const modifier = this.querySelector("[data-search-shortcut-modifier]");
@@ -281,6 +294,7 @@ const aiSearchApiUrl =
 			document.removeEventListener("keydown", this.handleModalKeydown, {
 				capture: true,
 			});
+			document.removeEventListener("astro:page-load", this.openFromQueryParam);
 		}
 	}
 
