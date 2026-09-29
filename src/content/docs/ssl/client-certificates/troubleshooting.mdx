@@ -13,7 +13,7 @@ tags:
   - mTLS
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
@@ -119,41 +119,44 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
 
 ## Certificate quota reached
 
-Cloudflare enforces limits on the number of certificates you can have active at one time. The limit and the error you see depend on the certificate type.
+### Cloudflare-managed CA
 
-### Cloudflare-managed client certificates
+Cloudflare-managed client certificates count against a per-zone quota. To free up a slot, revoke certificates you no longer need. Revoking a certificate immediately releases the slot.
 
-Each zone can have up to 100 active Cloudflare-managed client certificates by default. If you reach this limit, [revoke](/ssl/client-certificates/revoke-client-certificate/) certificates that are no longer needed — revoking a certificate frees its slot immediately. Deleting a certificate without revoking it first does not release the slot.
-
-Enterprise zones with [API Shield](/api-shield/) can raise this limit to 100,000 client certificates. Contact your account team to request an increase.
+To list and revoke certificates, refer to the [client certificates API](/api/resources/ssl/subresources/client_certificates/).
 
 ### Bring your own CA (BYOCA)
 
-Each Enterprise account can upload up to five CA certificates. This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+Each Enterprise account can upload up to five CA certificates for [BYOCA](/ssl/client-certificates/byo-ca/). This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
 
-If you exceed this quota, the API returns:
+If you exceed this limit, the API returns:
 
+```txt
+{
+  "code": 1489,
+  "message": "Hit maximum CA cert allocation."
+}
 ```
-Error 1489: Hit maximum CA cert allocation.
-```
 
-To free a slot, delete a CA certificate you no longer need. Before deleting a CA, you must first remove all hostname associations that reference it. Contact your account team to request a quota increase.
+To free a slot, you must first remove all hostname associations from the CA before deleting it. To increase your quota, contact your account team.
 
-:::note[Cloudflare Access uses a separate quota]
-CA certificates uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota that does not count against the five-CA BYOCA limit. If you see error `12130` ("maximum number of certificates has been reached") in Access, this relates to the Access certificate quota, not the BYOCA quota.
+:::note
+CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described above.
 :::
 
 ---
 
-## BYOCA upload failures
+## BYOCA certificate upload errors
 
-When uploading a CA certificate for [bring your own CA (BYOCA)](/ssl/client-certificates/byo-ca/), Cloudflare validates the certificate against a set of requirements. Upload failures are most commonly caused by one of the following.
+When uploading a CA certificate for [Bring your own CA (BYOCA)](/ssl/client-certificates/byo-ca/), the certificate must meet the following requirements:
 
-### Uploading a leaf certificate instead of a CA certificate
+<Render file="byo-ca-mtls-cert-requirements" product="ssl" />
+
+### Upload the CA certificate, not a leaf certificate
 
 The certificate you upload must be a CA certificate — that is, it must have `Basic Constraints: CA=TRUE` in its extensions. It is the certificate that directly issued your client certificates, not a client certificate itself.
 
-For example, if your certificate chain is `Root CA → Intermediate CA → Client certificate`, you should upload the Intermediate CA, not the client certificate or the full chain.
+A common cause of upload failure is uploading a leaf (client) certificate instead of the CA certificate. If your certificate chain is `Root CA → Intermediate CA → Client certificate`, upload the Intermediate CA (which has `CA:TRUE`), not the client certificate.
 
 To confirm whether a certificate is a CA certificate, run:
 
