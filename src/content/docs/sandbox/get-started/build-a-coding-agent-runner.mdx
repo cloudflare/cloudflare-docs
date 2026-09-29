@@ -249,7 +249,7 @@ import { z } from "zod";
 
 const repositoryDirectory = "/workspace/repo";
 const taskDirectory = "/workspace/task";
-const eventsPath = `${taskDirectory}/events.jsonl`;
+const eventsPath = `${taskDirectory}/stdout.log`;
 const stderrPath = `${taskDirectory}/stderr.log`;
 const exitCodePath = `${taskDirectory}/exit-code`;
 const pidPath = `${taskDirectory}/pid`;
@@ -267,8 +267,11 @@ const trustEnv = {
 	SSL_CERT_FILE: caPath,
 };
 
-const taskScript = `"$@" >${eventsPath} 2>${stderrPath}
-printf '%s\\n' "$?" >${exitCodePath}.tmp && mv ${exitCodePath}.tmp ${exitCodePath}`;
+// Runs the command in its own process group. Records its process ID when
+// it starts and its exit code when it ends.
+const taskScript = `dir=$1; shift
+setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
+echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
 const ResultEvent = z.object({
 	type: z.literal("result"),
@@ -348,8 +351,15 @@ export class AgentSandbox extends DurableObject<Env> {
 			await this.files.remove(taskDirectory, { recursive: true, force: true });
 			await this.files.mkdir(taskDirectory);
 
-			const task = await this.container.exec(
-				["/bin/sh", "-c", taskScript, "agent", ...this.agentCommand(prompt)],
+			await this.container.exec(
+				[
+					"/bin/sh",
+					"-c",
+					taskScript,
+					"agent",
+					taskDirectory,
+					...this.agentCommand(prompt),
+				],
 				{
 					cwd: repositoryDirectory,
 					env: { ...trustEnv, ...this.agentEnv() },
@@ -358,7 +368,6 @@ export class AgentSandbox extends DurableObject<Env> {
 				},
 			);
 
-			await this.files.writeFile(pidPath, String(task.pid));
 			this.ctx.storage.kv.put(taskKey, "started");
 			await this.ctx.storage.setAlarm(Date.now() + taskCheckInterval);
 			return "started";
@@ -470,7 +479,10 @@ export class AgentSandbox extends DurableObject<Env> {
 		const pid = await this.readOptionalText(pidPath);
 
 		if (pid === undefined) {
-			return { state: "none" };
+			// The task writes its process ID right after it starts.
+			return this.ctx.storage.kv.get(taskKey) === undefined
+				? { state: "none" }
+				: { state: "running" };
 		}
 
 		const probe = await this.run(
@@ -483,8 +495,8 @@ export class AgentSandbox extends DurableObject<Env> {
 			return { state: "running" };
 		}
 
-		// The task can finish after the first read. Its wrapper writes the
-		// exit code before it exits, so read it again.
+		// The task can finish after the first read, so read the exit code
+		// again.
 		const lateExitCode = await this.readOptionalText(exitCodePath);
 
 		if (lateExitCode !== undefined) {
@@ -616,7 +628,7 @@ If the repository has a `CLAUDE.md` file, Claude Code reads it, so the instructi
 
 The process writes its output to files instead of sending it back to the Durable Object. A process with piped output receives `SIGPIPE` after the request that started it ends, which stops Claude Code in the middle of its task.
 
-The shell wrapper writes the exit code to a temporary file and then renames it, so the Durable Object never reads a partial exit code.
+`taskScript` is the `RUN` script from [Run background processes](/sandbox/commands/run-background-processes/). `setsid` starts Claude Code in its own process group, and the script records the process ID of Claude Code when it starts. When Claude Code exits, the script writes the exit code to a temporary file and then renames it, so the Durable Object never reads a partial exit code.
 
 The task files live in `/workspace/task`, outside the repository, so they do not appear in the diff.
 
