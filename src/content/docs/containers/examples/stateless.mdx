@@ -14,7 +14,7 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 To proxy requests across a fixed number of Container instances, select an instance name and forward the request through its Durable Object.
 
-Because `container.start()` does not wait for readiness, this example polls `GET /health` before forwarding requests.
+`container.start()` returns before the container is ready. The Durable Object Container API example polls `GET /health` on port `8080` before forwarding requests. The container must return a successful response only when it is ready to receive traffic.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
@@ -120,5 +120,5 @@ export default {
 :::note
 Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
 
-See the [autoscaling documentation](/containers/configuration/scaling-and-routing) for more details about scaling stateless instances and routing.
+See the [autoscaling documentation](/containers/configuration/scaling-and-routing/) for more details about scaling stateless instances and routing.
 :::
