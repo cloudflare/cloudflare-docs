@@ -25,23 +25,25 @@ import {
 
 Issues provides built-in error monitoring for Cloudflare Workers. It detects production failures and groups related failures into issues without an SDK or application wrapper.
 
-![Issues overview showing active and resolved counts with grouped failures and occurrence totals.](~/assets/images/workers-observability/issues/workers-issues-overview-synthetic-2000x925.png)
+![Issues overview showing occurrence totals and active and resolved issues.](~/assets/images/workers-observability/issues/issues-overview.png)
 
 ## How Issues works
 
-When a Worker throws an uncaught exception, fails an invocation, returns a `5xx` response, or emits an application log, Issues records the failure as an occurrence. It groups related occurrences from the same Worker into one issue.
+When a Worker throws an uncaught exception, fails an invocation, returns a `5xx` response, or logs an error, Issues records the failure as an occurrence. It groups related occurrences from the same Worker into one issue.
 
 Use the Issues overview to identify recurring failures and changes in activity. To review the diagnostic context for a failure, refer to [Investigate issues](/workers/observability/issues/investigate/).
 
-You can also create an [automation](/workers/observability/issues/automations/) to send an issue to a coding agent, webhook, chat service, or incident-management tool.
+You can also create an [automation](/workers/observability/issues/automations/) to automatically send an issue to a coding agent, webhook, chat service, or incident-management tool.
 
 ## Enable Issues
 
-You can enable Issues immediately in the dashboard or through your Worker's Wrangler configuration file.
+You can enable Issues through Wrangler, the dashboard, or the Cloudflare CLI (`cf`).
 
 <Tabs>
 
 <TabItem label="Wrangler">
+
+Requires Wrangler 4.134.0 or later.
 
 <Steps>
 
@@ -76,6 +78,44 @@ You can enable Issues immediately in the dashboard or through your Worker's Wran
 
 </Steps>
 
+:::note
+If you deploy with Wrangler, also set `observability.issues.enabled` to `true` in your Wrangler configuration file. Otherwise, the next deployment turns off Issues.
+:::
+
+</TabItem>
+
+<TabItem label="Cloudflare CLI">
+
+<Steps>
+
+1. In your `cloudflare.config.ts` file, set `worker.observability.issues.enabled` to `true`.
+
+   ```ts title="cloudflare.config.ts"
+   import { defineConfig } from "cf/config";
+   import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+   export default defineConfig({
+     worker: {
+       name: "example-worker",
+       entrypoint,
+       compatibilityDate: "<COMPATIBILITY_DATE>",
+       observability: {
+         issues: {
+           enabled: true,
+         },
+       },
+     },
+   });
+   ```
+
+2. Deploy your Worker.
+
+   ```sh
+   cf deploy
+   ```
+
+</Steps>
+
 </TabItem>
 
 </Tabs>
@@ -106,3 +146,12 @@ try {
 ## Pricing
 
 Issues is available to all Workers accounts in open beta. It is free to use during the beta period.
+
+## Limits
+
+| Limit                            | Value              |
+| -------------------------------- | ------------------ |
+| Automations per account          | 50                 |
+| Minimum occurrence threshold     | 1                  |
+| Recurrence inactivity period     | 1 hour to 365 days |
+| Completed automation-run history | 30 days            |

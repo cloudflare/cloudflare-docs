@@ -10,7 +10,7 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-You can set up automations that send issues to a configured destination when matching issues meet a trigger condition.
+You can set up automations that send issues to a configured destination when matching issues meet a trigger condition. Configure automations and destinations in the dashboard or with the Cloudflare CLI (`cf`).
 
 ## Trigger types
 
@@ -31,15 +31,17 @@ An occurrence-threshold automation does not run for every occurrence after the t
 
 2. Select **Automations** > **Add automation**.
 
+   ![Automations dialog with an Add automation button.](~/assets/images/workers-observability/issues/create-automation.png)
+
 3. Select an occurrence threshold or recurrence-after-inactivity trigger and enter its value.
 
 4. Select an existing destination, or create a destination.
 
+   ![Create automation dialog with the destination menu open.](~/assets/images/workers-observability/issues/select-destination.png)
+
 5. Turn on **Enabled**, and then select **Create**.
 
 </Steps>
-
-![Automation setup flow showing how to open Automations, configure a trigger, select a destination, and set up a generic webhook.](~/assets/images/workers-observability/issues/automation-workflow-trimmed.png)
 
 ## Destinations
 
@@ -94,13 +96,4 @@ Issue data can include error messages, stack traces, request metadata, logs, and
 
 You can send an issue to a destination without waiting for its trigger. Open the issue and select the destination from its available actions. The manual run appears in the issue's activity history.
 
-Open an issue or automation to review recent runs. A run can be pending, successful, or failed. Failed deliveries are retried before the run is marked as failed.
-
-## Limits
-
-| Limit                            | Value               |
-| -------------------------------- | ------------------- |
-| Automations per account          | 50                  |
-| Minimum occurrence threshold     | 1                   |
-| Recurrence inactivity period     | 1 hour to 365 days  |
-| Completed automation-run history | 30 days             |
+Open an issue or automation to review recent runs. A run can be pending, succeeded, or failed. Cloudflare attempts to hand off each run up to three times before marking it failed. A succeeded run means Cloudflare Notifications accepted the event for delivery.

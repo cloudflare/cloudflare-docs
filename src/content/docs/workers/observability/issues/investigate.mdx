@@ -14,22 +14,9 @@ You can investigate an issue by comparing its occurrences and reviewing the avai
 
 ## Detected failures
 
-Issues can detect the following production failures:
-
-| Failure                   | Example                                                                           |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| Uncaught exception        | An exception escapes a Worker handler.                                             |
-| Failed invocation         | The runtime ends an invocation because of a CPU, memory, or other error.           |
-| HTTP server error         | A Worker intentionally or unintentionally produces an HTTP `5xx` response.        |
-| Subrequest server error   | An origin or another service returns an HTTP `5xx` response to the Worker.         |
-| Application log           | Any console output, including caught `Error` objects and non-`Error` values.       |
-| Non-fetch handler failure | A scheduled, queue, or alarm handler fails.                                        |
+Issues detects uncaught exceptions, failed invocations, HTTP `5xx` responses returned by the Worker, and console logs written at error level or containing an `Error` object or stack trace.
 
 Issues detection does not require Workers Logs or tracing. Tracing is only required to add custom application context.
-
-## How failures are grouped
-
-Issues groups similar failures from the same Worker. Differences in error messages or stack traces can create separate issues.
 
 ## Review issue details
 
@@ -47,11 +34,13 @@ Select an occurrence to review its available diagnostic context:
 
 The available context depends on the failure type and the telemetry captured for that invocation.
 
-![Issue details showing a handled checkout exception, stack trace, occurrence chart, and summary.](~/assets/images/workers-observability/issues/workers-issues-detail-synthetic-2000x925.png)
+![Issue details showing a handled RangeError, stack trace, occurrence chart, and destinations.](~/assets/images/workers-observability/issues/remapped-stacktrace.png)
 
 ## Add application context
 
-Cloudflare automatically captures platform context, but it does not know which application users, accounts, or sessions are relevant. Add these identifiers as attributes on the active span with the Workers runtime's built-in OpenTelemetry API. [Turn on tracing](/workers/observability/traces/#how-to-enable-tracing) before you access the active span.
+Cloudflare automatically captures platform context, but it does not know which application users, accounts, or sessions are relevant. Add these identifiers as early as possible in each invocation so they are attached when an issue occurs.
+
+You can add attributes to the active span with `tracing.getActiveSpan()` or to a span created with the [custom spans API](/workers/observability/traces/custom-spans/). [Turn on tracing](/workers/observability/traces/#how-to-enable-tracing) before you use either method.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -80,8 +69,6 @@ These attributes appear with related occurrences.
 
 Do not add secrets, access tokens, or sensitive request content to span attributes, logs, or error messages. Handle application identifiers and personal data according to your privacy and data-handling policies.
 
-For more information about the runtime tracing API, refer to [Custom spans](/workers/observability/traces/custom-spans/).
-
 ## Issue statuses
 
 | Status     | Behavior                                                                                  |
@@ -94,4 +81,4 @@ Issues do not resolve automatically. Update the status after you investigate or 
 
 ## Retention
 
-Issues and occurrence details are retained for seven days. To turn off Issues through Wrangler, set `observability.issues.enabled` to `false` and deploy your Worker. Issues stops detecting new failures, and existing data remains available until its retention period expires.
+Occurrence details are available for seven days. Issues remain listed after their occurrences expire. To turn off Issues through Wrangler, set `observability.issues.enabled` to `false` and deploy your Worker. Issues stops detecting new failures.
