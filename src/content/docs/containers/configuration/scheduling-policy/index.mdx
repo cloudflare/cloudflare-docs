@@ -141,6 +141,7 @@ If you omit `instance`, the Container uses `lite`. You can also supply a custom 
 ```ts
 this.ctx.container.start({
 	image: this.ctx.container.images.base,
+	enableInternet: false,
 	instance: {
 		vcpu: 1,
 		memoryMib: 4096,
