@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-09-11-workers-builds-tooling-updates.mdx
+  s_ea4eb577b33cf0::t_a2660c19ef48c3 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b19c47f7379237c4f45250e3cb5733d6fb72fcf1",
+  "prompts": {},
+  "sessions": {
+    "s_ea4eb577b33cf0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f7e27b040ffeKStnaBoaVQCwsL",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
