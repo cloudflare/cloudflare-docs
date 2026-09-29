@@ -202,6 +202,8 @@ The runtime does not wake a Durable Object when its container stops. Your Durabl
 
    The reason passed to `destroy()` reaches `monitor()`, so an idle stop records `idle` and a stop through `stop()` records `stopped`.
 
+   A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the stop and idle checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
+
 6. Add routes to your Worker. `GET` returns the record, `DELETE` stops the sandbox, and `POST` runs a command:
 
    ```ts title="src/index.ts"
