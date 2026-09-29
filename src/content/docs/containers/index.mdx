@@ -52,14 +52,13 @@ The container in this example exposes `GET /health` on port `4000` and returns a
 <Tabs>
 	<TabItem label="Worker Code">
 
-<TypeScriptExample
-	filename="src/index.ts"
-	code={{
-		collapse: "25-49",
-	}}
->
+<TypeScriptExample filename="src/index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
+
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+}
 
 export class MyContainer extends DurableObject<Env> {
 	private ready: Promise<void> | undefined;
@@ -108,10 +107,6 @@ export class MyContainer extends DurableObject<Env> {
 			cause: lastError,
 		});
 	}
-}
-
-interface Env {
-	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
 }
 
 export default {
