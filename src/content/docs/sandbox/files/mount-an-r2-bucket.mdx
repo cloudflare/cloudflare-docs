@@ -109,16 +109,27 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    `s3fs` in the sandbox sends each storage request to an address that the container intercepts. The intercept delivers the request to `S3Gateway` in your Worker. `S3Gateway` checks that the request stays within the bucket, prefix, and access mode of the mount. Then it signs the request with your credentials and sends it to R2.
 
-6. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+6. Add a constructor to your Durable Object. It creates one `S3Mount` object, and sets the inactivity timeout again when a restarted Durable Object finds the container running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
+   	private readonly container: Container;
+   	private readonly mounts: S3Mount;
+
    	constructor(ctx: DurableObjectState, env: Env) {
    		super(ctx, env);
    		const container = ctx.container;
-   		if (container?.running) {
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		this.container = container;
+   		this.mounts = new S3Mount(container, ctx.exports.S3Gateway);
+
+   		if (container.running) {
    			void ctx.blockConcurrencyWhile(() =>
    				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
    			);
@@ -127,6 +138,8 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    }
    ```
 
+   `this.ctx.container` stays the same object for as long as the Durable Object runs, so one `S3Mount` object serves every container that the Durable Object starts.
+
    Then add a method that starts the sandbox and mounts the prefix for the job:
 
    ```ts title="src/index.ts"
@@ -134,21 +147,15 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    	// ...
 
    	private async mountArtifacts(job: string) {
-   		const container = this.ctx.container;
-
-   		if (!container) {
-   			throw new Error("The container binding is not configured");
-   		}
-
-   		if (!container.running) {
-   			container.start({
-   				image: container.images.artifacts,
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.artifacts,
    				enableInternet: false,
    			});
-   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   			await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		}
 
-   		await new S3Mount(container, this.ctx.exports.S3Gateway).mount({
+   		await this.mounts.mount({
    			mountPath: "/mnt/artifacts",
    			source: {
    				type: "s3",
@@ -164,8 +171,6 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    			keyPrefix: `jobs/${job}`,
    			access: "read-write",
    		});
-
-   		return container;
    	}
    }
    ```
@@ -181,8 +186,8 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    	// ...
 
    	async digest(job: string) {
-   		const container = await this.mountArtifacts(job);
-   		const process = await container.exec(
+   		await this.mountArtifacts(job);
+   		const process = await this.container.exec(
    			// The command reads `input.txt` from R2 through the mount
    			// and writes `input.sha256` next to it
    			["sh", "-c", "sha256sum input.txt > input.sha256"],
@@ -204,16 +209,12 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    ```ts title="src/index.ts"
    async finish() {
-   	const container = this.ctx.container;
-
-   	if (!container?.running) {
+   	if (!this.container.running) {
    		return;
    	}
 
-   	await new S3Mount(container, this.ctx.exports.S3Gateway).unmount(
-   		"/mnt/artifacts",
-   	);
-   	await container.destroy();
+   	await this.mounts.unmount("/mnt/artifacts");
+   	await this.container.destroy();
    }
    ```
 

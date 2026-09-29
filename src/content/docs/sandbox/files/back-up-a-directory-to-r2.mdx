@@ -106,47 +106,40 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
+   	private readonly container: Container;
+   	private readonly backups: DirectoryBackup;
+
    	constructor(ctx: DurableObjectState, env: Env) {
    		super(ctx, env);
    		const container = ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		this.container = container;
+   		this.backups = new DirectoryBackup(
+   			container,
+   			ctx.exports.DirectoryBackupGateway,
+   			{ binding: "BACKUPS", prefix: "backups/" },
+   		);
+
    		// A restarted Durable Object sets the timeout again.
-   		if (container?.running) {
+   		if (container.running) {
    			void ctx.blockConcurrencyWhile(() =>
    				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
    			);
    		}
    	}
 
-   	private container(): Container {
-   		const container = this.ctx.container;
-
-   		if (!container) {
-   			throw new Error("The container binding is not configured");
-   		}
-
-   		return container;
-   	}
-
-   	private async startSandbox(): Promise<Container> {
-   		const container = this.container();
-
-   		if (!container.running) {
-   			container.start({
-   				image: container.images.workspace,
+   	private async startSandbox(): Promise<void> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.workspace,
    				enableInternet: false,
    			});
-   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   			await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		}
-
-   		return container;
-   	}
-
-   	private backups(): DirectoryBackup {
-   		return new DirectoryBackup(
-   			this.container(),
-   			this.ctx.exports.DirectoryBackupGateway,
-   			{ binding: "BACKUPS", prefix: "backups/" },
-   		);
    	}
    }
    ```
@@ -155,6 +148,8 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 
    The container sends the backup through `DirectoryBackupGateway`, which writes it to the `BACKUPS` bucket. The container never receives R2 credentials, and it can reach only the object of the operation in progress.
 
+   The constructor creates one `DirectoryBackup` object for the Durable Object, because `this.ctx.container` stays the same object for as long as the Durable Object runs.
+
 6. Add a method to `MyContainer` that adds a line to a file in the project and returns the file, so you can check what a restore brings back:
 
    ```ts title="src/index.ts"
@@ -162,11 +157,11 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
    	// ...
 
    	async note(line?: string) {
-   		const container = await this.startSandbox();
+   		await this.startSandbox();
    		const script = line
    			? `mkdir -p ${project} && printf "%s\n" "$1" >> ${project}/notes.txt && cat ${project}/notes.txt`
    			: `cat ${project}/notes.txt`;
-   		const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
+   		const process = await this.container.exec(["sh", "-c", script, "sh", line ?? ""]);
    		const output = await process.output();
 
    		return new TextDecoder().decode(output.stdout);
@@ -182,7 +177,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 
    	async backup() {
    		await this.startSandbox();
-   		const backup = await this.backups().backup({ dir: project });
+   		const backup = await this.backups.backup({ dir: project });
 
    		await this.ctx.storage.put(`backup:${backup.id}`, backup);
    		return { id: backup.id, size: backup.size };
@@ -210,7 +205,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
    		}
 
    		await this.startSandbox();
-   		await this.backups().restore(backup);
+   		await this.backups.restore(backup);
    		return true;
    	}
    }
@@ -296,7 +291,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 To leave out files, pass patterns in `.gitignore` syntax, relative to the directory. `node_modules/` matches a directory with that name at any depth, and `/build` matches only at the top:
 
 ```ts title="src/index.ts"
-const backup = await this.backups().backup({
+const backup = await this.backups.backup({
 	dir: project,
 	exclude: ["node_modules/", "/build"],
 	// Also apply the `.gitignore` files in the directory and `.git/info/exclude`,
@@ -320,7 +315,7 @@ export class MyContainer extends DurableObject<Env> {
 
 		if (backup) {
 			// `delete()` does not need a running container
-			await this.backups().delete(backup);
+			await this.backups.delete(backup);
 			await this.ctx.storage.delete(`backup:${id}`);
 		}
 	}
