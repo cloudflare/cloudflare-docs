@@ -41,9 +41,9 @@ Code that runs inside the instance does not count as activity. A build, a test s
 
 ## The timeout does not survive a restart
 
-The inactivity timeout belongs to the running Durable Object, not to the sandbox name. A Durable Object can restart while its Linux instance keeps running, for example between two alarms. After a restart, the Durable Object no longer has the timeout, and the instance stops shortly after the Durable Object next becomes inactive.
+Each Durable Object instance sets its own inactivity timeout. A Durable Object can restart while its Linux instance keeps running, for example after a deploy or between two alarms. The restarted Durable Object starts without a timeout, so the instance stops shortly after that Durable Object becomes inactive.
 
-A timeout set only after `start()` therefore lasts until the first restart. A timeout set on every request that uses the instance, including alarms, is in place whenever the Durable Object becomes inactive. The sandbox examples set it on every request for this reason.
+The sandbox examples set the timeout after `start()`, and set it again in the constructor of the Durable Object when the instance is already running. For an example, refer to [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout).
 
 ## What stops an instance
 
@@ -69,9 +69,9 @@ A running instance keeps the image, entrypoint, and environment variables that i
 
 Requests, streamed responses, and WebSockets that the previous version was handling end during the deploy. A browser terminal disconnects and must connect again.
 
-After the previous version stops, the instance keeps running for the inactivity timeout that version set. If no request arrives within that time, the instance stops. The new version does not have the timeout, so it sets the timeout again on the next request, as the sandbox examples do.
+After the previous version stops, the instance keeps running for the inactivity timeout that version set. If no request arrives within that time, the instance stops. The new version starts without the timeout, and its constructor sets the timeout again, as the sandbox examples do.
 
-Container [rollouts](/containers/configuration/rollouts/) replace instances only in Container applications that do not use `scheduling_policy: "durable_object"`, so no rollout replaces a sandbox.
+Container [rollouts](/containers/configuration/rollouts/) replace instances only in Container applications that use the [default scheduling policy](/containers/configuration/scheduling-policy/), so no rollout replaces a sandbox.
 
 ## Files and processes end with the instance
 
