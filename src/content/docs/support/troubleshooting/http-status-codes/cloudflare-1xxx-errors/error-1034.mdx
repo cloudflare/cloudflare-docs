@@ -40,13 +40,16 @@ This typically happens when:
 - Your zone was previously onboarded to a third-party CDN or SaaS service that uses Cloudflare's infrastructure with their own BYOIP prefix, and the zone membership was not cleaned up when you stopped using the service.
 - Your zone was moved between Cloudflare accounts after being enrolled in a BYOIP address map.
 
-**How to check**: Go to **Cloudflare Dashboard → Account Home → Network → Address Maps** and look for any address map that lists your affected zone as a member. If the IP addresses in that map match what your zone currently resolves to, and those IPs are not in [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/), this cause applies.
+:::note
+To check if this applies, go to **Cloudflare Dashboard** > **Account Home** > **Network** > **Address Maps** and look for any address map that lists your affected zone as a member. If the IP addresses in that map match what your zone currently resolves to, and those IPs are not in [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/), this cause applies.
+:::
 
 **Resolution**:
 
-1. Go to **Cloudflare Dashboard → Account Home → Network → Address Maps**.
-2. Click the address map that contains your zone.
-3. In the **Memberships** tab, find your zone and click **Remove**.
+1. Go to **Cloudflare Dashboard** > **Account Home** > **Network** > **Address Maps**.
+2. Select the address map that contains your zone.
+3. In the **Memberships** tab, find your zone and select **Remove**.
 4. Wait 1–2 minutes for the change to propagate, then test your domain.
 
 If you cannot remove the zone yourself (for example, if the address map is owned by a third-party service that previously used your domain), contact [Cloudflare Support](/support/contacting-cloudflare-support/) with the address map ID so we can investigate and assist.
+
