@@ -21,11 +21,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `Files` class from `@cloudflare/sandbox` reads and writes files in a running sandbox, and [`exec()`](/containers/api/durable-object-container/#exec) runs a command on them. In this example, the command compresses the uploaded file with `gzip`.
+This guide streams an uploaded file into a sandbox, compresses it with `gzip`, and streams the compressed file back to the caller.
+
+The `Files` class from `@cloudflare/sandbox` reads and writes files in a running Linux instance, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the instance, so your Durable Object starts it before each file operation.
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker project from [Run a Linux command](/sandbox/get-started/). This project uses a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
 
 <Render product="containers" file="docker-setup" />
 
@@ -37,7 +39,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
-2. Copy the `Files` helper binary into your image. If your project has no `Dockerfile`, create one in your project root:
+2. To give `Files` its helper binary, create a `Dockerfile` in the project root. If you already have one, add the `COPY` line to it:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -48,9 +50,9 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
    CMD ["sleep", "infinity"]
    ```
 
-   Use the `cloudflare/sandbox` tag that matches the installed package version. Replace the `FROM` line with the base image your commands need.
+   The `cloudflare/sandbox` tag must match the installed package version. A mismatch causes `SandboxProtocolError`. Replace the `FROM` line with the base image your commands need.
 
-3. In `wrangler.jsonc`, add the `nodejs_compat` flag and build the `Dockerfile` as a named image in your `containers` entry:
+3. To build the image, add the `nodejs_compat` flag to `wrangler.jsonc` and replace the `containers` entry:
 
    <WranglerConfig>
 
@@ -73,7 +75,9 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    </WranglerConfig>
 
-4. In `src/index.ts`, update the `MyContainer` class so that it starts the `workspace` image before each file operation. `Files` works with a running container and does not start one:
+   The `workspace` key names the image. Your code starts it as `container.images.workspace`.
+
+4. To start an instance before each file operation, replace `src/index.ts` with a `MyContainer` class that has a `startSandbox()` method:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -96,6 +100,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
    		}
    	}
 
+   	// Files does not start an instance, so start one before each operation.
    	private async startSandbox(): Promise<Container> {
    		const container = this.ctx.container;
 
@@ -118,9 +123,9 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    </TypeScriptExample>
 
-   The container keeps running for 10 minutes after the Durable Object becomes inactive. Requests in that time find the same files. A Durable Object that restarts, for example after a deploy, sets the timeout again in its constructor.
+   `startSandbox()` starts the `workspace` image when no instance is running. It sets the inactivity timeout on every call. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
-5. Add a method to `MyContainer` that writes the upload, runs the command, and returns the output file:
+5. To write the upload, run the command, and return the output file, add a `compress()` method to `MyContainer`:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -149,9 +154,9 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back. Neither method holds a whole file in the memory of the Durable Object. `output()` holds only what `gzip` prints, and that output counts toward the [memory limit](/workers/platform/limits/#memory).
 
-   A file operation that Linux rejects, such as a write to a full disk, throws `SandboxFileError`. The `code` property of the error holds the Linux error name. For every error that `Files` throws, refer to [Files errors](/sandbox/reference/files/#errors).
+   A Linux failure, such as a full disk, throws `SandboxFileError`. Its `code` holds the Linux error name, such as `ENOSPC`. To handle other errors, refer to [Files errors](/sandbox/reference/files/#errors).
 
-6. Replace the default export of your Worker with a `fetch` handler that sends uploads to the method:
+6. To send uploads to `compress()`, add a default export to `src/index.ts`:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -173,13 +178,15 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    </TypeScriptExample>
 
-   The route reads the sandbox name from the URL. In your application, derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
+   :::caution
+   This route reads the sandbox name from the URL, so any caller can reach any sandbox. In production, derive the name from the authenticated caller. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
+   :::
 
 7. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-8. Upload a file to the sandbox named `ada`, and save the response. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+8. To test the Worker, upload a file to the sandbox named `ada` and save the response. Replace the hostname with the `workers.dev` URL that Wrangler prints:
 
    ```sh
    printf 'Ada Lovelace\nGrace Hopper\n' | curl \
@@ -202,15 +209,37 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 </Steps>
 
-The compressed files stay in `/workspace` until the instance stops. To delete one sooner, call `files.remove()` after the caller has read the response.
+## List, rename, and remove files
+
+`Files` has methods for other file operations. Each method accepts the same `cwd` option as `writeFile()` and `readFile()`:
+
+| Method            | Use it to                                            |
+| ----------------- | ---------------------------------------------------- |
+| `readDirectory()` | List directory entries                               |
+| `stat()`          | Read the type, size, owner, and timestamps of a path |
+| `mkdir()`         | Create a directory                                   |
+| `rename()`        | Rename or move a file or directory                   |
+| `remove()`        | Delete a file, or a directory with `recursive: true` |
+
+Compressed files stay in `/workspace` until the instance stops. To delete a file sooner, call `remove()` after the caller has read the response.
+
+For more information, refer to [Files API](/sandbox/reference/files/).
 
 ## Accept paths from callers
 
-When callers choose file paths, such as in a file browser, accept only paths inside one directory. `Files` opens any path in the sandbox. Check each path from a request before you pass it to `Files` with `cwd`. The following check rejects empty paths, absolute paths, and paths that contain a null byte or a `..` segment:
+Some applications let callers choose paths, such as a file browser. `Files` does not restrict which paths it opens. To keep a request inside one directory, check each path before you pass it to `Files`.
+
+This example adds a `download()` method that accepts only relative paths without `..`, and returns `404` for a missing file:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+import { Files, SandboxFileError } from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+const workspace = "/workspace";
+
+// Accept only relative paths that stay inside cwd.
 function workspacePath(path: string): string | null {
 	if (
 		path === "" ||
@@ -223,11 +252,41 @@ function workspacePath(path: string): string | null {
 
 	return path;
 }
+
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	async download(path: string): Promise<Response> {
+		const relativePath = workspacePath(path);
+
+		if (!relativePath) {
+			return new Response("Invalid path", { status: 400 });
+		}
+
+		const files = new Files(await this.startSandbox());
+
+		try {
+			return await files.readFile(relativePath, { cwd: workspace });
+		} catch (error) {
+			if (SandboxFileError.is(error) && error.code === "ENOENT") {
+				return new Response("Not found", { status: 404 });
+			}
+
+			throw error;
+		}
+	}
+}
 ```
 
 </TypeScriptExample>
 
-The check limits the paths that a caller can name. It does not limit what code in the sandbox can reach: that code can create a symbolic link in `/workspace` that points elsewhere in the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+:::caution
+The check applies only to the path in the request. It does not isolate files inside the sandbox. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the sandbox.
+
+The `user` option, such as `user: "1000:1000"`, does not narrow access either. It sets the owner of files that `Files` creates. The helper can still open files that the user has no permission for.
+
+For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+:::
 
 ## Related resources
 
