@@ -15,7 +15,7 @@ import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
 Use `monitor()` with the Durable Object Container API to run code after the Container exits or errors. The `Container` class adds named lifecycle hooks and an inactivity callback.
 
-For the direct API example, expose `GET /health` on port 4000. Return a successful response once the application is ready.
+Because `container.start()` does not wait for readiness, this example polls `GET /health` before forwarding requests.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
