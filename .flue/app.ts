@@ -21,6 +21,7 @@ import {
 	devReviewRoutes,
 	hasValidInternalToken,
 } from "./lib/dev-review-routes";
+import { devCommentSpamRoutes } from "./lib/dev-comment-spam-routes";
 import {
 	processRecommendationEvent,
 	type RecommendationEnv,
@@ -60,6 +61,7 @@ const app = new Hono();
 
 app.get("/health", (c) => c.json({ ok: true }));
 app.route("/dev/review-run", devReviewRoutes);
+app.route("/dev/comment-spam-run", devCommentSpamRoutes);
 
 // Trigger a review for a PR by number. Fetches the real PR from GitHub,
 // builds the same classification a webhook would, and routes through

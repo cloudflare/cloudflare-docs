@@ -129,6 +129,11 @@ export interface CommentSpamParams {
 	parentNumber: number;
 	/** Whether the parent item is a PR (as opposed to an issue). */
 	isPullRequest: boolean;
+	/**
+	 * Dev replay of an existing comment. Follows DOCS_FLUE_REVIEW_MODE: `log`
+	 * runs the verdict but skips the audit write and the delete.
+	 */
+	replay?: boolean;
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────

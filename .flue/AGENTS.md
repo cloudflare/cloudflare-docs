@@ -128,6 +128,17 @@ The comment gate skips comments from authors with write access (`OWNER`, `MEMBER
 
 Before deleting, the workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
 
+## Comment Spam Replay
+
+`pnpm run flue:replay:comment-spam [--comment <id,...>]` replays the comment spam gate against existing comments (default: the three #33799 email-reply comments). Run `pnpm run flue:dev` first. It follows `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                                   |
+| --------- | ----------------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the verdict and `wouldDelete`; no R2 audit write and no delete                  |
+| `comment` | Real path. Writes the audit record to R2, then deletes the comment on a high-confidence verdict |
+
+Exemptions (write access, bots, item author, codeowners) still apply, and a deleted comment replays as `comment-missing`. Real webhooks ignore replay mode and always act.
+
 ## Replay And Evals
 
 `pnpm run flue:replay --pr <number>` runs the real-PR replay harness. Run `pnpm run flue:dev` first. It reads `DOCS_FLUE_INTERNAL_TOKEN` and optional `FLUE_BASE_URL` (default `http://localhost:5173`) from the environment or `.flue/.env(.local)`. `--pr` accepts any PR number or a comma-separated list, such as `--pr 33622,33305`; omit it to replay every PR in `bin/replay-prs.json`, and use `--concurrency <number>` to run several at once.

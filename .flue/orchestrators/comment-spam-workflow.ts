@@ -32,11 +32,13 @@ import {
 	spamDeletionAuditKey,
 	type CommentSpamParams,
 } from "../lib/comment-spam";
+import { reviewMode, type ReviewRunEnv } from "../lib/review/run-context";
 import { deleteIssueComment, getInstallationToken } from "../lib/github";
 
 interface CommentSpamEnv {
 	DOCS_FLUE_BUCKET: R2Bucket;
 	AI: AiRunner;
+	DOCS_FLUE_REVIEW_MODE?: string;
 	[key: string]: unknown;
 }
 
@@ -48,7 +50,10 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 		event: Readonly<WorkflowEvent<CommentSpamParams>>,
 		step: WorkflowStep,
 	): Promise<Record<string, unknown>> {
-		const { commentId, parentNumber, isPullRequest } = event.payload;
+		const { commentId, parentNumber, isPullRequest, replay } = event.payload;
+		const mode = reviewMode(this.env as unknown as ReviewRunEnv);
+		// A log-mode replay is a dry run: real webhooks always act.
+		const dryRun = replay === true && mode === "log";
 		const ghEnv = this.env as unknown as Record<string, string>;
 
 		// ── 1. Context + exemptions ─────────────────────────────────────────────
@@ -70,7 +75,7 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 				action: "skipped",
 				reason: fetched.skip,
 			});
-			return { acted: true, deleted: false, skipped: fetched.skip };
+			return { acted: true, deleted: false, skipped: fetched.skip, mode };
 		}
 		const context = fetched.context;
 
@@ -98,7 +103,12 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 		// ── 3. Act ──────────────────────────────────────────────────────────────
 		const parent = context.parent;
 		const label = `${parent.kind === "pull_request" ? "PR" : "Issue"} #${parent.number} comment ${commentId}`;
-		const result = await step.do<{ deleted: boolean }>("act", async () => {
+		const result = await step.do<{
+			deleted: boolean;
+			wouldDelete?: boolean;
+			verdict?: ReturnType<typeof parseJevVerdict>;
+			error?: string;
+		}>("act", async () => {
 			if (!verdict.ok) {
 				console.log({
 					message: `Comment spam filter errored (failing open): ${label} — ${verdict.error}`,
@@ -108,7 +118,7 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 					isPullRequest,
 					action: "filter_error",
 				});
-				return { deleted: false };
+				return { deleted: false, error: verdict.error };
 			}
 			if (!shouldDeleteComment(verdict.value)) {
 				console.log({
@@ -120,7 +130,17 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 					...verdict.value,
 					action: "left_undeleted",
 				});
-				return { deleted: false };
+				return { deleted: false, wouldDelete: false, verdict: verdict.value };
+			}
+			if (dryRun) {
+				console.log({
+					message: `Replay (log mode): would delete ${label}`,
+					event: "comment_spam_filter_verdict",
+					commentId,
+					...verdict.value,
+					action: "replay_would_delete",
+				});
+				return { deleted: false, wouldDelete: true, verdict: verdict.value };
 			}
 
 			// Audit before deleting: if the audit write fails, fail open — no
@@ -155,9 +175,9 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 				...verdict.value,
 				action: "comment_deleted",
 			});
-			return { deleted: true };
+			return { deleted: true, wouldDelete: true, verdict: verdict.value };
 		});
 
-		return { acted: true, deleted: result.deleted };
+		return { acted: true, mode, replay: replay === true, ...result };
 	}
 }
