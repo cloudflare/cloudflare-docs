@@ -1,0 +1,257 @@
+---
+title: Run a server in the background
+description: Start a server in a Linux sandbox once for each container, wait until it answers, and stop it from later requests.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-29
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Start a server that runs until the container stops, such as a development server, a tunnel, or a code kernel. The server has no exit code to wait for. Your Durable Object starts it on first use, waits until it answers, and starts it again in each new container.
+
+For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/).
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
+
+## Run a server
+
+<Steps>
+
+1. Add shell scripts and functions that start a server, check it, and stop it:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   const SERVERS = "/var/lib/servers";
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+   // Starts the server unless it already runs. The server runs in its own
+   // process group, and writes its process ID and output to its directory.
+   const SERVE = `dir=$1; shift
+   pid=$(cat "$dir/pid" 2>/dev/null) && kill -0 "$pid" 2>/dev/null && exit 0
+   mkdir -p "$dir" && rm -f "$dir/pid"
+   setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/log" 2>&1`;
+
+   // Prints the end of the log and exits with 0 when the server has exited.
+   const EXITED = `pid=$(cat "$1/pid" 2>/dev/null) || exit 1
+   kill -0 "$pid" 2>/dev/null && exit 1
+   tail -n 20 "$1/log"`;
+
+   // Stops the process group. Once the server exits, within 10 seconds,
+   // removes its process ID.
+   const STOP = `pid=$(cat "$1/pid" 2>/dev/null) || exit 0
+   kill -s TERM -- "-$pid" 2>/dev/null
+   timeout 10 sh -c 'while kill -0 "$0" 2>/dev/null; do sleep 0.1; done' "$pid" &&
+   	rm -f "$1/pid"`;
+
+   type ServerOptions = { cwd?: string; env?: Record<string, string> };
+
+   async function startServer(
+   	container: Container,
+   	dir: string,
+   	argv: string[],
+   	options: ServerOptions = {},
+   ): Promise<void> {
+   	// Ignoring the output lets the server outlive this request.
+   	await container.exec(["sh", "-c", SERVE, "sh", dir, ...argv], {
+   		...options,
+   		stdout: "ignore",
+   		stderr: "ignore",
+   	});
+   }
+
+   async function serverExited(
+   	container: Container,
+   	dir: string,
+   ): Promise<string | undefined> {
+   	const check = await container.exec(["sh", "-c", EXITED, "sh", dir]);
+   	const output = await check.output();
+
+   	return output.exitCode === 0
+   		? new TextDecoder().decode(output.stdout)
+   		: undefined;
+   }
+
+   async function waitForServer(
+   	container: Container,
+   	dir: string,
+   	port: number,
+   	timeoutMs: number,
+   ): Promise<Fetcher> {
+   	const server = container.getTcpPort(port);
+   	const deadline = Date.now() + timeoutMs;
+
+   	while (Date.now() < deadline) {
+   		try {
+   			const response = await server.fetch("http://server/", {
+   				signal: AbortSignal.timeout(1_000),
+   			});
+   			await response.body?.cancel();
+   			return server;
+   		} catch {
+   			const log = await serverExited(container, dir);
+
+   			if (log !== undefined) {
+   				throw new Error(`The server exited: ${log}`);
+   			}
+
+   			await scheduler.wait(500);
+   		}
+   	}
+
+   	throw new Error("The server did not answer in time");
+   }
+
+   async function stopServer(container: Container, dir: string): Promise<void> {
+   	const stop = await container.exec(["sh", "-c", STOP, "sh", dir]);
+   	await stop.exitCode;
+   }
+   ```
+
+   </TypeScriptExample>
+
+   `SERVE` starts nothing when the server in the directory already runs. Every request can call `startServer()`, and a new container, which has no server, gets one. This also covers a Durable Object that restarts while its container keeps running.
+
+   `setsid` starts the server in a new process group, so `STOP` also stops the processes that the server starts. The shell that runs `SERVE` stays in the container until the server exits. Do not start the server with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+
+   `STOP` removes the process ID once the server exits, so a server started in the same directory right after it never reads as exited. A server that ignores `SIGTERM` keeps running, and `STOP` exits with `124` after 10 seconds.
+
+   `waitForServer()` treats any HTTP response as ready. If the server exits first, it throws with the end of the log. The log grows until the server stops, so keep the output of a busy server small, or send it to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
+
+2. Add a constructor to your Durable Object. It sets the inactivity timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   Then add methods that send a request to the server, starting it first, and stop it:
+
+   ```ts title="src/index.ts"
+   const WEB = `${SERVERS}/web`;
+   const WEB_PORT = 8080;
+   const WEB_SERVER = [
+   	"node",
+   	"--eval",
+   	`require("node:http")
+   		.createServer((req, res) => res.end("hello from the server\\n"))
+   		.listen(${WEB_PORT})`,
+   ];
+
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
+
+   	async fetchServer(request: Request): Promise<Response> {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   		}
+
+   		await startServer(container, WEB, WEB_SERVER);
+   		const server = await waitForServer(container, WEB, WEB_PORT, 30_000);
+   		return server.fetch(request);
+   	}
+
+   	async stopWeb(): Promise<void> {
+   		const container = this.ctx.container;
+
+   		if (container?.running) {
+   			await stopServer(container, WEB);
+   		}
+   	}
+   }
+   ```
+
+   `fetchServer()` runs `SERVE` on every request. To skip it once the server answers, keep a flag in memory, and clear it when you start a new container.
+
+   A running server does not keep the container running. Requests that reach the server through your Durable Object keep it running, as other requests do. When the inactivity timeout ends, the container stops, and the server stops with it. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+
+3. Add routes to your Worker that call these methods:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+
+   		if (url.pathname !== "/server") {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName("sandbox");
+
+   		if (request.method === "DELETE") {
+   			await sandbox.stopWeb();
+   			return new Response(null, { status: 202 });
+   		}
+
+   		// getTcpPort() accepts only http:// URLs.
+   		const forward = new Request("http://container/", request);
+   		return sandbox.fetchServer(forward);
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+4. Deploy your Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+5. Send a request to the server. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/server
+   ```
+
+   The first request starts the container and the server, and waits until the server answers:
+
+   ```txt output
+   hello from the server
+   ```
+
+6. Stop the server, then send another request:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/server --request DELETE
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/server
+   ```
+
+   The `DELETE` request responds with `202`. The next request starts the server again and prints the same response.
+
+</Steps>
+
+## Related resources
+
+- [Run background processes](/sandbox/commands/run-background-processes/): processes that run until they finish.
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
+- [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport)
