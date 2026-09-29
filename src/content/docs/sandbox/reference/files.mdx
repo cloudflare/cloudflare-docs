@@ -71,7 +71,7 @@ Every method accepts `FileOperationOptions`:
 | `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user. A user ID alone, or a user or group name, throws `TypeError`.                                                                                                                                                                                                                              |
 | `signal` | `AbortSignal` | Cancels the operation and kills its helper process. A signal that fires after the operation finishes has no effect, including an `AbortSignal.timeout()` that outlives the call. The call rejects with the abort reason: `AbortError` from `abort()` without a reason, or `TimeoutError` from `AbortSignal.timeout()`. Cancellation can leave the partial effects that each method lists.                                             |
 
-`mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`. An option a method does not accept, or an option of the wrong type, throws `TypeError` before the helper process starts. No other options reach `exec()`.
+`mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`. An option a method does not accept, or an option of the wrong type, throws `TypeError` before the helper process starts. Of these options, only `user` and `signal` reach `exec()`.
 
 ## Methods
 
