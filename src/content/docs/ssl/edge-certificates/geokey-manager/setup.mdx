@@ -8,7 +8,7 @@ sidebar:
 head:
   - tag: title
     content: Setup - Geo Key Manager
-description: Learn how to set up Geo Key Manager and choose where your private TLS keys can be used.
+description: Learn how to set up Geo Key Manager and choose where your private TLS keys are decrypted.
 tags:
   - TLS
   - Compliance
@@ -32,13 +32,13 @@ Geo Key Manager v2 is only available through the Cloudflare API.
 
 :::
 
-Geo Key Manager v2 gives customers flexibility when choosing where their private TLS keys can be used.
+Geo Key Manager v2 gives customers flexibility when choosing where their private TLS keys are decrypted.
 
-Using the `policy` field, customers can define policies containing allow and block lists of countries or regions where the private key can be used.
+Using the `policy` field, customers can define policies containing allow and block lists of countries or regions where the private key can be decrypted.
 
 To use Geo Key Manager v2 with the API, generally, follow the steps to [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate).
 
-When sending the [`POST`](/api/resources/custom_certificates/methods/create/) request, include the `policy` parameter to define policies containing allow and block lists of countries or regions where the private key can be used.
+When sending the [`POST`](/api/resources/custom_certificates/methods/create/) request, include the `policy` parameter to define policies containing allow and block lists of countries or regions where the private key can be decrypted.
 
 :::note
 
@@ -50,7 +50,7 @@ You also have access to the `geo_restrictions` parameter, which is mutually excl
 
 <Example>
 
-Allow private TLS key use in the E.U. and the U.S.
+Allow private TLS key decryption in the E.U. and the U.S.
 
 <APIRequest
 	path="/zones/{zone_id}/custom_certificates"
@@ -66,7 +66,7 @@ Allow private TLS key use in the E.U. and the U.S.
 </Example>
 
 <Example>
-Allow private TLS key use in the E.U., but not in France
+Allow private TLS key decryption in the E.U., but not in France
 
 <APIRequest
 	path="/zones/{zone_id}/custom_certificates"
@@ -103,7 +103,7 @@ To use Geo Key Manager in the dashboard:
    - **Distribute only to highest security data centers** ([more details](/ssl/edge-certificates/geokey-manager/supported-options/#highest-security-data-centers))
 3. Select **Upload Custom Certificate**.
 
-These options control where your private TLS key can be used.
+These options control where your private TLS key is decrypted.
 
 </TabItem>
 

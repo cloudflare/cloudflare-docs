@@ -7,4 +7,4 @@ entry:
   url: /ssl/edge-certificates/geokey-manager/
 
 meta:
-  description: Control where your private TLS keys can be used
+  description: Control where your private TLS keys are decrypted
