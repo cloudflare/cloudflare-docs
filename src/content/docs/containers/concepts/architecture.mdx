@@ -12,7 +12,7 @@ products:
 
 How images and running Container instances update depends on the [scheduling policy](/containers/configuration/scheduling-policy/) for the application.
 
-With the `durable_object` policy, Wrangler prepares the named images for the application. Durable Object code can access their immutable references and selects an image and instance size when it calls `ctx.container.start()`. When an image reference changes, the Durable Object decides whether to stop the running Container and start it with the new image or let it continue with the previous image. This application-controlled restart is how you roll out image changes with the `durable_object` policy. These instances do not participate in application-wide image rollouts.
+With the `durable_object` policy, Wrangler prepares the named images for the application. Durable Object code can access their immutable references and selects an image and instance size when it calls `ctx.container.start()`. When an image reference changes, the Durable Object code decides whether to stop the running Container and start it with the new image or let it continue with the previous image. This application-controlled restart is how you roll out image changes with the `durable_object` policy. These instances do not participate in application-wide image rollouts.
 
 With the `default` policy, Wrangler uploads or resolves the application image. Cloudflare distributes that image across its network and prepares capacity for new instances. Changes to the image or instance type use a [rollout](/containers/configuration/rollouts/).
 
