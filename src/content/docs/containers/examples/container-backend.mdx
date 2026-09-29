@@ -186,7 +186,7 @@ export class Backend extends DurableObject<Env> {
 		const container = this.ctx.container!;
 		await container.setInactivityTimeout(2 * 60 * 60 * 1000);
 		if (!container.running) {
-			container.start();
+			container.start({ enableInternet: false });
 		}
 		this.ctx.waitUntil(
 			container
@@ -246,6 +246,7 @@ interface Env {
 
 export class Backend extends Container<Env> {
 	defaultPort = 8080; // pass requests to port 8080 in the container
+	enableInternet = false;
 	sleepAfter = "2h"; // only sleep a container if it hasn't gotten requests in 2 hours
 }
 

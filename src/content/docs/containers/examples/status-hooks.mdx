@@ -52,7 +52,7 @@ export class MyContainer extends DurableObject<Env> {
 		const container = this.ctx.container!;
 		await container.setInactivityTimeout(5 * 60 * 1000);
 		if (!container.running) {
-			container.start();
+			container.start({ enableInternet: false });
 		}
 
 		this.ctx.waitUntil(
@@ -94,6 +94,7 @@ import { Container, type StopParams } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 4000;
+	enableInternet = false;
 	sleepAfter = "5m";
 
 	override onStart() {

@@ -81,39 +81,11 @@ export class CronContainer extends DurableObject<Env> {
 
 	private async runOnce(startTime: string): Promise<void> {
 		const container = this.ctx.container!;
-		await container.setInactivityTimeout(10_000);
-
 		if (!container.running) {
-			container.start();
+			console.log("Starting scheduled task:", startTime);
+			container.start({ enableInternet: true });
 		}
-
-		const port = container.getTcpPort(8080);
-		let lastError: unknown;
-		for (let attempt = 0; attempt < 100; attempt++) {
-			try {
-				const response = await port.fetch("http://container/health");
-				if (!response.ok) {
-					throw new Error(`Health check returned ${response.status}`);
-				}
-				lastError = undefined;
-				break;
-			} catch (error) {
-				lastError = error;
-				await scheduler.wait(200);
-			}
-		}
-		if (lastError) {
-			throw lastError;
-		}
-
-		const response = await port.fetch("http://container/run", {
-			method: "POST",
-			body: JSON.stringify({ startTime }),
-			headers: { "content-type": "application/json" },
-		});
-		if (!response.ok) {
-			throw new Error(`Container returned ${response.status}`);
-		}
+		await container.monitor();
 	}
 }
 
@@ -161,6 +133,7 @@ export default {
 	): Promise<void> {
 		const container = getContainer(env.CRON_CONTAINER);
 		await container.start({
+			enableInternet: true,
 			envVars: {
 				MESSAGE: `Start Time: ${new Date(controller.scheduledTime).toISOString()}`,
 			},
