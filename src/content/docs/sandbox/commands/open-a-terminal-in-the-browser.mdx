@@ -1,0 +1,368 @@
+---
+title: Open a terminal in the browser
+description: Connect a browser terminal to an interactive shell in a Linux sandbox over a WebSocket.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+  label: Open a terminal
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import {
+	PackageManagers,
+	Render,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
+
+Give a person a live shell in a Linux sandbox from a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
+
+<BrowserTerminal
+	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
+	lines={[
+		"root@fbed6b5a41ac5bf7fa2b2db27f4d6a8268aab85bdaf6be012a2e881812eb617d:~# stty size",
+		"21 95",
+		'root@fbed6b5a41ac5bf7fa2b2db27f4d6a8268aab85bdaf6be012a2e881812eb617d:~# for i in $(seq 1 600); do echo "line $i"; sleep 1; done',
+		"line 1",
+		"line 2",
+		"line 3",
+		"line 4",
+		"line 5",
+	]}
+	status={{
+		left: "[main] 0:sleep*",
+		right: '"fbed6b5a41ac5bf7fa2b2" 02:45 25-Sep-26',
+	}}
+/>
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+
+<Render product="containers" file="docker-setup" />
+
+## Open a terminal
+
+<Steps>
+
+1. Create a `Dockerfile` in the project root with tmux:
+
+   ```dockerfile title="Dockerfile"
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends tmux \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   # Scroll back with the mouse wheel, and keep more history.
+   RUN printf 'set -g mouse on\nset -g history-limit 50000\n' > /etc/tmux.conf
+
+   CMD ["sleep", "infinity"]
+   ```
+
+   `sleep infinity` keeps the container running so it can accept terminals.
+
+2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry, then generate types for it:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"containers": [
+   		{
+   			"class_name": "MyContainer",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"terminal": {
+   					"dockerfile": "./Dockerfile",
+   				},
+   			},
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+3. Add a `fetch()` handler to your Durable Object that attaches a WebSocket to a tmux session:
+
+   ```ts title="src/index.ts"
+   async fetch(request: Request): Promise<Response> {
+   	const container = this.ctx.container;
+
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	if (request.headers.get("Upgrade") !== "websocket") {
+   		return new Response("Expected a WebSocket upgrade", { status: 426 });
+   	}
+
+   	// tmux session names cannot contain "." or ":".
+   	const url = new URL(request.url);
+   	const session = url.searchParams.get("session") || "main";
+
+   	if (!/^[a-z0-9][a-z0-9-]{0,62}$/.test(session)) {
+   		return new Response("Invalid session name", { status: 400 });
+   	}
+
+   	if (!container.running) {
+   		container.start({
+   			image: container.images.terminal,
+   			enableInternet: false,
+   		});
+   	}
+
+   	await container.setInactivityTimeout(5 * 60 * 1000);
+
+   	// Attach to the tmux session, or create it. The session keeps the shell
+   	// running after this WebSocket closes.
+   	const abort = new AbortController();
+   	const tmux = await container.exec(
+   		["tmux", "new-session", "-A", "-s", session],
+   		{
+   			pty: {
+   				cols: Number(url.searchParams.get("cols")) || 80,
+   				rows: Number(url.searchParams.get("rows")) || 24,
+   			},
+   			env: { TERM: "xterm-256color" },
+   			cwd: "/root",
+   			signal: abort.signal,
+   		},
+   	);
+
+   	const [client, server] = Object.values(new WebSocketPair());
+
+   	// Receive binary messages as ArrayBuffer instead of Blob.
+   	server.binaryType = "arraybuffer";
+
+   	// Keep this Durable Object in memory while the terminal is open.
+   	server.accept();
+
+   	const stdin = tmux.stdin!.getWriter();
+
+   	server.addEventListener("message", (event) => {
+   		if (typeof event.data === "string") {
+   			try {
+   				const { cols, rows } = JSON.parse(event.data);
+   				tmux.resize(cols, rows);
+   			} catch {
+   				// Ignore malformed resize messages so the terminal keeps running.
+   			}
+   		} else {
+   			stdin.write(new Uint8Array(event.data)).catch(() => {});
+   		}
+   	});
+
+   	let exited = false;
+   	const markExited = () => {
+   		exited = true;
+   	};
+   	tmux.exitCode.then(markExited, markExited);
+
+   	// Stop the tmux client when the browser disconnects. The session and its
+   	// shell keep running.
+   	server.addEventListener("close", () => {
+   		if (!exited) abort.abort();
+   	});
+
+   	const forward = async () => {
+   		for await (const chunk of tmux.stdout!) {
+   			server.send(chunk);
+   		}
+
+   		server.close(1000, `Terminal closed with code ${await tmux.exitCode}`);
+   	};
+
+   	void forward().catch(() => server.close(1011, "Terminal output failed"));
+
+   	return new Response(null, { status: 101, webSocket: client });
+   }
+   ```
+
+   Each WebSocket gets its own tmux client. `pty` runs the client attached to a pseudo-terminal, and `tmux new-session -A` attaches it to the named session, or creates the session if it does not exist. The handler writes keystrokes to the client's standard input, applies resize messages, and forwards the client's output unchanged.
+
+   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because signaling an exited process records an internal error.
+
+   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+
+4. Add the terminal page:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   const page = `<!doctype html>
+   <html lang="en">
+   	<head>
+   		<meta charset="utf-8" />
+   		<title>Sandbox terminal</title>
+   		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/css/xterm.css" />
+   		<style>
+   			html, body, #terminal { height: 100%; margin: 0; background: #000; }
+   		</style>
+   	</head>
+   	<body>
+   		<div id="terminal"></div>
+   		<script type="module">
+   			import { Terminal } from "https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/lib/xterm.mjs";
+   			import { FitAddon } from "https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.11.0/lib/addon-fit.mjs";
+
+   			// With tmux mouse mode on, hold Shift (Option on macOS) to select text.
+   			const terminal = new Terminal({ macOptionClickForcesSelection: true });
+   			const fitAddon = new FitAddon();
+   			terminal.loadAddon(fitAddon);
+   			terminal.open(document.getElementById("terminal"));
+   			fitAddon.fit();
+
+   			const session = new URLSearchParams(location.search).get("session") || "main";
+   			const encoder = new TextEncoder();
+   			let socket;
+   			let attempts = 0;
+
+   			const send = (data) => {
+   				if (socket.readyState === WebSocket.OPEN) socket.send(data);
+   			};
+
+   			const connect = () => {
+   				const url = new URL("terminal", location.href);
+   				url.protocol = location.protocol === "https:" ? "wss:" : "ws:";
+   				url.searchParams.set("session", session);
+   				url.searchParams.set("cols", terminal.cols);
+   				url.searchParams.set("rows", terminal.rows);
+
+   				socket = new WebSocket(url);
+   				socket.binaryType = "arraybuffer";
+
+   				socket.addEventListener("open", () => {
+   					attempts = 0;
+   					// tmux redraws the whole screen when a client attaches.
+   					terminal.reset();
+   				});
+   				socket.addEventListener("message", (event) => {
+   					terminal.write(new Uint8Array(event.data));
+   				});
+   				socket.addEventListener("close", (event) => {
+   					terminal.writeln("");
+   					// Code 1000 means the session ended or the client detached.
+   					if (event.code === 1000 || attempts >= 10) {
+   						terminal.writeln("[" + (event.reason || "Disconnected") + "]");
+   						return;
+   					}
+   					const delay = Math.min(1000 * 2 ** attempts++, 30000);
+   					terminal.writeln("[Reconnecting in " + delay / 1000 + " s]");
+   					setTimeout(connect, delay);
+   				});
+   			};
+   			connect();
+
+   			terminal.onData((data) => send(encoder.encode(data)));
+   			terminal.onResize(({ cols, rows }) => send(JSON.stringify({ cols, rows })));
+   			addEventListener("resize", () => fitAddon.fit());
+   		</script>
+   	</body>
+   </html>`;
+   ```
+
+   </TypeScriptExample>
+
+   The page sends keystrokes as binary messages and window sizes as JSON text messages. When the connection drops, it reconnects after 1 second, doubling the delay up to 30 seconds, and gives up after 10 attempts. It does not reconnect after code `1000`, which means the session ended or the client detached. The page loads xterm.js from a CDN to keep the example in one file. In production, install `@xterm/xterm` and `@xterm/addon-fit` from npm and serve them with [static assets](/workers/static-assets/).
+
+5. Add routes to your Worker that serve the page and pass the WebSocket to the sandbox:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([a-z0-9-]+)\/(terminal)?$/.exec(url.pathname);
+
+   		if (!match) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
+
+   		if (match[2]) {
+   			return sandbox.fetch(request);
+   		}
+
+   		return new Response(page, {
+   			headers: { "Content-Type": "text/html; charset=utf-8" },
+   		});
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   Anyone who opens the page gets a `root` shell in the sandbox named in the URL. Authenticate callers first, and derive the sandbox name from the caller's identity. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+7. Open the terminal for the sandbox named `ada` in your browser. Replace the example hostname with the `workers.dev` URL that Wrangler prints, and keep the trailing slash:
+
+   ```txt
+   https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/
+   ```
+
+   After the sandbox starts, a shell prompt appears with a green tmux status line at the bottom.
+
+8. Run `stty size`. The shell prints its rows and columns, such as `32 109`. Resize the browser window and run `stty size` again. The numbers change to match the window, minus one row for the status line.
+
+9. Start a command that keeps printing, then reload the page:
+
+   ```sh
+   for i in $(seq 1 600); do echo "line $i"; sleep 1; done
+   ```
+
+   The terminal attaches to the same shell, and the count has kept going while the page was away. tmux keeps earlier output in its history. Scroll back with the mouse wheel, and press `q` to leave the history.
+
+10. Open the same URL in a second browser tab. Both tabs show the same screen, and you can type in either. When the tabs are different sizes, tmux fits the screen to the tab used most recently and fills the rest of a larger tab with dots. To open a separate shell in the same sandbox, add `?session=build` to the URL.
+
+</Steps>
+
+Run `exit` in the shell to end the session. The page shows `[Terminal closed with code 0]` and does not reconnect. To leave the session running, detach with `CTRL + B` then `D`, and reload the page to attach again.
+
+## Run another command in the terminal
+
+To run an interactive command instead of the default shell, such as the command-line interface of a coding agent, add it after the session name in the `exec()` call. tmux runs the command when it creates the session:
+
+```ts title="src/index.ts"
+const tmux = await container.exec(
+	["tmux", "new-session", "-A", "-s", session, "claude"],
+	{
+		// Same options as before.
+	},
+);
+```
+
+Install the command in the `Dockerfile`.
+
+## End a session from your Worker
+
+To end a session and every process in it without a browser, run `tmux kill-session` in your Durable Object:
+
+```ts title="src/index.ts"
+await container.exec(["tmux", "kill-session", "-t", `=${session}`]);
+```
+
+The `=` matches the session name exactly instead of as a prefix. To list sessions, run `tmux list-sessions`.
+
+## Related resources
+
+- [Stream command output](/sandbox/commands/stream-command-output/): run a command without a terminal and stream its output.
+- [Terminal workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/terminal-workspace): a deployable Worker with this terminal, plus routes that list and end sessions.
+- [Durable Object container API](/containers/api/durable-object-container/#exec): every `exec()` option.
+- [xterm.js documentation](https://xtermjs.org/docs/): terminal options and add-ons.

@@ -39,7 +39,7 @@ After the Durable Object becomes inactive, the instance keeps running for the ti
 
 A pending [`monitor()`](/containers/api/durable-object-container/#monitor) call keeps the Durable Object in memory, so the inactivity timeout starts only after the Durable Object leaves memory. When it leaves, the call ends, so `monitor()` does not report the stop that follows.
 
-Code that runs inside the instance does not count as activity. A build, a test suite, or an agent that works longer than the inactivity timeout stops with the instance when no requests arrive. A Durable Object [alarm](/durable-objects/api/alarms/) that runs more often than the timeout and checks the work keeps the instance running until the work ends.
+Code that runs inside the instance does not count as activity. A build, a test suite, or an agent that works longer than the inactivity timeout stops with the instance when no requests arrive. A Durable Object [alarm](/durable-objects/api/alarms/) that runs more often than the timeout and checks the work keeps the instance running until the work ends. [Run background processes](/sandbox/commands/run-background-processes/) uses an alarm that runs every minute.
 
 ## The timeout does not survive a restart
 
