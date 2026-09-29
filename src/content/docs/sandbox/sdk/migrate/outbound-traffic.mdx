@@ -141,9 +141,9 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    The props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. Like 0.12, the entrypoint skips a handler whose name is not in `HANDLERS`, such as the handlers that 0.12 stored for bucket mounts.
 
-3. Add the certificate variables to `ENV`, and register the entrypoint each time the container starts:
+3. Add the certificate variables to `ENV`, and register the entrypoint in `startContainer()`:
 
-   ```ts title="src/index.ts" ins={1-3,6-7,9-13,18-35,42,48-49}
+   ```ts title="src/index.ts" ins={1-3,6-7,9-15,20-37,47,56-57}
    const RULES = "OUTBOUND_CONFIGURATION";
    const CA = "/etc/cloudflare/certs/cloudflare-containers-ca.crt";
    const BUNDLE = "/etc/ssl/certs/ca-certificates.crt";
@@ -153,10 +153,12 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
    	REQUESTS_CA_BUNDLE: BUNDLE,
    };
    // Wait up to 10 seconds for the certificate, then add it to the
-   // system bundle.
+   // system bundle once for each container.
    const CA_WAIT = `until [ -s ${CA} ]; do sleep 0.1; done`;
    const CA_READY = `timeout 10 sh -c '${CA_WAIT}'`;
-   const TRUST = ["sh", "-c", `${CA_READY} && cat ${CA} >> ${BUNDLE}`];
+   const TRUSTED = "/run/intercept-ca-trusted";
+   const APPEND = `${CA_READY} && cat ${CA} >> ${BUNDLE} && touch ${TRUSTED}`;
+   const TRUST = ["sh", "-c", `[ -e ${TRUSTED} ] || { ${APPEND}; }`];
 
    export class MySandbox extends DurableObject<Env> {
    	// ...
@@ -181,16 +183,22 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
    	}
 
    	private async startContainer(): Promise<void> {
-   		this.container.start({
-   			image: this.container.images.sandbox,
-   			instance: "standard-1",
-   			env: ENV,
-   			enableInternet: ENABLE_INTERNET,
-   		});
+   		const newContainer = !this.container.running;
+
+   		if (newContainer) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				enableInternet: ENABLE_INTERNET,
+   			});
+   		}
 
    		try {
-   			// Replaces onStart().
-   			await this.ctx.storage.put("startedAt", Date.now());
+   			if (newContainer) {
+   				// Replaces onStart().
+   				await this.ctx.storage.put("startedAt", Date.now());
+   			}
    			await this.intercept();
    			await this.trust();
    			await this.container.setInactivityTimeout(
@@ -207,15 +215,15 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    `// ...` stands for the constructor, the `container` getter, and your other methods. `rules()` reads the key where 0.12 stored the rules that each sandbox set at runtime, so those rules keep applying after the switch. If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the key into the 1.0 class.
 
-   The intercepts send every request on port `80`, and every HTTPS request on port `443`, to the entrypoint. `enableInternet` keeps the 0.12 value and still decides connections on other ports. An intercept lasts until the container stops, so `startContainer()` registers it for each new container. A container that already runs when you deploy keeps the intercepts it started with.
+   The intercepts send every request on port `80`, and every HTTPS request on port `443`, to the entrypoint. `enableInternet` keeps the 0.12 value and still decides connections on other ports. An intercept lasts until the container stops. `startContainer()` registers it for each new container, and again when a restarted Durable Object finds the container running. Registering it again replaces the earlier registration, so a container whose setup a deploy interrupted still gets its intercepts before the next command.
 
    Register other intercepts, such as bucket mounts, before `intercept()`. A hostname intercept that you register after `intercept()` never receives requests, because the `Outbound` entrypoint receives them. For more information, refer to [If you moved outbound rules](/sandbox/sdk/migrate/bucket-mounts/#if-you-moved-outbound-rules).
 
-   If your class uses `DirectoryBackup` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) after `start()` and before your `intercept()`. Otherwise every backup and restore fails with `BACKUP_TRANSFER`, because your `Outbound` entrypoint receives backup requests from the container. Call it only in `startContainer()`, not on every request.
+   If your class uses `DirectoryBackup` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) in the `try` block, before your `intercept()`. Otherwise every backup and restore fails with `BACKUP_TRANSFER`, because your `Outbound` entrypoint receives backup requests from the container. Call it only in `startContainer()`, not on every request.
 
    The HTTPS intercept signs responses with a certificate that the container does not trust by default. As in 0.12, the `TRUST` command appends the certificate to the system bundle, which curl and Git read. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
 
-   The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container.
+   The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container. After the append, `TRUST` writes a marker file, so running it again for the same container changes nothing.
 
 </Steps>
 

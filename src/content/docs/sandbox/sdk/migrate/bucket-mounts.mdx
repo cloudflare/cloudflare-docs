@@ -172,23 +172,29 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 
 Each mount registers an intercept for its own hostname. That intercept receives requests only if the mount runs before the `interceptAllOutboundHttp()` call from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). A mount after that call fails with `cannot verify the new FUSE connection`, because your `Outbound` entrypoint receives the storage requests. Registering the catch-all again later does not affect a mount that came first.
 
-Mount the prefix in `startContainer()`, after `start()` and before `intercept()`:
+Mount the prefix in the `try` block of `startContainer()`, before `intercept()`:
 
-```ts title="src/index.ts" ins={15-16}
+```ts title="src/index.ts" ins={22-23}
 export class MySandbox extends DurableObject<Env> {
 	// ...
 
 	private async startContainer(): Promise<void> {
-		this.container.start({
-			image: this.container.images.sandbox,
-			instance: "standard-1",
-			env: ENV,
-			enableInternet: ENABLE_INTERNET,
-		});
+		const newContainer = !this.container.running;
+
+		if (newContainer) {
+			this.container.start({
+				image: this.container.images.sandbox,
+				instance: "standard-1",
+				env: ENV,
+				enableInternet: ENABLE_INTERNET,
+			});
+		}
 
 		try {
-			// Replaces onStart().
-			await this.ctx.storage.put("startedAt", Date.now());
+			if (newContainer) {
+				// Replaces onStart().
+				await this.ctx.storage.put("startedAt", Date.now());
+			}
 			// Mount before the catch-all intercept.
 			await this.mountData();
 			await this.intercept();
@@ -203,7 +209,7 @@ export class MySandbox extends DurableObject<Env> {
 }
 ```
 
-Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here. To mount a path later, open a new sandbox.
+Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here. To mount a path later, open a new sandbox. A restarted Durable Object runs `startContainer()` again, and `mount()` reuses a mount that already matches.
 
 Each mount uses one of the [64 intercept targets](/containers/api/durable-object-container/#interceptoutboundhttp) of the container, and `unmount()` does not free it. Move outbound rules uses two. Give each job its own sandbox name instead of mounting a new prefix for each job in one container.
 

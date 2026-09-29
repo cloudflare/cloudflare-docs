@@ -146,24 +146,30 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
 
    `this.env` has the same bindings as the `env` argument. Where a 0.12 handler read `ctx.containerId`, read `this.ctx.props.containerId`.
 
-2. Register the entrypoint in `startContainer()`, after `start()`:
+2. Register the entrypoint in the `try` block of `startContainer()`:
 
-   ```ts title="src/index.ts" ins={16-21}
+   ```ts title="src/index.ts" ins={23-28}
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
    	private async startContainer(): Promise<void> {
-   		this.container.start({
-   			image: this.container.images.sandbox,
-   			instance: "standard-1",
-   			env: ENV,
-   			// 0.12 allowed Internet access by default.
-   			enableInternet: true,
-   		});
+   		const newContainer = !this.container.running;
+
+   		if (newContainer) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   		}
 
    		try {
-   			// Replaces onStart().
-   			await this.ctx.storage.put("startedAt", Date.now());
+   			if (newContainer) {
+   				// Replaces onStart().
+   				await this.ctx.storage.put("startedAt", Date.now());
+   			}
    			await this.container.interceptOutboundHttp(
    				"my.kv",
    				this.ctx.exports.KvGateway({
@@ -313,7 +319,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    Remove `apiKey` from your OpenCode configuration, and store each key as a secret. Like 0.12, the method passes the configuration as `OPENCODE_CONFIG_CONTENT` and the key in a provider variable such as `ANTHROPIC_API_KEY`. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
 
-   Set `this.opencodeReady = false` in `startContainer()`, after `start()`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
+   Set `this.opencodeReady = false` in `startContainer()`, inside `if (newContainer)`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
 
 4. Serve the OpenCode web UI from the `fetch()` handler of your Durable Object:
 

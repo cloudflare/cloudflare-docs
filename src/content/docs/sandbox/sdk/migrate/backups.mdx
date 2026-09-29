@@ -100,7 +100,7 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    }
    ```
 
-   If `startContainer()` registers a catch-all with `interceptAllOutboundHttp()`, as [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/) sets up, call `await this.backups.intercept()` in `startContainer()`, after `start()` and before the catch-all. Otherwise the catch-all receives backup traffic from the container, and backups and restores fail with `BACKUP_TRANSFER`. A container that was already running with the catch-all needs a restart. Refer to [`intercept()`](/sandbox/reference/directory-backups/#intercept).
+   If `startContainer()` registers a catch-all with `interceptAllOutboundHttp()`, as [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/) sets up, call `await this.backups.intercept()` in the `try` block of `startContainer()`, before the catch-all. Otherwise the catch-all receives backup traffic from the container, and backups and restores fail with `BACKUP_TRANSFER`. A container that was already running with the catch-all needs a restart. Refer to [`intercept()`](/sandbox/reference/directory-backups/#intercept).
 
 6. Replace `createBackup()`. In 0.12, your Worker called it on the sandbox:
 

@@ -139,30 +139,38 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    		return container;
    	}
 
-   	private starting: Promise<void> | null = null;
+   	private setup: Promise<void> | null = null;
 
-   	private async ensureRunning(): Promise<void> {
-   		if (!this.container.running) {
-   			// Requests that arrive during setup wait for the same setup.
-   			this.starting ??= this.startContainer().finally(() => {
-   				this.starting = null;
+   	private ensureRunning(): Promise<void> {
+   		// Set up each new container, and a running container
+   		// after this Durable Object restarts.
+   		if (this.setup === null || !this.container.running) {
+   			this.setup = this.startContainer().catch((error) => {
+   				this.setup = null;
+   				throw error;
    			});
    		}
-   		await this.starting;
+   		return this.setup;
    	}
 
    	private async startContainer(): Promise<void> {
-   		this.container.start({
-   			image: this.container.images.sandbox,
-   			instance: "standard-1",
-   			env: ENV,
-   			// 0.12 allowed Internet access by default.
-   			enableInternet: true,
-   		});
+   		const newContainer = !this.container.running;
+
+   		if (newContainer) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   		}
 
    		try {
-   			// Replaces onStart().
-   			await this.ctx.storage.put("startedAt", Date.now());
+   			if (newContainer) {
+   				// Replaces onStart().
+   				await this.ctx.storage.put("startedAt", Date.now());
+   			}
    			await this.container.setInactivityTimeout(
    				INACTIVITY_TIMEOUT_MS,
    			);
@@ -175,7 +183,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   Call `ensureRunning()` before each use of the container. It runs `startContainer()` once for each new container. `running` is `true` as soon as `start()` returns, so a request that arrives during setup would skip it. `ensureRunning()` makes that request wait for the same setup instead. If a setup step throws, `startContainer()` stops the container, so no request runs commands in a container that is not set up.
+   Call `ensureRunning()` before each use of the container. It runs `startContainer()` once for each new container, and once more when a restarted Durable Object finds the container running. A deploy restarts the Durable Object and can stop setup partway, so every step after `start()` must be safe to run again. `running` is `true` as soon as `start()` returns, so requests that arrive during setup wait for the same `startContainer()` call. If a setup step throws, `startContainer()` stops the container, so no request runs commands in a container that is not set up.
 
    `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout does not survive a Durable Object restart. The constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. If your commands do not need the Internet, set `enableInternet` to `false`.
 
@@ -198,11 +206,11 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
 8. Replace the hooks your subclass overrides:
 
-   - `onStart()`: run the code in `startContainer()`, after `start()`, as in the class from the previous step.
+   - `onStart()`: run the code in `startContainer()`, inside `if (newContainer)`, as in the class from the previous step.
    - `onStop()` and `onError()`: watch the container with [`monitor()`](/containers/api/durable-object-container/#monitor), and catch errors where you call `start()` and `exec()`.
    - `onActivityExpired()`: no code runs before the inactivity timeout stops the container. To run code first, keep your own idle deadline in an alarm, and call `this.container.destroy()` when it passes. For an example that saves the sandbox before it stops, refer to [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/).
 
-   To watch the container, call a method like this one in `startContainer()`, after `start()`:
+   To watch the container, call a method like this one in the `try` block of `startContainer()`. A restarted Durable Object runs `startContainer()` again, so it watches the running container too:
 
    ```ts title="src/index.ts"
    export class MySandbox extends DurableObject<Env> {
@@ -217,7 +225,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it can miss a stop. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it misses a stop that happens before the next request. For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
 

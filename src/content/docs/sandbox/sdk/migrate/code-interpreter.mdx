@@ -301,7 +301,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    }
    ```
 
-   Call `this.kernels.clear()` in `startContainer()`, after `start()`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
+   Call `this.kernels.clear()` in `startContainer()`, inside `if (newContainer)`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
 
 5. Add a `runCode()` method:
 
