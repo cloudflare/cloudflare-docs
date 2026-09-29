@@ -37,7 +37,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 
    <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
-2. Copy the helper binary into your image. If your project has no `Dockerfile`, create one in the project root:
+2. Copy the helper binary into your image. If your project has no `Dockerfile`, create one in your project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -158,27 +158,35 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 6. Add a method to `MyContainer` that adds a line to a file in the project and returns the file, so you can check what a restore brings back:
 
    ```ts title="src/index.ts"
-   async note(line?: string) {
-   	const container = await this.startSandbox();
-   	const script = line
-   		? `mkdir -p ${project} && printf "%s\n" "$1" >> ${project}/notes.txt && cat ${project}/notes.txt`
-   		: `cat ${project}/notes.txt`;
-   	const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
-   	const output = await process.output();
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	return new TextDecoder().decode(output.stdout);
+   	async note(line?: string) {
+   		const container = await this.startSandbox();
+   		const script = line
+   			? `mkdir -p ${project} && printf "%s\n" "$1" >> ${project}/notes.txt && cat ${project}/notes.txt`
+   			: `cat ${project}/notes.txt`;
+   		const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
+   		const output = await process.output();
+
+   		return new TextDecoder().decode(output.stdout);
+   	}
    }
    ```
 
 7. Add a method to `MyContainer` that backs up the project and stores the backup record:
 
    ```ts title="src/index.ts"
-   async backup() {
-   	await this.startSandbox();
-   	const backup = await this.backups().backup({ dir: project });
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	await this.ctx.storage.put(`backup:${backup.id}`, backup);
-   	return { id: backup.id, size: backup.size };
+   	async backup() {
+   		await this.startSandbox();
+   		const backup = await this.backups().backup({ dir: project });
+
+   		await this.ctx.storage.put(`backup:${backup.id}`, backup);
+   		return { id: backup.id, size: backup.size };
+   	}
    }
    ```
 
@@ -189,24 +197,28 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 8. Add a method to `MyContainer` that looks up a record and restores it:
 
    ```ts title="src/index.ts"
-   async restore(id: string) {
-   	const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
-   		`backup:${id}`,
-   	);
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!backup) {
-   		return false;
+   	async restore(id: string) {
+   		const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
+   			`backup:${id}`,
+   		);
+
+   		if (!backup) {
+   			return false;
+   		}
+
+   		await this.startSandbox();
+   		await this.backups().restore(backup);
+   		return true;
    	}
-
-   	await this.startSandbox();
-   	await this.backups().restore(backup);
-   	return true;
    }
    ```
 
    `restore()` replaces the directory and removes files that are not in the backup. Before it replaces anything, it checks the object against the SHA-256 in the record. A restore that fails leaves the directory as it was. If the object no longer exists, `restore()` throws `SandboxBackupError` with the code `BACKUP_NOT_FOUND`. If the object does not match the record, the code is `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
 
-9. Replace the default export of the Worker with routes that write a note, back up the project, and restore a backup:
+9. Replace the default export of your Worker with routes that write a note, back up the project, and restore a backup:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -250,7 +262,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 
    A backup holds every file in the directory, including credentials written in the sandbox. Authenticate callers first, so other people cannot back up or restore the files of another sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#code-can-read-what-you-put-in-its-sandbox).
 
-10. Deploy the Worker:
+10. Deploy your Worker:
 
     <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -287,30 +299,35 @@ To leave out files, pass patterns in `.gitignore` syntax, relative to the direct
 const backup = await this.backups().backup({
 	dir: project,
 	exclude: ["node_modules/", "/build"],
+	// Also apply the `.gitignore` files in the directory and `.git/info/exclude`,
+	// without `git` in the image
 	gitignore: true,
 });
 ```
-
-`gitignore: true` also applies the `.gitignore` files in the directory and `.git/info/exclude`. The image does not need `git`.
 
 ## Delete a backup
 
 To delete a backup, delete its object and its record:
 
 ```ts title="src/index.ts"
-async deleteBackup(id: string) {
-	const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
-		`backup:${id}`,
-	);
+export class MyContainer extends DurableObject<Env> {
+	// ...
 
-	if (backup) {
-		await this.backups().delete(backup);
-		await this.ctx.storage.delete(`backup:${id}`);
+	async deleteBackup(id: string) {
+		const backup = await this.ctx.storage.get<DirectoryBackupRecord>(
+			`backup:${id}`,
+		);
+
+		if (backup) {
+			// `delete()` does not need a running container
+			await this.backups().delete(backup);
+			await this.ctx.storage.delete(`backup:${id}`);
+		}
 	}
 }
 ```
 
-`delete()` does not need a running container. An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups. The rule leaves their records, and restoring one of those backups throws `BACKUP_NOT_FOUND`.
+An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups. The rule leaves their records, and restoring one of those backups throws `BACKUP_NOT_FOUND`.
 
 A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until the default lifecycle rule of the bucket aborts it after seven days.
 

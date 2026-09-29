@@ -52,27 +52,31 @@ Container snapshots are in public beta. Features and behavior may change.
    Then start the container from the stored snapshot when there is one:
 
    ```ts title="src/index.ts"
-   private async startSandbox(): Promise<Container> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
+   	private async startSandbox(): Promise<Container> {
+   		const container = this.ctx.container;
+
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		if (!container.running) {
+   			const snapshotId = await this.ctx.storage.get<string>("snapshotId");
+
+   			container.start({
+   				...(snapshotId
+   					? { containerSnapshot: { id: snapshotId } }
+   					: { image: "cloudflare/debian-trixie" }),
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   		}
+
+   		return container;
    	}
-
-   	if (!container.running) {
-   		const snapshotId = await this.ctx.storage.get<string>("snapshotId");
-
-   		container.start({
-   			...(snapshotId
-   				? { containerSnapshot: { id: snapshotId } }
-   				: { image: "cloudflare/debian-trixie" }),
-   			entrypoint: ["sleep", "infinity"],
-   			enableInternet: false,
-   		});
-   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-   	}
-
-   	return container;
    }
    ```
 
@@ -81,14 +85,18 @@ Container snapshots are in public beta. Features and behavior may change.
 2. Add a method that saves the filesystem and stops the instance:
 
    ```ts title="src/index.ts"
-   async save() {
-   	const container = await this.startSandbox();
-   	const snapshot = await container.snapshotContainer({ name: "workspace" });
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	await this.ctx.storage.put("snapshotId", snapshot.id);
-   	await container.destroy();
+   	async save() {
+   		const container = await this.startSandbox();
+   		const snapshot = await container.snapshotContainer({ name: "workspace" });
 
-   	return { snapshotId: snapshot.id, size: snapshot.size };
+   		await this.ctx.storage.put("snapshotId", snapshot.id);
+   		await container.destroy();
+
+   		return { snapshotId: snapshot.id, size: snapshot.size };
+   	}
    }
    ```
 
@@ -97,15 +105,19 @@ Container snapshots are in public beta. Features and behavior may change.
 3. Add a method that adds a line to a file and returns the file, so you can check what a restore brings back:
 
    ```ts title="src/index.ts"
-   async note(line?: string) {
-   	const container = await this.startSandbox();
-   	const script = line
-   		? 'mkdir -p /workspace && printf "%s\n" "$1" >> /workspace/notes.txt && cat /workspace/notes.txt'
-   		: "cat /workspace/notes.txt";
-   	const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
-   	const output = await process.output();
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	return new TextDecoder().decode(output.stdout);
+   	async note(line?: string) {
+   		const container = await this.startSandbox();
+   		const script = line
+   			? 'mkdir -p /workspace && printf "%s\n" "$1" >> /workspace/notes.txt && cat /workspace/notes.txt'
+   			: "cat /workspace/notes.txt";
+   		const process = await container.exec(["sh", "-c", script, "sh", line ?? ""]);
+   		const output = await process.output();
+
+   		return new TextDecoder().decode(output.stdout);
+   	}
    }
    ```
 
@@ -149,7 +161,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
    Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, so other people cannot read or restore the files of another sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
-5. Deploy the Worker:
+5. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -178,18 +190,22 @@ A snapshot ID restores in any Durable Object of the same class. To copy the file
 1. Add methods to your Durable Object that return the stored snapshot ID and store another one:
 
    ```ts title="src/index.ts"
-   async snapshotId() {
-   	return (await this.ctx.storage.get<string>("snapshotId")) ?? null;
-   }
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   async useSnapshot(snapshotId: string) {
-   	// Replacing a running instance would discard files it has not saved.
-   	if (this.ctx.container?.running) {
-   		return false;
+   	async snapshotId() {
+   		return (await this.ctx.storage.get<string>("snapshotId")) ?? null;
    	}
 
-   	await this.ctx.storage.put("snapshotId", snapshotId);
-   	return true;
+   	async useSnapshot(snapshotId: string) {
+   		// Replacing a running instance would discard files it has not saved.
+   		if (this.ctx.container?.running) {
+   			return false;
+   		}
+
+   		await this.ctx.storage.put("snapshotId", snapshotId);
+   		return true;
+   	}
    }
    ```
 
@@ -230,12 +246,16 @@ A snapshot ID restores in any Durable Object of the same class. To copy the file
 To discard the files of a sandbox, destroy its instance and delete the stored snapshot ID. The next request starts from the image:
 
 ```ts title="src/index.ts"
-async reset() {
-	if (this.ctx.container?.running) {
-		await this.ctx.container.destroy();
-	}
+export class MyContainer extends DurableObject<Env> {
+	// ...
 
-	await this.ctx.storage.delete("snapshotId");
+	async reset() {
+		if (this.ctx.container?.running) {
+			await this.ctx.container.destroy();
+		}
+
+		await this.ctx.storage.delete("snapshotId");
+	}
 }
 ```
 

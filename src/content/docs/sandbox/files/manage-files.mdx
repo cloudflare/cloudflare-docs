@@ -37,7 +37,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
-2. Copy the `Files` helper binary into your image. If your project has no `Dockerfile`, create one in the project root:
+2. Copy the `Files` helper binary into your image. If your project has no `Dockerfile`, create one in your project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -123,23 +123,27 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 5. Add a method to `MyContainer` that writes the upload, runs the command, and returns the output file:
 
    ```ts title="src/index.ts"
-   async compress(upload: ReadableStream<Uint8Array>): Promise<Response> {
-   	const container = await this.startSandbox();
-   	const files = new Files(container);
-   	const name = crypto.randomUUID();
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	await files.writeFile(name, upload, { cwd: workspace });
+   	async compress(upload: ReadableStream<Uint8Array>): Promise<Response> {
+   		const container = await this.startSandbox();
+   		const files = new Files(container);
+   		const name = crypto.randomUUID();
 
-   	const process = await container.exec(["gzip", "--force", name], {
-   		cwd: workspace,
-   	});
-   	const output = await process.output();
+   		await files.writeFile(name, upload, { cwd: workspace });
 
-   	if (output.exitCode !== 0) {
-   		throw new Error(new TextDecoder().decode(output.stderr));
+   		const process = await container.exec(["gzip", "--force", name], {
+   			cwd: workspace,
+   		});
+   		const output = await process.output();
+
+   		if (output.exitCode !== 0) {
+   			throw new Error(new TextDecoder().decode(output.stderr));
+   		}
+
+   		return files.readFile(`${name}.gz`, { cwd: workspace });
    	}
-
-   	return files.readFile(`${name}.gz`, { cwd: workspace });
    }
    ```
 
@@ -147,7 +151,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    A file operation that Linux rejects, such as a write to a full disk, throws `SandboxFileError`. The `code` property of the error holds the Linux error name. For every error that `Files` throws, refer to [Files errors](/sandbox/reference/files/#errors).
 
-6. Replace the default export of the Worker with a `fetch` handler that sends uploads to the method:
+6. Replace the default export of your Worker with a `fetch` handler that sends uploads to the method:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -171,7 +175,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    The route reads the sandbox name from the URL. In your application, derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
-7. Deploy the Worker:
+7. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

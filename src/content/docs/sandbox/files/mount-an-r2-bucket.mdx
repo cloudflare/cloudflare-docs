@@ -38,7 +38,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    <PackageManagers pkg="@cloudflare/sandbox@rc" />
 
-2. Create a `Dockerfile` in the project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mount` uses:
+2. Create a `Dockerfile` in your project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mount` uses:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -130,39 +130,43 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    Then add a method that starts the sandbox and mounts the prefix for the job:
 
    ```ts title="src/index.ts"
-   private async mountArtifacts(job: string) {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	private async mountArtifacts(job: string) {
+   		const container = this.ctx.container;
 
-   	if (!container.running) {
-   		container.start({
-   			image: container.images.artifacts,
-   			enableInternet: false,
-   		});
-   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-   	}
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
 
-   	await new S3Mount(container, this.ctx.exports.S3Gateway).mount({
-   		mountPath: "/mnt/artifacts",
-   		source: {
-   			type: "s3",
-   			endpoint: this.env.S3_ENDPOINT,
-   			region: "auto",
-   			bucket: this.env.S3_BUCKET,
-   			credentials: {
-   				type: "static",
-   				accessKeyId: this.env.S3_ACCESS_KEY_ID,
-   				secretAccessKey: this.env.S3_SECRET_ACCESS_KEY,
+   		if (!container.running) {
+   			container.start({
+   				image: container.images.artifacts,
+   				enableInternet: false,
+   			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   		}
+
+   		await new S3Mount(container, this.ctx.exports.S3Gateway).mount({
+   			mountPath: "/mnt/artifacts",
+   			source: {
+   				type: "s3",
+   				endpoint: this.env.S3_ENDPOINT,
+   				region: "auto",
+   				bucket: this.env.S3_BUCKET,
+   				credentials: {
+   					type: "static",
+   					accessKeyId: this.env.S3_ACCESS_KEY_ID,
+   					secretAccessKey: this.env.S3_SECRET_ACCESS_KEY,
+   				},
    			},
-   		},
-   		keyPrefix: `jobs/${job}`,
-   		access: "read-write",
-   	});
+   			keyPrefix: `jobs/${job}`,
+   			access: "read-write",
+   		});
 
-   	return container;
+   		return container;
+   	}
    }
    ```
 
@@ -173,22 +177,28 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 7. Add a method that runs a command in the mounted directory:
 
    ```ts title="src/index.ts"
-   async digest(job: string) {
-   	const container = await this.mountArtifacts(job);
-   	const process = await container.exec(
-   		["sh", "-c", "sha256sum input.txt > input.sha256"],
-   		{ cwd: "/mnt/artifacts" },
-   	);
-   	const output = await process.output();
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	return {
-   		exitCode: output.exitCode,
-   		stderr: new TextDecoder().decode(output.stderr),
-   	};
+   	async digest(job: string) {
+   		const container = await this.mountArtifacts(job);
+   		const process = await container.exec(
+   			// The command reads `input.txt` from R2 through the mount
+   			// and writes `input.sha256` next to it
+   			["sh", "-c", "sha256sum input.txt > input.sha256"],
+   			{ cwd: "/mnt/artifacts" },
+   		);
+   		const output = await process.output();
+
+   		return {
+   			exitCode: output.exitCode,
+   			stderr: new TextDecoder().decode(output.stderr),
+   		};
+   	}
    }
    ```
 
-   The command reads `input.txt` from R2 through the mount and writes `input.sha256` next to it. The mount maps files to objects. Renames, locks, and permissions do not work as they do on a local disk. Write results that other systems read to the mount. Keep working files, such as dependencies and build output, on the sandbox disk. For more information, refer to [Mounted file behavior](/sandbox/reference/s3-mounts/#mounted-file-behavior).
+   The mount maps files to objects. Renames, locks, and permissions do not work as they do on a local disk. Write results that other systems read to the mount. Keep working files, such as dependencies and build output, on the sandbox disk. For more information, refer to [Mounted file behavior](/sandbox/reference/s3-mounts/#mounted-file-behavior).
 
 8. Add a method that unmounts the prefix and stops the sandbox:
 
@@ -244,7 +254,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    Authenticate callers first, so other people cannot run jobs or read their results. For more information, refer to [Sandbox security](/sandbox/concepts/security/#code-can-read-what-you-put-in-its-sandbox).
 
-10. Deploy the Worker:
+10. Deploy your Worker:
 
     <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -284,7 +294,7 @@ Under `wrangler dev`, the container runs in Docker on your machine, and `S3Gatew
    docker exec minio sh -c "mc alias set local http://localhost:9000 minioadmin minioadmin && mc mb local/sandbox-artifacts"
    ```
 
-2. Create a `.dev.vars` file in the project root. Its values override the variables and secrets under `wrangler dev`:
+2. Create a `.dev.vars` file in your project root. Its values override the variables and secrets under `wrangler dev`:
 
    ```txt title=".dev.vars"
    S3_ENDPOINT=http://localhost:9000
