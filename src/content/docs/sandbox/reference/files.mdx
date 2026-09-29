@@ -14,7 +14,7 @@ reviewed: 2026-09-23
 
 import { TypeScriptExample } from "~/components";
 
-`Files` reads and writes files in a running container. Each method starts a helper process in the container through [`exec()`](/containers/api/durable-object-container/#exec) and waits for it to finish. `Files` does not start or stop the container. It follows Linux path rules and does not restrict which paths a caller can open.
+`Files` reads and writes files in a running container. Each method starts a helper process in the container through [`exec()`](/containers/api/durable-object-container/#exec) and waits for it to finish. `Files` does not start or stop the container. `Files` does not restrict which paths a caller can open.
 
 <TypeScriptExample>
 
@@ -58,7 +58,7 @@ new Files(container: Pick<Container, "exec">)
 - A relative path requires `cwd`. `cwd` must be absolute.
 - A path cannot be empty or contain a null character.
 - An invalid path or `cwd` throws `TypeError` before the helper process starts.
-- A relative path is joined onto `cwd`, and Linux resolves the joined path. An absolute path ignores `cwd`. A `cwd` that does not exist rejects with `SandboxFileError` `ENOENT`, as a missing directory anywhere in a path does.
+- A relative path is joined onto `cwd`, and Linux resolves the joined path. An absolute path ignores `cwd`. A `cwd` that does not exist rejects with `SandboxFileError` `ENOENT`. So does a missing directory anywhere in a path.
 - Paths resolve through symbolic links as they do in Linux, except where a method states otherwise.
 
 ## Options
@@ -69,7 +69,7 @@ Every method accepts `FileOperationOptions`:
 | -------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `cwd`    | `string`      | Absolute directory that resolves a relative path. For `rename()`, it resolves both paths.                                                                                                                                                                                                                                                                                                                                             |
 | `user`   | `string`      | Numeric Linux user and group IDs as `uid:gid`, such as `"1000:1000"`. Passed to `exec()`. When omitted, the helper runs as the image user. A user ID alone, or a user or group name, throws `TypeError`.                                                                                                                                                                                                                              |
-| `signal` | `AbortSignal` | Cancels the operation, and kills its helper process if the operation is still running. A signal that fires after the operation finishes, such as `AbortSignal.timeout()`, has no effect. An aborted signal rejects the call with the abort reason: an `AbortError` when `abort()` is called without a reason, or a `TimeoutError` from `AbortSignal.timeout()`. Cancellation can leave the partial effects described for each method. |
+| `signal` | `AbortSignal` | Cancels the operation and kills its helper process. A signal that fires after the operation finishes has no effect, including an `AbortSignal.timeout()` that outlives the call. The call rejects with the abort reason: `AbortError` from `abort()` without a reason, or `TimeoutError` from `AbortSignal.timeout()`. Cancellation can leave the partial effects that each method lists.                                             |
 
 `mkdir()` also accepts `recursive`. `remove()` also accepts `recursive` and `force`. An option a method does not accept, or an option of the wrong type, throws `TypeError` before the helper process starts. No other options reach `exec()`.
 
@@ -104,7 +104,7 @@ Creates a file, or truncates an existing file, then streams `content` into it.
 - The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
 - An error from the `content` stream rejects the call unchanged.
 
-`rename()` replaces an existing destination in one step, so a file written to a temporary path and then renamed is never visible partially written:
+`rename()` replaces an existing destination in one step. To keep other processes from reading a partially written file, write the file to a temporary path and then rename it:
 
 ```ts
 await files.writeFile(`${path}.partial`, content, { cwd });
@@ -143,7 +143,7 @@ Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandb
 - The method does not recurse or return metadata for each entry.
 - A file at `path` rejects with `ENOTDIR`. An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
 
-A recursive listing is a walk over `readDirectory()`. This walk does not follow symbolic links to directories:
+To list a directory tree, walk it with `readDirectory()`. This walk does not follow symbolic links to directories:
 
 ```ts
 import type { Files } from "@cloudflare/sandbox";

@@ -15,7 +15,7 @@ reviewed: 2026-09-25
 
 import { MetaInfo, Type, TypeScriptExample } from "~/components";
 
-`DirectoryBackup` saves a directory from a running container to an R2 bucket, and restores it into a container. The backup holds ordinary files, so it restores into a container that runs a newer image. The container transfers the backup through `DirectoryBackupGateway` in your Worker, which lets it reach only the one object that the operation needs. `DirectoryBackup` does not start or stop the container.
+`DirectoryBackup` saves a directory from a running container to an R2 bucket and restores it into a container. A backup can restore into a container that runs a newer image. The container transfers the backup through `DirectoryBackupGateway` in your Worker. The gateway lets the container reach only the object that the operation needs. `DirectoryBackup` does not start or stop the container.
 
 <TypeScriptExample>
 
@@ -104,7 +104,7 @@ Saves `options.dir` as one object in the bucket and returns its record. [What a 
 
 `backup()` reads the directory while processes can still change it, and it does not detect changes. A file that changes during the backup can be saved partly old and partly new. A backup is consistent only when no process writes to `dir` while it runs.
 
-A backup that fails or is canceled returns no record, and `backup()` aborts the multipart upload of the object. An upload left behind by a Durable Object that restarted during a backup stays in the bucket until an [R2 lifecycle rule](/r2/buckets/object-lifecycles/) aborts it.
+A backup that fails or is canceled returns no record, and `backup()` aborts its multipart upload. If the Durable Object restarts during a backup, the upload stays in the bucket until an [R2 lifecycle rule](/r2/buckets/object-lifecycles/) aborts it.
 
 ### `restore`
 
@@ -115,12 +115,12 @@ restore(backup: DirectoryBackupRecord, options?: DirectoryRestoreOptions): Promi
 Replaces the target directory with the contents of the backup. The target is `options.dir`, or `dir` from the record when `options.dir` is omitted.
 
 - The parent directory of the target must exist. The target does not need to exist.
-- The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. `restore()` fails with `EBUSY`, also when a mount appears during the restore. Unmount first, for example with `S3Mount.unmount()`, and mount again after the restore.
+- The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. Otherwise `restore()` fails with `EBUSY`, including when a mount appears during the restore. Unmount first, for example with `S3Mount.unmount()`, and mount again after the restore.
 - `restore()` extracts the backup into a new directory beside the target. It checks the size and SHA-256 of the object against the record, then swaps the new directory into place in one rename. A restore that fails or is canceled leaves the target as it was.
 - `restore()` deletes the old directory before it returns.
 - A process whose working directory is inside the old directory keeps the old directory. A file that a process opened before the swap stays open, and the process does not see the restored file. Restart such processes after `restore()`, or have them open files by absolute path instead of relative to their working directory.
 - The filesystem needs free space for the old and the restored directory at the same time. `restore()` stops with `ENOSPC` before free space falls below 5% of the filesystem or 256 MiB, whichever is smaller.
-- The root filesystem of a deployed container compresses files. `restore()` writes files without compression, which is faster. The restored files take more disk space until a process rewrites them.
+- The root filesystem of a deployed container compresses files. `restore()` writes files without compression. The restored files take more disk space until a process rewrites them.
 
 ### `delete`
 
@@ -140,7 +140,7 @@ intercept(): Promise<void>
 
 Routes backup traffic from the container to `DirectoryBackupGateway`, which refuses every request until a backup or restore starts. `intercept()` does not start the container.
 
-`backup()` and `restore()` add this route themselves. Call `intercept()` only when the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp): a catch-all receives the requests for every hostname that is routed after it, so uploads and downloads from the container would reach your catch-all instead of the gateway, and fail with `BACKUP_TRANSFER`.
+`backup()` and `restore()` add this route themselves. Call `intercept()` only when the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp). A catch-all receives requests for every hostname that the Durable Object routes after it. When `backup()` or `restore()` adds the route after the catch-all, uploads and downloads from the container reach your catch-all instead of the gateway and fail with `BACKUP_TRANSFER`.
 
 - Call `intercept()` right after you start the container, before `interceptAllOutboundHttp()`. Backups and restores in that container then keep their route.
 - Do not call `intercept()` while a backup or restore can be running. It replaces the access of the running operation, and the operation fails.
@@ -226,7 +226,7 @@ One `backup()` or `restore()` runs at a time in a container. Other calls wait fo
 
 `DirectoryBackup` sets no timeouts and does not retry. Aborting `signal` rejects the call with the abort reason at once, including a call that is still waiting for another operation. The helper process in the container then removes what the operation created and exits.
 
-When the Durable Object restarts during an operation, the result of the call is lost, and the helper process exits. A backup is not recorded. A restore either replaced the target or did not. Restoring the same backup again gives the same result either way.
+When the Durable Object restarts during an operation, the result of the call is lost, and the helper process exits. A backup is not recorded. A restore has either replaced the whole target or left it as it was. Restoring the same backup again gives the same result either way.
 
 ## `DirectoryBackupGateway`
 
