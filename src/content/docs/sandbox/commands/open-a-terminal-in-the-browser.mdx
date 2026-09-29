@@ -371,6 +371,8 @@ const tmux = await container.exec(
 
 Install the command in the `Dockerfile`.
 
+A coding agent also calls its model over the network, which `enableInternet: false` blocks. To route its requests through your Worker and allow only the hostnames that it needs, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps).
+
 ## End a session from your Worker
 
 To end a session and every process in it without a browser, run `tmux kill-session` in your Durable Object:
