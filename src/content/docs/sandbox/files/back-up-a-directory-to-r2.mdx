@@ -25,7 +25,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 <Render product="containers" file="docker-setup" />
 
@@ -89,7 +89,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-5. In `src/index.ts`, export `DirectoryBackupGateway`, and replace the `MyContainer` class with one whose methods start the `workspace` image and create `DirectoryBackups`:
+5. In `src/index.ts`, export `DirectoryBackupGateway`, and update the `MyContainer` class so that its methods start the `workspace` image and create `DirectoryBackups`:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -100,8 +100,20 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    export { DirectoryBackupGateway } from "@cloudflare/sandbox";
 
    const project = "/workspace/project";
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		// A restarted Durable Object sets the timeout again.
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+
    	private container(): Container {
    		const container = this.ctx.container;
 
@@ -120,9 +132,9 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    				image: container.images.workspace,
    				enableInternet: false,
    			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		}
 
-   		await container.setInactivityTimeout(10 * 60 * 1000);
    		return container;
    	}
 

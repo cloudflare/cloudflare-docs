@@ -25,13 +25,31 @@ Container snapshots are in public beta. Features and behavior may change.
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## Save and restore a sandbox
 
 <Steps>
 
-1. In your Durable Object, start the container from the stored snapshot when there is one:
+1. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   Then start the container from the stored snapshot when there is one:
 
    ```ts title="src/index.ts"
    private async startSandbox(): Promise<Container> {
@@ -51,9 +69,9 @@ Container snapshots are in public beta. Features and behavior may change.
    			entrypoint: ["sleep", "infinity"],
    			enableInternet: false,
    		});
+   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	}
 
-   	await container.setInactivityTimeout(10 * 60 * 1000);
    	return container;
    }
    ```

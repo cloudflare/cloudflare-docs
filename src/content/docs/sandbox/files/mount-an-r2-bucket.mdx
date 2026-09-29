@@ -25,7 +25,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 - An R2 bucket, and an [R2 API token](/r2/api/tokens/) with the **Object Read & Write** permission for that bucket only. The examples use a bucket named `sandbox-artifacts`.
 
 <Render product="containers" file="docker-setup" />
@@ -109,7 +109,25 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
    `s3fs` in the sandbox sends each storage request to an address that the container intercepts, and the intercept delivers it to `S3Gateway` in your Worker. `S3Gateway` checks that the request stays within the bucket, prefix, and access mode of the mount, signs it with your credentials, and sends it to R2.
 
-6. Add a method to your Durable Object that starts the sandbox and mounts the prefix for the job:
+6. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   Then add a method that starts the sandbox and mounts the prefix for the job:
 
    ```ts title="src/index.ts"
    private async mountArtifacts(job: string) {
@@ -124,9 +142,8 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    			image: container.images.artifacts,
    			enableInternet: false,
    		});
+   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	}
-
-   	await container.setInactivityTimeout(10 * 60 * 1000);
 
    	await new S3Mounts(container, this.ctx.exports.S3Gateway).mount({
    		mountPath: "/mnt/artifacts",

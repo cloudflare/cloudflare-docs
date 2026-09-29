@@ -24,7 +24,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## Save a sandbox before it stops
 
@@ -39,7 +39,7 @@ Container snapshots are in public beta. Features and behavior may change.
    const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
    ```
 
-   The inactivity timeout is longer than the check interval, so the Linux instance keeps running between checks. If the checks stop, the timeout still stops the instance, and the sandbox keeps the files from its last save.
+   The inactivity timeout is longer than the check interval, so the instance keeps running between checks. If the checks stop, the timeout still stops the instance, and the sandbox keeps the files from its last save.
 
 2. In `MyContainer`, replace `exec()`. It starts a new instance from the stored snapshot when there is one, schedules the first check, and records activity:
 

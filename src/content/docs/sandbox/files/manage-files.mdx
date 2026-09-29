@@ -21,11 +21,11 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Stream a file from your Worker into a Linux sandbox, run a command on it, and stream the file the command creates back to the caller. This guide compresses an uploaded file with `gzip`. The `Files` class from the `@cloudflare/sandbox` package moves the files, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command.
+Upload a file into a Linux sandbox, run a command on it, and stream the result back. In this example, the command compresses the file with `gzip`. The `Files` class from `@cloudflare/sandbox` moves the files, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command.
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 <Render product="containers" file="docker-setup" />
 
@@ -73,7 +73,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
 
    </WranglerConfig>
 
-4. In `src/index.ts`, replace the `MyContainer` class with one that starts the `workspace` image before each file operation. `Files` works with a running container and does not start one:
+4. In `src/index.ts`, update the `MyContainer` class so that it starts the `workspace` image before each file operation. `Files` works with a running container and does not start one:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -82,8 +82,20 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
    import { DurableObject } from "cloudflare:workers";
 
    const workspace = "/workspace";
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		// A restarted Durable Object sets the timeout again.
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+
    	private async startSandbox(): Promise<Container> {
    		const container = this.ctx.container;
 
@@ -96,15 +108,17 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
    				image: container.images.workspace,
    				enableInternet: false,
    			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		}
 
-   		await container.setInactivityTimeout(10 * 60 * 1000);
    		return container;
    	}
    }
    ```
 
    </TypeScriptExample>
+
+   The container keeps running for 10 minutes after the Durable Object becomes inactive, so later requests find the same files. A Durable Object that restarts, for example after a deploy, sets the timeout again in its constructor.
 
 5. Add a method to `MyContainer` that writes the upload, runs the command, and returns the output file:
 
@@ -129,7 +143,7 @@ Stream a file from your Worker into a Linux sandbox, run a command on it, and st
    }
    ```
 
-   `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back. The Durable Object names each upload with a random ID, so a caller cannot choose a path and two uploads do not collide.
+   `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back, so the Durable Object never holds a whole file in memory. `output()` holds only what `gzip` prints, which counts toward the [memory limit](/workers/platform/limits/#memory).
 
    A Linux failure, such as a full disk, throws `SandboxFileError` with the Linux error name in `code`. For every error, refer to [Files errors](/sandbox/reference/files/#errors).
 
@@ -188,7 +202,7 @@ The compressed files stay in `/workspace` until the Linux instance stops. To del
 
 ## Accept paths from callers
 
-When callers choose paths, such as in a file browser, resolve their paths against one directory in your Worker. `Files` follows Linux path rules and opens any path in the sandbox. This check keeps request paths relative to the `cwd` you pass:
+When callers choose file paths, such as in a file browser, accept only paths inside one directory. `Files` opens any path in the sandbox, so check each path from a request before you pass it together with `cwd`. The following check rejects empty and absolute paths, and paths that contain `..`:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -209,7 +223,7 @@ function workspacePath(path: string): string | null {
 
 </TypeScriptExample>
 
-The check applies to the path in the request. Code in the sandbox can still create a symbolic link in `/workspace` that points elsewhere in the same sandbox. The `user` option, such as `user: "1000:1000"`, does not narrow access either. It sets the owner of files that `Files` creates, but the helper can still open files that user has no permission for. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+The check limits the paths that a caller can name. It does not limit what code in the sandbox can reach: that code can create a symbolic link in `/workspace` that points elsewhere in the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
 ## Related resources
 
