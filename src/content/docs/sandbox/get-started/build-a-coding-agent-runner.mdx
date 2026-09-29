@@ -258,6 +258,8 @@ const taskCheckInterval = 60 * 1000;
 const taskKey = "task";
 
 const caPath = "/etc/cloudflare/certs/cloudflare-containers-ca.crt";
+// The CA alone replaces the system trust store. This works because
+// Outbound intercepts every HTTPS request from the container.
 const trustEnv = {
 	NODE_EXTRA_CA_CERTS: caPath,
 	GIT_SSL_CAINFO: caPath,
@@ -291,6 +293,7 @@ export type CommandResult = {
 export class AgentSandbox extends DurableObject<Env> {
 	private readonly container: Container;
 	private readonly files: Files;
+	private starting: Promise<void> | undefined;
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
@@ -421,19 +424,36 @@ export class AgentSandbox extends DurableObject<Env> {
 	}
 
 	private async startSandbox(): Promise<void> {
-		if (this.container.running) {
-			return;
+		if (!this.container.running) {
+			// Requests that arrive during setup wait for the same setup.
+			this.starting ??= this.setUpSandbox().finally(() => {
+				this.starting = undefined;
+			});
 		}
 
+		await this.starting;
+	}
+
+	private async setUpSandbox(): Promise<void> {
 		this.ctx.storage.kv.delete(taskKey);
 		this.container.start({
 			image: this.container.images.agent,
 			instance: "standard-1",
 			enableInternet: false,
 		});
-		await this.container.interceptAllOutboundHttp(this.ctx.exports.Outbound);
-		await this.container.interceptOutboundHttps("*", this.ctx.exports.Outbound);
-		await this.container.setInactivityTimeout(inactivityTimeout);
+
+		try {
+			await this.container.interceptAllOutboundHttp(this.ctx.exports.Outbound);
+			await this.container.interceptOutboundHttps(
+				"*",
+				this.ctx.exports.Outbound,
+			);
+			await this.container.setInactivityTimeout(inactivityTimeout);
+		} catch (error) {
+			// The next request starts a new container.
+			await this.container.destroy();
+			throw error;
+		}
 	}
 
 	private async taskStatus(): Promise<TaskStatus> {
@@ -569,7 +589,9 @@ Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific
 
 After each start, `startSandbox()` routes HTTP and HTTPS requests from the container on ports `80` and `443` to the `Outbound` entrypoint. The interception ends with the container, so `startSandbox()` registers it on every start. For more information, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps).
 
-Containers re-signs HTTPS traffic from the container with a Cloudflare certificate authority, so the `Outbound` entrypoint can read it. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests.
+`running` is `true` as soon as `start()` returns, before the interception is registered. A request that arrives during setup waits for the same `setUpSandbox()` call, so no command runs before the interception is in place. If a setup step fails, `setUpSandbox()` stops the container, and the next request starts a new one.
+
+Containers re-signs HTTPS traffic from the container with a Cloudflare certificate authority, so the `Outbound` entrypoint can read it. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests. `SSL_CERT_FILE`, `CURL_CA_BUNDLE`, and `GIT_SSL_CAINFO` replace the system trust store with that one certificate, which works only because the `Outbound` entrypoint receives every HTTPS request. If you copy them to a class that intercepts some hostnames only, add the certificate to the system trust store instead. For more information, refer to [Trust the CA certificate](/containers/configuration/outbound-traffic/#trust-the-ca-certificate).
 
 ### Run Claude Code in the background
 
@@ -626,7 +648,7 @@ import { z } from "zod";
 export { Outbound } from "./outbound";
 export { AgentSandbox } from "./sandbox";
 
-const sandboxName = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const sandboxName = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 
 // Linux rejects a command argument of 128 KiB or more, including its NUL byte.
 const maxPromptBytes = 128 * 1024 - 1;
@@ -651,7 +673,7 @@ export default {
 
 		if (!sandboxName.test(name)) {
 			return new Response(
-				"The sandbox name must be 1-63 lowercase letters, digits, or hyphens",
+				"The sandbox name must be 1-63 lowercase letters, digits, or hyphens, with no hyphen at either end",
 				{ status: 400 },
 			);
 		}
