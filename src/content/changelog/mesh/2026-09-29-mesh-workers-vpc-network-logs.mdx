@@ -1,8 +1,9 @@
 ---
 title: Identify Cloudflare Mesh and Workers VPC traffic in network logs
-description: Gateway network logs and Network Session Logs now identify Cloudflare Mesh and Workers VPC as distinct traffic sources and destinations, and show which Worker started each Workers VPC session.
+description: Gateway network logs and Network Session Logs now identify Cloudflare Mesh and Workers VPC as distinct traffic sources and destinations, show which Worker started each Workers VPC session, and show which tunnel and replica received each session.
 products:
   - mesh
+  - tunnel
   - cloudflare-one
   - gateway
   - workers-vpc
@@ -35,6 +36,10 @@ The `zero_trust_network_sessions` dataset, available through [Logpush](/cloudfla
 | `DestinationReplicaID` | The replica that served the session, such as a specific replica of a Mesh node or a `cloudflared` replica of a Cloudflare Tunnel. |
 
 For example, `OnrampType = 'WORKERS_VPC' AND Offramp = 'MESH'` returns every session where a Worker reached a service behind a Mesh node, and `SourceName` tells you which Worker it was.
+
+## See which tunnel and replica received a session
+
+With `DestinationReplicaID`, you can now confirm which [Cloudflare Tunnel](/tunnel/) and which `cloudflared` replica received traffic for a specific session. Combine it with the existing `DestinationTunnelID` field to trace a session to an exact tunnel replica — or Mesh node replica — when you run multiple replicas for high availability. The replica ID matches the **Connector ID** shown in the dashboard, so you can [stream that replica's logs](/tunnel/observability/#remote-log-streaming) with `cloudflared tail --connector-id`.
 
 :::caution[Redeploy your Workers]
 `SourceName` and `SourceID` are only populated for Workers deployed after 29 September 2026. To include them for an existing Worker, redeploy it — for example, with `npx wrangler deploy`. No code changes are required.
