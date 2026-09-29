@@ -127,10 +127,9 @@ const process = await this.container.exec(
 	{ cwd: "/workspace", env: ENV },
 );
 const result = await process.output();
+// Exit code 124 means the command ran longer than 60 seconds
 const timedOut = result.exitCode === 124;
 ```
-
-The command exits with code `124` when it runs longer than 60 seconds.
 
 0.12 threw `CommandError` with the message `Command timeout after 60000ms`, and the command kept running. In 1.0, a command that times out stops, so it cannot change files after the error.
 

@@ -243,57 +243,61 @@ A kernel is a Python process that runs the code of each call with IPython, and k
 4. Add methods to your class that start a kernel and send it a signal:
 
    ```ts title="src/index.ts"
-   // Ports of the kernels that this container runs.
-   private kernels = new Set<number>();
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   private async startKernel(
-   	context: CodeContext,
-   ): Promise<Fetcher> {
-   	const kernel = this.container.getTcpPort(context.port);
+   	// Ports of the kernels that this container runs.
+   	private kernels = new Set<number>();
 
-   	if (this.kernels.has(context.port)) {
-   		return kernel;
+   	private async startKernel(
+   		context: CodeContext,
+   	): Promise<Fetcher> {
+   		const kernel = this.container.getTcpPort(context.port);
+
+   		if (this.kernels.has(context.port)) {
+   			return kernel;
+   		}
+
+   		const start = await this.container.exec(
+   			[
+   				"sh",
+   				"-c",
+   				`setsid -f python3 /opt/kernel.py ${context.port}` +
+   					` > /var/log/kernel-${context.port}.log 2>&1`,
+   			],
+   			{ cwd: context.cwd, env: { ...ENV, ...context.env } },
+   		);
+   		await start.exitCode;
+
+   		const deadline = Date.now() + 30_000;
+
+   		while (Date.now() < deadline) {
+   			try {
+   				const response = await kernel.fetch("http://kernel/", {
+   					signal: AbortSignal.timeout(1_000),
+   				});
+   				await response.body?.cancel();
+   				this.kernels.add(context.port);
+   				return kernel;
+   			} catch {
+   				await scheduler.wait(500);
+   			}
+   		}
+
+   		throw new Error("The kernel did not start within 30 seconds");
    	}
 
-   	const start = await this.container.exec(
-   		[
+   	private async signalKernel(
+   		context: CodeContext,
+   		signal: "INT" | "TERM",
+   	): Promise<void> {
+   		const kill = await this.container.exec([
    			"sh",
    			"-c",
-   			`setsid -f python3 /opt/kernel.py ${context.port}` +
-   				` > /var/log/kernel-${context.port}.log 2>&1`,
-   		],
-   		{ cwd: context.cwd, env: { ...ENV, ...context.env } },
-   	);
-   	await start.exitCode;
-
-   	const deadline = Date.now() + 30_000;
-
-   	while (Date.now() < deadline) {
-   		try {
-   			const response = await kernel.fetch("http://kernel/", {
-   				signal: AbortSignal.timeout(1_000),
-   			});
-   			await response.body?.cancel();
-   			this.kernels.add(context.port);
-   			return kernel;
-   		} catch {
-   			await scheduler.wait(500);
-   		}
+   			`kill -${signal} "$(cat /run/kernel-${context.port}.pid)"`,
+   		]);
+   		await kill.exitCode;
    	}
-
-   	throw new Error("The kernel did not start within 30 seconds");
-   }
-
-   private async signalKernel(
-   	context: CodeContext,
-   	signal: "INT" | "TERM",
-   ): Promise<void> {
-   	const kill = await this.container.exec([
-   		"sh",
-   		"-c",
-   		`kill -${signal} "$(cat /run/kernel-${context.port}.pid)"`,
-   	]);
-   	await kill.exitCode;
    }
    ```
 
@@ -302,32 +306,36 @@ A kernel is a Python process that runs the code of each call with IPython, and k
 5. Add a `runCode()` method:
 
    ```ts title="src/index.ts"
-   async runCode(
-   	code: string,
-   	options: { context?: string; timeout?: number } = {},
-   ): Promise<Execution> {
-   	await this.ensureRunning();
-   	const context = await this.getContext(
-   		options.context ?? DEFAULT_CONTEXT.id,
-   	);
-   	const kernel = await this.startKernel(context);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	try {
-   		const response = await kernel.fetch("http://kernel/", {
-   			method: "POST",
-   			body: code,
-   			signal: AbortSignal.timeout(options.timeout ?? 60_000),
-   		});
-   		return await response.json<Execution>();
-   	} catch (error) {
-   		if ((error as Error).name === "TimeoutError") {
-   			// Stop the cell, and keep the kernel variables.
-   			await this.signalKernel(context, "INT");
-   		} else {
-   			// The kernel exited. The next call starts a new one.
-   			this.kernels.delete(context.port);
+   	async runCode(
+   		code: string,
+   		options: { context?: string; timeout?: number } = {},
+   	): Promise<Execution> {
+   		await this.ensureRunning();
+   		const context = await this.getContext(
+   			options.context ?? DEFAULT_CONTEXT.id,
+   		);
+   		const kernel = await this.startKernel(context);
+
+   		try {
+   			const response = await kernel.fetch("http://kernel/", {
+   				method: "POST",
+   				body: code,
+   				signal: AbortSignal.timeout(options.timeout ?? 60_000),
+   			});
+   			return await response.json<Execution>();
+   		} catch (error) {
+   			if ((error as Error).name === "TimeoutError") {
+   				// Stop the cell, and keep the kernel variables.
+   				await this.signalKernel(context, "INT");
+   			} else {
+   				// The kernel exited. The next call starts a new one.
+   				this.kernels.delete(context.port);
+   			}
+   			throw error;
    		}
-   		throw error;
    	}
    }
    ```
@@ -337,58 +345,62 @@ A kernel is a Python process that runs the code of each call with IPython, and k
 6. Add methods that replace `createCodeContext()`, `listCodeContexts()`, and `deleteCodeContext()`:
 
    ```ts title="src/index.ts"
-   private async getContext(id: string): Promise<CodeContext> {
-   	if (id === DEFAULT_CONTEXT.id) {
-   		return DEFAULT_CONTEXT;
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async getContext(id: string): Promise<CodeContext> {
+   		if (id === DEFAULT_CONTEXT.id) {
+   			return DEFAULT_CONTEXT;
+   		}
+
+   		const context = await this.ctx.storage.get<CodeContext>(
+   			`context:${id}`,
+   		);
+
+   		if (!context) {
+   			throw new Error(`No code context ${id}`);
+   		}
+
+   		return context;
    	}
 
-   	const context = await this.ctx.storage.get<CodeContext>(
-   		`context:${id}`,
-   	);
+   	async createCodeContext(
+   		options: { cwd?: string; env?: Record<string, string> } = {},
+   	): Promise<CodeContext> {
+   		const last =
+   			await this.ctx.storage.get<number>("lastKernelPort");
+   		const port = (last ?? DEFAULT_CONTEXT.port) + 1;
+   		const context: CodeContext = {
+   			id: crypto.randomUUID(),
+   			port,
+   			cwd: options.cwd ?? "/workspace",
+   			env: options.env,
+   		};
 
-   	if (!context) {
-   		throw new Error(`No code context ${id}`);
+   		await this.ctx.storage.put({
+   			lastKernelPort: port,
+   			[`context:${context.id}`]: context,
+   		});
+   		return context;
    	}
 
-   	return context;
-   }
-
-   async createCodeContext(
-   	options: { cwd?: string; env?: Record<string, string> } = {},
-   ): Promise<CodeContext> {
-   	const last =
-   		await this.ctx.storage.get<number>("lastKernelPort");
-   	const port = (last ?? DEFAULT_CONTEXT.port) + 1;
-   	const context: CodeContext = {
-   		id: crypto.randomUUID(),
-   		port,
-   		cwd: options.cwd ?? "/workspace",
-   		env: options.env,
-   	};
-
-   	await this.ctx.storage.put({
-   		lastKernelPort: port,
-   		[`context:${context.id}`]: context,
-   	});
-   	return context;
-   }
-
-   async listCodeContexts(): Promise<CodeContext[]> {
-   	const contexts = await this.ctx.storage.list<CodeContext>({
-   		prefix: "context:",
-   	});
-   	return [DEFAULT_CONTEXT, ...contexts.values()];
-   }
-
-   async deleteCodeContext(id: string): Promise<void> {
-   	const context = await this.getContext(id);
-
-   	if (this.container.running) {
-   		await this.signalKernel(context, "TERM");
-   		this.kernels.delete(context.port);
+   	async listCodeContexts(): Promise<CodeContext[]> {
+   		const contexts = await this.ctx.storage.list<CodeContext>({
+   			prefix: "context:",
+   		});
+   		return [DEFAULT_CONTEXT, ...contexts.values()];
    	}
 
-   	await this.ctx.storage.delete(`context:${id}`);
+   	async deleteCodeContext(id: string): Promise<void> {
+   		const context = await this.getContext(id);
+
+   		if (this.container.running) {
+   			await this.signalKernel(context, "TERM");
+   			this.kernels.delete(context.port);
+   		}
+
+   		await this.ctx.storage.delete(`context:${id}`);
+   	}
    }
    ```
 

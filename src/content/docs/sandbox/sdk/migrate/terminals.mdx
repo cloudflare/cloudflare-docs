@@ -107,13 +107,17 @@ This page replaces `terminal()`, `session.terminal()`, `proxyTerminal()`, and `S
 5. If your class forwards preview URLs from [Move preview URLs](/sandbox/sdk/migrate/preview-urls/), it already has a `fetch()` handler. Rename that handler to `forwardToPort()`, rename the terminal handler to `openTerminal()`, make both `private`, and add a `fetch()` handler that chooses one:
 
    ```ts title="src/index.ts"
-   async fetch(request: Request): Promise<Response> {
-   	// Only the preview route of the Worker sets this header.
-   	if (request.headers.has("X-Sandbox-Port")) {
-   		return this.forwardToPort(request);
-   	}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	return this.openTerminal(request);
+   	async fetch(request: Request): Promise<Response> {
+   		// Only the preview route of the Worker sets this header.
+   		if (request.headers.has("X-Sandbox-Port")) {
+   			return this.forwardToPort(request);
+   		}
+
+   		return this.openTerminal(request);
+   	}
    }
    ```
 

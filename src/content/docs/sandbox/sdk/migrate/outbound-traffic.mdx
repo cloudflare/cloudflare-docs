@@ -208,27 +208,31 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 Add methods that update the stored rules, and register the entrypoint again with them:
 
 ```ts title="src/index.ts"
-private async updateRules(change: StoredRules): Promise<void> {
-	this.ctx.storage.kv.put(RULES, { ...this.rules(), ...change });
+export class MySandbox extends DurableObject<Env> {
+	// ...
 
-	if (this.container.running) {
-		await this.intercept();
+	private async updateRules(change: StoredRules): Promise<void> {
+		this.ctx.storage.kv.put(RULES, { ...this.rules(), ...change });
+
+		if (this.container.running) {
+			await this.intercept();
+		}
 	}
-}
 
-async allowHost(hostname: string): Promise<void> {
-	const hosts = this.rules().allowedHosts ?? ALLOWED_HOSTS ?? [];
-	await this.updateRules({ allowedHosts: [...hosts, hostname] });
-}
+	async allowHost(hostname: string): Promise<void> {
+		const hosts = this.rules().allowedHosts ?? ALLOWED_HOSTS ?? [];
+		await this.updateRules({ allowedHosts: [...hosts, hostname] });
+	}
 
-async setOutboundByHost(
-	hostname: string,
-	method: string,
-	params?: unknown,
-): Promise<void> {
-	const hosts = { ...this.rules().outboundByHostOverrides };
-	hosts[hostname] = { method, params };
-	await this.updateRules({ outboundByHostOverrides: hosts });
+	async setOutboundByHost(
+		hostname: string,
+		method: string,
+		params?: unknown,
+	): Promise<void> {
+		const hosts = { ...this.rules().outboundByHostOverrides };
+		hosts[hostname] = { method, params };
+		await this.updateRules({ outboundByHostOverrides: hosts });
+	}
 }
 ```
 
@@ -263,18 +267,22 @@ await sandbox.gitCheckout(repo, { depth: 1 });
 In 1.0, run `git clone` in a Durable Object method:
 
 ```ts title="src/index.ts (1.0)"
-async clone(url: string, dir: string): Promise<void> {
-	await this.ensureRunning();
+export class MySandbox extends DurableObject<Env> {
+	// ...
 
-	const git = ["git", "clone", "--filter=blob:none", "--depth", "1"];
-	const clone = await this.container.exec(
-		["timeout", "-k", "5", "600", ...git, url, dir],
-		{ cwd: "/workspace", env: ENV },
-	);
-	const output = await clone.output();
+	async clone(url: string, dir: string): Promise<void> {
+		await this.ensureRunning();
 
-	if (output.exitCode !== 0) {
-		throw new Error(new TextDecoder().decode(output.stderr));
+		const git = ["git", "clone", "--filter=blob:none", "--depth", "1"];
+		const clone = await this.container.exec(
+			["timeout", "-k", "5", "600", ...git, url, dir],
+			{ cwd: "/workspace", env: ENV },
+		);
+		const output = await clone.output();
+
+		if (output.exitCode !== 0) {
+			throw new Error(new TextDecoder().decode(output.stderr));
+		}
 	}
 }
 ```

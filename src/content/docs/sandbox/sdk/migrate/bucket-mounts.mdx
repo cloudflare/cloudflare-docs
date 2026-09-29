@@ -61,38 +61,44 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    ```
 
    ```ts title="src/index.ts (1.0)"
-   private get mounts(): S3Mount {
-   	const gateway = this.ctx.exports.S3Gateway;
-   	return new S3Mount(this.container, gateway);
-   }
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   private async mountData(): Promise<void> {
-   	const job = this.ctx.id.name;
-
-   	if (!job) {
-   		throw new Error("Open the sandbox with getByName()");
+   	private get mounts(): S3Mount {
+   		const gateway = this.ctx.exports.S3Gateway;
+   		return new S3Mount(this.container, gateway);
    	}
 
-   	await this.mounts.mount({
-   		mountPath: "/data",
-   		source: {
-   			type: "s3",
-   			endpoint: this.env.S3_ENDPOINT,
-   			region: "auto",
-   			bucket: this.env.S3_BUCKET,
-   			credentials: {
-   				type: "static",
-   				accessKeyId: this.env.S3_ACCESS_KEY_ID,
-   				secretAccessKey: this.env.S3_SECRET_ACCESS_KEY,
+   	private async mountData(): Promise<void> {
+   		// The name that your Worker passed to getByName(),
+   		// or to getSandbox() in 0.12
+   		const job = this.ctx.id.name;
+
+   		if (!job) {
+   			throw new Error("Open the sandbox with getByName()");
+   		}
+
+   		await this.mounts.mount({
+   			mountPath: "/data",
+   			source: {
+   				type: "s3",
+   				endpoint: this.env.S3_ENDPOINT,
+   				region: "auto",
+   				bucket: this.env.S3_BUCKET,
+   				credentials: {
+   					type: "static",
+   					accessKeyId: this.env.S3_ACCESS_KEY_ID,
+   					secretAccessKey: this.env.S3_SECRET_ACCESS_KEY,
+   				},
    			},
-   		},
-   		keyPrefix: `jobs/${job}`,
-   		access: "read-write",
-   	});
+   			keyPrefix: `jobs/${job}`,
+   			access: "read-write",
+   		});
+   	}
    }
    ```
 
-   `this.ctx.id.name` is the name that the Worker passed to `getByName()`, or to `getSandbox()` in 0.12. The options change as follows:
+   The options change as follows:
 
    | 0.12                          | 1.0                                                                                                                       |
    | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -107,16 +113,20 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 4. Mount the prefix in each method that uses it:
 
    ```ts title="src/index.ts"
-   async listFiles(): Promise<string> {
-   	await this.ensureRunning();
-   	await this.mountData();
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	const ls = await this.container.exec(["ls", "-la"], {
-   		cwd: "/data",
-   		env: ENV,
-   	});
-   	const output = await ls.output();
-   	return new TextDecoder().decode(output.stdout);
+   	async listFiles(): Promise<string> {
+   		await this.ensureRunning();
+   		await this.mountData();
+
+   		const ls = await this.container.exec(["ls", "-la"], {
+   			cwd: "/data",
+   			env: ENV,
+   		});
+   		const output = await ls.output();
+   		return new TextDecoder().decode(output.stdout);
+   	}
    }
    ```
 
@@ -129,16 +139,20 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    ```
 
    ```ts title="src/index.ts (1.0)"
-   async unmountData(): Promise<string> {
-   	try {
-   		await this.mounts.unmount("/data");
-   		return "unmounted";
-   	} catch (error) {
-   		if (SandboxS3MountError.is(error)) {
-   			return error.code;
-   		}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   		throw error;
+   	async unmountData(): Promise<string> {
+   		try {
+   			await this.mounts.unmount("/data");
+   			return "unmounted";
+   		} catch (error) {
+   			if (SandboxS3MountError.is(error)) {
+   				return error.code;
+   			}
+
+   			throw error;
+   		}
    	}
    }
    ```
@@ -160,25 +174,29 @@ Each mount registers an intercept for its own hostname. That intercept receives 
 
 Mount the prefix in `ensureRunning()`, after `start()` and before `intercept()`:
 
-```ts title="src/index.ts" ins={11-12}
-private async ensureRunning(): Promise<void> {
-	if (!this.container.running) {
-		this.container.start({
-			image: this.container.images.sandbox,
-			instance: "standard-1",
-			env: ENV,
-			enableInternet: ENABLE_INTERNET,
-		});
-		// Replaces onStart().
-		await this.ctx.storage.put("startedAt", Date.now());
-		// Mount before the catch-all intercept.
-		await this.mountData();
-		await this.intercept();
-		const trust = await this.container.exec(TRUST);
-		await trust.exitCode;
-		await this.container.setInactivityTimeout(
-			INACTIVITY_TIMEOUT_MS,
-		);
+```ts title="src/index.ts" ins={14-15}
+export class MySandbox extends DurableObject<Env> {
+	// ...
+
+	private async ensureRunning(): Promise<void> {
+		if (!this.container.running) {
+			this.container.start({
+				image: this.container.images.sandbox,
+				instance: "standard-1",
+				env: ENV,
+				enableInternet: ENABLE_INTERNET,
+			});
+			// Replaces onStart().
+			await this.ctx.storage.put("startedAt", Date.now());
+			// Mount before the catch-all intercept.
+			await this.mountData();
+			await this.intercept();
+			const trust = await this.container.exec(TRUST);
+			await trust.exitCode;
+			await this.container.setInactivityTimeout(
+				INACTIVITY_TIMEOUT_MS,
+			);
+		}
 	}
 }
 ```

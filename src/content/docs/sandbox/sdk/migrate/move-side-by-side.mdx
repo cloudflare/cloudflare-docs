@@ -130,52 +130,56 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
 5. Add methods to the 1.0 class that move one sandbox. The copy runs once for each name, and stores `moved` so that later requests skip it:
 
    ```ts title="src/index.ts"
-   private moving: Promise<void> | null = null;
+   export class SandboxV1 extends DurableObject<Env> {
+   	// ...
 
-   async moveFrom0x(name: string): Promise<void> {
-   	// Requests that arrive during the copy wait for the same copy.
-   	this.moving ??= this.copyFrom0x(name).finally(() => {
-   		this.moving = null;
-   	});
-   	await this.moving;
-   }
+   	private moving: Promise<void> | null = null;
 
-   private async copyFrom0x(name: string): Promise<void> {
-   	if (await this.ctx.storage.get("moved")) {
-   		return;
+   	async moveFrom0x(name: string): Promise<void> {
+   		// Requests that arrive during the copy wait for the same copy.
+   		this.moving ??= this.copyFrom0x(name).finally(() => {
+   			this.moving = null;
+   		});
+   		await this.moving;
    	}
 
-   	const stub0x = this.env.Sandbox.getByName(name);
-   	const stored = await stub0x.exportStorage();
-   	await this.ctx.storage.put(Object.fromEntries(stored));
+   	private async copyFrom0x(name: string): Promise<void> {
+   		if (await this.ctx.storage.get("moved")) {
+   			return;
+   		}
 
-   	if (await stub0x.isRunning()) {
-   		const legacy = getSandbox(this.env.Sandbox, name);
-   		const path = "/tmp/workspace.tar.gz";
-   		await legacy.exec(`tar -czf ${path} -C /workspace .`);
-   		const archive = await legacy.readFile(path, {
-   			encoding: "base64",
-   		});
+   		const stub0x = this.env.Sandbox.getByName(name);
+   		const stored = await stub0x.exportStorage();
+   		await this.ctx.storage.put(Object.fromEntries(stored));
 
-   		await this.ensureRunning();
-   		const extract = await this.container.exec(
-   			["sh", "-c", "base64 -d | tar -xzf - -C /workspace"],
-   			{ stdin: new Blob([archive.content]).stream() },
-   		);
-   		const result = await extract.output();
+   		if (await stub0x.isRunning()) {
+   			const legacy = getSandbox(this.env.Sandbox, name);
+   			const path = "/tmp/workspace.tar.gz";
+   			await legacy.exec(`tar -czf ${path} -C /workspace .`);
+   			const archive = await legacy.readFile(path, {
+   				encoding: "base64",
+   			});
 
-   		if (result.exitCode !== 0) {
-   			const stderr = new TextDecoder().decode(result.stderr);
-   			throw new Error(stderr);
+   			await this.ensureRunning();
+   			const extract = await this.container.exec(
+   				["sh", "-c", "base64 -d | tar -xzf - -C /workspace"],
+   				{ stdin: new Blob([archive.content]).stream() },
+   			);
+   			const result = await extract.output();
+
+   			if (result.exitCode !== 0) {
+   				const stderr = new TextDecoder().decode(result.stderr);
+   				throw new Error(stderr);
+   			}
+
+   			await this.ctx.storage.put("moved", true);
+   			// destroy() would delete named tunnels and DNS records.
+   			await legacy.stop();
+   			return;
    		}
 
    		await this.ctx.storage.put("moved", true);
-   		// destroy() would delete named tunnels and DNS records.
-   		await legacy.stop();
-   		return;
    	}
-
-   	await this.ctx.storage.put("moved", true);
    }
    ```
 

@@ -28,31 +28,35 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
 
 2. Change `startProcess()` to start the container with `ensureRunning()`, and to run each process with the working directory and environment that 0.12 gave it:
 
-   ```ts title="src/index.ts" ins={2,16,17}
-   async startProcess(id: string, argv: string[]): Promise<boolean> {
-   	await this.ensureRunning();
+   ```ts title="src/index.ts" ins={5,19,20}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	// mkdir fails when another process already uses the ID.
-   	const dir = `${ROOT}/${id}`;
-   	await run(this.container, ["mkdir", "-p", ROOT]);
-   	const created = await run(this.container, ["mkdir", dir]);
+   	async startProcess(id: string, argv: string[]): Promise<boolean> {
+   		await this.ensureRunning();
 
-   	if (created.exitCode !== 0) {
-   		return false;
+   		// mkdir fails when another process already uses the ID.
+   		const dir = `${ROOT}/${id}`;
+   		await run(this.container, ["mkdir", "-p", ROOT]);
+   		const created = await run(this.container, ["mkdir", dir]);
+
+   		if (created.exitCode !== 0) {
+   			return false;
+   		}
+
+   		// Ignoring the output lets the process outlive this request.
+   		const command = ["sh", "-c", RUN, "sh", dir, ...argv];
+   		await this.container.exec(command, {
+   			cwd: "/workspace",
+   			env: ENV,
+   			stdout: "ignore",
+   			stderr: "ignore",
+   		});
+
+   		await this.ctx.storage.put(`process:${id}`, argv);
+   		await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   		return true;
    	}
-
-   	// Ignoring the output lets the process outlive this request.
-   	const command = ["sh", "-c", RUN, "sh", dir, ...argv];
-   	await this.container.exec(command, {
-   		cwd: "/workspace",
-   		env: ENV,
-   		stdout: "ignore",
-   		stderr: "ignore",
-   	});
-
-   	await this.ctx.storage.put(`process:${id}`, argv);
-   	await this.ctx.storage.setAlarm(Date.now() + 60_000);
-   	return true;
    }
    ```
 
@@ -109,23 +113,27 @@ Replace `getProcess()` and `Process.getStatus()` with `status()`, which returns 
 To replace `listProcesses()`, add a method that lists the process directories:
 
 ```ts title="src/index.ts"
-async listProcesses(): Promise<{ id: string; status: Status }[]> {
-	if (!this.container.running) {
-		return [];
-	}
+export class MySandbox extends DurableObject<Env> {
+	// ...
 
-	const { stdout } = await run(this.container, ["ls", ROOT]);
-	const processes = [];
-
-	for (const id of stdout.split("\n").filter((line) => line !== "")) {
-		const status = await this.status(id);
-
-		if (status) {
-			processes.push({ id, status });
+	async listProcesses(): Promise<{ id: string; status: Status }[]> {
+		if (!this.container.running) {
+			return [];
 		}
-	}
 
-	return processes;
+		const { stdout } = await run(this.container, ["ls", ROOT]);
+		const processes = [];
+
+		for (const id of stdout.split("\n").filter((line) => line !== "")) {
+			const status = await this.status(id);
+
+			if (status) {
+				processes.push({ id, status });
+			}
+		}
+
+		return processes;
+	}
 }
 ```
 
@@ -184,19 +192,23 @@ Without it, the pattern `[ok]` matches any line that contains `o` or `k`. Pass a
 To replace `Process.waitForExit()`, add a method that checks the status until the process ends:
 
 ```ts title="src/index.ts"
-async waitForExit(id: string, timeoutMs: number) {
-	const deadline = Date.now() + timeoutMs;
-	let status = await this.status(id);
+export class MySandbox extends DurableObject<Env> {
+	// ...
 
-	while (
-		(status?.state === "running" || status?.state === "starting") &&
-		Date.now() < deadline
-	) {
-		await scheduler.wait(500);
-		status = await this.status(id);
+	async waitForExit(id: string, timeoutMs: number) {
+		const deadline = Date.now() + timeoutMs;
+		let status = await this.status(id);
+
+		while (
+			(status?.state === "running" || status?.state === "starting") &&
+			Date.now() < deadline
+		) {
+			await scheduler.wait(500);
+			status = await this.status(id);
+		}
+
+		return status;
 	}
-
-	return status;
 }
 ```
 

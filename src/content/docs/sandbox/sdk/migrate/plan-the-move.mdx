@@ -59,15 +59,19 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 1. Make your `alarm()` handler check its own state before it acts. 0.12 keeps an alarm set while a container runs, and after the switch that alarm calls your handler. If the handler throws, the platform retries it with backoff. In this example, the handler returns unless its `nextCheckpoint` time has passed:
 
    ```ts title="src/index.ts"
-   async alarm(): Promise<void> {
-   	// A 0.12 alarm can call this handler once after the switch.
-   	const due = await this.ctx.storage.get<number>("nextCheckpoint");
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	if (due === undefined || due > Date.now()) {
-   		return;
+   	async alarm(): Promise<void> {
+   		// A 0.12 alarm can call this handler once after the switch.
+   		const due = await this.ctx.storage.get<number>("nextCheckpoint");
+
+   		if (due === undefined || due > Date.now()) {
+   			return;
+   		}
+
+   		await this.checkpoint();
    	}
-
-   	await this.checkpoint();
    }
    ```
 

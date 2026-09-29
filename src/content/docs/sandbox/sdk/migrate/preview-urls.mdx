@@ -56,43 +56,47 @@ This page does not cover the server that a preview reaches. To start it, refer t
 2. Add a method that reads the tokens, and `exposePort()`, to your Durable Object class:
 
    ```ts title="src/index.ts"
-   private async readPortTokens(): Promise<Record<string, PortToken>> {
-   	const stored = await this.ctx.storage.get<Stored>(PORT_TOKENS);
-   	const tokens: Record<string, PortToken> = {};
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	// Early 0.12 versions stored the token as a string.
-   	for (const [port, value] of Object.entries(stored ?? {})) {
-   		tokens[port] =
-   			typeof value === "string" ? { token: value } : value;
+   	private async readPortTokens(): Promise<Record<string, PortToken>> {
+   		const stored = await this.ctx.storage.get<Stored>(PORT_TOKENS);
+   		const tokens: Record<string, PortToken> = {};
+
+   		// Early 0.12 versions stored the token as a string.
+   		for (const [port, value] of Object.entries(stored ?? {})) {
+   			tokens[port] =
+   				typeof value === "string" ? { token: value } : value;
+   		}
+
+   		return tokens;
    	}
 
-   	return tokens;
-   }
+   	async exposePort(
+   		sandboxName: string,
+   		port: number,
+   		options: { hostname: string; name?: string; token?: string },
+   	) {
+   		if (!Number.isInteger(port) || port < 1024 || port > 65535) {
+   			throw new Error(`Invalid port number: ${port}`);
+   		}
 
-   async exposePort(
-   	sandboxName: string,
-   	port: number,
-   	options: { hostname: string; name?: string; token?: string },
-   ) {
-   	if (!Number.isInteger(port) || port < 1024 || port > 65535) {
-   		throw new Error(`Invalid port number: ${port}`);
+   		if (options.token && !/^[a-z0-9_]{1,16}$/.test(options.token)) {
+   			throw new Error(`Invalid token: ${options.token}`);
+   		}
+
+   		const tokens = await this.readPortTokens();
+   		const token =
+   			options.token ?? tokens[port]?.token ?? generateToken();
+   		tokens[port] = { token, name: options.name };
+   		await this.ctx.storage.put(PORT_TOKENS, tokens);
+
+   		return {
+   			url: previewUrl(port, sandboxName, token, options.hostname),
+   			port,
+   			name: options.name,
+   		};
    	}
-
-   	if (options.token && !/^[a-z0-9_]{1,16}$/.test(options.token)) {
-   		throw new Error(`Invalid token: ${options.token}`);
-   	}
-
-   	const tokens = await this.readPortTokens();
-   	const token =
-   		options.token ?? tokens[port]?.token ?? generateToken();
-   	tokens[port] = { token, name: options.name };
-   	await this.ctx.storage.put(PORT_TOKENS, tokens);
-
-   	return {
-   		url: previewUrl(port, sandboxName, token, options.hostname),
-   		port,
-   		name: options.name,
-   	};
    }
    ```
 
@@ -108,48 +112,52 @@ This page does not cover the server that a preview reaches. To start it, refer t
 3. Add the other port methods to the class:
 
    ```ts title="src/index.ts"
-   async unexposePort(port: number): Promise<void> {
-   	const tokens = await this.readPortTokens();
-   	delete tokens[port];
-   	await this.ctx.storage.put(PORT_TOKENS, tokens);
-   }
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   async getExposedPorts(sandboxName: string, hostname: string) {
-   	const tokens = await this.readPortTokens();
-
-   	return Object.entries(tokens).map(([port, { token }]) => ({
-   		url: previewUrl(Number(port), sandboxName, token, hostname),
-   		port: Number(port),
-   		status: "active" as const,
-   	}));
-   }
-
-   async isPortExposed(port: number): Promise<boolean> {
-   	const tokens = await this.readPortTokens();
-   	return port in tokens;
-   }
-
-   async validatePortToken(
-   	port: number,
-   	token: string,
-   ): Promise<boolean> {
-   	const tokens = await this.readPortTokens();
-   	const expected = tokens[port]?.token;
-
-   	if (expected === undefined) {
-   		return false;
+   	async unexposePort(port: number): Promise<void> {
+   		const tokens = await this.readPortTokens();
+   		delete tokens[port];
+   		await this.ctx.storage.put(PORT_TOKENS, tokens);
    	}
 
-   	// Compare in constant time, so timing does not reveal the token.
-   	const encoder = new TextEncoder();
-   	const a = encoder.encode(expected);
-   	const b = encoder.encode(token);
+   	async getExposedPorts(sandboxName: string, hostname: string) {
+   		const tokens = await this.readPortTokens();
 
-   	if (a.byteLength !== b.byteLength) {
-   		return false;
+   		return Object.entries(tokens).map(([port, { token }]) => ({
+   			url: previewUrl(Number(port), sandboxName, token, hostname),
+   			port: Number(port),
+   			status: "active" as const,
+   		}));
    	}
 
-   	return crypto.subtle.timingSafeEqual(a, b);
+   	async isPortExposed(port: number): Promise<boolean> {
+   		const tokens = await this.readPortTokens();
+   		return port in tokens;
+   	}
+
+   	async validatePortToken(
+   		port: number,
+   		token: string,
+   	): Promise<boolean> {
+   		const tokens = await this.readPortTokens();
+   		const expected = tokens[port]?.token;
+
+   		if (expected === undefined) {
+   			return false;
+   		}
+
+   		// Compare in constant time, so timing does not reveal the token.
+   		const encoder = new TextEncoder();
+   		const a = encoder.encode(expected);
+   		const b = encoder.encode(token);
+
+   		if (a.byteLength !== b.byteLength) {
+   			return false;
+   		}
+
+   		return crypto.subtle.timingSafeEqual(a, b);
+   	}
    }
    ```
 
@@ -173,7 +181,7 @@ This page does not cover the server that a preview reaches. To start it, refer t
    };
    ```
 
-   In 1.0, the Worker reads the port, the sandbox name, and the token from the hostname, and checks the token:
+   In 1.0, your Worker reads the port, the sandbox name, and the token from the hostname, and checks the token:
 
    ```ts title="src/index.ts (1.0)" ins={1-9,13-26}
    // <port>-<sandbox name>-<token>, as 0.12 issued preview hostnames.
@@ -210,40 +218,44 @@ This page does not cover the server that a preview reaches. To start it, refer t
 
    The expression splits the first label as 0.12 did. The port ends at the first hyphen, and the token starts after the last hyphen. A wrong token, or a port without a token, gets `404`, as in 0.12.
 
-   The Durable Object trusts the `X-Sandbox-Port` header, and `toPort()` replaces any value that the visitor sent. Send requests to the `fetch()` handler of the Durable Object only through `toPort()`, or remove the header first, as [Move browser terminals](/sandbox/sdk/migrate/terminals/#forward-the-websocket) does.
+   The Durable Object trusts the `X-Sandbox-Port` header, and `toPort()` replaces any value that the visitor sent. Send requests to the `fetch()` handler of your Durable Object only through `toPort()`, or remove the header first, as [Move browser terminals](/sandbox/sdk/migrate/terminals/#forward-the-websocket) does.
 
-5. Forward the request from the `fetch()` handler of the Durable Object:
+5. Forward the request from the `fetch()` handler of your Durable Object:
 
    ```ts title="src/index.ts"
-   async fetch(request: Request): Promise<Response> {
-   	const container = this.ctx.container;
-   	const port = Number(request.headers.get("X-Sandbox-Port"));
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	// Preview requests do not start the container.
-   	if (!container?.running) {
-   		return new Response("The sandbox is not running", {
-   			status: 503,
-   		});
-   	}
+   	async fetch(request: Request): Promise<Response> {
+   		const container = this.ctx.container;
+   		const port = Number(request.headers.get("X-Sandbox-Port"));
 
-   	const url = new URL(request.url);
-   	url.protocol = "http:";
-   	const forwarded = new Request(url, request);
-   	forwarded.headers.delete("X-Sandbox-Port");
-
-   	try {
-   		const tcpPort = container.getTcpPort(port);
-   		const response = await tcpPort.fetch(forwarded);
-
-   		if (response.webSocket) {
-   			return bridge(response.webSocket);
+   		// Preview requests do not start the container.
+   		if (!container?.running) {
+   			return new Response("The sandbox is not running", {
+   				status: 503,
+   			});
    		}
 
-   		return response;
-   	} catch {
-   		return new Response("Nothing is listening on this port", {
-   			status: 503,
-   		});
+   		const url = new URL(request.url);
+   		url.protocol = "http:";
+   		const forwarded = new Request(url, request);
+   		forwarded.headers.delete("X-Sandbox-Port");
+
+   		try {
+   			const tcpPort = container.getTcpPort(port);
+   			const response = await tcpPort.fetch(forwarded);
+
+   			if (response.webSocket) {
+   				return bridge(response.webSocket);
+   			}
+
+   			return response;
+   		} catch {
+   			return new Response("Nothing is listening on this port", {
+   				status: 503,
+   			});
+   		}
    	}
    }
    ```
@@ -283,7 +295,7 @@ Your Durable Objects keep the `portTokens` key when you deploy the switch in pla
 | A wrong token, or a port without a token | Returns `404`. |
 | A URL after `unexposePort()` | Returns `404`. |
 
-If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the tokens into the 1.0 class. In the preview route of the Worker, get the stub with `await sandboxFor(env, name)`.
+If you [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/), `copyFrom0x()` copies the tokens into the 1.0 class. In the preview route of your Worker, get the stub with `await sandboxFor(env, name)`.
 
 ## Check preview URLs
 

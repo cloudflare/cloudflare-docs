@@ -66,6 +66,8 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    	type DirectoryBackupRecord,
    } from "@cloudflare/sandbox";
 
+   // Gives the Durable Object this.ctx.exports.DirectoryBackupGateway,
+   // which moves each backup between the container and the bucket
    export { DirectoryBackupGateway } from "@cloudflare/sandbox";
 
    // 0.12 kept a backup for three days unless you set ttl.
@@ -75,17 +77,19 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    type Backup = DirectoryBackupRecord & { expiresAt: number };
    ```
 
-   The export gives the Durable Object `this.ctx.exports.DirectoryBackupGateway`, which moves each backup between the container and the bucket.
-
 5. Add a getter to `MySandbox` that creates `DirectoryBackup`:
 
    ```ts title="src/index.ts"
-   private get backups(): DirectoryBackup {
-   	return new DirectoryBackup(
-   		this.container,
-   		this.ctx.exports.DirectoryBackupGateway,
-   		{ binding: "BACKUP_BUCKET", prefix: "backups/" },
-   	);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private get backups(): DirectoryBackup {
+   		return new DirectoryBackup(
+   			this.container,
+   			this.ctx.exports.DirectoryBackupGateway,
+   			{ binding: "BACKUP_BUCKET", prefix: "backups/" },
+   		);
+   	}
    }
    ```
 
@@ -105,38 +109,46 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    In 1.0, add a method with the same name and options to `MySandbox`:
 
    ```ts title="src/index.ts (1.0)"
-   async createBackup(options: {
-   	dir: string;
-   	name?: string;
-   	excludes?: string[];
-   	gitignore?: boolean;
-   	ttl?: number;
-   }): Promise<Backup> {
-   	await this.ensureRunning();
-   	const { excludes, ttl = DEFAULT_TTL_SECONDS, ...rest } = options;
-   	const backup = await this.backups.backup({
-   		...rest,
-   		// 0.12 matched each pattern from the top of the directory.
-   		exclude: excludes?.map((pattern) => `/${pattern}`),
-   	});
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	return { ...backup, expiresAt: Date.now() + ttl * 1000 };
+   	async createBackup(options: {
+   		dir: string;
+   		name?: string;
+   		excludes?: string[];
+   		gitignore?: boolean;
+   		ttl?: number;
+   	}): Promise<Backup> {
+   		await this.ensureRunning();
+   		const { excludes, ttl = DEFAULT_TTL_SECONDS, ...rest } = options;
+   		const backup = await this.backups.backup({
+   			...rest,
+   			// 0.12 matched each pattern from the top of the directory.
+   			exclude: excludes?.map((pattern) => `/${pattern}`),
+   		});
+
+   		return { ...backup, expiresAt: Date.now() + ttl * 1000 };
+   	}
    }
    ```
 
-   The Worker calls it as before, on the stub that `getByName()` returns. It returns a record with the ID, directory, size, SHA-256, and expiry time of the backup. Store it where your code stored the 0.12 backup object. A record lets a caller restore that backup, so keep records out of reach of the code in the sandbox.
+   Your Worker calls it as before, on the stub that `getByName()` returns. It returns a record with the ID, directory, size, SHA-256, and expiry time of the backup. Store it where your code stored the 0.12 backup object. A record lets a caller restore that backup, so keep records out of reach of the code in the sandbox.
 
 7. Replace `restoreBackup()`:
 
    ```ts title="src/index.ts"
-   async restoreBackup(backup: Backup) {
-   	if (Date.now() > backup.expiresAt) {
-   		throw new Error(`Backup ${backup.id} has expired`);
-   	}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	await this.ensureRunning();
-   	await this.backups.restore(backup);
-   	return { success: true, dir: backup.dir, id: backup.id };
+   	async restoreBackup(backup: Backup) {
+   		if (Date.now() > backup.expiresAt) {
+   			throw new Error(`Backup ${backup.id} has expired`);
+   		}
+
+   		await this.ensureRunning();
+   		await this.backups.restore(backup);
+   		return { success: true, dir: backup.dir, id: backup.id };
+   	}
    }
    ```
 
@@ -144,7 +156,7 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
    A process whose working directory is inside the directory keeps the old, deleted directory after `restore()`. A server started with `cwd: "/workspace/project"` is one such process. Restart the process after the restore, or have it open files by absolute path. In 0.12, the restore mounted over the path, so such a process saw the restored files.
 
-8. Deploy the Worker, then back up and restore a directory through the existing routes of your Worker. `createBackup()` returns a record like this one:
+8. Deploy your Worker, then back up and restore a directory through the existing routes of your Worker. `createBackup()` returns a record like this one:
 
    ```json output
    {
@@ -195,41 +207,45 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
 2. Add a method to `MySandbox` that converts a 0.12 backup object:
 
    ```ts title="src/index.ts"
-   async convert(old: { id: string; dir: string }): Promise<Backup> {
-   	const meta = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/meta.json`);
-   	const image = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/data.sqsh`);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	if (!meta || !image) {
-   		throw new Error(`Backup ${old.id} was not found`);
+   	async convert(old: { id: string; dir: string }): Promise<Backup> {
+   		const meta = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/meta.json`);
+   		const image = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/data.sqsh`);
+
+   		if (!meta || !image) {
+   			throw new Error(`Backup ${old.id} was not found`);
+   		}
+
+   		const { createdAt, ttl } = await meta.json<{ createdAt: string; ttl: number }>();
+   		const expiresAt = Date.parse(createdAt) + ttl * 1000;
+
+   		if (Date.now() > expiresAt) {
+   			await image.body.cancel();
+   			throw new Error(`Backup ${old.id} has expired`);
+   		}
+
+   		await this.ensureRunning();
+
+   		// unsquashfs needs the whole image on disk, so it goes to /var/tmp first.
+   		const script =
+   			'cat > "$1" && rm -rf -- "$2" &&' +
+   			' unsquashfs -no-progress -d "$2" "$1" > /dev/null;' +
+   			' code=$?; rm -f -- "$1"; exit $code';
+   		const process = await this.container.exec(
+   			["sh", "-c", script, "sh", `/var/tmp/${old.id}.sqsh`, old.dir],
+   			{ stdin: image.body },
+   		);
+   		const output = await process.output();
+
+   		if (output.exitCode !== 0) {
+   			throw new Error(new TextDecoder().decode(output.stderr));
+   		}
+
+   		const backup = await this.backups.backup({ dir: old.dir });
+   		return { ...backup, expiresAt };
    	}
-
-   	const { createdAt, ttl } = await meta.json<{ createdAt: string; ttl: number }>();
-   	const expiresAt = Date.parse(createdAt) + ttl * 1000;
-
-   	if (Date.now() > expiresAt) {
-   		await image.body.cancel();
-   		throw new Error(`Backup ${old.id} has expired`);
-   	}
-
-   	await this.ensureRunning();
-
-   	// unsquashfs needs the whole image on disk, so it goes to /var/tmp first.
-   	const script =
-   		'cat > "$1" && rm -rf -- "$2" &&' +
-   		' unsquashfs -no-progress -d "$2" "$1" > /dev/null;' +
-   		' code=$?; rm -f -- "$1"; exit $code';
-   	const process = await this.container.exec(
-   		["sh", "-c", script, "sh", `/var/tmp/${old.id}.sqsh`, old.dir],
-   		{ stdin: image.body },
-   	);
-   	const output = await process.output();
-
-   	if (output.exitCode !== 0) {
-   		throw new Error(new TextDecoder().decode(output.stderr));
-   	}
-
-   	const backup = await this.backups.backup({ dir: old.dir });
-   	return { ...backup, expiresAt };
    }
    ```
 

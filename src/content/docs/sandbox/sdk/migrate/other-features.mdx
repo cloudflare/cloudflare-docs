@@ -60,42 +60,47 @@ The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`
    ```
 
    ```ts title="src/index.ts (1.0)"
-   private async waitForDocker(): Promise<void> {
-   	const wait = await this.container.exec([
-   		"timeout",
-   		"30",
-   		"sh",
-   		"-c",
-   		"until docker version > /dev/null 2>&1; do sleep 0.2; done",
-   	]);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	if ((await wait.exitCode) !== 0) {
-   		throw new Error("Docker did not start within 30 seconds");
+   	private async waitForDocker(): Promise<void> {
+   		const wait = await this.container.exec([
+   			"timeout",
+   			"30",
+   			"sh",
+   			"-c",
+   			"until docker version > /dev/null 2>&1; do sleep 0.2; done",
+   		]);
+
+   		if ((await wait.exitCode) !== 0) {
+   			throw new Error("Docker did not start within 30 seconds");
+   		}
    	}
-   }
 
-   async runImage(): Promise<string> {
-   	await this.ensureRunning();
-   	await this.waitForDocker();
+   	async runImage(): Promise<string> {
+   		await this.ensureRunning();
+   		// The Docker daemon starts after the container, so wait for it
+   		await this.waitForDocker();
 
-   	const run = await this.container.exec(
-   		[
-   			"docker",
-   			"run",
-   			"--rm",
-   			"--network=host",
-   			"alpine:3.22",
-   			"echo",
-   			"Hello from Docker",
-   		],
-   		{ env: ENV },
-   	);
-   	const result = await run.output();
-   	return new TextDecoder().decode(result.stdout);
+   		const run = await this.container.exec(
+   			[
+   				"docker",
+   				"run",
+   				"--rm",
+   				"--network=host",
+   				"alpine:3.22",
+   				"echo",
+   				"Hello from Docker",
+   			],
+   			{ env: ENV },
+   		);
+   		const result = await run.output();
+   		return new TextDecoder().decode(result.stdout);
+   	}
    }
    ```
 
-   The Docker daemon starts after the container does, so the first command waits for it. Without `--network=host`, `docker run` fails with `failed to disable IPv6 on container's interface eth0`. A `docker build` step that uses the network, such as a package install, also needs `docker build --network=host`. An inner container started this way shares the network access of the sandbox.
+   Without `--network=host`, `docker run` fails with `failed to disable IPv6 on container's interface eth0`. A `docker build` step that uses the network, such as a package install, also needs `docker build --network=host`. An inner container started this way shares the network access of the sandbox.
 
 4. Call `runImage()` from your Worker. It returns `Hello from Docker`. The first call also pulls `alpine:3.22`, and Docker writes its progress to `stderr`.
 
@@ -143,27 +148,31 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
 
 2. Register the entrypoint in `ensureRunning()`, after `start()`:
 
-   ```ts title="src/index.ts" ins={12-17}
-   private async ensureRunning(): Promise<void> {
-   	if (!this.container.running) {
-   		this.container.start({
-   			image: this.container.images.sandbox,
-   			instance: "standard-1",
-   			env: ENV,
-   			// 0.12 allowed Internet access by default.
-   			enableInternet: true,
-   		});
-   		// Replaces onStart().
-   		await this.ctx.storage.put("startedAt", Date.now());
-   		await this.container.interceptOutboundHttp(
-   			"my.kv",
-   			this.ctx.exports.KvGateway({
-   				props: { containerId: this.ctx.id.toString() },
-   			}),
-   		);
-   		await this.container.setInactivityTimeout(
-   			INACTIVITY_TIMEOUT_MS,
-   		);
+   ```ts title="src/index.ts" ins={15-20}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async ensureRunning(): Promise<void> {
+   		if (!this.container.running) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   			// Replaces onStart().
+   			await this.ctx.storage.put("startedAt", Date.now());
+   			await this.container.interceptOutboundHttp(
+   				"my.kv",
+   				this.ctx.exports.KvGateway({
+   					props: { containerId: this.ctx.id.toString() },
+   				}),
+   			);
+   			await this.container.setInactivityTimeout(
+   				INACTIVITY_TIMEOUT_MS,
+   			);
+   		}
    	}
    }
    ```
@@ -235,61 +244,65 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    ```
 
    ```ts title="src/index.ts (1.0)"
-   private opencodeReady = false;
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   private async openCode(): Promise<OpencodeClient> {
-   	await this.ensureRunning();
-   	const port = this.container.getTcpPort(OPENCODE_PORT);
+   	private opencodeReady = false;
 
-   	if (!this.opencodeReady) {
-   		const start = await this.container.exec(OPENCODE, {
-   			cwd: "/workspace",
-   			env: {
-   				...ENV,
-   				OPENCODE_CONFIG_CONTENT:
-   					JSON.stringify(OPENCODE_CONFIG),
-   				ANTHROPIC_API_KEY: this.env.ANTHROPIC_API_KEY,
-   			},
-   		});
-   		await start.exitCode;
+   	private async openCode(): Promise<OpencodeClient> {
+   		await this.ensureRunning();
+   		const port = this.container.getTcpPort(OPENCODE_PORT);
 
-   		const deadline = Date.now() + 30_000;
+   		if (!this.opencodeReady) {
+   			const start = await this.container.exec(OPENCODE, {
+   				cwd: "/workspace",
+   				env: {
+   					...ENV,
+   					OPENCODE_CONFIG_CONTENT:
+   						JSON.stringify(OPENCODE_CONFIG),
+   					ANTHROPIC_API_KEY: this.env.ANTHROPIC_API_KEY,
+   				},
+   			});
+   			await start.exitCode;
 
-   		while (!this.opencodeReady && Date.now() < deadline) {
-   			try {
-   				const response = await port.fetch(
-   					"http://opencode/",
-   					{ signal: AbortSignal.timeout(1_000) },
+   			const deadline = Date.now() + 30_000;
+
+   			while (!this.opencodeReady && Date.now() < deadline) {
+   				try {
+   					const response = await port.fetch(
+   						"http://opencode/",
+   						{ signal: AbortSignal.timeout(1_000) },
+   					);
+   					await response.body?.cancel();
+   					this.opencodeReady = true;
+   				} catch {
+   					await scheduler.wait(500);
+   				}
+   			}
+
+   			if (!this.opencodeReady) {
+   				throw new Error(
+   					"OpenCode did not start within 30 seconds",
    				);
-   				await response.body?.cancel();
-   				this.opencodeReady = true;
-   			} catch {
-   				await scheduler.wait(500);
    			}
    		}
 
-   		if (!this.opencodeReady) {
-   			throw new Error(
-   				"OpenCode did not start within 30 seconds",
-   			);
+   		return createOpencodeClient({
+   			baseUrl: "http://opencode",
+   			fetch: (request) => port.fetch(request),
+   		});
+   	}
+
+   	async createSession(title: string): Promise<string> {
+   		const client = await this.openCode();
+   		const session = await client.session.create({ title });
+
+   		if (!session.data) {
+   			throw new Error("OpenCode did not create the session");
    		}
+
+   		return session.data.id;
    	}
-
-   	return createOpencodeClient({
-   		baseUrl: "http://opencode",
-   		fetch: (request) => port.fetch(request),
-   	});
-   }
-
-   async createSession(title: string): Promise<string> {
-   	const client = await this.openCode();
-   	const session = await client.session.create({ title });
-
-   	if (!session.data) {
-   		throw new Error("OpenCode did not create the session");
-   	}
-
-   	return session.data.id;
    }
    ```
 
@@ -300,34 +313,38 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 4. Serve the OpenCode web UI from the `fetch()` handler of your Durable Object:
 
    ```ts title="src/index.ts"
-   async fetch(request: Request): Promise<Response> {
-   	const url = new URL(request.url);
-   	const accept = request.headers.get("Accept") ?? "";
-   	const page =
-   		accept.includes("text/html") || url.pathname === "/";
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	// The UI calls the server at the origin in ?url=.
-   	if (
-   		request.method === "GET" &&
-   		page &&
-   		!url.searchParams.has("url")
-   	) {
-   		url.searchParams.set("url", url.origin);
-   		return Response.redirect(url.toString(), 302);
+   	async fetch(request: Request): Promise<Response> {
+   		const url = new URL(request.url);
+   		const accept = request.headers.get("Accept") ?? "";
+   		const page =
+   			accept.includes("text/html") || url.pathname === "/";
+
+   		// The UI calls the server at the origin in ?url=.
+   		if (
+   			request.method === "GET" &&
+   			page &&
+   			!url.searchParams.has("url")
+   		) {
+   			url.searchParams.set("url", url.origin);
+   			return Response.redirect(url.toString(), 302);
+   		}
+
+   		await this.openCode();
+   		// The container port accepts only http: URLs.
+   		url.protocol = "http:";
+   		return this.container
+   			.getTcpPort(OPENCODE_PORT)
+   			.fetch(new Request(url, request));
    	}
-
-   	await this.openCode();
-   	// The container port accepts only http: URLs.
-   	url.protocol = "http:";
-   	return this.container
-   		.getTcpPort(OPENCODE_PORT)
-   		.fetch(new Request(url, request));
    }
    ```
 
-   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so serve it at the root of a hostname and forward every path to the Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
+   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so serve it at the root of a hostname and forward every path to your Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
 
-5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open the Worker URL in a browser. It redirects to `/?url=` and loads OpenCode.
+5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open your Worker URL in a browser. It redirects to `/?url=` and loads OpenCode.
 
 </Steps>
 
@@ -469,22 +486,26 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    ```
 
    ```ts title="src/index.ts (1.0)"
-   async runAgent(input: string): Promise<string | undefined> {
-   	await this.ensureRunning();
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	const shell = new SandboxShell(this.container);
-   	const editor = new SandboxEditor(new Files(this.container));
-   	const agent = new Agent({
-   		name: "Sandbox agent",
-   		instructions: INSTRUCTIONS,
-   		tools: [shellTool({ shell }), applyPatchTool({ editor })],
-   	});
-   	const result = await run(agent, input);
-   	return result.finalOutput;
+   	async runAgent(input: string): Promise<string | undefined> {
+   		await this.ensureRunning();
+
+   		const shell = new SandboxShell(this.container);
+   		const editor = new SandboxEditor(new Files(this.container));
+   		const agent = new Agent({
+   			name: "Sandbox agent",
+   			instructions: INSTRUCTIONS,
+   			tools: [shellTool({ shell }), applyPatchTool({ editor })],
+   		});
+   		const result = await run(agent, input);
+   		return result.finalOutput;
+   	}
    }
    ```
 
-   The Worker calls `runAgent()` on the stub that `getByName()` returns. The Agents SDK reads `OPENAI_API_KEY` from the environment, as it did in your Worker.
+   Your Worker calls `runAgent()` on the stub that `getByName()` returns. The Agents SDK reads `OPENAI_API_KEY` from the environment, as it did in your Worker.
 
 4. Check both classes without a model by calling them directly. `shell.run({ commands: ["pwd", "sleep 10"], timeoutMs: 2000 })` returns the working directory, then a timeout:
 

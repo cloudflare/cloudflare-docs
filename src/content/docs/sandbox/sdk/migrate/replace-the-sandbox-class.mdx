@@ -186,11 +186,15 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    To watch the container, call a method like this one after `start()`:
 
    ```ts title="src/index.ts"
-   private watch(): void {
-   	this.container.monitor().then(
-   		() => console.log("Exited with code 0"),
-   		(error: unknown) => console.error("Stopped", error),
-   	);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private watch(): void {
+   		this.container.monitor().then(
+   			() => console.log("Exited with code 0"),
+   			(error: unknown) => console.error("Stopped", error),
+   		);
+   	}
    }
    ```
 
@@ -220,19 +224,23 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    In 1.0, the stub has only the methods your class defines. Add a method to `MySandbox`, and call it from the Worker:
 
    ```ts title="src/index.ts (1.0)"
-   async test(): Promise<{ exitCode: number; output: string }> {
-   	await this.ensureRunning();
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	const process = await this.container.exec(["npm", "test"], {
-   		cwd: "/workspace/app",
-   		env: ENV,
-   	});
-   	const result = await process.output();
+   	async test(): Promise<{ exitCode: number; output: string }> {
+   		await this.ensureRunning();
 
-   	return {
-   		exitCode: result.exitCode,
-   		output: new TextDecoder().decode(result.stdout),
-   	};
+   		const process = await this.container.exec(["npm", "test"], {
+   			cwd: "/workspace/app",
+   			env: ENV,
+   		});
+   		const result = await process.output();
+
+   		return {
+   			exitCode: result.exitCode,
+   			output: new TextDecoder().decode(result.stdout),
+   		};
+   	}
    }
    ```
 
@@ -254,7 +262,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
 ## Check the class
 
-Start the Worker locally:
+Start your Worker locally:
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 

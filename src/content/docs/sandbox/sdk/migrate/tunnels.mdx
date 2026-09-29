@@ -88,56 +88,60 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 3. Add a method that starts `cloudflared` and waits for it to connect, and a method that opens a quick tunnel, to your Durable Object class:
 
    ```ts title="src/index.ts"
-   private async startTunnel(
-   	port: number,
-   	args: string[],
-   	env: Record<string, string> = {},
-   ): Promise<string> {
-   	const dir = `${TUNNEL_ROOT}/${port}`;
-   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	// Ignoring the output lets cloudflared outlive this request.
-   	const argv = ["sh", "-c", RUN_TUNNEL, "sh", dir, ...args];
-   	await this.container.exec(argv, {
-   		env,
-   		stdout: "ignore",
-   		stderr: "ignore",
-   	});
+   	private async startTunnel(
+   		port: number,
+   		args: string[],
+   		env: Record<string, string> = {},
+   	): Promise<string> {
+   		const dir = `${TUNNEL_ROOT}/${port}`;
+   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
 
-   	const deadline = Date.now() + 30_000;
+   		// Ignoring the output lets cloudflared outlive this request.
+   		const argv = ["sh", "-c", RUN_TUNNEL, "sh", dir, ...args];
+   		await this.container.exec(argv, {
+   			env,
+   			stdout: "ignore",
+   			stderr: "ignore",
+   		});
 
-   	while (Date.now() < deadline) {
-   		const status = await capture(this.container, [
-   			"sh",
-   			"-c",
-   			TUNNEL_STATUS,
-   			"sh",
-   			dir,
-   		]);
+   		const deadline = Date.now() + 30_000;
 
-   		if (status.startsWith("connected")) {
-   			return status.slice("connected".length).trim();
-   		}
-
-   		if (status === "exited") {
-   			const log = await capture(this.container, [
-   				"tail",
-   				`${dir}/log`,
+   		while (Date.now() < deadline) {
+   			const status = await capture(this.container, [
+   				"sh",
+   				"-c",
+   				TUNNEL_STATUS,
+   				"sh",
+   				dir,
    			]);
-   			throw new Error(`cloudflared exited: ${log}`);
+
+   			if (status.startsWith("connected")) {
+   				return status.slice("connected".length).trim();
+   			}
+
+   			if (status === "exited") {
+   				const log = await capture(this.container, [
+   					"tail",
+   					`${dir}/log`,
+   				]);
+   				throw new Error(`cloudflared exited: ${log}`);
+   			}
+
+   			await scheduler.wait(500);
    		}
 
-   		await scheduler.wait(500);
+   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
+   		throw new Error("The tunnel did not connect within 30 seconds");
    	}
 
-   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
-   	throw new Error("The tunnel did not connect within 30 seconds");
-   }
-
-   async openTunnel(port: number): Promise<string> {
-   	await this.ensureRunning();
-   	const url = `http://localhost:${port}`;
-   	return this.startTunnel(port, ["--url", url]);
+   	async openTunnel(port: number): Promise<string> {
+   		await this.ensureRunning();
+   		const url = `http://localhost:${port}`;
+   		return this.startTunnel(port, ["--url", url]);
+   	}
    }
    ```
 
@@ -148,35 +152,39 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 4. Add methods that list and close quick tunnels:
 
    ```ts title="src/index.ts"
-   async listTunnels(): Promise<{ port: number; url: string }[]> {
-   	if (!this.container.running) {
-   		return [];
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async listTunnels(): Promise<{ port: number; url: string }[]> {
+   		if (!this.container.running) {
+   			return [];
+   		}
+
+   		const output = await capture(this.container, [
+   			"sh",
+   			"-c",
+   			LIST,
+   			"sh",
+   			TUNNEL_STATUS,
+   		]);
+
+   		return output
+   			.split("\n")
+   			.filter((line) => line !== "")
+   			.map((line) => {
+   				const [port, url] = line.split(" ");
+   				return { port: Number(port), url };
+   			});
    	}
 
-   	const output = await capture(this.container, [
-   		"sh",
-   		"-c",
-   		LIST,
-   		"sh",
-   		TUNNEL_STATUS,
-   	]);
+   	async closeTunnel(port: number): Promise<void> {
+   		if (!this.container.running) {
+   			return;
+   		}
 
-   	return output
-   		.split("\n")
-   		.filter((line) => line !== "")
-   		.map((line) => {
-   			const [port, url] = line.split(" ");
-   			return { port: Number(port), url };
-   		});
-   }
-
-   async closeTunnel(port: number): Promise<void> {
-   	if (!this.container.running) {
-   		return;
+   		const dir = `${TUNNEL_ROOT}/${port}`;
+   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
    	}
-
-   	const dir = `${TUNNEL_ROOT}/${port}`;
-   	await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
    }
    ```
 
@@ -230,70 +238,74 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 3. Add methods that run and delete a named tunnel to your Durable Object class:
 
    ```ts title="src/index.ts"
-   private async namedTunnel(port: number) {
-   	const { storage } = this.ctx;
-   	const tunnels = await storage.get<Tunnels>("tunnels");
-   	const meta = await storage.get<TunnelsMeta>("tunnels:meta");
-   	const tunnel = tunnels?.[port];
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
 
-   	return tunnel && { ...tunnel, ...meta?.[port] };
-   }
+   	private async namedTunnel(port: number) {
+   		const { storage } = this.ctx;
+   		const tunnels = await storage.get<Tunnels>("tunnels");
+   		const meta = await storage.get<TunnelsMeta>("tunnels:meta");
+   		const tunnel = tunnels?.[port];
 
-   async resumeTunnel(port: number): Promise<string | undefined> {
-   	const tunnel = await this.namedTunnel(port);
-
-   	if (!tunnel?.accountId) {
-   		return undefined;
+   		return tunnel && { ...tunnel, ...meta?.[port] };
    	}
 
-   	const { accountId, id } = tunnel;
-   	const token = await cloudflare<string>(
-   		this.env,
-   		`/accounts/${accountId}/cfd_tunnel/${id}/token`,
-   	);
+   	async resumeTunnel(port: number): Promise<string | undefined> {
+   		const tunnel = await this.namedTunnel(port);
 
-   	await this.ensureRunning();
-   	// TUNNEL_TOKEN keeps the token out of the process list.
-   	await this.startTunnel(
-   		port,
-   		["run", "--url", `http://localhost:${port}`],
-   		{ TUNNEL_TOKEN: token },
-   	);
+   		if (!tunnel?.accountId) {
+   			return undefined;
+   		}
 
-   	return `https://${tunnel.hostname}`;
-   }
+   		const { accountId, id } = tunnel;
+   		const token = await cloudflare<string>(
+   			this.env,
+   			`/accounts/${accountId}/cfd_tunnel/${id}/token`,
+   		);
 
-   async deleteTunnel(port: number): Promise<void> {
-   	const tunnel = await this.namedTunnel(port);
+   		await this.ensureRunning();
+   		// TUNNEL_TOKEN keeps the token out of the process list.
+   		await this.startTunnel(
+   			port,
+   			["run", "--url", `http://localhost:${port}`],
+   			{ TUNNEL_TOKEN: token },
+   		);
 
-   	if (!tunnel?.accountId) {
-   		return;
+   		return `https://${tunnel.hostname}`;
    	}
 
-   	const { accountId, id, zoneId, dnsRecordId } = tunnel;
-   	await this.closeTunnel(port);
-   	await cloudflare(
-   		this.env,
-   		`/accounts/${accountId}/cfd_tunnel/${id}`,
-   		{ method: "DELETE" },
-   	);
+   	async deleteTunnel(port: number): Promise<void> {
+   		const tunnel = await this.namedTunnel(port);
 
-   	if (zoneId && dnsRecordId) {
+   		if (!tunnel?.accountId) {
+   			return;
+   		}
+
+   		const { accountId, id, zoneId, dnsRecordId } = tunnel;
+   		await this.closeTunnel(port);
    		await cloudflare(
    			this.env,
-   			`/zones/${zoneId}/dns_records/${dnsRecordId}`,
+   			`/accounts/${accountId}/cfd_tunnel/${id}`,
    			{ method: "DELETE" },
    		);
-   	}
 
-   	await this.ctx.storage.transaction(async (txn) => {
-   		const tunnels = (await txn.get<Tunnels>("tunnels")) ?? {};
-   		const meta =
-   			(await txn.get<TunnelsMeta>("tunnels:meta")) ?? {};
-   		delete tunnels[port];
-   		delete meta[port];
-   		await txn.put({ tunnels, "tunnels:meta": meta });
-   	});
+   		if (zoneId && dnsRecordId) {
+   			await cloudflare(
+   				this.env,
+   				`/zones/${zoneId}/dns_records/${dnsRecordId}`,
+   				{ method: "DELETE" },
+   			);
+   		}
+
+   		await this.ctx.storage.transaction(async (txn) => {
+   			const tunnels = (await txn.get<Tunnels>("tunnels")) ?? {};
+   			const meta =
+   				(await txn.get<TunnelsMeta>("tunnels:meta")) ?? {};
+   			delete tunnels[port];
+   			delete meta[port];
+   			await txn.put({ tunnels, "tunnels:meta": meta });
+   		});
+   	}
    }
    ```
 
