@@ -252,6 +252,8 @@ export default {
 						},
 					}),
 				},
+				// Stop after five model steps, so a model that keeps failing cannot
+				// run code indefinitely
 				stopWhen: isStepCount(5),
 			});
 
@@ -271,7 +273,7 @@ export default {
 
 `generateText()` sends the question to the model. When the model calls `runJavaScript`, the AI SDK runs `execute()` and sends the return value back to the model. The model can then run more code or answer.
 
-If the code throws, exceeds the CPU time limit or the timeout, or calls `fetch()`, `execute()` returns the error message instead of failing the request. The model reads the error and can fix its code. `isStepCount(5)` stops the loop after five model steps, so a model that keeps failing cannot run code indefinitely.
+If the code throws, exceeds the CPU time limit or the timeout, or calls `fetch()`, `execute()` returns the error message instead of failing the request. The model reads the error and can fix its code.
 
 The Worker validates the request body with Zod before it calls the model. If a Workers AI request fails, for example because of a [rate limit](/workers-ai/platform/limits/), the Worker logs the error and responds with `502` and the code that already ran. `observability` in `wrangler.jsonc` keeps those logs in [Workers Logs](/workers/observability/logs/workers-logs/).
 
@@ -326,7 +328,7 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 <Steps>
 
-1. Deploy the Worker:
+1. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

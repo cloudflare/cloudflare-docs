@@ -71,7 +71,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-5. Replace `src/index.ts`. The Worker reads `code` from the JSON body and runs it in the sandbox:
+5. Replace `src/index.ts`. Your Worker reads `code` from the JSON body and runs it in the sandbox:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -100,7 +100,9 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    					}
    				`,
    			},
+   			// Block `fetch()` and `connect()`
    			globalOutbound: null,
+   			// Stop code that uses more than 50 milliseconds of CPU time
    			limits: { cpuMs: 50 },
    		});
 
@@ -114,7 +116,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    </TypeScriptExample>
 
-   `code` is the body of `evaluate()`, so it needs a `return` statement. `globalOutbound: null` blocks `fetch()` and `connect()`. `limits` stops code that uses more than 50 milliseconds of CPU time. Code that waits without using CPU can still hold the request open, so add a timeout before you run code from other people. For an example, refer to [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/).
+   `code` is the body of `evaluate()`, so it needs a `return` statement. Code that waits without using CPU can still hold the request open, so add a timeout before you run code from other people. For an example, refer to [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/).
 
 6. Run `wrangler dev`:
 
