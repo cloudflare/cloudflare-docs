@@ -24,7 +24,7 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 <Render product="containers" file="docker-setup" />
 
@@ -44,7 +44,7 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
    CMD ["sleep", "infinity"]
    ```
 
-   `sleep infinity` keeps the container running between commands.
+   `sleep infinity` keeps the container running so that it can accept more `exec()` calls.
 
 2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry:
 
@@ -84,7 +84,7 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
    	});
 
    	const decoder = new TextDecoder();
-   	const run = async (stage: string, argv: string[], cwd?: string) => {
+   	const run = async (step: string, argv: string[], cwd?: string) => {
    		// `timeout` stops the command and every process it started.
    		const process = await container.exec(
    			["timeout", "--kill-after=5", "600", ...argv],
@@ -93,7 +93,7 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
    		const output = await process.output();
 
    		return {
-   			stage,
+   			step,
    			stdout: decoder.decode(output.stdout),
    			stderr: decoder.decode(output.stderr),
    			exitCode: output.exitCode,
@@ -133,7 +133,9 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
    }
    ```
 
-   Each stage runs under GNU coreutils `timeout`. A stage that runs longer than 10 minutes stops, together with every process it started, and returns exit code `124`. The `finally` block stops the Linux instance after the run.
+   A step that runs longer than 10 minutes stops, [together with every process it started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts), and returns exit code `124`. The `finally` block stops the Linux instance after the run.
+
+   `output()` holds the whole output of a step in the memory of the Durable Object. For test suites that print a lot, [stream the output](/sandbox/commands/stream-command-output/) instead.
 
    `enableInternet: true` lets `git` and `npm` download the repository and its packages. It also lets the install and test scripts of the repository reach the Internet, so do not pass credentials into this sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
@@ -179,14 +181,14 @@ Run the tests of a repository in a fresh Linux sandbox, such as for each pull re
 
    ```json output
    {
-   	"stage": "test",
+   	"step": "test",
    	"stdout": "...\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n...",
    	"stderr": "",
    	"exitCode": 0
    }
    ```
 
-   When a stage fails, the Worker responds with `500`, and `stage` names the stage that failed.
+   When a step fails, the Worker responds with `500`, and `step` names the step that failed.
 
 </Steps>
 

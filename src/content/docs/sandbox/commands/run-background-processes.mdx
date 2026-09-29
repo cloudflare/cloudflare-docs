@@ -14,11 +14,11 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Start a process that keeps running after the request ends, such as a development server, a build, or an agent, and manage it from later requests. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
+Start a process that keeps running after the request ends, such as a development server, a build, or an agent. Manage it from later requests by writing the process state to files in the sandbox. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 ## Run a process in the background
 
@@ -452,7 +452,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    }
    ```
 
-   The method clears the timer when the wait ends, because an abort signal that fires after the process exits records an internal error. For the same reason, do not pass `AbortSignal.timeout()` to `exec()`.
+   The method clears the timer when the wait ends, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
 
 3. Call it after `startProcess()`, for example with the pattern `^ready`:
 

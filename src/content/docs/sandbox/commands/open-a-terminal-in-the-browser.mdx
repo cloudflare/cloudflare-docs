@@ -22,7 +22,7 @@ import {
 } from "~/components";
 import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
 
-Give a person a live shell in a Linux sandbox from a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
+Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
 
 <BrowserTerminal
 	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
@@ -44,7 +44,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
 ## Prerequisites
 
-- A Worker with a Durable Object that starts a container with `scheduling_policy: "durable_object"`. To create one, refer to [Run a Linux command](/sandbox/get-started/).
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
 
 <Render product="containers" file="docker-setup" />
 
@@ -67,7 +67,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
    CMD ["sleep", "infinity"]
    ```
 
-   `sleep infinity` keeps the container running so it can accept terminals.
+   `sleep infinity` keeps the container running so that it can accept `exec()` calls for each terminal.
 
 2. In `wrangler.jsonc`, build the `Dockerfile` as a named image in your `containers` entry, then generate types for it:
 
@@ -93,7 +93,27 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-3. Add a `fetch()` handler to your Durable Object that attaches a WebSocket to a tmux session:
+3. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   The container keeps running for 5 minutes after the last terminal closes, so a reload finds the same tmux session.
+
+   Then add a `fetch()` handler that attaches a WebSocket to a tmux session:
 
    ```ts title="src/index.ts"
    async fetch(request: Request): Promise<Response> {
@@ -120,9 +140,8 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
    			image: container.images.terminal,
    			enableInternet: false,
    		});
+   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    	}
-
-   	await container.setInactivityTimeout(5 * 60 * 1000);
 
    	// Attach to the tmux session, or create it. The session keeps the shell
    	// running after this WebSocket closes.
@@ -191,7 +210,7 @@ Give a person a live shell in a Linux sandbox from a web page. The page runs [xt
 
    Each WebSocket gets its own tmux client. `pty` runs the client attached to a pseudo-terminal, and `tmux new-session -A` attaches it to the named session, or creates the session if it does not exist. The handler writes keystrokes to the client's standard input, applies resize messages, and forwards the client's output unchanged.
 
-   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because signaling an exited process records an internal error.
+   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
 
    `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
