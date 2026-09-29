@@ -16,14 +16,14 @@ You can investigate an issue by comparing its occurrences and reviewing the avai
 
 Issues can detect the following production failures:
 
-| Failure                   | Example                                                                           |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| Uncaught exception        | An exception escapes a Worker handler.                                             |
-| Failed invocation         | The runtime ends an invocation because of a CPU, memory, or other error.           |
-| HTTP server error         | A Worker intentionally or unintentionally produces an HTTP `5xx` response.        |
-| Subrequest server error   | An origin or another service returns an HTTP `5xx` response to the Worker.         |
-| Application log           | Any console output, including caught `Error` objects and non-`Error` values.       |
-| Non-fetch handler failure | A scheduled, queue, or alarm handler fails.                                        |
+| Failure                   | Example                                                                      |
+| ------------------------- | ---------------------------------------------------------------------------- |
+| Uncaught exception        | An exception escapes a Worker handler.                                       |
+| Failed invocation         | The runtime ends an invocation because of a CPU, memory, or other error.     |
+| HTTP server error         | A Worker intentionally or unintentionally produces an HTTP `5xx` response.   |
+| Subrequest server error   | An origin or another service returns an HTTP `5xx` response to the Worker.   |
+| Application log           | Any console output, including caught `Error` objects and non-`Error` values. |
+| Non-fetch handler failure | A scheduled, queue, or alarm handler fails.                                  |
 
 Issues detection does not require Workers Logs or tracing. Tracing is only required to add custom application context.
 
@@ -47,7 +47,11 @@ Select an occurrence to review its available diagnostic context:
 
 The available context depends on the failure type and the telemetry captured for that invocation.
 
-![Issue details showing a handled checkout exception, stack trace, occurrence chart, and summary.](~/assets/images/workers-observability/issues/workers-issues-detail-synthetic-2000x925.png)
+<div class="overflow-hidden rounded-xl shadow-sm">
+	![Issue details showing a handled checkout exception, stack trace, occurrence
+	chart, and
+	summary.](~/assets/images/workers-observability/issues/workers-issues-detail-synthetic-2000x925.png)
+</div>
 
 ## Add application context
 
@@ -76,7 +80,11 @@ export default {
 
 These attributes appear with related occurrences.
 
-![Issue context showing user, account, and session IDs with an execution trail and invocation metadata.](~/assets/images/workers-observability/issues/workers-issues-context-synthetic-2000x925.png)
+<div class="overflow-hidden rounded-xl shadow-sm">
+	![Issue context showing user, account, and session IDs with an execution trail
+	and invocation
+	metadata.](~/assets/images/workers-observability/issues/workers-issues-context-synthetic-2000x925.png)
+</div>
 
 Do not add secrets, access tokens, or sensitive request content to span attributes, logs, or error messages. Handle application identifiers and personal data according to your privacy and data-handling policies.
 
@@ -84,10 +92,10 @@ For more information about the runtime tracing API, refer to [Custom spans](/wor
 
 ## Issue statuses
 
-| Status     | Behavior                                                                                  |
-| ---------- | ----------------------------------------------------------------------------------------- |
-| `Active`   | The issue is unresolved. New issues start with this status.                               |
-| `Resolved` | The issue is considered fixed. A newer occurrence changes the status back to `Active`.   |
+| Status     | Behavior                                                                                     |
+| ---------- | -------------------------------------------------------------------------------------------- |
+| `Active`   | The issue is unresolved. New issues start with this status.                                  |
+| `Resolved` | The issue is considered fixed. A newer occurrence changes the status back to `Active`.       |
 | `Ignored`  | The issue remains ignored when new occurrences arrive. Change the status to review it again. |
 
 Issues do not resolve automatically. Update the status after you investigate or deploy a fix. A delayed occurrence observed before an issue was resolved does not reopen it.
