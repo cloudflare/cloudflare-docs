@@ -227,7 +227,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
    		const match =
-   			/^\/sandboxes\/([a-z0-9-]+)\/(notes|backups)(?:\/([0-9a-f-]{36})\/restore)?$/.exec(
+   			/^\/sandboxes\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\/(notes|backups)(?:\/([0-9a-f-]{36})\/restore)?$/.exec(
    				url.pathname,
    			);
 

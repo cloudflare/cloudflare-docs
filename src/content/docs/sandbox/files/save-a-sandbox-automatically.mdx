@@ -132,6 +132,8 @@ Container snapshots are in public beta. Features and behavior may change.
 
    Checkpoints limit what a sandbox loses when something other than the alarm stops it, such as the inactivity timeout after the checks stop. The sandbox restores the last checkpoint, without the changes made after it.
 
+   A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the idle and checkpoint checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
+
    A snapshot saves the writable root filesystem. It does not include mounted directories, memory, or running processes. A background process that writes a file during a save can leave part of that file in the snapshot.
 
    Each save creates a new snapshot. The Durable Object container API has no method to delete a snapshot. A snapshot expires 30 days after it is created or last restored. To save fewer snapshots, increase `CHECKPOINT_INTERVAL_MS` or remove checkpoints.
@@ -153,7 +155,7 @@ Container snapshots are in public beta. Features and behavior may change.
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([a-z0-9-]+)$/.exec(url.pathname);
+   		const match = /^\/sandboxes\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)$/.exec(url.pathname);
    		if (!match) {
    			return new Response("Not found", { status: 404 });
    		}

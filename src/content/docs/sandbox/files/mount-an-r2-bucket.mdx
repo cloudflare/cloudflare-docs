@@ -227,7 +227,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/jobs\/([a-z0-9-]+)(\/digest)?$/.exec(url.pathname);
+   		const match = /^\/jobs\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)(\/digest)?$/.exec(url.pathname);
 
    		if (!match) {
    			return new Response("Not found", { status: 404 });
