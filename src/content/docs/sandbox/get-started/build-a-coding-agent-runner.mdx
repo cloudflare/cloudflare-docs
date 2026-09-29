@@ -293,7 +293,7 @@ export type CommandResult = {
 export class AgentSandbox extends DurableObject<Env> {
 	private readonly container: Container;
 	private readonly files: Files;
-	private starting: Promise<void> | undefined;
+	private setup: Promise<void> | undefined;
 
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
@@ -424,23 +424,27 @@ export class AgentSandbox extends DurableObject<Env> {
 	}
 
 	private async startSandbox(): Promise<void> {
-		if (!this.container.running) {
-			// Requests that arrive during setup wait for the same setup.
-			this.starting ??= this.setUpSandbox().finally(() => {
-				this.starting = undefined;
+		// Set up each new container, and a running container
+		// after this Durable Object restarts.
+		if (this.setup === undefined || !this.container.running) {
+			this.setup = this.setUpSandbox().catch((error) => {
+				this.setup = undefined;
+				throw error;
 			});
 		}
 
-		await this.starting;
+		await this.setup;
 	}
 
 	private async setUpSandbox(): Promise<void> {
-		this.ctx.storage.kv.delete(taskKey);
-		this.container.start({
-			image: this.container.images.agent,
-			instance: "standard-1",
-			enableInternet: false,
-		});
+		if (!this.container.running) {
+			this.ctx.storage.kv.delete(taskKey);
+			this.container.start({
+				image: this.container.images.agent,
+				instance: "standard-1",
+				enableInternet: false,
+			});
+		}
 
 		try {
 			await this.container.interceptAllOutboundHttp(this.ctx.exports.Outbound);
@@ -590,6 +594,8 @@ Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific
 After each start, `startSandbox()` routes HTTP and HTTPS requests from the container on ports `80` and `443` to the `Outbound` entrypoint. The interception ends with the container, so `startSandbox()` registers it on every start. For more information, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps).
 
 `running` is `true` as soon as `start()` returns, before the interception is registered. A request that arrives during setup waits for the same `setUpSandbox()` call, so no command runs before the interception is in place. If a setup step fails, `setUpSandbox()` stops the container, and the next request starts a new one.
+
+A deploy restarts the Durable Object and can stop `setUpSandbox()` after `start()`. The restarted Durable Object runs `setUpSandbox()` again for the container that is already running. Registering an interception again replaces the earlier one, so the container gets its interception before the next command.
 
 Containers re-signs HTTPS traffic from the container with a Cloudflare certificate authority, so the `Outbound` entrypoint can read it. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests. `SSL_CERT_FILE`, `CURL_CA_BUNDLE`, and `GIT_SSL_CAINFO` replace the system trust store with that one certificate, which works only because the `Outbound` entrypoint receives every HTTPS request. If you copy them to a class that intercepts some hostnames only, add the certificate to the system trust store instead. For more information, refer to [Trust the CA certificate](/containers/configuration/outbound-traffic/#trust-the-ca-certificate).
 
