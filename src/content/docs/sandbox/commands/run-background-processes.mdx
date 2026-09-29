@@ -1,6 +1,6 @@
 ---
 title: Run background processes
-description: Start a process in a Linux sandbox that keeps running after the request ends, then check it, read its output, and stop it from later requests.
+description: Start a background process in a Linux sandbox, then check it, read its output, and stop it from later requests.
 pcx_content_type: how-to
 sidebar:
   order: 4
@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Start a process that keeps running after the request ends, such as a development server, a build, or an agent. Manage it from later requests by writing the process state to files in the sandbox. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
+Start a process that keeps running after the request ends, such as a development server, a build, or an agent. The process object that `exec()` returns belongs to the request that started it, so later requests manage the process through files in the sandbox. The process writes its process ID, output, and exit code to those files.
 
 ## Prerequisites
 
@@ -65,7 +65,7 @@ Start a process that keeps running after the request ends, such as a development
 
    </TypeScriptExample>
 
-   `setsid` starts the command in a new process group, so stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The exit code goes to a temporary file first and is then renamed, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+   `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
    Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that must be kept to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
@@ -223,7 +223,9 @@ Start a process that keeps running after the request ends, such as a development
    }
    ```
 
-   `follow()` sends the output so far, then new output until the process exits, when `tail --pid` stops. Each `data` event holds a JSON-encoded chunk of output, which can be part of a line or several lines, so a page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser). A disconnected client is noticed only when a write fails, so the comment every five seconds stops `tail` even when the log is quiet. Without it, `tail` keeps running until the process exits.
+   `follow()` sends the output so far, then new output until the process exits and `tail --pid` stops. Each `data` event holds a JSON-encoded chunk of output, which can be part of a line or several lines. A page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser).
+
+   `follow()` notices a disconnected client only when a write fails. The keep-alive comment every five seconds makes that write happen while the log is quiet, so `follow()` stops `tail`. Without the comment, `tail` keeps running until the process exits.
 
 5. Add a method that stops a process:
 
@@ -275,7 +277,7 @@ Start a process that keeps running after the request ends, such as a development
    }
    ```
 
-   A running process does not keep the container running. The alarm checks every process each minute, and each check sets the inactivity timeout again, so the container keeps running until the last process ends. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+   A running process does not keep the container running. The alarm checks every process each minute, and each check sets the 10-minute inactivity timeout again. The container stops 10 minutes after the alarm finds that the last process has ended. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
 
    When a process ends, the alarm writes a `process.ended` log to [Workers Logs](/workers/observability/logs/workers-logs/) within a minute. Replace the `console.log()` call with what your application does next, such as sending a notification.
 

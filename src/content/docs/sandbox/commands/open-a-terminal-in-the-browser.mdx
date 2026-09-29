@@ -22,7 +22,7 @@ import {
 } from "~/components";
 import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
 
-Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
+Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session. The shell keeps running when the page reloads or the connection drops.
 
 <BrowserTerminal
 	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
@@ -208,11 +208,11 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
    }
    ```
 
-   Each WebSocket gets its own tmux client. `pty` runs the client attached to a pseudo-terminal, and `tmux new-session -A` attaches it to the named session, or creates the session if it does not exist. The handler writes keystrokes to the client's standard input, applies resize messages, and forwards the client's output unchanged.
+   Each WebSocket gets its own tmux client. `pty` runs the client in a pseudo-terminal. `tmux new-session -A` attaches the client to the named session, or creates the session if it does not exist. The handler writes keystrokes to the standard input of the client, applies resize messages, and forwards the client output unchanged.
 
-   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle. The listeners never throw, because an exception in a listener closes the socket without running the `close` listener, which leaves the client running. The `close` listener skips a client that has already exited, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
+   The handler uses `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Hibernation would discard the process handle of the tmux client. Listeners must not throw. An exception in a listener closes the socket without running the `close` listener, which leaves the tmux client running. The `close` listener skips a client that has already exited, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
 
-   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), for example `user: "1000:1000"`, changes the Linux user of the shell. It does not limit what the shell can read or modify. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
 4. Add the terminal page:
 
@@ -293,7 +293,9 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
 
    </TypeScriptExample>
 
-   The page sends keystrokes as binary messages and window sizes as JSON text messages. When the connection drops, it reconnects after 1 second, doubling the delay up to 30 seconds, and gives up after 10 attempts. It does not reconnect after code `1000`, which means the session ended or the client detached. The page loads xterm.js from a CDN to keep the example in one file. In production, install `@xterm/xterm` and `@xterm/addon-fit` from npm and serve them with [static assets](/workers/static-assets/).
+   The page sends keystrokes as binary messages and window sizes as JSON text messages. When the connection drops, it reconnects after 1 second, doubling the delay up to 30 seconds, and gives up after 10 attempts. It does not reconnect after code `1000`, which means the session ended or the client detached.
+
+   The page loads xterm.js from a CDN. In production, install `@xterm/xterm` and `@xterm/addon-fit` from npm and serve them with [static assets](/workers/static-assets/).
 
 5. Add routes to your Worker that serve the page and pass the WebSocket to the sandbox:
 

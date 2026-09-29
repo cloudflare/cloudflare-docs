@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Show the output of a build, a test run, or another command in a browser while the command runs. The Durable Object sends standard output and standard error as [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), reports the exit code, and stops the command when the client disconnects.
+Show the output of a command in a browser while the command runs. The Durable Object sends standard output and standard error as [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), reports the exit code, and stops the command when the client disconnects.
 
 ## Prerequisites
 
@@ -107,7 +107,7 @@ Show the output of a build, a test run, or another command in a browser while th
    }
    ```
 
-   The method returns the response before the command finishes, and `pump()` writes each chunk as the process produces it. It reads standard output and standard error at the same time, because a stream that nobody reads can pause a process that keeps writing to it. `TextDecoderStream` keeps characters that span two chunks intact.
+   The method returns the response before the command finishes. `pump()` then writes each chunk as the process produces it. `pump()` reads standard output and standard error at the same time, because a stream that nobody reads can block a process that keeps writing to it. `TextDecoderStream` keeps characters that span two chunks intact.
 
    When the client disconnects, the next write fails and the method calls `kill()`, which sends `SIGTERM` to the command. The keep-alive comment every five seconds makes that write happen while the command is silent.
 
@@ -198,7 +198,7 @@ events.addEventListener("exit", (event) => {
 
 ## Stop a command after a time limit
 
-A disconnect stops only the process that `exec()` started, so processes that it starts, such as the commands in an `sh -c` script, keep the output streams open until they exit. To stop a command and every process it starts after a time limit, run it under GNU coreutils `timeout`:
+A disconnect stops only the process that `exec()` started. Processes that the command starts, such as the commands in an `sh -c` script, keep the output streams open until they exit. To stop a command and every process it starts after a time limit, run it under GNU coreutils `timeout`:
 
 ```ts
 const build = ["timeout", "--kill-after=5", "60", "sh", "-c", "npm test"];
