@@ -154,6 +154,8 @@ The runtime uses camel case (`memoryMib` and `diskMb`). Wrangler's application-l
 
 ### Start from an image or snapshot
 
+Snapshot creation and restore are only supported for applications that use the `durable_object` scheduling policy. Applications that use the `default` policy cannot create or restore snapshots.
+
 For a new filesystem, pass `image` to `ctx.container.start()`. To restore a full filesystem snapshot, pass `containerSnapshot` instead. `image` and `containerSnapshot` are mutually exclusive because a snapshot already identifies the filesystem to restore.
 
 Refer to [Snapshots](/containers/guides/snapshots/) for the complete save and restore flow.

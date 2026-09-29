@@ -107,7 +107,7 @@ Refer to [image management](/containers/guides/image-management/#use-pre-built-c
 All disk is ephemeral by default. When a Container instance goes to sleep, the
 next time it starts, it uses a fresh disk from the container image.
 
-If you need point-in-time filesystem state, create and restore a snapshot.
+If you need point-in-time filesystem state, Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) can create and restore a snapshot.
 Snapshots are immutable, so later file changes require a new snapshot. For more
 information, refer to [Snapshots](/containers/guides/snapshots/).
 
