@@ -189,6 +189,11 @@ Start a process that keeps running after the request ends, such as a development
    		const writer = writable.getWriter();
    		const encoder = new TextEncoder();
 
+   		const send = (event: string, data: unknown) =>
+   			writer.write(
+   				encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+   			);
+
    		let exited = false;
    		const markExited = () => {
    			exited = true;
@@ -213,8 +218,11 @@ Start a process that keeps running after the request ends, such as a development
    				for await (const text of process.stdout!.pipeThrough(
    					new TextDecoderStream(),
    				)) {
-   					await writer.write(encoder.encode(`data: ${JSON.stringify(text)}\n\n`));
+   					await send(stream, text);
    				}
+   				const ended = await this.status(id);
+   				const exitCode = ended?.state === "exited" ? ended.exitCode : null;
+   				await send("exit", { exitCode });
    				await writer.close();
    			} catch {
    				stop();
@@ -235,7 +243,7 @@ Start a process that keeps running after the request ends, such as a development
    }
    ```
 
-   `follow()` sends the output so far, then new output until the process exits and `tail --pid` stops. Each `data` event holds a JSON-encoded chunk of output, which can be part of a line or several lines. A page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser).
+   `follow()` sends the output so far, then new output until the process exits and `tail --pid` stops. Each event is named after the stream, and holds a JSON-encoded chunk of output, which can be part of a line or several lines. When the output ends, `follow()` sends an `exit` event with the exit code, or `null` when the process recorded none. A page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser).
 
    `follow()` notices a disconnected client only when a write fails. The keep-alive comment every five seconds makes that write happen while the log is quiet, so `follow()` stops `tail`. Without the comment, `tail` keeps running until the process exits.
 
@@ -298,6 +306,8 @@ Start a process that keeps running after the request ends, such as a development
    ```
 
    A running process does not keep the container running. The alarm checks every process each minute, and each check sets the 10-minute inactivity timeout again. The container stops 10 minutes after the alarm finds that the last process has ended. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+
+   A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the process checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
 
    When a process ends, the alarm writes a `process.ended` log to [Workers Logs](/workers/observability/logs/workers-logs/) within a minute. Replace the `console.log()` call with what your application does next, such as sending a notification.
 
@@ -392,11 +402,14 @@ Start a process that keeps running after the request ends, such as a development
     The first request prints the lines so far and ends. The second prints them as events, then a new event each second:
 
     ```txt output
-    data: "ready\n"
+    event: stdout
+    data: "ready\ntick 1\ntick 2\ntick 3\ntick 4\n"
 
-    data: "tick 1\n"
+    event: stdout
+    data: "tick 5\n"
 
-    data: "tick 2\n"
+    event: stdout
+    data: "tick 6\n"
     ```
 
     Add `stream=stderr` to the query to read standard error.
@@ -408,7 +421,14 @@ Start a process that keeps running after the request ends, such as a development
     curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker
     ```
 
-    The `DELETE` request responds with `202`, and the followed output ends:
+    The `DELETE` request responds with `202`. The followed output ends with an `exit` event:
+
+    ```txt output
+    event: exit
+    data: {"exitCode":143}
+    ```
+
+    The status shows the same exit code:
 
     ```json output
     { "state": "exited", "exitCode": 143 }

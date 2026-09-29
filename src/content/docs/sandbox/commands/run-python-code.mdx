@@ -159,7 +159,7 @@ Run Python code in a sandbox and return its output. The image sets the Python ve
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const match = /^\/sandboxes\/([a-z0-9-]+)\/python$/.exec(url.pathname);
+   		const match = /^\/sandboxes\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\/python$/.exec(url.pathname);
 
    		if (!match || request.method !== "POST") {
    			return new Response("Not found", { status: 404 });
@@ -227,7 +227,7 @@ To return an image, such as a `matplotlib` chart, have the code save it in `/wor
 2. In the `fetch()` handler of your Worker, after the line that parses `url`, add a route that returns the chart:
 
    ```ts title="src/index.ts"
-   const chart = /^\/sandboxes\/([a-z0-9-]+)\/chart\.png$/.exec(url.pathname);
+   const chart = /^\/sandboxes\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\/chart\.png$/.exec(url.pathname);
 
    if (chart) {
    	const png = await env.MY_CONTAINER.getByName(chart[1]).readFile("chart.png");

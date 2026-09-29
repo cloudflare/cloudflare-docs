@@ -110,6 +110,7 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
    				"clone",
    				"--depth=1",
    				`--branch=${revision}`,
+   				"--",
    				repository,
    				"/workspace",
    			]);
@@ -137,6 +138,8 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
    	}
    }
    ```
+
+   `--` stops `git` from reading a repository value that starts with `-` as an option.
 
    A step that runs longer than 10 minutes returns exit code `124`. `timeout` stops the step [together with every process the step started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The `finally` block stops the instance after the run.
 
