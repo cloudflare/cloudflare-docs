@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Let code in a sandbox call an API that needs a token, such as the GitHub API, while the token stays in your Worker. The sandbox gets a narrow way to use the token: a Worker entrypoint that checks each request and adds the token before sending it on.
+Let code in a sandbox call an API that needs a token, while the token stays in your Worker. Requests from the sandbox reach an entrypoint in your Worker, which allows only the requests you choose and adds the token. In this example, the code reads your profile from the GitHub API.
 
 ## Prerequisites
 
@@ -144,7 +144,7 @@ The container sends its request to `api.github.com` as usual. The Durable Object
    }
    ```
 
-   The intercept terminates TLS with a certificate that the container CA certificate signs, so the command receives the path of the certificate instead of the token. Node.js reads it from `NODE_EXTRA_CA_CERTS`. With `enableInternet: false`, the container can reach only the hostnames you intercept.
+   The intercept terminates TLS with a certificate that the container CA certificate signs. Node.js reads the CA certificate from the path in `NODE_EXTRA_CA_CERTS`. With `enableInternet: false`, the container can reach only the hostnames you intercept.
 
 3. Add a route to your Worker that returns the username:
 

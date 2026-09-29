@@ -21,11 +21,11 @@ import {
 } from "~/components";
 import { PreviewHostname } from "~/components/react/sandbox/PreviewHostname";
 
-Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser. On its own hostname, that code runs in a separate origin, so it cannot read your application pages or the storage of another preview. Paths also reach the server unchanged, so applications do not need a base path.
+Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser, and each preview hostname is a separate origin. Code in one preview cannot read your application pages or the storage of another preview. Paths reach the server unchanged, so applications do not need a base path.
 
 <PreviewHostname>
 
-In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route `*.example-previews.com/*` send the request to your Worker. Your Worker reads the sandbox name `ada` and calls `getByName("ada")`, and a name that is not a valid DNS label gets a `404`. The path `/app/` reaches the web server in the container unchanged, with the preview hostname in the `Host` header.
+In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route `*.example-previews.com/*` send the request to your Worker. Your Worker reads the sandbox name `ada` and calls `getByName("ada")`. A name that is not a valid DNS label gets a `404`. The path `/app/` reaches the web server in the container unchanged, with the preview hostname in the `Host` header.
 
 </PreviewHostname>
 
@@ -40,7 +40,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
 1. In the DNS settings of the preview domain, add a proxied [wildcard record](/dns/manage-dns-records/reference/wildcard-dns-records/). For example, add an `AAAA` record with the name `*` and the content `100::`, with the proxy status **Proxied**.
 
-   The record lets Cloudflare receive requests for every preview hostname. The Worker route handles those requests, so the address in the record is never contacted.
+   The record lets Cloudflare receive requests for every preview hostname. The Worker route handles those requests, so Cloudflare never contacts the address in the record.
 
 2. In `wrangler.jsonc`, add the preview domain as a variable and route its subdomains to the Worker. Replace `example-previews.com` with your preview domain:
 
@@ -99,7 +99,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
    </TypeScriptExample>
 
-   The Worker accepts only sandbox names that are valid DNS labels. It forwards the original URL with the `http:` scheme, so the server receives the full path and the preview hostname in the `Host` header.
+   The Worker accepts only sandbox names that are valid DNS labels. It forwards the original URL with the `http:` scheme, because `getTcpPort().fetch()` does not accept `https:` URLs. The server receives the full path and the preview hostname in the `Host` header.
 
    Every request to a preview hostname goes to the preview. Keep routes that manage previews, such as stopping one, on other hostnames, so code in a preview cannot call them from its own origin. Authenticate preview visitors on the preview hostname, and do not send your application session cookie there.
 
@@ -135,7 +135,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
 [Universal SSL](/ssl/edge-certificates/universal-ssl/) covers a domain and its first-level subdomains, such as `ada.example-previews.com`. It does not cover deeper hostnames such as `ada.previews.example.com`. To serve previews under a subdomain, add [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) for it.
 
-A preview domain that your application also uses shares cookies with it. Browsers send a cookie set with `Domain=example.com` to every subdomain, including every preview under `previews.example.com`.
+Previews under a domain that your application also uses share cookies with your application. Browsers send a cookie set with `Domain=example.com` to every subdomain, including every preview under `previews.example.com`.
 
 ## Set cookies on preview hostnames
 

@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Clone a private repository into a sandbox, such as for an agent that works on your code, while the access token stays in your Worker. A token in the clone URL would be readable by every command in the sandbox. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com` and delivers them to an entrypoint in your Worker, which checks each request and adds the token.
+Clone a private repository into a sandbox while the access token stays in your Worker. If the clone URL contains the token, every command in the sandbox can read it. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com`. An entrypoint in your Worker receives each request, checks it, and adds the token.
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
 
 <Steps>
 
-1. Create a `Dockerfile` in the project root with Git:
+1. Create a `Dockerfile` in the project root that installs Git:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -112,7 +112,7 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
 
    </TypeScriptExample>
 
-   `git-upload-pack` serves clones and fetches. The entrypoint rejects every other request, including `git-receive-pack` and other repositories, so code in the sandbox cannot push or read other repositories, even when the token allows it.
+   `git-upload-pack` serves clones and fetches. The entrypoint allows it for one repository and rejects every other request. Code in the sandbox cannot push through `git-receive-pack` or read other repositories, even when the token allows it.
 
 5. Add a method to your Durable Object that intercepts `github.com` and clones the repository:
 
@@ -159,7 +159,7 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
    }
    ```
 
-   The intercept terminates TLS with a certificate that the container CA certificate signs. Git reads that certificate from `GIT_SSL_CAINFO`, and prints its progress to standard error. With `enableInternet: false`, the container can reach only the hostnames you intercept.
+   The intercept terminates TLS with a certificate that the container CA certificate signs. Git reads the CA certificate from the path in `GIT_SSL_CAINFO`. Git prints its progress to standard error, which the method returns. With `enableInternet: false`, the container can reach only the hostnames you intercept.
 
 6. Add a route to your Worker that clones the repository:
 
@@ -171,7 +171,7 @@ Clone a private repository into a sandbox, such as for an agent that works on yo
    }
    ```
 
-   When Git fails, the route responds with `500` and the error from Git. A second request fails this way while the running sandbox still has the clone in `/workspace`.
+   When Git fails, the route responds with `500` and the error from Git. While the sandbox keeps running, a second request fails this way, because `/workspace` already holds the clone.
 
    Authenticate callers first, so other people cannot read the repository through the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
