@@ -1,0 +1,21 @@
+---
+title: Realtime SFU WebSocket adapter is generally available
+description: Connect WebSocket services to Realtime SFU media, with 15-second streaming reconnect and idempotent close.
+date: 2026-09-30
+---
+
+The Cloudflare Realtime SFU WebSocket adapter is generally available. Connect your service to SFU tracks to send or receive PCM audio, or receive video as JPEG frames, without implementing WebRTC.
+
+For WebRTC-to-WebSocket streaming, the automatic reconnect window increases from 5 to 15 seconds. The SFU retries the same endpoint after a disconnect. Create a new adapter if the window expires. Audio ingest does not automatically reconnect.
+
+Adapter close is idempotent. You can safely repeat a close request, including for an adapter that is already closed. Inspect each item's result and retry failed items with bounded backoff.
+
+A successful response for an already-closed adapter omits the byte count:
+
+```json
+{
+	"tracks": [{ "adapterId": "<ADAPTER_ID>" }]
+}
+```
+
+Refer to the [WebSocket adapter guide](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for endpoint setup, media formats, API examples, and recovery behavior.
