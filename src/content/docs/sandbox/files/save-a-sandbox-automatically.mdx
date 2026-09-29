@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps } from "~/components";
 
-Keep the files of a sandbox when it stops for inactivity, without a save request from your application. The Durable Object stops idle sandboxes itself: an alarm saves a Container snapshot, stops the Linux instance, and the next request starts a new instance from the snapshot.
+Save a sandbox before it stops for inactivity, so the next request finds the same files. An alarm in the Durable Object saves a Container snapshot of an idle sandbox and stops it. The next request starts the sandbox from the snapshot.
 
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
