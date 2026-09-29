@@ -519,11 +519,13 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
+   	private readonly files = new Files(this.container);
+
    	async runAgent(input: string): Promise<string | undefined> {
    		await this.ensureRunning();
 
    		const shell = new SandboxShell(this.container);
-   		const editor = new SandboxEditor(new Files(this.container));
+   		const editor = new SandboxEditor(this.files);
    		const agent = new Agent({
    			name: "Sandbox agent",
    			instructions: INSTRUCTIONS,
@@ -536,6 +538,8 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    ```
 
    Your Worker calls `runAgent()` on the stub that `getByName()` returns. The Agents SDK reads `OPENAI_API_KEY` from the environment, as it did in your Worker.
+
+   If your class already has the `files` field from [Change file calls](/sandbox/sdk/migrate/files/), keep one of the two.
 
 4. Check both classes without a model by calling them directly. `shell.run({ commands: ["pwd", "sleep 10"], timeoutMs: 2000 })` returns the working directory, then a timeout:
 

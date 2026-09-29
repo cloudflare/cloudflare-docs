@@ -64,10 +64,11 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	private get mounts(): S3Mount {
-   		const gateway = this.ctx.exports.S3Gateway;
-   		return new S3Mount(this.container, gateway);
-   	}
+   	// One S3Mount serves every container of this Durable Object.
+   	private readonly mounts = new S3Mount(
+   		this.container,
+   		this.ctx.exports.S3Gateway,
+   	);
 
    	private async mountData(): Promise<void> {
    		// The name that your Worker passed to getByName(),

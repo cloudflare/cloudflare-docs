@@ -84,21 +84,21 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    const EXPIRY_MARGIN_MS = 60 * 1000;
    ```
 
-5. Add a getter to `MySandbox` that creates `DirectoryBackup`:
+5. Add a `DirectoryBackup` field to `MySandbox`:
 
    ```ts title="src/index.ts"
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	private get backups(): DirectoryBackup {
-   		return new DirectoryBackup(
-   			this.container,
-   			this.ctx.exports.DirectoryBackupGateway,
-   			{ binding: "BACKUP_BUCKET", prefix: "backups/" },
-   		);
-   	}
+   	private readonly backups = new DirectoryBackup(
+   		this.container,
+   		this.ctx.exports.DirectoryBackupGateway,
+   		{ binding: "BACKUP_BUCKET", prefix: "backups/" },
+   	);
    }
    ```
+
+   `this.ctx.container` stays the same object for as long as the Durable Object runs, so one `DirectoryBackup` object serves every container that the Durable Object starts.
 
    If `startContainer()` registers a catch-all with `interceptAllOutboundHttp()`, as [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/) sets up, call `await this.backups.intercept()` in the `try` block of `startContainer()`, before the catch-all. Otherwise the catch-all receives backup traffic from the container, and backups and restores fail with `BACKUP_TRANSFER`. A container that was already running with the catch-all needs a restart. Refer to [`intercept()`](/sandbox/reference/directory-backups/#intercept).
 
