@@ -1443,6 +1443,58 @@ export class ChatRoom extends DurableObject<Env> {
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
 
+Use [`[shutdown]()`](/durable-objects/api/base/#shutdown) for a final best-effort checkpoint. Combine it with relaxed count-based or time-based checkpoints during normal requests.
+
+The following counter accepts the loss of increments since the previous checkpoint after an unexpected shutdown. It checkpoints every 100 increments and again during clean shutdown:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject, shutdown } from "cloudflare:workers";
+
+export interface Env {
+	COUNTER: DurableObjectNamespace<Counter>;
+}
+
+export class Counter extends DurableObject<Env> {
+	private count: number;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS counter (id INTEGER PRIMARY KEY, value INTEGER NOT NULL)"
+		);
+		this.ctx.storage.sql.exec(
+			"INSERT OR IGNORE INTO counter (id, value) VALUES (1, 0)"
+		);
+		this.count = this.ctx.storage.sql
+			.exec<{ value: number }>("SELECT value FROM counter WHERE id = 1")
+			.one().value;
+	}
+
+	increment() {
+		this.count++;
+		if (this.count % 100 === 0) {
+			this.checkpoint();
+		}
+		return this.count;
+	}
+
+	async [shutdown](info) {
+		console.log(`Shutting down: ${info.reason}`);
+		this.checkpoint();
+		await this.ctx.storage.put("lastShutdownReason", info.reason);
+	}
+
+	private checkpoint() {
+		this.ctx.storage.sql.exec(
+			"UPDATE counter SET value = ? WHERE id = 1",
+			this.count
+		);
+	}
+}
+```
+</TypeScriptExample>
+
 ## Anti-patterns to avoid
 
 ### Do not use a single Durable Object as a global singleton

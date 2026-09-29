@@ -306,6 +306,60 @@ class MyDurableObject(DurableObject):
 
 </TabItem> </Tabs>
 
+### `[shutdown]`
+
+:::note[Beta]
+Shutdown hooks are in Beta.
+:::
+
+Import the `shutdown` well-known symbol from `cloudflare:workers`. Define the hook with a computed method name, as shown in the example.
+
+- <code>[shutdown](info)</code>
+  : <Type text="void" /> | <Type text="Promise<void>" />
+  - Runs before idle eviction or a reset caused by a code update. Use this handler for best-effort clean shutdown logic, such as a final storage checkpoint.
+  - The hook is not guaranteed to run. It does not run after `ctx.abort()`, broken input or output gates, resource limit termination, loss of connectivity to the object's host, or a crash. Runtime process reloads and drains also do not trigger the hook.
+  - Once the hook starts, shutdown cannot be canceled. The instance receives no new requests, RPC calls, alarms, or WebSocket messages.
+  - A racing request waits for teardown and any pending storage writes to complete. The request then reaches the new instance.
+  - During code updates, the hook starts immediately and may run concurrently with in-flight requests already being processed; those requests continue until the hook's returned promise resolves. Account for changes made by those events.
+  - The runtime awaits the returned value, whether it is a promise or not. The handler has a 10-second wall-clock budget.
+  - After the hook finishes, throws an error, or times out, any storage writes it issued are still allowed to complete.
+  - The runtime logs rejections and timeouts, then continues shutdown. It does not retry the hook.
+  - The new instance's constructor starts after the previous instance's storage writes complete.
+  - The hook does not reset the inactivity timer.
+  - The hook runs before hibernatable WebSockets are hibernated. You can send a final message with `ws.send()`.
+  - During Beta, [Durable Object Facets](/dynamic-workers/usage/durable-object-facets/) are not supported.
+  - Local development follows the same behavior as production.
+  - The hook has no per-request `AsyncLocalStorage` context.
+  - The symbol is not exposed on a Durable Object stub. Therefore, callers cannot invoke the hook over RPC.
+  - Your code can call the symbol directly after importing it. Keep the hook idempotent and reentrant, or do not call it directly.
+
+#### Parameters
+
+- `info` - an object describing why shutdown is happening:
+  - `reason` <Type text="string"/> - `"inactive"` for idle eviction or `"codeUpdated"` for a code update. Handle unknown values because more reasons may be added.
+
+#### Return values
+
+- None.
+
+#### Example
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject, shutdown } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject<Env> {
+	async [shutdown](info) {
+		console.log(`Shutting down: ${info.reason}`);
+		await this.ctx.storage.put("lastShutdown", {
+			reason: info.reason,
+			timestamp: Date.now(),
+		});
+	}
+}
+```
+</TypeScriptExample>
+
 ## Properties
 
 ### `ctx`
@@ -321,3 +375,4 @@ class MyDurableObject(DurableObject):
 - [Use WebSockets](/durable-objects/best-practices/websockets/) for WebSocket handler best practices.
 - [Alarms API](/durable-objects/api/alarms/) for scheduling future work.
 - [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for type-safe method calls.
+- [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/#shutdown-notifications) for when `[shutdown]()` runs relative to eviction and code updates.
