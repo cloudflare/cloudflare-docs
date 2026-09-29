@@ -45,12 +45,12 @@ Use a cron expression in your Wrangler config to specify the schedule:
 			}
 		]
 	},
-	"migrations": [
-		{
-			"new_sqlite_classes": ["CronContainer"],
-			"tag": "v1"
+	"exports": {
+		"CronContainer": {
+			"type": "durable-object",
+			"storage": "sqlite"
 		}
-	]
+	}
 }
 ```
 
@@ -122,8 +122,10 @@ export default {
 		return new Response("This Worker runs a scheduled Container task.");
 	},
 
-	async scheduled(_controller: ScheduledController, env: Env): Promise<void> {
-		await env.CRON_CONTAINER.getByName("cron").run(new Date().toISOString());
+	async scheduled(controller: ScheduledController, env: Env): Promise<void> {
+		await env.CRON_CONTAINER
+			.getByName("cron")
+			.run(new Date(controller.scheduledTime).toISOString());
 	},
 };
 ```
@@ -153,11 +155,14 @@ export default {
 		return new Response("This Worker runs a cron job to execute a container on a schedule.");
 	},
 
-	async scheduled(_controller: ScheduledController, env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> }) {
+	async scheduled(
+		controller: ScheduledController,
+		env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> },
+	): Promise<void> {
 		const container = getContainer(env.CRON_CONTAINER);
 		await container.start({
 			envVars: {
-				MESSAGE: "Start Time: " + new Date().toISOString(),
+				MESSAGE: `Start Time: ${new Date(controller.scheduledTime).toISOString()}`,
 			},
 		});
 	},

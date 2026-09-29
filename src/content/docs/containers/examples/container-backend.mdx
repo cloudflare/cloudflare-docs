@@ -54,14 +54,12 @@ but you can select from one of many frontend frameworks. See our [Workers framew
       }
     ]
   },
-  "migrations": [
-    {
-      "new_sqlite_classes": [
-        "Backend"
-      ],
-      "tag": "v1"
+  "exports": {
+    "Backend": {
+      "type": "durable-object",
+      "storage": "sqlite"
     }
-  ]
+  }
 }
 ```
 </WranglerConfig>
@@ -151,7 +149,7 @@ Because `container.start()` does not wait for readiness, this example polls `GET
 <Tabs>
 	<TabItem label="Durable Object Container API">
 
-<TypeScriptExample filename="src/index.ts">
+<TypeScriptExample filename="src/index.ts" omitTabs={true}>
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
@@ -235,7 +233,7 @@ export default {
 	</TabItem>
 	<TabItem label="Container class">
 
-<TypeScriptExample filename="src/index.ts">
+<TypeScriptExample filename="src/index.ts" omitTabs={true}>
 ```ts
 import { Container, getRandom } from "@cloudflare/containers";
 
