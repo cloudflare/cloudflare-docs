@@ -56,7 +56,7 @@ There are three ways you can resolve this error:
 You can configure Cloudflare to send OPTIONS requests directly to your origin server. To bypass Access for OPTIONS requests:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
 3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 4. Turn on **Bypass options requests to origin**. This will remove all existing CORS settings for this application.
 
@@ -70,7 +70,7 @@ To configure how Cloudflare responds to preflight requests:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-2. Locate the origin that will be receiving OPTIONS requests and select **Configure**.
+2. Locate the origin that will be receiving OPTIONS requests and select **Edit**.
 
 3. Go to **Advanced settings** > **Cross-Origin Resource Sharing (CORS) settings**.
 
@@ -137,7 +137,7 @@ Follow [these instructions](/cloudflare-one/access-controls/service-credentials/
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
 
-2. Find your `api.mysite.com` application and select **Configure**.
+2. Find your `api.mysite.com` application and select **Edit**.
 
 3. Select the **Policies** tab.
 
