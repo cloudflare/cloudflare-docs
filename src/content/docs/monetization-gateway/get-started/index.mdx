@@ -14,21 +14,15 @@ Create a rule that charges matching requests for a resource.
 
 ## Review prerequisites
 
-Before setup, confirm that:
-
 - Your account and zone meet the [eligibility requirements](/monetization-gateway/eligibility/).
-- Your zone is proxied through Cloudflare.
 - You have a receiving wallet.
 
 ## Configure a payment rule
 
 <Steps>
-1. In Monetization Gateway, select the domain containing your resource.
+1. In Monetization Gateway, select the domain you'd like to monetize
 2. Select the receiving wallet for payments.
-3. Enter the URL that buyers request.
-
-	Enter the root domain to cover all subdomains and paths.
-
+3. Enter the URL for the request to be monetized.
 4. Select an audience:
 
 	- Select _Everyone_ to charge all matching traffic.
@@ -39,11 +33,13 @@ Before setup, confirm that:
 	- Select _Fixed_ to charge the same amount per request.
 	- Select _Variable_ to authorize a maximum amount.
 
-6. Enter the price in atomic units.
+6. Enter the price to be charged.
 
-	The minimum settlement amount is $0.001, or 1,000 atomic units.
+	The minimum amount is $0.001.
 </Steps>
 
 ## Continue configuration
 
-To refine matching traffic, refer to [Rules](/monetization-gateway/configuration/rules/). For variable pricing, configure [payment validation](/monetization-gateway/configuration/payment-validation/) at your origin.
+Configure [payment validation](/monetization-gateway/configuration/payment-validation/) at your origin.
+
+To refine matching traffic, refer to [Rules](/monetization-gateway/configuration/rules/).

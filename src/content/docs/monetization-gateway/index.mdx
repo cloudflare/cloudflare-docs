@@ -10,30 +10,31 @@ products:
 
 import { DirectoryListing } from "~/components";
 
-:::note[Public beta]
-Monetization Gateway is in public beta.
+:::note[Closed beta]
+Monetization Gateway is in closed beta.
 :::
 
-Monetization Gateway applies [x402](/agents/tools/payments/x402/) payment requirements to matching traffic. You define the request match, price, and receiving wallet.
+Monetization Gateway applies [x402](/agents/tools/payments/x402/) payment requirements to matching traffic. You define the shape of therequest to match, how much to charge for it, and the receiving wallet.
 
 Use Monetization Gateway to protect APIs, Model Context Protocol (MCP) tools, sites, and datasets. Buyers and sellers must be based in the United States.
 
 ## Protect resources
 
-You can match requests by URL, headers, and query parameters. Rules can charge every matching request or only verified bots.
+You can match requests by URL, headers, query parameters, or caller attributes. For example, payment rules can charge every caller or only verified bots.
 
-Payments happen within the HTTP request flow. Buyers do not use a checkout redirect or separate payment API.
+Payments happen within the HTTP request flow. Buyers simply sign a cryptographic payment authorization, no need for a checkout redirect or separate payment API call.
 
 ## Understand the payment flow
 
 1. A buyer requests a protected resource.
 2. Monetization Gateway returns payment requirements.
 3. The buyer signs an authorization and retries the request.
-4. Monetization Gateway verifies the authorization.
-5. The gateway settles through the Coinbase x402 Facilitator.
-6. The buyer receives the requested resource.
+4. Monetization Gateway verifies the authorized payment is valid.
+5. Your origin server receives the verified payment, produces a response.
+6. The gateway settles the payment through the Coinbase x402 Facilitator.
+7. The buyer receives the requested resource.
 
-For fixed pricing, the gateway settles the signed amount. For variable pricing, your origin reports the actual amount.
+For fixed pricing, the gateway settles the authorized signed amount. For variable pricing, your origin reports the actual amount.
 
 For request and response examples, refer to [x402 protocol](/monetization-gateway/x402/).
 
