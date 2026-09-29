@@ -1,6 +1,6 @@
 ---
 title: Move backups
-description: Replace @cloudflare/sandbox 0.12 createBackup() and restoreBackup() with DirectoryBackups, and convert the backups that 0.12 created.
+description: Replace @cloudflare/sandbox 0.12 createBackup() and restoreBackup() with DirectoryBackup, and convert the backups that 0.12 created.
 pcx_content_type: how-to
 sidebar:
   order: 14
@@ -13,7 +13,7 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-In Sandbox SDK 0.12, `createBackup()` saved a directory as a SquashFS image in the bucket bound as `BACKUP_BUCKET`, and `restoreBackup()` mounted that image over the directory. In 1.0, the `DirectoryBackups` class from `@cloudflare/sandbox` saves the directory to the same R2 binding as a compressed archive, and restores it as ordinary files. The code on this page keeps the 0.12 method names, options, and time to live, so the calls in your Worker barely change. The backups that 0.12 created convert to 1.0 backups the first time you restore them.
+In Sandbox SDK 0.12, `createBackup()` saved a directory as a SquashFS image in the bucket bound as `BACKUP_BUCKET`, and `restoreBackup()` mounted that image over the directory. In 1.0, the `DirectoryBackup` class from `@cloudflare/sandbox` saves the directory to the same R2 binding as a compressed archive, and restores it as ordinary files. The code on this page keeps the 0.12 method names, options, and time to live, so the calls in your Worker barely change. The backups that 0.12 created convert to 1.0 backups the first time you restore them.
 
 To save the whole filesystem instead of one directory, use a Container snapshot. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
@@ -21,7 +21,7 @@ To save the whole filesystem instead of one directory, use a Container snapshot.
 
 Your 1.0 class replaces the 0.12 `Sandbox` class. On this page it is `MySandbox`, with the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 
-This page replaces `createBackup()`, `restoreBackup()`, their options, and the backup errors. `DirectoryBackups` reaches R2 through `this.ctx.exports`, which is `undefined` before compatibility date `2025-11-17`, unless you add the `enable_ctx_exports` compatibility flag.
+This page replaces `createBackup()`, `restoreBackup()`, their options, and the backup errors. `DirectoryBackup` reaches R2 through `this.ctx.exports`, which is `undefined` before compatibility date `2025-11-17`, unless you add the `enable_ctx_exports` compatibility flag.
 
 ## Replace the backup calls
 
@@ -61,7 +61,10 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 4. Add these declarations to the top level of `src/index.ts`:
 
    ```ts title="src/index.ts"
-   import { type DirectoryBackup, DirectoryBackups } from "@cloudflare/sandbox";
+   import {
+   	DirectoryBackup,
+   	type DirectoryBackupRecord,
+   } from "@cloudflare/sandbox";
 
    export { DirectoryBackupGateway } from "@cloudflare/sandbox";
 
@@ -69,16 +72,16 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    const DEFAULT_TTL_SECONDS = 3 * 24 * 60 * 60;
 
    // The record your code stores in place of the 0.12 backup object.
-   type Backup = DirectoryBackup & { expiresAt: number };
+   type Backup = DirectoryBackupRecord & { expiresAt: number };
    ```
 
    The export gives the Durable Object `this.ctx.exports.DirectoryBackupGateway`, which moves each backup between the container and the bucket.
 
-5. Add a getter to `MySandbox` that creates `DirectoryBackups`:
+5. Add a getter to `MySandbox` that creates `DirectoryBackup`:
 
    ```ts title="src/index.ts"
-   private get backups(): DirectoryBackups {
-   	return new DirectoryBackups(
+   private get backups(): DirectoryBackup {
+   	return new DirectoryBackup(
    		this.container,
    		this.ctx.exports.DirectoryBackupGateway,
    		{ binding: "BACKUP_BUCKET", prefix: "backups/" },
@@ -162,24 +165,24 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
 Each 0.12 name has one of these replacements:
 
-| 0.12                                      | 1.0                                                                                                                                                                                                             |
-| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `dir`                                     | `dir`. 0.12 accepted only directories under `/workspace`, `/home`, `/tmp`, `/var/tmp`, and `/app`. `DirectoryBackups` accepts any absolute path, so check the directory in your code when a request chooses it. |
-| `name`                                    | `name`, stored in the record and in the custom metadata of the object                                                                                                                                           |
-| `ttl`                                     | `expiresAt` in the record. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`.                                                                            |
-| `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `/`, because a `.gitignore` pattern without a `/` matches at any depth.                                                            |
-| `gitignore`                               | `gitignore`. It applies the `.gitignore` files inside the directory and `.git/info/exclude`, and the image does not need `git`.                                                                                 |
-| `localBucket`, `multipart`, `compression` | Remove them. Every backup goes through the R2 binding in parts.                                                                                                                                                 |
-| `BackupNotFoundError`                     | `SandboxBackupError` with the code `BACKUP_NOT_FOUND`                                                                                                                                                           |
-| `BackupExpiredError`                      | The error that your `restoreBackup()` throws                                                                                                                                                                    |
-| `InvalidBackupConfigError`                | `TypeError`                                                                                                                                                                                                     |
-| `BackupCreateError`, `BackupRestoreError` | `SandboxFileError` for a Linux error, such as a directory that does not exist, or `SandboxBackupError` with the code `BACKUP_TRANSFER` or `BACKUP_INTEGRITY`                                                    |
+| 0.12                                      | 1.0                                                                                                                                                                                                            |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dir`                                     | `dir`. 0.12 accepted only directories under `/workspace`, `/home`, `/tmp`, `/var/tmp`, and `/app`. `DirectoryBackup` accepts any absolute path, so check the directory in your code when a request chooses it. |
+| `name`                                    | `name`, stored in the record and in the custom metadata of the object                                                                                                                                          |
+| `ttl`                                     | `expiresAt` in the record. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`.                                                                           |
+| `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `/`, because a `.gitignore` pattern without a `/` matches at any depth.                                                           |
+| `gitignore`                               | `gitignore`. It applies the `.gitignore` files inside the directory and `.git/info/exclude`, and the image does not need `git`.                                                                                |
+| `localBucket`, `multipart`, `compression` | Remove them. Every backup goes through the R2 binding in parts.                                                                                                                                                |
+| `BackupNotFoundError`                     | `SandboxBackupError` with the code `BACKUP_NOT_FOUND`                                                                                                                                                          |
+| `BackupExpiredError`                      | The error that your `restoreBackup()` throws                                                                                                                                                                   |
+| `InvalidBackupConfigError`                | `TypeError`                                                                                                                                                                                                    |
+| `BackupCreateError`, `BackupRestoreError` | `SandboxFileError` for a Linux error, such as a directory that does not exist, or `SandboxBackupError` with the code `BACKUP_TRANSFER` or `BACKUP_INTEGRITY`                                                   |
 
-For every error, refer to [DirectoryBackups errors](/sandbox/reference/directory-backups/#errors). For what a backup keeps, refer to [What a backup contains](/sandbox/reference/directory-backups/#what-a-backup-contains).
+For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors). For what a backup keeps, refer to [What a backup contains](/sandbox/reference/directory-backups/#what-a-backup-contains).
 
 ## Convert backups that 0.12 created
 
-0.12 stored each backup as `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` in the bucket, with presigned uploads and with `localBucket: true` alike. The objects stay in the bucket after you deploy 1.0, and the backup objects that your code stored stay where it stored them. To keep a backup, convert it the first time it is restored: extract the SquashFS image into the directory, then back up the directory with `DirectoryBackups`.
+0.12 stored each backup as `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` in the bucket, with presigned uploads and with `localBucket: true` alike. The objects stay in the bucket after you deploy 1.0, and the backup objects that your code stored stay where it stored them. To keep a backup, convert it the first time it is restored: extract the SquashFS image into the directory, then back up the directory with `DirectoryBackup`.
 
 <Steps>
 
@@ -249,6 +252,6 @@ A converted directory keeps its files, empty directories, symbolic links, hard l
 
 ## Related resources
 
-- [DirectoryBackups API](/sandbox/reference/directory-backups/)
+- [DirectoryBackup API](/sandbox/reference/directory-backups/)
 - [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/)
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/)

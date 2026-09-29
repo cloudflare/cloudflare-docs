@@ -45,7 +45,7 @@ The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`
    ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false > /var/log/dockerd.log 2>&1 & exec sleep infinity"]
    ```
 
-   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files` or `S3Mounts`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
+   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files` or `S3Mount`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
 
 2. Keep `enableInternet: true` in `start()`, so that Docker can pull images. 0.12 allowed Internet access by default.
 

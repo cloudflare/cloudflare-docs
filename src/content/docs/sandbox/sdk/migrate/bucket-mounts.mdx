@@ -1,6 +1,6 @@
 ---
 title: Move bucket mounts
-description: Replace @cloudflare/sandbox 0.12 mountBucket() and unmountBucket() with S3Mounts, which mounts the same prefix while S3Gateway in your Worker holds the credentials.
+description: Replace @cloudflare/sandbox 0.12 mountBucket() and unmountBucket() with S3Mount, which mounts the same prefix while S3Gateway in your Worker holds the credentials.
 pcx_content_type: how-to
 sidebar:
   order: 13
@@ -13,11 +13,11 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `mountBucket()` runs `s3fs` in the container, either with your bucket credentials in the container or through an R2 binding. In 1.0, `S3Mounts` runs `s3fs`, and `S3Gateway` in your Worker signs each storage request, so the container never holds credentials.
+In Sandbox SDK 0.12, `mountBucket()` runs `s3fs` in the container, either with your bucket credentials in the container or through an R2 binding. In 1.0, `S3Mount` runs `s3fs`, and `S3Gateway` in your Worker signs each storage request, so the container never holds credentials.
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mounts` uses. `S3Mounts` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mount` uses. `S3Mount` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
 
 This page replaces `mountBucket()`, `unmountBucket()`, their options, and their errors. [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/) builds the same mount from scratch, and this page links its configuration steps.
 
@@ -38,15 +38,15 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 
    ```ts title="src/index.ts"
    import {
-   	S3Mounts,
+   	S3Mount,
    	SandboxS3MountError,
    } from "@cloudflare/sandbox";
 
-   // S3Mounts sends each storage request to this entrypoint.
+   // S3Mount sends each storage request to this entrypoint.
    export { S3Gateway } from "@cloudflare/sandbox";
    ```
 
-   Then add the endpoint and name of the bucket as variables, and its credentials as secrets, as in steps 3 and 4 of [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/#mount-a-bucket-prefix). 0.12 read `AWS_*` and `R2_*` variables from the environment. `S3Mounts` uses only the credentials that you pass to it.
+   Then add the endpoint and name of the bucket as variables, and its credentials as secrets, as in steps 3 and 4 of [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/#mount-a-bucket-prefix). 0.12 read `AWS_*` and `R2_*` variables from the environment. `S3Mount` uses only the credentials that you pass to it.
 
    If your 0.12 code mounted through an R2 binding, calling `mountBucket()` with the binding name and no `endpoint`, create an [R2 API token](/r2/api/tokens/) with the **Object Read & Write** permission for that bucket. 1.0 cannot mount a bucket through a binding.
 
@@ -61,9 +61,9 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    ```
 
    ```ts title="src/index.ts (1.0)"
-   private get mounts(): S3Mounts {
+   private get mounts(): S3Mount {
    	const gateway = this.ctx.exports.S3Gateway;
-   	return new S3Mounts(this.container, gateway);
+   	return new S3Mount(this.container, gateway);
    }
 
    private async mountData(): Promise<void> {
@@ -98,9 +98,9 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
    | The `bucket` argument         | `source.bucket`                                                                                                           |
    | `endpoint`                    | `source.endpoint`, and `region`, which is `auto` for R2                                                                   |
-   | `prefix: "/jobs/ada/"`        | `keyPrefix: "jobs/ada"`. It cannot start with `/`, and `S3Mounts` adds the trailing `/`                                   |
+   | `prefix: "/jobs/ada/"`        | `keyPrefix: "jobs/ada"`. It cannot start with `/`, and `S3Mount` adds the trailing `/`                                   |
    | `readOnly: true`              | `access: "read-only"`. `access` is required                                                                               |
-   | `s3fsOptions: ["name=value"]` | `s3fsOptions: { name: "value" }`. `S3Mounts` always sets `nomixupload`, which 0.12 added only for R2, and rejects it here |
+   | `s3fsOptions: ["name=value"]` | `s3fsOptions: { name: "value" }`. `S3Mount` always sets `nomixupload`, which 0.12 added only for R2, and rejects it here |
    | `credentials`                 | `source.credentials`, with `type: "static"`                                                                               |
    | `provider`, `credentialProxy` | Remove them. `S3Gateway` signs every request                                                                              |
 
@@ -189,7 +189,7 @@ Each mount uses one of the [64 intercept targets](/containers/api/durable-object
 
 ## Replace localBucket
 
-0.12 mounted with `localBucket: true` under `wrangler dev` by copying files between the container and an R2 binding. `S3Mounts` works under `wrangler dev` with an S3-compatible server on your machine instead. Refer to [Develop locally](/sandbox/files/mount-an-r2-bucket/#develop-locally).
+0.12 mounted with `localBucket: true` under `wrangler dev` by copying files between the container and an R2 binding. `S3Mount` works under `wrangler dev` with an S3-compatible server on your machine instead. Refer to [Develop locally](/sandbox/files/mount-an-r2-bucket/#develop-locally).
 
 ## Mounts at the switch
 
@@ -214,6 +214,6 @@ drwxr-xr-x 1 root root 4096 Sep 27 20:11 sub
 ## Related resources
 
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/)
-- [S3Mounts API](/sandbox/reference/s3-mounts/)
+- [S3Mount API](/sandbox/reference/s3-mounts/)
 - [R2 API tokens](/r2/api/tokens/)
 - [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/)

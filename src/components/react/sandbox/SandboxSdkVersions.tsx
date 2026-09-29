@@ -5,7 +5,7 @@
 // running, previews, and backups. In 0.12 the package's Sandbox class does
 // them and a server from the package's image runs commands. In 1.0 your own
 // Durable Object does them, and the container runs your image, with the
-// package's helper only when you use Files or S3Mounts. Tinted cards are code
+// package's helper only when you use Files or S3Mount. Tinted cards are code
 // you write; the "from" line says the same in words. Static: the page
 // compares two designs, and nothing changes over time.
 import type { ReactNode } from "react";

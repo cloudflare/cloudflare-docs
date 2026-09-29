@@ -43,7 +43,7 @@ No shell reads a command. `exec()` takes an array of arguments and starts that p
 
 Your class decides how long a sandbox runs by setting the inactivity timeout on each request. A deploy does not replace running containers, so a new image applies only to containers that start later. So does code that your class runs when it starts a container, such as the outbound handlers it registers. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
-Your image provides every tool that your commands use. The 0.x image includes Python, Git, `curl`, `wget`, `jq`, `unzip`, and `ps`. `cloudflare/debian-trixie` and `node:24-trixie-slim`, which these pages use, include none of them. `Files` and `S3Mounts` also need the `sandbox-shim` helper in the image. For the `COPY` line, refer to [`@cloudflare/sandbox` requirements](/sandbox/reference/#requirements).
+Your image provides every tool that your commands use. The 0.x image includes Python, Git, `curl`, `wget`, `jq`, `unzip`, and `ps`. `cloudflare/debian-trixie` and `node:24-trixie-slim`, which these pages use, include none of them. `Files` and `S3Mount` also need the `sandbox-shim` helper in the image. For the `COPY` line, refer to [`@cloudflare/sandbox` requirements](/sandbox/reference/#requirements).
 
 The package writes nothing to Durable Object storage. A preview token, a process record, or a snapshot ID exists only if your class stores it. The keys that 0.x wrote stay in storage, and 1.0 code ignores them.
 

@@ -46,7 +46,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    CMD ["sleep", "infinity"]
    ```
 
-   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mounts` need `sandbox-shim`, and its tag matches the `@cloudflare/sandbox` version you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
+   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mount` need `sandbox-shim`, and its tag matches the `@cloudflare/sandbox` version you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
 
 3. Change the `containers` entry for your class in the Wrangler configuration. Keep your class name and its binding, so each name reaches the Durable Object and storage it reached in 0.12. Replace `my-worker-mysandbox-v2` with a name that your account does not use yet:
 
