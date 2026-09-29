@@ -204,6 +204,8 @@ To log failed connections, use [network session logs](/logs/logpush/logpush-job/
 | **Destination port**         | Destination port number for the packet.                                                                                                                    |
 | **Destination IP continent** | Continent code of the IP address for the packet's destination.                                                                                             |
 | **Destination IP country**   | Country code of the IP address for the packet's destination.                                                                                               |
+| **Traffic Source**           | How the traffic reached Cloudflare, such as the Cloudflare One Client, a [Cloudflare Mesh](/mesh/) node, or a [Workers VPC](/workers-vpc/) binding.       |
+| **Traffic Destination**      | How the traffic left Cloudflare, such as the Internet, a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), or a Mesh node.      |
 | **Transport protocol**       | Protocol over which the packet was sent.                                                                                                                   |
 | **Detected Protocol**        | The detected [network protocol](/cloudflare-one/traffic-policies/network-policies/protocol-detection/).                                                    |
 | **SNI**                      | Host whose Server Name Indication (SNI) header Gateway will filter traffic against.                                                                        |
