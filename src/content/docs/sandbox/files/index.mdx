@@ -13,9 +13,9 @@ products:
   - durable-objects
 ---
 
-An instance is the running Linux environment behind a sandbox name. Files on its disk end when the instance stops. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#files-and-processes-end-with-the-instance).
+Each sandbox name maps to a Durable Object, which starts a Linux instance when needed. When the instance stops, the files on its disk are deleted. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#files-and-processes-end-with-the-instance).
 
-To move files between your Worker and a running instance, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
+To move files between your Worker and a running instance, you can use the `Files` class from `@cloudflare/sandbox`. Refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/) for more information.
 
 ## Choose how to keep or share files
 
