@@ -223,7 +223,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    <PackageManagers pkg="@opencode-ai/sdk@1.18.32" />
 
-3. Replace `createOpencode()` with a method that starts the server once for each container:
+3. Replace `createOpencode()` with a method that starts the server once for each container. It uses the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server):
 
    ```ts title="src/index.ts (0.12)"
    const sandbox = getSandbox(env.Sandbox, "my-agent");
@@ -241,16 +241,18 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    } from "@opencode-ai/sdk/v2/client";
 
    const OPENCODE_PORT = 4096;
+   const OPENCODE_DIR = `${SERVERS}/opencode`;
 
    // Your OpenCode configuration, without apiKey values.
    const OPENCODE_CONFIG = {};
 
-   // Starts the server in the background and returns.
    const OPENCODE = [
-   	"sh",
-   	"-c",
-   	`setsid -f opencode serve --port ${OPENCODE_PORT} --hostname 0.0.0.0` +
-   		" > /var/log/opencode.log 2>&1",
+   	"opencode",
+   	"serve",
+   	"--port",
+   	String(OPENCODE_PORT),
+   	"--hostname",
+   	"0.0.0.0",
    ];
    ```
 
@@ -262,10 +264,9 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    	private async openCode(): Promise<OpencodeClient> {
    		await this.ensureRunning();
-   		const port = this.container.getTcpPort(OPENCODE_PORT);
 
    		if (!this.opencodeReady) {
-   			const start = await this.container.exec(OPENCODE, {
+   			await startServer(this.container, OPENCODE_DIR, OPENCODE, {
    				cwd: "/workspace",
    				env: {
    					...ENV,
@@ -274,30 +275,16 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    					ANTHROPIC_API_KEY: this.env.ANTHROPIC_API_KEY,
    				},
    			});
-   			await start.exitCode;
-
-   			const deadline = Date.now() + 30_000;
-
-   			while (!this.opencodeReady && Date.now() < deadline) {
-   				try {
-   					const response = await port.fetch(
-   						"http://opencode/",
-   						{ signal: AbortSignal.timeout(1_000) },
-   					);
-   					await response.body?.cancel();
-   					this.opencodeReady = true;
-   				} catch {
-   					await scheduler.wait(500);
-   				}
-   			}
-
-   			if (!this.opencodeReady) {
-   				throw new Error(
-   					"OpenCode did not start within 30 seconds",
-   				);
-   			}
+   			await waitForServer(
+   				this.container,
+   				OPENCODE_DIR,
+   				OPENCODE_PORT,
+   				30_000,
+   			);
+   			this.opencodeReady = true;
    		}
 
+   		const port = this.container.getTcpPort(OPENCODE_PORT);
    		return createOpencodeClient({
    			baseUrl: "http://opencode",
    			fetch: (request) => port.fetch(request),
@@ -319,7 +306,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    Remove `apiKey` from your OpenCode configuration, and store each key as a secret. Like 0.12, the method passes the configuration as `OPENCODE_CONFIG_CONTENT` and the key in a provider variable such as `ANTHROPIC_API_KEY`. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
 
-   Set `this.opencodeReady = false` in `startContainer()`, inside `if (newContainer)`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
+   Set `this.opencodeReady = false` in `startContainer()`, inside `if (newContainer)`, because a new container has no server. If your Durable Object restarts while the container runs, `startServer()` finds the server that already runs. Use the client in methods of your class, such as `createSession()`.
 
 4. Serve the OpenCode web UI from the `fetch()` handler of your Durable Object:
 

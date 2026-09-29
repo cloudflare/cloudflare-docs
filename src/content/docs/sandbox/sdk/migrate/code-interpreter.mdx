@@ -17,7 +17,7 @@ In Sandbox SDK 0.12, `runCode()` ran Python, JavaScript, and TypeScript in an in
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). To keep variables between calls, `src/index.ts` also needs the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server).
 
 A `runCode()` call without a `context` used a default context for its language, so plain calls in one sandbox shared variables:
 
@@ -200,8 +200,6 @@ A kernel is a Python process that runs the code of each call with IPython, and k
            pass
 
 
-   with open(f"/run/kernel-{PORT}.pid", "w") as file:
-       file.write(str(os.getpid()))
    signal.signal(signal.SIGINT, interrupt)
    # HTTPServer looks up the container hostname, which is too
    # long to resolve.
@@ -238,70 +236,58 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    	port: 8800,
    	cwd: "/workspace",
    };
+
+   // Each kernel runs as a server in its own directory.
+   const kernelDir = (context: CodeContext) =>
+   	`${SERVERS}/kernel-${context.port}`;
    ```
 
-4. Add methods to your class that start a kernel and send it a signal:
+4. Add methods to your class that start a kernel and interrupt it:
 
    ```ts title="src/index.ts"
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	// Ports of the kernels that this container runs.
+   	// Ports of the kernels that answered in this container.
    	private kernels = new Set<number>();
 
    	private async startKernel(
    		context: CodeContext,
    	): Promise<Fetcher> {
-   		const kernel = this.container.getTcpPort(context.port);
-
    		if (this.kernels.has(context.port)) {
-   			return kernel;
+   			return this.container.getTcpPort(context.port);
    		}
 
-   		const start = await this.container.exec(
-   			[
-   				"sh",
-   				"-c",
-   				`setsid -f python3 /opt/kernel.py ${context.port}` +
-   					` > /var/log/kernel-${context.port}.log 2>&1`,
-   			],
+   		await startServer(
+   			this.container,
+   			kernelDir(context),
+   			["python3", "/opt/kernel.py", String(context.port)],
    			{ cwd: context.cwd, env: { ...ENV, ...context.env } },
    		);
-   		await start.exitCode;
-
-   		const deadline = Date.now() + 30_000;
-
-   		while (Date.now() < deadline) {
-   			try {
-   				const response = await kernel.fetch("http://kernel/", {
-   					signal: AbortSignal.timeout(1_000),
-   				});
-   				await response.body?.cancel();
-   				this.kernels.add(context.port);
-   				return kernel;
-   			} catch {
-   				await scheduler.wait(500);
-   			}
-   		}
-
-   		throw new Error("The kernel did not start within 30 seconds");
+   		const kernel = await waitForServer(
+   			this.container,
+   			kernelDir(context),
+   			context.port,
+   			30_000,
+   		);
+   		this.kernels.add(context.port);
+   		return kernel;
    	}
 
-   	private async signalKernel(
-   		context: CodeContext,
-   		signal: "INT" | "TERM",
-   	): Promise<void> {
+   	private async interruptKernel(context: CodeContext): Promise<void> {
    		const kill = await this.container.exec([
    			"sh",
    			"-c",
-   			`kill -${signal} "$(cat /run/kernel-${context.port}.pid)"`,
+   			'kill -INT "$(cat "$1/pid")"',
+   			"sh",
+   			kernelDir(context),
    		]);
    		await kill.exitCode;
    	}
    }
    ```
 
-   Call `this.kernels.clear()` in `startContainer()`, inside `if (newContainer)`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
+   Call `this.kernels.clear()` in `startContainer()`, inside `if (newContainer)`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startServer()` finds the kernel that already runs, and the kernel keeps its variables. If a kernel exits, `waitForServer()` throws with the end of its log.
 
 5. Add a `runCode()` method:
 
@@ -329,7 +315,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    		} catch (error) {
    			if ((error as Error).name === "TimeoutError") {
    				// Stop the cell, and keep the kernel variables.
-   				await this.signalKernel(context, "INT");
+   				await this.interruptKernel(context);
    			} else {
    				// The kernel exited. The next call starts a new one.
    				this.kernels.delete(context.port);
@@ -400,7 +386,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    		const context = await this.getContext(id);
 
    		if (this.container.running) {
-   			await this.signalKernel(context, "TERM");
+   			await stopServer(this.container, kernelDir(context));
    			this.kernels.delete(context.port);
    		}
 

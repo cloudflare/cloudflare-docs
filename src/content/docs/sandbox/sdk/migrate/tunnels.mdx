@@ -18,7 +18,7 @@ Your Worker already routes requests to the container, so most tunnels can become
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `src/index.ts` has the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server), which start `cloudflared` and stop it.
 
 `startContainer()` must start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare. Code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
@@ -37,26 +37,19 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
    0.12 also ran version 2026.3.0. `cloudflared` needs the `ca-certificates` package, which the `Dockerfile` from Replace the Sandbox class installs.
 
-2. Add the scripts that run and stop `cloudflared` to the top level of `src/index.ts`. The names differ from the ones in [Run background processes](/sandbox/commands/run-background-processes/), so a class can have both:
+2. Add the scripts that check tunnels to the top level of `src/index.ts`:
 
    ```ts title="src/index.ts"
    const TUNNEL_ROOT = "/var/lib/tunnels";
    const QUICK_URL = "https://[a-z0-9-]+\\.trycloudflare\\.com";
 
-   // Runs cloudflared in its own process group, and records its PID.
-   const RUN_TUNNEL = `dir=$1; shift
-   mkdir -p "$dir"
-   setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" \\
-   	cloudflared tunnel --no-autoupdate "$@" >"$dir/log" 2>&1`;
-
-   // Prints "connected" and any quick tunnel URL, or "exited".
+   // Prints "connected" and any quick tunnel URL while cloudflared runs
+   // and serves requests.
    const TUNNEL_STATUS = `dir=$1
-   if grep -q 'Registered tunnel connection' "$dir/log" 2>/dev/null
+   pid=$(cat "$dir/pid" 2>/dev/null) && kill -0 "$pid" 2>/dev/null || exit 0
+   if grep -q 'Registered tunnel connection' "$dir/log"
    then
    	echo connected $(grep -o -m1 -E '${QUICK_URL}' "$dir/log")
-   elif [ -e "$dir/pid" ] && ! kill -0 "$(cat "$dir/pid")" 2>/dev/null
-   then
-   	echo exited
    fi`;
 
    // Prints the port and URL of each connected quick tunnel.
@@ -68,11 +61,6 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    		echo "$(basename "$dir") $2"
    done`;
 
-   // Stops the process group, and deletes the directory.
-   const STOP = `dir=$1
-   [ -e "$dir/pid" ] && kill -- "-$(cat "$dir/pid")" 2>/dev/null
-   rm -rf "$dir"`;
-
    async function capture(
    	container: Container,
    	argv: string[],
@@ -83,7 +71,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    }
    ```
 
-   Each tunnel keeps its process ID and log in a directory named after its port. `setsid` starts `cloudflared` in its own process group, so that `STOP` can end it. `cloudflared` logs `Registered tunnel connection` once the tunnel serves requests.
+   Each tunnel runs as a server in a directory named after its port. `cloudflared` logs `Registered tunnel connection` once the tunnel serves requests.
 
 3. Add a method that starts `cloudflared` and waits for it to connect, and a method that opens a quick tunnel, to your Durable Object class:
 
@@ -97,15 +85,9 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    		env: Record<string, string> = {},
    	): Promise<string> {
    		const dir = `${TUNNEL_ROOT}/${port}`;
-   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
-
-   		// Ignoring the output lets cloudflared outlive this request.
-   		const argv = ["sh", "-c", RUN_TUNNEL, "sh", dir, ...args];
-   		await this.container.exec(argv, {
-   			env,
-   			stdout: "ignore",
-   			stderr: "ignore",
-   		});
+   		const argv = ["cloudflared", "tunnel", "--no-autoupdate", ...args];
+   		await stopServer(this.container, dir);
+   		await startServer(this.container, dir, argv, { env });
 
    		const deadline = Date.now() + 30_000;
 
@@ -122,18 +104,16 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    				return status.slice("connected".length).trim();
    			}
 
-   			if (status === "exited") {
-   				const log = await capture(this.container, [
-   					"tail",
-   					`${dir}/log`,
-   				]);
+   			const log = await serverExited(this.container, dir);
+
+   			if (log !== undefined) {
    				throw new Error(`cloudflared exited: ${log}`);
    			}
 
    			await scheduler.wait(500);
    		}
 
-   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
+   		await stopServer(this.container, dir);
    		throw new Error("The tunnel did not connect within 30 seconds");
    	}
 
@@ -182,8 +162,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    			return;
    		}
 
-   		const dir = `${TUNNEL_ROOT}/${port}`;
-   		await capture(this.container, ["sh", "-c", STOP, "sh", dir]);
+   		await stopServer(this.container, `${TUNNEL_ROOT}/${port}`);
    	}
    }
    ```
@@ -375,4 +354,4 @@ Call `resumeTunnel(8080)`, and send the request again. The response comes from y
 - [Move preview URLs](/sandbox/sdk/migrate/preview-urls/)
 - [Quick tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
-- [Run background processes](/sandbox/commands/run-background-processes/)
+- [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)
