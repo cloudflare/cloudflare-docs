@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-This guide builds a Worker that starts a process that keeps running after the request ends, such as a development server, a build, or an agent, and manages it from later requests. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
+Start a process that keeps running after the request ends, such as a development server, a build, or an agent. The process object that `exec()` returns belongs to the request that started it, so later requests manage the process through files in the sandbox. The process writes its process ID, output, and exit code to those files.
 
 ## Prerequisites
 
@@ -67,7 +67,7 @@ This guide builds a Worker that starts a process that keeps running after the re
 
    `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
-   Each process keeps its files in its own directory under `/var/lib/processes` on an instance's disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that must be kept to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
+   Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that you want to keep to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
 2. Add a method to your Durable Object that starts a process:
 
@@ -422,7 +422,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
 
 <Steps>
 
-1. Add a script that checks a process's logs:
+1. Add a script that checks the logs of a process:
 
    <TypeScriptExample filename="src/index.ts">
 

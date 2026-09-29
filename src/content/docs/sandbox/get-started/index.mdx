@@ -104,7 +104,7 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    			container.start({
    				// Debian Trixie with Node.js 24
    				image: "cloudflare/debian-trixie",
-   				// Keep the Linux instance running so it can accept commands
+   				// Keep the instance running so it can accept commands
    				entrypoint: ["sleep", "infinity"],
    				// Block commands in the sandbox from reaching the Internet
    				enableInternet: false,

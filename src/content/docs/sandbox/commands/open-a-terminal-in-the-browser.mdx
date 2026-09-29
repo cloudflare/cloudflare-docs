@@ -22,7 +22,7 @@ import {
 } from "~/components";
 import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
 
-This guide builds a Worker that gives a person a live shell in a Linux sandbox from a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
+Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session. The shell keeps running when the page reloads or the connection drops.
 
 <BrowserTerminal
 	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
@@ -175,7 +175,7 @@ This guide builds a Worker that gives a person a live shell in a Linux sandbox f
    		const stdin = tmux.stdin!.getWriter();
 
    		// Listeners must not throw. An exception closes the socket without running
-   		// the `close` listener, which leaves the tmux client dangling
+   		// the `close` listener, which leaves the tmux client running.
    		server.addEventListener("message", (event) => {
    			if (typeof event.data === "string") {
    				try {
@@ -217,11 +217,13 @@ This guide builds a Worker that gives a person a live shell in a Linux sandbox f
    }
    ```
 
-   Each WebSocket gets its own tmux client, which `tmux new-session -A` attaches to the named session, or creates the session if it does not exist. The handler writes keystrokes to the client's standard input, applies resize messages, and forwards the client's output unchanged.
+   Each WebSocket gets its own tmux client. `tmux new-session -A` attaches the client to the named session, or creates the session if it does not exist. The handler writes keystrokes to the standard input of the client, applies resize messages, and forwards the client output unchanged.
 
-   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle.
+   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Hibernation would discard the process handle of the tmux client.
 
-   The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+   The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell. It does not limit what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+
+   The `close` listener skips a client that has already exited. For more information, refer to [Process lifetime](/containers/api/durable-object-container/#process-lifetime).
 
 4. Create a terminal page:
 
@@ -307,7 +309,7 @@ This guide builds a Worker that gives a person a live shell in a Linux sandbox f
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   const page = `[... HTML from above ...]`;
+   const page = `[... HTML from step 4 ...]`;
 
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {

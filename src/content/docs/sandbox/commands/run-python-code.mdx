@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-This guide builds a Worker that runs Python code in a Linux sandbox and returns what it prints. A Docker image sets the Python version and the packages the code can import, and files from each run stay in the sandbox for the next run.
+Run Python code in a sandbox and return its output. The image sets the Python version and the packages the code can import. Files that one run writes stay in the sandbox for the next run.
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ This guide builds a Worker that runs Python code in a Linux sandbox and returns 
 ## Run Python code
 
 <Steps>
-1. Create a file named `sales.py` with some Python code to run. This example uses `pandas`:
+1. Create a file named `sales.py` with the Python code to run. In this example, the code uses `pandas`:
 
    ```python title="sales.py"
    import pandas as pd
@@ -40,7 +40,7 @@ This guide builds a Worker that runs Python code in a Linux sandbox and returns 
    print(sales.groupby("city")["units"].sum())
    ```
 
-2. Create a `Dockerfile` in your project root that installs Python and a set of packages the code can import:
+2. Create a `Dockerfile` in your project root with Python and the packages the code can import:
 
    ```dockerfile title="Dockerfile"
    FROM python:3.13-slim
@@ -121,15 +121,15 @@ This guide builds a Worker that runs Python code in a Linux sandbox and returns 
    		// Each run is a new Python process, so variables do not carry over
    		const process = await container.exec(
    			[
-   				// GNU coreutils `timeout` stops code that runs longer than 60s,
+   				// GNU coreutils `timeout` stops code that runs longer than 60 seconds,
    				// together with every process the code starts
    				"timeout", "--kill-after=5", "60",
-   				// `python3 -` reads the code from stdin, which has no size limit
+   				// `python3 -` reads the code from standard input
    				"python3", "-",
    			],
    			{
    				stdin: new Response(code).body!,
-   				// Files written here stay until the Linux instance stops
+   				// Files that the code writes here stay until the instance stops
    				cwd: "/workspace",
    			},
    		);
@@ -146,6 +146,8 @@ This guide builds a Worker that runs Python code in a Linux sandbox and returns 
    	}
    }
    ```
+
+   For how `timeout` stops the processes that the code starts, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
    `output()` holds everything the code prints in the memory of the Durable Object. For code that prints a lot, [stream the output](/sandbox/commands/stream-command-output/) instead.
 
@@ -257,7 +259,7 @@ To return an image, such as a `matplotlib` chart, have the code save it in `/wor
 
 ## Run another language
 
-The same principles can be applied to run code in another language: start from an image that has it, and change the command that reads standard input. For example, use `FROM ruby:3.4-slim` and `["ruby", "-"]`, or `FROM node:24-slim` and `["node", "-"]`.
+To run another language, change the base image and the command that reads standard input. For example, use `FROM ruby:3.4-slim` and `["ruby", "-"]`, or `FROM node:24-slim` and `["node", "-"]`.
 
 ## Related resources
 

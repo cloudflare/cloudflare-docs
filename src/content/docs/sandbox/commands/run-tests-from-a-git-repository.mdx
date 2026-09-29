@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-This guide builds a Worker that runs a repository's tests in a fresh Linux sandbox, such as for each pull request or each change an agent makes. Its Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the Linux instance.
+Run the tests of a repository in a fresh sandbox. In this example, the Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the instance.
 
 ## Prerequisites
 
@@ -83,7 +83,7 @@ This guide builds a Worker that runs a repository's tests in a fresh Linux sandb
 
    		container.start({
    			image: container.images.tests,
-   			// needed for git, npm and tests. Do not pass secrets into this container
+   			// `git` and `npm` need the Internet. Do not pass credentials into this sandbox
    			enableInternet: true,
    		});
 
