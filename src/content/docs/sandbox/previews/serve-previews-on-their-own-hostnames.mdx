@@ -84,7 +84,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
    			const name = url.hostname.slice(0, -suffix.length);
 
    			// Accept only sandbox names that are valid DNS labels
-   			if (!/^[a-z0-9-]{1,63}$/.test(name)) {
+   			if (!/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(name)) {
    				return new Response("Not found", { status: 404 });
    			}
 

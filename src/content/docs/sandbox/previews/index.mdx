@@ -171,7 +171,7 @@ Use a browser to open a web server that runs in a sandbox. The server has no pub
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
-   		const preview = /^\/previews\/([a-z0-9-]+)(\/.*)?$/.exec(url.pathname);
+   		const preview = /^\/previews\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)(\/.*)?$/.exec(url.pathname);
 
    		if (!preview) {
    			return new Response("Not found", { status: 404 });
@@ -187,7 +187,7 @@ Use a browser to open a web server that runs in a sandbox. The server has no pub
 
    The server receives each path without the `/previews/<NAME>` prefix. Links that start with `/` leave the preview, so use relative links or [serve each preview on its own hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/).
 
-   In this example, the route reads the sandbox name from the URL. The pattern accepts only lowercase letters, digits, and hyphens. An encoded `/` does not match, so this route cannot reach a sandbox that another route names with a `/`, such as `<OWNER>/<SESSION>`.
+   In this example, the route reads the sandbox name from the URL. The pattern accepts only names that are valid DNS labels: 1 to 63 lowercase letters, digits, and hyphens, with no hyphen at either end. A name that this route accepts can also be a [preview hostname](/sandbox/previews/serve-previews-on-their-own-hostnames/). An encoded `/` does not match, so this route cannot reach a sandbox that another route names with a `/`, such as `<OWNER>/<SESSION>`.
 
    Authenticate callers before they reach a preview. Serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk).
 
@@ -332,7 +332,7 @@ Give someone access to one preview for a limited time. In this example, the Dura
 2. In the `fetch()` handler of your Worker, add routes that create a link and serve shared previews, before the `404` response:
 
    ```ts title="src/index.ts"
-   const share = /^\/shares\/([a-z0-9-]+)$/.exec(url.pathname);
+   const share = /^\/shares\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)$/.exec(url.pathname);
 
    if (share && request.method === "POST") {
    	const sandbox = env.MY_CONTAINER.getByName(share[1]);
@@ -340,7 +340,7 @@ Give someone access to one preview for a limited time. In this example, the Dura
    	return Response.json({ url: `${url.origin}/shared/${share[1]}/${token}/` });
    }
 
-   const shared = /^\/shared\/([a-z0-9-]+)\/([^/]+)(\/.*)?$/.exec(url.pathname);
+   const shared = /^\/shared\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)\/([^/]+)(\/.*)?$/.exec(url.pathname);
 
    if (shared) {
    	const sandbox = env.MY_CONTAINER.getByName(shared[1]);
