@@ -57,7 +57,7 @@ This page replaces `terminal()`, `session.terminal()`, `proxyTerminal()`, and `S
    );
    ```
 
-   0.12 started each shell in `/workspace`, with the variables from `envVars` and from the `ENV` lines of the image. `exec()` inherits neither, so add any image variables that your shells need to `ENV`.
+   0.12 started each shell in `/workspace`, with the variables from `envVars` and from the `ENV` lines of the image. `exec()` inherits only `PATH` from either, so add any other image variables that your shells need to `ENV`.
 
 3. Send the message that 0.12 clients wait for, right after `accept()`:
 

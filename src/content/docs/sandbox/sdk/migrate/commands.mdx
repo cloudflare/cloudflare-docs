@@ -42,7 +42,7 @@ if (result.exitCode !== 0) {
 }
 ```
 
-`exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets. `output()` waits for the process to exit, and returns its output as bytes. As in 0.12, a non-zero exit code does not throw.
+`exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets, except `PATH`. `output()` waits for the process to exit, and returns its output as bytes. As in 0.12, a non-zero exit code does not throw.
 
 `exec()` runs the command without a shell. For pipes, redirects, and variables, run the 0.12 string with `bash`:
 

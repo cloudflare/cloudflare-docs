@@ -166,7 +166,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    | --- | --- |
    | `sleepAfter` | `setInactivityTimeout()` after `start()`, and again in the constructor. |
    | `keepAlive` | An [alarm](/durable-objects/api/alarms/) that runs more often than the inactivity timeout while work remains. |
-   | `envVars`, `setEnvVars()` | `env` on `start()` for the main process, and `env` on each `exec()` call. Commands do not inherit the `start()` variables. |
+   | `envVars`, `setEnvVars()` | `env` on `start()` for the main process, and `env` on each `exec()` call. Commands do not inherit the `start()` variables, except `PATH`. |
    | `entrypoint` | `entrypoint` on `start()`, or `CMD` in the image. |
    | `enableInternet` | `enableInternet` on `start()`, which every call must pass. 0.12 defaulted to `true`. |
    | `labels`, `setLabels()` | `labels` on `start()`. |

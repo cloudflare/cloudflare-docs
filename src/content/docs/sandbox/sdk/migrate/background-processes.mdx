@@ -60,7 +60,7 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
    }
    ```
 
-   0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets.
+   0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets, except `PATH`.
 
 3. In `status()`, replace `10 * 60 * 1000` with `INACTIVITY_TIMEOUT_MS`, so that each check keeps your inactivity timeout.
 
