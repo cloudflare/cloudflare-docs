@@ -105,7 +105,7 @@ This location will again be the nearest location to the originating request with
 
 ### Container runtime
 
-Each container instance runs in a Firecracker microVM. The VM has its own kernel and network, so the instance does not share a kernel with other workloads on Cloudflare's network. Your image runs as a Linux container inside the VM.
+Each container instance runs in a Firecracker microVM with its own kernel and network. No other workload on the Cloudflare network shares that kernel. Your image runs as a Linux container inside the VM.
 
 Containers should be built for the `linux/amd64` architecture, and should stay within
 [size limits](/containers/platform/limits/).

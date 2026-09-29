@@ -32,7 +32,7 @@ export class MyContainer extends Container {
 }
 ```
 
-When `enableInternet` is `false`, only traffic that `allowedHosts` or an outbound handler allows can leave the container. Only ports `80` and `443` are available, and your outbound configuration decides which DNS lookups resolve. For more information, refer to [Non-HTTP traffic](#non-http-traffic).
+When `enableInternet` is `false`, only traffic that `allowedHosts` or an outbound handler allows can leave the container. Only ports `80` and `443` are available. Your outbound configuration decides which DNS lookups resolve. For more information, refer to [Non-HTTP traffic](#non-http-traffic).
 
 :::note
 `enableInternet` takes effect when the container starts. Changes to `outbound` handlers and related outbound policies can affect a live-running container without restarting it.
@@ -65,7 +65,7 @@ export class MyContainer extends Container {
 ```
 
 :::caution
-`deniedHosts` applies to HTTP on port `80` and, with `interceptHttps = true`, HTTPS on port `443`. While `enableInternet` is `true`, connections to other ports skip it. To block a destination on every port, set `enableInternet = false` and allow only what the container needs.
+`deniedHosts` applies to HTTP on port `80`. With `interceptHttps = true`, it also applies to HTTPS on port `443`. While `enableInternet` is `true`, connections to other ports bypass `deniedHosts`. To block a destination on every port, set `enableInternet = false` and allow only what the container needs.
 :::
 
 You can also disable internet access by default, but allow specific hosts and IPs:
@@ -306,7 +306,7 @@ HTTP communication to the outbound handler is encrypted by the networking stack.
 
 Outbound handlers only intercept HTTP and HTTPS traffic. Traffic on ports other than `80` and `443` is never routed through `outbound` or `outboundByHost`.
 
-If you set `enableInternet = false`, that traffic is denied. DNS lookups never reach a public resolver, so DNS cannot carry data out of the container. The container network answers only lookups for hostnames that your outbound configuration covers, with a placeholder address that routes the request to your Worker. Which hostnames resolve depends on the properties you set:
+If you set `enableInternet = false`, that traffic is denied. DNS lookups never reach a public resolver, so DNS cannot carry data out of the container. The container network answers lookups only for hostnames that your outbound configuration covers. Each answer is a placeholder address that routes the request to your Worker. The properties you set decide which hostnames resolve:
 
 - With `allowedHosts`, `deniedHosts`, or `outbound` set, every hostname resolves, and your Worker allows or blocks each request.
 - With only `outboundByHost` set, only its hostnames resolve.

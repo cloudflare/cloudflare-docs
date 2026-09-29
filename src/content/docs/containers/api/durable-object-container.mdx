@@ -82,7 +82,7 @@ this.ctx.container.running;
 
 `start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
 
-`start()` returns after it validates its options. Use [`monitor()`](#monitor) to catch errors after that, including a container that fails to start.
+`start()` returns once it validates its options. To catch later errors, including a container that fails to start, use [`monitor()`](#monitor).
 
 The required options depend on the application's scheduling policy.
 
@@ -217,7 +217,7 @@ Pass both IDs in `user`. A user ID without a group ID runs the process as `root`
 `user` does not restrict a process in a deployed container with the `durable_object` scheduling policy. Every process has the same Linux capabilities as `root`, regardless of user. File permissions do not stop the process, and it can switch back to `root`. The IDs set the owner of files that the process creates. In containers with the [`default` scheduling policy](/containers/configuration/scheduling-policy/), other users have no capabilities, and file permissions apply.
 :::
 
-With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, which is the default. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
+With `pty`, `stdin` defaults to `"pipe"`, and `stderr` defaults to `"combined"` and cannot take another value. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
 
 #### Return values
 
@@ -249,11 +249,11 @@ The Workers TypeScript types declare `stdin`, `stdout`, and `stderr` as `| null`
 
 `exec()` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
-`kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running, and `output()` waits until they exit. To stop them too, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
+`kill()` and `signal` reach only the process that `exec()` started. Processes that this process starts, such as the commands in a `bash -c` script, keep running. `output()` waits until they exit. To stop them too, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
-A process keeps running when the request that started it is canceled, so a client that retries starts a second copy of the command. For more information, refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects).
+A process keeps running when the request that started it is canceled. If the client retries, a second copy of the command runs. For more information, refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects).
 
-To stop the process when the client disconnects, pass the incoming request from your Worker to `fetch()` on the Durable Object stub, and abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
+To stop the process when the client disconnects, pass the incoming request from your Worker to `fetch()` on the Durable Object stub. Then abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
 
 <TypeScriptExample omitTabs>
 
@@ -288,7 +288,9 @@ export class MyContainer extends DurableObject {
 {/* Remove this caution when signaling a process that has exited no longer raises an internal error. */}
 
 :::caution
-Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits raises an uncaught `internal error` in the Durable Object. `AbortSignal.timeout()` and `request.signal` can fire after the process exits, so do not pass them to `exec()` directly. Pass the signal of an `AbortController` instead. Once `exitCode` resolves, stop calling `abort()`, for example by clearing the timer or removing the `abort` listener from `request.signal`.
+Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits raises an uncaught `internal error` in the Durable Object.
+
+Do not pass `AbortSignal.timeout()` or `request.signal` to `exec()` directly, because either can fire after the process exits. Pass the signal of an `AbortController` instead. Once `exitCode` resolves, stop anything that calls `abort()`, for example by clearing the timer or removing the `abort` listener from `request.signal`.
 :::
 
 #### Exceptions
@@ -373,7 +375,7 @@ this.ctx.container.signal(SIGTERM);
 
 ### `setInactivityTimeout`
 
-`setInactivityTimeout()` sets how long a container keeps running after its Durable Object becomes inactive. If the Durable Object handles another request before the timeout ends, it controls the same running container. Otherwise, Cloudflare stops the container. Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive.
+`setInactivityTimeout()` sets how long a container keeps running after its Durable Object becomes inactive. If the Durable Object handles another request before the timeout ends, the same container is still running. Otherwise, Cloudflare stops the container. Without a timeout, Cloudflare stops the container shortly after the Durable Object becomes inactive.
 
 Each Durable Object instance sets its own timeout. A Durable Object that restarts, for example after a deploy, starts without one. Set the timeout after `start()`, and set it again in the constructor when the container is already running.
 
@@ -501,7 +503,7 @@ class MyDurableObject extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-A `monitor()` promise belongs to one Durable Object instance. After a restart, such as a deploy, the new instance has no earlier promise. If `running` is `true` when the Durable Object starts, call `monitor()` again to observe the container.
+A `monitor()` promise does not carry over when the Durable Object restarts, for example after a deploy. If `running` is `true` when the Durable Object starts, call `monitor()` again to observe the container.
 
 #### Parameters
 
@@ -509,7 +511,7 @@ A `monitor()` promise belongs to one Durable Object instance. After a restart, s
 
 #### Return values
 
-- `Promise<void>`: Settles when the container stops. If the container already stopped, the promise settles with how it stopped:
+- `Promise<void>`: Settles when the container stops, including a container that stopped before the call. The outcome depends on how the container stopped:
   - It resolves when the main process exits with code `0`, or when `destroy()` stops the container without an error value.
   - It rejects with an `Error` that has an `exitCode` property when the main process exits with another code.
   - It rejects with the value passed to `destroy()`, when there is one.
@@ -556,9 +558,9 @@ A container has 128 intercept entries, which `interceptOutboundHttp()`, `interce
 - An IP address, IP:port, or CIDR range uses one entry.
 - The `interceptAllOutboundHttp()` rule uses two entries.
 
-A hostname intercepted for both HTTP and HTTPS is two targets and uses four entries. So a container can hold up to 64 hostname targets, or up to 128 IP address and CIDR targets. Registering an existing target again uses no more entries.
+A hostname intercepted for both HTTP and HTTPS is two targets and uses four entries. A container can hold up to 64 hostname targets, or up to 128 IP address and CIDR targets. Registering an existing target again uses no more entries.
 
-An intercept cannot be removed while the container runs. To route a changing set of hostnames, register `interceptAllOutboundHttp()` or the `*` target once, and choose the behavior for each hostname inside the `WorkerEntrypoint`, for example from its props. Registering the rule again with new props replaces them.
+You cannot remove an intercept while the container runs. To route a changing set of hostnames, register `interceptAllOutboundHttp()` or the `*` target once. Then choose the behavior for each hostname inside the `WorkerEntrypoint`, for example from its props. To change the props, register the rule again with new props.
 
 When a new target does not fit, awaiting the call throws an `Error` with the message `You can't configure more than 128 egress interceptors`. Intercepts registered earlier keep working.
 
@@ -579,9 +581,9 @@ When a new target does not fit, awaiting the call throws an `Error` with the mes
 
 `interceptAllOutboundHttp()` routes outbound HTTP requests on port `80` from the container through a `Fetcher`, regardless of destination.
 
-Connections to other ports, including HTTPS on port `443`, are not intercepted. To intercept HTTPS as well, also register [`interceptOutboundHttps("*")`](#interceptoutboundhttps). In a container started with `enableInternet: true`, connections that no intercept covers reach the Internet directly. To block them, start the container with `enableInternet: false`.
+This rule does not intercept other ports, including HTTPS on port `443`. To intercept HTTPS as well, also register [`interceptOutboundHttps("*")`](#interceptoutboundhttps). In a container started with `enableInternet: true`, connections that no intercept covers reach the Internet directly. To block them, start the container with `enableInternet: false`.
 
-Register hostname intercepts before `interceptAllOutboundHttp()`. A hostname that [`interceptOutboundHttp()`](#interceptoutboundhttp) registers first keeps its requests, including after you register this rule again. A hostname registered after this rule never receives requests, because this rule handles them.
+Register hostname intercepts before `interceptAllOutboundHttp()`. A hostname intercept that [`interceptOutboundHttp()`](#interceptoutboundhttp) registers first keeps receiving its requests, even after you register this rule again. A hostname intercept registered after this rule receives no requests.
 
 ```js
 await this.ctx.container.interceptAllOutboundHttp(worker);
@@ -618,7 +620,7 @@ await this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 await this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
-Only HTTPS on port `443` is intercepted. Matching uses the hostname the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while `*` is intercepted.
+`interceptOutboundHttps()` intercepts only HTTPS on port `443`. It matches the hostname that the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while a `*` intercept is registered.
 
 #### Parameters
 

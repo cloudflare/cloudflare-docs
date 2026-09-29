@@ -447,7 +447,7 @@ Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pa
 
 ### Stop the processes a command starts
 
-`kill()` signals only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit.
+`kill()` signals only the process that `exec()` started. Processes that this process starts, such as the commands in a `bash -c` script, keep running after `exitCode` resolves. `output()` waits until they exit.
 
 To stop a command together with the processes it starts, run it under GNU coreutils `timeout`. The image must include `timeout`.
 
