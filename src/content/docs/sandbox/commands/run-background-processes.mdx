@@ -30,6 +30,7 @@ Start a process that keeps running after the request ends, such as a development
 
    ```ts
    const ROOT = "/var/lib/processes";
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    // Runs the command in its own process group. Records its process ID when
    // it starts and its exit code when it ends.
@@ -52,8 +53,8 @@ Start a process that keeps running after the request ends, such as a development
    	| { state: "running"; pid: number }
    	| { state: "exited"; exitCode: number };
 
-   async function run(container: Container, argv: string[], signal?: AbortSignal) {
-   	const process = await container.exec(argv, { signal });
+   async function run(container: Container, argv: string[]) {
+   	const process = await container.exec(argv);
    	const output = await process.output();
 
    	return {
@@ -69,7 +70,23 @@ Start a process that keeps running after the request ends, such as a development
 
    Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that you want to keep to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
-2. Add a method to your Durable Object that starts a process:
+2. Add a constructor to your Durable Object. It sets the inactivity timeout again when a restarted Durable Object finds the container running:
+
+   ```ts title="src/index.ts"
+   export class MyContainer extends DurableObject<Env> {
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+   }
+   ```
+
+   Then add a method that starts a process:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -88,9 +105,8 @@ Start a process that keeps running after the request ends, such as a development
    				entrypoint: ["sleep", "infinity"],
    				enableInternet: false,
    			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    		}
-
-   		await container.setInactivityTimeout(10 * 60 * 1000);
 
    		// mkdir fails when another process already uses the ID.
    		const dir = `${ROOT}/${id}`;
@@ -126,8 +142,6 @@ Start a process that keeps running after the request ends, such as a development
    		if (!container?.running) {
    			return undefined;
    		}
-
-   		await container.setInactivityTimeout(10 * 60 * 1000);
 
    		const { stdout } = await run(container, [
    			"sh",
@@ -305,7 +319,7 @@ Start a process that keeps running after the request ends, such as a development
    }
    ```
 
-   A running process does not keep the container running. The alarm checks every process each minute, and each check sets the 10-minute inactivity timeout again. The container stops 10 minutes after the alarm finds that the last process has ended. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+   A running process does not keep the container running. The alarm checks every process each minute, and each alarm keeps the container running. A Durable Object that restarted between alarms sets the 10-minute inactivity timeout again in its constructor. The container stops 10 minutes after the alarm finds that the last process has ended. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
 
    A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the process checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
 
@@ -476,29 +490,37 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    			return undefined;
    		}
 
-   		const abort = new AbortController();
-   		const timer = setTimeout(() => abort.abort(), timeoutMs);
+   		const result = await run(container, [
+   			"timeout",
+   			"--kill-after=5",
+   			`${timeoutMs / 1000}`,
+   			"sh",
+   			"-c",
+   			WAIT,
+   			"sh",
+   			`${ROOT}/${id}`,
+   			pattern,
+   		]);
 
-   		try {
-   			const result = await run(
-   				container,
-   				["sh", "-c", WAIT, "sh", `${ROOT}/${id}`, pattern],
-   				abort.signal,
-   			);
-
-   			if (result.exitCode === 0) {
-   				return { state: "matched", line: result.stdout.trimEnd() };
-   			}
-
-   			return { state: result.exitCode === 3 ? "exited" : "timed-out" };
-   		} finally {
-   			clearTimeout(timer);
+   		if (result.exitCode === 0) {
+   			return { state: "matched", line: result.stdout.trimEnd() };
    		}
+
+   		if (result.exitCode === 3) {
+   			return { state: "exited" };
+   		}
+
+   		// 124 when the time limit passes, or 137 if timeout also sends SIGKILL.
+   		if (result.exitCode === 124 || result.exitCode === 137) {
+   			return { state: "timed-out" };
+   		}
+
+   		throw new Error(`The log check failed with exit code ${result.exitCode}`);
    	}
    }
    ```
 
-   The method clears the timer when the wait ends, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
+   `timeout` stops the script when the time limit passes. If the script is still running five seconds later, `--kill-after=5` stops it with `SIGKILL`.
 
 3. Call it after `startProcess()`, for example with the pattern `^ready`:
 
