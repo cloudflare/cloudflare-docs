@@ -98,6 +98,42 @@ To update a named image, change its Dockerfile or set `image` to a new digest-pi
 
 Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
 
+To keep a running Container on its current image, use the configured image only on its next start:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		image: this.ctx.container.images.base,
+		instance: "standard-2",
+		enableInternet: true,
+	});
+}
+```
+
+</TypeScriptExample>
+
+To upgrade a running Container immediately, compare its current image with the configured image. Stop and restart the Container when they differ:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+if ((await this.ctx.container.inspect())?.image !== this.ctx.container.images.base) {
+	if (this.ctx.container.running) {
+		await this.ctx.container.destroy();
+	}
+
+	this.ctx.container.start({
+		image: this.ctx.container.images.base,
+		instance: "standard-2",
+		enableInternet: true,
+	});
+}
+```
+
+</TypeScriptExample>
+
 ### Use an external image
 
 :::note

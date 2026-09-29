@@ -54,6 +54,20 @@ export class MyDurableObject extends DurableObject<Env> {
 
 ## Attributes
 
+### `images`
+
+`images` is a read-only map of named images configured for an application that uses the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). Each value is a digest-pinned image reference prepared by Wrangler.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const image = this.ctx.container.images.base;
+```
+
+</TypeScriptExample>
+
+Pass a value from this map as the `image` option to [`start()`](#start).
+
 ### `running`
 
 `running` is `true` when the container is running. It does not confirm that the container is ready to accept requests.
@@ -68,9 +82,17 @@ this.ctx.container.running;
 
 `start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
 
-```js
-this.ctx.container.start();
+<TypeScriptExample filename="index.ts">
+
+```ts
+this.ctx.container.start({
+	image: this.ctx.container.images.base,
+	instance: "standard-2",
+	enableInternet: true,
+});
 ```
+
+</TypeScriptExample>
 
 #### Parameters
 
@@ -78,10 +100,33 @@ this.ctx.container.start();
   - `env` (`Record<string, string>`, optional): Environment variables to pass to the container.
   - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
+  - `image` (`string`, optional): Image reference to start. For an application that uses the `durable_object` scheduling policy, pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images). Omit this option when restoring a snapshot.
+  - `instance` (`string | object`, optional): Instance size for an application that uses the `durable_object` scheduling policy. Pass `"lite"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, `"standard-4"`, or a custom object with `vcpu`, `memoryMib`, and `diskMb` properties. Defaults to `"lite"`.
+  - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional): Full container snapshot to restore before startup. You cannot pass both `containerSnapshot` and `image`.
 
 #### Return values
 
 - `void`: No return value.
+
+### `inspect`
+
+`inspect()` returns the image and labels for a running container. It returns `null` when no container is running.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const containerInfo = await this.ctx.container.inspect();
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- `Promise<ContainerInfo | null>`: Resolves with the running container information or `null`.
 
 ### `exec`
 
@@ -169,6 +214,31 @@ With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `Arr
 - `kill()` throws a `RangeError` when the signal is outside the supported range.
 
 For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
+
+### `snapshotContainer`
+
+`snapshotContainer()` creates a point-in-time snapshot of the running container filesystem.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const snapshot = await this.ctx.container.snapshotContainer({
+	name: "before-upgrade",
+});
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- `options` (`ContainerSnapshotOptions`): Snapshot configuration:
+  - `name` (`string`, optional): Human-readable name for the snapshot.
+
+#### Return values
+
+- `Promise<ContainerSnapshot>`: Resolves with a snapshot containing `id`, `size`, and an optional `name`.
+
+Container snapshots are immutable. Snapshot handles currently have an implicit 30-day time-to-live that refreshes when you restore them. For the complete save and restore flow, refer to [Use snapshots](/containers/guides/snapshots/).
 
 ### `destroy`
 
@@ -374,3 +444,4 @@ await this.ctx.container.interceptOutboundHttps("*", worker);
 - [Get started with Containers](/containers/get-started/): Deploy your first container.
 - [SQLite storage API](/durable-objects/api/sqlite-storage-api/): Persist state across container restarts.
 - [Durable Objects](/durable-objects/): The underlying platform that powers Containers.
+- [Snapshots](/containers/guides/snapshots/): Save and restore container filesystems.
