@@ -64,7 +64,7 @@ Other directives and Cache Rules settings can prevent Cloudflare from serving st
 
 ### Cache Reserve
 
-Invalidation keeps matching content in [Cache Reserve](/cache/advanced-configuration/cache-reserve/), where it continues to incur storage costs. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin again.
+Invalidation keeps matching content in [Cache Reserve](/cache/advanced-configuration/cache-reserve/), where it continues to incur storage costs. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin again. Content served from Cache Reserve is not served stale while it revalidates, even with `stale-while-revalidate`.
 
 Compared with purging, invalidation reduces origin egress but not Cache Reserve operations. Updating the stored content after a `304` response is a Class A operation. Invalidating by URL also updates the stored content when you send the request, which is a Class A operation. For details, refer to [Cache Reserve operations](/cache/advanced-configuration/cache-reserve/#operations).
 
