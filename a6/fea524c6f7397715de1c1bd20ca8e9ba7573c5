@@ -1,0 +1,21 @@
+src/content/changelog/r2-data-catalog/2026-09-16-table-maintenance-dashboard.mdx
+  s_7f9f850ae53f4d::t_3a27c1417d54b4 1-32
+src/content/docs/r2-data-catalog/table-maintenance.mdx
+  s_7f9f850ae53f4d::t_d6ce55e31aeb27 11-12,28-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a6fea524c6f7397715de1c1bd20ca8e9ba7573c5",
+  "prompts": {},
+  "sessions": {
+    "s_7f9f850ae53f4d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0aabb-46bc-7183-8272-1ba73295fb8a",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Yevgen Safronov <sejoker@gmail.com>"
+    }
+  }
+}
