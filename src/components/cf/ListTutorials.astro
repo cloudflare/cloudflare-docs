@@ -50,16 +50,14 @@ function timeAgo(value?: string | Date) {
 		</tr>
 	</thead>
 	<tbody>
-		{
-			tutorials.map((tutorial) => (
-				<tr>
-					<td>
-						<a href={`/${tutorial.id}/`}>{tutorial.data.title}</a>
-					</td>
-					<td>{timeAgo(tutorial.data.reviewed)}</td>
-					<td>{tutorial.data.difficulty}</td>
-				</tr>
-			))
-		}
+		{tutorials.map((tutorial) => (
+			<tr>
+				<td>
+					<a href={`/${tutorial.id}/`}>{tutorial.data.title}</a>
+				</td>
+				<td>{timeAgo(tutorial.data.reviewed)}</td>
+				<td>{tutorial.data.difficulty}</td>
+			</tr>
+		))}
 	</tbody>
 </table>

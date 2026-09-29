@@ -25,7 +25,7 @@ With `vite dev`, image references from external registries such as Docker Hub, A
 
 If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
 
-As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build. Make sure to `EXPOSE` a port for local dev as well.
+As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build.
 :::
 
 Container instances will be launched locally when your Worker code calls to create
@@ -67,26 +67,17 @@ you are using in your container code.
 
 ## Troubleshooting
 
-### Exposing Ports
+### Ports
 
-In production, all of your container's ports will be accessible by your Worker, so you do not need to specifically expose ports using the [`EXPOSE` instruction](https://docs.docker.com/reference/dockerfile/#expose) in your Dockerfile.
+Your Worker can connect to any port in the container.
 
-But for local development you will need to declare any ports you need to access in your Dockerfile with the EXPOSE instruction; for example: `EXPOSE 4000`, if you will be accessing port 4000.
-
-If you have not exposed any ports, you will see the following error in local development:
+`getTcpPort()` requires a process listening on that port. If the process has not started yet, you will see the following error:
 
 ```txt
-The container "MyContainer" does not expose any ports. In your Dockerfile, please expose any ports you intend to connect to.
+Container is not listening to port 8080
 ```
 
-And if you try to connect to any port that you have not exposed in your `Dockerfile` you will see the following error:
-
-```txt
-connect(): Connection refused: container port not found. Make sure you exposed the port in your container definition.
-```
-
-You may also see this while the container is starting up and no ports are available yet. You should retry until the ports become available.
-This retry logic should be handled for you if you are using the [containers package](https://github.com/cloudflare/containers/tree/main/src).
+Retry until the port becomes available.
 
 ### Socket configuration - `internal error`
 

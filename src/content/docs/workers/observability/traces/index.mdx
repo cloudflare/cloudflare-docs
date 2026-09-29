@@ -28,6 +28,7 @@ Cloudflare Workers provides tracing instrumentation **out of the box** — no co
 
 - **Fetch calls** — All outbound HTTP requests, capturing timing, status codes, and request metadata. This enables you to quickly identify how external dependencies affect your application's performance.
 - **Binding calls** — Interactions with various Worker bindings such as KV reads and writes, R2 object storage operations and Durable Object invocations.
+- **RPC calls** — Calls between Workers and Durable Objects, including caller-side session spans and individual method-call spans.
 - **Handler calls** — The complete lifecycle of each Worker invocation, including triggers such as [fetch handlers](/workers/runtime-apis/handlers/fetch/),
   [scheduled handlers](/workers/runtime-apis/handlers/scheduled/), and [queue handlers](/queues/configuration/javascript-apis/#consumer).
 

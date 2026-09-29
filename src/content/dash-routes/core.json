@@ -494,8 +494,8 @@
 		"parent": ["Analytics & logs"]
 	},
 	{
-		"name": "Attribution Business Insights",
-		"deeplink": "/?to=/:account/:zone/analytics/attribution-business-insights",
+		"name": "Business Insights",
+		"deeplink": "/?to=/:account/:zone/analytics/business-insights",
 		"parent": ["Analytics & logs"]
 	},
 	{

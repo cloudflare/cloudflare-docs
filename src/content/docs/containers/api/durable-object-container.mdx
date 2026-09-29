@@ -1,0 +1,376 @@
+---
+title: Durable Object Container API
+description: Access and manage containers associated with a Durable Object, including start, stop, and interaction methods.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - containers
+  - durable-objects
+---
+
+import { TypeScriptExample } from "~/components";
+
+Each [container](/containers/) is managed and proxied by a Durable Object. The Durable Object manages routing and persistent state. The container process runs your image inside a Linux VM.
+
+The API documented on this page is available on `this.ctx.container` inside any Durable Object class that has a container binding. Use it for direct control over the container process.
+
+:::note
+We recommend starting new applications with the Durable Object Container API. It lets you run container workloads alongside the Durable Object's persistent storage, alarms, and request handling. Use `ctx.container` to control when the container starts, receives traffic, and stops, while the Durable Object manages application state and coordination. For existing applications that use the `Container` class, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
+:::
+
+Your Durable Object also has access to [SQLite storage](/durable-objects/api/sqlite-storage-api/) through `this.ctx.storage`, [alarms](/durable-objects/api/alarms/), and all other Durable Object APIs. Use storage to preserve configuration and state across container restarts. Use alarms to schedule work without keeping the container running.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+export class MyDurableObject extends DurableObject<Env> {
+	async start(): Promise<void> {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("No container is configured for this Durable Object");
+		}
+		if (!container.running) {
+			container.start();
+			await this.ctx.storage.put("lastStartedAt", Date.now());
+		}
+	}
+
+	async scheduleStart(timestamp: number): Promise<void> {
+		await this.ctx.storage.setAlarm(timestamp);
+	}
+
+	async alarm(): Promise<void> {
+		await this.start();
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Attributes
+
+### `running`
+
+`running` is `true` when the container is running. It does not confirm that the container is ready to accept requests.
+
+```js
+this.ctx.container.running;
+```
+
+## Methods
+
+### `start`
+
+`start()` boots a container. It returns before the container is ready to accept requests. Confirm readiness before sending traffic.
+
+```js
+this.ctx.container.start();
+```
+
+#### Parameters
+
+- `options` (`object`, optional): Common container startup options:
+  - `env` (`Record<string, string>`, optional): Environment variables to pass to the container.
+  - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
+  - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
+
+#### Return values
+
+- `void`: No return value.
+
+### `exec`
+
+`exec()` starts another process inside an already-running container. It does not start a stopped container.
+
+```txt
+exec(
+  cmd: string[],
+  options?: ContainerExecOptions,
+): Promise<ExecProcess>
+```
+
+`exec()` starts the executable directly with the provided arguments. It does not start a shell or interpret pipes, redirects, expansion, or other shell syntax. Invoke Bash explicitly with `["bash", "-lc", "<COMMAND>"]` when Bash exists in the image. Use `["sh", "-c", "<COMMAND>"]` for images with only a Portable Operating System Interface (POSIX) shell.
+
+The following RPC method checks that the container is running before executing a command:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+export class MyDurableObject extends DurableObject<Env> {
+	async runCommand() {
+		const container = this.ctx.container;
+		if (!container) {
+			throw new Error("No container is configured for this Durable Object");
+		}
+		if (!container.running) {
+			throw new Error("Container is not running");
+		}
+
+		const process = await container.exec(["node", "--version"]);
+		const output = await process.output();
+
+		return {
+			pid: process.pid,
+			exitCode: output.exitCode,
+			stdout: new TextDecoder().decode(output.stdout),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- `cmd` (`string[]`): Executable followed by its arguments.
+- `options` (`ContainerExecOptions`, optional): Process configuration:
+  - `stdin` (`ReadableStream | "pipe"`, optional): Source for standard input. Use `"pipe"` to write through the returned `stdin` stream. When omitted, standard input closes and sends end-of-file (EOF).
+  - `stdout` (`"pipe" | "ignore"`, optional, default `"pipe"`): Captures or discards standard output.
+  - `stderr` (`"pipe" | "ignore" | "combined"`, optional, default `"pipe"`): Captures, discards, or merges standard error into standard output. The `"combined"` value requires `stdout: "pipe"`. Combined output does not guarantee ordering between its source streams.
+  - `cwd` (`string`, optional): Working directory for the process.
+  - `env` (`Record<string, string>`, optional): Environment additions and overrides. The process inherits existing container variables. Matching keys use the per-execution value.
+  - `user` (`string`, optional): Image user for the process.
+
+#### Return values
+
+- `Promise<ExecProcess>`: Resolves with an `ExecProcess` for the started process.
+
+An `ExecProcess` has these fields and methods:
+
+- `stdin` (`WritableStream | null`): Writable standard input when `stdin` is `"pipe"`.
+- `stdout` (`ReadableStream | null`): Readable standard output when piped.
+- `stderr` (`ReadableStream | null`): Readable standard error when piped separately.
+- `pid` (`number`): Process identifier.
+- `exitCode` (`Promise<number>`): Resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
+- `output()` (`Promise<ExecOutput>`): Reads buffered output once. `ExecOutput` contains `stdout` (`ArrayBuffer`), `stderr` (`ArrayBuffer`), and `exitCode` (`number`). Ignored streams produce empty buffers. Use `TextDecoder` to decode text.
+- `kill(signal?: number)` (`void`): Queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
+
+With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
+
+`output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
+
+`exec()` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
+
+#### Exceptions
+
+- `exec()` throws when the container is not running.
+- `exec()` throws a `TypeError` when `cmd` is empty, an option mode is invalid, or `stderr: "combined"` is used with `stdout: "ignore"`.
+- `exec()` rejects if the runtime cannot create or start the process.
+- Environment variable names cannot contain `=` or null characters. Environment values, `cwd`, and `user` cannot contain null characters.
+- `kill()` throws a `RangeError` when the signal is outside the supported range.
+
+For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
+
+### `destroy`
+
+`destroy()` stops the container and can include an optional reason for the operation.
+
+```js
+await this.ctx.container.destroy("Manually Destroyed");
+```
+
+#### Parameters
+
+- `error` (`any`, optional): Optional reason associated with the destroy operation. A string is commonly used for logging or debugging.
+
+#### Return values
+
+- `Promise<void>`: Resolves when the container is destroyed.
+
+### `signal`
+
+`signal()` sends an inter-process communication (IPC) signal to the container, such as `SIGKILL` or `SIGTERM`. Use it to stop the container gracefully or forcefully.
+
+```js
+const SIGTERM = 15;
+this.ctx.container.signal(SIGTERM);
+```
+
+#### Parameters
+
+- `signal` (`number`): POSIX signal number to send to the container, such as `SIGTERM` (`15`) or `SIGKILL` (`9`).
+
+#### Return values
+
+- `void`: No return value.
+
+### `setInactivityTimeout`
+
+`setInactivityTimeout()` sets how long a running container can remain inactive before the runtime stops it.
+
+```txt
+setInactivityTimeout(durationMs: number | bigint): Promise<void>
+```
+
+```js
+await this.ctx.container.setInactivityTimeout(10 * 60 * 1000);
+```
+
+#### Parameters
+
+- `durationMs` (`number | bigint`): Inactivity timeout in milliseconds.
+
+#### Return values
+
+- `Promise<void>`: Resolves after the timeout is set.
+
+### `getTcpPort`
+
+`getTcpPort()` returns a TCP port from the container. Use it to communicate with the container over TCP or HTTP.
+
+```js
+const port = this.ctx.container.getTcpPort(8080);
+const res = await port.fetch("http://container/set-state", {
+	body: initialState,
+	method: "POST",
+});
+```
+
+```js
+const conn = this.ctx.container.getTcpPort(8080).connect("10.0.0.1:8080");
+await conn.opened;
+
+try {
+	if (request.body) {
+		await request.body.pipeTo(conn.writable);
+	}
+	return new Response(conn.readable);
+} catch (error) {
+	console.error("Request body piping failed:", error);
+	return new Response("Failed to proxy request body", { status: 502 });
+}
+```
+
+#### Parameters
+
+- `port` (`number`): TCP port number to use for communication with the container.
+
+#### Return values
+
+- `Fetcher`: Object used to send HTTP requests or TCP connections to the container port.
+
+### `monitor`
+
+`monitor()` returns a promise that resolves when a container exits and rejects if the container errors. Use it to handle container status changes in your Workers code.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+class MyDurableObject extends DurableObject<Env> {
+	startAndMonitor() {
+		const container = this.ctx.container;
+		container.start();
+		this.ctx.waitUntil(
+			container
+				.monitor()
+				.then(() => console.log("Container exited"))
+				.catch((error) => console.error("Container errored", error)),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### Parameters
+
+- None.
+
+#### Return values
+
+- `Promise<void>`: Resolves when the container exits.
+
+### `interceptOutboundHttp`
+
+`interceptOutboundHttp()` routes outbound HTTP requests matching a hostname, hostname glob, IP address, IP:port, or CIDR range through a `Fetcher`. Call it before or after starting the container. Open connections use the new handler without being dropped.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: { message: "hello" } });
+
+// Match a specific hostname
+await this.ctx.container.interceptOutboundHttp("api.example.com", worker);
+
+// Match a hostname glob pattern
+await this.ctx.container.interceptOutboundHttp("*.example.com", worker);
+
+// Match an IP:port
+await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
+
+// Match a CIDR range (IPv4 and IPv6)
+await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
+```
+
+#### Parameters
+
+- `addr` (`string`): Hostname, hostname glob (for example, `*.example.com`), IP address, IP:port, or CIDR range to match.
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles matching requests.
+
+#### Return values
+
+- `Promise<void>`: Resolves when the intercept rule is installed.
+
+### `interceptAllOutboundHttp`
+
+`interceptAllOutboundHttp()` routes all outbound HTTP requests from the container through a `Fetcher`, regardless of destination.
+
+```js
+await this.ctx.container.interceptAllOutboundHttp(worker);
+```
+
+#### Parameters
+
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles all outbound HTTP requests.
+
+#### Return values
+
+- `Promise<void>`: Resolves when the intercept rule is installed.
+
+### `interceptOutboundHttps`
+
+`interceptOutboundHttps()` routes outbound HTTPS requests matching a hostname or hostname glob through a `Fetcher`. It works like `interceptOutboundHttp()` but handles HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception.
+
+Hostname globs support `*` to match any sequence of characters.
+
+```js
+const worker = this.ctx.exports.MyWorker({ props: {} });
+
+// Match a specific hostname
+await this.ctx.container.interceptOutboundHttps("api.example.com", worker);
+
+// Match a hostname glob pattern
+await this.ctx.container.interceptOutboundHttps("*.example.com", worker);
+
+// Intercept all HTTPS traffic
+await this.ctx.container.interceptOutboundHttps("*", worker);
+```
+
+#### Parameters
+
+- `addr` (`string`): Hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `binding` (`Fetcher`): Worker entrypoint or service binding that handles matching requests.
+
+#### Return values
+
+- `Promise<void>`: Resolves when the intercept rule is installed.
+
+## Related resources
+
+- [Containers APIs](/containers/api/): Compare direct runtime control with the `Container` class.
+- [Container class reference](/containers/api/container-class/): Reference for existing `Container` class applications.
+- [Containers overview](/containers/): Understand how Cloudflare Containers work.
+- [Get started with Containers](/containers/get-started/): Deploy your first container.
+- [SQLite storage API](/durable-objects/api/sqlite-storage-api/): Persist state across container restarts.
+- [Durable Objects](/durable-objects/): The underlying platform that powers Containers.

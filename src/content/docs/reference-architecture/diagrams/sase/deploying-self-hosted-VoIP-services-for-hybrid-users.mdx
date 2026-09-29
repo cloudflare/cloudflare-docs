@@ -18,7 +18,7 @@ Traditional VPN solutions create several problems for VoIP deployments, primaril
 
 Cloudflare improves over traditional VPN solutions by leveraging its [global network](https://www.cloudflare.com/network/) of data centers in <PublicStats id="data_center_cities" /> to significantly reduce latency for remote users. When using our device agent, remote users are automatically connected to the nearest Cloudflare data center, thus reducing latency.
 
-This document explains how to architect access to a self-hosted VoIP service using Cloudflare. Note the solution below uses [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector), a small piece of software deployed on a server in the same subnet as the VoIP servers and creates bi-directional traffic flow through Cloudflare to users.
+This document explains how to architect access to a self-hosted VoIP service using Cloudflare. Note the solution below uses [Cloudflare Mesh](/mesh/) (formerly WARP Connector), a small piece of software deployed on a server in the same subnet as the VoIP servers and creates bi-directional traffic flow through Cloudflare to users.
 
 ## Bi-directional VoIP traffic flow
 
@@ -82,6 +82,6 @@ With Cloudflare Mesh, remote users communicating with other remote users or on-p
 
 ## Related resources
 
-- [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
+- [Set up Cloudflare Mesh](/mesh/)
 - [Enable Mesh connectivity](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-all-cloudflare-one-traffic-to-reach-enrolled-devices)
 - [About the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/)

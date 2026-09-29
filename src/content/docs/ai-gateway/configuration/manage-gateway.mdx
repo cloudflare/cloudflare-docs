@@ -24,13 +24,14 @@ The request that triggers auto-creation must be authenticated. When using the [R
 
 The auto-created default gateway uses the following settings:
 
-| Setting            | Default value    |
-| ------------------ | ---------------- |
-| Authentication     | On               |
-| Log collection     | On               |
-| Caching            | Off (TTL of 0)   |
-| Rate limiting      | Off              |
-| Workers AI billing | Standard billing |
+| Setting                      | Default value    |
+| ---------------------------- | ---------------- |
+| Authentication               | On               |
+| Log collection               | On               |
+| Caching                      | Off (TTL of 0)   |
+| Rate limiting                | Off              |
+| Require provider credentials | Off              |
+| Workers AI billing           | Standard billing |
 
 After creation, you can edit the default gateway settings like any other gateway. If you delete the default gateway, sending a new authenticated request to the `default` gateway ID auto-creates it again.
 
@@ -66,6 +67,10 @@ To use prepaid AI Gateway credits for Workers AI requests:
 
 Workers AI requests routed through this gateway will deduct from your AI Gateway credit balance in real time.
 
+### Prevent Unified Billing fallback for BYOK third-party providers
+
+To prevent Unified Billing fallback for third-party provider requests, turn on **Require provider credentials**. Refer to [Prevent Unified Billing fallback for BYOK third-party providers](/ai-gateway/features/unified-billing/#prevent-unified-billing-fallback-for-byok-third-party-providers) for dashboard and API instructions.
+
 ## Retry requests
 
 You can configure your gateway to automatically retry failed requests to upstream providers. This is useful when you do not control the client and cannot implement client-side retries or backoff logic.
@@ -78,11 +83,9 @@ To configure retry settings:
 4. Turn on the toggle to turn on automatic retries.
 5. Configure the following settings:
    - **Retry count** — the maximum number of retry attempts (up to 5).
-   - **Delay** — the base delay between retries. Available values: 100ms, 500ms, 1 second, 2 seconds, 3 seconds, or 5 seconds.
+   - **Delay** — the base delay between retries, from 0.1 to 60 seconds.
    - **Backoff** — the backoff strategy for subsequent retries: Constant, Linear, or Exponential.
 6. Select **Save**.
-
-![Retry Requests settings in the AI Gateway dashboard](~/assets/images/ai-gateway/auto-retry-settings.png)
 
 These gateway-level defaults apply to all requests routed through the gateway. Per-request headers can override these defaults — refer to [Request handling](/ai-gateway/configuration/request-handling/#request-retries) for details.
 

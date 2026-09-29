@@ -19,6 +19,10 @@ Detections are always on once enabled, even if you have not configured any secur
 
 [Application Profiles](/waf/detections/application-profiles/) compare requests with application-specific expected structures. Profile detections do not mitigate traffic without a security rule.
 
+[Attack Signature Detection](/waf/detections/attack-signature-detection/) evaluates requests against Cloudflare attack signatures. It exposes match metadata independently from mitigation.
+
+Attack Signature Detection is available in Early Access. Contact your Cloudflare account team to request access.
+
 :::note[Application Profiles availability]
 Customers with API Security already have access to Schema Profiles through Schema Learning and Schema Validation. Cloudflare is opening a closed beta to invited Enterprise customers without API Security. Interested customers can contact their account team to express interest. Closed-beta access does not imply future plan availability or pricing.
 :::

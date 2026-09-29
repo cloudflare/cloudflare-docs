@@ -1,0 +1,160 @@
+name: Bump OpenAPI schema
+
+# Weekly PR updating openapi.lock.json to the newest versioned schema snapshot
+# in middlecache, so upstream schema changes reach the docs through review
+# instead of breaking every open PR at once. The PR needs a content-engineering
+# approval (see .github/CODEOWNERS); CI on the PR is the validation that every
+# <APIRequest> still resolves against the new schema.
+
+on:
+  schedule:
+    # Mondays 14:00 UTC — after the daily middlecache graduation (~23:13 UTC),
+    # so the run sees a complete weekend of upstream schema changes.
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bump-openapi-schema
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    name: Check for schema update
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          fetch-depth: 1
+          # Pushes use the App token (below), never the workflow token.
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+        with:
+          version: 11
+
+      - name: Set up node
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+        with:
+          node-version: 24.x
+
+      - name: Compare lock file against middlecache
+        id: bump
+        env:
+          SUMMARY_PATH: ${{ runner.temp }}/bump-summary.json
+          PR_BODY_PATH: ${{ runner.temp }}/pr-body.md
+        run: |
+          set -euo pipefail
+          # Dependency-free script (node builtins only), so it runs via dlx
+          # without installing the full dependency tree.
+          pnpm dlx tsx@4.23.15 bin/bump-openapi-lock.ts
+          cat "$SUMMARY_PATH"
+
+          status=$(jq -r .status "$SUMMARY_PATH")
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          echo "new_sha=$(jq -r '.new_sha // empty' "$SUMMARY_PATH")" >> "$GITHUB_OUTPUT"
+
+          if [ "$status" = "skipped" ]; then
+            echo "::warning::Schema bump skipped: $(jq -r .reason "$SUMMARY_PATH") (pin $(jq -r .sha "$SUMMARY_PATH"), middlecache latest $(jq -r .latest_sha "$SUMMARY_PATH"))"
+          fi
+
+      - name: Generate App token
+        if: steps.bump.outputs.status == 'bumped'
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_ID }}
+          private-key: ${{ secrets.CLOUDFLARE_DOCS_BOT_APP_PRIVATE_KEY }}
+
+      - name: Open or update the bump PR
+        if: steps.bump.outputs.status == 'bumped'
+        env:
+          # PRs and pushes made with the App token (unlike GITHUB_TOKEN)
+          # trigger CI on the bump PR.
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_REPO: ${{ github.repository }}
+          NEW_SHA: ${{ steps.bump.outputs.new_sha }}
+          PR_BODY_PATH: ${{ runner.temp }}/pr-body.md
+        run: |
+          set -euo pipefail
+
+          BRANCH=bot/openapi-schema-bump
+          BASE=production
+          BOT_NAME="cloudflare-docs-bot[bot]"
+          BOT_EMAIL="cloudflare-docs-bot[bot]@users.noreply.github.com"
+          TITLE="chore: bump pinned OpenAPI schema to ${NEW_SHA:0:8}"
+
+          # Supply the App token to a single git invocation via a header, the
+          # same way actions/checkout does, so it is never written to disk.
+          basic_auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$basic_auth"
+          git_auth() { git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic $basic_auth" "$@"; }
+
+          open_pr=$(gh pr list --head "$BRANCH" --base "$BASE" --state open --json number --jq '.[0].number // empty')
+
+          # The bump branch is reused across weeks. Only rewrite it when every
+          # non-merge commit on it is bot-authored; merges of production (the
+          # "Update branch" button) are safe to discard.
+          remote_sha=$(git ls-remote --heads origin "refs/heads/$BRANCH" | cut -f1)
+          if [ -n "$remote_sha" ]; then
+            human_commits=$(gh api "repos/$GH_REPO/compare/$BASE...$BRANCH" \
+              | jq --arg bot "$BOT_EMAIL" '[.commits[] | select((.parents | length) == 1) | select(.commit.author.email != $bot)] | length')
+            if [ "$human_commits" -gt 0 ]; then
+              if [ -n "$open_pr" ]; then
+                echo "::warning::$BRANCH has manual commits; not force-pushing. Commented on #$open_pr."
+                gh pr comment "$open_pr" --body "A newer schema snapshot (\`$NEW_SHA\`) is available, but this branch has manual commits, so the bot did not force-push. Merge this PR (or drop the manual commits), then re-run the **Bump OpenAPI schema** workflow."
+                exit 0
+              fi
+              echo "::error::$BRANCH has manual commits but no open PR. Open a PR for it or delete the branch, then re-run this workflow."
+              exit 1
+            fi
+          fi
+
+          # Rebuild the branch from the current production tip so the PR only
+          # ever contains the lock change. --force discards the working-tree
+          # lock (saved above), which git would otherwise refuse to overwrite
+          # if the lock differs between the checked-out commit and the tip.
+          cp openapi.lock.json "$RUNNER_TEMP/openapi.lock.json"
+          git fetch --no-tags --depth=1 origin "+refs/heads/$BASE:refs/remotes/origin/$BASE"
+          git checkout --force -B "$BRANCH" "origin/$BASE"
+          cp "$RUNNER_TEMP/openapi.lock.json" openapi.lock.json
+
+          if git diff --quiet -- openapi.lock.json; then
+            echo "$BASE already has this pin; nothing to do."
+            exit 0
+          fi
+
+          git config user.name "$BOT_NAME"
+          git config user.email "$BOT_EMAIL"
+          git add openapi.lock.json
+          git commit --no-verify -m "$TITLE"
+
+          # Skip the push (and a redundant CI run) when the branch already has
+          # exactly this change on top of the current production tip.
+          same_tree=false
+          if [ -n "$remote_sha" ]; then
+            git fetch --no-tags --depth=2 origin "+refs/heads/$BRANCH:refs/remotes/origin/$BRANCH"
+            if [ "$(git rev-parse "origin/$BRANCH^{tree}")" = "$(git rev-parse "HEAD^{tree}")" ]; then
+              same_tree=true
+            fi
+          fi
+
+          if [ "$same_tree" = true ]; then
+            echo "$BRANCH is already up to date; not pushing."
+          else
+            # The lease fails the push if someone pushed to the branch after
+            # the manual-commit check above.
+            git_auth push --force-with-lease="refs/heads/$BRANCH:$remote_sha" origin "HEAD:refs/heads/$BRANCH"
+          fi
+
+          if [ -n "$open_pr" ]; then
+            gh pr edit "$open_pr" --title "$TITLE" --body-file "$PR_BODY_PATH"
+            echo "Updated #$open_pr"
+          else
+            gh pr create --base "$BASE" --head "$BRANCH" --title "$TITLE" --body-file "$PR_BODY_PATH"
+          fi

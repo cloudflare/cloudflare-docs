@@ -12,7 +12,7 @@ On **October 5, 2026**, two changes take effect across the [Zero Trust Networks 
 
 ## Route endpoints
 
-The CIDR-encoded route endpoints are deprecated in favor of the standard, `route_id`-based endpoints that already exist today. Both sets of endpoints route a private network through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (the API still refers to Mesh nodes as `warp_connector`) — only the request shape changes.
+The CIDR-encoded route endpoints are deprecated in favor of the standard, `route_id`-based endpoints that already exist today. Both sets of endpoints route a private network through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/mesh/) (the API still refers to Mesh nodes as `warp_connector`) — only the request shape changes.
 
 **Deprecated endpoints (removed October 5, 2026):**
 
@@ -67,7 +67,7 @@ curl -X DELETE https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/teamnet
 
 ## Cloudflare Tunnel and Cloudflare Mesh connections
 
-Starting the same day, the `connections` array is removed from list and get responses for [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) nodes (the `cfd_tunnel` and `warp_connector` API resources). Query the dedicated connections endpoint instead of reading the field off the tunnel or node object.
+Starting the same day, the `connections` array is removed from list and get responses for [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Mesh](/mesh/) nodes (the `cfd_tunnel` and `warp_connector` API resources). Query the dedicated connections endpoint instead of reading the field off the tunnel or node object.
 
 This affects:
 

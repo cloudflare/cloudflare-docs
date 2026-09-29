@@ -7,20 +7,20 @@ products:
 tags:
   - Debugging
 sidebar:
-  order: 8
+  order: 13
 ---
 
 import { Render, Tabs, TabItem } from "~/components";
 
-Use this page to diagnose and resolve common issues with Cloudflare Tunnel. Many issues are resolved by upgrading to the latest version of `cloudflared` — refer to [Update cloudflared](/tunnel/downloads/update-cloudflared/) before investigating further.
+Use this page to diagnose and resolve common issues with Cloudflare Tunnel. Many issues are resolved by upgrading to the latest version of `cloudflared` — refer to [Update cloudflared](/tunnel/guides/update-cloudflared/) before investigating further.
 
-For tunnel health monitoring, logs, and metrics, refer to [Monitoring](/tunnel/monitoring/).
+For tunnel health monitoring, logs, and metrics, refer to [Observability](/tunnel/observability/).
 
 If your tunnel is `Healthy` but an HTTPS route fails or redirects, refer to [Troubleshoot HTTPS origins](/tunnel/troubleshooting/https-origins/).
 
 ## Connection errors
 
-When `cloudflared` cannot reach the Cloudflare network, it [logs](/tunnel/monitoring/#logs) specific error messages that indicate whether the issue is DNS resolution, QUIC (UDP), or TCP connectivity.
+When `cloudflared` cannot reach the Cloudflare network, it [logs](/tunnel/observability/#logs) specific error messages that indicate whether the issue is DNS resolution, QUIC (UDP), or TCP connectivity.
 
 ### DNS resolution failures
 
@@ -143,14 +143,14 @@ Replace `198.41.200.43` with the IP shown in your [error message](#dialcontext-e
 	file="tunnel/common-errors"
 	product="cloudflare-one"
 	params={{
-		logsURL: "/tunnel/monitoring/#logs",
-		protocolURL: "/tunnel/routing/#supported-protocols",
-		configFileURL: "/tunnel/advanced/local-management/configuration-file/",
-		originServerNameURL: "/tunnel/advanced/origin-parameters/#originservername",
-		caPoolURL: "/tunnel/advanced/origin-parameters/#capool",
-		noTLSVerifyURL: "/tunnel/advanced/origin-parameters/#notlsverify",
+		logsURL: "/tunnel/observability/#logs",
+		protocolURL: "/tunnel/concepts/routing/#supported-protocols",
+		configFileURL: "/tunnel/features/locally-managed-tunnels/configuration-file/",
+		originServerNameURL: "/tunnel/reference/origin-parameters/#originservername",
+		caPoolURL: "/tunnel/reference/origin-parameters/#capool",
+		noTLSVerifyURL: "/tunnel/reference/origin-parameters/#notlsverify",
 		httpsOriginURL: "/tunnel/troubleshooting/https-origins/",
-		ulimitsURL: "/tunnel/downloads/system-requirements/#ulimits-linux-and-macos",
+		ulimitsURL: "/tunnel/platform/system-requirements/#ulimits-linux-and-macos",
 	}}
 />
 
@@ -230,6 +230,6 @@ To capture verbose output for troubleshooting:
   cloudflared tunnel --loglevel debug --logfile /var/log/cloudflared/cloudflared.log run
   ```
 
-- **Remotely-managed tunnels** (created via the dashboard): Configure logging in the tunnel's [run parameters](/tunnel/advanced/run-parameters/#loglevel). You can also stream logs in real time using the [remote log streaming](/tunnel/monitoring/#remote-log-streaming) feature.
+- **Remotely-managed tunnels** (created via the dashboard): Configure logging in the tunnel's [run parameters](/tunnel/reference/run-parameters/#loglevel). You can also stream logs in real time using the [remote log streaming](/tunnel/observability/#remote-log-streaming) feature.
 
 Attach the debug logs when contacting support — refer to the checklist above for the full list of information to include.

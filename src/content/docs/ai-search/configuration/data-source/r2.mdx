@@ -20,6 +20,12 @@ If you have never created an R2-backed instance before, we recommend using the d
 
 To get started, [configure an R2 bucket](/r2/get-started/) containing your data. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
+## Set Content-Type metadata
+
+AI Search uses recognized filename extensions as its preferred, faster file-type detection path. For R2 objects without a filename extension, set explicit `Content-Type` metadata to a supported MIME type.
+
+Objects with a missing, unsupported, malformed, or `application/octet-stream` `Content-Type` are not supported. For supported file types and MIME types, refer to [Data source](/ai-search/configuration/data-source/#supported-file-types).
+
 ## Path filtering
 
 You can control which files get indexed by defining include and exclude rules for object paths. Use this to limit indexing to specific folders or to exclude files you do not want searchable.

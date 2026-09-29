@@ -49,18 +49,17 @@ puts @r2.list_buckets
 #=> }
 
 # List the first 20 items in a bucket
-puts @r2.list_objects(bucket:"your-bucket", max_keys:20)
+puts @r2.list_objects_v2(bucket: "your-bucket", max_keys: 20)
 
 #=> {
 #=>   :is_truncated => false,
-#=>   :marker => nil,
-#=>   :next_marker => nil,
 #=>   :name => "your-bucket",
 #=>   :prefix => nil,
-#=>   :delimiter =>nil,
+#=>   :delimiter => nil,
 #=>   :max_keys => 20,
 #=>   :common_prefixes => [],
-#=>   :encoding_type => nil
+#=>   :encoding_type => nil,
+#=>   :key_count => 3,
 #=>   :contents => [
 #=>     …,
 #=>     …,

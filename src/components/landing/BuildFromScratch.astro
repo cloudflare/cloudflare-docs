@@ -111,67 +111,65 @@ const primitives = [
 			tabs={primitives.map((p) => ({ id: p.id, label: p.label }))}
 		/>
 
-		{
-			primitives.map((p, i) => (
-				<div
-					role="tabpanel"
-					id={`build-panel-${p.id}`}
-					aria-labelledby={`build-tab-${p.id}`}
-					data-tabbar="build"
-					data-tab-id={p.id}
-					hidden={i !== 0}
-					class="bg-card p-5 sm:p-8"
-				>
-					<div class="w-full">
-						<div class="mb-4 flex items-center gap-3">
-							<div
-								class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
-								style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
-							>
-								<Icon name={p.icon} size="16px" />
-							</div>
-							<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
-								{p.heading}
-							</h3>
+		{primitives.map((p, i) => (
+			<div
+				role="tabpanel"
+				id={`build-panel-${p.id}`}
+				aria-labelledby={`build-tab-${p.id}`}
+				data-tabbar="build"
+				data-tab-id={p.id}
+				hidden={i !== 0}
+				class="bg-card p-5 sm:p-8"
+			>
+				<div class="w-full">
+					<div class="mb-4 flex items-center gap-3">
+						<div
+							class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
+							style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
+						>
+							<Icon name={p.icon} size="16px" />
 						</div>
-						<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
-							{p.description}
+						<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
+							{p.heading}
+						</h3>
+					</div>
+					<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
+						{p.description}
+					</p>
+
+					<CommandBlock
+						id={`build-cmd-${p.id}`}
+						command={p.command}
+						rounded
+						class="mb-6 max-w-[680px]"
+					/>
+
+					<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+						<LinkButton href={p.cta.href} variant="secondary" size="base">
+							{p.cta.label}
+							<Icon name="ph:arrow-right" class="h-3 w-3" />
+						</LinkButton>
+						<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
+							{p.tags.map((tag, idx) => (
+								<span class="inline-flex items-center">
+									<a
+										href={tag.href}
+										class="text-foreground no-underline hover:underline hover:underline-offset-4"
+									>
+										{tag.label}
+									</a>
+									{idx < p.tags.length - 1 && (
+										<span class="text-border mx-1.5" aria-hidden="true">
+											·
+										</span>
+									)}
+								</span>
+							))}
 						</p>
-
-						<CommandBlock
-							id={`build-cmd-${p.id}`}
-							command={p.command}
-							rounded
-							class="mb-6 max-w-[680px]"
-						/>
-
-						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-							<LinkButton href={p.cta.href} variant="secondary" size="base">
-								{p.cta.label}
-								<Icon name="ph:arrow-right" class="h-3 w-3" />
-							</LinkButton>
-							<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
-								{p.tags.map((tag, idx) => (
-									<span class="inline-flex items-center">
-										<a
-											href={tag.href}
-											class="text-foreground no-underline hover:underline hover:underline-offset-4"
-										>
-											{tag.label}
-										</a>
-										{idx < p.tags.length - 1 && (
-											<span class="text-border mx-1.5" aria-hidden="true">
-												·
-											</span>
-										)}
-									</span>
-								))}
-							</p>
-						</div>
 					</div>
 				</div>
-			))
-		}
+			</div>
+		))}
 	</div>
 </section>
 

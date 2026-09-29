@@ -12,7 +12,9 @@ products:
 Use this guide to resolve common issues when integrating Cloudflare logs with [Microsoft Sentinel](/analytics/analytics-integrations/sentinel/) through the Codeless Connector Framework (CCF).
 
 :::note[Support scope]
-Cloudflare Support can help you troubleshoot Cloudflare-side log delivery, including [Logpush](/logs/logpush/) job configuration. Configuring or troubleshooting your Microsoft Azure environment — including subscriptions, resource groups, role assignments, Log Analytics workspaces, or Data Collection Rules — is outside the scope of Cloudflare Support. Contact your Microsoft representative or your integration partner for assistance with those components.
+Cloudflare Support can help troubleshoot [Cloudflare Logpush](/logs/logpush/) and the Cloudflare CCF connector. Support can validate deployment prerequisites and investigate known issues involving Azure Resource Manager (ARM) template deployment, service principals, Azure roles, storage network access, Data Collection Rules (DCRs), table schemas, and field mappings.
+
+Cloudflare Support can guide you through these checks but cannot access or modify resources in your Azure environment. If the issue remains after validating the recommended setup and is isolated to Microsoft Azure or the Microsoft Sentinel CCF environment, contact Microsoft Support.
 :::
 
 ## Connector deployment fails with `InternalServerError (HTTP 500)`
@@ -150,4 +152,4 @@ If your issue is not covered here:
 - Consult the [Cloudflare CCF solution page](https://azuremarketplace.microsoft.com/marketplace/apps/cloudflare.azure-sentinel-solution-cloudflare-ccf) on the Azure Marketplace for the latest solution version and deployment prerequisites.
 - Review the [Cloudflare Logs change notices](/logs/reference/change-notices/) for recent schema changes that may affect your DCR or table definitions.
 - [Contact Cloudflare Support](/support/contacting-cloudflare-support/) for issues involving Cloudflare-side log delivery.
-- Contact your Microsoft representative or your integration partner for issues within your Azure environment.
+- Contact Microsoft Support for issues isolated to Microsoft Azure or the Microsoft Sentinel CCF environment.

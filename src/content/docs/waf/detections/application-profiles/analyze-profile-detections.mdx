@@ -20,6 +20,21 @@ Profile Analysis classifies requests with these statuses:
 - **Violates:** The evaluated request did not match its applicable profile.
 - **Not evaluated:** No applicable profile is available, or the profile does not apply.
 
+## Understand violation details
+
+Sampled violations include structured details about the first detected validation failure:
+
+| Detail       | Meaning                                                                                 | Example                |
+| ------------ | --------------------------------------------------------------------------------------- | ---------------------- |
+| Location     | The request component containing the violation.                                         | `body`                 |
+| Error class  | A stable, broad category for grouping similar violations.                               | `constraint_violation` |
+| Error detail | An optional, specific reason within the error class.                                    | `number_not_in_range`  |
+| Target       | An optional parameter, header, cookie, or JSON body path associated with the violation. | `$.items[0].quantity`  |
+
+The error detail or target can be empty when the other fields fully describe the violation. For example, a missing request body has the `missing_required` error class without a target.
+
+For all possible error classes and details, refer to [Fields](/waf/detections/application-profiles/fields/#violation-details).
+
 ## Review detections
 
 <Steps>

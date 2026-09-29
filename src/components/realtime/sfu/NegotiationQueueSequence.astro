@@ -1,0 +1,60 @@
+---
+import RealtimeSequenceDiagram from "./RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "snapshot", label: "Initial room snapshot" },
+	{ id: "joined", label: "Participant-joined handler" },
+	{ id: "queue", label: "A's receiving-session queue" },
+	{ id: "sfu", label: "Realtime SFU", tone: "accent" as const },
+];
+
+const events = [
+	{
+		from: "snapshot",
+		to: "queue",
+		label: "Subscribe to existing participants",
+	},
+	{ from: "joined", to: "queue", label: "Subscribe to B" },
+	{
+		from: "queue",
+		to: "sfu",
+		label: "tracks/new for existing publications",
+	},
+	{
+		from: "sfu",
+		to: "queue",
+		label: "Offer requiring an answer",
+		dashed: true,
+	},
+	{
+		type: "note" as const,
+		from: "queue",
+		to: "queue",
+		label: "A applies the offer and creates an answer",
+	},
+	{
+		from: "queue",
+		to: "sfu",
+		label: "renegotiate with A's answer",
+	},
+	{
+		from: "sfu",
+		to: "queue",
+		label: "Answer accepted",
+		dashed: true,
+	},
+	{ from: "queue", to: "sfu", label: "tracks/new for B's publications" },
+	{
+		type: "note" as const,
+		from: "queue",
+		to: "sfu",
+		label: "Complete the next offer/answer exchange",
+	},
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="An initial room snapshot and participant-joined handler place subscription work on one receiving-session queue. The queue completes each Realtime SFU offer and answer exchange before starting the next mutation."
+	participants={participants}
+	events={events}
+/>

@@ -29,12 +29,10 @@ const {
 	{...attrs}
 >
 	<span class="break-words">{label}</span>
-	{
-		badge &&
-			(typeof badge === "string" ? (
-				<Badge text={badge} />
-			) : (
-				<Badge text={badge.text} variant={badge.variant} />
-			))
-	}
+	{badge &&
+		(typeof badge === "string" ? (
+			<Badge text={badge} />
+		) : (
+			<Badge text={badge.text} variant={badge.variant} />
+		))}
 </a>

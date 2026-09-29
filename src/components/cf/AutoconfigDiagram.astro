@@ -48,17 +48,15 @@ const { framework, configs } = Astro.props;
 				<div class="config-box">
 					<span class="config-title">Generated configuration</span>
 					<div class="config-items">
-						{
-							configs.map((config, i) => (
-								<div class="config-item" data-config-index={i}>
-									<div class="config-file">{config.file}</div>
-									<div class="config-detail">
-										<span class="config-label">{config.label}:</span>
-										<span class="config-value">{config.value}</span>
-									</div>
+						{configs.map((config, i) => (
+							<div class="config-item" data-config-index={i}>
+								<div class="config-file">{config.file}</div>
+								<div class="config-detail">
+									<span class="config-label">{config.label}:</span>
+									<span class="config-value">{config.value}</span>
 								</div>
-							))
-						}
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
@@ -73,10 +71,12 @@ const { framework, configs } = Astro.props;
 						<svg viewBox="0 0 24 24" fill="none">
 							<path
 								d="M16.934 8.638l-5.669-3.14a2.91 2.91 0 00-2.82.027l-5.248 3.14A2.873 2.873 0 002 11.296V16.5c0 1.063.59 2.04 1.537 2.543l5.669 3.14a2.91 2.91 0 002.82-.027l5.248-3.14A2.873 2.873 0 0018.5 16.5v-5.204c0-1.063-.59-2.04-1.566-2.658z"
-								fill="#F6821F"></path>
+								fill="#F6821F"
+							></path>
 							<path
 								d="M16.934 8.638a2.873 2.873 0 011.566 2.543v5.204c0 1.063-.59 2.04-1.537 2.543L11.714 22l-1.49-7.34 6.71-5.022z"
-								fill="#FBAD41"></path>
+								fill="#FBAD41"
+							></path>
 						</svg>
 					</div>
 					<div class="node-info">
@@ -90,9 +90,9 @@ const { framework, configs } = Astro.props;
 		<!-- Status indicator -->
 		<div class="status-indicator">
 			<div class="status-dot"></div>
-			<span class="status-text"
-				>Wrangler handles configuration automatically</span
-			>
+			<span class="status-text">
+				Wrangler handles configuration automatically
+			</span>
 		</div>
 	</div>
 </autoconfig-diagram>

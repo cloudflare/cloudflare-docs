@@ -30,6 +30,26 @@ database_id = "<unique-ID-for-your-database>"
 </WranglerConfig>
 ````
 
+## Cloudflare CLI configuration
+
+Use `cfConfig` to provide a reviewed `cloudflare.config.ts` equivalent. Supplying this prop displays the shared CLI selector.
+
+````mdx
+import { WranglerConfig } from "~/components";
+
+<WranglerConfig
+	cfConfig={`export default {
+	name: "my-worker",
+};`}
+>
+```jsonc
+{
+	"name": "my-worker"
+}
+```
+</WranglerConfig>
+````
+
 ## Compatibility date
 
 You should generally use `$today` for the `compatibility_date` value for new projects. This magic string is automatically replaced with the current date at build time, ensuring documentation always suggests the latest date. When `$today` is used, the component also automatically injects a comment above the `compatibility_date` line (for example, `# Set this to today's date` in TOML and `// Set this to today's date` in JSONC) so that readers know to keep the value current. If you need to specify a fixed date, you can do so as well, but you may miss out on the latest features and performance improvements. You can disable specific features by using [compatibility flags](/workers/configuration/compatibility-flags/).

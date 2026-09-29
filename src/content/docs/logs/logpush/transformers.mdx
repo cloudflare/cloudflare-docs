@@ -9,12 +9,12 @@ products:
   - logpush
 ---
 
-import { DashButton, Badge } from "~/components";
+import { APIRequest, DashButton, Badge } from "~/components";
 
 <Badge text="Beta" variant="caution" />
 
-:::note[Closed beta]
-Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
+:::note[Beta]
+Transformers are in beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed.
 :::
 
 Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
@@ -38,6 +38,23 @@ Before you begin, you need:
 ## Access Transformers
 
 You can create, preview, attach, and manage transformers through the Cloudflare dashboard or the API.
+
+### Existing Logpush filters
+
+Each Logpush job can have either a transformer or [filters](/logs/logpush/logpush-job/filters/), but not both. When you attach a transformer to a filtered job in the Cloudflare dashboard, Transformer Studio converts the existing filter to an equivalent SQL predicate.
+
+Copy the predicate into the transformer's `WHERE` clause to preserve the filtering behavior. When you confirm the attachment, Transformer Studio removes the job filter and attaches the transformer.
+
+The API does not convert Logpush filters to SQL. To migrate a filtered job through the API, convert the filter to an equivalent SQL predicate and add it to the transformer's `WHERE` clause. Then clear `filter` and set `transformer_id` in the same Logpush job update request:
+
+```json
+{
+  "filter": "",
+  "transformer_id": 42
+}
+```
+
+If you set `transformer_id` without clearing the existing filter, the API returns a `400` response.
 
 ### Transformer Studio (UI)
 
@@ -69,6 +86,18 @@ Every transformer action is available through the Cloudflare API. To authenticat
 | List versions         | `GET`    | `accounts/:account_id/logpush/transformers/:id/versions` |
 | Update a transformer  | `PUT`    | `accounts/:account_id/logpush/transformers/:id`          |
 | Delete a transformer  | `DELETE` | `accounts/:account_id/logpush/transformers/:id`          |
+
+The following request creates a transformer that selects three fields from the zone-scoped `dns_logs` dataset:
+
+<APIRequest
+  path="/accounts/{account_id}/logpush/transformers"
+  method="POST"
+  json={{
+    name: "dns-query-fields",
+    description: "Selects key fields from DNS query logs.",
+    code: "SELECT QueryName, QueryType, ResponseCode FROM dns_logs",
+  }}
+/>
 
 To attach or detach a transformer from a job, set `transformer_id` on the Logpush job. Refer to [Logpush job setup](/logs/logpush/logpush-job/) for job endpoints.
 
@@ -118,7 +147,7 @@ In the dashboard, validation errors appear inline in the editor with line and co
 
 | Limit                          | Value       |
 | ------------------------------ | ----------- |
-| SQL query size                 | 10 KB       |
+| SQL query size                 | 250 KB      |
 | Transformer name length        | 255 bytes   |
 | Transformer description length | 4,096 bytes |
 | Filesystem access from a query | None        |
@@ -270,13 +299,14 @@ Delivered record:
 
 | HTTP  | Message                                                       | Cause                                                                                                                            |
 | ----- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `403` | `transformer feature is not available for this account`       | Your account does not have access to Transformers. Contact your Cloudflare Account Executive.                             |
+| `403` | `transformer feature is not available for this account`       | Your account does not have access to Transformers.                                                                               |
 | `400` | `missing required field: name`                                | Add a `name` field to the request body.                                                                                          |
 | `400` | `missing required field: code`                                | Add a non-empty `code` field with your SQL query.                                                                                |
 | `400` | Schema validation error (unknown column, invalid syntax)      | The SQL references a field that does not exist, uses unsupported syntax, or has a type mismatch. Fix the query and retry.        |
-| `413` | (request entity too large)                                    | The SQL query exceeds 10 KB. Shorten the query.                                                                                  |
+| `413` | (request entity too large)                                    | The SQL query exceeds 250 KB. Shorten the query.                                                                                 |
 | `400` | `transformer N not found for this account`                    | The transformer ID does not exist, or belongs to a different account.                                                            |
 | `400` | `transformer N dataset "X" does not match job dataset "Y"`    | The transformer's `FROM` table does not match the job's dataset.                                                                 |
+| `400` | `a job cannot have both a filter and a transformer configured; use one or the other` | Clear the job's `filter` in the same request that sets `transformer_id`.                                                          |
 
 ### Runtime failures
 

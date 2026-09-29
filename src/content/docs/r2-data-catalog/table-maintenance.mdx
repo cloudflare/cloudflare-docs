@@ -8,6 +8,8 @@ sidebar:
   order: 4
 ---
 
+import { DashButton, Steps } from "~/components";
+
 Table maintenance encompasses a set of operations that keep your Apache Iceberg tables performant and cost-efficient over time. As data is written, updated, and deleted, tables accumulate metadata and files that can degrade query performance over time.
 
 R2 Data Catalog automates two critical maintenance operations:
@@ -22,6 +24,37 @@ Without regular maintenance, tables can suffer from:
 - **Metadata overhead**: Large metadata files slow down query planning and table operations
 
 By enabling automatic table maintenance, R2 Data Catalog ensures your tables remain optimized without having to manually run them yourself.
+
+## View and queue table maintenance
+
+The **Maintenance** tab for each table shows the compaction and snapshot expiration configuration, schedule, and next eligibility time. It also provides a paginated history of maintenance runs with their status and duration.
+
+<Steps>
+1. In the Cloudflare dashboard, go to **R2 Data Catalog**.
+
+   <DashButton url="/?to=/:account/data-catalog/overview" />
+2. Select a catalog, then select the **Explorer** tab. The **Explorer** tab opens by default.
+3. Select a table.
+4. Select the **Maintenance** tab.
+</Steps>
+
+![Maintenance tab for an R2 Data Catalog table showing schedules and recent runs](~/assets/images/r2-data-catalog/table-maintenance-view.png)
+
+The **Recent runs** section displays five runs per page. Expand a run to view metrics for its manifest rewrite, compaction, and snapshot expiration operations. For manually queued runs, the expanded details include a searchable `request_id`.
+
+### Queue compaction manually
+
+Manual queueing requests compaction for the selected table. The request enters the same queue used by automatic maintenance and starts when the scheduler next polls for eligible work.
+
+<Steps>
+1. From the table's **Maintenance** tab, select **Queue maintenance**.
+2. In the confirmation dialog, select **Queue maintenance**.
+</Steps>
+
+The dashboard checks your permissions before accepting the request. Queueing can also return the following errors:
+
+- `40903`: A maintenance executor conflict prevents the request from being queued.
+- `42901`: The daily accepted-request limit has been reached.
 
 ## Why do I need compaction?
 

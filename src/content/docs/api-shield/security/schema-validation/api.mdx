@@ -24,9 +24,9 @@ Use the API to upload, activate, list, and delete OpenAPI schemas. An uploaded s
 
 <Steps>
 
-1. Upload a schema.
-2. Add the schema operations to the Web Assets inventory.
-3. Activate the schema to make uploaded profile evaluation available.
+1. Upload a schema with `validation_enabled` set to `false`.
+2. Add the schema operations as saved operations in the Web Assets inventory.
+3. Activate the schema by setting `validation_enabled` to `true`.
 4. Send representative traffic through the configured operations.
 5. Analyze `cf.schema_validation.uploaded.violated` in [Profile Analysis](/waf/detections/application-profiles/analyze-profile-detections/).
 6. Configure mitigation with [WAF Custom Rules](/waf/detections/application-profiles/enforce-profiles-with-custom-rules/).
@@ -36,14 +36,14 @@ Use the API to upload, activate, list, and delete OpenAPI schemas. An uploaded s
 Settings changes may take a few minutes to implement.
 
 :::note
-Operations must exist in Web Assets for Schema Validation matching.
+Operations must exist as saved operations in Web Assets for Schema Validation matching.
 :::
 
 ## Configuration
 
-### Upload and activate a schema
+### Upload a schema
 
-Upload a schema with `POST`. This example uses `example_schema.yaml` from the current directory.
+Upload a schema with `POST`. Keep validation inactive while you configure operations.
 
 <APIRequest
 	path="/zones/{zone_id}/schema_validation/schemas"
@@ -52,66 +52,35 @@ Upload a schema with `POST`. This example uses `example_schema.yaml` from the cu
 		kind: "openapi_v3",
 		name: "example_schema",
 		source: "<SOURCE>",
-		validation_enabled: true,
+		validation_enabled: false,
 	}}
 />
 
 ```json output
 {
 	"result": {
-		"schema": {
-			"schema_id": "af632e95-c986-4738-a67d-2ac09995017a",
-			"name": "example_schema",
-			"kind": "openapi_v3",
-			"source": "<SOURCE>",
-			"created_at": "2023-04-03T15:10:08.902309Z"
-		}
-	},
-	"success": true,
-	"errors": [],
-	"messages": []
-}
-```
-
-By default, uploaded schema evaluation is inactive. Set `validation_enabled=true` to make evaluation available during upload.
-
-Use `PATCH` to activate evaluation after inspecting the schema.
-
-<APIRequest
-	path="/zones/{zone_id}/api_gateway/user_schemas/{schema_id}"
-	method="PATCH"
-	json={{
-		validation_enabled: true,
-	}}
-/>
-
-```json output
-{
-	"result": {
-		"schema_id": "0bf58160-5da3-48ac-80a9-069f9642c1a0",
-		"name": "api_schema.json",
+		"schema_id": "af632e95-c986-4738-a67d-2ac09995017a",
+		"name": "example_schema",
 		"kind": "openapi_v3",
-		"validation_enabled": true,
-		"created_at": "0001-01-01T00:00:00Z"
+		"source": "<SOURCE>",
+		"validation_enabled": false,
+		"created_at": "2023-04-03T15:10:08.902309Z"
 	},
 	"success": true,
 	"errors": [],
 	"messages": []
 }
 ```
-
-Activation makes uploaded profile evaluation available for configured operations. It does not configure mitigation.
 
 ### Add schema operations
 
 Schemas contain hosts, paths, and methods that define operations. An operation represents an endpoint by HTTP method, hostname pattern, and path pattern.
 
-Schema Validation evaluates requests only for operations added to Web Assets. Retrieve schema operations and their configuration with `GET`.
+Schema Validation evaluates requests only for saved operations in Web Assets. Retrieve operations from the schema with `GET`.
 
 ```bash title="cURL command"
-curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&operation_status=new&page=1&per_page=5000" \
---header "Authorization: Bearer <API_TOKEN>" \
---header 'Content-Type: application/json'
+curl --request GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/schema_validation/schemas/$SCHEMA_ID/operations?operation_status=new&page=1&per_page=50" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 ```json output
@@ -128,28 +97,30 @@ curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 	"messages": [],
 	"result_info": {
 		"page": 1,
-		"per_page": 30,
+		"per_page": 50,
 		"count": 1,
 		"total_count": 1
 	}
 }
 ```
 
-To receive information about the configuration of existing operations, Cloudflare recommends passing the `?feature=schema_info` parameter.
+Use `operation_status=new` to return operations that are not saved. Use `feature=schema_info` to include Schema Validation configuration for existing operations.
+
+Results are paginated. Request each page to retrieve all schema operations.
 
 Add schema operations to Web Assets with `POST`.
 
 ```bash title="cURL command"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
---header "Authorization: Bearer <API_TOKEN>" \
---header 'Content-Type: application/json' \
---data '[
-  {
-   "method": "GET",
-   "host": "example.com",
-   "endpoint": "/pets",
-  }
-]'
+curl --request POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/api_gateway/operations" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '[
+		{
+			"method": "GET",
+			"host": "example.com",
+			"endpoint": "/pets"
+		}
+	]'
 ```
 
 ```json output
@@ -169,53 +140,68 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 }
 ```
 
-You can add schema operations that do not exist in Web Assets. This API call supports up to 20 operations and requires `jq`. For schemas with more than 20 new operations, run the command again to add the next batch.
+The endpoint may limit the number of operations you can add in a single batch. If necessary, add operations in multiple requests.
 
-```bash title="cURL command"
-response="$(curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}/operations?feature=schema_info&page=1&per_page=20&operation_status=new" --header "Authorization: Bearer <API_TOKEN>")" || exit 1
-operations="$(printf "%s" "$response" | jq --exit-status ".result")" || exit 1
+### Activate the schema
 
-if [ "$(printf "%s" "$operations" | jq "length")" -eq 0 ]; then
-	printf "No new operations found.\n"
-else
-	curl --silent --fail-with-body "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operations" \
-	--header "Authorization: Bearer <API_TOKEN>" \
-	--header "Content-Type: application/json" \
-	--data "$operations" || exit 1
-fi
+After you save the operations, use `PATCH` to activate the schema.
+
+<APIRequest
+	path="/zones/{zone_id}/schema_validation/schemas/{schema_id}"
+	method="PATCH"
+	json={{
+		validation_enabled: true,
+	}}
+/>
+
+```json output
+{
+	"result": {
+		"schema_id": "af632e95-c986-4738-a67d-2ac09995017a",
+		"name": "example_schema",
+		"kind": "openapi_v3",
+		"source": "",
+		"validation_enabled": true,
+		"created_at": "2023-04-03T15:10:08.902309Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
 ```
 
-:::note
-
-When there are no new operations, the command exits without sending an API request. All `new_operations` are already `existing_operations`.
-:::
+Activation makes uploaded profile evaluation available for configured operations.
 
 ### List all schemas
 
-List uploaded schemas on a zone with `GET`.
+List uploaded schemas on a zone with `GET`. Results use the same `page` and `per_page` pagination parameters.
 
-`validation_enabled=true` is an optional parameter.
+Use the optional `validation_enabled` query parameter to filter schemas by validation state.
 
 <APIRequest path="/zones/{zone_id}/schema_validation/schemas" method="GET" />
 
 ```json output
 {
-    "result":  [
-        {
-	        "schema_id": "af632e95-c986-4738-a67d-2ac09995017a",
-	        "name": "example_schema",
-	        "kind": "openapi_v3",
-	        "source": "<SOURCE>",
-	        "created_at": "2023-04-03T15:10:08.902309Z"
-	    }
-    ]
-    "success": true,
-    "errors":
-    [],
-    "messages":
-    []
+	"result": [
+		{
+			"schema_id": "af632e95-c986-4738-a67d-2ac09995017a",
+			"name": "example_schema",
+			"kind": "openapi_v3",
+			"source": "<SOURCE>",
+			"validation_enabled": true,
+			"created_at": "2023-04-03T15:10:08.902309Z"
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result_info": {
+		"page": 1,
+		"per_page": 20,
+		"count": 1,
+		"total_count": 1
+	}
 }
-
 ```
 
 :::note

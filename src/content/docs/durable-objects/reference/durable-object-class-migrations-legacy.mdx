@@ -20,7 +20,7 @@ import {
 
 For new Workers, use the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field instead of the `migrations` array described on this page. The `migrations` array remains fully supported for existing Workers and continues to work as documented here.
 
-You cannot use both `exports` and `migrations` in the same Worker configuration — they are mutually exclusive. To move an existing Worker from `migrations` to `exports`, refer to [Migrate from `migrations` to `exports`](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+You cannot use `migrations` and Durable Object entries in `exports` in the same Worker configuration. Workflow entries in `exports` can be used alongside `migrations`. To move an existing Worker from `migrations` to `exports`, refer to [Migrate from `migrations` to `exports`](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
 
 :::
 

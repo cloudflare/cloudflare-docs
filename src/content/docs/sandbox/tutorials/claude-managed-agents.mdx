@@ -28,7 +28,7 @@ This integration ships as an open-source deployment template. Fork the repo, dep
 Deploy a Workers-based control plane that gives you:
 
 - **Two sandbox backends** — Each agent can run on a full MicroVM ([Containers](/containers/)) or a lightweight isolate ([Dynamic Workers](/dynamic-workers/)). MicroVMs give the agent a full Linux environment with bash and arbitrary processes. Isolates cold-start in milliseconds and costs a fraction of a container session.
-- **Private service connectivity** — Connect agents to private internal services over [Workers VPC](/workers-vpc/) and [Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) without exposing them to the public internet.
+- **Private service connectivity** — Connect agents to private internal services over [Workers VPC](/workers-vpc/) and [Mesh](/mesh/) without exposing them to the public internet.
 - **Egress control** — Run all agent traffic through customizable proxies. Inject credentials into outbound requests without the agent ever seeing them, restrict access to specific domains, or write arbitrary proxy middleware.
 - **Agent Email** — Give each agent session its own email address for sending and receiving messages with [Cloudflare Email Service](/email-service).
 - **Browser Run tools** — Give agents headless browsers powered by [Browser Run](/browser-run/) for web fetches, screenshots, and CDP control. Session recordings provide an audit trail of every browser action.

@@ -30,18 +30,14 @@ const lastIndex = sorted.length - 1;
 ---
 
 <div class="nb-cl-feed">
-	{
-		sorted.length === 0 && (
-			<p class="text-muted-foreground pb-8 pl-[var(--body-x)] text-[0.9375rem] text-pretty max-sm:pl-0">
-				No entries yet.
-			</p>
-		)
-	}
-	{
-		sorted.map((entry, i) => (
-			<ChangelogEntry entry={entry} railEnd={i === lastIndex} />
-		))
-	}
+	{sorted.length === 0 && (
+		<p class="text-muted-foreground pb-8 pl-[var(--body-x)] text-[0.9375rem] text-pretty max-sm:pl-0">
+			No entries yet.
+		</p>
+	)}
+	{sorted.map((entry, i) => (
+		<ChangelogEntry entry={entry} railEnd={i === lastIndex} />
+	))}
 </div>
 
 <style>

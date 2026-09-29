@@ -7,7 +7,8 @@ products:
   - mesh
 ---
 
-import { TypeScriptExample, WranglerConfig, WorkersVPCEgressDiagram } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
+import WorkersVPCEgressDiagram from "~/components/cf/WorkersVPCEgressDiagram.astro";
 
 Workers using a [VPC Network](/workers-vpc/configuration/vpc-networks/) binding with `network_id: "cf1:network"` now egress to public Internet destinations through [Cloudflare Gateway](/cloudflare-one/traffic-policies/). This means your existing Zero Trust traffic policies — DNS, HTTP, Network, and egress — extend to traffic that originates from your Workers, the same way they do for WARP users today.
 

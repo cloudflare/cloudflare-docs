@@ -14,7 +14,11 @@ import {} from "~/components";
     - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
 
-14. (Optional) Create an Okta API token and enter it in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Integrations** > **Identity providers** (the token can be read-only). Use an API token if your Okta tenant has more than 100 groups. This setting is specific to Okta and is not part of SCIM. The token only retrieves Okta group names for the policy builder. Access evaluates group membership from the user's OIDC token during authentication.
+14. (Optional) Create an Okta API token and enter it in the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Zero Trust** > **Integrations** > **Identity providers** (the token can be read-only). Use an API token if your Okta tenant has more than 100 groups. When the user's OIDC token contains no groups or reaches Okta's 100-group limit, Cloudflare uses this token during authentication to fetch the user's complete group membership. This setting is specific to Okta and is not part of SCIM. The API token does not add groups to the Access policy builder; the group options in the policy builder come from groups provisioned through [SCIM](#synchronize-users-and-groups).
+
+   :::note
+   The API token field appears blank after you save the identity provider configuration. This is expected. Secret values are omitted from API responses, but the token is stored.
+   :::
 
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.

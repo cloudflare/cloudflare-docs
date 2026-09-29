@@ -10,6 +10,7 @@ import type {
 	SidebarTransform,
 } from "@cloudflare/nimbus-docs/types";
 import { getDirectoryEntryBySection } from "~/util/directory";
+import { EXTERNAL_LINK_ARROW } from "./external-link-arrow";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,
@@ -86,8 +87,6 @@ export function getCfRouteNavigation(
 		resolveLabel: breadcrumbLabelResolver,
 	});
 }
-
-const EXTERNAL_LINK_ARROW = " \u2197";
 
 // Append the external-link arrow, unless already present.
 function appendExternalArrow(label: string): string {
@@ -261,7 +260,7 @@ function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
 // Fixed badge for external-app links by URL shape (`/api` → "API", MCP server
 // repo → "MCP"). Takes precedence over authored/auto-Beta badges.
 function getExternalBadge(href: string): SidebarBadge | undefined {
-	if (href.startsWith("/api")) return { text: "API", variant: "note" };
+	if (isExternalAppHref(href)) return { text: "API", variant: "note" };
 	if (href.includes("/mcp-server-cloudflare"))
 		return { text: "MCP", variant: "note" };
 	return undefined;
