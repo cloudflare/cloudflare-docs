@@ -1,0 +1,65 @@
+---
+title: Run coding agents in a sandbox
+description: Run coding agents such as Claude Code and Codex on a repository in a Linux sandbox that belongs to one task.
+pcx_content_type: navigation
+sidebar:
+  order: 10
+  label: Overview
+  group:
+    label: Coding agents
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+A coding agent reads a repository, edits files, and runs commands until its task is done. Run the agent in a Linux sandbox so those commands stay inside a [Container](/containers/) that belongs to one task. The agent gets Git, a shell, and the files it works on.
+
+## The agent runs in your sandbox
+
+When the agent runs inside the sandbox, as Claude Code, Codex, OpenCode, and Pi do, your Worker starts the sandbox and holds the credentials. The agent calls its model through [AI Gateway](/ai-gateway/), and your Worker adds the gateway token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach.
+
+The guides for these four agents change the parts of one runner that are specific to the agent. Build the runner first:
+
+<LinkTitleCard
+	title="Build a coding agent runner"
+	href="/sandbox/get-started/build-a-coding-agent-runner/"
+	icon="rocket"
+	description="Build a Worker that runs Claude Code on a GitHub repository in a sandbox and returns its changes as a diff."
+/>
+
+Then switch the runner to another agent:
+
+<CardGrid>
+	<LinkTitleCard
+		title="Claude Code"
+		href="/sandbox/coding-agents/claude-code/"
+		icon="simple-icons:claude"
+		description="Edit a GitHub repository with Claude Code, which calls Anthropic models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="Codex"
+		href="/sandbox/coding-agents/codex/"
+		icon="simple-icons:openai"
+		description="Edit a GitHub repository with the Codex CLI, which calls OpenAI models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="OpenCode"
+		href="/sandbox/coding-agents/opencode/"
+		icon="simple-icons:opencode"
+		description="Edit a GitHub repository with OpenCode, which calls models through AI Gateway."
+	/>
+	<LinkTitleCard
+		title="Pi"
+		href="/sandbox/coding-agents/pi/"
+		icon="simple-icons:pi"
+		description="Edit a GitHub repository with Pi, which calls models through its built-in AI Gateway provider."
+	/>
+</CardGrid>
+
+## Build your own agent
+
+To give an agent that you build with the Agents SDK a Linux sandbox as a tool, refer to [Sandbox](/agents/tools/sandbox/) in the Agents SDK documentation.
