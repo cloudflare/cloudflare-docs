@@ -2,18 +2,19 @@
 title: Identify Cloudflare Mesh and Workers VPC traffic in network logs
 description: Gateway network logs and Network Session Logs now identify Cloudflare Mesh and Workers VPC as distinct traffic sources and destinations, and show which Worker started each Workers VPC session.
 products:
+  - mesh
   - cloudflare-one
   - gateway
   - workers-vpc
 date: 2026-09-29
 ---
 
+You can now tell a person on a laptop apart from a Mesh node or an AI agent running on Workers, without matching on connector email addresses or Mesh IP ranges.
+
 [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network-logs) and [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) now identify two new kinds of traffic:
 
 - **Mesh** — Traffic sent from or delivered to a [Cloudflare Mesh](/mesh/) node. Previously, Mesh nodes were logged the same way as devices running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), because Mesh nodes run the client in headless mode.
-- **Workers VPC** — Traffic sent by a Worker through a [Workers VPC](/workers-vpc/) binding.
-
-This means you can tell a person on a laptop apart from a Mesh node or an AI agent running on Workers, without matching on connector email addresses or Mesh IP ranges.
+- **Workers VPC** — Traffic sent by a Worker through a [Workers VPC](/workers-vpc/) binding. Previously, Workers VPC sessions were not recorded in Network Session Logs.
 
 ![Viewing Mesh and Workers VPC traffic in Gateway network logs](~/assets/images/changelog/cloudflare-one/2026-09-28-mesh-workers-vpc-network-logs.gif)
 
