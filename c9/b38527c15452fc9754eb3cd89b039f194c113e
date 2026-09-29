@@ -1,0 +1,25 @@
+src/content/changelog/durable-objects/2026-07-22-durable-objects-sqlite-rtree.mdx
+  s_1db2452d6808dd::t_d30c9a4ad04293 2,13,17,56-57,62
+src/content/docs/d1/best-practices/import-export-data.mdx
+  s_1db2452d6808dd::t_2a5399d6ad3920 153
+src/content/docs/durable-objects/api/sqlite-storage-api.mdx
+  s_1db2452d6808dd::t_fe4f73639d7b3b 143
+src/content/partials/d1/d1-do-supported-sqlite-extensions.mdx
+  s_1db2452d6808dd::t_342b9b9b08f42b 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c9b38527c15452fc9754eb3cd89b039f194c113e",
+  "prompts": {},
+  "sessions": {
+    "s_1db2452d6808dd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f19faeaeeffelybhptsAIvSqTc",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

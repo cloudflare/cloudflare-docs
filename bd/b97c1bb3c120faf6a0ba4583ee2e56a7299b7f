@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/media-middleware.mdx
+  s_e9333773d21230::t_5015b39c7f50ab 1-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bdb97c1bb3c120faf6a0ba4583ee2e56a7299b7f",
+  "prompts": {},
+  "sessions": {
+    "s_e9333773d21230": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "fuchsia-computer",
+        "model": "unknown"
+      },
+      "human_author": "Aman Kumar <amankumar@cloudflare.com>"
+    }
+  }
+}

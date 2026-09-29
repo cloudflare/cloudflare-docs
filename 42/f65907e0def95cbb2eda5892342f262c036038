@@ -1,0 +1,19 @@
+src/content/docs/logs/logpush/transformers.mdx
+  s_edb089c6c14927::t_a0f6f755c752a3 1-310
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "42f65907e0def95cbb2eda5892342f262c036038",
+  "prompts": {},
+  "sessions": {
+    "s_edb089c6c14927": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fedbab659ffee8O2WcUZSZUCo4",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "sahidya <sahidya@cloudflare.com>"
+    }
+  }
+}
