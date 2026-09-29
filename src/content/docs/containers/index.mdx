@@ -16,7 +16,6 @@ products:
 import {
 	CardGrid,
 	Description,
-	Details,
 	Feature,
 	LinkTitleCard,
 	Plan,
@@ -56,7 +55,7 @@ The container in this example exposes `GET /health` on port `4000` and returns a
 <TypeScriptExample filename="src/index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { startAndWaitForPort } from "./container-readiness";
+import { startAndWaitForPort } from "./utils";
 
 interface Env {
 	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
@@ -100,9 +99,10 @@ export default {
 ```
 </TypeScriptExample>
 
-<Details header="View `src/container-readiness.ts`">
+	</TabItem>
+	<TabItem label="utils.js">
 
-<TypeScriptExample filename="src/container-readiness.ts">
+<TypeScriptExample filename="src/utils.ts">
 ```ts
 interface ReadinessOptions {
 	port: number;
@@ -141,41 +141,43 @@ export async function startAndWaitForPort(
 ```
 </TypeScriptExample>
 
-</Details>
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
 
-    </TabItem>
-    <TabItem label="Worker Config">
-    	<WranglerConfig>
-    		```json
-    		{
-    			"name": "container-starter",
-    			"main": "src/index.js",
-    			"compatibility_date": "$today",
-    			"containers": [
-    				{
-    					"class_name": "MyContainer",
-    					"image": "./Dockerfile",
-    					"max_instances": 5
-    				}
-    			],
-    			"durable_objects": {
-    				"bindings": [
-    					{
-    						"class_name": "MyContainer",
-    						"name": "MY_CONTAINER"
-    					}
-    				]
-    			},
-    			"migrations": [
-    				{
-    					"new_sqlite_classes": ["MyContainer"],
-    					"tag": "v1"
-    				}
-    			]
-    		}
-    		```
-    	</WranglerConfig>
-    </TabItem>
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "container-starter",
+	"main": "src/index.js",
+	"compatibility_date": "$today",
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 5,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "MyContainer",
+				"name": "MY_CONTAINER",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["MyContainer"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+	</TabItem>
 
 </Tabs>
 
