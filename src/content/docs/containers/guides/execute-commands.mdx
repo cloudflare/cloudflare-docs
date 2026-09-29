@@ -222,7 +222,7 @@ export class MyContainer extends Container {
 
 ## Set the process context
 
-Use `cwd`, `env`, and `user` to set the process context. The process receives only the variables in `env`, plus `PATH` from the image. It does not inherit `envVars` or other variables set in the image. To give a command a value from `envVars`, pass it in `env` as well.
+Use `cwd`, `env`, and `user` to set the process context. The process receives only the variables in `env`, plus `PATH`. It does not inherit other variables from `envVars` or the image. `PATH` comes from `envVars`, or from the image when `envVars` does not set it. To give a command a value from `envVars`, pass it in `env` as well.
 
 This example uses `sh` because it needs expansion and redirection. It also captures standard output and standard error separately.
 

@@ -103,7 +103,7 @@ this.ctx.container.start({
 #### Parameters
 
 - `options` (`object`, conditionally required): Startup options. Required for applications that use the `durable_object` scheduling policy and optional for applications that use the `default` scheduling policy.
-  - `env` (`Record<string, string>`, optional): Environment variables to pass to the container. Processes started with [`exec()`](#exec) do not receive these variables.
+  - `env` (`Record<string, string>`, optional): Environment variables to pass to the container. Processes started with [`exec()`](#exec) do not receive these variables, except `PATH`.
   - `entrypoint` (`string[]`, optional): Command and arguments to run in the container.
   - `enableInternet` (`boolean`, required): Whether to allow outbound Internet access. Required when you pass `options`.
   - `image` (`string`, conditionally required) <Badge text="durable_object policy only" variant="note" size="small" />: Image reference to start. Required unless you pass `containerSnapshot`. Pass the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) or a value from [`ctx.container.images`](#images).
@@ -196,7 +196,7 @@ export class MyDurableObject extends DurableObject<Env> {
   - `stdout` (`"pipe" | "ignore"`, optional, default `"pipe"`): Captures or discards standard output.
   - `stderr` (`"pipe" | "ignore" | "combined"`, optional, default `"pipe"`): Captures, discards, or merges standard error into standard output. The `"combined"` value requires `stdout: "pipe"`. Combined output does not guarantee ordering between its source streams.
   - `cwd` (`string`, optional): Working directory for the process.
-  - `env` (`Record<string, string>`, optional): Environment variables for the process. The process does not inherit variables from `start()` or from the image. It receives `PATH` from the image unless `env` sets `PATH`.
+  - `env` (`Record<string, string>`, optional): Environment variables for the process. Other variables from `start()` or the image are not inherited, except for `PATH`. Unless overridden here, `PATH` uses the container's startup value, including any override passed to `start()`.
   - `user` (`string`, optional): Numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user.
   - `signal` (`AbortSignal`, optional): Aborting the signal sends `SIGKILL` to the process. An already-aborted signal makes `exec()` throw an `AbortError`.
   - `pty` (`boolean | { cols?: number; rows?: number }`, optional): Runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
@@ -267,7 +267,11 @@ export class MyContainer extends DurableObject {
 
 		const controller = new AbortController();
 		const abort = () => controller.abort();
-		request.signal.addEventListener("abort", abort);
+		if (request.signal.aborted) {
+			abort();
+		} else {
+			request.signal.addEventListener("abort", abort, { once: true });
+		}
 
 		const process = await container.exec(["sleep", "60"], {
 			signal: controller.signal,
@@ -410,6 +414,7 @@ export class MyDurableObject extends DurableObject<Env> {
 		}
 		if (!container.running) {
 			container.start({
+				// `cloudflare/debian-trixie` requires the `durable_object` scheduling policy.
 				image: "cloudflare/debian-trixie",
 				entrypoint: ["sleep", "infinity"],
 				enableInternet: false,
@@ -545,7 +550,7 @@ In a container started with `enableInternet: false`, no public resolver answers 
 
 - `A` and `AAAA` lookups for an intercepted hostname return a placeholder address that routes the request to the intercept.
 - `interceptAllOutboundHttp()` and a `*` hostname target make every hostname resolve, including hostnames that do not exist.
-- IP address and CIDR targets add no DNS answers.
+- IP address and CIDR targets add no DNS answers, except for `0.0.0.0/0` and `::/0`, which make every hostname resolve.
 - Every other lookup times out, including a lookup made before you register an intercept.
 
 #### Intercept limit
@@ -603,7 +608,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 ### `interceptOutboundHttps`
 
-`interceptOutboundHttps()` routes outbound HTTPS requests matching a hostname or hostname glob through a `Fetcher`. It works like `interceptOutboundHttp()` but handles HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception.
+`interceptOutboundHttps()` routes outbound HTTPS requests matching a hostname or hostname glob, with an optional port, through a `Fetcher`. It works like `interceptOutboundHttp()` but handles HTTPS traffic. The container must trust the CA certificate at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` for HTTPS interception.
 
 Hostname globs support `*` to match any sequence of characters.
 
@@ -620,11 +625,11 @@ await this.ctx.container.interceptOutboundHttps("*.example.com", worker);
 await this.ctx.container.interceptOutboundHttps("*", worker);
 ```
 
-`interceptOutboundHttps()` intercepts only HTTPS on port `443`. It matches the hostname that the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while a `*` intercept is registered.
+`interceptOutboundHttps()` intercepts HTTPS on port `443` by default. To use another port, include it in the target, for example `"api.example.com:8443"`. It matches the hostname that the client sends. In a container started with `enableInternet: false`, HTTPS requests to a bare IP address fail while a `*` intercept is registered.
 
 #### Parameters
 
-- `addr` (`string`): Hostname or hostname glob pattern to match. Use `*` to intercept all HTTPS traffic.
+- `addr` (`string`): Hostname or hostname glob pattern to match, with an optional port such as `api.example.com:8443`. Use `*` to intercept all HTTPS traffic on port `443`.
 - `binding` (`Fetcher`): Worker entrypoint or service binding that handles matching requests.
 
 #### Return values
