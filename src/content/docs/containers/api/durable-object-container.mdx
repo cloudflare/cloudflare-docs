@@ -87,7 +87,7 @@ this.ctx.container.start();
 
 // `durable_object` scheduling policy:
 // Pass an image and choose whether to allow outbound Internet access.
-// The instance size is optional.
+// The instance size is optional and defaults to "lite".
 this.ctx.container.start({
 	image: this.ctx.container.images.base,
 	enableInternet: true,
