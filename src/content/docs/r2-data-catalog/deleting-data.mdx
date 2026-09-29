@@ -92,7 +92,44 @@ spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
 ```
 
 :::caution[Data loss warning]
-`DROP TABLE ... PURGE` permanently deletes all data files from R2 storage. This operation cannot be undone and bypasses time-travel capabilities.
+`DROP TABLE ... PURGE` permanently deletes all data files from R2 storage once the deletion grace period expires. This operation cannot be undone and bypasses time-travel capabilities.
+:::
+
+### Purge grace period and deferred deletion
+
+When you execute `DROP TABLE ... PURGE`, R2 Data Catalog removes table metadata from the catalog immediately. However, the physical deletion of underlying data and metadata files from R2 storage is deferred by a safety grace period.
+
+- **Default grace period**: 6 days (518,400 seconds). Data files remain in your bucket until the grace period expires, at which point an automated purge worker deletes them.
+- **Configuring the grace period**: You can override the default by setting the `cloudflare-data-catalog.deletion.grace-period-seconds` property on the table or namespace before dropping it.
+
+#### Examples
+
+##### Spark SQL
+
+```sql
+-- Set grace period to 24 hours (86400 seconds) on a table
+ALTER TABLE r2dc.namespace_name.table_name
+SET TBLPROPERTIES ('cloudflare-data-catalog.deletion.grace-period-seconds' = '86400');
+
+-- Set grace period to 0 seconds (immediate deletion once picked up by purge worker)
+ALTER TABLE r2dc.namespace_name.table_name
+SET TBLPROPERTIES ('cloudflare-data-catalog.deletion.grace-period-seconds' = '0');
+
+-- Set default grace period across an entire namespace
+ALTER NAMESPACE r2dc.namespace_name
+SET PROPERTIES ('cloudflare-data-catalog.deletion.grace-period-seconds' = '172800');
+```
+
+##### PyIceberg
+
+```python
+# Set grace period on an existing table
+with table.transaction() as transaction:
+    transaction.set_properties({"cloudflare-data-catalog.deletion.grace-period-seconds": "86400"})
+```
+
+:::note[Location reuse during grace period]
+If you drop a table and create a new table with the same name during the grace period, R2 Data Catalog assigns a new unique storage prefix to the new table. The pending deletion of the old files will not affect your new table.
 :::
 
 ### Manual maintenance operations
@@ -193,7 +230,7 @@ These operations work the same way for both COW and MOR tables:
 | ---------------------- | ------------------------------- | ----------------------- | ------------------------- |
 | `DELETE FROM`          | Removes rows matching condition | No (marked for cleanup) | Via time travel[^1]       |
 | `DROP TABLE`           | Removes table from catalog      | No                      | Yes (if data files exist) |
-| `DROP TABLE ... PURGE` | Removes table and deletes data  | **Yes**                 | **No**                    |
+| `DROP TABLE ... PURGE` | Removes table and queues data for delayed purge | **Yes**                 | **No**                    |
 | `expire_snapshots`     | Cleans up old snapshots/files   | **Yes**                 | **No**                    |
 | `remove_orphan_files`  | Removes unreferenced files      | **Yes**                 | **No**                    |
 
