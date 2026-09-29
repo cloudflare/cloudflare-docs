@@ -45,7 +45,7 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs the baseline x64 OpenCode binary directly. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. When you build an `amd64` image on another architecture, the build runs under an emulator, so the package can pick the wrong binary. The baseline binary runs on every x64 CPU.
+   The image installs the baseline x64 OpenCode binary directly. The baseline binary runs on every x64 CPU. The `opencode-ai` package picks a binary for the CPU of the machine that builds the image. An `amd64` build on another architecture runs under an emulator, where the package can pick the wrong binary.
 
    OpenCode searches files with `rg` from the image. Without `ripgrep`, it tries to download `rg` from GitHub. The image pins the OpenCode version, because the model list and event format of OpenCode can change between releases.
 
@@ -119,7 +119,7 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    - `--auto` approves every tool call that the OpenCode configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what commands from OpenCode can reach.
    - `--model` selects the AI Gateway model from `MODEL`.
 
-   The built-in `cloudflare-ai-gateway` provider in OpenCode reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the universal endpoint of the gateway, which is the gateway path itself with no suffix. The `Outbound` entrypoint in the runner allows that exact path as well as the paths under it. OpenCode does not start without a token, so `CLOUDFLARE_API_TOKEN` is a placeholder, and the `Outbound` entrypoint replaces the token header with the gateway token.
+   The built-in `cloudflare-ai-gateway` provider in OpenCode reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the universal endpoint of the gateway: the gateway path with no suffix. The `Outbound` entrypoint in the runner allows that path and the paths under it. `CLOUDFLARE_API_TOKEN` is a placeholder, because OpenCode does not start without a token. The `Outbound` entrypoint replaces the token header with the gateway token.
 
    The `OPENCODE_DISABLE_*` variables make OpenCode use the model list built into the binary and turn off its update check, default plugins, language server downloads, and sharing. OpenCode still tries to install `@opencode-ai/plugin` from npm in the background. That request gets a `403` response from the `Outbound` entrypoint, and OpenCode continues.
 

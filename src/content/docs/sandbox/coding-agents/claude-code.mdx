@@ -44,7 +44,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    CMD ["sleep", "infinity"]
    ```
 
-   The installation runs the install script from the Claude Code package, which puts its native binary in place. The image pins the version, because the flags and event format of Claude Code can change between releases.
+   The install script from the Claude Code package puts its native binary in place. The image pins the version, because the flags and event format of Claude Code can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to an Anthropic model ID that your gateway can serve:
 
@@ -70,7 +70,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    headers.set("cf-aig-authorization", `Bearer ${this.env.AI_GATEWAY_TOKEN}`);
    ```
 
-   Claude Code sends a placeholder API key. If the Worker left it in place, AI Gateway would forward it to Anthropic, and the model request would fail with `Invalid API key`.
+   Claude Code sends a placeholder API key. If the `x-api-key` header stays, AI Gateway forwards it to Anthropic, and the model request fails with `Invalid API key`.
 
 4. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for the final event from Claude Code:
 
@@ -119,7 +119,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    - `ANTHROPIC_API_KEY` is a placeholder, because Claude Code does not start without an API key.
    - `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` turns off update checks, telemetry, and error reporting, so Claude Code calls only your gateway.
 
-   Claude Code still reads a `CLAUDE.md` file in the repository, so the instructions in the repository apply to the task.
+   If the repository has a `CLAUDE.md` file, Claude Code reads it, so the instructions in that file apply to the task.
 
 6. Replace the `outcome()` method:
 
@@ -152,7 +152,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    	}
    ```
 
-   Claude Code exits successfully even when a model request fails, so the outcome comes from the `is_error` field of the final `result` event instead of the exit code. Claude Code retries a failing model request 10 times, so a rejected gateway token takes about three minutes to fail the task with `Failed to authenticate. API Error: 401 Unauthorized`.
+   Claude Code exits successfully even when a model request fails, so the outcome comes from the `is_error` field of the final `result` event instead of the exit code. Claude Code retries a failing model request 10 times. A rejected gateway token fails the task after about three minutes with `Failed to authenticate. API Error: 401 Unauthorized`.
 
 7. Deploy the Worker:
 

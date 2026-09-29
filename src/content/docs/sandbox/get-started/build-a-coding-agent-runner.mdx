@@ -97,7 +97,7 @@ You also need:
    CMD ["sleep", "infinity"]
    ```
 
-   The image contains Claude Code, Git, and the tools Claude Code uses to search files. Install everything the agent needs when you build the image, because the sandbox cannot download packages at run time. The installation runs the install script from the Claude Code package, which puts its native binary in place.
+   Install everything the agent needs in the image, because the sandbox cannot download packages at run time. The install script from the Claude Code package puts its native binary in place.
 
    Pin the Claude Code version. Its command-line flags and event format can change between releases. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
 
@@ -164,7 +164,7 @@ You also need:
 
 </Steps>
 
-The tutorial adds or replaces these files. You create `src/outbound.ts` and `src/sandbox.ts`, and replace `src/index.ts`, in the next three sections:
+In the next three sections, you create `src/outbound.ts` and `src/sandbox.ts` and replace `src/index.ts`. The tutorial adds or replaces these files:
 
 <FileTree>
 
@@ -179,7 +179,7 @@ The tutorial adds or replaces these files. You create `src/outbound.ts` and `src
 
 ## 2. Allow only the gateway and GitHub
 
-Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through this entrypoint in your Worker. Without Internet access, it cannot reach other ports:
+Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through this entrypoint in your Worker. Without Internet access, the sandbox cannot reach other ports:
 
 <TypeScriptExample filename="src/outbound.ts">
 
@@ -229,10 +229,12 @@ export class Outbound extends WorkerEntrypoint<Env> {
 
 The entrypoint allows two destinations:
 
-- Requests to your gateway under your account ID and gateway ID. The Worker removes the placeholder API key that Claude Code sends and adds the gateway token. AI Gateway then calls Anthropic with the credentials it holds. If the Worker left the placeholder in place, AI Gateway would forward it to Anthropic and the model request would fail.
+- Requests to your gateway under your account ID and gateway ID. The Worker removes the placeholder API key that Claude Code sends and adds the gateway token. AI Gateway then calls Anthropic with the credentials it holds. If the placeholder stays, AI Gateway forwards it to Anthropic, and the model request fails.
 - Requests to `github.com`, so Git can clone public repositories.
 
-Both are HTTPS only. The Worker fetches with the scheme the container used, so a plain HTTP request to the gateway would send the gateway token unencrypted. Every other request gets a `403` response. Claude Code therefore cannot install packages from npm or fetch web pages while it works. To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
+The entrypoint allows both destinations over HTTPS only. The Worker fetches with the scheme the container used, so a plain HTTP request to the gateway would send the gateway token unencrypted. Every other request gets a `403` response, so Claude Code cannot install packages from npm or fetch web pages while it works.
+
+To allow another destination, add it to this entrypoint. Each destination you add is another way for data to leave the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 ## 3. Run Claude Code in the sandbox
 
@@ -563,17 +565,17 @@ Only `ResultEvent`, `agentCommand()`, `agentEnv()`, and `outcome()` are specific
 
 ### Start the sandbox
 
-`startSandbox()` starts the container from the image Wrangler built, with no direct Internet access. The `standard-1` [instance type](/containers/platform/limits/#instance-types) gives Claude Code and the repository room to work. Choose a size that fits your agent and your repositories.
+`startSandbox()` starts the container from the image Wrangler built, with no direct Internet access. In this example, the container uses the `standard-1` [instance type](/containers/platform/limits/#instance-types). Choose a size that fits your agent and your repositories.
 
-After each start, the Durable Object sends HTTP and HTTPS requests on ports `80` and `443` from the container to the `Outbound` entrypoint. The interception lasts for one container run, so `startSandbox()` sets it up every time it starts the container. For more information, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps).
+After each start, `startSandbox()` routes HTTP and HTTPS requests from the container on ports `80` and `443` to the `Outbound` entrypoint. The interception ends with the container, so `startSandbox()` registers it on every start. For more information, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps).
 
-Your Worker reads HTTPS traffic from the container by re-signing it with a Cloudflare certificate authority. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests.
+Containers re-signs HTTPS traffic from the container with a Cloudflare certificate authority, so the `Outbound` entrypoint can read it. The `trustEnv` variables point Git, Node.js, and other tools at that certificate. The Durable Object passes them to every command that makes HTTPS requests.
 
 ### Run Claude Code in the background
 
 A Claude Code task can run for several minutes, longer than a request should wait. `startTask()` starts the task and returns. The client then checks the task state with later requests.
 
-Claude Code runs without its own permission prompts. The sandbox limits what its commands can reach, and nothing outside the sandbox depends on what Claude Code does inside it. The command sets these options:
+Claude Code runs without its own permission prompts, because the sandbox limits what its commands can reach. The command sets these options:
 
 - `--print` runs Claude Code without an interactive terminal.
 - `--output-format stream-json --verbose` writes one JSON event per line, including a final `result` event.
@@ -582,11 +584,15 @@ Claude Code runs without its own permission prompts. The sandbox limits what its
 - `ANTHROPIC_API_KEY` is a placeholder. Claude Code does not start without an API key, and the `Outbound` entrypoint removes the key from each request.
 - `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` turns off update checks, telemetry, and error reporting, so Claude Code calls only your gateway.
 
-Claude Code still reads a `CLAUDE.md` file in the repository, so the instructions in the repository apply to the task.
+If the repository has a `CLAUDE.md` file, Claude Code reads it, so the instructions in that file apply to the task.
 
-The process writes its output to files instead of sending it back to the Durable Object. A process with piped output receives `SIGPIPE` after the request that started it ends, which stops Claude Code in the middle of its task. The shell wrapper writes the exit code to a temporary file and then renames it, so the Durable Object never reads a partial exit code.
+The process writes its output to files instead of sending it back to the Durable Object. A process with piped output receives `SIGPIPE` after the request that started it ends, which stops Claude Code in the middle of its task.
 
-The task files live in `/workspace/task`, outside the repository, so they do not appear in the diff. `blockConcurrencyWhile()` makes two requests that start a task at the same time run one after the other, so the second request sees the first task and returns `busy`.
+The shell wrapper writes the exit code to a temporary file and then renames it, so the Durable Object never reads a partial exit code.
+
+The task files live in `/workspace/task`, outside the repository, so they do not appear in the diff.
+
+When two requests start a task at the same time, `blockConcurrencyWhile()` runs them one after the other. The second request sees the running task and returns `busy`.
 
 ### Keep the sandbox running
 
@@ -604,7 +610,7 @@ The task has one of these states:
 
 Claude Code exits successfully even when a model request fails. The outcome comes from the `is_error` field of the final `result` event instead of the exit code. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. When there is no `result` event, the task fails with the end of the standard error output from Claude Code.
 
-While no exit code exists, the Durable Object checks whether the process still exists with `kill -0`. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
+While no exit code exists, the Durable Object runs `kill -0` to check whether the process still exists. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
 
 `readDiff()` marks new files with `git add --intent-to-add` so that `git diff` includes them.
 
@@ -816,7 +822,7 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
    }
    ```
 
-   The reply differs on each run. This task takes a few seconds, and larger tasks take minutes. You do not need to keep checking for the task to finish, because the alarm keeps the sandbox running until Claude Code exits.
+   The reply differs on each run. This task takes a few seconds, and larger tasks take minutes. The alarm keeps the sandbox running until Claude Code exits, so you do not need to keep checking.
 
 4. Read the changes:
 
@@ -842,8 +848,6 @@ If the model request fails, the task state is `failed` and `error` contains the 
 
 - `Failed to authenticate. API Error: 401 Unauthorized` means the gateway rejected the token. Check that the token belongs to the account and gateway in `wrangler.jsonc`. Claude Code retries a failing model request 10 times, so this error takes about three minutes to appear.
 - `API Error: 402 Insufficient wholesale credits` means the gateway uses Unified Billing and the account has no credits. Add credits, or store an Anthropic API key in the gateway.
-
-You built a Worker that runs a coding agent on a repository in a sandbox. The sandbox holds the repository and the agent, and your Worker holds the gateway token and decides where the sandbox can connect.
 
 ## Next steps
 

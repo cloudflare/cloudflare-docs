@@ -44,7 +44,7 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs Pi instead of Claude Code. The image pins the version, because the flags and event format of Pi can change between releases.
+   The image pins the version, because the flags and event format of Pi can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to a model ID from the `cloudflare-ai-gateway` provider in Pi:
 
@@ -62,7 +62,7 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
 
    </WranglerConfig>
 
-   Use a model from a provider such as Anthropic. Pi 0.87.1 requests as many output tokens as the context window for most Workers AI models in its catalog, and Workers AI rejects those requests.
+   Use a model from a provider such as Anthropic. For most Workers AI models in its catalog, Pi 0.87.1 requests as many output tokens as the context window. Workers AI rejects those requests.
 
 3. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for the Pi events that report the outcome:
 

@@ -16,13 +16,13 @@ products:
 
 import { CardGrid, LinkTitleCard } from "~/components";
 
-Coding agents such as Claude Code, Codex, and OpenCode can run a task on their own: they read a repository, edit files, and run commands until the task is done. Run the agent in a Linux sandbox so those commands stay inside a [Container](/containers/) that belongs to one task. The agent gets Git, a shell, and the files it works on.
+Coding agents such as Claude Code, Codex, and OpenCode can run a task on their own: they read a repository, edit files, and run commands until the task is done. Run the agent in a Linux sandbox so its commands stay inside a [Container](/containers/) that belongs to one task.
 
 ## The agent runs in your sandbox
 
-When the agent runs inside the sandbox, your Worker starts the sandbox and holds the credentials. The agent calls its model over HTTP, for example through [AI Gateway](/ai-gateway/), and your Worker adds the API token to each request, so the sandbox never receives it. Your Worker also decides which hostnames the sandbox can reach.
+Your Worker starts the sandbox, holds the credentials, and decides which hostnames the sandbox can reach. The agent calls its model over HTTP, for example through [AI Gateway](/ai-gateway/). Your Worker adds the API token to each request, so the sandbox never receives it.
 
-Each guide for an agent that runs in your sandbox changes the parts of one runner that are specific to that agent. Build the runner first:
+Each guide in this section changes only the agent-specific parts of one runner. Build the runner first:
 
 <LinkTitleCard
 	title="Build a coding agent runner"

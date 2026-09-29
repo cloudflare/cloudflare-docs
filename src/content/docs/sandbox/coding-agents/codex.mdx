@@ -44,7 +44,7 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
    CMD ["sleep", "infinity"]
    ```
 
-   The image installs the Codex CLI instead of Claude Code. The npm package ships its native binaries as dependencies, so it installs without running install scripts. The image pins the version, because the flags and event format of Codex can change between releases.
+   The Codex npm package ships its native binaries as dependencies, so it installs without running install scripts. The image pins the version, because the flags and event format of Codex can change between releases.
 
 2. In `wrangler.jsonc`, set `MODEL` to an OpenAI model ID that your gateway can serve:
 
@@ -163,7 +163,7 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
    	}
    ```
 
-   Codex exits with a nonzero code when its turn fails, so the exit code decides the outcome. A failed task returns the message from the last `turn.failed` or `error` event. Codex retries a failing model request five times, which takes about 20 seconds, before the task fails.
+   Codex exits with a nonzero code when its turn fails, so the exit code decides the outcome. A failed task returns the message from the last `turn.failed` or `error` event. Codex retries a failing model request five times, and the task fails after about 20 seconds.
 
 6. Deploy the Worker:
 
