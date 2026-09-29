@@ -25,7 +25,7 @@ The `durable_object` scheduling policy is in public beta.
 
 ## Use the default scheduling policy
 
-The `default` policy preserves the existing Containers behavior. Define one `image`, one `instance_type`, and application-level settings such as `max_instances` in Wrangler configuration. Omitting `scheduling_policy` selects `default`.
+With the `default` policy, Wrangler configuration defines one application-wide `image`, one `instance_type`, and settings such as `max_instances`. Omitting `scheduling_policy` selects `default`.
 
 <WranglerConfig>
 
