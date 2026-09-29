@@ -114,7 +114,7 @@ export class AgentComputer extends DurableObject {
 
 </TypeScriptExample>
 
-`ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/durable-objects/api/container/#exec).
+`ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/containers/api/durable-object-container/#exec).
 
 ### Configure named images
 
@@ -128,7 +128,7 @@ The image map is uploaded with the Worker version. Updating the map does not res
 
 ### Choose an instance size at runtime
 
-Set `instance` in `ctx.container.start()` to one of the following named instance types:
+Set `instance` in `ctx.container.start()` to one of the following [named instance types](/containers/platform/limits/#instance-types):
 
 - `lite`
 - `standard-1`
@@ -166,7 +166,7 @@ One Wrangler configuration can contain applications with both policies. This let
 
 ## Related resources
 
-- [Durable Object Container API](/durable-objects/api/container/)
+- [Durable Object Container API](/containers/api/durable-object-container/)
 - [Lifecycle of a Container](/containers/concepts/architecture/)
 - [Image Management](/containers/guides/image-management/)
 - [Wrangler Containers configuration](/workers/wrangler/configuration/#containers)
