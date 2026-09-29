@@ -270,8 +270,14 @@ const trustEnv = {
 // Runs the command in its own process group. Records its process ID when
 // it starts and its exit code when it ends.
 const taskScript = `dir=$1; shift
-setsid sh -c 'echo "$$" >"$0/pid"; exec "$@"' "$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
+setsid sh -c 'echo "$$ $(cat /proc/sys/kernel/random/boot_id)" >"$0/pid"; exec "$@"' \\
+	"$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
 echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
+
+// Succeeds while the process in the file runs and started in this instance.
+const taskRunningScript = `read -r pid boot <"$1" &&
+	[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ] &&
+	kill -0 "$pid"`;
 
 const ResultEvent = z.object({
 	type: z.literal("result"),
@@ -486,7 +492,7 @@ export class AgentSandbox extends DurableObject<Env> {
 		}
 
 		const probe = await this.run(
-			["/bin/sh", "-c", 'kill -0 "$1"', "probe", pid.trim()],
+			["/bin/sh", "-c", taskRunningScript, "probe", pidPath],
 			"/",
 			{},
 		);
@@ -651,6 +657,8 @@ The task has one of these states:
 Claude Code exits successfully even when a model request fails. The outcome comes from the `is_error` field of the final `result` event instead of the exit code. The events file comes from the sandbox, so the Durable Object validates each event with Zod before it reads it. When there is no `result` event, the task fails with the end of the standard error output from Claude Code.
 
 While no exit code exists, the Durable Object runs `kill -0` to check whether the process still exists. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
+
+The process ID file also records the boot ID, which changes in every instance. If you restore the workspace from a snapshot, the file comes back, and the new instance reuses the same process IDs. The check ignores a process ID from another instance, so a task that was running when the snapshot was taken is `lost`.
 
 `readDiff()` marks new files with `git add --intent-to-add` so that `git diff` includes them.
 
