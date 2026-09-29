@@ -17,7 +17,7 @@ In Sandbox SDK 0.12, `runCode()` ran Python, JavaScript, and TypeScript in an in
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 
 A `runCode()` call without a `context` used a default context for its language, so plain calls in one sandbox shared variables:
 
@@ -301,7 +301,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    }
    ```
 
-   Call `this.kernels.clear()` in `ensureRunning()` after `start()`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
+   Call `this.kernels.clear()` in `startContainer()`, after `start()`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startKernel()` starts a second kernel, which exits because the port is in use. The kernel that already runs answers the call and keeps its variables.
 
 5. Add a `runCode()` method:
 
@@ -367,9 +367,17 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    	async createCodeContext(
    		options: { cwd?: string; env?: Record<string, string> } = {},
    	): Promise<CodeContext> {
-   		const last =
-   			await this.ctx.storage.get<number>("lastKernelPort");
-   		const port = (last ?? DEFAULT_CONTEXT.port) + 1;
+   		// Take the lowest port that no stored context uses.
+   		const stored = await this.ctx.storage.list<CodeContext>({
+   			prefix: "context:",
+   		});
+   		const used = new Set([...stored.values()].map((c) => c.port));
+   		let port = DEFAULT_CONTEXT.port + 1;
+
+   		while (used.has(port)) {
+   			port++;
+   		}
+
    		const context: CodeContext = {
    			id: crypto.randomUUID(),
    			port,
@@ -377,10 +385,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    			env: options.env,
    		};
 
-   		await this.ctx.storage.put({
-   			lastKernelPort: port,
-   			[`context:${context.id}`]: context,
-   		});
+   		await this.ctx.storage.put(`context:${context.id}`, context);
    		return context;
    	}
 
@@ -403,6 +408,8 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    	}
    }
    ```
+
+   `createCodeContext()` gives each new context the lowest port after `8800` that no stored context uses, so a new context can take the port of a deleted one.
 
    The contexts share one container, so code in one context can read the files of the others and reach their ports. Give each user their own sandbox name.
 

@@ -139,24 +139,43 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    		return container;
    	}
 
+   	private starting: Promise<void> | null = null;
+
    	private async ensureRunning(): Promise<void> {
    		if (!this.container.running) {
-   			this.container.start({
-   				image: this.container.images.sandbox,
-   				instance: "standard-1",
-   				env: ENV,
-   				// 0.12 allowed Internet access by default.
-   				enableInternet: true,
+   			// Requests that arrive during setup wait for the same setup.
+   			this.starting ??= this.startContainer().finally(() => {
+   				this.starting = null;
    			});
+   		}
+   		await this.starting;
+   	}
+
+   	private async startContainer(): Promise<void> {
+   		this.container.start({
+   			image: this.container.images.sandbox,
+   			instance: "standard-1",
+   			env: ENV,
+   			// 0.12 allowed Internet access by default.
+   			enableInternet: true,
+   		});
+
+   		try {
    			// Replaces onStart().
    			await this.ctx.storage.put("startedAt", Date.now());
    			await this.container.setInactivityTimeout(
    				INACTIVITY_TIMEOUT_MS,
    			);
+   		} catch (error) {
+   			// The next request starts a new container.
+   			await this.container.destroy();
+   			throw error;
    		}
    	}
    }
    ```
+
+   Call `ensureRunning()` before each use of the container. It runs `startContainer()` once for each new container. `running` is `true` as soon as `start()` returns, so a request that arrives during setup would skip it. `ensureRunning()` makes that request wait for the same setup instead. If a setup step throws, `startContainer()` stops the container, so no request runs commands in a container that is not set up.
 
    `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout does not survive a Durable Object restart. The constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. If your commands do not need the Internet, set `enableInternet` to `false`.
 
@@ -179,11 +198,11 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
 8. Replace the hooks your subclass overrides:
 
-   - `onStart()`: run the code after `start()`, as in the class from the previous step.
+   - `onStart()`: run the code in `startContainer()`, after `start()`, as in the class from the previous step.
    - `onStop()` and `onError()`: watch the container with [`monitor()`](/containers/api/durable-object-container/#monitor), and catch errors where you call `start()` and `exec()`.
    - `onActivityExpired()`: no code runs before the inactivity timeout stops the container. To run code first, keep your own idle deadline in an alarm, and call `this.container.destroy()` when it passes. For an example that saves the sandbox before it stops, refer to [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/).
 
-   To watch the container, call a method like this one after `start()`:
+   To watch the container, call a method like this one in `startContainer()`, after `start()`:
 
    ```ts title="src/index.ts"
    export class MySandbox extends DurableObject<Env> {

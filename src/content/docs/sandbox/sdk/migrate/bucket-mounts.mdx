@@ -17,7 +17,7 @@ Move your 0.12 bucket mounts to `S3Mount`, which mounts the same bucket prefix w
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mount` uses. `S3Mount` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mount` uses. `S3Mount` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
 
 This page replaces `mountBucket()`, `unmountBucket()`, their options, and their errors. To build the same mount in a new project, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
 
@@ -172,30 +172,32 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
 
 Each mount registers an intercept for its own hostname. That intercept receives requests only if the mount runs before the `interceptAllOutboundHttp()` call from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). A mount after that call fails with `cannot verify the new FUSE connection`, because your `Outbound` entrypoint receives the storage requests. Registering the catch-all again later does not affect a mount that came first.
 
-Mount the prefix in `ensureRunning()`, after `start()` and before `intercept()`:
+Mount the prefix in `startContainer()`, after `start()` and before `intercept()`:
 
-```ts title="src/index.ts" ins={14-15}
+```ts title="src/index.ts" ins={15-16}
 export class MySandbox extends DurableObject<Env> {
 	// ...
 
-	private async ensureRunning(): Promise<void> {
-		if (!this.container.running) {
-			this.container.start({
-				image: this.container.images.sandbox,
-				instance: "standard-1",
-				env: ENV,
-				enableInternet: ENABLE_INTERNET,
-			});
+	private async startContainer(): Promise<void> {
+		this.container.start({
+			image: this.container.images.sandbox,
+			instance: "standard-1",
+			env: ENV,
+			enableInternet: ENABLE_INTERNET,
+		});
+
+		try {
 			// Replaces onStart().
 			await this.ctx.storage.put("startedAt", Date.now());
 			// Mount before the catch-all intercept.
 			await this.mountData();
 			await this.intercept();
-			const trust = await this.container.exec(TRUST);
-			await trust.exitCode;
-			await this.container.setInactivityTimeout(
-				INACTIVITY_TIMEOUT_MS,
-			);
+			await this.trust();
+			await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+		} catch (error) {
+			// The next request starts a new container.
+			await this.container.destroy();
+			throw error;
 		}
 	}
 }

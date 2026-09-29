@@ -16,7 +16,7 @@ This page replaces or removes the Sandbox SDK 0.12 features that have no class i
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` method, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). A class that you reach through `this.ctx.exports` needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). A class that you reach through `this.ctx.exports` needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
 
 Each 0.12 feature has one section:
 
@@ -146,21 +146,22 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
 
    `this.env` has the same bindings as the `env` argument. Where a 0.12 handler read `ctx.containerId`, read `this.ctx.props.containerId`.
 
-2. Register the entrypoint in `ensureRunning()`, after `start()`:
+2. Register the entrypoint in `startContainer()`, after `start()`:
 
-   ```ts title="src/index.ts" ins={15-20}
+   ```ts title="src/index.ts" ins={16-21}
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	private async ensureRunning(): Promise<void> {
-   		if (!this.container.running) {
-   			this.container.start({
-   				image: this.container.images.sandbox,
-   				instance: "standard-1",
-   				env: ENV,
-   				// 0.12 allowed Internet access by default.
-   				enableInternet: true,
-   			});
+   	private async startContainer(): Promise<void> {
+   		this.container.start({
+   			image: this.container.images.sandbox,
+   			instance: "standard-1",
+   			env: ENV,
+   			// 0.12 allowed Internet access by default.
+   			enableInternet: true,
+   		});
+
+   		try {
    			// Replaces onStart().
    			await this.ctx.storage.put("startedAt", Date.now());
    			await this.container.interceptOutboundHttp(
@@ -172,6 +173,10 @@ In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my
    			await this.container.setInactivityTimeout(
    				INACTIVITY_TIMEOUT_MS,
    			);
+   		} catch (error) {
+   			// The next request starts a new container.
+   			await this.container.destroy();
+   			throw error;
    		}
    	}
    }
@@ -206,7 +211,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
    ```
 
-   The 0.12 `opencode` image included OpenCode. Start the container with the `standard-1` instance type or larger, as `ensureRunning()` does. On `lite`, the server did not answer requests within 30 seconds.
+   The 0.12 `opencode` image included OpenCode. Start the container with the `standard-1` instance type or larger, as `startContainer()` does. On `lite`, the server did not answer requests within 30 seconds.
 
 2. Install the OpenCode SDK in your Worker project:
 
@@ -238,7 +243,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
    const OPENCODE = [
    	"sh",
    	"-c",
-   	"setsid -f opencode serve --port 4096 --hostname 0.0.0.0" +
+   	`setsid -f opencode serve --port ${OPENCODE_PORT} --hostname 0.0.0.0` +
    		" > /var/log/opencode.log 2>&1",
    ];
    ```
@@ -308,7 +313,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    Remove `apiKey` from your OpenCode configuration, and store each key as a secret. Like 0.12, the method passes the configuration as `OPENCODE_CONFIG_CONTENT` and the key in a provider variable such as `ANTHROPIC_API_KEY`. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
 
-   Set `this.opencodeReady = false` in `ensureRunning()` after `start()`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
+   Set `this.opencodeReady = false` in `startContainer()`, after `start()`, because a new container has no server. Use the client in methods of your class, such as `createSession()`.
 
 4. Serve the OpenCode web UI from the `fetch()` handler of your Durable Object:
 
@@ -422,8 +427,25 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    class SandboxEditor implements Editor {
    	constructor(private readonly files: Files) {}
 
+   	// Reads each path as relative to /workspace, as 0.12 did, and throws
+   	// when `..` leaves /workspace.
    	private path(path: string): string {
-   		return path.startsWith("/") ? path : `/workspace/${path}`;
+   		const root = "/workspace";
+   		const inRoot = path === root || path.startsWith(`${root}/`);
+   		const relative = inRoot ? path.slice(root.length) : path;
+   		const segments: string[] = [];
+
+   		for (const segment of relative.split("/")) {
+   			if (segment === "..") {
+   				if (segments.pop() === undefined) {
+   					throw new Error(`Operation outside workspace: ${path}`);
+   				}
+   			} else if (segment !== "" && segment !== ".") {
+   				segments.push(segment);
+   			}
+   		}
+
+   		return [root, ...segments].join("/");
    	}
 
    	async createFile(
@@ -466,7 +488,9 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    }
    ```
 
-   A failed `Files` call throws `SandboxFileError`. The 0.12 `Editor` caught errors and returned `status: "failed"`, and both 0.12 classes kept a `results` list. If your code relied on either, catch errors or record results in each method.
+   `path()` reads `/etc/passwd` as `/workspace/etc/passwd`, and throws for `../etc/passwd`, as 0.12 did. It checks the path only. A symbolic link in `/workspace` can still point outside it. For more information, refer to [Accept paths from callers](/sandbox/files/manage-files/#accept-paths-from-callers).
+
+   A failed `Files` call throws `SandboxFileError`. Both 0.12 classes kept a `results` list, and the 0.12 `Editor` added a `failed` result to it before it threw the error again. If your code read the list, record results in each method.
 
 3. Run the agent in a method of your class:
 

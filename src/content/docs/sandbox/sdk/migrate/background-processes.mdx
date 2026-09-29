@@ -26,6 +26,8 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
 
 1. Add the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) to your class, including the alarm handler and `waitForLog()` from [Wait for a log line](/sandbox/commands/run-background-processes/#wait-for-a-log-line).
 
+   A Durable Object has one alarm. If your class already has an `alarm()` handler, such as the one from [Move every sandbox in one deploy](/sandbox/sdk/migrate/plan-the-move/#move-every-sandbox-in-one-deploy), merge the process checks into it rather than adding a second.
+
 2. Change `startProcess()` to start the container with `ensureRunning()`, and to run each process with the working directory and environment that 0.12 gave it:
 
    ```ts title="src/index.ts" ins={5,19,20}
@@ -152,9 +154,9 @@ const stdout = await sandbox.logs("dev", "stdout");
 const stderr = await sandbox.logs("dev", "stderr");
 ```
 
-Replace `streamProcessLogs()` with `follow()`. It returns a `Response` that follows one stream until the process exits, and sends no `exit` event. When the stream ends, call `status()` for the exit code.
+Replace `streamProcessLogs()` with `follow()`. It returns a `Response` that follows one stream until the process exits, then sends an `exit` event with the exit code.
 
-Each `data` field holds a JSON-encoded chunk of output, where 0.12 sent `LogEvent` objects. Replace `parseSSEStream()` with `JSON.parse()` of each `data` field.
+0.12 sent events without a name, each with a `LogEvent` object in its `data` field. `follow()` names each event `stdout`, `stderr`, or `exit`. The `data` field of an output event holds a JSON-encoded chunk of output, and the `data` field of the `exit` event holds `{ "exitCode": <CODE> }`. Replace `parseSSEStream()` with a listener for each event name, or read the `event` line of each event and `JSON.parse()` its `data` field.
 
 ## Wait for output or exit
 

@@ -77,7 +77,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
    If your class has no `alarm()` handler, each pending alarm fails once with an internal error in your logs and then clears.
 
-2. Replace `schedule()` calls. 0.12 stores scheduled callbacks in a table that 1.0 does not read. Set the next run with `this.ctx.storage.setAlarm()` from your class, and do the work in `alarm()`. For more information, refer to [Alarms](/durable-objects/api/alarms/).
+2. Replace `schedule()` calls. 0.12 stores scheduled callbacks in a table that 1.0 does not read. Set the next run with `this.ctx.storage.setAlarm()` from your class, and do the work in `alarm()`. A Durable Object has one alarm, so this is the handler from step 1. To replace several schedules, store the time of each, set the alarm to the earliest, and run every task that is due in `alarm()`. For more information, refer to [Alarms](/durable-objects/api/alarms/).
 
 3. Prepare clients for sockets that go silent. Open terminals and preview WebSockets stop receiving data at the switch, and the browser does not see them close. Have your client reconnect when a socket receives nothing for a set time, or tell users to reload after the deploy.
 

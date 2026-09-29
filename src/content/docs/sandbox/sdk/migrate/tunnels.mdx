@@ -18,9 +18,9 @@ Your Worker already routes requests to the container, so most tunnels can become
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 
-`ensureRunning()` must start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare. Code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
+`startContainer()` must start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare. Code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
 This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. Remove the `SANDBOX_TRANSPORT` variable, which 0.12 tunnels required.
 
