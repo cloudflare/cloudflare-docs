@@ -15,7 +15,14 @@ products:
   - durable-objects
 ---
 
-import { CardGrid, Description, LinkTitleCard, Plan } from "~/components";
+import {
+	CardGrid,
+	Description,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	LinkButton,
+} from "~/components";
 
 <Description>
 
@@ -25,25 +32,132 @@ Start a sandbox and run untrusted or generated code
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run untrusted or generated code. Cloudflare provides two sandbox environments, and your [Worker](/workers/) decides what the code in each one receives:
+A sandbox is an isolated place to run untrusted or generated code. The code cannot directly read the memory or data of your application. Your Worker decides which application APIs and data the code receives and whether it can reach the public Internet.
 
-- [Containers](/containers/) start a Linux virtual machine from a [Durable Object](/durable-objects/).
-- [Dynamic Workers](/dynamic-workers/) load code at runtime into a new Worker that receives only the bindings you pass.
+You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
-Documentation for existing applications on `@cloudflare/sandbox` 0.x is in [Sandbox SDK 0.x](/sandbox/sdk/).
+Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the application that already handles your traffic.
+
+If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/sandbox/sdk/).
+
+---
+
+## Containers
+
+[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
+
+Each instance is a microVM with its own kernel and network, so no other workload shares it.
+
+A Durable Object in your Worker starts the instance from an image and runs a command in it:
+
+```ts
+container.start({
+	image: "cloudflare/debian-trixie",
+	entrypoint: ["sleep", "infinity"],
+	enableInternet: false,
+});
+const process = await container.exec(["uname", "-a"]);
+const output = await process.output();
+```
+
+<LinkButton variant="primary" href="/sandbox/get-started/">
+	Run a Linux command
+</LinkButton>
+
+---
+
+## Dynamic Workers
+
+[Dynamic Workers](/dynamic-workers/) create a new Worker at runtime. The untrusted code can be JavaScript, Python, or WebAssembly. Compile TypeScript to JavaScript before loading it.
+
+The Workers runtime runs each Dynamic Worker apart from your Worker and from other Dynamic Workers. It reaches your application only through the methods and data you pass.
+
+Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it:
+
+```ts
+const sandbox = env.LOADER.load({
+	compatibilityDate: "$today",
+	mainModule: "code.js",
+	modules: { "code.js": untrustedModule },
+	globalOutbound: null,
+});
+const entrypoint = sandbox.getEntrypoint<CodeEntrypoint>("Code");
+const result = await entrypoint.evaluate();
+```
+
+<LinkButton variant="primary" href="/sandbox/get-started/dynamic-workers/">
+	Run JavaScript
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="/sandbox/get-started/build-an-ai-code-interpreter/"
+>
+	Build an AI code interpreter
+</LinkButton>
+
+---
+
+## Concepts
 
 <CardGrid>
 
-<LinkTitleCard title="Containers" href="/containers/" icon="seti:docker">
-	Run commands in a Linux virtual machine that a Durable Object starts.
+<LinkTitleCard
+	title="Choose a sandbox environment"
+	href="/sandbox/concepts/"
+	icon="seti:info"
+>
+	Decide whether each job needs a Linux environment or only APIs you pass in.
 </LinkTitleCard>
 
-<LinkTitleCard title="Dynamic Workers" href="/dynamic-workers/" icon="rocket">
-	Load Worker code at runtime with the bindings and outbound access you choose.
+<LinkTitleCard
+	title="Sandbox lifetime"
+	href="/sandbox/concepts/lifetime/"
+	icon="database"
+>
+	Understand what keeps a Linux sandbox running, what stops it, and which files
+	a snapshot brings back.
 </LinkTitleCard>
 
-<LinkTitleCard title="Sandbox SDK 0.x" href="/sandbox/sdk/" icon="open-book">
-	Maintain an existing application on `@cloudflare/sandbox` 0.x.
+<LinkTitleCard
+	title="Sandbox security"
+	href="/sandbox/concepts/security/"
+	icon="ph:shield-check"
+>
+	Decide what each sandbox holds, because its code can use everything you place
+	inside it.
 </LinkTitleCard>
 
 </CardGrid>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+The serverless platform these sandbox environments run on.
+
+</RelatedProduct>
+
+<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
+
+Identity and coordination for an attached container.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run models on Cloudflare, then execute the code they generate in a sandbox.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+| Topic              | Links                                                                                                                                                                           |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Deploy and debug   | [Deploy Containers](/containers/guides/deploy/), [Local development](/containers/guides/local-dev/), [Logs](/workers/observability/logs/workers-logs/)                          |
+| Reference          | [Durable Object container API](/containers/api/durable-object-container/), [Dynamic Workers API](/dynamic-workers/api-reference/)                                               |
+| Pricing and limits | [Containers pricing](/containers/platform/pricing/), [Container limits](/containers/platform/limits/), [Dynamic Workers pricing](/dynamic-workers/pricing/)                     |
+| Related            | [Code Mode](/agents/tools/codemode/), [Workers security model](/workers/reference/security-model/)                                                                              |
