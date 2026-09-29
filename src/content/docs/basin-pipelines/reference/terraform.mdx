@@ -15,7 +15,7 @@ import { Details } from "~/components";
 This example shows how to configure [Basin Pipelines](/basin-pipelines/) and [Basin Catalog](/basin-catalog/) with Terraform using the [Cloudflare provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) (v5.19.0+).
 
 :::note[Legacy product names]
-Terraform resource and permission names for Basin Catalog still use legacy R2 Data Catalog identifiers, such as `cloudflare_r2_data_catalog`. These Catalog names will be updated in the coming weeks. Until then, use the identifiers shown in this guide.
+Terraform resource and API permission group names for Basin Catalog still use legacy R2 Data Catalog identifiers, such as `cloudflare_r2_data_catalog` and `Workers R2 Data Catalog Write`. These names will be updated in the coming weeks. Until then, use the identifiers shown in this guide.
 :::
 
 The configuration creates a complete data pipeline: an R2 bucket with the data catalog enabled, a scoped API token for the sink, and the stream, sink, and pipeline resources that ingest JSON data into an [Apache Iceberg](https://iceberg.apache.org/) table.
@@ -25,9 +25,9 @@ The configuration creates a complete data pipeline: an R2 bucket with the data c
 - [Terraform CLI](https://developer.hashicorp.com/terraform/downloads) `>= 1.0`
 - A Cloudflare account with R2 and Basin Pipelines enabled
 - An API token scoped to your account with the following permissions:
-  - **Pipelines** - Edit
+  - **Basin Pipelines** - Edit
   - **Workers R2 Storage** - Edit
-  - **Workers R2 Data Catalog** - Edit
+  - **Basin Catalog** - Edit
   - **Account API Tokens** - Edit
 
 For general information on using Terraform with Cloudflare, refer to [the Terraform documentation](/terraform/).

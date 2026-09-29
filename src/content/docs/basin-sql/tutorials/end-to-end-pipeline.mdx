@@ -54,9 +54,9 @@ You will need API tokens to interact with Cloudflare services.
 4. Enter a name for your API token.
 
 5. Under **Permissions**, choose:
-   - **Workers Pipelines** with Read, Send, and Edit permissions
-   - **Workers R2 Data Catalog** with Read and Edit permissions
-   - **Workers R2 SQL** with Read permissions
+   - **Basin Pipelines** with Read, Send, and Edit permissions
+   - **Basin Catalog** with Read and Edit permissions
+   - **Basin SQL** with Read permissions
    - **Workers R2 Storage** with Read and Edit permissions
 
 6. Optionally, add a TTL to this token.
@@ -127,7 +127,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 
 2. Select the bucket: `fraud-pipeline`.
 
-3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
+3. Switch to the **Settings** tab, scroll down to **Basin Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
 
@@ -164,7 +164,7 @@ Basin Catalog can automatically compact tables for you. In production event stre
 
 2. Select the bucket: `fraud-pipeline`.
 
-3. Switch to the **Settings** tab, scroll to **R2 Data Catalog**, select the edit icon, and select **Enable**.
+3. Switch to the **Settings** tab, scroll to **Basin Catalog**, select the edit icon, and select **Enable**.
 
 4. Choose a target file size or leave the default, then select **Save**.
 
@@ -264,7 +264,7 @@ Connect your stream to your sink with SQL:
 <TabItem label='Dashboard'>
 <Steps>
 
-1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
+1. In the Cloudflare dashboard, go to **Basin Pipelines** > **Pipelines**.
 
    <DashButton url="/?to=/:account/pipelines/overview" />
 
@@ -302,7 +302,7 @@ Connect your stream to your sink with SQL:
 
 5. **Define Sink**:
    - Select your R2 bucket: `fraud-pipeline`
-   - Storage type: **R2 Data Catalog**
+   - Storage type: **Basin Catalog**
    - Namespace: `fraud_detection`
    - Table name: `transactions`
    - **Advanced Settings**: Change **Maximum Time Interval** to `30 seconds`

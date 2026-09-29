@@ -31,13 +31,13 @@ For a full list of fields available in each dataset, refer to [Datasets](/logs/l
    - For account: <DashButton url="/?to=/:account/logs" />
    - For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
 2. Select **Create a Logpush job**.
-3. Select **Pipelines** as the destination.
+3. Select **Basin Pipelines** as the destination.
 4. In the **Dataset** step, select the dataset from the dropdown.
    - A Pipeline name is auto-generated, but you can edit it.
 5. In the **Destination** step, configure the destination:
    - Select an existing R2 bucket or type a new name to create one during setup.
-   - Choose the storage format: Parquet, JSON, or [R2 Data Catalog (Apache Iceberg)](/basin-catalog/).
-   - If you select R2 Data Catalog, enter a catalog namespace and table name.
+   - Choose the storage format: Parquet, JSON, or [Basin Catalog (Apache Iceberg)](/basin-catalog/).
+   - If you select Basin Catalog, enter a catalog namespace and table name.
    - Optionally, expand **Delivery settings** to configure roll size, roll interval, and other destination-specific settings. For more information about these settings, refer to the [Basin Pipelines sinks documentation](/basin-pipelines/sinks/).
 6. In the **Transform** step, choose how to process logs before they are written to the Sink:
    - **Simple** forwards all fields without modification (default).

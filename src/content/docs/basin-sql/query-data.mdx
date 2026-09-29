@@ -18,7 +18,7 @@ To query data with Basin SQL, you need your warehouse name associated with your 
 
 <PackageManagers type="exec" pkg="wrangler" args={"basin catalog get <BUCKET_NAME>"} />
 
-Alternatively, you can find it in the dashboard by going to the **R2 object storage** page, selecting the bucket, switching to the **Settings** tab, scrolling to **R2 Data Catalog**, and finding **Warehouse name**.
+Alternatively, you can find it in the dashboard by going to the **R2 object storage** page, selecting the bucket, switching to the **Settings** tab, scrolling to **Basin Catalog**, and finding **Warehouse name**.
 
 ## Query via Wrangler
 
@@ -66,21 +66,21 @@ For a full list of supported SQL commands, refer to the [Basin SQL reference](/b
 
 ## Authentication
 
-To query data with Basin SQL, you must provide a Cloudflare API token with R2 SQL, R2 Data Catalog, and R2 storage permissions. Basin SQL requires these permissions to access catalog metadata and read the underlying data files stored in R2.
+To query data with Basin SQL, you must provide a Cloudflare API token with Basin SQL, Basin Catalog, and R2 storage permissions. Basin SQL requires these permissions to access catalog metadata and read the underlying data files stored in R2.
 
 ### Create API token in the dashboard
 
 Create an [R2 API token](/r2/api/tokens/#permissions) with the following permissions:
 
-- Access to R2 Data Catalog (read-only)
+- Access to Basin Catalog (read-only)
 - Access to R2 storage (Admin read/write)
-- Access to R2 SQL (read-only)
+- Access to Basin SQL (read-only)
 
 Use this token value for the `WRANGLER_BASIN_SQL_AUTH_TOKEN` environment variable when querying with Wrangler, or in the Authorization header when using the REST API.
 
 ### Create API token via API
 
-To create an API token programmatically for use with Basin SQL, specify R2 SQL, R2 Data Catalog, and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
+To create an API token programmatically for use with Basin SQL, specify Basin SQL, Basin Catalog, and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
 
 #### Example Access Policy
 

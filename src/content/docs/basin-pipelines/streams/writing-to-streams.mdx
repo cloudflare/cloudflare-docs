@@ -103,7 +103,7 @@ HTTP endpoints follow this format:
 https://{stream-id}.ingest.cloudflare.com
 ```
 
-Find your stream's endpoint URL in the Cloudflare dashboard under **Pipelines** > **Streams** or using the Wrangler CLI with either the stream ID or stream name:
+Find your stream's endpoint URL in the Cloudflare dashboard under **Basin Pipelines** > **Streams** or using the Wrangler CLI with either the stream ID or stream name:
 
 <PackageManagers type="exec" pkg="wrangler" args={"basin pipelines streams get <STREAM_NAME_OR_ID>"} />
 
@@ -135,7 +135,7 @@ curl -X POST https://{stream-id}.ingest.cloudflare.com \
   -d '[{"event": "test"}]'
 ```
 
-The API token must have **Workers Pipeline Send** permission. To learn more, refer to the [Create API token](/fundamentals/api/get-started/create-token/) documentation.
+The API token must have **Basin Pipelines Send** permission. To learn more, refer to the [Create API token](/fundamentals/api/get-started/create-token/) documentation.
 
 ## Schema validation
 

@@ -37,7 +37,7 @@ Enabling the catalog on a bucket turns on the REST catalog interface and provide
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select **Create catalog**.
@@ -67,7 +67,7 @@ When you disable the catalog on a bucket, it immediately stops serving requests 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable.
@@ -88,7 +88,7 @@ To disable the catalog on your bucket, run the `basin catalog disable` command:
 
 Compaction improves query performance by combining the many small files created during data ingestion into fewer, larger files according to the set `target file size`. For more information about compaction and why it is valuable, refer to [About compaction](/basin-catalog/table-maintenance/).
 :::note[API token permission requirements]
-Table maintenance operations such as compaction and snapshot expiration require a Cloudflare API token with both R2 storage and R2 Data Catalog read/write permissions to act as a service credential.
+Table maintenance operations such as compaction and snapshot expiration require a Cloudflare API token with both R2 storage and Basin Catalog read/write permissions to act as a service credential.
 
 Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) for details on creating a token with the required permissions.
 :::
@@ -97,7 +97,7 @@ Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) f
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to enable compaction on.
@@ -152,7 +152,7 @@ Disabling compaction will prevent the process from running for all tables (catal
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable compaction on.
@@ -197,7 +197,7 @@ Snapshot expiration automatically removes old table snapshots and any unreferenc
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to enable snapshot expiration on.
@@ -244,7 +244,7 @@ Disabling snapshot expiration prevents the process from running for all tables (
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to the **R2 Data Catalog** page.
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable snapshot expiration on.
@@ -278,7 +278,7 @@ Disable snapshot expiration for a specific table:
 
 ## Authenticate your Iceberg engine
 
-To connect your Iceberg engine to Basin Catalog, you must provide a Cloudflare API token with **both** R2 Data Catalog permissions and R2 storage permissions. Iceberg engines interact with Basin Catalog to perform table operations. The catalog also provides engines with SigV4 credentials, which are required to access the underlying data files stored in R2.
+To connect your Iceberg engine to Basin Catalog, you must provide a Cloudflare API token with **both** Basin Catalog permissions and R2 storage permissions. Iceberg engines interact with Basin Catalog to perform table operations. The catalog also provides engines with SigV4 credentials, which are required to access the underlying data files stored in R2.
 
 Basin Catalog supports both read-only and read-write tokens:
 
@@ -289,7 +289,7 @@ Use a read-only token for query engines and clients that only read data (such as
 
 :::note[Vended credentials inherit your token's R2 storage permissions]
 
-When an engine loads credentials from the catalog, Basin Catalog returns SigV4 credentials that inherit the R2 storage permissions of the API token used to authenticate. A token with read-only R2 Data Catalog access but read-write R2 storage access can still be used to write objects (including catalog metadata files) to the underlying bucket. To ensure read-only access to your data, scope the R2 storage permission to read-only as well.
+When an engine loads credentials from the catalog, Basin Catalog returns SigV4 credentials that inherit the R2 storage permissions of the API token used to authenticate. A token with read-only Basin Catalog access but read-write R2 storage access can still be used to write objects (including catalog metadata files) to the underlying bucket. To ensure read-only access to your data, scope the R2 storage permission to read-only as well.
 
 :::
 
@@ -304,7 +304,7 @@ Providing the resulting token value to your Iceberg engine gives it the ability 
 
 ### Create API token via API
 
-To create an API token programmatically for use with Basin Catalog, you need to specify both R2 Data Catalog and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
+To create an API token programmatically for use with Basin Catalog, you need to specify both Basin Catalog and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
 
 #### Example read-write Access Policy
 

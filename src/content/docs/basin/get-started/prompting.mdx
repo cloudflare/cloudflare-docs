@@ -39,7 +39,7 @@ Choose an ingestion path before asking the agent to write code:
 | --- | --- |
 | Requests or application events handled by a Worker | Send a small JSON record through a [Basin Pipelines stream binding](/basin-pipelines/streams/writing-to-streams/#send-via-workers). The binding handles ingestion authentication. |
 | Activity involving D1, Queues, R2, Workers AI, or another Cloudflare service | Instrument the Worker or application that uses the service. Record the outcome and only the fields needed for analysis. |
-| Events from an external application | Use an [authenticated stream HTTP endpoint](/basin-pipelines/streams/writing-to-streams/#send-via-http) with a token that has **Workers Pipeline Send** permission. |
+| Events from an external application | Use an [authenticated stream HTTP endpoint](/basin-pipelines/streams/writing-to-streams/#send-via-http) with a token that has **Basin Pipelines Send** permission. |
 
 Do not assume a service exposes a direct Basin Pipelines source. If it does not, collect events where your application uses that service.
 
@@ -76,7 +76,7 @@ Take my existing Basin Pipelines stream of JSON application events and write pur
 ### Ingest external JSON events
 
 ```txt
-My external service sends JSON events over HTTP. Create an authenticated Basin Pipelines stream endpoint and an Iceberg sink in Basin Catalog. Show a minimal request, the required Workers Pipeline Send token permission, one Basin SQL validation query, and how to detect dropped events. Keep tokens out of source files and URLs.
+My external service sends JSON events over HTTP. Create an authenticated Basin Pipelines stream endpoint and an Iceberg sink in Basin Catalog. Show a minimal request, the required Basin Pipelines Send token permission, one Basin SQL validation query, and how to detect dropped events. Keep tokens out of source files and URLs.
 ```
 
 ### Track R2 object activity

@@ -54,7 +54,7 @@ Basin Pipelines must authenticate to Basin Catalog with an [R2 API token](/r2/ap
 </Steps>
 
 :::note
-This token also includes the R2 SQL Read permission, which allows you to query your data with Basin SQL.
+This token also includes the Basin SQL Read permission, which allows you to query your data with Basin SQL.
 :::
 
 ## 2. Create your first pipeline
@@ -156,11 +156,11 @@ You can also pre-set the pipeline name using the `--name` flag:
 
 3. Select **Create bucket**.
 
-4. Select the bucket, switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
+4. Select the bucket, switch to the **Settings** tab, scroll down to **Basin Catalog**, and select **Enable**.
 
 5. Once enabled, note the **Catalog URI** and **Warehouse name**.
 
-6. Go to **Pipelines** > **Pipelines**.
+6. Go to **Basin Pipelines** > **Pipelines**.
 
    <DashButton url="/?to=/:account/pipelines/overview" />
 
@@ -205,7 +205,7 @@ You can also pre-set the pipeline name using the `--name` flag:
 
 10. **Define Sink**:
     - Select your R2 bucket: `pipelines-tutorial`
-    - Storage type: **R2 Data Catalog**
+    - Storage type: **Basin Catalog**
     - Namespace: `default`
     - Table name: `ecommerce`
     - **Advanced Settings**: Change **Maximum Time Interval** to `10 seconds`
@@ -299,7 +299,7 @@ Query your data:
 	args={`basin sql query "YOUR_WAREHOUSE_NAME" "SELECT user_id, event_type, product_id, amount FROM default.ecommerce WHERE event_type = 'purchase' LIMIT 10"`}
 />
 
-Replace `YOUR_WAREHOUSE_NAME` with the warehouse name noted during pipeline setup. You can find it in the Cloudflare dashboard under **R2 object storage** > your bucket > **Settings** > **R2 Data Catalog**.
+Replace `YOUR_WAREHOUSE_NAME` with the warehouse name noted during pipeline setup. You can find it in the Cloudflare dashboard under **R2 object storage** > your bucket > **Settings** > **Basin Catalog**.
 
 You can also query this table with any engine that supports Apache Iceberg. To learn more about connecting other engines to Basin Catalog, refer to [Connect to Iceberg engines](/basin-catalog/config-examples/).
 

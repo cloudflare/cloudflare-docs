@@ -86,7 +86,7 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 
 2. Select the bucket: pipelines-tutorial.
 
-3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
+3. Switch to the **Settings** tab, scroll down to **Basin Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
 
@@ -117,7 +117,7 @@ Basin Pipelines must authenticate to Basin Catalog with an [R2 API token](/r2/ap
 </Steps>
 
 :::note
-This token also includes the R2 SQL Read permission, which allows you to query your data with Basin SQL.
+This token also includes the Basin SQL Read permission, which allows you to query your data with Basin SQL.
 :::
 
 ## 4. Create a pipeline
@@ -192,7 +192,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
 <TabItem label='Dashboard'>
 
 <Steps>
-1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
+1. In the Cloudflare dashboard, go to **Basin Pipelines** > **Pipelines**.
    <DashButton url="/?to=/:account/pipelines/overview" />
 
 2. Select **Create Pipeline**.
@@ -236,7 +236,7 @@ After setup completes, note the HTTP endpoint URL displayed in the final output.
 
 5. **Define Sink**:
    - Select your R2 bucket: `pipelines-tutorial`
-   - Storage type: **R2 Data Catalog**
+   - Storage type: **Basin Catalog**
    - Namespace: `default`
    - Table name: `ecommerce`
    - **Advanced Settings**: Change **Maximum Time Interval** to `10 seconds`
