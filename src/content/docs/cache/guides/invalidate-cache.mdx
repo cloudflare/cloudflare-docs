@@ -249,6 +249,6 @@ If the content was also purged after it was cached, the purge takes precedence, 
 
 While Cloudflare revalidates, it serves stale content only if the cached response includes `stale-while-revalidate`. You can turn this off with the [Serve stale content while revalidating](/cache/how-to/cache-rules/settings/#serve-stale-content-while-revalidating) setting in Cache Rules.
 
-If your origin returns a `5xx` error or cannot be reached, Cloudflare serves invalidated content stale by default, for as long as it stays in cache. The Cache Rules setting does not change this. To limit how long Cloudflare serves stale content when your origin fails, set `stale-if-error` in your origin responses. To prevent it, set `stale-if-error=0`.
+If your origin returns a `5xx` error or cannot be reached, Cloudflare serves invalidated content stale by default, for as long as it stays in cache. The Cache Rules setting does not change this. To limit how long Cloudflare serves stale content when your origin fails, set `stale-if-error` in your origin responses. To prevent it, set `stale-if-error=0`. With [Origin Cache Control](/cache/concepts/cache-control/) enabled, `must-revalidate`, `proxy-revalidate`, and `s-maxage` also prevent it.
 
 To stop serving cached content, [purge](/cache/how-to/purge-cache/) it instead.
