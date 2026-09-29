@@ -60,7 +60,7 @@ export class MyDurableObject extends DurableObject {
 			return;
 		}
 
-		this.ctx.container.start({ containerSnapshot });
+		this.ctx.container.start({ containerSnapshot, enableInternet: false });
 	}
 }
 ```
