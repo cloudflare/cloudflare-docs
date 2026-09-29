@@ -1,0 +1,83 @@
+---
+title: "WAF Release - 2026-09-29"
+description: Cloudflare WAF managed rulesets 2026-09-29 release
+date: 2026-09-29
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new detections to enhance protection against a specific GitLab path traversal vulnerability, alongside advanced generic rules targeting HTTP request smuggling, directory traversal, and command injection attempts.
+
+**Key Findings**
+- CVE-2026-85706: A path traversal vulnerability affecting GitLab. Attackers can exploit this flaw to navigate beyond intended directory structures, potentially reading unauthorized files and exposing sensitive configuration data.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f2445b9131214302a11477a2cb14ded8" />
+			</td>
+			<td>N/A</td>
+			<td>Broken Access Control - Directory Traversal</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5c1ba1fdb0a742d4beaaefd00364bd7e" />
+			</td>
+			<td>N/A</td>
+			<td>HTTP Request Smuggling - Request Body Anomaly - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+            <td>This rule is merged into the original rule "HTTP Request Smuggling - Request Body Anomaly" (ID:{" "}<RuleID id="a80f214f0947435dabb2ba2d1489d892" />).</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="09055ff9f80046419a3c0be5d498a69a" />
+			</td>
+			<td>N/A</td>
+			<td>Command Injection - Generic 8 - body - Beta</td>
+			<td>Disabled</td>
+			<td>Disabled</td>
+			<td>This rule is merged into the original rule "Command Injection - Generic 8 - body" (ID:{" "}<RuleID id="5b3ce84c099040c6a25cee2d413592e2" />).</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="c825487afc274e34966052bb87ae8cfc" />
+			</td>
+			<td>N/A</td>
+			<td>GitLab - Path Traversal- CVE:CVE-2026-85706</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>		
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="86b0681d72234ef7bd6f67c7549f7356" />
+			</td>
+			<td>N/A</td>
+			<td>Generic - Request routing cache inconsistency</td>
+			<td>-</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
