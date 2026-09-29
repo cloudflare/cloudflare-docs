@@ -1,16 +1,18 @@
 ---
 pcx_content_type: reference
-title: Container Interface
+title: Container class
 sidebar:
-  order: 1
-description: API reference for the Container interface and utility functions
+  order: 2
+description: API reference for the Container class and its built-in lifecycle helpers.
 products:
   - containers
 ---
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-The [`Container` class](https://github.com/cloudflare/containers) from [`@cloudflare/containers`](https://www.npmjs.com/package/@cloudflare/containers) is the most common way to interact with container instances from a Worker.
+The [`Container` class](https://github.com/cloudflare/containers) from [`@cloudflare/containers`](https://www.npmjs.com/package/@cloudflare/containers) provides lifecycle helpers for container instances. For direct lifecycle control, use the [Durable Object Container API](/containers/api/durable-object-container/).
+
+To move an existing application to direct control, refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
 
 **`Container` extends [`DurableObject`](/durable-objects/api/base/).** The Durable Object manages routing, persistent state, and lifecycle hooks, while the container process runs your image inside a Linux VM. Because your subclass is a Durable Object, you have access to the full Durable Object API — including [`this.ctx.storage`](/durable-objects/api/sqlite-storage-api/) for persistent SQLite-backed storage and [`this.ctx.id`](/durable-objects/api/id/) for the unique instance identifier. Use Durable Object storage to persist state that should survive container restarts, such as configuration, user data, or task results.
 
