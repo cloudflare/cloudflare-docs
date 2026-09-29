@@ -1,0 +1,19 @@
+---
+title: Manage sandboxes
+description: List the sandboxes that belong to a user, and record when and why each one stops.
+pcx_content_type: navigation
+sidebar:
+  order: 9
+  label: Overview
+  group:
+    label: Manage sandboxes
+products:
+  - sandbox
+  - containers
+---
+
+import { DirectoryListing } from "~/components";
+
+Your Worker reaches each sandbox by name, but the runtime does not record which names belong to which user. It also does not wake a Durable Object when its container stops. To show a user their sandboxes, or to act when a sandbox stops, your Worker keeps these records itself. These guides show how.
+
+<DirectoryListing descriptions />
