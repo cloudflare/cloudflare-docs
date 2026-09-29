@@ -80,15 +80,14 @@ this.ctx.container.running;
 
 The required options depend on the application's scheduling policy.
 
-**`default` scheduling policy:** The image and instance size come from Wrangler configuration, so `start()` does not require any options:
-
 ```js
+// `default` scheduling policy:
+// The image and instance size come from Wrangler configuration.
 this.ctx.container.start();
-```
 
-**`durable_object` scheduling policy:** Pass an image and explicitly choose whether to allow outbound Internet access. You can optionally select an instance size:
-
-```js
+// `durable_object` scheduling policy:
+// Pass an image and choose whether to allow outbound Internet access.
+// The instance size is optional.
 this.ctx.container.start({
 	image: this.ctx.container.images.base,
 	enableInternet: true,
