@@ -16,9 +16,9 @@ reviewed: 2026-09-23
 
 import { SandboxCredentials } from "~/components/react/sandbox/SandboxCredentials";
 
-A sandbox runs code you do not trust. A model might generate the code, a user might write it, or a package might bring it in as a dependency. Cloudflare isolates the sandbox from your Worker and from other sandboxes. For more information about that isolation, refer to [Sandboxes on Cloudflare](/sandbox/).
+A sandbox runs code you do not trust, such as code that a model generates, a user writes, or a dependency brings in. Cloudflare isolates the sandbox from your Worker and from other sandboxes. For more information about that isolation, refer to [Sandboxes on Cloudflare](/sandbox/).
 
-Isolation does not limit what the code does inside its own sandbox. The safe assumption is that the code uses everything it can reach there, including the files, credentials, and network access your Worker provides.
+Isolation does not limit what the code does inside its own sandbox. Assume that the code uses everything it can reach there, including the files, credentials, and network access that your Worker provides.
 
 ## Everything in one sandbox is shared
 
@@ -30,7 +30,7 @@ The sandbox is therefore the smallest unit of trust. When two users share a sand
 
 ## Code can read what you put in its sandbox
 
-Consider a coding agent that clones a private repository, installs its dependencies, and runs its tests. If your Worker puts a token in the clone URL, Git saves that URL in the `.git/config` file of the repository. The tests, and every dependency they load, run with the same access as the agent. Any of that code can read the token.
+For example, a coding agent clones a private repository, installs its dependencies, and runs its tests. If your Worker puts a token in the clone URL, Git saves that URL in the `.git/config` file of the repository. The tests, and every dependency they load, run with the same access as the agent. Any of that code can read the token.
 
 <SandboxCredentials client:visible>
 
@@ -44,17 +44,19 @@ Credentials are safer outside the sandbox. A Container can send its request with
 
 ## The sandbox name decides what a request reaches
 
-A sandbox keeps its files while its instance runs. A snapshot saves those files, including a token in `.git/config`, and restoring the snapshot brings them back. Your Worker reaches the same sandbox whenever it calls `getByName()` with the same name.
+A Container keeps its files while it runs. A snapshot saves those files, including a token in `.git/config`, and restoring the snapshot brings them back. Your Worker reaches the same sandbox whenever it calls `getByName()` with the same name.
 
-So the name decides which sandbox, and which saved files, a request reaches. The name does not show who sent the request. Your Worker authenticates the caller and derives the sandbox name from that identity. Reusing a name or a snapshot for someone else gives them the earlier user's files. The how-to guides read the name from the URL only to keep the examples short.
+The name decides which sandbox, and which saved files, a request reaches. It does not show who sent the request. Authenticate the caller in your Worker, and derive the sandbox name from that identity. Reusing a name or a snapshot for someone else gives them the earlier user's files. The how-to guides read the name from the URL only to keep the examples short.
 
 For more information about what a sandbox keeps between instances, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 ## Every opening is also a way out
 
-A Container starts with `enableInternet: false` by default, so it cannot make outbound requests. A Dynamic Worker has the network access of your Worker unless you load it with `globalOutbound: null`, which makes `fetch()` and `connect()` throw.
+A Container starts with `enableInternet: false` by default, so it cannot reach the Internet. Only requests that an outbound handler in your Worker intercepts leave it. A Dynamic Worker has the network access of your Worker unless you load it with `globalOutbound: null`, which makes `fetch()` and `connect()` throw.
 
-Each destination you allow gives the code a way to send out what it can read. Turning on Internet access so `npm install` can download packages also lets a dependency send the token to any server. An outbound handler in your Worker can allow the package registry alone, which narrows where the data can go. Keep Internet access off when you use one: handlers see HTTP on port `80` and HTTPS on port `443`, and with Internet access on, connections to other ports go out directly. To route requests through your Worker, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.
+Each destination you allow gives the code a way to send out what it can read. If you turn on Internet access so that `npm install` can download packages, a dependency can also send the token to any server. An outbound handler in your Worker can allow the package registry and block every other destination.
+
+Keep Internet access off when you use an outbound handler. Handlers see HTTP on port `80` and HTTPS on port `443`. With Internet access on, connections to other ports go out directly. To route requests through your Worker, refer to [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.
 
 ## Output carries the same risk
 

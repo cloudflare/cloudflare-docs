@@ -1,6 +1,6 @@
 ---
 title: Sandbox lifetime
-description: Understand what keeps a Linux sandbox running, what stops it, and which files the next Linux instance starts with.
+description: Understand what keeps a sandbox running, what stops it, and which files the next instance starts with.
 pcx_content_type: concept
 sidebar:
   order: 2
@@ -15,25 +15,25 @@ reviewed: 2026-09-24
 
 import { SandboxLifetime } from "~/components/react/sandbox/SandboxLifetime";
 
-A Linux sandbox has three parts, and each part lasts a different length of time. Your Worker reaches the sandbox by name. The name reaches a [Durable Object](/durable-objects/), and the Durable Object starts a Linux instance in [Containers](/containers/). The name and the Durable Object last as long as your application uses them. A Linux instance runs only while something keeps it running.
+A Linux sandbox has three parts: a name, a [Durable Object](/durable-objects/), and an instance in [Containers](/containers/). Your Worker reaches the sandbox by name, the name reaches the Durable Object, and the Durable Object starts the instance. The name and the Durable Object last as long as your application uses them. The instance runs only while something keeps it running.
 
-Consider a coding agent that clones a repository, installs its dependencies, edits files, and starts a development server, then waits an hour for its next instruction. The agent reaches the same sandbox by name. Whether the repository and the server are still there depends on whether the Linux instance kept running, and on whether the application saved a snapshot.
+This page follows a coding agent. The agent clones a repository, installs its dependencies, edits files, and starts a development server. Then it waits an hour for its next instruction and reaches the same sandbox by name. The files are still there if the instance kept running or the application saved a snapshot. The development server is still there only if the instance kept running.
 
 <SandboxLifetime client:visible>
 
-The sandbox of the coding agent, from top to bottom: the name, the Durable Object, whose storage keeps a snapshot ID, the Linux instance, which runs the development server and holds the repository and edits on its disk, and a mounted R2 bucket. When the instance stops, its processes and disk files end. The name, the Durable Object, and the objects in the bucket remain. A new instance started from the snapshot has the repository and edits on its disk, and no development server runs until the agent starts it again.
+The sandbox of the coding agent, from top to bottom: the name, the Durable Object, the instance, and a mounted R2 bucket. Durable Object storage keeps a snapshot ID. The instance runs the development server and holds the repository and edits on its disk. When the instance stops, its processes and disk files end. The name, the Durable Object, and the objects in the bucket remain. A new instance started from the snapshot has the repository and edits on its disk, and no development server runs until the agent starts it again.
 
 </SandboxLifetime>
 
 ## The name and the Durable Object remain
 
-Your Worker calls `getByName()` with the sandbox name. The same name always reaches the same Durable Object, so every request for a sandbox arrives in one place. Durable Object storage keeps data such as session details or a snapshot ID, whether or not a Linux instance is running.
+Your Worker calls `getByName()` with the sandbox name. The same name always reaches the same Durable Object. Durable Object storage keeps data such as session details or a snapshot ID, whether or not an instance is running.
 
 When work arrives and no instance is running, the Durable Object starts one with [`this.ctx.container.start()`](/containers/api/durable-object-container/#start).
 
 ## Activity keeps an instance running
 
-A Linux instance keeps running while its Durable Object is active. The Durable Object is active while it handles a request or runs an alarm. It also stays active while a WebSocket that it accepted, or a response that it streams, remains open. An open terminal keeps a sandbox running this way, even when nobody types.
+An instance keeps running while its Durable Object is active. The Durable Object is active while it handles a request, runs an alarm, streams a response, or keeps an accepted WebSocket open. An open terminal keeps a sandbox running this way, even when nobody types.
 
 After the Durable Object becomes inactive, the instance keeps running for the time set with [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout), up to 6 hours. A request that arrives within that time reaches the same instance, with its files and processes. When the time ends, Cloudflare stops the instance. Without a timeout, Cloudflare stops the instance shortly after the Durable Object becomes inactive.
 
@@ -41,7 +41,7 @@ Code that runs inside the instance does not count as activity. A build, a test s
 
 ## The timeout does not survive a restart
 
-Each Durable Object instance sets its own inactivity timeout. A Durable Object can restart while its Linux instance keeps running, for example after a deploy or between two alarms. The restarted Durable Object starts without a timeout, so the instance stops shortly after that Durable Object becomes inactive.
+A Durable Object can restart while its instance keeps running, for example after a deploy or between two alarms. The restarted Durable Object starts without an inactivity timeout, so the instance stops shortly after the Durable Object becomes inactive.
 
 The sandbox examples set the timeout after `start()`, and set it again in the constructor of the Durable Object when the instance is already running. For an example, refer to [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout).
 
@@ -63,21 +63,19 @@ Cloudflare does not wake the Durable Object when its instance stops.
 
 ## Deploys keep instances running
 
-Deploying a new version of your Worker restarts every Durable Object. A running Linux instance keeps running, and the next request reaches the same instance, with its files and processes. Outbound handlers that the Durable Object set up with [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps) remain in place and run the code of the new version.
+Deploying a new version of your Worker restarts every Durable Object. A running instance keeps running, and the next request reaches the same instance, with its files and processes. Outbound handlers that the Durable Object set up with [`interceptOutboundHttp()`](/containers/api/durable-object-container/#interceptoutboundhttp) remain in place and run the code of the new version.
 
-A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. A sandbox moves to a new image only when its instance stops, for example through `destroy()`, and a new instance starts. The files and processes of the old instance end with it.
+A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. To move a sandbox to a new image, stop its instance, for example with `destroy()`, and start a new one. The files and processes of the old instance end with it.
 
 Requests, streamed responses, and WebSockets that the previous version was handling end during the deploy. A browser terminal disconnects and must connect again.
 
-After the previous version stops, the instance keeps running for the inactivity timeout that version set. If no request arrives within that time, the instance stops. The new version starts without the timeout, and its constructor sets the timeout again, as the sandbox examples do.
+After the deploy, the instance keeps running for the inactivity timeout that the previous version set. If no request arrives within that time, the instance stops. The new version starts without the timeout, so set it again in the constructor, as the sandbox examples do.
 
 Container [rollouts](/containers/configuration/rollouts/) replace instances only in Container applications that use the [default scheduling policy](/containers/configuration/scheduling-policy/), so no rollout replaces a sandbox.
 
 ## Files and processes end with the instance
 
 The disk of an instance holds the repository, installed packages, configuration files, and output written by commands. Its memory holds running processes, open terminals, and network connections. All of it ends when the instance stops. The next instance starts from its image, or from a snapshot.
-
-For the coding agent, a stopped instance takes the repository, its dependencies, and the edits with it, along with the development server, unless the application saved a snapshot first.
 
 ## Snapshots carry files to the next instance
 
@@ -87,15 +85,15 @@ Container snapshots are in public beta. The API and behavior may change.
 
 [`snapshotContainer()`](/containers/api/durable-object-container/#snapshotcontainer) saves the writable root filesystem of a running instance. It does not save separately mounted filesystems, memory, or processes. Starting with a snapshot creates a new instance with the saved files, and the new instance runs its entrypoint. The processes that were running do not continue.
 
-Restores are explicit. Cloudflare does not choose a snapshot when a sandbox starts. Your application decides when to save a snapshot, stores it, for example in Durable Object storage, and passes it to the next `start()`. Changes made after the last snapshot exist only in the current instance, so save another snapshot before the instance stops.
+Cloudflare does not restore a snapshot on its own. Your application decides when to save a snapshot. It stores the snapshot, for example in Durable Object storage, and passes it to the next `start()`. Changes made after the last snapshot exist only in the current instance, so save another snapshot before the instance stops.
 
-A snapshot expires 30 days after it is created, and each restore starts the 30 days again. A workspace that no request restores for 30 days loses its files, so copy files that must last longer to a bucket.
+A snapshot expires 30 days after it is created or last restored. To keep files longer, copy them to a bucket.
 
 The repository, dependencies, and edits of the coding agent return from a snapshot. The development server does not, so the agent starts it again.
 
 ## Mounted buckets outlive every instance
 
-Files in a mounted [R2](/r2/) bucket are objects in that bucket. They remain after every instance stops, and other sandboxes and Workers with access to the bucket can read them. A mount belongs to one instance, so each new instance mounts the bucket again. Snapshots do not include mounted directories.
+Files in a mounted [R2](/r2/) bucket are objects in that bucket. They remain after every instance stops, and other sandboxes and Workers with access to the bucket can read them. A snapshot does not include mounted directories, and a mount ends with its instance, so each new instance mounts the bucket again.
 
 Use a snapshot for files that belong to one continuing workspace. Use a bucket for files that other systems read, or that must outlive the workspace.
 
