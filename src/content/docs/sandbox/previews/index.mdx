@@ -77,67 +77,76 @@ Use a browser to open a web server that runs in a sandbox. The server has no pub
    Then start the server and wait until it responds:
 
    ```ts title="src/index.ts"
-   private ready = false;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   private async startServer(): Promise<Container> {
-   	const container = this.ctx.container;
+   	// Skip the check after the first response
+   	private ready = false;
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	private async startServer(): Promise<Container> {
+   		const container = this.ctx.container;
 
-   	if (!container.running) {
-   		container.start({
-   			image: "cloudflare/debian-trixie",
-   			entrypoint: ["node", "--eval", server],
-   			enableInternet: false,
-   		});
-   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-   		this.ready = false;
-   	}
-
-   	const deadline = Date.now() + 30_000;
-
-   	while (!this.ready && Date.now() < deadline) {
-   		try {
-   			const response = await container
-   				.getTcpPort(port)
-   				.fetch("http://container/", { signal: AbortSignal.timeout(1_000) });
-   			await response.body?.cancel();
-   			this.ready = true;
-   		} catch {
-   			await scheduler.wait(500);
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
    		}
-   	}
 
-   	return container;
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["node", "--eval", server],
+   				enableInternet: false,
+   			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   			this.ready = false;
+   		}
+
+   		// `start()` returns before the server listens. Send `GET /` until any
+   		// HTTP response arrives, for up to 30 seconds
+   		const deadline = Date.now() + 30_000;
+
+   		while (!this.ready && Date.now() < deadline) {
+   			try {
+   				const response = await container
+   					.getTcpPort(port)
+   					.fetch("http://container/", { signal: AbortSignal.timeout(1_000) });
+   				await response.body?.cancel();
+   				this.ready = true;
+   			} catch {
+   				await scheduler.wait(500);
+   			}
+   		}
+
+   		return container;
+   	}
    }
    ```
 
-   `start()` returns before the server listens. The method sends `GET /` until any HTTP response arrives, for up to 30 seconds. After the first response, the `ready` flag skips the check.
-
-3. Forward requests from the `fetch()` handler of the Durable Object:
+3. Forward requests from the `fetch()` handler of your Durable Object:
 
    ```ts title="src/index.ts"
-   async fetch(request: Request): Promise<Response> {
-   	const container = await this.startServer();
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!this.ready) {
-   		return new Response("The preview did not start", { status: 503 });
-   	}
+   	async fetch(request: Request): Promise<Response> {
+   		const container = await this.startServer();
 
-   	try {
-   		return await container.getTcpPort(port).fetch(request);
-   	} catch {
-   		this.ready = false;
-   		return new Response("The preview is not responding", { status: 502 });
+   		if (!this.ready) {
+   			return new Response("The preview did not start", { status: 503 });
+   		}
+
+   		// Forward each request once, because a retry could send a `POST` twice
+   		try {
+   			return await container.getTcpPort(port).fetch(request);
+   		} catch {
+   			// Check the server again on the next request
+   			this.ready = false;
+   			return new Response("The preview is not responding", { status: 502 });
+   		}
    	}
    }
    ```
 
-   The Durable Object forwards each request once, because a retry could send a `POST` twice. When the server stops responding, the Durable Object responds with `502` and checks the server again on the next request.
-
-4. Route preview paths from your Worker to the Durable Object:
+4. Route preview paths from your Worker to your Durable Object:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -182,7 +191,7 @@ Use a browser to open a web server that runs in a sandbox. The server has no pub
 
    Authenticate callers before they reach a preview. Serve previews from a hostname that does not host your application. For more information, refer to [Sandbox security](/sandbox/concepts/security/#output-carries-the-same-risk).
 
-5. Deploy the Worker:
+5. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -220,6 +229,7 @@ To keep the sandbox running while a page has a connection open, accept both ends
    function bridge(upstream: WebSocket): Response {
    	const [client, server] = Object.values(new WebSocketPair());
 
+   	// Receive binary messages as `ArrayBuffer` instead of `Blob`
    	upstream.binaryType = "arraybuffer";
    	server.binaryType = "arraybuffer";
    	upstream.accept();
@@ -253,9 +263,7 @@ To keep the sandbox running while a page has a connection open, accept both ends
 
    </TypeScriptExample>
 
-   Binary messages arrive as `Blob` objects unless `binaryType` is `"arraybuffer"`.
-
-2. In the `fetch()` handler of the Durable Object, bridge responses that open a WebSocket:
+2. In the `fetch()` handler of your Durable Object, bridge responses that open a WebSocket:
 
    ```ts title="src/index.ts" {2-3}
    try {
@@ -298,22 +306,26 @@ Give someone access to one preview for a limited time. In this example, the Dura
 1. Add methods that create and check tokens to your Durable Object:
 
    ```ts title="src/index.ts"
-   async share(ttl: number): Promise<string> {
-   	const token = crypto.randomUUID();
-   	await this.ctx.storage.put(`share:${token}`, Date.now() + ttl);
-   	return token;
-   }
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   async isShared(token: string): Promise<boolean> {
-   	const key = `share:${token}`;
-   	const expires = await this.ctx.storage.get<number>(key);
-
-   	if (expires !== undefined && expires <= Date.now()) {
-   		await this.ctx.storage.delete(key);
-   		return false;
+   	async share(ttl: number): Promise<string> {
+   		const token = crypto.randomUUID();
+   		await this.ctx.storage.put(`share:${token}`, Date.now() + ttl);
+   		return token;
    	}
 
-   	return expires !== undefined;
+   	async isShared(token: string): Promise<boolean> {
+   		const key = `share:${token}`;
+   		const expires = await this.ctx.storage.get<number>(key);
+
+   		if (expires !== undefined && expires <= Date.now()) {
+   			await this.ctx.storage.delete(key);
+   			return false;
+   		}
+
+   		return expires !== undefined;
+   	}
    }
    ```
 
@@ -345,7 +357,7 @@ Give someone access to one preview for a limited time. In this example, the Dura
 
    The shared route needs no authentication, because the token is the permission.
 
-3. Deploy the Worker, then create a link to the preview named `ada`:
+3. Deploy your Worker, then create a link to the preview named `ada`:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/shares/ada --request POST
@@ -372,12 +384,16 @@ Stop the server when the preview is no longer needed, instead of waiting for the
 1. Add a method that stops the container to your Durable Object:
 
    ```ts title="src/index.ts"
-   async stop(): Promise<void> {
-   	if (this.ctx.container?.running) {
-   		await this.ctx.container.destroy();
-   	}
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	this.ready = false;
+   	async stop(): Promise<void> {
+   		if (this.ctx.container?.running) {
+   			await this.ctx.container.destroy();
+   		}
+
+   		this.ready = false;
+   	}
    }
    ```
 
@@ -390,7 +406,7 @@ Stop the server when the preview is no longer needed, instead of waiting for the
    }
    ```
 
-3. Deploy the Worker, and stop the preview named `ada`:
+3. Deploy your Worker, and stop the preview named `ada`:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/previews/ada --request DELETE

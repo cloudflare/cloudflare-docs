@@ -33,7 +33,7 @@ Clone a private repository into a sandbox while the access token stays in your W
 
 <Steps>
 
-1. Create a `Dockerfile` in the project root that installs Git:
+1. Create a `Dockerfile` in your project root that installs Git:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -117,49 +117,55 @@ Clone a private repository into a sandbox while the access token stays in your W
 5. Add a method to your Durable Object that intercepts `github.com` and clones the repository:
 
    ```ts title="src/index.ts"
-   async clone(): Promise<{ exitCode: number; stderr: string }> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	async clone(): Promise<{ exitCode: number; stderr: string }> {
+   		const container = this.ctx.container;
 
-   	await container.interceptOutboundHttps(
-   		"github.com",
-   		this.ctx.exports.GitGateway,
-   	);
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
 
-   	if (!container.running) {
-   		container.start({
-   			image: container.images.git,
-   			enableInternet: false,
-   		});
-   	}
+   		await container.interceptOutboundHttps(
+   			"github.com",
+   			this.ctx.exports.GitGateway,
+   		);
 
-   	const process = await container.exec(
-   		[
-   			"git",
-   			"clone",
-   			"--depth=1",
-   			`https://github.com/${this.env.REPOSITORY}.git`,
-   			"/workspace",
-   		],
-   		{
-   			env: {
-   				GIT_SSL_CAINFO: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   		if (!container.running) {
+   			container.start({
+   				image: container.images.git,
+   				// The container can reach only the hostnames you intercept
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await container.exec(
+   			[
+   				"git",
+   				"clone",
+   				"--depth=1",
+   				`https://github.com/${this.env.REPOSITORY}.git`,
+   				"/workspace",
+   			],
+   			{
+   				env: {
+   					// The intercept terminates TLS with a certificate that the container
+   					// CA certificate signs. Git reads the CA certificate from this path
+   					GIT_SSL_CAINFO: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   				},
    			},
-   		},
-   	);
-   	const output = await process.output();
+   		);
+   		const output = await process.output();
 
-   	return {
-   		exitCode: output.exitCode,
-   		stderr: new TextDecoder().decode(output.stderr),
-   	};
+   		return {
+   			exitCode: output.exitCode,
+   			// Git prints its progress to standard error
+   			stderr: new TextDecoder().decode(output.stderr),
+   		};
+   	}
    }
    ```
-
-   The intercept terminates TLS with a certificate that the container CA certificate signs. Git reads the CA certificate from the path in `GIT_SSL_CAINFO`. Git prints its progress to standard error, which the method returns. With `enableInternet: false`, the container can reach only the hostnames you intercept.
 
 6. Add a route to your Worker that clones the repository:
 
@@ -175,7 +181,7 @@ Clone a private repository into a sandbox while the access token stays in your W
 
    Authenticate callers first, so other people cannot read the repository through the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
-7. Deploy the Worker:
+7. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

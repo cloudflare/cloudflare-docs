@@ -42,7 +42,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
    The record lets Cloudflare receive requests for every preview hostname. The Worker route handles those requests, so Cloudflare never contacts the address in the record.
 
-2. In `wrangler.jsonc`, add the preview domain as a variable and route its subdomains to the Worker. Replace `example-previews.com` with your preview domain:
+2. In `wrangler.jsonc`, add the preview domain as a variable and route its subdomains to your Worker. Replace `example-previews.com` with your preview domain:
 
    <WranglerConfig>
 
@@ -83,10 +83,13 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
    		if (url.hostname.endsWith(suffix)) {
    			const name = url.hostname.slice(0, -suffix.length);
 
+   			// Accept only sandbox names that are valid DNS labels
    			if (!/^[a-z0-9-]{1,63}$/.test(name)) {
    				return new Response("Not found", { status: 404 });
    			}
 
+   			// Forward with the `http:` scheme, because `getTcpPort().fetch()`
+   			// does not accept `https:` URLs
    			url.protocol = "http:";
    			return env.MY_CONTAINER.getByName(name).fetch(new Request(url, request));
    		}
@@ -99,11 +102,11 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
    </TypeScriptExample>
 
-   The Worker accepts only sandbox names that are valid DNS labels. It forwards the original URL with the `http:` scheme, because `getTcpPort().fetch()` does not accept `https:` URLs. The server receives the full path and the preview hostname in the `Host` header.
+   The server receives the full path and the preview hostname in the `Host` header.
 
    Every request to a preview hostname goes to the preview. Keep routes that manage previews, such as stopping one, on other hostnames, so code in a preview cannot call them from its own origin. Authenticate preview visitors on the preview hostname, and do not send your application session cookie there.
 
-5. Deploy the Worker:
+5. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

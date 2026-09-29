@@ -99,52 +99,57 @@ The container sends its request to `api.github.com` as usual. The Durable Object
 2. Add a method to your Durable Object that intercepts `api.github.com` and runs code that calls it:
 
    ```ts title="src/index.ts"
-   async getUsername(): Promise<string> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	async getUsername(): Promise<string> {
+   		const container = this.ctx.container;
 
-   	await container.interceptOutboundHttps(
-   		"api.github.com",
-   		this.ctx.exports.GitHubGateway,
-   	);
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
 
-   	if (!container.running) {
-   		container.start({
-   			image: "cloudflare/debian-trixie",
-   			entrypoint: ["sleep", "infinity"],
-   			enableInternet: false,
-   		});
-   	}
+   		await container.interceptOutboundHttps(
+   			"api.github.com",
+   			this.ctx.exports.GitHubGateway,
+   		);
 
-   	const process = await container.exec(
-   		[
-   			"node",
-   			"--input-type=module",
-   			"--eval",
-   			`const response = await fetch("https://api.github.com/user");
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				// The container can reach only the hostnames you intercept
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await container.exec(
+   			[
+   				"node",
+   				"--input-type=module",
+   				"--eval",
+   				`const response = await fetch("https://api.github.com/user");
    if (!response.ok) throw new Error("GitHub request failed");
    console.log((await response.json()).login);`,
-   		],
-   		{
-   			env: {
-   				NODE_EXTRA_CA_CERTS: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   			],
+   			{
+   				env: {
+   					// The intercept terminates TLS with a certificate that the container
+   					// CA certificate signs. Node.js reads the CA certificate from this path
+   					NODE_EXTRA_CA_CERTS: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
+   				},
    			},
-   		},
-   	);
-   	const output = await process.output();
+   		);
+   		const output = await process.output();
 
-   	if (output.exitCode !== 0) {
-   		throw new Error(new TextDecoder().decode(output.stderr));
+   		if (output.exitCode !== 0) {
+   			throw new Error(new TextDecoder().decode(output.stderr));
+   		}
+
+   		return new TextDecoder().decode(output.stdout).trim();
    	}
-
-   	return new TextDecoder().decode(output.stdout).trim();
    }
    ```
-
-   The intercept terminates TLS with a certificate that the container CA certificate signs. Node.js reads the CA certificate from the path in `NODE_EXTRA_CA_CERTS`. With `enableInternet: false`, the container can reach only the hostnames you intercept.
 
 3. Add a route to your Worker that returns the username:
 
@@ -155,7 +160,7 @@ The container sends its request to `api.github.com` as usual. The Durable Object
    }
    ```
 
-4. Deploy the Worker, then send a request to `/username` on the `workers.dev` URL that Wrangler prints:
+4. Deploy your Worker, then send a request to `/username` on the `workers.dev` URL that Wrangler prints:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -223,8 +228,10 @@ A Dynamic Worker gets a method that calls one fixed GitHub endpoint, instead of 
    		`,
    	},
    	env: {
+   		// Create a stub that the Dynamic Worker can receive
    		GITHUB: ctx.exports.GitHub({ props: {} }),
    	},
+   	// Block every other `fetch()` and `connect()` call from the Dynamic Worker
    	globalOutbound: null,
    });
 
@@ -234,9 +241,9 @@ A Dynamic Worker gets a method that calls one fixed GitHub endpoint, instead of 
    return Response.json({ username });
    ```
 
-   Calling `ctx.exports.GitHub()` creates a stub that the Dynamic Worker can receive. The code calls `this.env.GITHUB.getUsername()`, and the method reads the token in your Worker. `globalOutbound: null` blocks every other `fetch()` and `connect()` call from the Dynamic Worker.
+   The code calls `this.env.GITHUB.getUsername()`, and the method reads the token in your Worker.
 
-3. Deploy the Worker, then send a request to the `workers.dev` URL that Wrangler prints:
+3. Deploy your Worker, then send a request to the `workers.dev` URL that Wrangler prints:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
