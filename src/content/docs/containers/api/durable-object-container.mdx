@@ -211,7 +211,7 @@ With `stderr: "combined"`, `stderr` is `null` on `ExecProcess` and an empty `Arr
 
 For task-oriented examples, refer to [Execute commands](/containers/guides/execute-commands/).
 
-### `snapshotContainer`
+### `snapshotContainer` <Badge text="durable_object policy only" variant="note" size="small" />
 
 `snapshotContainer()` creates a point-in-time snapshot of the running container filesystem. This method is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
 
