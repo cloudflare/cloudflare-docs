@@ -75,6 +75,13 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
    // The record your code stores in place of the 0.12 backup object.
    type Backup = DirectoryBackupRecord & { expiresAt: number };
+
+   // Restores read the expiry time from this object, because a caller
+   // can change the expiresAt field of a record.
+   const metaKey = (id: string) => `backups/${id}.meta.json`;
+
+   // Like 0.12, refuse a backup that expires within a minute.
+   const EXPIRY_MARGIN_MS = 60 * 1000;
    ```
 
 5. Add a getter to `MySandbox` that creates `DirectoryBackup`:
@@ -126,13 +133,20 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    			// 0.12 matched each pattern from the top of the directory.
    			exclude: excludes?.map((pattern) => `/${pattern}`),
    		});
+   		const expiresAt = Date.now() + ttl * 1000;
+   		await this.env.BACKUP_BUCKET.put(
+   			metaKey(backup.id),
+   			JSON.stringify({ expiresAt }),
+   		);
 
-   		return { ...backup, expiresAt: Date.now() + ttl * 1000 };
+   		return { ...backup, expiresAt };
    	}
    }
    ```
 
    Your Worker calls it as before, on the stub that `getByName()` returns. It returns a record with the ID, directory, size, SHA-256, and expiry time of the backup. Store it where your code stored the 0.12 backup object. A record lets a caller restore that backup, so keep records out of reach of the code in the sandbox.
+
+   `createBackup()` also writes the expiry time to `backups/<ID>.meta.json` in the bucket, as 0.12 wrote it to `meta.json`. The `expiresAt` field of the record is for display only.
 
 7. Replace `restoreBackup()`:
 
@@ -140,8 +154,16 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	async restoreBackup(backup: Backup) {
-   		if (Date.now() > backup.expiresAt) {
+   	async restoreBackup(backup: DirectoryBackupRecord) {
+   		const meta = await this.env.BACKUP_BUCKET.get(metaKey(backup.id));
+
+   		if (!meta) {
+   			throw new Error(`Backup ${backup.id} was not found`);
+   		}
+
+   		const { expiresAt } = await meta.json<{ expiresAt: number }>();
+
+   		if (Date.now() + EXPIRY_MARGIN_MS > expiresAt) {
    			throw new Error(`Backup ${backup.id} has expired`);
    		}
 
@@ -151,6 +173,8 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    	}
    }
    ```
+
+   `restoreBackup()` reads the expiry time from the bucket, not from the record, so a caller cannot restore an expired backup by changing `expiresAt`. A record from another sandbox restores too, as in 0.12, and `restore()` checks the object against the SHA-256 in the record.
 
    `restore()` replaces the directory with the files in the backup, so files that the backup left out, such as `node_modules`, are gone after a restore. In 0.12, the restored directory was a mount that ended with the container. In 1.0, the files stay in the container filesystem.
 
@@ -169,7 +193,7 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    }
    ```
 
-   `restoreBackup()` with that record returns `{"success":true,"dir":"/workspace/project","id":"52046bdb-afb2-4f38-a14c-70d48a45a56f"}`, and a record whose `expiresAt` has passed throws `Backup <ID> has expired`.
+   `restoreBackup()` with that record returns `{"success":true,"dir":"/workspace/project","id":"52046bdb-afb2-4f38-a14c-70d48a45a56f"}`, and a backup whose stored expiry time has passed throws `Backup <ID> has expired`, even when the record has a later `expiresAt`.
 
 </Steps>
 
@@ -181,7 +205,7 @@ Each 0.12 name has one of these replacements:
 | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `dir`                                     | `dir`. 0.12 accepted only directories under `/workspace`, `/home`, `/tmp`, `/var/tmp`, and `/app`. `DirectoryBackup` accepts any absolute path, so check the directory in your code when a request chooses it. |
 | `name`                                    | `name`, stored in the record and in the custom metadata of the object                                                                                                                                          |
-| `ttl`                                     | `expiresAt` in the record. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`.                                                                           |
+| `ttl`                                     | The expiry time in `backups/<ID>.meta.json`. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`. Delete its `.meta.json` object at the same time.        |
 | `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `/`, because a `.gitignore` pattern without a `/` matches at any depth.                                                           |
 | `gitignore`                               | `gitignore`. It applies the `.gitignore` files inside the directory and `.git/info/exclude`, and the image does not need `git`.                                                                                |
 | `localBucket`, `multipart`, `compression` | Remove them. Every backup goes through the R2 binding in parts.                                                                                                                                                |
@@ -221,7 +245,7 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
    		const { createdAt, ttl } = await meta.json<{ createdAt: string; ttl: number }>();
    		const expiresAt = Date.parse(createdAt) + ttl * 1000;
 
-   		if (Date.now() > expiresAt) {
+   		if (Date.now() + EXPIRY_MARGIN_MS > expiresAt) {
    			await image.body.cancel();
    			throw new Error(`Backup ${old.id} has expired`);
    		}
@@ -244,12 +268,16 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
    		}
 
    		const backup = await this.backups.backup({ dir: old.dir });
+   		await this.env.BACKUP_BUCKET.put(
+   			metaKey(backup.id),
+   			JSON.stringify({ expiresAt }),
+   		);
    		return { ...backup, expiresAt };
    	}
    }
    ```
 
-   The converted backup keeps the expiry time that 0.12 gave the original. The container needs free disk space for the image and the extracted files together. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
+   The converted backup keeps the expiry time that 0.12 gave the original, in its own `.meta.json` object. The container needs free disk space for the image and the extracted files together. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
 
 3. Where your code calls `restoreBackup()` with an object that 0.12 created, call `convert()` instead. A 0.12 object has no `format` field. `convert()` leaves the files in the directory, so it also does the restore. Store the record that it returns in place of the 0.12 object.
 
