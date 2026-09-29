@@ -47,7 +47,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    	&& apt-get install -y --no-install-recommends ca-certificates fuse3 s3fs \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    CMD ["sleep", "infinity"]
    ```

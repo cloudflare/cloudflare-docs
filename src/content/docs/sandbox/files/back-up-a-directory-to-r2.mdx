@@ -42,7 +42,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    RUN mkdir /workspace
    CMD ["sleep", "infinity"]
