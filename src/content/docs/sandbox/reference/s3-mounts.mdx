@@ -58,7 +58,7 @@ export class MyContainer extends DurableObject<Env> {
 
 ## Requirements
 
-`S3Mount` has the [package requirements](/sandbox/reference/#requirements) and these:
+In addition to the [package requirements](/sandbox/reference/#requirements), `S3Mount` has these requirements:
 
 - The container image contains FUSE 3 and `s3fs`. In Debian and Ubuntu images, install the `fuse3` and `s3fs` packages.
 - The main module of the Worker re-exports `S3Gateway`, so that `this.ctx.exports.S3Gateway` exists:
@@ -69,7 +69,7 @@ export class MyContainer extends DurableObject<Env> {
 
   Do not route HTTP requests to `S3Gateway`.
 
-## Constructor
+## `S3Mount`
 
 ```ts
 new S3Mount(container: Pick<Container, "exec" | "interceptOutboundHttp">, gateway: S3GatewayBinding)
