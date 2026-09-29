@@ -43,8 +43,21 @@ import { createWorkersAI } from "workers-ai-provider";
 import { z } from "zod";
 
 const MAX_OUTPUT_CHARS = 10_000;
+// Keep the container for 10 minutes after the agent becomes inactive.
+const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
 export class CodeAgent extends Think<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container;
+		// A restarted agent sets the timeout again.
+		if (container?.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
+
 	getModel() {
 		return createWorkersAI({ binding: this.env.AI })(
 			"@cf/moonshotai/kimi-k2.6",
@@ -85,9 +98,8 @@ export class CodeAgent extends Think<Env> {
 				entrypoint: ["sleep", "infinity"],
 				enableInternet: false,
 			});
+			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 		}
-		// Keep the container for 10 minutes after the agent becomes inactive.
-		await container.setInactivityTimeout(10 * 60 * 1000);
 
 		// `timeout` stops the command and every process it started.
 		const process = await container.exec([
@@ -123,7 +135,7 @@ export default {
 
 `start()` boots the `cloudflare/debian-trixie` image, a Debian system with Node.js and npm. The default command of the image exits immediately, so the `sleep infinity` entrypoint keeps the container running between commands. `enableInternet: false` blocks outbound requests.
 
-`setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. A Durable Object that restarts starts without the timeout. To cover restarts, the tool sets it before every command. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
+`setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. The tool sets it after `start()`. A Durable Object that restarts starts without the timeout, so the constructor sets it again when the container is already running. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
 
 `timeout` stops a command, and every process it started, after 60 seconds. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
