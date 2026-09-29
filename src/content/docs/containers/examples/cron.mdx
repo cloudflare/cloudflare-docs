@@ -55,7 +55,7 @@ Use a cron expression in your Wrangler config to specify the schedule:
 
 </WranglerConfig>
 
-Then call the Container from the `scheduled()` handler in the Worker. The raw API example expects the Container to expose a `GET /health` endpoint that returns success when ready and a `POST /run` endpoint that starts the scheduled task.
+Then call the Container from the `scheduled()` handler in the Worker. In the Durable Object Container API example, the Worker polls `GET /health` until the application is ready, then sends `POST /run` to start the scheduled task.
 
 <Tabs>
 	<TabItem label="Durable Object Container API">
