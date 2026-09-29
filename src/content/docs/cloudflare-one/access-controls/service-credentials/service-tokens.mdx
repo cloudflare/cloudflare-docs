@@ -85,18 +85,16 @@ To authenticate using a single header:
    curl -H "Authorization: {\"cf-access-client-id\": \"<CLIENT_ID>\", \"cf-access-client-secret\": \"<CLIENT_SECRET>\"}" https://app.example.com
    ```
 
-## Enforce strict service token authentication
+## Strict service token authentication
 
-Strict service token authentication gives automated clients consistent responses and prevents fallback to user authentication. When this setting is on, Access applies the following behavior to requests that include service token credentials:
+Strict service token authentication is a Zero Trust organization setting that applies consistent behavior to requests made with service tokens. When the setting is on, Access handles requests with service token headers as follows:
 
-- Access returns `401` when the token cannot authenticate. It returns `403` when the token is valid but not authorized.
-- Only Service Auth and Bypass policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
-- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Cloudflare One Client and Cloudflare Browser Isolation applications are exempt from this behavior.
-- Access rejects duplicate or incomplete service token headers. Access also rejects requests that contain credentials in both the standard headers and a configured custom header.
+- If authentication or authorization fails, Access always returns `401` or `403` instead of redirecting the client to the login page with `302`.
+- Only Service Auth policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
+- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
+- Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication). Access logs expired or disabled tokens, incorrect Client Secrets, and tokens not authorized for the application. It does not log malformed headers or unknown Client IDs.
 
-Failed requests produce [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication) when Access recognizes the Client ID. Access creates a log when a token is expired, disabled, or not authorized for the application. It also logs requests with an incorrect Client Secret. Access does not log malformed headers or an unknown Client ID.
-
-Zero Trust organizations created on or after October 5, 2026 use strict service token authentication by default. You cannot turn off the setting for these organizations.
+Zero Trust organizations created on or after October 5, 2026 have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
 
 For an existing organization, send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
 

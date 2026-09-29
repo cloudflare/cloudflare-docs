@@ -1,6 +1,6 @@
 ---
-title: Stricter authentication for Access service tokens
-description: Give automated clients consistent responses and prevent fallback to user authentication.
+title: New strict service token authentication setting for Access
+description: Apply consistent behavior to requests made with service tokens across your Zero Trust organization.
 date: 2026-09-28
 products:
   - access
@@ -8,11 +8,14 @@ products:
 
 import { CURL } from "~/components";
 
-Cloudflare Access now supports strict service token authentication. Requests with invalid credentials return `401`, while valid tokens without permission return `403`. Access no longer redirects these requests to the login page.
+The strict service token authentication setting applies consistent behavior to requests made with service tokens. When the setting is on for a Zero Trust organization, Access handles requests with service token headers as follows:
 
-Strict authentication prevents Allow policies from authorizing service token requests. It also stops returning a `CF_Authorization` cookie to the client and rejects incomplete or ambiguous service token headers. Failed requests for recognized service tokens appear in Access authentication logs.
+- If authentication or authorization fails, Access always returns `401` or `403` instead of redirecting the client to the login page with `302`.
+- Only Service Auth policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
+- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
+- Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication).
 
-Zero Trust organizations created on or after October 5, 2026 use strict service token authentication by default and cannot turn it off. Existing organizations can turn it on through the API:
+Zero Trust organizations created on or after October 5, 2026 have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well. To turn it on for an existing organization, use the API:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
@@ -23,4 +26,4 @@ Zero Trust organizations created on or after October 5, 2026 use strict service 
 	}}
 />
 
-For behavior and configuration details, refer to [Enforce strict service token authentication](/cloudflare-one/access-controls/service-credentials/service-tokens/#enforce-strict-service-token-authentication).
+For behavior and configuration details, refer to [Strict service token authentication](/cloudflare-one/access-controls/service-credentials/service-tokens/#strict-service-token-authentication).
