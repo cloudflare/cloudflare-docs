@@ -143,7 +143,7 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
 3. Add the certificate variables to `ENV`, and register the entrypoint in `startContainer()`:
 
-   ```ts title="src/index.ts" ins={1-3,6-7,9-15,20-37,47,56-57}
+   ```ts title="src/index.ts" ins={1-3,6-7,9-19,24-41,51,60-61}
    const RULES = "OUTBOUND_CONFIGURATION";
    const CA = "/etc/cloudflare/certs/cloudflare-containers-ca.crt";
    const BUNDLE = "/etc/ssl/certs/ca-certificates.crt";
@@ -152,13 +152,17 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
    	NODE_EXTRA_CA_CERTS: CA,
    	REQUESTS_CA_BUNDLE: BUNDLE,
    };
-   // Wait up to 10 seconds for the certificate, then add it to the
-   // system bundle once for each container.
+   // Keep a copy of the system bundle, wait up to 10 seconds for the
+   // certificate, then write the bundle from the copy and the certificate.
+   const SYSTEM = "/etc/ssl/certs/ca-certificates.system.crt";
    const CA_WAIT = `until [ -s ${CA} ]; do sleep 0.1; done`;
    const CA_READY = `timeout 10 sh -c '${CA_WAIT}'`;
-   const TRUSTED = "/run/intercept-ca-trusted";
-   const APPEND = `${CA_READY} && cat ${CA} >> ${BUNDLE} && touch ${TRUSTED}`;
-   const TRUST = ["sh", "-c", `[ -e ${TRUSTED} ] || { ${APPEND}; }`];
+   const TRUST = [
+   	"sh",
+   	"-c",
+   	`[ -e ${SYSTEM} ] || { cp ${BUNDLE} ${SYSTEM}.tmp && mv ${SYSTEM}.tmp ${SYSTEM}; }
+   	${CA_READY} && cat ${SYSTEM} ${CA} >${BUNDLE}.tmp && mv ${BUNDLE}.tmp ${BUNDLE}`,
+   ];
 
    export class MySandbox extends DurableObject<Env> {
    	// ...
@@ -221,9 +225,9 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    If your class uses `DirectoryBackup` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) in the `try` block, before your `intercept()`. Otherwise every backup and restore fails with `BACKUP_TRANSFER`, because your `Outbound` entrypoint receives backup requests from the container. Call it only in `startContainer()`, not on every request.
 
-   The HTTPS intercept signs responses with a certificate that the container does not trust by default. As in 0.12, the `TRUST` command appends the certificate to the system bundle, which curl and Git read. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
+   The HTTPS intercept signs responses with a certificate that the container does not trust by default. As in 0.12, the `TRUST` command adds the certificate to the system bundle, which curl and Git read. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
 
-   The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container. After the append, `TRUST` writes a marker file, so running it again for the same container changes nothing.
+   The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container. Each container gets a new certificate. A [snapshot](/containers/api/durable-object-container/#snapshotcontainer) saves the bundle with the certificate of the container it came from, so appending to the bundle would keep certificates from earlier containers. `TRUST` therefore keeps a copy of the system bundle as it was before any certificate was added, and writes the bundle again from that copy and the current certificate. Running it again for the same container writes the same bundle.
 
 </Steps>
 
