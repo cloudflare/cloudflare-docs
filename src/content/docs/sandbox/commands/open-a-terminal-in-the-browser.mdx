@@ -22,7 +22,7 @@ import {
 } from "~/components";
 import { BrowserTerminal } from "~/components/react/sandbox/BrowserTerminal";
 
-Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session. The shell keeps running when the page reloads or the connection drops.
+This guide builds a Worker that gives a person a live shell in a Linux sandbox from a web page. The page runs [xterm.js](https://xtermjs.org/) and connects it over a WebSocket to a shell in a [tmux](https://github.com/tmux/tmux/wiki) session, so the shell keeps running when the page reloads or the connection drops.
 
 <BrowserTerminal
 	url="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/"
@@ -116,110 +116,117 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
    Then add a `fetch()` handler that attaches a WebSocket to a tmux session:
 
    ```ts title="src/index.ts"
-   async fetch(request: Request): Promise<Response> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	async fetch(request: Request): Promise<Response> {
+   		const container = this.ctx.container;
 
-   	if (request.headers.get("Upgrade") !== "websocket") {
-   		return new Response("Expected a WebSocket upgrade", { status: 426 });
-   	}
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
 
-   	// tmux session names cannot contain "." or ":".
-   	const url = new URL(request.url);
-   	const session = url.searchParams.get("session") || "main";
+   		if (request.headers.get("Upgrade") !== "websocket") {
+   			return new Response("Expected a WebSocket upgrade", { status: 426 });
+   		}
 
-   	if (!/^[a-z0-9][a-z0-9-]{0,62}$/.test(session)) {
-   		return new Response("Invalid session name", { status: 400 });
-   	}
+   		// tmux session names cannot contain "." or ":".
+   		const url = new URL(request.url);
+   		const session = url.searchParams.get("session") || "main";
 
-   	if (!container.running) {
-   		container.start({
-   			image: container.images.terminal,
-   			enableInternet: false,
-   		});
-   		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
-   	}
+   		if (!/^[a-z0-9][a-z0-9-]{0,62}$/.test(session)) {
+   			return new Response("Invalid session name", { status: 400 });
+   		}
 
-   	// Attach to the tmux session, or create it. The session keeps the shell
-   	// running after this WebSocket closes.
-   	const abort = new AbortController();
-   	const tmux = await container.exec(
-   		["tmux", "new-session", "-A", "-s", session],
-   		{
-   			pty: {
-   				cols: Number(url.searchParams.get("cols")) || 80,
-   				rows: Number(url.searchParams.get("rows")) || 24,
+   		if (!container.running) {
+   			container.start({
+   				image: container.images.terminal,
+   				// Block commands in the terminal from reaching the Internet
+   				enableInternet: false,
+   			});
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   		}
+
+   		// Attach to the tmux session, or create it. The session keeps the shell
+   		// running after this WebSocket closes.
+   		const abort = new AbortController();
+   		const tmux = await container.exec(
+   			["tmux", "new-session", "-A", "-s", session],
+   			{
+   				// Run the tmux client attached to a pseudo-terminal.
+   				pty: {
+   					cols: Number(url.searchParams.get("cols")) || 80,
+   					rows: Number(url.searchParams.get("rows")) || 24,
+   				},
+   				env: { TERM: "xterm-256color" },
+   				cwd: "/root",
+   				signal: abort.signal,
    			},
-   			env: { TERM: "xterm-256color" },
-   			cwd: "/root",
-   			signal: abort.signal,
-   		},
-   	);
+   		);
 
-   	const [client, server] = Object.values(new WebSocketPair());
+   		const [client, server] = Object.values(new WebSocketPair());
 
-   	// Receive binary messages as ArrayBuffer instead of Blob.
-   	server.binaryType = "arraybuffer";
+   		// Receive binary messages as ArrayBuffer instead of Blob.
+   		server.binaryType = "arraybuffer";
 
-   	// Keep this Durable Object in memory while the terminal is open.
-   	server.accept();
+   		// Keep this Durable Object in memory while the terminal is open.
+   		server.accept();
 
-   	const stdin = tmux.stdin!.getWriter();
+   		const stdin = tmux.stdin!.getWriter();
 
-   	server.addEventListener("message", (event) => {
-   		if (typeof event.data === "string") {
-   			try {
-   				const { cols, rows } = JSON.parse(event.data);
-   				tmux.resize(cols, rows);
-   			} catch {
-   				// Ignore malformed resize messages so the terminal keeps running.
+   		// Listeners must not throw. An exception closes the socket without running
+   		// the `close` listener, which leaves the tmux client dangling
+   		server.addEventListener("message", (event) => {
+   			if (typeof event.data === "string") {
+   				try {
+   					const { cols, rows } = JSON.parse(event.data);
+   					tmux.resize(cols, rows);
+   				} catch {
+   					// Ignore malformed resize messages so the terminal keeps running.
+   				}
+   			} else {
+   				stdin.write(new Uint8Array(event.data)).catch(() => {});
    			}
-   		} else {
-   			stdin.write(new Uint8Array(event.data)).catch(() => {});
-   		}
-   	});
+   		});
 
-   	let exited = false;
-   	const markExited = () => {
-   		exited = true;
-   	};
-   	tmux.exitCode.then(markExited, markExited);
+   		let exited = false;
+   		const markExited = () => {
+   			exited = true;
+   		};
+   		tmux.exitCode.then(markExited, markExited);
 
-   	// Stop the tmux client when the browser disconnects. The session and its
-   	// shell keep running.
-   	server.addEventListener("close", () => {
-   		if (!exited) abort.abort();
-   	});
+   		// Stop the tmux client when the browser disconnects. The session and its
+   		// shell keep running.
+   		server.addEventListener("close", () => {
+   			// Signaling a process that has exited raises an error.
+   			if (!exited) abort.abort();
+   		});
 
-   	const forward = async () => {
-   		for await (const chunk of tmux.stdout!) {
-   			server.send(chunk);
-   		}
+   		const forward = async () => {
+   			for await (const chunk of tmux.stdout!) {
+   				server.send(chunk);
+   			}
 
-   		server.close(1000, `Terminal closed with code ${await tmux.exitCode}`);
-   	};
+   			server.close(1000, `Terminal closed with code ${await tmux.exitCode}`);
+   		};
 
-   	void forward().catch(() => server.close(1011, "Terminal output failed"));
+   		void forward().catch(() => server.close(1011, "Terminal output failed"));
 
-   	return new Response(null, { status: 101, webSocket: client });
+   		return new Response(null, { status: 101, webSocket: client });
+   	}
    }
    ```
 
-   Each WebSocket gets its own tmux client. `pty` runs the client in a pseudo-terminal. `tmux new-session -A` attaches the client to the named session, or creates the session if it does not exist. The handler writes keystrokes to the standard input of the client, applies resize messages, and forwards the client output unchanged.
+   Each WebSocket gets its own tmux client, which `tmux new-session -A` attaches to the named session, or creates the session if it does not exist. The handler writes keystrokes to the client's standard input, applies resize messages, and forwards the client's output unchanged.
 
-   The handler uses `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Hibernation would discard the process handle of the tmux client. Listeners must not throw. An exception in a listener closes the socket without running the `close` listener, which leaves the tmux client running. The `close` listener skips a client that has already exited, because [signaling a process that has exited raises an error](/containers/api/durable-object-container/#process-lifetime).
+   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api), because hibernation would discard the tmux client's process handle.
 
-   `enableInternet: false` keeps commands in the terminal off the Internet. The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), for example `user: "1000:1000"`, changes the Linux user of the shell. It does not limit what the shell can read or modify. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
+   The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell but not what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 
-4. Add the terminal page:
+4. Create a terminal page:
 
-   <TypeScriptExample filename="src/index.ts">
-
-   ```ts
-   const page = `<!doctype html>
+   ```html
+   <!doctype html>
    <html lang="en">
    	<head>
    		<meta charset="utf-8" />
@@ -288,10 +295,8 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
    			addEventListener("resize", () => fitAddon.fit());
    		</script>
    	</body>
-   </html>`;
+   </html>
    ```
-
-   </TypeScriptExample>
 
    The page sends keystrokes as binary messages and window sizes as JSON text messages. When the connection drops, it reconnects after 1 second, doubling the delay up to 30 seconds, and gives up after 10 attempts. It does not reconnect after code `1000`, which means the session ended or the client detached.
 
@@ -302,6 +307,8 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
+   const page = `[... HTML from above ...]`;
+
    export default {
    	async fetch(request: Request, env: Env): Promise<Response> {
    		const url = new URL(request.url);
@@ -328,7 +335,7 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
 
    Anyone who opens the page gets a `root` shell in the sandbox named in the URL. Authenticate callers first, and derive the sandbox name from the caller's identity. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
-6. Deploy the Worker:
+6. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

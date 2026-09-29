@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Start a process that keeps running after the request ends, such as a development server, a build, or an agent. The process object that `exec()` returns belongs to the request that started it, so later requests manage the process through files in the sandbox. The process writes its process ID, output, and exit code to those files.
+This guide builds a Worker that starts a process that keeps running after the request ends, such as a development server, a build, or an agent, and manages it from later requests. The process object that `exec()` returns belongs to the request that started it, so each process writes its process ID, output, and exit code to files that later requests read.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Start a process that keeps running after the request ends, such as a development
 
 <Steps>
 
-1. Add the shell scripts that run a process and report its state:
+1. Add shell scripts that run a process and report its state:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -67,83 +67,91 @@ Start a process that keeps running after the request ends, such as a development
 
    `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
-   Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that must be kept to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
+   Each process keeps its files in its own directory under `/var/lib/processes` on an instance's disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that must be kept to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
 2. Add a method to your Durable Object that starts a process:
 
    ```ts title="src/index.ts"
-   async startProcess(id: string, argv: string[]): Promise<boolean> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	async startProcess(id: string, argv: string[]): Promise<boolean> {
+   		const container = this.ctx.container;
 
-   	if (!container.running) {
-   		container.start({
-   			image: "cloudflare/debian-trixie",
-   			entrypoint: ["sleep", "infinity"],
-   			enableInternet: false,
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   		}
+
+   		await container.setInactivityTimeout(10 * 60 * 1000);
+
+   		// mkdir fails when another process already uses the ID.
+   		const dir = `${ROOT}/${id}`;
+   		await run(container, ["mkdir", "-p", ROOT]);
+   		const created = await run(container, ["mkdir", dir]);
+
+   		if (created.exitCode !== 0) {
+   			return false;
+   		}
+
+   		// Ignoring the output lets the process outlive this request.
+   		await container.exec(["sh", "-c", RUN, "sh", dir, ...argv], {
+   			stdout: "ignore",
+   			stderr: "ignore",
    		});
+
+   		await this.ctx.storage.put(`process:${id}`, argv);
+   		await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   		return true;
    	}
-
-   	await container.setInactivityTimeout(10 * 60 * 1000);
-
-   	// mkdir fails when another process already uses the ID.
-   	const dir = `${ROOT}/${id}`;
-   	await run(container, ["mkdir", "-p", ROOT]);
-   	const created = await run(container, ["mkdir", dir]);
-
-   	if (created.exitCode !== 0) {
-   		return false;
-   	}
-
-   	// Ignoring the output lets the process outlive this request.
-   	await container.exec(["sh", "-c", RUN, "sh", dir, ...argv], {
-   		stdout: "ignore",
-   		stderr: "ignore",
-   	});
-
-   	await this.ctx.storage.put(`process:${id}`, argv);
-   	await this.ctx.storage.setAlarm(Date.now() + 60_000);
-   	return true;
    }
    ```
 
 3. Add a method that reports the state of a process:
 
    ```ts title="src/index.ts"
-   async status(id: string): Promise<Status | undefined> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container?.running) {
+   	async status(id: string): Promise<Status | undefined> {
+   		const container = this.ctx.container;
+
+   		if (!container?.running) {
+   			return undefined;
+   		}
+
+   		await container.setInactivityTimeout(10 * 60 * 1000);
+
+   		const { stdout } = await run(container, [
+   			"sh",
+   			"-c",
+   			STATUS,
+   			"sh",
+   			`${ROOT}/${id}`,
+   		]);
+   		const [state, value] = stdout.trim().split(" ");
+
+   		if (state === "running") {
+   			return { state, pid: Number(value) };
+   		}
+
+   		if (state === "exited") {
+   			return { state, exitCode: Number(value) };
+   		}
+
+   		if (state === "starting" || state === "lost") {
+   			return { state };
+   		}
+
    		return undefined;
    	}
-
-   	await container.setInactivityTimeout(10 * 60 * 1000);
-
-   	const { stdout } = await run(container, [
-   		"sh",
-   		"-c",
-   		STATUS,
-   		"sh",
-   		`${ROOT}/${id}`,
-   	]);
-   	const [state, value] = stdout.trim().split(" ");
-
-   	if (state === "running") {
-   		return { state, pid: Number(value) };
-   	}
-
-   	if (state === "exited") {
-   		return { state, exitCode: Number(value) };
-   	}
-
-   	if (state === "starting" || state === "lost") {
-   		return { state };
-   	}
-
-   	return undefined;
    }
    ```
 
@@ -152,74 +160,78 @@ Start a process that keeps running after the request ends, such as a development
 4. Add methods that return the output of a process so far, and follow it while the process runs:
 
    ```ts title="src/index.ts"
-   async logs(id: string, stream: "stdout" | "stderr"): Promise<string | undefined> {
-   	if (!(await this.status(id))) {
-   		return undefined;
-   	}
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	const path = `${ROOT}/${id}/${stream}.log`;
-   	return (await run(this.ctx.container!, ["cat", path])).stdout;
-   }
-
-   async follow(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
-   	const status = await this.status(id);
-
-   	if (!status) {
-   		return undefined;
-   	}
-
-   	const path = `${ROOT}/${id}/${stream}.log`;
-   	const argv =
-   		status.state === "running"
-   			? ["tail", "-n", "+1", "-F", "--pid", `${status.pid}`, path]
-   			: ["cat", path];
-   	const process = await this.ctx.container!.exec(argv, { stderr: "ignore" });
-   	const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
-   	const writer = writable.getWriter();
-   	const encoder = new TextEncoder();
-
-   	let exited = false;
-   	const markExited = () => {
-   		exited = true;
-   	};
-   	process.exitCode.then(markExited, markExited);
-
-   	// Signaling a process that has exited records an internal error.
-   	const stop = () => {
-   		if (!exited) process.kill();
-   	};
-
-   	// Stop following when the client disconnects.
-   	writer.closed.catch(stop);
-
-   	// Detect a disconnected client while the log is quiet.
-   	const heartbeat = setInterval(() => {
-   		writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
-   	}, 5_000);
-
-   	const pump = async () => {
-   		try {
-   			for await (const text of process.stdout!.pipeThrough(
-   				new TextDecoderStream(),
-   			)) {
-   				await writer.write(encoder.encode(`data: ${JSON.stringify(text)}\n\n`));
-   			}
-   			await writer.close();
-   		} catch {
-   			stop();
-   		} finally {
-   			clearInterval(heartbeat);
+   	async logs(id: string, stream: "stdout" | "stderr"): Promise<string | undefined> {
+   		if (!(await this.status(id))) {
+   			return undefined;
    		}
-   	};
 
-   	void pump();
+   		const path = `${ROOT}/${id}/${stream}.log`;
+   		return (await run(this.ctx.container!, ["cat", path])).stdout;
+   	}
 
-   	return new Response(readable, {
-   		headers: {
-   			"Content-Type": "text/event-stream",
-   			"Cache-Control": "no-cache",
-   		},
-   	});
+   	async follow(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
+   		const status = await this.status(id);
+
+   		if (!status) {
+   			return undefined;
+   		}
+
+   		const path = `${ROOT}/${id}/${stream}.log`;
+   		const argv =
+   			status.state === "running"
+   				? ["tail", "-n", "+1", "-F", "--pid", `${status.pid}`, path]
+   				: ["cat", path];
+   		const process = await this.ctx.container!.exec(argv, { stderr: "ignore" });
+   		const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+   		const writer = writable.getWriter();
+   		const encoder = new TextEncoder();
+
+   		let exited = false;
+   		const markExited = () => {
+   			exited = true;
+   		};
+   		process.exitCode.then(markExited, markExited);
+
+   		// Signaling a process that has exited records an internal error.
+   		const stop = () => {
+   			if (!exited) process.kill();
+   		};
+
+   		// Stop following when the client disconnects.
+   		writer.closed.catch(stop);
+
+   		// Detect a disconnected client while the log is quiet.
+   		const heartbeat = setInterval(() => {
+   			writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
+   		}, 5_000);
+
+   		const pump = async () => {
+   			try {
+   				for await (const text of process.stdout!.pipeThrough(
+   					new TextDecoderStream(),
+   				)) {
+   					await writer.write(encoder.encode(`data: ${JSON.stringify(text)}\n\n`));
+   				}
+   				await writer.close();
+   			} catch {
+   				stop();
+   			} finally {
+   				clearInterval(heartbeat);
+   			}
+   		};
+
+   		void pump();
+
+   		return new Response(readable, {
+   			headers: {
+   				"Content-Type": "text/event-stream",
+   				"Cache-Control": "no-cache",
+   			},
+   		});
+   	}
    }
    ```
 
@@ -230,22 +242,26 @@ Start a process that keeps running after the request ends, such as a development
 5. Add a method that stops a process:
 
    ```ts title="src/index.ts"
-   async stop(id: string): Promise<boolean> {
-   	const status = await this.status(id);
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (status?.state !== "running") {
-   		return false;
+   	async stop(id: string): Promise<boolean> {
+   		const status = await this.status(id);
+
+   		if (status?.state !== "running") {
+   			return false;
+   		}
+
+   		// `kill` is a shell built-in. A negative ID signals the process group.
+   		const { exitCode } = await run(this.ctx.container!, [
+   			"sh",
+   			"-c",
+   			'kill -s TERM -- "$1"',
+   			"sh",
+   			`-${status.pid}`,
+   		]);
+   		return exitCode === 0;
    	}
-
-   	// `kill` is a shell built-in. A negative ID signals the process group.
-   	const { exitCode } = await run(this.ctx.container!, [
-   		"sh",
-   		"-c",
-   		'kill -s TERM -- "$1"',
-   		"sh",
-   		`-${status.pid}`,
-   	]);
-   	return exitCode === 0;
    }
    ```
 
@@ -254,25 +270,29 @@ Start a process that keeps running after the request ends, such as a development
 6. Add an alarm handler that keeps the sandbox running while any process runs:
 
    ```ts title="src/index.ts"
-   async alarm(): Promise<void> {
-   	let running = false;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	for (const [key, argv] of await this.ctx.storage.list<string[]>({
-   		prefix: "process:",
-   	})) {
-   		const id = key.slice("process:".length);
-   		const status = await this.status(id);
+   	async alarm(): Promise<void> {
+   		let running = false;
 
-   		if (status?.state === "running" || status?.state === "starting") {
-   			running = true;
-   		} else {
-   			console.log({ event: "process.ended", id, argv, status });
-   			await this.ctx.storage.delete(key);
+   		for (const [key, argv] of await this.ctx.storage.list<string[]>({
+   			prefix: "process:",
+   		})) {
+   			const id = key.slice("process:".length);
+   			const status = await this.status(id);
+
+   			if (status?.state === "running" || status?.state === "starting") {
+   				running = true;
+   			} else {
+   				console.log({ event: "process.ended", id, argv, status });
+   				await this.ctx.storage.delete(key);
+   			}
    		}
-   	}
 
-   	if (running) {
-   		await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   		if (running) {
+   			await this.ctx.storage.setAlarm(Date.now() + 60_000);
+   		}
    	}
    }
    ```
@@ -281,7 +301,7 @@ Start a process that keeps running after the request ends, such as a development
 
    When a process ends, the alarm writes a `process.ended` log to [Workers Logs](/workers/observability/logs/workers-logs/) within a minute. Replace the `console.log()` call with what your application does next, such as sending a notification.
 
-7. Add routes to your Worker that call the methods:
+7. Add routes to your Worker that call these methods:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -343,9 +363,9 @@ Start a process that keeps running after the request ends, such as a development
 
    </TypeScriptExample>
 
-   The example command prints `ready`, then prints a line each second for five minutes. Replace it with your command. The route accepts only process IDs that are safe in a path, because each ID becomes a directory name.
+   This example command prints `ready`, then prints a line each second for five minutes. Replace it with your own command. The route accepts only process IDs that are safe in a path, because each ID becomes a directory name.
 
-8. Deploy the Worker:
+8. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
@@ -402,7 +422,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
 
 <Steps>
 
-1. Add the script that checks the logs:
+1. Add a script that checks a process's logs:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -426,30 +446,34 @@ A development server prints a line, such as `ready`, when it accepts requests. T
 2. Add a method that runs the script with a time limit:
 
    ```ts title="src/index.ts"
-   async waitForLog(id: string, pattern: string, timeoutMs: number) {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container?.running) {
-   		return undefined;
-   	}
+   	async waitForLog(id: string, pattern: string, timeoutMs: number) {
+   		const container = this.ctx.container;
 
-   	const abort = new AbortController();
-   	const timer = setTimeout(() => abort.abort(), timeoutMs);
-
-   	try {
-   		const result = await run(
-   			container,
-   			["sh", "-c", WAIT, "sh", `${ROOT}/${id}`, pattern],
-   			abort.signal,
-   		);
-
-   		if (result.exitCode === 0) {
-   			return { state: "matched", line: result.stdout.trimEnd() };
+   		if (!container?.running) {
+   			return undefined;
    		}
 
-   		return { state: result.exitCode === 3 ? "exited" : "timed-out" };
-   	} finally {
-   		clearTimeout(timer);
+   		const abort = new AbortController();
+   		const timer = setTimeout(() => abort.abort(), timeoutMs);
+
+   		try {
+   			const result = await run(
+   				container,
+   				["sh", "-c", WAIT, "sh", `${ROOT}/${id}`, pattern],
+   				abort.signal,
+   			);
+
+   			if (result.exitCode === 0) {
+   				return { state: "matched", line: result.stdout.trimEnd() };
+   			}
+
+   			return { state: result.exitCode === 3 ? "exited" : "timed-out" };
+   		} finally {
+   			clearTimeout(timer);
+   		}
    	}
    }
    ```

@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Show the output of a command in a browser while the command runs. The Durable Object sends standard output and standard error as [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), reports the exit code, and stops the command when the client disconnects.
+This guide builds a Worker that streams the output of a command, such as a build or a test run, to a browser while the command runs. Its Durable Object sends standard output and standard error as [server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html), reports the exit code, and stops the command when the client disconnects.
 
 ## Prerequisites
 
@@ -27,83 +27,87 @@ Show the output of a command in a browser while the command runs. The Durable Ob
 1. Add a method to your Durable Object that runs a command and returns its output as an event stream:
 
    ```ts title="src/index.ts"
-   async stream(argv: string[]): Promise<Response> {
-   	const container = this.ctx.container;
+   export class MyContainer extends DurableObject<Env> {
+   	// ...
 
-   	if (!container) {
-   		throw new Error("The container binding is not configured");
-   	}
+   	async stream(argv: string[]): Promise<Response> {
+   		const container = this.ctx.container;
 
-   	if (!container.running) {
-   		container.start({
-   			image: "cloudflare/debian-trixie",
-   			entrypoint: ["sleep", "infinity"],
-   			enableInternet: false,
+   		if (!container) {
+   			throw new Error("The container binding is not configured");
+   		}
+
+   		if (!container.running) {
+   			container.start({
+   				image: "cloudflare/debian-trixie",
+   				entrypoint: ["sleep", "infinity"],
+   				enableInternet: false,
+   			});
+   		}
+
+   		const process = await container.exec(argv);
+   		const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
+   		const writer = writable.getWriter();
+   		const encoder = new TextEncoder();
+
+   		const send = (event: string, data: unknown) =>
+   			writer.write(
+   				encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
+   			);
+
+   		const forward = async (
+   			stream: ReadableStream<Uint8Array>,
+   			event: "stdout" | "stderr",
+   		) => {
+   			for await (const text of stream.pipeThrough(new TextDecoderStream())) {
+   				await send(event, text);
+   			}
+   		};
+
+   		let exited = false;
+   		const markExited = () => {
+   			exited = true;
+   		};
+   		process.exitCode.then(markExited, markExited);
+
+   		// Signaling a process that has exited records an internal error.
+   		const stop = () => {
+   			if (!exited) process.kill();
+   		};
+
+   		// Stop the process when the client disconnects.
+   		writer.closed.catch(stop);
+
+   		// Detect a disconnected client while the process writes nothing.
+   		const heartbeat = setInterval(() => {
+   			writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
+   		}, 5_000);
+
+   		const pump = async () => {
+   			try {
+   				await Promise.all([
+   					forward(process.stdout!, "stdout"),
+   					forward(process.stderr!, "stderr"),
+   				]);
+   				await send("exit", { exitCode: await process.exitCode });
+   				await writer.close();
+   			} catch {
+   				stop();
+   			} finally {
+   				clearInterval(heartbeat);
+   			}
+   		};
+
+   		// Keep streaming after this method returns the response.
+   		void pump();
+
+   		return new Response(readable, {
+   			headers: {
+   				"Content-Type": "text/event-stream",
+   				"Cache-Control": "no-cache",
+   			},
    		});
    	}
-
-   	const process = await container.exec(argv);
-   	const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
-   	const writer = writable.getWriter();
-   	const encoder = new TextEncoder();
-
-   	const send = (event: string, data: unknown) =>
-   		writer.write(
-   			encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
-   		);
-
-   	const forward = async (
-   		stream: ReadableStream<Uint8Array>,
-   		event: "stdout" | "stderr",
-   	) => {
-   		for await (const text of stream.pipeThrough(new TextDecoderStream())) {
-   			await send(event, text);
-   		}
-   	};
-
-   	let exited = false;
-   	const markExited = () => {
-   		exited = true;
-   	};
-   	process.exitCode.then(markExited, markExited);
-
-   	// Signaling a process that has exited records an internal error.
-   	const stop = () => {
-   		if (!exited) process.kill();
-   	};
-
-   	// Stop the process when the client disconnects.
-   	writer.closed.catch(stop);
-
-   	// Detect a disconnected client while the process writes nothing.
-   	const heartbeat = setInterval(() => {
-   		writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
-   	}, 5_000);
-
-   	const pump = async () => {
-   		try {
-   			await Promise.all([
-   				forward(process.stdout!, "stdout"),
-   				forward(process.stderr!, "stderr"),
-   			]);
-   			await send("exit", { exitCode: await process.exitCode });
-   			await writer.close();
-   		} catch {
-   			stop();
-   		} finally {
-   			clearInterval(heartbeat);
-   		}
-   	};
-
-   	// Keep streaming after this method returns the response.
-   	void pump();
-
-   	return new Response(readable, {
-   		headers: {
-   			"Content-Type": "text/event-stream",
-   			"Cache-Control": "no-cache",
-   		},
-   	});
    }
    ```
 
@@ -141,7 +145,7 @@ Show the output of a command in a browser while the command runs. The Durable Ob
 
    The example command writes a line each second, writes a warning to standard error, and exits with code `3`. Replace it with your build or test command. The Worker chooses the command instead of reading one from the request. For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
-3. Deploy the Worker:
+3. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

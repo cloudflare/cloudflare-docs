@@ -13,7 +13,9 @@ products:
   - durable-objects
 ---
 
-In each guide, a Durable Object starts a container and runs commands in it with `exec()`. The guides differ in how the output reaches the caller and in what ends the command:
+You can use a sandbox to run code that a model writes, run a project's test suite, keep a development server running after a request ends, or give a user a shell in the browser.
+
+Each of the following guides runs a command in a sandbox with `exec()`. They differ in how the output reaches the caller and in what ends the command:
 
 | Guide                                                                                 | How the output reaches the caller             | The command runs until                          |
 | ------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
