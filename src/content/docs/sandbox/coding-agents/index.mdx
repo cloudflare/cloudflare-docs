@@ -62,7 +62,7 @@ Then switch the runner to another agent:
 
 ## The vendor runs the agent loop
 
-Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in the vendor's own service and send the commands and file edits to sandboxes in your Cloudflare account. Each vendor's template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the sandbox also holds a vendor credential, because the vendor's worker process runs inside it.
+Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in their own service. The loop sends commands and file edits to sandboxes in your Cloudflare account. Each vendor template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the vendor worker process runs inside the sandbox, so the sandbox also holds a vendor credential.
 
 <CardGrid>
 	<LinkTitleCard

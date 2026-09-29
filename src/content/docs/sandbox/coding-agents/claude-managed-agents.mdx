@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { LinkButton } from "~/components";
 
-[Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview) runs its agent loop on the Anthropic platform. A self-managed environment moves the place where the actions of the agent run into your Cloudflare account. Cloudflare publishes an open-source template for that environment: fork it, deploy it to your account, and change it as you need.
+[Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview) runs its agent loop on the Anthropic platform. A self-managed environment runs the actions of the agent in your Cloudflare account instead. Cloudflare publishes an open-source template for that environment. Fork it, deploy it to your account, and change it as you need.
 
 <LinkButton variant="secondary" href="https://github.com/cloudflare/claude-managed-agents">
 	Get the template
@@ -61,10 +61,10 @@ Use a self-managed Cloudflare environment when you need:
 
 ## Deploy the template
 
-Follow the [onboarding guide](https://github.com/cloudflare/claude-managed-agents#onboarding-guide) in the repository. You can deploy with a **Deploy to Cloudflare** button, which builds the template in Workers Builds, or run `npm run deploy` from your terminal. The guide walks through creating an Anthropic environment and webhook, setting secrets, applying D1 migrations, provisioning R2 credentials for snapshots, and securing the dashboard.
+Follow the [onboarding guide](https://github.com/cloudflare/claude-managed-agents#onboarding-guide) in the repository. It covers the Anthropic environment and webhook, secrets, D1 migrations, R2 credentials for snapshots, and dashboard security. Deploy with the **Deploy to Cloudflare** button, which builds the template in Workers Builds, or run `npm run deploy` from your terminal.
 
 :::note
-You need a Workers Paid plan or an Enterprise account. Linux sandboxes use [Containers](/containers/), and Dynamic Workers and the egress proxies use Worker Loader bindings. Both require the Workers Paid plan.
+You need a Workers Paid plan or an Enterprise account. The template runs Linux sandboxes on [Containers](/containers/), and runs Dynamic Workers and egress proxies through Worker Loader bindings.
 :::
 
 ## Template documentation

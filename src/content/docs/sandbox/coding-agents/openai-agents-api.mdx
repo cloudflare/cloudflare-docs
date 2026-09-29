@@ -14,7 +14,7 @@ reviewed: 2026-09-24
 
 import { CURL, Details, Steps } from "~/components";
 
-The [OpenAI Agents API](https://developers.openai.com/api/docs/guides/agents-api/overview) runs the Codex agent loop at OpenAI, which manages sessions, orchestration, context compaction, and recovery. A self-hosted environment moves the place where Codex runs commands and edits files into your Cloudflare account. The Cloudflare template runs the Codex executor of each session in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
+The [OpenAI Agents API](https://developers.openai.com/api/docs/guides/agents-api/overview) runs the Codex agent loop at OpenAI. With a self-hosted environment, Codex runs commands and edits files in your Cloudflare account instead. The Cloudflare template runs the Codex executor of each session in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
 
 ![Architecture showing an application creating an OpenAI task, webhooks starting a Cloudflare container, and the application fetching the result](~/assets/images/sandbox/openai-agents-api-arch.jpg)
 
@@ -22,7 +22,7 @@ The [template](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents
 
 ## How it works
 
-OpenAI sends signed webhooks to a Worker in your account as a session starts, needs an environment, works, and goes idle. The Worker verifies each webhook, retrieves the session from OpenAI, and passes it to the Durable Object named for that session. The Durable Object starts a container that runs `codex exec-server`. The executor connects out to OpenAI with a restricted API key and runs commands from the agent against files in `/workspace`, which stay in your Cloudflare account.
+OpenAI sends signed webhooks to a Worker in your account as a session starts, needs an environment, works, and goes idle. The Worker verifies each webhook, retrieves the session from OpenAI, and passes it to the Durable Object named for that session. The Durable Object starts a container that runs `codex exec-server`. The executor connects out to OpenAI with a restricted API key. It runs commands from the agent against files in `/workspace`, which stay in your Cloudflare account.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ You need:
 
 - A Cloudflare account on the Workers Paid plan with access to Containers
 - OpenAI Agents API access and an OpenAI API key
-- curl
+- `curl`
 - For manual deployment, [Node.js 24](https://nodejs.org/) or later and a running [Docker](https://www.docker.com/) daemon
 
 You also need a restricted OpenAI API key for `codex exec-server`, called the executor key in this guide. It needs the `api.model.read` and `api.agents.environments.connect` permissions. The OpenAI API key that the Worker uses needs `api.agents.read`. Both keys must belong to the same organization, project, and owner, whether that owner is a user or a service account.
@@ -91,7 +91,7 @@ export OPENAI_AGENT_ID="agent_..."
    export WORKER_URL="https://<YOUR_WORKER>.workers.dev"
    ```
 
-   The template starts a container as soon as a session is created, and snapshots it when the session goes idle. `EXECUTOR_KEEP_ALIVE_SECONDS` in `wrangler.jsonc` sets how long an idle session keeps its container, 30 seconds in the template.
+   The template starts a container as soon as OpenAI creates a session, and snapshots the container when the session goes idle. An idle session keeps its container for `EXECUTOR_KEEP_ALIVE_SECONDS`, which `wrangler.jsonc` in the template sets to 30 seconds.
 
 3. In [OpenAI project webhook settings](https://platform.openai.com/settings/project/webhooks), register `https://<YOUR_WORKER>.workers.dev/webhook`. OpenAI must be able to reach this URL.
 
@@ -102,7 +102,7 @@ export OPENAI_AGENT_ID="agent_..."
    - `agent.session.idle`
    - `agent.session.failed`
 
-   Copy the signing secret that OpenAI returns. In **Settings** &gt; **Variables and Secrets** for the Worker, replace `OPENAI_WEBHOOK_SECRET` with it, then select **Deploy**. If you deployed manually, set it with Wrangler from `openai/agents-api`:
+   Copy the signing secret that OpenAI returns. In **Settings** &gt; **Variables and Secrets** for the Worker, replace `OPENAI_WEBHOOK_SECRET` with it, then select **Deploy**. If you deployed manually, run this command in the `openai/agents-api` directory instead:
 
    ```bash
    npx wrangler secret put OPENAI_WEBHOOK_SECRET
@@ -220,7 +220,7 @@ To deploy from your terminal instead of with the button in step 2:
 
 </Steps>
 
-`EXECUTOR_KEEP_ALIVE_SECONDS`, `EXECUTOR_PREWARM_ENABLED`, and `EXECUTOR_SNAPSHOTS_ENABLED` are variables in `wrangler.jsonc`.
+To change the keep-alive, prewarm, and snapshot settings, edit `EXECUTOR_KEEP_ALIVE_SECONDS`, `EXECUTOR_PREWARM_ENABLED`, and `EXECUTOR_SNAPSHOTS_ENABLED` in `wrangler.jsonc`, then run `npm run deploy` again.
 
 Save the deployed Worker URL, then continue with step 3.
 
@@ -261,7 +261,7 @@ Open the session event stream again, then send more input:
 
 ## Build an application on the Agents API
 
-The [basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api/basic) in the template is a TypeScript application with an HTTP interface. It uses the OpenAI Agents API TypeScript SDK to create self-hosted sessions that run on the executor Worker, and has endpoints for the first input, follow-up input, and cleanup. Its `POST /demo` endpoint runs the whole workflow: it creates a session, writes and reads a file in the container, sends a follow-up message, and then deletes the OpenAI session and its executor.
+The [basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api/basic) in the template is a TypeScript application that uses the OpenAI Agents API TypeScript SDK. It creates self-hosted sessions that run on the executor Worker. Its HTTP endpoints send the first input, send follow-up input, and clean up. The `POST /demo` endpoint runs the whole workflow: it creates a session, writes and reads a file in the container, sends a follow-up message, and then deletes the OpenAI session and its executor.
 
 ## Clean up
 
@@ -301,7 +301,7 @@ Deleting an OpenAI session does not send a webhook to the Worker. The Worker sto
 
 4. The Durable Object named for the session starts a container with those connection details and the executor key. `codex exec-server` connects out to OpenAI.
 
-5. Container starts, environment connections, and `agent.session.in_progress` webhooks reset a deadline of `EXECUTOR_KEEP_ALIVE_SECONDS`. When the deadline passes, the Worker retrieves the session and gives an active session another deadline.
+5. Each container start, environment connection, and `agent.session.in_progress` webhook resets a deadline of `EXECUTOR_KEEP_ALIVE_SECONDS`. When the deadline passes, the Worker retrieves the session. If the session is still active, the Worker sets a new deadline.
 
 6. An `agent.session.idle` webhook makes the Worker snapshot the container and reset the deadline. When the deadline passes, the Worker stops the container and keeps the snapshot.
 
@@ -319,7 +319,9 @@ Container snapshots are in public beta. Features and behavior may change.
 
 When a session goes idle, the Worker snapshots the container filesystem before it stops the container. The next environment connection starts from that snapshot, so the files in `/workspace` come back. Running processes and memory do not. If the snapshot fails, the Worker leaves the container running and schedules another lifecycle check. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
-A session uses its snapshot only while the session lasts. Failed or deleted sessions and the cleanup endpoint delete the snapshot record in the Worker, so the next session starts from the image. The Worker does not delete the snapshot itself. With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with an empty `/workspace`. Keep files that must outlast a session somewhere else, such as an R2 bucket. For more information, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
+A session uses its snapshot only while the session lasts. The Worker deletes the snapshot record of a session when the session fails, when a later lookup finds that the session no longer exists, or when you call the cleanup endpoint. The next session then starts from the image. The Worker does not delete the snapshot itself.
+
+With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with an empty `/workspace`. To keep files after a session ends, store them somewhere else, such as an R2 bucket. For more information, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
 
 ## Add tools to the container
 
@@ -339,7 +341,7 @@ RUN apt-get update \
 
 You can also install language tools in the image, such as global npm packages. Do not put API keys or other secrets in the Dockerfile. Pass them at runtime through Worker secrets and container environment variables.
 
-Run `npm run deploy` from `openai/agents-api` to build and deploy the new image. New containers start from it. A session that starts from a snapshot keeps the filesystem of its old image, so it does not get the new packages.
+To build and deploy the new image, run `npm run deploy` in the `openai/agents-api` directory. New containers start from it. A session that starts from a snapshot keeps the filesystem of its old image, so it does not get the new packages.
 
 ## Security considerations
 

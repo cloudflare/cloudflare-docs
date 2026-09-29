@@ -15,7 +15,7 @@ reviewed: 2026-09-24
 import { PackageManagers, Steps } from "~/components";
 import { VendorAgentConnections } from "~/components/react/sandbox/VendorAgentConnections";
 
-[Devin](https://docs.devin.ai/cloud/outposts/overview) runs its agent loop in its own service. A Devin Outpost moves the machine that each session works on, where Devin runs commands, edits files, and opens a browser, to infrastructure that you choose. The Devin Outpost template runs each session in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
+[Devin](https://docs.devin.ai/cloud/outposts/overview) runs its agent loop in its own service. Each session works on a machine where Devin runs commands, edits files, and opens a browser. A Devin Outpost moves that machine to infrastructure that you choose. The Devin Outpost template runs each session in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ You need:
 ### Get your Devin credentials
 
 <Steps>
-1. Open your Devin organization outpost settings. Replace both instances of `my-org` in this URL with your organization slug:
+1. Open your Devin organization outpost settings. In this URL, replace both occurrences of `my-org` with your organization slug:
 
    ```txt
    https://my-org.devinenterprise.com/org/my-org/settings/enterprise-environment?tab=outposts
@@ -136,7 +136,7 @@ Your Worker connects to Devin on a cron trigger and lists sessions. It sends eac
 
 </VendorAgentConnections>
 
-When Devin suspends a session, the Devin CLI exits and the sandbox keeps running until the Durable Object saves a snapshot of its disk. When the session continues, the sandbox starts from that snapshot and the Devin CLI claims the session again. The snapshot keeps the files and installed packages of the session. It does not keep running processes. If the Devin CLI exits while the session is still running, the template saves a snapshot and starts a new sandbox from it.
+When Devin suspends a session, the Devin CLI exits. The sandbox keeps running until the Durable Object saves a snapshot of its disk. When the session continues, the sandbox starts from that snapshot and the Devin CLI claims the session again. The snapshot keeps the files and installed packages of the session. It does not keep running processes. If the Devin CLI exits while the session is still running, the template saves a snapshot and starts a new sandbox from it.
 
 For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
@@ -146,7 +146,7 @@ The template saves a snapshot only after the Devin CLI exits. If a sandbox stops
 
 ## Security
 
-Each session runs in its own container, so sessions do not share files or processes. Inside that container, Devin runs as root, can reach the Internet, and holds the Devin API token, because the Devin CLI needs the token. Code that runs in a session can read that token. Deploy a separate outpost for each group of users that must not share access.
+Each session runs in its own container and does not share files or processes with other sessions. Inside the container, Devin runs as root, can reach the Internet, and holds the Devin API token. Code that runs in a session can read that token. Deploy a separate outpost for each group of users that must not share access.
 
 For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
