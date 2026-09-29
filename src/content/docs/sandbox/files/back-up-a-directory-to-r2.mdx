@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Keep one directory from a sandbox in your own R2 bucket, such as a project that an agent works on. The `DirectoryBackup` class from the `@cloudflare/sandbox` package saves the directory as one object, and restores it as ordinary files. A backup does not depend on the Linux instance or the image, so it restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it.
+The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. A backup restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it. In this example, the directory is a project in `/workspace/project`.
 
 ## Prerequisites
 
@@ -182,7 +182,9 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    }
    ```
 
-   `backup()` returns a record with the ID, size, and SHA-256 of the object. The package keeps no list of backups, so the Durable Object stores the record. A caller refers to a backup only by its ID, so a request cannot point a restore at another object in the bucket. Stop the commands that write to the directory first, because `backup()` saves each file as it reads it.
+   `backup()` returns a record with the ID, size, and SHA-256 of the object. The package keeps no list of backups. The Durable Object stores the record and looks it up by ID, so a request cannot point a restore at another object in the bucket.
+
+   Stop the commands that write to the directory before you call `backup()`. A file that changes during the backup can be saved partly old and partly new.
 
 8. Add a method to `MyContainer` that looks up a record and restores it:
 
@@ -202,7 +204,7 @@ Keep one directory from a sandbox in your own R2 bucket, such as a project that 
    }
    ```
 
-   `restore()` replaces the directory, so files that are not in the backup are removed. It checks the object against the SHA-256 in the record before it replaces anything, and a restore that fails leaves the directory as it was. An object that was deleted or changed throws `SandboxBackupError`, with the code `BACKUP_NOT_FOUND` or `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
+   `restore()` replaces the directory and removes files that are not in the backup. Before it replaces anything, it checks the object against the SHA-256 in the record. A restore that fails leaves the directory as it was. If the object no longer exists, `restore()` throws `SandboxBackupError` with the code `BACKUP_NOT_FOUND`. If the object does not match the record, the code is `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
 
 9. Replace the default export of the Worker with routes that write a note, back up the project, and restore a backup:
 
@@ -308,7 +310,7 @@ async deleteBackup(id: string) {
 }
 ```
 
-`delete()` does not need a running container. An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups, but it leaves their records, and restoring one throws `BACKUP_NOT_FOUND`.
+`delete()` does not need a running container. An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups. The rule leaves their records, and restoring one of those backups throws `BACKUP_NOT_FOUND`.
 
 A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until the default lifecycle rule of the bucket aborts it after seven days.
 

@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give commands in a Linux sandbox a directory backed by R2, such as the input and output files of a job. The `S3Mount` class from the `@cloudflare/sandbox` package mounts one prefix of a bucket with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request, so the sandbox never receives them.
+The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as a directory with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request. In this example, a command reads an input file from the mount and writes a digest next to it.
 
 ## Prerequisites
 
@@ -107,7 +107,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
    </TypeScriptExample>
 
-   `s3fs` in the sandbox sends each storage request to an address that the container intercepts, and the intercept delivers it to `S3Gateway` in your Worker. `S3Gateway` checks that the request stays within the bucket, prefix, and access mode of the mount, signs it with your credentials, and sends it to R2.
+   `s3fs` in the sandbox sends each storage request to an address that the container intercepts. The intercept delivers the request to `S3Gateway` in your Worker. `S3Gateway` checks that the request stays within the bucket, prefix, and access mode of the mount. Then it signs the request with your credentials and sends it to R2.
 
 6. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
 
@@ -166,9 +166,9 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    }
    ```
 
-   Any process in the sandbox can read, change, or delete every object under the prefix, so mount the narrowest prefix the job needs, and use `access: "read-only"` when it only reads. The sandbox receives placeholder credentials, because `s3fs` requires a key pair, and the mount works with `enableInternet: false`. For short-lived credentials, refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
+   Any process in the sandbox can read, change, or delete every object under the prefix. Mount the narrowest prefix the job needs, and use `access: "read-only"` when the job only reads. The sandbox receives placeholder credentials, because `s3fs` requires a key pair. The mount works with `enableInternet: false`. For short-lived credentials, refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
 
-   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept that unmounting does not remove, and an instance supports a [limited number of intercepts](/containers/api/durable-object-container/#interceptoutboundhttp). Give each job its own sandbox name instead of mounting a different prefix in the same instance.
+   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept, and `unmount()` does not remove it. An instance supports a [limited number of intercepts](/containers/api/durable-object-container/#interceptoutboundhttp). Give each job its own sandbox name instead of mounting a new prefix in the same instance.
 
 7. Add a method that runs a command in the mounted directory:
 
@@ -188,7 +188,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
    }
    ```
 
-   The command reads `input.txt` from R2 through the mount and writes `input.sha256` next to it. The mount maps files to objects, so renames, locks, and permissions do not work as they do on a local disk. Write results that other systems read to the mount, and keep working files, such as dependencies and build output, on the sandbox disk. Refer to [Mounted file behavior](/sandbox/reference/s3-mounts/#mounted-file-behavior).
+   The command reads `input.txt` from R2 through the mount and writes `input.sha256` next to it. The mount maps files to objects. Renames, locks, and permissions do not work as they do on a local disk. Write results that other systems read to the mount. Keep working files, such as dependencies and build output, on the sandbox disk. For more information, refer to [Mounted file behavior](/sandbox/reference/s3-mounts/#mounted-file-behavior).
 
 8. Add a method that unmounts the prefix and stops the sandbox:
 
@@ -273,7 +273,7 @@ Give commands in a Linux sandbox a directory backed by R2, such as the input and
 
 ## Develop locally
 
-Under `wrangler dev`, the container runs in Docker on your machine, and `S3Gateway` runs in your local Worker. Point the mount at an S3-compatible server on your machine, such as [MinIO](https://min.io/), instead of R2. FUSE needs Docker in a virtual machine, such as Docker Desktop, or rootless Linux Docker with `/dev/fuse`. Refer to [FUSE support](/containers/guides/local-dev/#fuse-support).
+Under `wrangler dev`, the container runs in Docker on your machine, and `S3Gateway` runs in your local Worker. Point the mount at an S3-compatible server on your machine instead of R2. In this example, the server is [MinIO](https://min.io/). FUSE needs Docker in a virtual machine, such as Docker Desktop, or rootless Linux Docker with `/dev/fuse`. For more information, refer to [FUSE support](/containers/guides/local-dev/#fuse-support).
 
 <Steps>
 

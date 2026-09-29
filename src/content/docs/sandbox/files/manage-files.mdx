@@ -1,6 +1,6 @@
 ---
 title: Move files in and out of a sandbox
-description: Stream a file from your Worker into a Linux sandbox, run a command on it, and stream the file the command creates back to the caller.
+description: Stream a file from your Worker into a Linux sandbox, run a command on it, and stream the output file back to the caller.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Upload a file into a Linux sandbox, run a command on it, and stream the result back. In this example, the command compresses the file with `gzip`. The `Files` class from `@cloudflare/sandbox` moves the files, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command.
+The `Files` class from `@cloudflare/sandbox` reads and writes files in a running sandbox, and [`exec()`](/containers/api/durable-object-container/#exec) runs a command on them. In this example, the command compresses the uploaded file with `gzip`.
 
 ## Prerequisites
 
@@ -118,7 +118,7 @@ Upload a file into a Linux sandbox, run a command on it, and stream the result b
 
    </TypeScriptExample>
 
-   The container keeps running for 10 minutes after the Durable Object becomes inactive, so later requests find the same files. A Durable Object that restarts, for example after a deploy, sets the timeout again in its constructor.
+   The container keeps running for 10 minutes after the Durable Object becomes inactive. Requests in that time find the same files. A Durable Object that restarts, for example after a deploy, sets the timeout again in its constructor.
 
 5. Add a method to `MyContainer` that writes the upload, runs the command, and returns the output file:
 
@@ -143,9 +143,9 @@ Upload a file into a Linux sandbox, run a command on it, and stream the result b
    }
    ```
 
-   `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back, so the Durable Object never holds a whole file in memory. `output()` holds only what `gzip` prints, which counts toward the [memory limit](/workers/platform/limits/#memory).
+   `writeFile()` streams the upload into the file, and `readFile()` returns a `Response` that streams the output file back. Neither method holds a whole file in the memory of the Durable Object. `output()` holds only what `gzip` prints, and that output counts toward the [memory limit](/workers/platform/limits/#memory).
 
-   A Linux failure, such as a full disk, throws `SandboxFileError` with the Linux error name in `code`. For every error, refer to [Files errors](/sandbox/reference/files/#errors).
+   A file operation that Linux rejects, such as a write to a full disk, throws `SandboxFileError`. The `code` property of the error holds the Linux error name. For every error that `Files` throws, refer to [Files errors](/sandbox/reference/files/#errors).
 
 6. Replace the default export of the Worker with a `fetch` handler that sends uploads to the method:
 
@@ -169,7 +169,7 @@ Upload a file into a Linux sandbox, run a command on it, and stream the result b
 
    </TypeScriptExample>
 
-   The route reads the sandbox name from the URL to keep the example short. Derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
+   The route reads the sandbox name from the URL. In your application, derive the name from the authenticated caller instead, so one caller cannot reach another caller's files. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
 
 7. Deploy the Worker:
 
@@ -198,11 +198,11 @@ Upload a file into a Linux sandbox, run a command on it, and stream the result b
 
 </Steps>
 
-The compressed files stay in `/workspace` until the Linux instance stops. To delete one sooner, call `files.remove()` after the caller has read the response.
+The compressed files stay in `/workspace` until the instance stops. To delete one sooner, call `files.remove()` after the caller has read the response.
 
 ## Accept paths from callers
 
-When callers choose file paths, such as in a file browser, accept only paths inside one directory. `Files` opens any path in the sandbox, so check each path from a request before you pass it together with `cwd`. The following check rejects empty and absolute paths, and paths that contain `..`:
+When callers choose file paths, such as in a file browser, accept only paths inside one directory. `Files` opens any path in the sandbox. Check each path from a request before you pass it to `Files` with `cwd`. The following check rejects empty paths, absolute paths, and paths that contain a null byte or a `..` segment:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -228,5 +228,5 @@ The check limits the paths that a caller can name. It does not limit what code i
 ## Related resources
 
 - [Files API](/sandbox/reference/files/): every method, including `readDirectory()`, `rename()`, and `remove()`.
-- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the Linux instance stops.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the instance stops.
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): write files that other systems read.
