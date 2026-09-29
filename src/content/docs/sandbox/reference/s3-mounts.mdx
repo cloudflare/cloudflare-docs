@@ -26,15 +26,20 @@ import { DurableObject } from "cloudflare:workers";
 export { S3Gateway } from "@cloudflare/sandbox";
 
 export class MyContainer extends DurableObject<Env> {
-	// The container must already be running.
-	async mountModels() {
-		const container = this.ctx.container;
-		if (!container) {
+	private readonly mounts: S3Mount;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		if (!ctx.container) {
 			throw new Error("The container binding is not configured");
 		}
+		// ctx.container stays the same object while the Durable Object runs.
+		this.mounts = new S3Mount(ctx.container, ctx.exports.S3Gateway);
+	}
 
-		const mounts = new S3Mount(container, this.ctx.exports.S3Gateway);
-		await mounts.mount({
+	// The container must already be running.
+	async mountModels() {
+		await this.mounts.mount({
 			mountPath: "/mnt/models",
 			source: {
 				type: "s3",

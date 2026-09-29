@@ -25,17 +25,22 @@ import { Files } from "@cloudflare/sandbox";
 import { DurableObject } from "cloudflare:workers";
 
 export class MyContainer extends DurableObject<Env> {
-	// The container must already be running.
-	async readInput(): Promise<Response> {
-		const container = this.ctx.container;
-		if (!container) {
+	private readonly files: Files;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		if (!ctx.container) {
 			throw new Error("The container binding is not configured");
 		}
+		// ctx.container stays the same object while the Durable Object runs.
+		this.files = new Files(ctx.container);
+	}
 
-		const files = new Files(container);
-		await files.mkdir("/workspace", { recursive: true });
-		await files.writeFile("/workspace/input.txt", "hello\n");
-		return files.readFile("/workspace/input.txt");
+	// The container must already be running.
+	async readInput(): Promise<Response> {
+		await this.files.mkdir("/workspace", { recursive: true });
+		await this.files.writeFile("/workspace/input.txt", "hello\n");
+		return this.files.readFile("/workspace/input.txt");
 	}
 }
 ```

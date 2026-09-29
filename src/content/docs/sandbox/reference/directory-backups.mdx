@@ -29,9 +29,24 @@ import { DurableObject } from "cloudflare:workers";
 export { DirectoryBackupGateway } from "@cloudflare/sandbox";
 
 export class MyContainer extends DurableObject<Env> {
+	readonly #backups: DirectoryBackup;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		if (!ctx.container) {
+			throw new Error("The container binding is not configured");
+		}
+		// ctx.container stays the same object while the Durable Object runs.
+		this.#backups = new DirectoryBackup(
+			ctx.container,
+			ctx.exports.DirectoryBackupGateway,
+			{ binding: "BACKUPS", prefix: "workspaces/" },
+		);
+	}
+
 	// The container must already be running.
 	async saveWorkspace() {
-		const backup = await this.#backups().backup({
+		const backup = await this.#backups.backup({
 			dir: "/workspace/app",
 			exclude: ["node_modules/"],
 		});
@@ -43,20 +58,8 @@ export class MyContainer extends DurableObject<Env> {
 		const backup =
 			await this.ctx.storage.get<DirectoryBackupRecord>("workspace");
 		if (backup) {
-			await this.#backups().restore(backup);
+			await this.#backups.restore(backup);
 		}
-	}
-
-	#backups() {
-		const container = this.ctx.container;
-		if (!container) {
-			throw new Error("The container binding is not configured");
-		}
-		return new DirectoryBackup(
-			container,
-			this.ctx.exports.DirectoryBackupGateway,
-			{ binding: "BACKUPS", prefix: "workspaces/" },
-		);
 	}
 }
 ```
@@ -168,7 +171,7 @@ async #setUp(container: Container): Promise<void> {
 			enableInternet: false,
 		});
 	}
-	await this.#backups().intercept();
+	await this.#backups.intercept();
 	await container.interceptAllOutboundHttp(
 		this.ctx.exports.Outbound({ props: {} }),
 	);

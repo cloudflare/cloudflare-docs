@@ -109,32 +109,40 @@ import { DurableObject } from "cloudflare:workers";
 const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
 export class MyContainer extends DurableObject<Env> {
+	private readonly container: Container;
+	private readonly files: Files;
+
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 		const container = ctx.container;
+
+		if (!container) {
+			throw new Error("The container binding is not configured");
+		}
+
+		this.container = container;
+		// ctx.container stays the same object while the Durable Object runs.
+		this.files = new Files(container);
+
 		// A restarted Durable Object sets the timeout again.
-		if (container?.running) {
+		if (container.running) {
 			void ctx.blockConcurrencyWhile(() =>
 				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
 			);
 		}
 	}
 
-	async files(): Promise<Files> {
-		const container = this.ctx.container;
-		if (!container) {
-			throw new Error("The container binding is not configured");
-		}
-
-		if (!container.running) {
-			container.start({
-				image: container.images.workspace,
+	async listWorkspace() {
+		// Files does not start the container.
+		if (!this.container.running) {
+			this.container.start({
+				image: this.container.images.workspace,
 				enableInternet: false,
 			});
-			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+			await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 		}
 
-		return new Files(container);
+		return this.files.readDirectory("/workspace");
 	}
 }
 ```
