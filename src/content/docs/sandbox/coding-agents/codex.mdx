@@ -81,27 +81,38 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
 4. Replace the `agentCommand()` and `agentEnv()` methods:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private agentCommand(prompt: string): string[] {
    		const baseUrl = `https://gateway.ai.cloudflare.com/v1/${this.env.AI_GATEWAY_ACCOUNT_ID}/${this.env.AI_GATEWAY_ID}/openai`;
 
    		return [
    			"codex",
+   			// Run one task without an interactive terminal
    			"exec",
+   			// Write one JSON event per line to the events file
    			"--json",
+   			// Skip the session files that Codex would otherwise save
    			"--ephemeral",
    			"--dangerously-bypass-approvals-and-sandbox",
+   			// Write the final message to a file outside the repository
    			"--output-last-message",
    			lastMessagePath,
    			"--model",
    			this.env.MODEL,
+   			// Add a custom provider that sends requests to the OpenAI endpoint of your gateway
    			"--config",
    			'model_provider="cloudflare-ai-gateway"',
    			"--config",
    			`model_providers.cloudflare-ai-gateway={ name = "Cloudflare AI Gateway", base_url = ${JSON.stringify(baseUrl)}, wire_api = "responses" }`,
+   			// Stop the analytics and update requests from Codex
    			"--config",
    			"analytics.enabled=false",
    			"--config",
    			"check_for_update_on_startup=false",
+   			// Stop Codex from syncing its plugin marketplace, which clones a
+   			// repository from `github.com` on every run
    			"--config",
    			"features.plugins=false",
    			"--",
@@ -112,23 +123,21 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
    	private agentEnv(): Record<string, string> {
    		return {};
    	}
+   }
    ```
 
-   `codex exec` runs one task without an interactive terminal:
+   `--dangerously-bypass-approvals-and-sandbox` turns off the approval prompts and the built-in command sandbox of Codex. The container limits what commands from Codex can reach instead.
 
-   - `--json` writes one JSON event per line to the events file.
-   - `--ephemeral` skips the session files Codex would otherwise save.
-   - `--dangerously-bypass-approvals-and-sandbox` turns off the approval prompts and the built-in command sandbox of Codex. The container limits what commands from Codex can reach instead.
-   - `--output-last-message` writes the final message from Codex to `lastMessagePath`, outside the repository.
-   - The `model_provider` and `model_providers` settings add a custom provider that sends requests to the OpenAI endpoint of your gateway. A custom provider sends no API key, and the `Outbound` entrypoint adds the gateway token.
-   - `analytics.enabled=false` and `check_for_update_on_startup=false` stop the analytics and update requests from Codex.
-   - `features.plugins=false` stops Codex from syncing its plugin marketplace, which clones a repository from `github.com` on every run.
+   A custom provider sends no API key, and the `Outbound` entrypoint adds the gateway token.
 
    Codex reads the certificate for intercepted HTTPS from `SSL_CERT_FILE`, which `trustEnv` in the runner sets.
 
 5. Replace the `outcome()` method:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private async outcome(exitCode: number): Promise<TaskStatus> {
    		if (exitCode === 0) {
    			return {
@@ -161,11 +170,12 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
 
    		return { state: "failed", error: failure };
    	}
+   }
    ```
 
    Codex exits with a nonzero code when its turn fails, so the exit code decides the outcome. A failed task returns the message from the last `turn.failed` or `error` event. Codex retries a failing model request five times, and the task fails after about 20 seconds.
 
-6. Deploy the Worker:
+6. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

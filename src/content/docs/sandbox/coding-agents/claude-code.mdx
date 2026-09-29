@@ -124,6 +124,9 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
 6. Replace the `outcome()` method:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private async outcome(exitCode: number): Promise<TaskStatus> {
    		let result: z.infer<typeof ResultEvent> | undefined;
    		const events = await this.files.readFile(eventsPath);
@@ -150,11 +153,12 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
 
    		return { state: "succeeded", result: result.result ?? "" };
    	}
+   }
    ```
 
    Claude Code exits successfully even when a model request fails, so the outcome comes from the `is_error` field of the final `result` event instead of the exit code. Claude Code retries a failing model request 10 times. A rejected gateway token fails the task after about three minutes with `Failed to authenticate. API Error: 401 Unauthorized`.
 
-7. Deploy the Worker:
+7. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

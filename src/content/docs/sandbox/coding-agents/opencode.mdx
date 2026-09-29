@@ -85,13 +85,19 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
 4. Replace the `agentCommand()` and `agentEnv()` methods:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private agentCommand(prompt: string): string[] {
    		return [
    			"opencode",
+   			// Run one task without an interactive terminal
    			"run",
+   			// Write one JSON event per line to the events file
    			"--format",
    			"json",
    			"--auto",
+   			// Select the AI Gateway model from `MODEL`
    			"--model",
    			this.env.MODEL,
    			"--",
@@ -111,13 +117,10 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    			OPENCODE_DISABLE_SHARE: "1",
    		};
    	}
+   }
    ```
 
-   `opencode run` runs one task without an interactive terminal:
-
-   - `--format json` writes one JSON event per line to the events file.
-   - `--auto` approves every tool call that the OpenCode configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what commands from OpenCode can reach.
-   - `--model` selects the AI Gateway model from `MODEL`.
+   `--auto` approves every tool call that the OpenCode configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what commands from OpenCode can reach.
 
    The built-in `cloudflare-ai-gateway` provider in OpenCode reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the universal endpoint of the gateway: the gateway path with no suffix. The `Outbound` entrypoint in the runner allows that path and the paths under it. `CLOUDFLARE_API_TOKEN` is a placeholder, because OpenCode does not start without a token. The `Outbound` entrypoint replaces the token header with the gateway token.
 
@@ -126,6 +129,9 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
 5. Replace the `outcome()` method:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private async outcome(exitCode: number): Promise<TaskStatus> {
    		let text = "";
    		let error: string | undefined;
@@ -159,11 +165,12 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
 
    		return { state: "failed", error };
    	}
+   }
    ```
 
    OpenCode exits with a nonzero code on any model or session error, so the exit code decides the outcome. A successful task returns the last `text` event. A failed task returns the message from the last `error` event, such as the message from the gateway for a rejected token or missing Unified Billing credits.
 
-6. Deploy the Worker:
+6. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

@@ -91,14 +91,22 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
 4. Replace the `agentCommand()` and `agentEnv()` methods:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private agentCommand(prompt: string): string[] {
    		return [
    			"pi",
+   			// Run one task, write one JSON event per line to the events file, and exit
    			"--mode",
    			"json",
+   			// Keep the session in memory instead of saving it to disk
    			"--no-session",
+   			// Select the built-in AI Gateway provider in Pi, which reads the account
+   			// and gateway IDs from the environment
    			"--provider",
    			"cloudflare-ai-gateway",
+   			// Select the model from `MODEL`
    			"--model",
    			this.env.MODEL,
    			"--",
@@ -116,14 +124,10 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
    			PI_TELEMETRY: "0",
    		};
    	}
+   }
    ```
 
    Pi runs its tools without approval prompts. The container limits what commands from Pi can reach.
-
-   - `--mode json` runs one task, writes one JSON event per line to the events file, and exits.
-   - `--no-session` keeps the session in memory instead of saving it to disk.
-   - `--provider cloudflare-ai-gateway` selects the built-in AI Gateway provider in Pi, which reads the account and gateway IDs from the environment.
-   - `--model` selects the model from `MODEL`.
 
    Pi does not start without an API key, so `CLOUDFLARE_API_KEY` is a placeholder. Pi sends the key in the `cf-aig-authorization` header, and the `Outbound` entrypoint replaces it with the gateway token. `PI_OFFLINE`, `PI_SKIP_VERSION_CHECK`, and `PI_TELEMETRY` turn off the model catalog refresh, version check, and telemetry in Pi.
 
@@ -132,6 +136,9 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
 5. Replace the `outcome()` method:
 
    ```ts title="src/sandbox.ts"
+   export class AgentSandbox extends DurableObject<Env> {
+   	// ...
+
    	private async outcome(exitCode: number): Promise<TaskStatus> {
    		if (exitCode !== 0) {
    			const stderr = (await this.readOptionalText(stderrPath)) ?? "";
@@ -175,11 +182,12 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
    		);
    		return { state: "succeeded", result: text.join("") };
    	}
+   }
    ```
 
    Pi exits successfully even when a model request fails, so the outcome comes from its events. The task succeeds when Pi sends an `agent_settled` event and its last assistant message has a `stopReason` other than `error` or `aborted`. Otherwise, the task fails with the error message from Pi.
 
-6. Deploy the Worker:
+6. Deploy your Worker:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 

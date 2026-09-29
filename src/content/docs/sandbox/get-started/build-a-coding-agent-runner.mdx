@@ -80,7 +80,7 @@ You also need:
 
    <PackageManagers pkg="@cloudflare/sandbox@rc zod" />
 
-4. Create a `Dockerfile` in the project root:
+4. Create a `Dockerfile` in your project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -89,19 +89,19 @@ You also need:
    	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
    	&& rm -rf /var/lib/apt/lists/*
 
+   # The install script from the Claude Code package puts its native binary in place
    RUN npm install --global @anthropic-ai/claude-code@2.1.280
 
    COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
+   # Keep the container running between requests
    CMD ["sleep", "infinity"]
    ```
 
-   Install everything the agent needs in the image, because the sandbox cannot download packages at run time. The install script from the Claude Code package puts its native binary in place.
+   Install everything the agent needs in the image, because the sandbox cannot download packages at run time.
 
    Pin the Claude Code version. Its command-line flags and event format can change between releases. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
-
-   `CMD` keeps the container running between requests.
 
 5. Replace `wrangler.jsonc`. Replace `<ACCOUNT_ID>` with your account ID, and `default` with your gateway ID if it is different:
 
@@ -749,7 +749,7 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
    { "AI_GATEWAY_TOKEN": "<AI_GATEWAY_TOKEN>" }
    ```
 
-2. Deploy the Worker with the secret:
+2. Deploy your Worker with the secret:
 
    <PackageManagers
    	type="exec"
