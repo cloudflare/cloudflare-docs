@@ -188,7 +188,7 @@ Attach a container to the agent class in `wrangler.jsonc`. The class also needs 
 
 The sandbox starts without Internet access, so commands such as `npm install` cannot download packages. Setting `enableInternet: true` allows every destination. Commands that the model writes can then send anything they can read to any server on the Internet.
 
-To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route requests from the sandbox through an outbound handler in your Worker.
+To allow specific hostnames, or to add a credential to a request after it leaves the sandbox, route requests from the sandbox through an outbound handler in your Worker. For an example, refer to [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/).
 
 ## Sandbox and agent state
 
