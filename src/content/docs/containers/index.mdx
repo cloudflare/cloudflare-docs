@@ -89,12 +89,12 @@ Container instances are spun up on-demand and controlled by code you write in yo
     					}
     				]
     			},
-    			"migrations": [
-    				{
-    					"new_sqlite_classes": ["MyContainer"],
-    					"tag": "v1"
-    				}
-    			]
+                "exports": {
+                    "MyContainer": {
+                        "type": "durable-object",
+                        "storage": "sqlite"
+                    }
+                }
     		}
     		```
     	</WranglerConfig>
