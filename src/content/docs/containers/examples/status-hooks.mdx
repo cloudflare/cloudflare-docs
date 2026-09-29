@@ -125,4 +125,4 @@ export class MyContainer extends Container {
 	</TabItem>
 </Tabs>
 
-The `monitor()` promise in the direct API does not include an exit code or stop reason. The `setInactivityTimeout()` method does not invoke a callback when the timeout expires. Use the [`Container` class lifecycle hooks](/containers/api/container-class/#lifecycle-hooks) when you need those events.
+The `monitor()` promise resolves without a value when the container exits successfully. For nonzero exits, it rejects with an error containing the exit code. The `setInactivityTimeout()` method does not invoke a callback when the timeout expires. Use the [`Container` class lifecycle hooks](/containers/api/container-class/#lifecycle-hooks) for structured stop parameters and an inactivity callback.
