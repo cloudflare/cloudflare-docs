@@ -51,6 +51,7 @@ export { default as CURL } from "./components/cf/CURL.astro";
 export { default as Flex } from "./components/cf/Flex.astro";
 export { default as Width } from "./components/cf/Width.astro";
 export { default as RuleID } from "./components/cf/RuleID.astro";
+export { default as CopyPrompt } from "./components/cf/CopyPrompt.astro";
 export { default as PublicStats } from "./components/cf/PublicStats.astro";
 export { default as RSSButton } from "./components/cf/RSSButton.astro";
 export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinition.astro";
