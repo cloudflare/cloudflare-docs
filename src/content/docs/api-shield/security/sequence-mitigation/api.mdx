@@ -10,24 +10,23 @@ sidebar:
 head:
   - tag: title
     content: Configure sequence mitigation via the API
-
 ---
 
-Configuring sequence mitigation via the API consists of building a rule object by choosing the sequence and setting the type of rule and its action.
+To configure sequence mitigation via the API, choose a sequence, rule kind, and action. The following example shows a rule returned by the API. In responses, `position` is a one-indexed integer:
 
-```json title="Example of a rule object"
+```json title="Example response rule object"
 {
-    "id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
-    "title": "<RULE_TITLE>",
-    "kind": "allow",
-    "action": "block",
-    "sequence": [
-     "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
-     "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
-    ],
-    "priority": 0,
-    "last_updated": "2023-07-24T12:06:51.796286Z",
-    "created_at": "2023-07-24T12:06:51.796286Z"
+	"id": "d4909253-390f-4956-89fd-92a5b0cd86d8",
+	"title": "<RULE_TITLE>",
+	"kind": "allow",
+	"action": "block",
+	"sequence": [
+		"0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
+		"b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
+	],
+	"position": 1,
+	"last_updated": "2023-07-24T12:06:51.796286Z",
+	"created_at": "2023-07-24T12:06:51.796286Z"
 }
 ```
 
@@ -37,18 +36,18 @@ Otherwise, the request to endpoint `b704ab4d-5be0-46e0-9875-b2b3d1ab42f9` is blo
 
 ### Fields
 
-| <div style="width:115px">Field name</div> | Description                                                                                                                                                                                                                                           | Possible Values                                                | Example                                                                            |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `id`                                      | An opaque identifier that identifies a rule.                                                                                                                                                                                                          | A UUID                                                         | `"d4909253-390f-4956-89fd-92a5b0cd86d8"`                                           |
-| `title`                                   | A string that helps to identify the rule.                                                                                                                                                                                                             | A value between 1 and 50 characters                            | `"Allow checkout sequence"`                                                        |
-| `kind`                                    | Defines the semantics of this rule. Block rules have a negative security model and allow to explicitly deny a sequence. Allow rules have a positive security model and deny everything but the configured sequence.                                   | `block`, `allow`                                               | `"block"`                                                                          |
-| `action`                                  | What firewall action should we do when the rule matches.                                                                                                                                                                                              | `block`,`log`                                                  | `"log"`                                                                            |
-| `sequence`                                | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length two. The first operation will be the starting endpoint and the second operation will be the ending endpoint. | An array with two valid operation IDs from Endpoint Management | `["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
-| `priority`                                | Denotes the precedence of this rule in relation to all other rules. Rules with a higher priority value are evaluated before those with a lower value. If two rules have the same priority, they are evaluated in the order in which they were added.  | A valid integer                                                | `10`                                                                               |
-| `last_updated`                            | When this rule was last changed.                                                                                                                                                                                                                      | A date string                                                  | `2023-05-02T12:06:51.796286Z`                                                      |
-| `created_at`                              | When this rule was created.                                                                                                                                                                                                                           | A date string                                                  | `2023-05-02T12:06:51.796286Z`                                                      |
+| <div style="width:115px">Field name</div> | Description                                                                                                                                                                                                                                                                              | Possible Values                                                | Example                                                                            |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `id`                                      | An opaque identifier that identifies a rule.                                                                                                                                                                                                                                             | A UUID                                                         | `"d4909253-390f-4956-89fd-92a5b0cd86d8"`                                           |
+| `title`                                   | A string that helps to identify the rule.                                                                                                                                                                                                                                                | A value between 1 and 50 characters                            | `"Allow checkout sequence"`                                                        |
+| `kind`                                    | Defines the semantics of this rule. Block rules have a negative security model and allow to explicitly deny a sequence. Allow rules have a positive security model and deny everything but the configured sequence.                                                                      | `block`, `allow`                                               | `"block"`                                                                          |
+| `action`                                  | What firewall action should we do when the rule matches.                                                                                                                                                                                                                                 | `block`,`log`                                                  | `"log"`                                                                            |
+| `sequence`                                | Denotes the operations (from Endpoint Management) that make up the sequence for this rule. We currently only support sequences of length two. Both operations must use the same hostname. The first operation is the starting endpoint, and the second operation is the ending endpoint. | An array with two valid operation IDs from Endpoint Management | `["0d9bf70c-92e1-4bb3-9411-34a3bcc59003", "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"]` |
+| `position`                                | Denotes the one-indexed position of this rule among all sequence rules. Rules are evaluated from top to bottom, so rules with lower position values are evaluated first. Responses return an integer. `POST` and `PATCH` requests set the position with `{"index": N}`.                 | A positive integer                                             | `1`                                                                                |
+| `last_updated`                            | When this rule was last changed.                                                                                                                                                                                                                                                         | A date string                                                  | `2023-05-02T12:06:51.796286Z`                                                      |
+| `created_at`                              | When this rule was created.                                                                                                                                                                                                                                                              | A date string                                                  | `2023-05-02T12:06:51.796286Z`                                                      |
 
-You can find an endpoint's operation ID by exporting the schema in [Endpoint Management](/api-shield/management-and-monitoring/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/operations/methods/list/).
+You can find an endpoint's operation ID by exporting the schema in [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/operations/methods/list/).
 
 ### List sequence rules
 
@@ -62,7 +61,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules"
 
 Use the `POST` command to create a single rule.
 
-This adds a single rule to all existing rules. Priority can be used to place the rule between, before, or after another rule.
+This adds a single rule to all existing rules. If you omit `position`, the API appends the rule. To insert it at a specific position, set the one-indexed request field to `{"index": N}`. Existing rules at and after that position move back.
 
 The response will reflect the rule that has been written with its ID. In case something is not right with the rule, an appropriate error message with a `json` path pointing towards the issue will be provided.
 
@@ -77,7 +76,9 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/
     "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
     "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
   ],
-  "priority": 0
+  "position": {
+    "index": 1
+  }
 }'
 ```
 
@@ -86,6 +87,8 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/seqrules/
 Use the `PUT` command to set up new rules in bulk.
 
 This will overwrite any existing rules and replace them with the rules specified in the body. Setting an empty array for the rules removes all rules.
+
+The order of objects in the `rules` array sets their order, starting at position `1`. Do not include `position` in individual bulk rule objects.
 
 The response will reflect the rules that have been written with their IDs in case something is not right with the rules, an appropriate error message with a `json` path pointing towards the issue will be provided.
 
@@ -101,8 +104,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
       "sequence": [
         "0d9bf70c-92e1-4bb3-9411-34a3bcc59003",
         "b704ab4d-5be0-46e0-9875-b2b3d1ab42f9"
-      ],
-      "priority": 0
+      ]
     }
   ]
 }'
