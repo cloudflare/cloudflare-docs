@@ -13,7 +13,7 @@ You can run both your container and your Worker locally by simply running [`npx 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
 
-Containers with `scheduling_policy: "durable_object"` require Wrangler 4.136.0 or later for local development.
+Containers with `scheduling_policy: "durable_object"` require Wrangler 4.136.0 or later for local development. To run the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) locally, use Wrangler 4.141.0 or later.
 
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
@@ -69,7 +69,9 @@ you are using in your container code.
 
 ## Differences after you deploy
 
-Local containers run in Docker. Deployed containers with `scheduling_policy: "durable_object"` differ from them in two ways, so some code works locally and fails after you deploy.
+Local containers run in Docker. Deployed containers with `scheduling_policy: "durable_object"` differ from them in the following ways, so some code works locally and fails after you deploy.
+
+{/* Remove this section when the deployed hostname fits in a DNS label. */}
 
 ### The hostname is longer than a DNS label
 
@@ -89,7 +91,7 @@ python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer((""
 
 ### Other Linux users keep root capabilities
 
-Locally, Docker gives a process that runs as another Linux user no capabilities, so file permissions apply to it. In a deployed container with `scheduling_policy: "durable_object"`, every process has the same Linux capabilities as `root`, whatever its user. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
+Locally, Docker gives a process that runs as another Linux user no capabilities, so file permissions apply to it. In a deployed container with `scheduling_policy: "durable_object"`, every process has the same Linux capabilities as `root`, regardless of user. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
 
 ## Troubleshooting
 

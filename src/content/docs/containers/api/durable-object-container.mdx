@@ -111,6 +111,8 @@ this.ctx.container.start({
   - `containerSnapshot` (`ContainerSnapshotRestoreParams`, optional) <Badge text="durable_object policy only" variant="note" size="small" />: Snapshot handle to restore before startup. Pass the `ContainerSnapshot` returned by [`snapshotContainer()`](#snapshotcontainer), or an object containing its `id`. You cannot pass both `containerSnapshot` and `image`.
   - `labels` (`Record<string, string>`, optional): Up to 10 labels that [`inspect()`](#inspect) returns. Label names must contain 1 to 16 bytes. Label values can contain up to 64 bytes. Names and values cannot contain control characters.
 
+An application that uses the `durable_object` scheduling policy requires `image` or `containerSnapshot`. Without either, the promise returned by `monitor()` rejects.
+
 #### Return values
 
 - `void`: No return value.
@@ -121,7 +123,6 @@ this.ctx.container.start({
 - `start()` throws a `TypeError` when both `image` and `containerSnapshot` are set, when either is empty, or when `instance` names an unknown type.
 - `start()` throws a `RangeError` when a custom `instance` value is missing or invalid.
 - `start()` throws an `Error` when `labels` exceed the label limits, when an environment variable name contains `=`, or when an environment variable name or value contains a null character.
-- When a container with the `durable_object` scheduling policy starts without `image` or `containerSnapshot`, `monitor()` rejects.
 
 ### `inspect`
 
@@ -200,10 +201,12 @@ export class MyDurableObject extends DurableObject<Env> {
   - `signal` (`AbortSignal`, optional): Aborting the signal sends `SIGKILL` to the process. An already-aborted signal makes `exec()` throw an `AbortError`.
   - `pty` (`boolean | { cols?: number; rows?: number }`, optional): Runs the process attached to a pseudo-terminal. `true` uses 80 columns and 24 rows.
 
-:::caution
-Pass both IDs in `user`. A user ID without a group ID runs the process as `root`. A user or group name rejects with an internal error.
+{/* Remove the first paragraph of this caution when exec() accepts a user ID without a group ID, and user and group names. */}
 
-In a deployed container with the `durable_object` scheduling policy, every process has the same Linux capabilities as `root`, whatever its user. File permissions do not restrict a process that runs as another user, and the process can switch back to `root`. The IDs set the owner of files that the process creates. Under `wrangler dev`, and in containers without that scheduling policy, other users have no capabilities, so file permissions apply.
+:::caution
+Pass both IDs in `user`. A user ID without a group ID runs the process as `root`, and a user or group name makes `exec()` reject with an internal error.
+
+`user` does not restrict a process in a deployed container with the `durable_object` scheduling policy. Every process has the same Linux capabilities as `root`, regardless of user. File permissions do not stop the process, and it can switch back to `root`. The IDs set the owner of files that the process creates. In containers with the `default` scheduling policy, other users have no capabilities, and file permissions apply.
 :::
 
 With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, which is the default. Standard output and standard error arrive together on `stdout`. The terminal converts line endings to `\r\n`.
@@ -214,9 +217,9 @@ With `pty`, `stdin` defaults to `"pipe"` and `stderr` must be `"combined"`, whic
 
 An `ExecProcess` has these fields and methods:
 
-- `stdin` (`WritableStream | null`): Writable standard input when `stdin` is `"pipe"`.
-- `stdout` (`ReadableStream | null`): Readable standard output when piped.
-- `stderr` (`ReadableStream | null`): Readable standard error when piped separately.
+- `stdin` (`WritableStream | undefined`): Writable standard input when `stdin` is `"pipe"`.
+- `stdout` (`ReadableStream | undefined`): Readable standard output when piped.
+- `stderr` (`ReadableStream | undefined`): Readable standard error when piped separately.
 - `pid` (`number`): Process identifier.
 - `isPty` (`boolean`): Whether the process runs attached to a pseudo-terminal.
 - `exitCode` (`Promise<number>`): Resolves when the process exits. Nonzero codes resolve normally instead of rejecting.
@@ -224,19 +227,27 @@ An `ExecProcess` has these fields and methods:
 - `kill(signal?: number)` (`void`): Queues a signal for the process. The default is `SIGTERM`, signal `15`. The signal must be from `1` through `64`.
 - `resize(cols: number, rows: number)` (`void`): Changes the pseudo-terminal size. Both values must be from `1` through `65535`.
 
-With `stderr: "combined"` or `pty`, `ExecProcess` has no `stderr` stream, and `stderr` on `ExecOutput` is an empty `ArrayBuffer`. Read both output channels from `stdout`.
+A stream that the process does not provide is `undefined`. For example, with `stderr: "combined"` or `pty`, `stderr` is `undefined` on `ExecProcess` and an empty `ArrayBuffer` on `ExecOutput`. Read both output channels from `stdout`.
+
+{/* Remove this paragraph when the Workers TypeScript types declare the ExecProcess streams as undefined instead of null. */}
+
+The Workers TypeScript types declare `stdin`, `stdout`, and `stderr` as `| null`. Test for a stream, such as `if (process.stderr)`, instead of comparing with `null`.
 
 `output()` throws a `TypeError` when called more than once or after either readable stream starts being consumed. For large output, consume both readable streams concurrently instead of buffering them with `output()`.
 
-`exec()` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
+#### Process lifetime
 
-:::caution
-Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits records an internal error. `AbortSignal.timeout()` still fires after the process exits, so pass a signal from an `AbortController` and clear its timer when `exitCode` resolves.
-:::
+`exec()` has no built-in timeout. Use `kill()` to request termination, then observe completion through `exitCode`. A process can handle or ignore a signal, so this does not enforce a hard deadline. Do not infer a specific exit code from the signal.
 
 `kill()` and `signal` reach only the process that `exec()` started. Processes that it started, such as the commands in a `bash -c` script, keep running, and `output()` waits until they exit. To stop them too, refer to [Stop a process](/containers/guides/execute-commands/#stop-a-process).
 
-Canceling the request that called `exec()` does not stop the process. When the client disconnects, [the Durable Object keeps running the method](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects), and the client does not receive the result. A client that retries after a timeout starts the command again while the first run continues. To stop the process when the client disconnects, turn on the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, pass the incoming request to `fetch()` on the Durable Object, and pass `request.signal` to `exec()`. RPC methods do not receive the signal.
+A process keeps running when the request that started it is canceled, so a client that retries starts a second copy of the command. For more information, refer to [Client disconnects](/durable-objects/concepts/durable-object-lifecycle/#client-disconnects).
+
+To stop the process when the client disconnects, handle the request in the `fetch()` handler of the Durable Object, and abort the `exec()` signal when `request.signal` aborts. `request.signal` requires the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. RPC methods do not receive a request signal.
+
+:::caution
+Signal only a process that is still running. Aborting `signal` or calling `kill()` after the process exits raises an uncaught `internal error` in the Durable Object. `AbortSignal.timeout()` and `request.signal` can fire after the process exits, so do not pass them to `exec()` directly. Pass the signal of an `AbortController` instead. Once `exitCode` resolves, stop calling `abort()`, for example by clearing the timer or removing the `abort` listener from `request.signal`.
+:::
 
 #### Exceptions
 
@@ -407,13 +418,15 @@ class MyDurableObject extends DurableObject<Env> {
 
 </TypeScriptExample>
 
+A `monitor()` promise belongs to one Durable Object instance. After a restart, such as a deploy, the new instance has no earlier promise. If `running` is `true` when the Durable Object starts, call `monitor()` again to observe the container.
+
 #### Parameters
 
 - None.
 
 #### Return values
 
-- `Promise<void>`: Settles when the container stops:
+- `Promise<void>`: Settles when the container stops. If the container already stopped, the promise settles with how it stopped:
   - It resolves when the main process exits with code `0`, or when `destroy()` stops the container without an error value.
   - It rejects with an `Error` that has an `exitCode` property when the main process exits with another code.
   - It rejects with the value passed to `destroy()`, when there is one.
@@ -421,9 +434,7 @@ class MyDurableObject extends DurableObject<Env> {
 
 #### Exceptions
 
-- `monitor()` throws an `Error` when this Durable Object instance has not started a container and did not find one running when it started. After a container stops, `monitor()` still returns how that container stopped.
-
-After a restart, such as a deploy, a Durable Object no longer has an earlier `monitor()` promise. If `running` is `true` when the Durable Object starts, call `monitor()` again to observe the running container.
+- `monitor()` throws an `Error` when this Durable Object instance has no container. An instance has a container after it calls `start()`, or when a container was already running as the instance started.
 
 ### `interceptOutboundHttp`
 
@@ -447,7 +458,12 @@ await this.ctx.container.interceptOutboundHttp("15.0.0.1:80", worker);
 await this.ctx.container.interceptOutboundHttp("123.123.123.123/23", worker);
 ```
 
-In a container started with `enableInternet: false`, DNS answers from the intercepts instead of a public resolver. `A` and `AAAA` lookups for an intercepted hostname get a placeholder address, so the request reaches the intercept. `interceptAllOutboundHttp` and the `*` hostname make every name resolve, even names that do not exist. IP address and CIDR targets add no DNS answers. Other lookups time out, including every lookup before the first hostname intercept.
+In a container started with `enableInternet: false`, no public resolver answers DNS lookups. Lookups resolve as follows:
+
+- `A` and `AAAA` lookups for an intercepted hostname return a placeholder address that routes the request to the intercept.
+- `interceptAllOutboundHttp()` and a `*` hostname target make every hostname resolve, including hostnames that do not exist.
+- IP address and CIDR targets add no DNS answers.
+- Every other lookup times out, including a lookup made before you register an intercept.
 
 #### Parameters
 
@@ -460,13 +476,15 @@ In a container started with `enableInternet: false`, DNS answers from the interc
 
 #### Exceptions
 
-- The call fails with an `Error` when the container already has 64 targets and `addr` is a new one. The message reads `You can't configure more than 128 egress interceptors`, because each target uses two entries. Intercepts registered earlier keep working.
+{/* Remove the error message sentence when the runtime error states the 64-target limit. */}
+
+- Awaiting `interceptOutboundHttp()` throws an `Error` when the container already has 64 targets and `addr` is a new one. Intercepts registered earlier keep working. The error message reads `You can't configure more than 128 egress interceptors`, because each target uses two entries.
 
 ### `interceptAllOutboundHttp`
 
 `interceptAllOutboundHttp()` routes outbound HTTP requests on port `80` from the container through a `Fetcher`, regardless of destination.
 
-Connections to other ports are not intercepted. When the container started with `enableInternet: true`, they reach the Internet directly. To send every request through your Worker, start the container with `enableInternet: false`.
+Connections to other ports, including HTTPS on port `443`, are not intercepted. To intercept HTTPS as well, also register [`interceptOutboundHttps("*")`](#interceptoutboundhttps). In a container started with `enableInternet: true`, connections that no intercept covers reach the Internet directly. To block them, start the container with `enableInternet: false`.
 
 Register hostname intercepts before `interceptAllOutboundHttp()`. A hostname that [`interceptOutboundHttp()`](#interceptoutboundhttp) registers first keeps its requests, including after you register this rule again. A hostname registered after this rule never receives requests, because this rule handles them.
 
@@ -484,7 +502,7 @@ await this.ctx.container.interceptAllOutboundHttp(worker);
 
 #### Exceptions
 
-- The call fails with an `Error` when the container already has 64 targets and none of them is the `interceptAllOutboundHttp()` rule. Refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
+- Awaiting `interceptAllOutboundHttp()` throws an `Error` when the container already has 64 targets and none of them is the `interceptAllOutboundHttp()` rule. For the target limit, refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
 
 ### `interceptOutboundHttps`
 
@@ -518,7 +536,7 @@ Only HTTPS on port `443` is intercepted. Matching uses the hostname the client s
 
 #### Exceptions
 
-- The call fails with an `Error` when the container already has 64 targets and `addr` is a new one. Refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
+- Awaiting `interceptOutboundHttps()` throws an `Error` when the container already has 64 targets and `addr` is a new one. For the target limit, refer to [`interceptOutboundHttp`](#interceptoutboundhttp).
 
 ## Related resources
 

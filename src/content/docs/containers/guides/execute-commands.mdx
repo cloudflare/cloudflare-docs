@@ -262,7 +262,7 @@ export class MyContainer extends Container {
 ```
 </TypeScriptExample>
 
-The `user` option sets the numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user. For current limitations, refer to [`exec()`](/containers/api/durable-object-container/#exec).
+The `user` option sets the numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user. Before you rely on `user` to restrict a process, refer to [`exec()`](/containers/api/durable-object-container/#exec).
 
 ## Combine standard error
 
@@ -445,7 +445,7 @@ export class MyContainer extends Container {
 
 Calling `kill()` without an argument queues a `SIGTERM`, signal `15`. You can pass another signal when the process requires it. A process can handle or ignore a signal, so this is not a hard execution deadline. Observe completion through `exitCode`, and do not infer a specific exit code from a signal.
 
-The signal reaches only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit. To stop a command and every process it started, run it under GNU coreutils `timeout`. The image must include `timeout`.
+The signal reaches only the process that `exec()` started. When that process starts others, such as the commands in a `bash -c` script, they keep running after `exitCode` resolves, and `output()` waits until they exit. To stop a command together with the processes it starts, run it under GNU coreutils `timeout`. The image must include `timeout`.
 
 <TypeScriptExample omitTabs>
 ```ts
@@ -459,12 +459,12 @@ const process = await this.ctx.container.exec([
 ]);
 const output = await process.output();
 
-// The exit code is 124 when the command runs longer than 30 seconds.
+// 124 when the command times out, or 137 if timeout also sends SIGKILL.
 console.log(output.exitCode);
 ```
 </TypeScriptExample>
 
-`timeout` sends `SIGTERM` to the command and every process it started. With `--kill-after=5`, it sends `SIGKILL` five seconds later if they are still running.
+After 30 seconds, `timeout` sends `SIGTERM` to its process group. The group includes every process the command starts, unless a process moves to its own group, for example with `setsid`. With `--kill-after=5`, `timeout` sends `SIGKILL` to the group five seconds later if the command is still running.
 
 ## Coordinate operations
 
