@@ -47,6 +47,8 @@ export class MyContainer extends DurableObject<Env> {
 
 </TypeScriptExample>
 
+For a complete Worker, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
+
 ## Requirements
 
 Before you use `Files`, meet the [package requirements](/sandbox/reference/#requirements): the helper binary in the image, the `nodejs_compat` flag, and a running container. `Files` has no other requirements.
@@ -329,5 +331,6 @@ Use `SandboxProtocolError.is(error)` to recognize the error.
 
 ## Related resources
 
+- [Move files in and out of a sandbox](/sandbox/files/manage-files/)
 - [Durable Object Container](/containers/api/durable-object-container/)
 - [Sandbox lifetime](/sandbox/concepts/lifetime/)
