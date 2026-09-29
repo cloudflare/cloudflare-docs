@@ -12,6 +12,12 @@ import { Render } from "~/components";
 
 Troubleshoot and debug errors commonly associated with Workers VPC.
 
+## Find a Worker's sessions in logs
+
+For Workers using a [VPC Network](/workers-vpc/configuration/vpc-networks/) binding, each connection is recorded in [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/). Filter on `SourceName` (the Worker name) to find its sessions, then check `Offramp`, `OriginIP`, `OriginPort`, and `ConnectionCloseReason` to see where each connection was routed and why it closed.
+
+If `SourceName` is empty, redeploy the Worker. Workers deployed before 29 September 2026 do not populate this field until they are redeployed.
+
 ## Connection error codes
 
 When Workers VPC cannot establish a connection to your private service, `fetch()` will throw an exception with an error code describing what went wrong. These error codes are also visible in the **Metrics** tab of your VPC Service in the Cloudflare dashboard.
