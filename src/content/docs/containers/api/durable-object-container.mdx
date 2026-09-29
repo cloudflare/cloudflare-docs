@@ -218,15 +218,11 @@ For task-oriented examples, refer to [Execute commands](/containers/guides/execu
 
 `snapshotContainer()` creates a point-in-time snapshot of the running container filesystem. This method is only supported for applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
 
-<TypeScriptExample filename="index.ts">
-
-```ts
+```js
 const snapshot = await this.ctx.container.snapshotContainer({
 	name: "before-upgrade",
 });
 ```
-
-</TypeScriptExample>
 
 #### Parameters
 
