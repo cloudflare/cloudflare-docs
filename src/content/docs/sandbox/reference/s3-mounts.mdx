@@ -95,6 +95,10 @@ Mounts the source at `request.mountPath`. The result depends on what the path ho
 
 Each new mount adds one outbound intercept target to the container. Reusing a mount does not add one. `unmount()` does not remove one. A container accepts up to [64 intercept targets](/containers/api/durable-object-container/#interceptoutboundhttp), including the targets your own code registers. Once the container reaches the limit, a mount with new settings fails.
 
+{/* Remove this paragraph when a hostname intercept registered after interceptAllOutboundHttp() receives its requests. */}
+
+If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), call `mount()` before it, right after you start the container. Otherwise the catch-all receives the storage requests from the container, and `mount()` fails with `cannot verify the new FUSE connection`. A container that registered the catch-all first keeps sending storage requests to it. Restart the container to mount.
+
 `S3Mount` does not retry a failed operation. Call `inspect()` before you retry.
 
 ### `inspect`
