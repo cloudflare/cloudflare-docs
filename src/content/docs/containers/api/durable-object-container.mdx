@@ -262,6 +262,8 @@ try {
 
 `monitor()` returns a promise that resolves when a container exits and rejects if the container errors. Use it to handle container status changes in your Workers code.
 
+A pending `monitor()` call prevents eviction until the container exits or for up to 15 minutes, whichever comes first. Starting another operation later can extend the Durable Object's [time in memory](/durable-objects/concepts/durable-object-lifecycle/).
+
 <TypeScriptExample>
 
 ```ts

@@ -64,13 +64,11 @@ In case of an incoming request or event while in the **hibernated** state, the `
 While in the **idle, in-memory, non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
 :::note[Pending operations prevent eviction]
-Unfinished I/O operations, promises passed to `this.ctx.waitUntil()`, and open outbound connections prevent a Durable Object from hibernating or being evicted. Examples include service binding requests, Durable Object remote procedure call (RPC) calls, outbound requests, storage operations such as `this.ctx.storage.put()`, [`this.ctx.container.monitor()`](/durable-objects/api/container/#monitor), TCP sockets, and outbound WebSockets.
+Pending I/O and open outbound connections prevent a Durable Object from being evicted. Examples include service binding requests, Durable Object remote procedure call (RPC) calls, outbound `fetch()` requests, [`this.ctx.container.monitor()`](/containers/api/durable-object-container/#monitor), promises passed to `this.ctx.waitUntil()`, and pending `setTimeout()` and `setInterval()` timers. TCP sockets and outbound WebSockets also prevent eviction.
 
-Each I/O operation prevents eviction until it completes or for up to 15 minutes from when it starts, whichever comes first. An operation started later can therefore extend the Durable Object's total time in memory.
+Each operation prevents eviction until it completes or for up to 15 minutes from when it starts, whichever comes first. Operations started together do not combine their windows. Starting another operation later can extend the Durable Object's time in memory. The limit applies to each operation, not to the total time in memory.
 
-Operations started together do not combine their windows. There is no overall invocation wall-time limit.
-
-While an operation prevents eviction, the Durable Object remains in the **idle, in-memory, non-hibernateable** state and continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
+While an operation prevents eviction, the Durable Object continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
 :::
 
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.

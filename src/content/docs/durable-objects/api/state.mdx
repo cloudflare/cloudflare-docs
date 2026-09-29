@@ -81,7 +81,7 @@ Contains loopback bindings to the Worker's own top-level exports. This has exact
 
 :::note[`waitUntil` can prevent eviction]
 
-A promise passed to `waitUntil` can prevent a Durable Object from being evicted for up to 15 minutes while the promise remains incomplete. It does not affect when a request or RPC completes.
+A promise passed to `waitUntil` prevents eviction until it settles or for up to 15 minutes, whichever comes first. This lets work continue after the client disconnects. It does not affect when a request or RPC completes. For more information, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
 :::
 
 #### Parameters

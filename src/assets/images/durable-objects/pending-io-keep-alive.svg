@@ -40,11 +40,9 @@
   <path fill="#f0fdf4" stroke="#86efac" d="M204 266h481v28H204q-4 0-4-4v-20q0-4 4-4z"/>
   <text x="442" y="284" class="alive" text-anchor="middle">pending operations prevent eviction</text>
   <path fill="#f3f4f6" stroke="#d1d5db" stroke-dasharray="4 3" d="M685 266h75v28h-75z"/>
-  <text x="722.5" y="278" class="sublabel" text-anchor="middle">70–140s</text>
-  <text x="722.5" y="290" class="sublabel" text-anchor="middle">idle</text>
-  <path stroke="#6b7280" stroke-dasharray="4 3" stroke-width="1.5" d="M760 256v48"/>
-  <text x="760" y="314" class="sublabel" text-anchor="middle">may be evicted</text>
+  <text x="722.5" y="278" class="sublabel" text-anchor="middle">may be</text>
+  <text x="722.5" y="290" class="sublabel" text-anchor="middle">evicted</text>
 
-  <text x="40" y="328" class="sublabel">Starting another operation can extend time in memory. No 15-minute limit applies to the entire invocation.</text>
+  <text x="40" y="328" class="sublabel">Starting another operation can extend time in memory. The 15-minute limit applies to each operation.</text>
   <text x="40" y="346" class="sublabel">Standard eviction rules resume when no operation prevents eviction.</text>
 </svg>
