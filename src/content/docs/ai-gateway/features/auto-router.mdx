@@ -11,15 +11,21 @@ products:
 
 import { Details, TabItem, Tabs } from "~/components";
 
-AI Gateway Auto Router automatically selects an AI model for each request. It helps reduce costs while maintaining the quality of responses by matching requests with the model best suited to the task.
+AI Gateway Auto Router automatically selects an AI model for each request. It helps reduce costs while maintaining the quality of responses by matching requests with the model best suited to the task. To use Auto Router, set the model to `cloudflare/auto` in your request.
 
 ## How it works
 
-For each request, AI Gateway first builds a pool of eligible models. It excludes models that do not support the request format or execution mode. It also accounts for credentials, billing configuration, and spend limits configured for the gateway. Unhealthy providers are excluded and restored automatically once they recover.
+For each request, AI Gateway first builds a pool of eligible models. It excludes models that do not support the request format or its inputs. For example, if a request includes an image, only models that accept image input are eligible. It also accounts for credentials, billing configuration, and spend limits configured for the gateway. Unhealthy providers are excluded and restored automatically once they recover.
 
 A classification step then analyzes the conversation to estimate the type and difficulty of the task. A scoring step weighs the expected quality of each remaining candidate against its cost, and ranks the models by fit. AI Gateway attempts the top-ranked model first, and falls back to the next one if a provider cannot serve the request.
 
-When Auto Router receives a session ID or detects a supported client, such as OpenCode, it pins the selected model on a per-turn basis to take advantage of caching. A turn includes the user message and any follow-up requests, such as tool calls. When you send a session ID without a turn ID, Auto Router determines the turn from the message history. At the start of each new turn, Auto Router only switches models when the expected benefit outweighs the cost of losing the cache. For example, if a conversation moves from a simple general question to a complex, multi-file coding task, Auto Router may switch to a more capable model. Without a session ID or supported client, Auto Router selects a model for each request.
+### Session affinity
+
+To take advantage of prompt caching, Auto Router keeps the same model for an entire turn. A turn is a user message plus any follow-up requests, such as tool calls.
+
+Session affinity turns on when you send a `cf-aig-session-id` header or use a supported client, such as OpenCode. Without either, Auto Router selects a model for each request.
+
+At the start of each turn, Auto Router switches models only when the expected benefit outweighs the cost of losing the cache. For example, if a conversation moves from a simple question to a multi-file coding task, Auto Router may switch to a more capable model.
 
 ## Headers
 
@@ -27,7 +33,7 @@ Auto Router supports the following request headers:
 
 | Header                       | Description                                                                                                              |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `cf-aig-session-id`          | Identifies the session that the request belongs to. Enables session affinity.                                            |
+| `cf-aig-session-id`          | Identifies the session that the request belongs to. Enables [session affinity](#session-affinity).                       |
 | `cf-aig-turn-id`             | Identifies the turn that the request belongs to. Overrides turn detection from message history.                          |
 | `cf-aig-no-session-affinity` | Set to `true` to select a model for each request instead of pinning a model for the turn.                                |
 | `cf-aig-allowed-models`      | A comma-separated list of models that Auto Router can select from. Supports the `*` wildcard, for example `anthropic/*`. |
