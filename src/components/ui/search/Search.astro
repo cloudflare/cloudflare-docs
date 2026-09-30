@@ -209,13 +209,10 @@ const aiSearchApiUrl =
 
 		private openFromQueryParam = async () => {
 			const params = new URLSearchParams(window.location.search);
-			const term = (params.get("q") ?? params.get("query") ?? "").trim();
+			const term = (params.get("q") ?? "").trim();
 			if (!term) return;
 			await customElements.whenDefined("search-modal-snippet");
-			const modal =
-				this.modal ??
-				this.querySelector<SearchModalSnippet>("search-modal-snippet");
-			await modal?.search(term);
+			await this.modal?.search(term);
 		};
 
 		private prepareModal = () => {
