@@ -1,0 +1,218 @@
+---
+title: Save a sandbox automatically
+description: Save the filesystem of a Linux sandbox in a Container snapshot before it stops for inactivity, and restore the files on the next request.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+products:
+  - sandbox
+  - workers
+  - containers
+  - durable-objects
+reviewed: 2026-09-24
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+An alarm in the Durable Object saves a Container snapshot of an idle sandbox and stops it. While the sandbox is in use, the alarm also saves checkpoints. The next request starts the sandbox from the last snapshot.
+
+:::note[Public beta]
+Container snapshots are in public beta. Features and behavior may change.
+:::
+
+## Prerequisites
+
+- A Worker with a Durable Object that starts a container with the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). To create one, refer to [Run a Linux command](/sandbox/get-started/).
+
+## Save a sandbox before it stops
+
+<Steps>
+
+1. At the top of `src/index.ts`, define how often the Durable Object checks the sandbox, how long a sandbox can go without requests, and how often to save a sandbox that is in use:
+
+   ```ts title="src/index.ts"
+   const CHECK_INTERVAL_MS = 60 * 1000;
+   const IDLE_LIMIT_MS = 10 * 60 * 1000;
+   const CHECKPOINT_INTERVAL_MS = 15 * 60 * 1000;
+   const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+   ```
+
+   The inactivity timeout is longer than the check interval, so the instance keeps running between checks. If the checks stop, the timeout still stops the instance, and the sandbox keeps the files from its last save.
+
+2. In `MyContainer`, replace `exec()`. It starts a new instance from the stored snapshot when there is one, schedules the first check, and records activity:
+
+   ```ts title="src/index.ts"
+   busy = 0;
+
+   async exec(argv: string[]) {
+   	const container = this.ctx.container;
+   	if (!container) {
+   		throw new Error("The container binding is not configured");
+   	}
+
+   	if (!container.running) {
+   		const snapshotId = await this.ctx.storage.get<string>("snapshotId");
+   		container.start({
+   			...(snapshotId
+   				? { containerSnapshot: { id: snapshotId } }
+   				: { image: "cloudflare/debian-trixie" }),
+   			entrypoint: ["sleep", "infinity"],
+   			enableInternet: false,
+   		});
+   		await this.ctx.storage.put("savedAt", Date.now());
+   	}
+   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	if ((await this.ctx.storage.getAlarm()) === null) {
+   		await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
+   	}
+
+   	this.busy++;
+   	await this.ctx.storage.put("lastActivity", Date.now());
+   	try {
+   		const process = await container.exec(argv);
+   		const output = await process.output();
+   		return {
+   			stdout: new TextDecoder().decode(output.stdout),
+   			exitCode: output.exitCode,
+   		};
+   	} finally {
+   		this.busy--;
+   		await this.ctx.storage.put("lastActivity", Date.now());
+   	}
+   }
+   ```
+
+   `savedAt` holds when the files were last saved or restored. `busy` counts the running commands, and the Durable Object does not save or stop a sandbox while a command runs. A request in progress keeps the Durable Object in memory, so `busy` does not need storage. If the stored snapshot cannot be restored, `start()` fails. To handle that failure, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+
+3. Add a method that saves a snapshot, and an alarm handler that saves and stops an idle sandbox and saves a checkpoint of a sandbox in use:
+
+   ```ts title="src/index.ts"
+   async save() {
+   	const startedAt = Date.now();
+   	const snapshot = await this.ctx.container!.snapshotContainer({
+   		name: "auto",
+   	});
+   	await this.ctx.storage.put({ snapshotId: snapshot.id, savedAt: startedAt });
+   }
+
+   async alarm() {
+   	const container = this.ctx.container;
+   	if (!container?.running) {
+   		return;
+   	}
+
+   	const lastActivity = (await this.ctx.storage.get<number>("lastActivity")) ?? 0;
+   	const savedAt = (await this.ctx.storage.get<number>("savedAt")) ?? 0;
+   	const idle = this.busy === 0 && Date.now() - lastActivity > IDLE_LIMIT_MS;
+   	const checkpoint =
+   		this.busy === 0 &&
+   		lastActivity > savedAt &&
+   		Date.now() - savedAt > CHECKPOINT_INTERVAL_MS;
+
+   	if (idle || checkpoint) {
+   		await this.save();
+   	}
+
+   	const activeDuringSave =
+   		this.busy > 0 ||
+   		(await this.ctx.storage.get<number>("lastActivity")) !== lastActivity;
+   	if (idle && !activeDuringSave) {
+   		await container.destroy("idle");
+   		return;
+   	}
+
+   	await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   	await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
+   }
+   ```
+
+   A save takes a few seconds, and the instance keeps running commands during it. If a request arrives during the save, the alarm does not stop the instance. A later snapshot saves the files written during the save. If a save fails or a deploy interrupts it, the runtime [runs the alarm again](/durable-objects/api/alarms/), and the instance keeps running.
+
+   Checkpoints limit what a sandbox loses when something other than the alarm stops it, such as the inactivity timeout after the checks stop. The sandbox restores the last checkpoint, without the changes made after it.
+
+   A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the idle and checkpoint checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
+
+   A snapshot saves the writable root filesystem. It does not include mounted directories, memory, or running processes. A background process that writes a file during a save can leave part of that file in the snapshot.
+
+   Each save creates a new snapshot. The Durable Object container API has no method to delete a snapshot. A snapshot expires 30 days after it is created or last restored. To save fewer snapshots, increase `CHECKPOINT_INTERVAL_MS` or remove checkpoints.
+
+4. Add a method that returns the state of the sandbox:
+
+   ```ts title="src/index.ts"
+   async status() {
+   	return {
+   		running: this.ctx.container?.running ?? false,
+   		snapshotId: (await this.ctx.storage.get<string>("snapshotId")) ?? null,
+   	};
+   }
+   ```
+
+5. Add routes to your Worker that run a command in a named sandbox and return its state:
+
+   ```ts title="src/index.ts"
+   export default {
+   	async fetch(request: Request, env: Env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = /^\/sandboxes\/([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)$/.exec(url.pathname);
+   		if (!match) {
+   			return new Response("Not found", { status: 404 });
+   		}
+
+   		const sandbox = env.MY_CONTAINER.getByName(match[1]);
+   		if (request.method === "GET") {
+   			return Response.json(await sandbox.status());
+   		}
+
+   		const { argv } = (await request.json()) as { argv: string[] };
+   		return Response.json(await sandbox.exec(argv));
+   	},
+   };
+   ```
+
+   Snapshots can contain credentials or other sensitive files written in the sandbox. Authenticate callers first, and give each user their own sandbox name. For more information, refer to [Sandbox security](/sandbox/concepts/security/#the-sandbox-name-decides-what-a-request-reaches).
+
+6. Deploy the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+7. Write a file in the sandbox named `ada`. Replace the example hostname with the `workers.dev` URL that Wrangler prints:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada --json '{"argv":["sh","-c","mkdir -p /workspace && echo hello > /workspace/notes.txt"]}'
+   ```
+
+8. Send no requests to `ada` for 11 minutes, then read its state:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada
+   ```
+
+   ```json output
+   {
+   	"running": false,
+   	"snapshotId": "<SNAPSHOT_ID>"
+   }
+   ```
+
+   The sandbox saved a snapshot and stopped. The next request starts a new instance from the snapshot. Read the file:
+
+   ```sh
+   curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada --json '{"argv":["cat","/workspace/notes.txt"]}'
+   ```
+
+   ```json output
+   {
+   	"stdout": "hello\n",
+   	"exitCode": 0
+   }
+   ```
+
+</Steps>
+
+## Related resources
+
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): save when your application decides, copy a sandbox, and start a sandbox over.
+- [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance): what a snapshot saves, and what a restored instance starts with.
+- [`snapshotContainer()`](/containers/api/durable-object-container/#snapshotcontainer)
