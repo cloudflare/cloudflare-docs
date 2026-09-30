@@ -114,15 +114,15 @@ if (!this.ctx.container.running) {
 
 </TypeScriptExample>
 
-To upgrade a running Container immediately, record the image reference in Durable Object storage each time you start the Container. When the recorded reference differs from the configured image, stop the Container and start it again:
+To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 const image = this.ctx.container.images.base;
-const startedImage = await this.ctx.storage.get<string>("containerImage");
+const info = await this.ctx.container.inspect();
 
-if (this.ctx.container.running && startedImage !== image) {
+if (info && info.image !== image) {
 	await this.ctx.container.destroy();
 }
 
@@ -132,7 +132,6 @@ if (!this.ctx.container.running) {
 		instance: "standard-2",
 		enableInternet: false,
 	});
-	await this.ctx.storage.put("containerImage", image);
 }
 ```
 
