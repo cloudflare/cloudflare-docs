@@ -29,17 +29,17 @@ IDs, routes, and triggers. Local secrets in `.dev.vars` keep working under
 
 The main differences between the two tools are:
 
-| Area                  | Wrangler                                        | `cf`                                                                   |
-| --------------------- | ----------------------------------------------- | ---------------------------------------------------------------------- |
-| Coverage              | Workers and a subset of Cloudflare products     | The public Cloudflare API, with more than 2,900 commands               |
-| Sign-in               | `wrangler login`                                | `cf auth login`, with its own credentials                              |
-| Project configuration | `wrangler.jsonc` or `wrangler.toml`             | `cloudflare.config.ts`, written in TypeScript                          |
-| Environments          | `env` blocks selected with `--env`              | Modes selected with `--mode`                                           |
-| Build                 | Wrangler's bundler                              | Wrangler's bundler or the Cloudflare Vite plugin                       |
-| Deployable artifact   | Internal to Wrangler                            | [Build Output](/cf/projects/build-output/) in `.cloudflare/output/v0/` |
-| Output                | Tables for many commands, with `--json` on some | JSON for most API commands                                             |
-| Resource identifiers  | Names for many resources                        | The IDs that the Cloudflare API expects                                |
-| Local and remote data | Some commands default to local data             | Remote. `--local` works only for supported KV, D1, and R2 commands     |
+| Area                  | Wrangler                                        | `cf`                                                               |
+| --------------------- | ----------------------------------------------- | ------------------------------------------------------------------ |
+| Coverage              | Workers and a subset of Cloudflare products     | The public Cloudflare API, with more than 2,900 commands           |
+| Sign-in               | `wrangler login`                                | `cf auth login`, with its own credentials                          |
+| Project configuration | `wrangler.jsonc` or `wrangler.toml`             | `cloudflare.config.ts`, written in TypeScript                      |
+| Environments          | `env` blocks selected with `--env`              | Modes selected with `--mode`                                       |
+| Build                 | Wrangler's bundler                              | Wrangler's bundler or the Cloudflare Vite plugin                   |
+| Deployable artifact   | Internal to Wrangler                            | Build Output in `.cloudflare/output/v0/`                           |
+| Output                | Tables for many commands, with `--json` on some | JSON for most API commands                                         |
+| Resource identifiers  | Names for many resources                        | The IDs that the Cloudflare API expects                            |
+| Local and remote data | Some commands default to local data             | Remote. `--local` works only for supported KV, D1, and R2 commands |
 
 For example, Wrangler accepts a D1 database name, while `cf` expects the
 database ID:
