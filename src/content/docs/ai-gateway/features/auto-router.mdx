@@ -11,7 +11,7 @@ products:
 
 import { Details, TabItem, Tabs } from "~/components";
 
-AI Gateway Auto Router automatically selects an AI model for each request. It helps reduce costs while maintaining the quality of responses by matching requests with the model best suited to the task. To use Auto Router, set the model to `cloudflare/auto` in your request.
+AI Gateway Auto Router automatically selects an AI model for each request. It helps reduce costs while maintaining the quality of responses by matching requests with the model best suited to the task.
 
 ## How it works
 
@@ -19,11 +19,46 @@ For each request, AI Gateway first builds a pool of eligible models. It excludes
 
 A classification step then analyzes the conversation to estimate the type and difficulty of the task. A scoring step weighs the expected quality of each remaining candidate against its cost, and ranks the models by fit. AI Gateway attempts the top-ranked model first, and falls back to the next one if a provider cannot serve the request.
 
-### Session affinity
+## Get started
 
-To take advantage of prompt caching, Auto Router keeps the same model for an entire turn. A turn is a user message plus any follow-up requests, such as tool calls.
+To use Auto Router, send requests to your AI Gateway and specify `cloudflare/auto` in place of a provider-specific model. Refer to [Unified API (OpenAI compat)](/ai-gateway/usage/chat-completion/) for endpoint and authentication instructions.
 
-Session affinity turns on when you send a `cf-aig-session-id` header or use a supported client, such as OpenCode. Without either, Auto Router selects a model for each request.
+:::note
+
+Auto Router supports the Chat Completions and Responses API formats. The [WebSockets API](/ai-gateway/usage/websockets-api/) is not yet supported.
+
+:::
+
+```bash
+curl -i -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/$CLOUDFLARE_GATEWAY_ID/compat/chat/completions" \
+  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "cloudflare/auto",
+    "messages": [
+      {
+        "role": "user",
+        "content": "hello"
+      }
+    ]
+  }'
+```
+
+The response headers show which model Auto Router selected:
+
+```txt output
+cf-aig-routed-model: openai/gpt-5.6-luna
+cf-aig-routing-reason: cost_optimal_within_pool
+cf-aig-routing-decision-id: 91e0b970-33f0-4921-b8dc-127412e7b103
+```
+
+## Session affinity
+
+For multi-turn conversations, such as chats or coding agents, send a `cf-aig-session-id` header with each request. Auto Router then keeps the same model for an entire turn, so requests can take advantage of prompt caching. A turn is a user message plus any follow-up requests, such as tool calls. Supported clients, such as OpenCode, do this automatically.
+
+Without a session ID, Auto Router selects a model for each request. Requests in the same conversation may go to different models, so they cannot reuse the prompt cache.
+
+Auto Router detects turns from the message history. To mark turns yourself, send a `cf-aig-turn-id` header. To turn off session affinity, including for supported clients, send `cf-aig-no-session-affinity: true`.
 
 At the start of each turn, Auto Router switches models only when the expected benefit outweighs the cost of losing the cache. For example, if a conversation moves from a simple question to a multi-file coding task, Auto Router may switch to a more capable model.
 
@@ -71,7 +106,7 @@ Auto Router selects from a pool of models managed by Cloudflare. The pool may ch
 
 ### Default models
 
-By default, Auto Router selects from the models in the table below. Customers can provide their own set of models for evaluation by using the [`cf-aig-allowed-models` or `cf-aig-allowed-providers` header](#headers).
+By default, Auto Router selects from the following models. To provide your own set of models, use the [`cf-aig-allowed-models` or `cf-aig-allowed-providers` header](#headers).
 
 | Model                       | Provider    |
 | --------------------------- | ----------- |
@@ -115,39 +150,6 @@ Auto Router only selects these models when they match `cf-aig-allowed-models` or
 </Details>
 
 The Provider column uses the values that `cf-aig-allowed-providers` accepts.
-
-## Get started
-
-To use Auto Router, send requests to your AI Gateway and specify `cloudflare/auto` in place of a provider-specific model. Refer to [Unified API (OpenAI compat)](/ai-gateway/usage/chat-completion/) for endpoint and authentication instructions.
-
-:::note
-
-Auto Router supports the Chat Completions and Responses API formats. The [WebSockets API](/ai-gateway/usage/websockets-api/) is not yet supported.
-
-:::
-
-```bash
-curl -i -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/$CLOUDFLARE_GATEWAY_ID/compat/chat/completions" \
-  --header "cf-aig-authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "cloudflare/auto",
-    "messages": [
-      {
-        "role": "user",
-        "content": "hello"
-      }
-    ]
-  }'
-```
-
-The response headers show which model Auto Router selected:
-
-```txt output
-cf-aig-routed-model: openai/gpt-5.6-luna
-cf-aig-routing-reason: cost_optimal_within_pool
-cf-aig-routing-decision-id: 91e0b970-33f0-4921-b8dc-127412e7b103
-```
 
 ## Use with OpenCode
 
