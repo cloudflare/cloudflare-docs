@@ -10,11 +10,11 @@ hidden: false
 
 import { LinkCard } from "~/components";
 
-Today, we're launching the new [Cloudflare Pipelines](/basin-pipelines/): a streaming data platform that ingests events, transforms them with [SQL](/basin-pipelines/sql-reference/select-statements/), and writes to [R2](/r2/) as [Apache Iceberg](https://iceberg.apache.org/) tables or Parquet files.
+Today, we are launching the new [Cloudflare Pipelines](/basin-pipelines/): a streaming data platform that ingests events, transforms them with [SQL](/basin-pipelines/sql-reference/select-statements/), and writes to [R2](/r2/) as [Apache Iceberg](https://iceberg.apache.org/) tables or Parquet files.
 
 Pipelines can receive events via [HTTP endpoints](/basin-pipelines/streams/writing-to-streams/#send-via-http) or [Worker bindings](/basin-pipelines/streams/writing-to-streams/#send-via-workers), transform them with SQL, and deliver to R2 with exactly-once guarantees. This makes it easy to build analytics-ready warehouses for server logs, mobile application events, IoT telemetry, or clickstream data without managing streaming infrastructure.
 
-For example, here's a pipeline that ingests clickstream events and filters out bot traffic while extracting domain information:
+For example, here is a pipeline that ingests clickstream events and filters out bot traffic while extracting domain information:
 
 ```sql
 INSERT into events_table
