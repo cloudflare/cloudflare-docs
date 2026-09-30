@@ -27,16 +27,13 @@ The `cloudflare/debian-trixie` managed image is available only with the `durable
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
 | `cloudflare/debian-trixie` | [`node:24.20.0-trixie-slim`](https://hub.docker.com/layers/library/node/24.20.0-trixie-slim/images/sha256-a747ad80c8a161b650d79a6da9c422005b91148b18b8d2c669eb5a0b7c07e600) pinned by digest | Node.js 24.20.0 on Debian Trixie slim |
 
-`cloudflare/debian-trixie` is a Cloudflare-managed identifier, not a public Cloudflare Docker Hub image. Pass the identifier when the Durable Object starts its Container.
-
-The image's default command runs `node`, which exits immediately when it has no input. Set `entrypoint` to a long-running process:
+`cloudflare/debian-trixie` is a Cloudflare-managed identifier, not a public Cloudflare Docker Hub image. Pass the identifier when the Durable Object starts its Container:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 this.ctx.container.start({
 	image: "cloudflare/debian-trixie",
-	entrypoint: ["sleep", "infinity"],
 	enableInternet: false,
 });
 ```

@@ -129,7 +129,6 @@ If you do not need a custom image, start the [`cloudflare/debian-trixie` Cloudfl
 ```ts
 this.ctx.container.start({
 	image: "cloudflare/debian-trixie",
-	entrypoint: ["sleep", "infinity"],
 	instance: "standard-2",
 	enableInternet: false,
 });
