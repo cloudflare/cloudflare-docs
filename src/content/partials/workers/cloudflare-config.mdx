@@ -5,7 +5,6 @@
 import {
 	AnnotatedConfigExplorer,
 	PackageManagers,
-	Render,
 	TypeScriptExample,
 } from "~/components";
 
@@ -14,7 +13,10 @@ Its default export can define a Worker, Container applications, and account
 settings. Because the file is a TypeScript module, it can use imports,
 functions, environment variables, and asynchronous values.
 
-<Render file="beta-note" product="cf" />
+:::note[Open beta]
+Programmatic configuration with `cloudflare.config.ts` is in open beta.
+The configuration format can change before the stable release.
+:::
 
 Loading `cloudflare.config.ts` requires Node.js 22.18 or later. Bun is not
 supported: when `cf` runs on Bun, loading the file fails with
