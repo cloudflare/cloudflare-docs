@@ -94,7 +94,7 @@ A configuration can contain up to 100 named images. Each image name must contain
 
 ### Roll out a named image update
 
-To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. After the deployment completes, the corresponding value in `ctx.container.images` refers to the updated image. During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each Durable Object sees the image map of the Worker version that runs it, so different Durable Objects can start different images until the deployment completes.
+To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. After the deployment completes, the corresponding value in `ctx.container.images` refers to the updated image. During a [Workers gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each Durable Object sees the image map of the Worker version that runs it, so different Durable Objects can start different images until the deployment completes.
 
 Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
 
