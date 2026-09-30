@@ -429,7 +429,11 @@ function workerLines() {
 				if (ref.name === "assets") {
 					return exampleObjectLines(
 						ref,
-						[{ name: "htmlHandling", value: '"auto-trailing-slash"' }],
+						[
+							{ name: "htmlHandling", value: '"auto-trailing-slash"' },
+							{ name: "notFoundHandling", value: '"404-page"' },
+							{ name: "runWorkerFirst", value: '["/api/*"]' },
+						],
 						2,
 						[{ ref }, ": "],
 						"},",
@@ -464,13 +468,43 @@ function workerLines() {
 					);
 				}
 				if (ref.name === "placement") {
-					return exampleObjectLines(
-						ref,
-						[{ name: "mode", value: '"smart"' }],
-						2,
-						[{ ref }, ": "],
-						"},",
-					);
+					return [
+						refLine(2, "", ref, ":"),
+						refsLine(4, [{ ref: mode }, ' === "regional"']),
+						...exampleObjectLines(
+							ref,
+							[{ name: "region", value: '"aws:us-east-1"' }],
+							6,
+							["? "],
+							"}",
+						),
+						refsLine(6, [": ", { ref: mode }, ' === "host"']),
+						...exampleObjectLines(
+							ref,
+							[{ name: "host", value: '"database.example.com:5432"' }],
+							8,
+							["? "],
+							"}",
+						),
+						refsLine(8, [": ", { ref: mode }, ' === "hostname"']),
+						...exampleObjectLines(
+							ref,
+							[{ name: "hostname", value: '"api.example.com"' }],
+							10,
+							["? "],
+							"}",
+						),
+						...exampleObjectLines(
+							ref,
+							[
+								{ name: "mode", value: '"smart"' },
+								{ name: "hint", value: '"ENAM"' },
+							],
+							10,
+							[": "],
+							"},",
+						),
+					];
 				}
 				if (ref.name === "limits") {
 					return exampleObjectLines(
@@ -489,13 +523,30 @@ function workerLines() {
 						ref,
 						[
 							{ name: "enabled", value: "true" },
+							{ name: "headSamplingRate", value: "1" },
+							{ name: "redactQueryString", value: "true" },
+							{
+								name: "issues",
+								value: [{ name: "enabled", value: "true" }],
+							},
 							{
 								name: "logs",
-								value: [{ name: "persist", value: "true" }],
+								value: [
+									{ name: "enabled", value: "true" },
+									{ name: "headSamplingRate", value: "1" },
+									{ name: "invocationLogs", value: "true" },
+									{ name: "persist", value: "true" },
+									{ name: "destinations", value: "[]" },
+								],
 							},
 							{
 								name: "traces",
-								value: [{ name: "persist", value: "true" }],
+								value: [
+									{ name: "enabled", value: "true" },
+									{ name: "headSamplingRate", value: "0.1" },
+									{ name: "persist", value: "true" },
+									{ name: "destinations", value: "[]" },
+								],
 							},
 						],
 						2,
