@@ -1,0 +1,333 @@
+---
+title: DirectoryBackup API
+description: Reference for the DirectoryBackup class in @cloudflare/sandbox, which saves a directory from a running container to R2 and restores it.
+pcx_content_type: reference
+sidebar:
+  order: 3
+  label: DirectoryBackup
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - r2
+reviewed: 2026-09-25
+---
+
+import { MetaInfo, Type, TypeScriptExample } from "~/components";
+
+`DirectoryBackup` saves a directory from a running container to an R2 bucket and restores it later into a container, including a container that runs a newer image. The container sends the backup through `DirectoryBackupGateway` in your Worker, so the container needs no Internet access and no R2 credentials. The gateway lets the container reach only the object that the operation needs. `DirectoryBackup` does not start or stop the container.
+
+<TypeScriptExample>
+
+```ts
+import {
+	DirectoryBackup,
+	type DirectoryBackupRecord,
+} from "@cloudflare/sandbox";
+import { DurableObject } from "cloudflare:workers";
+
+export { DirectoryBackupGateway } from "@cloudflare/sandbox";
+
+export class MyContainer extends DurableObject<Env> {
+	readonly #backups: DirectoryBackup;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		if (!ctx.container) {
+			throw new Error("The container binding is not configured");
+		}
+		// ctx.container stays the same object while the Durable Object runs.
+		this.#backups = new DirectoryBackup(
+			ctx.container,
+			ctx.exports.DirectoryBackupGateway,
+			{ binding: "BACKUPS", prefix: "workspaces/" },
+		);
+	}
+
+	// The container must already be running.
+	async saveWorkspace() {
+		const backup = await this.#backups.backup({
+			dir: "/workspace/app",
+			exclude: ["node_modules/"],
+		});
+		// Keep the record. The package does not list backups.
+		await this.ctx.storage.put("workspace", backup);
+	}
+
+	async restoreWorkspace() {
+		const backup =
+			await this.ctx.storage.get<DirectoryBackupRecord>("workspace");
+		if (backup) {
+			await this.#backups.restore(backup);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Requirements
+
+In addition to the [package requirements](/sandbox/reference/#requirements), `DirectoryBackup` has these requirements:
+
+- The Worker has an [R2 bucket binding](/r2/api/workers/workers-api-reference/).
+- The main module of the Worker re-exports `DirectoryBackupGateway` from `@cloudflare/sandbox`:
+
+  ```ts
+  export { DirectoryBackupGateway } from "@cloudflare/sandbox";
+  ```
+
+  Do not route HTTP requests to `DirectoryBackupGateway`.
+
+## `DirectoryBackup`
+
+```ts
+new DirectoryBackup(
+	container: Pick<Container, "exec" | "interceptOutboundHttp">,
+	gateway: DirectoryBackupGatewayBinding,
+	storage: DirectoryBackupStorage,
+)
+```
+
+- `container` — the container from `this.ctx.container`.
+- `gateway` — `this.ctx.exports.DirectoryBackupGateway`.
+- `storage` — where backups are stored. Refer to [`DirectoryBackupStorage`](#directorybackupstorage).
+
+An invalid `storage` throws `TypeError`.
+
+## Methods
+
+### `backup`
+
+```ts
+backup(options: DirectoryBackupOptions): Promise<DirectoryBackupRecord>
+```
+
+Saves `options.dir` as one object in the bucket and returns a [`DirectoryBackupRecord`](#directorybackuprecord). For the options, refer to [`DirectoryBackupOptions`](#directorybackupoptions). [What a backup contains](#what-a-backup-contains) lists what the object keeps.
+
+`backup()` reads the directory while processes can still change it, and it does not detect changes. A file that changes during the backup can be saved partly old and partly new. A backup is consistent only when no process writes to `dir` while it runs.
+
+A backup that fails or is canceled returns no record, and `backup()` aborts its multipart upload. If the Durable Object restarts during a backup, the upload stays in the bucket until an [R2 lifecycle rule](/r2/buckets/object-lifecycles/) aborts it.
+
+### `restore`
+
+```ts
+restore(backup: DirectoryBackupRecord, options?: DirectoryRestoreOptions): Promise<void>
+```
+
+Replaces the target directory with the contents of the backup. The target is `dir` from the record, unless you pass another absolute path in `options.dir`.
+
+- The parent directory of the target must exist. The target does not need to exist.
+- The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. Otherwise `restore()` fails with `EBUSY`, including when a mount appears during the restore. Unmount first, for example with `S3Mount.unmount()`, and mount again after the restore.
+- `restore()` extracts the backup into a new directory beside the target and checks the size and SHA-256 of the object against the record. It then replaces the target with the new directory in one atomic rename. When `restore()` throws `SandboxFileError` or `SandboxBackupError`, or is canceled before it verifies the download, it leaves the target as it was and removes the new directory.
+- A process that has its working directory inside the target, or has a file in the target open, keeps using the old directory or file. Restart such processes after `restore()`, or have them reopen files by absolute path.
+- The filesystem needs free space for the old and the restored directory at the same time. `restore()` stops with `ENOSPC` before free space falls below 5% of the filesystem or 256 MiB, whichever is smaller.
+- The root filesystem of a deployed container compresses files. `restore()` writes files without compression. The restored files take more disk space until a process rewrites them.
+
+### `delete`
+
+```ts
+delete(backup: DirectoryBackupRecord, options?: DirectoryBackupDeleteOptions): Promise<void>
+```
+
+Deletes the backup object. The container does not need to be running. Deleting an object that does not exist succeeds. A `restore()` that reads the object at the same time fails with `BACKUP_NOT_FOUND` or `BACKUP_INTEGRITY`.
+
+### `intercept`
+
+```ts
+intercept(): Promise<void>
+```
+
+Routes backup traffic from the container to `DirectoryBackupGateway`, which refuses every request until a backup or restore starts. `intercept()` does not start the container.
+
+{/* Remove the second sentence and the last list item when a hostname intercept registered after interceptAllOutboundHttp() receives its requests. */}
+
+`backup()` and `restore()` add this route themselves. If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), call `intercept()` before it. Otherwise the catch-all receives the backup traffic from the container, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
+
+- Call `intercept()` in the setup that runs after you start the container, and again when a restarted Durable Object finds the container running. Backups and restores in that container then keep their route.
+- Do not call `intercept()` while a backup or restore can be running. It replaces the access of the running operation, and the operation fails.
+- A container that registered the catch-all first keeps sending backup traffic to it. Restart the container to use `intercept()`.
+
+```ts
+#setup: Promise<void> | null = null;
+
+// Call before each use of the container.
+#ensureRunning(container: Container): Promise<void> {
+	// Set up each new container, and a running container
+	// after this Durable Object restarts.
+	if (this.#setup === null || !container.running) {
+		this.#setup = this.#setUp(container).catch((error) => {
+			this.#setup = null;
+			throw error;
+		});
+	}
+	return this.#setup;
+}
+
+async #setUp(container: Container): Promise<void> {
+	if (!container.running) {
+		container.start({
+			image: container.images.sandbox,
+			enableInternet: false,
+		});
+	}
+	await this.#backups.intercept();
+	await container.interceptAllOutboundHttp(
+		this.ctx.exports.Outbound({ props: {} }),
+	);
+}
+```
+
+## Types
+
+### `DirectoryBackupRecord`
+
+The record that `backup()` returns. It is a plain object that you can store in Durable Object storage, a database, or JSON. The package keeps no list of backups.
+
+- `id` <Type text="string" /> — UUID of the backup. The object key is `<prefix><id>.tar.zst`.
+- `dir` <Type text="string" /> — absolute path of the directory that was backed up, and the default restore target.
+- `size` <Type text="number" /> — size of the stored object in bytes.
+- `name` <Type text="string" /> <MetaInfo text="optional" /> — the `name` passed to `backup()`.
+- `sha256` <Type text="string" /> — SHA-256 of the stored object, as 64 lowercase hexadecimal characters. Every `restore()` checks it.
+- `format` <Type text='"tar+zstd/1"' /> — archive format of the object.
+
+A record works only with the same `storage.binding` and `storage.prefix` that created it. A record that does not match this shape throws `TypeError`.
+
+### `DirectoryBackupStorage`
+
+- `binding` <Type text="string" /> — name of the R2 bucket binding in the Worker `env`, such as `"BACKUPS"`.
+- `prefix` <Type text="string" /> <MetaInfo text="optional" /> — key prefix for the objects. A prefix that is not empty must end in `/`. The default is no prefix.
+
+### `DirectoryBackupOptions`
+
+- `dir` <Type text="string" /> — absolute path of the directory to back up.
+- `name` <Type text="string" /> <MetaInfo text="optional" /> — label stored in the record and in the custom metadata of the object as `name`.
+- `exclude` <Type text="string[]" /> <MetaInfo text="optional" /> — patterns in [`.gitignore` syntax](https://git-scm.com/docs/gitignore#_pattern_format), relative to `dir`. `"node_modules/"` excludes every directory named `node_modules`. `"/build"` excludes only `build` at the top of `dir`.
+- `gitignore` <Type text="boolean" /> <MetaInfo text="optional" /> — also apply the `.gitignore` files inside `dir` and `.git/info/exclude`. Global Git excludes do not apply. The image does not need `git`. The default is `false`.
+- `signal` <Type text="AbortSignal" /> <MetaInfo text="optional" /> — cancels the operation. Refer to [Cancellation](#cancellation).
+
+### `DirectoryRestoreOptions`
+
+- `dir` <Type text="string" /> <MetaInfo text="optional" /> — absolute path of the directory to replace. The default is `dir` from the record.
+- `signal` <Type text="AbortSignal" /> <MetaInfo text="optional" /> — cancels the operation. Refer to [Cancellation](#cancellation).
+
+### `DirectoryBackupDeleteOptions`
+
+- `signal` <Type text="AbortSignal" /> <MetaInfo text="optional" /> — an aborted signal rejects the call before the object is deleted.
+
+An option that a method does not accept, or an option of the wrong type, throws `TypeError`.
+
+## What a backup contains
+
+`backup()` walks `dir` without following symbolic links and does not enter other filesystems. A mount point inside `dir` becomes an empty directory in the backup. `restore()` works the other way: it refuses a target that contains a mount point. For more information, refer to [`restore`](#restore). `backup()` includes every other path, including `.git`, unless `exclude` or `gitignore` leaves it out.
+
+A backup keeps:
+
+- File contents
+- Directories, including empty ones
+- Symbolic links, as links
+- Hard links between files inside `dir`
+- Permission bits, and numeric user and group IDs
+- Modification times, to the nanosecond
+
+A backup does not keep:
+
+- Sockets, devices, and FIFOs
+- The setuid and setgid bits
+- Extended attributes, ACLs, and file capabilities
+- Holes in sparse files, which restore as zeros
+- Access times
+
+When the image user is root, `restore()` sets the saved user and group IDs as numbers, even when the image has no user with that ID. Otherwise, the restored files belong to the image user.
+
+## Operations in one container
+
+One `backup()` or `restore()` runs at a time in a container. Other calls wait for it to finish, including calls from other `DirectoryBackup` instances and from a Durable Object that restarted. `Promise.all()` over several directories runs them one after another. `delete()` does not wait.
+
+### Cancellation
+
+`DirectoryBackup` sets no timeouts and does not retry. Aborting `signal` rejects the call with the abort reason without waiting for the helper process, including a call that is still waiting for another operation. The helper process in the container then removes what the operation created and exits.
+
+After `restore()` verifies the download, it finishes replacing the target even if `signal` aborts. The call then resolves when the target is replaced, or rejects with the error from replacing it.
+
+When the Durable Object restarts during an operation, the result of the call is lost, and the helper process exits. A backup is not recorded. A restore has either replaced the whole target or left it as it was. Restoring the same backup again gives the same result either way.
+
+## `DirectoryBackupGateway`
+
+`DirectoryBackupGateway` is a `WorkerEntrypoint` that moves backups between the container and the R2 bucket.
+
+- The container can reach only the object of the operation in progress. During a backup, it uploads parts of that object. During a restore, it reads byte ranges of it. It cannot list or delete objects or reach another key.
+- The SHA-256 check detects an object that changed after the backup.
+
+The container sends HTTP requests to the gateway at `backups.sandbox.internal`, which `DirectoryBackup` routes with [`interceptOutboundHttp()`](/containers/api/durable-object-container/#interceptoutboundhttp). The Durable Object creates, completes, and aborts uploads, and deletes objects, through RPC calls to the gateway. The first operation in a container, or [`intercept()`](#intercept), adds the intercept target. Each later operation replaces the handler on that target and does not add a target.
+
+## Limits
+
+The container uploads the compressed backup in parts of 16 MiB. An R2 multipart upload holds up to [10,000 parts](/r2/platform/limits/), so a compressed backup can be at most 160,000 MiB, about 156 GiB. A larger backup fails with `BACKUP_TRANSFER`.
+
+## Local development
+
+Under `wrangler dev`, the container runs in Docker, and `restore()` cannot replace a directory that is part of the image. The restore fails with `SandboxFileError` code `EXDEV` and leaves the directory as it was. `restore()` can replace a directory that was created after the container started, a directory in a volume, or a target that does not exist yet.
+
+## Errors
+
+### `SandboxBackupError`
+
+The backup object is missing, changed, or could not be transferred.
+
+| Field       | Type                       | Description                               |
+| ----------- | -------------------------- | ----------------------------------------- |
+| `name`      | `"SandboxBackupError"`     | Error name                                |
+| `code`      | `SandboxBackupErrorCode`   | Error code                                |
+| `operation` | `DirectoryBackupOperation` | Method that failed: `backup` or `restore` |
+| `path`      | `string`                   | Directory being backed up or restored     |
+| `detail`    | `string`                   | Error description                         |
+
+`code` is one of the following values:
+
+| Code               | Meaning                                                                                                                                                                                                                                       |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BACKUP_NOT_FOUND` | The object does not exist                                                                                                                                                                                                                     |
+| `BACKUP_INTEGRITY` | The object does not match the record, or it is not a valid archive. The target was not changed. `backup()` also throws it when R2 stored a different size than the container uploaded, and deletes the object                                 |
+| `BACKUP_TRANSFER`  | An upload or download between the container and `DirectoryBackupGateway` failed, including when `storage.binding` does not name an R2 bucket binding. `detail` contains the HTTP status. No record was returned, and no directory was changed |
+
+The package exports the `SandboxBackupErrorCode` and `DirectoryBackupOperation` types, which list these codes and methods.
+
+`SandboxBackupError` is not a class. Use `SandboxBackupError.is(error)` instead of `instanceof`. It recognizes errors thrown in the same Worker and errors returned through Durable Object RPC.
+
+### `SandboxFileError`
+
+Linux rejected the operation in the container. `operation` is `backup` or `restore`. Refer to [`SandboxFileError`](/sandbox/reference/files/#sandboxfileerror).
+
+| Code      | Condition                                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------------------- |
+| `EBUSY`   | The restore target is a mount point or has one inside it                                                       |
+| `EINVAL`  | An `exclude` pattern is invalid                                                                                |
+| `ENOENT`  | `dir` from the backup or the parent of the restore target does not exist                                       |
+| `ENOSPC`  | The restore would fill the filesystem                                                                          |
+| `ENOTDIR` | `dir` from the backup or the restore target is a symbolic link or is not a directory                           |
+| `EXDEV`   | Linux could not swap the restored directory into place, as for a directory from the image under `wrangler dev` |
+
+Other codes, such as `EACCES`, come from reading a file during a backup.
+
+### `SandboxProtocolError`
+
+`DirectoryBackup` could not complete its exchange with the helper binary. Refer to [`SandboxProtocolError`](/sandbox/reference/files/#sandboxprotocolerror).
+
+### Other errors
+
+`DirectoryBackup` does not wrap errors from the runtime, from R2, or from its inputs.
+
+| Condition                                                                        | Error                                     |
+| -------------------------------------------------------------------------------- | ----------------------------------------- |
+| Invalid options, record, or `storage`                                            | `TypeError`                               |
+| `storage.binding` does not name an R2 bucket binding in `backup()` or `delete()` | `TypeError` from `DirectoryBackupGateway` |
+| The container is not running                                                     | `Error` from `exec()`                     |
+| `signal` is aborted                                                              | The abort reason                          |
+| R2 rejects creating, completing, or aborting an upload, or deleting an object    | The error from the R2 binding             |
+| An intercept cannot be added                                                     | `Error` from `interceptOutboundHttp()`    |
+
+## Related resources
+
+- [Durable Object Container](/containers/api/durable-object-container/)
+- [R2 Workers API](/r2/api/workers/workers-api-reference/)
