@@ -426,10 +426,6 @@ docker pull <PUBLIC_IMAGE>
 docker tag <PUBLIC_IMAGE> <IMAGE>:<TAG>
 ```
 
-:::note
-With the containerd image store in Docker Desktop, such as on Apple silicon, `wrangler containers push` can reject a pulled multi-platform image with an `Unsupported platform` error. Instead, create a Dockerfile that contains `FROM <PUBLIC_IMAGE>` and build and push it with `wrangler containers build -p`, as shown below.
-:::
-
 Wrangler provides a command to push images to the Cloudflare Registry:
 
 <PackageManagers
