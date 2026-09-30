@@ -45,7 +45,7 @@ With Containers you can run:
 - Applications and libraries that require a full filesystem, specific runtime, or Linux-like environment
 - Existing applications and tools that have been distributed as container images
 
-Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write JavaScript:
+Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write TypeScript or JavaScript.
 
 The container in this example exposes `GET /health` on port `4000` and returns a successful response when it is ready. Because `container.start()` returns immediately, the Durable Object waits for this endpoint before forwarding requests.
 
@@ -100,7 +100,7 @@ export default {
 </TypeScriptExample>
 
 	</TabItem>
-	<TabItem label="utils.js">
+	<TabItem label="utils.ts">
 
 <TypeScriptExample filename="src/utils.ts">
 ```ts
@@ -149,7 +149,7 @@ export async function startAndWaitForPort(
 ```jsonc
 {
 	"name": "container-starter",
-	"main": "src/index.js",
+	"main": "src/index.ts",
 	"compatibility_date": "$today",
 	"containers": [
 		{
