@@ -716,6 +716,11 @@ product:migration-guides:
       - any-glob-to-any-file:
           - src/content/docs/migration-guides/**
 
+product:monetization-gateway:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/monetization-gateway/**
+
 product:moq:
   - changed-files:
       - any-glob-to-any-file:
