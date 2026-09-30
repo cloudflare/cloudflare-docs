@@ -3,23 +3,22 @@ pcx_content_type: how-to
 title: Transformers
 sidebar:
   order: 3
-  badge: Beta
 description: Advanced filtering, reshaping, redacting, and computing on Logpush records with SQL before they leave Cloudflare.
 products:
   - logpush
 ---
 
-import { APIRequest, DashButton, Badge } from "~/components";
-
-<Badge text="Beta" variant="caution" />
-
-:::note[Beta]
-Transformers are in beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed.
-:::
+import { APIRequest, DashButton } from "~/components";
 
 Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
 
 You write the logic as a single SQL query, attach it to a Logpush job, and Cloudflare runs it on every batch. The `FROM` clause names the Logpush dataset (for example, `http_requests` or `audit_logs_v2`) and field names come from that dataset's schema.
+
+## Availability and pricing
+
+Transformers are available to all Logpush customers for supported datasets. Free, Pro, and Business customers can add Logpush through self-service checkout, which includes access to Transformers. Enterprise customers continue to work with their account team.
+
+For included usage, rates, and billing details, refer to [Logpush pricing](/logs/logpush/pricing/).
 
 ## Key features
 
@@ -32,7 +31,7 @@ You write the logic as a single SQL query, attach it to a Logpush job, and Cloud
 Before you begin, you need:
 
 - A Logpush job that uses the `ndjson` output format. Transformers are only available for NDJSON jobs, and are supported for both account-scoped and zone-scoped datasets.
-- An API token with the `Logs Write` permission for the account.
+- If you use the API, an API token with the `Logs Write` permission for the account.
 - Familiarity with the [dataset](/logs/logpush/logpush-job/datasets/) whose records you plan to transform. Your SQL references its field names directly.
 
 ## Access Transformers
