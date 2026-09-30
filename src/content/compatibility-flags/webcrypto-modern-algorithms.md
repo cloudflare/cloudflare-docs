@@ -6,7 +6,6 @@ _build:
 
 name: "Web Crypto modern algorithms"
 sort_date: "2026-10-01"
-experimental: true
 enable_flag: "webcrypto_modern_algorithms"
 ---
 
