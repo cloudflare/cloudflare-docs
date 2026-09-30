@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, Steps } from "~/components";
 
 Consumers read records from a K2 stream through a [subscription](/k2/concepts/#subscriptions), which
 tracks which records have been processed. Each subscription on a stream reads
@@ -16,10 +16,14 @@ independently, meaning multiple applications can read the same records.
 
 To consume records:
 
+<Steps>
+
 1. [Create a subscription](#create-a-subscription) on the stream.
 2. [Request a batch](#request-a-batch) of records. K2 leases the batch to your consumer.
 3. Process the records, then [acknowledge the batch](#acknowledge-a-batch). If processing takes longer than the lease, [extend the lease](#extend-a-lease).
 4. Repeat from step 2.
+
+</Steps>
 
 K2 delivers records at least once. Your consumer can receive the same record more than once.
 
