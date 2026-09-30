@@ -213,6 +213,13 @@ export const sidebarSections: SidebarSection[] = [
 			},
 			{
 				type: "group",
+				label: "Monetize",
+				icon: "ph:coins",
+				collapsed: true,
+				nodes: [link("Monetization Gateway", "/monetization-gateway/")],
+			},
+			{
+				type: "group",
 				label: "Delivery & Performance",
 				icon: "speed",
 				collapsed: true,
