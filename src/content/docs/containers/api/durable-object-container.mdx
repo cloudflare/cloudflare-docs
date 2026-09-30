@@ -35,7 +35,11 @@ export class MyDurableObject extends DurableObject<Env> {
 			throw new Error("No container is configured for this Durable Object");
 		}
 		if (!container.running) {
-			container.start();
+			// With the `default` scheduling policy, call `container.start()` without options.
+			container.start({
+				image: container.images.base,
+				enableInternet: false,
+			});
 			await this.ctx.storage.put("lastStartedAt", Date.now());
 		}
 	}
@@ -124,7 +128,7 @@ const containerInfo = await this.ctx.container.inspect();
 #### Return values
 
 - `Promise<ContainerInfo | null>`: Resolves with `null` when no container is running. Otherwise, it resolves with a `ContainerInfo` object containing:
-  - `image` (`string`): Image reference reported by the runtime. The value can be an empty string.
+  - `image` (`string`): Image reference passed to [`start()`](#start). The value is an empty string for a container restored from `containerSnapshot`.
   - `labels` (`Record<string, string>`): Labels passed to [`start()`](#start).
 
 ### `exec`
@@ -340,7 +344,11 @@ interface Env {}
 class MyDurableObject extends DurableObject<Env> {
 	startAndMonitor() {
 		const container = this.ctx.container;
-		container.start();
+		// With the `default` scheduling policy, call `container.start()` without options.
+		container.start({
+			image: container.images.base,
+			enableInternet: false,
+		});
 		this.ctx.waitUntil(
 			container
 				.monitor()
