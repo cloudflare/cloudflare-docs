@@ -21,43 +21,69 @@ The replacement application must use a new Durable Object class and namespace. T
 
 :::caution
 
-This process does not transfer existing Container instances, their filesystems, or Durable Object storage. The `default` scheduling policy does not support snapshots, so you cannot use a Container snapshot to transfer its filesystem.
+This process does not transfer existing Container instances or Durable Object storage. The `default` scheduling policy does not support snapshots, so you cannot use a Container snapshot to transfer a filesystem.
 
 If the existing Durable Objects contain data, design an application-specific transfer process before continuing.
 
 :::
 
+## Before you begin
+
+- **Replace the `Container` class.** The [`Container` class](/containers/api/container-class/) does not support the `durable_object` policy. If your existing class extends `Container`, the replacement class must use the [Durable Object Container API](/containers/api/durable-object-container/) directly. Rebuild any `Container` class helpers your application relies on, such as port readiness checks, request proxying, and sleep timeouts. Refer to [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).
+- **Check how the Worker declares Durable Object classes.** A Worker uses either the [`exports` field](/durable-objects/reference/durable-objects-migrations/) or the [legacy `migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/), not both. Declare the replacement class with the same mechanism the Worker already uses. Moving from `migrations` to `exports` cannot be undone. If you want to move, do it as a separate change. Refer to [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow).
+- **Move external images to the Cloudflare managed registry.** Named images with the `durable_object` policy must use a Dockerfile or a digest-pinned reference in the Cloudflare managed registry. If the existing `image` references Docker Hub, Amazon ECR, or Google Artifact Registry, [push the image to the Cloudflare managed registry](/containers/guides/image-management/#use-an-external-image) first.
+
 ## Configuration changes
 
 Map the existing application configuration to its `durable_object` equivalent:
 
-| `default` policy                                                                                     | `durable_object` policy                                                  |
-| ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `image`                                                                                              | A named `images` entry, selected with `ctx.container.start()`            |
-| `image_build_context`                                                                                | `build_context` on the named image                                       |
-| `image_vars`                                                                                         | `build_vars` on the named image                                          |
-| `instance_type`                                                                                      | The `instance` option in `ctx.container.start()`                         |
-| Application-wide image rollouts                                                                      | Application code that stops and starts each Container                    |
-| `observability`                                                                                      | Keep in Wrangler configuration, subject to `durable_object` restrictions |
-| `unsafe.configuration.experimental_flags`                                                            | Keep in Wrangler configuration                                           |
-| `ssh` and `authorized_keys`                                                                          | Keep in Wrangler configuration                                           |
-| `max_instances`, placement constraints, rollout settings, `wrangler_ssh`, and `trusted_user_ca_keys` | Not supported on the replacement application                             |
+| `default` policy                                                                    | `durable_object` policy                                                                                                                                              |
+| ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `image` (Dockerfile path)                                                           | `dockerfile` on a named `images` entry, selected with `ctx.container.start()`                                                                                        |
+| `image` (registry reference)                                                        | `image` on a named `images` entry. Must be a digest-pinned reference in the Cloudflare managed registry                                                              |
+| `image_build_context`                                                               | `build_context` on the named image                                                                                                                                   |
+| `image_vars`                                                                        | `build_vars` on the named image                                                                                                                                      |
+| `instance_type`                                                                     | The `instance` option in `ctx.container.start()`. Refer to [Instance size changes](#instance-size-changes)                                                           |
+| `max_instances`                                                                     | Not supported. Running instances count toward [account limits](/containers/platform/limits/#account-limits). Enforce any per-application cap in application code |
+| Application-wide image rollouts                                                     | Application code that stops and starts each Container                                                                                                                |
+| `observability`                                                                     | Keep in Wrangler configuration, subject to `durable_object` restrictions                                                                                             |
+| `unsafe.configuration.experimental_flags`                                           | Keep in Wrangler configuration                                                                                                                                       |
+| `ssh` and `authorized_keys`                                                         | Keep in Wrangler configuration                                                                                                                                       |
+| Placement constraints, rollout settings, `wrangler_ssh`, and `trusted_user_ca_keys` | Not supported on the replacement application                                                                                                                         |
 
 For the complete field compatibility list, refer to [Wrangler configuration](/workers/wrangler/configuration/#containers).
+
+### Instance size changes
+
+With the `durable_object` policy, you set the instance size with the `instance` option of `ctx.container.start()` instead of `instance_type` in Wrangler configuration. `instance` accepts `lite`, `standard-1`, `standard-2`, `standard-3`, and `standard-4`. If your existing application uses one of the following `instance_type` values, choose a replacement:
+
+- `dev`: Use `lite`.
+- `standard`: Use `standard-1`.
+- `basic`: Choose `lite` or `standard-1`. Custom instance types require at least 1 vCPU, so you cannot reproduce `basic` with a custom instance.
+
+Custom instance objects use camel case at runtime. Rename `memory_mib` to `memoryMib` and `disk_mb` to `diskMb`. Refer to [Choose an instance size at runtime](/containers/configuration/scheduling-policy/#choose-an-instance-size-at-runtime).
 
 ## Move the application
 
 <Steps>
 
-1. **Create a replacement Durable Object class.**
+1. **Add a new Durable Object class and Container application.**
 
-   Add a new SQLite-backed Durable Object class and binding. Keep the existing class and binding so that you can route traffic back to them.
+   You cannot move the existing application by changing its `scheduling_policy` to `durable_object`, because the scheduling policy cannot be changed after creation. You also cannot reuse the existing Durable Object class, because each Durable Object namespace attaches to one Container application.
 
-   Use the declarative `exports` field to define both SQLite-backed Durable Object classes. Keep the existing class exported while you add the replacement class.
+   :::caution
+   Do not change `scheduling_policy` on the existing Container entry. `wrangler deploy` deploys the new Worker version before it configures the Container application. The deploy then fails with the new Worker code already live and no `durable_object` application behind it.
+   :::
 
-2. **Add a replacement Container application.**
+   Instead, add all of the following to the Wrangler configuration:
 
-   Keep the existing application and add a differently named application with the `durable_object` policy:
+   - A new SQLite-backed Durable Object class.
+   - A Durable Object binding for the new class.
+   - A new Container entry with `"scheduling_policy": "durable_object"`, a different `name`, and `class_name` set to the new class.
+
+   Leave the existing Container entry, Durable Object class, and binding unchanged so that you can route traffic back to them. Changing the existing entry's `name` or `class_name` can cause Wrangler to create a new application instead of updating the existing one.
+
+   The following example uses `exports`. If the Worker uses the legacy `migrations` array, add a new migration with `new_sqlite_classes: ["DurableSandbox"]` instead.
 
    <WranglerConfig>
 
@@ -67,14 +93,14 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
        "main": "src/index.ts",
        "compatibility_date": "2026-09-29",
        "containers": [
+           // Existing application. Keep this entry unchanged.
            {
-               "name": "sandbox-default",
-               "class_name": "LegacySandbox",
-               "scheduling_policy": "default",
+               "class_name": "Sandbox",
                "image": "./container/Dockerfile",
                "instance_type": "standard-2",
                "max_instances": 10,
            },
+           // Replacement application.
            {
                "name": "sandbox-durable-object",
                "class_name": "DurableSandbox",
@@ -89,8 +115,8 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
        "durable_objects": {
            "bindings": [
                {
-                   "name": "LEGACY_SANDBOX",
-                   "class_name": "LegacySandbox",
+                   "name": "SANDBOX",
+                   "class_name": "Sandbox",
                },
                {
                    "name": "DURABLE_SANDBOX",
@@ -99,7 +125,7 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
            ],
        },
        "exports": {
-           "LegacySandbox": {
+           "Sandbox": {
                "type": "durable-object",
                "storage": "sqlite",
            },
@@ -113,7 +139,7 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
 
    </WranglerConfig>
 
-3. **Move startup configuration into the replacement class.**
+2. **Move startup configuration into the replacement class.**
 
    Select the image and instance size when the replacement Durable Object starts its Container:
 
@@ -131,7 +157,8 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
            this.ctx.container.start({
                image: this.ctx.container.images.base,
                instance: "standard-2",
-               enableInternet: false,
+               // Match the existing application's outbound access.
+               enableInternet: true,
            });
        }
    }
@@ -139,40 +166,43 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
 
    </TypeScriptExample>
 
-   Move other supported startup settings, such as `env`, `entrypoint`, and `enableInternet`, into the same call. Add an application-specific readiness check before sending traffic to the Container.
+   Move other supported startup settings, such as `env` and `entrypoint`, into the same call. Set `enableInternet` to match the existing application. The `Container` class allows outbound Internet access unless you set `enableInternet = false`.
 
-4. **Deploy and validate the replacement application.**
+   `ctx.container.start()` returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic to the Container.
+
+3. **Deploy and validate the replacement application.**
 
    Deploy both applications:
 
    <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
-   Start a replacement Container without changing production routing. Confirm that the image, instance size, environment, entrypoint, network access, and readiness behavior match the existing application.
+   Start a replacement Container without changing production routing, for example through a test-only route that uses the `DURABLE_SANDBOX` binding. Confirm that the image, instance size, environment, entrypoint, network access, and readiness behavior match the existing application.
 
-5. **Cut traffic over to the replacement namespace.**
+4. **Cut traffic over to the replacement namespace.**
 
-   Update the Worker routing logic to resolve Container IDs through the replacement Durable Object binding. New Durable Object IDs refer to the replacement namespace and do not access storage from the old namespace.
+   Update the Worker routing logic to resolve Container IDs through the replacement Durable Object binding. The same name resolves to a different Durable Object in each namespace. A Durable Object in the replacement namespace cannot access storage from the old namespace.
 
-   For example, you can use a feature flag to select the binding while keeping the same logical name:
+   Choose the binding per logical Container, not per request. If requests for the same name can reach both bindings, such as during a percentage-based rollout or a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), two Containers can run for one logical sandbox and their state can diverge. For example, record which namespace each sandbox uses and read that record when routing:
 
    ```ts
-   const binding = useReplacement
+   // isMigrated() is application code that reads a per-sandbox record.
+   const binding = (await isMigrated(sandboxName))
        ? env.DURABLE_SANDBOX
-       : env.LEGACY_SANDBOX;
+       : env.SANDBOX;
    const sandbox = binding.getByName(sandboxName);
    ```
 
-   If Durable Object state must move, complete the application-specific transfer before routing all traffic to the replacement namespace.
+   If Durable Object state must move, complete the application-specific transfer for each sandbox before routing it to the replacement namespace.
 
-6. **Observe the replacement application.**
+5. **Observe the replacement application.**
 
    Keep the old application, class, and binding during the observation period. To roll back, route traffic to the old Durable Object binding again.
 
    Writes made after cutover stay in the replacement namespace. If the application accepts writes, plan how to reconcile that data before rolling back.
 
-7. **Delete the old Container application.**
+6. **Delete the old Container application.**
 
-   After the rollback period, remove the old Container entry and routing code from the Worker configuration. Deploy the updated Worker. Keep the old Durable Object class and binding until you no longer need its stored data.
+   After the rollback period, remove the old Container entry from the Wrangler configuration and the old routing path from the Worker code. Deploy the updated Worker. Keep the old Durable Object class and binding until you no longer need its stored data.
 
    Removing the entry from Wrangler configuration does not delete the existing Container application. List the applications and copy the old application ID:
 
@@ -193,3 +223,4 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
 - [Scheduling Policies](/containers/configuration/scheduling-policy/)
 - [Image Management](/containers/guides/image-management/)
 - [Durable Object Container API](/containers/api/durable-object-container/)
+- [Migrate to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/)
