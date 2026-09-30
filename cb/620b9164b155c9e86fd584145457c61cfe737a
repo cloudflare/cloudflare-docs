@@ -1,0 +1,21 @@
+src/components/landing/BuildFromScratch.astro.test.ts
+  s_e4b6fc7e80fdf4::t_b48195dda44008 1-41
+src/components/landing/BuildFromScratch.astro
+  s_e4b6fc7e80fdf4::t_7a2a9a8e07936a 6,10,47-48,69-70,105-116,154-180
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cb620b9164b155c9e86fd584145457c61cfe737a",
+  "prompts": {},
+  "sessions": {
+    "s_e4b6fc7e80fdf4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ecd8-5703-7562-aa56-718ec28dc8ad",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}
