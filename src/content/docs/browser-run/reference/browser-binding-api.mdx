@@ -188,7 +188,6 @@ async function useLaunch(env: Env): Promise<unknown> {
 | ------------------------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `keepAlive`              | `number`                  | Session inactivity timeout in milliseconds. The value must be between 10 seconds and 20 minutes.                                                           |
 | `recording`              | `boolean`                 | Records the session for later inspection.                                                                                                                  |
-| `location`               | `string`                  | ISO 3166-1 alpha-2 country code for the browser location.                                                                                                  |
 | `outboundByHost`         | `Record<string, Fetcher>` | Routes requests for each hostname through a Worker Fetcher. Refer to [Route requests through an outbound Worker](/browser-run/features/outbound-workers/). |
 | `guardrails`             | `object`                  | Restricts the hostnames that the browser session can access. Refer to [Guardrails](/browser-run/features/guardrails/).                                     |
 | `targets`                | `boolean`                 | Includes the session's DevTools targets in the result.                                                                                                     |
