@@ -116,7 +116,7 @@ if (!this.ctx.container.running) {
 
 To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image.
 
-A Container restored from a snapshot reports an empty image from `inspect()`. The following example keeps restored Containers running instead of replacing them:
+`inspect()` reports an empty image while a Container is starting and for a Container restored from a snapshot. The following example does not replace a Container in either case:
 
 <TypeScriptExample filename="src/index.ts">
 
