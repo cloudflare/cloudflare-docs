@@ -61,7 +61,7 @@ When the inactivity timeout ends, every process in the instance receives `SIGTER
 
 After an instance stops, the next request that calls `start()` starts a new instance.
 
-Cloudflare does not wake the Durable Object when its instance stops.
+Cloudflare does not wake the Durable Object when its instance stops. To record each stop and its reason, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 ## Deploys keep instances running
 
