@@ -162,12 +162,12 @@ export async function startAndWaitForPort(
 			},
 		],
 	},
-	"migrations": [
-		{
-			"new_sqlite_classes": ["MyContainer"],
-			"tag": "v1",
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
@@ -220,6 +220,15 @@ Ship from your machine or Workers Builds, and confirm the deploy.
 ## More resources
 
 <CardGrid>
+
+<LinkTitleCard
+	title="Scheduling policies"
+	href="/containers/configuration/scheduling-policy/"
+	icon="ph:gear"
+>
+	Choose whether image and instance configuration is managed centrally or from
+	Durable Object code.
+</LinkTitleCard>
 
 <LinkTitleCard
 	title="Rollouts"
