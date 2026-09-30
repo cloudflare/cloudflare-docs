@@ -211,6 +211,8 @@ jobs:
           path: dist
 
       - name: Tests (Workers)
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
         run: pnpm run test:postbuild
 
   notify:

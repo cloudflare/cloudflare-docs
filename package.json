@@ -29,7 +29,7 @@
 		"sync": "astro sync",
 		"test": "vitest",
 		"test:prebuild": "vitest --project Node --project Astro",
-		"test:postbuild": "vitest --project Workers",
+		"test:postbuild": "vitest --project Workers --maxWorkers=2",
 		"flue:dev": "NODE_OPTIONS=--max-old-space-size=8192 pnpm --dir .flue exec vite dev",
 		"flue:dev:wrangler": "FLUE_DEV_NO_QUEUE_CONSUMER=1 pnpm --dir .flue exec vite build && cp -f .flue/.env.local .flue/dist/cloudflare_docs_flue/.dev.vars && pnpm --dir .flue exec wrangler dev --config dist/cloudflare_docs_flue/wrangler.json --remote",
 		"flue:build": "pnpm --dir .flue exec vite build",
