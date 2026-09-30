@@ -1,0 +1,83 @@
+---
+pcx_content_type: configuration
+title: Machine Payments (x402)
+sidebar:
+  order: 2
+  badge: Beta
+head: []
+description: Use x402 to pay for and authenticate your inference requests.
+products:
+  - ai-gateway
+---
+
+import { Steps } from "~/components";
+
+Machine Payments allows clients to pay for inference calls to select open models from their stablecoin wallet, without having to maintain a prepaid credit balance. To use Machine Payments, you must be based in the United States and have a credit card on file.
+
+The `Payment-Method: x402` header tells Cloudflare to negotiate payment through the [x402 protocol](https://github.com/x402-foundation/x402). This header is specific to Cloudflare.
+
+## Prerequisites
+
+- Ensure your Cloudflare account has a credit card on file.
+- Ensure you have [authenticated](/ai-gateway/configuration/authentication/) your AI Gateway.
+
+## Eligible endpoints
+
+- [POST /ai/run](/ai-gateway/usage/rest-api/#airun-universal-endpoint)
+
+## Eligible Models
+
+- `z-ai/glm-4.7-flash`
+- `google/gemma-4-26b-a4b-it`
+- `openai/gpt-oss-20b`
+- `alibaba/qwen3.8-27b`
+
+## Use Machine Payments
+
+Machine Payments works with the Cloudflare API and requires a Cloudflare API token.
+
+### Transaction flow
+
+An x402-compatible client handles the challenge and retry automatically.
+
+<Steps>
+1. The client sends an inference request with the Cloudflare-specific `Payment-Method: x402` header. This requests x402 payment instead of using the account's configured billing method.
+2. AI Gateway validates the request and returns `402 Payment Required`. The standard `PAYMENT-REQUIRED` response header contains the accepted network, asset, payment scheme, and maximum authorized amount. Note that most AI Gateway models will use the `upto` payment scheme, which indicates that the maximum a client may be charged..
+```http
+HTTP/1.1 402 Payment Required
+PAYMENT-REQUIRED: <base64-encoded payment requirements>
+```
+3. The x402 client decodes the payment requirements. The wallet signs an authorization for up to the maximum amount.
+4. The client retries the same inference request with the signed authorization in the standard `PAYMENT-SIGNATURE` request header.
+5. Cloudflare verifies the authorization and runs the inference request. Cloudflare settles the actual request cost, which cannot exceed the authorized maximum.
+6. AI Gateway returns the inference response.
+</Steps>
+
+### REST API
+
+At this time, only the `/ai/run` endpoint is available with Machine Payments.
+
+Use the Cloudflare API to call third-party models. Pass your Cloudflare API token in the `Authorization` header, and include `Payment-Method: x402` as a header. If the header is not passed, AI Gateway follows the normal [credential precedence](/ai-gateway/features/unified-billing/#credential-precedence) and may deduct the inference cost from your Unified Billing credit balance.
+
+```bash
+# Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
+# and `wrangler auth token` to get an auth token to replace $CLOUDFLARE_API_TOKEN.
+curl -iX POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Payment-Method: x402" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "z-ai/glm-4.7-flash",
+    "input": {
+      "max_tokens": 9001,
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is Cloudflare?"
+        }
+      ]
+    }
+  }'
+```
+
+Refer to [REST API](/ai-gateway/usage/rest-api/) for more details.
