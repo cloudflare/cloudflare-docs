@@ -189,6 +189,122 @@ export const prerender = true;
 							</a>
 						</div>
 					</div>
+					<div class="sponsorship sponsorship-featured">
+						<a
+							class="sponsorship-icon"
+							aria-label="Visit EmDash"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://emdashcms.com/"
+						>
+							<img
+								src="https://emdashcms.com/brand/favicon.svg"
+								alt=""
+								width="72"
+								height="72"
+							/>
+						</a>
+						<a
+							class="sponsorship-title"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://emdashcms.com/"
+						>
+							<h3>EmDash</h3>
+						</a>
+						<div class="sponsorship-description">
+							<p>
+								An open-source, Astro-native CMS built for humans and agents.
+							</p>
+						</div>
+						<div class="sponsorship-links">
+							<a
+								class="sponsorship-link-site more group"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://emdashcms.com/"
+							>
+								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
+							</a>
+							<a
+								class="sponsorship-link-github"
+								aria-label="View EmDash on GitHub"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://github.com/emdash-cms/emdash"
+							>
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
+							</a>
+						</div>
+					</div>
+					<div class="sponsorship sponsorship-featured">
+						<a
+							class="sponsorship-icon"
+							aria-label="Visit Vinext"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://vinext.dev/"
+						>
+							<img
+								src="https://vinext.dev/favicon.ico"
+								alt=""
+								width="72"
+								height="72"
+							/>
+						</a>
+						<a
+							class="sponsorship-title"
+							target="_blank"
+							rel="noopener noreferrer"
+							href="https://vinext.dev/"
+						>
+							<h3>Vinext</h3>
+						</a>
+						<div class="sponsorship-description">
+							<p>A Vite plugin that reimplements the Next.js API surface.</p>
+						</div>
+						<div class="sponsorship-links">
+							<a
+								class="sponsorship-link-site more group"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://vinext.dev/"
+							>
+								Visit site
+								<Icon
+									name="ph:arrow-right"
+									class="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+								/>
+							</a>
+							<a
+								class="sponsorship-link-github"
+								aria-label="View Vinext on GitHub"
+								target="_blank"
+								rel="noopener noreferrer"
+								href="https://github.com/cloudflare/vinext"
+							>
+								<Icon
+									name="ph:github-logo"
+									class="h-5 w-5"
+									aria-hidden="true"
+								/>
+								<span class="text-muted-foreground font-mono text-xs">
+									GITHUB
+								</span>
+							</a>
+						</div>
+					</div>
 					<div class="sponsorship">
 						<a
 							class="sponsorship-icon"
@@ -2327,7 +2443,7 @@ export const prerender = true;
 		padding-bottom: 0;
 	}
 
-	.sponsorship-grid .sponsorship .sponsorship-icon svg {
+	.sponsorship-grid .sponsorship .sponsorship-icon :is(svg, img) {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -2341,8 +2457,8 @@ export const prerender = true;
 		transition: filter 0.15s ease;
 	}
 
-	.sponsorship-grid .sponsorship:hover .sponsorship-icon svg,
-	.sponsorship-grid .sponsorship:focus-within .sponsorship-icon svg {
+	.sponsorship-grid .sponsorship:hover .sponsorship-icon :is(svg, img),
+	.sponsorship-grid .sponsorship:focus-within .sponsorship-icon :is(svg, img) {
 		filter: grayscale(0);
 	}
 
