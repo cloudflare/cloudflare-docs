@@ -25,7 +25,7 @@ The `Payment-Method: x402` header tells Cloudflare to negotiate payment through 
 
 - [POST /ai/run](/ai-gateway/usage/rest-api/#airun-universal-endpoint)
 
-## Eligible Models
+## Eligible models
 
 - `z-ai/glm-4.7-flash`
 - `google/gemma-4-26b-a4b-it`
@@ -42,11 +42,11 @@ An x402-compatible client handles the challenge and retry automatically.
 
 <Steps>
 1. The client sends an inference request with the Cloudflare-specific `Payment-Method: x402` header. This requests x402 payment instead of using the account's configured billing method.
-2. AI Gateway validates the request and returns `402 Payment Required`. The standard `PAYMENT-REQUIRED` response header contains the accepted network, asset, payment scheme, and maximum authorized amount. Note that most AI Gateway models will use the `upto` payment scheme, which indicates that the maximum a client may be charged..
-```http
-HTTP/1.1 402 Payment Required
-PAYMENT-REQUIRED: <base64-encoded payment requirements>
-```
+2. AI Gateway validates the request and returns `402 Payment Required`. The standard `PAYMENT-REQUIRED` response header contains the accepted network, asset, payment scheme, and maximum authorized amount. Most AI Gateway models use the `upto` payment scheme, which indicates the maximum a client may be charged.
+   ```http
+   HTTP/1.1 402 Payment Required
+   PAYMENT-REQUIRED: <base64-encoded payment requirements>
+   ```
 3. The x402 client decodes the payment requirements. The wallet signs an authorization for up to the maximum amount.
 4. The client retries the same inference request with the signed authorization in the standard `PAYMENT-SIGNATURE` request header.
 5. Cloudflare verifies the authorization and runs the inference request. Cloudflare settles the actual request cost, which cannot exceed the authorized maximum.
