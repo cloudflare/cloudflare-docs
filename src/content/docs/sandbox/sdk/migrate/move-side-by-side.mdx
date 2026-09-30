@@ -30,7 +30,7 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
 
 1. Install version 1 of the package, and keep 0.12 under the alias `sandbox-0x`:
 
-   <PackageManagers pkg="@cloudflare/sandbox@rc sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
+   <PackageManagers pkg="@cloudflare/sandbox sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
 
    Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
 
@@ -66,7 +66,7 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
    ```dockerfile title="Dockerfile.v1"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
