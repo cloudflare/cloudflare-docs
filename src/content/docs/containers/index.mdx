@@ -21,6 +21,7 @@ import {
 	Plan,
 	TabItem,
 	Tabs,
+	TypeScriptExample,
 	WranglerConfig,
 	LinkButton,
 } from "~/components";
@@ -44,61 +45,135 @@ With Containers you can run:
 - Applications and libraries that require a full filesystem, specific runtime, or Linux-like environment
 - Existing applications and tools that have been distributed as container images
 
-Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write JavaScript:
+Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write TypeScript or JavaScript.
 
 <Tabs>
 	<TabItem label="Worker Code">
-		```js
-		import { Container, getContainer } from "@cloudflare/containers";
 
-    	export class MyContainer extends Container {
-    		defaultPort = 4000; // Port the container is listening on
-    		sleepAfter = "10m"; // Stop the instance if requests not sent for 10 minutes
-    	}
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { rewriteRequestForContainer, startAndWaitForPort } from "./utils";
 
-    	export default {
-    		async fetch(request, env) {
-    			const { "session-id": sessionId } = await request.json();
-    			// Get the container instance for the given session ID
-    			const containerInstance = getContainer(env.MY_CONTAINER, sessionId);
-    			// Pass the request to the container instance on its default port
-    			return containerInstance.fetch(request);
-    		},
-    	};
-    	```
-    </TabItem>
-    <TabItem label="Worker Config">
-    	<WranglerConfig>
-    		```json
-    		{
-    			"name": "container-starter",
-    			"main": "src/index.js",
-    			"compatibility_date": "$today",
-    			"containers": [
-    				{
-    					"class_name": "MyContainer",
-    					"image": "./Dockerfile",
-    					"max_instances": 5
-    				}
-    			],
-    			"durable_objects": {
-    				"bindings": [
-    					{
-    						"class_name": "MyContainer",
-    						"name": "MY_CONTAINER"
-    					}
-    				]
-    			},
-    			"migrations": [
-    				{
-    					"new_sqlite_classes": ["MyContainer"],
-    					"tag": "v1"
-    				}
-    			]
-    		}
-    		```
-    	</WranglerConfig>
-    </TabItem>
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+}
+
+export class MyContainer extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		await startAndWaitForPort(container, {
+			port: 4000,
+			inactivityTimeout: 10 * 60 * 1000,
+		});
+
+		const forwarded = rewriteRequestForContainer(request);
+		const response = await container.getTcpPort(4000).fetch(forwarded);
+		return response;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const containerRequest = request.clone();
+		const { "session-id": sessionId } = await request.json<{
+			"session-id": string;
+		}>();
+		return env.MY_CONTAINER.getByName(sessionId).fetch(containerRequest);
+	},
+};
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="utils.ts">
+
+<TypeScriptExample filename="src/utils.ts">
+```ts
+interface ReadinessOptions {
+	port: number;
+	inactivityTimeout: number;
+}
+
+type ContainerInstance = NonNullable<DurableObjectState["container"]>;
+
+export function rewriteRequestForContainer(request: Request): Request {
+	const url = new URL(request.url);
+	url.protocol = "http:";
+	url.host = "container";
+	const forwarded = new Request(url, request);
+	forwarded.headers.delete("host");
+	return forwarded;
+}
+
+export async function startAndWaitForPort(
+	container: ContainerInstance,
+	options: ReadinessOptions,
+): Promise<void> {
+	await container.setInactivityTimeout(options.inactivityTimeout);
+	if (!container.running) {
+		container.start();
+	}
+
+	// start() returns before the container is ready, so poll its health endpoint.
+	const port = container.getTcpPort(options.port);
+	let lastError: unknown;
+	for (let attempt = 0; attempt < 100; attempt++) {
+		try {
+			const response = await port.fetch("http://container/health");
+			if (!response.ok) {
+				throw new Error(`Health check returned ${response.status}`);
+			}
+			return;
+		} catch (error) {
+			lastError = error;
+			await scheduler.wait(200);
+		}
+	}
+	throw new Error(`Container did not become ready on port ${options.port}`, {
+		cause: lastError,
+	});
+}
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="wrangler.jsonc">
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "container-starter",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"max_instances": 5,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "MyContainer",
+				"name": "MY_CONTAINER",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["MyContainer"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+	</TabItem>
 
 </Tabs>
 
