@@ -8,7 +8,7 @@ products:
   - monetization-gateway
 ---
 
-[x402](https://www.x402.org/) is an HTTP payment protocol. Monetization Gateway uses x402 version 2 to request and settle payments within an HTTP exchange.
+[x402](https://www.x402.org/) is an HTTP payment protocol. Monetization Gateway uses x402 to request and settle payments within an HTTP exchange.
 
 The protocol uses two client-facing headers. Each header contains Base64-encoded JSON.
 
@@ -57,7 +57,7 @@ After Base64 decoding, a fixed-price response has this general structure:
 }
 ```
 
-The `accepts` array tells the client how it can pay. Important fields include:
+The `accepts` array has information about the accepted payment methods. Important fields include:
 
 | Field               | Description                                                                                          |
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -66,11 +66,11 @@ The `accepts` array tells the client how it can pay. Important fields include:
 | `asset`             | Asset identifier used for payment.                                                                   |
 | `amount`            | Fixed charge or maximum authorized charge in atomic units.                                           |
 | `payTo`             | Receiving wallet configured by the seller.                                                           |
-| `maxTimeoutSeconds` | Maximum time allowed for payment authorization.                                                      |
+| `maxTimeoutSeconds` | The amount of time the payment must be valid for.                                                    |
 
 ## Authorize payment
 
-The client selects an accepted option and signs a payment authorization. It then repeats the request with a `PAYMENT-SIGNATURE` header:
+The client selects an accepted payment method and signs a payment authorization. It then repeats the request with an added `PAYMENT-SIGNATURE` header:
 
 ```http
 GET /premium-data HTTP/1.1
@@ -78,7 +78,7 @@ Host: api.example.com
 PAYMENT-SIGNATURE: <BASE64_ENCODED_PAYMENT_PAYLOAD>
 ```
 
-The signed payload binds the authorization to the selected payment requirements. Use an x402 client library to create this payload instead of constructing it manually.
+The signed payload binds the authorization to the selected payment requirements.
 
 To implement a paying client, refer to [x402 payments](/agents/tools/payments/x402/). To pay from a Cloudflare Agent, refer to [Pay from Agents SDK](/agents/tools/payments/x402/pay-from-agents-sdk/).
 
@@ -86,7 +86,7 @@ To implement a paying client, refer to [x402 payments](/agents/tools/payments/x4
 
 After verifying the client authorization, Monetization Gateway forwards the request to your origin. It adds a `PAYMENT-CONTEXT` header containing a signed JSON Web Token (JWT).
 
-Your origin must validate this token before serving the paid resource. Variable-price origins also return the actual charge in `PAYMENT-SETTLEMENT`. These headers are between Monetization Gateway and your origin. They are not x402 client headers.
+Your origin must validate this token before serving the paid resource. Variable-price origins also return the actual amount to be charged in `PAYMENT-SETTLEMENT` (the `PAYMENT-SETTLEMENT` header is just for communicating with the Monetization Gateway, it will be stripped before reaching the client).
 
 For validation and settlement requirements, refer to [Payment validation](/monetization-gateway/configuration/payment-validation/).
 

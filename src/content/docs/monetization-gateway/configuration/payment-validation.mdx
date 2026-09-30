@@ -8,15 +8,13 @@ products:
   - monetization-gateway
 ---
 
-Your origin receives payment authorization in the `PAYMENT-CONTEXT` header. Validate this context before serving paid content.
+Your origin receives verified payment information in the `PAYMENT-CONTEXT` header. Validate this header before serving paid content.
 
 ## Validate the context
 
-The header contains a JSON Web Token (JWT). Validate it with a recommended JWT library.
+The header contains a JSON Web Token (JWT). Validate the signature with a recommended JWT library, reject the request if the signature verification fails.
 
-Use only the [pinned JSON Web Key Set (JWKS)](https://payments.cloudflare.com/certs). Require Ed25519 signatures, and cache keys according to the endpoint's `Cache-Control` header.
-
-Do not parse the token without verifying its signature. Reject requests when JWT validation fails.
+Use only the [pinned JSON Web Key Set (JWKS)](https://payments.cloudflare.com/certs).
 
 Recommended libraries include:
 
@@ -32,7 +30,9 @@ Recommended libraries include:
 If `PAYMENT-CONTEXT` is absent, treat the request as unpaid and unverified. Do not serve paid content or set `PAYMENT-SETTLEMENT`.
 :::
 
-## Read fixed claims
+## Read the `PAYMENT-CONTEXT` contents:
+
+### Fixed pricing rule match
 
 Fixed pricing uses the x402 `exact` scheme. The following decoded example authorizes 25,000 atomic units for one audience:
 
@@ -47,9 +47,10 @@ Fixed pricing uses the x402 `exact` scheme. The following decoded example author
 }
 ```
 
-Do not set `PAYMENT-SETTLEMENT` for fixed pricing. Monetization Gateway settles the signed amount.
+Monetization Gateway will settle the exact amount in the `PAYMENT-CONTEXT` which matches the previously configured rule.
+A `PAYMENT-SETTLEMENT` header sent for a fixed pricing request will be ignored.
 
-## Read variable claims
+### Variable pricing rule match
 
 Variable pricing uses the x402 `upto` scheme. The `amount` claim contains the authorized maximum.
 
@@ -66,20 +67,16 @@ The following decoded example authorizes up to 100,000 atomic units:
 }
 ```
 
-Calculate an actual amount where `0 <= actual <= authorized maximum`. Express the amount in atomic units.
+Calculate the actual amount you wish to charge for this request. Express the amount in atomic units.
 
-If the actual amount exceeds the authorized maximum, Monetization Gateway settles the authorized maximum instead. Nothing will be settled if the specified amount is zero.
+If the actual amount exceeds the authorized maximum configured in the rule and signed by the buyer, Monetization Gateway will settle the authorized maximum instead. Nothing will be settled if the actual amount is zero.
 
-## Report variable settlement
-
-Set `PAYMENT-SETTLEMENT` only for a successful `upto` response. Set it before sending response headers.
-
-Use a JSON value containing the actual amount as a string. This standalone example reports 1,000,000 atomic units:
+Set a `PAYMENT-SETTLEMENT` header with a base64 encoded JSON where the actual amount to be charged is expressed in atomic units:
 
 ```json
-{ "amount": "1000000" }
+{ "amount": "50000" }
 ```
 
-Do not set `PAYMENT-SETTLEMENT` when the response status is `400` or greater. Do not create a `PAYMENT-RESPONSE` header.
+NOTE: a `PAYMENT-SETTLEMENT` header will be ignored for responses with an error HTTP status code (`400` or greater).
 
 Monetization Gateway creates the payment receipt after settlement. It removes `PAYMENT-SETTLEMENT` from the response sent to the buyer.
