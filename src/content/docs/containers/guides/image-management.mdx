@@ -188,12 +188,16 @@ This is not necessary if you are using a pre-built image, as described below.
 
 ### Use pre-built container images
 
-Containers support images from the Cloudflare managed registry at `registry.cloudflare.com`, [Docker Hub](https://hub.docker.com/), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google Artifact Registry](https://cloud.google.com/artifact-registry).
+With the `default` scheduling policy, Containers support images from the Cloudflare managed registry at `registry.cloudflare.com`, [Docker Hub](https://hub.docker.com/), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google Artifact Registry](https://cloud.google.com/artifact-registry).
 
 :::note
 Cloudflare does not cache images pulled from Docker Hub, Amazon ECR, or Google Artifact Registry.
 
 Docker Hub pulls may be subject to Docker Hub pull limits or fair-use restrictions. Pulling images from Amazon ECR or Google Artifact Registry may incur cloud provider egress charges.
+:::
+
+:::note
+The `durable_object` scheduling policy does not pull from Docker Hub, Amazon ECR, or Google Artifact Registry, and does not use registry credentials configured with `wrangler containers registries configure`. Refer to [Use an external image](#use-an-external-image).
 :::
 
 #### Use public Docker Hub images
@@ -409,7 +413,7 @@ If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image i
 
 ## Push images to the Cloudflare Registry
 
-Both scheduling policies can use images that you push to the Cloudflare Registry yourself.
+Both scheduling policies can use images that you push to the Cloudflare Registry yourself. With the `durable_object` policy, this is required for any image from Docker Hub, Amazon ECR, Google Artifact Registry, or another external registry.
 
 ### Use images from other registries
 
