@@ -114,7 +114,9 @@ if (!this.ctx.container.running) {
 
 </TypeScriptExample>
 
-To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image:
+To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image.
+
+A Container restored from a snapshot reports an empty image from `inspect()`. The following example keeps restored Containers running instead of replacing them:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -122,7 +124,7 @@ To upgrade a running Container immediately, compare its image with the configure
 const image = this.ctx.container.images.base;
 const info = await this.ctx.container.inspect();
 
-if (info && info.image !== image) {
+if (info && info.image !== "" && info.image !== image) {
 	await this.ctx.container.destroy();
 }
 
