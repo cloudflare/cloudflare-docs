@@ -1427,6 +1427,10 @@ A `durable_object` entry accepts only the following options. Wrangler rejects ev
   - Instance targeting with `target_instance_count` or `target_instance_percentage` is not supported. If you omit `observability`, Wrangler preserves the application's existing setting instead of inheriting the root Worker setting.
 - `unsafe.configuration.experimental_flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - Experimental application flags. This is the only `unsafe` setting accepted with the `durable_object` policy.
+- `ssh` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for SSH through Wrangler. Refer to [SSH](#ssh). The deprecated `wrangler_ssh` alias is not accepted with the `durable_object` policy.
+- `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
+  - Public keys that should be added to the Container's `authorized_keys` file. Refer to [Authorized keys](#authorized-keys).
 
 Name one or more images and select one from Durable Object code when the Container starts:
 
