@@ -10,6 +10,8 @@ import { DashButton, Steps, Tabs, TabItem, TypeScriptExample, WranglerConfig } f
 
 With Cloudflare Access, you can restrict who is authorized to access your application. You decide who is approved, and every request is checked before your Worker runs. Approved visitors are let through, while everyone else is shown a login page or blocked.
 
+To add authentication for an application's customers or other external users, use an [end-user application](/cloudflare-one/access-controls/applications/http-apps/end-user-applications/). End-user applications create users in an application-scoped population and leave authorization to your Worker.
+
 You can protect:
 
 - **A single application**: require sign-in on its preview URLs, production URLs, or both.
