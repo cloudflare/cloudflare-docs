@@ -55,7 +55,7 @@ For the complete field compatibility list, refer to [Wrangler configuration](/wo
 
 ### Instance size changes
 
-The runtime `instance` option accepts `lite`, `standard-1`, `standard-2`, `standard-3`, and `standard-4`. It does not accept the following `instance_type` values:
+With the `durable_object` policy, you set the instance size with the `instance` option of `ctx.container.start()` instead of `instance_type` in Wrangler configuration. `instance` accepts `lite`, `standard-1`, `standard-2`, `standard-3`, and `standard-4`. If your existing application uses one of the following `instance_type` values, choose a replacement:
 
 - `dev`: Use `lite`.
 - `standard`: Use `standard-1`.
@@ -67,11 +67,23 @@ Custom instance objects use camel case at runtime. Rename `memory_mib` to `memor
 
 <Steps>
 
-1. **Add a replacement Durable Object class and Container application.**
+1. **Add a new Durable Object class and Container application.**
 
-   Leave the existing Container entry, Durable Object class, and binding unchanged. Changing the existing entry's `name` or `class_name` can cause Wrangler to create a new application instead of updating the existing one. Keeping the existing class and binding lets you route traffic back to them.
+   You cannot move the existing application by changing its `scheduling_policy` to `durable_object`, because the scheduling policy cannot be changed after creation. You also cannot reuse the existing Durable Object class, because each Durable Object namespace attaches to one Container application.
 
-   Add a new SQLite-backed Durable Object class, a binding for it, and a differently named Container application with the `durable_object` policy. The following example uses `exports`. If the Worker uses the legacy `migrations` array, add a new migration with `new_sqlite_classes: ["DurableSandbox"]` instead.
+   :::caution
+   Do not change `scheduling_policy` on the existing Container entry. `wrangler deploy` deploys the new Worker version before it configures the Container application. The deploy then fails with the new Worker code already live and no `durable_object` application behind it.
+   :::
+
+   Instead, add all of the following to the Wrangler configuration:
+
+   - A new SQLite-backed Durable Object class.
+   - A Durable Object binding for the new class.
+   - A new Container entry with `"scheduling_policy": "durable_object"`, a different `name`, and `class_name` set to the new class.
+
+   Leave the existing Container entry, Durable Object class, and binding unchanged so that you can route traffic back to them. Changing the existing entry's `name` or `class_name` can cause Wrangler to create a new application instead of updating the existing one.
+
+   The following example uses `exports`. If the Worker uses the legacy `migrations` array, add a new migration with `new_sqlite_classes: ["DurableSandbox"]` instead.
 
    <WranglerConfig>
 
