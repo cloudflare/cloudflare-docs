@@ -12,14 +12,14 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 A scheduling policy determines where you configure a Container image and [instance size](/containers/platform/limits/#instance-types). It also determines how image updates and [rollouts](/containers/configuration/rollouts/) apply. Choose the policy when you create the Container application.
 
+| Policy                  | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
+| ----------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `default`               | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |
+| `durable_object` (beta) | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance                                              | Sandboxes, agent environments, and other workloads that need per-instance configuration |
+
 :::note
 The `durable_object` scheduling policy is in public beta.
 :::
-
-| Policy           | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
-| ---------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `default`        | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |
-| `durable_object` | In Durable Object code when calling `ctx.container.start()` | Application code selects an image each time it starts an instance                                              | Sandboxes, agent environments, and other workloads that need per-instance configuration |
 
 One Wrangler configuration can contain applications with both policies. This lets a Worker use centrally managed service Containers alongside Durable Object-managed sandboxes.
 
