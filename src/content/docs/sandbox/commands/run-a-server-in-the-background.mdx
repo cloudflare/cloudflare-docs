@@ -16,7 +16,7 @@ import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
 Start a server that runs until the container stops, such as a development server, a tunnel, or a code kernel. The server has no exit code to wait for. Your Durable Object starts it on first use, waits until it answers, and starts it again in each new container.
 
-For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/).
+For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/). If the sandbox runs one server and keeps no files that you need, you can make the server the main process instead, as in [Preview a web application](/sandbox/previews/). When the main process exits, the instance stops, and its files end with it.
 
 ## Prerequisites
 
@@ -266,5 +266,6 @@ For a process that runs until it finishes, such as a build or an agent task, ref
 ## Related resources
 
 - [Run background processes](/sandbox/commands/run-background-processes/): processes that run until they finish.
+- [Preview a web application](/sandbox/previews/): a web server as the main process.
 - [Sandbox lifetime](/sandbox/concepts/lifetime/)
 - [`getTcpPort()`](/containers/api/durable-object-container/#gettcpport)
