@@ -55,35 +55,23 @@ The container in this example exposes `GET /health` on port `4000` and returns a
 <TypeScriptExample filename="src/index.ts">
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { startAndWaitForPort } from "./utils";
+import { rewriteRequestForContainer, startAndWaitForPort } from "./utils";
 
 interface Env {
 	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
 }
 
 export class MyContainer extends DurableObject<Env> {
-	private ready: Promise<void> | undefined;
-
 	async fetch(request: Request): Promise<Response> {
 		const container = this.ctx.container!;
-		if (!container.running) {
-			this.ready = undefined;
-		}
-		this.ready ??= startAndWaitForPort(container, {
+		await startAndWaitForPort(container, {
 			port: 4000,
 			inactivityTimeout: 10 * 60 * 1000,
-		}).catch((error: unknown) => {
-			this.ready = undefined;
-			throw error;
 		});
-		await this.ready;
 
-		const url = new URL(request.url);
-		url.protocol = "http:";
-		url.host = "container";
-		const forwarded = new Request(url, request);
-		forwarded.headers.delete("host");
-		return container.getTcpPort(4000).fetch(forwarded);
+		const forwarded = rewriteRequestForContainer(request);
+		const response = await container.getTcpPort(4000).fetch(forwarded);
+		return response;
 	}
 }
 
@@ -110,6 +98,15 @@ interface ReadinessOptions {
 }
 
 type ContainerInstance = NonNullable<DurableObjectState["container"]>;
+
+export function rewriteRequestForContainer(request: Request): Request {
+	const url = new URL(request.url);
+	url.protocol = "http:";
+	url.host = "container";
+	const forwarded = new Request(url, request);
+	forwarded.headers.delete("host");
+	return forwarded;
+}
 
 export async function startAndWaitForPort(
 	container: ContainerInstance,
