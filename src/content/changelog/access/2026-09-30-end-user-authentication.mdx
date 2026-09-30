@@ -1,0 +1,29 @@
+---
+title: Add end-user authentication to your applications
+description: Use Cloudflare Access to authenticate customers and other external users with an application-scoped user population.
+date: 2026-09-30
+products:
+  - access
+  - workers
+---
+
+Cloudflare Access now supports `end_user` applications for customer, partner, and other external user authentication. Each application connects to its own user population. Access creates a user record after the user's first successful sign-in and sends the signed identity to the application.
+
+End-user applications can protect Cloudflare Workers or applications on public hostnames. Access handles authentication, while your application decides what each user can do. In a Worker, call `ctx.access.getIdentity()` to read the population-scoped user ID and other verified identity fields.
+
+Create an end-user application through the Access API with `type` set to `end_user`, one user population, and managed OAuth enabled:
+
+```json
+{
+  "type": "end_user",
+  "name": "Customer application",
+  "domain": "app.example.com",
+  "allowed_idps": ["<IDENTITY_PROVIDER_ID>"],
+  "user_populations": ["<USER_POPULATION_ID>"],
+  "oauth_configuration": {
+    "enabled": true
+  }
+}
+```
+
+For setup instructions and a complete Worker example, refer to [Add end-user authentication to an application](/cloudflare-one/access-controls/applications/http-apps/end-user-applications/).
