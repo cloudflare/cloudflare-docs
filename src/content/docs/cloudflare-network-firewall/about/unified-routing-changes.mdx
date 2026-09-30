@@ -10,7 +10,7 @@ Cloudflare Network Firewall rules can behave differently depending on whether yo
 
 ## `ip.geoip.country`
 
-The `ip.geoip.country` field is no longer supported on Unified Routing. Rewrite any rule that uses `ip.geoip.country` with the [`ip.src.country` and `ip.dst.country`](/cloudflare-network-firewall/reference/network-firewall-fields/#ipsrccountry) fields instead.
+The `ip.geoip.country` field is no longer supported on Unified Routing. Before upgrading you must either remove these rules or rewrite any rule that uses `ip.geoip.country` with the [`ip.src.country` and `ip.dst.country`](/cloudflare-network-firewall/reference/network-firewall-fields/#ipsrccountry) fields instead.
 
 | Match type     | Rule using `ip.geoip.country`         | Equivalent rule                                                           |
 | -------------- | ------------------------------------- | ------------------------------------------------------------------------- |
