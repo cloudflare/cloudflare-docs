@@ -120,6 +120,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("R2 Data Catalog", "/r2-data-catalog/"),
 					link("R2 SQL", "/r2-sql/"),
 					link("Pipelines", "/pipelines/"),
+					link("K2", "/k2/"),
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),
