@@ -37,14 +37,14 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox@rc" />
+   <PackageManagers pkg="@cloudflare/sandbox" />
 
 2. To give `Files` its helper binary, create a `Dockerfile` in the project root. If you already have one, add the `COPY` line to it:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    RUN mkdir /workspace
    CMD ["sleep", "infinity"]

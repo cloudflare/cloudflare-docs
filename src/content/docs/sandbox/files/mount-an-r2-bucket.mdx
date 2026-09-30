@@ -36,7 +36,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox@rc" />
+   <PackageManagers pkg="@cloudflare/sandbox" />
 
 2. Create a `Dockerfile` in your project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mount` uses:
 
@@ -47,7 +47,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    	&& apt-get install -y --no-install-recommends ca-certificates fuse3 s3fs \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0-rc.2 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    CMD ["sleep", "infinity"]
    ```
