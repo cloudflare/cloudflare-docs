@@ -1,0 +1,19 @@
+src/assets/images/durable-objects/pending-io-keep-alive.svg
+  s_3e6028260b6d84::t_8df7937aca3172 1-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f3755e515341aecf422da8ac854362be162dea10",
+  "prompts": {},
+  "sessions": {
+    "s_3e6028260b6d84": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5921c1ceffe0EjmKsfUUih8j3",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "iglesiasbrandon <5313116+iglesiasbrandon@users.noreply.github.com>"
+    }
+  }
+}
