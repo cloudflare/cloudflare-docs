@@ -21,10 +21,32 @@ import { CardGrid, LinkTitleCard, Plan } from "~/components";
 <Plan type="workers-paid" />
 
 :::note
-These pages document `@cloudflare/sandbox` 0.x for existing applications. Version 1.0 is a different library that works with a container you start from a Durable Object. To start new work, refer to [Sandboxes](/sandbox/).
+These pages document `@cloudflare/sandbox` 0.x for existing applications. Version 1.0 is a different library that works with a container you start from a Durable Object. To move an existing application to 1.0, refer to [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/). To start new work, refer to [Sandboxes](/sandbox/).
 :::
 
 Sandbox SDK 0.x gives your [Worker](/workers/) a `Sandbox` class built on [Containers](/containers/). A sandbox starts its container on first use, and its methods run commands, manage files, run background processes, and expose services in that container.
+
+## Move to 1.0
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Migrate from Sandbox SDK 0.x"
+	href="/sandbox/sdk/migrate/"
+	icon="ph:arrow-circle-up"
+>
+	Move a 0.12 application to a Durable Object that starts its own container.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="API map"
+	href="/sandbox/sdk/migrate/api-map/"
+	icon="list-format"
+>
+	Find what replaces each 0.12 API in 1.0.
+</LinkTitleCard>
+
+</CardGrid>
 
 ## Maintain a 0.x application
 
