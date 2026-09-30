@@ -147,16 +147,18 @@ For implementation details, refer to [Environment variables and secrets](/contai
 
 ## Can I run Docker inside a container (Docker-in-Docker)?
 
-Yes. Use the `docker:dind-rootless` base image since Containers run without root privileges.
-
-You must disable iptables when starting the Docker daemon because Containers do not support iptables manipulation:
+Yes. Use the `docker:dind` image, and start the Docker daemon with iptables and IP forwarding turned off:
 
 ```dockerfile title="Dockerfile"
-FROM docker:dind-rootless
+FROM docker:dind
 
-# Start dockerd with iptables disabled, then run your app
-ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /path/to/your-app"]
+# Start dockerd with iptables and IP forwarding turned off, then run your app
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false & exec /path/to/your-app"]
 ```
+
+This Dockerfile works with both [scheduling policies](/containers/configuration/scheduling-policy/). Containers that use the `durable_object` policy cannot turn on IP forwarding. In those containers, the Docker daemon exits on startup unless you pass `--ip-forward=false`.
+
+Run the Docker daemon as `root`. Rootless Docker does not start in Containers.
 
 If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
 
@@ -174,7 +176,9 @@ exec /path/to/your-app
 
 <Render file="dind-network-host-caveat" product="containers" />
 
-For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
+{/* Remove the second and third sentences when the linked example passes --ip-forward=false. */}
+
+For a complete working example, refer to the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind). The example uses the `default` scheduling policy. To run it with `scheduling_policy: "durable_object"`, add `--ip-forward=false` to its `dockerd` flags.
 
 ## How do I allow or disallow egress from my container?
 
