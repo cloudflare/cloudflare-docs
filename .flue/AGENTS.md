@@ -141,6 +141,17 @@ Replay calls the dev review route with `replay: true`. It always runs a full rev
 
 In comment mode, replaying the whole list comments on every PR in it. Replay never writes review state or reactions, and has no debounce, supersession, or cleanup. Results and rendered markdown go to the ignored `.flue/replay-results/` directory.
 
+## Dependabot Replay
+
+`pnpm run flue:replay:dependabot --pr <number,...>` replays the Dependabot review for existing Dependabot PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as `flue:replay` and follows `DOCS_FLUE_REVIEW_MODE` from `.flue/.env.local`:
+
+| Mode      | Replay output                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| `log`     | Prints the rendered comment in the terminal and writes `.flue/replay-results/dependabot-<pr>.md` |
+| `comment` | Creates or updates the PR's Dependabot review comment                                            |
+
+The replay runs `DependabotReviewWorkflow` with `replay: true`, which only adds the rendered comment to the workflow output.
+
 Evals live in `evals/` and exercise structured agent output with fixtures. `pnpm run flue:evals` starts a local dev server with `DOCS_FLUE_AGENT_EVALS=1`, waits for it, runs evals, and tears it down. It requires `DOCS_FLUE_INTERNAL_TOKEN` in the environment or `.flue/.env(.local)`:
 
 ```sh

@@ -25,54 +25,78 @@ If `initialData.packages` is empty or malformed, call `get_pr_context` and parse
 
 The PR body in `initialData.prBody` already contains Dependabot-generated release notes, changelogs, and commits for each package. Use it as the primary source.
 
-From the PR body, identify:
+Record only changes that could matter to a consumer. Give each a `kind`:
 
-- **Breaking changes** — removed or renamed exports, changed function signatures, dropped Node/browser support
-- **Behavior changes** — anything that alters output, side effects, or defaults
-- **New APIs** — new exports, methods, or options
-- **Bug fixes** — especially if they fix incorrect output this repo depends on
-- **Security fixes** — note the CVE/GHSA ID and what it affects
+| Kind       | Use for                                                         |
+| ---------- | --------------------------------------------------------------- |
+| `breaking` | Removed or renamed exports, changed signatures, dropped support |
+| `behavior` | Changed output, side effects, or defaults                       |
+| `security` | A fix with a CVE/GHSA ID; put the ID in `text`                  |
+| `fix`      | Bug fixes, especially ones that change output this repo uses    |
+| `feature`  | New exports, methods, or options                                |
 
-Ignore internal refactors, CI changes, test changes, and type-only changes that do not affect emitted JS.
-
-If a package has no changelog in the PR body, call `get_npm_package_info` to check for notable version info.
+Skip internal refactors, CI, tests, docs, lockfile churn, and type-only changes that do not affect emitted JS. When a package has no changelog in the PR body, call `get_npm_package_info`. If there is still nothing, use an empty `changes` array.
 
 ### 3. Determine how this repo uses each package
 
-For each package, use `search_repo`, `trace_dependency`, and `read_repo_file` to understand usage. **Do not skip this step.**
+For each package, use `search_repo`, `trace_dependency`, and `read_repo_file`. **Do not skip this step.**
 
-Key files to check:
+- `package.json`: is it a direct dependency?
+- `pnpm-lock.yaml`: who pulls it in if transitive?
+- `src/`, `worker/`, `bin/`, config files: imports and callsites
 
-- `package.json` — is it a direct dependency?
-- `pnpm-lock.yaml` — who pulls it in if transitive?
-- `src/`, `worker/`, `bin/` — direct imports and callsites
+Then, for each recorded change, decide whether it touches an API or code path this repo actually uses. That answer is `affectsUs`.
 
-Use `search_repo` with the package name to find import sites. Then inspect found files to understand which APIs are called.
+### 4. Rate risk for each package
 
-Map files to dependency type:
+Rate the **change**, not the package. A package that renders every page is not high risk because of that. It is high risk only if the change alters what it does for this repo.
 
-- `src/content/docs/**/*.{ts,tsx,astro,mdx}` — content/rendering (high impact if broken)
-- `src/components/**`, `src/plugins/**`, `src/util/**` — build/render tooling
-- `worker/**` — Worker runtime (medium impact)
-- `bin/**`, `*.config.{ts,mjs}`, `vitest.config.ts` — build/test tooling (lower impact)
+| Risk     | Meaning                                                                                  |
+| -------- | ---------------------------------------------------------------------------------------- |
+| `none`   | Transitive only, types only, data only, or no used API touched                           |
+| `low`    | Bug fixes or additive changes; used APIs unchanged; or tooling only (lint, format, test) |
+| `medium` | A used API changed behavior in a way that could alter rendered output or Worker behavior |
+| `high`   | A breaking change hits an API this repo uses, or a security fix in a code path we use    |
 
-### 4. Rate impact for each package
+Do not raise the risk because a break would fail the build. CI builds every PR and catches missing exports, changed commands, and schema errors. Only raise it for problems CI cannot catch, such as visitor-visible output or runtime behavior.
 
-| Rating       | Meaning                                                                                        |
-| ------------ | ---------------------------------------------------------------------------------------------- |
-| **None**     | Transitive only; or only internal/type changes; not used by this repo                          |
-| **Very Low** | Direct dep but changed APIs not called in this repo                                            |
-| **Low**      | Changed APIs called only in build/test tooling, not content rendering or Worker                |
-| **Medium**   | Changed APIs affect Astro components, MDX processing, or Worker behavior                       |
-| **High**     | Changed APIs affect output seen by visitors — rendered HTML, search, routing, Worker responses |
+### 5. Choose checks
 
-For security fixes, note what the vulnerability affects and whether usage is in the vulnerable code path.
+`checks` lists manual steps a human must do before merging, for problems CI cannot catch. Each check names a package, a concrete `action`, and `where` (a page path or a command).
 
-### 5. Submit the result
+- Good: `action: "Open a page with an image whose alt text contains &, confirm it is not double-escaped"`, `where: "/workers/get-started/guide/"`
+- Bad: `action: "Spot-check pages"`, `where: "the site"`
+- Leave `checks` empty for `merge`. Do not add checks to be safe.
 
-Call `submit_dependabot_review` exactly once with the required result fields. All packages must be covered in `packageReviews`.
+### 6. Submit the result
 
-- `recommendation`: `merge`, `merge-verify`, or `investigate`
-- `merge` — no action needed
-- `merge-verify` — merge is likely safe, but manually spot-check the listed pages/areas
-- `investigate` — high-impact change, needs manual testing before merging
+Call `submit_dependabot_review` exactly once. All packages must appear in `packageReviews`.
+
+| `recommendation` | When                                                 |
+| ---------------- | ---------------------------------------------------- |
+| `merge`          | No manual step needed; `checks` is empty             |
+| `merge-verify`   | Likely safe, but at least one check is required      |
+| `investigate`    | A high-risk change needs manual testing before merge |
+
+## Output style
+
+Reviewers scan this comment. Write fragments, not sentences, and keep every field short.
+
+| Field                 | Write                                              | Length guide   |
+| --------------------- | -------------------------------------------------- | -------------- |
+| `headline`            | One line: the verdict and the single reason for it | Under 20 words |
+| `why`                 | The reason for this package's risk                 | 3 to 8 words   |
+| `changes[].text`      | What changed, upstream PR number if known          | Under 15 words |
+| `changes[].affectsUs` | One concrete repo fact, or `No: <API> unused`      | Under 15 words |
+| `usedIn`              | Up to 3 file paths                                 | Paths only     |
+| `checks[].action`     | The step to run                                    | Under 20 words |
+
+- Do not restate the package name or versions in any field. The table already shows them.
+- Do not explain reasoning or hedge. State the fact.
+- Include at most 5 `changes` per package; keep the ones that matter most.
+
+Good `headline`: `All 0.15.0 changes are additive and touch APIs this repo does not call.`
+Bad `headline`: a paragraph that summarizes each package and repeats the details.
+
+Good `affectsUs`: `No: apiCollection() unused`
+Bad `affectsUs`: `This repository does not appear to use this API in any of its content collections, so the change should not matter.`

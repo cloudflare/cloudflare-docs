@@ -46,6 +46,8 @@ export interface DependabotReviewParams {
 	triggerCommentId?: number;
 	/** Reaction id of the 👀 to remove when the review completes. */
 	triggerEyesReactionId?: number | null;
+	/** Local replay: the rendered comment is returned in the workflow output. */
+	replay?: boolean;
 }
 
 interface DependabotEnv {
@@ -202,6 +204,7 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 		const published = await step.do<{
 			finalized: boolean;
 			reason?: string;
+			commentBody?: string;
 		}>("publish", async () => {
 			const token = await getInstallationToken(ghEnv);
 
@@ -232,7 +235,10 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 					action: "complete_log_mode",
 					commentBody,
 				});
-				return { finalized: true };
+				return {
+					finalized: true,
+					commentBody: params.replay ? commentBody : undefined,
+				};
 			}
 
 			const fresh = await findExistingBotComment(token, number);
@@ -262,7 +268,10 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 				runId,
 				action: "complete_comment_posted",
 			});
-			return { finalized: true };
+			return {
+				finalized: true,
+				commentBody: params.replay ? commentBody : undefined,
+			};
 		});
 
 		if (!published.finalized) {
@@ -277,7 +286,9 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 			acted: true,
 			recommendation: result.recommendation,
 			packageCount: ctx.packages.length,
-			summary: result.summary,
+			headline: result.headline,
+			mode: reviewMode,
+			commentBody: published.commentBody,
 		};
 	}
 }
