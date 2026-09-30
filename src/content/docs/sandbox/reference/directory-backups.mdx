@@ -119,7 +119,7 @@ Replaces the target directory with the contents of the backup. The target is `di
 
 - The parent directory of the target must exist. The target does not need to exist.
 - The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. Otherwise `restore()` fails with `EBUSY`, including when a mount appears during the restore. Unmount first, for example with `S3Mount.unmount()`, and mount again after the restore.
-- `restore()` extracts the backup into a new directory beside the target and checks the size and SHA-256 of the object against the record. It then replaces the target with the new directory in one atomic rename. A restore that fails or is canceled leaves the target as it was and removes the new directory.
+- `restore()` extracts the backup into a new directory beside the target and checks the size and SHA-256 of the object against the record. It then replaces the target with the new directory in one atomic rename. When `restore()` throws `SandboxFileError` or `SandboxBackupError`, or is canceled before it verifies the download, it leaves the target as it was and removes the new directory.
 - A process that has its working directory inside the target, or has a file in the target open, keeps using the old directory or file. Restart such processes after `restore()`, or have them reopen files by absolute path.
 - The filesystem needs free space for the old and the restored directory at the same time. `restore()` stops with `ENOSPC` before free space falls below 5% of the filesystem or 256 MiB, whichever is smaller.
 - The root filesystem of a deployed container compresses files. `restore()` writes files without compression. The restored files take more disk space until a process rewrites them.
@@ -246,7 +246,9 @@ One `backup()` or `restore()` runs at a time in a container. Other calls wait fo
 
 ### Cancellation
 
-`DirectoryBackup` sets no timeouts and does not retry. Aborting `signal` rejects the call with the abort reason at once, including a call that is still waiting for another operation. The helper process in the container then removes what the operation created and exits.
+`DirectoryBackup` sets no timeouts and does not retry. Aborting `signal` rejects the call with the abort reason without waiting for the helper process, including a call that is still waiting for another operation. The helper process in the container then removes what the operation created and exits.
+
+After `restore()` verifies the download, it finishes replacing the target even if `signal` aborts. The call then resolves when the target is replaced, or rejects with the error from replacing it.
 
 When the Durable Object restarts during an operation, the result of the call is lost, and the helper process exits. A backup is not recorded. A restore has either replaced the whole target or left it as it was. Restoring the same backup again gives the same result either way.
 
