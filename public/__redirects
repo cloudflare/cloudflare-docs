@@ -724,6 +724,7 @@
 /sandbox/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
 /sandbox/sdk/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
 /sandbox/1-0-preview/migrate/ /sandbox/sdk/migrate/ 301
+/changelog/post/2026-08-07-sandbox-sdk-1-0-preview/ /changelog/post/2026-09-30-sandbox-sdk-1-0/ 301
 /sandbox/tutorials/ /sandbox/sdk/tutorials/ 301
 /sandbox/concepts/architecture/ /sandbox/sdk/concepts/architecture/ 301
 /sandbox/concepts/backup-restore/ /sandbox/sdk/concepts/backup-restore/ 301
