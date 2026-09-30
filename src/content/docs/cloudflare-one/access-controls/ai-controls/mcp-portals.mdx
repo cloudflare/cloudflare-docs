@@ -64,6 +64,20 @@ You do not need to specify which transport your upstream server uses. The portal
 
 If a connection attempt returns a `404`, `405`, or `406` error, the portal falls back to the next strategy. All other errors stop the connection attempt.
 
+### Client identity header
+
+When a portal sends a request to an upstream MCP server, it adds an `X-Forwarded-User-Agent` header that identifies the downstream MCP client.
+
+The portal selects the header value in the following order:
+
+| Source             | Behavior                                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `clientInfo.name`  | Preferred when the MCP client sends a valid value. The portal removes the ` (via mcp-remote <VERSION>)` suffix before forwarding the name. |
+| HTTP `User-Agent`  | Used when valid MCP client information is unavailable.                                                                                     |
+| Neither is present | The portal omits `X-Forwarded-User-Agent` and continues the request.                                                                       |
+
+An upstream server can record this header in logs or use it for diagnostics. Do not use it for authentication or authorization because the MCP client controls the value.
+
 ### Built-in portal tools
 
 Every portal exposes the following built-in tools to MCP clients, in addition to the upstream server tools:
