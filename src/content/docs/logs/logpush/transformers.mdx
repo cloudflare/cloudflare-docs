@@ -3,23 +3,18 @@ pcx_content_type: how-to
 title: Transformers
 sidebar:
   order: 3
-  badge: Beta
 description: Advanced filtering, reshaping, redacting, and computing on Logpush records with SQL before they leave Cloudflare.
 products:
   - logpush
 ---
 
-import { APIRequest, DashButton, Badge } from "~/components";
-
-<Badge text="Beta" variant="caution" />
-
-:::note[Beta]
-Transformers are in beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed.
-:::
+import { APIRequest, DashButton } from "~/components";
 
 Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
 
 You write the logic as a single SQL query, attach it to a Logpush job, and Cloudflare runs it on every batch. The `FROM` clause names the Logpush dataset (for example, `http_requests` or `audit_logs_v2`) and field names come from that dataset's schema.
+
+Transformers are available on Free, Pro, Business, and Enterprise plans for supported Logpush datasets. Each Cloudflare account includes 1 GB of transformation input per month. Additional input costs $0.04 per GB. For more information, refer to [Logpush pricing](/logs/logpush/pricing/).
 
 ## Key features
 
