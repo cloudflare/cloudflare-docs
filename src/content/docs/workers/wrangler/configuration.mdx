@@ -417,6 +417,21 @@ Example:
 
 </WranglerConfig>
 
+### Issues
+
+Requires Wrangler 4.134.0 or later.
+
+Set `observability.issues.enabled` to `true` to detect and group production failures for a Worker. Set it to `false` and deploy the Worker to stop detecting new failures. Refer to [Workers Issues](/workers/observability/issues/) for supported signals, retention, and behavior.
+
+<WranglerConfig>
+
+```toml
+[observability.issues]
+enabled = true
+```
+
+</WranglerConfig>
+
 ## Custom builds
 
 :::note
