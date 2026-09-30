@@ -631,6 +631,8 @@ Each entry in `exports` is keyed by Durable Object class name. The fields on eac
   - Required when `state` is `"transferred"`. The name of the target Worker that will receive the namespace.
 - `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
+- `container` <Type text="string" /> <MetaInfo text="optional" />
+  - Attaches a [Container](#containers) to this Durable Object. Must match the `name` of an entry in the top-level `containers` array, and requires `storage` to be `"sqlite"`. Only allowed when `state` is `"created"` or `"expecting-transfer"`. Use this instead of setting `class_name` on the Container entry.
 
 Example:
 
@@ -1312,7 +1314,7 @@ You can define [Containers](/containers) to run alongside your Worker using the 
 Each Container application has a [scheduling policy](/containers/configuration/scheduling-policy/) that determines whether image and instance configuration is managed centrally or supplied by Durable Object code at runtime. The policy is immutable after the application is created.
 
 :::note
-Each Container application must link to a Durable Object defined in the same Worker. Set `class_name` on the Container entry, or set `name` and reference that name from [`exports.<Class>.container`](/durable-objects/reference/durable-objects-migrations/). Configure exactly one of these linkage directions.
+Each Container application must link to a Durable Object defined in the same Worker. Set `class_name` on the Container entry, or set `name` and reference that name from [`exports.<Class>.container`](#exports). Configure exactly one of these linkage directions.
 :::
 
 ### `default` scheduling policy
@@ -1326,17 +1328,17 @@ The following options are available:
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
     build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
-- `class_name` <Type text="string" /> <MetaInfo text="conditionally required" />
+- `class_name` <Type text="string" /> <MetaInfo text="conditional" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
     and allow each instance to control a container. Refer to the [Durable Object Container API](/containers/api/durable-object-container/) for details.
   - Omit this field when the Container is linked by `name` from `exports.<Class>.container`.
-- `name` <Type text="string" /> <MetaInfo text="conditionally required" />
+- `name` <Type text="string" /> <MetaInfo text="conditional" />
   - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
   - Required when `class_name` is omitted so that `exports.<Class>.container` can reference the Container.
 - `instance_type` <Type text="string | object" /> <MetaInfo text="optional" />
   - The instance type determines the amount of memory, CPU, and disk given to the container instance. Supported values are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information, refer to [Limits and Instance Types](/containers/platform/limits/#instance-types).
-  - To specify a custom instance type, see [Custom instance types](#custom-instance-types).
+  - To specify a custom instance type, refer to [Custom instance types](#custom-instance-types).
 - `max_instances` <Type text="number" /> <MetaInfo text="optional" />
   - The maximum number of concurrent container instances. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
   - Defaults to 20.
@@ -1373,7 +1375,7 @@ The following options are available:
 	"containers": [
 		{
 			"class_name": "MyContainer",
-			"scheduling_policy": "default",
+			"scheduling_policy": "default", // Optional. Cannot be changed after the application is created.
 			"image": "./Dockerfile",
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
@@ -1407,22 +1409,30 @@ The following options are available:
 
 ### `durable_object` scheduling policy
 
-The `durable_object` policy lets each Durable Object supply its Container image or snapshot and instance size to `ctx.container.start()`. Set `scheduling_policy` to `"durable_object"` explicitly.
+The `durable_object` policy is in beta. It lets each Durable Object supply its Container image or snapshot and instance size to `ctx.container.start()`. Set `scheduling_policy` to `"durable_object"` explicitly. The linked Durable Object must use SQLite storage.
 
-A `durable_object` entry accepts only the following options. Wrangler rejects every other Container application field for this policy.
+A `durable_object` entry accepts only the following options. Wrangler rejects every other Container application field for this policy, including `image`, `instance_type`, `max_instances`, rollout settings, and placement constraints.
 
 - `scheduling_policy` <Type text="string" /> <MetaInfo text="required" />
   - Must be set to `"durable_object"`.
 - `images` <Type text="Record<string, object>" /> <MetaInfo text="optional" />
   - Named images that Durable Object code can access through `ctx.container.images`. A configuration can contain up to 100 named images, and each name must contain 1-128 characters.
-  - Each named image must set exactly one of `dockerfile` or `image`. `dockerfile` is a local Dockerfile path and can also set `build_context` and `build_vars`. `image` must be a digest-pinned reference in the Cloudflare managed registry.
-- `class_name` <Type text="string" /> <MetaInfo text="conditionally required" />
+  - Each named image must set exactly one of `dockerfile` or `image`.
+- `images.<name>.dockerfile` <Type text="string" /> <MetaInfo text="conditional" />
+  - Path to a local Dockerfile. `wrangler deploy` builds and pushes the image.
+- `images.<name>.build_context` <Type text="string" /> <MetaInfo text="optional" />
+  - Build context, relative to the Wrangler configuration file. Defaults to the directory of `dockerfile`. Only valid with `dockerfile`. Equivalent to `image_build_context` in the `default` policy.
+- `images.<name>.build_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Build-time variables, equivalent to `image_vars` in the `default` policy. Only valid with `dockerfile`.
+- `images.<name>.image` <Type text="string" /> <MetaInfo text="conditional" />
+  - A digest-pinned image reference in the Cloudflare Registry.
+- `class_name` <Type text="string" /> <MetaInfo text="conditional" />
   - The corresponding Durable Object class name.
   - Omit this field when the Container is linked by `name` from `exports.<Class>.container`.
-- `name` <Type text="string" /> <MetaInfo text="conditionally required" />
-  - The name of the Container application.
+- `name` <Type text="string" /> <MetaInfo text="conditional" />
+  - The name of the Container application. Defaults to a combination of your Worker name and the class name.
   - Required when `class_name` is omitted so that `exports.<Class>.container` can reference the Container.
-- `observability` <Type text="object" /> <MetaInfo text="optional with restrictions" />
+- `observability` <Type text="object" /> <MetaInfo text="optional" />
   - Set either `observability.enabled` or `observability.logs.enabled` to enable or disable application-wide Container logs.
   - Instance targeting with `target_instance_count` or `target_instance_percentage` is not supported. If you omit `observability`, Wrangler preserves the application's existing setting instead of inheriting the root Worker setting.
 - `unsafe.configuration.experimental_flags` <Type text="string[]" /> <MetaInfo text="optional" />
@@ -1472,11 +1482,13 @@ Name one or more images and select one from Durable Object code when the Contain
 
 </WranglerConfig>
 
-Configure the startup image or snapshot and instance size in `ctx.container.start()`. Fields from the `default` policy, including `image`, `instance_type`, `max_instances`, rollout settings, and placement constraints, are not supported.
+Configure the startup image or snapshot and instance size in `ctx.container.start()`. Refer to [Scheduling policy](/containers/configuration/scheduling-policy/) for a code example.
 
-### Custom Instance Types
+### Custom instance types
 
-Custom instance types only apply to the `default` scheduling policy. In place of the [named instance types](/containers/platform/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
+In Wrangler configuration, custom instance types apply only to the `default` scheduling policy. With the `durable_object` policy, pass a custom instance object to `ctx.container.start()` instead. Refer to [Scheduling policy](/containers/configuration/scheduling-policy/).
+
+In place of the [named instance types](/containers/platform/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
 See the [limits documentation](/containers/platform/limits/#custom-instance-types) for constraints on custom instance types.
 
 The following options are available:
@@ -1511,7 +1523,7 @@ The following options are available:
 
 ### SSH
 
-SSH configuration applies to both the `default` and `durable_object` scheduling policies. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
+Configuration for SSH access to a Container instance through Wrangler. SSH configuration applies to both the `default` and `durable_object` scheduling policies. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
 
 The following options are available:
 
