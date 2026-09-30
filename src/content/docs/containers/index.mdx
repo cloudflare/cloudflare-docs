@@ -47,8 +47,6 @@ With Containers you can run:
 
 Container instances are spun up on-demand and controlled by code you write in your [Worker](/workers). Instead of chaining together API calls or writing Kubernetes operators, you just write TypeScript or JavaScript.
 
-The container in this example exposes `GET /health` on port `4000` and returns a successful response when it is ready. Because `container.start()` returns immediately, the Durable Object waits for this endpoint before forwarding requests.
-
 <Tabs>
 	<TabItem label="Worker Code">
 
@@ -117,6 +115,7 @@ export async function startAndWaitForPort(
 		container.start();
 	}
 
+	// start() returns before the container is ready, so poll its health endpoint.
 	const port = container.getTcpPort(options.port);
 	let lastError: unknown;
 	for (let attempt = 0; attempt < 100; attempt++) {
