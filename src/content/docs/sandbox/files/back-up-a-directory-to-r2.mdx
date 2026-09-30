@@ -211,7 +211,7 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
    }
    ```
 
-   `restore()` replaces the directory and removes files that are not in the backup. Before it replaces anything, it checks the object against the SHA-256 in the record. A restore that fails leaves the directory as it was. If the object no longer exists, `restore()` throws `SandboxBackupError` with the code `BACKUP_NOT_FOUND`. If the object does not match the record, the code is `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
+   `restore()` replaces the directory and removes files that are not in the backup. Before it replaces anything, it checks the object against the SHA-256 in the record. When `restore()` throws `SandboxFileError` or `SandboxBackupError`, it leaves the directory as it was. If the object no longer exists, `restore()` throws `SandboxBackupError` with the code `BACKUP_NOT_FOUND`. If the object does not match the record, the code is `BACKUP_INTEGRITY`. For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors).
 
 9. Replace the default export of your Worker with routes that write a note, back up the project, and restore a backup:
 
