@@ -20,6 +20,7 @@ export { default as LinkButton } from "./components/ui/link-button/LinkButton.as
 export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
+export { default as CopyPromptButton } from "./components/CopyPromptButton.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
 export { default as CfCommand } from "./components/cf/CfCommand.astro";
 export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
