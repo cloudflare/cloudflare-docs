@@ -15,6 +15,7 @@ products:
 reviewed: 2026-09-24
 ---
 
+import { CardGrid, LinkTitleCard } from "~/components";
 import { SandboxEnvironments } from "~/components/react/sandbox/SandboxEnvironments";
 
 A sandbox runs code that you did not write and do not trust, such as code that a model generates or the test suite of a repository. Cloudflare runs it in one of two environments: a [Container](/containers/), which runs a Linux image, or a [Dynamic Worker](/dynamic-workers/), which runs JavaScript against methods that your [Worker](/workers/) provides. Your Worker starts either one, and one Worker can use both.
@@ -64,3 +65,23 @@ With a Dynamic Worker, you write each method and decide what it returns. When ge
 ## Use both in one application
 
 A coding agent can answer questions about a repository through scoped methods in a Dynamic Worker. When the agent proposes a patch, the same Worker starts a Container and runs the test suite of the repository.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Run a Linux command"
+	href="/sandbox/get-started/"
+	icon="ph:terminal-window"
+>
+	Post a command to a Worker and read stdout from Linux.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Run JavaScript"
+	href="/sandbox/get-started/dynamic-workers/"
+	icon="ph:code"
+>
+	Post JavaScript to a Worker and read the sandboxed result.
+</LinkTitleCard>
+
+</CardGrid>
