@@ -102,8 +102,11 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
    		if (!container.running) {
    			container.start({
+   				// Debian Trixie with Node.js 24
    				image: "cloudflare/debian-trixie",
+   				// Keep the instance running so it can accept commands
    				entrypoint: ["sleep", "infinity"],
+   				// Block commands in the sandbox from reaching the Internet
    				enableInternet: false,
    			});
    		}
@@ -127,8 +130,6 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    ```
 
    </TypeScriptExample>
-
-   `cloudflare/debian-trixie` is Debian Trixie with Node.js 24. The `sleep infinity` entrypoint keeps the instance running so it can accept commands. `enableInternet: false` blocks the public Internet.
 
 5. Generate types for the binding. Wrangler reads the `MyContainer` class from `src/index.ts` to type `env.MY_CONTAINER`:
 
