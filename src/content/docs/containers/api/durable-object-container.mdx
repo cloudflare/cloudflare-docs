@@ -128,7 +128,7 @@ const containerInfo = await this.ctx.container.inspect();
 #### Return values
 
 - `Promise<ContainerInfo | null>`: Resolves with `null` when no container is running. Otherwise, it resolves with a `ContainerInfo` object containing:
-  - `image` (`string`): Image reference passed to [`start()`](#start). The value is an empty string for a container restored from `containerSnapshot`.
+  - `image` (`string`): Image reference passed to [`start()`](#start). The value is an empty string while the container is starting and for a container restored from `containerSnapshot`.
   - `labels` (`Record<string, string>`): Labels passed to [`start()`](#start).
 
 ### `exec`
