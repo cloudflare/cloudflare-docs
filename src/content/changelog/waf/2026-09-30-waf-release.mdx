@@ -1,7 +1,7 @@
 ---
-title: "WAF Release - 2026-09-29"
-description: Cloudflare WAF managed rulesets 2026-09-29 release
-date: 2026-09-29
+title: "WAF Release - 2026-09-30"
+description: Cloudflare WAF managed rulesets 2026-09-30 release
+date: 2026-09-30
 ---
 
 import { RuleID } from "~/components";
@@ -9,7 +9,8 @@ import { RuleID } from "~/components";
 This release introduces new detections to enhance protection against a specific GitLab path traversal vulnerability, alongside advanced generic rules targeting HTTP request smuggling, directory traversal, and command injection attempts.
 
 **Key Findings**
-- CVE-2026-85706: A path traversal vulnerability affecting GitLab. Attackers can exploit this flaw to navigate beyond intended directory structures, potentially reading unauthorized files and exposing sensitive configuration data.
+
+- CVE-2026-85706: A path traversal vulnerability affecting GitLab.
 
 <table style="width: 100%">
 	<thead>
@@ -44,7 +45,7 @@ This release introduces new detections to enhance protection against a specific 
 			<td>HTTP Request Smuggling - Request Body Anomaly - Beta</td>
 			<td>Log</td>
 			<td>Block</td>
-            <td>This rule is merged into the original rule "HTTP Request Smuggling - Request Body Anomaly" (ID:{" "}<RuleID id="a80f214f0947435dabb2ba2d1489d892" />).</td>
+			<td>This rule is merged into the original rule "HTTP/2 Request Smuggling - Request Body Anomaly" (ID:{" "}<RuleID id="a80f214f0947435dabb2ba2d1489d892" />).</td>
 		</tr>
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
@@ -67,7 +68,7 @@ This release introduces new detections to enhance protection against a specific 
 			<td>Log</td>
 			<td>Block</td>
 			<td>This is a new detection.</td>
-		</tr>		
+		</tr>
 		<tr>
 			<td>Cloudflare Managed Ruleset</td>
 			<td>
@@ -75,7 +76,7 @@ This release introduces new detections to enhance protection against a specific 
 			</td>
 			<td>N/A</td>
 			<td>Generic - Request routing cache inconsistency</td>
-			<td>-</td>
+			<td>N/A</td>
 			<td>Block</td>
 			<td>This is a new detection.</td>
 		</tr>
