@@ -216,14 +216,7 @@ export const sidebarSections: SidebarSection[] = [
 				label: "Monetize",
 				icon: "ph:coins",
 				collapsed: true,
-				nodes: [
-					link(
-						"Monetization Gateway",
-						"/monetization-gateway/",
-						undefined,
-						"Beta",
-					),
-				],
+				nodes: [link("Monetization Gateway", "/monetization-gateway/")],
 			},
 			{
 				type: "group",
