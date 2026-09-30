@@ -8,7 +8,7 @@ date: 2026-10-01
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-The Workers Web Crypto API now supports ML-KEM-768, ML-KEM-1024, and all three ML-DSA parameter sets. ML-KEM establishes shared secrets, while ML-DSA signs and verifies data.
+The Workers Web Crypto API now supports ML-KEM-768, ML-KEM-1024, ML-DSA-44, ML-DSA-65, and ML-DSA-87. ML-KEM establishes shared secrets, while ML-DSA signs and verifies data.
 
 The opt-in API also adds key encapsulation and decapsulation methods, `getPublicKey()`, `SubtleCrypto.supports()`, and JSON Web Keys (JWKs) with the `AKP` key type.
 
@@ -17,7 +17,6 @@ Turn on the `webcrypto_modern_algorithms` compatibility flag to use these featur
 <WranglerConfig>
 
 ```toml
-compatibility_date = "$today"
 compatibility_flags = ["webcrypto_modern_algorithms"]
 ```
 
