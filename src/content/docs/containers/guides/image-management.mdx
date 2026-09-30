@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Image Management
-description: Configure and update Container images with the durable_object and default scheduling policies.
+description: Configure and update Container images for both scheduling policies, including images from Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry.
 sidebar:
   order: 4
 products:
@@ -70,7 +70,7 @@ The following configuration defines one image from each source:
 
 </WranglerConfig>
 
-Wrangler builds or resolves each named image and exposes its immutable reference through `ctx.container.images`. Select a reference when the Durable Object starts its Container:
+Wrangler builds or resolves each named image and exposes its digest-pinned reference through `ctx.container.images`. Select a reference when the Durable Object starts its Container:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -94,7 +94,7 @@ A configuration can contain up to 100 named images. Each image name must contain
 
 ### Roll out a named image update
 
-To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. The corresponding value in `ctx.container.images` now refers to the updated image.
+To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. After the deployment completes, the corresponding value in `ctx.container.images` refers to the updated image. During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each Durable Object sees the image map of the Worker version that runs it, so different Durable Objects can start different images until the deployment completes.
 
 Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
 
@@ -107,32 +107,40 @@ if (!this.ctx.container.running) {
 	this.ctx.container.start({
 		image: this.ctx.container.images.base,
 		instance: "standard-2",
-		enableInternet: true,
+		enableInternet: false,
 	});
 }
 ```
 
 </TypeScriptExample>
 
-To upgrade a running Container immediately, compare its current image with the configured image. Stop and restart the Container when they differ:
+To upgrade a running Container immediately, record the image reference in Durable Object storage each time you start the Container. When the recorded reference differs from the configured image, stop the Container and start it again:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-if ((await this.ctx.container.inspect())?.image !== this.ctx.container.images.base) {
-	if (this.ctx.container.running) {
-		await this.ctx.container.destroy();
-	}
+const image = this.ctx.container.images.base;
+const startedImage = await this.ctx.storage.get<string>("containerImage");
 
+if (this.ctx.container.running && startedImage !== image) {
+	await this.ctx.container.destroy();
+}
+
+if (!this.ctx.container.running) {
 	this.ctx.container.start({
-		image: this.ctx.container.images.base,
+		image,
 		instance: "standard-2",
-		enableInternet: true,
+		enableInternet: false,
 	});
+	await this.ctx.storage.put("containerImage", image);
 }
 ```
 
 </TypeScriptExample>
+
+:::caution
+`destroy()` stops the Container immediately. In-progress work and any filesystem changes made since startup are lost. To preserve the filesystem, create a [snapshot](/containers/guides/snapshots/) before you stop the Container. A snapshot is tied to the image it was created from, so you cannot restore it onto the updated image.
+:::
 
 ### Use an external image
 
@@ -140,7 +148,7 @@ if ((await this.ctx.container.inspect())?.image !== this.ctx.container.images.ba
 The `durable_object` scheduling policy does not support direct image references from external registries. A named `image` source must use a digest-pinned reference from the Cloudflare managed registry.
 :::
 
-To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, configure the resulting digest-pinned reference as a named image.
+To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, [get its digest](#get-the-digest-of-a-pushed-image) and configure the resulting digest-pinned reference as a named image.
 
 A named `dockerfile` entry can use an external image in its `FROM` instruction. Authenticate your local Docker installation before deploying if the base image is private.
 
@@ -390,7 +398,21 @@ image = "<REGION>-docker.pkg.dev/<PROJECT_ID>/<REPOSITORY>/<IMAGE>:<TAG>"
 
 </WranglerConfig>
 
-#### Use images from other registries
+To use an image from a registry not listed above, [push it to the Cloudflare Registry](#use-images-from-other-registries).
+
+:::note
+With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry are supported in local development.
+
+With `vite dev`, image references from external registries such as Docker Hub, Amazon ECR, and Google Artifact Registry are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+
+If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
+:::
+
+## Push images to the Cloudflare Registry
+
+Both scheduling policies can use images that you push to the Cloudflare Registry yourself.
+
+### Use images from other registries
 
 If you want to use a pre-built image from another registry provider, first make sure it exists locally, then push it to the Cloudflare Registry:
 
@@ -415,7 +437,7 @@ Or, you can use the `-p` flag with `wrangler containers build` to build and push
 	args="containers build -p -t <TAG> ."
 />
 
-This will output an image registry URI that you can then use in your Wrangler configuration:
+This will output an image registry URI. With the `default` scheduling policy, you can use this tag reference in your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -431,19 +453,43 @@ This will output an image registry URI that you can then use in your Wrangler co
 
 </WranglerConfig>
 
-:::note
-With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry are supported in local development.
+With the `durable_object` scheduling policy, a named `image` source requires a digest-pinned reference. [Get the digest of the pushed image](#get-the-digest-of-a-pushed-image) first.
 
-With `vite dev`, image references from external registries such as Docker Hub, Amazon ECR, and Google Artifact Registry are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+### Get the digest of a pushed image
 
-If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
-:::
+After you push an image, list its repository digests with Docker:
+
+```bash
+docker image inspect --format '{{join .RepoDigests "\n"}}' registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>
+```
+
+Use the entry that starts with `registry.cloudflare.com/` as a named `image` source:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"tools": {
+					"image": "registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>@sha256:<DIGEST>",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
 
 ### Push images with CI
 
 To use an image built in a continuous integration environment, install `wrangler` then
 build and push images using either `wrangler containers build` with the `--push` flag, or
-using the `wrangler containers push` command.
+using the `wrangler containers push` command. With the `durable_object` scheduling policy, [get the digest of the pushed image](#get-the-digest-of-a-pushed-image) before you update your Wrangler configuration.
 
 ## Registry limits
 
