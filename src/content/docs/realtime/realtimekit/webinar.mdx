@@ -8,7 +8,7 @@ products:
   - realtime
 ---
 
-import { Steps, Details } from "~/components";
+import { CopyPromptButton, Steps, Details } from "~/components";
 
 In a RealtimeKit webinar, presenters publish audio and video from the [stage](/realtime/realtimekit/concepts/meeting/#stage). Viewers watch and can request to join the stage.
 
@@ -35,6 +35,13 @@ Before you set up a webinar, make sure that you have:
 If you have not completed these requirements, refer to [Quickstart](/realtime/realtimekit/quickstart/).
 
 ## Set up a webinar
+
+To configure presenter and viewer presets with a coding agent, copy this prompt. Then continue with **Create a meeting** in the manual steps.
+
+<CopyPromptButton
+	tooltip="Configure RealtimeKit webinar presets with cf"
+	prompt="Set up presenter and viewer presets for a Cloudflare RealtimeKit webinar. Read https://developers.cloudflare.com/realtime/realtimekit/webinar/, https://developers.cloudflare.com/api/resources/realtime_kit/subresources/presets/methods/create/, and https://developers.cloudflare.com/cf/agents/. Use the Cloudflare cf CLI, installing it if needed. Confirm my account and app ID. Inspect cf realtime kit presets commands with --help and cf schema. Retrieve any webinar_presenter and webinar_viewer presets and verify their permissions before reusing them. Create missing presets with config.view_type set to WEBINAR and permissions.stage_enabled set to true. Set stage_access and audio, video, and screenshare can_produce to ALLOWED for presenters and CAN_REQUEST for viewers. Allow presenters, but not viewers, to accept production requests. Include all other required config, permissions, and UI fields from the current schema. Ask before changing an existing preset used by other meetings. Preview changes with --dry-run, apply them, then retrieve both presets and compare their saved permissions. Report the exact preset names and the remaining presenter/viewer stage-request test from the guide. Keep API tokens private. Do not create meetings or claim the browser test passed. If a step fails, explain the blocker and what remains."
+/>
 
 <Steps>
 1. In the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to **Presets** and review the default `webinar_presenter` and `webinar_viewer` presets. Both presets have **Meeting Type** set to **Video (WebRTC)** and **Manage Stage (Webinar)** turned on under **Configuration** > **Stage & Media**.
