@@ -273,7 +273,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-for-platforms/ @dinasaur404 @irvinebroque @cloudflare/product-owners
 /src/content/directory/cloudflare-for-platforms.yaml @dinasaur404 @irvinebroque @cloudflare/product-owners
 /src/icons/cloudflare-for-platforms.svg @dinasaur404 @irvinebroque @cloudflare/product-owners
-/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @dinasaur404 @irvinebroque @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/ @baubuchon-cf @cferike @dinasaur404 @irvinebroque @cloudflare/appsec-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @dinasaur404 @irvinebroque @cloudflare/deploy-config @cloudflare/product-owners
 /src/content/partials/cloudflare-for-platforms/ @baubuchon-cf @dinasaur404 @irvinebroque @cloudflare/appsec-reviewers @cloudflare/product-owners
 
