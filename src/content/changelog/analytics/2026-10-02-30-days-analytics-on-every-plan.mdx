@@ -8,6 +8,8 @@ Every plan now gets at least 30 days of analytics data. Adaptive analytics datas
 
 A full month of history lets you investigate an issue after it happens, compare today with the same day in previous weeks, and tell a one-time spike from a longer trend. The change applies in the Cloudflare dashboard, in [Custom Dashboards](/analytics/custom-dashboards/), and through the [GraphQL Analytics API](/analytics/graphql-api/).
 
+Domain analytics also now live in one place. In the Cloudflare dashboard, select a domain and go to **Analytics** to see Traffic, Performance, Security, Cache, Origin, DNS, and Visitors as tabs that share one time range and one set of filters. Account-level analytics are under **Observability** > **Analytics**.
+
 This change does not alter which datasets or fields your plan can access. Aggregated datasets, such as `httpRequests1hGroups`, keep their existing per-plan limits. To check the exact retention and query window for a zone or account, query the [settings](/analytics/graphql-api/features/discovery/settings/) for each dataset.
 
 For plan-specific limits, refer to [Security Analytics](/waf/analytics/security-analytics/#availability), [Security Events](/waf/analytics/security-events/#availability), and [GraphQL Analytics API limits](/analytics/graphql-api/limits/#node-limits-and-availability).
