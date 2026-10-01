@@ -12,7 +12,7 @@ Use the Analytics SQL binding to query analytics datasets from a Worker.
 
 ## Configure the binding
 
-Add an Analytics SQL binding to your Worker's Wrangler configuration:
+Add an Analytics SQL binding to your Worker's Wrangler configuration. The `analytics` key requires Wrangler 4.145.0 or later.
 
 <WranglerConfig>
 
@@ -43,8 +43,10 @@ type CountRow = {
 
 export default {
 	async fetch(_request, env): Promise<Response> {
+		const start = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 		const result = await env.ANALYTICS_SQL.query<CountRow>({
-			query: "SELECT COUNT(*) AS requests FROM events.httpRequests",
+			query: "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start",
+			params: { start },
 		});
 
 		return Response.json(result);
@@ -91,7 +93,7 @@ The `AnalyticsSQLResult<T>` object has the following properties:
 | `rows`       | `number`                 | Number of rows in `data`.                         |
 | `statistics` | `AnalyticsSQLStatistics` | Execution statistics for the query.               |
 
-The `statistics` object contains `elapsed_ms`, `rows_read`, and `bytes_read`. For details about these values, refer to [Query the SQL API](/analytics/sql-api/query-api/#response).
+The `statistics` object contains `elapsed_ms`, `rows_read`, and `bytes_read`. For details about these values, refer to [Query the SQL API](/analytics/sql-api/query-api/#response-formats).
 
 ## Errors
 
