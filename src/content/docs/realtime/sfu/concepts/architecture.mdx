@@ -8,6 +8,7 @@ products:
   - realtime
 ---
 
+import { Render } from "~/components";
 import ApplicationMediaSequence from "~/components/realtime/sfu/ApplicationMediaSequence.astro";
 
 Realtime SFU forwards media tracks and DataChannels between endpoints. Your application supplies the signaling, state, and permissions around those connections.
@@ -62,6 +63,8 @@ An endpoint may use one bidirectional session or separate publishing and receivi
 ## Credentials and discovery
 
 Create an SFU application through the dashboard or API. Keep its App Secret on trusted backend infrastructure. In Workers, store the app values as Worker secrets.
+
+<Render file="sfu/create-app-prompt" product="realtime" />
 
 An endpoint authenticates to your backend using your application's identity mechanism. The backend checks which resources it can access before making an SFU request. A room name, session ID, or track name does not establish permission.
 
