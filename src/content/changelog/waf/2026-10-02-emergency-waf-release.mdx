@@ -1,0 +1,46 @@
+---
+title: "WAF Release - 2026-10-02 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-10-02 emergency release
+date: 2026-10-02
+---
+
+import { RuleID } from "~/components";
+
+This update provides immediate defense against a vulnerability affecting Citrix NetScaler ADC and Gateway appliances, deploying protection against improper input validation vectors.
+
+**Key Findings**
+
+- CVE-2026-88771: An improper input validation vulnerability affecting Citrix NetScaler ADC and Gateway allows an unauthenticated attacker to execute arbitrary commands.
+
+**Impact**
+
+We strongly recommend that administrators apply the latest versions to fully secure origin servers. Additionally, customers should review configurations against applicable preconditions and follow standard incident response processes if signs of compromise are identified.
+
+Detailed Rule Changes
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="6802845374ea41a289fd4f43827ab216" />
+			</td>
+			<td>N/A</td>
+			<td>Citrix Netscaler ADC and Gateway - Improper input validation - CVE:CVE-2026-88771</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
