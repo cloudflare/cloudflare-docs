@@ -9,6 +9,7 @@ products:
   - realtime
 ---
 
+import { Render } from "~/components";
 import RTKPill from "~/components/realtimekit/RTKPill/RTKPill.astro";
 
 A Preset is a **re-usable configuration** that defines a participant’s experience in a Meeting.
@@ -33,6 +34,8 @@ Example: Large Ed-Tech Classroom
 A set of default presets are created for you, when you create an app via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
 
 You can also create a preset using the [dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit) or the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/).
+
+<Render file="realtimekit/preset-prompt" product="realtime" />
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets \
