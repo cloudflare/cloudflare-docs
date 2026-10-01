@@ -1,0 +1,31 @@
+---
+title: Traces
+pcx_content_type: navigation
+description: Choose the tracing tool that matches your Cloudflare request workflow.
+sidebar:
+  order: 3
+  label: Traces
+products:
+  - observability
+---
+
+import { RelatedProduct } from "~/components";
+
+Use Workers tracing for application requests. Use Cloudflare Trace to test how Cloudflare applies configurations to a simulated HTTP request.
+
+<RelatedProduct
+	header="Workers tracing"
+	href="/workers/observability/traces/"
+	product="workers"
+>
+	Collect and inspect traces from Workers applications and connected services.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Trace"
+	href="/rules/trace-request/"
+	product="rules"
+>
+	Simulate an HTTP request through Cloudflare's network to test configuration
+	behavior.
+</RelatedProduct>
