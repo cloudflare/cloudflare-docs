@@ -1,0 +1,19 @@
+src/content/docs/workers/previews/configuration.mdx
+  s_757fa506844e4b::t_04d28292316135 47,57,59,69,152-167
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3f1c4d9dbdeb02abff273a11769a6ba2bec3ed66",
+  "prompts": {},
+  "sessions": {
+    "s_757fa506844e4b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f3a485004ffeihwKVbj65gTm33",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}

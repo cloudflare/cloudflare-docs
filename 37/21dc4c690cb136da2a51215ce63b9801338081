@@ -1,0 +1,45 @@
+src/components/PreviewsConfigDiagram.astro
+  s_1db491faeae11b::t_61fa686865f359 5,8,10,15,41,47,53,143-147,485-494
+src/content/docs/workers/previews/automation-examples.mdx
+  s_97ebcdec73a0f1::t_464799ccc4e19f 3-4,11,13,15,17,21,29,31,33-35,40-46,50,54-61,65-68,71,73,77,86,90,106,110,113-122,127,138,140,142,148
+src/content/docs/workers/previews/compare-workflows.mdx
+  s_2dff52134f53df::t_3df18916dc7e75 11,17-21,27,60-63,66
+src/content/docs/workers/previews/configuration.mdx
+  s_2dff52134f53df::t_f260c02157ceee 14,16,18,20,22,24,26,28-35,37-39,41,72-171
+src/content/docs/workers/previews/index.mdx
+  s_2dff52134f53df::t_e94f70db0a30c5 11,13,19,40-42,44,46,71
+src/content/docs/workers/previews/resources/index.mdx
+  s_1db491faeae11b::t_8c29c044cb78ee 4,16,20-40,44,46,48-51,53,105,110,117-120,219,222-224,226,228-232,235,237-257,259-261,265-285,287,289,291,293,295,297,299
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3721dc4c690cb136da2a51215ce63b9801338081",
+  "prompts": {},
+  "sessions": {
+    "s_1db491faeae11b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f4e7517efffetz3wL5F0YedGIE",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    },
+    "s_2dff52134f53df": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f3b29e4e4ffeS8YePz7bBeR0Jh",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    },
+    "s_97ebcdec73a0f1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f3b291e5bffeywO0sV1GN8JOyZ",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}
