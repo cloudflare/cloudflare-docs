@@ -128,6 +128,7 @@ export const sidebarSections: SidebarSection[] = [
 							link("Basin SQL", "/basin-sql/"),
 						],
 					},
+					link("K2", "/k2/"),
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),

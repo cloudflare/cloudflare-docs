@@ -521,6 +521,14 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/images.yaml @deannalam @dochne @renandincer @third774 @cloudflare/product-owners
 /src/icons/images.svg @deannalam @dochne @renandincer @third774 @cloudflare/product-owners
 
+# k2
+
+/src/content/docs/k2/ @Marcinthecloud @mwylde @sejoker @cloudflare/product-owners
+/src/assets/images/k2/ @Marcinthecloud @mwylde @sejoker @cloudflare/product-owners
+/src/content/changelog/k2/ @Marcinthecloud @mwylde @sejoker @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/k2.yaml @Marcinthecloud @mwylde @sejoker @cloudflare/product-owners
+/src/icons/k2.svg @Marcinthecloud @mwylde @sejoker @cloudflare/product-owners
+
 # key-transparency
 
 /src/content/docs/key-transparency/ @lschull @mgalicer @cloudflare/appsec-reviewers @cloudflare/product-owners
