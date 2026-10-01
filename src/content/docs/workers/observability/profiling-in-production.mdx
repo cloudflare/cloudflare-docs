@@ -1,0 +1,67 @@
+---
+title: Profiling in production
+pcx_content_type: how-to
+description: Identify expensive functions and memory allocations in deployed code.
+products:
+  - workers
+  - durable-objects
+---
+
+import { DashButton, Steps } from "~/components";
+
+Capture central processing unit (CPU) and allocation profiles for deployed [Workers](/workers/) and [Durable Objects](/durable-objects/) in the Cloudflare dashboard. Use the flamegraph to find expensive functions and allocating code.
+
+## Choose a profile type
+
+Use a **CPU** profile to identify functions that consume CPU time. This is the default profile type.
+
+Use a **Heap** profile to identify code that allocates memory. It collects a stack trace every 512 kB of memory allocated during capture, recording the chain of function calls responsible for each sampled allocation.
+
+A Heap profile measures allocations, not retained memory. It is not a heap snapshot and does not show whether allocated memory remains live.
+
+## Prepare traffic
+
+Your Worker or Durable Object instance needs traffic before and during the capture. Capture targets a recently active, already-loaded [isolate](/workers/reference/how-workers-works/#isolates), rather than starting a new invocation.
+
+Send requests that exercise the code you want to investigate. Capturing a profile does not invoke your code for you.
+
+The historical log time range and filters do not control capture. A profile records activity during the selected capture duration, not past requests shown in logs.
+
+## Capture a profile
+
+<Steps>
+1. In the Cloudflare dashboard, select your Worker or Durable Object instance. For a Worker, go to **Workers & Pages**:
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Observability**. In the view dropdown, select *Flamegraph*.
+3. In **Profile type**, select *CPU* or *Heap*.
+4. In **Duration (ms)**, enter a capture duration from 1000 to 50000 milliseconds. The default is 10000 milliseconds.
+5. In **Version**, select *Latest* or a version in the active deployment.
+6. Select **Capture profile**. The button displays **Capturing...** while capture is in progress.
+</Steps>
+
+When capture completes, the dashboard displays the profile as a flamegraph.
+
+## Inspect the results
+
+Each frame represents a function in the captured call stacks. Callers appear above their callees, the functions they call.
+
+Frame width is proportional to CPU time or allocated memory, depending on the profile type. The graph is not a timeline: horizontal position does not indicate when a function ran.
+
+Select a frame to focus on its subtree. Use the breadcrumbs to return to a parent frame, or **All frames** to reset the view.
+
+Use **Search frames** to find function names or source locations. Switch to **Table** to compare these values:
+
+| Value              | Meaning                                                                    |
+| ------------------ | -------------------------------------------------------------------------- |
+| Self               | CPU time or allocated memory attributed to the frame, excluding descendants |
+| Total              | CPU time or allocated memory attributed to the frame and its descendants    |
+| Percent of profile | Share of the whole capture                                                 |
+
+Percentages remain relative to the whole capture, even when you focus on a subtree.
+
+## Download the capture
+
+To inspect the profile with other profiling tools, select **Download profile**. The download contains the raw pprof profile.
+
+Focusing on a subtree or searching frames does not filter the export. The downloaded profile contains the whole capture.
