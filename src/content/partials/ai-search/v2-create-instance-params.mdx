@@ -12,7 +12,7 @@ The unique identifier for the AI Search instance. Must be 1-64 characters and ma
 
 `type` <Type text="string" /> <MetaInfo text="optional" />
 
-The type of data source. Valid values: `r2` or `web-crawler`. If omitted, an HTTP(S) URL source selects `web-crawler`, an existing R2 bucket selects `r2`, and a missing or blank source creates an instance with built-in storage. Other sources return error `7111`. The REST API also accepts `null`, which behaves like an omitted value; the Workers binding does not.
+The type of data source. Valid values: `r2` or `web-crawler`. If omitted, an HTTP(S) URL source selects `web-crawler`, an existing R2 bucket selects `r2`, and a missing or blank source creates an instance with built-in storage. Other sources return error `7111`. The REST API also accepts `null`, which behaves like an omitted value. The Workers binding does not accept `null`.
 
 ---
 

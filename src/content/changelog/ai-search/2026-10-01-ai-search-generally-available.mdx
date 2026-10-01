@@ -9,34 +9,34 @@ publish_future_dated_entry: true
 
 AI Search is now generally available. Usage-based billing begins on November 1, 2026, with included monthly ingestion, storage, semantic query, and full-text query usage. Cloudflare will send a reminder email the week before billing begins.
 
-Learn more about [pricing and included usage](/ai-search/platform/limits-pricing/).
+Refer to [Limits & pricing](/ai-search/platform/limits-pricing/) for rates and included usage.
 
 ## Hybrid search is on by default
 
 New AI Search instances use hybrid search by default. Hybrid search combines semantic vector retrieval with full-text matching. You can choose a different index method when you create an instance.
 
-Learn more about [hybrid search](/ai-search/configuration/indexing/hybrid-search/).
+Refer to [Hybrid search](/ai-search/configuration/indexing/hybrid-search/) for details.
 
 ## Workers AI embeddings and reranking are included
 
 Workers AI embedding and reranking calls made by AI Search are included in AI Search pricing. These calls no longer appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external providers continue to use your account and gateway.
 
-Learn more about [AI Search pricing](/ai-search/platform/limits-pricing/).
+Refer to [Limits & pricing](/ai-search/platform/limits-pricing/) for details.
 
 ## Multimodal model and image support
 
 AI Search supports the `@cf/qwen/qwen3-vl-embedding-2b` and `google-ai-studio/gemini-embedding-2` multimodal embedding models. Search and chat requests can include images through the REST API and public endpoint.
 
-Learn more about [supported embedding models](/ai-search/configuration/models/supported-models/).
+Refer to [Supported models](/ai-search/configuration/models/supported-models/) for the full list of embedding models.
 
 ## OCR availability and increased file limits
 
 Optical character recognition (OCR) is available on every account for scanned PDFs. Plain-text or code files and PDFs with OCR enabled can be up to 10 MiB. PDFs without OCR and other supported formats remain limited to 4 MiB.
 
-Learn more about [file limits and OCR pricing](/ai-search/platform/limits-pricing/).
+Refer to [Data source](/ai-search/configuration/data-source/#file-limits) for file limits and [Limits & pricing](/ai-search/platform/limits-pricing/) for OCR pricing.
 
 ## Source type inference
 
 When you create an AI Search instance, the `type` field is optional. AI Search infers a website source from an HTTP or HTTPS URL, or an R2 source from an existing bucket name.
 
-Learn more about [AI Search data sources](/ai-search/configuration/data-source/).
+Refer to [Data source](/ai-search/configuration/data-source/) for details.
