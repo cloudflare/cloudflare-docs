@@ -143,7 +143,7 @@ Existing 0.x grants and tokens keep working, and there is no KV migration. Old g
 ## Also since June
 
 - Consent helpers implement the MCP confused deputy protections. `beginConsent()` and `approveConsent()` bind the consent page to the browser with a `__Host-` cookie. `beginUpstream()` and `finishUpstream()` handle sign-in through GitHub, Google or another provider. `describeConsent()` returns what the page must show.
-- A token in the library's own format that is not in storage is answered `invalid_token` directly. It no longer goes to `resolveExternalToken`. One deployment was forwarding about 24,000 expired tokens an hour to a third-party API this way.
+- A token in the library's own format that is not in storage is answered `invalid_token` directly. It no longer goes to `resolveExternalToken`.
 - `refreshTokenIdleTTL` keeps a grant alive while it is used. Dynamic registrations still in use renew themselves.
 - `completeAuthorization()` stays within the Worker subrequest limit for users with hundreds of grants. `purgeExpiredData()` returns a cursor, so scheduled cleanup reaches every grant.
 - `onError` receives an `internal` reason for every error, such as `refresh_token_expired`, while the client still gets a generic response.
