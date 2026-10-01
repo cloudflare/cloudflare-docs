@@ -117,7 +117,6 @@ To add an MCP server:
    :::
 
 8. If you use DCR, select **Automatic (recommended)** under **OAuth credentials**. Add the [dashboard callback URL](#dashboard-callback-url) to the OAuth provider's redirect URI allowlist.
-
 9. Select **Save and connect server**.
 10. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
 
@@ -140,7 +139,6 @@ To add the private MCP server:
 5. Wait for the server status to change to **Ready**. You can then add the server to a portal.
 
 </Steps>
-
 
 ### Configure manual OAuth credentials
 
@@ -257,7 +255,7 @@ By default, the portal uses a callback URL on your portal domain:
 https://<your-portal-hostname>/servers-callback
 ```
 
-Allowlist this URL as a redirect URI at the upstream OAuth provider.
+Add the callback URL to the OAuth provider's redirect URI allowlist.
 
 #### Shared Cloudflare callback URL
 
