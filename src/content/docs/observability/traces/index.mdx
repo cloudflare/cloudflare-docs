@@ -1,31 +1,40 @@
 ---
 title: Traces
-pcx_content_type: navigation
-description: Choose the tracing tool that matches your Cloudflare request workflow.
+pcx_content_type: overview
+description: Inspect production request paths in Cloudflare Observability.
 sidebar:
-  order: 3
-  label: Traces
+  order: 1
+  label: Overview
 products:
   - observability
 ---
 
-import { RelatedProduct } from "~/components";
+Cloudflare Traces show how production requests move through Cloudflare and record traces from actual traffic on your domain. Each trace contains [spans](/observability/traces/spans/) for supported steps in the request path, such as [Rules](/rules/), request routing, [Cache](/cache/), [Workers](/workers/), and origin connections. A span records how long an operation took, its outcome, and related attributes, which helps you see where a request slowed down or failed.
 
-Use Workers tracing for application requests. Use Cloudflare Trace to test how Cloudflare applies configurations to a simulated HTTP request.
+&lt;screenshot&gt;
 
-<RelatedProduct
-	header="Workers tracing"
-	href="/workers/observability/traces/"
-	product="workers"
->
-	Collect and inspect traces from Workers applications and connected services.
-</RelatedProduct>
+Use Cloudflare Traces to answer questions such as:
 
-<RelatedProduct
-	header="Cloudflare Trace"
-	href="/rules/trace-request/"
-	product="rules"
->
-	Simulate an HTTP request through Cloudflare's network to test configuration
-	behavior.
-</RelatedProduct>
+- Why was a request blocked or challenged, and which [security rule](/waf/custom-rules/) took action?
+- Was the URL rewritten by a [Transform Rule](/rules/transform/) before it reached the application?
+- Which [Page Rules](/rules/page-rules/), [Snippets](/rules/snippets/), or [Workers](/workers/) handled or changed the request?
+- Was the response served from [cache](/cache/), and where was time spent between Cloudflare, the origin connection, and the application?
+- Was the behavior isolated to a particular [Cloudflare location or region](/fundamentals/concepts/how-cloudflare-works/)?
+
+## Enable tracing
+
+Enable tracing separately for each domain in your account. To manage sampling, context, export destinations, and trace rules, refer to [Configuration](/observability/traces/configuration/).
+
+&lt;screenshot&gt;
+
+## Inspect a trace
+
+Use **Add filter** or enter a query to search across traces for the selected time range.
+
+Open a trace to see the full request path as a hierarchy of spans. Each row represents one operation, and its bar shows when the operation ran and how long it took. Expand a span to inspect its child operations, or search for a span by name.
+
+Select a span to open its details. The detail panel shows the span status, service, trigger, span and trace IDs, duration compared to similar spans, and recorded attributes. You can search or copy the attributes while investigating the operation.
+
+:::note[Cloudflare Trace]
+[Cloudflare Trace](/rules/trace-request/) simulates how Cloudflare configurations would handle a request. It does not show actual production traffic.
+:::
