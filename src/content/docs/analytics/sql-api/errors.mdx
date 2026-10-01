@@ -23,7 +23,7 @@ The SQL API uses HTTP status codes to report errors. Errors returned by the SQL 
 
 An HTTP `422` response begins with `Input was invalid:` and describes the validation failure. Common causes include:
 
-- Missing account or zone scope in both SQL and the request body.
+- For HTTP API requests, missing account or zone scope in both SQL and the request body. The [Workers binding](/analytics/sql-api/workers-binding/) supplies scope automatically and rejects SQL tenancy predicates.
 - Missing lower timestamp bound in both SQL and `time_range`.
 - Supplying tenancy or time bounds in both SQL and the corresponding request field.
 - A bare dataset name instead of a schema-qualified name.

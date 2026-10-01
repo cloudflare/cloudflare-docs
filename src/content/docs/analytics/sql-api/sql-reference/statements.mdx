@@ -47,7 +47,7 @@ WHERE accountTag = '<ACCOUNT_TAG>'
   AND edgeResponseStatus >= 500
 ```
 
-Every query requires an account or zone scope. You can provide scope through the JSON request instead of SQL. Supported SQL tenancy forms are:
+Every HTTP API query requires an account or zone scope. You can provide scope through the JSON request instead of SQL. The [Workers binding](/analytics/sql-api/workers-binding/) supplies account scope automatically, so do not include a tenancy predicate in binding queries. Supported SQL tenancy forms for HTTP API queries are:
 
 ```sql
 accountTag = '<ACCOUNT_TAG>'
