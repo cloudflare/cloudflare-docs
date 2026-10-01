@@ -7,13 +7,15 @@ sidebar:
   order: 17
 ---
 
-import { Details, Steps } from "~/components";
+import { Details, Render, Steps } from "~/components";
 
 ### API token
 
 <Details header="How can I generate a Cloudflare API token?">
 
 To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloudflare.com).
+
+<Render file="realtimekit/api-token-prompt" product="realtime" />
 
 Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin**. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
 

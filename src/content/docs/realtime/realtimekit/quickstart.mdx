@@ -8,13 +8,17 @@ products:
   - realtime
 ---
 
-import { Render, YouTube } from "~/components";
+import { CopyPromptButton, Render, YouTube } from "~/components";
 import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
 import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
 
 ### Prerequisites
 
 To integrate RealtimeKit in your application, you must have a [Cloudflare account](https://dash.cloudflare.com).
+
+<Render file="realtimekit/api-token-prompt" product="realtime" />
+
+To create the token manually:
 
 1. Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
 2. When configuring permissions, ensure that **Realtime** / **Realtime Admin** permissions are selected.
@@ -31,6 +35,13 @@ _Optional:_ Alternatively, [create tokens programmatically via the API](/fundame
 ### Create a RealtimeKit App
 
 You can create an application from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), by clicking on Create App.
+
+To create an app with a coding agent, copy this prompt:
+
+<CopyPromptButton
+	tooltip="Create a RealtimeKit app with cf"
+	prompt="Create a Cloudflare RealtimeKit app for my application. Read https://developers.cloudflare.com/realtime/realtimekit/quickstart/ and https://developers.cloudflare.com/cf/agents/ for current instructions. Use the Cloudflare cf CLI, installing it if needed. Confirm my account, app name, and whether this is for development, staging, or production. Inspect cf realtime kit apps and cf realtime kit presets commands with --help and cf schema. Check existing apps and ask before reusing a match. Preview creation with --dry-run, then create the app. Retrieve it by its returned ID to verify its name and account. List its presets instead of assuming API creation supplies the same defaults as dashboard creation. Report the account ID, app ID, available preset names, and any preset setup needed before adding participants. Keep API tokens in backend secret storage, outside frontend code, chat, and source control. Do not create meetings, deploy, or change billing. If a step fails, explain the blocker and what remains."
+/>
 
 _Optional:_ You can also use our [API reference](/api/resources/realtime_kit/) for creating an application:
 
@@ -60,6 +71,8 @@ curl --location 'https://api.cloudflare.com/client/v4/accounts/<account_id>/real
 
 Presets define what permissions a user should have. Learn more in the Concepts guide.
 You can create new presets using the [Presets API](/api/resources/realtime_kit/subresources/presets/methods/create/) or via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
+
+<Render file="realtimekit/preset-prompt" product="realtime" />
 
 > **Note:** Skip this step if you created the app in the dashboard—default presets are already set up for you.
 
