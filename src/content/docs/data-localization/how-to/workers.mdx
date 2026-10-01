@@ -31,7 +31,19 @@ Regional Services only applies to the custom domain configured for a Workers pro
 
 Regional Services restricts where Workers are executed (where requests are processed). However, Workers code and secrets are deployed globally to all Cloudflare data centers. Regional Services does not prevent the code itself from being present outside the configured region — only its execution is regionalized.
 
-Requests reaching your regionalized hostname from another zone or domain are regionalized according to your hostname's Regional Services configuration, regardless of the originating zone. Regional Services does not extend to outgoing [subrequests](/workers/platform/limits/#subrequests) from Workers to other services — refer to [Limitations](/data-localization/limitations/#regional-services) for details.
+Requests reaching your regionalized hostname from another zone or domain are regionalized according to your hostname's Regional Services configuration, regardless of the originating zone.
+
+### Workers subrequests
+
+When a Worker makes a [subrequest](/workers/platform/limits/#subrequests) with `fetch()` to a regionalized hostname in a different zone, Cloudflare processes that subrequest in the destination hostname's configured region. This applies whether or not the zone running the calling Worker uses Regional Services.
+
+For example, a Worker on `example.com` that calls `fetch("https://api.example.net")`, where `api.example.net` is a regional hostname set to `eu`, has its subrequest to `api.example.net` processed only in EU data centers.
+
+Subrequests to a hostname in the same zone as the calling Worker are not rerouted. To have same-zone subrequests follow the destination hostname's Regional Services configuration, enable the [`global_fetch_strictly_public`](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) compatibility flag.
+
+### Service bindings and other triggers
+
+[Service bindings](/workers/runtime-apis/bindings/service-bindings/), including [RPC](/workers/runtime-apis/bindings/service-bindings/rpc/), call another Worker directly without going through a hostname. Regional Services does not apply to Worker-to-Worker calls made through Service bindings, even if the called Worker has a regionalized custom domain. If the called Worker must run in a specific region, call its regionalized custom domain with `fetch()` instead.
 
 Regional Services does not apply to other Worker triggers, like [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/).
 
