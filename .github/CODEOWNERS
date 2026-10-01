@@ -111,15 +111,15 @@ package.json @cloudflare/content-engineering
 
 # analytics
 
-/src/content/docs/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/content/docs/analytics/analytics-engine/ @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
-/src/assets/images/changelog/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/content/changelog/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/partials/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/content/directory/analytics.yaml @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/icons/analytics.svg @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
-/public/images/analytics/ @angelampcosta @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/content/docs/analytics/ @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/content/docs/analytics/analytics-engine/ @hc2116 @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
+/src/assets/images/changelog/analytics/ @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/changelog/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/partials/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/directory/analytics.yaml @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/icons/analytics.svg @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
+/public/images/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
 
 # api-deprecations
 
@@ -153,9 +153,9 @@ package.json @cloudflare/content-engineering
 
 # audit-logs
 
-/src/assets/images/changelog/audit-logs/ @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/audit-logs/ @dcpena @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/audit-logs.yaml @dcpena @sahidya @cloudflare/product-owners
+/src/assets/images/changelog/audit-logs/ @dcpena @hc2116 @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/audit-logs/ @dcpena @hc2116 @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/audit-logs.yaml @dcpena @hc2116 @sahidya @cloudflare/product-owners
 
 # automatic-platform-optimization
 
@@ -576,13 +576,13 @@ package.json @cloudflare/content-engineering
 
 # logs
 
-/src/content/changelog/logs/ @angelampcosta @dcpena @rianvdm @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/logs/ @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
-/src/assets/images/logs/ @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
-/src/content/partials/logs/ @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
-/src/content/directory/logs.yaml @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
-/src/content/glossary/logs.yaml @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
-/src/icons/logs.svg @angelampcosta @rianvdm @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/changelog/logs/ @angelampcosta @dcpena @hc2116 @rianvdm @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/assets/images/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/partials/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/directory/logs.yaml @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/glossary/logs.yaml @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/icons/logs.svg @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
 
 # magic-transit
 
@@ -657,10 +657,10 @@ package.json @cloudflare/content-engineering
 
 # notifications
 
-/src/content/docs/notifications/ @cloudflare/product-owners
-/src/content/partials/notifications/ @cloudflare/product-owners
-/src/content/directory/notifications.yaml @cloudflare/product-owners
-/src/icons/notifications.svg @cloudflare/product-owners
+/src/content/docs/notifications/ @hc2116 @cloudflare/product-owners
+/src/content/partials/notifications/ @hc2116 @cloudflare/product-owners
+/src/content/directory/notifications.yaml @hc2116 @cloudflare/product-owners
+/src/icons/notifications.svg @hc2116 @cloudflare/product-owners
 
 # pages
 
