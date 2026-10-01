@@ -134,7 +134,7 @@ List every MCP server in `resources`, as the example does for calendar and drive
 
 Existing 0.x grants and tokens keep working, and there is no KV migration. Old grants are bound to a resource the next time they refresh.
 
-## Also since June
+## Other updates and helpers
 
 - Consent helpers implement the MCP confused deputy protections. `beginConsent()` and `approveConsent()` bind the consent page to the browser with a `__Host-` cookie. `beginUpstream()` and `finishUpstream()` handle sign-in through GitHub, Google or another provider. `describeConsent()` returns what the page must show.
 - A token in the library's own format that is not in storage is answered `invalid_token` directly. It no longer goes to `resolveExternalToken`.
