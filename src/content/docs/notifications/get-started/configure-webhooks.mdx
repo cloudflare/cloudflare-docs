@@ -48,7 +48,7 @@ Cloudflare's IP ranges are shared across multiple services and may change over t
 
 ## Generic webhooks
 
-If you use a service that is not covered by Cloudflare's currently available webhooks, you can [configure your own](#configure-webhooks), and enter a valid webhook URL.
+If you use a service that is not covered by Cloudflare's currently available webhooks, you can [configure your own](#create-a-webhook), and enter a valid webhook URL.
 
 It is always recommended to use a secret for generic webhooks. Cloudflare will send your secret in the `cf-webhook-auth` header of every request made. If this header is not present, or is not your specified value, you should reject the webhook.
 
