@@ -108,44 +108,31 @@ You can still use `OAuthProvider` as both the authorization server and the MCP s
 
 ## MCP 2026-07-28, with backward compatibility
 
-The library implements the authorization server and protected resource side of MCP 2026-07-28:
-
-- [Client ID Metadata Documents](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00) (CIMD) are the preferred way for clients to register. Dynamic Client Registration is deprecated in MCP 2026-07-28.
-- Every authorization response carries the [RFC 9207](https://datatracker.ietf.org/doc/html/rfc9207) `iss` parameter, including error redirects.
-- Public clients must use S256 PKCE. Plain PKCE and the implicit grant are removed, as OAuth 2.1 requires.
-- Redirect URIs must be `https`, or `http` on a loopback host.
-- `offline_access` stays out of resource metadata and Bearer challenges.
-
-Clients built for earlier MCP revisions keep working. The library accepts their registrations while ignoring metadata that does not comply with the specification, and holds every request to the current rules.
+The library implements the authorization server and resource server side of MCP 2026-07-28, including [Client ID Metadata Documents](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#client-id-metadata-documents) and [issuer identification](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#authorization-response-issuer). Clients built for earlier MCP revisions keep working.
 
 ## Step-up authorization
 
-`requiredScopes` lists the scopes any access needs. The MCP server publishes them in its metadata and in the `401` challenge, so clients ask for them first. When a tool needs more, `insufficientScope()` answers with the step-up challenge, as the `POST` branch in the example does.
-
-The client receives a `403` with `error="insufficient_scope"`, every scope the operation needs, and the metadata URL. It asks the user to approve the extra scope and retries.
+`requiredScopes` tells clients which scopes to request first. When a tool needs more, return `insufficientScope()`, as the `POST` branch in the example does. Refer to [Scopes and step-up authorization](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#scopes-and-step-up-authorization).
 
 ## Separate Workers, separate WAF rules
 
-The authorization server and each MCP server can now run in their own Workers, on their own hostnames. You can apply different [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules to `auth.example.com` and `calendar.example.com`, and deploy them independently. Only the authorization server holds the `OAUTH_KV` binding and the token storage.
+Run the authorization server and each MCP server on their own hostnames, with their own [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules. Only the authorization server holds token storage. Refer to [Resource servers](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/resource-servers.md).
 
 ## Multiple resources, one authorization server
 
-List every MCP server in `resources`, as the example does for calendar and drive. Each token is bound to exactly one of them, so a token for `https://calendar.example.com/mcp` is rejected at `https://drive.example.com/mcp`. Grants are tracked per user, client and resource, so authorizing one MCP server does not sign the user out of another.
-
-Existing 0.x grants and tokens keep working, and there is no KV migration. Old grants are bound to a resource the next time they refresh.
+List every MCP server in `resources`. Each token works at exactly one of them. Existing 0.x grants and tokens keep working, with no KV migration.
 
 ## Other updates and helpers
 
-- Consent helpers implement the MCP confused deputy protections. `beginConsent()` and `approveConsent()` bind the consent page to the browser with a `__Host-` cookie. `beginUpstream()` and `finishUpstream()` handle sign-in through GitHub, Google or another provider. `describeConsent()` returns what the page must show.
-- A token in the library's own format that is not in storage is answered `invalid_token` directly. It no longer goes to `resolveExternalToken`.
-- `refreshTokenIdleTTL` keeps a grant alive while it is used. Dynamic registrations still in use renew themselves.
-- `completeAuthorization()` stays within the Worker subrequest limit for users with hundreds of grants. `purgeExpiredData()` returns a cursor, so scheduled cleanup reaches every grant.
-- `onError` receives an `internal` reason for every error, such as `refresh_token_expired`, while the client still gets a generic response.
+- [Consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) and [upstream sign-in](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) helpers implement the MCP confused deputy protections.
+- [Sliding refresh token expiry](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/advanced-configuration.md#sliding-expiry) with `refreshTokenIdleTTL`.
+- [Resumable KV cleanup](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/advanced-configuration.md#kv-cleanup) with `purgeExpiredData()`.
+- An [internal reason](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/advanced-configuration.md#the-internal-reason) on every error passed to `onError`.
 
 ## Upgrade with the migration skill
 
 <PackageManagers pkg="@cloudflare/workers-oauth-provider@latest" />
 
-The package ships a coding agent skill at `node_modules/@cloudflare/workers-oauth-provider/skills/migrate-to-1.0/SKILL.md`. Point your agent at it. It searches your project for every affected option, applies the fix, and links each change to the [migration guide](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/migration-1.0.md).
+Point your coding agent at `node_modules/@cloudflare/workers-oauth-provider/skills/migrate-to-1.0/SKILL.md`, or follow the [migration guide](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/migration-1.0.md).
 
-For both Workers in full, refer to the [split Workers example](https://github.com/cloudflare/workers-oauth-provider/tree/main/examples/split-workers). For how authorization fits into an MCP server, refer to [MCP authorization](/agents/model-context-protocol/protocol/authorization/).
+For both Workers in full, refer to the [split Workers example](https://github.com/cloudflare/workers-oauth-provider/tree/main/examples/split-workers).
