@@ -88,6 +88,11 @@ existing project without building it. Review the changes and commit them. For
 the list of changes, refer to
 [Start from an existing project](/cf/get-started/first-worker/#start-from-an-existing-project).
 
+Detecting a framework does not mean that the project builds. For Astro 6 and
+later, automatic configuration runs `astro add cloudflare`, which writes a
+`wrangler.jsonc` file instead of `cloudflare.config.ts`. The build then fails,
+and the next command runs automatic configuration again.
+
 :::caution[Wrangler projects]
 Automatic configuration does not read Wrangler configuration files. In a project
 that has `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` but no
@@ -179,8 +184,9 @@ When you omit `--mode`, the Cloudflare Vite plugin uses `development` for
 leave the mode `undefined`. For the full list, refer to
 [Select a mode](/cf/projects/cloudflare-config/#select-a-mode).
 
-When `cf` runs a framework's own command, only Vite and Astro accept `--mode`.
-Other framework commands fail with an error. Refer to
+When `cf` runs a framework's own command, only Vite, Astro, and Next.js
+projects that use `vinext` accept `--mode`. Other framework commands fail with
+an error. Refer to
 [A framework rejects `--mode`](#a-framework-rejects---mode).
 
 This configuration deploys a separate staging Worker with its own API origin:
@@ -419,9 +425,13 @@ project, run `cf init`.
 
 ### Dependencies are not installed
 
-In a configured project whose dependencies are not installed, Vite reports that
-it cannot resolve `@cloudflare/vite-plugin`, or `cf` reports that a build tool
-is declared but not installed. Install dependencies with your package manager,
+In a configured project whose dependencies are not installed, the command
+fails when `cf` hands off to the build tool. The error depends on the project
+and the package manager. For example, with pnpm and no `node_modules`
+directory, `cf build` fails with `spawn vite EACCES`. If Vite is installed but
+the Cloudflare Vite plugin is not, Vite reports that it cannot resolve
+`@cloudflare/vite-plugin`. In a Wrangler project, `cf` reports that Wrangler is
+declared but not installed. Install dependencies with your package manager,
 then run the command again.
 
 ### Arguments are rejected
@@ -439,8 +449,8 @@ the framework's configuration, or run the framework command directly.
 The detected command `<COMMAND>` does not currently support `--mode`.
 ```
 
-Only Vite and Astro accept `--mode` when `cf` runs a framework command. Run the
-command without `--mode`.
+Only Vite, Astro, and Next.js projects that use `vinext` accept `--mode` when
+`cf` runs a framework command. Run the command without `--mode`.
 
 ### A prebuilt deploy rejects the mode
 
@@ -485,7 +495,9 @@ Pass a name: `cf previews deploy <PREVIEW_NAME>`.
 ### A local command has no local equivalent
 
 ```txt
-This command has no local equivalent. Re-run without --local to use the Cloudflare API.
+APIError
+[error] This command has no local equivalent. Re-run without --local to use the Cloudflare API. The local explorer API does not implement POST /d1/database/<DATABASE_ID>/query.
+404 Not Found
 ```
 
 The command does not support `--local`. For D1 queries, use `cf d1 raw` instead
