@@ -8,7 +8,7 @@ products:
   - realtime
 ---
 
-import { DashButton, LinkButton, PackageManagers, Steps } from "~/components";
+import { DashButton, LinkButton, PackageManagers, Render, Steps } from "~/components";
 
 Run a browser video room that publishes camera and microphone tracks through Realtime SFU. Open a second participant to receive the first participant's media and send media back.
 
@@ -27,6 +27,10 @@ The example is experimental. Local development uses an identity mechanism restri
 ## Run the video room
 
 <span id="create-your-first-app"></span>
+
+<Render file="sfu/create-app-prompt" product="realtime" />
+
+After the agent creates your app, continue with **Clone the example**. To create the app manually, follow the dashboard step:
 
 <Steps>
 
