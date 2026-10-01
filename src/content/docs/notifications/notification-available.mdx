@@ -1,18 +1,16 @@
 ---
-title: Available Notifications
+title: Available alerts
 pcx_content_type: concept
 sidebar:
   order: 2
 products:
   - notifications
-description: Browse available notification types by product.
+description: Browse available alert types by product.
 ---
 
 import { AvailableNotifications } from "~/components";
 
-Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
-
-All plans can configure webhooks to connect with external services such as Slack and Google Chat. PagerDuty availability depends on your plan.
+The alerts available to you depend on your Cloudflare plan. Cloudflare offers alerts across products including [DDoS Protection](/ddos-protection/), [SSL/TLS](/ssl/), [Magic Transit](/magic-transit/), [Billing](/billing/), and more.
 
 ## Custom Alerts (Beta)
 
@@ -140,10 +138,8 @@ The query preview validates and charts an approximation of the signal before you
 
 Threshold previews show the configured threshold. SLO previews show the calculated percentage and target. A query that returns no rows produces no signal and cannot trigger the alert for that evaluation.
 
-## Actions available on receiving a Notification
+## Built-in alerts
 
-Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
-
-Refer to information below to understand what each Notification does and what to do when receiving one.
+Refer to the list below to understand what each alert does and what action to take when you receive one.
 
 <AvailableNotifications />

@@ -1,107 +1,54 @@
 ---
 pcx_content_type: get-started
-title: Configure Cloudflare Notifications
+title: Configure alerts
 sidebar:
   order: 1
-  label: Configure Cloudflare Notifications
+  label: Configure alerts
   group:
     label: Get started
 products:
   - notifications
-description: Set up notifications via email, webhooks, or PagerDuty.
+description: Set up alerts via email, webhooks, or PagerDuty.
 ---
 
 import { DashButton } from "~/components";
 
-The list of notifications available depends on the type of account you have. Refer to [Available Notifications](/notifications/notification-available/) to learn more about what each notification does and what do to when receiving one.
-
-You can check the [Notification History](/notifications/notification-history/) using the API to view notifications that have been generated for your account.
+This guide covers creating and managing alerts from the Cloudflare dashboard. For a full list of available alert types, refer to [Available alerts](/notifications/notification-available/).
 
 ## Permissions
 
-To create a notification via the Cloudflare dashboard, you will need to have the Super Administrator or Administrator role.
+To create an alert, you need one of the following:
 
-You can also create a notification if you have the account edit role, which allows you create any type of notification.
+- **Super Administrator** or **Administrator** role in the dashboard
+- **Account edit** role (allows creating any alert type)
+- An API token with the [Notifications Read/Write permission](https://developers.cloudflare.com/fundamentals/api/reference/permissions/)
 
-An API token needs to have the [Notifications Read/Write permission](https://developers.cloudflare.com/fundamentals/api/reference/permissions/) to create a notification,
+Some alert types are only available on Professional, Business, or Enterprise plans, or require a specific Cloudflare product.
 
-Some notifications can only be created if you have a Professional, Business or Enterprise account or if you are using a particular Cloudflare product.
+## Create an alert
 
-## Configure notifications
+1. In the Cloudflare dashboard, go to **Alerts** > **Overview**.
 
-This guide will help you create, edit, test, or delete notifications using the Cloudflare dashboard.
-
-### Create a notification
-
-You can create a notification via the Cloudflare dashboard.
-
-1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
-2. Select **Add**.
-3. On the notification you want to create, choose **Select**.
-4. Name the notification.
-5. Enter an email address to receive the notifications.
-
-:::note
-
-All plans can use webhooks. Accounts without a paid zone can configure up to 100 webhook destinations. Business and higher plans can also use PagerDuty.
-:::
-
-6. (Optional) Specify any additional options for the notification, if required. For example, some notifications require that you select one or more domains or services.
+    <DashButton url="/?to=/:account/notifications" buttonName="Alerts" />
+2. Select **Create an Alert**.
+3. Choose the alert type you want to create and select **Select**.
+4. Name the alert.
+5. Add one or more delivery destinations (email, webhook, or PagerDuty).
+6. (Optional) Configure any additional options, such as specific domains or services to monitor.
 7. Select **Create**.
 
-The browser will navigate back to the list of notifications, where the new notification will appear as **Enabled**.
+## Manage alerts
 
-### Edit a notification
+Once created, each alert has an action menu (⋯) with the following options:
 
-You can edit existing Notifications via the Cloudflare dashboard.
+- **Edit** — modify the alert name, delivery destinations, or configuration.
+- **Disable / Enable** — toggle the alert on or off.
+- **Test** — send a test alert with sample data to verify delivery.
+- **Mute** — temporarily suppress the alert for a preset duration (**1h**, **12h**, **24h**) or a custom time range. Muted alerts still appear in [Alert history](/notifications/notification-history/) and are marked as silenced.
+- **Delete** — permanently remove the alert.
 
-1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
-2. On the notification that you want to modify, select **Edit**.
-3. Make your changes as needed and select **Save**.
+## Manage silences
 
-The browser will navigate back to the list of notifications.
+You can view, edit, or delete existing silences from **Alerts** > **Silences**.
 
-### Disable or delete a notification
-
-You can delete or disable existing Notifications via the Cloudflare dashboard.
-
-1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
-2. On the notification that you want to disable, select the **Enabled** toggle. To delete it, select **Delete**.
-
-### Mute a notification
-
-You can temporarily mute a notification to stop receiving alerts for a set period of time. Muted notifications create a silence that automatically expires after the specified duration.
-
-1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
-2. On the notification that you want to mute, select **Mute**.
-3. Select a duration preset (**1h**, **12h**, or **24h**), or set a custom time range using the **Start Time** and **End Time** fields.
-4. Select **Save**.
-
-:::note
-
-While a notification is muted, alerts that would have triggered it are suppressed and will not be sent. However, silenced alerts still appear in [Notification History](/notifications/notification-history/) and are marked as silenced.
-:::
-
-### Manage silences
-
-You can view, edit, or delete existing silences from the **Silences** tab.
-
-1. In the Cloudflare dashboard, go to the **Notifications** page.
-  
-    <DashButton url="/?to=/:account/notifications" />
-2. Select the **Silences** tab.
-3. To create a new silence, select **Add**. To modify an existing silence, select **Edit**. To remove a silence before it expires, select **Delete**.
-
-### Test a notification
-
-To verify that notifications will be sent to the correct location or to view which details are available, you can test a notification by selecting **Test** on any enabled notification.
-
-This action sends a notification with fake data.
+<DashButton url="/?to=/:account/notifications" buttonName="Alerts" />
