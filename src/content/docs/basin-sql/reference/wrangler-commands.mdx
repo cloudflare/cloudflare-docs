@@ -1,0 +1,15 @@
+---
+pcx_content_type: concept
+title: Wrangler commands
+description: Wrangler commands for querying data with Basin SQL.
+sidebar:
+  order: 80
+products:
+  - basin-sql
+---
+
+import { PackageManagers } from "~/components";
+
+Use the `basin sql` command family to query a warehouse:
+
+<PackageManagers type="exec" pkg="wrangler" args={"basin sql query <WAREHOUSE_NAME> \"SELECT * FROM <NAMESPACE>.<TABLE> LIMIT 10\""} />
