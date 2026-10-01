@@ -1,0 +1,65 @@
+---
+title: Datasets
+pcx_content_type: reference
+description: Review scope, size, and retention for supported Logs datasets.
+sidebar:
+  order: 2
+products:
+  - observability
+---
+
+Cloudflare Observability supports logs from the products listed in the table. Turn on each dataset in the location shown under **Enablement**. Datasets enabled through [Log Explorer](/log-explorer/) appear in Logs once your account has Log Explorer and that dataset turned on. Event sizes are estimates and vary by record.
+
+## Supported datasets
+
+| Dataset                                                                                                    | Identifier                    | Enablement                                                                 | Average event size | Default retention |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------- | -------------------------------------------------------------------------- | ------------------ | ----------------- |
+| [Workers](/workers/observability/logs/workers-logs/)                                                       | `workers`                     | [On Worker](/workers/observability/logs/workers-logs/#enable-workers-logs) | 4.84 KB            | 7 days            |
+| [Containers](/containers/faq/#how-do-container-logs-work)                                                  | `containers`                  | [On Worker](/containers/faq/#how-do-container-logs-work)                   | 1.88 KB            | 7 days            |
+| [R2 Data Access Logs](/r2/buckets/data-access-logs/)                                                       | `r2`                          | [On Bucket](/r2/buckets/data-access-logs/#turn-on-data-access-logs)        | 1.55 KB            | 7 days            |
+| [AI Gateway](/ai-gateway/observability/logging/)                                                           | `ai-gateway`                  | [On Gateway](/ai-gateway/observability/logging/)                           | 2 KB               | 7 days            |
+| [Issues](/workers/observability/issues/)                                                                   | `real-time-issues`            | [On Worker](/workers/observability/issues)                                 | 2.64 KB            | 7 days            |
+| [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)                                    | `http_requests`               | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.56 KB            | 30 days           |
+| [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)                                | `firewall_events`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.36 KB            | 30 days           |
+| [Access Requests](/logs/logpush/logpush-job/datasets/account/access_requests/)                             | `access_requests`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 446 B              | 30 days           |
+| [Audit Logs](/logs/logpush/logpush-job/datasets/account/audit_logs/)                                       | `audit_logs`                  | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 2.69 KB            | 30 days           |
+| [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/)                                 | `audit_logs_v2`               | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.73 KB            | 30 days           |
+| [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/)            | `biso_user_actions`           | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | Not published      | 30 days           |
+| [CASB Findings](/logs/logpush/logpush-job/datasets/account/casb_findings/)                                 | `casb_findings`               | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 2.67 KB            | 30 days           |
+| [DEX Application Tests](/logs/logpush/logpush-job/datasets/account/dex_application_tests/)                 | `dex_application_tests`       | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 3.29 KB            | 30 days           |
+| [DEX Device State Events](/logs/logpush/logpush-job/datasets/account/dex_device_state_events/)             | `dex_device_state_events`     | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.98 KB            | 30 days           |
+| [Device Posture Results](/logs/logpush/logpush-job/datasets/account/device_posture_results/)               | `device_posture_results`      | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 730 B              | 30 days           |
+| [DNS Firewall Logs](/logs/logpush/logpush-job/datasets/account/dns_firewall_logs/)                         | `dns_firewall_logs`           | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 387 B              | 30 days           |
+| [DNS Logs](/logs/logpush/logpush-job/datasets/zone/dns_logs/)                                              | `dns_logs`                    | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 199 B              | 30 days           |
+| [Email Security Alerts](/logs/logpush/logpush-job/datasets/account/email_security_alerts/)                 | `email_security_alerts`       | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 6.74 KB            | 30 days           |
+| [Gateway DNS](/logs/logpush/logpush-job/datasets/account/gateway_dns/)                                     | `gateway_dns`                 | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.44 KB            | 30 days           |
+| [Gateway HTTP](/logs/logpush/logpush-job/datasets/account/gateway_http/)                                   | `gateway_http`                | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.47 KB            | 30 days           |
+| [Gateway Network](/logs/logpush/logpush-job/datasets/account/gateway_network/)                             | `gateway_network`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 877 B              | 30 days           |
+| [IPsec Logs](/logs/logpush/logpush-job/datasets/account/ipsec_logs/)                                       | `ipsec_logs`                  | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 207 B              | 30 days           |
+| [Magic BGP Logs](/logs/logpush/logpush-job/datasets/account/magic_bgp_logs/)                               | `magic_bgp_logs`              | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | Not published      | 30 days           |
+| [Magic IDS Detections](/logs/logpush/logpush-job/datasets/account/magic_ids_detections/)                   | `magic_ids_detections`        | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 334 B              | 30 days           |
+| [NEL Reports](/logs/logpush/logpush-job/datasets/zone/nel_reports/)                                        | `nel_reports`                 | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 204 B              | 30 days           |
+| [Network Analytics](/logs/logpush/logpush-job/datasets/account/network_analytics_logs/)                    | `network_analytics_logs`      | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.31 KB            | 30 days           |
+| [Page Shield Events](/logs/logpush/logpush-job/datasets/zone/page_shield_events/)                          | `page_shield_events`          | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 443 B              | 30 days           |
+| [Sinkhole HTTP Logs](/logs/logpush/logpush-job/datasets/account/sinkhole_http_logs/)                       | `sinkhole_http_logs`          | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 705 B              | 30 days           |
+| [Spectrum Events](/logs/logpush/logpush-job/datasets/zone/spectrum_events/)                                | `spectrum_events`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 685 B              | 30 days           |
+| [WARP Toggle Changes](/logs/logpush/logpush-job/datasets/account/warp_toggle_changes/)                     | `warp_toggle_changes`         | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 327 B              | 30 days           |
+| [Zaraz Events](/logs/logpush/logpush-job/datasets/zone/zaraz_events/)                                      | `zaraz_events`                | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 7.30 KB            | 30 days           |
+| [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) | `zero_trust_network_sessions` | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.21 KB            | 30 days           |
+
+## Pricing
+
+Beginning December 1, 2026, all Cloudflare logs and traces will use the same pricing model.
+Unsampled security datasets have a different price point of $1 per GB ingested and include 30-day retention. Queries, dashboards, alerts, and analytics do not incur additional charge.
+
+### Included in the new Observability pricing
+
+The following logs and traces share account-level ingestion and storage allowances:
+
+- [Cloudflare Traces](/observability/traces/)
+- [Workers Logs](/workers/observability/logs/workers-logs/)
+- [Workers Traces](/workers/observability/traces/)
+- [Containers logs](/containers/faq/#how-do-container-logs-work)
+- [R2 Data Access Logs](/r2/buckets/data-access-logs/)
+- [AI Gateway logs](/ai-gateway/observability/logging/)
+- [Issues](/workers/observability/issues/)

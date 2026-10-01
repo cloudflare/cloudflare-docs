@@ -73,5 +73,10 @@
 		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",
 		"name": "Issues",
 		"parent": ["Compute & AI", "Workers & Pages"]
+	},
+	{
+		"deeplink": "/?to=/:account/observability/destinations",
+		"name": "OpenTelemetry",
+		"parent": ["Observability", "Export"]
 	}
 ]

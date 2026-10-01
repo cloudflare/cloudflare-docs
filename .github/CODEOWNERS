@@ -662,6 +662,12 @@ package.json @cloudflare/content-engineering
 /src/content/directory/notifications.yaml @hc2116 @cloudflare/product-owners
 /src/icons/notifications.svg @hc2116 @cloudflare/product-owners
 
+# observability
+
+/src/content/docs/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+/src/assets/images/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+/src/content/release-notes/observability.yaml @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+
 # pages
 
 /src/assets/images/pages/ @aninibread @GregBrimble @MattieTK @scottbuscemi @WalshyDev @cloudflare/product-owners
