@@ -116,7 +116,7 @@ To add an MCP server:
    Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/).
    :::
 
-8. If you use DCR, select **Automatic (recommended)** under **OAuth credentials**. Add the [dashboard callback URL](#dashboard-callback-url) to the OAuth provider's redirect URI allowlist.
+8. Under **OAuth credentials**, select **Automatic (recommended)** to use DCR. Add the [dashboard callback URL](#dashboard-callback-url) to the OAuth provider's redirect URI allowlist.
 9. Select **Save and connect server**.
 10. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
 
@@ -239,11 +239,11 @@ https://dash.cloudflare.com/<account-tag>/one/access-controls/ai-controls/mcp-se
 
 The dashboard callback URL is scoped to the account and server.
 
-Add the dashboard callback URL to the OAuth provider's redirect URI allowlist before authorizing the upstream MCP server; otherwise, authorization may fail.
+Add the dashboard callback URL to the OAuth provider's redirect URI allowlist before authorizing the upstream MCP server. Otherwise, authorization may fail.
 
 DCR uses the dashboard callback URL even when the **Use the Cloudflare-hosted OAuth callback** setting is on.
 
-End users will never use the dashboard callback URL to authorize the upstream MCP server.
+End users never use the dashboard callback URL to authorize the upstream MCP server.
 
 #### Portal callback URL
 
