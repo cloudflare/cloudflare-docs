@@ -32,6 +32,8 @@ The following logs and traces share account-level ingestion and storage allowanc
 | Free | 0.5 GB per day          | Seven-day retention included  | Not available        | Not separately metered |
 | Paid | 50 GB per billing cycle | 12 GB-month per billing cycle | $0.25 per GB         | $0.10 per GB-month     |
 
+Enterprise accounts move to this pricing when their contract renews. Until then, existing contract terms apply.
+
 Paid usage continues automatically after an allowance is exhausted. Ingestion and storage are separate meters, so unused ingestion allowance cannot be applied to storage or the reverse. Allowances do not roll over between billing cycles.
 
 You will be able to view your current ingestion and storage usage, remaining allowances, and estimated charges in **Billable Usage**.
@@ -43,7 +45,7 @@ On Free, Cloudflare stops ingesting new data when the account reaches its daily 
 #### Ingestion
 
 Ingestion includes the event body, the default enriched attributes and custom attributes. Ingestion is pre-compression and does not include dropped events.
-Sampling data before storage reduce both ingestion and storage usage.
+Sampling data before storage reduces both ingestion and storage usage.
 
 #### Storage
 
@@ -70,7 +72,7 @@ Cloudflare plans to add configurable 30, 90, and 365-day retention periods in th
 
 ### Existing customers
 
-Existing Workers Observability customers automatically move to this pricing on December 1, 2026. Ingestion charges apply only to data received on or after that date.
+Existing Workers Observability customers on Free, Pro, and Business plans automatically move to this pricing on December 1, 2026. Ingestion charges apply only to data received on or after that date. Enterprise accounts move at contract renewal.
 
 For Paid accounts, data retained on December 1 begins contributing to storage usage from that date. Usage before December 1 is not charged retroactively.
 
