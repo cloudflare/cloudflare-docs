@@ -8,6 +8,8 @@ products:
   - fundamentals
 ---
 
+import { DashButton, Steps } from "~/components"
+
 :::note
 
 Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
@@ -108,6 +110,25 @@ After creating an Organization, you can assign existing accounts to manage them 
 The assigned account now appears on the Organization overview page. From here, you can view the account, copy its ID, or rename it.
 
 To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### Create new accounts
+
+Organization Super Administrators can create up to five Free accounts within an Enterprise Organization.
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Accounts**.
+
+    <DashButton url="/" />
+
+2. Select **Create Account**.
+3. Enter an account name.
+4. For **Organization**, select the destination Organization.
+5. Select **Create Account**.
+</Steps>
+
+The new account starts on the Free plan. It does not inherit payment methods, plans, subscriptions, or entitlements from the Organization.
+
+API tokens and OAuth access tokens cannot create accounts within an Organization.
 
 ## Manage members
 
@@ -224,9 +245,6 @@ To manage Organization resources through their full Terraform lifecycle, configu
 :::
 
 ## What you cannot do
-
-### Create new accounts
-Enterprise Organizations cannot self-serve create new accounts. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create it, then assign it to your Organization.
 
 ### Create sub-organizations
 Enterprise Organizations use a flat structure. You cannot create sub-organizations or nested containers. Use **tags** to organize accounts by business unit, region, or environment.

@@ -1,0 +1,2084 @@
+{
+	"model_id": "anthropic/claude-opus-5.5",
+	"provider_id": "anthropic",
+	"name": "Claude Opus 5.5",
+	"description": "Claude Opus 5.5 is Anthropic's model for long-running agentic coding and knowledge work. It combines a one million token context window with adaptive thinking that is always on, a 128K token maximum output, and a medium default effort level.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Agentic",
+		"Knowledge Work"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 4,
+		"Output tokens (per 1M)": 20,
+		"Cached input tokens (per 1M)": 0.2,
+		"Cache creation tokens (per 1M)": 5
+	},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic message request",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Thermodynamics is usually described by **three main laws**, plus a \"zeroth\" law that was added later because it underpins the others.\n\n**Zeroth Law: Thermal equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in equilibrium with each other. This is what makes temperature a meaningful, measurable quantity, and it is why thermometers work.\n\n**First Law: Conservation of energy**\nEnergy cannot be created or destroyed, only transformed from one form to another.\n- Written as: **\u0394U = Q \u2212 W**, where \u0394U is the change in a system's internal energy, Q is the heat added to the system, and W is the work done by the system.\n- Implication: no machine can produce more energy than it takes in, so a \"perpetual motion machine of the first kind\" is impossible.\n\n**Second Law: Entropy increases**\nIn an isolated system, total entropy (roughly, disorder or the spreading out of energy) never decreases over time.\n- Heat flows spontaneously from hot to cold, never the reverse without outside work.\n- No heat engine can be 100% efficient. Some energy is always lost as waste heat.\n- This law gives time its \"direction\" (the arrow of time).\n\n**Third Law: Absolute zero**\nAs a system approaches absolute zero (0 K, or \u2212273.15 \u00b0C), its entropy approaches a minimum constant value. For a perfect crystal, that value is zero.\n- Implication: absolute zero cannot be reached in a finite number of steps.\n\n**A popular informal summary:**\n1. You can't win (you can't get out more energy than you put in).\n2. You can't break even (you'll always lose some energy as heat).\n3. You can't quit the game (you can't reach absolute zero)."
+			},
+			"raw_response": {
+				"model": "claude-opus-5-5",
+				"id": "msg_011CfJq2fgVPNWUne9rV4Tiv",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "thinking",
+						"thinking": "",
+						"signature": "CAQSmwUKEAgSGAI4AUIIdGhpbmtpbmcSDFVkpHQKiUqmYYqLgBoM8wyoXxEXn4HFcl0CIjCevXuqxkDavToC7S4gH/QFNscgJxQuyQfgg5lrBctKdBWSqysQvLawgvmsCshEmpYquAQDK/xJ80Z7b+/HtCuw4EYkFeLBS9DgqtPWUbd5GSCI9aC9YXFhzp1f9qW1kUyMIBgoUhiQWi2N4LVQnFFuE+3T5DzegFjfCEsU9WLjw3LL4uUemJb+B7Y7wWJ7USzBIgdytRa3Ta/NePqTWHWMR3csyGHh+avsBoZ+GLsgFOs4HQ0AFW1qfnGuNRivh3947vZ1SWFaROOoYZK6LGV856aez1mjiHdr3+yzOBNHGL4nWM+EFG7CtjxcBfqI7qU3nK4atAjAweIFAHarEIApWCRodUVyDcSNpMnS4EuquJs7JPju7+0jxj+sLP/6faYmzH+thOy3YT/aBzlGOxVT2ns6TOFsMEcxRYBjwkj3f579LZ1VpE/GVT7ZJzGXq3puXvJhFdMvxYEgOnr2ih6S6cJHhB4FAGEjvvLMJ33MpGI92egyVFhJXTZfYz90W4vqIYpGLuRzERPLHjexXGwzAjZu8K1a/MvZcekX3mSNzoyhHO8B3ALp7p6aKYJ0PVTfGLD/p7IRuMRBf/sHauAiOy8RuUojVCbRkhcfzYLA+zpYs9AAe+HOv4hOS+yUq/dRZC2xpj8YWfhNwHVoIrqs0j5kGkjl33QX9X9BS1urhkAuUojh864FFNKb9z2uREt2kYglcrUz6fQQZ9iWvJ4iyO0cGKEyy53Tgehmf/lzNZlNWAPnGs05dH+t72Knf4gtepuZ1fDSTimg60NrIJvF9+7GrBjbJBY2rwAcgLM8g/8E8BbzSCruZqGaGAE="
+					},
+					{
+						"type": "text",
+						"text": "Thermodynamics is usually described by **three main laws**, plus a \"zeroth\" law that was added later because it underpins the others.\n\n**Zeroth Law: Thermal equilibrium**\nIf two systems are each in thermal equilibrium with a third system, they are in equilibrium with each other. This is what makes temperature a meaningful, measurable quantity, and it is why thermometers work.\n\n**First Law: Conservation of energy**\nEnergy cannot be created or destroyed, only transformed from one form to another.\n- Written as: **\u0394U = Q \u2212 W**, where \u0394U is the change in a system's internal energy, Q is the heat added to the system, and W is the work done by the system.\n- Implication: no machine can produce more energy than it takes in, so a \"perpetual motion machine of the first kind\" is impossible.\n\n**Second Law: Entropy increases**\nIn an isolated system, total entropy (roughly, disorder or the spreading out of energy) never decreases over time.\n- Heat flows spontaneously from hot to cold, never the reverse without outside work.\n- No heat engine can be 100% efficient. Some energy is always lost as waste heat.\n- This law gives time its \"direction\" (the arrow of time).\n\n**Third Law: Absolute zero**\nAs a system approaches absolute zero (0 K, or \u2212273.15 \u00b0C), its entropy approaches a minimum constant value. For a perfect crystal, that value is zero.\n- Implication: absolute zero cannot be reached in a finite number of steps.\n\n**A popular informal summary:**\n1. You can't win (you can't get out more energy than you put in).\n2. You can't break even (you'll always lose some energy as heat).\n3. You can't quit the game (you can't reach absolute zero)."
+					}
+				],
+				"container": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"stop_details": null,
+				"usage": {
+					"input_tokens": 22,
+					"cache_creation_input_tokens": 0,
+					"cache_read_input_tokens": 0,
+					"cache_creation": {
+						"ephemeral_5m_input_tokens": 0,
+						"ephemeral_1h_input_tokens": 0
+					},
+					"output_tokens": 597,
+					"output_tokens_details": {
+						"thinking_tokens": 30
+					},
+					"service_tier": "standard",
+					"inference_geo": "global"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-5.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-5.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Message",
+			"description": "Using a system message to set context",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "How do I read a JSON file in Python?",
+						"role": "user"
+					}
+				],
+				"system": "You are a helpful coding assistant specializing in Python."
+			},
+			"output": {
+				"text": "Use Python's built-in `json` module:\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data)\n```\n\n`json.load()` parses the file into Python objects:\n\n| JSON | Python |\n|------|--------|\n| object `{}` | `dict` |\n| array `[]` | `list` |\n| string | `str` |\n| number | `int` / `float` |\n| `true` / `false` | `True` / `False` |\n| `null` | `None` |\n\n### Accessing the data\n\nGiven this `data.json`:\n\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30,\n  \"skills\": [\"Python\", \"SQL\"]\n}\n```\n\n```python\nprint(data[\"name\"])       # Alice\nprint(data[\"skills\"][0])  # Python\nprint(data.get(\"email\", \"N/A\"))  # N/A (safe access with a default)\n```\n\n### Handling errors\n\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n### Related tips\n\n- **Parsing a JSON string** (not a file): use `json.loads()` (the \"s\" stands for string).\n  ```python\n  data = json.loads('{\"key\": \"value\"}')\n  ```\n- **Using `pathlib`**:\n  ```python\n  from pathlib import Path\n  data = json.loads(Path(\"data.json\").read_text(encoding=\"utf-8\"))\n  ```\n- **Writing JSON back to a file**:\n  ```python\n  with open(\"output.json\", \"w\", encoding=\"utf-8\") as f:\n      json.dump(data, f, indent=4)\n  ```"
+			},
+			"raw_response": {
+				"model": "claude-opus-5-5",
+				"id": "msg_011CfJq38YmJ38ymFcT5DTY1",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "thinking",
+						"thinking": "",
+						"signature": "CAQS2gQKEAgSGAI4AUIIdGhpbmtpbmcSDFxQnE4f+jiYlyFgJRoMSio6ozq/nrk03OjnIjBVW7CpYGDuYX0b4SOpKqPYvUWec6ECWFTyOTlkKzvsGwcS1cN+YxcSbrCn9Gas++Uq9wO+i2aTJH/h1Sp0FqfRJDDBYWHuhH/1E26gBxzSBMAf+a6H86MyyhWgenqOfkqey4JJT10Sw9Y3aPrXOdBiVVrDk+r74fWA+tGK/tEVawYJIQPKlZrH8OPSpvOoetWEGF/fCtDIJkjTL/YmT4GK+grY1UJJ/vkRrvX0hPOc5wD1y+Wk7WV4MtJMEioXohlQ93b7jO9Il9TVp1s5Pyt6SjQNal/VfnLa4zUfsKymng8D0c+o9BrfEtffPovv/PslRUv5XHKLTRYqIyJ9o3K3iTtoUMgAl+CyFE8/i48CC2ATgpfrnF60aXRqTYOHBs6h1C62pgfRGHsD7Xxcg0k7JNnyMw4PXml9i4//7MNzUW0ZHRN5K8u5aZoTo52x3LwyIO2bc7se+oISb8CcjTYRzWGLwE/ra4WW3LiR6i3uObzoEHWVwolPEgcJQU0HgYWpTSqCr4FugcxGoTtU1Nklly31MJzeYUcdATSJxOGw1rz0QfZmGN81uRYbS5DF2jiQ82t3b9K9XdZWFm7nguV5jb/Hl68hDoSrm4KCv40xZwe34cXp4FdQSAnEsMikuoP+odCbrUpdrCycGws8xwKkatEq2MBCZ0Y5U2HlSWEHJo8WqHYNuuC4sIgXWKdtZlZJZWzTqeZ//nq/57ON0Z02DNVTd4yjoMfF0BgB"
+					},
+					{
+						"type": "text",
+						"text": "Use Python's built-in `json` module:\n\n```python\nimport json\n\nwith open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n    data = json.load(f)\n\nprint(data)\n```\n\n`json.load()` parses the file into Python objects:\n\n| JSON | Python |\n|------|--------|\n| object `{}` | `dict` |\n| array `[]` | `list` |\n| string | `str` |\n| number | `int` / `float` |\n| `true` / `false` | `True` / `False` |\n| `null` | `None` |\n\n### Accessing the data\n\nGiven this `data.json`:\n\n```json\n{\n  \"name\": \"Alice\",\n  \"age\": 30,\n  \"skills\": [\"Python\", \"SQL\"]\n}\n```\n\n```python\nprint(data[\"name\"])       # Alice\nprint(data[\"skills\"][0])  # Python\nprint(data.get(\"email\", \"N/A\"))  # N/A (safe access with a default)\n```\n\n### Handling errors\n\n```python\nimport json\n\ntry:\n    with open(\"data.json\", \"r\", encoding=\"utf-8\") as f:\n        data = json.load(f)\nexcept FileNotFoundError:\n    print(\"File not found.\")\nexcept json.JSONDecodeError as e:\n    print(f\"Invalid JSON: {e}\")\n```\n\n### Related tips\n\n- **Parsing a JSON string** (not a file): use `json.loads()` (the \"s\" stands for string).\n  ```python\n  data = json.loads('{\"key\": \"value\"}')\n  ```\n- **Using `pathlib`**:\n  ```python\n  from pathlib import Path\n  data = json.loads(Path(\"data.json\").read_text(encoding=\"utf-8\"))\n  ```\n- **Writing JSON back to a file**:\n  ```python\n  with open(\"output.json\", \"w\", encoding=\"utf-8\") as f:\n      json.dump(data, f, indent=4)\n  ```"
+					}
+				],
+				"container": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"stop_details": null,
+				"usage": {
+					"input_tokens": 40,
+					"cache_creation_input_tokens": 0,
+					"cache_read_input_tokens": 0,
+					"cache_creation": {
+						"ephemeral_5m_input_tokens": 0,
+						"ephemeral_1h_input_tokens": 0
+					},
+					"output_tokens": 600,
+					"output_tokens_details": {
+						"thinking_tokens": 10
+					},
+					"service_tier": "standard",
+					"inference_geo": "global"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-5.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'How do I read a JSON file in Python?', role: 'user' }],\n    system: 'You are a helpful coding assistant specializing in Python.',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-5.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"How do I read a JSON file in Python?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"system\": \"You are a helpful coding assistant specializing in Python.\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Creative Writing with High Effort",
+			"description": "Use adaptive thinking with high effort for deeper reasoning.",
+			"input": {
+				"max_tokens": 2048,
+				"messages": [
+					{
+						"content": "Write a short story opening about a detective finding an unusual clue.",
+						"role": "user"
+					}
+				],
+				"output_config": {
+					"effort": "high"
+				},
+				"thinking": {
+					"type": "adaptive"
+				}
+			},
+			"output": {
+				"text": "# The Missing Page\n\nThe dead man had been arranged with the kind of care people usually reserve for sleeping children. Hands folded over his sternum. Shoes placed side by side at the foot of the bed, laces tucked in. Someone had even drawn the curtains halfway, as if the morning light might disturb him.\n\nDetective Inez Halloran stood in the doorway longer than she needed to, letting the room tell her what it wanted to tell her. Rooms always talked, if you let them. This one was saying *nothing happened here*, and it was saying it far too politely.\n\n\"Neighbor found him,\" said Patrolman Deaks, hovering at her elbow. \"Door was unlocked. No sign of forced entry, no sign of a struggle. Coroner's thinking heart, maybe. Guy was sixty-one.\"\n\n\"Guys who die of heart attacks don't usually take their shoes off first and line them up.\"\n\n\"Maybe he was tidy.\"\n\nInez didn't answer. She crossed the room, snapped on a pair of gloves, and crouched beside the shoes. Brown oxfords, recently polished, heels worn unevenly in a way that suggested a bad left knee. She picked up the right shoe, then the left, and felt something shift inside the toe.\n\nA folded square of paper, pale blue, lined.\n\nShe knew the paper before she'd even opened it. It was the same shade of blue as the cheap spiral notebook she'd bought from the pharmacy on Calder Street that morning, because her old one had gotten coffee-soaked in the car. She'd grabbed it off the rack without thinking, paid with exact change, and written exactly one thing in it: the address of this apartment.\n\nShe unfolded the paper.\n\nFour words, written in blue ballpoint:\n\n*He wasn't the first.*\n\nThe handwriting was slanted, cramped, the *t*s crossed low and hard, the way her father had taught her when she was seven because he said it looked more decisive. Nobody else crossed their *t*s like that. She'd never seen anyone else do it.\n\nIt was her handwriting.\n\n\"Detective?\" Deaks leaned in. \"You got something?\"\n\nInez folded the paper back along its creases and slipped it into an evidence bag, keeping her face very still. Then, as casually as she could manage, she reached into her coat pocket and pulled out her new notebook. She flipped it open to the first page, where the address sat in her own familiar scrawl.\n\nThen she ran her thumb along the spiral binding and felt the small, ragged teeth of paper where the second page had been torn out.\n\n\"Detective?\"\n\n\"Get me a list,\" she said quietly, \"of every unattended death in this city for the past six months. Every single one where the coroner said *natural causes*.\"\n\n\"That's gonna be a lot of names.\"\n\nInez looked down at the dead man's folded hands, at the careful, tender way someone had placed them, and felt a cold certainty settle in her chest like a stone sinking to the bottom of a well.\n\n\"I know,\" she said. \"That's what worries me.\""
+			},
+			"raw_response": {
+				"model": "claude-opus-5-5",
+				"id": "msg_011CfJq3WeHfjsXNsyLj1M39",
+				"type": "message",
+				"role": "assistant",
+				"content": [
+					{
+						"type": "thinking",
+						"thinking": "",
+						"signature": "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"
+					},
+					{
+						"type": "text",
+						"text": "# The Missing Page\n\nThe dead man had been arranged with the kind of care people usually reserve for sleeping children. Hands folded over his sternum. Shoes placed side by side at the foot of the bed, laces tucked in. Someone had even drawn the curtains halfway, as if the morning light might disturb him.\n\nDetective Inez Halloran stood in the doorway longer than she needed to, letting the room tell her what it wanted to tell her. Rooms always talked, if you let them. This one was saying *nothing happened here*, and it was saying it far too politely.\n\n\"Neighbor found him,\" said Patrolman Deaks, hovering at her elbow. \"Door was unlocked. No sign of forced entry, no sign of a struggle. Coroner's thinking heart, maybe. Guy was sixty-one.\"\n\n\"Guys who die of heart attacks don't usually take their shoes off first and line them up.\"\n\n\"Maybe he was tidy.\"\n\nInez didn't answer. She crossed the room, snapped on a pair of gloves, and crouched beside the shoes. Brown oxfords, recently polished, heels worn unevenly in a way that suggested a bad left knee. She picked up the right shoe, then the left, and felt something shift inside the toe.\n\nA folded square of paper, pale blue, lined.\n\nShe knew the paper before she'd even opened it. It was the same shade of blue as the cheap spiral notebook she'd bought from the pharmacy on Calder Street that morning, because her old one had gotten coffee-soaked in the car. She'd grabbed it off the rack without thinking, paid with exact change, and written exactly one thing in it: the address of this apartment.\n\nShe unfolded the paper.\n\nFour words, written in blue ballpoint:\n\n*He wasn't the first.*\n\nThe handwriting was slanted, cramped, the *t*s crossed low and hard, the way her father had taught her when she was seven because he said it looked more decisive. Nobody else crossed their *t*s like that. She'd never seen anyone else do it.\n\nIt was her handwriting.\n\n\"Detective?\" Deaks leaned in. \"You got something?\"\n\nInez folded the paper back along its creases and slipped it into an evidence bag, keeping her face very still. Then, as casually as she could manage, she reached into her coat pocket and pulled out her new notebook. She flipped it open to the first page, where the address sat in her own familiar scrawl.\n\nThen she ran her thumb along the spiral binding and felt the small, ragged teeth of paper where the second page had been torn out.\n\n\"Detective?\"\n\n\"Get me a list,\" she said quietly, \"of every unattended death in this city for the past six months. Every single one where the coroner said *natural causes*.\"\n\n\"That's gonna be a lot of names.\"\n\nInez looked down at the dead man's folded hands, at the careful, tender way someone had placed them, and felt a cold certainty settle in her chest like a stone sinking to the bottom of a well.\n\n\"I know,\" she said. \"That's what worries me.\""
+					}
+				],
+				"container": null,
+				"stop_reason": "end_turn",
+				"stop_sequence": null,
+				"stop_details": null,
+				"usage": {
+					"input_tokens": 28,
+					"cache_creation_input_tokens": 0,
+					"cache_read_input_tokens": 0,
+					"cache_creation": {
+						"ephemeral_5m_input_tokens": 0,
+						"ephemeral_1h_input_tokens": 0
+					},
+					"output_tokens": 1633,
+					"output_tokens_details": {
+						"thinking_tokens": 656
+					},
+					"service_tier": "standard",
+					"inference_geo": "global"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-5.5',\n  {\n    max_tokens: 2048,\n    messages: [\n      {\n        content: 'Write a short story opening about a detective finding an unusual clue.',\n        role: 'user',\n      },\n    ],\n    output_config: { effort: 'high' },\n    thinking: { type: 'adaptive' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-5.5\",\n  \"max_tokens\": 2048,\n  \"messages\": [\n    {\n      \"content\": \"Write a short story opening about a detective finding an unusual clue.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"output_config\": {\n    \"effort\": \"high\"\n  },\n  \"thinking\": {\n    \"type\": \"adaptive\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming Response",
+			"description": "Enable streaming for real-time output",
+			"input": {
+				"max_tokens": 1024,
+				"messages": [
+					{
+						"content": "Explain the concept of recursion with a simple example.",
+						"role": "user"
+					}
+				],
+				"stream": true
+			},
+			"output": {
+				"text": [
+					"#",
+					" Recursion\n\n**Recurs",
+					"ion** is when a function sol",
+					"ves a problem by **",
+					"calling itself** on a",
+					" smaller version of the same probl",
+					"em,",
+					" until it reaches a case",
+					" sim",
+					"ple enough to answ",
+					"er directly.",
+					"\n\nEvery recursive function need",
+					"s two parts:\n\n1.",
+					" **Base case**: the sim",
+					"plest version",
+					" of the problem, answ",
+					"ered directly without rec",
+					"ursion. This is",
+					" what",
+					" stops the function",
+					".\n2. **Recurs",
+					"ive case**: the function",
+					" cal",
+					"ls itself on a smaller",
+					" input, moving clos",
+					"er to the base case.\n\n##",
+					" A",
+					" Simple Example: Fact",
+					"orial\n\nThe",
+					" factorial of a number `",
+					"n` (written `n!`",
+					") is the product of all positive",
+					" integers up to `n`:",
+					"\n\n```\n5! = 5",
+					" \u00d7 4 \u00d7 3",
+					" \u00d7 2 \u00d7 1",
+					" ",
+					"= 120\n```\n\nNot",
+					"ice that `5! = 5",
+					" \u00d7 4!`, and",
+					" `4! = 4 \u00d7",
+					" 3!`, and so on",
+					". The",
+					" problem cont",
+					"ains a",
+					" smaller cop",
+					"y of itself, which makes",
+					" it a natural fit for rec",
+					"ursion.\n\n```python\ndef",
+					" factorial(n):\n    ",
+					"if n == 1:                ",
+					"       ",
+					"# Base case\n        return ",
+					"1\n    return n * factor",
+					"ial(n - 1)      ",
+					"# Recursive case\n\nprint",
+					"(factorial(5))  ",
+					"# Output: 120\n```",
+					"\n\n## How It Works",
+					" Step by Step\n\nWhen",
+					" you",
+					" call `factorial(5)",
+					"`, the calls st",
+					"ack up until",
+					" they reach the base case:",
+					"\n\n```\nfactorial(5)",
+					" = 5 * factorial",
+					"(4)\n                ",
+					"   ",
+					"factorial(4) = ",
+					"4 * factorial(3",
+					")\n                                      ",
+					"factorial(3) = ",
+					"3 * factorial(2",
+					")\n                                                         ",
+					"factorial(2) = ",
+					"2 * factorial(1",
+					")\n                                                                            fact",
+					"orial(1) = 1",
+					"   ",
+					"\u2190 base case\n```",
+					"\n\nThen the results are",
+					" returned back",
+					" up the chain:\n\n```",
+					"\nfactorial(1) = ",
+					"1\nfactorial(2)",
+					" = 2 * 1  ",
+					"= 2\nfactorial(",
+					"3) = 3 * ",
+					"2  = 6\nfactor",
+					"ial(4) = 4 ",
+					"* 6  = 24",
+					"\nfactorial(5) = ",
+					"5 * 24 = ",
+					"120\n```\n\n## A Real",
+					"-World Analogy",
+					"\n\nImagine you're standing in",
+					" a long",
+					" line and want to know your",
+					" position. You ask the person in",
+					" front of",
+					" you, \"What's your position?",
+					"\" They ask the",
+					" person in front of them, and so",
+					" on. The person at the very",
+					" front knows they're #",
+					"1 (**",
+					"base case**). Each person then",
+					" answ",
+					"ers the",
+					" one behind them with \"my",
+					" position",
+					" + 1,\" until",
+					" the",
+					" answer reaches you.",
+					"\n\n## Common Pitfall",
+					"\n\nIf you forget the base case",
+					", or the input",
+					" never gets clos",
+					"er to it, the function cal",
+					"ls itself forever:\n\n```",
+					"python\ndef broken(",
+					"n):\n    return n * bro",
+					"ken(n - 1)   ",
+					"# No base case!",
+					"\n```\n\nIn Python this ra",
+					"ises a `RecursionError",
+					"` (a",
+					" \"",
+					"stack overflow\")",
+					" because each call takes up memory",
+					" until the lim",
+					"it is h",
+					"it.\n\n## When to",
+					" Use Recursion",
+					"\n\nRecursion works well for problems",
+					" that naturally break into",
+					" smaller,",
+					" similar subproblems,",
+					" such as:\n- Travers",
+					"ing trees and",
+					" folder structures\n- S",
+					"orting algorithms like",
+					" merge sort and quicks",
+					"ort\n- Mathematical",
+					" s",
+					"equences (factorial,",
+					" Fibonacci)",
+					"\n- Puzzles like the",
+					" T",
+					"ower of Hanoi",
+					"\n\nFor",
+					" simple rep",
+					"etitive tasks, a",
+					" regular loop is",
+					" often more",
+					" efficient,",
+					" but recursion can",
+					" make",
+					" cert",
+					"ain problems much clearer and",
+					" easier to write."
+				]
+			},
+			"raw_response": [
+				{
+					"type": "message_start",
+					"message": {
+						"model": "claude-opus-5-5",
+						"id": "msg_011CfJq56VHXzuR3jeXnycTD",
+						"type": "message",
+						"role": "assistant",
+						"content": [],
+						"container": null,
+						"stop_reason": null,
+						"stop_sequence": null,
+						"stop_details": null,
+						"usage": {
+							"input_tokens": 24,
+							"cache_creation_input_tokens": 0,
+							"cache_read_input_tokens": 0,
+							"cache_creation": {
+								"ephemeral_5m_input_tokens": 0,
+								"ephemeral_1h_input_tokens": 0
+							},
+							"output_tokens": 2,
+							"service_tier": "standard",
+							"inference_geo": "global"
+						}
+					}
+				},
+				{
+					"type": "content_block_start",
+					"index": 0,
+					"content_block": {
+						"type": "thinking",
+						"thinking": "",
+						"signature": ""
+					}
+				},
+				{
+					"type": "ping"
+				},
+				{
+					"type": "content_block_delta",
+					"index": 0,
+					"delta": {
+						"type": "thinking_delta",
+						"thinking": ""
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 0,
+					"delta": {
+						"type": "signature_delta",
+						"signature": "CAQS2gUKEAgSGAI4AUIIdGhpbmtpbmcSDG7qYU+4U9Zn5Lr4RRoM/vhjDo069cSYwSAJIjDZo0bVWdOCSK34lCUaRsf5vpUOey6PJqmdjT8R7tFiyQyAAAXqYCXSZOE/gUyEcikq9wSCLqq0hBfJiy0nHOuvdbASGmFcB9zKW9euhrjq/SyPB3gv5yjeBk+U38pS7ddp7I1FBCSnQOumNIIOK+VVXHQFUig/WVcT41u8KVUCZ13Nhg+iouuuxL8wqjIDZkCzhIGFVYDw90+D+weWURa30/7pbtIK5cOnG8H3eshGI5Qk/GRtww4OBrbBbdVJyGSVf3qjv71UH0T2J2L5+FDAZg0UnuxuZRqBdZEFHSX8cMVNYIH7CbWwbWwfyzak2MVBRcqCaZZKqTM/sBYX/lwfZb/38abvc/n99qnqRdMXvMYW4Oe0nbRFCBcO7MhEIuaymtrPQ3MG3utQhO8kKaTIWSV52khnAPffmED7VF/GCedk9hm23IoWf/BFJTHyLYrHFKAHlL6YBHnXmdGSybzflEtn3sS3u4pCPLP492Tg0sZe+ECKCKlueBYmxi9OmRQRKRRF5r+4Ln2hw/LEpOWl091Y9XGuQail0uwhmDEiY+CLvsFdVZroYx7PbEcfoosxGq3cZrtJm/rS3fAV484VhmQMhZU4Wb2wI0VvXvikT6pjJ8i7SURbqTLWzmZxYOGtlDNAQQ9c1OaAbNpIjQU0/eVENMB8GBAzVizNF2mXoBxhvpkE2CQ+adaDrTtC0m02xVLT6mClWd8gOu4REXD0JTK45EL4gae1qIuQpcPA8PRBaOB31TiIgs5Lvaghtw63zIV5+g50x6Ct8CTpfb6Wel3knBMLsYmdA9N9d4pLFy14sVaRS9o4sKLnNzSFNZAXT80ynyq/dEVY8BZY/z2akFnG5pA3be9rkLFncIxreGwx23MKLxm+vXjoEKIPT3PX0Yq6gRAlLScdGAE="
+					}
+				},
+				{
+					"type": "content_block_stop",
+					"index": 0
+				},
+				{
+					"type": "content_block_start",
+					"index": 1,
+					"content_block": {
+						"type": "text",
+						"text": ""
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "#"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " Recursion\n\n**Recurs"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ion** is when a function sol"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ves a problem by **"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "calling itself** on a"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " smaller version of the same probl"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "em,"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " until it reaches a case"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " sim"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ple enough to answ"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "er directly."
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nEvery recursive function need"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "s two parts:\n\n1."
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " **Base case**: the sim"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "plest version"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " of the problem, answ"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ered directly without rec"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ursion. This is"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " what"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " stops the function"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ".\n2. **Recurs"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ive case**: the function"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " cal"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ls itself on a smaller"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " input, moving clos"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "er to the base case.\n\n##"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " A"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " Simple Example: Fact"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "orial\n\nThe"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " factorial of a number `"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "n` (written `n!`"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ") is the product of all positive"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " integers up to `n`:"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n```\n5! = 5"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " \u00d7 4 \u00d7 3"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " \u00d7 2 \u00d7 1"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "= 120\n```\n\nNot"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ice that `5! = 5"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " \u00d7 4!`, and"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " `4! = 4 \u00d7"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " 3!`, and so on"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ". The"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " problem cont"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ains a"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " smaller cop"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "y of itself, which makes"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " it a natural fit for rec"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ursion.\n\n```python\ndef"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " factorial(n):\n    "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "if n == 1:                "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "       "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "# Base case\n        return "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "1\n    return n * factor"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ial(n - 1)      "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "# Recursive case\n\nprint"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "(factorial(5))  "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "# Output: 120\n```"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n## How It Works"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " Step by Step\n\nWhen"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " you"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " call `factorial(5)"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "`, the calls st"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ack up until"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " they reach the base case:"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n```\nfactorial(5)"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " = 5 * factorial"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "(4)\n                "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "   "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "factorial(4) = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "4 * factorial(3"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ")\n                                      "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "factorial(3) = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "3 * factorial(2"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ")\n                                                         "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "factorial(2) = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "2 * factorial(1"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ")\n                                                                            fact"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "orial(1) = 1"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "   "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\u2190 base case\n```"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nThen the results are"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " returned back"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " up the chain:\n\n```"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\nfactorial(1) = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "1\nfactorial(2)"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " = 2 * 1  "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "= 2\nfactorial("
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "3) = 3 * "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "2  = 6\nfactor"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ial(4) = 4 "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "* 6  = 24"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\nfactorial(5) = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "5 * 24 = "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "120\n```\n\n## A Real"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "-World Analogy"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nImagine you're standing in"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " a long"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " line and want to know your"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " position. You ask the person in"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " front of"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " you, \"What's your position?"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\" They ask the"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " person in front of them, and so"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " on. The person at the very"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " front knows they're #"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "1 (**"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "base case**). Each person then"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " answ"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ers the"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " one behind them with \"my"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " position"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " + 1,\" until"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " the"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " answer reaches you."
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\n## Common Pitfall"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nIf you forget the base case"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": ", or the input"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " never gets clos"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "er to it, the function cal"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ls itself forever:\n\n```"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "python\ndef broken("
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "n):\n    return n * bro"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ken(n - 1)   "
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "# No base case!"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n```\n\nIn Python this ra"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ises a `RecursionError"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "` (a"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " \""
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "stack overflow\")"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " because each call takes up memory"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " until the lim"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "it is h"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "it.\n\n## When to"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " Use Recursion"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nRecursion works well for problems"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " that naturally break into"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " smaller,"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " similar subproblems,"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " such as:\n- Travers"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ing trees and"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " folder structures\n- S"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "orting algorithms like"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " merge sort and quicks"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ort\n- Mathematical"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " s"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "equences (factorial,"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " Fibonacci)"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n- Puzzles like the"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " T"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ower of Hanoi"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "\n\nFor"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " simple rep"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "etitive tasks, a"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " regular loop is"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " often more"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " efficient,"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " but recursion can"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " make"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " cert"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": "ain problems much clearer and"
+					}
+				},
+				{
+					"type": "content_block_delta",
+					"index": 1,
+					"delta": {
+						"type": "text_delta",
+						"text": " easier to write."
+					}
+				},
+				{
+					"type": "content_block_stop",
+					"index": 1
+				},
+				{
+					"type": "message_delta",
+					"delta": {
+						"stop_reason": "end_turn",
+						"stop_sequence": null,
+						"stop_details": null,
+						"container": null
+					},
+					"usage": {
+						"input_tokens": 24,
+						"cache_creation_input_tokens": 0,
+						"cache_read_input_tokens": 0,
+						"output_tokens": 1022,
+						"output_tokens_details": {
+							"thinking_tokens": 53
+						}
+					}
+				},
+				{
+					"type": "message_stop"
+				}
+			],
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'anthropic/claude-opus-5.5',\n  {\n    max_tokens: 1024,\n    messages: [{ content: 'Explain the concept of recursion with a simple example.', role: 'user' }],\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/messages \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"anthropic/claude-opus-5.5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"content\": \"Explain the concept of recursion with a simple example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"stream\": true\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+	"terms": "https://www.anthropic.com/legal/commercial-terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-opus-5.5.png",
+	"metadata": {
+		"Adaptive Thinking": "Always on",
+		"Architecture": "Transformer",
+		"Default Effort": "Medium",
+		"Knowledge Cutoff": "June 2026"
+	},
+	"request_formats": [
+		"anthropic-messages"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "anthropic",
+			"pricing": {
+				"input_tokens": 4,
+				"output_tokens": 20,
+				"input_cached_tokens": 0.2,
+				"input_cache_creation_tokens": 5
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-23 20:51:41",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"user",
+									"assistant"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string"
+												},
+												"text": {
+													"type": "string"
+												},
+												"source": {},
+												"cache_control": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string",
+															"const": "ephemeral"
+														},
+														"ttl": {
+															"type": "string",
+															"enum": [
+																"5m",
+																"1h"
+															]
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": false
+												}
+											},
+											"required": [
+												"type"
+											],
+											"additionalProperties": {}
+										}
+									}
+								]
+							}
+						},
+						"required": [
+							"role",
+							"content"
+						],
+						"additionalProperties": false
+					}
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"system": {
+					"type": "string"
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"metadata": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string"
+					},
+					"additionalProperties": {}
+				},
+				"thinking": {
+					"type": "object",
+					"properties": {
+						"type": {
+							"type": "string",
+							"const": "adaptive"
+						},
+						"display": {
+							"type": "string",
+							"enum": [
+								"summarized",
+								"omitted"
+							]
+						}
+					},
+					"required": [
+						"type"
+					],
+					"additionalProperties": {}
+				},
+				"output_config": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"type": "string",
+							"enum": [
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						},
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"tool_choice": {
+					"oneOf": [
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "auto"
+								},
+								"disable_parallel_tool_use": {
+									"type": "boolean"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"additionalProperties": {}
+						},
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "none"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"additionalProperties": {}
+						}
+					]
+				},
+				"tools": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string"
+							}
+						},
+						"additionalProperties": {}
+					}
+				}
+			},
+			"required": [
+				"messages",
+				"max_tokens"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"const": "message"
+				},
+				"role": {
+					"type": "string",
+					"const": "assistant"
+				},
+				"content": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string"
+							},
+							"text": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"type"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"model": {
+					"type": "string"
+				},
+				"stop_reason": {
+					"type": [
+						"string",
+						"null"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"id",
+				"type",
+				"role",
+				"content",
+				"model",
+				"stop_reason",
+				"usage"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

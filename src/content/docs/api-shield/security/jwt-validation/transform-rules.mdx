@@ -1,23 +1,23 @@
 ---
-title: Enhance Transform Rules
+title: Enhance Request Header Transform Rules
 pcx_content_type: how-to
-description: Forward verified JWT claims to your origin using Transform Rules.
+description: Forward verified JWT claims to your origin using Request Header Transform Rules.
 products:
   - api-shield
 sidebar:
   order: 4
 head:
   - tag: title
-    content: Enhance Transform Rules with JWT claims
+    content: Enhance Request Header Transform Rules with JWT claims
 tags:
   - JSON web token (JWT)
 ---
 
-import { Steps, DashButton } from "~/components"
+import { Steps, DashButton } from "~/components";
 
-You can forward information from a [JSON Web Token (JWT)](/api-shield/security/jwt-validation/) to the origin in a header by creating [Transform Rules](/rules/transform/) using claims that Cloudflare has verified via the JSON Web Token.
+You can forward verified claims from a [JSON Web Token (JWT)](/api-shield/security/jwt-validation/) to your origin in a header by creating a [Request Header Transform Rule](/rules/transform/request-header-modification/).
 
-Claims are available through the `http.request.jwt.claims` firewall fields.
+Verified claims are available to Request Header Transform Rules through the `http.request.jwt.claims` fields. They are not available to [URL Rewrite Rules](/rules/transform/url-rewrite/).
 
 For example, the following expression will extract the user claim from a token processed by the token configuration with `TOKEN_CONFIGURATION_ID`:
 
@@ -27,9 +27,9 @@ lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "clai
 
 Refer to [Configure JWT validation](/api-shield/security/jwt-validation/api/) for more information about creating a token configuration.
 
-## Create a Transform Rule
+## Create a Request Header Transform Rule
 
-As an example, to send the `x-send-jwt-claim-user` request header to the origin, you must create a Transform Rule:
+As an example, create a Request Header Transform Rule to send the `x-send-jwt-claim-user` request header to the origin:
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Rules overview** page.

@@ -1,0 +1,301 @@
+---
+title: Move backups
+description: Replace @cloudflare/sandbox 0.12 createBackup() and restoreBackup() with DirectoryBackup, and convert the backups that 0.12 created.
+pcx_content_type: how-to
+sidebar:
+  order: 14
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - r2
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Replace 0.12 `createBackup()` and `restoreBackup()` with Durable Object methods of the same names, built on `DirectoryBackup`. Your Worker calls them with the same options, and backups keep the 0.12 time to live. `DirectoryBackup` saves the directory to the same `BACKUP_BUCKET` binding as a compressed archive, and restores it as ordinary files. 0.12 saved a SquashFS image and mounted it over the directory. Backups that 0.12 created convert to 1.0 backups the first time you restore them.
+
+To save the whole filesystem instead of one directory, use a Container snapshot. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class. On this page it is `MySandbox`, with the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+This page replaces `createBackup()`, `restoreBackup()`, their options, and the backup errors. `DirectoryBackup` reaches R2 through `this.ctx.exports`, which is `undefined` before compatibility date `2025-11-17`, unless you add the `enable_ctx_exports` compatibility flag.
+
+## Replace the backup calls
+
+<Steps>
+
+1. Install the package, if your Worker does not use it yet:
+
+   <PackageManagers pkg="@cloudflare/sandbox" />
+
+2. Copy the helper binary into your image, if the `Dockerfile` does not copy it yet:
+
+   ```dockerfile title="Dockerfile"
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   ```
+
+   Use the `cloudflare/sandbox` tag that matches the installed package version.
+
+3. Keep the R2 binding named `BACKUP_BUCKET`, and point it at the bucket that 0.12 wrote to. With presigned uploads, that is the bucket in `BACKUP_BUCKET_NAME`:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"r2_buckets": [
+   		{
+   			"binding": "BACKUP_BUCKET",
+   			"bucket_name": "my-sandbox-backups",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   After you delete the 0.12 class, remove `BACKUP_BUCKET_NAME` and `BACKUP_BUCKET_ENDPOINT` from your variables, and `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY` from your secrets unless a bucket mount uses them. The container never receives bucket credentials for backups in 1.0.
+
+4. Add these declarations to the top level of `src/index.ts`:
+
+   ```ts title="src/index.ts"
+   import {
+   	DirectoryBackup,
+   	type DirectoryBackupRecord,
+   } from "@cloudflare/sandbox";
+
+   // Gives the Durable Object this.ctx.exports.DirectoryBackupGateway,
+   // which moves each backup between the container and the bucket
+   export { DirectoryBackupGateway } from "@cloudflare/sandbox";
+
+   // 0.12 kept a backup for three days unless you set ttl.
+   const DEFAULT_TTL_SECONDS = 3 * 24 * 60 * 60;
+
+   // The record your code stores in place of the 0.12 backup object.
+   type Backup = DirectoryBackupRecord & { expiresAt: number };
+
+   // Restores read the expiry time from this object, because a caller
+   // can change the expiresAt field of a record.
+   const metaKey = (id: string) => `backups/${id}.meta.json`;
+
+   // Like 0.12, refuse a backup that expires within a minute.
+   const EXPIRY_MARGIN_MS = 60 * 1000;
+   ```
+
+5. Add a `DirectoryBackup` field to `MySandbox`:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private readonly backups = new DirectoryBackup(
+   		this.container,
+   		this.ctx.exports.DirectoryBackupGateway,
+   		{ binding: "BACKUP_BUCKET", prefix: "backups/" },
+   	);
+   }
+   ```
+
+   `this.ctx.container` stays the same object for as long as the Durable Object runs, so one `DirectoryBackup` object serves every container that the Durable Object starts.
+
+   If `startContainer()` registers a catch-all with `interceptAllOutboundHttp()`, as [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/) sets up, call `await this.backups.intercept()` in the `try` block of `startContainer()`, before the catch-all. Otherwise the catch-all receives backup traffic from the container, and backups and restores fail with `BACKUP_TRANSFER`. A container that was already running with the catch-all needs a restart. Refer to [`intercept()`](/sandbox/reference/directory-backups/#intercept).
+
+6. Replace `createBackup()`. In 0.12, your Worker called it on the sandbox:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "ada");
+   const backup = await sandbox.createBackup({
+   	dir: "/workspace/project",
+   	excludes: ["node_modules"],
+   	ttl: 24 * 60 * 60,
+   });
+   ```
+
+   In 1.0, add a method with the same name and options to `MySandbox`:
+
+   ```ts title="src/index.ts (1.0)"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async createBackup(options: {
+   		dir: string;
+   		name?: string;
+   		excludes?: string[];
+   		gitignore?: boolean;
+   		ttl?: number;
+   	}): Promise<Backup> {
+   		await this.ensureRunning();
+   		const { excludes, ttl = DEFAULT_TTL_SECONDS, ...rest } = options;
+   		const backup = await this.backups.backup({
+   			...rest,
+   			// 0.12 matched each pattern from the top of the directory.
+   			exclude: excludes?.map((pattern) => `/${pattern}`),
+   		});
+   		const expiresAt = Date.now() + ttl * 1000;
+   		await this.env.BACKUP_BUCKET.put(
+   			metaKey(backup.id),
+   			JSON.stringify({ expiresAt }),
+   		);
+
+   		return { ...backup, expiresAt };
+   	}
+   }
+   ```
+
+   Your Worker calls it as before, on the stub that `getByName()` returns. It returns a record with the ID, directory, size, SHA-256, and expiry time of the backup. Store it where your code stored the 0.12 backup object. A record lets a caller restore that backup, so keep records out of reach of the code in the sandbox.
+
+   `createBackup()` also writes the expiry time to `backups/<ID>.meta.json` in the bucket, as 0.12 wrote it to `meta.json`. The `expiresAt` field of the record is for display only.
+
+7. Replace `restoreBackup()`:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async restoreBackup(backup: DirectoryBackupRecord) {
+   		const meta = await this.env.BACKUP_BUCKET.get(metaKey(backup.id));
+
+   		if (!meta) {
+   			throw new Error(`Backup ${backup.id} was not found`);
+   		}
+
+   		const { expiresAt } = await meta.json<{ expiresAt: number }>();
+
+   		if (Date.now() + EXPIRY_MARGIN_MS > expiresAt) {
+   			throw new Error(`Backup ${backup.id} has expired`);
+   		}
+
+   		await this.ensureRunning();
+   		await this.backups.restore(backup);
+   		return { success: true, dir: backup.dir, id: backup.id };
+   	}
+   }
+   ```
+
+   `restoreBackup()` reads the expiry time from the bucket, not from the record, so a caller cannot restore an expired backup by changing `expiresAt`. A record from another sandbox restores too, as in 0.12, and `restore()` checks the object against the SHA-256 in the record.
+
+   `restore()` replaces the directory with the files in the backup, so files that the backup left out, such as `node_modules`, are gone after a restore. In 0.12, the restored directory was a mount that ended with the container. In 1.0, the files stay in the container filesystem.
+
+   A process whose working directory is inside the directory keeps the old, deleted directory after `restore()`. A server started with `cwd: "/workspace/project"` is one such process. Restart the process after the restore, or have it open files by absolute path. In 0.12, the restore mounted over the path, so such a process saw the restored files.
+
+8. Deploy your Worker, then back up and restore a directory through the existing routes of your Worker. `createBackup()` returns a record like this one:
+
+   ```json output
+   {
+   	"id": "52046bdb-afb2-4f38-a14c-70d48a45a56f",
+   	"dir": "/workspace/project",
+   	"size": 445,
+   	"sha256": "31ffdbb8a126e88fce0ff3b273a7db8aae1c933ba446118cf2319d8e015ebf91",
+   	"format": "tar+zstd/1",
+   	"expiresAt": 1790465279938
+   }
+   ```
+
+   `restoreBackup()` with that record returns `{"success":true,"dir":"/workspace/project","id":"52046bdb-afb2-4f38-a14c-70d48a45a56f"}`, and a backup whose stored expiry time has passed throws `Backup <ID> has expired`, even when the record has a later `expiresAt`.
+
+</Steps>
+
+## Replace options, configuration, and errors
+
+Each 0.12 name has one of these replacements:
+
+| 0.12                                      | 1.0                                                                                                                                                                                                            |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dir`                                     | `dir`. 0.12 accepted only directories under `/workspace`, `/home`, `/tmp`, `/var/tmp`, and `/app`. `DirectoryBackup` accepts any absolute path, so check the directory in your code when a request chooses it. |
+| `name`                                    | `name`, stored in the record and in the custom metadata of the object                                                                                                                                          |
+| `ttl`                                     | The expiry time in `backups/<ID>.meta.json`. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`. Delete its `.meta.json` object at the same time.        |
+| `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `/`, because a `.gitignore` pattern without a `/` matches at any depth.                                                           |
+| `gitignore`                               | `gitignore`. It applies the `.gitignore` files inside the directory and `.git/info/exclude`, and the image does not need `git`.                                                                                |
+| `localBucket`, `multipart`, `compression` | Remove them. Every backup goes through the R2 binding in parts.                                                                                                                                                |
+| `BackupNotFoundError`                     | `SandboxBackupError` with the code `BACKUP_NOT_FOUND`                                                                                                                                                          |
+| `BackupExpiredError`                      | The error that your `restoreBackup()` throws                                                                                                                                                                   |
+| `InvalidBackupConfigError`                | `TypeError`                                                                                                                                                                                                    |
+| `BackupCreateError`, `BackupRestoreError` | `SandboxFileError` for a Linux error, such as a directory that does not exist, or `SandboxBackupError` with the code `BACKUP_TRANSFER` or `BACKUP_INTEGRITY`                                                   |
+
+For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-backups/#errors). For what a backup keeps, refer to [What a backup contains](/sandbox/reference/directory-backups/#what-a-backup-contains).
+
+## Convert backups that 0.12 created
+
+0.12 stored each backup as `backups/<ID>/data.sqsh` and `backups/<ID>/meta.json` in the bucket, with presigned uploads and with `localBucket: true` alike. These R2 objects stay in the bucket after you deploy 1.0, and the 0.12 backup objects that your code stored stay where they are. To keep a backup, convert it the first time your code restores it: extract the SquashFS image into the directory, then back up the directory with `DirectoryBackup`.
+
+<Steps>
+
+1. Add `squashfs-tools` to your image:
+
+   ```dockerfile title="Dockerfile"
+   RUN apt-get update && apt-get install -y --no-install-recommends squashfs-tools && rm -rf /var/lib/apt/lists/*
+   ```
+
+2. Add a method to `MySandbox` that converts a 0.12 backup object:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async convert(old: { id: string; dir: string }): Promise<Backup> {
+   		const meta = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/meta.json`);
+   		const image = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/data.sqsh`);
+
+   		if (!meta || !image) {
+   			throw new Error(`Backup ${old.id} was not found`);
+   		}
+
+   		const { createdAt, ttl } = await meta.json<{ createdAt: string; ttl: number }>();
+   		const expiresAt = Date.parse(createdAt) + ttl * 1000;
+
+   		if (Date.now() + EXPIRY_MARGIN_MS > expiresAt) {
+   			await image.body.cancel();
+   			throw new Error(`Backup ${old.id} has expired`);
+   		}
+
+   		await this.ensureRunning();
+
+   		// unsquashfs needs the whole image on disk, so it goes to /var/tmp first.
+   		const script =
+   			'cat > "$1" && rm -rf -- "$2" &&' +
+   			' unsquashfs -no-progress -d "$2" "$1" > /dev/null;' +
+   			' code=$?; rm -f -- "$1"; exit $code';
+   		const process = await this.container.exec(
+   			["sh", "-c", script, "sh", `/var/tmp/${old.id}.sqsh`, old.dir],
+   			{ stdin: image.body },
+   		);
+   		const output = await process.output();
+
+   		if (output.exitCode !== 0) {
+   			throw new Error(new TextDecoder().decode(output.stderr));
+   		}
+
+   		const backup = await this.backups.backup({ dir: old.dir });
+   		await this.env.BACKUP_BUCKET.put(
+   			metaKey(backup.id),
+   			JSON.stringify({ expiresAt }),
+   		);
+   		return { ...backup, expiresAt };
+   	}
+   }
+   ```
+
+   The converted backup keeps the expiry time that 0.12 gave the original, in its own `.meta.json` object. The container needs free disk space for the image and the extracted files together. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
+
+3. Where your code calls `restoreBackup()` with an object that 0.12 created, call `convert()` instead. A 0.12 object has no `format` field. `convert()` leaves the files in the directory, so it also does the restore. Store the record that it returns in place of the 0.12 object.
+
+4. After you store the new record, delete the two 0.12 objects:
+
+   ```ts title="src/index.ts"
+   await this.env.BACKUP_BUCKET.delete([
+   	`backups/${old.id}/data.sqsh`,
+   	`backups/${old.id}/meta.json`,
+   ]);
+   ```
+
+</Steps>
+
+A converted directory keeps its files, empty directories, symbolic links, hard links, and permissions. Modification times keep whole seconds only, because SquashFS does not store fractions of a second. If `unsquashfs` fails, the directory is incomplete, and calling `convert()` again replaces it.
+
+## Related resources
+
+- [DirectoryBackup API](/sandbox/reference/directory-backups/)
+- [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/)
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/)

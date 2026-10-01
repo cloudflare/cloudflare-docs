@@ -94,28 +94,26 @@ const v = variantStyles[variant];
 >
 	<div class:list={["tabbar-indicator", v.indicator]} aria-hidden="true"></div>
 
-	{
-		tabs.map((t) => {
-			const active = t.id === activeId;
-			return (
-				<button
-					type="button"
-					role="tab"
-					id={`${name}-tab-${t.id}`}
-					data-tab-id={t.id}
-					aria-selected={active ? "true" : "false"}
-					aria-controls={`${name}-panel-${t.id}`}
-					tabindex={active ? 0 : -1}
-					class:list={[v.tab.base, active ? v.tab.active : v.tab.inactive]}
-				>
-					{t.icon && (
-						<Icon name={t.icon} class="size-5 shrink-0" aria-hidden="true" />
-					)}
-					<span>{t.label}</span>
-				</button>
-			);
-		})
-	}
+	{tabs.map((t) => {
+		const active = t.id === activeId;
+		return (
+			<button
+				type="button"
+				role="tab"
+				id={`${name}-tab-${t.id}`}
+				data-tab-id={t.id}
+				aria-selected={active ? "true" : "false"}
+				aria-controls={`${name}-panel-${t.id}`}
+				tabindex={active ? 0 : -1}
+				class:list={[v.tab.base, active ? v.tab.active : v.tab.inactive]}
+			>
+				{t.icon && (
+					<Icon name={t.icon} class="size-5 shrink-0" aria-hidden="true" />
+				)}
+				<span>{t.label}</span>
+			</button>
+		);
+	})}
 </div>
 
 <script>

@@ -25,11 +25,15 @@ import { WranglerNamespace } from "~/components";
 import { WranglerNamespace } from "~/components";
 
 <WranglerNamespace namespace="d1" />
+
+<WranglerNamespace namespace="hyperdrive" cfNamespace="hyperdrive" />
 ```
 
 ## Arguments
 
 - `namespace` <Type text="string" /> <MetaInfo text="required" />
   - The namespace to pull the related commands from (`d1`, `hyperdrive`).
-- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+- `headingLevel` <Type text="number" /> <MetaInfo text="(default: 2) optional" />
   - The heading level that the commands should be added at on the page, i.e `2` for `h2`.
+- `cfNamespace` <Type text="string" /> <MetaInfo text="optional" />
+  - A reviewed Cloudflare CLI namespace without the `cf` prefix. Supplying this prop displays one shared CLI selector for the namespace. Explain differences between the command families in the surrounding page content.

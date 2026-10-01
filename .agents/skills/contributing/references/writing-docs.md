@@ -2,7 +2,7 @@
 
 The end-to-end process for adding or changing a documentation page. Work through these steps in order. Each step links to the reference that holds the detail.
 
-You are an editor first. Match the existing voice, structure, and depth of the pages around the one you are changing. Keep edits small unless the task is a deliberate restructure.
+You are an editor first. Match the existing voice and depth of the pages around the one you are changing, but follow the canonical information architecture instead of preserving outdated local structure. Keep edits small unless the task is a deliberate restructure.
 
 ## 1. Gather context
 
@@ -10,7 +10,7 @@ Confirm you have enough to write something accurate before you write anything. I
 
 ## 2. Locate where the change belongs
 
-Before creating a file, find where it fits. Read sibling pages in the same product area to learn the local patterns, and decide whether this is even a new page.
+Before creating a file, read `information-architecture.md` and find where the change fits in the canonical product structure. Read sibling pages for context and page-level conventions, not as structural authority, and decide whether this is even a new page.
 
 Read `information-architecture.md` for: file locations, sidebar ordering, whether to extract a partial instead of a page, whether existing content already covers this (link to it rather than duplicate), and what to do when you rename or move a page (redirects).
 
@@ -66,4 +66,4 @@ When the change is ready, load the `pr-mr` skill to draft the pull request or me
 
 ## Editing existing pages
 
-When editing rather than creating: preserve the existing structure and voice, change only what the task requires, and do not rewrite surrounding content or "improve" unrelated phrasing. Read the whole file (and its neighbors) for context before touching a diff.
+When editing rather than creating, preserve the page-level structure and voice, change only what the task requires, and do not rewrite surrounding content or "improve" unrelated phrasing. Do not preserve nonstandard section names, placement, or ordering when the task is a deliberate restructure. For focused edits, flag unrelated information architecture drift instead of expanding the scope. Read the whole file and its neighbors for context before touching a diff.

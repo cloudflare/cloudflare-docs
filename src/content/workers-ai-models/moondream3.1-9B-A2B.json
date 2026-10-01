@@ -17,6 +17,10 @@
             ]
         },
         {
+            "property_id": "terms",
+            "value": "https://moondream.ai/licenses/model/1.0"
+        },
+        {
             "property_id": "vision",
             "value": "true"
         }
@@ -105,7 +109,7 @@
                 },
                 "stream": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "description": "Return incremental tokens for `query` and `caption`. `point` and `detect` do not support streaming."
                 }
             }

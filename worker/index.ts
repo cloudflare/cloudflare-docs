@@ -3,6 +3,7 @@ import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleOg } from "./og/route";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -92,6 +93,10 @@ export default class extends WorkerEntrypoint<Env> {
 			/image-resizing/.test(request.headers.get("via") ?? "")
 		) {
 			return this.env.ASSETS.fetch(request);
+		}
+
+		if (pathname.endsWith("/og.png")) {
+			return handleOg(request, this.env, this.ctx);
 		}
 
 		if (pathname === "/.well-known/api-catalog") {

@@ -24,18 +24,18 @@ A token configuration defines the JSON Web Key Set (JWKS) used to validate JSON 
 
 :::note
 
-A zone may have up to four token configurations.
+Each zone supports up to 32 token configurations by default, with up to 16 keys per configuration. Contact your account team if you need a different allocation.
 :::
 
 Token configurations require the following information:
 
-| <div style="width:120px">Field name</div> | Description                                                                                                                                                   | Example                                                                                                             | Notes                                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| `title`                                   | A human-readable name for the configuration that allows you to quickly identify the purpose of the configuration.                                             | Production JWT configuration                                                                                        | Limited to 50 characters.                         |
-| `description `                            | A human-readable description that gives more details than `title` which serves as a means to allow customers to better document the use of the configuration. | This configuration checks the JWT in the authorization header.                                                      | Limited to 500 characters.                        |
-| `token_sources`                           | A list of possible locations where then JWT can be found on the request.                                                                                      | `http.request.headers[\"authorization\"][0]` <br /> `http.request.cookies[\"Authorization\"][0]`                    | Refer to the [information](#token-sources) below. |
-| `token_type`                              | This specifies the type of token to validate.                                                                                                                 | `jwt`                                                                                                               | Only `jwt` is currently supported.                |
-| `credentials`                             | This describes the cryptographic keys that should be used to validate JWTs. Each key must be a JSON Web Key (JWK).                                           | Refer to the example below.                                                                                         | Refer to the [information](#credentials) below.   |
+| <div style="width:120px">Field name</div> | Description                                                                                                                                                   | Example                                                                                          | Notes                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
+| `title`                                   | A human-readable name for the configuration that allows you to quickly identify the purpose of the configuration.                                             | Production JWT configuration                                                                     | Limited to 50 characters.                         |
+| `description `                            | A human-readable description that gives more details than `title` which serves as a means to allow customers to better document the use of the configuration. | This configuration checks the JWT in the authorization header.                                   | Limited to 500 characters.                        |
+| `token_sources`                           | A list of possible locations where then JWT can be found on the request.                                                                                      | `http.request.headers[\"authorization\"][0]` <br /> `http.request.cookies[\"Authorization\"][0]` | Refer to the [information](#token-sources) below. |
+| `token_type`                              | This specifies the type of token to validate.                                                                                                                 | `jwt`                                                                                            | Only `jwt` is currently supported.                |
+| `credentials`                             | This describes the cryptographic keys that should be used to validate JWTs. Each key must be a JSON Web Key (JWK).                                            | Refer to the example below.                                                                      | Refer to the [information](#credentials) below.   |
 
 ### Token sources
 
@@ -43,7 +43,9 @@ Each item must be a Ruleset Engine expression that resolves to a string.
 
 Currently supported fields are `http.request.headers` and `http.request.cookies`.
 
-You can set up to four token sources. If a request has more than one of these fields set, only one will be used. Leading `Bearer: ` strings in request tokens are automatically ignored.
+You can set up to four token sources. The sources use `OR` logic: a valid token from any one source is sufficient. This supports clients using different token locations, including during a migration. If a request contains values in multiple configured sources, Cloudflare evaluates them one at a time and stops after the first valid token. Cloudflare does not combine token values or require multiple sources to be valid.
+
+A source can contain an unprefixed JWT. It can also use the exact `Bearer ` prefix, with a capital `B`, no colon, and one space after `Bearer`.
 
 Refer to the [Ruleset Engine documentation](/ruleset-engine/rules-language/fields) for details on working with Ruleset Engine fields.
 
@@ -53,21 +55,21 @@ API Shield supports asymmetric RSA and elliptic curve keys and symmetric hash-ba
 
 | Key type | Supported algorithms                                     | Requirements                                                          |
 | -------- | -------------------------------------------------------- | --------------------------------------------------------------------- |
-| RSA      | `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, and `PS512` | RSA keys must be at least 2,048 bits.                                  |
-| EC       | `ES256` and `ES384`                                      | Use curve `P-256` with `ES256` and curve `P-384` with `ES384`.         |
+| RSA      | `RS256`, `RS384`, `RS512`, `PS256`, `PS384`, and `PS512` | RSA keys must be 2,048, 3,072, or 4,096 bits.                         |
+| EC       | `ES256` and `ES384`                                      | Use curve `P-256` with `ES256` and curve `P-384` with `ES384`.        |
 | HMAC     | `HS256`, `HS384`, and `HS512`                            | Use a symmetric secret of at least 32, 48, or 64 bytes, respectively. |
 
-Each JWK must have an `alg` and a `kid`. The JWT header must contain matching `alg` and `kid` values so API Shield can select the correct key.
+Provide an `alg` value for every JWK. Each JWK must also have a `kid`. The effective algorithm and key ID must match the `alg` and `kid` values in the JWT header.
 
-Provide an `alg` value for every JWK. The effective algorithm, whether provided or defaulted, must match the `alg` value in the JWT header. HMAC keys must always specify `alg`.
-
-For compatibility with identity providers that omit `alg`, API Shield defaults an RSA key without `alg` to `RS256`. RSA key size does not identify which signing algorithm an identity provider uses. Specify `alg` explicitly if the identity provider uses another supported algorithm.
+For compatibility with identity providers that omit `alg`, API Shield defaults RSA keys to `RS256`, P-256 EC keys to `ES256`, and P-384 EC keys to `ES384`. Because an RSA key does not identify its signing algorithm, specify `alg` explicitly if the identity provider uses another supported RSA algorithm. HMAC keys must always specify `alg`.
 
 For an HMAC key, set `kty` to `oct`. Set `k` to the raw symmetric credential encoded with unpadded Base64url. The decoded credential must meet the minimum length for its algorithm.
 
 :::caution
 
-Anyone with an HMAC credential can sign and validate JWTs. Treat the credential as a secret and do not expose it in source code or logs. Cloudflare never stores symmetric credentials in plaintext. API responses do not include the credential.
+For new JWT deployments, Cloudflare recommends asymmetric, public-key algorithms such as RSA or elliptic curve algorithms. API Shield then needs only the public verification key, while the issuer retains the private signing key.
+
+HMAC uses a shared credential. Anyone with that credential can sign and validate JWTs. Treat it as a secret and do not expose it in source code or logs. Cloudflare never stores symmetric credentials in plaintext. API responses do not include the credential.
 :::
 
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support.
@@ -265,7 +267,7 @@ Refer to [Apply a rule to operations](#apply-a-rule-to-operations) for more info
 
 A token validation rule's expression defines a security policy that a request must meet.
 
-For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e")` will trigger if an incoming request does not have at least one valid authentication token.
+For example, the expression `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or is_jwt_valid("fddfc39e-3686-4683-ab23-bf917da6bb43")` will trigger if an incoming request does not have at least one valid authentication token.
 
 These expressions are similar to [expressions used in Ruleset Engine](/ruleset-engine/rules-language/), with a few key differences:
 
@@ -301,7 +303,7 @@ It can be combined with a `block` action in the token validation rule to block r
 
 The `is_jwt_valid("51231d16-01f1-48e3-93f8-91c99e81288e") or is_jwt_valid("fddfc39e-3686-4683-ab23-bf917da6bb43")` expressions will trigger an action if a request does not have at least one valid token.
 
-This can occur if you need to split JWKs into multiple token configurations.
+This can occur when your API accepts tokens from two different identity providers.
 
 #### Require a valid token but ignore requests without a token
 
@@ -330,8 +332,8 @@ For example, the following selector will apply a rule to all operations in `v1.e
 	"exclude": [
 		{
 			"operation_ids": [
-				"f9c5615e-fe15-48ce-bec6-cfc1946f1bec", // POST v1.example.com/login
-				"56828eae-035a-4396-ba07-51c66d680a04" // POST v2.example.com/login
+				"f9c5615e-fe15-48ce-bec6-cfc1946f1bec",
+				"56828eae-035a-4396-ba07-51c66d680a04"
 			]
 		}
 	]
@@ -340,11 +342,13 @@ For example, the following selector will apply a rule to all operations in `v1.e
 
 Operations can be included at a host level and ignored on a per-operation basis.
 
-You can use the `POST /zones/{zone_id}/token_validation/rules/preview` endpoint to see the operations covered by this rule:
+You can use the `POST /zones/{zone_id}/token_validation/rules/preview` endpoint to see the operations covered by this rule.
+
+Use the `page` and `per_page` query parameters to paginate operations. They default to page `1` and `20` operations per page. Each response includes one page in `result.operations` and pagination metadata in `result_info`.
 
 ```bash title="Example using cURL"
-curl --request PUT \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/preview' \
+curl --request POST \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/preview?page=1&per_page=20' \
 --header 'Content-Type: application/json' \
 --data '{
     "include": [
@@ -358,15 +362,15 @@ curl --request PUT \
     "exclude": [
         {
             "operation_ids": [
-                "f9c5615e-fe15-48ce-bec6-cfc1946f1bec", // POST v1.example.com/login
-                "56828eae-035a-4396-ba07-51c66d680a04"  // POST v2.example.com/login
+                "f9c5615e-fe15-48ce-bec6-cfc1946f1bec",
+                "56828eae-035a-4396-ba07-51c66d680a04"
             ]
         }
     ]
 }'
 ```
 
-The response will include all operations on a zone with an additional `state` field.
+The response includes one page of operations on a zone with an additional `state` field.
 
 The `state` field can be `ignored`, `excluded`, or `included`. Included operations will match the hostname selectors you specified. Excluded operations will match the operation IDs you specified in the selector. Ignored operations are those that do not match anything specified in the selector.
 
@@ -439,7 +443,7 @@ The `state` field can be `ignored`, `excluded`, or `included`. Included operatio
 		"available_hosts": [
 			"example.com",
 			"v1.example.com",
-			"v1.example.com",
+			"v2.example.com",
 			"v3.example.com"
 		]
 	},
@@ -449,24 +453,24 @@ The `state` field can be `ignored`, `excluded`, or `included`. Included operatio
 	"result_info": {
 		"page": 1,
 		"per_page": 20,
-		"count": 20,
-		"total_count": 1631
+		"count": 7,
+		"total_count": 7
 	}
 }
 ```
 
-Operations with a `included` state will be covered by the token validation rule. The response also shows the hostnames of included operations in `result.selected_hosts` and shows all hostnames used by all zone operations in `result.available_hosts`.
+Operations with an `included` state will be covered by the token validation rule. The response also shows the hostnames of included operations in `result.selected_hosts` and shows all hostnames used by all zone operations in `result.available_hosts`.
 
 You can also send an empty object in the request body:
 
 ```bash title="Example using cURL"
-curl --request PUT \
+curl --request POST \
 'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/preview' \
 --header 'Content-Type: application/json' \
 --data '{ }'
 ```
 
-The response will show all zone operations and all possible hosts, which you can use to build your own selector.
+The response shows one page of zone operations and all possible hosts, which you can use to build your own selector.
 
 ## Token validation rule JSON object
 
@@ -594,7 +598,7 @@ Cloudflare will remove any fields that are unnecessary from each key and will dr
 It is highly recommended to validate the output of the <GlossaryTooltip term="API call">API call</GlossaryTooltip> to check that the resulting keys appear as intended.
 :::
 
-Credential updates use the same algorithm compatibility behavior as configuration creation. The response includes normalized credentials and a message for each defaulted algorithm.
+Credential updates use the same algorithm defaulting behavior as configuration creation. The response includes normalized credentials in `result` and one message for each defaulted algorithm.
 
 Use `PUT` to replace the complete key set. Every symmetric key in a `PUT` request must include `k`. Keys omitted from the request are removed.
 
@@ -767,5 +771,4 @@ The same accuracy applies as for EXP claims. As such, a token may be already reg
 :::
 
 7. Cloudflare makes verified claims available as `http.request.jwt.claims` fields. WAF custom rules can act on these claims. Token validation rules can act on token presence and validity.
-
 8. Security Analytics events in the Cloudflare dashboard for the `API Shield - Token Validation` service will explain violation reasons in the `Token validation violations` section of the event.

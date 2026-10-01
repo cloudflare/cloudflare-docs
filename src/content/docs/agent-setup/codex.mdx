@@ -37,7 +37,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 			2. **Launch Codex in your project**
 
-				Start Codex from the root of your project, where `wrangler.jsonc` lives (if it already exists).
+				Start Codex from the root of your project, where `wrangler.jsonc` or `cloudflare.config.ts` lives (if either exists).
 
 				```bash
 				codex
@@ -100,13 +100,21 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
 		All three. Skills load Cloudflare knowledge into every Codex session (when
 		to use Durable Objects, how to structure a Workers project, etc.). The
 		Cloudflare API MCP server handles platform operations (DNS, WAF, Zero
 		Trust). Wrangler handles local dev, deploys, and migrations. The bundled
 		`wrangler` Skill teaches Codex when to run CLI commands vs. call the MCP
-		API.
+		API. For tasks across the whole Cloudflare API, Codex can also use the
+		[Cloudflare CLI](/cf/), `cf`.
+	</FAQItem>
+	<FAQItem question="Can Codex use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with
+		`npm install -g cf`, sign in with `cf auth login`, and tell Codex to
+		prefer it in `AGENTS.md`. Refer to
+		[Use cf with AI agents](/cf/agents/).
 	</FAQItem>
 	<FAQItem question="How do I connect Codex to my Cloudflare account?">
 		The first time Codex calls a Cloudflare tool, you will be redirected to

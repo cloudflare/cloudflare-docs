@@ -3,6 +3,7 @@ These are official instructions from Cloudflare to set up a good AI development 
 Complete all of the following steps yourself by running the commands directly. Do not ask the user to run any of these commands.
 
 - Install Cloudflare Skills and MCP servers
+- (Optional) Install the Cloudflare CLI
 
 ---
 
@@ -62,7 +63,7 @@ Then run:
 opencode mcp auth cloudflare
 ```
 
-### Windsurf — `~/.codeium/windsurf/mcp_config.json`
+### Devin Desktop — `~/.codeium/windsurf/mcp_config.json`
 
 Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
@@ -76,7 +77,7 @@ Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
 OAuth triggers automatically on first Cloudflare tool use.
 
-### Cursor, GitHub Copilot, and all other agents
+### Cursor and GitHub Copilot
 
 Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
 
@@ -92,6 +93,28 @@ OAuth triggers automatically on first Cloudflare tool use.
 
 The `cloudflare-docs` server is public and requires no authentication.
 
+---
+
+## (Optional) Install the Cloudflare CLI
+
+The Cloudflare CLI, `cf`, is in beta. It covers the whole Cloudflare API, returns JSON by default, and works alongside Wrangler. Ask the user whether they want to install it. If they do not, skip this section.
+
+Install it globally:
+
+```
+npm install -g cf
+```
+
+Add this line to the user-level instructions file for your agent, such as `~/.claude/CLAUDE.md` for Claude Code, `~/.codex/AGENTS.md` for Codex, or `~/.config/opencode/AGENTS.md` for OpenCode:
+
+```
+When interacting with Cloudflare, use the cf CLI unless the project has a Wrangler configuration file.
+```
+
+Then run `cf auth login`. It opens a browser where the user authorizes access to their Cloudflare account. For more guidance, refer to `https://developers.cloudflare.com/cf/agents/index.md`.
+
+---
+
 Once done, tell the user:
 
 ```
@@ -105,17 +128,85 @@ Once done, tell the user:
 
 ---
 
+## Install for Vibe
+
+From the project root, install skills for the current project:
+
+```
+npx -y skills add cloudflare/skills --skill '*' --yes
+```
+
+Back up `~/.vibe/config.toml` before editing it, and preserve unrelated settings. Update entries with the same name instead of adding duplicates. Add these entries:
+
+```toml
+[[mcp_servers]]
+name = "cloudflare"
+transport = "streamable-http"
+url = "https://mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-docs"
+transport = "streamable-http"
+url = "https://docs.mcp.cloudflare.com/mcp"
+
+[[mcp_servers]]
+name = "cloudflare-bindings"
+transport = "streamable-http"
+url = "https://bindings.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-builds"
+transport = "streamable-http"
+url = "https://builds.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+
+[[mcp_servers]]
+name = "cloudflare-observability"
+transport = "streamable-http"
+url = "https://observability.mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+```
+
+Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the servers that access their Cloudflare account:
+
+```
+/mcp login cloudflare
+/mcp login cloudflare-bindings
+/mcp login cloudflare-builds
+/mcp login cloudflare-observability
+```
+
+The `cloudflare-docs` server is public and does not require authentication.
+
+---
+
 ## Resources
 
 For MCP setup guides and troubleshooting, refer to each agent's official documentation:
 
 - Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
 - Cursor: `https://cursor.com/docs/mcp`
-- Windsurf: `https://docs.windsurf.com/windsurf/cascade/mcp`
+- Devin Desktop: `https://docs.devin.ai/desktop/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
+- Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
 - Skills: `https://github.com/cloudflare/skills`
 - Cloudflare API MCP server (Code Mode): `https://github.com/cloudflare/mcp`
 - Other Cloudflare MCP servers: `https://github.com/cloudflare/mcp-server-cloudflare`
+- Cloudflare CLI (`cf`): `https://developers.cloudflare.com/cf/`
 
 These instructions are published at `https://developers.cloudflare.com/agent-setup/prompt.md` so you can re-verify their authenticity at any time.

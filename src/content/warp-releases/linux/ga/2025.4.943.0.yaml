@@ -6,7 +6,6 @@ releaseNotes: |-
 
   **Known issues**
   - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/#route-traffic-to-fallback-server).
-
 version: 2025.4.943.0
 releaseDate: 2025-05-22T19:22:32.439Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.4.943.0

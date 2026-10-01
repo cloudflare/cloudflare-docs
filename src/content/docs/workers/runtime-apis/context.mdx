@@ -94,6 +94,7 @@ To use `ctx.exports`, you must use [the `enable_ctx_exports` compatibility flag]
 
 - For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
 - For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](/durable-objects/api/namespace/).
+- For each top-level export that `extends WorkflowEntrypoint` (and which has been declared as a Workflow in the [`exports`](/workers/wrangler/configuration/#workflow-exports) field of your Wrangler configuration), `ctx.exports` automatically contains a [Workflow binding](/workflows/build/workers-api/#workflow). Refer to [Call a Workflow through `ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports).
 
 For example:
 
@@ -176,7 +177,7 @@ export default {
 
 Specifying props dynamically is permitted in this case because the caller is the same Worker, and thus can be presumed to be trusted to specify any props. The ability to customize props is particularly useful when the resulting binding is to be passed to another Worker over RPC or used in the `env` of a [dynamically-loaded worker](/workers/runtime-apis/bindings/worker-loader/).
 
-Note that `props` values specified in this way are allowed to contain any "persistently" serializable type. This includes all basic [structured clonable data types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). It also includes Service Bindings themselves: you can place a Service Binding into the `props` of another Service Binding.
+Note that `props` values specified in this way are allowed to contain any "persistently" serializable type. This includes all basic [structured cloneable data types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). It also includes Service Bindings themselves: you can place a Service Binding into the `props` of another Service Binding.
 
 ### TypeScript types for `ctx.exports` and `ctx.props`
 

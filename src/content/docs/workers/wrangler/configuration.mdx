@@ -16,7 +16,6 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
-	InlineBadge,
 } from "~/components";
 import { FileTree } from "~/components";
 
@@ -95,13 +94,6 @@ Further, there are a few keys that can _only_ appear at the top-level.
 
 ## Automatic provisioning
 
-<a
-	href="https://developers.cloudflare.com/changelog/2025-10-24-automatic-resource-provisioning/"
-	target="_blank"
->
-	<InlineBadge preset="beta" />
-</a>
-
 Wrangler can automatically provision resources for you when you deploy your Worker without you having to create them ahead of time.
 
 This currently works for the following resources: KV, R2, D1, Flagship, AI Search, Agent Memory, Dispatch Namespaces and Queues.
@@ -132,6 +124,10 @@ Top-level keys apply to the Worker as a whole (and therefore all environments). 
 
 - `keep_vars` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should keep variables configured in the dashboard on deploy. Refer to [source of truth](#source-of-truth).
+
+- `addresses` <Type text="string[]" /> <MetaInfo text="optional" />
+  - A list of inbound email addresses that [Email Routing](/email-service/configuration/email-routing-addresses/#configure-rules-with-wrangler) routes to this Worker. Each entry is either a literal recipient address (for example, `support@example.com`) or a `*@domain` catch-all (for example, `*@example.com`). Catch-all entries support apex domains only. When you deploy the Worker or its triggers, Wrangler reconciles the Worker's managed Email Routing rules with this list.
+
 - `send_metrics` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Wrangler should send usage data to Cloudflare for this project. Defaults to `true`. You can learn more about this in our [data policy](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md).
 - `dependencies_instrumentation` <Type text="object" /> <MetaInfo text="optional" />
@@ -163,9 +159,9 @@ The `main` key is optional for assets-only Workers.
 - `compatibility_flags` <Type text="string[]" /> <MetaInfo text="optional" />
   - A list of flags that enable features from upcoming features of the Workers runtime, usually used together with `compatibility_date`. Refer to [compatibility dates](/workers/configuration/compatibility-dates/).
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
+  - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. Refer to [types of routes](#types-of-routes).
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/versions-and-deployments/preview-urls/).
+  - Enables Version URLs and `workers.dev` Preview URLs. If omitted, Wrangler does not change an existing setting. If no setting exists, its initial value depends on `workers_dev`. Refer to [Version URLs](/workers/versions-and-deployments/version-urls/) and [Previews](/workers/previews/).
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
 - `routes` <Type text="Route[]" /> <MetaInfo text="optional" />
@@ -214,7 +210,8 @@ The `main` key is optional for assets-only Workers.
 * `assets` <Type text="Assets" /> <MetaInfo text="optional" />
   - Configures static assets that will be served. Refer to [Assets](/workers/static-assets/binding/) for more details.
 * `exports` <Type text="object"/> <MetaInfo text="optional"/>
-  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Mutually exclusive with `migrations`.
+  - Declares the Durable Object classes this Worker exports and their lifecycle state (`created`, `deleted`, `renamed`, `transferred`, `expecting-transfer`). Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Durable Object entries are mutually exclusive with `migrations`.
+  - Declares the Workflows this Worker defines. Refer to [Workflow exports](#workflow-exports).
 * `migrations` <Type text="object"/> <MetaInfo text="optional"/>
   - Legacy imperative configuration that maps a Durable Object from a class name to a runtime state. For new Workers, prefer [`exports`](/durable-objects/reference/durable-objects-migrations/). Refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 * `placement` <Type text="object"/> <MetaInfo text="optional"/>
@@ -362,7 +359,7 @@ Example:
 Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard.
 
 - `workers_dev` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true`.
+  - Whether the Worker runs on a custom `workers.dev` account subdomain. Defaults to `true` when the configuration has no `route` or `routes`, and `false` otherwise. To keep the `workers.dev` URL alongside routes, set `workers_dev` to `true`. For more information, refer to [`workers.dev`](/workers/configuration/routing/workers-dev/).
 
 <WranglerConfig>
 
@@ -416,6 +413,21 @@ Example:
 		"head_sampling_rate": 0.1, // 10% of requests are logged
 	},
 }
+```
+
+</WranglerConfig>
+
+### Issues
+
+Requires Wrangler 4.134.0 or later.
+
+Set `observability.issues.enabled` to `true` to detect and group production failures for a Worker. Set it to `false` and deploy the Worker to stop detecting new failures. Refer to [Workers Issues](/workers/observability/issues/) for supported signals, retention, and behavior.
+
+<WranglerConfig>
+
+```toml
+[observability.issues]
+enabled = true
 ```
 
 </WranglerConfig>
@@ -634,6 +646,8 @@ Each entry in `exports` is keyed by Durable Object class name. The fields on eac
   - Required when `state` is `"transferred"`. The name of the target Worker that will receive the namespace.
 - `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
+- `container` <Type text="string" /> <MetaInfo text="optional" />
+  - Attaches a [Container](#containers) to this Durable Object. Must match the `name` of an entry in the top-level `containers` array, and requires `storage` to be `"sqlite"`. Only allowed when `state` is `"created"` or `"expecting-transfer"`. Use this instead of setting `class_name` on the Container entry.
 
 Example:
 
@@ -669,7 +683,7 @@ Example:
 
 :::note
 
-`migrations` is the legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer the declarative [`exports`](#exports) field. `migrations` and `exports` are mutually exclusive.
+`migrations` is the legacy imperative configuration for managing Durable Object class lifecycle. For new Workers, prefer the declarative [`exports`](#exports) field. `migrations` and Durable Object entries in `exports` are mutually exclusive.
 
 :::
 
@@ -1180,6 +1194,11 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
   - A list of cron schedules that create new instances of this Workflow automatically.
   - Use this when you want to run a Workflow on a recurring interval without defining top-level `triggers.crons` and a separate `scheduled` handler.
   - Use a Wrangler release that supports Workflow schedules. If your local schema does not recognize `schedules`, update Wrangler first.
+- `default_retention` <Type text="object" /> <MetaInfo text="optional" />
+  - How long to retain the state of instances of this Workflow after they finish. Applied to instances that do not set their own [`retention`](/workflows/build/workers-api/#workflowinstancecreateoptions) when they are created.
+  - `success_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that complete successfully or are terminated, as a duration string such as `"3 days"` or a whole number of milliseconds.
+  - `error_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that end in an errored state, as a duration string such as `"7 days"` or a whole number of milliseconds.
+  - Retention is capped at the [retention limit](/workflows/reference/limits/) for your account.
 
 Example:
 
@@ -1198,6 +1217,54 @@ Example:
 ```
 
 </WranglerConfig>
+
+#### Workflow exports
+
+:::note
+Requires Wrangler 4.139.0 or above.
+:::
+
+The `exports` field declares the Workflows this Worker defines, without a binding. Refer to [Declare Workflows in `exports`](/workflows/build/workers-api/#declare-workflows-in-exports).
+
+Each Workflow entry in `exports` is keyed by the name of a class that extends `WorkflowEntrypoint`. The fields on each entry are:
+
+- `type` <Type text="string" /> <MetaInfo text="required" />
+  - For Workflow entries, set this to `"workflow"`.
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Workflow. Two entries in `exports` cannot use the same name.
+- `limits` <Type text="object" /> <MetaInfo text="optional" />
+  - `steps` <Type text="number" /> <MetaInfo text="optional" /> — The maximum number of steps a Workflow instance can run. Refer to [Workflow step limits](/workflows/build/workers-api/#workflow-step-limits).
+- `schedules` <Type text="string | string[]" /> <MetaInfo text="optional" />
+  - One or more cron schedules that create new instances of this Workflow automatically. Refer to [Schedule a Workflow directly](/workflows/build/trigger-workflows/#schedule-a-workflow-directly).
+- `default_retention` <Type text="object" /> <MetaInfo text="optional" />
+  - How long to retain the state of instances of this Workflow after they finish. Accepts the same `success_retention` and `error_retention` fields as the [`workflows` binding](#workflows).
+
+A Workflow can be declared both as a `workflows` binding and as an export. Both declarations must use the same class, and cannot set the same field to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "my-workflow",
+			"limits": {
+				"steps": 25000,
+			},
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+The Worker calls each Workflow declared in `exports` through [`ctx.exports`](/workflows/build/workers-api/#call-a-workflow-through-ctxexports), keyed by class name.
 
 ## Assets
 
@@ -1259,31 +1326,38 @@ You can also configure `run_worker_first` with an array of route patterns:
 
 You can define [Containers](/containers) to run alongside your Worker using the `containers` field.
 
+Each Container application has a [scheduling policy](/containers/configuration/scheduling-policy/) that determines whether image and instance configuration is managed centrally or supplied by Durable Object code at runtime. The policy is immutable after the application is created.
+
 :::note
-You must also define a Durable Object to communicate with your Container via Workers. This Durable Object's
-class name must match the `class_name` value in container configuration.
+Each Container application must link to a Durable Object defined in the same Worker. Set `class_name` on the Container entry, or set `name` and reference that name from [`exports.<Class>.container`](#exports). Configure exactly one of these linkage directions.
 :::
+
+### `default` scheduling policy
+
+The `default` policy stores the image and instance configuration on the Container application and manages deployments as rollouts. It is used when `scheduling_policy` is omitted or set to `"default"`.
 
 The following options are available:
 
+- `scheduling_policy` <Type text="string" /> <MetaInfo text="optional" />
+  - Set to `"default"`, or omit this field.
 - `image` <Type text="string" /> <MetaInfo text="required" />
   - The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
     build and push the image, or it can be an image reference. Supported registries are the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry. For more information, refer to [Image Management](/containers/guides/image-management/).
-- `class_name` <Type text="string" /> <MetaInfo text="required" />
+- `class_name` <Type text="string" /> <MetaInfo text="conditional" />
   - The corresponding Durable Object class name. This will make this Durable Object a container-enabled Durable Object
-    and allow each instance to control a container. See [Durable Object Container Methods](/durable-objects/api/container/) for details.
-- `instance_type` <Type text="string" /> <MetaInfo text="optional" />
-  - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
-    instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
-    see the [instance types documentation](/containers/platform/limits/#instance-types).
-  - To specify a custom instance type, see [here](#custom-instance-types).
-- `max_instances` <Type text="string" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
-  - Defaults to 20.
-  - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
-- `name` <Type text="string" /> <MetaInfo text="optional" />
+    and allow each instance to control a container. Refer to the [Durable Object Container API](/containers/api/durable-object-container/) for details.
+  - Omit this field when the Container is linked by `name` from `exports.<Class>.container`.
+- `name` <Type text="string" /> <MetaInfo text="conditional" />
   - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
+  - Required when `class_name` is omitted so that `exports.<Class>.container` can reference the Container.
+- `instance_type` <Type text="string | object" /> <MetaInfo text="optional" />
+  - The instance type determines the amount of memory, CPU, and disk given to the container instance. Supported values are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information, refer to [Limits and Instance Types](/containers/platform/limits/#instance-types).
+  - To specify a custom instance type, refer to [Custom instance types](#custom-instance-types).
+- `max_instances` <Type text="number" /> <MetaInfo text="optional" />
+  - The maximum number of concurrent container instances. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
+  - Defaults to 20.
+  - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
   - The build context of the application, by default it is the directory of `image`.
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
@@ -1292,9 +1366,13 @@ The following options are available:
   - During a [rollout](/containers/configuration/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
   - Percentage of container instances to update at each [rollout](/containers/configuration/rollouts/) step. A single number uses that step size (`5`, `10`, `20`, `25`, `50`, or `100`). An array must contain ascending integer values from `10` through `100`, end in `100`, contain at most 10 entries, and contain no more entries than `max_instances`; its values are cumulative. Defaults to `100` if `max_instances` is omitted or less than `2`; otherwise defaults to `[10, 100]`. Override for one deploy with `--containers-rollout=immediate` (single 100% step; does not override grace period).
+- `observability` <Type text="object" /> <MetaInfo text="optional" />
+  - Overrides the root Worker observability configuration for this Container application.
+- `unsafe.configuration.experimental_flags` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Experimental application flags.
 - `ssh` <Type text="object" /> <MetaInfo text="optional" />
   - Configuration for SSH through Wrangler. Refer to [SSH](#ssh).
-- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional deprecated, use `ssh`" />
+- `wrangler_ssh` <Type text="object" /> <MetaInfo text="optional; deprecated, use `ssh`" />
   - Deprecated alias for `ssh`. Still supported for backward compatibility.
 - `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
   - Public keys that should be added to the Container's `authorized_keys` file.
@@ -1312,6 +1390,7 @@ The following options are available:
 	"containers": [
 		{
 			"class_name": "MyContainer",
+			"scheduling_policy": "default", // Optional, defaults to "default". Cannot be changed after the application is created.
 			"image": "./Dockerfile",
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
@@ -1332,18 +1411,97 @@ The following options are available:
 			},
 		],
 	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyContainer"],
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 
 </WranglerConfig>
 
-### Custom Instance Types
+### `durable_object` scheduling policy
+
+The `durable_object` policy is in beta. It lets each Durable Object supply its Container image or snapshot and instance size to `ctx.container.start()`. Set `scheduling_policy` to `"durable_object"` explicitly. The linked Durable Object must use SQLite storage.
+
+A `durable_object` entry accepts only the following options. Wrangler rejects every other Container application field for this policy, including `image`, `instance_type`, `max_instances`, rollout settings, and placement constraints.
+
+- `scheduling_policy` <Type text="string" /> <MetaInfo text="required" />
+  - Must be set to `"durable_object"`.
+- `images` <Type text="Record<string, object>" /> <MetaInfo text="optional" />
+  - Named images that Durable Object code can access through `ctx.container.images`. A configuration can contain up to 100 named images, and each name must contain 1-128 characters.
+  - Each named image must set exactly one of `dockerfile` or `image`.
+- `images.<name>.dockerfile` <Type text="string" /> <MetaInfo text="conditional" />
+  - Path to a local Dockerfile. `wrangler deploy` builds and pushes the image.
+- `images.<name>.build_context` <Type text="string" /> <MetaInfo text="optional" />
+  - Build context, relative to the Wrangler configuration file. Defaults to the directory of `dockerfile`. Only valid with `dockerfile`. Equivalent to `image_build_context` in the `default` policy.
+- `images.<name>.build_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Build-time variables, equivalent to `image_vars` in the `default` policy. Only valid with `dockerfile`.
+- `images.<name>.image` <Type text="string" /> <MetaInfo text="conditional" />
+  - A digest-pinned image reference in the Cloudflare Registry.
+- `class_name` <Type text="string" /> <MetaInfo text="conditional" />
+  - The corresponding Durable Object class name.
+  - Omit this field when the Container is linked by `name` from `exports.<Class>.container`.
+- `name` <Type text="string" /> <MetaInfo text="conditional" />
+  - The name of the Container application. Defaults to a combination of your Worker name and the class name.
+  - Required when `class_name` is omitted so that `exports.<Class>.container` can reference the Container.
+- `observability` <Type text="object" /> <MetaInfo text="optional" />
+  - Set either `observability.enabled` or `observability.logs.enabled` to enable or disable application-wide Container logs.
+  - Instance targeting with `target_instance_count` or `target_instance_percentage` is not supported. If you omit `observability`, Wrangler preserves the application's existing setting instead of inheriting the root Worker setting.
+- `unsafe.configuration.experimental_flags` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Experimental application flags. This is the only `unsafe` setting accepted with the `durable_object` policy.
+- `ssh` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for SSH through Wrangler. Refer to [SSH](#ssh). The deprecated `wrangler_ssh` alias is not accepted with the `durable_object` policy.
+- `authorized_keys` <Type text="object[]" /> <MetaInfo text="optional" />
+  - Public keys that should be added to the Container's `authorized_keys` file. Refer to [Authorized keys](#authorized-keys).
+
+Name one or more images and select one from Durable Object code when the Container starts:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+					"build_context": ".",
+					"build_vars": {
+						"APP_ENV": "production",
+					},
+				},
+			},
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "AGENT_COMPUTER",
+				"class_name": "AgentComputer",
+			},
+		],
+	},
+	"exports": {
+		"AgentComputer": {
+			"type": "durable-object",
+			"storage": "sqlite",
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+Configure the startup image or snapshot and instance size in `ctx.container.start()`. Refer to [Scheduling policy](/containers/configuration/scheduling-policy/) for a code example.
+
+### Custom instance types
+
+In Wrangler configuration, custom instance types apply only to the `default` scheduling policy. With the `durable_object` policy, pass a custom instance object to `ctx.container.start()` instead. Refer to [Scheduling policy](/containers/configuration/scheduling-policy/).
 
 In place of the [named instance types](/containers/platform/limits/#instance-types), you can set a custom instance type by individually configuring vCPU, memory, and disk.
 See the [limits documentation](/containers/platform/limits/#custom-instance-types) for constraints on custom instance types.
@@ -1366,7 +1524,7 @@ The following options are available:
 			"image": "./Dockerfile",
 			"instance_type": {
 				"vcpu": 1,
-				"memory_mib": 1024,
+				"memory_mib": 3072,
 				"disk_mb": 4000,
 			},
 		},
@@ -1380,7 +1538,7 @@ The following options are available:
 
 ### SSH
 
-Configuration for SSH access to a Container instance through Wrangler. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
+Configuration for SSH access to a Container instance through Wrangler. SSH configuration applies to both the `default` and `durable_object` scheduling policies. For a guide on connecting to Containers via SSH, refer to [SSH](/containers/guides/ssh/).
 
 The following options are available:
 
@@ -1470,14 +1628,14 @@ The files in this directory represent your vendored packages and is where the py
 may find that the files in this folder are too large and if your worker doesn't require them then they just grow your bundle size for
 no reason.
 
-To fix this, you can exclude certain files from being included. To do this use the `python_modules.excludes` option, for example:
+To fix this, you can exclude certain files from being included. To do this use the `python_modules.exclude` option, for example:
 
 <WranglerConfig>
 
 ```jsonc
 {
 	"python_modules": {
-		"excludes": ["**/*.pyc", "**/__pycache__"],
+		"exclude": ["**/*.pyc", "**/__pycache__"],
 	},
 }
 ```
@@ -1486,7 +1644,7 @@ To fix this, you can exclude certain files from being included. To do this use t
 
 This will exclude any .pyc files and `__pycache__` directories inside any subdirectory in `python_modules`.
 
-By default, `python_modules.excludes` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
+By default, `python_modules.exclude` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
 
 ## Local development settings
 

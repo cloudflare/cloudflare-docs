@@ -60,6 +60,8 @@ The `--local` flag for `wrangler workflows` commands requires Wrangler version `
 
 While a `wrangler dev` session is running, you can use all [`wrangler workflows` commands](/workers/wrangler/commands/workflows/) with the `--local` flag to interact with your local Workflow instances.
 
+The `--local` flag also works with Workflows declared only in the [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports) field of your Wrangler configuration, without a `workflows` binding. This requires Wrangler 4.142.0 or above.
+
 For example, to list your local Workflows:
 
 ```sh
@@ -95,6 +97,8 @@ With Local Explorer you can:
 - Delete specific instances or clear all of them at once.
 
 Local Explorer requires Wrangler version `4.82.1` or later, or [Cloudflare Vite plugin](/workers/vite-plugin/) version `1.32.0` or later.
+
+Local Explorer also lists Workflows declared only in `exports`, with Wrangler version `4.142.0` or later, or Cloudflare Vite plugin version `1.61.0` or later.
 
 ## Known Issues
 

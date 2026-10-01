@@ -119,7 +119,7 @@ Give the model a read-only `search` method and a `saveDocument` method. Because 
 import { CodemodeConnector, type ConnectorTools } from "@cloudflare/codemode";
 
 // The instance this connector reads from and writes to.
-const INSTANCE_ID = "knowledge-base";
+const INSTANCE_NAME = "knowledge-base";
 
 // A connector turns AI Search operations into methods the model can call from
 // its generated code. Each connector becomes one named object in the sandbox.
@@ -149,7 +149,7 @@ export class AISearchConnector extends CodemodeConnector<Env> {
 				},
 				execute: async (input) => {
 					const { query } = input as { query: string };
-					return this.env.AI_SEARCH.get(INSTANCE_ID).search({
+					return this.env.AI_SEARCH.get(INSTANCE_NAME).search({
 						query,
 						ai_search_options: { retrieval: { max_num_results: 5 } },
 					});
@@ -172,7 +172,7 @@ export class AISearchConnector extends CodemodeConnector<Env> {
 					const { name, content } = input as { name: string; content: string };
 					// upload() queues the document for indexing and returns right away.
 					// The item becomes searchable once indexing finishes, a few seconds later.
-					const item = await this.env.AI_SEARCH.get(INSTANCE_ID).items.upload(
+					const item = await this.env.AI_SEARCH.get(INSTANCE_NAME).items.upload(
 						name,
 						content,
 					);
@@ -182,7 +182,7 @@ export class AISearchConnector extends CodemodeConnector<Env> {
 				// Compensating action for rollback: delete the document this call added.
 				revert: async (_input, result) => {
 					const { id } = result as { id: string };
-					await this.env.AI_SEARCH.get(INSTANCE_ID).items.delete(id);
+					await this.env.AI_SEARCH.get(INSTANCE_NAME).items.delete(id);
 				},
 			},
 		};
@@ -217,7 +217,7 @@ import { AISearchConnector } from "./ai-search-connector";
 // facet exported from the Worker entry. The runtime requires this export.
 export { CodemodeRuntime } from "@cloudflare/codemode";
 
-const INSTANCE_ID = "knowledge-base";
+const INSTANCE_NAME = "knowledge-base";
 
 // Seed content, so the agent has something to find on the first query.
 const SEED_DOC = `# Getting started
@@ -235,11 +235,11 @@ export class Chat extends AIChatAgent<Env> {
 		try {
 			// index_method with both vector and keyword enables hybrid search.
 			await this.env.AI_SEARCH.create({
-				id: INSTANCE_ID,
+				id: INSTANCE_NAME,
 				index_method: { vector: true, keyword: true },
 			});
 			// Queue the seed document for indexing so the first search has content.
-			await this.env.AI_SEARCH.get(INSTANCE_ID).items.upload(
+			await this.env.AI_SEARCH.get(INSTANCE_NAME).items.upload(
 				"getting-started.md",
 				SEED_DOC,
 			);

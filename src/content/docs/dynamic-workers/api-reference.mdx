@@ -129,7 +129,7 @@ Using this, you can provide custom bindings to the Worker.
 
 `env` is serialized and transferred into the dynamic Worker, where it is used directly as the value of `env` there. It may contain:
 
-- [Structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+- [Structured cloneable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 - [Service Bindings](/workers/runtime-apis/bindings/service-bindings), including [loopback bindings from `ctx.exports`](/workers/runtime-apis/context/#exports).
 
 The second point is the key to creating custom bindings: you can define a binding with any arbitrary API, by defining a [`WorkerEntrypoint` class](/workers/runtime-apis/bindings/service-bindings/rpc) implementing an RPC API, and then giving it to the dynamic Worker as a Service Binding.

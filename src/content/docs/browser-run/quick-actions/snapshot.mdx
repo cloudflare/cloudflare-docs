@@ -17,7 +17,7 @@ Browser Run provides individual endpoints for [HTML content](/browser-run/quick-
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/snapshot
 ```
 
 ## Required fields
@@ -45,7 +45,7 @@ You must provide either `url` or `html`:
 4. Take a screenshot.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/snapshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -120,7 +120,7 @@ This example uses the `html` property to render `<html><body>Advanced Snapshot</
 5. Returns the rendered HTML content and a base-64 encoded screenshot of the page.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/snapshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -161,7 +161,7 @@ The following example requests a screenshot, Markdown, and the accessibility tre
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/snapshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

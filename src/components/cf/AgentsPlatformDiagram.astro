@@ -70,20 +70,20 @@ const tools = [
 				<span class="count-badge">{channels.length}</span>
 			</header>
 			<div class="pill-stack">
-				{
-					channels.map((item) => (
-						<a class="binding-pill" href={item.href}>
-							{item.type}
-						</a>
-					))
-				}
+				{channels.map((item) => (
+					<a class="binding-pill" href={item.href}>
+						{item.type}
+					</a>
+				))}
 			</div>
 		</section>
 
 		<section class="agent-card" aria-label="Agent">
 			<div class="agent-card-inner">
 				<header class="agent-header">
-					<span class="agent-icon" aria-hidden="true">A</span>
+					<span class="agent-icon" aria-hidden="true">
+						A
+					</span>
 					<div class="agent-title">Agent</div>
 					<span class="status-dot" aria-label="Active"></span>
 				</header>
@@ -106,11 +106,13 @@ const tools = [
 							Durable identity, state, connections, scheduling, and recovery.
 						</p>
 					</div>
-					<a class="agent-class" href="/agents/runtime/agents-api/"
-						>Agent class</a
-					>
+					<a class="agent-class" href="/agents/runtime/agents-api/">
+						Agent class
+					</a>
 					<div class="runtime-list">
-						{runtime.map((item) => <a href={item.href}>{item.label}</a>)}
+						{runtime.map((item) => (
+							<a href={item.href}>{item.label}</a>
+						))}
 					</div>
 				</div>
 			</div>
@@ -122,13 +124,11 @@ const tools = [
 				<span class="count-badge">{tools.length}</span>
 			</header>
 			<div class="pill-stack">
-				{
-					tools.map((item) => (
-						<a class="binding-pill" href={item.href}>
-							{item.type}
-						</a>
-					))
-				}
+				{tools.map((item) => (
+					<a class="binding-pill" href={item.href}>
+						{item.type}
+					</a>
+				))}
 			</div>
 		</section>
 

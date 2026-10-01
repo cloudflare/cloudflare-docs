@@ -13,7 +13,7 @@ tags:
   - mTLS
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Render } from "~/components";
 
 If your query returns an error even after configuring and embedding a client SSL certificate, check the following settings.
 
@@ -114,3 +114,67 @@ You can use [Cloudflare Workers](/workers/) to debug client certificate validati
      "certVerified": "NONE",
    },
    ```
+
+---
+
+## Certificate quota reached
+
+### Cloudflare-managed CA
+
+Cloudflare-managed client certificates count against a per-zone quota. To free up a slot, revoke certificates you no longer need. Revoking a certificate immediately releases the slot.
+
+To list and revoke certificates, refer to the [client certificates API](/api/resources/ssl/subresources/client_certificates/).
+
+### Bring your own CA (BYOCA)
+
+Each Enterprise account can upload up to five CA certificates for [BYOCA](/ssl/client-certificates/byo-ca/). This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+
+If you exceed this limit, the API returns:
+
+```txt
+{
+  "code": 1489,
+  "message": "Hit maximum CA cert allocation."
+}
+```
+
+To free a slot, you must first remove all hostname associations from the CA before deleting it. To increase your quota, contact your account team.
+
+:::note
+CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described in [Bring your own CA (BYOCA)](#bring-your-own-ca-byoca).
+:::
+
+---
+
+## BYOCA certificate upload errors
+
+When uploading a CA certificate for [Bring your own CA (BYOCA)](/ssl/client-certificates/byo-ca/), the certificate must meet the following requirements:
+
+<Render file="byo-ca-mtls-cert-requirements" product="ssl" />
+
+### Upload the CA certificate, not a leaf certificate
+
+The certificate you upload must be a CA certificate — that is, it must have `Basic Constraints: CA=TRUE` in its extensions. It is the certificate that directly issued your client certificates, not a client certificate itself.
+
+A common cause of upload failure is uploading a leaf (client) certificate instead of the CA certificate. If your certificate chain is `Root CA → Intermediate CA → Client certificate`, upload the Intermediate CA (which has `CA:TRUE`), not the client certificate.
+
+To confirm whether a certificate is a CA certificate, run:
+
+```sh
+openssl x509 -in certificate.pem -noout -text | grep -A1 "Basic Constraints"
+```
+
+The output should include `CA:TRUE`. If it shows `CA:FALSE` or the field is absent, the certificate is not a CA certificate and cannot be uploaded.
+
+### Unsupported signature algorithm
+
+The CA certificate must use one of the following signature algorithms:
+
+- `SHA1WithRSA`, `SHA256WithRSA`, `SHA384WithRSA`, `SHA512WithRSA`
+- `ECDSAWithSHA1`, `ECDSAWithSHA256`, `ECDSAWithSHA384`, `ECDSAWithSHA512`
+
+If the CA certificate uses a different algorithm, re-issue it using a supported one.
+
+### Malformed PEM content
+
+The `certificates` field in the upload request must contain valid, properly delimited PEM content. Ensure the certificate starts with `-----BEGIN CERTIFICATE-----` and ends with `-----END CERTIFICATE-----`. Do not include private keys or certificate signing requests in this field.

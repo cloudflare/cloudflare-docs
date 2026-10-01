@@ -19,7 +19,7 @@ The term **Source Endpoint** refers to the endpoint managed by API Shield in End
 
 ## Process
 
-You must add Source Endpoints to Endpoint Management through established methods, including [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/#add-endpoints-manually), before creating a route.
+You must add Source Endpoints to Endpoint Management through established methods, including [uploading a schema](/api-shield/security/schema-validation/#add-validation-by-uploading-a-schema), via [API Discovery](/api-shield/security/api-discovery/), or by [adding manually](/api-shield/management-and-monitoring/endpoint-management/#add-endpoints-manually), before creating a route.
 
 To create a route, you will need the operation ID of the Source Endpoint. To find the operation ID in the dashboard:
 
@@ -27,7 +27,7 @@ To create a route, you will need the operation ID of the Source Endpoint. To fin
 1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
-2. Filter the endpoints to find your **Source Endpoint**.
+2. In the **Operations** tab, filter the operations to find your **Source Endpoint**.
 3. Expand the row for your Source Endpoint and note the **operation ID** field.
 4. Select the copy icon to copy the operation ID to your clipboard.
 
@@ -41,7 +41,7 @@ Once your Source Endpoints are added to Endpoint Management, use the following s
 1. In the Cloudflare dashboard, go to the **Web Assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
-2. In **Endpoints**, select an existing endpoint and expand its details.
+2. In the operations list, select an existing endpoint and expand its details.
 3. Under **Routing**, select **Create route**.
 4. Enter the target URL or IP address to route your endpoint to.
 5. Select **Deploy route**.
@@ -54,16 +54,11 @@ You can reorder path variables if they are present. For example, you can route `
 
 You can also edit or delete a route by selecting **Edit route** on an existing route.
 
-### Test a route
+### Verify a route
 
 After sending a request to your Source Endpoint, you should see the contents of the back-end service as if you called the Target Endpoint directly.
 
 If API Shield returns unexpected results, check your Source Endpoint host, method, and path and [verify the Route](/api-shield/management-and-monitoring/api-routing/#verify-a-route) to ensure the Target Endpoint value is correct.
-
-:::note
-
-You may need to wait up to five minutes for Route changes to synchronize across the Cloudflare network.
-:::
 
 ## Availability
 

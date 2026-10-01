@@ -13,6 +13,11 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"First output megapixel": 0.05,
+		"Per additional output megapixel": 0.05,
+		"Per input megapixel": 0.05
+	},
 	"examples": [
 		{
 			"name": "Typography & Design",
@@ -128,6 +133,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"first_output_megapixel": 0.05,
+				"subsequent_output_megapixel": 0.05,
+				"input_megapixel": 0.05
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-27 23:12:22",
 	"schema": {
@@ -136,8 +151,8 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt for image generation or editing.",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt for image generation or editing."
 				},
 				"seed": {
 					"description": "Optional seed for reproducible generation.",
@@ -207,9 +222,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "URL to the generated image",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated image"
 				}
 			},
 			"required": [

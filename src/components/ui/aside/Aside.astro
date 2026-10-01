@@ -51,11 +51,9 @@ const displayTitle = title ?? c.label;
 		{type === "note" && <Icon name="ph:info" class="h-[1em] w-[1em]" />}
 		{type === "tip" && <Icon name="ph:lightbulb" class="h-[1em] w-[1em]" />}
 		{type === "caution" && <Icon name="ph:warning" class="h-[1em] w-[1em]" />}
-		{
-			type === "danger" && (
-				<Icon name="ph:warning-circle" class="h-[1em] w-[1em]" />
-			)
-		}
+		{type === "danger" && (
+			<Icon name="ph:warning-circle" class="h-[1em] w-[1em]" />
+		)}
 	</span>
 	<div class="flex min-w-0 flex-1 flex-col gap-0.5">
 		<p class="m-0 text-base leading-snug font-semibold">{displayTitle}</p>

@@ -28,6 +28,10 @@ Generally, you should use TXT-based DCV when you cannot use [HTTP validation](/c
 
 Selecting `ssl.method: txt` uses TXT validation for initial certificate issuance. During an Automated Certificate Management Environment (ACME) renewal, Cloudflare may use automatic HTTP validation for an eligible non-wildcard hostname.
 
+Automatic HTTP validation at renewal succeeds as long as your customer's hostname points to your SaaS target and they do not have any [CAA records](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#caa-records) blocking your chosen certificate authority.
+
+This automatic HTTP attempt does not mean that the Create Custom Hostname API accepts both HTTP and TXT validation methods in one request. The `ssl.method` field accepts one value.
+
 Hostnames with properly configured [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) remain TXT-based. Keep the delegation CNAME record in place for future renewals. With manual TXT validation, share each certificate order's current DCV tokens with your customer. For more information, refer to [Renew certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/renew-certificates/).
 
 ### Wildcard custom hostnames

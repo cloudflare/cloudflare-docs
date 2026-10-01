@@ -25,7 +25,7 @@ By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data e
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/json
 ```
 
 ## Required fields
@@ -55,7 +55,7 @@ And at least one of:
 This example captures webpage data by providing both a prompt and a JSON schema. The prompt guides the extraction process, while the JSON schema defines the expected structure of the output.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/json' \
   -H 'authorization: Bearer <apiToken>' \
   -H 'content-type: application/json' \
   -d '{
@@ -205,7 +205,7 @@ In this example, only a prompt is provided. The endpoint will use the prompt to 
 This is useful for simple extractions where you do not need a specific format.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/json' \
   -H 'authorization: Bearer <apiToken>' \
   -H 'content-type: application/json' \
   -d '{
@@ -234,7 +234,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 In this case, you supply a JSON schema via the `response_format` parameter. The schema defines the structure of the extracted data.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/json' \
   -H 'authorization: Bearer <apiToken>' \
   -H 'content-type: application/json' \
   -d '{
@@ -353,7 +353,7 @@ Browser Run can use a custom model for which you supply credentials. List the mo
 This example uses the `custom_ai` parameter to instruct Browser Run to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/json' \
   -H 'authorization: Bearer <apiToken>' \
   -H 'content-type: application/json' \
   -d '{

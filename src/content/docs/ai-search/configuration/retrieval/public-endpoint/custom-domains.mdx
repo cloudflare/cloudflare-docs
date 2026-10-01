@@ -35,7 +35,7 @@ Custom domains are also the foundation for [restricting access with Cloudflare A
 Set `public_endpoint_params.custom_domains` when you create or update an instance.
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -93,7 +93,7 @@ The custom domain starts serving traffic once domain control validation complete
 By default, a public endpoint answers on both the custom domain and the default `<PUBLIC_ENDPOINT_ID>.search.ai.cloudflare.com` hostname. Set `default_domain_enabled` to `false` to serve the custom domain only. The default hostname then returns a `404` with error `60018`.
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -118,7 +118,7 @@ Three rules apply:
 Send `custom_domains` as an empty array. Cloudflare removes the certificate and stops routing the hostname.
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
