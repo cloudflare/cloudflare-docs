@@ -37,7 +37,7 @@ Cloudflare does not publish Cloudflare One Client egress IP ranges. Cloudflare O
 
 ## Load balancing
 
-Traffic that does not match any egress policy exits from the closest Cloudflare data center using a default Gateway egress IP. This applies whether your account uses dedicated egress IPs or the default shared IPs.
+Traffic that does not match any egress policy attempts to use the closest dedicated egress IP location.
 
 If two data centers are equally close to the user, Gateway splits traffic between them. The load balancer keeps each user on the same egress IP regardless of which data center handles the request.
 
