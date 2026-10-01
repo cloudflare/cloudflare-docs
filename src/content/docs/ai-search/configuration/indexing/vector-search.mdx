@@ -20,7 +20,7 @@ The [embedding model](/ai-search/configuration/models/) determines the vector di
 
 ## Disable vector search
 
-Vector search is the default index method for all instances. To switch to [keyword search](/ai-search/configuration/indexing/keyword-search/) only, set `index_method.vector` to `false`. At least one of `vector` or `keyword` must be `true`.
+Vector search is enabled by default. To use [keyword search](/ai-search/configuration/indexing/keyword-search/) only, set `index_method.vector` to `false`. At least one of `vector` or `keyword` must be `true`.
 
 ```ts
 const instance = await env.AI_SEARCH.create({
