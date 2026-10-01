@@ -15,11 +15,11 @@ import {
 
 [`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1, with a new split API. One Worker acts as the authorization server: it signs users in and issues tokens. Your MCP server acts as the resource server, and can run in another Worker. It validates each token with the authorization server over a [Service Binding](/workers/runtime-apis/bindings/service-bindings/), without crossing the public Internet.
 
-- It supports the [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization). It still works with older clients.
-- `insufficientScope()` gives you step-up authorization in one line.
-- The authorization server and the resource server can run in different Workers with different WAF rules.
-- One authorization server can issue tokens for many MCP servers.
-- A migration skill ships in the npm package so a coding agent can perform the upgrade.
+- It supports the [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization), including [Client ID Metadata Documents](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#client-id-metadata-documents) and [issuer identification](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#authorization-response-issuer). It still works with older clients, including those using [Dynamic Client Registration](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#dynamic-client-registration).
+- `insufficientScope()` gives you [step-up authorization](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#scopes-and-step-up-authorization) in one line.
+- The authorization server and the resource server can run in [different Workers](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/resource-servers.md#separate-workers) with different [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules.
+- One authorization server can issue tokens for [many MCP servers](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#resources-and-token-audiences).
+- A [migration skill](https://github.com/cloudflare/workers-oauth-provider/blob/main/skills/migrate-to-1.0/SKILL.md) ships in the npm package so a coding agent can perform the upgrade.
 
 ## The split API
 
