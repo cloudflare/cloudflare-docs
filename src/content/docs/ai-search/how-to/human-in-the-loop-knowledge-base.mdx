@@ -239,7 +239,9 @@ export class Chat extends AIChatAgent<Env> {
 				"getting-started.md",
 				SEED_DOC,
 			);
-		} catch {}
+		} catch {
+			// intentional fallback, nothing to handle
+		}
 		this.ready = true;
 	}
 

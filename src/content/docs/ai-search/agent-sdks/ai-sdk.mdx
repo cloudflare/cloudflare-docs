@@ -102,7 +102,9 @@ purge the cache after a deploy.`;
 async function ensureInstance(env: Env) {
 	try {
 		await env.AI_SEARCH.create({ id: INSTANCE_NAME });
-	} catch {}
+	} catch {
+		// intentional fallback, nothing to handle
+	}
 }
 
 export default {

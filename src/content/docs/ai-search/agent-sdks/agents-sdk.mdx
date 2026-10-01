@@ -134,7 +134,9 @@ export class SearchAgent extends AIChatAgent {
 				await new Promise((resolve) => setTimeout(resolve, 2_000));
 				info = await instance.items.get(id).info();
 			}
-		} catch {}
+		} catch {
+			// intentional fallback, nothing to handle
+		}
 		this.ready = true;
 	}
 
