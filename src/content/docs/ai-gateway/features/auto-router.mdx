@@ -9,7 +9,7 @@ products:
   - ai-gateway
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import { Details, TabItem, Tabs, TypeScriptExample } from "~/components";
 
 AI Gateway Auto Router automatically selects an AI model for each request. It helps reduce costs while maintaining the quality of responses by matching requests with the model best suited to the task.
 
@@ -44,7 +44,17 @@ curl -i -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/$CL
   }'
 ```
 
+The response headers show which model Auto Router selected:
+
+```txt output
+cf-aig-routed-model: openai/gpt-5.6-luna
+cf-aig-routing-reason: cost_optimal_within_pool
+cf-aig-routing-decision-id: 91e0b970-33f0-4921-b8dc-127412e7b103
+```
+
 To call Auto Router from a Worker, use the [AI binding](/ai-gateway/usage/worker-binding-methods/) and specify the AI Gateway ID:
+
+<TypeScriptExample>
 
 ```ts
 const response = await env.AI.run(
@@ -70,13 +80,7 @@ const response = await env.AI.run(
 );
 ```
 
-The response headers show which model Auto Router selected:
-
-```txt output
-cf-aig-routed-model: openai/gpt-5.6-luna
-cf-aig-routing-reason: cost_optimal_within_pool
-cf-aig-routing-decision-id: 91e0b970-33f0-4921-b8dc-127412e7b103
-```
+</TypeScriptExample>
 
 ## Session affinity
 
