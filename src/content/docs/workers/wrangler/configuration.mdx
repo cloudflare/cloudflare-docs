@@ -236,6 +236,8 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
   - A list of KV namespaces that your Worker should be bound to. Refer to [KV namespaces](#kv-namespaces).
 - `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
+- `analytics` <Type text="object" /> <MetaInfo text="optional" />
+  - An Analytics SQL binding. Refer to [Analytics SQL](#analytics-sql).
 - `ai_search_namespaces` <Type text="object" /> <MetaInfo text="optional" />
   - A list of AI Search namespaces that your Worker should be bound to. Refer to [AI Search namespaces](#ai-search-namespaces).
 - `ai_search` <Type text="object" /> <MetaInfo text="optional" />
@@ -1111,6 +1113,29 @@ Example:
 			"dataset": "<DATASET_NAME>",
 		},
 	],
+}
+```
+
+</WranglerConfig>
+
+### Analytics SQL
+
+The [Analytics SQL binding](/analytics/sql-api/workers-binding/) queries analytics datasets without an API token. Assign an object with the following fields to the `analytics` key:
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to query Analytics SQL from your Worker.
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Set to `true` to acknowledge that local development connects to the remote service and suppress the remote resource warning. Analytics SQL has no local implementation and always uses the remote service.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"analytics": {
+		"binding": "ANALYTICS_SQL"
+	}
 }
 ```
 
