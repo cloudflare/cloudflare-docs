@@ -1,32 +1,45 @@
 ---
-
-pcx_content_type: overview
-title: Notifications
+pcx_content_type: navigation
+title: Alerts
 sidebar:
   order: 1
+  group:
+    hideIndex: false
 products:
   - notifications
-description: Configure alerts for your Cloudflare account.
+head:
+  - tag: title
+    content: Cloudflare Alerts
+description: Set up alerts across Cloudflare products and deliver them to email, webhooks, PagerDuty, or connected services.
 ---
 
-import { Plan } from "~/components"
+Cloudflare Alerts monitor your account and notify you when something needs attention — from DDoS attacks and certificate expirations to origin failures and billing spikes. You can configure alerts on any Cloudflare product using threshold rules, anomaly detection, or SLO burn-rate monitoring.
 
-<Plan type="all" />
+## Delivery methods
 
-Cloudflare Notifications help you stay up to date with your Cloudflare account. Manage your Notifications to define what you want to be warned about and how, be it a denial-of-service attack or an issue with your server.
+Alerts can be delivered to:
 
-The available Notification features vary according to your plan:
+- **Email** (all plans)
+- **[Webhooks](/notifications/get-started/configure-webhooks/)** (all plans)
+- **[PagerDuty](/notifications/get-started/configure-pagerduty/)** (Business and higher)
+- **Connected services**, including coding agents
 
-- Free plans can set up email-based Notifications.
-- Business and higher plans can also [access PagerDuty](/notifications/get-started/configure-pagerduty/).
-- Professional and higher plans can also [use webhooks](/notifications/get-started/configure-webhooks/).
+## [Get started](/notifications/get-started/)
 
-The notification service only works on the [proxied](/dns/proxy-status/) domains because Cloudflare needs enough information necessary to decide if we need to trigger a notification or not.
+Create and manage alerts from the Cloudflare dashboard. Configure where alerts are delivered.
 
-:::note
+## [Available alerts](/notifications/notification-available/)
 
-The availability of delivery methods like PagerDuty and webhooks in Free or Professional zones depends on the highest zone plan in your Cloudflare account:
+Browse the full list of alert types organized by Cloudflare product.
 
-- PagerDuty is available in zones on a Free/Professional plan if your Cloudflare account has at least one zone in a Business plan (or higher).
-- Webhooks are available in zones on a Free plan if your Cloudflare account has at least one zone in a Professional plan (or higher).
-:::
+## [Alert history](/notifications/notification-history/)
+
+View a log of alerts that have been sent on your account.
+
+## [API reference](/notifications/api-reference/)
+
+Manage alerts programmatically using the Cloudflare API.
+
+## [Reference](/notifications/reference/)
+
+Troubleshooting, common errors, and details on specific alert types.
