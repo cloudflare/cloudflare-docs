@@ -7,11 +7,7 @@ products:
 date: 2026-10-01
 ---
 
-import {
-	PackageManagers,
-	TypeScriptExample,
-	WranglerConfig,
-} from "~/components";
+import { PackageManagers, TypeScriptExample } from "~/components";
 
 [`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1. The latest release is 1.2.1. It has a new split API: one Worker signs users in and issues tokens, and your MCP servers check those tokens from their own Workers.
 
@@ -25,51 +21,57 @@ This entry covers every release since 0.8.0 in June.
 
 ## The split API
 
-<TypeScriptExample filename="auth-server/index.ts">
+<TypeScriptExample>
 
 ```ts
-import { OAuthAuthorizationServer } from "@cloudflare/workers-oauth-provider";
+import {
+	OAuthAuthorizationServer,
+	OAuthResourceServer,
+	insufficientScope,
+} from "@cloudflare/workers-oauth-provider";
 import { WorkerEntrypoint } from "cloudflare:workers";
 
+// auth-server Worker: signs users in and issues tokens for both MCP servers.
 const authorizationServer = new OAuthAuthorizationServer<Env>({
 	issuer: "https://auth.example.com",
-	resources: ["https://mcp.example.com/mcp"], // every resource this server issues tokens for
-	scopesSupported: ["mcp:read", "mcp:write", "offline_access"], // every scope it can grant
-	clientIdMetadataDocumentEnabled: true, // the registration method MCP 2026-07-28 prefers
+	resources: [
+		"https://calendar.example.com/mcp",
+		"https://drive.example.com/mcp",
+	],
+	scopesSupported: ["calendar:read", "calendar:write", "offline_access"],
+	clientIdMetadataDocumentEnabled: true,
 });
 
-export default class AuthServer extends WorkerEntrypoint<Env> {
+export class AuthServer extends WorkerEntrypoint<Env> {
 	fetch(request: Request) {
 		if (new URL(request.url).pathname === "/authorize") {
-			return authorize(request, this.env); // sign the user in and ask for consent
+			return showConsent(request, this.env);
 		}
 		return authorizationServer.fetch(request, this.env, this.ctx);
 	}
 
-	// RPC over a Service Binding. Not reachable from the Internet.
 	validateToken(resource: string, token: string) {
 		return authorizationServer.validateToken(resource, token, this.env);
 	}
 }
-```
 
-</TypeScriptExample>
-
-<TypeScriptExample filename="mcp-server/index.ts">
-
-```ts
-import { OAuthResourceServer } from "@cloudflare/workers-oauth-provider";
-
-export default new OAuthResourceServer<Env, AuthProps>({
+// calendar MCP Worker: checks tokens with AuthServer over a Service Binding.
+export const calendar = new OAuthResourceServer<Env, AuthProps>({
 	resourceMetadata: {
-		resource: "https://mcp.example.com/mcp",
+		resource: "https://calendar.example.com/mcp",
 		authorization_servers: ["https://auth.example.com"],
 	},
-	requiredScopes: ["mcp:read"],
+	requiredScopes: ["calendar:read"],
 	validateToken: (env) => env.AUTH_SERVER.validateToken,
 	handler: {
 		fetch(request, env, ctx) {
-			// Your MCP server. ctx.props is what the user authorized, ctx.auth is the verified token.
+			if (
+				request.method === "POST" &&
+				!ctx.auth.scope.includes("calendar:write")
+			) {
+				return insufficientScope(ctx.auth, ["calendar:read", "calendar:write"]);
+			}
+			return handleMcp(request, ctx.props);
 		},
 	},
 });
@@ -77,21 +79,7 @@ export default new OAuthResourceServer<Env, AuthProps>({
 
 </TypeScriptExample>
 
-The MCP server reaches the authorization server through a [Service Binding](/workers/runtime-apis/bindings/service-bindings/). It needs no KV namespace of its own.
-
-<WranglerConfig>
-
-```toml
-name = "mcp-server"
-main = "index.ts"
-compatibility_date = "$today"
-
-[[services]]
-binding = "AUTH_SERVER"
-service = "auth-server"
-```
-
-</WranglerConfig>
+The calendar Worker binds to the auth server with a [Service Binding](/workers/runtime-apis/bindings/service-bindings/), so `validateToken` is an RPC call that is not reachable from the Internet. It needs no KV namespace of its own.
 
 `OAuthResourceServer` publishes the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata that MCP clients use to find your authorization server. It answers requests without a token with a `401` challenge that points to that metadata. It also rejects tokens issued for any other resource.
 
@@ -117,43 +105,17 @@ Conformance tests run against a real Worker in `workerd` for every dated MCP aut
 
 ## Step-up authorization
 
-`requiredScopes` lists the scopes any access needs. The MCP server publishes them in its metadata and in the `401` challenge, so clients ask for them first. When a tool needs more, return `insufficientScope()`:
-
-<TypeScriptExample>
-
-```ts
-import { insufficientScope } from "@cloudflare/workers-oauth-provider";
-
-if (!ctx.auth.scope.includes("mcp:write")) {
-	return insufficientScope(ctx.auth, ["mcp:read", "mcp:write"]);
-}
-```
-
-</TypeScriptExample>
+`requiredScopes` lists the scopes any access needs. The MCP server publishes them in its metadata and in the `401` challenge, so clients ask for them first. When a tool needs more, `insufficientScope()` answers with the step-up challenge, as the `POST` branch in the example does.
 
 The client receives a `403` with `error="insufficient_scope"`, every scope the operation needs, and the metadata URL. It asks the user to approve the extra scope and retries.
 
 ## Separate Workers, separate WAF rules
 
-The authorization server and each MCP server can now run in their own Workers, on their own hostnames. You can apply different [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules to `auth.example.com` and `mcp.example.com`, and deploy them independently. Only the authorization server holds the `OAUTH_KV` binding and the token storage.
+The authorization server and each MCP server can now run in their own Workers, on their own hostnames. You can apply different [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules to `auth.example.com` and `calendar.example.com`, and deploy them independently. Only the authorization server holds the `OAUTH_KV` binding and the token storage.
 
 ## Multiple resources, one authorization server
 
-List every MCP server in `resources`. Each token is bound to exactly one of them, so a token for `https://calendar.example.com/mcp` is rejected at `https://drive.example.com/mcp`. Grants are tracked per user, client and resource, so authorizing one MCP server does not sign the user out of another.
-
-<TypeScriptExample>
-
-```ts
-const authorizationServer = new OAuthAuthorizationServer<Env>({
-	issuer: "https://auth.example.com",
-	resources: [
-		"https://calendar.example.com/mcp",
-		"https://drive.example.com/mcp",
-	],
-});
-```
-
-</TypeScriptExample>
+List every MCP server in `resources`, as the example does for calendar and drive. Each token is bound to exactly one of them, so a token for `https://calendar.example.com/mcp` is rejected at `https://drive.example.com/mcp`. Grants are tracked per user, client and resource, so authorizing one MCP server does not sign the user out of another.
 
 Existing 0.x grants and tokens keep working, and there is no KV migration. Old grants are bound to a resource the next time they refresh.
 
