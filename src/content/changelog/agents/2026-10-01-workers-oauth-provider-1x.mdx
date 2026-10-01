@@ -121,7 +121,7 @@ The library implements the authorization server and protected resource side of M
 Real clients do not always follow the specification, so the library accepts what it safely can:
 
 - A client that omits the RFC 8707 `resource` parameter, as 2025-03-26 clients do, gets the server's only resource or its `defaultResource`.
-- A CIMD document that lists extra grant types or authentication methods is negotiated down to what the server supports. ChatGPT's document lists `private_key_jwt` and `none`, and gets `none`.
+- A CIMD document that lists extra grant types or authentication methods is negotiated down to what the server supports.
 - A registration may list redirect URIs that the policy refuses beside ones it accepts. Some Cursor versions register a `cursor://` callback next to a loopback one. Only a request that uses a refused URI fails.
 
 ## Step-up authorization
