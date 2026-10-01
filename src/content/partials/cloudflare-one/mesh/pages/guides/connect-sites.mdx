@@ -1,0 +1,124 @@
+---
+{}
+---
+
+import { DashButton, Render, Steps } from "~/components";
+
+Connect two sites, offices, or cloud networks with [Cloudflare Mesh](/mesh/). A Linux Mesh node at each site carries traffic between the private subnets through Cloudflare. Hosts behind the nodes do not need the Cloudflare One Client.
+
+This example uses separate subnets and tests traffic in both directions:
+
+| Site   | Private subnet   | Mesh node local IP | Test host IP   |
+| ------ | ---------------- | ------------------ | -------------- |
+| Site A | `10.0.0.0/24`    | `10.0.0.10`        | `10.0.0.50`    |
+| Site B | `192.168.1.0/24` | `192.168.1.10`     | `192.168.1.50` |
+
+Replace these addresses with your own. The subnets must not overlap each other or your Mesh IP range.
+
+## Prerequisites
+
+- A [supported Linux host](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#linux) at each site, with a stable local IP and administrator access
+- Access to each site's router or cloud route table to direct traffic to its local Mesh node
+- A test service on a host in each subnet, such as SSH on TCP port `22`
+- Netcat (`nc`) installed on the hosts where you will run the TCP tests
+
+<Render file="mesh/guides/prerequisites" product="cloudflare-one" />
+
+For containers, use separate node identities and review the [container source NAT behavior](/mesh/guides/run-mesh-in-containers/#source-nat/) before configuring return routes.
+
+## Connect a node at each site
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select **Add participant** > **Add node**. Name the node `site-a`, select **Create node**, and then select **Linux**.
+3. Run the displayed installation and registration commands on the Linux host at Site A. Confirm that the node appears as **Online**.
+4. Repeat the procedure at Site B with a new node named `site-b`. Use the new node's installation commands and token; each site needs a distinct node identity.
+5. Confirm both nodes appear as **Online** and record their local IPs and Mesh IPs.
+
+</Steps>
+
+Each node must forward traffic for its subnet. The Linux installation commands include persistent IP forwarding. On both hosts, verify that IPv4 forwarding is on:
+
+```sh
+sysctl net.ipv4.ip_forward
+```
+
+If the output is not `net.ipv4.ip_forward = 1`, follow [Make IP forwarding persistent](/mesh/best-practices/#make-ip-forwarding-persistent/). Cloud virtual machines may also require [provider-specific forwarding settings](/mesh/best-practices/#cloud-vpc-deployments/).
+
+If a node uses UFW, firewalld, nftables, or another host firewall, allow forwarded traffic between its local network and Cloudflare One Client interfaces. Also check that cloud firewall rules or security groups allow the forwarded traffic. Enabling `net.ipv4.ip_forward` does not override firewall rules that drop forwarded packets.
+
+## Advertise each local subnet
+
+A [CIDR route](/mesh/features/routes/#manage-cidr-routes) tells Cloudflare which node can reach a private subnet.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh** and select `site-a`.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. In the **Routes** tab, select **Add route**. Enter `10.0.0.0/24` and select **Add route**.
+3. Select `site-b` and add a route for `192.168.1.0/24`.
+
+</Steps>
+
+Advertise only subnets that the node can reach on its own local network. A route to a node's Mesh IP is not a substitute for a route to hosts behind that node.
+
+## Route remote subnets through Cloudflare
+
+Each node must send traffic for the **other** site's subnet through Cloudflare. Check the [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) settings in the device profile applied to each node:
+
+| Node     | Include mode                                 | Exclude mode                                                |
+| -------- | -------------------------------------------- | ----------------------------------------------------------- |
+| `site-a` | Include `100.96.0.0/12` and `192.168.1.0/24` | Do not exclude either range or a parent range containing it |
+| `site-b` | Include `100.96.0.0/12` and `10.0.0.0/24`    | Do not exclude either range or a parent range containing it |
+
+Use your configured device IP range if it differs from `100.96.0.0/12`. On each node, run `warp-cli settings` to confirm which [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/#via-the-cli) is applied. If both nodes share a profile, changing it affects both sites. Confirm that `site-a` can still reach `10.0.0.50` locally and `site-b` can still reach `192.168.1.50` locally.
+
+## Configure the site routers
+
+When a node is not the local default gateway, add static routes on the site's router. The next hop is the node's **local IP**, not its Mesh IP:
+
+<Steps>
+
+1. On the Site A router, route `192.168.1.0/24` to `10.0.0.10`.
+2. On the Site B router, route `10.0.0.0/24` to `192.168.1.10`.
+
+</Steps>
+
+These routes also provide the return path: a reply from Site B to a Site A host returns through `site-b`, and vice versa. To reach hosts from enrolled devices by Mesh IP, also route `100.96.0.0/12` to the local node at **each** site. If a node is the site's default gateway, hosts already send traffic through it and those additional static routes are not needed.
+
+## Verify both directions
+
+Confirm that an SSH service listens on each test host, or use the port of another service. Test from a host **behind** each node, not only from the nodes themselves:
+
+<Steps>
+
+1. On Site A host `10.0.0.50`, test Site B host `192.168.1.50`:
+
+   ```sh
+   nc -vz 192.168.1.50 22
+   ```
+
+2. On Site B host `192.168.1.50`, test Site A host `10.0.0.50`:
+
+   ```sh
+   nc -vz 10.0.0.50 22
+   ```
+
+</Steps>
+
+A successful TCP connection confirms the service path. If a test fails, check forwarding, Split Tunnels, return routes, destination firewalls, and [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). `ping` requires the ICMP Gateway proxy. For a symptom-by-symptom checklist, refer to [Troubleshoot Cloudflare Mesh connectivity](/mesh/troubleshooting/).
+
+<Render file="mesh/guides/security-and-logs" product="cloudflare-one" />
+
+## Next steps
+
+- [Connect two servers](/mesh/guides/connect-servers/) by Mesh IP without subnet routing.
+- [Configure high availability](/mesh/features/high-availability/) for routed subnets.
+- [Review MTU recommendations](/mesh/best-practices/#mtu-and-packet-fragmentation/) if large packets fail.
+- [Explore other VPN replacement scenarios](/cloudflare-one/setup/replace-vpn/).

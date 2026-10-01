@@ -1,0 +1,89 @@
+---
+{}
+---
+
+import { DashButton, Render, Steps } from "~/components";
+
+Install one Cloudflare Mesh node on each Linux server. Each server receives a private Mesh IP, so it can reach services on the other server through Cloudflare. Neither server needs a public inbound port.
+
+This setup reaches services running **on the nodes themselves**. To connect hosts behind the nodes instead, follow [Connect two sites](/mesh/guides/connect-sites/).
+
+## Prerequisites
+
+- Two servers running a [supported Linux distribution](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/#linux), with administrator access
+- A service listening on each server if you want to test both directions, such as SSH on TCP port `22`
+- Netcat (`nc`) installed on the servers where you will run the TCP tests
+- Outbound access from both servers to the [Cloudflare One Client IPs and ports](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/)
+
+<Render file="mesh/guides/prerequisites" product="cloudflare-one" />
+
+To run a node in a container, refer to [Run Mesh in Docker or Kubernetes](/mesh/guides/run-mesh-in-containers/).
+
+## Connect the first server
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Select **Add participant** > **Add node**.
+3. Name the node `server-a`, then select **Create node**.
+4. Select **Linux** and run the displayed installation and registration commands on the first server. Keep the node token private.
+5. Confirm that `server-a` appears as **Online** in the Mesh dashboard. Record its **Mesh IP**.
+
+</Steps>
+
+## Connect the second server
+
+<Steps>
+
+1. In **Networking** > **Mesh**, select **Add participant** > **Add node**.
+
+   <DashButton url="/?to=/:account/mesh" />
+
+2. Name the new node `server-b`, select **Create node**, then select **Linux**.
+3. Run the new installation and registration commands on the second server. Do not reuse the first node token: each server needs its own node identity.
+4. Confirm that `server-b` appears as **Online** and record its **Mesh IP**.
+
+</Steps>
+
+When a service runs on the node itself, you do not need a CIDR route, router changes, or IP forwarding. [IP forwarding](/mesh/best-practices/#make-ip-forwarding-persistent/) is only needed when a node routes traffic for other hosts.
+
+## Allow service traffic
+
+On each destination server, confirm the service listens on the Mesh IP or on all interfaces. A service bound only to a separate local-network IP cannot accept connections to its Mesh IP. Allow the required port from the other server's Mesh IP in the host firewall, and check any cloud firewall or security group. You do not need to open an inbound Internet port.
+
+Confirm that the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) handles the service protocol and that any [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) permit the connection.
+
+## Verify connectivity
+
+If both servers run SSH, test each direction using the other server's Mesh IP:
+
+<Steps>
+
+1. On `server-a`, test TCP port `22` on `server-b`:
+
+   ```sh
+   nc -vz <SERVER-B-MESH-IP> 22
+   ```
+
+2. On `server-b`, test TCP port `22` on `server-a`:
+
+   ```sh
+   nc -vz <SERVER-A-MESH-IP> 22
+   ```
+
+</Steps>
+
+Replace the Mesh IP placeholders with the addresses shown in the dashboard. If you use another service, substitute its port. **Online** means the node is connected to Cloudflare; a successful service test confirms that traffic reaches the destination. `ping` is only useful when the ICMP Gateway proxy is turned on.
+
+If a test fails, refer to [Troubleshoot Cloudflare Mesh connectivity](/mesh/troubleshooting/).
+
+<Render file="mesh/guides/security-and-logs" product="cloudflare-one" />
+
+## Next steps
+
+- [Connect two private networks](/mesh/guides/connect-sites/) through routed subnets.
+- [Connect two devices](/mesh/guides/connect-client-devices/) by Mesh IP.
+- [Connect Workers to Mesh](/workers-vpc/examples/connect-to-cloudflare-mesh/) with a VPC Network binding.

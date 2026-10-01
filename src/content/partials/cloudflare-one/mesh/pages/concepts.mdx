@@ -2,114 +2,163 @@
 {}
 ---
 
-import { Details } from "~/components";
+import { CardGrid, Details, LinkCard } from "~/components";
+import MeshBidirectional from "~/components/react/mesh/MeshBidirectional";
+import MeshHighAvailability from "~/components/react/mesh/MeshHighAvailability";
+import MeshParticipants from "~/components/react/mesh/MeshParticipants";
+import MeshRoutes from "~/components/react/mesh/MeshRoutes";
 
-Cloudflare Mesh connects your services and devices with post-quantum encrypted networking. Route traffic privately between servers, laptops, and phones without VPNs or bastion hosts.
+Cloudflare Mesh is a private network for services and devices in your Cloudflare account. It gives each enrolled participant a private address and carries traffic between participants through Cloudflare.
 
-Every enrolled device and node receives a private IP address (Mesh IP) and can reach any other participant by IP over TCP, UDP, or ICMP, with traffic routed through Cloudflare's network.
+Participants can be Linux servers, laptops, phones, or desktops. They communicate over TCP, UDP, or Internet Control Message Protocol (ICMP) without public IP addresses or inbound firewall rules.
 
-Mesh nodes are Linux servers running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (`warp-cli`) in headless mode. Client devices are laptops and phones running the same client with a UI.
+<span id="how-it-works"></span>
 
-![The Mesh network map in the Cloudflare dashboard showing nodes and devices connected through Cloudflare](~/assets/images/cloudflare-one/connections/mesh-network-map.gif)
+## The connection starts with the Cloudflare One Client
 
-:::note
-Cloudflare Mesh was previously known as WARP Connector and peer-to-peer connectivity. Existing WARP Connectors are now called mesh nodes. The WARP client is now the Cloudflare One Client. All existing deployments continue to work — no migration required.
-:::
+_Connect each participant to Cloudflare with the same client._
 
-## How it works
+Every participant runs the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). The client establishes an encrypted connection to Cloudflare and keeps that connection available for Mesh traffic.
 
-Mesh has two types of participants:
+A **Mesh node** runs the client in headless mode on a Linux server, virtual machine, or container. A **client device** runs the same software with a user interface on a laptop, phone, or desktop.
 
-|                       | Mesh nodes                                                                                                        | Client devices                                                                                                  |
-| --------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| **Runs on**           | Linux servers, VMs, containers                                                                                    | Laptops, phones, desktops                                                                                       |
-| **Client**            | [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (`warp-cli`), headless | [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (`warp-cli`) with UI |
-| **Mesh IP**           | Assigned on enrollment                                                                                            | Assigned on enrollment                                                                                          |
-| **Subnet routing**    | Can advertise CIDR routes                                                                                         | No — clients reach subnets through nodes                                                                        |
-| **High availability** | Supports active-passive replicas                                                                                  | Not applicable                                                                                                  |
+<MeshParticipants client:visible>
 
-Any participant can reach any other participant by Mesh IP. Client-to-client connectivity works without deploying any Mesh nodes.
+The Mesh node and client device connect to Cloudflare independently. Cloudflare assigns each participant a private Mesh IP and places both in your account's Mesh network.
 
-```mermaid
-flowchart LR
-  subgraph nodes["Mesh nodes"]
-    A["web-server <br> 100.96.0.1"]
-    B["db-replica <br> 100.96.0.2"]
-  end
-  subgraph devices["Client devices"]
-    C["MacBook <br> 100.96.0.10"]
-    D["iPhone <br> 100.96.0.11"]
-  end
-  A <--> CF((Cloudflare <br> network))
-  B <--> CF
-  CF <--> C
-  CF <--> D
-```
+</MeshParticipants>
 
-All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and access rules apply to every connection.
+Client-to-client connectivity does not require a Mesh node. Deploy a node when you want to connect a server, route a private network, or provide a headless gateway.
+
+For setup instructions, refer to [Get started](/mesh/get-started/).
+
+## Mesh IPs identify participants
+
+_Reach any participant through a stable private address._
+
+Cloudflare assigns each participant an address from `100.96.0.0/12`. Other Cloudflare One documentation calls these addresses [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
+
+The default range uses [carrier-grade NAT address space](https://datatracker.ietf.org/doc/html/rfc6598). This avoids common private ranges such as `10.0.0.0/8`. You can [configure a custom subnet](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) if the default range conflicts with your network.
+
+View Mesh IPs on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh) or a participant details page.
+
+## Traffic can start from either participant
+
+_Create bidirectional private connectivity between services and devices._
+
+Any participant can initiate traffic to another participant's Mesh IP. This supports device-to-device, device-to-server, and server-to-server connections.
+
+<MeshBidirectional client:visible>
+
+The laptop sends a request over its existing Mesh connection. Cloudflare applies configured controls, carries the request to the server, and returns the response. The server can initiate the same flow in reverse.
+
+</MeshBidirectional>
+
+All traffic passes through Cloudflare. [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and identity controls can govern each connection.
+
+Connectivity and access are separate. A participant can be online while policy blocks its traffic.
+
+## Routes extend Mesh to private networks
+
+_Reach resources that cannot run the Cloudflare One Client._
+
+A Mesh node is directly reachable through its own Mesh IP. A route makes resources behind that node reachable as well.
+
+- **CIDR routes** send traffic for an IPv4 or IPv6 range through a node.
+- **Hostname routes** send traffic for a private or public hostname through a node.
+
+<MeshRoutes client:visible>
+
+Without a matching route, the client and Mesh node remain connected but Cloudflare cannot forward a request for `10.0.0.50`. A CIDR route maps `10.0.0.0/24` to the node, which forwards request and return traffic between Cloudflare and the database.
+
+</MeshRoutes>
+
+Return traffic must also route through the Mesh node. For configuration requirements, refer to [Routes](/mesh/features/routes/).
+
+## Node identity and high availability
+
+_Keep routed networks available when a node host fails._
+
+A Mesh node has a stable identity in your Cloudflare account. For high availability, multiple Linux hosts can register as replicas of that node and advertise the same routes.
+
+One replica is active while the others remain on standby. If the active replica disconnects, Cloudflare promotes a standby for inbound traffic to the advertised CIDR routes.
+
+<MeshHighAvailability client:visible>
+
+Both hosts share one Mesh node identity and advertise the route to the same private database. Try stopping replica A before adding replica B: the database request fails because no replica is available. Add replica B and retry to see Cloudflare send the request through the newly active replica. When replica A returns, it remains on standby while replica B stays active.
+
+</MeshHighAvailability>
+
+High availability protects routed prefixes, not direct access to a replica's Mesh IP. Each replica keeps its own Mesh IP. For requirements and failover behavior, refer to [High availability](/mesh/features/high-availability/).
 
 ## Protocol requirement
 
-Cloudflare Mesh requires that the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) of each Mesh node is configured to use [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol), the default protocol for the Cloudflare One Client. Most deployments do not need to change anything.
+Cloudflare Mesh uses the MASQUE protocol by default. Hostname routes, IPv6 CIDR routes, and high availability require [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).
 
-If a Mesh node's device profile uses WireGuard instead, the following capabilities will not work:
+If a Mesh node device profile uses WireGuard, those capabilities do not work. Direct participant connectivity and IPv4 CIDR routes remain available.
 
-- [Hostname routes](/mesh/features/routes/#hostname-routes)
-- [IPv6 CIDR routes](/mesh/features/routes/#manage-cidr-routes)
-- [High availability](/mesh/features/high-availability/)
+<span id="mesh-vs-tunnel"></span>
 
-## Mesh IPs
+## Mesh vs. Cloudflare Tunnel
 
-Every participant is assigned a private IP from the `100.96.0.0/12` range. In other parts of the Cloudflare One documentation, these addresses are referred to as [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
+Mesh and [Cloudflare Tunnel](/tunnel/) both connect private infrastructure to Cloudflare. They use different connection models:
 
-This range uses [CGNAT address space](https://datatracker.ietf.org/doc/html/rfc6598) to avoid conflicts with RFC 1918 private ranges (`10.x`, `172.16.x`, `192.168.x`). If the default range conflicts with your network, you can [configure a custom subnet](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
+|                      | Cloudflare Mesh                                             | Cloudflare Tunnel                                       |
+| -------------------- | ----------------------------------------------------------- | ------------------------------------------------------- |
+| **Connection model** | Participants can initiate traffic in either direction       | Clients connect to resources behind `cloudflared`       |
+| **Addressing**       | Every participant receives a Mesh IP                        | Resources use published hostnames or private routes     |
+| **Connector**        | Cloudflare One Client                                       | `cloudflared`                                           |
+| **Primary use**      | Private connectivity between devices, servers, and networks | Publishing applications or routing to private resources |
 
-View a device's Mesh IP on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh) or on the node detail page in the dashboard.
+Use Mesh when participants need private IP connectivity in either direction. Mesh also suits stable, long-lived connections such as database replication, remote administration, and enterprise resource planning systems.
 
-For details on reserved ranges, refer to [Reserved IP addresses](/cloudflare-one/networks/routes/reserved-ips/).
-
-## Mesh vs. Tunnel
-
-Both Cloudflare Mesh and [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) connect private infrastructure to Cloudflare, but they solve different problems:
-
-|                       | Cloudflare Mesh                                     | Cloudflare Tunnel                                         |
-| --------------------- | --------------------------------------------------- | --------------------------------------------------------- |
-| **Traffic direction** | Bidirectional — any participant can initiate        | Inbound to origin — clients connect to published services |
-| **Addressing**        | Every participant gets a Mesh IP                    | Server-side only, no Mesh IPs                             |
-| **Use case**          | Private IP connectivity between devices and servers | Publishing specific applications, hostnames, or IP routes |
-| **Connector**         | `warp-cli`                                          | `cloudflared`                                             |
-| **Protocols**         | TCP, UDP, ICMP                                      | HTTP/S, TCP, SSH, RDP, SMB (proxied over WebSocket)       |
-
-Use Mesh when devices need to reach each other by private IP, or when your workload requires stable, long-lived TCP connections (SAP, database replication, ERP systems, RDP sessions). Mesh operates at L3/L4 and preserves connections end-to-end, making it the recommended software on-ramp for any traffic sensitive to connection interruptions. Use Tunnel when you want to publish services by hostname or proxy traffic to specific IP ranges through `cloudflared`.
+Use Tunnel when you want to publish specific applications or route clients to resources behind an outbound-only connector.
 
 <Details header="Coming from another mesh networking product?">
 
-If you have used Tailscale, WireGuard, or a similar product, here is how concepts map to Cloudflare Mesh:
+Common concepts map to Cloudflare Mesh as follows:
 
-| Other products         | Cloudflare Mesh                                                                                                                                                                                                     |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tailnet / mesh network | Your Cloudflare account's Mesh network                                                                                                                                                                              |
-| Node / peer            | Mesh node (servers) or client device (laptops/phones)                                                                                                                                                               |
-| Subnet router          | Mesh node with [CIDR routes](/mesh/features/routes/)                                                                                                                  |
-| MagicDNS / custom DNS  | [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) + [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) |
-| ACLs / access rules    | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) + [device posture](/cloudflare-one/reusable-components/posture-checks/)                                                              |
-| Exit node              | Attach a public CIDR to a Mesh node and traffic to those IPs exits through that node. For broader Internet filtering, use [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/).             |
-| Admin console          | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) under **Networking** > **Mesh**                                                                                                              |
+| Other products          | Cloudflare Mesh                                                                                                                                          |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mesh network or tailnet | Your Cloudflare account Mesh network                                                                                                                     |
+| Node or peer            | Mesh node or client device                                                                                                                               |
+| Subnet router           | Mesh node with a [CIDR route](/mesh/features/routes/)                                                                                                    |
+| Access control list     | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) and [device posture](/cloudflare-one/reusable-components/posture-checks/) |
+| Admin console           | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) under **Networking** > **Mesh**                                                   |
 
-Key differences:
-
-- You manage configuration entirely through the Cloudflare dashboard or API — no command-line administration needed.
-- Gateway policies, device posture, and identity checks are built into the platform.
-- Traffic routes through the nearest Cloudflare data center, not directly between devices.
+Unlike peer-to-peer products, Mesh traffic passes through Cloudflare. You manage policies, posture, and identity with Cloudflare One.
 
 </Details>
 
-## Next steps
+## Start building
 
-1. [**Create your first Mesh node**](/mesh/get-started/) — The dashboard wizard handles provisioning. Install the client on a Linux server with two commands.
-2. [**Connect client devices**](/mesh/guides/connect-client-devices/) — Install the Cloudflare One Client on laptops and phones. They can reach each other and any Mesh node by Mesh IP.
-3. [**Run in Docker / Kubernetes**](/mesh/guides/run-mesh-in-containers/) — Deploy a Mesh node as a Docker container for Docker Compose, Kubernetes, and CI/CD environments.
-4. [**Add routes**](/mesh/features/routes/) (optional) — Make subnets behind a Mesh node reachable from any device.
-5. [**Enable high availability**](/mesh/features/high-availability/) (optional) — Run multiple replicas of a node for failover.
-6. [**Connect from Workers**](/workers-vpc/examples/connect-to-cloudflare-mesh/) (optional) — Use VPC Network bindings to reach private services from Cloudflare Workers.
-7. [**Delegate access**](/cloudflare-one/networks/connectors/granular-permissions/) (optional) — Scope member permissions to specific Mesh nodes instead of granting account-wide control.
+Choose the participant or network you want to connect.
+
+<CardGrid>
+	<LinkCard
+		title="Set up Cloudflare Mesh"
+		href="/mesh/get-started/"
+		description="Configure your account and connect your first participant."
+	/>
+	<LinkCard
+		title="Connect two devices"
+		href="/mesh/guides/connect-client-devices/"
+		description="Add laptops, phones, and headless user devices."
+	/>
+	<LinkCard
+		title="Add routes"
+		href="/mesh/features/routes/"
+		description="Reach private subnets and hostnames through a Mesh node."
+	/>
+	<LinkCard
+		title="Connect from Workers"
+		href="/workers-vpc/examples/connect-to-cloudflare-mesh/"
+		description="Let Workers call services on your Mesh network."
+	/>
+</CardGrid>
+
+## Related resources
+
+- [Run Mesh in containers](/mesh/guides/run-mesh-in-containers/): deploy a node with Docker or Kubernetes.
+- [Tips and best practices](/mesh/best-practices/): plan routes, updates, and cloud deployments.
+- [Reserved IP addresses](/cloudflare-one/networks/routes/reserved-ips/): review ranges reserved by Cloudflare One.
