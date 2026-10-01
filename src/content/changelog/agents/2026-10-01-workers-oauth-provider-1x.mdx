@@ -7,7 +7,11 @@ products:
 date: 2026-10-01
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 [`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1. The latest release is 1.2.1. It has a new split API: one Worker signs users in and issues tokens, and your MCP servers check those tokens from their own Workers.
 
@@ -80,6 +84,25 @@ export const calendar = new OAuthResourceServer<Env, AuthProps>({
 </TypeScriptExample>
 
 The calendar Worker binds to the auth server with a [Service Binding](/workers/runtime-apis/bindings/service-bindings/), so `validateToken` is an RPC call that is not reachable from the Internet. It needs no KV namespace of its own.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "calendar-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"services": [
+		{
+			"binding": "AUTH_SERVER",
+			"service": "auth-server",
+			"entrypoint": "AuthServer",
+		},
+	],
+}
+```
+
+</WranglerConfig>
 
 `OAuthResourceServer` publishes the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata that MCP clients use to find your authorization server. It answers requests without a token with a `401` challenge that points to that metadata. It also rejects tokens issued for any other resource.
 
