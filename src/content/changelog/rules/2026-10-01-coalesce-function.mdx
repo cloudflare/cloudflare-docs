@@ -1,0 +1,13 @@
+---
+title: Handle missing values with coalesce()
+description: Use coalesce() in rule expressions to return the first value that is not nil.
+date: 2026-10-01
+---
+
+The `coalesce()` function returns the first argument that is not nil. Use it to provide a fallback in rule expressions:
+
+```txt
+http.request.uri.path eq coalesce(http.request.uri.args["expected_path"][0], "/")
+```
+
+For details, refer to the [`coalesce()` function reference](/ruleset-engine/rules-language/functions/#coalesce).
