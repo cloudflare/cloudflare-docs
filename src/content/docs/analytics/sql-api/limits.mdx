@@ -21,7 +21,7 @@ The following limits apply to SQL API queries:
 
 The lower timestamp bound and tenancy scope can be supplied in SQL or through the JSON request fields.
 
-Dataset-specific limits can restrict field availability, the number of selected fields, historical retention, query duration, and the maximum number of returned rows. These limits depend on the dataset, your plan, and the account or zone being queried. A dataset-specific maximum page size rejects an explicit `LIMIT` above the maximum; it does not add a limit to a query that omits one.
+Dataset-specific limits can restrict field availability, the number of selected fields, historical retention, query duration, and the maximum number of returned rows. These limits depend on the dataset, your plan, and the account or zone being queried. A dataset-specific maximum page size rejects an explicit `LIMIT` above the maximum. It does not add a limit to a query that omits one.
 
 The API also applies request-rate, concurrency, queue, execution-time, and resource-consumption limits. Cloudflare can adjust these operational limits to protect service availability.
 

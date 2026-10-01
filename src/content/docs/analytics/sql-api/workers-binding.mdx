@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 The Analytics SQL binding lets a Cloudflare Worker query SQL API datasets without making an HTTP request or managing an API token. Each binding is scoped to the Cloudflare account that owns the Worker.
 
@@ -32,9 +32,15 @@ The `binding` value determines how you access the binding on your Worker's `env`
 
 Call the binding's `query()` method with a SQL statement and optional parameters:
 
-```js
+<TypeScriptExample>
+
+```ts
+interface Env {
+	ANALYTICS_SQL: AnalyticsSQLBinding;
+}
+
 export default {
-	async fetch(_request, env) {
+	async fetch(_request, env): Promise<Response> {
 		const start = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 		const result = await env.ANALYTICS_SQL.query({
 			query: `
@@ -50,8 +56,10 @@ export default {
 
 		return Response.json(result);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 Do not include an `accountTag` or `zoneTag` predicate in a binding query. The binding supplies the Worker's account scope separately and the API rejects a query that also specifies tenancy in SQL.
 

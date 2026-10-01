@@ -8,7 +8,7 @@ products:
 description: Send Cloudflare alerts to webhook endpoints.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 Webhooks let you deliver Cloudflare alerts to any service that accepts HTTP callbacks. You can connect to [popular services](#popular-webhook-services) like Slack, Google Chat, and PagerDuty, or configure a [generic webhook](#generic-webhooks) for any custom endpoint.
 
@@ -17,6 +17,8 @@ Webhooks are available on all plans. Accounts without a paid zone can configure 
 :::
 
 ## Create a webhook
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to **Alerts** > **Destinations**.
 
@@ -28,9 +30,13 @@ Webhooks are available on all plans. Accounts without a paid zone can configure 
 5. If needed, enter the **Secret**. Secrets vary by service — refer to [popular webhook services](#popular-webhook-services) for details.
 6. Select **Save and Test** to finish setting up your webhook.
 
+</Steps>
+
 ## Edit or delete a webhook
 
 You can rename or delete existing webhooks.
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to **Alerts** > **Destinations**.
 
@@ -38,6 +44,8 @@ You can rename or delete existing webhooks.
 
 2. In the **Webhooks** card, select **Edit** on the webhook you want to modify.
 3. Update the name and select **Save**, or select **Delete** to remove it.
+
+</Steps>
 
 ## Firewall settings
 

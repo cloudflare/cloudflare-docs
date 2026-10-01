@@ -73,7 +73,7 @@ Log datasets are typically unsampled, but some use adaptive sampling. As with ev
 
 ## Workers Analytics Engine datasets
 
-Query a Workers Analytics Engine dataset as `events.analyticsEngine.<DATASET_NAME>`, replacing `<DATASET_NAME>` with the name configured for the binding. Use an unquoted SQL identifier for names such as `myDataset`, or a double-quoted identifier for names containing characters such as hyphens: `events.analyticsEngine."example-dataset"`. These datasets require `accountTag` or `scope.accountTag`; zone scope is not supported.
+Query a Workers Analytics Engine dataset as `events.analyticsEngine.<DATASET_NAME>`, replacing `<DATASET_NAME>` with the name configured for the binding. Use an unquoted SQL identifier for names such as `myDataset`, or a double-quoted identifier for names containing characters such as hyphens: `events.analyticsEngine."example-dataset"`. These datasets require `accountTag` or `scope.accountTag`. Zone scope is not supported.
 
 ```sql
 SELECT timestamp, index1, blob1, double1
@@ -189,7 +189,7 @@ Introspection normally returns static catalog metadata without querying the unde
 
 - Each custom-attribute type is capped at the service's configured attribute limit (1,000 by default), so the response might not include every historical custom attribute.
 - Truncation is silent: the response gives no indication that the limit was reached.
-- A custom attribute's `data_type` is one of `String`, `Float64`, or `Bool`, a smaller set than the column `data_type` values listed above.
+- A custom attribute's `data_type` is one of `String`, `Float64`, or `Bool`, a smaller set than the column `data_type` values.
 - `custom_attributes` is omitted, not returned as an empty array, for a dataset that has no custom attributes to discover.
 
 ### Log Explorer availability

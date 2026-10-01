@@ -8,7 +8,7 @@ products:
 description: Route Cloudflare alerts to PagerDuty.
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 :::note
 PagerDuty is available if your account has at least one zone on a Business or higher plan.
@@ -20,6 +20,8 @@ To use PagerDuty, you need a [PagerDuty account](https://www.pagerduty.com/sign-
 
 ## Connect PagerDuty
 
+<Steps>
+
 1. In the Cloudflare dashboard, go to **Alerts** > **Destinations**.
 
     <DashButton url="/?to=/:account/notifications" buttonName="Alerts" />
@@ -28,11 +30,15 @@ To use PagerDuty, you need a [PagerDuty account](https://www.pagerduty.com/sign-
 4. Choose the services you want to use and select **Connect**.
 5. The browser will navigate back to your Cloudflare dashboard. Select **Continue**.
 
+</Steps>
+
 Your connected PagerDuty services will appear in the **Connected notification services** card.
 
 ## Edit or disconnect PagerDuty
 
 To change which PagerDuty services are connected, you need to disconnect and reconnect:
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to **Alerts** > **Destinations**.
 
@@ -41,6 +47,8 @@ To change which PagerDuty services are connected, you need to disconnect and rec
 3. Select **Disconnect** > **Confirm**.
 4. Make your changes in [PagerDuty](https://www.pagerduty.com/).
 5. [Reconnect PagerDuty](/notifications/get-started/configure-pagerduty/).
+
+</Steps>
 
 :::note
 Disconnecting PagerDuty disables any alerts currently routed to it. If PagerDuty was the only destination for an alert, that alert will have no destination until you reconfigure it.
