@@ -70,4 +70,19 @@ A successful response has the following structure:
 
 The `data` array contains one object for each result row. The object keys match selected field names or aliases. The `rows` value is the number of returned rows. The `statistics` object describes the work performed by the data store.
 
+This response shape applies to the default output from ClickHouse-backed datasets. Log Explorer and explicit output formats have different response shapes. Refer to [Response formats](/analytics/sql-api/query-api/#response-formats).
+
+## Use the Cloudflare CLI
+
+The Cloudflare CLI provides `cf sql query`. Pass the SQL statement as a positional argument, then provide exactly one scope flag and a lower time bound:
+
+```bash
+cf sql query \
+  'SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests GROUP BY edgeResponseStatus ORDER BY requests DESC LIMIT 5' \
+  --scope-account "<ACCOUNT_TAG>" \
+  --time-since "<START_TIME>"
+```
+
+Use `--scope-zone` instead of `--scope-account` for zone scope. You can optionally add `--time-until`. Both time bounds are inclusive. Do not include tenancy or timestamp predicates in SQL when you supply the corresponding CLI flags.
+
 For request options and parameter binding, refer to [Query the API](/analytics/sql-api/query-api/).

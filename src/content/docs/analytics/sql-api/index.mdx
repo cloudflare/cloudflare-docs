@@ -8,15 +8,15 @@ sidebar:
 
 The SQL API lets you query Cloudflare analytics and observability datasets with SQL. Use the API to select fields, filter events, calculate aggregates, group results, and integrate analytics data with your applications.
 
-The SQL API provides a query endpoint:
+The SQL API provides `GET` and `POST` query endpoints at:
 
 ```txt
 https://api.cloudflare.com/client/v4/analytics/sql
 ```
 
-Send one `SELECT` statement in each `POST` request. The API validates the statement against the available datasets and supported SQL language before it executes the query.
+Send one `SELECT` statement in each request. Use `POST` to send raw SQL or a JSON request with parameters, request-level scope, and a time range. Use `GET` for URL-encoded queries. The API validates the statement against the available datasets and supported SQL language before it executes the query.
 
-Use the [introspection endpoint](/analytics/sql-api/datasets/#discover-datasets) to discover dataset names, descriptions, columns, and data types.
+Use the [introspection endpoint](/analytics/sql-api/datasets/#discover-datasets) to discover dataset names, categories, descriptions, kinds, columns, and data types. You can also run queries with [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) and list datasets with `cf sql datasets`.
 
 The SQL API supports a deliberately limited SQL dialect. It does not pass arbitrary SQL through to the underlying data store. For the complete language surface, refer to the [SQL language reference](/analytics/sql-api/sql-reference/).
 

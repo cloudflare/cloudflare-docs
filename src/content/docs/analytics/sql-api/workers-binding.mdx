@@ -56,6 +56,8 @@ Do not include an `accountTag` or `zoneTag` predicate in a binding query. The bi
 
 The binding can query only datasets that support account scope.
 
+The binding can query Workers Analytics Engine datasets through names such as `events.analyticsEngine."example-dataset"`. Access still depends on the account's Workers Analytics Engine entitlement.
+
 ## Request
 
 The `query()` method accepts the following fields:
@@ -69,7 +71,7 @@ The binding does not accept `scope` because it derives scope from the Worker. It
 
 ## Response
 
-The method returns the same result structure as the HTTP API:
+The method returns the default ClickHouse-backed result structure:
 
 ```json
 {
@@ -87,5 +89,7 @@ The method returns the same result structure as the HTTP API:
 	}
 }
 ```
+
+Do not add a `FORMAT` clause to binding queries. The binding expects the default JSON response with `statistics`. Log Explorer-backed datasets currently return a different response shape and are not supported through the binding.
 
 The binding does not retry failed requests automatically. A thrown error includes a boolean `retryable` property that indicates whether retrying may succeed. Apply bounded exponential backoff only when `retryable` is `true`.

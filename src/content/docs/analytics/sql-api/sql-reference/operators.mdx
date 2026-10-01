@@ -60,10 +60,46 @@ edgeResponseStatus IN (403, 404, 429)
 
 ## BETWEEN
 
-Use `BETWEEN` to set an inclusive range on a dataset timestamp field:
+Use `BETWEEN` to test an inclusive range. `NOT BETWEEN` negates the test:
 
 ```sql
 timestamp BETWEEN '2026-09-15T00:00:00Z' AND '2026-09-15T01:00:00Z'
+edgeResponseStatus BETWEEN 400 AND 499
 ```
 
-General-purpose `BETWEEN` expressions on other fields are not supported.
+## Pattern matching
+
+Use `LIKE` and `NOT LIKE` for case-sensitive pattern matching. Use `ILIKE` and `NOT ILIKE` for case-insensitive matching. In a pattern, `%` matches any sequence of characters and `_` matches one character.
+
+```sql
+clientRequestHttpHost ILIKE 'api.%'
+```
+
+`LIKE ... ESCAPE` is not supported.
+
+## Null predicates
+
+Use `IS NULL` or `IS NOT NULL` to test whether an expression is null:
+
+```sql
+originResponseStatus IS NOT NULL
+```
+
+This does not make a standalone `NULL` literal valid in other expressions.
+
+## CASE
+
+The SQL API supports searched and simple `CASE` expressions:
+
+```sql
+CASE
+  WHEN edgeResponseStatus >= 500 THEN 'server error'
+  WHEN edgeResponseStatus >= 400 THEN 'client error'
+  ELSE 'other'
+END
+
+CASE edgeResponseStatus
+  WHEN 200 THEN 'ok'
+  ELSE 'other'
+END
+```

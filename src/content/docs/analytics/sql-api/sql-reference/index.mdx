@@ -8,7 +8,7 @@ sidebar:
 
 The SQL API supports a read-only subset of SQL for analytics queries. SQL keywords and function names are case-insensitive. Dataset and field names are case-sensitive.
 
-Every query must read one schema-qualified dataset and must include an account or zone filter and a lower time bound. For example:
+Every query must read one schema-qualified dataset and must include an account or zone scope and a lower time bound. You can provide scope and time bounds in SQL or through the JSON request fields. For example:
 
 ```sql
 SELECT
@@ -34,12 +34,12 @@ LIMIT 10
 The SQL API does not support arbitrary ClickHouse SQL. Unsupported features include:
 
 - Data modification or definition statements, including `INSERT`, `UPDATE`, `DELETE`, `CREATE`, `ALTER`, and `DROP`.
-- Joins, unions, common table expressions, and general subqueries.
+- Joins, unions, common table expressions, and general subqueries. One restricted derived-table projection is supported.
 - Window functions.
-- `DISTINCT`.
-- `OFFSET` and `FETCH`.
+- Row-level `SELECT DISTINCT`. `COUNT`, `SUM`, and `AVG` support `DISTINCT` on unsampled datasets and Workers Analytics Engine datasets.
+- `FETCH`. ClickHouse-backed datasets support `OFFSET` with `LIMIT`.
 - `EXPLAIN`, `ANALYZE`, `DESCRIBE`, `VALUES`, and `UNNEST`.
-- `CASE`, `LIKE`, `IS NULL`, and user-authored casts.
-- Aggregate `FILTER`, aggregate `DISTINCT`, and aggregate-local `ORDER BY` clauses.
+- `SIMILAR TO`, `LIKE ... ESCAPE`, and user-authored casts.
+- Aggregate `FILTER` and aggregate-local `ORDER BY` clauses.
 
 The API returns an HTTP `422` response when a statement contains unsupported syntax.

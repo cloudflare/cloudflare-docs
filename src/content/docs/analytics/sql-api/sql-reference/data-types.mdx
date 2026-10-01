@@ -14,6 +14,7 @@ Dataset schemas can expose the following field types:
 | `UInt8`, `UInt16`, `UInt32`, `UInt64` | Unsigned integers.                      |
 | `Int64`                               | Signed integer.                         |
 | `Float64`                             | Double-precision floating-point number. |
+| `Date`                                | Calendar date.                          |
 | `DateTime`                            | Timestamp with second precision.        |
 | `DateTime64(3)`                       | Timestamp with millisecond precision.   |
 | `Array(type)`                         | List of values of one scalar type.      |
@@ -37,7 +38,7 @@ LIMIT 1
 
 Escape a single quote inside a string according to standard SQL string literal syntax.
 
-`NULL` literals are not supported.
+Standalone `NULL` literals are not supported. Expressions can still produce null values, and `IS NULL` and `IS NOT NULL` predicates are supported.
 
 ## Timestamp values
 
@@ -62,7 +63,7 @@ An array field can only be selected as a complete, top-level result field:
 
 ```sql
 SELECT botTags
-FROM logs.rawHttpRequests
+FROM logs.httpRequests
 WHERE zoneTag = '<ZONE_TAG>'
   AND timestamp >= '2026-09-15T00:00:00Z'
 LIMIT 10
@@ -95,4 +96,4 @@ WHERE accountTag = '<ACCOUNT_TAG>'
 GROUP BY attributes['http.method']
 ```
 
-JSON casts, nested traversal, ordering by JSON values, comparisons between two JSON values, and `COUNT` of a JSON key are not supported.
+JSON casts, nested traversal, ordering by JSON values, comparisons between two JSON values, and `COUNT` of a JSON key are not supported. Dynamic JSON lookups also cannot be wrapped in `LIKE`, `BETWEEN`, `IS NULL`, or `CASE` expressions.

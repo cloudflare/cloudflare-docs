@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Functions
-description: SQL aggregate and time functions supported by the SQL API.
+description: SQL aggregate, scalar, and time functions supported by the SQL API.
 sidebar:
   order: 3
 ---
@@ -10,150 +10,105 @@ Function names are case-insensitive.
 
 ## Aggregate functions
 
-State dataset rows represent observations of a system's state rather than unique events. Some aggregate functions can therefore produce misleading or nonsensical results. To prevent this, each state dataset supports only the aggregate functions that are meaningful for its data. The API rejects other aggregate functions.
+| Function                                                 | Description                                                                                                                 |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `COUNT(*)` or `COUNT()`                                  | Count matching rows or represented events. `COUNT(expression)` is not supported.                                            |
+| `SUM(expression)`                                        | Sum a numeric expression.                                                                                                   |
+| `AVG(expression)`                                        | Calculate the arithmetic mean of a numeric expression.                                                                      |
+| `MIN(expression)`, `MAX(expression)`                     | Return an exact extremum on an unsampled dataset.                                                                           |
+| `APPROX_MIN(expression)`, `APPROX_MAX(expression)`       | Return the smallest or largest value observed in retained rows of an adaptively sampled dataset.                            |
+| `countIf(condition)`                                     | Count rows that satisfy a condition.                                                                                        |
+| `sumIf(expression, condition)`                           | Sum values from rows that satisfy a condition.                                                                              |
+| `avgIf(expression, condition)`                           | Average values from rows that satisfy a condition.                                                                          |
+| `first_value(expression)`, `last_value(expression)`      | Return the first or last value in the aggregate input.                                                                      |
+| `argMax(value, expression)`, `argMin(value, expression)` | Return `value` from the row with the largest or smallest `expression`.                                                      |
+| `topK(expression)`                                       | Return an array of the most frequent values. Supports ClickHouse-style parameters such as `topK(10)(expression)`.           |
+| `topKWeighted(expression, weight)`                       | Return the most frequent values using explicit weights. Supports parameters such as `topKWeighted(10)(expression, weight)`. |
+| `quantileWeighted(level, expression, weight)`            | Calculate a weighted quantile. `level` must be between `0` and `1`.                                                         |
+| `quantileExactWeighted(level)(expression, weight)`       | Alias form of `quantileWeighted`.                                                                                           |
 
-| State dataset                      | Supported aggregate functions |
-| ---------------------------------- | ----------------------------- |
-| `states.d1Storage`                 | `MAX`                         |
-| `states.r2CombinedStorage`         | `MAX`                         |
-| `states.hyperdrivePoolSizes`       | `AVG`, `MAX`                  |
-| `states.queuesConsumerMetrics`     | `AVG`                         |
-| `states.deviceState`               | `COUNT`, `MAX`                |
-| Magic WAN Connector state datasets | `COUNT`, `MAX`                |
+`topK` accepts up to three optional parameters before its value expression. `topKWeighted` accepts the same parameters before its value and weight expressions. The requested top-k size and load factor must each be between `1` and `100`.
 
-No current state dataset supports `SUM`, `MIN`, `APPROX_MIN`, or `APPROX_MAX`.
+The compatibility aggregates from `countIf` through `quantileExactWeighted` in the table are supported by ClickHouse-backed datasets. Log Explorer-backed datasets support `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `APPROX_MIN`, and `APPROX_MAX`.
 
-### COUNT
+### Adaptive sampling
 
-`COUNT(*)` returns the number of events represented by the matching rows.
+For adaptively sampled event and log datasets, the SQL API automatically applies sample weights to `COUNT`, `SUM`, `AVG`, `countIf`, `sumIf`, `avgIf`, and `topK`. You do not need to use `sampleInterval` yourself for these functions. Weighted averages exclude null expression values from both the numerator and denominator.
+
+`topKWeighted` and `quantileWeighted` use the explicit weight argument supplied by the query. Pass `sampleInterval` when you want that weight to represent the dataset's adaptive sampling.
 
 ```sql
-SELECT COUNT(*) AS requests
+SELECT countIf(edgeResponseStatus >= 500) AS server_errors
 FROM events.httpRequests
 WHERE accountTag = '<ACCOUNT_TAG>'
   AND timestamp >= NOW() - INTERVAL '1' HOUR
 ```
 
-`COUNT()` is also accepted. `COUNT(field)` and `COUNT(DISTINCT field)` are not supported.
+Exact `MIN` and `MAX` are rejected for adaptively sampled event and log datasets. Use `APPROX_MIN` and `APPROX_MAX` to calculate extrema from retained sample rows. These functions cannot reconstruct values from events that sampling did not retain.
 
-For adaptively sampled event datasets, the SQL API automatically weights each row by its sample interval. You do not need to apply the sample interval manually.
+`argMax` and `argMin` are also rejected on adaptively sampled datasets, except Workers Analytics Engine datasets, which preserve their existing compatibility behavior.
 
-### SUM
+### DISTINCT aggregates
 
-`SUM(expression)` returns the sum of a numeric expression.
-
-```sql
-SELECT SUM(edgeResponseBytes) AS bytes
-FROM events.httpRequests
-WHERE accountTag = '<ACCOUNT_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
-```
-
-For adaptively sampled event datasets, the SQL API automatically calculates a sample-weighted sum.
-
-### AVG
-
-`AVG(expression)` returns the arithmetic mean of a numeric expression.
+The following forms are supported by ClickHouse-backed unsampled datasets:
 
 ```sql
-SELECT AVG(edgeTimeToFirstByteMs) AS average_ttfb_ms
-FROM events.httpRequests
-WHERE accountTag = '<ACCOUNT_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
+COUNT(DISTINCT expression)
+SUM(DISTINCT expression)
+AVG(DISTINCT expression)
 ```
 
-For adaptively sampled event datasets, the SQL API automatically calculates a sample-weighted average.
+Other `DISTINCT` aggregates and row-level `SELECT DISTINCT` are not supported. Adaptively sampled datasets reject `DISTINCT` aggregates because omitted values cannot be reconstructed. Workers Analytics Engine datasets retain `COUNT`, `SUM`, and `AVG DISTINCT` for compatibility.
 
-### MIN
+Log Explorer-backed datasets support `COUNT(DISTINCT expression)` and `SUM(DISTINCT expression)`, but not `AVG(DISTINCT expression)`.
 
-`MIN(expression)` returns the smallest value.
+### State datasets
 
-```sql
-SELECT MIN(edgeTimeToFirstByteMs) AS minimum_ttfb_ms
-FROM logs.httpRequests
-WHERE zoneTag = '<ZONE_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
-```
+State dataset rows represent observations of a system's state rather than unique events. Unrestricted aggregation could produce misleading or nonsensical results, so each state dataset exposes a `valid_aggregations` list through [introspection](/analytics/sql-api/datasets/#discover-datasets). The list can contain `count`, `sum`, `avg`, `min`, or `max`.
 
-`MIN` is not supported by adaptively sampled event datasets.
+`countIf`, `sumIf`, and `avgIf` require the corresponding base aggregation. Other compatibility aggregates, including approximate extrema, are not supported on state datasets.
 
-### APPROX_MIN
+## Scalar functions
 
-`APPROX_MIN(expression)` estimates the smallest value for an adaptively sampled event dataset.
+The following scalar functions are supported on ClickHouse-backed datasets. Function names are case-insensitive.
 
-```sql
-SELECT APPROX_MIN(edgeTimeToFirstByteMs) AS approximate_minimum_ttfb_ms
-FROM events.httpRequests
-WHERE accountTag = '<ACCOUNT_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
-```
+| Category                      | Functions                                                                                                                                                                                             |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Conditional                   | `if(condition, then, else)`                                                                                                                                                                           |
+| Numeric                       | `intDiv`, `round`, `ceil`, `floor`, `log`, `pow`                                                                                                                                                      |
+| String                        | `length`, `isEmpty`, `toLower`, `toUpper`, `startsWith`, `endsWith`, `substring`, `position`, `format`                                                                                                |
+| Conversion and representation | `toUInt8`, `toUInt32`, `bin`, `hex`                                                                                                                                                                   |
+| Bitwise                       | `bitAnd`, `bitCount`, `bitHammingDistance`, `bitNot`, `bitOr`, `bitRotateLeft`, `bitRotateRight`, `bitShiftLeft`, `bitShiftRight`, `bitTest`, `bitXor`                                                |
+| Date parts                    | `date_part`, `EXTRACT`, `toYear`, `toMonth`, `toDayOfMonth`, `toDayOfWeek`, `toHour`, `toMinute`, `toSecond`, `toYYYYMM`                                                                              |
+| Date and time conversion      | `toUnixTimestamp`, `formatDateTime`, `toDateTime`, `toDate`, `timezone`                                                                                                                               |
+| Time buckets                  | `toStartOfInterval`, `toStartOfDay`, `toStartOfMinute`, `toStartOfFiveMinutes`, `toStartOfTenMinutes`, `toStartOfFifteenMinutes`, `toStartOfHour`, `toStartOfWeek`, `toStartOfMonth`, `toStartOfYear` |
+| Interval constructors         | `toIntervalSecond`, `toIntervalMinute`, `toIntervalHour`, `toIntervalDay`, `toIntervalWeek`, `toIntervalMonth`, `toIntervalQuarter`, `toIntervalYear`                                                 |
 
-Use `APPROX_MIN` instead of `MIN` when a dataset uses adaptive sampling.
+Supported aliases include `lengthUTF8`, `empty`, `lower`, `lowerUTF8`, `upper`, `upperUTF8`, `substr`, `strpos`, `ceiling`, `ln`, `dayOfWeek`, and `toStartOfFiveMinute`.
 
-### MAX
+Log Explorer-backed datasets support only a subset of these functions: `if`, `isEmpty`, `startsWith`, `endsWith`, `pow`, `length`, `toLower`, `toUpper`, `position`, one-argument `ceil` and `floor`, `log`, `toYear`, `toMonth`, `toHour`, `toMinute`, `toSecond`, `toDayOfMonth`, `toDayOfWeek`, `toYYYYMM`, `toDate`, `toStartOfWeek`, `toStartOfMonth`, and `toStartOfYear`. The API returns HTTP `422` when the selected backend does not support a function.
 
-`MAX(expression)` returns the largest value.
+## Current date and time
 
-```sql
-SELECT MAX(edgeTimeToFirstByteMs) AS maximum_ttfb_ms
-FROM logs.httpRequests
-WHERE zoneTag = '<ZONE_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
-```
+The API resolves current-time functions once when it plans the query. Repeated uses in one query represent the same instant.
 
-`MAX` is not supported by adaptively sampled event datasets.
-
-### APPROX_MAX
-
-`APPROX_MAX(expression)` estimates the largest value for an adaptively sampled event dataset.
-
-```sql
-SELECT APPROX_MAX(edgeTimeToFirstByteMs) AS approximate_maximum_ttfb_ms
-FROM events.httpRequests
-WHERE accountTag = '<ACCOUNT_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
-```
-
-Use `APPROX_MAX` instead of `MAX` when a dataset uses adaptive sampling.
-
-## Date and time functions
-
-The API resolves current-time functions once when it plans the query. Repeated uses in one query therefore represent the same instant.
-
-### NOW
-
-`NOW()` returns the current UTC timestamp. Use it in selected expressions or time predicates.
-
-```sql
-WHERE timestamp >= NOW() - INTERVAL '1' HOUR
-```
-
-### CURRENT_TIMESTAMP
-
-`CURRENT_TIMESTAMP()` is equivalent to `NOW()`.
+| Function              | Description                                 |
+| --------------------- | ------------------------------------------- |
+| `NOW()`               | Return the current UTC timestamp.           |
+| `CURRENT_TIMESTAMP()` | Equivalent to `NOW()`.                      |
+| `TODAY()`             | Return the start of the current day in UTC. |
+| `CURRENT_DATE()`      | Equivalent to `TODAY()`.                    |
 
 ```sql
 SELECT CURRENT_TIMESTAMP() AS queried_at, COUNT(*) AS requests
 FROM events.httpRequests
 WHERE accountTag = '<ACCOUNT_TAG>'
-  AND timestamp >= NOW() - INTERVAL '1' HOUR
+  AND timestamp >= TODAY()
 ```
 
-### TODAY
+## Time buckets and intervals
 
-`TODAY()` returns the start of the current day in UTC. It is supported only in a time predicate.
-
-```sql
-WHERE timestamp >= TODAY()
-```
-
-### CURRENT_DATE
-
-`CURRENT_DATE()` is equivalent to `TODAY()` and is supported only in a time predicate.
-
-### toStartOfInterval
-
-`toStartOfInterval(timestamp, interval)` rounds a `DateTime` or `DateTime64(3)` value down to the beginning of an interval. Use it to group events into time buckets:
+`toStartOfInterval(timestamp, interval[, timezone])` rounds a `DateTime` or `DateTime64(3)` value down to the beginning of an interval:
 
 ```sql
 SELECT
@@ -165,11 +120,7 @@ WHERE accountTag = '<ACCOUNT_TAG>'
 GROUP BY bucket
 ```
 
-The interval must contain a positive integer and one of the following units: `YEAR`, `QUARTER`, `MONTH`, `WEEK`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `MILLISECOND`, `MICROSECOND`, or `NANOSECOND`.
-
-`toStartOfInterval` is not supported for datasets queried through Log Explorer.
-
-## Intervals
+The interval must contain a positive integer and one of the following units: `YEAR`, `QUARTER`, `MONTH`, `WEEK`, `DAY`, `HOUR`, `MINUTE`, `SECOND`, `MILLISECOND`, `MICROSECOND`, or `NANOSECOND`. The optional timezone must be a string literal. `toStartOfInterval` is not supported for Log Explorer-backed datasets.
 
 Add an interval to or subtract an interval from a timestamp expression:
 
@@ -178,4 +129,4 @@ NOW() - INTERVAL '15' MINUTE
 NOW() - INTERVAL '7' DAY
 ```
 
-The SQL API does not support other scalar or aggregate functions unless they appear on this page.
+The SQL API rejects scalar and aggregate functions that are not listed on this page.

@@ -6,13 +6,15 @@ sidebar:
   order: 3
 ---
 
-Send a `POST` request to:
+Send a `GET` or `POST` request to:
 
 ```txt
 https://api.cloudflare.com/client/v4/analytics/sql
 ```
 
 Include an `Authorization: Bearer <API_TOKEN>` header with every request.
+
+Cloudflare recommends `POST` with a JSON body. `POST` also accepts raw SQL, and `GET` accepts SQL in the `query` query parameter.
 
 ## JSON request
 
@@ -61,6 +63,8 @@ Use `$name` placeholders with an object:
 
 Parameter values can be strings, numbers, booleans, or `null`. The API infers the required type from the expression. Every placeholder must have a corresponding value.
 
+For `GET` and raw SQL `POST` requests, bind placeholders with URL query parameters named `param_<NAME>`. For example, `param_status=404` binds `$status`, and `param_1=404` binds `$1`. Duplicate parameter names are rejected. Do not combine URL parameters with `params` in a JSON body.
+
 ## Request-level scope
 
 You can supply the account or zone scope outside the SQL statement. This allows applications to reuse SQL without embedding a tenancy predicate.
@@ -97,6 +101,8 @@ A query that contains `zoneTag`, including request-level zone scope, requires ei
 
 The `scope` object must contain exactly one of `accountTag` or `zoneTag`. Do not combine request-level scope with an `accountTag`, `zoneTag`, or resource tenancy predicate in SQL. The API returns HTTP `422` if the request specifies tenancy in both places.
 
+Account and zone tags must be 32-character lowercase hexadecimal strings.
+
 Request-level scope is available only with the JSON request format.
 
 ## Request-level time range
@@ -130,11 +136,21 @@ curl "https://api.cloudflare.com/client/v4/analytics/sql" \
   --data "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = '<ACCOUNT_TAG>' AND timestamp >= NOW() - INTERVAL '1' HOUR"
 ```
 
-Use the JSON request format when a query has parameters or an application-supplied time range.
+Raw SQL requests can use URL parameter bindings:
 
-## Response
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode 'query=SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account AND timestamp >= $start' \
+  --data-urlencode "param_account=<ACCOUNT_TAG>" \
+  --data-urlencode "param_start=<START_TIME>"
+```
 
-Successful requests return JSON:
+For a raw SQL `POST`, place SQL in the request body and use the same `param_*` URL parameters for values. Use the JSON request format when an application supplies request-level scope or a time range.
+
+## Response formats
+
+Without a `FORMAT` clause, ClickHouse-backed datasets return JSON with `data`, `rows`, and `statistics`:
 
 ```json
 {
@@ -157,3 +173,25 @@ Successful requests return JSON:
 | `statistics.bytes_read` | integer | Number of bytes read to execute the query. |
 
 Execution statistics do not include queue time, retries, network transfer, or client-side processing. A value can be `0` when the data store does not report that statistic.
+
+Log Explorer-backed datasets return `data` and `rows` without `statistics`.
+
+Add one of the following clauses to the end of a query to select an explicit output format:
+
+| Clause                | Content type                | Output                                                                                                 |
+| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `FORMAT JSON`         | `application/json`          | JSON with typed `meta`, `data`, `rows`, `rows_before_limit_at_least`, and `statistics` for ClickHouse. |
+| `FORMAT JSONEachRow`  | `application/x-ndjson`      | One JSON object per line without a response envelope.                                                  |
+| `FORMAT TabSeparated` | `text/tab-separated-values` | Tab-separated rows without a header or response envelope.                                              |
+| `FORMAT TSV`          | `text/tab-separated-values` | Alias for `FORMAT TabSeparated`.                                                                       |
+
+For Log Explorer datasets, `FORMAT JSON` returns the same `data` and `rows` shape as the default response. It does not add ClickHouse metadata or statistics.
+
+```sql
+SELECT timestamp, edgeResponseStatus
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+LIMIT 10
+FORMAT JSONEachRow
+```

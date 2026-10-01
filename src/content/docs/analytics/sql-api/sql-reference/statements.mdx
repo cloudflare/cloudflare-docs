@@ -17,7 +17,8 @@ FROM schema.dataset
 [GROUP BY expression [, ...]]
 [HAVING aggregate_predicate]
 [ORDER BY expression [ASC | DESC] [, ...]]
-[LIMIT non_negative_integer]
+[LIMIT non_negative_integer [OFFSET non_negative_integer]]
+[FORMAT JSON | JSONEachRow | TabSeparated | TSV]
 ```
 
 Use a schema-qualified dataset name, such as `events.httpRequests`. Bare dataset names are not supported.
@@ -34,7 +35,7 @@ WHERE accountTag = '<ACCOUNT_TAG>'
 LIMIT 100
 ```
 
-`SELECT *` returns every field that is available to the caller. Explicit field lists provide a more stable response when a dataset gains fields.
+`SELECT *` returns every field that is available to the caller. If permissions deny a field reached only through `*`, the API omits it. Explicitly selecting a denied field returns HTTP `403`. Explicit field lists provide a more stable response when a dataset gains fields.
 
 ## WHERE
 
@@ -46,7 +47,7 @@ WHERE accountTag = '<ACCOUNT_TAG>'
   AND edgeResponseStatus >= 500
 ```
 
-Every query requires an account or zone tenancy predicate. Supported tenancy forms are:
+Every query requires an account or zone scope. You can provide scope through the JSON request instead of SQL. Supported SQL tenancy forms are:
 
 ```sql
 accountTag = '<ACCOUNT_TAG>'
@@ -58,7 +59,7 @@ A query can select only one account. Specify zone tenancy in one `zoneTag` predi
 
 Any query containing `zoneTag` requires either **Zone Analytics Read** permission for every named zone or **Account Analytics Read** permission for their owning account.
 
-Every query also requires a lower bound on the dataset timestamp field. Use `>`, `>=`, or `BETWEEN` to provide the lower bound. The timestamp field name varies by dataset.
+Every query also requires a lower bound on the dataset timestamp field. Use `>`, `>=`, or `BETWEEN` to provide the lower bound, or use request-level `time_range`. The timestamp field name varies by dataset.
 
 ## GROUP BY
 
@@ -89,7 +90,7 @@ HAVING COUNT(*) > 100
 
 Use `ORDER BY` to sort results in ascending (`ASC`) or descending (`DESC`) order. `ASC` is the default.
 
-Every query that uses `ORDER BY` must also use `LIMIT`.
+Every query that uses `ORDER BY` must also use `LIMIT`. Workers Analytics Engine datasets preserve compatibility with `ORDER BY` without `LIMIT`.
 
 ```sql
 ORDER BY requests DESC
@@ -106,6 +107,29 @@ LIMIT 10
 LIMIT 100
 ```
 
+## OFFSET
+
+ClickHouse-backed datasets support `OFFSET` after `LIMIT`. Both values must be non-negative integer literals. Log Explorer-backed datasets do not support `OFFSET`.
+
+```sql
+LIMIT 100 OFFSET 200
+```
+
+Workers Analytics Engine datasets also preserve compatibility with `OFFSET` without `LIMIT`.
+
+## FORMAT
+
+Add a top-level `FORMAT` clause to select the response format:
+
+```sql
+FORMAT JSON
+FORMAT JSONEachRow
+FORMAT TabSeparated
+FORMAT TSV
+```
+
+`TSV` is an alias for `TabSeparated`. Refer to [Response formats](/analytics/sql-api/query-api/#response-formats) for content types and response shapes. A `FORMAT` clause inside a derived table is not supported.
+
 ## Derived table projection
 
 The SQL API supports one restricted derived table when the outer query only projects expressions from the inner query:
@@ -120,4 +144,4 @@ FROM (
 )
 ```
 
-The outer query cannot add filtering, grouping, aggregation, ordering, or a limit. Derived table aliases and nested derived tables are not supported.
+The outer query cannot add filtering, grouping, aggregation, ordering, or a limit. The inner query can contain supported ordering and limits. Derived table aliases and nested derived tables are not supported.
