@@ -2,7 +2,7 @@ id: mxTnLg
 name: Cloudflare OHTTP Relay
 
 entry:
-  title: Cloudflare OHTTP Relay (formerly Privacy Gateway)
+  title: Cloudflare OHTTP Relay
   url: /privacy-gateway/
   group: Developer platform
   additional_groups: [Privacy]
