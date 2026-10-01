@@ -1,0 +1,19 @@
+src/content/docs/dns/nameservers/custom-nameservers/account-custom-nameservers.mdx
+  s_d30bb2649e1bc0::t_29319c2adfbd99 112,114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b67c1dec437b3712ed5eae9406f0ed78de757c64",
+  "prompts": {},
+  "sessions": {
+    "s_d30bb2649e1bc0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05a9569e5ffex23mdB8hBtt9Yu",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Matilde Bravo <matilde@cloudflare.com>"
+    }
+  }
+}

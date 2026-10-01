@@ -1,0 +1,21 @@
+src/content/partials/workers/build-output.mdx
+  s_c188427086e28c::t_72605cdaa8185c 18
+src/content/directory/cf.yaml
+  s_c188427086e28c::t_72605cdaa8185c 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6c07684bdaecea57343ad108c0a17b94a28ef5b2",
+  "prompts": {},
+  "sessions": {
+    "s_c188427086e28c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d2e809bd-820c-47f9-900f-62cd6977b7ec",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}
