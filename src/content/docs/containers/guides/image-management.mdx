@@ -1,0 +1,504 @@
+---
+pcx_content_type: how-to
+title: Image Management
+description: Configure and update Container images with the durable_object and default scheduling policies.
+sidebar:
+  order: 4
+products:
+  - containers
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Container applications manage images differently based on their [scheduling policy](/containers/configuration/scheduling-policy/). With the `durable_object` policy, Durable Object code selects an image each time it starts a Container. With the `default` policy, Wrangler configuration sets one image for the application.
+
+## Use images with the `durable_object` scheduling policy
+
+### Use the Cloudflare-managed image
+
+The `cloudflare/debian-trixie` managed image is available only with the `durable_object` scheduling policy:
+
+| Managed image              | Source image                                                                                                                                                                                 | Contents                              |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `cloudflare/debian-trixie` | [`node:24.20.0-trixie-slim`](https://hub.docker.com/layers/library/node/24.20.0-trixie-slim/images/sha256-a747ad80c8a161b650d79a6da9c422005b91148b18b8d2c669eb5a0b7c07e600) pinned by digest | Node.js 24.20.0 on Debian Trixie slim |
+
+`cloudflare/debian-trixie` is a Cloudflare-managed identifier, not a public Cloudflare Docker Hub image. Pass the identifier when the Durable Object starts its Container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+this.ctx.container.start({
+	image: "cloudflare/debian-trixie",
+	enableInternet: false,
+});
+```
+
+</TypeScriptExample>
+
+### Configure named images
+
+Configure one or more named images in the `images` map. Each entry must use exactly one image source. Set `dockerfile` to build an image from a local Dockerfile. Set `image` to use a digest-pinned image from the Cloudflare managed registry.
+
+The following configuration defines one image from each source:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"base": {
+					"dockerfile": "./container/Dockerfile",
+					"build_context": ".",
+				},
+				"tools": {
+					"image": "registry.cloudflare.com/<ACCOUNT_ID>/<REPOSITORY>@sha256:<DIGEST>",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Wrangler builds or resolves each named image and exposes its digest-pinned reference through `ctx.container.images`. Select a reference when the Durable Object starts its Container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class AgentComputer extends DurableObject {
+	startContainer() {
+		this.ctx.container.start({
+			image: this.ctx.container.images.base,
+			instance: "standard-2",
+			enableInternet: false,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+A configuration can contain up to 100 named images. Each image name must contain between 1 and 128 characters. For the complete policy configuration, refer to [Scheduling Policies](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
+
+### Roll out a named image update
+
+To update a named image, change its Dockerfile or set `image` to a new digest-pinned reference. Then, deploy the Worker. After the deployment completes, the corresponding value in `ctx.container.images` refers to the updated image. During a [Workers gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each Durable Object sees the image map of the Worker version that runs it, so different Durable Objects can start different images until the deployment completes.
+
+Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
+
+To keep a running Container on its current image, use the configured image only on its next start:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		image: this.ctx.container.images.base,
+		instance: "standard-2",
+		enableInternet: false,
+	});
+}
+```
+
+</TypeScriptExample>
+
+To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image.
+
+`inspect()` reports an empty image while a Container is starting and for a Container restored from a snapshot. The following example does not replace a Container in either case:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+const image = this.ctx.container.images.base;
+const info = await this.ctx.container.inspect();
+
+if (info && info.image !== "" && info.image !== image) {
+	await this.ctx.container.destroy();
+}
+
+if (!this.ctx.container.running) {
+	this.ctx.container.start({
+		image,
+		instance: "standard-2",
+		enableInternet: false,
+	});
+}
+```
+
+</TypeScriptExample>
+
+:::caution
+`destroy()` stops the Container immediately. In-progress work and any filesystem changes made since startup are lost. To preserve the filesystem, create a [snapshot](/containers/guides/snapshots/) before you stop the Container. A snapshot is tied to the image it was created from, so you cannot restore it onto the updated image.
+:::
+
+### Use an external image
+
+:::note
+The `durable_object` scheduling policy does not support direct image references from external registries. A named `image` source must use a digest-pinned reference from the Cloudflare managed registry.
+:::
+
+To use an image from another registry, pull it and [push it to the Cloudflare managed registry](#use-images-from-other-registries). Then, [get its digest](#get-the-digest-of-a-pushed-image) and configure the resulting digest-pinned reference as a named image.
+
+A named `dockerfile` entry can use an external image in its `FROM` instruction. Authenticate your local Docker installation before deploying if the base image is private.
+
+## Use images with the `default` scheduling policy
+
+Set the singular `image` field to a local Dockerfile or a supported registry reference. Changing this field deploys the new application image through an [application-wide rollout](/containers/configuration/rollouts/).
+
+### Push images during `wrangler deploy`
+
+When running `wrangler deploy`, if you set the `image` attribute in your [Wrangler configuration](/workers/wrangler/configuration/#containers) to a path to a Dockerfile, Wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
+This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
+Cloudflare both when pushing and pulling images.
+
+Just provide the path to your Dockerfile:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+		{
+			"image": "./Dockerfile"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+And deploy your Worker with `wrangler deploy`. No other image management is necessary.
+
+On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time.
+
+:::note
+Docker or a Docker-compatible CLI tool must be running for Wrangler to build and push images.
+This is not necessary if you are using a pre-built image, as described below.
+:::
+
+### Use pre-built container images
+
+With the `default` scheduling policy, Containers support images from the Cloudflare managed registry at `registry.cloudflare.com`, [Docker Hub](https://hub.docker.com/), [Amazon ECR](https://aws.amazon.com/ecr/), and [Google Artifact Registry](https://cloud.google.com/artifact-registry).
+
+:::note
+Cloudflare does not cache images pulled from Docker Hub, Amazon ECR, or Google Artifact Registry.
+
+Docker Hub pulls may be subject to Docker Hub pull limits or fair-use restrictions. Pulling images from Amazon ECR or Google Artifact Registry may incur cloud provider egress charges.
+:::
+
+:::note
+The `durable_object` scheduling policy does not pull from Docker Hub, Amazon ECR, or Google Artifact Registry, and does not use registry credentials configured with `wrangler containers registries configure`. Refer to [Use an external image](#use-an-external-image).
+:::
+
+#### Use public Docker Hub images
+
+To use a public Docker Hub image, set `image` to a fully qualified Docker Hub image reference in your Wrangler configuration.
+
+For example:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+		{
+			"image": "docker.io/<NAMESPACE>/<REPOSITORY>:<TAG>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Public Docker Hub images do not require registry configuration.
+
+Private Docker Hub images use the private registry configuration flow described next.
+
+If Docker Hub credentials have been configured, those credentials are used to pull both public and private images.
+
+:::note
+Official Docker Hub images use the `library` namespace. For example, use `docker.io/library/<IMAGE>:<TAG>` instead of `docker.io/<IMAGE>:<TAG>`.
+:::
+
+#### Configure private registry credentials
+
+To use a private image from Docker Hub, Amazon ECR, or Google Artifact Registry, run [`wrangler containers registries configure`](/workers/wrangler/commands/containers/#containers-registries-configure) for the registry domain.
+
+Wrangler prompts for the secret and stores it in [Secrets Store](/secrets-store). If you do not already have a Secrets Store store, Wrangler prompts you to create one first.
+
+Use `--secret-name` to name or reuse a secret, `--secret-store-id` to target a specific Secrets Store store, and `--skip-confirmation` for non-interactive runs. In CI or scripts, pass the secret through `stdin`.
+
+#### Use private Docker Hub images
+
+Configure Docker Hub in Wrangler using these values:
+
+- registry domain: `docker.io`
+- username flag: `--dockerhub-username=<YOUR_DOCKERHUB_USERNAME>`
+- secret: Docker Hub personal access token with read-only access
+
+To create a Docker Hub personal access token:
+
+<Steps>
+1. Sign in to [Docker Home](https://app.docker.com/).
+2. Go to **Account settings** > **Personal access tokens**.
+3. Select **Generate new token**.
+4. Give the token **Read** access, then copy the token value.
+</Steps>
+
+Interactive:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers registries configure docker.io --dockerhub-username=<YOUR_DOCKERHUB_USERNAME>"
+/>
+
+CI or scripts:
+
+```bash
+printf '%s' "$DOCKERHUB_PAT" | npx wrangler containers registries configure docker.io --dockerhub-username=<YOUR_DOCKERHUB_USERNAME> --secret-name=<SECRET_NAME> --skip-confirmation
+```
+
+After you configure the registry, use the same fully qualified Docker Hub image reference shown above.
+
+#### Use private Amazon ECR images
+
+Configure Amazon ECR in Wrangler using these values:
+
+- registry domain: `<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com`
+- access key flag: `--aws-access-key-id=<AWS_ACCESS_KEY_ID>`
+- secret: matching AWS secret access key
+
+Public ECR images are not supported.
+To generate the required credentials, create an IAM user with a read-only policy. The following example grants access to all image repositories in AWS account `123456789012` in `us-east-1`.
+
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Action": ["ecr:GetAuthorizationToken"],
+			"Effect": "Allow",
+			"Resource": "*"
+		},
+		{
+			"Effect": "Allow",
+			"Action": [
+				"ecr:BatchCheckLayerAvailability",
+				"ecr:GetDownloadUrlForLayer",
+				"ecr:BatchGetImage"
+			],
+			// arn:${Partition}:ecr:${Region}:${Account}:repository/${Repository-name}
+			"Resource": [
+				"arn:aws:ecr:us-east-1:123456789012:repository/*"
+				// "arn:aws:ecr:us-east-1:123456789012:repository/example-repo"
+			]
+		}
+	]
+}
+```
+
+After you create the IAM user, use its credentials to [configure the registry in Wrangler](/workers/wrangler/commands/containers/#containers-registries-configure). Wrangler prompts you to create a Secrets Store store if one does not already exist, then stores the secret there.
+
+Interactive:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers registries configure <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com --aws-access-key-id=<AWS_ACCESS_KEY_ID>"
+/>
+
+CI or scripts:
+
+```bash
+printf '%s' "$AWS_SECRET_ACCESS_KEY" | npx wrangler containers registries configure <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com --aws-access-key-id=<AWS_ACCESS_KEY_ID> --secret-name=<SECRET_NAME> --skip-confirmation
+```
+
+After you configure the registry, use the fully qualified Amazon ECR image reference in your Wrangler configuration:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+		{
+			"image": "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/<REPOSITORY>:<TAG>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+#### Use private Google Artifact Registry images
+
+Configure Google Artifact Registry in Wrangler using these values:
+
+- registry domain: `<REGION>-docker.pkg.dev`
+- Google service account email flag: `--gar-email=<SERVICE_ACCOUNT_EMAIL>`
+- secret: the service account JSON key
+
+The public credential is the service account email, supplied with `--gar-email`. It must match the `client_email` field in the service account key.
+
+The private credential is the service account JSON key.
+Provide it through `stdin` (a file path, raw JSON, or base64) or the interactive prompt (a file path or base64).
+Wrangler stores the key base64-encoded in Secrets Store.
+
+:::caution
+Only `*-docker.pkg.dev` hosts are supported. Container Registry hosts such as `gcr.io` and `*.gcr.io` are not supported, because Google has shut down Container Registry.
+:::
+
+To generate the required credentials, create a service account with the **Artifact Registry Reader** role and download its JSON key:
+
+<Steps>
+1. In the [Google Cloud console](https://console.cloud.google.com), go to **IAM & Admin** > **Service Accounts**.
+2. Select **Create service account**, then enter a name, ID, and optional description.
+3. Grant the service account the **Artifact Registry Reader** role, then select **Done**.
+4. Select the service account, then open the **Keys** tab.
+5. Select **Add key** > **Create new key**, choose **JSON**, then select **Create**. The key file downloads to your machine.
+</Steps>
+
+Interactive:
+Wrangler prompts for the key, where you enter a file path or base64-encoded JSON:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers registries configure <REGION>-docker.pkg.dev --gar-email=<SERVICE_ACCOUNT_EMAIL>"
+/>
+
+CI or scripts:
+Pipe the key through `stdin` (the key contents as raw JSON or base64, or a path to the key file)
+
+```bash
+cat <PATH_TO_KEY> | npx wrangler containers registries configure <REGION>-docker.pkg.dev --gar-email=<SERVICE_ACCOUNT_EMAIL> --secret-name=<SECRET_NAME> --skip-confirmation
+```
+
+If you have already stored the key in Secrets Store, reference the existing secret and omit the key:
+
+```bash
+npx wrangler containers registries configure <REGION>-docker.pkg.dev --gar-email=<SERVICE_ACCOUNT_EMAIL> --secret-name=<EXISTING_SECRET_NAME> --skip-confirmation
+```
+
+After you configure the registry, use the fully qualified Google Artifact Registry image reference in your Wrangler configuration:
+
+<WranglerConfig>
+
+```toml
+[[containers]]
+image = "<REGION>-docker.pkg.dev/<PROJECT_ID>/<REPOSITORY>/<IMAGE>:<TAG>"
+```
+
+</WranglerConfig>
+
+To use an image from a registry not listed above, [push it to the Cloudflare Registry](#use-images-from-other-registries).
+
+:::note
+With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry are supported in local development.
+
+With `vite dev`, image references from external registries such as Docker Hub, Amazon ECR, and Google Artifact Registry are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+
+If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
+:::
+
+## Push images to the Cloudflare Registry
+
+Both scheduling policies can use images that you push to the Cloudflare Registry yourself. With the `durable_object` policy, this is required for any image from Docker Hub, Amazon ECR, Google Artifact Registry, or another external registry.
+
+### Use images from other registries
+
+If you want to use a pre-built image from another registry provider, first make sure it exists locally, then push it to the Cloudflare Registry:
+
+```bash
+docker pull <PUBLIC_IMAGE>
+docker tag <PUBLIC_IMAGE> <IMAGE>:<TAG>
+```
+
+Wrangler provides a command to push images to the Cloudflare Registry:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers push <IMAGE>:<TAG>"
+/>
+
+Or, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="containers build -p -t <TAG> ."
+/>
+
+This will output an image registry URI. With the `default` scheduling policy, you can use this tag reference in your Wrangler configuration:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+		{
+			"image": "registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+With the `durable_object` scheduling policy, a named `image` source requires a digest-pinned reference. [Get the digest of the pushed image](#get-the-digest-of-a-pushed-image) first.
+
+### Get the digest of a pushed image
+
+After you push an image, list its repository digests with Docker:
+
+```bash
+docker image inspect --format '{{join .RepoDigests "\n"}}' registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>:<TAG>
+```
+
+Use the entry that starts with `registry.cloudflare.com/` as a named `image` source:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "AgentComputer",
+			"scheduling_policy": "durable_object",
+			"images": {
+				"tools": {
+					"image": "registry.cloudflare.com/<YOUR_ACCOUNT_ID>/<IMAGE>@sha256:<DIGEST>",
+				},
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+### Push images with CI
+
+To use an image built in a continuous integration environment, install `wrangler` then
+build and push images using either `wrangler containers build` with the `--push` flag, or
+using the `wrangler containers push` command. With the `durable_object` scheduling policy, [get the digest of the pushed image](#get-the-digest-of-a-pushed-image) before you update your Wrangler configuration.
+
+## Registry limits
+
+Images are limited in size by available disk of the configured [instance type](/containers/platform/limits/#instance-types) for a Container.
+
+Delete images with `wrangler containers images delete` to free up space, but reverting a
+Worker to a previous version that uses a deleted image will then error.

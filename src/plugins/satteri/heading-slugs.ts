@@ -12,7 +12,7 @@ import type {
 	HastVisitorContext,
 	Text,
 } from "./types";
-import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
+import { stripExternalLinkArrow } from "../../util/external-link-arrow";
 
 const LITERAL_COMMENT_ID = /\{\/\*\s*([\s\S]*?)\s*\*\/\}\s*$/;
 
@@ -66,11 +66,9 @@ export default function headingSlugs(): HastPluginDefinition {
 				}
 
 				if (!node.properties?.id) {
-					const string = ctx
-						.textContent(node)
-						.split(EXTERNAL_LINK_ARROW)
-						.join("")
-						.trimEnd();
+					const string = stripExternalLinkArrow(
+						ctx.textContent(node),
+					).trimEnd();
 					setSlug(ctx, node, slugger.slug(string));
 				}
 			},

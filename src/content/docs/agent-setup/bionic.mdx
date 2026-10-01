@@ -31,7 +31,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 
 	2. **Create a Code Project**
 
-		In Bionic, create a **Code Project**, then select the local directory that contains your Cloudflare project. If your project has a `wrangler.jsonc` file, select the directory that contains it.
+		In Bionic, create a **Code Project**, then select the local directory that contains your Cloudflare project. If your project has a `wrangler.jsonc` or `cloudflare.config.ts` file, select the directory that contains it.
 
 	3. **Add the Cloudflare MCP server**
 
@@ -71,11 +71,19 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Should I use the MCP server, Wrangler CLI, or both?">
+	<FAQItem question="Should I use the MCP server, a CLI, or both?">
 		Use both. The Cloudflare API MCP server handles Cloudflare account operations,
 		such as DNS, WAF, R2, and Zero Trust. Wrangler handles local development,
 		deployments, and migrations. In a Code Project, Bionic can run local shell
-		commands, including Wrangler commands.
+		commands, including Wrangler and <a href="/cf/">Cloudflare CLI</a> (<code>cf</code>)
+		commands.
+	</FAQItem>
+	<FAQItem question="Can Bionic use the Cloudflare CLI?">
+		Yes. The <a href="/cf/">Cloudflare CLI</a>, <code>cf</code>, is in beta and
+		covers the whole Cloudflare API and prints JSON output.
+		Install it with <code>npm install -g cf</code>, sign in with
+		<code>cf auth login</code>, and tell Bionic to prefer it in your project instructions.
+		Refer to <a href="/cf/agents/">Use cf with AI agents</a>.
 	</FAQItem>
 	<FAQItem question="How do I give Bionic access to my Cloudflare account?">
 		Add <code>https://mcp.cloudflare.com/mcp</code> as a remote MCP server. When
@@ -84,7 +92,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	</FAQItem>
 	<FAQItem question="Can Bionic deploy existing Workers projects?">
 		Yes. Create a Code Project from the existing project directory where
-		<code>wrangler.jsonc</code> is located. You can then ask Bionic to run the
+		<code>wrangler.jsonc</code> or <code>cloudflare.config.ts</code> is located. You can then ask Bionic to run the
 		deployment command for that project.
 	</FAQItem>
 	<FAQItem question="What does Code Mode mean for MCP?">

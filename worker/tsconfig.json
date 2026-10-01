@@ -9,6 +9,6 @@
 			"@cloudflare/vitest-pool-workers/types"
 		]
 	},
-	"include": ["*.ts"],
+	"include": ["**/*.ts"],
 	"exclude": []
 }

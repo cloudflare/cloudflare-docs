@@ -11,11 +11,86 @@ products:
   - workers
 ---
 
-When a Container starts, stops, becomes idle, and errors, it can trigger code execution in a Worker
-that has defined status hooks on the `Container` class. Refer to the [Container class lifecycle hooks](/containers/container-class/#lifecycle-hooks) for more details.
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
 
+Use `monitor()` with the Durable Object Container API to run code after the Container exits or errors. The `Container` class adds named lifecycle hooks and an inactivity callback.
+
+The direct API example requires the Container to expose `GET /health` on port `4000`. The endpoint must return a successful response when the application is ready. Because `container.start()` does not wait for readiness, the Worker polls this endpoint before forwarding requests.
+
+<Tabs>
+	<TabItem label="Durable Object Container API">
+
+<TypeScriptExample filename="src/index.ts">
 ```ts
-import { Container } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {}
+
+export class MyContainer extends DurableObject<Env> {
+	private ready: Promise<void> | undefined;
+
+	async fetch(request: Request): Promise<Response> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			this.ready = undefined;
+		}
+		this.ready ??= this.startAndMonitor().catch((error: unknown) => {
+			this.ready = undefined;
+			throw error;
+		});
+		await this.ready;
+
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return container.getTcpPort(4000).fetch(forwarded);
+	}
+
+	private async startAndMonitor(): Promise<void> {
+		const container = this.ctx.container!;
+		await container.setInactivityTimeout(5 * 60 * 1000);
+		if (!container.running) {
+			container.start();
+		}
+
+		this.ctx.waitUntil(
+			container
+				.monitor()
+				.then(() => console.log("Container stopped"))
+				.catch((error: unknown) => console.error("Container error:", error)),
+		);
+
+		const port = container.getTcpPort(4000);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 100; attempt++) {
+			try {
+				const response = await port.fetch("http://container/health");
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
+				console.log("Container successfully started");
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(200);
+			}
+		}
+		throw new Error("Container did not become ready on port 4000", {
+			cause: lastError,
+		});
+	}
+}
+```
+</TypeScriptExample>
+
+	</TabItem>
+	<TabItem label="Container class">
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { Container, type StopParams } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 4000;
@@ -25,7 +100,7 @@ export class MyContainer extends Container {
 		console.log("Container successfully started");
 	}
 
-	override onStop(stopParams) {
+	override onStop(stopParams: StopParams) {
 		if (stopParams.exitCode === 0) {
 			console.log("Container stopped gracefully");
 		} else {
@@ -40,8 +115,14 @@ export class MyContainer extends Container {
 		await this.stop();
 	}
 
-	override onError(error: string) {
+	override onError(error: unknown) {
 		console.log("Container error:", error);
 	}
 }
 ```
+</TypeScriptExample>
+
+	</TabItem>
+</Tabs>
+
+The `monitor()` promise resolves without a value when the container exits successfully. For nonzero exits, it rejects with an error containing the exit code. The `setInactivityTimeout()` method does not invoke a callback when the timeout expires. Use the [`Container` class lifecycle hooks](/containers/api/container-class/#lifecycle-hooks) for structured stop parameters and an inactivity callback.

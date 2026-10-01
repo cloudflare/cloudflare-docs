@@ -1497,7 +1497,7 @@ This pattern does not scale. As traffic increases, the single Durable Object bec
 
 ### Test with Vitest and plan for class lifecycle changes
 
-Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides utilities for direct instance access.
+Use `@cloudflare/vitest-plugin` for testing Durable Objects. The integration provides utilities for direct instance access.
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
@@ -1546,7 +1546,7 @@ const stub = env.CHAT_ROOM.get(id);
 Configure Vitest in your `vitest.config.ts`:
 
 ```ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({

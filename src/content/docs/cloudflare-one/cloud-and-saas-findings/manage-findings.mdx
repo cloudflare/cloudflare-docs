@@ -13,7 +13,7 @@ tags:
   - Compliance
 ---
 
-import { TabItem, Tabs, Details } from "~/components";
+import { Steps, TabItem, Tabs } from "~/components";
 
 Findings are security issues detected within SaaS and cloud applications that involve users, data at rest (files stored in your apps), and other configuration settings. With Cloudflare CASB, you can review a comprehensive list of findings in Cloudflare One and take action on the issues found.
 
@@ -34,7 +34,7 @@ To view details about the posture findings that CASB found:
 
 Cloud & SaaS findings will display details about your posture finding, including the finding type, [severity level](#severity-levels), number of instances, associated integration, current status, and date detected. For more information on each instance of the finding, select **Manage**.
 
-To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. You can also [send a posture finding instance to a webhook](#send-webhook). Some findings also provide a remediation guide to resolve the issue or support [creating a Gateway HTTP policy](#resolve-finding-with-a-gateway-policy) to block the traffic.
+To manage the finding's visibility, you can update the finding's [severity level](#severity-levels) or [hide the finding](#hide-findings) from view. You can also [send a posture finding instance to a webhook](#send-webhook). Some findings also provide a remediation guide to resolve the issue.
 
 ### Severity levels
 
@@ -163,6 +163,45 @@ To remediate a supported finding:
 
 CASB will begin remediating the instance.
 
+### Remediate inherited file permissions
+
+CASB can remove supported permissions applied directly to a Microsoft 365 or Google Workspace resource. If a file inherits access from a parent folder or Shared Drive, change the permission on that parent resource. Changing the file itself does not remove the inherited access.
+
+CASB does not automatically change permissions on parent resources. Changing a parent permission can affect every downstream file and folder that inherits it.
+
+#### Microsoft 365
+
+CASB may show a separate finding for the parent folder that gives the file its permission. The remediation details may include **Parent Folder Access** links. Open the linked finding to remediate the parent folder separately.
+
+When an inherited permission prevents remediation, CASB displays:
+
+> Resource has inherited permissions. Remediate permissions at the folder or organizational level.
+
+#### Google Workspace
+
+For Google Workspace, CASB does not identify the exact parent resource. Asset details may show the associated Shared Drive, but not the originating folder or permission.
+
+When an inherited permission prevents remediation, CASB displays:
+
+> Resource has inherited permissions from a parent resource. Direct remediation of the parent is not yet supported for Google Workspace.
+
+For example, a file inherits public access when its parent folder allows **Anyone with the link**. Change the parent folder's **General access** setting to remediate the finding.
+
+A file can also inherit external access from a Shared Drive member. Change the relevant parent permission or Shared Drive membership to remediate the finding.
+
+To remediate an inherited Google Workspace permission:
+
+<Steps>
+1. In Google Drive, open the affected file and select **Share** or **Manage access**.
+2. Find the public or external access associated with the finding.
+3. If Google Drive identifies the parent, open that resource. Otherwise, inspect each parent folder until you find where the permission is configured directly.
+4. For Shared Drive content, also inspect the membership and sharing settings.
+5. Review the impact on downstream resources before changing the permission.
+6. Change the permission at its source.
+</Steps>
+
+CASB updates the finding after it receives updated asset data. The failed child-resource remediation remains in the remediation history.
+
 ### Manage remediated findings
 
 Remediated findings will appear in **Cloud & SaaS findings** > **Posture Findings**. The status of the finding will change depending on what action CASB has taken:
@@ -176,40 +215,10 @@ Remediated findings will appear in **Cloud & SaaS findings** > **Posture Finding
 | Failed     | CASB unsuccessfully remediated the finding.                                                                     |
 | Rejected   | CASB does not have the correct permissions to remediate the finding.                                            |
 
+CASB may take up to 48 hours to validate a remediation.
+
 If the status is **Completed**, remediation succeeded. If the status is **Failed** or **Rejected**, remediation failed, and you can select the finding to take action again. A **Rejected** status indicates that CASB does not have the correct permissions to remediate the finding.
 
 CASB will log remediation actions in **Logs** > **Admin**. For more information, refer to [Cloudflare One Logs](/cloudflare-one/insights/logs/).
 
-## Resolve finding with a Gateway policy
-
-CASB detects security issues that already exist in your SaaS environment. To prevent the same issues from recurring, you can create a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) directly from a CASB finding. For example, you can block users from sharing files publicly or accessing unsanctioned applications.
-
-CASB supports creating a Gateway policy for findings from the [Google Workspace integration](/cloudflare-one/integrations/cloud-and-saas/google-workspace/):
-
-<Details header="Supported CASB findings for Gateway policies">
-
-- Google Workspace: File publicly accessible with edit access
-- Google Workspace: File publicly accessible with view access
-- Google Workspace: File shared outside company with edit access
-- Google Workspace: File shared outside company with view access
-
-</Details>
-
-:::note[Before you begin]
-Ensure that you have [enabled HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/) for your organization.
-:::
-
-To create a Gateway policy directly from a CASB finding:
-
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Posture Findings** or **Cloud & SaaS findings** > **Content Findings**.
-2. Choose **SaaS** or **Cloud**.
-3. Choose the finding you want to modify, then select **Manage**.
-4. Find the instance you want to block and select its three-dot menu.
-5. Select **Block with Gateway HTTP policy**. A new browser tab will open with a pre-filled HTTP policy.
-   :::note
-   Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your application dashboard or through your domain provider.
-   :::
-6. (Optional) [Configure the HTTP policy](/cloudflare-one/traffic-policies/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
-7. Select **Save**.
-
-Your HTTP policy will now prevent future instances of the security finding.
+To automatically remediate matching findings without reviewing each one, refer to [Remediation Policies](/cloudflare-one/cloud-and-saas-findings/policies/).

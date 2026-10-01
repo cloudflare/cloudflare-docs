@@ -12,6 +12,12 @@ Cloudflare measures Magic Transit usage based on the 95th percentile of clean ba
 
 To measure 95th percentile bandwidth, Cloudflare records clean bandwidth leaving our global network at five-minute intervals, sorts these measurements in descending order, and discards the top 5% of measurements it recorded. The highest remaining value constitutes the 95th percentile bandwidth measurement for that time period.
 
+## Bandwidth limits and overages
+
+Magic Transit contracts may include a subscribed bandwidth amount, but this is a billing metric, not a technical limitation. Cloudflare does not restrict, throttle, or drop traffic when your usage exceeds your contracted bandwidth. Instead, overage charges apply according to your contract terms.
+
+If you want to discuss adjusting your subscribed bandwidth or contract terms, contact your Cloudflare account team.
+
 ## Cloudflare-originated traffic
 
 Clean bandwidth includes all egress traffic Cloudflare routes to your network through Magic Transit tunnels and interconnects. This includes traffic that originated from the public Internet, as well as response traffic from services within the Cloudflare network (such as Cloudflare CDN) destined to your servers.

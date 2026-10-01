@@ -37,6 +37,10 @@ New and updated rules follow a seven-day release cycle, typically on Monday or T
 
 **Week 2 — Default action:** On the following release day, the rules change from the _Log_ action to their intended default action (shown in the **New Action** column of the changelog table). The `beta` and `new` tags are removed.
 
+:::note
+In some cases, the `beta` tag may persist beyond the standard seven-day review period — for example, when a rule is replacing an older deprecated rule that has not yet been retired. Use the `last_updated` field in the changelog to understand when a rule was last modified, rather than relying on the `beta` tag alone to infer its lifecycle stage.
+:::
+
 For updates to existing rules, Cloudflare first deploys the updated version as a separate `BETA` rule (noted in the rule description) with a `beta` tag, before updating the original rule on the next release cycle.
 
 ### Disabled rules

@@ -246,34 +246,6 @@ rtkUIKit.startMeeting()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-## Initialize and display the meeting
-
-Create an `RtkMeetingInfo` with your auth token, wrap it in `RealtimeKitUIInfo`, and build the UI Kit. The returned `RealtimeKitUI` object is a Flutter widget — place it directly in your widget tree.
-
-Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to fetch the `authToken`.
-
-```dart
-import 'package:flutter/material.dart';
-import 'package:realtimekit_ui/realtimekit_ui.dart';
-
-final meetingInfo = RtkMeetingInfo(authToken: '<auth-token>');
-final uiKitInfo = RealtimeKitUIInfo(meetingInfo);
-final rtkUI = RealtimeKitUIBuilder.build(uiKitInfo: uiKitInfo);
-
-// Place rtkUI in your widget tree
-Navigator.push(
-  context,
-  MaterialPageRoute(builder: (_) => rtkUI),
-);
-```
-
-Call `RealtimeKitUIBuilder.dispose()` when you no longer need the meeting UI.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ## Initialize the SDK

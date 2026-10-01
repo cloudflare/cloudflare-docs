@@ -29,6 +29,12 @@ Each managed ruleset has its own payload logging configuration. To turn on paylo
 
 Once enabled, the WAF saves the payload of rule matches for the managed ruleset configured with payload logging, encrypting the payload with your public key. If multiple rules checking the same request field match (for example, for the field `http.cookie`), the logged payload for that field will refer to the last matched rule.
 
+:::caution[Important]
+
+Payload logging only captures data for requests that trigger a managed rule match **after** the feature is enabled. Existing or past Security Events will not have payload data.
+
+:::
+
 For more information, refer to [Configure payload logging in the dashboard](/waf/managed-rules/payload-logging/configure/) or [Configure payload logging via API](/waf/managed-rules/payload-logging/configure-api/).
 
 :::caution[Important]
@@ -40,9 +46,7 @@ When you generate a key pair in the dashboard, Cloudflare will only save the gen
 To view the content of the payload in clear text, do one of the following:
 
 - In the [Security Events](/waf/analytics/security-events/) page, enter your private key to decrypt the payload of a log entry directly in the browser. Refer to [View the payload content in the dashboard](/waf/managed-rules/payload-logging/view/) for details.
-
 - Decrypt the payload in the command line using the `matched-data-cli` tool. Refer to [Decrypt the payload content in the command line](/waf/managed-rules/payload-logging/command-line/decrypt-payload/) for details.
-
 - Decrypt the matched payload in your [Logpush](/logs/logpush/) job using a Worker before storing the logs in your <GlossaryTooltip term="SIEM">SIEM system</GlossaryTooltip>. Refer to [Store decrypted matched payloads in logs](/waf/managed-rules/payload-logging/decrypt-in-logs/) for details.
 
 :::caution[Important]

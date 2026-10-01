@@ -36,23 +36,21 @@ const formattedDate = lastUpdated
 	)}
 	{...attrs}
 >
-	{
-		lastUpdated && (
-			<>
-				<span
-					data-nb-page-actions-updated
-					class="text-muted-foreground inline-flex items-center gap-1.5 px-2 py-1 max-[900px]:hidden"
-				>
-					<Icon name="ph:clock-counter-clockwise" class="h-3.5 w-3.5" />
-					Last updated{" "}
-					<time datetime={lastUpdated.toISOString()}>{formattedDate}</time>
-				</span>
-				<span aria-hidden="true" class={cn(sepClass, "max-[900px]:hidden")}>
-					|
-				</span>
-			</>
-		)
-	}
+	{lastUpdated && (
+		<>
+			<span
+				data-nb-page-actions-updated
+				class="text-muted-foreground inline-flex items-center gap-1.5 px-2 py-1 max-[900px]:hidden"
+			>
+				<Icon name="ph:clock-counter-clockwise" class="h-3.5 w-3.5" />
+				Last updated{" "}
+				<time datetime={lastUpdated.toISOString()}>{formattedDate}</time>
+			</span>
+			<span aria-hidden="true" class={cn(sepClass, "max-[900px]:hidden")}>
+				|
+			</span>
+		</>
+	)}
 
 	<button
 		type="button"
@@ -66,10 +64,14 @@ const formattedDate = lastUpdated
 			class="text-success hidden h-3.5 w-3.5"
 			data-nb-page-actions-check-icon
 		/>
-		<span data-nb-page-actions-label aria-live="polite">Copy as Markdown</span>
+		<span data-nb-page-actions-label aria-live="polite">
+			Copy as Markdown
+		</span>
 	</button>
 
-	<span aria-hidden="true" class={sepClass}>|</span>
+	<span aria-hidden="true" class={sepClass}>
+		|
+	</span>
 
 	<a
 		href="index.md"
@@ -83,7 +85,9 @@ const formattedDate = lastUpdated
 		View as Markdown
 	</a>
 
-	<span aria-hidden="true" class={cn(sepClass, "max-[700px]:hidden")}>|</span>
+	<span aria-hidden="true" class={cn(sepClass, "max-[700px]:hidden")}>
+		|
+	</span>
 
 	<a
 		href="/agent-setup/"

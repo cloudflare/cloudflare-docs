@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import skills from "astro-skills";
@@ -213,6 +213,12 @@ const integrations = [
 				features: { smartPunctuation: false },
 				hastPlugins,
 			}),
+			// Match Render.astro: `file` is relative to `src/content/partials/<product>/`.
+			// The revision invalidates prepared Markdown assets; bump it if this mapping changes.
+			partialResolver: {
+				revision: "partial-resolver-v1",
+				resolve: ({ file, product }) => (product ? `${product}/${file}` : file),
+			},
 		},
 		validateMdx: false,
 		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
@@ -225,9 +231,6 @@ const integrations = [
 							item as Parameters<typeof serializeSitemapLastmod>[0],
 						),
 		},
-		// Partial resolution ( <Render file="..." product="..." /> ) is handled
-		// entirely by our own Render.astro component via astro:content's
-		// `getEntry("partials", id)` — no integration-level hook needed.
 		rules: {
 			"nimbus/frontmatter-shape": "error",
 			"nimbus/image-ref": [
@@ -276,11 +279,17 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
+	experimental: {
+		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
+	},
 	markdown,
 	image: {
-		service: {
-			entrypoint: "@astrojs/cloudflare/image-service",
-		},
+		// /cdn-cgi/image/ only exists on Cloudflare's edge, so dev serves
+		// originals directly; production keeps edge resizing.
+		service:
+			process.env.NODE_ENV === "production"
+				? { entrypoint: "@astrojs/cloudflare/image-service" }
+				: passthroughImageService(),
 	},
 	server: {
 		port: 1111,

@@ -1,0 +1,130 @@
+---
+title: Prompt an agent to build with Basin
+description: Use example prompts to send Worker, Cloudflare service, and application events through Basin Pipelines to Basin Catalog and Basin SQL.
+pcx_content_type: concept
+sidebar:
+  order: 2
+  label: Prompting
+products:
+  - basin
+---
+
+import { Steps } from "~/components";
+
+Describe the events you want to collect and the question you want to answer. Your coding agent can instrument a Worker or application, send events to Basin Pipelines, write an Iceberg table in Basin Catalog, and query it with Basin SQL.
+
+`Source → Basin Pipelines → Basin Catalog → Basin SQL`
+
+## Try a first prompt
+
+Copy this prompt to build a request analytics workflow from a Hello World Worker:
+
+```txt
+Start with the JavaScript Hello World Worker. Use basin pipelines setup to create a stream with one required string field named path, a simple-ingestion pipeline, and a Basin Catalog table named default.request_events. Add one Worker binding call that sends new URL(request.url).pathname on each request while keeping the Hello World response. Deploy it, visit / and /example, then count requests by path with Basin SQL. Keep the resources so I can inspect them.
+```
+
+For the full working procedure, follow the [Basin CLI guide](/basin/get-started/guide/).
+
+## Give your agent current documentation
+
+Connect the [Cloudflare documentation Model Context Protocol (MCP) server](https://docs.mcp.cloudflare.com/mcp) to your editor or agent. It can retrieve current commands, binding fields, permissions, and limits. The [Cloudflare Observability MCP server](https://observability.mcp.cloudflare.com/mcp) can help inspect Worker logs and exceptions. Neither connection grants account access or replaces checks of Basin Pipelines delivery and Basin SQL results.
+
+Point your agent to the [Basin Pipelines](/basin-pipelines/), [Basin Catalog](/basin-catalog/), and [Basin SQL](/basin-sql/) documentation before it creates resources.
+
+## Choose a data source
+
+Choose an ingestion path before asking the agent to write code:
+
+| Data source | Recommended path |
+| --- | --- |
+| Requests or application events handled by a Worker | Send a small JSON record through a [Basin Pipelines stream binding](/basin-pipelines/streams/writing-to-streams/#send-via-workers). The binding handles ingestion authentication. |
+| Activity involving D1, Queues, R2, Workers AI, or another Cloudflare service | Instrument the Worker or application that uses the service. Record the outcome and only the fields needed for analysis. |
+| Events from an external application | Use an [authenticated stream HTTP endpoint](/basin-pipelines/streams/writing-to-streams/#send-via-http) with a token that has **Basin Pipelines Send** permission. |
+
+Do not assume a service exposes a direct Basin Pipelines source. If it does not, collect events where your application uses that service.
+
+If you combine sources, use separate tables unless their schemas match. Verify fields and shared identifiers before joining records with Basin SQL. Otherwise, compare aggregates over a time window.
+
+Pipelines SQL uses `INSERT INTO sink SELECT ... FROM stream` to transform and route incoming records. Use Basin SQL for `GROUP BY`, joins, and reports after data reaches an Iceberg table. A plain R2 JSON or Parquet sink is not a Basin SQL table.
+
+## More example prompts
+
+### Add telemetry to an existing Worker
+
+```txt
+Instrument my existing Worker to record the route, response status, and request duration in a Basin Pipelines stream. Preserve the response and avoid request bodies, tokens, and client IP addresses. Write the events to a Basin Catalog Iceberg table, then use Basin SQL to count requests and errors by route. Show how to verify that events reach the table.
+```
+
+### Measure D1 operations
+
+```txt
+In the Worker that uses D1, record a short operation label, success or failure, and elapsed time for each database operation. Send these records through a Basin Pipelines stream binding to a Basin Catalog Iceberg table. Do not include SQL parameters or result data. Use Basin SQL to compare operation counts and error rates. Keep the existing database behavior intact.
+```
+
+### Track Queue processing
+
+```txt
+Instrument my Queue consumer Worker to record the message type, processing outcome, and duration through a Basin Pipelines stream binding. Do not store message bodies or secrets. Write the events to a Basin Catalog Iceberg table and use Basin SQL to count successful and failed processing attempts. Preserve the consumer's existing retry behavior.
+```
+
+### Route an existing stream
+
+```txt
+Take my existing Basin Pipelines stream of JSON application events and write purchases and signups to separate Basin Catalog tables. Inspect the real stream schema, then use supported Pipelines INSERT INTO ... SELECT statements to route records. Provide Basin SQL queries that count each event type. Preserve the existing stream and explain which sinks and tables you create.
+```
+
+### Ingest external JSON events
+
+```txt
+My external service sends JSON events over HTTP. Create an authenticated Basin Pipelines stream endpoint and an Iceberg sink in Basin Catalog. Show a minimal request, the required Basin Pipelines Send token permission, one Basin SQL validation query, and how to detect dropped events. Keep tokens out of source files and URLs.
+```
+
+### Track R2 object activity
+
+```txt
+In the Worker that reads and writes R2 objects, record the operation type, outcome, and duration through a Basin Pipelines stream binding. Do not record object contents, credentials, or full object keys. Write the events to a Basin Catalog Iceberg table and use Basin SQL to count operations and failures by type. Preserve existing R2 behavior.
+```
+
+## Reusable base prompt
+
+Replace the text inside `<user_prompt>` with your data source, the fields you need, and the question you want to answer. The tags organize instructions for your agent; they are not part of a Cloudflare configuration.
+
+```txt
+<system_context>
+You are building a Cloudflare Basin workflow. Check current Cloudflare documentation for Basin Pipelines, Basin Catalog, Basin SQL, Workers, and any source service before choosing commands or APIs.
+</system_context>
+
+<source_selection>
+Choose the path that fits the request:
+- Worker events: use a Basin Pipelines stream binding and await env.STREAM.send([record]). Configure the binding with a stream ID using the "stream" field in wrangler.jsonc.
+- Activity involving D1, Queues, R2, Workers AI, or another Cloudflare service: instrument the Worker or application that performs the operation. Inspect its code and choose a small event schema.
+- External application events: use an authenticated HTTP stream endpoint.
+Do not invent a direct service connector. Keep separate sources in separate tables unless their schemas match.
+</source_selection>
+
+<basin_rules>
+- When the goal includes Basin SQL, write Apache Iceberg tables through a Basin Catalog sink. A plain R2 JSON or Parquet sink is different.
+- Use the current Wrangler commands: basin pipelines setup, basin catalog get <BUCKET_NAME>, and basin sql query <WAREHOUSE_NAME> <SQL>. Set WRANGLER_BASIN_SQL_AUTH_TOKEN for SQL queries. Keep the "stream" binding field; do not use the deprecated "pipeline" field.
+- Use Pipelines SQL for supported ingestion transforms and routing. Use Basin SQL for aggregations, joins, and analysis after data lands.
+- Inspect the actual application events and stream schema before naming columns. Verify a shared key before joining sources.
+- Do not place tokens in Worker code, wrangler.jsonc, URLs, or generated documentation. Worker bindings handle ingestion authentication. Scope tokens for HTTP ingestion, catalog writes, and SQL queries.
+- Keep event records minimal and avoid sensitive request fields unless required.
+</basin_rules>
+
+<verification>
+Show the resources and files needed for the chosen path. Provide one small sample event and a query against the actual warehouse and namespace.table. Verify source ingestion, the Iceberg table, and the Basin SQL result. Check Basin Pipelines metrics and user errors if rows are missing. Allow a few minutes for the first Iceberg file. State what you tested and what still needs account access.
+</verification>
+
+<user_prompt>
+Describe the data source, event fields, and question to answer.
+</user_prompt>
+```
+
+## Verify the result
+
+<Steps>
+1. Confirm that the Worker or application sent an event to the stream. A successful Worker `send()` confirms ingestion, not a table row.
+2. Confirm that Basin Pipelines writes to a Basin Catalog Iceberg sink. Check records and files written in [Pipelines metrics](/basin-pipelines/observability/metrics/).
+3. Run a small `SELECT ... LIMIT 10` query with [Basin SQL](/basin-sql/query-data/). If the table is missing or empty, wait for the first file roll and retry.
+4. If rows are still missing, inspect [Pipelines user error metrics](/basin-pipelines/observability/metrics/#user-error-metrics) for missing fields, type mismatches, parse failures, and null values.
+</Steps>

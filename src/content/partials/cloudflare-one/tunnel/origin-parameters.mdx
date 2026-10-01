@@ -36,31 +36,31 @@ This section describes how to update origin parameters for a <GlossaryTooltip te
 | ------- | ------------------ |
 | `""`    | Origin Server Name |
 
-Hostname that `cloudflared` should expect from your origin server certificate. If null, the expected hostname is the service URL, for example `localhost` if the service is `https://localhost:443`.
+Hostname that `cloudflared` should expect from your origin server certificate. If empty, `cloudflared` uses the hostname from the service URL, for example `localhost` if the service is `https://localhost:443`.
 
 ### matchSNItoHost
 
-| Default | UI name           |
-| ------- | ----------------- |
-| `false` | Match SNI to Host |
+| Default | UI name          |
+| ------- | ---------------- |
+| `false` | Match SNI to host |
 
-When `true`, `cloudflared` will automatically set the Server Name Indication (SNI) during the TLS handshake to the hostname of the incoming request.
+When `true`, `cloudflared` sets the Server Name Indication (SNI) during the TLS handshake to the request `Host` value sent to the origin. If you configure [HTTP Host Header](#httphostheader), `cloudflared` uses that value for SNI. This setting overrides [Origin Server Name](#originservername) for each request.
 
 This setting is useful when directing traffic to entry points that host multiple services and rely on SNI to route requests or present the correct certificate. It eliminates the need to explicitly configure [`originServerName`](#originservername) for individual services when using wildcard routing.
 
 ### caPool
 
-| Default | UI name                    |
-| ------- | -------------------------- |
-| `""`    | Certificate Authority Pool |
+| Default | UI name |
+| ------- | ------- |
+| `""`    | CA Pool |
 
-Local file path to the certificate authority (CA) for your origin server certificate (for example, `/root/certs/ca.pem`). The path should point to a certificate store file or a bundle file in `.pem` or `.crt` format that contains one or more trusted root CA certificates. You should only configure this setting if your certificate is not signed by Cloudflare.
+Local file path to the certificate authority (CA) for your origin server certificate (for example, `/root/certs/ca.pem`). The path should point to a certificate store file or a bundle file in `.pem` or `.crt` format that contains one or more trusted root CA certificates. `cloudflared` adds these certificates to its default trust pool. Configure this setting when a private CA signs the certificate and the CA is not in the default trust pool.
 
 ### noTLSVerify
 
-| Default | UI name       |
-| ------- | ------------- |
-| `false` | No TLS Verify |
+| Default | UI name                              |
+| ------- | ------------------------------------ |
+| `false` | Disable TLS certificate verification |
 
 When `false`, TLS verification is performed on the certificate presented by your origin.
 
@@ -76,13 +76,13 @@ Timeout for completing a TLS handshake to your origin server, if you have chosen
 
 ### http2Origin
 
-| Default | UI name          |
-| ------- | ---------------- |
-| `false` | HTTP2 connection |
+| Default | UI name               |
+| ------- | --------------------- |
+| `false` | Use HTTP/2 to origin  |
 
 When `false`, `cloudflared` will connect to your origin with HTTP/1.1.
 
-When `true`, `cloudflared` will attempt to connect to your origin server using HTTP/2.0 instead of HTTP/1.1. HTTP/2.0 is a faster protocol for high traffic origins but requires you to deploy an SSL certificate on the origin. We recommend using this setting in conjunction with [noTLSVerify](#notlsverify) so that you can use a self-signed certificate.
+When `true`, `cloudflared` attempts to connect to your origin server using HTTP/2 instead of HTTP/1.1. HTTP/2 to the origin requires HTTPS. For a certificate signed by a private CA, configure [CA Pool](#capool) and keep TLS verification enabled.
 
 ## HTTP settings
 
@@ -181,7 +181,7 @@ Timeout after which an idle keepalive connection can be discarded.
 
 Default: `100`
 
-Maximum number of idle keepalive connections between Cloudflare and your origin. This does not restrict the total number of concurrent connections.
+Maximum number of idle keepalive connections between `cloudflared` and your origin. This does not restrict the total number of concurrent connections.
 
 ### tcpKeepAlive
 
@@ -191,7 +191,7 @@ Maximum number of idle keepalive connections between Cloudflare and your origin.
 
 Default: `30s`
 
-The timeout after which a TCP keepalive packet is sent on a connection between Cloudflare and the origin server.
+The timeout after which `cloudflared` sends a TCP keepalive packet to the origin server.
 
 ## Access settings
 

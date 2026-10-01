@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2026-08-25"
+    title: Larger custom metadata values
+    description: |-
+      AI Search supports larger custom metadata values within a shared 10 KiB metadata envelope for each vector. The envelope includes system metadata and JSON overhead, and the first 64 UTF-8 bytes of each indexed string remain filterable. Refer to [Metadata attributes](/ai-search/configuration/indexing/metadata/) for details.
   - publish_date: "2026-08-06"
     title: Custom domains, Cloudflare Access, and namespace public endpoints
     description: |-

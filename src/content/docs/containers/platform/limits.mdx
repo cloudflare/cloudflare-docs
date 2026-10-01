@@ -1,0 +1,69 @@
+---
+pcx_content_type: reference
+title: Limits and Instance Types
+description: Available Container instance types and limits for memory, vCPU, disk, image storage, and snapshots.
+sidebar:
+  order: 1
+products:
+  - containers
+---
+
+import { Render } from "~/components";
+
+## Instance Types
+
+The memory, vCPU, and disk space for Containers are set through instance types. You can use one of six predefined instance types or configure a [custom instance type](#custom-instance-types).
+
+<Render product="containers" file="instance-types" />
+
+For an application that uses the [`default` scheduling policy](/containers/configuration/scheduling-policy/), specify the size with the [`instance_type` property](/workers/wrangler/configuration/#containers) in your Worker's Wrangler configuration file. For the `durable_object` policy, pass the named size to `ctx.container.start()` with the runtime `instance` property.
+
+:::note
+The `dev` and `standard` instance types are preserved for backward compatibility and are aliases for `lite` and `standard-1`, respectively.
+:::
+
+### Custom Instance Types
+
+In addition to the predefined instance types, you can configure custom instance types. Field names depend on where you configure the size. Wrangler configuration for the `default` policy uses `vcpu`, `memory_mib`, and `disk_mb`. A `ctx.container.start()` call for the `durable_object` policy uses `vcpu`, `memoryMib`, and `diskMb`.
+
+Refer to the [Wrangler configuration documentation](/workers/wrangler/configuration/#custom-instance-types) or [scheduling policy documentation](/containers/configuration/scheduling-policy/#choose-an-instance-size-at-runtime) for examples.
+
+Custom instance types have the following constraints:
+
+| Resource             | Limit                         |
+| -------------------- | ----------------------------- |
+| Minimum vCPU         | 1                             |
+| Maximum vCPU         | 4                             |
+| Maximum Memory       | 12 GiB                        |
+| Maximum Disk         | 20 GB                         |
+| Memory to vCPU ratio | Minimum 3 GiB memory per vCPU |
+
+For workloads requiring less than 1 vCPU, use the predefined instance types such as `lite` or `basic`.
+
+If you need larger instance sizes or higher account-level limits, contact your account team, file a
+support ticket, or fill out [this form](https://forms.gle/CscdaEGuw5Hb6H2s7).
+
+## Account limits
+
+The following limits apply per account:
+
+| Resource                        | Limit                                          |
+| ------------------------------- | ---------------------------------------------- |
+| Concurrent memory               | 6 TiB                                          |
+| Concurrent vCPU                 | 1,500                                          |
+| Concurrent disk                 | 30 TB                                          |
+| Image size                      | Same as [instance disk space](#instance-types) |
+| Total image storage per account | 50 GB [^1]                                     |
+
+[^1]: Delete container images with `wrangler containers delete` to free up space. If you delete a container image and then [roll back](/workers/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
+
+## Snapshot limits
+
+The following limits apply to [Container snapshots](/containers/guides/snapshots/):
+
+| Resource              | Limit                                           |
+| --------------------- | ----------------------------------------------- |
+| Maximum snapshot size | 20 GB                                           |
+| Snapshot retention    | 30 days from creation or the most recent restore |
+
+Restoring a snapshot refreshes its 30-day time-to-live.

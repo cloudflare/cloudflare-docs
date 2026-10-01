@@ -1,0 +1,20 @@
+---
+title: R2 bandwidth usage metrics
+description: View upload and download bandwidth usage across your buckets.
+pcx_content_type: changelog
+products:
+  - r2
+date: 2026-09-24
+---
+
+import { DashButton } from "~/components";
+
+New [R2](/r2/) product-level **Metrics** page in the Cloudflare dashboard shows bandwidth usage. You can view usage across all buckets or per bucket.
+
+<DashButton url="/?to=/:account/r2/metrics" buttonName="R2 Metrics" />
+
+![R2 upload and download throughput across all buckets over 24 hours](~/assets/images/r2/r2-bandwidth-metrics.png)
+
+Bandwidth throughput is split by object upload and download. The [GraphQL Analytics API](/analytics/graphql-api/) exposes the same bandwidth usage metrics that power the dashboard for your queries and analytics.
+
+For more information, refer to [R2 metrics and analytics](/r2/platform/metrics-analytics/).

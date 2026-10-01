@@ -1,0 +1,195 @@
+---
+title: Change file calls
+description: Replace @cloudflare/sandbox 0.12 file methods and watch() with Files from @cloudflare/sandbox 1.0 and inotifywait.
+pcx_content_type: how-to
+sidebar:
+  order: 7
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+In Sandbox SDK 0.12, the SDK server in the container handled file calls. It created missing directories, returned binary files as base64, and hid dotfiles. In 1.0, [`Files`](/sandbox/reference/files/) runs a small helper in the container for each call, and does only what the call asks.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` method from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `Files` needs the `sandbox-shim` helper in your image, which the `Dockerfile` on that page copies.
+
+Import `Files`, and create one as a field of your class. `this.ctx.container` stays the same object for as long as the Durable Object runs, so one `Files` object serves every container that the Durable Object starts. Call `ensureRunning()` before each file call:
+
+```ts title="src/index.ts"
+import { Files, SandboxFileError } from "@cloudflare/sandbox";
+
+export class MySandbox extends DurableObject<Env> {
+	private readonly files = new Files(this.container);
+	// ...
+}
+```
+
+This page replaces `readFile()`, `readFileStream()`, `writeFile()`, `exists()`, `listFiles()`, `mkdir()`, `deleteFile()`, `renameFile()`, `moveFile()`, `watch()`, and `checkChanges()`. For commands, refer to [Change command calls](/sandbox/sdk/migrate/commands/).
+
+## Change each file call
+
+These calls keep their meaning, under a new name or with a different result:
+
+| 0.12 | 1.0 |
+| --- | --- |
+| `readFile(path)`, then `.content` of a text file | `await (await this.files.readFile(path)).text()` |
+| `readFileStream(path)` | `(await this.files.readFile(path)).body` |
+| `exists(path)` | `this.files.stat(path)`, catching `SandboxFileError` with code `ENOENT` |
+| `mkdir(path, { recursive })` | `this.files.mkdir(path, { recursive })` |
+| `deleteFile(path)` | `this.files.remove(path)` |
+| `renameFile()`, `moveFile()` | `this.files.rename(source, destination)` |
+
+0.12 resolved a relative path against the working directory of the session, `/workspace` by default. `Files` throws `TypeError: cwd is required when path is relative`, so pass the directory in the `cwd` option:
+
+```ts title="src/index.ts"
+const text = await (
+	await this.files.readFile("app/package.json", { cwd: "/workspace" })
+).text();
+```
+
+## Write into a new directory
+
+0.12 created missing parent directories. Create them with `mkdir()` first:
+
+```ts title="src/index.ts (0.12)"
+await sandbox.writeFile("/workspace/app/src/index.js", code);
+```
+
+```ts title="src/index.ts (1.0)" ins={1}
+await this.files.mkdir("/workspace/app/src", { recursive: true });
+await this.files.writeFile("/workspace/app/src/index.js", code);
+```
+
+Without `mkdir()`, `writeFile()` rejects with `SandboxFileError` code `ENOENT`. Where 0.12 took base64 with `encoding: "base64"`, pass bytes. `writeFile()` also accepts a string, a `Blob`, or a stream.
+
+0.12 wrote a stream to a temporary file and renamed it into place. `writeFile()` writes into the file directly, so a reader can see it partly written. To keep the 0.12 behavior, write to a temporary path and call `rename()`, as in [`writeFile`](/sandbox/reference/files/#writefile).
+
+## Read binary files
+
+0.12 returned a binary file as a base64 string, with `encoding: "base64"`. `readFile()` returns a `Response`, so read the bytes directly:
+
+```ts title="src/index.ts (0.12)"
+const file = await sandbox.readFile("/workspace/logo.png");
+const bytes = Uint8Array.from(atob(file.content), (c) =>
+	c.charCodeAt(0),
+);
+```
+
+```ts title="src/index.ts (1.0)"
+const response = await this.files.readFile("/workspace/logo.png");
+const bytes = new Uint8Array(await response.arrayBuffer());
+```
+
+The response has no `Content-Type` header, where 0.12 returned a `mimeType`. For the size, call `stat()`.
+
+## List files
+
+0.12 left out dotfiles unless you passed `includeHidden: true`, and returned the size and modification time of each file. `readDirectory()` returns every entry, with only its `name` and `type`:
+
+```ts title="src/index.ts (0.12)"
+const result = await sandbox.listFiles("/workspace/app");
+
+for (const file of result.files) {
+	console.log(file.name, file.size);
+}
+```
+
+```ts title="src/index.ts (1.0)" ins={4-6}
+const entries = await this.files.readDirectory("/workspace/app");
+
+for (const entry of entries) {
+	if (entry.name.startsWith(".")) {
+		continue;
+	}
+
+	const stat = await this.files.stat(`/workspace/app/${entry.name}`);
+	console.log(entry.name, Number(stat.size));
+}
+```
+
+`stat()` returns the size as a `bigint`, which `JSON.stringify()` cannot serialize. Convert it with `Number()`. Each `Files` call starts one helper process in the container. For a recursive listing, use the walk in [`readDirectory`](/sandbox/reference/files/#readdirectory).
+
+## Handle errors
+
+A failed call throws `SandboxFileError`, whose `code` is the Linux error name. Each 0.12 error class becomes a code:
+
+| 0.12 | `code` |
+| --- | --- |
+| `FileNotFoundError` | `ENOENT` |
+| `FileExistsError` | `EEXIST` |
+| `PermissionDeniedError` | `EACCES` |
+| `FileSystemError` | The code of the failure, such as `EISDIR` or `ENOTDIR` |
+
+`SandboxFileError` is not a class, so check it with `SandboxFileError.is()`:
+
+```ts title="src/index.ts"
+try {
+	await this.files.stat("/workspace/package.json");
+} catch (cause) {
+	if (SandboxFileError.is(cause) && cause.code === "ENOENT") {
+		// The file does not exist.
+	} else {
+		throw cause;
+	}
+}
+```
+
+Two calls behave differently from 0.12:
+
+- `deleteFile()` refused a directory. `remove()` removes one with `recursive: true`, and rejects with `EISDIR` without it.
+- `renameFile()` and `moveFile()` ran `mv`, which copies across filesystems. `rename()` rejects with `EXDEV`, so copy with `container.exec(["cp", "-a", source, destination])`, then call `remove()`.
+
+## Replace file watching
+
+To replace `watch()`, run `inotifywait` in the container, and stream its output while the request is open. Add `inotify-tools` to the `apt-get install` line in your `Dockerfile`, then return the output of the watcher:
+
+```ts title="src/index.ts"
+// Stop watching after 10 minutes.
+const watcher = await this.container.exec([
+	"timeout",
+	"--kill-after=5",
+	"600",
+	"inotifywait",
+	"-m",
+	"-r",
+	"-e",
+	"create,modify,delete,move",
+	"--format",
+	"%e %w%f",
+	"/workspace",
+]);
+
+return new Response(watcher.stdout, {
+	headers: { "Content-Type": "text/event-stream" },
+});
+```
+
+Each line holds an event and a path, such as `MODIFY /workspace/src/index.ts`. The `text/event-stream` type keeps the response streaming, as in [Stream output](/sandbox/sdk/migrate/commands/#stream-output). The lines are not server-sent events, so read them with `fetch()` and a stream reader.
+
+`timeout` stops the watcher after 10 minutes, and the stream ends. If the client disconnects first, the watcher exits the next time it writes an event.
+
+Pass `inotifywait` an absolute path, where 0.12 resolved a relative path against `/workspace`. The 0.12 `include` and `exclude` options took lists of glob patterns. `inotifywait` takes one regular expression for each, such as `--exclude '(\.log|/node_modules/.*)$'`, and uses only the last `--exclude`.
+
+`checkChanges()` has no replacement. The watcher reports only changes made while it runs, so read the files a client needs again when it reconnects.
+
+## Check the file calls
+
+Write a file into a directory that does not exist yet, without `mkdir()`. The call rejects with `SandboxFileError` code `ENOENT`, and the message `writeFile '/workspace/new/deep/a.txt': No such file or directory (os error 2)`.
+
+After `mkdir()` with `recursive: true`, the write succeeds. Call `readDirectory()` on a directory that holds a dotfile. The result includes the dotfile:
+
+```json output
+[
+	{ "name": ".hidden", "type": "file" },
+	{ "name": "shown", "type": "file" }
+]
+```
+
+## Related resources
+
+- [`Files` reference](/sandbox/reference/files/)
+- [Move files in and out of a sandbox](/sandbox/files/manage-files/)
+- [Change command calls](/sandbox/sdk/migrate/commands/)

@@ -75,7 +75,7 @@ MSSP/Distributor Organizations support up to 5 levels of nested sub-organization
 - **Organization-level membership**: Invite members to the Organization once, granting them access to all child accounts.
 - **WAF and Gateway policy sharing**: Create security policies once and share them across accounts in your Organization.
 - **IdP federation**: Share a single identity provider configuration across all accounts in your Organization. Refer to [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/) for setup details.
-- **API, SDK, and Terraform support**: Manage Organizations programmatically with the [Cloudflare Organizations API](/api/resources/organizations/), SDKs, or Terraform provider.
+- **API, SDK, and Terraform support**: Manage Organizations programmatically with the [Cloudflare Organizations API](/api/resources/organizations/), SDKs, or Terraform provider. User API Tokens support some Organization operations, but they cannot complete the full Terraform resource lifecycle. Refer to [API authentication](/fundamentals/organizations/limitations/#api-authentication).
 - **Enhanced account switcher**: Navigate between accounts with an Organization-aware account switcher in the dashboard.
 
 For a full list of features and limitations specific to each Organization type, refer to the [Enterprise](/fundamentals/organizations/for-enterprise/) or [MSSP/Distributor](/fundamentals/organizations/for-mssp-distributors/) guide.

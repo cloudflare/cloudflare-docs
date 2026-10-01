@@ -42,6 +42,17 @@ then wait 5 minutes before issuing another query.
 That rate limit is applied in addition to the [general rate limits enforced by
 the Cloudflare API](/fundamentals/api/reference/limits/).
 
+### Account-based rate limiting
+
+If you query analytics across many zones or accounts, you can opt into
+**account-based rate limiting**, where limits apply per account and per zone
+instead of per user or API token. Because each account and zone has its own
+budget, a single user or token can make far more requests overall, and limit
+increases can be applied per resource and take effect quickly.
+
+To learn how to enable it and the query requirements, refer to
+[Account-based rate limiting](/analytics/graphql-api/account-based-rate-limiting/).
+
 ## Node limits and availability
 
 Each data node has its limits, such as:

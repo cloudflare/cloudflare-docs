@@ -9,14 +9,18 @@ products:
 
 ## 416 Range Not Satisfiable
 
-The `416 Range Not Satisfiable` status code indicates that the server cannot fulfill the requested range specified in the `Range` header of the client's request.
+The `416 Range Not Satisfiable` status code indicates that the server cannot fulfill the byte range specified in the request's `Range` header.
 
-For more details, refer to [RFC 7233](https://datatracker.ietf.org/doc/html/rfc7233).
+For more details, refer to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-416-range-not-satisfiable).
 
 ### Common use cases
 
-This error can happen when a client requests a byte range outside the bounds of the resource, such as a range exceeding the file's total size. It can also happen if the server does not support partial content delivery or if there is a conflict between the requested range and the server's understanding of the resource, often caused by an outdated or invalid cache.
+This error can occur when every requested byte range falls outside the selected resource. It can also occur when the server does not support the requested range unit.
+
+A `416` response to a byte-range request should include a `Content-Range` header. The header uses `bytes */<LENGTH>`, where `<LENGTH>` is the current resource length.
 
 ### Cloudflare-specific information
 
-Cloudflare typically serves this response when the origin server rejects a `Range` header request for a resource. This often occurs if the requested range exceeds the size of the file, as indicated in the `Content-Range` header.
+Cloudflare can return a `416` response when the origin rejects a range request. Cloudflare can also generate this response when a cached resource cannot satisfy the requested range.
+
+Cloudflare does not cache `416` responses returned by an origin server. This applies even when the response includes explicit cache directives or a matching Cache Rule sets a [Status Code TTL](/cache/how-to/configure-cache-status-code/) for `416`. This behavior prevents one unsatisfiable range request from affecting later requests for the same URL.

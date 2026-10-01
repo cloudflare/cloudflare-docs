@@ -1,0 +1,40 @@
+---
+title: "WAF Release - 2026-09-01"
+description: Cloudflare WAF managed rulesets 2026-09-01 release
+date: 2026-09-01
+---
+
+import { RuleID } from "~/components";
+
+This release introduces a new threat detection to enhance protection against SQL injection (SQLi) attempts exploiting complex query syntax.
+
+**Key Findings**
+
+- SQLi Protection: Improved coverage for SQL injection patterns involving WHERE comparisons combined with WITH clauses.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d2d75b2f0614405f9fab0354bcfa0966" />
+			</td>
+			<td>N/A</td>
+			<td>SQLi - WHERE Comparison With WITH Clause</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

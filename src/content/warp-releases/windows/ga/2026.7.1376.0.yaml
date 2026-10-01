@@ -1,0 +1,9 @@
+releaseNotes: Fixed a rare but critical issue where the client could fail to
+  connect or switch organizations due to an invalid registration after switching
+  installed client versions. Additionally, this hotfix resolves an issue where a
+  small but noticeable percentage of DNS queries fail across platforms.
+version: 2026.7.1376.0
+releaseDate: 2026-08-28T15:41:51.514Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.7.1376.0
+packageSize: 59437056
+platformName: Windows

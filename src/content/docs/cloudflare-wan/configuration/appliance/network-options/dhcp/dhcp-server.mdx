@@ -6,11 +6,50 @@ products:
 title: DHCP server
 ---
 
-import { Render } from "~/components";
+import { APIRequest, DashButton, TabItem, Tabs } from "~/components";
 
-<Render file="mconn/network-options/dhcp/dhcp-server"
-	product="networking-services"
-	params={{
-		dashName: "Cloudflare WAN"
-	}}
+When you use a static IP address, Cloudflare One Appliance (formerly Magic WAN Connector) can also act as a DHCP server in your network. To enable this feature:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
+4. Select **Network Configuration** > **LAN configuration**.
+5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
+6. Select **Edit**.
+7. Under **Static addressing**, select **This is a DHCP Server**. You also have to specify:
+   - The DNS server address. You can have more than one IP address. Select **Add DNS Server** for each server you want to add.
+   - The DHCP pool start
+   - The DHCP pool end
+
+</TabItem> <TabItem label="API">
+
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP server:
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
+    "static_addressing": {
+      "dhcp_server": {
+        "dhcp_pool_end": "<IP_ADDRESS>",
+        "dhcp_pool_start": "<IP_ADDRESS>",
+        "dns_server": "<IP_ADDRESS>"
+      }
+    }
+  }
+  }}
 />
+
+</TabItem> </Tabs>

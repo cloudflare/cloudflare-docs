@@ -1,0 +1,261 @@
+---
+title: WebSocket adapter
+description: Create and close WebSocket adapters for PCM audio and JPEG video, with endpoint authentication, reconnect, and error handling.
+pcx_content_type: reference
+sidebar:
+  order: 1
+  label: WebSocket
+  badge: Beta
+products:
+  - realtime
+---
+
+The WebSocket adapter connects Realtime SFU media tracks to your WebSocket service. It supports audio in both directions and video egress as JPEG frames. Each adapter is unidirectional.
+
+The WebSocket adapter is in beta. Its API may change.
+
+## Supported media and directions
+
+Choose whether your service sends audio into the SFU or receives an existing publication:
+
+| Direction and API location                  | Path                             | Media                                                     |
+| ------------------------------------------- | -------------------------------- | --------------------------------------------------------- |
+| Audio into the SFU (`location: "local"`)    | WebSocket service → SFU → WebRTC | 48 kHz stereo PCM input, published as Opus audio          |
+| Media out of the SFU (`location: "remote"`) | WebRTC → SFU → WebSocket service | Opus audio decoded to 48 kHz stereo PCM, or video as JPEG |
+
+The API uses buffer mode for audio ingest and stream mode for media egress. For bidirectional audio, create one adapter for each direction. Video ingest is not supported.
+
+JPEG egress defaults to 1 frame per second (FPS). Customers with an Enterprise contract can contact their Cloudflare account team to discuss higher frame rates for their use case.
+
+## Prepare your endpoint
+
+The SFU opens a WebSocket connection to the `endpoint` URL you supply. Use a publicly reachable `wss://` endpoint that accepts WebSocket upgrades and the binary [packet format](#media-formats). A localhost endpoint is not reachable from the SFU, and the adapter does not follow HTTP redirects.
+
+The SFU API App Secret belongs on your backend. Authentication for your WebSocket service is a separate boundary. Adapter requests do not support custom WebSocket headers. A scoped token in the endpoint URL's path or query string is one way for your service to authenticate the connection.
+
+Keep endpoint tokens out of browser responses and logs. For media-egress recovery (stream mode), the same endpoint URL is reused. Its credential must remain valid for the reconnect attempts; consuming it permanently at the first handshake prevents that recovery.
+
+## Media formats
+
+### WebSocket binary format
+
+Each binary WebSocket message contains a Protocol Buffers packet:
+
+```proto
+message Packet {
+  uint32 sequenceNumber = 1;
+  uint32 timestamp = 2;
+  bytes payload = 5;
+}
+```
+
+PCM payloads use signed 16-bit little-endian samples at 48 kHz, stereo, with left and right samples interleaved. Video payloads contain complete JPEG images.
+
+<span id="buffer-mode-ingest"></span>
+
+### Audio ingest packets (buffer mode)
+
+Only `payload` is used for ingest. Send small, frequent audio chunks within the 32 KB serialized-message limit. Account for protobuf overhead when choosing a chunk size.
+
+<span id="stream-mode-egress"></span>
+
+### Media egress packets (stream mode)
+
+Audio messages contain PCM frames with timestamps and sequence numbers. Video messages contain JPEG frames with timestamps; a video sequence number may be unset. Each frame is a separate WebSocket message.
+
+The JPEG path supports H.264, H.265, VP8, and VP9 WebRTC input. Refer to [supported SFU codecs](/realtime/sfu/platform/limits/#supported-codecs) for the broader media-track codec list.
+
+## Create adapter
+
+Your backend sends an authenticated JSON request to:
+
+```txt
+POST https://rtc.live.cloudflare.com/v1/apps/{appId}/adapters/websocket/new
+```
+
+Include `Authorization: Bearer <APP_SECRET>` and `Content-Type: application/json`. Send one to four entries in `tracks`. The [OpenAPI schema](/realtime/static/realtime-api-2024-05-21.yaml) describes the complete contract.
+
+<span id="ingest-audio"></span>
+
+### Send audio into the SFU
+
+For audio ingest, use `location: "local"` to create a publication from your WebSocket service:
+
+```json
+{
+  "tracks": [
+    {
+      "location": "local",
+      "trackName": "generated-speech",
+      "endpoint": "wss://example.com/audio-source",
+      "inputCodec": "pcm"
+    }
+  ]
+}
+```
+
+The required ingest fields are:
+
+| Field        | Value                             |
+| ------------ | --------------------------------- |
+| `location`   | `"local"`                         |
+| `trackName`  | Name for the new publication      |
+| `endpoint`   | WebSocket URL that supplies audio |
+| `inputCodec` | `"pcm"`                           |
+
+Ingest uses buffer mode. The API selects the mode from `location`; a `mode` field does not change it. An ingest request's `sessionId` is ignored because the SFU allocates a publishing session.
+
+A successful item includes the new session ID:
+
+```json
+{
+  "tracks": [
+    {
+      "trackName": "generated-speech",
+      "adapterId": "<ADAPTER_ID>",
+      "sessionId": "<PUBLISHER_SESSION_ID>",
+      "endpoint": "wss://example.com/audio-source"
+    }
+  ]
+}
+```
+
+Your application shares the session ID and track name with authorized WebRTC subscribers. Subscribers can follow [Receive a published track](/realtime/sfu/get-started/connection-patterns/#receive-a-published-track) to play that audio. The WebSocket service sends protobuf packets containing PCM audio. Keep each serialized WebSocket message within 32 KB, including protobuf overhead.
+
+<span id="stream-audio-or-video"></span>
+
+### Send audio or video to your service
+
+Start with an existing media publication. To create one, follow [Publish audio or video](/realtime/sfu/get-started/connection-patterns/#publish-audio-or-video).
+
+For media egress, use `location: "remote"` to send that publication to your service:
+
+```json
+{
+  "tracks": [
+    {
+      "location": "remote",
+      "sessionId": "<PUBLISHER_SESSION_ID>",
+      "trackName": "microphone",
+      "endpoint": "wss://example.com/audio-consumer",
+      "outputCodec": "pcm"
+    }
+  ]
+}
+```
+
+The required media-egress fields are:
+
+| Field         | Value                                                       |
+| ------------- | ----------------------------------------------------------- |
+| `location`    | `"remote"`                                                  |
+| `sessionId`   | Session that owns the publication                           |
+| `trackName`   | Name of the existing publication                            |
+| `endpoint`    | WebSocket URL that receives media                           |
+| `outputCodec` | `"pcm"` for an Opus audio publication or `"jpeg"` for video |
+
+Stream mode is selected automatically. PCM output requires an Opus source track. For JPEG output, use a video publication and set `outputCodec: "jpeg"`.
+
+A successful media-egress item contains the adapter ID, track name, and endpoint. It does not return a new session ID:
+
+```json
+{
+  "tracks": [
+    {
+      "trackName": "microphone",
+      "adapterId": "<ADAPTER_ID>",
+      "endpoint": "wss://example.com/audio-consumer"
+    }
+  ]
+}
+```
+
+Retain the adapter ID in your application's resource state so you can close it later.
+
+## Partial batch results
+
+Creation and closure return results for individual request entries. An HTTP `200` response means at least one entry succeeded. It can also contain failed entries:
+
+```json
+{
+  "tracks": [
+    {
+      "trackName": "microphone",
+      "adapterId": "<ADAPTER_ID>",
+      "endpoint": "wss://example.com/audio-consumer"
+    },
+    {
+      "trackName": "camera",
+      "errorCode": "websocket_handshake_failed",
+      "errorDescription": "The handshake with the provided endpoint failed."
+    }
+  ]
+}
+```
+
+Inspect every item. Save successful allocations even if another item fails. Retrying an entire partially successful creation batch can allocate duplicate resources.
+
+If every attempted item fails, the outer response is HTTP `503`. Item errors contain `errorCode` and `errorDescription`; their individual HTTP status codes are not included.
+
+## Close adapter
+
+To close one or more adapters, your backend sends:
+
+```txt
+POST https://rtc.live.cloudflare.com/v1/apps/{appId}/adapters/websocket/close
+```
+
+```json
+{
+  "tracks": [{ "adapterId": "<ADAPTER_ID>" }]
+}
+```
+
+A successful item includes an operational byte count:
+
+```json
+{
+  "tracks": [
+    {
+      "adapterId": "<ADAPTER_ID>",
+      "bytesProcessed": 83492
+    }
+  ]
+}
+```
+
+An adapter that is absent or already closed can return an item error with `errorCode: "adapter_not_found"`. If all close items fail, including already-absent items, the outer response can be HTTP `503`. Repeated close is not guaranteed to return HTTP `200`.
+
+For cleanup of an adapter your application owns, an explicit `adapter_not_found` item establishes that it is already absent. Handle that item separately from other failures. Keep unsuccessful items for retry; do not treat every `503` response as successful cleanup.
+
+`bytesProcessed` is an adapter statistic, not the authoritative billed-usage total. Refer to [usage and pricing](#usage-and-pricing).
+
+## Automatic reconnection for streaming
+
+For WebRTC-to-WebSocket streaming, the SFU automatically retries the same endpoint for up to five seconds after a brief disconnect or endpoint restart. No additional API setting is required.
+
+If the endpoint stays unavailable beyond that window, the adapter closes. Your application must create a new adapter to resume streaming.
+
+### Media buffering during reconnect
+
+Audio uses a short, bounded backlog. Older frames can be dropped when that backlog fills. Video retains only the latest available JPEG frame, replacing older buffered frames.
+
+Recovery does not guarantee gapless or exactly-once delivery. It retries the same endpoint and does not provide failover to another URL.
+
+Automatic reconnect applies to stream mode only. Ingest adapters do not automatically reconnect; application logic must recreate them after a terminal disconnect.
+
+## Troubleshooting
+
+Use [Error codes](/realtime/sfu/observability/error-codes/) for request failures and [adapter errors](/realtime/sfu/observability/error-codes/#adapter-errors) for WebSocket connection and closure results. Inspect each item before deciding what to retry.
+
+If the connection opens but media is missing, check the selected direction, source session and track, protobuf framing, PCM format, and message sizes. Record application resource IDs and connection transitions without recording endpoint tokens, SDP, or media contents.
+
+## Usage and pricing
+
+WebSocket adapter usage is tracked in Realtime billing. Egress to WebSocket endpoints follows Realtime pricing; audio ingested into the SFU is not charged as ingress. Refer to [pricing and the shared free tier](/realtime/sfu/platform/pricing/#websocket-adapter).
+
+## Learn with an example
+
+Follow the [AI audio guide](/realtime/sfu/examples/ai-audio/) for separate speech-generation and microphone-transcription paths. The [WebRTC-to-JPEG example](https://github.com/cloudflare/realtime-examples/tree/main/video-to-jpeg) demonstrates a video publication delivered to a Worker as JPEG frames.
+
+These examples require application authentication and authorization before public use. Their repository guides describe setup, lifecycle behavior, and limitations.

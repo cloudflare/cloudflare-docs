@@ -8,7 +8,8 @@ products:
   - workers
 ---
 
-import { CompatibilityFlags, WranglerConfig, Render } from "~/components";
+import { WranglerConfig, Render } from "~/components";
+import CompatibilityFlags from "~/components/cf/CompatibilityFlags.astro";
 
 Compatibility flags enable specific features. They can be useful if you want to help the Workers team test upcoming changes that are not yet enabled by default, or if you need to hold back a change that your code depends on but still want to apply other compatibility changes.
 
@@ -59,7 +60,7 @@ A [growing subset](/workers/runtime-apis/nodejs/) of Node.js APIs are available 
 
 <Render file="nodejs_compat" product="workers" />
 
-For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. These flags are not used for these compatibility dates because the compatibility date enables the same behavior. Wrangler, Miniflare, the Cloudflare Vite plugin, and Vitest Pool Workers ignore these redundant flags when starting the runtime. Existing projects do not need to remove them when updating their compatibility date. Omit them from new configurations.
+For compatibility dates of `2026-08-04` or later, Workers enables both `nodejs_compat` and `nodejs_compat_v2` by default. These flags are not used for these compatibility dates because the compatibility date enables the same behavior. Wrangler, Miniflare, the Cloudflare Vite plugin, and the Workers Vitest plugin ignore these redundant flags when starting the runtime. Existing projects do not need to remove them when updating their compatibility date. Omit them from new configurations.
 
 To turn off Node.js compatibility completely for a compatibility date of `2026-08-04` or later, remove `nodejs_compat` and `nodejs_compat_v2` if present. Then add both of the following flags:
 

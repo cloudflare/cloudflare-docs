@@ -1,0 +1,521 @@
+---
+title: Replace the code interpreter
+description: Replace @cloudflare/sandbox 0.12 runCode(), code contexts, and runCodeStream() with an IPython kernel for Python and a Dynamic Worker for JavaScript.
+pcx_content_type: how-to
+sidebar:
+  order: 16
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - dynamic-workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+In Sandbox SDK 0.12, `runCode()` ran Python, JavaScript, and TypeScript in an interpreter process for each code context, and variables stayed defined between calls. 1.0 has no interpreter. This page runs Python in an IPython kernel that your Durable Object starts, with the results that 0.12 returned, and runs JavaScript in a Dynamic Worker.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). To keep variables between calls, `src/index.ts` also needs the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server).
+
+A `runCode()` call without a `context` used a default context for its language, so plain calls in one sandbox shared variables:
+
+```ts title="src/index.ts (0.12)"
+const sandbox = getSandbox(env.Sandbox, "ada");
+await sandbox.runCode("sales = [120, 95]");
+const execution = await sandbox.runCode("sum(sales)");
+```
+
+If your code relies on this, or on contexts that you create, follow [Keep Python variables between calls](#keep-python-variables-between-calls). If the code in each call stands alone, start a new `python3` process for each call, as in [Run Python code](/sandbox/commands/run-python-code/). The other 0.12 methods have their own sections:
+
+| 0.12 | Section |
+| --- | --- |
+| `runCode()` with `language: "javascript"` or `"typescript"` | [Run JavaScript in a Dynamic Worker](#run-javascript-in-a-dynamic-worker) |
+| `runCodeStream()`, `onStdout`, `onStderr`, `onResult` | [Replace streaming output](#replace-streaming-output) |
+
+## Keep Python variables between calls
+
+A kernel is a Python process that runs the code of each call with IPython, and keeps its variables until it exits. Your Durable Object starts one kernel for each context, on its own port.
+
+<Steps>
+
+1. Add IPython and the packages the code imports to your `Dockerfile`, and copy in the kernel script:
+
+   ```dockerfile title="Dockerfile" ins={6,7,13}
+   FROM node:24-trixie-slim
+
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends \
+   		ca-certificates git python3 \
+   		python3-ipython python3-matplotlib \
+   		python3-numpy python3-pandas \
+   	&& rm -rf /var/lib/apt/lists/*
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   COPY kernel.py /opt/kernel.py
+   CMD ["sleep", "infinity"]
+   ```
+
+   The 0.12 `python` image included IPython, matplotlib, NumPy, and pandas. Debian packages install them without `pip`.
+
+2. Create `kernel.py` next to your `Dockerfile`:
+
+   ```python title="kernel.py"
+   import base64
+   import io
+   import json
+   import os
+   import signal
+   import sys
+   import traceback
+   from http.server import BaseHTTPRequestHandler
+   from socketserver import TCPServer
+
+   os.environ["MPLBACKEND"] = "Agg"
+
+   from IPython.core.interactiveshell import InteractiveShell
+   from IPython.utils.capture import capture_output
+
+   PORT = int(sys.argv[1])
+   FORMATS = {
+       "text/plain": "text",
+       "text/html": "html",
+       "text/markdown": "markdown",
+       "text/latex": "latex",
+       "image/png": "png",
+       "image/jpeg": "jpeg",
+       "image/svg+xml": "svg",
+       "application/json": "json",
+       "application/javascript": "javascript",
+   }
+
+   shell = InteractiveShell.instance(colors="NoColor")
+   # Return values and errors in the response, not in stdout.
+   shell.displayhook.write_output_prompt = lambda: None
+   shell.displayhook.write_format_data = lambda *a, **k: None
+   shell.showtraceback = lambda *a, **k: None
+   shell.showsyntaxerror = lambda *a, **k: None
+   running = False
+
+
+   def interrupt(signum, frame):
+       # Stop a running cell. An idle kernel ignores the signal.
+       if running:
+           raise KeyboardInterrupt
+
+
+   def formats(data):
+       return {
+           FORMATS[kind]: value
+           for kind, value in data.items()
+           if kind in FORMATS
+       }
+
+
+   def figures():
+       if "matplotlib.pyplot" not in sys.modules:
+           return []
+       import matplotlib.pyplot as plt
+
+       images = []
+       for number in plt.get_fignums():
+           buffer = io.BytesIO()
+           plt.figure(number).savefig(
+               buffer, format="png", bbox_inches="tight"
+           )
+           png = base64.b64encode(buffer.getvalue()).decode()
+           images.append({"png": png})
+       plt.close("all")
+       return images
+
+
+   def describe(error):
+       if error is None:
+           return None
+       if isinstance(error, SyntaxError):
+           lines = traceback.format_exception_only(error)
+       else:
+           # Skip the frame of the kernel itself.
+           lines = traceback.format_exception(
+               type(error), error, error.__traceback__.tb_next
+           )
+       return {
+           "name": type(error).__name__,
+           "message": str(error),
+           "traceback": lines,
+       }
+
+
+   def run(code):
+       global running
+       running = True
+       try:
+           with capture_output(display=True) as captured:
+               cell = shell.run_cell(code, store_history=True)
+       finally:
+           running = False
+
+       results = [formats(output.data) for output in captured.outputs]
+       results += figures()
+       if isinstance(cell.result, (dict, list)):
+           results.append({"json": cell.result})
+       elif cell.result is not None:
+           data, _ = shell.display_formatter.format(cell.result)
+           results.append(formats(data))
+
+       stdout, stderr = captured.stdout, captured.stderr
+       return {
+           "logs": {
+               "stdout": [stdout] if stdout else [],
+               "stderr": [stderr] if stderr else [],
+           },
+           "results": results,
+           "error": describe(
+               cell.error_before_exec or cell.error_in_exec
+           ),
+           "executionCount": cell.execution_count,
+       }
+
+
+   class Kernel(BaseHTTPRequestHandler):
+       def do_GET(self):
+           self.reply(b"ready")
+
+       def do_POST(self):
+           length = int(self.headers["Content-Length"])
+           code = self.rfile.read(length).decode()
+           result = json.dumps(run(code), default=repr)
+           self.reply(result.encode())
+
+       def reply(self, body):
+           self.send_response(200)
+           self.send_header("Content-Length", str(len(body)))
+           self.end_headers()
+           self.wfile.write(body)
+
+       def log_message(self, *args):
+           pass
+
+
+   signal.signal(signal.SIGINT, interrupt)
+   # HTTPServer looks up the container hostname, which is too
+   # long to resolve.
+   TCPServer.allow_reuse_address = True
+   TCPServer(("0.0.0.0", PORT), Kernel).serve_forever()
+   ```
+
+   The kernel runs the body of each `POST` request as an IPython cell, and returns what 0.12 returned: standard output and standard error, one result for each value that the cell displays, a PNG for each open matplotlib figure, the value of the last expression, and the error. It handles one request at a time, so calls to one context wait for each other, as they did in 0.12.
+
+3. Add the result and context types before your class:
+
+   ```ts title="src/index.ts"
+   type Execution = {
+   	logs: { stdout: string[]; stderr: string[] };
+   	// One object for each value, keyed by format.
+   	results: Record<string, string | object>[];
+   	error: {
+   		name: string;
+   		message: string;
+   		traceback: string[];
+   	} | null;
+   	executionCount: number;
+   };
+
+   type CodeContext = {
+   	id: string;
+   	port: number;
+   	cwd: string;
+   	env?: Record<string, string>;
+   };
+
+   const DEFAULT_CONTEXT: CodeContext = {
+   	id: "default",
+   	port: 8800,
+   	cwd: "/workspace",
+   };
+
+   // Each kernel runs as a server in its own directory.
+   const kernelDir = (context: CodeContext) =>
+   	`${SERVERS}/kernel-${context.port}`;
+   ```
+
+4. Add methods to your class that start a kernel and interrupt it:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	// Ports of the kernels that answered in this container.
+   	private kernels = new Set<number>();
+
+   	private async startKernel(
+   		context: CodeContext,
+   	): Promise<Fetcher> {
+   		if (this.kernels.has(context.port)) {
+   			return this.container.getTcpPort(context.port);
+   		}
+
+   		await startServer(
+   			this.container,
+   			kernelDir(context),
+   			["python3", "/opt/kernel.py", String(context.port)],
+   			{ cwd: context.cwd, env: { ...ENV, ...context.env } },
+   		);
+   		const kernel = await waitForServer(
+   			this.container,
+   			kernelDir(context),
+   			context.port,
+   			30_000,
+   		);
+   		this.kernels.add(context.port);
+   		return kernel;
+   	}
+
+   	private async interruptKernel(context: CodeContext): Promise<void> {
+   		const kill = await this.container.exec([
+   			"sh",
+   			"-c",
+   			`${CURRENT}\ncurrent "$1" && kill -INT "$pid"`,
+   			"sh",
+   			kernelDir(context),
+   		]);
+   		await kill.exitCode;
+   	}
+   }
+   ```
+
+   Call `this.kernels.clear()` in `startContainer()`, inside `if (newContainer)`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startServer()` finds the kernel that already runs, and the kernel keeps its variables. If a kernel exits, `waitForServer()` throws with the end of its log.
+
+5. Add a `runCode()` method:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async runCode(
+   		code: string,
+   		options: { context?: string; timeout?: number } = {},
+   	): Promise<Execution> {
+   		await this.ensureRunning();
+   		const context = await this.getContext(
+   			options.context ?? DEFAULT_CONTEXT.id,
+   		);
+   		const kernel = await this.startKernel(context);
+
+   		try {
+   			const response = await kernel.fetch("http://kernel/", {
+   				method: "POST",
+   				body: code,
+   				signal: AbortSignal.timeout(options.timeout ?? 60_000),
+   			});
+   			return await response.json<Execution>();
+   		} catch (error) {
+   			if ((error as Error).name === "TimeoutError") {
+   				// Stop the cell, and keep the kernel variables.
+   				await this.interruptKernel(context);
+   			} else {
+   				// The kernel exited. The next call starts a new one.
+   				this.kernels.delete(context.port);
+   			}
+   			throw error;
+   		}
+   	}
+   }
+   ```
+
+   0.12 had no default timeout, and a cell that timed out kept running. Here, a call that runs longer than `timeout` throws a `TimeoutError`, and the kernel stops the cell with `KeyboardInterrupt`. Variables that earlier calls defined stay. If the kernel exits, for example because the code runs out of memory, the call throws and the next call starts a kernel without variables.
+
+6. Add methods that replace `createCodeContext()`, `listCodeContexts()`, and `deleteCodeContext()`:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async getContext(id: string): Promise<CodeContext> {
+   		if (id === DEFAULT_CONTEXT.id) {
+   			return DEFAULT_CONTEXT;
+   		}
+
+   		const context = await this.ctx.storage.get<CodeContext>(
+   			`context:${id}`,
+   		);
+
+   		if (!context) {
+   			throw new Error(`No code context ${id}`);
+   		}
+
+   		return context;
+   	}
+
+   	async createCodeContext(
+   		options: { cwd?: string; env?: Record<string, string> } = {},
+   	): Promise<CodeContext> {
+   		// Take the lowest port that no stored context uses.
+   		const stored = await this.ctx.storage.list<CodeContext>({
+   			prefix: "context:",
+   		});
+   		const used = new Set([...stored.values()].map((c) => c.port));
+   		let port = DEFAULT_CONTEXT.port + 1;
+
+   		while (used.has(port)) {
+   			port++;
+   		}
+
+   		const context: CodeContext = {
+   			id: crypto.randomUUID(),
+   			port,
+   			cwd: options.cwd ?? "/workspace",
+   			env: options.env,
+   		};
+
+   		await this.ctx.storage.put(`context:${context.id}`, context);
+   		return context;
+   	}
+
+   	async listCodeContexts(): Promise<CodeContext[]> {
+   		const contexts = await this.ctx.storage.list<CodeContext>({
+   			prefix: "context:",
+   		});
+   		return [DEFAULT_CONTEXT, ...contexts.values()];
+   	}
+
+   	async deleteCodeContext(id: string): Promise<void> {
+   		const context = await this.getContext(id);
+
+   		if (this.container.running) {
+   			await stopServer(this.container, kernelDir(context));
+   			this.kernels.delete(context.port);
+   		}
+
+   		await this.ctx.storage.delete(`context:${id}`);
+   	}
+   }
+   ```
+
+   `createCodeContext()` gives each new context the lowest port after `8800` that no stored context uses, so a new context can take the port of a deleted one.
+
+   The contexts share one container, so code in one context can read the files of the others and reach their ports. Give each user their own sandbox name.
+
+7. Replace each call. Pass the `id` of the context, and `env` for `envVars`:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "ada");
+   const context = await sandbox.createCodeContext({
+   	language: "python",
+   	envVars: { REGION: "east" },
+   });
+   const execution = await sandbox.runCode(
+   	"import os; os.environ['REGION']",
+   	{ context, timeout: 30_000 },
+   );
+   ```
+
+   ```ts title="src/index.ts (1.0)" ins={1,3,7}
+   const sandbox = env.Sandbox.getByName("ada");
+   const context = await sandbox.createCodeContext({
+   	env: { REGION: "east" },
+   });
+   const execution = await sandbox.runCode(
+   	"import os; os.environ['REGION']",
+   	{ context: context.id, timeout: 30_000 },
+   );
+   ```
+
+   Then change the code that reads the result:
+
+   | 0.12 | 1.0 |
+   | --- | --- |
+   | `results[i].text`, `html`, `png`, `jpeg`, `svg`, `latex`, `markdown`, `javascript`, `json` | The same keys. 0.12 returned each format as its own result, such as one `html` result and one `text` result for a pandas DataFrame. The kernel returns one result with both keys. |
+   | `results[i].formats()` | `Object.keys(results[i])`. |
+   | `results[i].chart`, `results[i].data` | Not returned. The 0.12 Python interpreter did not set them. |
+   | `logs.stdout`, `logs.stderr` | The same, with one string for each call. 0.12 also wrote the value of the last line to `stdout`, such as `Out[0]: 215`. The kernel returns that value only in `results`. |
+   | `error.name`, `error.message`, `error.traceback` | The same. `error` is `null` when the code succeeds, not `undefined`. |
+   | `executionCount` | The same. |
+
+8. Deploy, and send two calls to one sandbox. In this example, a Worker route at `/sandboxes/<name>/code` passes the request body to `runCode()`:
+
+   ```sh
+   WORKER="https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev"
+   curl "$WORKER/sandboxes/ada/code" --data-binary 'sales = [120, 95]'
+   curl "$WORKER/sandboxes/ada/code" --data-binary 'sum(sales)'
+   ```
+
+   The second call reads the variable that the first call defined:
+
+   ```json output
+   {
+   	"logs": { "stdout": [], "stderr": [] },
+   	"results": [{ "text": "215" }],
+   	"error": null,
+   	"executionCount": 2
+   }
+   ```
+
+</Steps>
+
+Variables that 0.12 contexts held stay in the 0.12 container. After the switch, run your setup code again, and create your contexts again, because 0.12 context IDs are not in the storage of your Durable Object.
+
+## Run JavaScript in a Dynamic Worker
+
+Run JavaScript in a [Dynamic Worker](/dynamic-workers/) that your Worker loads, so JavaScript needs no container.
+
+<Steps>
+
+1. Add a Worker Loader binding to your Wrangler configuration:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"worker_loaders": [
+   		{
+   			"binding": "LOADER",
+   		},
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+2. Create `src/sandbox.ts` with the `runJavaScript()` function from [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/#2-run-code-in-a-sandbox).
+
+3. Replace each `runCode()` call for JavaScript:
+
+   ```ts title="src/index.ts (0.12)"
+   const execution = await sandbox.runCode(
+   	"[2, 3, 5, 7].reduce((a, b) => a + b)",
+   	{ language: "javascript" },
+   );
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import { runJavaScript } from "./sandbox";
+
+   const output = await runJavaScript(
+   	env,
+   	"return [2, 3, 5, 7].reduce((a, b) => a + b);",
+   );
+   ```
+
+   `output` is `{ "result": 17, "logs": [] }`, and `logs` holds the `console.log()` output. The code runs as the body of an async function, so it must `return` its result. 0.12 returned the value of the last expression instead. The code has no network access. For the limits that `runJavaScript()` sets, refer to [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/#2-run-code-in-a-sandbox).
+
+</Steps>
+
+Each call loads a new Dynamic Worker, so variables do not carry over. Put the values that the code needs into the code. 0.12 compiled TypeScript before running it. To run TypeScript, compile it first with [`@cloudflare/worker-bundler`](/dynamic-workers/getting-started/#using-typescript-and-npm-dependencies).
+
+## Replace streaming output
+
+The kernel returns the output of a cell when the cell finishes, so `runCodeStream()`, `onStdout`, `onStderr`, and `onResult` have no 1.0 version. To send output while code runs, run the code as a command with `python3 -`, pass it on standard input, and return `stdout` from the process, as in [Move commands](/sandbox/sdk/migrate/commands/#stream-output). A command does not keep variables.
+
+## Related resources
+
+- [Run Python code](/sandbox/commands/run-python-code/)
+- [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/)
+- [Dynamic Workers](/dynamic-workers/)
+- [Stream command output](/sandbox/commands/stream-command-output/)
+- [Durable Object Container API](/containers/api/durable-object-container/)

@@ -12,6 +12,14 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Cached input image tokens (per 1M)": 2,
+		"Cached input tokens (per 1M)": 1.25,
+		"Input image tokens (per 1M)": 8,
+		"Input tokens (per 1M)": 5,
+		"Output image tokens (per 1M)": 30,
+		"Output tokens (per 1M)": 10
+	},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -227,6 +235,19 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_cached_image_tokens": 2,
+				"input_cached_tokens": 1.25,
+				"input_image_tokens": 8,
+				"input_tokens": 5,
+				"output_image_tokens": 30,
+				"output_tokens": 10
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:39",
 	"schema": {
@@ -235,8 +256,8 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the image to generate or edit",
-					"type": "string"
+					"type": "string",
+					"description": "Text prompt describing the image to generate or edit"
 				},
 				"images": {
 					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
@@ -295,9 +316,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "URL to the generated image",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated image"
 				}
 			},
 			"required": [

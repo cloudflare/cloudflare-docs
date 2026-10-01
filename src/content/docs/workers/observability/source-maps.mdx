@@ -41,7 +41,9 @@ Miniflare can also [output source maps](https://miniflare.dev/developing/source-
 ​​
 When your Worker throws an uncaught exception, we fetch the source map and use it to map the stack trace of the exception back to lines of your Worker’s original source code.
 
-You can then view the stack trace when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
+You can then view the source-mapped stack trace when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
+
+[Workers Issues](/workers/observability/issues/) groups production failures and displays captured stack traces when available.
 
 :::note
 
@@ -88,6 +90,6 @@ With **source maps uploaded**: all methods reference the correct files and line 
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/logs/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
+* [Tail Workers](/workers/observability/logs/tail-workers/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
 * [Real-time logs](/workers/observability/logs/real-time-logs/) - Learn how to capture Workers logs in real-time.
 * [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how exceptions are handled over RPC (Remote Procedure Call).

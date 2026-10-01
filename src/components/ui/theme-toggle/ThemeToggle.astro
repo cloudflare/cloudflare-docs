@@ -24,11 +24,9 @@ const { class: className, ...attrs } = Astro.props;
 	{...attrs}
 	aria-label="Toggle theme (light, dark, system)"
 >
-	{
-		/* Icon visibility is driven by `:root[data-nb-pref]`, which BaseLayout's
+	{/* Icon visibility is driven by `:root[data-nb-pref]`, which BaseLayout's
       pre-paint script sets before first paint — so the correct icon shows with
-      no flash, even before this component's script hydrates. */
-	}
+      no flash, even before this component's script hydrates. */}
 	<Icon
 		name="ph:sun"
 		class="nb-theme-ico nb-theme-ico-light h-[1.125rem] w-[1.125rem]"

@@ -1,0 +1,11 @@
+---
+title: Symmetric key support for JWT validation
+description: Validate JSON Web Tokens signed with HS256, HS384, or HS512 symmetric keys.
+date: 2026-08-25
+---
+
+API Shield [JSON Web Token validation](/api-shield/security/jwt-validation/) now supports symmetric keys that use the `HS256`, `HS384`, and `HS512` algorithms. You can configure HMAC verification keys in the Cloudflare dashboard or with the Cloudflare API.
+
+Cloudflare never stores symmetric credentials in plaintext. API responses do not include the credential.
+
+Refer to [Configure JWT validation via the API](/api-shield/security/jwt-validation/api/#credentials) for supported key formats and credential requirements.

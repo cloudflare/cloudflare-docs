@@ -17,7 +17,7 @@ The `/links` endpoint retrieves all links from a webpage. It can be used to extr
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/links
 ```
 
 ## Required fields
@@ -43,7 +43,7 @@ This example grabs all links from the [Cloudflare Doc's homepage](https://develo
 The response will be a JSON array containing the links found on the page.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/links' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -175,7 +175,7 @@ Visit the [Browser Run API reference](/api/resources/browser_rendering/subresour
 Set the `visibleLinksOnly` parameter to `true` to only return links that are visible on the page. By default, this is set to `false`.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/links' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -267,7 +267,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 Set the `excludeExternalLinks` parameter to `true` to exclude links pointing to external domains. By default, this is set to `false`.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/links' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

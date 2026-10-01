@@ -1,0 +1,24 @@
+---
+title: "Crawl endpoint now respects the Content Signals `use` directive"
+description: "The /crawl endpoint accepts a new contentUse parameter that enforces the `use` directive in a site's robots.txt Content Signals."
+products:
+  - browser-run
+date: 2026-08-31
+---
+
+The [`/crawl`](/browser-run/quick-actions/crawl-endpoint/) endpoint now respects the `use` directive of the [Content Signals](https://contentsignals.org/) standard, letting site owners express the maximum level at which their content may be used.
+
+You can declare your intended level with the new `contentUse` parameter. Allowed values, from least to most permissive, are `reference` and `full`, and the default is `full`. If a target site's `robots.txt` sets a `use` level that is more restrictive than your declared `contentUse`, the crawl request is rejected with a `400` error.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "contentUse": "reference",
+    "formats": ["markdown"]
+  }'
+```
+
+For more information, refer to [Content Signals](/browser-run/quick-actions/crawl-endpoint/#content-signals) in the `/crawl` endpoint documentation.

@@ -10,7 +10,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-The Network session analytics dashboard provides visibility into your Cloudflare One traffic patterns. This dashboard helps you understand how traffic flows through your network, including on-ramps (how traffic enters Cloudflare, such as the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [proxy endpoints (PAC files)](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), or Cloudflare Tunnel) and off-ramps (how traffic exits Cloudflare, such as the public Internet or a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)).
+The Network session analytics dashboard provides visibility into your Cloudflare One traffic patterns. This dashboard helps you understand how traffic flows through your network, including on-ramps (how traffic enters Cloudflare, such as the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [proxy endpoints (PAC files)](/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), [Cloudflare Mesh](/mesh/), [Workers VPC](/workers-vpc/), or Cloudflare Tunnel) and off-ramps (how traffic exits Cloudflare, such as the public Internet, a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), or a Mesh node).
 
 The dashboard is based on the [Zero Trust network sessions Logpush dataset](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/). For definitions on any field, refer to the dataset schema documentation.
 
@@ -60,6 +60,14 @@ The Network session analytics dashboard helps you:
   - Origin unroutable
 
 For the full list of reasons for session termination, refer to [ConnectionCloseReason](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/#connectionclosereason).
+
+### Troubleshoot session limit errors
+
+Session limit close reasons identify the type and scope of a limit. Reasons containing `ACTIVE_SESSIONS` indicate too many concurrent sessions. Reasons containing `NEW_SESSIONS` indicate that sessions are being created too quickly. `FOR_ACCOUNT` reasons aggregate sessions for the account on the Cloudflare server enforcing the limit and can affect multiple users connected to that server. `FOR_USER` reasons apply to one user.
+
+Use [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/), not Gateway activity logs, to investigate these errors. Filter by `ConnectionCloseReason`, then correlate `SessionStartTime` and `SessionID` with fields such as `Email`, `UserID`, `DeviceID`, `SourceIP`, `OriginIP`, `OriginPort`, `Protocol`, and `ConnectionReuse`.
+
+Reduce automatic retries and connection churn in the affected application. Reuse connections when the application and protocol support it. If expected sustained traffic continues to produce these errors, contact your account team or [Cloudflare Support](/cloudflare-one/troubleshooting/contact-support/) for review.
 
 ## Related resources
 

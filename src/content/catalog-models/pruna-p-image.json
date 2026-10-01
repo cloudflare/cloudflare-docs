@@ -11,6 +11,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.005
+	},
 	"examples": [
 		{
 			"name": "Lion at Sunset",
@@ -92,6 +95,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"output_image_count": 0.005
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-18 15:45:31",
 	"schema": {
@@ -100,12 +111,12 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text description of the image to generate. The model automatically enhances prompts for better results.",
-					"type": "string"
+					"type": "string",
+					"description": "Text description of the image to generate. The model automatically enhances prompts for better results."
 				},
 				"aspect_ratio": {
-					"description": "Aspect ratio for the image. Use \"custom\" with width/height for exact dimensions.",
 					"default": "16:9",
+					"description": "Aspect ratio for the image. Use \"custom\" with width/height for exact dimensions.",
 					"type": "string",
 					"enum": [
 						"1:1",
@@ -137,8 +148,8 @@
 					"type": "string"
 				},
 				"lora_scale": {
-					"description": "How strongly the LoRA should be applied (-1 to 3).",
 					"default": 0.5,
+					"description": "How strongly the LoRA should be applied (-1 to 3).",
 					"type": "number",
 					"minimum": -1,
 					"maximum": 3
@@ -148,8 +159,8 @@
 					"type": "string"
 				},
 				"prompt_upsampling": {
-					"description": "Upsample the prompt with an LLM for enhanced results.",
 					"default": false,
+					"description": "Upsample the prompt with an LLM for enhanced results.",
 					"type": "boolean"
 				},
 				"seed": {
@@ -159,8 +170,8 @@
 					"maximum": 9007199254740991
 				},
 				"disable_safety_checker": {
-					"description": "Disable safety checker for generated images.",
 					"default": false,
+					"description": "Disable safety checker for generated images.",
 					"type": "boolean"
 				}
 			},
@@ -178,9 +189,9 @@
 			"type": "object",
 			"properties": {
 				"image": {
-					"description": "Presigned URL for the generated image.",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "Presigned URL for the generated image."
 				}
 			},
 			"required": [

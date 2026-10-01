@@ -1,12 +1,12 @@
 ---
-title: WebSocket reporting now includes full connection data transfer
-description: HTTP Traffic Analytics and HTTP request logs now count data transferred throughout WebSocket connections, not only the initial handshake.
+title: WebSocket reporting now includes full connection data transfer and duration
+description: HTTP Traffic Analytics and HTTP request logs now report data transfer and duration for the full WebSocket connection, not only the initial handshake.
 date: 2026-08-14
 ---
 
-Cloudflare has fixed an issue affecting WebSocket data transfer reporting. HTTP Traffic Analytics and HTTP request logs now correctly count data transferred throughout a WebSocket connection, restoring the correct behavior. During the affected period, reporting captured only the initial `101 Switching Protocols` handshake for some WebSocket connections, which could underreport their data transfer.
+Cloudflare has fixed an issue affecting WebSocket data transfer and session duration reporting. HTTP Traffic Analytics and HTTP request logs now correctly report data transferred throughout a WebSocket connection and the duration of the full session. During the affected period, reporting captured only the bytes and duration of the initial `101 Switching Protocols` handshake for some WebSocket connections.
 
-Customers with WebSocket traffic will see the correct **Data Transfer** in the dashboard and `EdgeResponseBytes` in analytics and HTTP request logs. The change reflects restored accounting of existing WebSocket traffic, not an increase in traffic caused by this change. WebSocket connection behavior is unaffected.
+Customers with WebSocket traffic will see the correct **Data Transfer** in the dashboard and `EdgeResponseBytes` in analytics and HTTP request logs. Reported session duration now reflects the full WebSocket session rather than only the handshake. These changes restore the accounting of existing WebSocket traffic and duration. They do not indicate an increase in traffic or alter WebSocket connection behavior.
 
 The separate [WebSocket Analytics Logpush dataset](/logs/logpush/logpush-job/datasets/zone/websocket_analytics/) continues to provide per-connection directional byte counts, timestamps, and close details.
 

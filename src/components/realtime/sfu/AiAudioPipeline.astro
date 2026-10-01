@@ -1,0 +1,226 @@
+---
+import RealtimeDiagramFrame from "./RealtimeDiagramFrame.astro";
+---
+
+<RealtimeDiagramFrame
+	ariaLabel="Publisher text goes to a TTS Durable Object, which exchanges data with Workers AI speech generation and sends PCM audio through Realtime SFU to browser listeners. Browser microphone audio goes through Realtime SFU to an STT Durable Object, which exchanges data with Workers AI transcription and sends transcripts to the browser."
+	className="rt-ai-audio"
+>
+	<div class="rtai-desktop">
+		<div class="rtai-track rtai-track--tts">
+			<div class="rt-diagram__node rtai-source">
+				<strong>Publisher text</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-source-link"></div>
+			<div class="rt-diagram__node rt-diagram__node--accent rtai-adapter">
+				<strong>TTS Durable Object</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-sfu-link">
+				<span class="rt-diagram__connector-label">PCM over WebSocket</span>
+			</div>
+			<div class="rt-diagram__node rt-diagram__node--accent rtai-sfu">
+				<span class="rt-diagram__eyebrow">Cloudflare</span>
+				<strong>Realtime SFU</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-browser-link">
+				<span class="rt-diagram__connector-label">WebRTC audio</span>
+			</div>
+			<div class="rt-diagram__node rtai-destination">
+				<strong>Browser listeners</strong>
+			</div>
+
+			<div class="rtai-service-link rtai-service-link--tts" aria-hidden="true">
+				<span></span>
+			</div>
+			<div class="rt-diagram__node rt-diagram__node--blue rtai-service rtai-service--tts">
+				<strong>Workers AI speech generation</strong>
+			</div>
+		</div>
+
+		<div class="rtai-track rtai-track--stt">
+			<div class="rt-diagram__node rtai-source">
+				<strong>Browser microphone</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-source-link">
+				<span class="rt-diagram__connector-label">WebRTC audio</span>
+			</div>
+			<div class="rt-diagram__node rt-diagram__node--accent rtai-sfu">
+				<span class="rt-diagram__eyebrow">Cloudflare</span>
+				<strong>Realtime SFU</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-sfu-link">
+				<span class="rt-diagram__connector-label">PCM over WebSocket</span>
+			</div>
+			<div class="rt-diagram__node rt-diagram__node--accent rtai-adapter">
+				<strong>STT Durable Object</strong>
+			</div>
+			<div class="rt-diagram__connector rtai-browser-link">
+				<span class="rt-diagram__connector-label">Transcript WebSocket</span>
+			</div>
+			<div class="rt-diagram__node rtai-destination">
+				<strong>Browser transcript</strong>
+			</div>
+
+			<div class="rtai-service-link rtai-service-link--stt" aria-hidden="true">
+				<span></span>
+			</div>
+			<div class="rt-diagram__node rt-diagram__node--blue rtai-service rtai-service--stt">
+				<strong>Workers AI transcription</strong>
+			</div>
+		</div>
+	</div>
+
+	<div class="rt-diagram__mobile-routes">
+		<div class="rt-diagram__mobile-route">
+			<span>Publisher text</span>
+			<small>→</small>
+			<span>TTS Durable Object</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>TTS Durable Object</span>
+			<small>↔</small>
+			<span>Workers AI speech generation</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>TTS Durable Object</span>
+			<small>PCM over WebSocket →</small>
+			<span>Realtime SFU</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>WebRTC audio →</small>
+			<span>Browser listeners</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Browser microphone</span>
+			<small>WebRTC audio →</small>
+			<span>Realtime SFU</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>PCM over WebSocket →</small>
+			<span>STT Durable Object</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>STT Durable Object</span>
+			<small>↔</small>
+			<span>Workers AI transcription</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>STT Durable Object</span>
+			<small>Transcript WebSocket →</small>
+			<span>Browser transcript</span>
+		</div>
+	</div>
+</RealtimeDiagramFrame>
+
+<style>
+	.rtai-desktop {
+		display: grid;
+		gap: 2rem;
+		max-width: 940px;
+		margin: 0 auto;
+	}
+
+	.rtai-track {
+		display: grid;
+		grid-template-columns:
+			minmax(5.75rem, 1fr) minmax(2.5rem, 0.55fr) minmax(6.25rem, 1fr)
+			minmax(3.25rem, 0.7fr) minmax(6.25rem, 1fr) minmax(3rem, 0.65fr) minmax(
+				5.75rem,
+				1fr
+			);
+		grid-template-rows: minmax(5rem, auto) 2.5rem minmax(4.5rem, auto);
+		align-items: stretch;
+	}
+
+	.rtai-source {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.rtai-source-link {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.rtai-track--tts .rtai-adapter,
+	.rtai-track--stt .rtai-sfu {
+		grid-column: 3;
+		grid-row: 1;
+	}
+
+	.rtai-sfu-link {
+		grid-column: 4;
+		grid-row: 1;
+	}
+
+	.rtai-track--tts .rtai-sfu,
+	.rtai-track--stt .rtai-adapter {
+		grid-column: 5;
+		grid-row: 1;
+	}
+
+	.rtai-browser-link {
+		grid-column: 6;
+		grid-row: 1;
+	}
+
+	.rtai-destination {
+		grid-column: 7;
+		grid-row: 1;
+	}
+
+	.rtai-service-link {
+		position: relative;
+		grid-row: 2;
+		justify-self: center;
+		width: 1px;
+		background: var(--rtd-line);
+	}
+
+	.rtai-service-link::before,
+	.rtai-service-link::after {
+		content: "";
+		position: absolute;
+		left: -3px;
+		width: 6px;
+		height: 6px;
+		border-top: 1.5px solid var(--rtd-line);
+		border-right: 1.5px solid var(--rtd-line);
+	}
+
+	.rtai-service-link::before {
+		top: 0;
+		transform: rotate(-45deg);
+	}
+
+	.rtai-service-link::after {
+		bottom: 0;
+		transform: rotate(135deg);
+	}
+
+	.rtai-service-link--tts,
+	.rtai-service--tts {
+		grid-column: 3;
+	}
+
+	.rtai-service-link--stt,
+	.rtai-service--stt {
+		grid-column: 5;
+	}
+
+	.rtai-service {
+		grid-row: 3;
+	}
+
+	@container (max-width: 32rem) {
+		.rtai-desktop {
+			display: none;
+		}
+
+		.rt-diagram__mobile-routes {
+			display: grid;
+		}
+	}
+</style>
