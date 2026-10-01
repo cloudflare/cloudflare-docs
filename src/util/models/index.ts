@@ -3,6 +3,7 @@
  */
 export * from "./model-types";
 export * from "./model-helpers";
+export * from "./model-format";
 export * from "./model-properties";
 export * from "./model-schema";
 export * from "./model-resolver";

@@ -6,12 +6,15 @@ products:
 title: Edit basic information
 ---
 
-import { Render } from "~/components";
+import { DashButton } from "~/components";
 
-<Render
-	file="mconn/maintenance/edit-basic-info"
-	product="networking-services"
-	params={{
-		dashName: "Cloudflare WAN (formerly Magic WAN)",
-	}}
-/>
+In **Basic information**, you can change the name and description of your Cloudflare One Appliance (formerly Magic WAN Connector).
+
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles**.
+3. Find the Cloudflare One Appliance that you want to edit > select the three dots next to it > **Edit**.
+4. In **Basic information** make the necessary changes.
+5. Select **Save**.

@@ -20,9 +20,7 @@ const { title, class: className, ...attrs } = Astro.props;
 
 <div data-step class={cn(className)} {...attrs}>
 	{title && <p class="text-foreground m-0 font-semibold">{title}</p>}
-	<div
-		class="text-foreground mt-1 text-sm leading-snug [&_p:first-child]:mt-0 [&_p:last-child]:mb-0"
-	>
+	<div class="text-foreground mt-1 text-sm leading-snug [&_p:first-child]:mt-0 [&_p:last-child]:mb-0">
 		<slot />
 	</div>
 </div>

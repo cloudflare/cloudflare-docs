@@ -39,7 +39,7 @@ export function ActionButton({
 			disabled={disabled}
 			title={title}
 			className={cn(
-				"px-3 py-1.5 font-mono text-[10px] font-medium tracking-widest uppercase",
+				"inline-flex items-center justify-center gap-1.5 px-3 py-1.5 font-mono text-[10px] font-medium tracking-widest uppercase",
 				"rounded-sm border shadow-xs",
 				"cursor-pointer select-none active:scale-[0.97]",
 				"disabled:cursor-not-allowed disabled:opacity-40",

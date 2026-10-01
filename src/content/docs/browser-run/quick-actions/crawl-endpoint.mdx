@@ -18,7 +18,7 @@ The `/crawl` endpoint is available via the REST API. [Create a custom API Token]
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<account_id>/browser-rendering/crawl
+https://api.cloudflare.com/client/v4/accounts/<account_id>/browser-run/crawl
 ```
 
 ## Required fields
@@ -37,7 +37,7 @@ Refer to [optional parameters](/browser-run/quick-actions/crawl-endpoint/#option
 There are two steps to using the `/crawl` endpoint:
 
 1. [Initiate the crawl job](/browser-run/quick-actions/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
-2. [Request results of the crawl job](/browser-run/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
+2. [Request results of the crawl job](/browser-run/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) — Monitor the crawl with an event subscription or `GET` request. When it finishes, send a `GET` request for the results.
 
 Crawl jobs have a maximum run time of seven days. If a job does not finish within this time, it will be cancelled due to timeout. Job results are available for 14 days after the job completes, after which the job data is deleted.
 
@@ -50,7 +50,7 @@ Users on the Workers Free plan are subject to additional crawl-specific restrict
 Send a `POST` request with a `url` to start a crawl job. The API responds immediately with a job `id` you will use to retrieve results. Refer to [optional parameters](/browser-run/quick-actions/crawl-endpoint/#optional-parameters) for additional customization options.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -72,7 +72,7 @@ Example response:
 To check the status or request the results of your crawl job, use the job `id` you received:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -85,6 +85,18 @@ The response includes a `status` field indicating the current state of the crawl
 - `errored` — The crawl job encountered an error.
 - `completed` — The crawl job finished successfully.
 
+### Subscribe to lifecycle events
+
+Use [Queues event subscriptions](/queues/event-subscriptions/events-schemas/#browser-run) as a push-based alternative to status polling. The linked reference includes setup instructions and payload schemas.
+
+Browser Run is an account-level event source. A subscription receives events for all crawl jobs in your account:
+
+- `crawl.started` — A crawl job starts.
+- `crawl.updated` — A crawled URL changes status.
+- `crawl.finished` — A crawl job finishes.
+
+These events provide lifecycle and status information, not crawled page content. After `crawl.finished`, send a `GET` request with the job ID to fetch the full results.
+
 ### Polling for completion
 
 Since crawl jobs run asynchronously, you can poll the endpoint periodically to check when the job finishes. Add `?limit=1` to the request URL so the response stays lightweight — you only need the job `status`, not the full set of crawled records.
@@ -96,7 +108,7 @@ async function waitForCrawl(accountId, jobId, apiToken) {
 
 	for (let i = 0; i < maxAttempts; i++) {
 		const response = await fetch(
-			`https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-rendering/crawl/${jobId}?limit=1`,
+			`https://api.cloudflare.com/client/v4/accounts/${accountId}/browser-run/crawl/${jobId}?limit=1`,
 			{
 				headers: {
 					Authorization: `Bearer ${apiToken}`,
@@ -127,7 +139,7 @@ Once the job reaches a terminal status, fetch the full results without the `limi
 Example with query parameters:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e?cursor=10&limit=10&status=completed' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -179,7 +191,7 @@ This information is only available in the crawl results (step 2) — the [initia
 To view only errored records, filter by `status=errored`:
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=errored' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/{job_id}?status=errored' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -190,7 +202,7 @@ The record's `status` field contains the HTTP status code returned by the origin
 To cancel a crawl job that is currently in progress, use the job `id` you received:
 
 ```bash
-curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
+curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
 
@@ -217,6 +229,7 @@ When `render` is `true` (the default), crawl jobs also support all standard Brow
 | `options.includePatterns`      | Array of strings | Only visits URLs that match one of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`.                                                                                                                                                                                                                                                                                                  |
 | `options.excludePatterns`      | Array of strings | Does not visit URLs that match any of these wildcard patterns. Use `*` to match any characters except `/`, or `**` to match any characters including `/`.                                                                                                                                                                                                                                                                                               |
 | `crawlPurposes`                | Array of strings | Declares the intended use of crawled content for [Content Signals](https://contentsignals.org/) enforcement. Allowed values: `search`, `ai-input`, `ai-train`. Default is `["search", "ai-input", "ai-train"]`. If a target site's `robots.txt` includes a `Content-Signal` directive that sets any of your declared purposes to `no`, the crawl request will be rejected with a `400` error. Refer to [Content Signals](#content-signals) for details. |
+| `contentUse`                   | String           | Declares the intended content use level for the `use` [Content Signals](https://contentsignals.org/) directive. Allowed values, from least to most permissive: `reference`, `full`. Default is `full`. If a target site sets a `use` directive more restrictive than your declared level, the crawl request will be rejected with a `400` error. Refer to [Content Signals](#content-signals) for details.                                              |
 
 ### Pattern behavior
 
@@ -228,12 +241,14 @@ When `render` is `true` (the default), crawl jobs also support all standard Brow
 
 ### Viewing skipped URLs
 
-To view URLs that were discovered but skipped, query the crawl job results with `status=skipped`. URLs can be skipped due to `includeExternalLinks`, `includeSubdomains`, `includePatterns`/`excludePatterns`, or the `modifiedSince` parameter. Skipped URLs will also be visible in the dashboard in a future release.
+The `skipped` status applies to URLs that the crawler discovered and evaluated individually, but then chose not to fetch because they were excluded by your crawl configuration, such as `includeExternalLinks`, `includeSubdomains`, or `includePatterns`/`excludePatterns`. To view these URLs, query the crawl job results with `status=skipped`.
 
 ```bash
-curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/{job_id}?status=skipped' \
+curl -X GET 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl/{job_id}?status=skipped' \
   -H 'Authorization: Bearer YOUR_API_TOKEN'
 ```
+
+Because `skipped` only tracks URLs that were evaluated one by one, it applies mainly to crawls that use `source: links` (or `source: all`), where the crawler follows links scraped from pages and checks each one against your configuration. When crawling from a sitemap (`source: sitemaps`), URLs that fall outside your configuration are filtered out in bulk before they are evaluated individually, so they are omitted from the job entirely rather than recorded as `skipped`. As a result, the set of `skipped` URLs is not an exhaustive list of every URL that was left out of the crawl.
 
 ### `render` parameter
 
@@ -246,12 +261,13 @@ Crawls that use `render: true` use a headless browser and are billed under typic
 ### Example with all optional parameters
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
     "url": "https://www.exampledocs.com/docs/",
     "crawlPurposes": ["search"],
+    "contentUse": "reference",
     "limit": 50,
     "depth": 2,
     "formats": ["markdown"],
@@ -283,7 +299,7 @@ Visit the [Browser Run API reference](/api/resources/browser_rendering/subresour
 Crawl only documentation pages and exclude specific sections:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -308,7 +324,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Extract structured product data using the `json` format. This leverages [Workers AI](/workers-ai/) by default. Refer to the [`/json` endpoint](/browser-run/quick-actions/json-endpoint/) to learn more.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -344,7 +360,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Fetch static HTML without rendering for faster crawling of static sites:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -360,7 +376,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Crawl pages behind HTTP authentication or with custom headers:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -376,7 +392,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 You can also use cookies or custom headers for token-based authentication:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -393,7 +409,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Crawl single-page applications that load content dynamically:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -416,7 +432,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 Speed up crawling by blocking images and media. `rejectResourceTypes` is only available when `render` is `true` (the default).
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -481,7 +497,25 @@ Content-Signal: search=yes, ai-train=no
 Allow: /
 ```
 
+A site owner can also declare a `use` directive to express the maximum level at which their content may be used. The levels, from least to most permissive, are:
+
+- `immediate` — Ephemeral, single-response use, where content is not retained.
+- `reference` — Content may be retained, indexed, or cited.
+- `full` — Unrestricted use, including AI training.
+
+For example, a `robots.txt` that limits use to `reference`:
+
+```txt title="robots.txt"
+User-Agent: *
+Content-Signal: use=reference
+Allow: /
+```
+
 #### How /crawl enforces Content Signals
+
+The `/crawl` endpoint enforces both the yes/no purpose directives (`search`, `ai-input`, `ai-train`) and the `use` level directive.
+
+**Purpose directives**
 
 By default, `/crawl` declares all three purposes: `["search", "ai-input", "ai-train"]`. If a target site sets any of those content signals to `no`, the crawl request will be rejected at initiation with a `400 Bad Request` error unless you explicitly narrow your declared purposes using the `crawlPurposes` parameter to exclude the disallowed use.
 
@@ -489,12 +523,12 @@ This means:
 
 1. **Site has no Content Signals** — The crawl proceeds normally.
 2. **Site has Content Signals, and all your declared purposes are allowed** — The crawl proceeds normally.
-3. **Site sets a content signal to `no`, and that purpose is in your `crawlPurposes`** — The crawl request is rejected with a `400` error and the message `Crawl purpose(s) completely disallowed by Content-Signal directive`.
+3. **Site sets a content signal to `no`, and that purpose is in your `crawlPurposes`** — The crawl request is rejected with a `400` error and the message `Crawl disallowed by Content-Signal directive (purpose or use level)`.
 
 To crawl a site that disallows AI training but allows search, set `crawlPurposes` to only the purposes you need:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -506,8 +540,33 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
 
 In this example, because the operator declared only `search` as their purpose, the crawl will succeed even if the site sets `ai-train=no`.
 
+**Use level directive**
+
+The `contentUse` parameter declares the level at which you intend to use the crawled content. Allowed values, from least to most permissive, are `reference` and `full`. The default is `full`.
+
+The `immediate` level is not accepted as a `contentUse` value because the `/crawl` endpoint stores crawled content, which is not compatible with ephemeral, single-response use.
+
+A crawl is rejected when your declared `contentUse` level is more permissive than the site's declared `use` level. For example:
+
+1. **Site sets `use=full` (or does not set `use`)** — Any `contentUse` value is allowed.
+2. **Site sets `use=reference`** — A crawl with `contentUse: "reference"` is allowed, but the default `contentUse: "full"` is rejected.
+3. **Site sets `use=immediate`** — All crawls are rejected, because both `reference` and `full` exceed the declared level.
+
+To crawl a site that sets `use=reference`, set `contentUse` to `reference`:
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/crawl' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "contentUse": "reference",
+    "formats": ["markdown"]
+  }'
+```
+
 :::note
-Content Signals are trust-based. By setting `crawlPurposes`, you are declaring to the site owner how you intend to use the crawled content.
+Content Signals are trust-based. By setting `crawlPurposes` and `contentUse`, you are declaring to the site owner how you intend to use the crawled content.
 :::
 
 ## Troubleshooting
@@ -522,7 +581,12 @@ If your crawl job completes but returns an empty records array, or all URLs show
 
 ### Crawl rejected by Content Signals
 
-If your crawl request returns a `400 Bad Request` with the message `Crawl purpose(s) completely disallowed by Content-Signal directive`, the target site's `robots.txt` includes a `Content-Signal` directive that disallows one or more of your declared `crawlPurposes`. To resolve this, check the site's `robots.txt` for `Content-Signal:` entries and set `crawlPurposes` to only the purposes you need. For example, if the site sets `ai-train=no` and you only need search indexing, use `"crawlPurposes": ["search"]`. Refer to [Content Signals](#content-signals) for details.
+If your crawl request returns a `400 Bad Request` with the message `Crawl disallowed by Content-Signal directive (purpose or use level)`, the target site's `robots.txt` includes a `Content-Signal` directive that disallows one or more of your declared `crawlPurposes`, or a `use` directive that is more restrictive than your declared `contentUse` level. To resolve this, check the site's `robots.txt` for `Content-Signal:` entries:
+
+- If the site sets a purpose to `no`, set `crawlPurposes` to only the purposes you need. For example, if the site sets `ai-train=no` and you only need search indexing, use `"crawlPurposes": ["search"]`.
+- If the site sets a `use` level, set `contentUse` to a level at or below it. For example, if the site sets `use=reference`, use `"contentUse": "reference"`.
+
+Refer to [Content Signals](#content-signals) for details.
 
 ### Crawl job takes too long
 

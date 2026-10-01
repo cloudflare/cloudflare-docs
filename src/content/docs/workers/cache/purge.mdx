@@ -368,4 +368,4 @@ On failure, each error in `errors` carries a numeric `code` and a human-readable
 
 ## Rate limits
 
-`purge()` uses the same rate-limiting system as Cloudflare's zone purge API. For the rate limits that apply to your account's plan, refer to [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits). When the purge is rate-limited, `success` is `false` and `errors` contains an entry describing the rejection.
+`purge()` uses the same rate-limiting system as Cloudflare's zone purge API. However, because Workers Caching is associated with the Worker rather than the zone, Workers Cache always uses the **Free tier limits** described in [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits), regardless of your account or zone plan. When the purge is rate-limited, `success` is `false` and `errors` contains an entry describing the rejection.

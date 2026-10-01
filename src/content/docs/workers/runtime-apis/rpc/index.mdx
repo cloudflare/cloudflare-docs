@@ -45,7 +45,7 @@ Note that RPC calls do not actually return `Promise`s, but they return a type th
 
 (We'll see why the type is not actually a Promise a bit later.)
 
-## Structured clonable types, and more
+## Structured cloneable types, and more
 
 Nearly all types that are [Structured Cloneable](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types) can be used as a parameter or return value of an RPC method. This includes, most basic "value" types in JavaScript, including objects, arrays, strings and numbers.
 
@@ -55,7 +55,7 @@ The RPC system also supports a number of types that are not Structured Cloneable
 
 - Functions, which are replaced by stubs that call back to the sender.
 - Application-defined classes that extend `RpcTarget`, which are similarly replaced by stubs.
-- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WriteableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
+- [ReadableStream](/workers/runtime-apis/streams/readablestream/) and [WritableStream](/workers/runtime-apis/streams/writablestream/), with automatic streaming flow control.
 - [Request](/workers/runtime-apis/request/) and [Response](/workers/runtime-apis/response/), for conveniently representing HTTP messages.
 - RPC stubs themselves, even if the stub was received from a third Worker.
 
@@ -209,7 +209,7 @@ While it's possible to define a similar interface to the caller using an object 
 
 :::note
 
-Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as clonable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion.
+Classes which do not inherit `RpcTarget` cannot be sent over RPC at all. This differs from Structured Clone, which defines application-defined classes as cloneable. Why the difference? By default, the Structured Clone algorithm simply ignores an object's class entirely. So, the recipient receives a plain object, containing the original object's instance properties but entirely missing its original type. This behavior is rarely useful in practice, and could be confusing if the developer had intended the class to be treated as an `RpcTarget`. So, Workers RPC has chosen to disallow classes that are not `RpcTarget`s, to avoid any confusion.
 :::
 
 ### Promise pipelining
@@ -348,9 +348,9 @@ class Default(WorkerEntrypoint):
 
 If the initial RPC ends up throwing an exception, then any pipelined calls will also fail with the same exception
 
-## ReadableStream, WriteableStream, Request and Response
+## ReadableStream, WritableStream, Request and Response
 
-You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WriteableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control. This allows you to send messages over RPC which are larger than [the typical 32 MiB limit](#limitations).
+You can send and receive [`ReadableStream`](/workers/runtime-apis/streams/readablestream/), [`WritableStream`](/workers/runtime-apis/streams/writablestream/), [`Request`](/workers/runtime-apis/request/), and [`Response`](/workers/runtime-apis/response/) using RPC methods. When doing so, bytes in the body are automatically streamed with appropriate flow control. This allows you to send messages over RPC which are larger than [the typical 32 MiB limit](#limitations).
 
 Only [byte-oriented streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API/Using_readable_byte_streams) (streams with an underlying byte source of `type: "bytes"`) are supported.
 

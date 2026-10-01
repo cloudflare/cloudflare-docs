@@ -154,7 +154,6 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
   - `name` - the name of the step.
   - `duration` - the duration to sleep for, as a `number` in milliseconds or as a `WorkflowDuration`-compatible string.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
-
 - <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
   - `name` - the name of the step.
   - `timestamp` - a JavaScript `Date` object or milliseconds from the Unix epoch to sleep the Workflow instance until.
@@ -325,6 +324,139 @@ steps = 25_000
 `step.sleep` does not count towards the maximum steps limit.
 
 Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
+
+## Default instance retention
+
+By default, the state of a finished Workflow instance is retained for the maximum [retention period](/workflows/reference/limits/) available on your account. To retain instances for a shorter period, configure `default_retention` on the Workflow binding in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"default_retention": {
+				"success_retention": "3 days",
+				"error_retention": "7 days",
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+- `success_retention` applies to instances that complete successfully and to instances that are terminated, and `error_retention` applies to instances that end in an errored state.
+- Both fields are optional and accept either a duration string, such as `"3 days"`, or a whole number of milliseconds.
+
+Instance-level retention settings take precedence over Workflow binding settings, which take precedence over the account default. The retention period cannot exceed your account's [retention limit](/workflows/reference/limits/).
+
+:::note
+
+`default_retention` cannot be combined with `script_name`. If you bind to a Workflow defined in another Worker, set `default_retention` on the Worker that defines the Workflow.
+
+:::
+
+## Declare Workflows in `exports`
+
+:::note
+Requires Wrangler 4.139.0 or above.
+:::
+
+You can declare the Workflows a Worker defines in the `exports` field of your Wrangler configuration, instead of in a `workflows` binding:
+
+- The Worker that declares the Workflow calls it through [`ctx.exports`](#call-a-workflow-through-ctxexports).
+- Other Workers call the Workflow through a [cross-script binding](#cross-script-calls). Set `script_name` to the Worker that declares the export, and `class_name` to the key of the export.
+
+Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `type` to `"workflow"` and `name` to the name of the Workflow:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "billing-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"exports": {
+		"MyWorkflow": {
+			"type": "workflow",
+			"name": "billing-workflow",
+			"schedules": ["0 * * * *"],
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, and `default_retention`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+
+You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
+
+A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
+
+### Call a Workflow through `ctx.exports`
+
+:::note
+Local development requires one of the following, depending on your tooling:
+
+- Wrangler 4.142.0 or above
+- `@cloudflare/vite-plugin` 1.61.0 or above
+- `@cloudflare/vitest-plugin` 1.3.0 or above
+
+:::
+
+Each Workflow declared in `exports` is available on [`ctx.exports`](/workers/runtime-apis/context/#exports), keyed by class name. It has the same API as a [Workflow binding](#workflow), so the Worker does not need a `workflows` binding to call it.
+
+The following Worker creates an instance of `MyWorkflow` through `ctx.exports`, and gets the status of an existing instance:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import {
+	WorkflowEntrypoint,
+	WorkflowEvent,
+	WorkflowStep,
+} from "cloudflare:workers";
+
+type Params = { name: string };
+
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		return await step.do("greet", async () => `Hello, ${event.payload.name}!`);
+	}
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const id = new URL(request.url).searchParams.get("id");
+
+		// Get the status of an existing instance
+		if (id !== null) {
+			const instance = await ctx.exports.MyWorkflow.get(id);
+			return Response.json(await instance.status());
+		}
+
+		// Create a new instance
+		const instance = await ctx.exports.MyWorkflow.create({
+			params: { name: "World" },
+		});
+		return Response.json({ id: instance.id });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/workers/#types) to type `ctx.exports.MyWorkflow` as `Workflow<Params>`. This requires Wrangler 4.142.0 or above.
+
+A `workflows` binding and a `workflow` export with the same `name` share their instances. This includes instances created before you declared the Workflow in `exports`, so you can move a Workflow from a binding to an export without losing its instances.
+
+To test a Workflow declared in `exports` with the Vitest integration, refer to [Introspect Workflows declared in `exports`](/workers/testing/vitest-integration/test-apis/#introspect-workflows-declared-in-exports).
 
 ## NonRetryableError
 
@@ -509,6 +641,44 @@ Returns an array of `WorkflowInstance`.
 
 Unlike [`create`](/workflows/build/workers-api/#create), this operation is idempotent and will not fail if an ID is already in use. If an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/), it will be skipped and excluded from the returned array.
 
+### deleteBatch
+
+Delete up to 100 Workflow instances and their stored state.
+
+`deleteBatch(instanceIds: string[])` returns a `Promise<WorkflowBatchDeleteResult>`. The `instanceIds` argument contains the IDs of the Workflow instances to delete.
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+```
+
+</TypeScriptExample>
+
+The operation returns successes and per-instance failures:
+
+<TypeScriptExample>
+
+```ts
+type WorkflowBatchDeleteResult = {
+	deleted: { id: string }[];
+	errors: {
+		id: string;
+		code: number;
+		message: string;
+	}[];
+};
+```
+
+</TypeScriptExample>
+
+`deleted` contains the IDs that were deleted successfully. `errors` contains failures identified by instance ID, with a stable error code and message.
+
+`deleteBatch()` accepts between 1 and 100 IDs. Duplicate IDs count toward the limit and are deleted once, with the result repeated for each input position. An ID whose instance does not exist is included in `errors`. If any ID is invalid, the call fails before deleting any instances. Deleting a running instance removes its stored state and stops its current execution without running rollback handlers.
+
 ### get
 
 Get a specific Workflow instance by ID.
@@ -555,11 +725,12 @@ interface WorkflowInstanceCreateOptions {
 	 */
 	retention?: {
 		/**
-		 * How long to retain instance state after the Workflow completes successfully.
+		 * How long to retain instance state after the Workflow completes successfully
+		 * or is terminated.
 		 */
 		successRetention?: WorkflowRetentionDuration;
 		/**
-		 * How long to retain instance state after the Workflow ends in an errored or terminated state.
+		 * How long to retain instance state after the Workflow ends in an errored state.
 		 */
 		errorRetention?: WorkflowRetentionDuration;
 	};
@@ -568,7 +739,7 @@ interface WorkflowInstanceCreateOptions {
 type WorkflowRetentionDuration = WorkflowSleepDuration;
 ```
 
-If `retention` is not set, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
 
 The following example creates an instance that retains state for 1 day after success and 7 days after an error:
 
@@ -607,9 +778,19 @@ declare abstract class WorkflowInstance {
 	 */
 	public restart(options?: WorkflowInstanceRestartOptions): Promise<void>;
 	/**
+	 * Delete the instance and its stored state.
+	 */
+	public delete(): Promise<void>;
+	/**
 	 * Returns the current status of the instance.
 	 */
 	public status(): Promise<InstanceStatus>;
+	/**
+	 * Subscribe to events from this Workflow instance.
+	 */
+	public subscribe(
+		options?: WorkflowInstanceSubscribeOptions,
+	): Promise<WorkflowInstanceSubscription>;
 }
 ```
 
@@ -720,6 +901,21 @@ interface WorkflowInstanceTerminateOptions {
 }
 ```
 
+### delete
+
+Delete a Workflow instance and its stored state with <code>delete(): Promise&lt;void&gt;</code>.
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+</TypeScriptExample>
+
+Deleting a running instance stops its current execution without running rollback handlers. If a Workflow deletes its own instance, execution stops during `await instance.delete()`, and code after the call does not run.
+
 ### sendEvent
 
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
@@ -759,6 +955,55 @@ export default {
 You can call `sendEvent` multiple times, setting the value of the `type` property to match the specific `waitForEvent` calls in your Workflow.
 
 This allows you to wait for multiple events at once, or use `Promise.race` to wait for multiple events and allow the first event to progress the Workflow.
+
+### subscribe
+
+Subscribe to historical and live execution events from a Workflow instance.
+
+- <code>subscribe(options?: WorkflowInstanceSubscribeOptions): Promise&lt;WorkflowInstanceSubscription&gt;</code>
+  - `options` - optional properties that set the starting cursor and filter event types.
+
+The returned subscription provides a `next()` method. Each call returns the next matching `WorkflowInstanceEvent` or waits for one. The subscription ends when the instance completes, errors, or terminates.
+
+#### WorkflowInstanceSubscribeOptions
+
+```ts
+interface WorkflowInstanceSubscribeOptions {
+	/**
+	 * The event ID after which to start.
+	 */
+	cursor?: number;
+	/**
+	 * Emit only events with one of these types.
+	 */
+	filter?: WorkflowInstanceEventType[];
+}
+
+type WorkflowInstanceEventType = WorkflowInstanceEvent["type"];
+```
+
+Call `subscribe()` without options to receive all events. Use `cursor` and `filter` to control which events the subscription returns:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("abc-123");
+
+// Subscribe to all events.
+using allEvents = await instance.subscribe();
+
+// Subscribe to events after event ID 100.
+using eventsAfterCursor = await instance.subscribe({ cursor: 100 });
+
+// Subscribe to selected event types.
+using filteredEvents = await instance.subscribe({
+	filter: ["workflow_completed", "workflow_errored"],
+});
+```
+
+</TypeScriptExample>
+
+For event types, filtering behavior, and cursor usage, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
 
 ### InstanceStatus
 

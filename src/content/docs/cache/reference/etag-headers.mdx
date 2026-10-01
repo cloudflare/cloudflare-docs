@@ -17,7 +17,7 @@ Weak ETag headers indicate a cached resource is semantically equivalent to the v
 :::note
 
 
-When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) and [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list of the features you need to disable, refer to the [Notes about end-to-end compression](/speed/optimization/content/compression/#notes-about-end-to-end-compression).
+When using weak ETag headers, it is necessary to disable certain features such as [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/), [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/), and [Replace insecure JavaScript libraries](/waf/tools/replace-insecure-js-libraries/) to prevent Cloudflare from removing the ETag headers set by your origin web server. For a comprehensive list of the features you need to disable, refer to the [Notes about end-to-end compression](/speed/optimization/content/compression/#notes-about-end-to-end-compression).
 
 
 :::
@@ -61,7 +61,7 @@ When **Respect Strong ETags** is disabled, Cloudflare will preserve strong ETag 
 
 * The origin server sends a response compressed using GZIP or Brotli, or an uncompressed response.
 * If the origin server sends a compressed response, the visitor accepts the same compression (GZIP, Brotli), according to the `accept-encoding` header.
-* [Rocket Loader](/speed/optimization/content/rocket-loader/) and [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) features are disabled.
+* [Rocket Loader](/speed/optimization/content/rocket-loader/), [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/), and [Replace insecure JavaScript libraries](/waf/tools/replace-insecure-js-libraries/) features are disabled.
 
 In all other situations, Cloudflare will either convert strong ETag headers to weak ETag headers or remove the strong ETag. For example, given the following conditions:
 

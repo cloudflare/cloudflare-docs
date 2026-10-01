@@ -104,29 +104,6 @@ meeting.chat.messages
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-There are three types of messages that can be sent in chat:
-
-- Text messages
-- Images
-- Files
-
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
-
-```
-meeting.chat;
-```
-
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `ChatMessage`.
-
-```
-meeting.chat.messages;
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 There are three types of messages that can be sent in chat:
@@ -298,40 +275,6 @@ public final class FileMessage: ChatMessage {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The `ChatMessage` class is defined as follows:
-
-```dart
-enum MessageType { text, image, file }
-
-class ChatMessage {
-  final String displayName;
-  final MessageType type;
-  final bool read;
-  final String userId;
-  final String? pluginId;
-  final String time;
-}
-
-class TextMessage extends ChatMessage {
-  final String message;
-}
-
-class ImageMessage extends ChatMessage {
-  final String link;
-}
-
-class FileMessage extends ChatMessage {
-  final String name;
-  final String link;
-  final int size;
-}
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The `Message` type is defined as follows:
@@ -424,20 +367,6 @@ meeting.chat.sendTextMessage(message)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-There is a method in `meeting.chat` to send a message of each type.
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```dart
-final message = "Is this the real life?";
-meeting.chat.sendTextMessage(message);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 There is a method in `meeting.chat` to send a message of each type.
@@ -530,20 +459,6 @@ meeting.chat.sendImageMessage(imageURL: url) { err in
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-You can send an image with the help of `meeting.chat.sendImageMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
-
-```dart
-final filePath = "file_path_of_image";
-meeting.chat.sendImageMessage(filePath, (error) {
-  // Handle error if any
-});
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type File, and sends it to the participants in the meeting.
@@ -641,20 +556,6 @@ meeting.chat.sendFileMessage(fileURL: url) { err in
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-You can send a file with the help of `meeting.chat.sendFileMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
-
-```dart
-final filePath = "file_path_of_pdf";
-meeting.chat.sendFileMessage(filePath, (error) {
-  // Handle error if any
-});
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
@@ -869,53 +770,6 @@ The `onNewChatMessage()` method will be called whenever a new chat message is sh
 The `onMessageRateLimitReset()` method will be called when the rate limit for sending messages of self is reset and you can send messages again. The default rate limit is 180 messages within 60 seconds.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-To be able to receive chat messages you need to implement a method `onChatUpdates()` method from callback `RtkChatEventListener`. You can subscribe to this events by calling `meeting.addChatEventListener(rtkChatEventListener)`.
-
-```dart
-class ChatEventListener extends RtkChatEventListener {
-  @override
-  void onChatUpdates(List<ChatMessage> messages) {
-    messages.map((msg) {
-      switch (msg.type) {
-        case MessageType.text:
-          print((msg as TextMessage).displayName);
-          print((msg).message);
-
-          // Show message/return state to show text message UI.
-
-          break;
-        case MessageType.image:
-          print((msg as ImageMessage).displayName);
-          print((msg).link);
-
-          // Show message/return state to show image message UI.
-          break;
-        case MessageType.file:
-          print((msg as FileMessage).name);
-          print((msg).link);
-          print((msg).size);
-          // Show message/return state to show file message UI.
-
-          break;
-      }
-    });
-  }
-
-  void onNewChatMessage(ChatMessage message) {
-    // your code to handle new chat message
-  }
-}
-```
-
-In this context, `messages` refers to a list of all the chat messages in the meeting. The type of message used is `ChatMessage`, which was introduced earlier in the introduction to Chat topic.
-
-Whenever a chat message is received, the `meeting.chat.messages` list is automatically updated.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.

@@ -1,0 +1,19 @@
+---
+{}
+---
+
+### Add the Cloudflare Vite plugin to your project
+
+In your `vite.config.ts`, add the Cloudflare Vite plugin after your framework plugin:
+
+```ts {3, 6} title="vite.config.ts"
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [react(), cloudflare()],
+});
+```
+
+The Cloudflare Vite plugin does not require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application.

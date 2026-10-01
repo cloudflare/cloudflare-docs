@@ -10,9 +10,11 @@ tags:
   - Debugging
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 Use this guide to troubleshoot common issues with Data Loss Prevention (DLP).
+
+To check whether a profile detects specific content without sending traffic through Gateway, use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/).
 
 ## DLP policy does not trigger or block content
 
@@ -28,6 +30,20 @@ Once you turn on TLS decryption, you can create a DLP policy to inspect the cont
 | ----------- | -------- | --------------------- | ----- | ------ |
 | Domain      | in       | `box.com`             | And   | Block  |
 | DLP Profile | in       | _Credit card numbers_ |       |        |
+
+## Passive Detection shows no results
+
+[Passive Detection](/cloudflare-one/data-loss-prevention/passive-detection/) shows detections from sampled Gateway traffic. If you expect results but the dashboard is empty:
+
+<Steps>
+1. Select a time range that includes the traffic you want to investigate.
+2. Check **Traffic direction**. Remove the filter to include all traffic directions, or select _Unknown_ to check bodies without a recorded direction.
+3. Confirm that the expected detection entry is enabled in at least one DLP profile in the account.
+4. Confirm that traffic meets the [Gateway inspection prerequisites](/cloudflare-one/data-loss-prevention/passive-detection/#prerequisites), including HTTP filtering and TLS decryption for HTTPS.
+5. Check whether a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) or another routing configuration excludes the traffic from inspection.
+</Steps>
+
+An individual request or response body may not be sampled. An empty dashboard does not confirm that sensitive data is absent.
 
 ## DLP scans trigger false positives or block legitimate sites
 

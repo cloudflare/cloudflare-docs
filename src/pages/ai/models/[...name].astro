@@ -21,6 +21,7 @@ export const getStaticPaths = (async () => {
 	return models.map((model) => ({
 		params: { name: model.slug },
 		props: { model, slug: model.slug },
+		cacheKey: String(model.digest ?? model.id),
 	}));
 }) satisfies GetStaticPaths;
 

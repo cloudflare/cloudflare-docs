@@ -9,13 +9,43 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { GlossaryTooltip, Width } from "~/components";
 
-<Render
-	file="mnm-magic-transit-integration"
-	product="networking-services"
-	params={{
-		productName: "Network Flow",
-		rulesAutoAdvertiseURL: "/network-flow/rules/#rule-auto-advertisement"
-	}}
-/>
+[Magic Transit On Demand](/magic-transit/on-demand/) allows you to keep Magic Transit disabled during normal operations and activate it only when you need DDoS protection. Network Flow monitors your traffic while Magic Transit is off and detects attacks. When an attack is detected, you can enable Magic Transit automatically or manually.
+
+You can create Network Flow rules that monitor specific IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for DDoS attacks. When an attack is detected, Cloudflare notifies you by email, [webhook](/notifications/get-started/configure-webhooks/), or [PagerDuty](/notifications/get-started/configure-pagerduty/).
+
+If you enable [auto-advertisement](#activate-ip-auto-advertisement) on a rule, Magic Transit activates automatically to protect the targeted prefixes. You can enable auto-advertisement for individual Network Flow rules through the dashboard or API.
+
+After Magic Transit activates and your traffic flows through Cloudflare, Cloudflare blocks malicious DDoS traffic. Your origin servers receive only clean traffic through IPsec or GRE tunnels.
+
+The following diagrams illustrate this process:
+
+<Width size="large">
+	![The diagram shows the flow of traffic when you send flow data from your network to Cloudflare for analysis.](~/assets/images/network-flow/1-flowdata.png)
+</Width>
+
+<Width size="large">
+	![Cloudflare automatically notifies you when Cloudflare detects an attack	based on your flow data.](~/assets/images/network-flow/2-flowdata.png)
+</Width>
+
+<Width size="large">
+	![You can create rules to activate Magic Transit automatically, to protect your IP addresses from a DDoS
+	attack.](~/assets/images/network-flow/3-flowdata.png)
+</Width>
+
+## Activate IP auto-advertisement
+
+Before a rule can automatically activate Magic Transit, you must enable IP advertisement for the relevant prefixes. You can do this through the dashboard or the API.
+
+### Dashboard
+
+To activate IP advertisement through the Cloudflare dashboard, refer to [Configure dynamic advertisement](/byoip/concepts/dynamic-advertisement/best-practices/#configure-dynamic-advertisement).
+
+### API
+
+To activate IP advertisement through the API, refer to the [IP Address Management Dynamic Advertisement API](/api/resources/addressing/subresources/prefixes/subresources/advertisement_status/methods/edit/).
+
+## Network Flow rules
+
+To create Network Flow rules with auto-advertisement, refer to [Rule Auto-Advertisement](/network-flow/rules/#rule-auto-advertisement).

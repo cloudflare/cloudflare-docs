@@ -3,6 +3,15 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-09-16"
+    title: RealtimeKit Android Core 3.2.0
+    description: |-
+      **Enhancements**
+
+      - **Connection and media reliability** — Improved recovery from connection interruptions and screen-share shutdown.
+      - **Breakout rooms** — Admins can now join child rooms and reassign participants across rooms. Participant assignment and state handling are also improved.
+      - **Polls** — Improved vote acknowledgements and validation for ambiguous options.
+      - **API errors** — Improved reporting for authenticated API failures.
   - publish_date: "2026-07-17"
     title: RealtimeKit Android Core 3.1.0
     description: |-

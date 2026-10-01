@@ -44,10 +44,9 @@ Create a new project named `fetch-and-index` by running:
 />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}
@@ -97,7 +96,7 @@ export interface Env {
 }
 
 // The instance that indexes the fetched page.
-const INSTANCE_ID = "my-instance";
+const INSTANCE_NAME = "my-instance";
 
 // Build a stable item key that ends in .html, so AI Search converts the HTML
 // to Markdown before indexing it.
@@ -118,7 +117,7 @@ export default {
 			if (!query) {
 				return new Response("Add a ?q= query parameter", { status: 400 });
 			}
-			const results = await env.AI_SEARCH.get(INSTANCE_ID).search({ query });
+			const results = await env.AI_SEARCH.get(INSTANCE_NAME).search({ query });
 			return Response.json({
 				query: results.search_query,
 				results: results.chunks.map((chunk) => ({
@@ -177,7 +176,7 @@ export default {
 
 		// Upload the rendered HTML to built-in storage. uploadAndPoll waits until
 		// the page is indexed and searchable.
-		const item = await env.AI_SEARCH.get(INSTANCE_ID).items.uploadAndPoll(
+		const item = await env.AI_SEARCH.get(INSTANCE_NAME).items.uploadAndPoll(
 			itemKey(pageUrl),
 			html,
 			{ timeoutMs: 60_000 },
@@ -248,7 +247,7 @@ try {
 Then pass `metadata` in the upload options:
 
 ```ts
-const item = await env.AI_SEARCH.get(INSTANCE_ID).items.uploadAndPoll(
+const item = await env.AI_SEARCH.get(INSTANCE_NAME).items.uploadAndPoll(
 	itemKey(pageUrl),
 	html,
 	{ timeoutMs: 60_000, metadata },

@@ -40,24 +40,22 @@ const {
 ---
 
 <fieldset class={cn("m-0 flex min-w-0 flex-col gap-3 border-0 p-0", className)}>
-	{
-		legend && (
-			<legend
-				class={cn(
-					"text-foreground float-none mb-1 p-0 text-sm font-medium",
-					srOnlyLegend && "sr-only",
-					legendClass,
-				)}
-			>
-				{legend}
-			</legend>
-		)
-	}
-	<div class="flex flex-col gap-2"><slot /></div>
+	{legend && (
+		<legend
+			class={cn(
+				"text-foreground float-none mb-1 p-0 text-sm font-medium",
+				srOnlyLegend && "sr-only",
+				legendClass,
+			)}
+		>
+			{legend}
+		</legend>
+	)}
+	<div class="flex flex-col gap-2">
+		<slot />
+	</div>
 	{error && <p class="text-danger m-0 text-sm">{error}</p>}
-	{
-		description && (
-			<p class="text-muted-foreground m-0 text-sm">{description}</p>
-		)
-	}
+	{description && (
+		<p class="text-muted-foreground m-0 text-sm">{description}</p>
+	)}
 </fieldset>

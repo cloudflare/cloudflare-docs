@@ -176,9 +176,9 @@ The powerful analytics capabilities allow users to jump to immediate threats lik
 
 Within discovered endpoints, under the **Endpoints** tab and within **Security** > **Web assets**, users can also easily filter on the `cf-llm` label for discovered LLM-specific endpoints as shown below.
 
-Here, the power of the Cloudflare platform and cross-product integration is on full display. Not only are the respective discovered LLM endpoints labeled with `cf-llm`, but [Cloudflare API Security capabilities has also automatically attached managed risk labels](/api-shield/management-and-monitoring/endpoint-labels/) of `cf-risk-missing-auth` and `cf-risk-missing-schema`, signifying identified risks associated with the respective endpoint.
+Here, the power of the Cloudflare platform and cross-product integration is on full display. Not only are the respective discovered LLM endpoints labeled with `cf-llm`, but [Cloudflare API Security capabilities has also automatically attached managed risk labels](/api-shield/management-and-monitoring/endpoint-labels/) such as `cf-risk-missing-auth`, signifying identified risks associated with the respective endpoint.
 
-![The Cloudflare dashboard showing an endpoint that was automatically labelled with "cf-llm", "cf-risk-missing-auth", and "cf-risk-missing-schema"](~/assets/images/reference-architecture/ai-security-for-apps/fig18-auto-endpoint-labeling.png "Figure 18: LLM discovery and auto labeling of API endpoint security risks")
+![The Cloudflare dashboard showing an endpoint that was automatically labelled with "cf-llm", "cf-risk-missing-auth"](~/assets/images/reference-architecture/ai-security-for-apps/fig18-auto-endpoint-labeling.png "Figure 18: LLM discovery and auto labeling of API endpoint security risks")
 
 Users can also log the exact prompts in the request via prompt logging. Log request details, including the request body are easily accessible via **Security Analytics**. In the figure below, notice that only users with the respective private key configured can decrypt and view the payload contents.
 

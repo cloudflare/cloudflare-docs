@@ -14,6 +14,10 @@ import { Render, Badge, Tabs, TabItem, APIRequest } from "~/components";
 
 With Browser Isolation, you can define policies to dynamically isolate websites based on identity, security threats, or content.
 
+:::note
+Isolation policies are Gateway HTTP policies. Gateway [account-level and resource-scoped roles](/cloudflare-one/traffic-policies/granular-permissions/) apply to isolation policies, so you can delegate management of specific isolation policies without granting access to all Gateway resources.
+:::
+
 ## Isolate
 
 When an HTTP policy applies the Isolate action, the user's web browser is transparently served an HTML compatible remote browser client. Isolation policies can be applied to requests that include `Accept: text/html*` (requests for web pages). This allows Browser Isolation policies to co-exist with API traffic.

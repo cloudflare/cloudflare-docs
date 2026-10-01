@@ -13,6 +13,11 @@
 	"context_length": 2000000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Output tokens (per 1M)": 6,
+		"Cached input tokens (per 1M)": 0.2
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -672,6 +677,16 @@
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 6,
+				"input_cached_tokens": 0.2
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:54:02",
 	"schema": {
@@ -692,13 +707,9 @@
 					]
 				},
 				"instructions": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"max_output_tokens": {
@@ -726,33 +737,21 @@
 					]
 				},
 				"parallel_tool_calls": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"previous_response_id": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"prompt_cache_key": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"reasoning": {
@@ -774,23 +773,15 @@
 							]
 						},
 						"generate_summary": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"summary": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						}
 					},
@@ -800,13 +791,9 @@
 					"type": "object",
 					"properties": {
 						"from_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"max_search_results": {
@@ -837,13 +824,9 @@
 							]
 						},
 						"return_citations": {
-							"anyOf": [
-								{
-									"type": "boolean"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"boolean",
+								"null"
 							]
 						},
 						"sources": {
@@ -859,36 +842,24 @@
 							]
 						},
 						"to_date": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						}
 					},
 					"additionalProperties": {}
 				},
 				"store": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"stream": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"temperature": {
@@ -1020,13 +991,9 @@
 					]
 				},
 				"logprobs": {
-					"anyOf": [
-						{
-							"type": "boolean"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"boolean",
+						"null"
 					]
 				},
 				"top_p": {
@@ -1042,13 +1009,9 @@
 					]
 				},
 				"user": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"context_management": {
@@ -1096,13 +1059,9 @@
 					"type": "number"
 				},
 				"completed_at": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				},
 				"model": {
@@ -1125,13 +1084,9 @@
 					"type": "boolean"
 				},
 				"previous_response_id": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"reasoning": {
@@ -1149,33 +1104,21 @@
 					"items": {}
 				},
 				"top_p": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				},
 				"temperature": {
-					"anyOf": [
-						{
-							"type": "number"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"number",
+						"null"
 					]
 				},
 				"instructions": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"incomplete_details": {
@@ -1191,13 +1134,9 @@
 					"type": "boolean"
 				},
 				"user": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"error": {
@@ -1245,13 +1184,9 @@
 							"additionalProperties": {}
 						},
 						"cost_in_usd_ticks": {
-							"anyOf": [
-								{
-									"type": "number"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"number",
+								"null"
 							]
 						},
 						"num_sources_used": {

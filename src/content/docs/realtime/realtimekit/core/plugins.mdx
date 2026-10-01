@@ -14,7 +14,7 @@ This guide explains how to register, activate, and render plugins in a meeting u
 
 Plugins are interactive real-time applications that run inside a meeting, such as a shared whiteboard or a document viewer. When a participant activates a plugin, it becomes active for everyone in the session.
 
-<RTKSDKSelector disabledPlatforms={["mobile-flutter"]} />
+<RTKSDKSelector />
 
 :::note
 You must register a plugin with the same `id` on every platform your participants use. A plugin is only visible to a participant who has registered it, and activation state only syncs across participants who share the same plugin `id`. If a web participant registers a plugin under one `id` and a mobile participant uses a different `id`, the plugin will not be visible or synced across both platforms.

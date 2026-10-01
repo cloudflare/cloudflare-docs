@@ -275,7 +275,7 @@ Your agent is now running at `http://localhost:8787`.
 
 ### Configure Slack Event Subscriptions
 
-Now that your agent is running locally, you need to expose it to Slack. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to create a secure tunnel:
+Now that your agent is running locally, you need to expose it to Slack. Use a [Quick Tunnel](/tunnel/get-started/quick-tunnels/) to create a public URL:
 
 ```sh
 npx cloudflared tunnel --url http://localhost:8787

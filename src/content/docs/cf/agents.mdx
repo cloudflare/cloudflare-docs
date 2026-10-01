@@ -1,0 +1,216 @@
+---
+title: Use cf with coding agents
+description: Set up the Cloudflare CLI for coding agents, and help agents find, inspect, and safely run the right commands.
+pcx_content_type: how-to
+sidebar:
+  order: 5
+  label: Coding agents
+products:
+  - cf
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+Coding agents can use `cf` to work with your Cloudflare account. Commands
+return JSON and describe their own inputs, so an agent can find and run the
+right command without prior knowledge of `cf`.
+
+## Set up `cf` for your agent
+
+<Steps>
+1. Install `cf` globally so every agent session can run it:
+
+   <PackageManagers type="add" pkg="cf" global />
+
+   Inside a project that installs `cf` as a dependency, the global command runs
+   the project's copy.
+
+2. Sign in:
+
+   ```sh
+   cf auth login
+   ```
+
+   Sign-in opens a browser page where you approve access, so complete this step
+   yourself. For agents that run without a person present, refer to
+   [Authenticate unattended agents](#authenticate-unattended-agents).
+
+3. Tell your agent to prefer `cf`. Add this instruction to your user-level
+   `AGENTS.md`, `CLAUDE.md`, or equivalent instructions file:
+
+   ```md title="AGENTS.md"
+   When interacting with Cloudflare, use the `cf` CLI unless the project has a
+   Wrangler configuration file.
+   ```
+
+   Projects that still use `wrangler.jsonc` or `wrangler.toml` keep working
+   with Wrangler, while every other Cloudflare task goes through `cf`.
+</Steps>
+
+You can also ask your agent to do this setup for you:
+
+```txt
+Install the Cloudflare CLI with `npm install -g cf`. Then add this line to my
+user-level AGENTS.md or CLAUDE.md file: "When interacting with Cloudflare, use
+the cf CLI unless the project has a Wrangler configuration file."
+```
+
+## Help your agent find commands
+
+`cf` has more than 2,900 commands. Instead of reading help for every product,
+an agent can describe the task, inspect the best match, and then run it.
+
+<Steps>
+1. Search for a command by describing the task:
+
+   ```sh
+   cf cli search "create D1 database"
+   ```
+
+   The search runs locally and needs no credentials. Put the task in quotes.
+   `cf cli search` takes the whole task as one argument, and unquoted words
+   after the first fail as unknown commands. It returns up to five matches as a
+   JSON array, best match first. Each match has the command and a short
+   summary. These are the first two matches for this search:
+
+   ```json output
+   [
+     {
+       "command": "cf d1 create",
+       "summary": "Create D1 Database"
+     },
+     {
+       "command": "cf d1 update",
+       "summary": "Update D1 Database"
+     }
+   ]
+   ```
+
+2. Inspect the API request of the chosen command:
+
+   ```sh
+   cf schema d1 create
+   ```
+
+   The JSON result describes the API request that the command sends:
+   `operationId`, `httpMethod`, `path`, `pathParams`, `queryParams`,
+   `hasRequestBody`, and `requestBodyFields`. Each parameter and body field
+   lists its name, its type, and whether it is required. Body fields also
+   include a description. `cf schema` covers generated API commands. For a
+   command's arguments and options, or for a command such as `cf deploy`, run
+   the command with `--help`.
+
+   Path and query parameters use their API names, such as `account_id`.
+   `requestBodyFields` lists the body fields that the command also accepts as
+   options, under the option names. A field inside an object gets a combined
+   name, such as `read-replication-mode` for `read_replication.mode`, and array
+   fields show the type `string`. For some bodies, the list is incomplete or
+   empty. For these commands, pass the complete body with `--body`, and check
+   the API reference for its shape.
+
+3. Preview the request with `--dry-run`, then run the command without it:
+
+   ```sh
+   cf d1 create --name my-database --dry-run
+   ```
+
+</Steps>
+
+Root and group `--help` output starts with a reminder for agents to use
+`cf cli search` first. A command's own `--help` shows its usage as plain text.
+If an agent types a command that does not exist, `cf` lists the closest
+matches.
+
+## Read command output
+
+Results go to standard output as JSON. Messages, such as the selected zone,
+and errors go to standard error. When standard output is not a terminal, it
+contains only the result, so an agent can parse it or filter it with `jq`
+without extra flags.
+
+- **Lists** print a JSON array and return one page. Paging options differ
+  between commands, so check the command's `--help` output.
+- **Changes that return no data** print nothing to standard output.
+- **Raw content**, such as an R2 object or an image from a Workers AI model,
+  goes to standard output unchanged. Redirect it to a file.
+- **JSON output** is indented, whether or not standard output is a terminal.
+  Colors are added only in a terminal.
+
+A failed command exits with a non-zero status and prints the error to standard
+error.
+
+## Run commands safely
+
+- **Preview changes.** Add `--dry-run` to print the request as JSON without
+  sending it. Dry runs need no credentials.
+- **Check for aborted deletes.** In a non-interactive session, a destructive
+  command without `--force` prints `Aborted.` to standard error and exits with
+  status `0`. A successful exit does not mean the resource was deleted.
+- **Review `--force` before you allow it.** On some commands, `--force` is also
+  an API parameter. For example, `cf workers delete --force` also deletes a
+  Worker that other Workers still reference.
+- **Use local data where supported.** `--local` works only for a few
+  resources that local development provides, mainly KV keys, D1 databases
+  through `cf d1 raw`, `cf d1 migrations list`, and `cf d1 migrations apply`,
+  and R2 objects. Commands without a local equivalent, including
+  `cf d1 query`, return an error instead of calling the Cloudflare API.
+
+For local state, refer to
+[Local resource data](/cf/projects/#local-resource-data).
+
+## Work in Wrangler projects
+
+:::caution
+Do not let an agent run `cf dev`, `cf build`, or `cf deploy` in a project that
+has a Wrangler configuration file but no `cloudflare.config.ts`. These commands
+can generate a new configuration that ignores `wrangler.jsonc`, or fail. Migrate
+the project first.
+:::
+
+To migrate a project with an agent, ask it to:
+
+<Steps>
+1. Preview the migration without writing files:
+
+   ```sh
+   cf migrate --dry-run
+   ```
+
+2. Run the migration:
+
+   ```sh
+   cf migrate
+   ```
+
+3. Resolve the `TODO(@cloudflare)` comments in the generated
+   `cloudflare.config.ts`, and ask you about any choice it cannot make on its
+   own. The build fails until every required item is resolved.
+</Steps>
+
+For the full process, refer to
+[Migrate a Wrangler project](/cf/wrangler/migrate/).
+
+## Authenticate unattended agents
+
+Agents that run without a person present, such as in continuous integration
+(CI), cannot complete `cf auth login`. Set `CLOUDFLARE_API_TOKEN` instead. The
+token takes priority over any stored login. For the variables, token
+permissions, and non-interactive behavior, refer to [Use cf in CI](/cf/ci/).
+
+To give an agent separate credentials for one project on your own machine, bind
+a named profile to the project directory. Refer to
+[Use named profiles](/cf/get-started/#use-named-profiles).
+
+## Inspect local resources
+
+When `cf dev` runs inside a supported coding agent, the development server also
+prints the URL and main routes of the
+[Local Explorer API](/workers/local-development/local-explorer/#use-with-ai-agents).
+The agent can use this API to read and change the data in your Worker's local
+bindings, and to query local traces and logs.
+
+## Related resources
+
+- [Agent setup](/agent-setup/) configures Cloudflare Skills and MCP servers for
+  popular coding agents.
+- [Use cf in CI](/cf/ci/) covers API tokens and non-interactive behavior.

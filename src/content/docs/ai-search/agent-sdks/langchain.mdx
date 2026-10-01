@@ -65,7 +65,7 @@ from cloudflare import Cloudflare, NotFoundError
 ACCOUNT_ID = os.environ["CLOUDFLARE_ACCOUNT_ID"]
 API_TOKEN = os.environ["CLOUDFLARE_API_TOKEN"]
 NAMESPACE = "default"
-INSTANCE_ID = "knowledge-base"
+INSTANCE_NAME = "knowledge-base"
 
 # The SDK authenticates with this token; the account ID is passed on each call.
 client = Cloudflare(api_token=API_TOKEN)
@@ -74,18 +74,18 @@ client = Cloudflare(api_token=API_TOKEN)
 # first and only create it when read() raises NotFoundError.
 try:
     client.aisearch.namespaces.instances.read(
-        INSTANCE_ID, account_id=ACCOUNT_ID, name=NAMESPACE
+        INSTANCE_NAME, account_id=ACCOUNT_ID, name=NAMESPACE
     )
-    print(f"Instance '{INSTANCE_ID}' already exists.")
+    print(f"Instance '{INSTANCE_NAME}' already exists.")
 except NotFoundError:
     client.aisearch.namespaces.instances.create(
         name=NAMESPACE,
         account_id=ACCOUNT_ID,
-        id=INSTANCE_ID,
+        id=INSTANCE_NAME,
         # Index both vectors and keywords to enable hybrid search.
         index_method={"vector": True, "keyword": True},
     )
-    print(f"Created instance '{INSTANCE_ID}'.")
+    print(f"Created instance '{INSTANCE_NAME}'.")
 ```
 
 The first positional argument to `create()` is the namespace name. If you created a vector-only instance earlier, enable hybrid search on it with `client.aisearch.namespaces.instances.update(...)` instead.
@@ -96,7 +96,7 @@ Add the following to `main.py` to upload a document to built-in storage. Setting
 
 ```python title="main.py"
 item = client.aisearch.namespaces.instances.items.upload(
-    id=INSTANCE_ID,
+    id=INSTANCE_NAME,
     account_id=ACCOUNT_ID,
     name=NAMESPACE,
     file={
@@ -136,7 +136,7 @@ from langchain_cloudflare import CloudflareAISearchRetriever
 retriever = CloudflareAISearchRetriever(
     account_id=ACCOUNT_ID,
     api_token=API_TOKEN,
-    instance_name=INSTANCE_ID,
+    instance_name=INSTANCE_NAME,
     namespace=NAMESPACE,
     retrieval_type="hybrid",  # query both the vector and keyword indexes
     k=5,  # maximum number of results to return (capped at 50)

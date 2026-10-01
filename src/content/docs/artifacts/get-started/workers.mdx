@@ -28,6 +28,12 @@ By the end of this guide, you will create a Worker, bind it to Artifacts, create
 
 Start by reading [Namespaces](/artifacts/concepts/namespaces/), then choose the namespace name you will use. This guide uses `default` in the examples.
 
+## Set up with your coding agent
+
+<Render file="agent-setup" product="artifacts" />
+
+To set up Artifacts manually, follow the steps below.
+
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
@@ -53,10 +59,9 @@ You also need:
    />
 
    <Render
-   	file="c3-post-run-steps"
+   	file="c3-post-run-steps-hello-world"
    	product="workers"
    	params={{
-   		category: "hello-world",
    		type: "Worker only",
    		lang: "TypeScript",
    	}}

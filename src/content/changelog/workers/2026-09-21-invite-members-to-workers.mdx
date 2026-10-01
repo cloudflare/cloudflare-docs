@@ -1,0 +1,30 @@
+---
+title: Give teammates access to specific Workers directly from the dashboard
+description: Super Administrators can now invite account members and grant scoped access to an individual Worker directly from the Workers dashboard.
+products:
+  - workers
+date: 2026-09-21
+---
+
+You can now grant teammates scoped access to specific Workers directly from the Workers dashboard.
+
+Go to your Worker and click **Invite**.
+
+![Invite button on a Worker's overview page](~/assets/images/changelog/workers/worker-invitations/invite-button.png)
+
+Enter the teammate's email address, choose the appropriate access level, and click **Invite**.
+
+![Dialog for inviting a teammate and choosing their access level](~/assets/images/changelog/workers/worker-invitations/invite-dialog.png)
+
+You can grant a user one of the following access levels:
+
+- **Metadata Read-Only**: View settings, metrics, logs, and traces without access to Worker code or the ability to make changes.
+- **Content Read-Only**: Read Worker code, settings, and observability data without the ability to modify or deploy changes.
+- **Editor**: Update and deploy a Worker without the ability to delete it.
+- **Admin**: Everything included with Editor, plus the ability to delete the Worker.
+
+If the teammate is already an account member, they will receive access to the Worker immediately. If they are not an account member, Cloudflare will send them an invitation to join the account, and they will receive access to the Worker after accepting the invitation.
+
+Only account members with the Super Administrator role can invite users from a Worker's dashboard.
+
+For details about available roles and scopes, refer to the [Workers roles and permissions documentation](/workers/authorization/workers/).

@@ -1,0 +1,703 @@
+---
+title: Migrate a Wrangler project
+description: Convert a Wrangler project to cf with cf migrate, resolve the follow-up items, and deploy it with cloudflare.config.ts.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+  label: Migrate a project
+products:
+  - cf
+  - workers
+---
+
+import { PackageManagers, Render, Steps, WranglerConfig } from "~/components";
+
+`cf migrate` converts a Wrangler configuration file to `cloudflare.config.ts`
+and adds `cf` to your project. It handles most of the conversion, then lists
+the items that you finish by hand. This page covers the whole migration:
+preview, run, resolve follow-up items, finish the project, validate, and
+deploy.
+
+<Render file="beta-note" product="cf" />
+
+The examples on this page migrate `orders-api`, a Worker with a D1 database, a
+queue, a cron trigger, a route, and a Durable Object:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "orders-api",
+	"main": "src/index.ts",
+	"account_id": "<ACCOUNT_ID>",
+	"compatibility_date": "2026-08-24",
+	"compatibility_flags": ["nodejs_compat"],
+	"vars": {
+		"ENVIRONMENT": "production",
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "orders-db",
+			"database_id": "<DATABASE_ID>",
+		},
+	],
+	"queues": {
+		"producers": [{ "binding": "JOBS", "queue": "orders-jobs" }],
+		"consumers": [{ "queue": "orders-jobs", "max_batch_size": 10 }],
+	},
+	"routes": [{ "pattern": "api.example.com/*", "zone_name": "example.com" }],
+	"triggers": {
+		"crons": ["0 * * * *"],
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "COUNTERS", "class_name": "Counter" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Counter"] }],
+}
+```
+
+</WranglerConfig>
+
+## Before you begin
+
+- [Install `cf`](/cf/get-started/) and meet its
+  [requirements](/cf/get-started/#requirements). You do not need to sign in
+  until you deploy.
+- Commit or stash every change, including untracked files. `cf migrate` does
+  not write files when `git status` reports changes anywhere in the
+  repository. Files that `.gitignore` excludes do not count.
+- Install the project's dependencies. With the Wrangler bundler, the Worker's
+  package needs Wrangler 4.136.0 or later installed. `cf migrate` uses it to
+  write `wrangler.config.ts`, and `cf dev`, `cf build`, and `cf deploy` run it.
+- Do not run `cf dev`, `cf build`, or `cf deploy` in the project first. In an
+  unmigrated project they
+  [write their own configuration or fail](/cf/wrangler/#unmigrated-projects).
+
+## Preview the migration
+
+In the directory that contains the Wrangler configuration file, run:
+
+```sh
+cf migrate --dry-run
+```
+
+Without a path, `cf migrate` looks for exactly one `wrangler.json`,
+`wrangler.jsonc`, or `wrangler.toml` file in the current directory. For a
+configuration file elsewhere, such as a package in a monorepo, pass its path:
+
+```sh
+cf migrate packages/api/wrangler.jsonc --dry-run
+```
+
+`cf migrate` writes its files next to the configuration file.
+
+The dry run lists the files it would change and the follow-up items. It does
+not show file contents. For `orders-api`, it prints:
+
+```txt output
+Using the Wrangler bundler because @cloudflare/vite-plugin is not declared. Pass --bundler vite to override.
+Would update 4 file(s):
+├─ cloudflare.config.ts
+├─ wrangler.config.ts
+├─ package.json
+└─ package-lock.json
+
+Follow-up work:
+├─ [required] durable_objects.bindings.0: Durable Object bindings require manual review after migration.
+│  └─ https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+└─ [required] migrations: Wrangler Durable Object migrations are unsupported. Replace them with an exports lifecycle declaration, for example `exports: { MyDurableObject: exports.durableObject({ storage: "sqlite" }) }`.
+   └─ https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+
+⚠ Migration requires follow-up work.
+```
+
+Like a real run, the dry run exits with status `1` while `[required]` items
+remain. It does not check whether the Git worktree is clean.
+
+## Choose a bundler {/* choose-a-bundler */}
+
+`cf migrate` chooses a bundler for the migrated project from the `package.json`
+file beside the Wrangler configuration file:
+
+| Bundler  | Chosen when                               | Builds with                         | Build settings live in                          |
+| -------- | ----------------------------------------- | ----------------------------------- | ----------------------------------------------- |
+| Vite     | `@cloudflare/vite-plugin` is declared     | Vite and the Cloudflare Vite plugin | `vite.config.ts`                                |
+| Wrangler | `@cloudflare/vite-plugin` is not declared | Wrangler, installed in the project  | `wrangler.config.ts`, which `cf migrate` writes |
+
+When you do not pass `--bundler`, the first line of output explains the
+choice, as in the `orders-api` preview. To override the choice, pass
+`--bundler vite` or `--bundler wrangler`.
+
+`cf migrate` does not install Vite or create `vite.config.ts`. To move a
+project that does not use Vite yet to the Vite bundler, pass `--bundler vite`,
+then install Vite and the Cloudflare Vite plugin beta that `cf` uses:
+
+<PackageManagers type="add" pkg="vite @cloudflare/vite-plugin@beta" dev />
+
+Then create `vite.config.ts`:
+
+```ts title="vite.config.ts"
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+});
+```
+
+If the project already uses the Cloudflare Vite plugin, install
+`@cloudflare/vite-plugin@beta` in the same way. The beta reads
+`cloudflare.config.ts` and has no `configPath` option. Remove `configPath` if
+`vite.config.ts` passes it to `cloudflare()`.
+
+## Run the migration
+
+Run `cf migrate` with the same arguments as the dry run, without `--dry-run`:
+
+```sh
+cf migrate
+```
+
+`cf migrate` accepts these arguments:
+
+| Argument       | Description                                                                                                                                   |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[path]`       | Path to the Wrangler configuration file. Defaults to the only `wrangler.json`, `wrangler.jsonc`, or `wrangler.toml` in the current directory. |
+| `--bundler`    | `vite` or `wrangler`. Chosen from `package.json` when omitted.                                                                                |
+| `--dry-run`    | Lists the files that would change without writing them.                                                                                       |
+| `--force`      | Runs even if the Git worktree is not clean. It does not bypass any other check.                                                               |
+| `--no-install` | Skips adding `cf` to the project.                                                                                                             |
+
+## Review what changed {/* what-changed */}
+
+Review the changes with `git status` and `git diff`. `cf migrate` changes these
+files:
+
+| File                                                                         | Change                                                                    |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `cloudflare.config.ts`                                                       | Created next to the Wrangler configuration file                           |
+| `wrangler.config.ts`                                                         | Created with the Wrangler bundler only. It holds Wrangler build settings. |
+| `package.json` and the lockfile                                              | Updated to add `cf` as a development dependency                           |
+| The Wrangler configuration file                                              | Unchanged                                                                 |
+| Package scripts, `vite.config.ts`, `.gitignore`, `tsconfig.json`, and source | Unchanged                                                                 |
+
+The project needs its own `cf` dependency because `cloudflare.config.ts`
+imports from `cf/config`. `cf migrate` installs it with the package manager
+that the project uses, based on the `packageManager` field or the lockfile.
+With npm, the install also rewrites `package.json` with two-space indentation.
+
+If the only `package.json` is in a parent directory, such as a workspace root,
+`cf migrate` does not change it. Install `cf` in the package that contains the
+Worker instead.
+
+`cf migrate` never overwrites files. It stops if `cloudflare.config.ts`
+exists, or if `wrangler.config.ts` exists and you use the Wrangler bundler.
+`--force` does not change this.
+
+## Read the output {/* read-the-output */}
+
+Each follow-up item has one of two levels:
+
+- `[required]`: you must resolve it before the project builds. While any
+  required item remains, `cf migrate` exits with status `1`. This does not mean
+  that the migration failed.
+- `[info]`: context that needs no change.
+
+`cf migrate` also writes each required item into `cloudflare.config.ts` as a
+`TODO(@cloudflare)` comment. When required items remain, it adds a `throw`
+statement at the top of the file. Until you delete that statement, `cf dev`,
+`cf build`, and `cf deploy` fail with this error:
+
+```txt output
+Error: Migration incomplete. Resolve every cf migrate TODO in `cloudflare.config.ts`.
+```
+
+For `orders-api`, `cf migrate` generates this file:
+
+{/* prettier-ignore */}
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig, triggers } from "cf/config";
+
+/**
+ * This migration needs manual work. Resolve every TODO in this file, then remove the error below.
+ */
+/**
+ * TODO(@cloudflare): cf migrate: durable_objects.bindings.0: Durable Object bindings require manual review after migration.
+ * @see https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+ */
+/**
+ * TODO(@cloudflare): cf migrate: migrations: Wrangler Durable Object migrations are unsupported. Replace them with an exports lifecycle declaration, for example `exports: { MyDurableObject: exports.durableObject({ storage: "sqlite" }) }`.
+ * @see https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+ */
+throw new Error("Migration incomplete. Resolve every cf migrate TODO in `cloudflare.config.ts`.");
+
+export default defineConfig({
+	accountId: "<ACCOUNT_ID>",
+	worker: {
+		name: "orders-api",
+		compatibilityDate: "2026-08-24",
+		compatibilityFlags: [
+			"nodejs_compat",
+		],
+		entrypoint: "src/index.ts",
+		triggers: [
+			triggers.fetch({
+				pattern: "api.example.com/*",
+				zone: "example.com",
+			}),
+			triggers.scheduled({
+				schedule: "0 * * * *",
+			}),
+			triggers.queue({
+				maxBatchSize: 10,
+				name: "orders-jobs",
+			}),
+		],
+		env: {
+			ENVIRONMENT: bindings.text("production"),
+			DB: bindings.d1({
+				name: "orders-db",
+				id: "<DATABASE_ID>",
+			}),
+			JOBS: bindings.queue({
+				name: "orders-jobs",
+			}),
+			COUNTERS: bindings.durableObject({
+				worker: "orders-api",
+				exportName: "Counter",
+			}),
+		},
+		/**
+		 * TODO(@cloudflare): cf migrate: Durable Object bindings require manual review after migration.
+		 * @see https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+		 */
+		/**
+		 * TODO(@cloudflare): cf migrate: Wrangler Durable Object migrations are unsupported. Replace them with an exports lifecycle declaration, for example `exports: { MyDurableObject: exports.durableObject({ storage: "sqlite" }) }`.
+		 * @see https://developers.cloudflare.com/workers/runtime-apis/context/#exports
+		 */
+	},
+});
+```
+
+Some items link to Wrangler or Workers runtime documentation. The next section
+describes how to resolve each item for `cf`. When you have resolved every item,
+delete the `TODO(@cloudflare)` comments, the comment that starts with
+`This migration needs manual work`, and the `throw` statement.
+
+## Resolve follow-up items
+
+### Durable Objects {/* durable-objects */}
+
+A project with Durable Objects always has required items: one for each
+Durable Object binding and one for the `migrations` history. `cf migrate`
+converts each binding, but it does not convert `migrations`.
+
+<Steps>
+1. Import `exports` from `cf/config`. Under `worker`, add an `exports` entry
+   for each Durable Object class that is live today. Match the storage that
+   the class already uses: `"sqlite"` for classes created with
+   `new_sqlite_classes`, and `"legacy-kv"` for classes created with
+   `new_classes`.
+
+   ```ts
+   exports: {
+   	Counter: exports.durableObject({ storage: "sqlite" }),
+   },
+   ```
+
+2. Review each generated binding. In
+   `bindings.durableObject({ worker, exportName })`, `worker` is the name of
+   the Worker that defines the class and `exportName` is the class name.
+3. Delete the TODO comments for these items.
+</Steps>
+
+Do not copy renames or deletions that have already been applied. For classes
+that you still need to rename, delete, or transfer, refer to
+[Convert Durable Object migrations](/cf/wrangler/reference/#convert-durable-object-migrations).
+
+### Environments {/* environments */}
+
+`cf migrate` converts each `env.<NAME>` block into a `case` of a
+`switch (ctx.mode)` statement. Each case returns a complete configuration. It
+follows Wrangler's inheritance rules: bindings, `vars`, and secrets from the
+top level are not copied into environments. An environment without its own
+`name` gets `<NAME>-<ENVIRONMENT>`. The generated configuration has this shape:
+
+```ts title="cloudflare.config.ts"
+export default defineConfig((ctx) => {
+	switch (ctx.mode) {
+		case "staging": {
+			return {
+				worker: {
+					name: "orders-api-staging",
+					// ...
+				},
+			};
+		}
+		default: {
+			return {
+				worker: {
+					name: "orders-api",
+					// ...
+				},
+			};
+		}
+	}
+});
+```
+
+Replace `--env <NAME>` with `--mode <NAME>`:
+
+```sh
+cf build --mode staging
+cf deploy --mode staging
+```
+
+A required item that applies to the top-level configuration appears again for
+each environment that inherits it.
+
+Without `--mode`, the Wrangler bundler uses the `default` branch. The Vite
+bundler uses the `development` mode for `cf dev` and `production` for
+`cf build` and `cf deploy`. With the Vite bundler, an environment named
+`production` or `development` would be selected without `--mode`, so
+`cf migrate` marks it as required. Rename that `case`, for example to `"prod"`,
+and pass the new name with `--mode`.
+
+For mode defaults across all commands, refer to
+[Convert environments to modes](/cf/wrangler/reference/#environments-to-modes).
+
+### Build settings {/* build-settings */}
+
+Wrangler build fields, such as `build`, `minify`, `alias`, and
+`assets.directory`, do not belong in `cloudflare.config.ts`.
+
+With the Wrangler bundler, `cf migrate` moves them to `wrangler.config.ts` with
+camelCase keys, and no follow-up item is needed. For example:
+
+```ts title="wrangler.config.ts"
+import { defineWranglerConfig } from "wrangler/experimental-config";
+
+export default defineWranglerConfig({
+	alias: {
+		lodash: "lodash-es",
+	},
+	minify: true,
+	uploadSourceMaps: true,
+	build: {
+		command: "npm run build:css",
+	},
+	dev: {
+		port: 8788,
+	},
+	types: {
+		generate: false,
+	},
+	assetsDirectory: "./public",
+});
+```
+
+`wrangler.config.ts` is experimental and can change during the beta.
+
+With the Vite bundler, `cf migrate` lists these fields in a required item and
+does not move them. Move each setting to its Vite equivalent in
+`vite.config.ts`, such as `alias` to `resolve.alias`. For every field, refer to
+[Build settings](/cf/wrangler/reference/#build-settings).
+
+A custom `build` command does not carry over to the Vite bundler. `cf build`
+runs Vite directly, so run the command yourself first, for example
+`npm run build:css && cf build`.
+
+### Source maps {/* source-maps */}
+
+With the Vite bundler, `cf migrate` lists `upload_source_maps` in its required
+item for build settings. To keep uploading Worker source maps, turn on
+`build.sourcemap` for the Worker's Vite environment, then delete the TODO
+comment. By default, the Cloudflare Vite plugin beta names the Worker's
+environment `ssr`:
+
+```ts title="vite.config.ts" {6-12}
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+	environments: {
+		ssr: {
+			build: {
+				sourcemap: true,
+			},
+		},
+	},
+});
+```
+
+How `cf migrate` reports source maps can change during the beta.
+
+### D1 migrations {/* d1-migrations */}
+
+`cf migrate` does not convert the `migrations_dir`, `migrations_pattern`, or
+`migrations_table` fields of a D1 binding. Pass them to
+`cf d1 migrations apply` instead:
+
+| Wrangler field       | `cf d1 migrations apply` option              |
+| -------------------- | -------------------------------------------- |
+| `migrations_dir`     | `--dir`, which defaults to `./migrations`    |
+| `migrations_pattern` | `--pattern`                                  |
+| `migrations_table`   | `--table`, which defaults to `d1_migrations` |
+
+For example:
+
+```sh
+cf d1 migrations apply <DATABASE_ID> --dir db/migrations
+```
+
+`cf d1 migrations apply` takes the database ID. Unlike Wrangler, it applies
+migrations to the remote database unless you add `--local`.
+
+### Other required items {/* other-required-items */}
+
+Resolve the remaining items as follows, then delete each TODO comment:
+
+| Item                                                                          | What to do                                                                                                                                                  |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Preview resources: `preview_id`, `preview_bucket_name`, `preview_database_id` | `cloudflare.config.ts` has no preview resource fields. During `cf dev`, bindings use local resources unless you set `dev: { remote: true }` on the binding. |
+| A route that uses `zone_id`                                                   | `cf migrate` copies the zone ID into the `zone` option of `triggers.fetch()`, which accepts a zone name or a zone ID. Confirm the value.                    |
+| A service binding to a legacy service environment                             | `cf migrate` rewrites the target to `<SERVICE>-<ENVIRONMENT>`. Confirm that this is the Worker to bind to.                                                  |
+| Workers Sites (`site`)                                                        | Not supported. Move the site to [Workers Static Assets](/workers/static-assets/).                                                                           |
+| `previews`                                                                    | Converted to a branch on `ctx.isPreview`. Review the branch. For more information, refer to [Deploy a preview](/cf/projects/#deploy-a-preview).             |
+| A missing `name` or `compatibility_date`                                      | Replaced with the placeholders `"TODO"` and `"YYYY-MM-DD"`. Set real values.                                                                                |
+| Unsupported or unknown fields, such as `keep_vars`                            | Remove them, or find an equivalent in the [configuration reference](/cf/projects/cloudflare-config/).                                                       |
+| Installing `cf`                                                               | Appears with `--no-install`, after a failed install, or when no `package.json` is beside the configuration file. Install `cf` in the Worker's package.      |
+
+To install `cf` as a development dependency, run:
+
+<PackageManagers type="add" pkg="cf" dev />
+
+### Workflows and Containers {/* workflows-and-containers */}
+
+`cf migrate` does not convert Workflow bindings or Containers configuration.
+It reports both as required items. Add them to `cloudflare.config.ts` by hand:
+
+- For a Workflow, declare the class with `exports.workflow({ name })` in the
+  Worker that defines it. Bind to it with
+  `bindings.workflow({ name, worker, exportName })`. Refer to
+  [Declare exports](/cf/projects/cloudflare-config/#declare-exports).
+- For a Container, define it with `defineContainer()`, add it to the top-level
+  `containers` array, and reference it from an
+  `exports.durableObject({ storage: "sqlite", container })` entry. Refer to
+  [Attach a Container](/cf/projects/cloudflare-config/#attach-a-container).
+
+Then delete the TODO comment for each item.
+
+### Secrets {/* secrets */}
+
+`cf migrate` never reads secret files. It lists any `.dev.vars` or `.env`
+files that it finds as an `[info]` item. `cf dev` still loads `.dev.vars` for
+local development.
+
+Entries in `secrets.required` become `bindings.secret()` values. Declare any
+other secret that the Worker reads the same way:
+
+```ts
+env: {
+	API_TOKEN: bindings.secret(),
+},
+```
+
+To upload secrets with a new version, pass `--secrets-file <PATH>` to
+`cf deploy` or `cf workers versions create`. The file can be JSON or `.env`
+format.
+
+## Finish the project {/* finish-the-project */}
+
+`cf migrate` leaves the rest of the project to you:
+
+<Steps>
+1. Replace Wrangler commands in the `package.json` scripts. Wrangler commands
+   read the Wrangler configuration file and ignore `cloudflare.config.ts`.
+
+   ```json title="package.json"
+   {
+   	"scripts": {
+   		"dev": "cf dev",
+   		"build": "cf build",
+   		"deploy": "cf deploy"
+   	}
+   }
+   ```
+
+   `cf build` runs Vite or Wrangler directly, not your `build` script. To run
+   extra steps, chain them yourself, for example `tsc -b && cf build`.
+
+2. Add `.cloudflare/` to `.gitignore`. The directory holds Build Output,
+   generated types, and other files that `cf` generates.
+3. Set `"type": "module"` in `package.json`. Without it, Node.js prints a
+   `MODULE_TYPELESS_PACKAGE_JSON` warning each time `cf` loads
+   `cloudflare.config.ts`.
+4. Generate types:
+   - With the Vite bundler, `cf dev` and `cf build` write
+     `.cloudflare/types/index.d.ts`.
+   - With the Wrangler bundler, `cf migrate` sets
+     `types: { generate: false }` in `wrangler.config.ts`. Change it to
+     `true`, or run `cf workers types`.
+
+   Then add the generated types to `tsconfig.json`:
+
+   ```json title="tsconfig.json"
+   {
+   	"include": ["src", "cloudflare.config.ts", ".cloudflare/types"]
+   }
+   ```
+
+5. (Optional) Replace the string `entrypoint` with an import that uses the
+   `cf-worker` attribute:
+
+   ```ts title="cloudflare.config.ts"
+   import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+   ```
+
+   Under `worker`, replace `entrypoint: "src/index.ts"` with `entrypoint`.
+   With a string path, `Env` binding types are still inferred, but the types
+   of your Worker module exports are not. To type-check a `.ts` import path,
+   set `allowImportingTsExtensions` in `tsconfig.json`.
+</Steps>
+
+For a finished version of `orders-api`, refer to
+[Complete example](/cf/wrangler/reference/#complete-example).
+
+## Validate the project {/* validate */}
+
+Start the project locally with `cf dev` and check that it responds. Then stop
+the development server, build the project, and run a dry-run deployment:
+
+```sh
+cf build
+cf deploy --dry-run
+```
+
+None of these commands need you to sign in. `cf deploy --dry-run` builds the
+project, prints the bindings it would deploy, and uploads nothing.
+
+If the project has environments, also validate each mode:
+
+```sh
+cf build --mode staging
+cf deploy --dry-run --mode staging
+```
+
+## Deploy
+
+Sign in, then deploy:
+
+```sh
+cf auth login
+cf deploy
+```
+
+`cf deploy` builds the project, uploads a new Worker Version, and deploys it.
+For deployment options, refer to [Develop, build, and deploy](/cf/projects/).
+To deploy from CI, refer to [Use cf in CI](/cf/ci/).
+
+## Remove the Wrangler configuration
+
+Once `cloudflare.config.ts` exists, `cf` ignores the Wrangler configuration
+file. Delete the Wrangler file after you deploy with `cf` and your scripts and
+CI use `cf`.
+
+Wrangler does not read `cloudflare.config.ts`. If you still run Wrangler
+commands in the project, such as `wrangler tail`, keep the Wrangler
+configuration file until you no longer need them.
+
+## Troubleshooting
+
+### No Wrangler configuration found
+
+```txt output
+No Wrangler config found in <DIRECTORY>. Pass its path to cf migrate.
+```
+
+Run `cf migrate` in the directory that contains the Wrangler configuration
+file, or pass the file path. If the directory contains more than one Wrangler
+configuration file, `cf migrate` reports
+`Multiple Wrangler configs found in <DIRECTORY>`. Pass the exact path.
+
+### Git worktree is not clean
+
+```txt output
+Git worktree is not clean. Commit or stash your changes before running a codemod, or rerun with `--force` to bypass this safety check.
+```
+
+Commit or stash every change, including untracked files, then run the
+migration again.
+
+### `cloudflare.config.ts` already exists
+
+```txt output
+Cannot migrate because <PATH>/cloudflare.config.ts already exists. Inspect and finish the existing migration; it will not be overwritten. Automated agents should read its TODOs and ask the user about unresolved choices.
+```
+
+If an earlier `cf migrate` run created the file, finish that migration. If
+`cf dev`, `cf build`, or `cf deploy` created it, undo their changes as
+described in
+[Run project commands only after you migrate](/cf/wrangler/#unmigrated-projects),
+then run `cf migrate`.
+
+### Wrangler is missing or too old
+
+With the Wrangler bundler, `cf migrate` needs a local Wrangler installation,
+even for a dry run. Without one, it reports:
+
+```txt output
+Generating wrangler.config.ts requires wrangler 4.100.0 or newer because earlier versions do not export wrangler/experimental-config. No local Wrangler installation was found. Update Wrangler and retry the migration.
+```
+
+After the migration, `cf dev`, `cf build`, and `cf deploy` need Wrangler
+4.136.0 or later. With an older version, their error includes:
+
+```txt output
+cf requires wrangler@4.136.0 or newer for cf dev, cf build, cf deploy, and cf previews deploy.
+```
+
+Install the project's dependencies or update Wrangler, then run the command
+again.
+
+### Migration incomplete
+
+```txt output
+Error: Migration incomplete. Resolve every cf migrate TODO in `cloudflare.config.ts`.
+```
+
+Resolve the [follow-up items](#resolve-follow-up-items), then delete the
+`throw` statement at the top of `cloudflare.config.ts`.
+
+### `cloudflare.config.ts` is required
+
+```txt output
+Error: cloudflare.config.ts is required when --experimental-new-config is enabled.
+```
+
+`cf dev`, `cf build`, or `cf deploy` ran in a Wrangler project that you have
+not migrated. Run `cf migrate`.
+
+### Wrangler is not installed
+
+```txt output
+wrangler is declared in <PATH>/package.json but is not installed.
+```
+
+Install the project's dependencies. `cf` looks for Wrangler only in the Worker
+package's own `node_modules` directory. In a monorepo, a copy hoisted to the
+workspace root does not count.
+
+If `package.json` declares neither package, for example because you use a
+global Wrangler installation, the error starts with
+`No Cloudflare dev-server is installed in this project`. Add Wrangler as a
+development dependency, or install Vite and the Cloudflare Vite plugin as
+described in [Choose a bundler](#choose-a-bundler).
+
+### Unknown command: migrate
+
+A global `cf` runs the copy of `cf` installed in the project. If the project
+pins an older `cf` without `cf migrate`, update the project's `cf` dependency,
+or run the latest version once with `npx cf@latest migrate`.

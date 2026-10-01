@@ -1,0 +1,99 @@
+---
+title: "WAF Release - 2026-08-25"
+description: Cloudflare WAF managed rulesets 2026-08-25 release
+date: 2026-08-25
+---
+
+import { RuleID } from "~/components";
+
+This release moves four new detections from Log to Block, merges the XSS, HTML Injection - Script Tag - Beta rule into the original rule, and adds a Generic Rules - Remote Code Execution rule in Block mode.
+
+**Key Findings**
+
+- Four new detections move from Log to Block: HTTP/2 Request Smuggling - Request Body Anomaly and XSS - JavaScript Event Handler Coercion across Headers, Body, and URI.
+
+- The XSS, HTML Injection - Script Tag - Beta rule is merged into the original rule.
+
+- A Generic Rules - Remote Code Execution detection is added in Block mode.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="a80f214f0947435dabb2ba2d1489d892" />
+			</td>
+			<td>N/A</td>
+			<td>HTTP/2 Request Smuggling - Request Body Anomaly</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="58a184412d2b4113bca6379b20646260" />
+			</td>
+			<td>N/A</td>
+			<td>XSS - JavaScript Event Handler Coercion - Headers</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="e79cb939d6aa41db984e6db3d706d517" />
+			</td>
+			<td>N/A</td>
+			<td>XSS - JavaScript Event Handler Coercion - Body</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="7e3249c7a5d8469697478746660886c8" />
+			</td>
+			<td>N/A</td>
+			<td>XSS - JavaScript Event Handler Coercion - URI</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d34bc5db8cbc4e18a44ed115c293b926" />
+			</td>
+			<td>N/A</td>
+			<td>XSS, HTML Injection - Script Tag - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "XSS, HTML Injection - Script Tag" (ID:{" "}<RuleID id="9c8dda9708cc4452ac76e7be7b58420b" />).</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2b6b94ec864d47f99630ecf72ca6cce3" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Remote Code Execution</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

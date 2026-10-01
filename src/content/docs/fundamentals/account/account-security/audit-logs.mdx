@@ -46,6 +46,12 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
 :::
 
+## Customer Metadata Boundary
+
+Audit Logs v2 supports [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/). The account-level CMB preference automatically applies to Audit Logs v2. For example, if you select `eu`, Audit Logs v2 uses the EU metadata boundary. You do not need to configure Audit Logs separately.
+
+To configure CMB in the Cloudflare dashboard or via the `/accounts/{account_id}/logs/control/cmb/config` API, refer to [Get started with Customer Metadata Boundary](/data-localization/metadata-boundary/get-started/). CMB is part of the Data Localization Suite. Contact your account team if CMB is not enabled for your account.
+
 ## Access Audit Logs
 
 You can retrieve audit logs using the Cloudflare dashboard, the API, or Logpush.
@@ -106,6 +112,23 @@ To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **A
 
 :::note
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
+:::
+
+#### Account analytics
+
+The account-level Audit Logs v2 dashboard includes analytics for the selected time range. The **Actions over time** chart separates successful and failed actions. The summary cards show **Total actions**, **Unique actors**, **Products impacted**, and **Failure rate**.
+
+Select a summary card to view more details:
+
+- **Total actions**: Action types and authentication methods
+- **Unique actors**: Actors with the most actions
+- **Products impacted**: Products with the most actions
+- **Failure rate**: Failed actions and their HTTP status codes
+
+To focus the analytics and audit log table on a value, select **Filter** or **Exclude** from a detail panel. The analytics, table, filters, and time range remain synchronized.
+
+:::note
+Account analytics are available for account-level audit logs. They are not available for organization-level audit logs.
 :::
 
 ### Logpush
@@ -206,11 +229,12 @@ Audit logs can be initiated either by users or the system. Understanding the typ
 
 #### User initiated Audit Logs
 
-Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors:
+Track actions initiated by users through Cloudflare interfaces, including the dashboard and API. These logs capture who or what performed the action. They also record when it occurred and which resource was affected. User-initiated actions can have four actor types:
 
 - `actor_type="user"`: Action was performed by an individual user.
-- `actor_type="Cloudflare_admin"`: Action was performed by Cloudflare.
+- `actor_type="cloudflare_admin"`: Action was performed by Cloudflare.
 - `actor_type="account"`: Action was performed using an account API token. Refer to the [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/) documentation for more information.
+- `actor_type="delegated_service"`: Action was performed by a Cloudflare service acting on a user's behalf. The log does not identify the initiating user.
 
 #### System initiated Audit Logs
 
@@ -325,7 +349,14 @@ Use the following example to get a list of audit logs for a Cloudflare account.
 
 ### Actor
 
-The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or dashboard (`dash`).
+The actor represents who or what performed the action. Its identity attributes depend on the actor type. These attributes can include a user ID, email address, and IP address. Actor types include `user`, `account`, `cloudflare_admin`, `delegated_service`, or `system`. An actor can also include the context used to initiate the action:
+
+- `api`: The action was performed through the API. The specific credential type was not recorded.
+- `api_key`: The action was authenticated with a Cloudflare Global API Key.
+- `api_token`: The action was authenticated with an API token.
+- `dash`: The action was performed through the Cloudflare dashboard.
+- `oauth`: The action was authenticated with an OAuth token.
+- `origin_ca_key`: The action was authenticated with an Origin CA key.
 
 ### Action
 

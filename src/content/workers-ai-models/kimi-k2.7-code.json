@@ -10,6 +10,29 @@
             "value": "262144"
         },
         {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
+            "property_id": "reasoning",
+            "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": {
+                "mandatory": true,
+                "default_enabled": true
+            }
+        },
+        {
+            "property_id": "terms",
+            "value": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -28,22 +51,6 @@
                     "currency": "USD"
                 }
             ]
-        },
-        {
-            "property_id": "function_calling",
-            "value": "true"
-        },
-        {
-            "property_id": "reasoning",
-            "value": "true"
-        },
-        {
-            "property_id": "terms",
-            "value": "https://huggingface.co/moonshotai/Kimi-K2.7-Code/blob/main/LICENSE"
-        },
-        {
-            "property_id": "vision",
-            "value": "true"
         }
     ],
     "id": "c29c7295-ff20-4b9b-bdcc-25136c19b21d",
@@ -298,29 +305,16 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                            "enum": [
+                                                true
+                                            ]
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -418,25 +412,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -1012,6 +987,7 @@
                                                                             "enum": [
                                                                                 "text",
                                                                                 "image_url",
+                                                                                "video_url",
                                                                                 "input_audio",
                                                                                 "file"
                                                                             ]
@@ -1033,6 +1009,14 @@
                                                                                         "high"
                                                                                     ],
                                                                                     "default": "auto"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "video_url": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "url": {
+                                                                                    "type": "string"
                                                                                 }
                                                                             }
                                                                         },
@@ -1555,29 +1539,16 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                            "enum": [
+                                                true
+                                            ]
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1675,25 +1646,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2391,29 +2343,16 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                                        "enum": [
+                                                            true
+                                                        ]
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -2511,25 +2450,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -3105,6 +3025,7 @@
                                                                                         "enum": [
                                                                                             "text",
                                                                                             "image_url",
+                                                                                            "video_url",
                                                                                             "input_audio",
                                                                                             "file"
                                                                                         ]
@@ -3126,6 +3047,14 @@
                                                                                                     "high"
                                                                                                 ],
                                                                                                 "default": "auto"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "video_url": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                            "url": {
+                                                                                                "type": "string"
                                                                                             }
                                                                                         }
                                                                                     },
@@ -3648,29 +3577,16 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Reasoning is always enabled for this model and cannot be disabled.",
+                                                        "enum": [
+                                                            true
+                                                        ]
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3768,25 +3684,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -4716,23 +4613,6 @@
                             "anyOf": [
                                 {
                                     "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
                                 },
                                 {
                                     "type": "null"

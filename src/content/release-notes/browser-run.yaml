@@ -3,6 +3,11 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-09-21"
+    title: "Browser binding session and DevTools methods"
+    description: |-
+      * Browser Run browser bindings now support typed methods for [acquiring and connecting to sessions](/browser-run/reference/browser-binding-api/), launching a browser with [outbound Worker routing](/browser-run/features/outbound-workers/), creating Live View URLs, and managing session lifecycle.
+      * Added a nested `devtools` binding with methods for browser version and protocol information, listing and creating targets, and activating or closing targets. See the [Browser binding API reference](/browser-run/reference/browser-binding-api/) for the full API.
   - publish_date: "2026-07-28"
     title: "Structured handoff for Human in the Loop"
     description: |-

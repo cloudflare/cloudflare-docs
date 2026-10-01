@@ -115,6 +115,8 @@ To test that your connection is working, go to **Authentication** > **Login meth
 
 The generic OIDC integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/team-and-resources/users/scim/).
 
+<Render file="access/scim-policy-behavior" product="cloudflare-one" />
+
 ### Prerequisites
 
 Your identity provider must support SCIM version 2.0.
@@ -136,7 +138,7 @@ Setup instructions vary depending on the identity provider. In your identity pro
 If you would like to build policies based on IdP groups:
 
 - Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a OIDC claim.
-- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/integrations/identity-providers/generic-oidc/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+- If your IdP requires a new SCIM application, ensure that its groups match the groups in the [original SSO application](/cloudflare-one/integrations/identity-providers/generic-oidc/#1-create-an-application-in-your-identity-provider). Matching the groups keeps the Gateway identity synchronized with the groups that the IdP returns when the user authenticates to Access.
 
 ### 3. Verify SCIM provisioning
 

@@ -1,13 +1,13 @@
-name: PR - Label and assign
+name: PR - Label
 
-# **What it does**: Labels PRs with size and associated products. Updates assignees to match our CODEOWNERS file.
+# **What it does**: Labels PRs with size and associated products.
 # **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
 # **Who does it impact**: PCX team
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
 on:
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -22,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6
+        with:
+          # Product labels are config-managed; synchronize may reconcile manually assigned product labels.
+          sync-labels: true
     continue-on-error: true
   label_size:
     name: Label size
@@ -32,17 +35,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: codelytv/pr-size-labeler@4ec67706cd878fbc1c8db0a5dcd28b6bb412e85a # v1
-    continue-on-error: true
-
-  assign:
-    name: Update assignees
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - uses: ./.github/actions/assign-pr
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     continue-on-error: true

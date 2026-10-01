@@ -6,12 +6,15 @@ products:
 title: Edit network settings
 ---
 
-import { Render } from "~/components";
+import { DashButton } from "~/components";
 
-<Render
-	file="mconn/maintenance/edit-network-settings"
-	product="networking-services"
-	params={{
-		dashName: "Cloudflare WAN (formerly Magic WAN)",
-	}}
-/>
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles**.
+3. Find the Appliance that you want to edit > select the three dots next to it > **Edit**.
+4. Go to **Network configuration** > **WAN configuration** or **LAN configuration**.
+5. Find the WAN/LAN you want to edit > select the three dots next to it > **Edit**.
+6. Make the necessary changes.
+7. Select **Save**.

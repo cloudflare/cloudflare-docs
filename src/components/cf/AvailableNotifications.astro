@@ -10,7 +10,7 @@
  */
 import { getEntry } from "astro:content";
 import { z } from "astro/zod";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 import AnchorHeading from "./AnchorHeading.astro";
 import Details from "./Details.astro";
 
@@ -53,43 +53,41 @@ const grouped = notifications.reduce<Record<string, any[]>>((acc, entry) => {
 const showProductHeadings = !product && !notificationFilter;
 ---
 
-{
-	Object.entries(grouped)
-		.sort()
-		.map(([product, entries]) => (
-			<>
-				{showProductHeadings && <AnchorHeading depth={2} title={product} />}
-				{(entries ?? []).map((notification) => (
-					<Details header={notification.name}>
-						<strong>Who is it for?</strong>
-						<p set:html={marked.parse(notification.audience)} />
+{Object.entries(grouped)
+	.sort()
+	.map(([product, entries]) => (
+		<>
+			{showProductHeadings && <AnchorHeading depth={2} title={product} />}
+			{(entries ?? []).map((notification) => (
+				<Details header={notification.name}>
+					<strong>Who is it for?</strong>
+					<p set:html={renderMarkdown(notification.audience)} />
 
-						<strong>Other options / filters</strong>
-						<p set:html={marked.parse(notification.otherFilters)} />
+					<strong>Other options / filters</strong>
+					<p set:html={renderMarkdown(notification.otherFilters)} />
 
-						<strong>Included with</strong>
-						<p set:html={marked.parse(notification.availability)} />
+					<strong>Included with</strong>
+					<p set:html={renderMarkdown(notification.availability)} />
 
-						<strong>What should you do if you receive one?</strong>
-						<p set:html={marked.parse(notification.nextSteps)} />
+					<strong>What should you do if you receive one?</strong>
+					<p set:html={renderMarkdown(notification.nextSteps)} />
 
-						{notification.additional_information && (
-							<>
-								<strong>Additional information</strong>
-								<p
-									set:html={marked.parse(notification.additional_information)}
-								/>
-							</>
-						)}
+					{notification.additional_information && (
+						<>
+							<strong>Additional information</strong>
+							<p
+								set:html={renderMarkdown(notification.additional_information)}
+							/>
+						</>
+					)}
 
-						{notification.limitations && (
-							<>
-								<strong>Limitations</strong>
-								<p set:html={marked.parse(notification.limitations)} />
-							</>
-						)}
-					</Details>
-				))}
-			</>
-		))
-}
+					{notification.limitations && (
+						<>
+							<strong>Limitations</strong>
+							<p set:html={renderMarkdown(notification.limitations)} />
+						</>
+					)}
+				</Details>
+			))}
+		</>
+	))}

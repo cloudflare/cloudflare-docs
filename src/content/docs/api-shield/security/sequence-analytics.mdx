@@ -6,10 +6,9 @@ products:
 title: Sequence Analytics
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
 Sequence Analytics tracks the order of API endpoint requests over time, allowing you to discover how users interact with your API. Sequence Analytics groups and highlights important user journeys (sequences) across your API. You can enforce preferred sequences using [Sequence mitigation](/api-shield/security/sequence-mitigation/).
 
@@ -48,7 +47,7 @@ For more information, refer to the [blog post](https://blog.cloudflare.com/api-s
 
 ### Repeated sequences
 
-Real-world API usage shows many successively repeated operations. To facilitate exploration, Sequence Analytics collapses successively repeated operations into one.
+To facilitate exploration, Sequence Analytics collapses successive requests to the same operation into one when no other operation occurs between them.
 
 ## Availability
 

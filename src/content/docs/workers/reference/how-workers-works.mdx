@@ -9,7 +9,8 @@ products:
   - workers
 ---
 
-import { Render, WorkersIsolateDiagram } from "~/components"
+import { Render } from "~/components"
+import WorkersIsolateDiagram from "~/components/cf/WorkersIsolateDiagram.astro"
 
 Though Cloudflare Workers behave similarly to [JavaScript](https://www.cloudflare.com/learning/serverless/serverless-javascript/) in the browser or in Node.js, there are a few differences in how you have to think about your code. Under the hood, the Workers runtime uses the [V8 engine](https://www.cloudflare.com/learning/serverless/glossary/what-is-chrome-v8/) — the same engine used by Chromium and Node.js. The Workers runtime also implements many of the standard [APIs](/workers/runtime-apis/) available in most modern browsers.
 

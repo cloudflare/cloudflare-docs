@@ -401,7 +401,7 @@ Key points:
 
 ### Chat recovery
 
-`AIChatAgent` builds on fibers for LLM streaming recovery. When `chatRecovery` is enabled, each chat turn is wrapped in a fiber automatically. The framework handles the internal recovery path and exposes `onChatRecovery` for provider-specific strategies. Refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/agentic-patterns/long-running-agents/#recovering-interrupted-llm-streams) for details.
+`AIChatAgent` and `Think` build on fibers for LLM streaming recovery. Every chat turn is wrapped in a fiber automatically. The framework handles the internal recovery path and exposes `onChatRecovery` for provider-specific strategies. Refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/agentic-patterns/long-running-agents/#recovering-interrupted-llm-streams) for details.
 
 ## Concurrent fibers
 

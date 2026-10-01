@@ -40,7 +40,7 @@ Without content selectors, AI Search applies a default processing pipeline that 
 Content selectors are configured in the `source_params.web_crawler.parse_options.content_selector` field when creating or updating an AI Search instance. The field accepts an array of objects, each with a `path` and `selector` property.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
