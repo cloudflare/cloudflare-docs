@@ -1,0 +1,220 @@
+---
+pcx_content_type: concept
+title: Datasets
+description: Understand SQL API dataset types and discover available datasets and columns.
+sidebar:
+  order: 2
+---
+
+Each SQL API dataset has a schema-qualified name. The prefix identifies what one row represents and how you should interpret the data:
+
+| Prefix    | Row meaning                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `events.` | Each row is a unique event. Event datasets are often sampled.                                                                           |
+| `states.` | Each row represents the current state of a system when the observation was recorded.                                                    |
+| `logs.`   | Each row is a unique event or log entry. Log datasets are typically unsampled, but can be sampled. This includes Log Explorer datasets. |
+
+## Event datasets
+
+Use an `events.` dataset for aggregate analysis, such as creating tables, charts, and dashboards. You can also retrieve individual events. For example, the following query counts HTTP requests by response status:
+
+```sql
+SELECT edgeResponseStatus AS status, COUNT(*) AS requests
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+GROUP BY edgeResponseStatus
+ORDER BY requests DESC
+LIMIT 10
+```
+
+Event datasets are often adaptively sampled. The SQL API automatically applies sample weights to `COUNT`, `SUM`, and `AVG`. A query that selects individual rows only returns the sampled rows and cannot reconstruct events that were not retained.
+
+## State datasets
+
+Use a `states.` dataset to inspect observations of system state, such as D1 database storage. Each row describes the state at the time in its `timestamp` field. It does not represent a unique action or transaction.
+
+```sql
+SELECT timestamp, databaseId, databaseSizeBytes
+FROM states.d1Storage
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+ORDER BY timestamp DESC
+LIMIT 100
+```
+
+Each state dataset defines which aggregate functions are meaningful for its values. The API rejects aggregate functions that are not supported by the selected state dataset. [Introspection](#discover-datasets) lists these as `valid_aggregations` on the dataset's `kind`:
+
+```json
+{
+	"kind": {
+		"states": {
+			"sampling": "adaptive",
+			"valid_aggregations": ["max"]
+		}
+	}
+}
+```
+
+## Log datasets
+
+Use a `logs.` dataset for fine-grained investigation of individual events and log entries. You can also aggregate log data to identify trends. This category includes datasets served by Log Explorer.
+
+```sql
+SELECT timestamp, scriptName, logType
+FROM logs.workersLogs
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '15' MINUTE
+ORDER BY timestamp DESC
+LIMIT 100
+```
+
+Log datasets are typically unsampled, but some use adaptive sampling. As with event datasets, the SQL API automatically applies sample weights to supported aggregate functions when a log dataset is sampled.
+
+## Workers Analytics Engine datasets
+
+Query a Workers Analytics Engine dataset as `events.analyticsEngine.<DATASET_NAME>`, replacing `<DATASET_NAME>` with the name configured for the binding. Use an unquoted SQL identifier for names such as `myDataset`, or a double-quoted identifier for names containing characters such as hyphens: `events.analyticsEngine."example-dataset"`. These datasets require `accountTag` or `scope.accountTag`; zone scope is not supported.
+
+```sql
+SELECT timestamp, index1, blob1, double1
+FROM events.analyticsEngine."example-dataset"
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+ORDER BY timestamp DESC
+LIMIT 100
+```
+
+This interface uses the Analytics SQL API endpoint and SQL dialect. It is separate from the [Workers Analytics Engine SQL API](/analytics/analytics-engine/sql-api/).
+
+Workers Analytics Engine datasets are adaptively sampled. The SQL API applies sample weights to supported aggregates. To preserve compatibility with existing Workers Analytics Engine queries, these datasets also support aggregate `DISTINCT`, `argMax`, and `argMin`. They permit `ORDER BY` without `LIMIT` and `OFFSET` without `LIMIT`. These compatibility exceptions do not apply to other adaptively sampled datasets.
+
+[Introspection](#discover-datasets) discovers Workers Analytics Engine dataset names from the account's own data, up to a limit of 1,000 distinct names by default (truncated silently beyond that, with no time bound: a dataset remains listed for as long as any of its data is retained). This differs from `include_custom_attributes`, which only looks at the preceding seven days. Passing the bare `events.analyticsEngine` namespace as `dataset_name`, with no `<DATASET_NAME>` suffix, returns every Workers Analytics Engine dataset the account has, rather than being rejected as an unknown name.
+
+## Discover datasets
+
+Use the introspection endpoint to list the datasets in the SQL API catalog. The catalog is not a fixed list: datasets can appear or disappear depending on the deployment and, for Workers Analytics Engine and Log Explorer datasets, on the account. Query the catalog rather than hard-coding dataset names, and do not treat a dataset's absence from one response as proof that it can never appear.
+
+You can use the Cloudflare CLI to inspect the catalog:
+
+```bash
+cf sql datasets --account-tag "<ACCOUNT_TAG>"
+```
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode "account_tag=<ACCOUNT_TAG>"
+```
+
+The response contains dataset names, titles, categories, descriptions, and kinds, sorted by name. Columns are omitted by default. A `kind`'s `sampling` is either `unsampled` or `adaptive`.
+
+```json
+{
+	"datasets": [
+		{
+			"name": "events.httpRequests",
+			"title": "HTTP Requests",
+			"category": "HTTP Traffic",
+			"description": "Aggregated HTTP requests data with adaptive sampling",
+			"kind": {
+				"events": {
+					"sampling": "adaptive"
+				}
+			}
+		}
+	]
+}
+```
+
+### Query parameters
+
+The endpoint accepts the following query parameters:
+
+| Parameter                   | Type    | Required | Description                                                                                                                     |
+| --------------------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `account_tag`               | string  | Yes      | Account identifier. Requires Account Analytics Read permission.                                                                 |
+| `dataset_name`              | string  | No       | Exact, case-sensitive schema-qualified dataset name to return.                                                                  |
+| `include_columns`           | boolean | No       | Set to `true` to include column names, descriptions, and data types. Defaults to `false`.                                       |
+| `include_custom_attributes` | boolean | No       | Set to `true` to discover custom attribute names and types from account data. Requires a nonempty `dataset_name`.               |
+| `include_wae`               | boolean | No       | Set to `false` to omit Workers Analytics Engine datasets, which are discovered from the account's own data. Defaults to `true`. |
+| `include_lex`               | boolean | No       | Set to `false` to omit Log Explorer datasets, which are listed only for accounts that have them. Defaults to `true`.            |
+
+### Columns
+
+To inspect one dataset and its columns, provide both optional parameters:
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode "account_tag=<ACCOUNT_TAG>" \
+  --data-urlencode "dataset_name=events.httpRequests" \
+  --data-urlencode "include_columns=true"
+```
+
+```json
+{
+	"datasets": [
+		{
+			"name": "events.httpRequests",
+			"title": "HTTP Requests",
+			"category": "HTTP Traffic",
+			"description": "Aggregated HTTP requests data with adaptive sampling",
+			"kind": {
+				"events": {
+					"sampling": "adaptive"
+				}
+			},
+			"columns": [
+				{
+					"name": "accountTag",
+					"description": "Account tag (hex identifier)",
+					"data_type": "String"
+				},
+				{
+					"name": "timestamp",
+					"description": "The date and time the event occurred at the edge",
+					"data_type": "DateTime"
+				}
+			]
+		}
+	]
+}
+```
+
+A column's `data_type` is one of `String`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Int64`, `Float64`, `Date`, `DateTime`, `DateTime64(3)`, `Array(<scalar type>)` (for example `Array(String)`), or `Json`.
+
+### Custom attributes
+
+Introspection normally returns static catalog metadata without querying the underlying data store. Setting `include_custom_attributes=true` queries the preceding seven days of the selected dataset within the specified account:
+
+- Each custom-attribute type is capped at the service's configured attribute limit (1,000 by default), so the response might not include every historical custom attribute.
+- Truncation is silent: the response gives no indication that the limit was reached.
+- A custom attribute's `data_type` is one of `String`, `Float64`, or `Bool`, a smaller set than the column `data_type` values listed above.
+- `custom_attributes` is omitted, not returned as an empty array, for a dataset that has no custom attributes to discover.
+
+### Log Explorer availability
+
+Log Explorer datasets include an `availability` field alongside `kind`, listing the scopes where the account has enabled the dataset:
+
+```json
+{
+	"availability": [
+		{ "scope": "account" },
+		{ "scope": "zone", "zone": "<ZONE_TAG>" }
+	]
+}
+```
+
+`availability` is omitted for datasets that are not backed by Log Explorer.
+
+### Errors
+
+Introspection uses the same [HTTP status codes as the rest of the SQL API](/analytics/sql-api/errors/). The following `422` causes are specific to introspection:
+
+- `account_tag` is invalid or unknown.
+- `include_custom_attributes=true` was set without a nonempty `dataset_name`.
+- `dataset_name` identifies a Workers Analytics Engine dataset while `include_wae=false`.
+- A Workers Analytics Engine dataset name used for direct lookup is malformed or contains unsupported characters.
+- The supplied criteria, such as `dataset_name`, match no dataset. A dataset that exists but is not describable in this deployment returns the identical error, with a message naming the criteria that matched nothing, so the two cases cannot be told apart.
+
+A dataset or column appearing in the response does not guarantee that your plan and permissions allow you to query it. The SQL API applies dataset and field authorization when you submit a query.
