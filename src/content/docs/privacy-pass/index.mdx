@@ -26,7 +26,7 @@ Privacy Pass, an [IETF standard](https://datatracker.ietf.org/doc/html/rfc9576) 
 
 Verifying users on the Internet usually forces a trade-off between user experience and privacy, coming at the cost of either time spent solving CAPTCHAs or privacy lost to a trackable identifier. Privacy Pass eases that trade-off: a user proves a claim once, and receives tokens that can be redeemed later without revealing their identity or linking their activity.
 
-So far, the main use cases have been providing a privacy-preserving CAPTCHA alternative, such as through [Turnstile](/turnstile/) and verification for Cloudflare's [Privacy Proxy](/privacy-proxy/) and [Cloudflare OHTTP Relay (formerly Privacy Gateway)](/privacy-gateway/) products. However, by adjusting the deployment, Privacy Pass tokens can attest to any other information a service provider wants to prove.
+So far, the main use cases have been providing a privacy-preserving CAPTCHA alternative, such as through [Turnstile](/turnstile/) and verification for Cloudflare's [Privacy Proxy](/privacy-proxy/) and [Cloudflare OHTTP Relay (formerly Privacy Gateway)](/cloudflare-ohttp-relay/) products. However, by adjusting the deployment, Privacy Pass tokens can attest to any other information a service provider wants to prove.
 
 ---
 
@@ -56,7 +56,7 @@ Every Privacy Pass use case comes down to the same idea: let clients prove somet
 
 A MASQUE-based forward proxy that uses Privacy Pass tokens to authenticate users without revealing their identity.
 
-**[Cloudflare OHTTP Relay](/privacy-gateway/)**
+**[Cloudflare OHTTP Relay](/cloudflare-ohttp-relay/)**
 
 Implements the Oblivious HTTP (OHTTP) standard for request-level privacy, hiding client IP addresses from application backends with Privacy Pass authentication.
 

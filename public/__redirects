@@ -31,6 +31,10 @@
 # Privacy Proxy
 /privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
 
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/ /cloudflare-ohttp-relay/ 301
+/privacy-gateway/* /cloudflare-ohttp-relay/:splat 301
+
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
 /billing/payment-methods/backup-payment-method-auto-retry/ /billing/payment-methods/additional-payment-method-auto-retry/ 301

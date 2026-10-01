@@ -667,7 +667,7 @@ package.json @cloudflare/content-engineering
 
 # privacy-gateway
 
-/src/content/docs/privacy-gateway/ @lschull @mgalicer @cloudflare/product-owners
+/src/content/docs/cloudflare-ohttp-relay/ @lschull @mgalicer @cloudflare/product-owners
 /src/content/directory/privacy-gateway.yaml @lschull @mgalicer @cloudflare/product-owners
 /src/icons/privacy-gateway.svg @lschull @mgalicer @cloudflare/product-owners
 
