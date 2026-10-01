@@ -10,9 +10,11 @@ products:
 
 import { DashButton } from "~/components";
 
-The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets you connect a new or existing Worker to a GitHub or GitLab repository, enabling automated builds and deployments for your Worker on push.
+The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets you connect a new or existing Worker to a repository hosted by Artifacts, GitHub, or GitLab, enabling automated builds and deployments for your Worker on push.
 
 ## Get started
+
+To connect a repository hosted in Artifacts, refer to the [Artifacts integration](/workers/ci-cd/builds/git-integration/artifacts-integration/).
 
 ### Connect a new Worker
 
@@ -52,6 +54,8 @@ When connecting a repository to a Workers project, the Worker name in the Cloudf
 
 When you connect a repository that does not have a Wrangler configuration file, [autoconfig](/workers/framework-guides/automatic-configuration/) runs to detect your framework and create a [pull request](/workers/ci-cd/builds/automatic-prs/) to configure your project for Cloudflare Workers.
 
+Artifacts does not provide this automatic pull request workflow. Prepare the source code and project configuration before you connect an Artifacts repository.
+
 1. Autoconfig detects your framework and generates the necessary configuration
 2. A pull request is created in your repository with the necessary configuration changes
 3. A preview deployment is generated so you can test before merging
@@ -66,7 +70,7 @@ You can monitor a build's status and its build logs by navigating to **View buil
 A successful build produces different output depending on the branch:
 
 - Production branch builds create a new [version](/workers/versions-and-deployments/) under Version History. If the build is configured to deploy, that version is promoted to the Active Deployment.
-- Preview builds create or update a [Preview](/workers/previews/). Preview builds run for branches that are not your production branch. The Preview URL is posted as a pull request comment and can also be found in the Previews section of your Worker.
+- Preview builds create or update a [Preview](/workers/previews/). Preview builds run for branches that are not your production branch. Find the Preview URL in the **Previews** section of your Worker. Supported external providers can also post the URL as a pull request comment.
 
 To configure Preview settings such as variables, secrets, bindings, custom domains, or resource isolation, refer to [Previews](/workers/previews/).
 
@@ -82,7 +86,7 @@ For Workers that use [Containers](/containers/), use `wrangler deploy` on the pr
 
 ## Disconnecting builds
 
-To disconnect a Worker from a GitHub or GitLab repository:
+To disconnect a Worker from a repository:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
