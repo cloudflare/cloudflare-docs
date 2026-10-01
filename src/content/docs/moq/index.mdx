@@ -12,6 +12,8 @@ products:
   - moq
 ---
 
+import { CopyPromptButton } from "~/components";
+
 MoQ (Media over QUIC) is a protocol for delivering live media content using QUIC transport. It provides efficient, low-latency media streaming by leveraging QUIC's multiplexing and connection management capabilities.
 
 MoQ is designed to be an Internet infrastructure level service that provides media delivery to applications, similar to how HTTP provides content delivery and WebRTC provides real-time communication.
@@ -27,6 +29,13 @@ Cloudflare MoQ relays are available through the [Cloudflare dashboard](https://d
 ### Provision a relay
 
 Each relay provides an isolated scope — your namespaces, tracks, and objects are separated from those belonging to other relays. You control who can publish and who can subscribe by issuing tokens scoped to the operations each client needs.
+
+To provision a relay with a coding agent, copy this prompt:
+
+<CopyPromptButton
+	tooltip="Create a MoQ relay with cf"
+	prompt="Create a Cloudflare Media over QUIC relay. Read https://developers.cloudflare.com/moq/ and https://developers.cloudflare.com/cf/agents/ for current instructions. Use the Cloudflare cf CLI, installing it if needed. Confirm my account, relay name, and secure token storage location. Inspect commands under cf realtime moq relays with --help and cf schema. Check existing relays and ask before reusing a match. Preview creation with --dry-run, then create the relay. Capture the creation response in a restricted local file without displaying the two token secrets, which are shown only once. Identify the publish-and-subscribe token and the subscribe-only token; give subscribers only the latter. Retrieve the relay and list its token metadata to verify the relay ID and permissions. Report the relay ID, token storage location, and the documented publisher/subscriber connection commands with token placeholders. Keep token values out of chat and source control. Explain that connection URLs containing tokens may appear in access logs. Distinguish provisioning checks from an actual media-transfer test. Do not change billing. If a step fails, explain the blocker and what remains."
+/>
 
 To create a relay via the API:
 
