@@ -1700,8 +1700,9 @@
 /page-shield/reference/page-shield-api/ /client-side-security/reference/api/ 301
 
 # pipelines
-/pipelines/concepts/how-pipelines-work/ /pipelines/ 301
-/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
+/pipelines/concepts/how-pipelines-work/ /basin-pipelines/ 301
+/pipelines/platform/wrangler-commands/ /basin-pipelines/reference/wrangler-commands/ 301
+/pipelines/ /basin-pipelines/ 301
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
 /queues/javascript-apis/ /queues/configuration/javascript-apis/ 301
@@ -2105,11 +2106,22 @@
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/objects/multipart-objects/ /r2/objects/upload-objects/ 301
-/r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
+/r2/sql/platform/troubleshooting/ /basin-sql/troubleshooting/ 301
+/r2/data-catalog/ /basin-catalog/ 301
+/r2-data-catalog/ /basin-catalog/ 301
 
 # r2 sql
-/r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
-/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
+/r2-sql/platform/wrangler-commands/ /basin-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /basin-sql/reference/limitations-best-practices/ 301
+/r2-sql/ /basin-sql/ 301
+
+# Basin changelog product routes
+/changelog/product/pipelines/ /changelog/product/basin-pipelines/ 301
+/changelog/product/r2-data-catalog/ /changelog/product/basin-catalog/ 301
+/changelog/product/r2-sql/ /changelog/product/basin-sql/ 301
+/changelog/rss/pipelines.xml /changelog/rss/basin-pipelines.xml 301
+/changelog/rss/r2-data-catalog.xml /changelog/rss/basin-catalog.xml 301
+/changelog/rss/r2-sql.xml /changelog/rss/basin-sql.xml 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -3188,7 +3200,13 @@
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
 
 # R2 Data Catalog promoted to a top-level product (was nested under R2)
-/r2/data-catalog/* /r2-data-catalog/:splat 301
+/r2/data-catalog/* /basin-catalog/:splat 301
+/r2-data-catalog/* /basin-catalog/:splat 301
+
+# Basin product route migrations
+/pipelines/* /basin-pipelines/:splat 301
+/r2-sql/* /basin-sql/:splat 301
+
 /style-guide/formatting/* /style-guide/style-and-grammar/formatting/:splat 301
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301

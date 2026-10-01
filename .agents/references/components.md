@@ -650,7 +650,7 @@ import { Feature } from "~/components";
 </Feature>
 ```
 
-Props: `header` (required, feature name), `href` (required, link to feature docs). Body text is the feature description.
+Props: `header` (required, feature name), `href` (required, link to feature docs), `target` (optional, `"_blank"` to open the link in a new tab). Body text is the feature description.
 
 ---
 
