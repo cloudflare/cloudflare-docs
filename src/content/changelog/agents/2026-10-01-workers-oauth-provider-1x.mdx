@@ -110,7 +110,7 @@ You can still use `OAuthProvider` as both the authorization server and the MCP s
 
 The library implements the authorization server and protected resource side of MCP 2026-07-28:
 
-- [Client ID Metadata Documents](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00) (CIMD) are the preferred way for clients to register. Dynamic Client Registration is deprecated in MCP 2026-07-28 but stays available.
+- [Client ID Metadata Documents](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00) (CIMD) are the preferred way for clients to register. Dynamic Client Registration is deprecated in MCP 2026-07-28.
 - Every authorization response carries the [RFC 9207](https://datatracker.ietf.org/doc/html/rfc9207) `iss` parameter, including error redirects.
 - Public clients must use S256 PKCE. Plain PKCE and the implicit grant are removed, as OAuth 2.1 requires.
 - Redirect URIs must be `https`, or `http` on a loopback host.
