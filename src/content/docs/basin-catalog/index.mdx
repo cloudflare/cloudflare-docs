@@ -11,13 +11,13 @@ products:
 
 import { LinkCard } from "~/components";
 
-:::note[Availability and product rename]
-Basin Catalog requires an active [R2 subscription](/r2/get-started/). Your account must also have a [linked payment card](/billing/get-started/create-billing-profile/).
-
-Basin Catalog was formerly known as R2 Data Catalog. Existing configurations and APIs continue to work and will be deprecated in the future.
-:::
-
 Basin Catalog is a managed [Apache Iceberg](https://iceberg.apache.org/) data catalog built directly into your R2 bucket. It exposes a standard Iceberg REST catalog interface, so you can connect the engines you already use, like [Spark](/basin-catalog/config-examples/spark-scala/), [Snowflake](/basin-catalog/config-examples/snowflake/), and [PyIceberg](/basin-catalog/config-examples/pyiceberg/).
+
+:::note[Basin Catalog is now Generally Available]
+Basin Catalog, formerly known as R2 Data Catalog, is now Generally Available. Existing configurations and APIs continue to work and will be deprecated in the future.
+
+To report bugs or give feedback, go to the [**#basin-catalog Discord channel**](https://discord.cloudflare.com/). If you are having issues with Wrangler, report issues in the [**Wrangler GitHub repository**](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+:::
 
 Basin Catalog makes it easy to turn an R2 bucket into a data warehouse or lakehouse for a variety of analytical workloads including log analytics, business intelligence, and data pipelines. R2's zero-egress fee model means that data users and consumers can access and analyze data from different clouds, data platforms, or regions without incurring transfer costs.
 
