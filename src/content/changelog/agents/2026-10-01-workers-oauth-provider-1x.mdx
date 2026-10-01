@@ -1,0 +1,174 @@
+---
+title: "The best way to do MCP auth just got better: Workers OAuth Provider goes v1, with a new split API and full support for MCP 2026-07-28"
+description: Workers OAuth Provider v1 splits the authorization server from your MCP servers, adds step-up authorization, and supports MCP 2026-07-28.
+products:
+  - agents
+  - workers
+date: 2026-10-01
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+[`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1. The latest release is 1.2.1. It has a new split API: one Worker signs users in and issues tokens, and your MCP servers check those tokens from their own Workers.
+
+- It supports the [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization), and still works with older and less careful clients.
+- `insufficientScope()` gives you step-up authorization in one line.
+- The authorization server and the resource server can run in different Workers, with different WAF rules.
+- One authorization server can issue tokens for many MCP servers.
+- A migration skill ships in the npm package, so your coding agent can do the upgrade.
+
+This entry covers every release since 0.8.0 in June.
+
+## The split API
+
+<TypeScriptExample filename="auth-server/index.ts">
+
+```ts
+import { OAuthAuthorizationServer } from "@cloudflare/workers-oauth-provider";
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const authorizationServer = new OAuthAuthorizationServer<Env>({
+	issuer: "https://auth.example.com",
+	resources: ["https://mcp.example.com/mcp"], // every resource this server issues tokens for
+	scopesSupported: ["mcp:read", "mcp:write", "offline_access"], // every scope it can grant
+	clientIdMetadataDocumentEnabled: true, // the registration method MCP 2026-07-28 prefers
+});
+
+export default class AuthServer extends WorkerEntrypoint<Env> {
+	fetch(request: Request) {
+		if (new URL(request.url).pathname === "/authorize") {
+			return authorize(request, this.env); // sign the user in and ask for consent
+		}
+		return authorizationServer.fetch(request, this.env, this.ctx);
+	}
+
+	// RPC over a Service Binding. Not reachable from the Internet.
+	validateToken(resource: string, token: string) {
+		return authorizationServer.validateToken(resource, token, this.env);
+	}
+}
+```
+
+</TypeScriptExample>
+
+<TypeScriptExample filename="mcp-server/index.ts">
+
+```ts
+import { OAuthResourceServer } from "@cloudflare/workers-oauth-provider";
+
+export default new OAuthResourceServer<Env, AuthProps>({
+	resourceMetadata: {
+		resource: "https://mcp.example.com/mcp",
+		authorization_servers: ["https://auth.example.com"],
+	},
+	requiredScopes: ["mcp:read"],
+	validateToken: (env) => env.AUTH_SERVER.validateToken,
+	handler: {
+		fetch(request, env, ctx) {
+			// Your MCP server. ctx.props is what the user authorized, ctx.auth is the verified token.
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+The MCP server reaches the authorization server through a [Service Binding](/workers/runtime-apis/bindings/service-bindings/). It needs no KV namespace of its own.
+
+<WranglerConfig>
+
+```toml
+name = "mcp-server"
+main = "index.ts"
+compatibility_date = "$today"
+
+[[services]]
+binding = "AUTH_SERVER"
+service = "auth-server"
+```
+
+</WranglerConfig>
+
+`OAuthResourceServer` publishes the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata that MCP clients use to find your authorization server. It answers requests without a token with a `401` challenge that points to that metadata. It also rejects tokens issued for any other resource.
+
+`OAuthProvider` still works if you want one Worker that is both the authorization server and the MCP server. For most 0.x deployments, the only required change is to add `resourceMetadata: { resource }`.
+
+## MCP 2026-07-28, with backward compatibility
+
+The library implements the authorization server and protected resource side of MCP 2026-07-28:
+
+- [Client ID Metadata Documents](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-00) (CIMD) are the preferred way for clients to register. Dynamic Client Registration is deprecated in MCP 2026-07-28 but stays available.
+- Every authorization response carries the [RFC 9207](https://datatracker.ietf.org/doc/html/rfc9207) `iss` parameter, including error redirects.
+- Public clients must use S256 PKCE. Plain PKCE and the implicit grant are removed, as OAuth 2.1 requires.
+- Redirect URIs must be `https`, or `http` on a loopback host.
+- `offline_access` stays out of resource metadata and Bearer challenges.
+
+Real clients do not always follow the specification, so the library accepts what it safely can:
+
+- A client that omits the RFC 8707 `resource` parameter, as 2025-03-26 clients do, gets the server's only resource or its `defaultResource`.
+- A CIMD document that lists extra grant types or authentication methods is negotiated down to what the server supports. ChatGPT's document lists `private_key_jwt` and `none`, and gets `none`.
+- A registration may list redirect URIs that the policy refuses beside ones it accepts. Some Cursor versions register a `cursor://` callback next to a loopback one. Only a request that uses a refused URI fails.
+
+Conformance tests run against a real Worker in `workerd` for every dated MCP authorization revision: 2025-03-26, 2025-06-18, 2025-11-25 and 2026-07-28. CI also runs the official [MCP conformance runner](https://github.com/modelcontextprotocol/conformance).
+
+## Step-up authorization
+
+`requiredScopes` lists the scopes any access needs. The MCP server publishes them in its metadata and in the `401` challenge, so clients ask for them first. When a tool needs more, return `insufficientScope()`:
+
+<TypeScriptExample>
+
+```ts
+import { insufficientScope } from "@cloudflare/workers-oauth-provider";
+
+if (!ctx.auth.scope.includes("mcp:write")) {
+	return insufficientScope(ctx.auth, ["mcp:read", "mcp:write"]);
+}
+```
+
+</TypeScriptExample>
+
+The client receives a `403` with `error="insufficient_scope"`, every scope the operation needs, and the metadata URL. It asks the user to approve the extra scope and retries.
+
+## Separate Workers, separate WAF rules
+
+The authorization server and each MCP server can now run in their own Workers, on their own hostnames. You can apply different [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules to `auth.example.com` and `mcp.example.com`, and deploy them independently. Only the authorization server holds the `OAUTH_KV` binding and the token storage.
+
+## Multiple resources, one authorization server
+
+List every MCP server in `resources`. Each token is bound to exactly one of them, so a token for `https://calendar.example.com/mcp` is rejected at `https://drive.example.com/mcp`. Grants are tracked per user, client and resource, so authorizing one MCP server does not sign the user out of another.
+
+<TypeScriptExample>
+
+```ts
+const authorizationServer = new OAuthAuthorizationServer<Env>({
+	issuer: "https://auth.example.com",
+	resources: [
+		"https://calendar.example.com/mcp",
+		"https://drive.example.com/mcp",
+	],
+});
+```
+
+</TypeScriptExample>
+
+Existing 0.x grants and tokens keep working, and there is no KV migration. Old grants are bound to a resource the next time they refresh.
+
+## Also since June
+
+- Consent helpers implement the MCP confused deputy protections. `beginConsent()` and `approveConsent()` bind the consent page to the browser with a `__Host-` cookie. `beginUpstream()` and `finishUpstream()` handle sign-in through GitHub, Google or another provider. `describeConsent()` returns what the page must show.
+- A token in the library's own format that is not in storage is answered `invalid_token` directly. It no longer goes to `resolveExternalToken`. One deployment was forwarding about 24,000 expired tokens an hour to a third-party API this way.
+- `refreshTokenIdleTTL` keeps a grant alive while it is used. Dynamic registrations still in use renew themselves.
+- `completeAuthorization()` stays within the Worker subrequest limit for users with hundreds of grants. `purgeExpiredData()` returns a cursor, so scheduled cleanup reaches every grant.
+- `onError` receives an `internal` reason for every error, such as `refresh_token_expired`, while the client still gets a generic response.
+
+## Upgrade with the migration skill
+
+<PackageManagers pkg="@cloudflare/workers-oauth-provider@latest" />
+
+The package ships a coding agent skill at `node_modules/@cloudflare/workers-oauth-provider/skills/migrate-to-1.0/SKILL.md`. Point your agent at it. It searches your project for every affected option, applies the fix, and links each change to the [migration guide](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/migration-1.0.md).
+
+For both Workers in full, refer to the [split Workers example](https://github.com/cloudflare/workers-oauth-provider/tree/main/examples/split-workers). For how authorization fits into an MCP server, refer to [MCP authorization](/agents/model-context-protocol/protocol/authorization/).
