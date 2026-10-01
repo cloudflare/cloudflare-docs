@@ -44,6 +44,32 @@ curl -i -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/$CL
   }'
 ```
 
+To call Auto Router from a Worker, use the [AI binding](/ai-gateway/usage/worker-binding-methods/) and specify the AI Gateway ID:
+
+```ts
+const response = await env.AI.run(
+	"cloudflare/auto",
+	{
+		messages: [
+			{
+				role: "system",
+				content:
+					"You are a helpful oracle powered by lava lamps. Answer clearly, with a flicker of dry humor.",
+			},
+			{
+				role: "user",
+				content: "hello",
+			},
+		],
+	},
+	{
+		gateway: {
+			id: "my-gateway",
+		},
+	},
+);
+```
+
 The response headers show which model Auto Router selected:
 
 ```txt output
