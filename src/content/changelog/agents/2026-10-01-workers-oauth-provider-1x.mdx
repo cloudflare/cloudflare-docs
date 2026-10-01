@@ -118,10 +118,6 @@ The library implements the authorization server and resource server side of MCP 
 
 Run the authorization server and each MCP server on their own hostnames, with their own [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules. Only the authorization server holds token storage. Refer to [Resource servers](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/resource-servers.md).
 
-## Multiple resources, one authorization server
-
-List every MCP server in `resources`. Each token works at exactly one of them. Existing 0.x grants and tokens keep working, with no KV migration.
-
 ## Other updates and helpers
 
 - [Consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) and [upstream sign-in](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) helpers implement the MCP confused deputy protections.
