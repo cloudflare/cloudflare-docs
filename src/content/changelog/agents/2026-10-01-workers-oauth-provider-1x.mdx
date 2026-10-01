@@ -106,10 +106,6 @@ In the example, `env.AUTH_SERVER.validateToken` is that Service Binding call. Th
 
 You can still use `OAuthProvider` as both the authorization server and the MCP server. For most 0.x deployments, the only required change is to add `resourceMetadata: { resource }`.
 
-## MCP 2026-07-28, with backward compatibility
-
-The library implements the authorization server and resource server side of MCP 2026-07-28, including [Client ID Metadata Documents](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#client-id-metadata-documents) and [issuer identification](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#authorization-response-issuer). Clients built for earlier MCP revisions using Dynamic Client Registration continue to be supported.
-
 ## Other updates and helpers
 
 - [Consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) and [upstream sign-in](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) helpers implement the MCP confused deputy protections.
