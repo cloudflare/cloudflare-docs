@@ -5,6 +5,8 @@ description: Inspect production request paths in Cloudflare Observability.
 sidebar:
   order: 1
   label: Overview
+  badge:
+    text: Beta
 products:
   - observability
 ---
@@ -25,7 +27,7 @@ Enable tracing separately for each domain in your account. To manage sampling, c
 
 ## Inspect a trace
 
-Use **Add filter** or enter a query to search across traces for the selected time range.
+Use **Add filter** or enter a query to search across traces for the selected time range. To find the trace for one request, filter on its Ray ID.
 
 Open a trace to see the full request path as a hierarchy of spans. Each row represents one operation, and its bar shows when the operation ran and how long it took. Expand a span to inspect its child operations, or search for a span by name.
 
