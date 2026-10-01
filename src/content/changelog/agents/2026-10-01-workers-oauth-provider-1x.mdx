@@ -110,14 +110,6 @@ You can still use `OAuthProvider` as both the authorization server and the MCP s
 
 The library implements the authorization server and resource server side of MCP 2026-07-28, including [Client ID Metadata Documents](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#client-id-metadata-documents) and [issuer identification](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#authorization-response-issuer). Clients built for earlier MCP revisions using Dynamic Client Registration continue to be supported.
 
-## Step-up authorization
-
-`requiredScopes` tells clients which scopes to request first. When a tool needs more, return `insufficientScope()`, as the `POST` branch in the example does. Refer to [Scopes and step-up authorization](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/authorization-server.md#scopes-and-step-up-authorization).
-
-## Separate Workers, separate WAF rules
-
-Run the authorization server and each MCP server on their own hostnames, with their own [WAF](/waf/) and [rate limiting](/waf/rate-limiting-rules/) rules. Only the authorization server holds token storage. Refer to [Resource servers](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/resource-servers.md).
-
 ## Other updates and helpers
 
 - [Consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) and [upstream sign-in](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) helpers implement the MCP confused deputy protections.
