@@ -135,6 +135,13 @@ To add tags to a target, make a `PUT` request to the [Infrastructure Access Targ
 	path="/accounts/{account_id}/infrastructure/targets/{target_id}"
 	method="PUT"
 	json={{
+		hostname: "infra-target-example",
+		ip: {
+			ipv4: {
+				ip_addr: "198.51.100.10",
+				virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
+			},
+		},
 		tags: {
 			environment: "production",
 			team: "platform",
