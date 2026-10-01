@@ -104,7 +104,7 @@ In the example, `env.AUTH_SERVER.validateToken` is that Service Binding call. Th
 
 `OAuthResourceServer` publishes the [RFC 9728](https://datatracker.ietf.org/doc/html/rfc9728) protected resource metadata that MCP clients use to find your authorization server. It answers requests without a token with a `401` challenge that points to that metadata. It also rejects tokens issued for any other resource.
 
-`OAuthProvider` still works if you want one Worker that is both the authorization server and the MCP server. For most 0.x deployments, the only required change is to add `resourceMetadata: { resource }`.
+You can still use `OAuthProvider` as both the authorization server and the MCP server. For most 0.x deployments, the only required change is to add `resourceMetadata: { resource }`.
 
 ## MCP 2026-07-28, with backward compatibility
 
