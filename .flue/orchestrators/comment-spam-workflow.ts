@@ -15,30 +15,30 @@
  *   1. spam-context — fetches the comment and parent item, then re-runs the
  *      exemption checks against fresh data (including the codeowner check).
  *      Skips without consulting the agent when any exemption matches.
- *   2. spam-verdict — dispatches the comment-spam-filter agent.
+ *   2. spam-verdict — asks Clef (Workers AI) directly; no agent.
  *   3. act — on a high-confidence spam verdict: writes an R2 audit record
  *      first, then deletes the comment. Every failure path fails open — an
- *      agent error or audit failure never deletes a comment.
+ *      Clef error or audit failure never deletes a comment.
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
-import CommentSpamFilter, {
-	COMMENT_SPAM_VERDICT_DATA,
-} from "../agents/comment-spam-filter";
-import { agentStep } from "../lib/agents/agent-step";
-import { SMALL_AGENT_DURABILITY } from "../lib/agents/durability";
+import type { AiRunner, SpamVerdict } from "../lib/clef";
 import {
 	buildCommentSpamAuditRecord,
+	evaluateCommentSpam,
 	getCommentSpamContext,
 	shouldDeleteComment,
 	spamDeletionAuditKey,
 	type CommentSpamParams,
 } from "../lib/comment-spam";
+import { reviewMode, type ReviewRunEnv } from "../lib/review/run-context";
 import { deleteIssueComment, getInstallationToken } from "../lib/github";
-import { SpamVerdictSchema } from "../lib/spam-filter";
 
 interface CommentSpamEnv {
 	DOCS_FLUE_BUCKET: R2Bucket;
+	AI: AiRunner;
+	DOCS_FLUE_REVIEW_MODE?: string;
+	DOCS_FLUE_AI_GATEWAY_ID?: string;
 	[key: string]: unknown;
 }
 
@@ -50,7 +50,10 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 		event: Readonly<WorkflowEvent<CommentSpamParams>>,
 		step: WorkflowStep,
 	): Promise<Record<string, unknown>> {
-		const { commentId, parentNumber, isPullRequest } = event.payload;
+		const { commentId, parentNumber, isPullRequest, replay } = event.payload;
+		const mode = reviewMode(this.env as unknown as ReviewRunEnv);
+		// A log-mode replay is a dry run: real webhooks always act.
+		const dryRun = replay === true && mode === "log";
 		const ghEnv = this.env as unknown as Record<string, string>;
 
 		// ── 1. Context + exemptions ─────────────────────────────────────────────
@@ -72,29 +75,43 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 				action: "skipped",
 				reason: fetched.skip,
 			});
-			return { acted: true, deleted: false, skipped: fetched.skip };
+			return { acted: true, deleted: false, skipped: fetched.skip, mode };
 		}
 		const context = fetched.context;
 
-		// ── 2. Agent verdict ────────────────────────────────────────────────────
-		const verdict = await agentStep(step, {
-			name: "comment-spam-filter",
-			agent: CommentSpamFilter,
-			id: `${event.instanceId}:comment-spam:${commentId}`,
-			message: "Evaluate this comment for spam and submit your verdict.",
-			initialData: {
-				comment: context.comment,
-				parent: context.parent,
+		// ── 2. Clef verdict ─────────────────────────────────────────────────────
+		// A Clef failure is captured as a result (not thrown) so the act step
+		// fails open instead of retrying into a stuck workflow.
+		const verdict = await step.do<
+			{ ok: true; value: SpamVerdict } | { ok: false; error: string }
+		>(
+			"spam-verdict",
+			{ retries: { limit: 2, delay: "5 seconds", backoff: "exponential" } },
+			async () => {
+				try {
+					return {
+						ok: true,
+						value: await evaluateCommentSpam(
+							this.env.AI,
+							context,
+							this.env.DOCS_FLUE_AI_GATEWAY_ID,
+						),
+					};
+				} catch (error) {
+					return { ok: false, error: String(error) };
+				}
 			},
-			dataName: COMMENT_SPAM_VERDICT_DATA,
-			schema: SpamVerdictSchema,
-			readTimeoutMs: SMALL_AGENT_DURABILITY.timeoutMs,
-		});
+		);
 
 		// ── 3. Act ──────────────────────────────────────────────────────────────
 		const parent = context.parent;
 		const label = `${parent.kind === "pull_request" ? "PR" : "Issue"} #${parent.number} comment ${commentId}`;
-		const result = await step.do<{ deleted: boolean }>("act", async () => {
+		const result = await step.do<{
+			deleted: boolean;
+			wouldDelete?: boolean;
+			verdict?: SpamVerdict;
+			error?: string;
+		}>("act", async () => {
 			if (!verdict.ok) {
 				console.log({
 					message: `Comment spam filter errored (failing open): ${label} — ${verdict.error}`,
@@ -104,7 +121,7 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 					isPullRequest,
 					action: "filter_error",
 				});
-				return { deleted: false };
+				return { deleted: false, error: verdict.error };
 			}
 			if (!shouldDeleteComment(verdict.value)) {
 				console.log({
@@ -116,7 +133,17 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 					...verdict.value,
 					action: "left_undeleted",
 				});
-				return { deleted: false };
+				return { deleted: false, wouldDelete: false, verdict: verdict.value };
+			}
+			if (dryRun) {
+				console.log({
+					message: `Replay (log mode): would delete ${label}`,
+					event: "comment_spam_filter_verdict",
+					commentId,
+					...verdict.value,
+					action: "replay_would_delete",
+				});
+				return { deleted: false, wouldDelete: true, verdict: verdict.value };
 			}
 
 			// Audit before deleting: if the audit write fails, fail open — no
@@ -151,9 +178,9 @@ export class CommentSpamWorkflow extends WorkflowEntrypoint<
 				...verdict.value,
 				action: "comment_deleted",
 			});
-			return { deleted: true };
+			return { deleted: true, wouldDelete: true, verdict: verdict.value };
 		});
 
-		return { acted: true, deleted: result.deleted };
+		return { acted: true, mode, replay: replay === true, ...result };
 	}
 }

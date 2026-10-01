@@ -21,6 +21,9 @@ import {
 	devReviewRoutes,
 	hasValidInternalToken,
 } from "./lib/dev-review-routes";
+import { devCommentSpamRoutes } from "./lib/dev-comment-spam-routes";
+import { devSpamRoutes } from "./lib/dev-spam-routes";
+import { clefEvalRoutes } from "./lib/dev-clef-eval-routes";
 import {
 	processRecommendationEvent,
 	type RecommendationEnv,
@@ -30,8 +33,6 @@ import CodeReviewer from "./agents/code-reviewer";
 import StyleGuideReviewer from "./agents/style-guide-reviewer";
 import ConventionsReviewer from "./agents/conventions-reviewer";
 import ReviewJudge from "./agents/review-judge";
-import SpamFilter from "./agents/spam-filter";
-import CommentSpamFilter from "./agents/comment-spam-filter";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -61,6 +62,8 @@ const app = new Hono();
 
 app.get("/health", (c) => c.json({ ok: true }));
 app.route("/dev/review-run", devReviewRoutes);
+app.route("/dev/comment-spam-run", devCommentSpamRoutes);
+app.route("/dev/spam-run", devSpamRoutes);
 
 // Trigger a review for a PR by number. Fetches the real PR from GitHub,
 // builds the same classification a webhook would, and routes through
@@ -214,11 +217,12 @@ const EVAL_AGENTS = [
 	StyleGuideReviewer,
 	ConventionsReviewer,
 	ReviewJudge,
-	SpamFilter,
-	CommentSpamFilter,
 ] as const;
 
-app.use("/eval/agents/*", async (c, next) => {
+const evalGate = async (
+	c: Parameters<Parameters<typeof app.use>[1]>[0],
+	next: () => Promise<void>,
+) => {
 	const env = c.env as unknown as WebhookEnv;
 	if (env.DOCS_FLUE_ENABLE_EVAL_ROUTES !== "1") return c.text("Not Found", 404);
 	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
@@ -227,7 +231,11 @@ app.use("/eval/agents/*", async (c, next) => {
 	if (!(await hasValidInternalToken(provided, secret)))
 		return c.text("Unauthorized", 401);
 	await next();
-});
+};
+
+app.use("/eval/agents/*", evalGate);
+app.use("/eval/clef/*", evalGate);
+app.route("/eval/clef", clefEvalRoutes);
 
 for (const agent of EVAL_AGENTS) {
 	const name = agent.agentName;

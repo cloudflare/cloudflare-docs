@@ -39,6 +39,8 @@
 		"flue:evals": "tsx .flue/bin/run-evals.ts",
 		"flue:replay": "tsx .flue/bin/replay.ts",
 		"flue:replay:dependabot": "tsx .flue/bin/replay-dependabot.ts",
+		"flue:replay:spam": "tsx .flue/bin/replay-spam.ts",
+		"flue:replay:comment-spam": "tsx .flue/bin/replay-comment-spam.ts",
 		"lint": "eslint",
 		"generate:config-reference": "node bin/generate-cf-config-reference.mjs",
 		"prepare": "husky",
