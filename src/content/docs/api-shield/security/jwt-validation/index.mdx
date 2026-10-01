@@ -39,7 +39,7 @@ JWT issuers that use asymmetric algorithms typically publish public keys (JWKS) 
 
 For supported algorithms and symmetric key requirements, refer to [Configure JWT validation via the API](/api-shield/security/jwt-validation/api/#credentials).
 
-To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
+Token configurations do not automatically retrieve or refresh keys from a JWKS URL. Add updated JWK values directly, or use a Worker to synchronize the token configuration with your identity provider. To configure automatic updates, refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/).
 
 ### Act on JWT validation results
 
