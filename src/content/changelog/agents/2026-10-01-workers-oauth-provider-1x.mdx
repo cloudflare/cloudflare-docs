@@ -124,8 +124,6 @@ Real clients do not always follow the specification, so the library accepts what
 - A CIMD document that lists extra grant types or authentication methods is negotiated down to what the server supports. ChatGPT's document lists `private_key_jwt` and `none`, and gets `none`.
 - A registration may list redirect URIs that the policy refuses beside ones it accepts. Some Cursor versions register a `cursor://` callback next to a loopback one. Only a request that uses a refused URI fails.
 
-Conformance tests run against a real Worker in `workerd` for every dated MCP authorization revision: 2025-03-26, 2025-06-18, 2025-11-25 and 2026-07-28. CI also runs the official [MCP conformance runner](https://github.com/modelcontextprotocol/conformance).
-
 ## Step-up authorization
 
 `requiredScopes` lists the scopes any access needs. The MCP server publishes them in its metadata and in the `401` challenge, so clients ask for them first. When a tool needs more, `insufficientScope()` answers with the step-up challenge, as the `POST` branch in the example does.
