@@ -13,7 +13,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1, with a new split API. One Worker acts as the authorization server: it signs users in and issues tokens. Your MCP server acts as the resource server, and can run in another Worker. It checks the tokens the authorization server issued.
+[`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1, with a new split API. One Worker acts as the authorization server: it signs users in and issues tokens. Your MCP server acts as the resource server, and can run in another Worker. It validates each token with the authorization server over a [Service Binding](/workers/runtime-apis/bindings/service-bindings/), without crossing the public Internet.
 
 - It supports the [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization), and still works with older and less careful clients.
 - `insufficientScope()` gives you step-up authorization in one line.
@@ -83,7 +83,7 @@ export const calendar = new OAuthResourceServer<Env, AuthProps>({
 
 </TypeScriptExample>
 
-The calendar Worker binds to the auth server with a [Service Binding](/workers/runtime-apis/bindings/service-bindings/), so `validateToken` is an RPC call that is not reachable from the Internet. It needs no KV namespace of its own.
+In the example, `env.AUTH_SERVER.validateToken` is that Service Binding call. The calendar Worker needs no KV namespace of its own.
 
 <WranglerConfig>
 
