@@ -54,4 +54,6 @@ You can filter the alerts by domain, whether or not to include traffic already m
 
 Traffic alerts are configured per zone. It is not currently possible to configure alerts for a specific path or hostname.
 
+Traffic alerts only evaluate [proxied](/dns/proxy-status/) hostnames, because Cloudflare only sees traffic that passes through it.
+
 The conditions that trigger alerts cannot be customized. However, you can choose whether to include traffic mitigated by DoS and WAF.
