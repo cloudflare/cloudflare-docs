@@ -13,7 +13,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1. The latest release is 1.2.1. It has a new split API: one Worker signs users in and issues tokens, and your MCP servers check those tokens from their own Workers.
+[`@cloudflare/workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) is now v1, with a new split API. One Worker acts as the authorization server: it signs users in and issues tokens. Your MCP server acts as the resource server, and can run in another Worker. It checks the tokens the authorization server issued.
 
 - It supports the [MCP 2026-07-28 authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization), and still works with older and less careful clients.
 - `insufficientScope()` gives you step-up authorization in one line.
