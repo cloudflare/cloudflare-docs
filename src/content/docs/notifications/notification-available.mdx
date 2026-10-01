@@ -14,7 +14,7 @@ Available Notifications depend on your Cloudflare plan. Cloudflare offers a vari
 
 Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
 
-## Custom Alerts
+## Custom Alerts (Beta)
 
 Custom Alerts evaluate a SQL API query on a schedule. Cloudflare sends a notification when the query result meets your detection criteria.
 
@@ -24,12 +24,11 @@ The datasets available to Custom Alerts depend on your plan and permissions. The
 
 Each Custom Alert has the following details:
 
-| Option        | Required | Description                                                                       |
-| ------------- | -------- | --------------------------------------------------------------------------------- |
-| Name          | Yes      | Identifies the alert in notifications and the Cloudflare dashboard.               |
-| Description   | No       | Records additional context about the alert.                                       |
-| Dataset scope | Yes      | Limits dataset selection to account-level datasets or datasets for one zone.      |
-| Destination   | Yes      | Sends notifications to at least one email address, webhook, or PagerDuty service. |
+| Option      | Required | Description                                                                       |
+| ----------- | -------- | --------------------------------------------------------------------------------- |
+| Name        | Yes      | Identifies the alert in notifications and the Cloudflare dashboard.               |
+| Description | No       | Records additional context about the alert.                                       |
+| Destination | Yes      | Sends notifications to at least one email address, webhook, or PagerDuty service. |
 
 You can add up to 20 email recipients. Webhook and PagerDuty availability depends on your plan.
 
@@ -37,12 +36,13 @@ You can add up to 20 email recipients. Webhook and PagerDuty availability depend
 
 Use the query builder or enter custom SQL. The query builder supports these options:
 
-| Option     | Description                                                                                                      |
-| ---------- | ---------------------------------------------------------------------------------------------------------------- |
-| Dataset    | Selects one dataset available within the dataset scope.                                                          |
-| Metric     | Applies `COUNT` or a supported aggregate function to a numeric field. The builder returns the result as `value`. |
-| Time range | Sets the data window relative to each alert evaluation. The builder adds the required timestamp bounds.          |
-| Filters    | Restricts rows by field value. Available operators depend on the field data type. Multiple filters use `AND`.    |
+| Option        | Description                                                                                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Dataset scope | Limits dataset selection to account-level datasets or datasets for one zone.                                     |
+| Dataset       | Selects one dataset available within the dataset scope.                                                          |
+| Metric        | Applies `COUNT` or a supported aggregate function to a numeric field. The builder returns the result as `value`. |
+| Time range    | In Manual mode, sets a fixed data window relative to each evaluation and adds the timestamp bounds.              |
+| Filters       | Restricts rows by field value. Available operators depend on the field data type. Multiple filters use `AND`.    |
 
 For adaptively sampled datasets, the builder uses `APPROX_MIN` and `APPROX_MAX` instead of `MIN` and `MAX`. The SQL API automatically applies sample weights to `COUNT`, `SUM`, and `AVG`.
 
@@ -51,14 +51,14 @@ A custom SQL query must meet these requirements:
 - Return one numeric value in a column named `value`.
 - Read one schema-qualified SQL API dataset.
 - Include an account or zone filter.
-- Include a lower timestamp bound, unless the alert supplies a fixed time range.
+- Include a lower timestamp bound when using Manual time-range mode.
 - Use the [supported SQL syntax](/analytics/sql-api/sql-reference/).
 - Omit a trailing semicolon.
 
-Custom SQL supports two ways to define the time range:
+Custom SQL supports two time-range modes:
 
-- **Query-defined time range**: Include the timestamp filter in the SQL query.
-- **Fixed time range**: Omit the timestamp filter and configure an evaluation window. For each evaluation, Cloudflare supplies a start and end time based on that window and the evaluation time.
+- **Automatic** (recommended): Omit the timestamp filter. When the alert runs, Cloudflare supplies a time range ending at the evaluation time and spanning the execution interval.
+- **Manual**: Add a fixed time range to the SQL query. Relative ranges end at the evaluation time.
 
 For example, this query returns the number of server errors during the previous five minutes:
 
@@ -95,13 +95,14 @@ A threshold alert supports these options:
 
 #### Anomaly detection
 
-Anomaly detection calculates the number of standard deviations between the current result and its historical baseline. It detects both spikes and drops.
+Anomaly detection calculates the number of standard deviations between the current result and its historical baseline. It supports these options:
 
 | Option              | Description                                                                                                               |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | Query               | Produces the numeric value to evaluate.                                                                                   |
 | Evaluation window   | Sets the current data window. You can select a preset or enter a custom duration.                                         |
 | Baseline window     | Sets the historical comparison window. The value must be at least six times the evaluation window and no more than `24h`. |
+| Alert on            | Detects spikes, drops, or both spikes and drops.                                                                          |
 | Sensitivity         | Sets the z-score threshold. Lower values detect smaller changes. You can select a preset or enter a custom value.         |
 | Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                           |
 
@@ -109,18 +110,18 @@ New anomaly alerts require at least 30 minutes of historical data before they ca
 
 #### Service-level objective
 
-An SLO alert calculates the successful-event percentage from unsuccessful and total event counts. Both queries must return a numeric column named `value`.
+An SLO alert calculates the successful-event percentage from bad and total event counts. Both queries must return a numeric column named `value`. It supports these options:
 
-| Option                     | Description                                                                                                                             |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Unsuccessful events query  | Counts events that do not meet your success criteria.                                                                                   |
-| Unsuccessful events window | Sets the data window for the unsuccessful events query. You can select a preset or enter a custom duration.                             |
-| Total events query         | Counts all events in the same population as the unsuccessful events query.                                                              |
-| Total events window        | Sets the data window for the total events query. You can select a preset or enter a custom duration.                                    |
-| SLO target                 | Triggers when `(1 - unsuccessful events / total events) × 100` falls below this value. You can select a preset or enter a custom value. |
-| Minimum event count        | Optionally suppresses alerts for low-volume evaluation windows.                                                                         |
+| Option              | Description                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Bad events query    | Counts events that do not meet your success criteria.                                                                                |
+| Total events query  | Counts all events in the same population as the bad events query.                                                                    |
+| Short window        | Measures the successful-event percentage over a short period so the alert reacts and resolves quickly.                               |
+| Long window         | Measures the successful-event percentage over a longer period so brief failures do not trigger the alert.                            |
+| SLO target          | Triggers when `(1 - bad events / total events) × 100` is below this value for both windows. You can select a preset or customize it. |
+| Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                                      |
 
-Use equivalent filters in both queries. The unsuccessful events query should represent a subset of the total events query.
+Use equivalent filters in both queries. The bad events query should represent a subset of the total events query.
 
 ### Evaluation and notification frequency
 
