@@ -276,10 +276,12 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			try {
-				const forceTrailingSlashURL = new URL(
-					request.url.replace(/([^/])$/, "$1/"),
-					request.url,
-				);
+				// Append the slash to the path only. Doing it on the full URL string
+				// puts it after the query string, so rules never match.
+				const forceTrailingSlashURL = new URL(request.url);
+				if (!forceTrailingSlashURL.pathname.endsWith("/")) {
+					forceTrailingSlashURL.pathname += "/";
+				}
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
 					this.env.ASSETS,
