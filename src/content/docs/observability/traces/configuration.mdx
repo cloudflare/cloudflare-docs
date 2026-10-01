@@ -10,6 +10,8 @@ products:
 
 Configure [Cloudflare Traces](/observability/traces/) separately for each domain. Choose how many requests to trace, where to save or send traces, and whether to connect them to traces from other systems.
 
+![Trace settings for sampling, persistence, export destinations, trace rules, and trace context propagation.](~/assets/images/observability/trace-configuration.png)
+
 ## Head sampling
 
 **Default sample rate (%)** sets how many requests Cloudflare traces. For example, a rate of `10%` traces about 10 out of every 100 requests. Trace rules can use a different rate for requests that match a rule.
@@ -21,6 +23,8 @@ Trace rules override the default sample rate for matching requests. Cloudflare u
 Choose **Custom filter expression** to match selected requests, or choose **All incoming requests** to apply the rule to every request. Build a custom filter from fields, operators, and values, or select **Edit expression** to write it with the [Cloudflare Rules language](/ruleset-engine/rules-language/).
 
 Set **Sample rate (%)** to the percentage of matching requests you want to trace. Select **Save as Draft** to keep the rule inactive, or select **Deploy** to start using it.
+
+![A trace rule that samples all incoming requests with a URL path starting with /api/v1.](~/assets/images/observability/create-trace-rule.png)
 
 ## Persist traces
 
