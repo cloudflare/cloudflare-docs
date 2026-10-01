@@ -132,6 +132,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),
+					link("Artifacts", "/artifacts/"),
 				],
 			},
 			{
