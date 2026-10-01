@@ -6,28 +6,27 @@ sidebar:
   order: 4
 ---
 
+import { WranglerConfig } from "~/components";
+
 The Analytics SQL binding lets a Cloudflare Worker query SQL API datasets without making an HTTP request or managing an API token. Each binding is scoped to the Cloudflare account that owns the Worker.
 
 ## Configure the binding
 
-Add an Analytics SQL binding to your Worker's Wrangler configuration:
+Add an Analytics SQL binding to your Worker's Wrangler configuration. The `analytics` key requires Wrangler 4.145.0 or later.
 
-The Wrangler configuration for this binding uses the experimental `unsafe.bindings` interface and may change.
+<WranglerConfig>
 
 ```jsonc
 {
-	"unsafe": {
-		"bindings": [
-			{
-				"name": "ANALYTICS_SQL",
-				"type": "analytics",
-			},
-		],
-	},
+	"analytics": {
+		"binding": "ANALYTICS_SQL"
+	}
 }
 ```
 
-The `name` value determines how you access the binding on your Worker's `env` object.
+</WranglerConfig>
+
+The `binding` value determines how you access the binding on your Worker's `env` object.
 
 ## Query from a Worker
 
