@@ -1,0 +1,26 @@
+src/content/changelog/analytics/2026-10-02-workers-observability-in-custom-dashboards.mdx
+  s_06aec84e422a49::t_8176f04602246f 1-13
+src/content/docs/analytics/custom-dashboards.mdx
+  s_06aec84e422a49::t_fbac4485762302 51-55
+  s_06aec84e422a49::t_8db1c27174f2a3 154
+  s_06aec84e422a49::t_9d127e12f4d0b6 6
+  s_06aec84e422a49::t_089ef9a97403af 74
+  s_06aec84e422a49::t_ab432ac94c893e 25,29
+  s_06aec84e422a49::t_ee0afb2e3090a6 118-136
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2721f6df7d1b1569f14301db27a748fbeb9aa544",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

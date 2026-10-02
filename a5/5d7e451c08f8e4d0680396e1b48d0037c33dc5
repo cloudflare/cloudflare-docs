@@ -1,0 +1,41 @@
+src/content/docs/cloudflare-one/insights/dex/notifications.mdx
+  s_06aec84e422a49::t_11be655bfc369d 20
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications.mdx
+  s_06aec84e422a49::t_d65b47806f4c16 18
+src/content/docs/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup.mdx
+  s_06aec84e422a49::t_83fcb72bd0f13f 120
+src/content/docs/email-security/migrate-to-email-security.mdx
+  s_06aec84e422a49::t_a323f2b292608d 84
+src/content/docs/fundamentals/security/protect-your-origin-server.mdx
+  s_06aec84e422a49::t_df57127d8ae7a8 47
+src/content/docs/fundamentals/user-profiles/change-password-or-email.mdx
+  s_06aec84e422a49::t_73240cc7605616 31
+src/content/docs/load-balancing/reference/migration-guides/health-monitor-notifications.mdx
+  s_06aec84e422a49::t_11c48e22724386 103
+src/content/docs/notifications/index.mdx
+  s_06aec84e422a49::t_38e97fd63d52d0 16
+src/content/docs/notifications/reference/traffic-alerts.mdx
+  s_06aec84e422a49::t_02c0f72f5f7570 57-58
+src/content/docs/tunnel/observability/index.mdx
+  s_06aec84e422a49::t_e01e6054a30614 40
+src/content/docs/waf/reference/alerts.mdx
+  s_06aec84e422a49::t_eedc6860a7c951 25
+src/content/partials/networking-services/mnm/rules/rule-notifications.mdx
+  s_06aec84e422a49::t_6ecb191cd7b18b 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a55d7e451c08f8e4d0680396e1b48d0037c33dc5",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

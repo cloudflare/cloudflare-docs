@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-01-workers-oauth-provider-1x.mdx
+  s_36848236258ad7::t_69624ac2fcc1bb 111,115,119,123,127-130,136,138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "96899f7b27435f96fa9eb9003de52ea9d1d22dad",
+  "prompts": {},
+  "sessions": {
+    "s_36848236258ad7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0f6c6-9469-746e-a13c-bf4be39b76b0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

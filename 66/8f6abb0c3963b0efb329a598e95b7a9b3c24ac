@@ -1,0 +1,38 @@
+src/content/docs/pages/configuration/git-integration/index.mdx
+  s_0a88b989226253::t_9622865d4f172d 42
+  s_0a88b989226253::t_fd77213a6f3c60 41
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_0a88b989226253::t_fd77213a6f3c60 28,44
+  s_0a88b989226253::t_9622865d4f172d 29-31,45
+src/content/docs/pages/configuration/git-integration/github-integration.mdx
+  s_0a88b989226253::t_fd77213a6f3c60 55
+  s_0a88b989226253::t_9622865d4f172d 56,59
+src/content/docs/workers/ci-cd/builds/git-integration/index.mdx
+  s_0a88b989226253::t_fd77213a6f3c60 29
+  s_0a88b989226253::t_9622865d4f172d 30
+src/content/docs/workers/ci-cd/builds/git-integration/github-integration.mdx
+  s_0a88b989226253::t_fd77213a6f3c60 57
+  s_0a88b989226253::t_9622865d4f172d 58,61
+src/content/partials/pages/get-started-git-connect-pages.mdx
+  s_0a88b989226253::t_9622865d4f172d 17,34
+  s_0a88b989226253::t_fd77213a6f3c60 16
+src/content/changelog/workers/2026-09-11-user-scoped-github-repositories.mdx
+  s_0a88b989226253::t_9622865d4f172d 1-9,11-14
+  s_0a88b989226253::t_fd77213a6f3c60 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "668f6abb0c3963b0efb329a598e95b7a9b3c24ac",
+  "prompts": {},
+  "sessions": {
+    "s_0a88b989226253": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f9260e2fcffeQuLsNCWXhBmDs8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
