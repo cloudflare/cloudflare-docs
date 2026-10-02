@@ -1,207 +1,201 @@
 ---
 summary: A simple frontend app with a containerized backend
 pcx_content_type: example
-title: Static Frontend, Container Backend
+title: Static frontend, container backend
 sidebar:
   order: 3
 description: A simple frontend app with a containerized backend
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
 ---
 
 import {
-	WranglerConfig,
-	Details,
-	TabItem,
-	Tabs,
 	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+	Details,
 } from "~/components";
 
-A common pattern is to serve a static frontend application (e.g., React, Vue, Svelte) using Static Assets,
-then pass backend requests to a containerized backend application.
+Serve a static frontend with [Workers Static Assets](/workers/static-assets/). Route API requests to a pool of three Containers using the `durable_object` scheduling policy.
 
-In this example, we'll show an example using a simple `index.html` file served as a static asset,
-but you can select from one of many frontend frameworks. See our [Workers framework examples](/workers/framework-guides/web-apps/) for more information.
-
-## Configure Static Assets and a Container
+## Configure the Worker
 
 <WranglerConfig>
-```json
-{
-  "name": "static-frontend-container-backend",
-  "main": "src/index.ts",
-  "compatibility_date": "$today",
-  "observability": {
-    "enabled": true
-  },
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS"
-  },
-  "containers": [
-    {
-      "class_name": "Backend",
-      "image": "./Dockerfile",
-			"max_instances": 3
-    }
-  ],
-  "durable_objects": {
-    "bindings": [
-      {
-        "class_name": "Backend",
-        "name": "BACKEND"
-      }
-    ]
-  },
-  "exports": {
-    "Backend": {
-      "type": "durable-object",
-      "storage": "sqlite"
-    }
-  }
-}
+
+```toml
+name = "static-frontend-container-backend"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+run_worker_first = ["/api", "/api/*"]
+
+[[containers]]
+class_name = "Backend"
+scheduling_policy = "durable_object"
+
+[containers.images.base]
+dockerfile = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "BACKEND"
+class_name = "Backend"
+
+[exports.Backend]
+type = "durable-object"
+storage = "sqlite"
 ```
+
 </WranglerConfig>
 
-## Add a simple index.html file to serve
+## Add the frontend
 
 Create a simple `index.html` file in the `./dist` directory.
 
 <Details header="index.html">
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Widgets</title>
+		<script
+			defer
+			src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"
+		></script>
+	</head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Widgets</title>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.3/cdn.min.js"></script>
-</head>
+	<body>
+		<div x-data="widgets()" x-init="fetchWidgets()">
+			<h1>Widgets</h1>
+			<div x-show="loading">Loading...</div>
+			<div x-show="error" x-text="error" style="color: red;"></div>
+			<ul x-show="!loading && !error">
+				<template x-for="widget in widgets" :key="widget.id">
+					<li>
+						<span x-text="widget.name"></span> - (ID:
+						<span x-text="widget.id"></span>)
+					</li>
+				</template>
+			</ul>
 
-<body>
-  <div x-data="widgets()" x-init="fetchWidgets()">
-    <h1>Widgets</h1>
-    <div x-show="loading">Loading...</div>
-    <div x-show="error" x-text="error" style="color: red;"></div>
-    <ul x-show="!loading && !error">
-      <template x-for="widget in widgets" :key="widget.id">
-        <li>
-          <span x-text="widget.name"></span> - (ID: <span x-text="widget.id"></span>)
-        </li>
-      </template>
-    </ul>
+			<div x-show="!loading && !error && widgets.length === 0">
+				No widgets found.
+			</div>
+		</div>
 
-    <div x-show="!loading && !error && widgets.length === 0">
-      No widgets found.
-    </div>
+		<script>
+			function widgets() {
+				return {
+					widgets: [],
+					loading: false,
+					error: null,
 
-  </div>
+					async fetchWidgets() {
+						this.loading = true;
+						this.error = null;
 
-  <script>
-    function widgets() {
-      return {
-        widgets: [],
-        loading: false,
-        error: null,
-
-        async fetchWidgets() {
-          this.loading = true;
-          this.error = null;
-
-          try {
-            const response = await fetch('/api/widgets');
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            this.widgets = await response.json();
-          } catch (err) {
-            this.error = err.message;
-          } finally {
-            this.loading = false;
-          }
-        }
-      }
-    }
-  </script>
-
-</body>
-
+						try {
+							const response = await fetch("/api/widgets");
+							if (!response.ok) {
+								throw new Error(
+									`HTTP ${response.status}: ${response.statusText}`,
+								);
+							}
+							this.widgets = await response.json();
+						} catch (err) {
+							this.error = err.message;
+						} finally {
+							this.loading = false;
+						}
+					},
+				};
+			}
+		</script>
+	</body>
 </html>
 ```
+
 </Details>
 
-In this example, we are using [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from `/api/widgets`.
+The frontend uses [Alpine.js](https://alpinejs.dev/) to fetch a list of widgets from `/api/widgets`.
 
 This is meant to be a very simple example, but you can get significantly more complex.
 See [examples of Workers integrating with frontend frameworks](/workers/framework-guides/web-apps/) for more information.
 
-## Define a Worker
+## Route API requests
 
-Your Worker needs to be able to both serve static assets and route requests to the containerized backend.
+`start()` initiates startup. The Worker waits for a successful `/health` response before forwarding traffic. Concurrent requests share that readiness check, and a failed check can be retried by the next request.
 
-In this case, we will pass requests to one of three container instances if the route starts with `/api`,
-and all other requests will be served as static assets.
+<TypeScriptExample filename="src/index.ts">
 
-Because `container.start()` does not wait for readiness, this example polls `GET /health` before forwarding requests.
-
-<Tabs>
-	<TabItem label="Durable Object Container API">
-
-<TypeScriptExample filename="src/index.ts" omitTabs={true}>
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-const INSTANCE_COUNT = 3;
-
 interface Env {
-	ASSETS: Fetcher;
 	BACKEND: DurableObjectNamespace<Backend>;
+	ASSETS: Fetcher;
 }
 
+const INSTANCE_COUNT = 3;
+
+const INACTIVITY_TIMEOUT_MS = 2 * 60 * 60 * 1000;
+
 export class Backend extends DurableObject<Env> {
-	private ready: Promise<void> | undefined;
+	private starting: Promise<void> | undefined;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container!;
+		if (container.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
 
 	async fetch(request: Request): Promise<Response> {
-		const container = this.ctx.container!;
-		if (!container.running) {
-			this.ready = undefined;
-		}
-		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
-			this.ready = undefined;
-			throw error;
+		// Concurrent requests share startup and readiness checks.
+		this.starting ??= this.startAndWaitForPort().finally(() => {
+			this.starting = undefined;
 		});
-		await this.ready;
+		await this.starting;
 
 		const url = new URL(request.url);
 		url.protocol = "http:";
 		url.host = "container";
 		const forwarded = new Request(url, request);
 		forwarded.headers.delete("host");
-		return container.getTcpPort(8080).fetch(forwarded);
+		return this.ctx.container!.getTcpPort(8080).fetch(forwarded);
 	}
 
 	private async startAndWaitForPort(): Promise<void> {
 		const container = this.ctx.container!;
-		await container.setInactivityTimeout(2 * 60 * 60 * 1000);
 		if (!container.running) {
-			container.start();
+			container.start({
+				image: container.images.base,
+				instance: "lite",
+				enableInternet: false,
+			});
 		}
-		this.ctx.waitUntil(
-			container
-				.monitor()
-				.then(() => console.log("Backend container exited"))
-				.catch((error: unknown) =>
-					console.error("Backend container errored:", error),
-				),
-		);
+		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 
 		const port = container.getTcpPort(8080);
 		let lastError: unknown;
 		for (let attempt = 0; attempt < 100; attempt++) {
 			try {
-				const response = await port.fetch("http://container/health");
+				const response = await port.fetch("http://container/health", {
+					signal: AbortSignal.timeout(1000),
+				});
+				await response.body?.cancel();
 				if (!response.ok) {
 					throw new Error(`Health check returned ${response.status}`);
 				}
@@ -211,68 +205,27 @@ export class Backend extends DurableObject<Env> {
 				await scheduler.wait(200);
 			}
 		}
-		throw new Error("Backend did not become ready on port 8080", {
+		throw new Error("Container did not become ready on port 8080", {
 			cause: lastError,
 		});
 	}
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		if (new URL(request.url).pathname.startsWith("/api")) {
+	fetch(request: Request, env: Env): Promise<Response> {
+		const pathname = new URL(request.url).pathname;
+		if (pathname === "/api" || pathname.startsWith("/api/")) {
 			const index = Math.floor(Math.random() * INSTANCE_COUNT);
 			return env.BACKEND.getByName(`instance-${index}`).fetch(request);
 		}
-
 		return env.ASSETS.fetch(request);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
 </TypeScriptExample>
 
-	</TabItem>
-	<TabItem label="Container class">
-
-<TypeScriptExample filename="src/index.ts" omitTabs={true}>
-```ts
-import { Container, getRandom } from "@cloudflare/containers";
-
-const INSTANCE_COUNT = 3;
-
-interface Env {
-	ASSETS: Fetcher;
-	BACKEND: DurableObjectNamespace<Backend>;
-}
-
-export class Backend extends Container<Env> {
-	defaultPort = 8080; // pass requests to port 8080 in the container
-	sleepAfter = "2h"; // only sleep a container if it hasn't gotten requests in 2 hours
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		if (url.pathname.startsWith("/api")) {
-			const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
-			return containerInstance.fetch(request);
-		}
-
-		return env.ASSETS.fetch(request);
-	},
-};
-```
-</TypeScriptExample>
-
-For a full Container class example, see the [Static Frontend + Container Backend Template](https://github.com/mikenomitch/static-frontend-container-backend).
-
-	</TabItem>
-</Tabs>
-
-:::note
-Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
-
-See the [autoscaling documentation](/containers/configuration/scaling-and-routing) for more details about scaling stateless instances and routing.
-:::
+The Worker selects one of three named instances for each API request. Each instance uses the configured `base` image and the `lite` instance size.
 
 ## Define a backend container
 
@@ -333,3 +286,13 @@ CMD ["/server"]
 ```
 
 </Details>
+
+## Run the example
+
+Start a Docker-compatible engine. Install Wrangler in your project, using version 4.136.0 or later for [local development](/containers/guides/local-dev/).
+
+<PackageManagers type="add" pkg="wrangler" dev />
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+Visit `http://localhost:8787/` to load the frontend and its list of widgets.
