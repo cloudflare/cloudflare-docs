@@ -54,14 +54,14 @@ If you do not specify otherwise, Cloudflare automatically sets the `only_when_up
 
 :::
 
-## Choosing a mitigation mode
+## Choose a mitigation mode
 
 The `only_when_upstream_unhealthy` setting controls when Cloudflare starts blocking queries identified as part of a random prefix attack.
 
 | Mode | `only_when_upstream_unhealthy` | When to use |
 |---|---|---|
 | **Conditional** (default) | `true` | Steady-state protection. Cloudflare blocks attack traffic only when your upstream nameservers are unresponsive. Reduces the risk of false positives — legitimate queries are less likely to be refused. Recommended for most deployments. |
-| **Always on** | `false` | Active attack response. Cloudflare blocks identified attack traffic at all times, regardless of upstream health. Use this when your upstream is being overwhelmed. Note that some legitimate queries for subdomains not seen before may receive a `REFUSED` response. |
+| **Always on** | `false` | Active attack response. Cloudflare blocks identified attack traffic at all times, regardless of upstream health. Use this when your upstream is being overwhelmed. Some legitimate queries for subdomains not seen before may receive a `REFUSED` response. |
 
 To check your current cluster configuration before making changes, send a [`GET` request](/api/resources/dns_firewall/methods/get/):
 
@@ -70,7 +70,7 @@ To check your current cluster configuration before making changes, send a [`GET`
 	method="GET"
 />
 
-## Identifying the type of attack
+## Identify the type of attack
 
 DNS Firewall provides different levels of protection depending on the type of attack. Before applying mitigations, identify which pattern you are dealing with by inspecting a sample of query names hitting your upstream nameservers.
 
@@ -86,7 +86,7 @@ If the suffix under attack is listed on the [Public Suffix List](https://publics
 
 :::
 
-## During a simple DNS flood
+## Respond to a simple DNS flood
 
 If the same query names are being repeated at high volume, Cloudflare's cache is your primary defense. Apply the following settings via API or dashboard to maximise cache absorption.
 
@@ -127,9 +127,9 @@ If the attack includes queries for names that do not exist, enable negative resp
 	}}
 />
 
-## During an active random prefix attack
+## Respond to an active random prefix attack
 
-If your upstream nameservers are being overwhelmed by a random prefix attack, apply the following steps in order. All changes can be made via API; rate limit configuration is not available in the dashboard.
+If your upstream nameservers are being overwhelmed by a random prefix attack, apply the following steps in order. All changes can be made via API. Rate limit configuration is not available in the dashboard.
 
 ### 1. Switch attack mitigation to always-on
 
