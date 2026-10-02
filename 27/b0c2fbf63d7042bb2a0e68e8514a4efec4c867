@@ -1,0 +1,25 @@
+src/content/catalog-models/pruna-p-image-edit.json
+  s_19f9585d15e6d0::t_737ef7d1295a0a 30,35
+src/content/catalog-models/pruna-p-image-try-on.json
+  s_19f9585d15e6d0::t_fe2325f2742057 30,35,66,71
+src/content/catalog-models/pruna-p-image-upscale.json
+  s_19f9585d15e6d0::t_5a8a5477ea46a9 34,39
+src/content/catalog-models/pruna-p-image.json
+  s_19f9585d15e6d0::t_f2727e90a6c57a 26,31,59,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "27b0c2fbf63d7042bb2a0e68e8514a4efec4c867",
+  "prompts": {},
+  "sessions": {
+    "s_19f9585d15e6d0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f029a8b0effef18PLYbAczdowa",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "shridharathi <shridharathinarayanan@gmail.com>"
+    }
+  }
+}
