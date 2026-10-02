@@ -279,12 +279,6 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
-	build: {
-		// Emit every stylesheet as a cacheable <link> instead of a <style> in each
-		// page. Inline styles are counted as page text by HTML-to-Markdown
-		// converters, which pushes real content down the page for agents.
-		inlineStylesheets: "never",
-	},
 	experimental: {
 		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
 	},
@@ -303,11 +297,6 @@ export default defineConfig({
 	integrations,
 	vite: {
 		...appVite,
-		build: {
-			// Stops Astro inlining small module scripts (e.g. webmcp) into the
-			// head, for the same reason as `inlineStylesheets` above.
-			assetsInlineLimit: 0,
-		},
 		server: {
 			watch: {
 				ignored: ["**/dist/**"],
