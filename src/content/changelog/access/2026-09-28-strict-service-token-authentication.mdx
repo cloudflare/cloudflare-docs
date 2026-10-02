@@ -6,7 +6,7 @@ products:
   - access
 ---
 
-import { CURL } from "~/components";
+import { CURL, DashButton, Steps, Tabs, TabItem } from "~/components";
 
 The strict service token authentication setting applies consistent behavior to requests made with service tokens. When the setting is on for a Zero Trust organization, Access handles requests with service token headers as follows:
 
@@ -15,7 +15,24 @@ The strict service token authentication setting applies consistent behavior to r
 - Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
 - Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication).
 
-Zero Trust organizations created on or after October 5, 2026 have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well. To turn it on for an existing organization, use the API:
+Zero Trust organizations created on or after October 5, 2026 have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
+
+Organizations created before October 5, 2026 can configure the setting in the dashboard or through the API.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Manage service tokens**, turn on **Strict service token authentication**.
+3. In the confirmation dialog, select **Enable**.
+</Steps>
+
+To turn off strict service token authentication, turn off the setting and select **Disable**.
+
+</TabItem> <TabItem label="API">
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
@@ -25,5 +42,9 @@ Zero Trust organizations created on or after October 5, 2026 have strict service
 		strict_service_token_auth: true,
 	}}
 />
+
+To turn off strict service token authentication, set `strict_service_token_auth` to `false`.
+
+</TabItem> </Tabs>
 
 For behavior and configuration details, refer to [Strict service token authentication](/cloudflare-one/access-controls/service-credentials/service-tokens/#strict-service-token-authentication).

@@ -94,9 +94,28 @@ Strict service token authentication is a Zero Trust organization setting that ap
 - Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
 - Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication). Access logs expired or disabled tokens, incorrect Client Secrets, and tokens not authorized for the application. It does not log malformed headers or unknown Client IDs.
 
-Zero Trust organizations created on or after October 5, 2026 have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
+Zero Trust organizations created on or after `2026-10-05` have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
 
-For an existing organization, send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
+:::note
+Organizations created before `2026-10-05` can turn this setting on or off.
+:::
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Manage service tokens**, turn on **Strict service token authentication**.
+3. In the confirmation dialog, select **Enable**.
+</Steps>
+
+To turn off strict service token authentication, turn off the setting and select **Disable**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
@@ -106,6 +125,10 @@ For an existing organization, send a `PATCH` request to the [Update your Zero Tr
 		strict_service_token_auth: true,
 	}}
 />
+
+To turn off strict service token authentication, set `strict_service_token_auth` to `false`.
+
+</TabItem> </Tabs>
 
 ## Rotate service token secrets
 
