@@ -26,6 +26,7 @@ export { default as CfCommand } from "./components/cf/CfCommand.astro";
 export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
+export { default as AnnotatedConfigExplorer } from "./components/config-explorer/AnnotatedConfigExplorer.astro";
 export { default as Description } from "./components/cf/Description.astro";
 export { default as Details } from "./components/cf/Details.astro";
 export { default as MetaInfo } from "./components/cf/MetaInfo.astro";
@@ -63,6 +64,7 @@ export { default as ProductAvailabilityText } from "./components/cf/ProductAvail
 export { default as AvailableNotifications } from "./components/cf/AvailableNotifications.astro";
 export { default as Stream } from "./components/cf/Stream.astro";
 export { default as WARPReleases } from "./components/cf/WARPReleases.astro";
+export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
 export { TunnelOutbound } from "./components/react/tunnel/TunnelOutbound";
