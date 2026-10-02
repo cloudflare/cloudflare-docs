@@ -1,0 +1,56 @@
+---
+title: Logs
+pcx_content_type: overview
+description: Query and visualize logs from supported Cloudflare products.
+sidebar:
+  order: 1
+  label: Overview
+products:
+  - observability
+---
+
+Use Logs to query structured events from supported Cloudflare products and services. Filter by time range and field values, then chart or inspect matching events.
+
+You can use Logs to:
+
+- Inspect HTTP requests and security actions
+- Debug errors in [Workers](/workers/) and [Containers](/containers/)
+- Audit [R2](/r2/) bucket access and operations
+- Investigate [AI Gateway](/ai-gateway/) errors, latency, token usage, and costs
+- Query [Zero Trust](/cloudflare-one/) and network events
+
+![Logs showing Worker query controls, outcome and duration visualizations, and a table of structured events.](~/assets/images/observability/logs-workers-dashboard-overview.png)
+
+## Choose a dataset
+
+Open the dataset selector to search available datasets, including HTTP requests, security events, Workers, Containers, R2, AI Gateway, and Issues. For domain-scoped datasets, select one domain or all domains.
+
+Available fields and retention periods vary by dataset, and some datasets must be turned on in their source product.
+
+![Dataset selector showing HTTP requests, Workers, Containers, R2, and Issues.](~/assets/images/observability/logs-dataset-selector.png)
+
+## Narrow the results
+
+Use the field browser to search field names or browse categories. To create a filter, select a field, operator, and value.
+
+You can also enter a query directly, either in the filter query language or as SQL against the selected dataset. The built-in reference covers field queries, comparison operators, functions, Boolean logic, examples, and keyboard shortcuts. To inspect one request, filter on its Ray ID.
+
+Select a preset time range, enter a relative range, or select calendar dates. Results show the returned row count and query duration.
+
+![Logs filter builder matching requests where Path equals /.env, with the generated query and filtered chart.](~/assets/images/observability/logs-filter-builder.png)
+
+## Visualize results
+
+Create a visualization from a field, describe the chart you want in plain language, or configure one from scratch. Group results by one or more fields, or add, remove, and reorder custom series with separate labels, metrics, and filters. When Logs detects an anomaly in a series, select it to narrow the results to the affected time range and investigate.
+
+Available chart types include:
+
+- **Single value:** Stat and Percentage
+- **Time series:** Timeseries, Bar Chart, and Stacked Area
+- **Categories:** Categorical Bar, Horizontal Bar, Vertical Bar, Doughnut Chart, and Top List
+- **Geospatial and flow:** Choropleth Country Map, Proportional Symbol Map, and Sankey Diagram
+- **Tabular data:** Table
+
+Use automatic interval selection or select an interval from one minute to one day. Resize the visualization area, duplicate or remove a chart, and add the chart to a [custom dashboard](/analytics/custom-dashboards/).
+
+![Logs visualizations showing Worker invocation outcomes, error outcomes, latency, and an empty chart ready to configure.](~/assets/images/observability/logs-visualization-builder.png)

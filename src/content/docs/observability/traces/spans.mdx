@@ -1,0 +1,58 @@
+---
+title: Spans
+pcx_content_type: concept
+description: Understand spans captured as requests move through Cloudflare.
+sidebar:
+  order: 3
+products:
+  - observability
+---
+
+A span represents one operation within a trace. Each span records when an operation started and how long it took. Related spans form a hierarchy that shows how a request moved through Cloudflare.
+
+The spans in a trace depend on the products and request path involved. A span appears only when the corresponding operation runs.
+
+## Span reference
+
+| Span                 | What it covers                                                                                                                                                                                                 | What its duration measures                                                                                                                                                                                                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `cloudflare_request` | Cloudflare's processing of an HTTP request. This is the root span for platform-level request processing.                                                                                                       | Starts after tracing configuration and sampling are resolved. Includes the request processing, upstream, response delivery, and post-processing, but excludes processing before tracing is activated.                                                                                                                          |
+| `response`           | Response processing and delivery to the client.                                                                                                                                                                | Starts after an upstream or internally generated response becomes available. This includes the time spent to fully stream the response back to the client.                                                                                                                                                                     |
+| `workers_routing`    | The decision to match, skip, or reject a Workers route or custom domain. A `skipped` means a skip or disabled route matched. Requests that are not eligible for Workers routing do not emit this span.         | Includes the time to evaluate the routes/custom domains that might match the request. Does not include the time executing the Worker.                                                                                                                                                                                          |
+| `page_rules`         | One evaluation of a configured Page Rules set.                                                                                                                                                                 | Includes the time to evaluate the Page Rules. It does not include applying those actions to the request.                                                                                                                                                                                                                       |
+| `cache`              | Getting a response from Cloudflare's cache, fetching or revalidating it when needed.                                                                                                                           | On a cache hit, includes reading and transferring the cached response. If Cloudflare needs to fetch or revalidate the response, that time is included too, including waiting for another request already filling the cache. **Includes the full response body, not just the cache lookup.**                                    |
+| `dynamic`            | Fetching and returning an uncached response.                                                                                                                                                                   | Includes establishing a connection when needed, sending the request and its body, waiting for the response, and transferring the full response body. **It is not just the time your origin spends processing the request.**                                                                                                     |
+| `upstream`           | Fetching a response from another Cloudflare location using Tiered Cache.                                                                                                                                       | Includes establishing a connection when needed, sending the request, waiting for the other location to produce a response, and receiving its full response body. If that location needs to fetch from your origin, that wait is included. **It is not just the network travel time between locations.**                         |
+
+## Ruleset phase spans
+
+Ruleset phase spans measure rule execution and application of the phase output. They start after eligibility checks and request-body preparation, and end after Cloudflare applies the resulting actions. A skipped phase does not emit a span.
+
+| Span                                      | Ruleset phase covered                |
+| ----------------------------------------- | ------------------------------------ |
+| `http_request_dynamic_redirect`           | Dynamic Redirect Rules               |
+| `http_request_transform`                  | Early request Transform Rules        |
+| `http_config_settings`                    | Configuration Rules                  |
+| `http_request_origin`                     | Origin Rules                         |
+| `http_request_firewall_custom`            | Custom rules                         |
+| `http_request_firewall_managed`           | Managed rules                        |
+| `http_request_redirect`                   | Request redirect rules               |
+| `http_request_late_transform_managed`     | Managed late request transforms      |
+| `http_request_late_transform`             | Late request transforms              |
+| `http_request_cache_settings`             | Cache Rules                          |
+| `http_request_snippets`                   | Snippets rules                       |
+| `http_custom_errors`                      | Custom Error Rules                   |
+| `http_response_headers_transform_managed` | Managed response header transforms   |
+| `http_response_headers_transform`         | Response Header Transform Rules      |
+| `http_response_compression`               | Compression Rules                    |
+| `http_response_firewall_managed`          | Managed response firewall processing |
+
+## Workers runtime spans
+
+Cloudflare Traces include spans for supported Workers runtime operations, including handler invocations, fetch calls, and binding operations.
+
+Refer to [Workers spans and attributes](/workers/observability/traces/spans-and-attributes/) for the complete runtime reference. You can also [create custom spans](/workers/observability/traces/custom-spans/) for application-specific operations.
+
+:::note
+[Workers tracing](/workers/observability/traces/) needs to be enabled to see Workers spans in a Cloudflare Trace.
+:::

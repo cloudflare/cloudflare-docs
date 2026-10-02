@@ -1,0 +1,94 @@
+---
+pcx_content_type: how-to
+title: Export to Sentry
+description: Send Cloudflare traces and logs to Sentry with OpenTelemetry.
+sidebar:
+  order: 4
+products:
+  - observability
+---
+
+import { DashButton, Steps } from "~/components";
+
+Sentry provides distributed tracing, logs, and application monitoring. Export Cloudflare telemetry to query data and create alerts or dashboards.
+
+![Sentry trace view with timing information displayed on a timeline](~/assets/images/workers-observability/sentry-example.png)
+
+This guide configures Sentry to receive Cloudflare traces and logs.
+
+## Prerequisites
+
+Before you begin, you need an active [Sentry account](https://sentry.io/signup/). You also need Cloudflare logs or traces to export.
+
+## 1. Create a Sentry project
+
+Skip this step if you already have a project.
+
+<Steps>
+
+1. Log in to your [Sentry account](https://sentry.io/).
+2. Go to **Insights** > **Projects**.
+3. Select [**New Project**](https://sentry.io/orgredirect/organizations/:orgslug/insights/projects/new/).
+4. Complete the project form, then select **Create Project**.
+
+</Steps>
+
+## 2. Get your Sentry OTLP endpoints
+
+Sentry provides separate OpenTelemetry Protocol (OTLP) endpoints for traces and logs:
+
+- **Traces**: `https://<HOST>/api/<PROJECT_ID>/integration/otlp/v1/traces`
+- **Logs**: `https://<HOST>/api/<PROJECT_ID>/integration/otlp/v1/logs`
+
+<Steps>
+
+1. In Sentry, go to [**Settings** > **Projects**](https://sentry.io/orgredirect/organizations/:orgslug/settings/projects/).
+2. Select your project.
+3. Under **SDK Setup**, select **Client Keys (DSN)**.
+4. Copy the OTLP endpoints and authentication header.
+
+</Steps>
+
+For endpoint details, refer to [Sentry OTLP documentation](https://docs.sentry.io/concepts/otlp/).
+
+## 3. Configure Cloudflare Observability destinations
+
+In the Cloudflare dashboard, go to **Observability** > **Destinations**.
+
+<DashButton url="/?to=/:account/observability/destinations" />
+
+### Configure a traces destination
+
+<Steps>
+
+1. Select **Add destination**.
+2. Configure the destination:
+   - **Destination name**: `sentry-traces`
+   - **Destination type**: _Traces_
+   - **OTLP endpoint**: Your Sentry OTLP traces endpoint
+   - **Custom header name**: `x-sentry-auth`
+   - **Custom header value**: `sentry sentry_key=<SENTRY_PUBLIC_KEY>`
+3. Select **Save**.
+
+</Steps>
+
+### Configure a logs destination
+
+<Steps>
+
+1. Select **Add destination**.
+2. Configure the destination:
+   - **Destination name**: `sentry-logs`
+   - **Destination type**: _Logs_
+   - **OTLP endpoint**: Your Sentry OTLP logs endpoint
+   - **Custom header name**: `x-sentry-auth`
+   - **Custom header value**: `sentry sentry_key=<SENTRY_PUBLIC_KEY>`
+3. Select **Save**.
+
+</Steps>
+
+## 4. Enable export
+
+Creating a destination does not start exporting telemetry. To export [Workers Logs](/workers/observability/logs/workers-logs/) or [Workers Traces](/workers/observability/traces/), [configure OpenTelemetry export for your Worker](/workers/observability/opentelemetry-export/). To export [Cloudflare Traces](/observability/traces/), [configure export for your domain](/observability/traces/configuration/#export-traces).
+
+Data may take several minutes to appear in Sentry.
