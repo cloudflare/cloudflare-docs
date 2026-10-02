@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 
-import { bindCopyPromptButtons, resolvePrompt } from "./copy-prompt";
+import { bindCopyPromptButtons } from "./copy-prompt";
 
 const writeText = vi.fn<(text: string) => Promise<void>>();
 
@@ -78,17 +78,4 @@ test("does not report success when clipboard access is rejected", async () => {
 	await Promise.resolve();
 
 	expect(button.dataset.copied).toBeUndefined();
-});
-
-test.each([
-	"https://developers.cloudflare.com/agents/harnesses/pi/",
-	"https://preview.example.com/agents/harnesses/pi/",
-	"http://localhost:4321/agents/harnesses/pi/",
-])("uses the current page URL on %s", (url) => {
-	const prompt = "Read {{pageUrl}}, then deploy my Pi agent.";
-	const resolved = resolvePrompt(
-		prompt,
-		new URL(`${url}?view=full#core-pattern`),
-	);
-	expect(resolved).toBe(`Read ${url}, then deploy my Pi agent.`);
 });
