@@ -12,7 +12,7 @@ products:
   - moq
 ---
 
-import { CopyPromptButton } from "~/components";
+import { CopyPromptButton, Tabs, TabItem } from "~/components";
 
 MoQ (Media over QUIC) is a protocol for delivering live media content using QUIC transport. It provides efficient, low-latency media streaming by leveraging QUIC's multiplexing and connection management capabilities.
 
@@ -24,20 +24,41 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
 
 ## Get started
 
-Cloudflare MoQ relays are available through the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [API](/api/resources/moq). They are free to use during the beta period.
+Provision a relay with a coding agent, the [`cf` CLI](/cf/), the [Cloudflare dashboard](https://dash.cloudflare.com/), or the [API](/api/resources/moq/). Relays are free to use during the beta period.
 
 ### Provision a relay
 
 Each relay provides an isolated scope — your namespaces, tracks, and objects are separated from those belonging to other relays. You control who can publish and who can subscribe by issuing tokens scoped to the operations each client needs.
 
-To provision a relay with a coding agent, copy this prompt:
+#### Set up with your coding agent
+
+Copy this prompt to create a relay and save its tokens using `cf`:
 
 <CopyPromptButton
 	tooltip="Create a MoQ relay with cf"
 	prompt="Create a Cloudflare Media over QUIC relay. Read https://developers.cloudflare.com/moq/ and https://developers.cloudflare.com/cf/agents/ for current instructions. Use the Cloudflare cf CLI, installing it if needed. Confirm my account, relay name, and secure token storage location. Inspect commands under cf realtime moq relays with --help and cf schema. Check existing relays and ask before reusing a match. Preview creation with --dry-run, then create the relay. Capture the creation response in a restricted local file without displaying the two token secrets, which are shown only once. Identify the publish-and-subscribe token and the subscribe-only token; give subscribers only the latter. Retrieve the relay and list its token metadata to verify the relay ID and permissions. Report the relay ID, token storage location, and the documented publisher/subscriber connection commands with token placeholders. Keep token values out of chat and source control. Explain that connection URLs containing tokens may appear in access logs. Distinguish provisioning checks from an actual media-transfer test. Do not change billing. If a step fails, explain the blocker and what remains."
 />
 
-To create a relay via the API:
+#### Provision the relay manually
+
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and go to **Media** > **Realtime** > **MoQ Relay**. Create a relay and save its tokens.
+
+</TabItem>
+<TabItem label="cf CLI" class="space-y-4">
+
+[Install and sign in to `cf`](/cf/get-started/), then create the relay:
+
+```sh
+cf realtime moq relays create --name "My Relay"
+```
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+Use the [Create relay API](/api/resources/moq/subresources/relays/methods/create/):
 
 ```sh
 curl -X POST \
@@ -47,9 +68,10 @@ curl -X POST \
   -d '{"name": "My Relay"}'
 ```
 
-Cloudflare returns a relay ID and two default tokens: one that can publish and subscribe, and one that can only subscribe. Token secrets are shown once in the response and never stored.
+</TabItem>
+</Tabs>
 
-You can also create and manage relays in the Cloudflare dashboard under **Media** > **Realtime** > **MoQ Relay**.
+The CLI and API return a relay ID and two default tokens: one that can publish and subscribe, and one that can only subscribe. Token secrets are shown once in the response and never stored by Cloudflare. Save them securely before closing the terminal.
 
 ### Connect a publisher and subscriber (draft-16)
 

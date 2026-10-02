@@ -8,7 +8,7 @@ products:
   - realtime
 ---
 
-import { CopyPromptButton, Steps, TypeScriptExample } from "~/components";
+import { CopyPromptButton, DashButton, Steps, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 Webhooks let your backend receive RealtimeKit events as they happen. RealtimeKit sends an HTTP `POST` request to your configured endpoint with a JSON payload when a subscribed event occurs, such as when a meeting starts, a participant joins, or a recording is uploaded.
 
@@ -72,14 +72,41 @@ Your endpoint should return a `2xx` response as soon as it accepts the event. Mo
 
 ## Register a webhook
 
-To register your endpoint with a coding agent, copy this prompt:
+### Set up with your coding agent
+
+Copy this prompt to register your endpoint using `cf`:
 
 <CopyPromptButton
 	tooltip="Register a RealtimeKit webhook with cf"
 	prompt="Register a webhook in my Cloudflare RealtimeKit app. Read https://developers.cloudflare.com/realtime/realtimekit/webhooks/ and https://developers.cloudflare.com/cf/agents/ for current instructions. Use the Cloudflare cf CLI, installing it if needed. Confirm my account, app ID, webhook name, public HTTPS endpoint URL, and desired events. Inspect cf realtime kit webhooks commands with --help and cf schema. Fetch supported events and check existing webhooks to avoid duplicate subscriptions. Verify that my endpoint checks rtk-signature against the raw request body before processing events. If the endpoint is not ready, explain what is missing before enabling delivery. Preview registration with --dry-run, then register only the requested events. Retrieve the webhook by ID and verify its URL, events, and enabled state. Report the webhook ID and configuration, and explain how to trigger a subscribed event to test signed delivery. Do not claim delivery was tested unless a real event was received and verified. Keep API tokens out of chat, logs, and source control. Do not deploy an endpoint or modify unrelated webhooks. If a step fails, explain the blocker and what remains."
 />
 
-Register the publicly accessible endpoint URL using the RealtimeKit [Webhooks API](/api/resources/realtime_kit/subresources/webhooks/):
+### Register the webhook manually
+
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
+
+Open your app in the RealtimeKit dashboard to manage webhooks. Register your public HTTPS endpoint and select the events it should receive.
+
+<DashButton url="/?to=/:account/realtime/kit" />
+
+</TabItem>
+<TabItem label="cf CLI" class="space-y-4">
+
+[Install and sign in to `cf`](/cf/get-started/), then register the endpoint with your chosen events:
+
+```sh
+cf realtime kit webhooks create "<APP_ID>" \
+  --name "Production webhook" \
+  --url "https://example.com/webhook" \
+  --events meeting.started meeting.ended \
+  --enabled true
+```
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+Use the [Webhooks API](/api/resources/realtime_kit/subresources/webhooks/):
 
 ```bash
 curl --request POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/webhooks" \
@@ -99,7 +126,8 @@ curl --request POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/r
   }'
 ```
 
-You can also manage webhooks from the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
+</TabItem>
+</Tabs>
 
 ## Webhook headers
 
