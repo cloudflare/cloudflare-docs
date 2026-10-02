@@ -33,7 +33,6 @@
 
 # Cloudflare OHTTP Relay (formerly Privacy Gateway)
 /privacy-gateway/ /ohttp-relay/ 301
-/privacy-gateway/* /ohttp-relay/:splat 301
 
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
@@ -2894,6 +2893,9 @@
 # DYNAMIC REDIRECTS
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/* /ohttp-relay/:splat 301
 
 # Agent Skills legacy discovery path
 /.well-known/skills/* /.well-known/agent-skills/:splat 301
