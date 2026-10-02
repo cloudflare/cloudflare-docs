@@ -176,6 +176,36 @@ Returns `true` when the source ends with a given substring. Returns `false` othe
 
 For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
+### `hash_in_range`
+
+<code>hash_in_range(min <Type text="Integer" />, max <Type text="Integer" />, seed <Type text="Integer | Bytes | IP address" /> [, ...])</code>: <Type text="Integer" />
+
+Hashes seed fields into an integer from `min` to `max`. The range includes `min` but excludes `max`. Both bounds must be integer literals, with `max` greater than `min`. Seeds must be fields, not literal values.
+
+The function ignores missing (nil) seed values. If all seed values are missing, it returns nil. If every seed might be missing, use [`coalesce()`](#coalesce) for a fallback.
+
+All HTTP products support this function on all plans.
+
+The following expression selects approximately 10% of requests at random:
+
+```txt
+hash_in_range(0, 100, cf.random_seed) < 10
+```
+
+The [`cf.random_seed`](/ruleset-engine/rules-language/fields/reference/cf.random_seed/) field provides random bytes for every request. Because the field is always present, this example needs no fallback.
+
+With Cloudflare for SaaS, use [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) to control rollout progression. Define `rollout_pct` as a custom key for each hostname. Set its value to an integer from 0 to 100. The expression selects approximately that percentage of requests:
+
+```txt
+hash_in_range(0, 100, cf.random_seed) < coalesce(lookup_json_integer(cf.hostname.metadata, "rollout_pct"), 0)
+```
+
+If `rollout_pct` is missing, `coalesce()` supplies `0`. The rule then matches no requests.
+
+:::caution[Hash algorithm]
+The hash algorithm may change at any time without prior notice. Do not rely on a specific result for a fixed seed. Use `cf.random_seed` to get fresh random bytes for each request.
+:::
+
 ### `join`
 
 <code>join(items <Type text="Array<String>" />, separator <Type text="String" />)</code>: <Type text="String" />
