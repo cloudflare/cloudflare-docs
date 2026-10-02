@@ -8,7 +8,7 @@ products:
   - realtime
 ---
 
-import { CopyPromptButton, Steps, Details } from "~/components";
+import { CopyPromptButton, DashButton, Steps, Tabs, TabItem } from "~/components";
 
 In a RealtimeKit webinar, presenters publish audio and video from the [stage](/realtime/realtimekit/concepts/meeting/#stage). Viewers watch and can request to join the stage.
 
@@ -36,24 +36,28 @@ If you have not completed these requirements, refer to [Quickstart](/realtime/re
 
 ## Set up a webinar
 
-To configure presenter and viewer presets with a coding agent, copy this prompt. Then continue with **Create a meeting** in the manual steps.
+### Set up with your coding agent
+
+Copy this prompt to configure presenter and viewer presets using `cf`. Then continue with [Create a meeting and add participants](#create-a-meeting-and-add-participants).
 
 <CopyPromptButton
 	tooltip="Configure RealtimeKit webinar presets with cf"
 	prompt="Set up presenter and viewer presets for a Cloudflare RealtimeKit webinar. Read https://developers.cloudflare.com/realtime/realtimekit/webinar/, https://developers.cloudflare.com/api/resources/realtime_kit/subresources/presets/methods/create/, and https://developers.cloudflare.com/cf/agents/. Use the Cloudflare cf CLI, installing it if needed. Confirm my account and app ID. Inspect cf realtime kit presets commands with --help and cf schema. Retrieve any webinar_presenter and webinar_viewer presets and verify their permissions before reusing them. Create missing presets with config.view_type set to WEBINAR and permissions.stage_enabled set to true. Set stage_access and audio, video, and screenshare can_produce to ALLOWED for presenters and CAN_REQUEST for viewers. Allow presenters, but not viewers, to accept production requests. Include all other required config, permissions, and UI fields from the current schema. Ask before changing an existing preset used by other meetings. Preview changes with --dry-run, apply them, then retrieve both presets and compare their saved permissions. Report the exact preset names and the remaining presenter/viewer stage-request test from the guide. Keep API tokens private. Do not create meetings or claim the browser test passed. If a step fails, explain the blocker and what remains."
 />
 
-<Steps>
-1. In the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to **Presets** and review the default `webinar_presenter` and `webinar_viewer` presets. Both presets have **Meeting Type** set to **Video (WebRTC)** and **Manage Stage (Webinar)** turned on under **Configuration** > **Stage & Media**.
-2. Create a meeting using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/). Save the returned meeting `id` for the next step.
-3. Add each presenter and viewer to the meeting using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). Assign `webinar_presenter` to presenters and `webinar_viewer` to viewers.
-4. Deliver each participant's returned `authToken` only to the frontend session for that specific user.
-5. Initialize [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/) with the participant's `authToken`. UI Kit renders the webinar interface, including stage controls, based on the participant's preset.
-</Steps>
+### Configure presets manually
 
-<Details header="Configure presets with the API">
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
 
-If you manage presets programmatically instead of through the dashboard, use the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/) with the following fields:
+In the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), go to **Presets** and review the default `webinar_presenter` and `webinar_viewer` presets. Both presets have **Meeting Type** set to **Video (WebRTC)** and **Manage Stage (Webinar)** turned on under **Configuration** > **Stage & Media**.
+
+<DashButton url="/?to=/:account/realtime/kit" />
+
+</TabItem>
+<TabItem label="cf CLI or API" class="space-y-4">
+
+Use the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/), or inspect the same request with `cf schema realtime kit presets create`. Include all required fields and apply these webinar settings:
 
 - `config.view_type` set to `WEBINAR`.
 - `permissions.stage_enabled` set to `true` for both presets.
@@ -69,7 +73,25 @@ Set `permissions.stage_access`, `permissions.media.audio.can_produce`, `permissi
 
 For the complete request schema, refer to [Presets](/api/resources/realtime_kit/subresources/presets/).
 
-</Details>
+To use `cf`, save the complete request body in `preset.json` and run:
+
+```sh
+cf realtime kit presets create "<APP_ID>" --body @preset.json
+```
+
+</TabItem>
+</Tabs>
+
+### Create a meeting and add participants
+
+After configuring the presets with either method, create the meeting and assign participant roles:
+
+<Steps>
+1. Create a meeting using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/). Save the returned meeting `id` for the next step.
+2. Add each presenter and viewer to the meeting using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). Assign `webinar_presenter` to presenters and `webinar_viewer` to viewers.
+3. Deliver each participant's returned `authToken` only to the frontend session for that specific user.
+4. Initialize [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/) with the participant's `authToken`. UI Kit renders the webinar interface, including stage controls, based on the participant's preset.
+</Steps>
 
 ## Manage stage requests
 

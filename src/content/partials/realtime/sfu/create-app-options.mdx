@@ -1,0 +1,31 @@
+import { DashButton, Steps, Tabs, TabItem } from "~/components";
+
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
+
+<Steps>
+1. In the Cloudflare dashboard, select your account and go to **Realtime** > **Serverless SFU**.
+
+   <DashButton url="/?to=/:account/realtime/sfu" />
+
+2. Create an app and save its **App ID** and **App Secret**.
+</Steps>
+
+</TabItem>
+<TabItem label="cf CLI" class="space-y-4">
+
+[Install and sign in to `cf`](/cf/get-started/), then create the app:
+
+```sh
+cf realtime sfu apps create --name "Video room"
+```
+
+Save the App ID and App Secret returned by the command.
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+Use the [Create SFU app API](/api/resources/calls/subresources/sfu/methods/create/) with your Cloudflare account authorization. Save the App ID and App Secret from the response.
+
+</TabItem>
+</Tabs>

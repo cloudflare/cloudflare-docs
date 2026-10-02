@@ -62,9 +62,17 @@ An endpoint may use one bidirectional session or separate publishing and receivi
 
 ## Credentials and discovery
 
-Create an SFU application through the dashboard or API. Keep its App Secret on trusted backend infrastructure. In Workers, store the app values as Worker secrets.
+Keep the SFU App Secret on trusted backend infrastructure. In Workers, store the app values as Worker secrets.
+
+### Set up with your coding agent
 
 <Render file="sfu/create-app-prompt" product="realtime" />
+
+### Create the app manually
+
+The [app setup guide](/realtime/sfu/get-started/#create-the-app-manually) provides dashboard, `cf` CLI, and API options.
+
+### Authorize endpoints
 
 An endpoint authenticates to your backend using your application's identity mechanism. The backend checks which resources it can access before making an SFU request. A room name, session ID, or track name does not establish permission.
 

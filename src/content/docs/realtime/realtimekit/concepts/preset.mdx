@@ -29,25 +29,19 @@ Example: Large Ed-Tech Classroom
 - **Students** use the `webinar-participant` preset — they cannot share media but can use features like chat.
 - **Teaching** assistant uses the `group-call-host` preset — they can share media but don’t have full host privileges.
 
-### Create a Preset
+## Create a preset
 
-A set of default presets are created for you, when you create an app via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
+Default presets are created when you create an app in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit). Review these before creating another preset.
 
-You can also create a preset using the [dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit) or the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/).
+### Set up with your coding agent
 
 <Render file="realtimekit/preset-prompt" product="realtime" />
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets \
-    -H 'Content-Type: application/json' \
-    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-    -d '{
-          "config": {
-            ...<preset-configuration-json>
-        }'
-```
+### Create the preset manually
 
-### Preset Editor
+<Render file="realtimekit/preset-options" product="realtime" />
+
+## Preset editor
 
 We provide a UI-based editor to create and manage the presets in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit).
 
@@ -80,7 +74,7 @@ The permissions are divided into the following categories:
 
         These options control capabilities like - editing names, viewing the participant list, syncing tab views, enabling transcriptions, and other supplementary features that enhance how users interact within the meeting.
 
-### Where to Go Next
+## Next steps
 
 After learning about Meetings and Sessions, you can explore the following next steps:
 

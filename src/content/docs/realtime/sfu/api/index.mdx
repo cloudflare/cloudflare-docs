@@ -26,9 +26,15 @@ To implement a connection, follow the [browser and backend recipes](/realtime/sf
 
 ## Create an application
 
-Create an SFU app in the dashboard or through the [Cloudflare account API](/api/resources/calls/subresources/sfu/methods/create/). App creation uses your Cloudflare account authorization. The Connection API uses the resulting SFU App ID and App Secret.
+App creation uses your Cloudflare account authorization. The Connection API uses the resulting SFU App ID and App Secret.
+
+### Set up with your coding agent
 
 <Render file="sfu/create-app-prompt" product="realtime" />
+
+### Create the app manually
+
+<Render file="sfu/create-app-options" product="realtime" />
 
 The [quickstart](/realtime/sfu/get-started/) shows this setup with a Worker backend.
 
