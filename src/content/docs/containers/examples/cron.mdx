@@ -1,67 +1,60 @@
 ---
 summary: Running a container on a schedule using Cron Triggers
 pcx_content_type: example
-title: Cron Container
+title: Cron container
 sidebar:
   order: 4
 description: Running a container on a schedule using Cron Triggers
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
 ---
 
-import { TabItem, Tabs, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
 
-To launch a container on a schedule, you can use a Workers [Cron Trigger](/workers/configuration/cron-triggers/).
+Run a short container task every two minutes with a Workers [Cron Trigger](/workers/configuration/cron-triggers/). The task prints its scheduled time, then exits.
 
-Use a cron expression in your Wrangler config to specify the schedule:
+## Configure the schedule
 
 <WranglerConfig>
 
-```jsonc
-{
-	"name": "cron-container",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"observability": {
-		"enabled": true
-	},
-	"triggers": {
-		"crons": [
-			"*/2 * * * *" // Run every 2 minutes
-		]
-	},
-	"containers": [
-		{
-			"class_name": "CronContainer",
-			"image": "./Dockerfile"
-		}
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"class_name": "CronContainer",
-				"name": "CRON_CONTAINER"
-			}
-		]
-	},
-	"exports": {
-		"CronContainer": {
-			"type": "durable-object",
-			"storage": "sqlite"
-		}
-	}
-}
+```toml
+name = "cron-container"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[triggers]
+crons = ["*/2 * * * *"]
+
+[[containers]]
+class_name = "CronContainer"
+scheduling_policy = "durable_object"
+
+[containers.images.base]
+dockerfile = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "CRON_CONTAINER"
+class_name = "CronContainer"
+
+[exports.CronContainer]
+type = "durable-object"
+storage = "sqlite"
 ```
 
 </WranglerConfig>
 
-Call the Container from the Worker's `scheduled()` handler. The container image runs the task on startup and exits when finished. Await `monitor()` to observe completion or failure.
-
-<Tabs>
-	<TabItem label="Durable Object Container API">
+## Start and await the task
 
 <TypeScriptExample filename="src/index.ts">
+
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
@@ -82,67 +75,54 @@ export class CronContainer extends DurableObject<Env> {
 	private async runOnce(startTime: string): Promise<void> {
 		const container = this.ctx.container!;
 		if (!container.running) {
-			console.log("Starting scheduled task:", startTime);
-			container.start();
+			container.start({
+				image: container.images.base,
+				instance: "lite",
+				enableInternet: false,
+				env: { MESSAGE: `Scheduled time: ${startTime}` },
+			});
 		}
 		await container.monitor();
 	}
 }
 
 export default {
-	async fetch(): Promise<Response> {
+	fetch(): Response {
 		return new Response("This Worker runs a scheduled Container task.");
 	},
-
 	async scheduled(controller: ScheduledController, env: Env): Promise<void> {
-		await env.CRON_CONTAINER
-			.getByName("cron")
-			.run(new Date(controller.scheduledTime).toISOString());
+		await env.CRON_CONTAINER.getByName("cron").run(
+			new Date(controller.scheduledTime).toISOString(),
+		);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
 </TypeScriptExample>
 
-	</TabItem>
-	<TabItem label="Container class">
+All triggers use the same Durable Object. If a run is still active, another trigger waits for that run instead of starting a second task. This example does not queue overlapping runs or guarantee exactly-once execution. Make tasks idempotent when they modify external data.
 
-<TypeScriptExample filename="src/index.ts">
-```ts
-import { Container, getContainer } from "@cloudflare/containers";
+`monitor()` reports completion or failure, not HTTP readiness. Keep this task short enough to finish within the [Cron Trigger execution limits](/workers/platform/limits/#duration).
 
-export class CronContainer extends Container {
-  sleepAfter = '10s';
+## Define the task
 
-  override onStart() {
-    console.log('Starting container');
-  }
-
-  override onStop() {
-    console.log('Container stopped');
-  }
-}
-
-export default {
-	async fetch(): Promise<Response> {
-		return new Response("This Worker runs a cron job to execute a container on a schedule.");
-	},
-
-	async scheduled(
-		controller: ScheduledController,
-		env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> },
-	): Promise<void> {
-		const container = getContainer(env.CRON_CONTAINER);
-		await container.start({
-			envVars: {
-				MESSAGE: `Start Time: ${new Date(controller.scheduledTime).toISOString()}`,
-			},
-		});
-	},
-};
+```dockerfile title="Dockerfile"
+FROM alpine:3.20
+CMD ["sh", "-c", "printf '%s\\n' \"$MESSAGE\""]
 ```
-</TypeScriptExample>
 
-For a full Container class example, see the [Cron Container Template](https://github.com/mikenomitch/cron-container/tree/main).
+## Test the schedule locally
 
-	</TabItem>
-</Tabs>
+Start a Docker-compatible engine and use Wrangler 4.136.0 or later.
+
+<PackageManagers type="add" pkg="wrangler" dev />
+
+<PackageManagers type="exec" pkg="wrangler" args="dev --test-scheduled" />
+
+In another terminal, trigger the scheduled handler:
+
+```sh
+curl 'http://localhost:8787/__scheduled?cron=*/2+*+*+*+*'
+```
+
+Check the container logs for the scheduled time. After deployment, Cron Triggers invoke the handler automatically.
