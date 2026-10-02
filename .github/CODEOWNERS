@@ -1050,6 +1050,13 @@ package.json @cloudflare/content-engineering
 /src/content/directory/web-analytics.yaml @ack-cf @cnachiappan-dev @mbullock1986 @ryantownsend @tkadlec @cloudflare/product-owners
 /src/icons/web-analytics.svg @ack-cf @cnachiappan-dev @mbullock1986 @ryantownsend @tkadlec @cloudflare/product-owners
 
+# web-search
+
+/src/content/docs/web-search/ @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
+/src/content/changelog/web-search/ @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/web-search.yaml @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
+/src/icons/web-search.svg @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
+
 # web3
 
 /src/content/docs/web3/ @cloudflare/appsec-reviewers @cloudflare/product-owners
