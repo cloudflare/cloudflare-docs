@@ -11,10 +11,6 @@ sidebar:
 
 The following sections cover the available skip options in custom rules.
 
-:::note
-An account-level skip rule configured with the `phases` action parameter skips the specified phases for matching requests at both the account and zone levels.
-:::
-
 ## Skip the remaining custom rules (current ruleset)
 
 - Dashboard option: **All remaining custom rules**
@@ -23,6 +19,10 @@ An account-level skip rule configured with the `phases` action parameter skips t
 Skips the remaining rules in the current ruleset.
 
 ## Skip phases
+
+:::note
+When an account-level skip rule uses the phases action parameter, Cloudflare skips the specified phases at both the account and zone levels for matching requests.
+:::
 
 - Dashboard options: **All rate limiting rules**, **All Super Bot Fight Mode rules**, and **All managed rules**
 - API action parameter: `phases`
