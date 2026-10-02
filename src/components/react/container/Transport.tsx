@@ -176,6 +176,7 @@ export function LabeledButton({
 	title,
 	highlight,
 	disabled,
+	ariaDisabled,
 	onClick,
 	children,
 }: {
@@ -183,15 +184,19 @@ export function LabeledButton({
 	title?: string;
 	highlight?: boolean;
 	disabled?: boolean;
+	/** Visually dims and blocks clicks like `disabled`, but stays
+	 *  focusable — for controls that disable themselves once used. */
+	ariaDisabled?: boolean;
 	onClick: () => void;
 	children: ReactNode;
 }) {
 	return (
 		<button
 			type="button"
-			onClick={onClick}
+			onClick={ariaDisabled ? undefined : onClick}
 			aria-label={ariaLabel}
 			title={title}
+			aria-disabled={ariaDisabled || undefined}
 			disabled={disabled}
 			className={cn(
 				"inline-flex items-center justify-center gap-1.5 px-2 py-1 font-mono text-[10px] font-medium tracking-widest uppercase",
@@ -200,6 +205,8 @@ export function LabeledButton({
 				"border-neutral-200 dark:border-neutral-800",
 				"bg-white hover:bg-neutral-50 dark:bg-neutral-900 dark:hover:bg-neutral-800",
 				highlight && "ring-brand ring-1",
+				(disabled || ariaDisabled) &&
+					"cursor-default opacity-45 hover:bg-white active:scale-100 dark:hover:bg-neutral-900",
 			)}
 		>
 			{children}

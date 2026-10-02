@@ -7,6 +7,7 @@
  */
 import { defineTool, type ToolDefinition } from "@flue/runtime";
 import * as v from "valibot";
+import { getPullRequestFiles } from "./github";
 import type { TokenProvider } from "./token-provider";
 
 const REPO = "cloudflare/cloudflare-docs";
@@ -29,6 +30,7 @@ export function makeGetPrContextTool(
 ): ToolDefinition {
 	return defineTool({
 		name: "get_pr_context",
+		timeoutMs: 30_000,
 		description:
 			"Fetch the Dependabot PR metadata: title, body, author, base/head refs.",
 		async run() {
@@ -63,19 +65,12 @@ export function makeGetPrFilesTool(
 ): ToolDefinition {
 	return defineTool({
 		name: "get_pr_files",
+		timeoutMs: 30_000,
 		description:
 			"Fetch the list of files changed in the Dependabot PR, including patches.",
 		async run() {
 			const token = await getToken();
-			const res = await fetch(
-				`https://api.github.com/repos/${REPO}/pulls/${prNumber}/files?per_page=100`,
-				{ headers: apiHeaders(token) },
-			);
-			if (!res.ok)
-				throw new Error(
-					`get_pr_files failed: ${res.status} ${await res.text()}`,
-				);
-			const files = (await res.json()) as Array<Record<string, unknown>>;
+			const files = await getPullRequestFiles(token, prNumber);
 			return JSON.stringify(
 				files.map((f) => ({
 					filename: f.filename,
@@ -91,13 +86,65 @@ export function makeGetPrFilesTool(
 
 // ── Tool: read_repo_file ──────────────────────────────────────────────────────
 
-export function makeReadRepoFileTool(
-	getToken: TokenProvider,
-	defaultRef: string = DEFAULT_REF,
-): ToolDefinition {
-	return defineTool({
+const MAX_FILE_CHARS = 32_768;
+
+export interface LineRange {
+	start_line?: number;
+	end_line?: number;
+}
+
+/**
+ * Render file text for the model. A whole file within the size cap is
+ * returned as-is. A line range, or a file over the cap, is returned with a
+ * header giving the shown line span, and cut at a line boundary with a note
+ * saying where to continue, so no part of the file is unreachable.
+ */
+export function renderRepoFile(
+	path: string,
+	text: string,
+	range: LineRange = {},
+): string {
+	const ranged = range.start_line !== undefined || range.end_line !== undefined;
+	if (!ranged && text.length <= MAX_FILE_CHARS) return text;
+
+	const lines = text.split("\n");
+	if (text.endsWith("\n")) lines.pop();
+	const total = lines.length;
+	const start = range.start_line ?? 1;
+	const end = Math.min(range.end_line ?? total, total);
+	if (start > total)
+		return `${path} has ${total} lines; start_line ${start} is past the end.`;
+	if (end < start) return `end_line ${end} is before start_line ${start}.`;
+
+	const shown: string[] = [];
+	let size = 0;
+	let lastShown = start - 1;
+	for (let n = start; n <= end; n++) {
+		const line = lines[n - 1];
+		if (shown.length > 0 && size + line.length + 1 > MAX_FILE_CHARS) break;
+		shown.push(line.slice(0, MAX_FILE_CHARS));
+		size += line.length + 1;
+		lastShown = n;
+	}
+
+	const header = `[${path}: lines ${start}-${lastShown} of ${total}]`;
+	const rest =
+		lastShown < end
+			? `\n[Output capped at ${MAX_FILE_CHARS} characters. Request start_line=${lastShown + 1} to continue.]`
+			: "";
+	return `${header}\n${shown.join("\n")}${rest}`;
+}
+
+const lineNumber = (description: string) =>
+	v.optional(
+		v.pipe(v.number(), v.integer(), v.minValue(1), v.description(description)),
+	);
+
+/** Model-facing contract for `read_repo_file`; evals reuse it with fixture data. */
+export function readRepoFileDefinition(defaultRef: string = DEFAULT_REF) {
+	return {
 		name: "read_repo_file",
-		description: `Read any text file from the cloudflare/cloudflare-docs repo. Use for package.json, tsconfig, source files, etc. The default ref is "${defaultRef}".`,
+		description: `Read a text file from the cloudflare/cloudflare-docs repo. The default ref is "${defaultRef}". Pass start_line and end_line to read part of a large file. Output over ${MAX_FILE_CHARS} characters is cut at a line boundary with a note saying where to continue.`,
 		input: v.object({
 			path: v.pipe(
 				v.string(),
@@ -111,7 +158,21 @@ export function makeReadRepoFileTool(
 					v.description(`Git ref. Defaults to "${defaultRef}".`),
 				),
 			),
+			start_line: lineNumber("First line to read, 1-based. Defaults to 1."),
+			end_line: lineNumber(
+				"Last line to read, inclusive. Defaults to the end of the file.",
+			),
 		}),
+	};
+}
+
+export function makeReadRepoFileTool(
+	getToken: TokenProvider,
+	defaultRef: string = DEFAULT_REF,
+): ToolDefinition {
+	return defineTool({
+		...readRepoFileDefinition(defaultRef),
+		timeoutMs: 30_000,
 		async run({ data }) {
 			const token = await getToken();
 			const path = data.path;
@@ -134,14 +195,10 @@ export function makeReadRepoFileTool(
 				const binary = atob((data_.content as string).replace(/\n/g, ""));
 				const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
 				const text = new TextDecoder().decode(bytes);
-				// Cap at 32 KB to avoid bloating context
-				if (text.length > 32768) {
-					return (
-						text.slice(0, 32768) +
-						`\n\n[...truncated at 32 KB — file is ${text.length} bytes total]`
-					);
-				}
-				return text;
+				return renderRepoFile(path, text, {
+					start_line: data.start_line,
+					end_line: data.end_line,
+				});
 			}
 			return JSON.stringify(data_);
 		},
@@ -153,26 +210,32 @@ export function makeReadRepoFileTool(
 // Uses the GitHub code search API. If search returns no results or errors,
 // use read_repo_file on specific paths instead.
 
-export function makeSearchRepoTool(getToken: TokenProvider): ToolDefinition {
-	return defineTool({
-		name: "search_repo",
-		description: `Search the cloudflare/cloudflare-docs repo for a string or pattern using GitHub code search. Returns matching file paths and line snippet. Use to find import sites, usages, and callers. Limited to 20 results. Note: code search indexes the default branch, so results may not reflect changes on the PR branch — use read_repo_file for exact current content. If code search returns an error or no results, use read_repo_file on specific paths instead.`,
-		input: v.object({
-			query: v.pipe(
+/** Model-facing contract for `search_repo`; evals reuse it with fixture data. */
+export const SEARCH_REPO_DEFINITION = {
+	name: "search_repo",
+	description: `Search the cloudflare/cloudflare-docs repo with GitHub code search to find definitions, import sites, usages, and callers. Returns up to 20 matching file paths with line snippets. Code search indexes the default branch only: results show code as it was before a PR, and cannot include code a PR adds. Use read_repo_file for current content. If search errors or finds nothing, read specific files instead.`,
+	input: v.object({
+		query: v.pipe(
+			v.string(),
+			v.description(
+				"Search term, e.g. a package name, import path, or function name.",
+			),
+		),
+		path: v.optional(
+			v.pipe(
 				v.string(),
 				v.description(
-					"Search term, e.g. a package name, import path, or function name.",
+					"Directory prefix to restrict the search, e.g. 'src/' or '.flue/lib/'. Not a file path; to search one file, read it instead.",
 				),
 			),
-			path: v.optional(
-				v.pipe(
-					v.string(),
-					v.description(
-						"Restrict search to this path prefix, e.g. 'src/' or 'worker/'.",
-					),
-				),
-			),
-		}),
+		),
+	}),
+};
+
+export function makeSearchRepoTool(getToken: TokenProvider): ToolDefinition {
+	return defineTool({
+		...SEARCH_REPO_DEFINITION,
+		timeoutMs: 60_000,
 		async run({ data }) {
 			const token = await getToken();
 			const query = data.query;
@@ -219,6 +282,7 @@ export function makeSearchRepoTool(getToken: TokenProvider): ToolDefinition {
 export function makeGetNpmPackageInfoTool(): ToolDefinition {
 	return defineTool({
 		name: "get_npm_package_info",
+		timeoutMs: 60_000,
 		description:
 			"Fetch npm registry metadata for a package version — description, homepage, repository, keywords, and any dist-tags. Useful when the PR body lacks release notes.",
 		input: v.object({
@@ -273,6 +337,7 @@ export function makeTraceDependencyTool(
 ): ToolDefinition {
 	return defineTool({
 		name: "trace_dependency",
+		timeoutMs: 60_000,
 		description:
 			"Determine whether a package is a direct or transitive dependency of this repo by reading package.json and pnpm-lock.yaml from the production branch.",
 		input: v.object({
@@ -371,28 +436,12 @@ export function makeDependabotReviewTools(
 	];
 }
 
-// ── Factory: code-review tools ────────────────────────────────────────────────
-//
-// Tools for the generic code-review specialist. `read_repo_file` defaults to
-// the PR head SHA so the agent reads post-change file content for full context
-// (the diff patch alone is staged in the workspace). `search_repo` indexes the
-// default branch only, so it is best-effort for finding usages/callers.
-
-export function makeCodeReviewTools(
-	getToken: TokenProvider,
-	headSha: string,
-): ToolDefinition[] {
-	return [
-		makeReadRepoFileTool(getToken, headSha),
-		makeSearchRepoTool(getToken),
-	];
-}
-
 // ── Tool: get_commit_pr ───────────────────────────────────────────────────────
 
 function makeGetCommitPrTool(getToken: TokenProvider): ToolDefinition {
 	return defineTool({
 		name: "get_commit_pr",
+		timeoutMs: 30_000,
 		description:
 			"Given a commit SHA from the production branch, return the pull request(s) that introduced that commit — including the PR title, description (body), number, and URL. Use this to understand WHY a production change was made and what the author intended, which helps determine the correct merge resolution.",
 		input: v.object({

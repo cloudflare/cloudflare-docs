@@ -7,7 +7,8 @@
 	"main": "./worker/index.preview.ts",
 	"workers_dev": false,
 	"rules": [
-		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true }
+		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true },
+		{ "type": "Data", "globs": ["**/*.woff"], "fallthrough": true }
 	],
 	"assets": {
 		"directory": "./dist",
@@ -15,6 +16,9 @@
 		"not_found_handling": "404-page",
 		"run_worker_first": true
 	},
+	"r2_buckets": [
+		{ "binding": "PRIVATE_ASSETS", "bucket_name": "cloudflare-docs-private" }
+	],
 	"previews": {
 		"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }]
 	},

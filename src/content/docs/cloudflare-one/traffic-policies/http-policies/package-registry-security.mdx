@@ -247,3 +247,4 @@ Package metadata is available in the `PackageInfo` object in the `gateway_http` 
 - Only **download** operations are detected. Metadata lookups (resolve), package publishing, and other registry operations are not classified.
 - Version comparison uses each ecosystem's native ordering rules. Cross-ecosystem version comparisons are not supported.
 - Ecosystem-specific range syntax (such as npm `^1.2.3`, PyPI `~=1.4`, or Maven interval notation) is not supported. Use the individual comparison operators (`>`, `<`, `>=`, `<=`) instead.
+- Detecting dependency packages within package archives (such as dependencies in shaded or fat JARs) is not supported.

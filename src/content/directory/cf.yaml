@@ -1,0 +1,12 @@
+id: YyXewq
+name: Cloudflare CLI
+
+entry:
+  title: Cloudflare CLI
+  url: /cf/
+  group: Developer platform
+
+meta:
+  title: Cloudflare CLI docs
+  description: Manage Cloudflare resources from one command-line interface
+  author: "@cloudflare"

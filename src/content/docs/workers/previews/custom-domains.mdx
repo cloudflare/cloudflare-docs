@@ -133,6 +133,10 @@ If `preview_urls` is omitted, Wrangler does not change an existing Preview URL s
 </TabItem>
 </Tabs>
 
-## Protect with Cloudflare Access
+## Protect Preview content
 
-Use [Cloudflare Access](/workers/configuration/cloudflare-access/) to require sign-in for custom domain and `workers.dev` Preview URLs.
+To restrict access to custom domain and `workers.dev` Preview URLs, use [Cloudflare Access](/workers/configuration/cloudflare-access/). This prevents unauthenticated users and crawlers from viewing your Preview.
+
+To keep a Preview public while discouraging search engine indexing, add an `X-Robots-Tag: noindex` response header. Cloudflare adds this header automatically to `workers.dev` Preview URLs, but not to custom domain Preview URLs.
+
+For static assets, add the header through a [`_headers` file](/workers/static-assets/headers/). For Worker-generated responses, add it directly in your Worker code.

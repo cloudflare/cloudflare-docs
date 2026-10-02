@@ -1,0 +1,246 @@
+---
+title: Move bucket mounts
+description: Replace @cloudflare/sandbox 0.12 mountBucket() and unmountBucket() with S3Mount, which mounts the same prefix without bucket credentials in the container.
+pcx_content_type: how-to
+sidebar:
+  order: 13
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - r2
+---
+
+import { Steps } from "~/components";
+
+Move your 0.12 bucket mounts to `S3Mount`, which mounts the same bucket prefix without bucket credentials in the container. `S3Gateway` in your Worker signs each storage request. In 0.12, `mountBucket()` put the credentials in the container, or mounted through an R2 binding.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). Its image has `sandbox-shim`, which `S3Mount` uses. `S3Mount` reaches `S3Gateway` through `this.ctx.exports`, which needs compatibility date `2025-11-17` or later, or the `enable_ctx_exports` flag.
+
+This page replaces `mountBucket()`, `unmountBucket()`, their options, and their errors. To build the same mount in a new project, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/).
+
+## Mount the bucket
+
+<Steps>
+
+1. Add FUSE and `s3fs` to your `Dockerfile`:
+
+   ```dockerfile title="Dockerfile" ins={3}
+   RUN apt-get update \
+   	&& apt-get install -y --no-install-recommends \
+   		ca-certificates fuse3 git python3 s3fs \
+   	&& rm -rf /var/lib/apt/lists/*
+   ```
+
+2. Export `S3Gateway` from the main module of your Worker:
+
+   ```ts title="src/index.ts"
+   import {
+   	S3Mount,
+   	SandboxS3MountError,
+   } from "@cloudflare/sandbox";
+
+   // S3Mount sends each storage request to this entrypoint.
+   export { S3Gateway } from "@cloudflare/sandbox";
+   ```
+
+   Then add the endpoint and name of the bucket as variables, and its credentials as secrets, as in steps 3 and 4 of [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/#mount-a-bucket-prefix). 0.12 read `AWS_*` and `R2_*` variables from the environment. `S3Mount` uses only the credentials that you pass to it.
+
+   1.0 cannot mount a bucket through an R2 binding. If your 0.12 code called `mountBucket()` with a binding name and no `endpoint`, create an [R2 API token](/r2/api/tokens/) with the **Object Read & Write** permission for that bucket.
+
+3. Replace `mountBucket()` with a method that mounts the prefix for the sandbox:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, job);
+   await sandbox.mountBucket(env.S3_BUCKET, "/data", {
+   	endpoint: env.S3_ENDPOINT,
+   	prefix: `/jobs/${job}/`,
+   });
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	// One S3Mount serves every container of this Durable Object.
+   	private readonly mounts = new S3Mount(
+   		this.container,
+   		this.ctx.exports.S3Gateway,
+   	);
+
+   	private async mountData(): Promise<void> {
+   		// The name that your Worker passed to getByName(),
+   		// or to getSandbox() in 0.12
+   		const job = this.ctx.id.name;
+
+   		if (!job) {
+   			throw new Error("Open the sandbox with getByName()");
+   		}
+
+   		await this.mounts.mount({
+   			mountPath: "/data",
+   			source: {
+   				type: "s3",
+   				endpoint: this.env.S3_ENDPOINT,
+   				region: "auto",
+   				bucket: this.env.S3_BUCKET,
+   				credentials: {
+   					type: "static",
+   					accessKeyId: this.env.S3_ACCESS_KEY_ID,
+   					secretAccessKey: this.env.S3_SECRET_ACCESS_KEY,
+   				},
+   			},
+   			keyPrefix: `jobs/${job}`,
+   			access: "read-write",
+   		});
+   	}
+   }
+   ```
+
+   The options change as follows:
+
+   | 0.12                          | 1.0                                                                                                                       |
+   | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+   | The `bucket` argument         | `source.bucket`                                                                                                           |
+   | `endpoint`                    | `source.endpoint`, and `region`, which is `auto` for R2                                                                   |
+   | `prefix: "/jobs/ada/"`        | `keyPrefix: "jobs/ada"`. It cannot start with `/`, and `S3Mount` adds the trailing `/`                                   |
+   | `readOnly: true`              | `access: "read-only"`. `access` is required                                                                               |
+   | `s3fsOptions: ["name=value"]` | `s3fsOptions: { name: "value" }`. `S3Mount` always sets `nomixupload`, which 0.12 added only for R2, and rejects it here |
+   | `credentials`                 | `source.credentials`, with `type: "static"`                                                                               |
+   | `provider`, `credentialProxy` | Remove them. `S3Gateway` signs every request                                                                              |
+
+4. Mount the prefix in each method that uses it:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async listFiles(): Promise<string> {
+   		await this.ensureRunning();
+   		await this.mountData();
+
+   		const ls = await this.container.exec(["ls", "-la"], {
+   			cwd: "/data",
+   			env: ENV,
+   		});
+   		const output = await ls.output();
+   		return new TextDecoder().decode(output.stdout);
+   	}
+   }
+   ```
+
+   A mount lasts until the container stops, in 0.12 and in 1.0. Calling `mount()` again with the same request reuses the mount. A request with other settings for a mounted path throws `SandboxS3MountError` with code `S3_MOUNT_CONFLICT`, where 0.12 threw `InvalidMountConfigError`.
+
+5. Replace `unmountBucket()`, and check errors by their `code`:
+
+   ```ts title="src/index.ts (0.12)"
+   await sandbox.unmountBucket("/data");
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async unmountData(): Promise<string> {
+   		try {
+   			await this.mounts.unmount("/data");
+   			return "unmounted";
+   		} catch (error) {
+   			if (SandboxS3MountError.is(error)) {
+   				return error.code;
+   			}
+
+   			throw error;
+   		}
+   	}
+   }
+   ```
+
+   `S3_MOUNT_BUSY` means that a process still uses the path. Requests to the path stay denied. Stop the process and call `unmount()` again. The 0.12 errors map as follows:
+
+   | 0.12                                 | 1.0                                                                                                                       |
+   | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+   | `InvalidMountConfigError`            | `TypeError` for an invalid request, such as a `keyPrefix` that starts with `/`, and `S3_MOUNT_CONFLICT` for a path in use |
+   | `MissingCredentialsError`            | None. `source.credentials` is required                                                                                    |
+   | `S3FSMountError`, `BucketMountError` | `S3_MOUNT_FAILED`                                                                                                         |
+   | `BucketUnmountError`                 | `S3_MOUNT_BUSY` when a process uses the path                                                                              |
+
+</Steps>
+
+## If you moved outbound rules
+
+Each mount registers an intercept for its own hostname. That intercept receives requests only if the mount runs before the `interceptAllOutboundHttp()` call from [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). A mount after that call fails with `cannot verify the new FUSE connection`, because your `Outbound` entrypoint receives the storage requests. Registering the catch-all again later does not affect a mount that came first.
+
+Mount the prefix in the `try` block of `startContainer()`, before `intercept()`:
+
+```ts title="src/index.ts" ins={22-23}
+export class MySandbox extends DurableObject<Env> {
+	// ...
+
+	private async startContainer(): Promise<void> {
+		const newContainer = !this.container.running;
+
+		if (newContainer) {
+			this.container.start({
+				image: this.container.images.sandbox,
+				instance: "standard-1",
+				env: ENV,
+				enableInternet: ENABLE_INTERNET,
+			});
+		}
+
+		try {
+			if (newContainer) {
+				// Replaces onStart().
+				await this.ctx.storage.put("startedAt", Date.now());
+			}
+			// Mount before the catch-all intercept.
+			await this.mountData();
+			await this.intercept();
+			await this.trust();
+			await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+		} catch (error) {
+			// The next request starts a new container.
+			await this.container.destroy();
+			throw error;
+		}
+	}
+}
+```
+
+Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here. To mount a path later, open a new sandbox. A restarted Durable Object runs `startContainer()` again, and `mount()` reuses a mount that already matches.
+
+Each mount uses one of the [64 intercept targets](/containers/api/durable-object-container/#interceptoutboundhttp) of the container, and `unmount()` does not free it. Move outbound rules uses two. Give each job its own sandbox name instead of mounting a new prefix for each job in one container.
+
+## Replace localBucket
+
+0.12 mounted with `localBucket: true` under `wrangler dev` by copying files between the container and an R2 binding. `S3Mount` works under `wrangler dev` with an S3-compatible server on your machine instead. Refer to [Develop locally](/sandbox/files/mount-an-r2-bucket/#develop-locally).
+
+## Mounts at the switch
+
+A 0.12 mount ends with the 0.12 container, and the objects stay in the bucket. After the switch, the mount path does not exist in the new container until `mountData()` runs. Files that 0.12 wrote under `prefix: "/jobs/ada/"` appear at the same paths under `keyPrefix: "jobs/ada"`.
+
+If your 0.12 class also had outbound rules, the stored rules can include handlers named `r2EgressMount` and `s3CredentialProxyMount` for mounts that were active at the switch. The entrypoint from Move outbound rules skips them.
+
+## Check the mount
+
+After you deploy the switch, call `listFiles()` in a sandbox that mounted its prefix in 0.12. It lists the files that 0.12 wrote:
+
+```txt output
+total 9
+drwxrwxrwx 1 root root 4096 Jan  1  1970 .
+drwxr-xr-x 1 2346 2346  140 Sep 27 20:20 ..
+-rw-r--r-- 1 root root   20 Sep 27 20:11 hello.txt
+drwxr-xr-x 1 root root 4096 Sep 27 20:11 sub
+```
+
+`this.mounts.inspect("/data")` reports the state of the mount. A working mount returns an `attachment` status of `managed`, a `fuse` status of `connected`, and a `gateway` status of `reachable` with an `upstream` status of `usable`.
+
+## Related resources
+
+- [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/)
+- [S3Mount API](/sandbox/reference/s3-mounts/)
+- [R2 API tokens](/r2/api/tokens/)
+- [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/)

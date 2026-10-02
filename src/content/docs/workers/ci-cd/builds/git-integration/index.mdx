@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Git integration
-description: Learn how to add and manage your Git integration for Workers Builds
+description: Learn how to add and manage your Git integration for Workers Builds, including Cloudflare Artifacts.
 sidebar:
   order: 3
 products:
@@ -10,19 +10,21 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-Cloudflare supports connecting your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/), [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/), or [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/) repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
+Cloudflare supports connecting your [Cloudflare Artifacts](/workers/ci-cd/builds/git-integration/artifacts-integration/), [GitHub](/workers/ci-cd/builds/git-integration/github-integration/), [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/), or [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/) (Cursor's Git hosting platform) repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
 
 Adding a Git integration also lets you monitor build statuses directly in your Git provider. [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#features) and [Cursor Origin](/workers/ci-cd/builds/git-integration/cursor-origin-integration/#features) use pull request comments and check runs, while [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#features) uses commit statuses, so you can manage deployments without leaving your workflow.
 
 ## Supported Git Providers
 
-Cloudflare supports connecting Cloudflare Workers to your GitHub, GitLab, and Cursor Origin repositories. Workers Builds does not currently support connecting self-hosted instances of GitHub or GitLab.
+Cloudflare supports connecting Cloudflare Workers to your Artifacts, GitHub, GitLab, and Cursor Origin repositories. Workers Builds does not currently support connecting self-hosted instances of GitHub or GitLab.
 
 If you are using a different Git provider (e.g. Bitbucket), you can use an [external CI/CD provider (e.g. GitHub Actions)](/workers/ci-cd/external-cicd/) and deploy using [Wrangler CLI](/workers/wrangler/commands/general/#deploy).
 
 ## Add a Git Integration
 
-Workers Builds provides direct integration with GitHub and GitLab accounts that are _not_ self-hosted, as well as Cursor Origin user and team repositories.
+Workers Builds provides direct integration with Artifacts repositories, GitHub and GitLab accounts that are _not_ self-hosted, and Cursor Origin user and team repositories.
+
+To connect an Artifacts repository, refer to the [Cloudflare Artifacts integration](/workers/ci-cd/builds/git-integration/artifacts-integration/).
 
 When connecting a GitHub or GitLab repository for the first time, follow the prompts in the Cloudflare dashboard to authorize the Git provider. To connect Cursor Origin, install the [Cloudflare app in Cursor](https://cursor.com/codebase/settings/apps/public/cloudflare) and follow the installation prompts.
 

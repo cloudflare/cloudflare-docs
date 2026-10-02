@@ -91,12 +91,20 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		guide for details on where Copilot looks for Skills.
 	</FAQItem>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
 		All three. Skills load Cloudflare expertise into every agent-mode session.
 		The Cloudflare API MCP server handles platform operations (DNS, WAF, Zero
 		Trust, R2 buckets). Wrangler runs local dev and deploys in the VS Code
 		terminal. The bundled `wrangler` Skill teaches Copilot when to reach for
-		which.
+		which. For tasks across the whole Cloudflare API, Copilot can also use the
+		[Cloudflare CLI](/cf/), `cf`.
+	</FAQItem>
+	<FAQItem question="Can Copilot use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with
+		`npm install -g cf`, sign in with `cf auth login`, and tell Copilot to
+		prefer it in `.github/copilot-instructions.md` or `AGENTS.md`. Refer to
+		[Use cf with AI agents](/cf/agents/).
 	</FAQItem>
 	<FAQItem question="Do I still need .github/copilot-instructions.md?">
 		It's complementary. Use custom instructions for simple repository-wide
@@ -105,7 +113,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		only load when relevant.
 	</FAQItem>
 	<FAQItem question="Can Copilot deploy to Cloudflare directly?">
-		Yes, via Wrangler in the VS Code terminal, or via a GitHub Actions workflow
+		Yes, via Wrangler or `cf` in the VS Code terminal, or via a GitHub Actions workflow
 		that Copilot can generate for you.
 	</FAQItem>
 </FAQList>

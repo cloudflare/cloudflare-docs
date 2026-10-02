@@ -20,9 +20,13 @@ export { default as LinkButton } from "./components/ui/link-button/LinkButton.as
 export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
+export { default as CopyPromptButton } from "./components/CopyPromptButton.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
+export { default as CfCommand } from "./components/cf/CfCommand.astro";
+export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
+export { default as AnnotatedConfigExplorer } from "./components/config-explorer/AnnotatedConfigExplorer.astro";
 export { default as Description } from "./components/cf/Description.astro";
 export { default as Details } from "./components/cf/Details.astro";
 export { default as MetaInfo } from "./components/cf/MetaInfo.astro";
@@ -62,3 +66,14 @@ export { default as WARPReleases } from "./components/cf/WARPReleases.astro";
 export { default as AutoconfigDiagram } from "./components/cf/AutoconfigDiagram.astro";
 export { default as ResourcesBySelector } from "./components/cf/ResourcesBySelector.astro";
 export { default as SubtractIPCalculator } from "./components/react/SubtractIPCalculator";
+export { default as MeshHostnameRoutingDiagram } from "./components/cf/MeshHostnameRoutingDiagram.astro";
+export { default as TunnelHostnameRoutingDiagram } from "./components/cf/TunnelHostnameRoutingDiagram.astro";
+export { ContainerConnectivity } from "./components/react/container/ContainerConnectivity";
+export { ContainerIsolation } from "./components/react/container/ContainerIsolation";
+export { ContainerRequestPath } from "./components/react/container/ContainerRequestPath";
+export { ContainerLifecycle } from "./components/react/container/ContainerLifecycle";
+export { ContainerPlacement } from "./components/react/container/ContainerPlacement";
+export { TunnelOutbound } from "./components/react/tunnel/TunnelOutbound";
+export { TunnelIdentity } from "./components/react/tunnel/TunnelIdentity";
+export { TunnelQuickNested } from "./components/react/tunnel/TunnelQuickNested";
+export { TunnelTraffic } from "./components/react/tunnel/TunnelTraffic";

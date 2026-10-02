@@ -1,6 +1,6 @@
 import { createAppAuth } from "@octokit/auth-app";
 
-const REPO = "cloudflare/cloudflare-docs";
+export const REPO = "cloudflare/cloudflare-docs";
 
 export interface PullRequestFile {
 	filename: string;
@@ -42,6 +42,7 @@ export interface GitHubPullRequest {
 	user: GitHubUser | null;
 	author_association: string;
 	draft: boolean;
+	created_at: string;
 	updated_at: string;
 	labels: { name: string }[];
 	base: { ref: string; sha: string; repo: { full_name: string } };
@@ -193,6 +194,29 @@ export async function getIssueComment(
 		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
 		{ headers: apiHeaders(token) },
 	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get issue comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubIssueComment;
+}
+
+/**
+ * Fetch an issue comment, or undefined when it no longer exists (HTTP 404).
+ * Used by callers that must tolerate a comment deleted between the webhook
+ * and the fetch, such as the comment spam gate running concurrently with a
+ * redelivery of the same event.
+ */
+export async function findIssueComment(
+	token: string,
+	commentId: number,
+): Promise<GitHubIssueComment | undefined> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/comments/${commentId}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return undefined;
 	if (!res.ok) {
 		throw new Error(
 			`Failed to get issue comment ${commentId} (HTTP ${res.status}): ${await res.text()}`,
@@ -361,7 +385,49 @@ export interface GitHubIssueComment {
 	body: string | null;
 	created_at: string;
 	updated_at: string;
+	html_url?: string;
 	user: GitHubUser | null;
+	author_association?: string;
+}
+
+export interface GitHubPullRequestReview {
+	id: number;
+	body: string | null;
+	submitted_at: string | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export interface GitHubPullRequestReviewComment {
+	id: number;
+	body: string | null;
+	created_at: string;
+	path: string;
+	line: number | null;
+	user: GitHubUser | null;
+	author_association: string;
+}
+
+export async function listPullRequestReviews(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReview[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/reviews?per_page=100`,
+		`list reviews for ${pullNumber}`,
+	);
+}
+
+export async function listPullRequestReviewComments(
+	token: string,
+	pullNumber: number,
+): Promise<GitHubPullRequestReviewComment[]> {
+	return fetchAllPages(
+		token,
+		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/comments?per_page=100`,
+		`list review comments for ${pullNumber}`,
+	);
 }
 
 export async function getIssueComments(
@@ -376,6 +442,100 @@ export async function getIssueComments(
 		`get comments for ${issueNumber}`,
 	);
 	return comments;
+}
+
+export interface GitHubIssueEvent {
+	id: number;
+	event: string;
+	created_at: string;
+	actor: GitHubUser | null;
+}
+
+/** Every issue event for an issue or PR, oldest first, across all pages. */
+export async function listIssueEvents(
+	token: string,
+	issueNumber: number,
+): Promise<GitHubIssueEvent[]> {
+	return fetchAllPages<GitHubIssueEvent>(
+		token,
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/events?per_page=100`,
+		`list events for ${issueNumber}`,
+	);
+}
+
+export interface GitHubBranchActivity {
+	id: number;
+	activity_type: string;
+	timestamp: string;
+	actor: GitHubUser | null;
+}
+
+/**
+ * The first page (newest first, up to 100 entries) of repository activity for
+ * one branch of this repository. Branch names containing `/`, `#`, and other
+ * special characters are percent-encoded by the query builder. Throws on HTTP
+ * failure.
+ */
+export async function listBranchActivity(
+	token: string,
+	ref: string,
+): Promise<GitHubBranchActivity[]> {
+	const query = new URLSearchParams({
+		ref: `refs/heads/${ref}`,
+		direction: "desc",
+		per_page: "100",
+	});
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/activity?${query}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to list activity for ${ref} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubBranchActivity[];
+}
+
+export interface GitHubCommitSummary {
+	/** `commit.committer.date` */
+	committedAt: string;
+	/** The GitHub account linked to the commit author, when GitHub knows it. */
+	author: GitHubUser | null;
+}
+
+/**
+ * The committer date and the GitHub-linked author for one commit. Works for
+ * fork PR head SHAs. Throws on HTTP failure, or when the commit has no
+ * committer date.
+ */
+export async function getCommitSummary(
+	token: string,
+	sha: string,
+): Promise<GitHubCommitSummary> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/commits/${encodeURIComponent(sha)}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get commit ${sha} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const data = (await res.json()) as {
+		commit?: { committer?: { date?: string } };
+		author?: { login: string; type?: string } | null;
+	};
+	const committedAt = data.commit?.committer?.date;
+	if (!committedAt) {
+		throw new Error(`Commit ${sha} has no committer date`);
+	}
+	return {
+		committedAt,
+		author: data.author
+			? { login: data.author.login, type: data.author.type }
+			: null,
+	};
 }
 
 export async function updateIssueComment(

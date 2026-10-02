@@ -55,17 +55,17 @@ For the complete workflow and traffic thresholds, refer to [Get started with App
 
 [Rate limiting rules](/waf/rate-limiting-rules/) allow you to define rate limits for requests matching an expression, and choose the action to perform when those rate limits are reached.
 
-API Shield generates rate limit recommendations for each endpoint based on your session identifiers. These recommendations are scoped per endpoint and per session rather than applied across your entire site or based on IP address.
+API Shield generates rate limit recommendations for eligible saved operations. Recommendations require API Shield access, a configured session identifier that matches operation traffic, sufficient data, and completed processing. These recommendations are scoped per operation and per session rather than applied across your entire site or based on IP address.
 
 Per-session rate limits track traffic from individual visitors during their session to a specific endpoint. This reduces false positives from broadly scoped rules while still limiting abusive traffic.
 
 ## Export a learned schema
 
-Learned schemas include the hostname, all endpoints by host, method, and path, and detected path variables (for example, `/users/{id}`). They can also include detected query parameters and their format. You can optionally include rate limit threshold recommendations.
+A learned-schema export is a point-in-time OpenAPI snapshot for a selected hostname. It includes learned operations by method and path and detected path variables (for example, `/users/{id}`). It can also include detected query parameters, their formats, and rate limit recommendations.
 
 You can export your learned schemas in the [Cloudflare dashboard](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#export-a-schema) or via the [API](/api/resources/api_gateway/subresources/schemas/methods/list/).
 
-Exporting creates an OpenAPI `v3.0.0` file. To use a fixed profile, upload that file through [Schema Validation](/api-shield/security/schema-validation/).
+The export uses OpenAPI `v3.0.0`. To use a fixed profile, upload that file through [Schema Validation](/api-shield/security/schema-validation/).
 
 ## View and configure Sequence Analytics
 

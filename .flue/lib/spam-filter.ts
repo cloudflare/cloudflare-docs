@@ -16,8 +16,6 @@ export const SpamVerdictSchema = v.object({
 	reason: v.string(),
 });
 
-export type SpamVerdict = v.InferOutput<typeof SpamVerdictSchema>;
-
 // ── Comment templates ─────────────────────────────────────────────────────────
 
 export const SPAM_COMMENT =
@@ -64,7 +62,7 @@ export interface SpamFilterPayload {
 
 /**
  * Fetch the GitHub item (issue or PR) and optional diff summary for the
- * spam filter skill.
+ * spam filter agent.
  */
 export async function getGitHubContext(
 	token: string,

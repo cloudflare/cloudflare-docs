@@ -14,22 +14,20 @@
 		"evals:json": "vitest run --config vitest.evals.config.ts --reporter=vitest-evals/reporter --reporter=json --outputFile.json=vitest-results.json"
 	},
 	"dependencies": {
-		"@cloudflare/workers-types": "5.20260921.1",
-		"@flue/runtime": "0.4.0-nightly.202605211826",
+		"@cloudflare/workers-types": "5.20260928.1",
+		"@flue/runtime": "2.1.0",
 		"@octokit/auth-app": "8.3.1",
-		"agents": "0.24.0",
-		"hono": "4.13.8",
+		"hono": "4.13.10",
 		"valibot": "1.5.0"
 	},
 	"devDependencies": {
-		"@cloudflare/vite-plugin": "1.57.1",
-		"@flue/cli": "0.4.0-nightly.202605211826",
-		"@flue/sdk": "0.4.0-nightly.202605211826",
-		"@flue/vite": "0.4.0-nightly.202605211826",
+		"@cloudflare/vite-plugin": "1.62.0",
+		"@flue/cli": "2.1.0",
+		"@flue/vite": "2.1.0",
 		"typescript": "7.0.2",
-		"vite": "8.3.0",
+		"vite": "8.3.1",
 		"vitest": "4.1.10",
 		"vitest-evals": "0.17.0",
-		"wrangler": "4.136.1"
+		"wrangler": "4.143.0"
 	}
 }

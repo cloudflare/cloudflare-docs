@@ -22,7 +22,11 @@ import ArtifactsPlatformSharedCIDiagram from "~/components/ArtifactsPlatformShar
 
 Artifacts events can build and deploy projects stored in Artifacts repos. When a user or agent pushes a commit, the event triggers a [Workflow instance](/workflows/build/trigger-workflows/).
 
-Within the Workflow, you define a continuous integration (CI) pipeline with the `@cloudflare/ci` SDK to cache dependencies, run checks, and build the project. The final step in your CI pipeline can deploy the output to a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
+If you want standard build-and-deploy behavior for a Worker, use the [Workers Builds Artifacts integration](/workers/ci-cd/builds/git-integration/artifacts-integration/). Workers Builds runs the configured build and deploy commands when you push to the repository, and supports Worker Previews for non-production branches.
+
+Follow the rest of this guide when you need a custom continuous integration (CI) pipeline. For example, use this workflow to run multiple checks in parallel, cache dependencies across runners, deploy to Workers for Platforms, or apply custom retry and credential settings.
+
+Within the Workflow, you define a CI pipeline with the `@cloudflare/ci` SDK to cache dependencies, run checks, and build the project. The final step in your CI pipeline can deploy the output to a [Worker](/workers/) or a [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) User Worker.
 
 This is useful when you need to:
 
