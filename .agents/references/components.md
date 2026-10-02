@@ -803,6 +803,18 @@ import { RuleID } from "~/components";
 
 ---
 
+## CopyPrompt
+
+Renders a one-line prompt next to a **Copy prompt** button, for readers to paste into an AI coding agent. The prompt is truncated on screen but copied in full. Keep it short; use a `txt` code block for longer prompts.
+
+```mdx
+import { CopyPrompt } from "~/components";
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
+```
+
+---
+
 ## SubtractIPCalculator
 
 Interactive calculator for subtracting IP ranges from a base CIDR block. Used in Magic Transit and networking docs.
