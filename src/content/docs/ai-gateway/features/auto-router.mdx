@@ -153,7 +153,49 @@ The Provider column uses the values that `cf-aig-allowed-providers` accepts.
 
 ## Use with OpenCode
 
-[OpenCode](https://opencode.ai/) can use Auto Router as a custom model. Set the `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_GATEWAY_ID`, and `CLOUDFLARE_API_TOKEN` environment variables, then add this `opencode.json` file to your project root:
+[OpenCode](https://opencode.ai/) can use Auto Router as a custom model. Set the `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_GATEWAY_ID`, and `CLOUDFLARE_API_TOKEN` environment variables. Add the configuration for your OpenCode version to an `opencode.json` file in your project root:
+
+<Tabs>
+<TabItem label="OpenCode 2">
+
+```json title="opencode.json"
+{
+	"$schema": "https://opencode.ai/config.json",
+	"providers": {
+		"cloudflare-auto-gateway": {
+			"name": "Cloudflare AI Gateway",
+			"package": "@opencode/ai/providers/openai-compatible",
+			"settings": {
+				"baseURL": "https://gateway.ai.cloudflare.com/v1/{env:CLOUDFLARE_ACCOUNT_ID}/{env:CLOUDFLARE_GATEWAY_ID}/compat",
+				"apiKey": ""
+			},
+			"headers": {
+				"cf-aig-authorization": "Bearer {env:CLOUDFLARE_API_TOKEN}"
+			},
+			"models": {
+				"cloudflare/auto": {
+					"name": "Cloudflare Auto",
+					"capabilities": {
+						"tools": true,
+						"input": ["text", "image"],
+						"output": ["text"]
+					},
+					"limit": {
+						"context": 1000000,
+						"output": 128000
+					},
+					"body": {
+						"max_completion_tokens": 32000
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+</TabItem>
+<TabItem label="OpenCode 1">
 
 ```json title="opencode.json"
 {
@@ -190,6 +232,11 @@ The Provider column uses the values that `cf-aig-allowed-providers` accepts.
 	}
 }
 ```
+
+</TabItem>
+</Tabs>
+
+OpenCode 2 also accepts [V1 configuration](https://opencode.ai/v2/docs/migrate-v1/#configuration). Keep each provider entry in one format. Do not put V1 fields such as `npm` and `options` inside the V2 `providers` object.
 
 Start OpenCode with `opencode` and select **Cloudflare Auto**. For more OpenCode configuration options, refer to [OpenCode](/ai-gateway/integrations/coding-agents/opencode/).
 
