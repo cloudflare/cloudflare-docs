@@ -3,7 +3,7 @@ name: Cloudflare OHTTP Relay
 
 entry:
   title: Cloudflare OHTTP Relay
-  url: /cloudflare-ohttp-relay/
+  url: /ohttp-relay/
   group: Developer platform
   additional_groups: [Privacy]
 
