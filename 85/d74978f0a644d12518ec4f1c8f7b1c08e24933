@@ -1,0 +1,24 @@
+src/content/docs/workers/ci-cd/builds/git-integration/index.mdx
+  s_a99c32076143fd::t_7f823bc7c9e7c3 13,19,25,35,37,53
+  s_a99c32076143fd::t_46f84c350e544f 15
+src/content/docs/workers/ci-cd/builds/git-integration/cursor-origin-integration.mdx
+  s_a99c32076143fd::t_a7b49906b2dbac 11
+  s_a99c32076143fd::t_7f823bc7c9e7c3 1-10,12-82
+  s_a99c32076143fd::t_9d3aa873370fe5 83-85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "85d74978f0a644d12518ec4f1c8f7b1c08e24933",
+  "prompts": {},
+  "sessions": {
+    "s_a99c32076143fd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fb54dc279ffexug7bUr71BF5nw",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

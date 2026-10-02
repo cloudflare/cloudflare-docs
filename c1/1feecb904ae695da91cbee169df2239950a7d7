@@ -1,0 +1,19 @@
+src/content/changelog/radar/2026-09-08-radar-search-events.mdx
+  s_3665a3fcfc8c69::t_ce60a7a88634db 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c11feecb904ae695da91cbee169df2239950a7d7",
+  "prompts": {},
+  "sessions": {
+    "s_3665a3fcfc8c69": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fe0aae37bffehdq635qxKRSPQW",
+        "model": "claude-opus-5"
+      },
+      "human_author": "André Jesus <ajesus@cloudflare.com>"
+    }
+  }
+}

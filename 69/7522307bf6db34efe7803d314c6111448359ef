@@ -1,0 +1,19 @@
+src/content/docs/ai-gateway/features/machine-payments.mdx
+  s_c4bfad1910b8fd::t_f5c45083342d63 1-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "697522307bf6db34efe7803d314c6111448359ef",
+  "prompts": {},
+  "sessions": {
+    "s_c4bfad1910b8fd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0ef82e62ffegKOzLjzZOODoT5",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    }
+  }
+}

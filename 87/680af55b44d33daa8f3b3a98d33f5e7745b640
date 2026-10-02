@@ -1,0 +1,21 @@
+src/content/changelog/waf/2026-09-30-waf-release.mdx
+  s_0ecdaf68e1dc1e::t_4a35b66fe99a40 2-4,12-13,48,71,79,84
+src/content/changelog/waf/scheduled-waf-release.mdx
+  s_0ecdaf68e1dc1e::t_59996aa88a6138 4,33,35,37,48,50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "87680af55b44d33daa8f3b3a98d33f5e7745b640",
+  "prompts": {},
+  "sessions": {
+    "s_0ecdaf68e1dc1e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f1209e7fdffeOhGV2hVEEoR3TE",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "fbressan <fbressan@cloudflare.com>"
+    }
+  }
+}

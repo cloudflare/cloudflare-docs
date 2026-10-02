@@ -1,0 +1,19 @@
+.github/CODEOWNERS
+  s_9a62b92cbc1907::t_81c9c19fb53c3c 189-194,230-232,235-238
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3fb2d982ed3f1a43ed7dd4193714061932b28e3f",
+  "prompts": {},
+  "sessions": {
+    "s_9a62b92cbc1907": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc52f4bfaffePhHHqQYK3cYWgr",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
