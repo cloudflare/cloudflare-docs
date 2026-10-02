@@ -9,7 +9,7 @@ date: 2026-10-02
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-`PiHarness` is now available in beta in the Agents SDK. It runs [Pi Durable](https://earendil.com/posts/pi-durable/), the durable harness from the Pi project, inside a Cloudflare Durable Object. It is our first step toward running external harnesses on Durable Objects through the Agents SDK. We built it together with the Pi team at Earendil, and it supports Pi Durable 1.0.
+Run Pi on Cloudflare Workers. The `PiHarness` is now available as part of the Agents SDK. It runs [Pi Durable](https://earendil.com/posts/pi-durable/), the new durable harness from the Pi project, inside a Cloudflare Durable Object. Built alongside the team at Earendil it is our first step toward first-class support for running third-party harnesses on Cloudflare.
 
 :::caution[Beta]
 
@@ -17,14 +17,7 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 
 :::
 
-`PiHarness` comes out of several months of rework inside the Agents SDK, which we will write about separately.
-
-`PiHarness` is a Lifecycle capability. Lifecycle gives a capability hooks into the Durable Object it runs in: SQLite storage, startup, and a durable job queue that shares the object's single alarm. `PiHarness` uses these hooks in two ways:
-
-- Pi stores its transcripts, inbox, and tasks in the object's SQLite database, in tables prefixed with `pi_`.
-- When a session has work in progress, `PiHarness` schedules a Lifecycle job for it. If the object is evicted in the middle of a run, the job's alarm restarts the object. Pi reopens its storage and continues the run.
-
-Pi owns the agent loop, tools, retries, and recovery. The Agents SDK supplies the storage and the wake-up. We will cover the capability and Lifecycle model in more detail in a future post.
+`PiHarness` ships as a Lifecycle capability. Pi Durable provides the agent harness and the Lifecycle keeps it running. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes and network issues. We'll be sharing more on this foundational component in the near future.
 
 ## Install
 
@@ -34,32 +27,32 @@ Both Pi packages are optional peer dependencies of `agents`, so you only install
 
 ## Use it in an Agent
 
-Every `Agent` already has a Lifecycle. Add the harness to it in the constructor. This example uses Workers AI through the `AI` binding:
+Creating a Pi agent requires configuring the Pi `Harness` with model, skills and tools then registering the `PiHarness` with the `Agent` class.
 
 <TypeScriptExample>
 
 ```ts
 import { Agent } from "agents";
 import { createModels } from "@earendil-works/pi-ai/models";
-import { Harness } from "@earendil-works/pi-durable";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
-import { CLOUDFLARE_PROVIDER_ID, createAI } from "agents/models/pi-ai";
+import { createAI } from "agents/models/pi-ai";
 
 export class Assistant extends Agent<Env> {
 	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
 
 	harness = new PiHarness({
-		harness: ({ storage, context, registry, settings }) => {
+		harness: ({ storage, context }) => {
 			const models = createModels();
 			models.setProvider(this.ai.provider);
-			return Harness.open(storage, { models, registry, settings }, context);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
 		},
-		defaults: {
-			model: {
-				provider: CLOUDFLARE_PROVIDER_ID,
-				modelId: "@cf/moonshotai/kimi-k2.7-code",
-			},
-		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
 	});
 
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -76,94 +69,46 @@ export class Assistant extends Agent<Env> {
 
 </TypeScriptExample>
 
-The `harness` factory receives Pi's storage over the object's SQLite database, along with the registry and settings that `PiHarness` builds. Pass those to `Harness.open()`, together with your models and any other Pi options.
-
-## Use it in a plain Durable Object
-
-You do not need the `Agent` class. Install a Lifecycle on a `DurableObject` and add the harness to it:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { PiHarness } from "agents/harness/pi";
-
-export class Assistant extends DurableObject<Env> {
-	harness = new PiHarness({/* same options as above */});
-
-	lifecycle = Lifecycle.install(this).use(this.harness);
-
-	async ask(prompt: string) {
-		// Native RPC does not pass through Lifecycle, so start it first.
-		await this.lifecycle.start();
-		const { text } = await this.harness.prompt(prompt);
-		return text;
-	}
-}
-```
-
-</TypeScriptExample>
+We've included support for AI Gateway and Workers AI models under the `agents/models/pi-ai` entrypoint so you can get started with Cloudflare models right away or alternatively use your existing `pi-ai` provider.
 
 ## Add tools with extensions
 
-Tools and system prompt sections come from extensions. An extension is a function that registers transforms on the harness's tools and prompt. Pass extensions to `PiHarness` by name:
+Both tools and system prompt sections are provided to the Pi `Harness` via extensions.
 
 <TypeScriptExample>
 
 ```ts
 import { Type } from "@earendil-works/pi-ai";
-import { skills, type PiExtension } from "agents/harness/pi";
+import type { ToolRegistration } from "@earendil-works/pi-durable";
+import { skills } from "agents/harness/pi";
 
-const editor: PiExtension = (ctx) => {
-	ctx.prompt.transform((prompt) =>
-		prompt.set("preamble", { render: () => "You are an editor.", tag: false }),
-	);
-	ctx.tools.transform((tools) =>
-		tools.set("word_count", {
-			description: "Count the words in a text.",
-			parameters: Type.Object({ text: Type.String() }),
-			replay: "safe",
-			async execute({ text }) {
-				const words = text.split(/\s+/).filter(Boolean).length;
-				return { content: [{ type: "text", text: String(words) }] };
-			},
-		}),
-	);
+const WordCount = Type.Object({ text: Type.String() });
+
+const wordCount: ToolRegistration<typeof WordCount> = {
+	name: "word_count",
+	description: "Count the words in a text.",
+	parameters: WordCount,
+	replay: "safe",
+	async execute({ text }) {
+		const words = text.split(/\s+/).filter(Boolean).length;
+		return { content: [{ type: "text", text: String(words) }] };
+	},
 };
 
-harness = new PiHarness({
-	// ...harness and defaults as above
-	extensions: {
-		editor,
-		skills: skills(sources),
-	},
+// In the harness factory, before Harness.open():
+registry.install({
+	name: "editor",
+	sections: [
+		{ key: "preamble", render: () => "You are an editor.", tag: false },
+	],
+	tools: [wordCount],
 });
+registry.install(await skills(sources));
 ```
 
 </TypeScriptExample>
 
-`replay: "safe"` lets Pi run the tool again if an eviction interrupted it. Without it, the model gets an interrupted result instead. `skills(sources)` turns `agents/skills` sources into an extension that adds skill tools and a prompt section. Pi Durable has more extension features than `PiHarness` supports today, such as generation and tool hooks. The [extensions documentation](/agents/harnesses/pi/extensions/#what-piharness-supports) lists what works.
-
-## Sessions and operations
-
-`harness.prompt()` submits to the root session and waits for the answer. For long runs, `submit()` returns once Pi has stored the input, and `wait()` returns the result later. Pass an `operationId` to make a submission idempotent:
-
-<TypeScriptExample>
-
-```ts
-const session = await this.harness.sessions.create();
-const receipt = await session.submit("Summarize the latest report", {
-	operationId: "report-summary-42",
-});
-const result = await session.wait(receipt.operationId);
-```
-
-</TypeScriptExample>
-
-A submission made while a session is running is queued as a follow-up. Set `whenBusy: "steer"` to add it to the running turn after the current tool round instead.
-
-`PiHarness` does not pick a transport. `session.events()` returns Pi's own event stream: a snapshot, then one batch of events per commit. Send it to clients over WebSockets, HTTP, or RPC.
+See the [Pi Extensions](/agents/harnesses/pi/extensions/) documentation for more information on creating and configuring extensions.
 
 ## Learn more
 
