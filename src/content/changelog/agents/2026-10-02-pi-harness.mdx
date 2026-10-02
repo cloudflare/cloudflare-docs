@@ -30,7 +30,7 @@ Built with [Earendil](https://earendil.com/), this integration is our first step
 
 :::
 
-`PiHarness` is a new "Lifecycle capability" provided by the Cloudflare Agents SDK. Pi Durable provides the agent harness and the Lifecycle is responsible for keeping the agent running in the Durable Object. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes and network issues. We'll be sharing more on Lifecycle capabilities in the near future.
+`PiHarness` is a new "Lifecycle capability" provided by the Cloudflare Agents SDK. Pi Durable provides the agent harness and the Lifecycle is responsible for keeping the agent running in the Durable Object. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes, and network issues. We will share more on Lifecycle capabilities in the near future.
 
 ## Install
 
@@ -40,7 +40,7 @@ Both Pi packages are optional peer dependencies of `agents`, so you only install
 
 ## Use it in an Agent
 
-Creating a Pi agent requires configuring the Pi `Harness` with model, skills and tools then registering the `PiHarness` with the `Agent` class.
+Creating a Pi agent requires configuring the Pi `Harness` with a model, skills, and tools, then registering the `PiHarness` with the `Agent` class.
 
 <TypeScriptExample>
 
@@ -82,7 +82,7 @@ export class Assistant extends Agent<Env> {
 
 </TypeScriptExample>
 
-We've included support for AI Gateway and Workers AI models under the `agents/models/pi-ai` entrypoint so you can get started with Cloudflare models right away or alternatively use your existing `pi-ai` provider.
+The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing `pi-ai` provider.
 
 ## Add tools with extensions
 
@@ -121,7 +121,7 @@ registry.install(await skills(sources));
 
 </TypeScriptExample>
 
-See the [Pi Extensions](/agents/harnesses/pi/extensions/) documentation for more information on creating and configuring extensions.
+For more information on creating and configuring extensions, refer to [Extensions](/agents/harnesses/pi/extensions/).
 
 ## Learn more
 
