@@ -104,11 +104,12 @@ Refer to [image management](/containers/guides/image-management/#use-pre-built-c
 
 ## Is disk persistent? What happens to my disk when my container sleeps?
 
-All disk is ephemeral. When a Container instance goes to sleep, the next time
-it is started, it will have a fresh disk as defined by its container image.
+All disk is ephemeral by default. When a Container instance goes to sleep, the
+next time it starts, it uses a fresh disk from the container image.
 
-Snapshots are coming soon, which allow the user to quickly persist and restore the disk
-from an entire container or a directory.
+If you need point-in-time filesystem state, Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) can create and restore a snapshot.
+Snapshots are immutable, so later file changes require a new snapshot. For more
+information, refer to [Snapshots](/containers/guides/snapshots/).
 
 You can also use [FUSE](/containers/examples/r2-fuse-mount/) to persist disk
 to R2 or other object storage backends. Though you should not expect native
@@ -123,7 +124,9 @@ Containers do not use swap memory.
 
 ## How long can instances run for? What happens when a host server is shut down?
 
-Cloudflare does not stop a container instance after a fixed maximum runtime. The Container class sets [`sleepAfter`](/containers/reference/container-class/#sleepafter) to 10 minutes by default, and its default [`onActivityExpired()`](/containers/reference/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook. Even if your hook keeps the instance running, another platform event can stop it. One of those cases is a host server restart, which happens on an irregular cadence. Cloudflare does not guarantee that any container instance will run for any set period of time.
+Cloudflare does not stop a container instance after a fixed maximum runtime. With the Durable Object Container API, call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to stop an inactive container. The `Container` class sets [`sleepAfter`](/containers/api/container-class/#sleepafter) to 10 minutes by default. Its [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
+
+Another platform event can stop an active container. For example, a host server restart happens on an irregular cadence. Cloudflare does not guarantee that any container instance will run for a set period.
 
 When the platform is about to stop a container instance (including before a host moves work off a server), it:
 
@@ -144,16 +147,18 @@ For implementation details, refer to [Environment variables and secrets](/contai
 
 ## Can I run Docker inside a container (Docker-in-Docker)?
 
-Yes. Use the `docker:dind-rootless` base image since Containers run without root privileges.
-
-You must disable iptables when starting the Docker daemon because Containers do not support iptables manipulation:
+Yes. Use the `docker:dind` image, and start the Docker daemon with iptables and IP forwarding turned off:
 
 ```dockerfile title="Dockerfile"
-FROM docker:dind-rootless
+FROM docker:dind
 
-# Start dockerd with iptables disabled, then run your app
-ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false & exec /path/to/your-app"]
+# Start dockerd with iptables and IP forwarding turned off, then run your app
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false & exec /path/to/your-app"]
 ```
+
+This Dockerfile works with both [scheduling policies](/containers/configuration/scheduling-policy/). Containers that use the `durable_object` policy cannot turn on IP forwarding. In those containers, the Docker daemon exits on startup unless you pass `--ip-forward=false`.
+
+Run the Docker daemon as `root`. Rootless Docker does not start in Containers.
 
 If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
 
@@ -171,8 +176,10 @@ exec /path/to/your-app
 
 <Render file="dind-network-host-caveat" product="containers" />
 
-For a complete working example, see the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind).
+{/* Remove the second and third sentences when the linked example passes --ip-forward=false. */}
+
+For a complete working example, refer to the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind). The example uses the `default` scheduling policy. To run it with `scheduling_policy: "durable_object"`, add `--ip-forward=false` to its `dockerd` flags.
 
 ## How do I allow or disallow egress from my container?
 
-Refer to [Handle outbound traffic](/containers/guides/outbound-traffic/) for how to control outbound traffic and internet access.
+Refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/) for how to control outbound traffic and internet access.

@@ -120,6 +120,36 @@ Codeowner commands are authorized in the pipeline entry:
 
 `/review` and `/full-review` route Dependabot PRs to `DEPENDABOT_REVIEW`. `/draft-never-stale` only applies to open draft PRs. Draft PRs skip automatic review; commands can still run. `DOCS_FLUE_REVIEW_MODE=log` is the default and only logs rendered output. `comment` updates the singleton summary comment.
 
+## Spam Gates
+
+Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.
+
+| Gate                     | Workflow              | Questions                                                                                                                   | Acts when                                                     |
+| ------------------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Item (`INGEST`)          | `IngestWorkflow`      | `is_spam` (yes/no) and `category`: `spam`, `bot_or_test`, `irrelevant_change`, `support_request`, `feature_request`, `none` | Spam probability >= 0.5 (category does not matter); item open |
+| Comment (`COMMENT_SPAM`) | `CommentSpamWorkflow` | `is_spam` (yes/no) and `category`: `link_promo`, `scam_phishing`, `bot_flood`, `gibberish`, `email_reply_artifact`, `none`  | Spam probability >= 0.8 (high) and category is not `none`     |
+
+Item gate: new issues and non-Dependabot PRs. The category picks the response: `support_request` and `feature_request` get the `off topic` label and `OFF_TOPIC_COMMENT`; `spam`, `bot_or_test`, and `irrelevant_change` get the `spam` label and `SPAM_COMMENT`. Any other category, including `none`, gets the `spam` label and `SPAM_COMMENT`. Then the item is closed.
+
+Comment gate: new `issue_comment` events, on open and closed items. Off-topic content is never deletable at the comment level; support questions, short reactions, and email replies with a real question or correction are normal conversation. An email-reply artifact is a brief acknowledgment plus a quoted GitHub notification email.
+
+The comment gate skips comments from authors with write access (`OWNER`, `MEMBER`, or `COLLABORATOR` via `author_association`), any `[bot]` account, the item's own author, and exact-match slash commands (payload-derived, zero API calls in the classifier). Codeowners are skipped via an API check inside the workflow, keeping the webhook fast.
+
+Before deleting, the comment workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
+
+Clef requests go through AI Gateway when `DOCS_FLUE_AI_GATEWAY_ID` is set.
+
+## Spam Replay
+
+`pnpm run flue:replay:spam --issue <n,...> --pr <n,...>` replays the item gate against existing issues and PRs. `pnpm run flue:replay:comment-spam [--comment <id,...>]` replays the comment gate against existing comments (default: the three #33799 email-reply comments). Run `pnpm run flue:dev` first. Both follow `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                                               |
+| --------- | ----------------------------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the verdict and `wouldClose` / `wouldDelete`; no labels, close, comment, audit, or delete   |
+| `comment` | Real path. The item gate labels, comments, and closes; the comment gate writes the audit record and deletes |
+
+An item replay never starts a review. Comment exemptions (write access, bots, item author, codeowners) still apply, and a deleted comment replays as `comment-missing`. Real webhooks ignore replay mode and always act.
+
 ## Replay And Evals
 
 `pnpm run flue:replay --pr <number>` runs the real-PR replay harness. Run `pnpm run flue:dev` first. It reads `DOCS_FLUE_INTERNAL_TOKEN` and optional `FLUE_BASE_URL` (default `http://localhost:5173`) from the environment or `.flue/.env(.local)`. `--pr` accepts any PR number or a comma-separated list, such as `--pr 33622,33305`; omit it to replay every PR in `bin/replay-prs.json`, and use `--concurrency <number>` to run several at once.
@@ -132,6 +162,17 @@ Replay calls the dev review route with `replay: true`. It always runs a full rev
 | `comment` | Writes the PR's singleton summary comment, even on a closed PR: first a "Full review in progress" note, then the finished review, or a failure note if the run fails |
 
 In comment mode, replaying the whole list comments on every PR in it. Replay never writes review state or reactions, and has no debounce, supersession, or cleanup. Results and rendered markdown go to the ignored `.flue/replay-results/` directory.
+
+## Dependabot Replay
+
+`pnpm run flue:replay:dependabot --pr <number,...>` replays the Dependabot review for existing Dependabot PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as `flue:replay` and follows `DOCS_FLUE_REVIEW_MODE` from `.flue/.env.local`:
+
+| Mode      | Replay output                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| `log`     | Prints the rendered comment in the terminal and writes `.flue/replay-results/dependabot-<pr>.md` |
+| `comment` | Creates or updates the PR's Dependabot review comment                                            |
+
+The replay runs `DependabotReviewWorkflow` with `replay: true`, which only adds the rendered comment to the workflow output.
 
 Evals live in `evals/` and exercise structured agent output with fixtures. `pnpm run flue:evals` starts a local dev server with `DOCS_FLUE_AGENT_EVALS=1`, waits for it, runs evals, and tears it down. It requires `DOCS_FLUE_INTERNAL_TOKEN` in the environment or `.flue/.env(.local)`:
 
@@ -151,7 +192,7 @@ pnpm run flue:evals
 | Reset local Worker state | `pnpm run flue:reset:local`                          |
 | Focused tests            | `pnpm --dir .flue exec vitest run <file>`            |
 
-`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`.
+`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`. Migration `v13` created `FlueCommentSpamFilterAgent` and `v14` deletes it along with `FlueSpamFilterAgent`.
 
 Because `wrangler.jsonc` declares `secrets.required`, local dev loads only those secrets from `.flue/.env(.local)` and drops every other key. `vite.config.ts` forwards the non-secret settings in `LOCAL_DEV_SETTINGS` (review mode, recommendations mode, and debounce) as Worker vars during `vite dev` only, and logs them at startup. Restart `flue dev` after editing these values. `flue:dev:wrangler` does not forward them.
 

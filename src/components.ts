@@ -20,11 +20,13 @@ export { default as LinkButton } from "./components/ui/link-button/LinkButton.as
 export { default as Icon } from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 export { default as Render } from "./components/Render.astro";
+export { default as CopyPromptButton } from "./components/CopyPromptButton.astro";
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
 export { default as CfCommand } from "./components/cf/CfCommand.astro";
 export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
+export { default as AnnotatedConfigExplorer } from "./components/config-explorer/AnnotatedConfigExplorer.astro";
 export { default as Description } from "./components/cf/Description.astro";
 export { default as Details } from "./components/cf/Details.astro";
 export { default as MetaInfo } from "./components/cf/MetaInfo.astro";
@@ -51,6 +53,7 @@ export { default as CURL } from "./components/cf/CURL.astro";
 export { default as Flex } from "./components/cf/Flex.astro";
 export { default as Width } from "./components/cf/Width.astro";
 export { default as RuleID } from "./components/cf/RuleID.astro";
+export { default as CopyPrompt } from "./components/cf/CopyPrompt.astro";
 export { default as PublicStats } from "./components/cf/PublicStats.astro";
 export { default as RSSButton } from "./components/cf/RSSButton.astro";
 export { default as GlossaryDefinition } from "./components/cf/GlossaryDefinition.astro";

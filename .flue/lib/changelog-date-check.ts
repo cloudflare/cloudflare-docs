@@ -128,10 +128,10 @@ export function renderChangelogDateComment(
 		`⚠️ ${author ? `@${author} ` : ""}This pull request adds a changelog entry dated in the past:`,
 		"",
 	];
+	// The body must not depend on the current date: any change triggers an
+	// edit, and nightly edits bump the PR's updated_at for no reason.
 	for (const entry of stale) {
-		lines.push(
-			`- \`${entry.path}\` — dated **${entry.date}**, ${entry.ageDays} day${entry.ageDays === 1 ? "" : "s"} old`,
-		);
+		lines.push(`- \`${entry.path}\` — dated **${entry.date}**`);
 	}
 	lines.push(
 		"",

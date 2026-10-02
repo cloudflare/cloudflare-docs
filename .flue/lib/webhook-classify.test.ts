@@ -136,10 +136,11 @@ describe("classifyWebhook — slash commands", () => {
 		expect(c.command).toBe("review");
 	});
 
-	it("ignores non-command comments", () => {
+	it("routes non-command comments to the comment spam gate", () => {
 		const c = classifyWebhook("issue_comment", base("thanks!"));
 		expect(c.command).toBeNull();
-		expect(isActionable(c)).toBe(false);
+		expect(c.isCommentSpamEvent).toBe(true);
+		expect(isActionable(c)).toBe(true);
 	});
 
 	it("ignores the removed review-limit command", () => {
@@ -155,5 +156,116 @@ describe("classifyWebhook — slash commands", () => {
 			comment: { id: 1, body: "/review" },
 		});
 		expect(c.command).toBeNull();
+	});
+});
+
+describe("classifyWebhook — comment spam gate", () => {
+	const comment = (overrides: Record<string, unknown> = {}) => ({
+		action: "created",
+		issue: { number: 70, user: { login: "pr-author" } },
+		comment: {
+			id: 900,
+			body: "spam message",
+			user: { login: "random-user" },
+			author_association: "NONE",
+		},
+		sender: { login: "random-user" },
+		...overrides,
+	});
+
+	it("gates a plain comment on a PR", () => {
+		const c = classifyWebhook(
+			"issue_comment",
+			comment({
+				issue: { number: 70, pull_request: {}, user: { login: "pr-author" } },
+			}),
+		);
+		expect(c.isCommentSpamEvent).toBe(true);
+		expect(c.commentIsOnPullRequest).toBe(true);
+		expect(c.number).toBe(70);
+		expect(isActionable(c)).toBe(true);
+	});
+
+	it("gates a plain comment on an issue", () => {
+		const c = classifyWebhook("issue_comment", comment());
+		expect(c.isCommentSpamEvent).toBe(true);
+		expect(c.commentIsOnPullRequest).toBe(false);
+		expect(isActionable(c)).toBe(true);
+	});
+
+	it.each(["OWNER", "MEMBER", "COLLABORATOR"])(
+		"exempts write-access authors (%s)",
+		(association) => {
+			const c = classifyWebhook(
+				"issue_comment",
+				comment({
+					comment: {
+						id: 900,
+						body: "LGTM, merging",
+						user: { login: "maintainer" },
+						author_association: association,
+					},
+				}),
+			);
+			expect(c.isCommentSpamEvent).toBe(false);
+			expect(isActionable(c)).toBe(false);
+		},
+	);
+
+	it("exempts bot authors", () => {
+		const c = classifyWebhook(
+			"issue_comment",
+			comment({
+				comment: {
+					id: 900,
+					body: "This branch has conflicts",
+					user: { login: "cloudflare-docs-bot[bot]" },
+					author_association: "NONE",
+				},
+			}),
+		);
+		expect(c.isCommentSpamEvent).toBe(false);
+		expect(isActionable(c)).toBe(false);
+	});
+
+	it("exempts the item author commenting on their own item", () => {
+		const c = classifyWebhook(
+			"issue_comment",
+			comment({
+				comment: {
+					id: 900,
+					body: "pushed a fix for the typo",
+					user: { login: "pr-author" },
+					author_association: "CONTRIBUTOR",
+				},
+			}),
+		);
+		expect(c.isCommentSpamEvent).toBe(false);
+		expect(isActionable(c)).toBe(false);
+	});
+
+	it("routes slash commands to command handling, not the spam gate", () => {
+		const c = classifyWebhook(
+			"issue_comment",
+			comment({
+				comment: {
+					id: 900,
+					body: "/review",
+					user: { login: "random-user" },
+					author_association: "NONE",
+				},
+				issue: { number: 70, pull_request: {}, user: { login: "pr-author" } },
+			}),
+		);
+		expect(c.command).toBe("review");
+		expect(c.isCommentSpamEvent).toBe(false);
+	});
+
+	it("ignores edited and deleted comment actions", () => {
+		for (const action of ["edited", "deleted"]) {
+			const c = classifyWebhook("issue_comment", comment({ action }));
+			expect(c.isCommentSpamEvent).toBe(false);
+			expect(isActionable(c)).toBe(false);
+		}
 	});
 });

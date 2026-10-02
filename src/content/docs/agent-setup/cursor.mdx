@@ -57,7 +57,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 <TipsList>
 
 - The Cloudflare API MCP server uses Code Mode — Cursor writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
-- Add `@wrangler.jsonc` to your Composer prompts so Cursor sees your current bindings when generating or modifying code.
+- Add `@wrangler.jsonc` or `@cloudflare.config.ts` to your Composer prompts so Cursor sees your current bindings when generating or modifying code.
 
 </TipsList>
 
@@ -71,12 +71,20 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 ## FAQ
 
 <FAQList>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
 		All three work together. Skills give Cursor persistent Cloudflare knowledge
 		loaded into every Composer prompt. The Cloudflare API MCP server handles
 		platform operations (DNS, WAF, R2 buckets, Zero Trust). Wrangler runs local
 		dev and Workers-specific commands. The bundled `wrangler` Skill teaches
-		Cursor when to reach for which.
+		Cursor when to reach for which. For tasks across the whole Cloudflare API,
+		Cursor can also use the [Cloudflare CLI](/cf/), `cf`.
+	</FAQItem>
+	<FAQItem question="Can Cursor use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with
+		`npm install -g cf`, sign in with `cf auth login`, and tell Cursor to
+		prefer it in your project rules or `AGENTS.md`. Refer to
+		[Use cf with AI agents](/cf/agents/).
 	</FAQItem>
 	<FAQItem question="How do I give Cursor access to Cloudflare?">
 		Install the Skills plugin (from the Cursor Marketplace, or Settings > Rules
@@ -85,8 +93,9 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		choose permissions.
 	</FAQItem>
 	<FAQItem question="Can Cursor deploy to Cloudflare without leaving the IDE?">
-		Yes. Ask Composer to deploy your project. Cursor runs Wrangler commands in
-		the integrated terminal and can also call the API MCP server for managed
+		Yes. Ask Composer to deploy your project. Cursor runs `wrangler deploy` or
+		`cf deploy` in the integrated terminal, depending on how the project is
+		configured, and can also call the API MCP server for managed
 		deploys and resource creation.
 	</FAQItem>
 </FAQList>
@@ -107,7 +116,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Composer does not understand Workers APIs">
 		Add the Cloudflare docs MCP server and Workers documentation to your project
-		context. Use @-mentions to reference `wrangler.jsonc`.
+		context. Use @-mentions to reference `wrangler.jsonc` or `cloudflare.config.ts`.
 	</TroubleshootingItem>
 </TroubleshootingList>
 

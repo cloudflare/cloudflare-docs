@@ -237,6 +237,7 @@ export class ReviewOrchestrator extends WorkflowEntrypoint<
 export { DependabotReviewWorkflow } from "./orchestrators/dependabot-review-workflow";
 export { RebaseWorkflow } from "./orchestrators/rebase-workflow";
 export { IngestWorkflow } from "./orchestrators/ingest-workflow";
+export { CommentSpamWorkflow } from "./orchestrators/comment-spam-workflow";
 
 export default {
 	async scheduled(_controller: ScheduledController, env: RecommendationEnv) {

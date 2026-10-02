@@ -1,0 +1,133 @@
+---
+import { z } from "astro/zod";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+// Request body `model` selector is the last segment of the model ID.
+const selector = name.split("/").at(-1);
+
+const worker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.AI.run("${name}", {
+			model: "${selector}",
+			state: "Checkout has been failing for every customer for the last hour.",
+			questions: {
+				urgent: {
+					type: "noul",
+					instructions: "Is this support request urgent?",
+				},
+				team: {
+					type: "choice",
+					instructions: "Which team should handle this request?",
+					criteria: {
+						billing: "Payments, invoices, and refunds",
+						technical: "Outages, errors, and configuration",
+						sales: "Plans and upgrades",
+					},
+				},
+				severity: {
+					type: "score",
+					instructions: "How severe is the customer impact?",
+					criteria: ["No impact", "Minor", "Major", "Critical"],
+				},
+			},
+		});
+
+		// response.answers.urgent   -> probability the request is urgent
+		// response.answers.team     -> chosen team with per-option probabilities
+		// response.answers.severity -> probability-weighted score (0 = lowest level)
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+        "model": "${selector}",
+        "state": "Checkout has been failing for every customer for the last hour.",
+        "questions": {
+            "urgent": {
+                "type": "noul",
+                "instructions": "Is this support request urgent?",
+            },
+            "team": {
+                "type": "choice",
+                "instructions": "Which team should handle this request?",
+                "criteria": {
+                    "billing": "Payments, invoices, and refunds",
+                    "technical": "Outages, errors, and configuration",
+                    "sales": "Plans and upgrades",
+                },
+            },
+            "severity": {
+                "type": "score",
+                "instructions": "How severe is the customer impact?",
+                "criteria": ["No impact", "Minor", "Major", "Critical"],
+            },
+        },
+    },
+)
+print(response.json())
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{
+    "model": "${selector}",
+    "state": "Checkout has been failing for every customer for the last hour.",
+    "questions": {
+      "urgent": { "type": "noul", "instructions": "Is this support request urgent?" },
+      "team": {
+        "type": "choice",
+        "instructions": "Which team should handle this request?",
+        "criteria": {
+          "billing": "Payments, invoices, and refunds",
+          "technical": "Outages, errors, and configuration",
+          "sales": "Plans and upgrades"
+        }
+      },
+      "severity": {
+        "type": "score",
+        "instructions": "How severe is the customer impact?",
+        "criteria": ["No impact", "Minor", "Major", "Critical"]
+      }
+    }
+  }'
+`;
+---
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={python} lang="py" title="" />
+	</TabItem>
+	<TabItem label="curl">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>

@@ -12,7 +12,6 @@ tags:
 
 import { Render } from "~/components";
 
-
 :::note
 Remote browser isolation is available as an add-on to Zero Trust Pay-as-you-go and Enterprise plans.
 :::
@@ -23,6 +22,14 @@ Browser Isolation also protects users from phishing attacks by preventing user i
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated. When the user closes the isolated browser, their session is automatically deleted.
 
+## Permissions
+
+Browser Isolation is configured through Gateway [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) with the _Isolate_ or _Do Not Isolate_ action. Gateway role-based access control (RBAC) covers isolation policy management, and there is no separate Browser Isolation permission surface.
+
+You can use [account-level roles](/fundamentals/manage-members/roles/#account-scoped-roles) such as `Zero Trust HTTP Policies Admin` to grant access to all HTTP policies in the account. You can also use [resource-scoped roles](/cloudflare-one/traffic-policies/granular-permissions/) to delegate management of specific isolation policies to individual team members.
+
+For details on available roles and how to assign granular permissions, refer to [Granular permissions for Gateway](/cloudflare-one/traffic-policies/granular-permissions/).
+
 ## Privacy
 
 Cloudflare Browser Isolation is a security product. In order to serve transparent isolated browsing and block web based threats our network decrypts Internet traffic using the [Cloudflare root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/). Traffic logs are retained as per the [Zero Trust](/cloudflare-one/insights/logs/) documentation.
@@ -30,4 +37,3 @@ Cloudflare Browser Isolation is a security product. In order to serve transparen
 ## Troubleshooting
 
 For help resolving common issues with Browser Isolation, refer to [Troubleshoot Browser Isolation](/cloudflare-one/remote-browser-isolation/troubleshooting/).
-

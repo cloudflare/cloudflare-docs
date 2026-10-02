@@ -228,7 +228,15 @@ const hasRssAlternate = headExtras.some(
 )}
 {noindex && <meta name="robots" content="noindex" />}
 
-<link rel="shortcut icon" type={selectedFavicon.type} href={faviconHref} />
+<link rel="icon" href={faviconHref} />
+{selectedFavicon.file !== "favicon.png" && inPublic("favicon.png") && (
+	<link
+		rel="icon"
+		type="image/png"
+		sizes="96x96"
+		href={`${import.meta.env.BASE_URL}favicon.png`}
+	/>
+)}
 <link rel="stylesheet" href={shikiCssHref} />
 {site && canonical && <link rel="canonical" href={canonical} />}
 {site && <link rel="sitemap" href="/sitemap-index.xml" />}

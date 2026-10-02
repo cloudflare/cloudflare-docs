@@ -169,16 +169,16 @@ const isOpen = Boolean(
 
 <style is:global>
 	/*
-   * Chevron rotation, driven by the trigger's `data-nb-state`. The
-   * disclosure runtime (`@/components/ui/collapsible/collapsible.client`)
-   * keeps this attribute in sync on toggle; this rule turns the
-   * attribute change into the visual rotation.
-   *
-   * Direct CSS rather than Tailwind's `group-data-[...]/expander:rotate-90`
-   * variant — the variant compiled but didn't reliably fire in practice
-   * when paired with the named-group split between trigger and outer
-   * row container.
-   */
+	   * Chevron rotation, driven by the trigger's `data-nb-state`. The
+	   * disclosure runtime (`@/components/ui/collapsible/collapsible.client`)
+	   * keeps this attribute in sync on toggle; this rule turns the
+	   * attribute change into the visual rotation.
+	   *
+	   * Direct CSS rather than Tailwind's `group-data-[...]/expander:rotate-90`
+	   * variant — the variant compiled but didn't reliably fire in practice
+	   * when paired with the named-group split between trigger and outer
+	   * row container.
+	   */
 	[data-nb-collapsible-trigger][data-nb-state="open"] [data-nb-caret] {
 		rotate: 90deg;
 	}

@@ -1,7 +1,7 @@
 import { parse } from "node-html-parser";
 import he from "he";
 import { stripMarkdownToText } from "./markdown";
-import { EXTERNAL_LINK_ARROW } from "@cloudflare/nimbus-docs/markdown";
+import { stripExternalLinkArrow } from "./external-link-arrow";
 
 // Parity: mirrors production's src/util/props.ts generateDescription (html
 // branch); reimplemented as a standalone function rather than reused.
@@ -12,10 +12,7 @@ export function generateDescriptionFromHtml(html: string): string | undefined {
 
 	if (!paragraph) return undefined;
 
-	return he
-		.decode(paragraph.innerText)
-		.replaceAll(EXTERNAL_LINK_ARROW, "")
-		.trim();
+	return stripExternalLinkArrow(he.decode(paragraph.innerText)).trim();
 }
 
 // Parity: production strips Markdown from the description only for JSON-LD

@@ -196,7 +196,7 @@ The `name()` result (`aiSearch`) becomes the global the model's code calls, so t
 
 ## 4. Build the agent
 
-Create `src/server.ts`. The agent provisions an AI Search instance with [hybrid search](/ai-search/configuration/indexing/hybrid-search/) enabled the first time it runs, then creates the Code Mode runtime with the connector and exposes it to the model as a single `codemode` tool. The `@callable()` methods let your client list pending approvals and approve, reject, or roll back a write.
+Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/configuration/indexing/hybrid-search/) by default. The example then creates the Code Mode runtime with the connector and exposes it to the model as a single `codemode` tool. The `@callable()` methods let your client list pending approvals and approve, reject, or roll back a write.
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -227,26 +227,20 @@ export class Chat extends AIChatAgent<Env> {
 	// In-memory guard, so the one-time setup runs once per instance lifetime.
 	private ready = false;
 
-	// Create the AI Search instance with hybrid search enabled, then seed it.
-	// create() throws if the instance already exists, so the try/catch makes
-	// this safe to call on every message.
+	// Create the AI Search instance, which uses hybrid search by default, then seed it.
 	private async ensureInstance() {
 		if (this.ready) return;
 		try {
-			// index_method with both vector and keyword enables hybrid search.
 			await this.env.AI_SEARCH.create({
 				id: INSTANCE_NAME,
-				index_method: { vector: true, keyword: true },
 			});
 			// Queue the seed document for indexing so the first search has content.
 			await this.env.AI_SEARCH.get(INSTANCE_NAME).items.upload(
 				"getting-started.md",
 				SEED_DOC,
 			);
-		} catch (err) {
-			// create() throws if the instance already exists, which is expected on
-			// every run after the first. Log anything else so real failures surface.
-			console.error("ensureInstance:", err);
+		} catch {
+			// intentional fallback, nothing to handle
 		}
 		this.ready = true;
 	}

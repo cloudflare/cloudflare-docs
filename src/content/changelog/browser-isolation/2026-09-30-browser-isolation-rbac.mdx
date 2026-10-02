@@ -1,0 +1,17 @@
+---
+title: Role-based access control for Browser Isolation policies
+description: Browser Isolation policies support granular RBAC through Gateway account-level and resource-scoped roles.
+products:
+  - browser-isolation
+  - gateway
+  - cloudflare-one
+date: 2026-09-30
+---
+
+[Isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/) support role-based access control (RBAC). Because isolation policies are Gateway HTTP policies with the _Isolate_ action, Gateway's account-level and resource-scoped roles apply to them directly.
+
+Use the `Zero Trust HTTP Policies Admin` account-level role to grant access to all HTTP policies in the account. You can also assign a [resource-scoped role](/cloudflare-one/traffic-policies/granular-permissions/) to let a team member manage a specific isolation policy without exposing other Gateway resources.
+
+[Policy settings](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) such as copy/paste, file download/upload, keyboard, and printing are part of the policy object and follow the same permissions.
+
+For setup instructions, refer to [Granular permissions for Gateway](/cloudflare-one/traffic-policies/granular-permissions/).

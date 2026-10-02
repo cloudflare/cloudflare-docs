@@ -650,7 +650,7 @@ import { Feature } from "~/components";
 </Feature>
 ```
 
-Props: `header` (required, feature name), `href` (required, link to feature docs). Body text is the feature description.
+Props: `header` (required, feature name), `href` (required, link to feature docs), `target` (optional, `"_blank"` to open the link in a new tab). Body text is the feature description.
 
 ---
 
@@ -799,6 +799,18 @@ Renders a copyable rule ID. Used in WAF and security rules documentation.
 import { RuleID } from "~/components";
 
 <RuleID id="abcdefghijklmnopqrstuvwxyz" />
+```
+
+---
+
+## CopyPrompt
+
+Renders a one-line prompt next to a **Copy prompt** button, for readers to paste into an AI coding agent. The prompt is truncated on screen but copied in full. Keep it short; use a `txt` code block for longer prompts.
+
+```mdx
+import { CopyPrompt } from "~/components";
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
 ```
 
 ---

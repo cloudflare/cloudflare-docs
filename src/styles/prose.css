@@ -241,7 +241,9 @@
 
 	.docs-content
 		:where(
-			tbody:not([class]):has(tr:nth-child(5)) tr:nth-child(even) td:not([class])
+			tbody:not([class]):not([data-row-stripes="off"]):has(tr:nth-child(5))
+				tr:nth-child(even)
+				td:not([class])
 		) {
 		background: var(--nb-accent);
 	}

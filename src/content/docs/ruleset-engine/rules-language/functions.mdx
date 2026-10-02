@@ -130,6 +130,20 @@ Examples:
 You can only use the `cidr6()` function in [custom rules](/waf/custom-rules/) and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
+### `coalesce`
+
+<code>coalesce(value1 <Type text="T" />, value2 <Type text="T" /> [, ...])</code>: <Type text="T" />
+
+Returns the first argument that is not nil. It checks arguments from left to right. If all arguments are nil, the function returns nil. Provide at least two arguments of the same data type.
+
+For comparison behavior involving nil, refer to [Missing values](/ruleset-engine/rules-language/values/#missing-values).
+
+The following expression compares the request path with a query parameter. If `expected_path` is missing, `coalesce()` uses `/` instead:
+
+```txt
+http.request.uri.path eq coalesce(http.request.uri.args["expected_path"][0], "/")
+```
+
 ### `concat`
 
 <code>concat(<Type text="String | Bytes | Array" />)</code>: <Type text="String | Array" />
