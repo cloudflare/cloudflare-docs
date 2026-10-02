@@ -665,9 +665,9 @@ package.json @cloudflare/content-engineering
 
 /public/images/precursor/ @cf-jian @marinaelmore @migueldemoura @njustus1 @olipayne @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
 
-# privacy-gateway
+# ohttp-relay
 
-/src/content/docs/cloudflare-ohttp-relay/ @lschull @mgalicer @cloudflare/product-owners
+/src/content/docs/ohttp-relay/ @lschull @mgalicer @cloudflare/product-owners
 /src/content/directory/privacy-gateway.yaml @lschull @mgalicer @cloudflare/product-owners
 /src/icons/privacy-gateway.svg @lschull @mgalicer @cloudflare/product-owners
 
