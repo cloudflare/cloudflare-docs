@@ -225,6 +225,19 @@ describe("Cloudflare Docs", () => {
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
 
+		it("llms.txt declares utf-8 charset", async () => {
+			for (const path of ["/llms.txt", "/workers/llms.txt"]) {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+				);
+
+				expect(response.status).toBe(200);
+				expect(response.headers.get("Content-Type")).toBe(
+					"text/plain; charset=utf-8",
+				);
+			}
+		});
+
 		it("agent setup prompt declares utf-8 charset", async () => {
 			const request = new Request("http://fakehost/agent-setup/prompt.md");
 			const response = await SELF.fetch(request);
