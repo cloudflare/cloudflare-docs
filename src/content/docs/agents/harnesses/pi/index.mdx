@@ -21,13 +21,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The Agents SDK provides first-class support for building agents using the Pi harness. Build long-running agents with [Pi 1.0](https://earendil.com/posts/pi-1-0/), [Pi Durable](https://earendil.com/posts/pi-durable/), and the `PiHarness` class from the Agents SDK. Your agent's work is durably persisted, even if it is interrupted mid-turn.
+[Pi](https://pi.dev/) is a minimal, extensible agent harness. The Agents SDK provides first-class support for building agents using the Pi harness, and this page shows how to run [Pi Durable](https://earendil.com/posts/pi-durable/) in a Cloudflare Durable Object with `PiHarness` from the Agents SDK.
 
-Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, model calls, tools, retries, and crash recovery. `PiHarness` gives Pi storage in the Durable Object's SQLite database, and wakes the object when Pi has work to finish. Use it in an [`Agent`](/agents/runtime/lifecycle/agent-class/) subclass or in a plain `DurableObject`.
+Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, model calls, tools, retries, and crash recovery. `PiHarness` gives Pi storage in the Durable Object's SQLite database, and wakes the object when Pi has work to finish.
 
 <CopyPromptButton
 	tooltip="Build and deploy a Pi Durable agent"
-	prompt="Read https://developers.cloudflare.com/agents/harnesses/pi/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi, then use them to build and deploy my first Pi Durable agent on Cloudflare with the Agents SDK. Give me the deployed URL."
+	prompt="Read {{pageUrl}}, then use the linked Pi harness example to build and deploy my first Pi Durable agent on Cloudflare. Give me the deployed URL."
 />
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
@@ -317,10 +317,6 @@ While Pi has work, the job's heartbeat alarm fires every 30 seconds. A crashed o
 - **Background tasks.** Work that Pi runs in the background is checked on each heartbeat, so the harness notices it finish up to 30 seconds late.
 - **Graceful eviction.** A running session keeps work in flight, so the object does not drain while Pi runs.
 - **Session deletion.** Pi Durable cannot delete a conversation yet.
-
-## Example
-
-The [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi) is a browser chat over WebSockets. It sends `session.events()` to each socket, renders Pi's entries as a transcript, and gives the model a [`@cloudflare/computer`](https://github.com/cloudflare/computer) Workspace with file and JavaScript tools.
 
 ## Related resources
 
