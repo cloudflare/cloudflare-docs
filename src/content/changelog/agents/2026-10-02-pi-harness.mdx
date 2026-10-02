@@ -1,21 +1,25 @@
 ---
 title: Run the Pi Durable harness on Cloudflare with the Agents SDK
-description: The PiHarness beta runs Pi durably inside an Agent or Durable Object.
+description: The PiHarness beta in the Agents SDK runs the Pi Durable harness durably inside an Agent or Durable Object.
 products:
   - agents
   - workers
 date: 2026-10-02
 ---
 
-import { CopyPromptButton, PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	CopyPromptButton,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
 
 The [Agents SDK](/agents/) now provides first-class support for building agents using the Pi harness. You can build long-running agents using the combination of [Pi 1.0](https://earendil.com/posts/pi-1-0/), [Pi Durable](https://earendil.com/posts/pi-durable/), and the new `PiHarness` class that the Cloudflare Agents SDK provides, ensuring your agent's work is durably persisted, even if interrupted mid-turn.
 
-Built with [Earendil](https://earendil.com/), this integration is our first step toward first-class support for  third-party agent harnesses on Cloudflare.
+Built with [Earendil](https://earendil.com/), this integration is our first step toward first-class support for third-party agent harnesses on Cloudflare.
 
 <CopyPromptButton
 	tooltip="Build and deploy a Pi Durable agent"
-	prompt="Read {{pageUrl}}, then use the linked example to build and deploy my first Pi Durable agent on Cloudflare. Give me the deployed URL."
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/pi/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi, then use them to build and deploy my first Pi Durable agent on Cloudflare with the Agents SDK. Give me the deployed URL."
 />
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
