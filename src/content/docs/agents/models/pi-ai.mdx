@@ -119,23 +119,24 @@ Third-party models go through AI Gateway, which holds the credential through [Un
 
 ## Use it with the Pi harness
 
-pi-durable's `Harness` takes a pi-ai `Models` registry. Register the provider on one:
+pi-durable's `Harness` takes a pi-ai `Models` registry. Register the provider on one, then pass models from `ai()` to the [Pi harness](/agents/harnesses/pi/):
 
 ```ts
 import { createModels } from "@earendil-works/pi-ai/models";
-import { CLOUDFLARE_PROVIDER_ID, createAI } from "agents/models/pi-ai";
+import { createAI } from "agents/models/pi-ai";
 
 const ai = createAI({ binding: env.AI });
 const models = createModels();
 models.setProvider(ai.provider);
 
-// A session's model:
-// { provider: CLOUDFLARE_PROVIDER_ID, modelId: "anthropic/claude-opus-4.8" }
+// In PiHarness options:
+// defaults: { model: ai("@cf/moonshotai/kimi-k2.7-code") }
+
+// For one session:
+await session.setModel(ai("anthropic/claude-opus-4.8"));
 ```
 
-`CLOUDFLARE_PROVIDER_ID` is `"cloudflare"`. A pi session stores its model as `{ provider, modelId }`, not as a model object, so use the `@cf/` and `<provider>/<id>` forms there. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
-
-For a complete example, refer to [Pi harness](/agents/harnesses/pi/).
+A Pi session stores only its model's provider and id, then looks the model up in the `Models` registry. Use the `@cf/` and `<provider>/<id>` forms there: both belong to the `cloudflare` provider (`CLOUDFLARE_PROVIDER_ID`) that you registered. A model object keeps its vendor's provider id, which this registry does not know. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
 
 The provider's model list is every Workers AI model pi-ai knows, plus every `<provider>/<id>` in pi-ai's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-4.8")` resolves.
 
