@@ -70,6 +70,6 @@ To get consistent results, ensure your upstream nameserver returns the same answ
 
 ## What happens when the per-data-center rate limit is exceeded?
 
-When the configured [rate limit](/dns/dns-firewall/setup/#additional-options) for a data center is exceeded, DNS Firewall stops forwarding queries to your upstream nameservers at that location for a short period. During this time, DNS Firewall continues to serve responses from its cache. Queries for records that are not in the cache, or whose cached TTL has expired, return `SERVFAIL`.
+When the configured [rate limit](/dns/dns-firewall/setup/#additional-options) for a data center is exceeded, DNS Firewall stops forwarding queries to your upstream nameservers at that location for a short period. During this time, DNS Firewall continues to serve responses from its cache. Queries for records that are not in the cache, or whose cached TTL has expired, return `REFUSED`.
 
 The rate limit applies independently at each Cloudflare data center. Exceeding the limit at one location does not affect query forwarding at other locations.
