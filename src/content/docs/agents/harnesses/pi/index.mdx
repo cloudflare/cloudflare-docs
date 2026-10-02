@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[Pi](https://pi.dev/) is a minimal, extensible agent harness. This page shows how to run [Pi Durable](https://earendil.com/posts/pi-durable/) in a Cloudflare Durable Object with `PiHarness`. Pi Durable manages sessions and the agent loop. The Durable Object stores its data in SQLite, and `PiHarness` uses the Agents SDK Lifecycle to resume unfinished work after eviction.
+[Pi](https://pi.dev/) is a minimal, extensible agent harness. This page shows how to run [Pi Durable](https://earendil.com/posts/pi-durable/) in a Cloudflare Durable Object with `PiHarness`. Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, model calls, tools, retries, and crash recovery. `PiHarness` gives Pi storage in the Durable Object's SQLite database, and wakes the object when Pi has work to finish.
 
 :::caution[Beta]
 `PiHarness` is in beta. Pi Durable is a new, experimental package, and the `PiHarness` API will likely change as Pi Durable matures.
