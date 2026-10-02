@@ -1,68 +1,120 @@
 ---
 summary: Run multiple instances across Cloudflare's network
 pcx_content_type: example
-title: Stateless Instances
+title: Stateless instances
 sidebar:
   order: 2
 description: Run multiple instances across Cloudflare's network
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
 ---
 
-import { TabItem, Tabs, TypeScriptExample } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+	Render,
+} from "~/components";
 
-To proxy requests across a fixed number of Container instances, select an instance name and forward the request through its Durable Object.
+Distribute HTTP requests across three named Container instances. Each Durable Object starts its Container with the `durable_object` scheduling policy.
 
-`container.start()` returns before the container is ready. The Durable Object Container API example polls `GET /health` on port `8080` before forwarding requests. The container must return a successful response only when it is ready to receive traffic.
+The Worker chooses among `instance-0`, `instance-1`, and `instance-2`. This is a fixed pool, not automatic scaling. Requests can reach different instances, so keep shared application data outside the container filesystem.
 
-<Tabs>
-	<TabItem label="Durable Object Container API">
+## Configure the Worker
+
+<WranglerConfig>
+
+```toml
+name = "stateless-containers"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[[containers]]
+class_name = "Backend"
+scheduling_policy = "durable_object"
+
+[containers.images.base]
+dockerfile = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "BACKEND"
+class_name = "Backend"
+
+[exports.Backend]
+type = "durable-object"
+storage = "sqlite"
+```
+
+</WranglerConfig>
+
+## Route requests
+
+`start()` initiates startup. The Worker waits for a successful `/health` response before forwarding traffic. Concurrent requests share that readiness check, and a failed check can be retried by the next request.
 
 <TypeScriptExample filename="src/index.ts">
+
 ```ts
 import { DurableObject } from "cloudflare:workers";
-
-const INSTANCE_COUNT = 3;
 
 interface Env {
 	BACKEND: DurableObjectNamespace<Backend>;
 }
 
+const INSTANCE_COUNT = 3;
+
+const INACTIVITY_TIMEOUT_MS = 2 * 60 * 60 * 1000;
+
 export class Backend extends DurableObject<Env> {
-	private ready: Promise<void> | undefined;
+	private starting: Promise<void> | undefined;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container!;
+		if (container.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
 
 	async fetch(request: Request): Promise<Response> {
-		const container = this.ctx.container!;
-		if (!container.running) {
-			this.ready = undefined;
-		}
-		this.ready ??= this.startAndWaitForPort().catch((error: unknown) => {
-			this.ready = undefined;
-			throw error;
+		// Concurrent requests share startup and readiness checks.
+		this.starting ??= this.startAndWaitForPort().finally(() => {
+			this.starting = undefined;
 		});
-		await this.ready;
+		await this.starting;
 
 		const url = new URL(request.url);
 		url.protocol = "http:";
 		url.host = "container";
 		const forwarded = new Request(url, request);
 		forwarded.headers.delete("host");
-		return container.getTcpPort(8080).fetch(forwarded);
+		return this.ctx.container!.getTcpPort(8080).fetch(forwarded);
 	}
 
 	private async startAndWaitForPort(): Promise<void> {
 		const container = this.ctx.container!;
-		await container.setInactivityTimeout(2 * 60 * 60 * 1000);
 		if (!container.running) {
-			container.start();
+			container.start({
+				image: container.images.base,
+				instance: "lite",
+				enableInternet: false,
+			});
 		}
+		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 
 		const port = container.getTcpPort(8080);
 		let lastError: unknown;
 		for (let attempt = 0; attempt < 100; attempt++) {
 			try {
-				const response = await port.fetch("http://container/health");
+				const response = await port.fetch("http://container/health", {
+					signal: AbortSignal.timeout(1000),
+				});
+				await response.body?.cancel();
 				if (!response.ok) {
 					throw new Error(`Health check returned ${response.status}`);
 				}
@@ -79,46 +131,23 @@ export class Backend extends DurableObject<Env> {
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
+	fetch(request: Request, env: Env): Promise<Response> {
 		const index = Math.floor(Math.random() * INSTANCE_COUNT);
 		return env.BACKEND.getByName(`instance-${index}`).fetch(request);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
+
 </TypeScriptExample>
 
-	</TabItem>
-	<TabItem label="Container class">
+<Render file="containers/example-http-server" />
 
-<TypeScriptExample filename="src/index.ts">
-```ts
-import { Container, getRandom } from "@cloudflare/containers";
+## Run the example
 
-const INSTANCE_COUNT = 3;
+Start a Docker-compatible engine. Install Wrangler in your project, using version 4.136.0 or later for [local development](/containers/guides/local-dev/).
 
-interface Env {
-	BACKEND: DurableObjectNamespace<Backend>;
-}
+<PackageManagers type="add" pkg="wrangler" dev />
 
-export class Backend extends Container<Env> {
-	defaultPort = 8080;
-	sleepAfter = "2h";
-}
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
-		return containerInstance.fetch(request);
-	},
-};
-```
-</TypeScriptExample>
-
-	</TabItem>
-</Tabs>
-
-:::note
-Both examples randomly select one of a fixed number of Container instances for each request. The `Container` class provides `getRandom()` as a helper.
-
-See the [autoscaling documentation](/containers/configuration/scaling-and-routing/) for more details about scaling stateless instances and routing.
-:::
+Visit `http://localhost:8787/` to receive the container response. Instances stop after their Durable Objects remain inactive for two hours.

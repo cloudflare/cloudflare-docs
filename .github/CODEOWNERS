@@ -111,15 +111,15 @@ package.json @cloudflare/content-engineering
 
 # analytics
 
-/src/content/docs/analytics/ @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/content/docs/analytics/analytics-engine/ @hc2116 @irvinebroque @nevikashah @WalshyDev @cloudflare/product-owners
-/src/assets/images/changelog/analytics/ @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/content/changelog/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/partials/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/content/directory/analytics.yaml @angelampcosta @hc2116 @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/icons/analytics.svg @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
-/public/images/analytics/ @angelampcosta @rianvdm @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/docs/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/content/docs/analytics/analytics-engine/ @artikumar-cf @fridgecow @hc2116 @irvinebroque @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @nevikashah @renahlee @WalshyDev @cloudflare/product-owners
+/src/assets/images/changelog/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/content/changelog/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/partials/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/content/directory/analytics.yaml @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
+/src/icons/analytics.svg @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
+/public/images/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
 
 # api-deprecations
 
@@ -153,9 +153,9 @@ package.json @cloudflare/content-engineering
 
 # audit-logs
 
-/src/assets/images/changelog/audit-logs/ @dcpena @hc2116 @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/changelog/audit-logs/ @dcpena @hc2116 @sahidya @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/audit-logs.yaml @dcpena @hc2116 @sahidya @cloudflare/product-owners
+/src/assets/images/changelog/audit-logs/ @adepke-cf @cf-ypark @dcpena @hc2116 @jeehoon-cf @kvap @rtaylor-cf @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/changelog/audit-logs/ @adepke-cf @cf-ypark @dcpena @hc2116 @jeehoon-cf @kvap @rtaylor-cf @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/audit-logs.yaml @adepke-cf @cf-ypark @dcpena @hc2116 @jeehoon-cf @kvap @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 
 # automatic-platform-optimization
 
@@ -576,13 +576,13 @@ package.json @cloudflare/content-engineering
 
 # logs
 
-/src/content/changelog/logs/ @angelampcosta @dcpena @hc2116 @rianvdm @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/assets/images/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/content/partials/logs/ @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/content/directory/logs.yaml @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/content/glossary/logs.yaml @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
-/src/icons/logs.svg @angelampcosta @rianvdm @sahidya @hc2116 @soheiokamoto @cloudflare/product-owners
+/src/content/changelog/logs/ @adepke-cf @angelampcosta @cf-ypark @dcpena @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/assets/images/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/partials/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/directory/logs.yaml @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/glossary/logs.yaml @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/icons/logs.svg @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 
 # magic-transit
 
@@ -657,10 +657,16 @@ package.json @cloudflare/content-engineering
 
 # notifications
 
-/src/content/docs/notifications/ @hc2116 @cloudflare/product-owners
-/src/content/partials/notifications/ @hc2116 @cloudflare/product-owners
-/src/content/directory/notifications.yaml @hc2116 @cloudflare/product-owners
-/src/icons/notifications.svg @hc2116 @cloudflare/product-owners
+/src/content/docs/notifications/ @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @cloudflare/product-owners
+/src/content/partials/notifications/ @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @cloudflare/product-owners
+/src/content/directory/notifications.yaml @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @cloudflare/product-owners
+/src/icons/notifications.svg @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @cloudflare/product-owners
+
+# observability
+
+/src/content/docs/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+/src/assets/images/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+/src/content/release-notes/observability.yaml @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
 
 # pages
 
@@ -687,9 +693,9 @@ package.json @cloudflare/content-engineering
 
 /public/images/precursor/ @cf-jian @marinaelmore @migueldemoura @njustus1 @olipayne @worenga @cloudflare/appsec-reviewers @cloudflare/product-owners
 
-# privacy-gateway
+# ohttp-relay
 
-/src/content/docs/privacy-gateway/ @lschull @mgalicer @cloudflare/product-owners
+/src/content/docs/ohttp-relay/ @lschull @mgalicer @cloudflare/product-owners
 /src/content/directory/privacy-gateway.yaml @lschull @mgalicer @cloudflare/product-owners
 /src/icons/privacy-gateway.svg @lschull @mgalicer @cloudflare/product-owners
 
@@ -1049,6 +1055,13 @@ package.json @cloudflare/content-engineering
 /src/content/partials/web-analytics/ @ack-cf @cnachiappan-dev @mbullock1986 @ryantownsend @tkadlec @cloudflare/product-owners
 /src/content/directory/web-analytics.yaml @ack-cf @cnachiappan-dev @mbullock1986 @ryantownsend @tkadlec @cloudflare/product-owners
 /src/icons/web-analytics.svg @ack-cf @cnachiappan-dev @mbullock1986 @ryantownsend @tkadlec @cloudflare/product-owners
+
+# web-search
+
+/src/content/docs/web-search/ @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
+/src/content/changelog/web-search/ @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/web-search.yaml @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
+/src/icons/web-search.svg @corywilkerson @ethulia @G4brym @mchenco @nelsonjsduarte @superhighfives @cloudflare/product-owners
 
 # web3
 

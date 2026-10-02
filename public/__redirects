@@ -3,6 +3,12 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+/workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
+/workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
+/workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
+/workers/observability/exporting-opentelemetry-data/axiom/ /observability/export/opentelemetry/axiom/ 301
+/workers/observability/exporting-opentelemetry-data/sentry/ /observability/export/opentelemetry/sentry/ 301
+/workers/observability/exporting-opentelemetry-data/posthog/ /observability/export/opentelemetry/posthog/ 301
 
 # ProductFeatures component removed
 /dns/reference/all-features/ /dns/ 301
@@ -34,6 +40,9 @@
 
 # Privacy Proxy
 /privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/ /ohttp-relay/ 301
 
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
@@ -2942,6 +2951,9 @@
 # DYNAMIC REDIRECTS
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/* /ohttp-relay/:splat 301
 
 # Agent Skills legacy discovery path
 /.well-known/skills/* /.well-known/agent-skills/:splat 301

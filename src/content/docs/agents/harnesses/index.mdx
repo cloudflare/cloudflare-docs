@@ -12,7 +12,7 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-You can build this loop yourself on top of the [Agents SDK runtime](/agents/runtime/agents-api/), or use an opinionated harness like [Project Think](/agents/harnesses/think/).
+You can build this loop yourself on top of the [Agents SDK runtime](/agents/runtime/agents-api/), use an opinionated harness like [Project Think](/agents/harnesses/think/), or run an external harness such as [Pi](/agents/harnesses/pi/) on a Durable Object.
 
 ## How harnesses fit
 
@@ -29,12 +29,20 @@ Use a build-your-own harness when you need full control over the model call, mes
 
 Use Project Think when you want an opinionated chat-agent harness with defaults for memory, workspace tools, streaming, lifecycle hooks, sub-agent RPC, and durable chat recovery.
 
+Use Pi (beta) when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own the agent loop, transcript, and recovery. `PiHarness` runs it inside an `Agent` or a plain Durable Object and wakes it after eviction. You choose the transport.
+
 ## Current harnesses
 
 <LinkCard
 	title="Project Think"
 	href="/agents/harnesses/think/"
 	description="An opinionated chat agent harness with built-in tools, persistent memory, lifecycle hooks, streaming, and sub-agent RPC."
+/>
+
+<LinkCard
+	title="Pi (beta)"
+	href="/agents/harnesses/pi/"
+	description="Run Pi Durable sessions inside an Agent or Durable Object, with storage in SQLite and recovery after eviction."
 />
 
 ## What a harness usually owns

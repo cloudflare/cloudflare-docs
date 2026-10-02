@@ -1,0 +1,68 @@
+---
+pcx_content_type: how-to
+title: Export to Grafana Cloud
+description: Send Cloudflare traces and logs to Grafana Cloud.
+sidebar:
+  order: 2
+products:
+  - observability
+---
+
+import { DashButton, Steps } from "~/components";
+
+Grafana Cloud provides visualization, alerting, and telemetry analytics. It accepts Cloudflare telemetry through the OpenTelemetry Protocol (OTLP).
+
+Export Cloudflare traces to Grafana Tempo and logs to Grafana Loki.
+
+![Grafana Tempo trace view showing a distributed trace for a service with multiple spans including fetch requests, durable object subrequests, and queue operations, with timing information displayed on a timeline](~/assets/images/workers-observability/grafana-traces.png)
+
+This guide configures Grafana Cloud to receive Cloudflare traces and logs.
+
+## Prerequisites
+
+Before you begin, you need an active [Grafana Cloud account](https://grafana.com/auth/sign-up/create-user). You also need Cloudflare logs or traces to export.
+
+## 1. Get your OpenTelemetry credentials
+
+<Steps>
+
+1. Log in to the [Grafana Cloud portal](https://grafana.com/).
+2. From your organization home page, go to **Connections** > **Add new connection**.
+3. Search for `OpenTelemetry`, then select **OpenTelemetry (OTLP)**.
+4. Select **Quickstart**, then select **JavaScript**.
+5. Select **Create a new token**.
+6. Enter a token name, such as `cloudflare-otel`.
+7. Select **Create token**, then select **Close**.
+8. Copy the `OTEL_EXPORTER_OTLP_ENDPOINT` value from **Environment variables**.
+9. Copy the `OTEL_EXPORTER_OTLP_HEADERS` value from the same block.
+
+</Steps>
+
+## 2. Configure Cloudflare Observability destinations
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Observability** > **Destinations**.
+
+   <DashButton url="/?to=/:account/observability/destinations" />
+
+2. Select **Add destination**.
+3. Enter a descriptive destination name, such as `grafana-traces`.
+4. For **Destination type**, select _Traces_ or _Logs_. Create a separate destination for each type you export.
+5. Enter the Grafana OTLP endpoint for your telemetry type:
+   - **Traces**: Append `/v1/traces` to the endpoint.
+   - **Logs**: Append `/v1/logs` to the endpoint.
+6. Add the Grafana authentication header:
+   - **Header name**: `Authorization`
+   - **Header value**: The Basic authentication value from Grafana
+7. Select **Save**.
+
+</Steps>
+
+The endpoint resembles `https://otlp-gateway-prod-us-east-2.grafana.net/otlp`.
+
+## 3. Enable export
+
+Creating a destination does not start exporting telemetry. To export [Workers Logs](/workers/observability/logs/workers-logs/) or [Workers Traces](/workers/observability/traces/), [configure OpenTelemetry export for your Worker](/workers/observability/opentelemetry-export/). To export [Cloudflare Traces](/observability/traces/), [configure export for your domain](/observability/traces/configuration/#export-traces).
+
+Data may take several minutes to appear in Grafana Cloud.

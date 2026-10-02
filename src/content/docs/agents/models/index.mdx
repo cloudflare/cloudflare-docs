@@ -1,0 +1,75 @@
+---
+title: Models
+pcx_content_type: overview
+description: Call Workers AI and third-party models through AI Gateway from the AI SDK or pi-ai with one createAI provider over the AI binding.
+tags:
+  - AI
+sidebar:
+  order: 4.5
+  badge: Beta
+  group:
+    hideIndex: false
+products:
+  - agents
+---
+
+import { LinkCard, WranglerConfig } from "~/components";
+
+The Agents SDK includes model providers for [Workers AI](/workers-ai/) and [AI Gateway](/ai-gateway/). Each provider is one `createAI` factory over the Worker's `AI` binding. There are two, one per framework:
+
+| Import                 | Framework                                                           | Use it with                                                   |
+| ---------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `agents/models/ai-sdk` | [AI SDK](https://ai-sdk.dev/) v7                                    | `generateText`, `streamText`, Think, and any AI SDK consumer  |
+| `agents/models/pi-ai`  | [pi-ai](https://github.com/earendil-works/pi/tree/main/packages/ai) | The [Pi harness](/agents/harnesses/pi/), and pi-ai's `stream` |
+
+Both take the same options, route through the same gateway, and handle Workers AI the same way.
+
+:::caution[Beta]
+The model providers are in beta. Their APIs may change in a minor release.
+:::
+
+## How a model is chosen
+
+The providers keep one model catalog up to date: Workers AI. Every other vendor's models come from that vendor's own package, and the provider routes them through AI Gateway.
+
+- **A Workers AI model** is a `@cf/` id, such as `ai("@cf/zai-org/glm-4.7-flash")`. It runs through `env.AI.run()`. A compatibility layer turns each model's response into the standard OpenAI chat completions shape.
+- **A third-party model** is a model object built by the vendor's provider, such as `ai(anthropic("claude-opus-4-8"))`. The vendor's code builds the request and parses the response. The provider swaps the transport, so the request goes through AI Gateway with `env.AI.gateway(id).run()`.
+
+The provider does not keep third-party model ids, wire formats, or thinking settings. When a vendor ships a new model, update the vendor's package.
+
+## What every model gets
+
+- **No API tokens in your Worker.** Requests go through the `AI` binding. AI Gateway holds third-party credentials, through [Unified Billing](/ai-gateway/features/unified-billing/) or a key you [store on the gateway](/ai-gateway/configuration/bring-your-own-keys/).
+- **Gateway options.** Caching, logging, metadata, timeouts, and retries are options on the provider, the model, or the call. The `default` gateway is created the first time you use it.
+- **Fallback.** List models to try in order if the first fails before it produces output. Mix Workers AI and third-party models freely.
+- **Gateway metadata on every result.** Each response carries the gateway log id, cache status, and the model that actually answered.
+
+## Configure the binding
+
+Both providers need the `AI` binding:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI",
+	},
+}
+```
+
+</WranglerConfig>
+
+## Choose a provider
+
+<LinkCard
+	title="AI SDK"
+	href="/agents/models/ai-sdk/"
+	description="A full AI SDK ProviderV4 for text, tools, structured output, embeddings, images, speech, transcription, and reranking."
+/>
+
+<LinkCard
+	title="pi-ai"
+	href="/agents/models/pi-ai/"
+	description="pi-ai models for the Pi harness, pi-durable, and any framework built on a pi-ai Models registry."
+/>

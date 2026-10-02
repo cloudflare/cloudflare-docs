@@ -14,12 +14,12 @@ import {
 } from "../../util/llms-delegation";
 import {
 	formatPage,
-	formatWorkersAiModel,
+	formatModel,
 	normalizeForIndexMd,
 } from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
-import { getLegacyModels } from "../../util/models";
+import { getLegacyModels, getResolvedModels } from "../../util/models";
 
 const DIRECTORY_PROSE_THRESHOLD = 250;
 
@@ -32,10 +32,26 @@ function isDirectoryOnlyPage(body: string): boolean {
 	return prose.trim().length <= DIRECTORY_PROSE_THRESHOLD;
 }
 
+type ResolvedModel = Awaited<ReturnType<typeof getResolvedModels>>[number];
+
+// Workers AI model pages use the last segment of the `@cf/...` name.
+const workersAiSlug = (model: ResolvedModel) => model.name.split("/").at(-1)!;
+
+function toModelEntry(slugOf: (model: ResolvedModel) => string) {
+	return (model: ResolvedModel) => ({
+		id: model.id,
+		title: model.name,
+		slug: slugOf(model),
+		description: model.description,
+		digest: model.digest,
+	});
+}
+
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
 	const workersAiModels = await getLegacyModels();
+	const allModels = await getResolvedModels();
 	const documentIds = new Set(docs.map((page) => page.id));
 
 	const mapped = directory
@@ -73,17 +89,15 @@ export const getStaticPaths = (async () => {
 
 			if (pages.length === 0) return null;
 
+			// Model pages are generated from collections, not `docs`, so they have
+			// to be added to the index explicitly.
 			const models =
 				productUrl === "/workers-ai/"
-					? workersAiModels
-							.map(({ id, name, description, digest }) => ({
-								id,
-								name,
-								description,
-								digest,
-							}))
-							.toSorted((a, b) => a.name.localeCompare(b.name))
-					: [];
+					? workersAiModels.map(toModelEntry(workersAiSlug))
+					: productUrl === "/ai/"
+						? allModels.map(toModelEntry((model) => model.slug))
+						: [];
+			models.sort((a, b) => a.title.localeCompare(b.title));
 
 			return {
 				params: { product: urlPath },
@@ -354,7 +368,9 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 				}
 				if (section.id === `${prefix}/models`) {
 					lines.push(
-						...models.map((model) => formatWorkersAiModel(base, model)),
+						...models.map((model) =>
+							formatModel(base, `/${section.id}`, model),
+						),
 					);
 				}
 				return `${heading}\n\n${lines.join("\n")}`;
@@ -397,7 +413,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	return new Response(markdown, {
 		headers: {
-			"content-type": "text/plain",
+			"content-type": "text/plain; charset=utf-8",
 		},
 	});
 };

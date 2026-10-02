@@ -1,0 +1,124 @@
+---
+title: Cloudflare Web Search API
+description: Ground AI agents and applications with real-time web search results from Ceramic.ai, Exa, and Linkup through AI Gateway.
+pcx_content_type: overview
+tags:
+  - AI
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+products:
+  - web-search
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkButton,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Give your agents real-time web context with a single API call.
+
+</Description>
+
+<Plan type="beta" />
+
+Web Search API lets your AI agents and applications search the Internet and ground their responses in live information. Instead of guessing URLs or relying on a model's training cutoff, your agent sends a search query and receives structured results — titles, URLs, and descriptions — that you can pass straight into a model's context.
+
+Web Search API runs through [AI Gateway](/ai-gateway/), so every search gets the same logging, analytics, billing, and access controls as your model inference requests. You can call it from any backend with the REST API, or from a Worker with the AI binding.
+
+<div>
+	<LinkButton href="/web-search/how-to-use/">How to use</LinkButton>{" "}
+	<LinkButton href="/web-search/providers/" variant="secondary">
+		Browse providers
+	</LinkButton>
+</div>
+
+---
+
+## Features
+
+<Feature header="Multiple search providers" href="/web-search/providers/" cta="View providers">
+
+Choose between Ceramic.ai, Exa, and Linkup with a single `provider` parameter. All providers return results in the same format, so you can switch without changing your code.
+
+</Feature>
+
+<Feature header="Unified Billing" href="/ai-gateway/features/unified-billing/" cta="Learn about Unified Billing">
+
+Pay for searches with your AI Gateway credits at each provider's list API price, with no additional markup. You can also bring your own provider API key.
+
+</Feature>
+
+<Feature header="Observability" href="/ai-gateway/observability/logging/" cta="View logging">
+
+Search requests appear in your AI Gateway logs and analytics alongside your model inference requests.
+
+</Feature>
+
+<Feature header="Responsible crawling" href="/web-search/about/#crawler-standards" cta="Learn more">
+
+Every provider commits to Cloudflare's [verified bot](/bots/concepts/bot/verified-bots/) requirements and returns a link to the source of every result.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="AI Gateway" href="/ai-gateway/" product="ai-gateway">
+
+Observe and control your AI applications with analytics, caching, rate limiting, and model fallback.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare's global network.
+
+</RelatedProduct>
+
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+
+Build AI-powered agents that can perform tasks, persist state, browse the web, and communicate in real time.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Use cases" href="/use-cases/ai/" icon="document">
+	Learn how you can build and deploy ambitious AI applications to Cloudflare's
+	global network.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+</CardGrid>

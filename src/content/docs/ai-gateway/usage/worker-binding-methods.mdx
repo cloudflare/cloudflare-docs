@@ -94,6 +94,28 @@ On the AI binding path, only a [BYOK (Bring Your Own Keys)](/ai-gateway/configur
 
 Browse available models in the [model catalog](/ai/models/).
 
+**Dynamic route:**
+
+Pass a [dynamic route](/ai-gateway/features/dynamic-routing/) as the model in the form `dynamic/{route}`. Set `gateway.id` to the gateway that owns the route — routes are not shared across gateways. Dynamic routes accept the OpenAI chat completions request shape only.
+
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
+	"dynamic/my-route",
+	{
+		messages: [{ role: "user", content: "tell me a joke" }],
+	},
+	{
+		gateway: {
+			id: "my-gateway",
+		},
+	},
+);
+```
+
+</TypeScriptExample>
+
 ### Gateway options
 
 The third argument to `env.AI.run()` accepts a `gateway` object with the following parameters:
