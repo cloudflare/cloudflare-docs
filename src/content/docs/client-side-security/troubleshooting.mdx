@@ -22,7 +22,8 @@ Cloudflare does not collect data on every single page view. Instead, it uses a s
 Other steps you can take to troubleshoot this issue:
 
 - Verify that [client-side resource monitoring is turned on](/client-side-security/get-started/#1-activate-client-side-resource-monitoring).
-- After enabling client-side resource monitoring and generating some traffic to your application (at least 100 requests), wait approximately one hour to ensure that Cloudflare has already collected and processed enough data to display in the client-side resource monitoring dashboard.
+- Generate test traffic with a browser. Command-line clients such as `curl` do not execute page scripts or submit CSP reports. Cloudflare may also omit the resource monitoring header from requests identified as automated traffic.
+- Browser CSP report delivery is asynchronous, and browsers may queue or batch reports. After enabling client-side resource monitoring and generating at least 100 browser page views, wait approximately one hour to ensure that Cloudflare has collected and processed enough data to display in the client-side resource monitoring dashboard.
 - Use your browser's dev tools (**Network** tab) to check if the [`content-security-policy-report-only` HTTP header](/client-side-security/reference/csp-header/) is present.
 - Use analytics dashboards to verify if traffic is being proxied by Cloudflare.
 - Check if there are duplicate or conflicting Content Security Policy (CSP) headers in responses. Your origin server might be adding CSP headers to the response.
