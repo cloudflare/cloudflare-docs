@@ -107,6 +107,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Sandboxes", "/sandbox/"),
 					link("Vectorize", "/vectorize/"),
 					link("AI Search", "/ai-search/"),
+					link("Web Search API", "/web-search/"),
 					link("AI Crawl Control", "/ai-crawl-control/"),
 				],
 			},
