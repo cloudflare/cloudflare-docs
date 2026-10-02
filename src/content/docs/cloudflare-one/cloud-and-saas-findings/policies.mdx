@@ -28,7 +28,7 @@ Policies build on [manual remediation](/cloudflare-one/cloud-and-saas-findings/m
 
 ## How policies work
 
-When CASB detects a finding instance, it checks whether the instance matches a customer-configured policy. If a policy matches, Cloudflare runs the policy's configured action against that instance automatically.
+When CASB detects a finding instance, it checks whether the instance matches a customer-configured policy. If a policy matches, Cloudflare runs the action configured in the policy against that instance automatically.
 
 A policy can run a remediation action, send a webhook, or both.
 
@@ -103,7 +103,7 @@ When a policy sends a webhook, the payload uses the same format as a webhook sen
 3. Modify the policy's basic information, trigger, or actions.
 4. Select **Save changes**.
 
-To turn a policy on or off, use the **Enable policy** toggle under **Status**. A policy's status displays as **Enabled** or **Disabled** in the policy list. A disabled policy stops matching new finding instances until enabled again.
+To turn a policy on or off, use the **Enable policy** toggle under **Status**. Each policy displays its status as **Enabled** or **Disabled** in the policy list. A disabled policy stops matching new finding instances until you turn it on again.
 
 To delete a policy, open the policy and select **Delete**.
 

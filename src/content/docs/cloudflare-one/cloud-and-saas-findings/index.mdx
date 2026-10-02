@@ -29,13 +29,13 @@ For a list of supported finding types, refer to [Cloud and SaaS integrations](/c
 
 CASB uses the following terms for posture findings:
 
-| Term             | Definition                                                                                                                                                                                                                          |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Finding type     | A definition of a specific security issue that CASB detects. It includes detection logic and associated metadata for a supported vendor and asset class, such as files or users. A finding type can apply to multiple integrations. |
-| Posture finding  | A summary of detections of one finding type within one integration. Each row in **Posture Findings** represents a finding and groups its instances.                                                                                 |
-| Finding instance | An individual occurrence of a posture finding affecting a specific asset within that integration. One asset can have instances of different finding types.                                                                          |
+| Term             | Definition                                                                                                                                                                                                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Finding type     | A definition of a specific security issue that CASB detects. It includes detection logic and metadata for one vendor and asset class, such as files or users. One finding type can apply to multiple integrations. |
+| Posture finding  | A summary of detections of one finding type within one integration. Each row in **Posture Findings** represents a finding and groups its instances.                                                                |
+| Finding instance | An individual occurrence of a posture finding affecting a specific asset within that integration. One asset can have instances of different finding types.                                                         |
 
-For example, a finding type detects Google Workspace files publicly accessible with view access. If CASB detects affected files in two Workspace integrations, **Posture Findings** shows two findings for that type, one per integration. An affected file, such as `budget.xlsx`, has its own finding instance within its integration.
+For example, CASB detects publicly viewable files in two Google Workspace integrations. **Posture Findings** shows two findings for the **Google Workspace: File publicly accessible with view access** finding type, one per integration. Each affected file, such as `budget.xlsx`, is a separate finding instance within its integration.
 
 Content findings use a different grouping. Each row in **Content Findings** represents one asset within an integration and groups its matching [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) profiles.
 

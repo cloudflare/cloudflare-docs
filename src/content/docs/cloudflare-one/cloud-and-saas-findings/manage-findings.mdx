@@ -30,7 +30,7 @@ To view details about the posture findings that CASB found:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Posture Findings**.
 2. Choose **SaaS** or **Cloud**.
-3. To view details about a finding, select the finding's name.
+3. To view details about a finding, select the finding name.
 
 Cloud & SaaS findings will display details about your posture finding, including the finding type, [severity level](#severity-levels), number of instances, associated integration, current status, and date detected. For more information on each instance of the finding, select **Manage**.
 
@@ -65,7 +65,7 @@ To view details about the content findings that CASB found:
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Content Findings**.
 2. Choose **SaaS** or **Cloud**.
-3. To view details about a finding, select the finding's name.
+3. To view details about a finding, select the finding name.
 
 Cloud & SaaS findings will display details about your content finding, including the file name, a link to the file, matching DLP profiles, associated integration, and date detected.
 
@@ -98,7 +98,7 @@ Posture finding instances and content findings for some integrations (such as [M
 
 After reviewing your findings, you may decide that certain posture findings are not applicable to your organization. Cloudflare CASB allows you to remove findings or individual instances of findings from your list of active issues. CASB will continue to scan for these issues, but any detections will appear in a separate tab.
 
-- **Ignore a finding** — Moves the posture finding for one integration from **Active** to **Ignored**. Current and future detections of that finding type within the integration appear under the ignored finding. Findings for the same type in other integrations are not affected.
+- **Ignore a finding** — Moves the posture finding for one integration from **Active** to **Ignored**. Current and future detections of that finding type within the integration appear under the ignored finding. Ignoring does not affect findings of the same type in other integrations.
 - **Hide an instance** — Moves one finding instance from **Active** to **Hidden**. Future detections of the same finding type for that asset within the integration go to the **Hidden** tab automatically.
 
 ### Ignore a finding
@@ -185,7 +185,7 @@ When an inherited permission prevents remediation, CASB displays:
 
 > Resource has inherited permissions from a parent resource. Direct remediation of the parent is not yet supported for Google Workspace.
 
-For example, a file inherits public access when its parent folder allows **Anyone with the link**. Change the parent folder's **General access** setting to resolve the finding instance.
+For example, a file inherits public access when its parent folder allows **Anyone with the link**. Change the **General access** setting on the parent folder to resolve the finding instance.
 
 A file can also inherit external access from a Shared Drive member. Change the relevant parent permission or Shared Drive membership to resolve the finding instance.
 
@@ -204,7 +204,7 @@ CASB updates the finding instance after it receives updated asset data. The fail
 
 ### Manage remediated findings
 
-To review remediation progress, go to **Cloud & SaaS findings** > **Posture Findings** and open the affected finding instance. Remediation statuses describe progress for that instance, rather than the finding type or all instances in the integration:
+To review remediation progress, go to **Cloud & SaaS findings** > **Posture Findings** and open the affected finding instance. Each remediation status applies only to that instance:
 
 | Status     | Description                                                                                              |
 | ---------- | -------------------------------------------------------------------------------------------------------- |
