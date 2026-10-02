@@ -841,7 +841,7 @@ product:posture-checks:
 product:privacy-gateway:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/privacy-gateway/**
+          - src/content/docs/ohttp-relay/**
 
 product:privacy-pass:
   - changed-files:
