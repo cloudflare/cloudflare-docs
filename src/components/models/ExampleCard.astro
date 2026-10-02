@@ -60,12 +60,15 @@ const hasOutput = hasText || hasMedia;
 const hasRawResponse = !!example.raw_response;
 const hasResponse = hasOutput || hasRawResponse;
 
-// Raw responses can be huge (hundreds of streamed SSE chunks). Trim them at
-// render time so page size stays reasonable for readers and agents.
 const MAX_STREAM_ITEMS = 3;
 const MAX_RAW_JSON_CHARS = 8000;
 
-function prepareRawResponse(raw: unknown): string {
+/**
+ * Safely stringify a raw value by truncating any root array and trimming the
+ * resulting string. Raw responses can be huge (hundreds of streamed SSE
+ * chunks), so this keeps page size reasonable for readers and agents.
+ */
+function safeStringify(raw: unknown): string {
 	let value: unknown = raw;
 	if (Array.isArray(value) && value.length > MAX_STREAM_ITEMS) {
 		const omitted = value.length - MAX_STREAM_ITEMS;
@@ -81,9 +84,7 @@ function prepareRawResponse(raw: unknown): string {
 		: json;
 }
 
-const rawResponseJson = hasRawResponse
-	? prepareRawResponse(example.raw_response)
-	: "";
+const safeResponse = hasRawResponse ? safeStringify(example.raw_response) : "";
 
 // Only enable the side-by-side layout when a code block and renderable media
 // are both present — text-only or JSON-only responses stack better vertically.
@@ -154,7 +155,7 @@ function getLabel(label: string): string {
 					</TabItem>
 					<TabItem label="Raw response">
 						<div class="example-raw-response">
-							<Code code={rawResponseJson} lang="json" />
+							<Code code={safeResponse} lang="json" />
 						</div>
 					</TabItem>
 				</Tabs>
@@ -169,7 +170,7 @@ function getLabel(label: string): string {
 				/>
 			) : (
 				<div class="example-raw-response">
-					<Code code={rawResponseJson} lang="json" />
+					<Code code={safeResponse} lang="json" />
 				</div>
 			)}
 		</div>
