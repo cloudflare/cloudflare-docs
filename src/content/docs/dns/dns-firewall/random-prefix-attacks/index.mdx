@@ -1,4 +1,3 @@
-[SEAL:54058243077d0d678179994187991577:BEGIN source="sandbox_exec"]
 ---
 pcx_content_type: concept
 title: Random prefix attack mitigation
@@ -29,4 +28,3 @@ In addition, the default setting for the automatic mitigation ensures that it wi
 Because Cloudflare does not know which domains and subdomains exist as DNS records on an upstream nameserver, this feature takes a best effort approach by blocking DNS queries to affected subdomains in order to allow upstream nameservers to keep responding to DNS queries to unaffected subdomains.
 
 Attack mitigation is evaluated continuously based on observed traffic patterns across the cluster. Because Cloudflare cannot determine which subdomains legitimately exist on your nameservers, some queries may pass through before or during mitigation. This is expected behavior — mitigation is not instantaneous and is not guaranteed to block every query that is part of an attack.
-[SEAL:54058243077d0d678179994187991577:END]
