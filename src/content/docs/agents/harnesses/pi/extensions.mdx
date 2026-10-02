@@ -1,0 +1,169 @@
+---
+title: Extensions
+pcx_content_type: concept
+description: Add tools and system prompt sections to a PiHarness with extensions, and see which Pi Durable extension features PiHarness supports.
+sidebar:
+  order: 1
+  badge: Beta
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+An extension adds tools and system prompt sections to a [`PiHarness`](/agents/harnesses/pi/). It is a function that registers transforms on the harness's tools and prompt. It does not edit them directly.
+
+The harness builds its tools and its prompt from empty, by running every transform once, in order. The result depends only on which extensions are installed and in what order.
+
+:::caution[Beta]
+Extensions are in beta and will likely change as Pi Durable matures.
+:::
+
+## Write an extension
+
+Pass extensions to `PiHarness` by name. They run in key order the first time the harness opens, before Pi's `Harness`. Pass the `registry` the factory receives to `Harness.open()`, or the extensions are not applied:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { Type } from "@earendil-works/pi-ai";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { Harness } from "@earendil-works/pi-durable";
+import { PiHarness, type PiExtension } from "agents/harness/pi";
+import { CLOUDFLARE_PROVIDER_ID, createAI } from "agents/models/pi-ai";
+
+const editor: PiExtension = (ctx) => {
+	ctx.prompt.transform((prompt) =>
+		prompt.set("preamble", { render: () => "You are an editor.", tag: false }),
+	);
+	ctx.tools.transform((tools) =>
+		tools.set("word_count", {
+			description: "Count the words in a text.",
+			parameters: Type.Object({ text: Type.String() }),
+			replay: "safe",
+			// `text` is typed from `parameters`, which Pi validates first.
+			async execute({ text }) {
+				const words = text.split(/\s+/).filter(Boolean).length;
+				return { content: [{ type: "text", text: String(words) }] };
+			},
+		}),
+	);
+};
+
+export class Editor extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+
+	harness = new PiHarness({
+		harness: ({ storage, context, registry, settings }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(storage, { models, registry, settings }, context);
+		},
+		defaults: {
+			model: {
+				provider: CLOUDFLARE_PROVIDER_ID,
+				modelId: "@cf/moonshotai/kimi-k2.7-code",
+			},
+		},
+		extensions: { editor },
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+}
+```
+
+</TypeScriptExample>
+
+An extension receives a context with:
+
+- `name`: the key it was installed under.
+- `tools`: the harness's tools. `tools.transform(change)` registers a change.
+- `prompt`: the system prompt's sections, in order. `prompt.transform(change)` registers a change.
+
+Inside a transform, the draft has `get`, `has`, `set`, `delete`, and `keys`. `set` adds an entry, or replaces the entry with that name in place.
+
+A tool is a Pi Durable `ToolRegistration` without `name`. Its key in `tools` is its name. A section is a Pi `PromptSection` without `key`.
+
+An extension can be `async`, for example to load what it adds. It must register its transforms before it returns. A transform registered later throws.
+
+## Mark tools replay-safe
+
+Pi decides what to do with a tool call that an eviction interrupted from the tool's `replay` setting:
+
+- `replay: "safe"`: Pi runs the tool again after the object restarts.
+- `replay: "unsafe"`, the default: Pi does not run it again. The model gets an interrupted result.
+
+Mark a tool safe when running it twice does no harm, such as a read, a search, or a whole-file write. Leave it unsafe when a second run would fail or repeat a side effect, such as an edit of text it already replaced, running code, or sending an email.
+
+Pi runs the tool calls in one model round at the same time by default. Set `executionMode: "sequential"` on a tool whose calls must run one after another. One sequential call makes its whole round sequential.
+
+A tool's `execute` receives an abort signal on its context. Honor it: `session.abort()` waits until every running tool returns.
+
+## Add skills
+
+`skills(sources)` turns [Agent Skills](/agents/runtime/execution/agent-skills/) sources from `agents/skills` into an extension. It adds the `activate_skill` and `read_skill_resource` tools and a `skills` prompt section. This example imports bundled skills with the Agents Vite plugin:
+
+```ts
+import { PiHarness, skills } from "agents/harness/pi";
+import bundledSkills from "agents:skills";
+
+harness = new PiHarness({
+	// ...harness and defaults
+	extensions: {
+		editor,
+		skills: skills([bundledSkills]),
+	},
+});
+```
+
+The model can read a skill's instructions and resources. `skills()` has no script runner, so skill scripts do not run. The sources are read once per isolate, when the harness first opens.
+
+## Change another extension's tools
+
+A transform sees everything that the transforms before it built, so a later extension can remove or rewrite an earlier one's tools and sections:
+
+```ts
+extensions: {
+	workspace: workspaceTools(this.workspace),
+	// No `exec` in this deployment.
+	policy: (ctx) => ctx.tools.transform((tools) => tools.delete("exec")),
+}
+```
+
+Each tool and section belongs to the extension that first added it. A replaced entry keeps that owner. After the build, the harness installs one Pi extension for each extension that added anything, under its name. Rewriting another extension's tool changes it everywhere that extension applies.
+
+## Choose extensions per session
+
+Each extension is installed in Pi under its name. To pick extensions for one conversation, read the installed Pi extension from `harness.registry` and configure the conversation through Pi:
+
+```ts
+const pi = await this.harness.pi();
+const editor = this.harness.registry.snapshot().extension("editor");
+```
+
+Pass `editor` to Pi Durable's `configure({ extensions })` on a conversation from `pi`. `harness.registry` is empty until the harness first opens.
+
+## What PiHarness supports
+
+Pi Durable extensions can do more than `PiHarness` extensions can today.
+
+| Pi Durable extension feature                                                                                                                                          | Pi API                          | `PiHarness`                                                                                                                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tools, including `replay`, `executionMode`, `prepareArguments`, `outputLimits`, and the full tool `api`, such as `memo`, `commit`, tasks, and subagent `conversation` | `tools`                         | Supported, through `ctx.tools`                                                                                                                                 |
+| Tool results that add tools, end the run, or hand off                                                                                                                 | `ToolExecutionResult.control`   | Supported. A tool's result is Pi's.                                                                                                                            |
+| System prompt sections, rendered before each request                                                                                                                  | `sections`                      | Supported, through `ctx.prompt`                                                                                                                                |
+| Removing or rewriting another extension's tools and sections                                                                                                          | `wraps`                         | Partly. A later extension's change applies wherever the owning extension applies. Pi's `wrapTool` and `wrapSection` are not supported.                         |
+| Generation hooks: `beforeRequest`, `afterResponse`, `onYield`, `afterTools`                                                                                           | `hook(GenerationTask, ...)`     | Not yet                                                                                                                                                        |
+| Tool hooks: `beforeTool`, `afterTool`                                                                                                                                 | `hook(ToolTask, ...)`           | Not yet                                                                                                                                                        |
+| Compaction hook: `beforeCompact`                                                                                                                                      | `hook(CompactionTask, ...)`     | Not yet                                                                                                                                                        |
+| Hooks on custom tasks                                                                                                                                                 | `hook(task, ...)`               | Not yet                                                                                                                                                        |
+| Durable custom tasks, resumed after a restart                                                                                                                         | `tasks`                         | Not yet                                                                                                                                                        |
+| Extension state in typed documents (`defineDoc`)                                                                                                                      | `api.commit`, `input.read`      | Partly. A tool can read and write its own documents through `api`, and a section can read them. Seeding a document on every new conversation is not supported. |
+| Choosing extensions per conversation                                                                                                                                  | `configure({ extensions })`     | Through Pi, as shown in [Choose extensions per session](#choose-extensions-per-session).                                                                       |
+| Replacing or removing extensions while the object runs                                                                                                                | `registry.install`, `uninstall` | Not yet. Extensions run once per isolate, when the harness first opens.                                                                                        |
+
+To use a feature that is not supported yet, create your own registry in the factory and pass it to `Harness.open()` instead of the one the factory receives. The extensions in `extensions` are then not applied.

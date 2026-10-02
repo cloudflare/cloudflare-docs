@@ -1,0 +1,338 @@
+---
+title: Pi
+pcx_content_type: overview
+description: Run Pi Durable sessions inside an Agent or Durable Object with the PiHarness Lifecycle capability, and keep runs going across eviction.
+tags:
+  - AI
+sidebar:
+  order: 10
+  badge: Beta
+  group:
+    hideIndex: false
+products:
+  - agents
+---
+
+import {
+	LinkCard,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+`PiHarness` runs [Pi Durable](https://earendil.com/posts/pi-durable/), the durable harness from the [Pi](https://github.com/earendil-works/pi) project, inside a Durable Object. Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, model calls, tools, retries, and crash recovery. `PiHarness` gives Pi storage in the Durable Object's SQLite database, and wakes the object when Pi has work to finish.
+
+Use it in an [`Agent`](/agents/runtime/lifecycle/agent-class/) subclass or in a plain `DurableObject`.
+
+:::caution[Beta]
+`PiHarness` is in beta. Pi Durable is a new, experimental package, and the `PiHarness` API will likely change as Pi Durable matures.
+:::
+
+## How it works
+
+`PiHarness` is a [Lifecycle](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md) capability. Lifecycle gives a capability hooks into its Durable Object: SQLite storage, startup, and a durable job queue that shares the object's alarm.
+
+- **Storage.** Pi keeps its transcripts, inbox, and tasks in its own tables in the object's SQLite database. The table names start with `pi_`, so they do not collide with your own tables.
+- **Wake-up.** Pi's scheduler runs in memory, and an evicted object has none. When a session has work in progress, `PiHarness` schedules a Lifecycle job for it. The job keeps a heartbeat while Pi works and completes when the session is idle. If the object is evicted mid-run, the job's alarm restarts it, Pi reopens its storage, and the run continues.
+
+`PiHarness` does not choose how clients reach a session. It gives you each session's event stream, and you send it over WebSockets, HTTP, or RPC.
+
+## Install
+
+Install `agents` with pi-durable and pi-ai:
+
+<PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai" />
+
+Both Pi packages are optional peer dependencies of `agents`. `PiHarness` needs version 1.0 or later of each.
+
+The examples on this page use Workers AI through the `AI` binding and the [pi-ai model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "pi-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Assistant"] }],
+}
+```
+
+</WranglerConfig>
+
+## Use it in an Agent
+
+Every `Agent` already has a Lifecycle. Create the harness as a field, then add it to the Lifecycle in the constructor:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { CLOUDFLARE_PROVIDER_ID, createAI } from "agents/models/pi-ai";
+
+export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+
+	harness = new PiHarness({
+		harness: ({ storage, context, registry, settings }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(storage, { models, registry, settings }, context);
+		},
+		defaults: {
+			model: {
+				provider: CLOUDFLARE_PROVIDER_ID,
+				modelId: "@cf/moonshotai/kimi-k2.7-code",
+			},
+		},
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = env.Assistant.getByName("demo");
+		return Response.json({ text: await agent.ask("What is 47 × 19?") });
+	},
+};
+```
+
+</TypeScriptExample>
+
+The `harness` factory receives:
+
+- `storage`: Pi's storage over the object's SQLite database, with Pi's migrations already run.
+- `context`: a background context for opening Pi.
+- `registry`: Pi's registry, with your [extensions](/agents/harnesses/pi/extensions/) installed.
+- `settings`: harness-wide settings from `PiHarness`, such as the retry policy from `defaults`.
+
+Pass `registry` and `settings` to `Harness.open()`. Everything else that `Harness.open()` takes, such as `models`, `env`, and `onReport`, is yours to set in the factory.
+
+## Use it in a plain Durable Object
+
+You do not need the `Agent` class. Install a Lifecycle on a `DurableObject` and add the harness to it:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { CLOUDFLARE_PROVIDER_ID, createAI } from "agents/models/pi-ai";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+
+	harness = new PiHarness({
+		harness: ({ storage, context, registry, settings }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(storage, { models, registry, settings }, context);
+		},
+		defaults: {
+			model: {
+				provider: CLOUDFLARE_PROVIDER_ID,
+				modelId: "@cf/moonshotai/kimi-k2.7-code",
+			},
+		},
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async ask(prompt: string) {
+		await this.lifecycle.start();
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Native RPC does not pass through Lifecycle, so a plain Durable Object's RPC methods call `this.lifecycle.start()` first. An `Agent` starts its Lifecycle before its `async` RPC methods run. In both cases, address the object by name, for example with `env.Assistant.getByName("demo")`.
+
+## Options
+
+Only `harness` is required.
+
+| Option       | Description                                                                                                                               |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `harness`    | A function that opens Pi's `Harness`. Refer to the factory arguments above.                                                               |
+| `defaults`   | `model` and `thinkingLevel` for new sessions, and a `retry` policy that applies to the whole harness.                                     |
+| `extensions` | Tools and system prompt sections, by name. Refer to [Extensions](/agents/harnesses/pi/extensions/).                                       |
+| `store`      | `prefix` for Pi's table names. Defaults to `pi_`.                                                                                         |
+| `timing`     | When the wake-up job hands a wait to the alarm, how long it waits, and its heartbeat. The defaults suit a deployment. Tests shorten them. |
+
+`defaults.model` and `defaults.thinkingLevel` apply when a session is created. Change one session's model later with `session.setModel()`. Without a model, a session's prompts end unanswered until you set one.
+
+## Add tools and a system prompt
+
+Tools and system prompt sections come from extensions. An extension is a function that registers changes to the harness's tools and prompt:
+
+```ts
+import { Type } from "@earendil-works/pi-ai";
+import type { PiExtension } from "agents/harness/pi";
+
+const assistant: PiExtension = (ctx) => {
+	ctx.prompt.transform((prompt) =>
+		prompt.set("preamble", { render: () => "Be brief.", tag: false }),
+	);
+	ctx.tools.transform((tools) =>
+		tools.set("word_count", {
+			description: "Count the words in a text.",
+			parameters: Type.Object({ text: Type.String() }),
+			replay: "safe",
+			async execute({ text }) {
+				const words = text.split(/\s+/).filter(Boolean).length;
+				return { content: [{ type: "text", text: String(words) }] };
+			},
+		}),
+	);
+};
+```
+
+Pass it to `PiHarness` as `extensions: { assistant }`. For ordering, skills, and which Pi Durable extension features work, refer to [Extensions](/agents/harnesses/pi/extensions/).
+
+## Send prompts
+
+`harness.prompt()` submits to the root session and waits for the answer. It returns the final assistant `text`, the `status`, and the session's transcript as `messages`.
+
+For long runs, submit and wait separately. `submit()` returns once Pi has durably stored the input, before the model runs. `wait()` returns the result when Pi finishes:
+
+```ts
+const receipt = await this.harness.submit("Summarize the latest report", {
+	operationId: "report-summary-42",
+});
+
+// Later, possibly from another request:
+const result = await this.harness.wait(receipt.operationId);
+// { operationId, session, status: "done" | "unanswered", text?, reason? }
+```
+
+An `operationId` makes a submission idempotent. Submitting the same id again returns the same operation with `accepted: false`. Use an id that survives your own retries, such as an inbound event id.
+
+A submission made while the session is running is queued and answered after the current run, as its own run. Set `whenBusy: "steer"`, or call `session.steer()`, to join the running work after its current tool round instead.
+
+`harness.pending()` lists submissions Pi has not finished, with their status: `queued` or `running`.
+
+## Work with sessions
+
+A session is a Pi conversation. The root session has the id `"1"` and exists from the start. The `harness` methods take an optional `session` option, and `harness.session(id)` returns a handle for one session:
+
+```ts
+const session = await this.harness.sessions.create();
+await session.submit("Draft a release note");
+
+const fork = await this.harness.sessions.fork(session.id);
+const all = await this.harness.sessions.list();
+// [{ id: "1", busy: false }, { id: "2", busy: true }, { id: "3", parent: "2", busy: false }]
+```
+
+| Method                      | Description                                                                                           |
+| --------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `submit(input, options)`    | Durably submit input. Returns a receipt.                                                              |
+| `prompt(input, options)`    | Submit and wait for the answer and the updated transcript.                                            |
+| `steer(input)`              | Submit with `whenBusy: "steer"`.                                                                      |
+| `wait(operationId, signal)` | Wait for an operation. Aborting `signal` stops the wait, not the work.                                |
+| `abort(operationId)`        | Withdraw a queued operation, or abort the run it joined. With no id, abort everything in the session. |
+| `reset(handoff)`            | Start a new context, optionally from a handoff note.                                                  |
+| `setModel(model)`           | Change this session's model.                                                                          |
+| `messages()`                | The active transcript, as Pi's `EntryRecord` entries since the newest reset.                          |
+| `events()`                  | Pi's event stream for this session.                                                                   |
+| `busy()`                    | Whether the session is running.                                                                       |
+
+`sessions.create()` makes a new top-level session with the harness defaults. `sessions.fork(id)` makes a session that sees another's history up to its newest entry. `sessions.list()` includes sessions that Pi's subagent tools created.
+
+Session ids are Pi's conversation ids, so you cannot choose them. To give each user or chat its own agent, use one Durable Object per conversation and the root session in each.
+
+## Stream events to clients
+
+`session.events()` returns Pi's `AgentEventStream`: a `snapshot` of the session, then one batch of events for each change Pi commits:
+
+```ts
+const stream = await this.harness.session().events();
+send(stream.snapshot);
+
+stream.start(async (events) => {
+	for (const event of events) send(event);
+});
+
+// When the client goes away:
+await stream.stop();
+```
+
+A client that connects mid-run gets a snapshot that includes the partial answer, then follows the live events. The stream lives in memory. After the object restarts, open a new stream and send a fresh snapshot.
+
+`messages()` and `snapshot.entries` are Pi's transcript entries, not a chat UI format. Map them to what your client renders.
+
+For anything `PiHarness` does not cover, `await harness.pi()` returns the opened Pi `Harness`.
+
+## Recovery
+
+| What happens                                                       | Result                                                                                            |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| The object is evicted, crashes, or exceeds its memory or CPU limit | The wake-up job's next alarm restarts the object, and Pi continues from its last checkpoint.      |
+| A deploy happens mid-run                                           | Same as a crash. The runtime gives in-flight work 30 seconds, then the alarm restarts the object. |
+| The model was streaming                                            | Pi keeps the partial answer it stored and makes the model call again.                             |
+| A tool with `replay: "safe"` was running                           | Pi runs the tool again.                                                                           |
+| Any other tool was running                                         | Pi does not run it again. The model gets an interrupted result and decides what to do next.       |
+
+Mark a tool `replay: "safe"` when running it twice is harmless, such as a read or a whole-file write. Leave other tools unsafe, such as an edit that would fail on text it already replaced, or a call that charges a card.
+
+While Pi has work, the job's heartbeat alarm fires every 30 seconds. A crashed object restarts on the next heartbeat.
+
+## Limitations
+
+- **Hooks and durable custom tasks.** Pi Durable's generation, tool, and compaction hooks, and its custom tasks, are not available through `PiHarness` extensions yet. Refer to [Extensions](/agents/harnesses/pi/extensions/#what-piharness-supports).
+- **Approvals.** Pi Durable has no approval or permission step for tool calls yet.
+- **Event replay.** Event streams always start from a snapshot. There is no cursor to resume a stream from.
+- **Abort and tools.** `abort()` waits until the session is idle. A tool that ignores its abort signal keeps the session busy until it returns.
+- **Long model calls.** The wake-up job waits inside an alarm invocation, and an alarm invocation runs for up to 15 minutes. The harness hands off to a new alarm every 10 minutes, but one model request that streams for more than 15 minutes can be cut off.
+- **Background tasks.** Work that Pi runs in the background is checked on each heartbeat, so the harness notices it finish up to 30 seconds late.
+- **Graceful eviction.** A running session keeps work in flight, so the object does not drain while Pi runs.
+- **Session deletion.** Pi Durable cannot delete a conversation yet.
+
+## Example
+
+The [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi) is a browser chat over WebSockets. It sends `session.events()` to each socket, renders Pi's entries as a transcript, and gives the model a [`@cloudflare/computer`](https://github.com/cloudflare/computer) Workspace with file and JavaScript tools.
+
+## Related resources
+
+<LinkCard
+	title="Extensions"
+	href="/agents/harnesses/pi/extensions/"
+	description="Add tools and system prompt sections to PiHarness."
+/>
+
+<LinkCard
+	title="pi-ai model provider"
+	href="/agents/models/pi-ai/"
+	description="Workers AI and AI Gateway models for pi-ai and Pi Durable."
+/>
+
+<LinkCard
+	title="Pi Durable announcement"
+	href="https://earendil.com/posts/pi-durable/"
+	description="Earendil's introduction to Pi Durable."
+/>
