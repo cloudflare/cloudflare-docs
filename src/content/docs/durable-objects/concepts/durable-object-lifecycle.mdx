@@ -71,6 +71,12 @@ Each operation prevents eviction until it completes or for up to 15 minutes from
 While an operation prevents eviction, the Durable Object continues to [incur duration charges](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges). When no operation prevents eviction, the [standard eviction rules](#durable-object-lifecycle-state-transitions) resume.
 :::
 
+:::note[Profiling keeps Durable Objects from being evicted]
+An active profiling session on a Durable Object prevents it from being evicted. While the session is running, the Durable Object cannot transition to the **inactive** state.
+
+Profiling does not prevent hibernation. A Durable Object that meets the hibernation criteria can still transition to the **hibernated** state during a profiling session.
+:::
+
 Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to transition the object to the **inactive** state (for example deciding to move the object to a different host) thus restarting the lifecycle.
 
 The next incoming request or event starts the cycle again.
