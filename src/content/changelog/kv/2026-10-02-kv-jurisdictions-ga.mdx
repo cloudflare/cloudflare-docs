@@ -1,0 +1,34 @@
+---
+title: Workers KV namespace jurisdictions are now generally available
+description: Restrict a Workers KV namespace to durably store data only within a specific jurisdiction, such as the EU, the US, or FedRAMP-compliant data centers.
+products:
+  - kv
+date: 2026-10-02
+---
+
+Jurisdictions for [Workers KV](/kv/) namespaces are now generally available. When you create a namespace, you can set a [jurisdiction](/kv/reference/data-location/) to make sure the namespace's data is only durably stored within that region. Jurisdictions can help you comply with data localization regulations such as GDPR or FedRAMP. Supported jurisdictions are `eu`, `us`, and `fedramp`.
+
+A jurisdiction can only be set when a namespace is created, using the Cloudflare dashboard, Wrangler, the `cf` CLI, or the REST API, and cannot be added or changed afterwards.
+
+```sh
+npx wrangler@latest kv namespace create <NAMESPACE_NAME> --jurisdiction=eu
+```
+
+```sh
+cf kv namespaces create --title <NAMESPACE_NAME> --jurisdiction eu
+```
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/storage/kv/namespaces" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "title": "<NAMESPACE_NAME>",
+    "jurisdiction": "eu"
+  }'
+```
+
+Workers can still access a namespace restricted to a jurisdiction from anywhere in the world, and KV data can be cached outside the jurisdiction on Cloudflare's network. The jurisdiction only controls where the namespace's data is durably stored.
+
+To learn more, refer to [Data location](/kv/reference/data-location/).

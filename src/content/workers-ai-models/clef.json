@@ -1,0 +1,331 @@
+{
+    "name": "@cf/cloudflare/clef",
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "65536"
+        },
+        {
+            "property_id": "info",
+            "value": "https://huggingface.co/Cloudflare/clef"
+        },
+        {
+            "property_id": "terms",
+            "value": "https://huggingface.co/Cloudflare/clef/blob/main/LICENSE"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.24,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "id": "87f39d62-116c-4b26-b2cd-562a9ba01f2f",
+    "source": 1,
+    "description": "Clef is a 27B multimodal decision model that turns a state and a schema of typed questions into decisions. It reads the state as text, JSON, images, or video, and returns a probability for every allowed option of every question.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-09-29 14:05:24.552",
+    "tags": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "properties": {
+                "model": {
+                    "type": "string",
+                    "pattern": "^\\s*(clef|clef-flash)\\s*$",
+                    "description": "Required. The model selector: \"clef\" for @cf/cloudflare/clef, \"clef-flash\" for @cf/cloudflare/clef-flash."
+                },
+                "state": {
+                    "description": "Required. The content to evaluate: a string, or structured data (object/array) such as records, chat logs, or application state. Long text state is truncated to fit the model's token limit."
+                },
+                "questions": {
+                    "type": "object",
+                    "description": "Map of question id to a typed question (noul, choice, or score). 1 to 64 questions; ids may use letters, digits, '_', '.', '-' (max 100 chars). Answers are returned under the same ids.",
+                    "minProperties": 1,
+                    "maxProperties": 64,
+                    "additionalProperties": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "title": "Noul",
+                                "description": "A yes/no question. Returns the probability the answer is yes.",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "noul"
+                                        ]
+                                    },
+                                    "instructions": {
+                                        "description": "Required. The yes/no question to evaluate: a non-empty string, or an object/array that holds the question in one field and referenced data in others."
+                                    },
+                                    "criteria": {
+                                        "type": "object",
+                                        "description": "Optional descriptions of what a yes and a no mean.",
+                                        "properties": {
+                                            "true": {
+                                                "description": "What a yes (value near 1) means."
+                                            },
+                                            "false": {
+                                                "description": "What a no (value near 0) means."
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "instructions"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "Choice",
+                                "description": "Pick one option from a set you define. Returns the chosen option, a probability per option, and confidence.",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "choice"
+                                        ]
+                                    },
+                                    "instructions": {
+                                        "description": "Required. What the model should decide: a non-empty string, or an object/array holding the question and referenced data."
+                                    },
+                                    "criteria": {
+                                        "type": "object",
+                                        "description": "Map of option id (non-empty string) to its description: string, object, array, or null when no detail is needed. 2 to 255 options.",
+                                        "additionalProperties": {}
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "instructions",
+                                    "criteria"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "Score",
+                                "description": "Rate the state on an ordered rubric. Returns a probability-weighted score, a probability per level, and confidence.",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "score"
+                                        ]
+                                    },
+                                    "instructions": {
+                                        "description": "Required. What the model should rate: a non-empty string, or an object/array holding the question and referenced data."
+                                    },
+                                    "criteria": {
+                                        "type": "array",
+                                        "description": "Ordered level descriptions (string, object, or array), lowest first; levels are indexed from 0. 2 to 10 levels.",
+                                        "minItems": 2,
+                                        "maxItems": 10,
+                                        "items": {}
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "instructions",
+                                    "criteria"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "description": "Clef extension to the System One API. Optional embedded PNG, JPEG, or WebP images placed before the state (max 4; 4 MiB and 16 megapixels each, 8 MiB total decoded; whole request body max 13 MiB). Remote URLs are not accepted.",
+                    "maxItems": 4,
+                    "items": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "title": "Data URL",
+                                "description": "A base64 data URL: data:image/png;base64,..., data:image/jpeg;base64,..., or data:image/webp;base64,...",
+                                "pattern": "^[Dd][Aa][Tt][Aa]:"
+                            },
+                            {
+                                "type": "object",
+                                "title": "Base64 image",
+                                "properties": {
+                                    "content_type": {
+                                        "type": "string",
+                                        "description": "image/png, image/jpeg, or image/webp."
+                                    },
+                                    "base64": {
+                                        "type": "string",
+                                        "description": "Base64-encoded image bytes."
+                                    }
+                                },
+                                "required": [
+                                    "content_type",
+                                    "base64"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "model",
+                "state",
+                "questions"
+            ]
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "properties": {
+                "model": {
+                    "type": "string",
+                    "description": "The model that performed the evaluation."
+                },
+                "answers": {
+                    "type": "object",
+                    "description": "One answer per question, keyed by the question ids from the request.",
+                    "additionalProperties": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "title": "Noul answer",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "noul"
+                                        ]
+                                    },
+                                    "noul": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1,
+                                        "description": "Probability the answer is yes."
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "noul"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "Choice answer",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "choice"
+                                        ]
+                                    },
+                                    "choice": {
+                                        "type": "string",
+                                        "description": "The highest-probability option."
+                                    },
+                                    "probabilities": {
+                                        "type": "object",
+                                        "description": "Probability per option/level; values sum to 1.",
+                                        "additionalProperties": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 1
+                                        }
+                                    },
+                                    "confidence": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1,
+                                        "description": "How certain the model is, derived from the probabilities."
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "choice",
+                                    "probabilities",
+                                    "confidence"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "Score answer",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "score"
+                                        ]
+                                    },
+                                    "score": {
+                                        "type": "number",
+                                        "description": "Probability-weighted level; can land between levels."
+                                    },
+                                    "legend": {
+                                        "type": "object",
+                                        "description": "Level index (string) mapped to its description.",
+                                        "additionalProperties": {}
+                                    },
+                                    "probabilities": {
+                                        "type": "object",
+                                        "description": "Probability per option/level; values sum to 1.",
+                                        "additionalProperties": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 1
+                                        }
+                                    },
+                                    "confidence": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1,
+                                        "description": "How certain the model is, derived from the probabilities."
+                                    }
+                                },
+                                "required": [
+                                    "type",
+                                    "score",
+                                    "legend",
+                                    "probabilities",
+                                    "confidence"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "usage": {
+                    "type": "object",
+                    "properties": {
+                        "input_tokens": {
+                            "type": "integer"
+                        },
+                        "output_tokens": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "input_tokens",
+                        "output_tokens"
+                    ]
+                }
+            },
+            "required": [
+                "model",
+                "answers",
+                "usage"
+            ]
+        }
+    },
+    "deprecated": false
+}

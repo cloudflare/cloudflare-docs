@@ -86,6 +86,7 @@ database_id = "<unique-ID-for-your-database>"
 - Always provide TOML or JSON as input — the other format is auto-generated.
 - Use `$today` for `compatibility_date`. It is replaced with the current date at build time and injects a comment telling readers to keep it current.
 - Use `removeSchema` prop to omit the `$schema` line from JSON output (useful for config snippets rather than full files).
+- Use `cfConfig` to supply a reviewed `cloudflare.config.ts` alternative and surface the shared CLI selector.
 - If a feature requires a minimum `compatibility_date`, note it in a `:::note` admonition above or below the config block.
 
 ---
@@ -101,10 +102,25 @@ import { PackageManagers } from "~/components";
 
 <PackageManagers pkg="wrangler" />
 
+<!-- Install a global package: -->
+
+<PackageManagers pkg="cf" global />
+
 <!-- Execute a command: -->
 
 <PackageManagers type="exec" pkg="wrangler" args="init my-project" />
+
+<!-- Show reviewed Wrangler and Cloudflare CLI equivalents: -->
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
 ```
+
+Use `global` only for packages designed to be installed globally. Use `cfCommand` only for a reviewed, single-line `cf` equivalent of a Wrangler execution command. The value is the complete alternative command and must begin with `cf `; `args` continues to define only the Wrangler invocation. Unlike `WranglerCommand`'s `cfCommand` prop, this prop includes the `cf` prefix. Supplying it surfaces the shared CLI selector. Existing calls without `cfCommand` remain Wrangler-only.
 
 ---
 
@@ -470,6 +486,21 @@ Props: `url` (required), `method` (default `GET`), `headers`, `json`, `form`, `q
 
 ---
 
+## CfCommand
+
+Renders one Cloudflare CLI command from the installed, version-pinned `cf` package metadata. Use it for native CF command reference pages; do not hand-author descriptions or arguments.
+
+```mdx
+import { CfCommand } from "~/components";
+
+<CfCommand command="deploy" />
+<CfCommand command="auth whoami" headingLevel={3} />
+```
+
+Props: `command` (required, without the `cf` prefix), `headingLevel` (default `2`).
+
+---
+
 ## WranglerCommand
 
 Renders the full CLI reference for a Wrangler command, auto-generated from the installed Wrangler version. Used in Wrangler reference documentation.
@@ -480,6 +511,14 @@ import { WranglerCommand } from "~/components";
 <WranglerCommand command="deploy" />
 <WranglerCommand command="d1 execute" />
 
+<!-- Add an explicitly reviewed CF equivalent from the pinned metadata: -->
+
+<WranglerCommand command="deploy" cfCommand="deploy" />
+
+<!-- One Wrangler command can correspond to multiple CF commands: -->
+
+<WranglerCommand command="d1 execute" cfCommand={["d1 query", "d1 raw"]} />
+
 <!-- With custom description: -->
 
 <WranglerCommand
@@ -488,7 +527,7 @@ import { WranglerCommand } from "~/components";
 />
 ```
 
-Props: `command` (required), `headingLevel` (default `2`), `description` (overrides Wrangler default).
+Props: `command` (required), `headingLevel` (default `2`), `description` (overrides Wrangler default), `cfCommand` (a reviewed CF command or command array; surfaces the shared CLI selector). Explain partial or non-equivalent workflows in the surrounding page content.
 
 ---
 
@@ -611,7 +650,7 @@ import { Feature } from "~/components";
 </Feature>
 ```
 
-Props: `header` (required, feature name), `href` (required, link to feature docs). Body text is the feature description.
+Props: `header` (required, feature name), `href` (required, link to feature docs), `target` (optional, `"_blank"` to open the link in a new tab). Body text is the feature description.
 
 ---
 
@@ -720,6 +759,20 @@ Props: `framework` (required, framework slug).
 
 ---
 
+## CfNamespace
+
+Renders every visible command under a Cloudflare CLI namespace from the installed, version-pinned `cf` package metadata.
+
+```mdx
+import { CfNamespace } from "~/components";
+
+<CfNamespace namespace="hyperdrive" />
+```
+
+Props: `namespace` (required, without the `cf` prefix), `headingLevel` (default `2`).
+
+---
+
 ## WranglerNamespace
 
 Renders the full command listing for a Wrangler namespace (e.g. `d1`, `hyperdrive`). Used in Wrangler reference docs.
@@ -728,9 +781,13 @@ Renders the full command listing for a Wrangler namespace (e.g. `d1`, `hyperdriv
 import { WranglerNamespace } from "~/components";
 
 <WranglerNamespace namespace="d1" />
+
+<!-- Add an explicitly reviewed CF namespace from the pinned metadata: -->
+
+<WranglerNamespace namespace="hyperdrive" cfNamespace="hyperdrive" />
 ```
 
-Props: `namespace` (required), `headingLevel` (default `2`).
+Props: `namespace` (required), `headingLevel` (default `2`), `cfNamespace` (a reviewed CF namespace; surfaces one shared CLI selector for the namespace). Explain differences between the command families in the surrounding page content.
 
 ---
 
@@ -742,6 +799,18 @@ Renders a copyable rule ID. Used in WAF and security rules documentation.
 import { RuleID } from "~/components";
 
 <RuleID id="abcdefghijklmnopqrstuvwxyz" />
+```
+
+---
+
+## CopyPrompt
+
+Renders a one-line prompt next to a **Copy prompt** button, for readers to paste into an AI coding agent. The prompt is truncated on screen but copied in full. Keep it short; use a `txt` code block for longer prompts.
+
+```mdx
+import { CopyPrompt } from "~/components";
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
 ```
 
 ---

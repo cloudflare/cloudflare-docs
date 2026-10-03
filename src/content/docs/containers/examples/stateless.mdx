@@ -1,41 +1,153 @@
 ---
 summary: Run multiple instances across Cloudflare's network
 pcx_content_type: example
-title: Stateless Instances
+title: Stateless instances
 sidebar:
   order: 2
 description: Run multiple instances across Cloudflare's network
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
 ---
 
-To simply proxy requests to one of multiple instances of a container, you can use the `getRandom` function:
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+	Render,
+} from "~/components";
+
+Distribute HTTP requests across three named Container instances. Each Durable Object starts its Container with the `durable_object` scheduling policy.
+
+The Worker chooses among `instance-0`, `instance-1`, and `instance-2`. This is a fixed pool, not automatic scaling. Requests can reach different instances, so keep shared application data outside the container filesystem.
+
+## Configure the Worker
+
+<WranglerConfig>
+
+```toml
+name = "stateless-containers"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[[containers]]
+class_name = "Backend"
+scheduling_policy = "durable_object"
+
+[containers.images.base]
+dockerfile = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "BACKEND"
+class_name = "Backend"
+
+[exports.Backend]
+type = "durable-object"
+storage = "sqlite"
+```
+
+</WranglerConfig>
+
+## Route requests
+
+`start()` initiates startup. The Worker waits for a successful `/health` response before forwarding traffic. Concurrent requests share that readiness check, and a failed check can be retried by the next request.
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Container, getRandom } from "@cloudflare/containers";
+import { DurableObject } from "cloudflare:workers";
+
+interface Env {
+	BACKEND: DurableObjectNamespace<Backend>;
+}
 
 const INSTANCE_COUNT = 3;
 
-class Backend extends Container {
-	defaultPort = 8080;
-	sleepAfter = "2h";
+const INACTIVITY_TIMEOUT_MS = 2 * 60 * 60 * 1000;
+
+export class Backend extends DurableObject<Env> {
+	private starting: Promise<void> | undefined;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container!;
+		if (container.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+		}
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		// Concurrent requests share startup and readiness checks.
+		this.starting ??= this.startAndWaitForPort().finally(() => {
+			this.starting = undefined;
+		});
+		await this.starting;
+
+		const url = new URL(request.url);
+		url.protocol = "http:";
+		url.host = "container";
+		const forwarded = new Request(url, request);
+		forwarded.headers.delete("host");
+		return this.ctx.container!.getTcpPort(8080).fetch(forwarded);
+	}
+
+	private async startAndWaitForPort(): Promise<void> {
+		const container = this.ctx.container!;
+		if (!container.running) {
+			container.start({
+				image: container.images.base,
+				instance: "lite",
+				enableInternet: false,
+			});
+		}
+		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+
+		const port = container.getTcpPort(8080);
+		let lastError: unknown;
+		for (let attempt = 0; attempt < 100; attempt++) {
+			try {
+				const response = await port.fetch("http://container/health", {
+					signal: AbortSignal.timeout(1000),
+				});
+				await response.body?.cancel();
+				if (!response.ok) {
+					throw new Error(`Health check returned ${response.status}`);
+				}
+				return;
+			} catch (error) {
+				lastError = error;
+				await scheduler.wait(200);
+			}
+		}
+		throw new Error("Container did not become ready on port 8080", {
+			cause: lastError,
+		});
+	}
 }
 
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
-		return containerInstance.fetch(request);
+	fetch(request: Request, env: Env): Promise<Response> {
+		const index = Math.floor(Math.random() * INSTANCE_COUNT);
+		return env.BACKEND.getByName(`instance-${index}`).fetch(request);
 	},
-};
+} satisfies ExportedHandler<Env>;
 ```
 
-:::note
-This example uses `getRandom`, which randomly selects one of a fixed number of Container
-instances for each request.
+</TypeScriptExample>
 
-In the future, we will provide improved latency-aware load balancing and autoscaling.
+<Render file="containers/example-http-server" />
 
-This will make scaling stateless instances simple and routing more efficient. See the
-[autoscaling documentation](/containers/configuration/scaling-and-routing) for more details.
-:::
+## Run the example
+
+Start a Docker-compatible engine. Install Wrangler in your project, using version 4.136.0 or later for [local development](/containers/guides/local-dev/).
+
+<PackageManagers type="add" pkg="wrangler" dev />
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+Visit `http://localhost:8787/` to receive the container response. Instances stop after their Durable Objects remain inactive for two hours.

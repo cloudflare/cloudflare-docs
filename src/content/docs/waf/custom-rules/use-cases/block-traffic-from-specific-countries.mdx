@@ -14,10 +14,10 @@ This example [custom rule](/waf/custom-rules/create-dashboard/) blocks requests 
 
   | Field   | Operator | Value                   |
   | ------- | -------- | ----------------------- |
-  | Country | is in    | `Korea, North`, `Syria` |
+  | Country | is in    | `Korea, North`          |
 
   If you are using the expression editor:<br/>
-  `(ip.src.country in {"KP" "SY"})`
+  `(ip.src.country in {"KP"})`
 
 - **Then take action**: _Block_
 

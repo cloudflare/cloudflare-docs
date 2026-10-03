@@ -13,7 +13,9 @@ import { DashButton } from "~/components"
 
 To maintain optimal site performance, Cloudflare strongly recommends using single-file (by URL) purging instead of a complete cache purge.
 
-Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource returns to your origin server to validate the resource. If the cached version is no longer valid, Cloudflare fetches the latest version from your origin server and caches it.
+Purging everything instantly clears all resources from your CDN cache in all Cloudflare data centers. Each new request for a purged resource is a cache miss. Cloudflare fetches the full resource from your origin server and caches it again.
+
+To have Cloudflare revalidate cached resources with your origin server instead, [invalidate everything](/cache/guides/invalidate-cache/). If your origin server confirms that a resource has not changed, Cloudflare reuses the cached copy.
 
 :::caution
 When you purge everything, all cached content for your zone is removed at once. Every subsequent request must be served from your origin until the cache is repopulated. On high-traffic sites with many assets, this can cause a large spike in origin requests and may significantly slow down your site or overload your origin server.
@@ -36,4 +38,4 @@ For information on rate limits, refer to the [Availability and limits](/cache/ho
 
 ## Resulting cache status
 
-Purge Everything invalidates the resource, resulting in the `CF-Cache-Status` header indicating [`EXPIRED`](/cache/concepts/cache-responses/#expired) for subsequent requests.
+After you purge everything, the next request for each resource returns a `CF-Cache-Status` header of [`MISS`](/cache/concepts/cache-responses/#miss).

@@ -52,11 +52,11 @@ const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 	.nb-cl-shell {
 		position: relative;
 		/* Reading column width; the backdrop's left rule (the spine) sits on the
-       column's left edge (= the feed's node axis). */
+	       column's left edge (= the feed's node axis). */
 		--nb-cl-col: min(768px, calc(100vw - 3rem));
 		/* Decorative outer bound — half of the directory's 1360px envelope, so the
-       outer rule lines up across both pages even though the reading column is
-       narrower. The dot-grid fills from the column edge out to this bound. */
+	       outer rule lines up across both pages even though the reading column is
+	       narrower. The dot-grid fills from the column edge out to this bound. */
 		--nb-cl-outer: 680px;
 	}
 
@@ -66,7 +66,7 @@ const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 		width: var(--nb-cl-col);
 		margin-inline: auto;
 		/* Top padding is owned by the page content (PageHeader's pt-14 on the feed,
-       pt-6 on the post), so the feed hero lines up with Directory/Agent Setup. */
+	       pt-6 on the post), so the feed hero lines up with Directory/Agent Setup. */
 		padding-bottom: 3rem;
 	}
 
@@ -91,7 +91,7 @@ const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 		bottom: 0;
 		width: 1px;
 		/* center the 1px rule on its x so it coincides exactly with the feed's
-       solid spine (also center-anchored) — no fuzzy doubled line in the feed. */
+	       solid spine (also center-anchored) — no fuzzy doubled line in the feed. */
 		transform: translateX(-50%);
 		background-image: linear-gradient(
 			to bottom,
@@ -133,7 +133,7 @@ const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 	}
 
 	/* Subtle 1px outline on entry images for consistent depth — pure
-     black/white at 10%, never a tinted neutral. */
+	     black/white at 10%, never a tinted neutral. */
 	.nb-cl-prose img {
 		outline: 1px solid rgba(0, 0, 0, 0.1);
 		outline-offset: -1px;

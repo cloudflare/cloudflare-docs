@@ -16,15 +16,21 @@ New account API tokens use the `cfat_` prefixed [scannable format](/fundamentals
 
 ## Create an account owned token
 
+In order to create account API tokens, members either require API Token Provisioning capabilities or Super Administrator status.
+
+While Super Administrators can view and manage all account API tokens in a respective account, other members can only view and manage tokens which they created.
+
 :::note
-Creating or updating an account owned token requires Super Administrator permission on the account
+Account members may only grant account API tokens permissions which are a subset of their own account permissions.
 :::
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Manage Account** > **Account API Tokens**.
-3. Select **Create Token** and fill in the token name, permissions, and the optional expiration date for the token.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Manage account** > **Account API tokens**.
+3. Select **Create Token** and fill in the token name, permissions, and an optional expiration date.
 4. Select **Continue to summary** and review the details.
 5. Select **Create Token**.
+
+Newly created account-owned tokens also contain helpful metadata regarding creator attribution and provisioning details.
 
 Alternatively, you can create a token using the [account API token creation API](/api/resources/accounts/subresources/tokens/methods/create/).
 

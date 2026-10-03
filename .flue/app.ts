@@ -4,7 +4,7 @@ import { createAgentRouter } from "@flue/runtime/routing";
 import {
 	cloudflareBindingProvider,
 	type CloudflareAIBinding,
-} from "@flue/runtime/cloudflare";
+} from "@flue/runtime/cloudflare/workers-ai";
 import { Hono } from "hono";
 import {
 	verifyGitHubSignature,
@@ -18,16 +18,21 @@ import {
 } from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
 import {
+	devReviewRoutes,
+	hasValidInternalToken,
+} from "./lib/dev-review-routes";
+import { devCommentSpamRoutes } from "./lib/dev-comment-spam-routes";
+import { devSpamRoutes } from "./lib/dev-spam-routes";
+import { clefEvalRoutes } from "./lib/dev-clef-eval-routes";
+import {
 	processRecommendationEvent,
 	type RecommendationEnv,
 } from "./lib/run-reviewer-recommendations";
 import { parseRecommendationsMode } from "./lib/reviewer-recommendations";
-import CodeReviewFile from "./agents/code-review-file";
-import StyleGuideFile from "./agents/style-guide-file";
+import CodeReviewer from "./agents/code-reviewer";
+import StyleGuideReviewer from "./agents/style-guide-reviewer";
 import ConventionsReviewer from "./agents/conventions-reviewer";
-import ReconcileReviewer from "./agents/reconcile-reviewer";
-import ReviewValidator from "./agents/review-validator";
-import SpamFilter from "./agents/spam-filter";
+import ReviewJudge from "./agents/review-judge";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -56,6 +61,9 @@ type WebhookEnv = PipelineEnv & {
 const app = new Hono();
 
 app.get("/health", (c) => c.json({ ok: true }));
+app.route("/dev/review-run", devReviewRoutes);
+app.route("/dev/comment-spam-run", devCommentSpamRoutes);
+app.route("/dev/spam-run", devSpamRoutes);
 
 // Trigger a review for a PR by number. Fetches the real PR from GitHub,
 // builds the same classification a webhook would, and routes through
@@ -67,7 +75,8 @@ app.post("/dev/review/:number", async (c) => {
 	if (!secret) return c.text("Internal token not configured", 500);
 
 	const provided = c.req.header("x-dev-secret");
-	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
 
 	const prNumber = Number(c.req.param("number"));
 	if (!Number.isInteger(prNumber) || prNumber <= 0)
@@ -88,10 +97,13 @@ app.post("/dev/review/:number", async (c) => {
 		isDependabotReviewEvent: pr.user?.login === "dependabot[bot]",
 		isSpamFilterEvent: pr.user?.login !== "dependabot[bot]",
 		isCodeReviewEvent: pr.user?.login !== "dependabot[bot]",
+		isChangelogDateEvent: pr.user?.login !== "dependabot[bot]",
 		isDraft: pr.draft,
 		command: null,
 		commentId: undefined,
 		commentPrAuthorLogin: undefined,
+		isCommentSpamEvent: false,
+		commentIsOnPullRequest: false,
 	};
 
 	if (!isActionable(classification)) {
@@ -114,7 +126,8 @@ app.post("/dev/recommendations", async (c) => {
 	if (!secret) return c.text("Internal token not configured", 500);
 
 	const provided = c.req.header("x-dev-secret");
-	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
 
 	let payload: unknown;
 	try {
@@ -200,28 +213,34 @@ app.post("/webhooks/github", async (c) => {
 // (DOCS_FLUE_AGENT_EVALS=1), so eval routes are never live in production or
 // normal dev.
 const EVAL_AGENTS = [
-	CodeReviewFile,
-	StyleGuideFile,
+	CodeReviewer,
+	StyleGuideReviewer,
 	ConventionsReviewer,
-	ReconcileReviewer,
-	ReviewValidator,
-	SpamFilter,
+	ReviewJudge,
 ] as const;
 
-app.use("/eval/agents/*", async (c, next) => {
+const evalGate = async (
+	c: Parameters<Parameters<typeof app.use>[1]>[0],
+	next: () => Promise<void>,
+) => {
 	const env = c.env as unknown as WebhookEnv;
 	if (env.DOCS_FLUE_ENABLE_EVAL_ROUTES !== "1") return c.text("Not Found", 404);
 	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
 	if (!secret) return c.text("Not Found", 404);
 	const provided = c.req.header("x-dev-secret");
-	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
 	await next();
-});
+};
+
+app.use("/eval/agents/*", evalGate);
+app.use("/eval/clef/*", evalGate);
+app.route("/eval/clef", clefEvalRoutes);
 
 for (const agent of EVAL_AGENTS) {
 	const name = agent.agentName;
 	if (!name) continue;
-	app.route(`/eval/agents/${name}`, createAgentRouter(agent));
+	app.mount(`/eval/agents/${name}`, createAgentRouter(agent).fetch);
 }
 
 export default app;

@@ -1,0 +1,19 @@
+---
+title: Control JavaScript Detections API results
+description: Enterprise Bot Management customers can control whether Cloudflare uses JavaScript Detections API results.
+date: 2026-09-16
+---
+
+Enterprise Bot Management customers can control whether Cloudflare uses results created through the JavaScript Detections API for bot scoring and detections.
+
+Turn **JavaScript Detections for API traffic** on or off in **Security** > **Settings**. You can also configure the zone through the Bot Management API by setting `jsd_api_results_enabled`:
+
+```json
+{
+	"jsd_api_results_enabled": true
+}
+```
+
+This setting is separate from zone-wide script injection. When it is off, the API script can still execute and return `success` to the callback, but Cloudflare does not consume the result.
+
+For more information, refer to [JavaScript Detections](/cloudflare-challenges/challenge-types/javascript-detections/#api).

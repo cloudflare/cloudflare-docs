@@ -1,0 +1,15 @@
+---
+title: Compare dynamic values in Rules expressions
+description: Compare fields and function results in Rules expressions using equality and ordering operators.
+date: 2026-10-01
+---
+
+Cloudflare Rules expressions now support dynamic values on both sides of equality and ordering comparisons. You can compare request fields or function results with one another.
+
+For example, compare the current request path with its original value:
+
+```txt
+http.request.uri.path ne raw.http.request.uri.path
+```
+
+For supported operators and examples, refer to [Compare dynamic values](/ruleset-engine/rules-language/operators/#compare-dynamic-values).

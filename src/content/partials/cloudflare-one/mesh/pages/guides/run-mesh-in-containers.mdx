@@ -2,7 +2,14 @@
 {}
 ---
 
-import { DashButton, Details, Tabs, TabItem, Render } from "~/components";
+import {
+	DashButton,
+	Details,
+	Render,
+	Steps,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 The [`cloudflare/mesh`](https://hub.docker.com/r/cloudflare/mesh) Docker image packages a Cloudflare Mesh node for Linux containers. It runs the Cloudflare One Client's `warp-svc` daemon headlessly in a minimal [Wolfi](https://wolfi.dev/)-based runtime.
 
@@ -20,18 +27,23 @@ The `latest` tag is a multi-platform manifest. Docker automatically selects the 
 
 ## Prerequisites
 
-Before starting the container, create a Mesh node and copy its token.
+Before starting the container, create a Mesh node and obtain its token.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to **Networking** > **Mesh**.
 
    <DashButton url="/?to=/:account/mesh" />
 
-2. Select **Add a node**.
+2. Select **Add participant** > **Add node**.
 3. Enter a name for your node (for example, `k8s-gateway` or `docker-agent`).
 4. Select **Create node**.
-5. Copy the token shown in the dashboard. You will pass it to the container as `MESH_NODE_TOKEN`.
+5. Select **Kubernetes**, **Docker Compose**, or **Docker CLI**.
+6. Follow the displayed instructions. The dashboard masks the node token but includes it when required by a copied command. Docker Compose configurations and Kubernetes manifests reference a secret instead of containing the token.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

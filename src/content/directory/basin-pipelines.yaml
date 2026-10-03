@@ -1,0 +1,12 @@
+id: 7nEJGj
+name: Basin Pipelines
+
+entry:
+  title: Basin Pipelines
+  url: /basin-pipelines/
+  group: Developer platform
+
+meta:
+  title: Cloudflare Basin Pipelines Docs
+  description: Ingest real time data streams and load into R2
+  author: "@cloudflare"

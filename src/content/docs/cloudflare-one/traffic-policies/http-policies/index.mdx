@@ -758,6 +758,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 	params={{ APIendpoint: "http.conn.src_ip" }}
 />
 
+### Traffic Destination <Badge text="Beta" variant="caution"/>
+
+The method used to off-ramp traffic from Cloudflare. Use this selector to apply policies based on how traffic leaves Gateway.
+
+| UI name             | API example                      |
+| ------------------- | -------------------------------- |
+| Traffic Destination | `net.offramp.type == "internet"` |
+
+Available values: `internet` (Internet), `cloudflare_wan` (Cloudflare WAN), `cloudflare_tunnel` (Cloudflare Tunnel), `device_client` (Cloudflare One Client), `mesh` (Mesh).
+
 ### Traffic Source <Badge text="Beta" variant="caution"/>
 
 The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.

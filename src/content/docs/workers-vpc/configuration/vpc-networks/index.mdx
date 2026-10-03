@@ -138,6 +138,16 @@ When a VPC Network cannot establish a TCP connection, `connect()` throws an exce
 
 :::
 
+## Logs
+
+Traffic sent through a VPC Network binding appears in [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network-logs) with **Workers VPC** as the **Traffic Source**.
+
+[Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) also record which Worker started each session. Workers VPC sessions report `OnrampType` as `WORKERS_VPC`, `SourceName` as the Worker name, and `SourceID` as the Worker's stable identifier. Use these fields to audit which Worker reached a private service, or to debug a failed connection.
+
+:::note
+`SourceName` and `SourceID` are only populated for Workers deployed after [the release of Worker attribution in Network Session Logs](/changelog/post/2026-09-29-mesh-workers-vpc-network-logs/). Redeploy existing Workers to include them. No code changes are required.
+:::
+
 ## VPC Networks vs VPC Services
 
 VPC Networks and [VPC Services](/workers-vpc/configuration/vpc-services/) both connect Workers to private infrastructure, but they make different trade-offs.

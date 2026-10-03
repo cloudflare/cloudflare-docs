@@ -3,23 +3,18 @@ pcx_content_type: how-to
 title: Transformers
 sidebar:
   order: 3
-  badge: Beta
 description: Advanced filtering, reshaping, redacting, and computing on Logpush records with SQL before they leave Cloudflare.
 products:
   - logpush
 ---
 
-import { DashButton, Badge } from "~/components";
-
-<Badge text="Beta" variant="caution" />
-
-:::note[Closed beta]
-Transformers are in closed beta. Contact your Cloudflare Account Executive for access. Beta usage is not billed. The API surface may change before GA.
-:::
+import { APIRequest, DashButton } from "~/components";
 
 Transformers let you run a SQL query against each batch of records before Logpush delivers them to your destination. Use them to filter records you do not want to store, reshape fields to match a downstream schema, redact sensitive values, compute new fields, or add static metadata.
 
 You write the logic as a single SQL query, attach it to a Logpush job, and Cloudflare runs it on every batch. The `FROM` clause names the Logpush dataset (for example, `http_requests` or `audit_logs_v2`) and field names come from that dataset's schema.
+
+Transformers are available on Free, Pro, Business, and Enterprise plans for supported Logpush datasets. Each Cloudflare account includes 1 GB of transformation input per month. Additional input costs $0.04 per GB. For more information, refer to [Logpush pricing](/logs/logpush/pricing/).
 
 ## Key features
 
@@ -32,12 +27,29 @@ You write the logic as a single SQL query, attach it to a Logpush job, and Cloud
 Before you begin, you need:
 
 - A Logpush job that uses the `ndjson` output format. Transformers are only available for NDJSON jobs, and are supported for both account-scoped and zone-scoped datasets.
-- An API token with the `Logs Write` permission for the account.
+- If you use the API, an API token with the `Logs Write` permission for the account.
 - Familiarity with the [dataset](/logs/logpush/logpush-job/datasets/) whose records you plan to transform. Your SQL references its field names directly.
 
 ## Access Transformers
 
 You can create, preview, attach, and manage transformers through the Cloudflare dashboard or the API.
+
+### Existing Logpush filters
+
+Each Logpush job can have either a transformer or [filters](/logs/logpush/logpush-job/filters/), but not both. When you attach a transformer to a filtered job in the Cloudflare dashboard, Transformer Studio converts the existing filter to an equivalent SQL predicate.
+
+Copy the predicate into the transformer's `WHERE` clause to preserve the filtering behavior. When you confirm the attachment, Transformer Studio removes the job filter and attaches the transformer.
+
+The API does not convert Logpush filters to SQL. To migrate a filtered job through the API, convert the filter to an equivalent SQL predicate and add it to the transformer's `WHERE` clause. Then clear `filter` and set `transformer_id` in the same Logpush job update request:
+
+```json
+{
+	"filter": "",
+	"transformer_id": 42
+}
+```
+
+If you set `transformer_id` without clearing the existing filter, the API returns a `400` response.
 
 ### Transformer Studio (UI)
 
@@ -70,6 +82,18 @@ Every transformer action is available through the Cloudflare API. To authenticat
 | Update a transformer  | `PUT`    | `accounts/:account_id/logpush/transformers/:id`          |
 | Delete a transformer  | `DELETE` | `accounts/:account_id/logpush/transformers/:id`          |
 
+The following request creates a transformer that selects three fields from the zone-scoped `dns_logs` dataset:
+
+<APIRequest
+	path="/accounts/{account_id}/logpush/transformers"
+	method="POST"
+	json={{
+		name: "dns-query-fields",
+		description: "Selects key fields from DNS query logs.",
+		code: "SELECT QueryName, QueryType, ResponseCode FROM dns_logs",
+	}}
+/>
+
 To attach or detach a transformer from a job, set `transformer_id` on the Logpush job. Refer to [Logpush job setup](/logs/logpush/logpush-job/) for job endpoints.
 
 ## The SQL transformer contract
@@ -88,7 +112,7 @@ Records that do not match the `WHERE` clause are dropped from the output.
 
 ### Supported SQL
 
-Transformers use the same SQL dialect as [Cloudflare Pipelines](/pipelines/sql-reference/). The following operations are supported:
+Transformers use the same SQL dialect as [Basin Pipelines](/basin-pipelines/sql-reference/). The following operations are supported:
 
 - **Projection** - `SELECT` specific fields, rename with `AS`, compute new fields with expressions.
 - **Filtering** - `WHERE` clauses with the standard comparison, boolean, and null-check operators.
@@ -118,7 +142,7 @@ In the dashboard, validation errors appear inline in the editor with line and co
 
 | Limit                          | Value       |
 | ------------------------------ | ----------- |
-| SQL query size                 | 10 KB       |
+| SQL query size                 | 250 KB      |
 | Transformer name length        | 255 bytes   |
 | Transformer description length | 4,096 bytes |
 | Filesystem access from a query | None        |
@@ -146,16 +170,16 @@ Input record from the [`audit_logs_v2`](/logs/logpush/logpush-job/datasets/accou
 
 ```json
 {
-  "ActionType": "update",
-  "ActorEmail": "user@example.com",
-  "ActorID": "a1b2c3d4",
-  "ActorIPAddress": "203.0.113.42",
-  "ActorType": "user",
-  "ActionTimestamp": "2026-05-21T15:00:00Z",
-  "AccountID": "90796717",
-  "ResourceID": "r1s2t3u4",
-  "ResourceType": "zone",
-  "ActorContext": "dashboard"
+	"ActionType": "update",
+	"ActorEmail": "user@example.com",
+	"ActorID": "a1b2c3d4",
+	"ActorIPAddress": "203.0.113.42",
+	"ActorType": "user",
+	"ActionTimestamp": "2026-05-21T15:00:00Z",
+	"AccountID": "90796717",
+	"ResourceID": "r1s2t3u4",
+	"ResourceType": "zone",
+	"ActorContext": "dashboard"
 }
 ```
 
@@ -181,16 +205,16 @@ Delivered record:
 
 ```json
 {
-  "action_type": "UPDATE",
-  "actor": {
-    "email": "user@example.com",
-    "ip": "203.0.113.42",
-    "type": "user"
-  },
-  "is_zone": true,
-  "provider": "Cloudflare",
-  "resource_meta": ["zone", "r1s2t3u4"],
-  "unix_ts": 1779375600
+	"action_type": "UPDATE",
+	"actor": {
+		"email": "user@example.com",
+		"ip": "203.0.113.42",
+		"type": "user"
+	},
+	"is_zone": true,
+	"provider": "Cloudflare",
+	"resource_meta": ["zone", "r1s2t3u4"],
+	"unix_ts": 1779375600
 }
 ```
 
@@ -212,16 +236,16 @@ Input record from the [`http_requests`](/logs/logpush/logpush-job/datasets/zone/
 
 ```json
 {
-  "ClientIP": "203.0.113.42",
-  "ClientRequestHost": "example.com",
-  "ClientRequestMethod": "POST",
-  "ClientRequestPath": "/api/checkout",
-  "ClientRequestUserAgent": "curl/7.85.0",
-  "EdgeResponseStatus": 502,
-  "EdgeStartTimestamp": "2026-05-21T15:00:00Z",
-  "RayID": "8e2a1c60ef9e1c9a",
-  "OriginResponseTime": 3200000000,
-  "WAFAction": "unknown"
+	"ClientIP": "203.0.113.42",
+	"ClientRequestHost": "example.com",
+	"ClientRequestMethod": "POST",
+	"ClientRequestPath": "/api/checkout",
+	"ClientRequestUserAgent": "curl/7.85.0",
+	"EdgeResponseStatus": 502,
+	"EdgeStartTimestamp": "2026-05-21T15:00:00Z",
+	"RayID": "8e2a1c60ef9e1c9a",
+	"OriginResponseTime": 3200000000,
+	"WAFAction": "unknown"
 }
 ```
 
@@ -251,16 +275,16 @@ Delivered record:
 
 ```json
 {
-  "is_server_error": true,
-  "method": "POST",
-  "provider": "Cloudflare",
-  "request": {
-    "host": "example.com",
-    "method": "POST",
-    "path": "/api/checkout"
-  },
-  "request_meta": ["example.com", "/api/checkout"],
-  "unix_ts": 1779375600
+	"is_server_error": true,
+	"method": "POST",
+	"provider": "Cloudflare",
+	"request": {
+		"host": "example.com",
+		"method": "POST",
+		"path": "/api/checkout"
+	},
+	"request_meta": ["example.com", "/api/checkout"],
+	"unix_ts": 1779375600
 }
 ```
 
@@ -268,15 +292,16 @@ Delivered record:
 
 ### API errors
 
-| HTTP  | Message                                                       | Cause                                                                                                                            |
-| ----- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `403` | `transformer feature is not available for this account`       | Your account does not have access to Transformers. Contact your Cloudflare Account Executive.                             |
-| `400` | `missing required field: name`                                | Add a `name` field to the request body.                                                                                          |
-| `400` | `missing required field: code`                                | Add a non-empty `code` field with your SQL query.                                                                                |
-| `400` | Schema validation error (unknown column, invalid syntax)      | The SQL references a field that does not exist, uses unsupported syntax, or has a type mismatch. Fix the query and retry.        |
-| `413` | (request entity too large)                                    | The SQL query exceeds 10 KB. Shorten the query.                                                                                  |
-| `400` | `transformer N not found for this account`                    | The transformer ID does not exist, or belongs to a different account.                                                            |
-| `400` | `transformer N dataset "X" does not match job dataset "Y"`    | The transformer's `FROM` table does not match the job's dataset.                                                                 |
+| HTTP  | Message                                                                              | Cause                                                                                                                     |
+| ----- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| `403` | `transformer feature is not available for this account`                              | Your account does not have access to Transformers.                                                                        |
+| `400` | `missing required field: name`                                                       | Add a `name` field to the request body.                                                                                   |
+| `400` | `missing required field: code`                                                       | Add a non-empty `code` field with your SQL query.                                                                         |
+| `400` | Schema validation error (unknown column, invalid syntax)                             | The SQL references a field that does not exist, uses unsupported syntax, or has a type mismatch. Fix the query and retry. |
+| `413` | (request entity too large)                                                           | The SQL query exceeds 250 KB. Shorten the query.                                                                          |
+| `400` | `transformer N not found for this account`                                           | The transformer ID does not exist, or belongs to a different account.                                                     |
+| `400` | `transformer N dataset "X" does not match job dataset "Y"`                           | The transformer's `FROM` table does not match the job's dataset.                                                          |
+| `400` | `a job cannot have both a filter and a transformer configured; use one or the other` | Clear the job's `filter` in the same request that sets `transformer_id`.                                                  |
 
 ### Runtime failures
 

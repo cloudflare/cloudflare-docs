@@ -64,7 +64,7 @@ The API examples in the following sections assume `$ACCOUNT_ID` is set and `$CLO
 1. Create a browser session with `targets=true` to include its current page targets and generated Live View URLs in the response:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/browser"
 	method="POST"
 	headers={{
 		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
@@ -89,7 +89,7 @@ The API examples in the following sections assume `$ACCOUNT_ID` is set and `$CLO
 			"webSocketDebuggerUrl": "wss://live.browser.run/api/devtools/browser/1909cef7-.../page/8E598E99...?jwt=..."
 		}
 	],
-	"webSocketDebuggerUrl": "wss://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/devtools/browser/1909cef7-..."
+	"webSocketDebuggerUrl": "wss://api.cloudflare.com/client/v4/accounts/{account_id}/browser-run/devtools/browser/1909cef7-..."
 }
 ```
 
@@ -104,7 +104,7 @@ If you have a running session and want to connect to it:
 1. List your active sessions and copy the ID of the session you want to view:
 
    <CURL
-   	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/session"
+   	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/session"
    	method="GET"
    	headers={{
    		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
@@ -114,7 +114,7 @@ If you have a running session and want to connect to it:
 2. Using the session ID, list the targets in that session:
 
    <CURL
-   	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/json/list"
+   	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/browser/$SESSION_ID/json/list"
    	method="GET"
    	headers={{
    		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
@@ -167,7 +167,7 @@ A read-only Live View guardrail applies only to the generated connection. Other 
 Use the [Live View endpoint](/api/resources/browser_rendering/subresources/devtools/subresources/browser/subresources/live_view/methods/create/) to generate a URL:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/browser/$SESSION_ID/live_view"
 	method="POST"
 	headers={{
 		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
@@ -183,7 +183,7 @@ Use the [Live View endpoint](/api/resources/browser_rendering/subresources/devto
 To block viewer interaction, set `guardrails` to `{ "mode": "readonly" }`:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-rendering/devtools/browser/$SESSION_ID/live_view"
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/browser-run/devtools/browser/$SESSION_ID/live_view"
 	method="POST"
 	headers={{
 		Authorization: "Bearer $CLOUDFLARE_API_TOKEN",
