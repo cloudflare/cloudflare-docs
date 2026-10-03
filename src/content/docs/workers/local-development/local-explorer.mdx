@@ -4,7 +4,7 @@ title: Local Explorer
 sidebar:
   order: 5
 head: []
-description: Browse and edit local binding data from your browser during development.
+description: Browse and edit local binding data, and invoke scheduled handlers from your browser during development.
 products:
   - workers
 ---
@@ -30,7 +30,7 @@ Local Explorer works with both [Wrangler](/workers/wrangler/) and the [Cloudflar
 
 2. Open Local Explorer in your browser:
    - **Wrangler**: press `e` in your terminal.
-   - **Vite plugin**: navigate directly to `/cdn-cgi/local/explorer` on your dev server's route and port.
+   - **Vite plugin**: Go directly to `/cdn-cgi/local/explorer` on your dev server's route and port.
 </Steps>
 
 Local Explorer is available by default and detects the bindings defined in your [Wrangler configuration](/workers/wrangler/configuration/) automatically.
@@ -50,6 +50,45 @@ Local Explorer supports the following binding types:
 ### D1 and Durable Objects SQL Studio
 
 For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL Studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
+
+## Test Cron Triggers
+
+Local Explorer can send one-off invocations to the [`scheduled()` handler](/workers/runtime-apis/handlers/scheduled/) for your Worker. It supports both configured Cron Triggers and ad hoc expressions.
+
+Cron Trigger testing requires Wrangler 4.139.0 or later, or Cloudflare Vite plugin 1.60.0 or later.
+
+To test a configured expression, define at least one [Cron Trigger](/workers/configuration/cron-triggers/) for the active environment. Ad hoc expressions do not require configuration.
+
+<Steps>
+1. In Local Explorer, select **Cron Triggers** > **Configured Crons**.
+2. Under **Scheduled time**, select _Now_. To test another time, select **Add preset** and enter a UTC date and time or epoch milliseconds.
+3. Select **Trigger** next to a configured cron expression.
+4. Review the outcome, `noRetry()` status, dispatched expression, and scheduled time.
+5. (Optional) To test another expression, select **Cron Triggers** > **Ad-Hoc Triggers**. Select **Add trigger**, enter or build an expression, and then select **Trigger**.
+</Steps>
+
+Full invocation logs are available in the development session that owns the Worker. That session must have **Observability** turned on.
+
+### Build an ad hoc expression
+
+Under **Ad-Hoc Triggers**, select **Expression** to enter an exact expression. Select **Build expression** to create a common five-field UTC expression. The exact expression shown in the row is always dispatched.
+
+The builder supports minute, hour, day-of-month, and month intervals. It also supports daily, selected-weekday, and monthly schedules. Use these Quartz-like options for more specific schedules:
+
+| Option | Behavior                                  |
+| ------ | ----------------------------------------- |
+| `L`    | Select the last day or last named weekday |
+| `W`    | Select the nearest weekday                |
+| `LW`   | Select the last weekday of the month      |
+| `#`    | Select an occurrence of a named weekday   |
+
+Step values start at the field minimum and reset at its boundary. Day steps start on day `1`, and month steps start in January. Dates `29` through `31` do not run in months without that date.
+
+Switching to **Build expression** does not replace the current expression. Changing a valid builder field regenerates the expression. To use syntax that the builder does not provide, select **Expression** and enter it directly.
+
+Ad hoc triggers and scheduled time presets are stored in your browser. Local Explorer scopes them to the local project and Worker. They do not change your Wrangler configuration or deployed Cron Triggers.
+
+Each invocation is a one-off local test. Local development does not run Cron Triggers automatically.
 
 ## Observability
 
@@ -79,6 +118,8 @@ To retrieve the OpenAPI spec:
 curl http://localhost:8787/cdn-cgi/local/explorer/api
 ```
 
+The API includes `POST /cdn-cgi/local/explorer/api/local/scheduled?worker=<WORKER_NAME>` for scheduled invocations. The request targets an exact Worker and accepts a required cron expression and an optional scheduled time. For a request example, refer to [Test Cron Triggers locally](/workers/configuration/cron-triggers/#use-the-local-explorer-api).
+
 ### Use with AI agents
 
 When Wrangler or the Cloudflare Vite plugin detects it is running inside an AI agent, it prints a hint with the Local Explorer API endpoint directly to the terminal. The agent can fetch the [OpenAPI specification](https://www.openapis.org/) from that endpoint to discover all available operations, then make API calls to read or modify local data, query traces and logs, and debug your Worker.
@@ -102,5 +143,6 @@ This can be useful as an alternative to the CLI when you want an agent to:
 - Populate test data in your local [KV](/kv/) namespaces or [D1](/d1/) databases
 - Inspect the state of a [Durable Object](/durable-objects/) during debugging
 - Trigger or retry a [Workflow](/workflows/) run with different input data
+- Invoke a `scheduled()` handler with a chosen cron expression and time
 - Upload test files to a local [R2](/r2/) bucket
 - Find recent requests with errors and drill into failing spans
