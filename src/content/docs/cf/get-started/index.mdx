@@ -228,9 +228,10 @@ CLOUDFLARE_API_TOKEN=<API_TOKEN>
 CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID>
 ```
 
-`cf` reads only `.env`. It does not read `.env.local` or mode-specific files
-such as `.env.<MODE>`. Variables already set in your environment override the
-file.
+`cf` also reads `.env.local`. When you pass `--mode <MODE>`, it then reads
+`.env.<MODE>` and `.env.<MODE>.local`. A value in a later file overrides the
+same variable in an earlier one, so `.env.local` overrides `.env`. Variables
+already set in your environment override every file.
 
 Commands run with `--local` do not read the file. `cf deploy`,
 `cf previews deploy`, `cf workers versions create`, and

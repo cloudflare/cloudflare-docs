@@ -107,8 +107,9 @@ In CI, `cf` replaces account names with `(redacted)`. To fix the error, set
 
 For scripts on your own machine, `cf` commands that call the Cloudflare API
 can also read these variables from a `.env` file in the current directory.
-They do not read `.env.local`. Variables already set in the environment take
-priority. For details, refer to
+They also read `.env.local`, and with `--mode`, the matching mode-specific
+files. Variables already set in the environment take priority. For details,
+refer to
 [Load credentials from a .env file](/cf/get-started/#load-credentials-from-a-env-file).
 
 :::caution

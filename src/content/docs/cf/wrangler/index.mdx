@@ -75,11 +75,11 @@ read `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 read `wrangler.jsonc` or `wrangler.toml`. In a Wrangler project that you have
 not migrated, the result depends on the project:
 
-| Project                                                            | Result                                                                                                                                                                                                                                                                   |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| A Worker without a framework or static assets                      | The command fails with `cloudflare.config.ts is required when --experimental-new-config is enabled.` and a stack trace.                                                                                                                                                  |
-| A Worker that uses the Cloudflare Vite plugin                      | Automatic configuration writes a new `cloudflare.config.ts` for a single-page application, without your entrypoint or bindings. In a project without `index.html`, `cf build` fails with `Cannot resolve entry module index.html`, and `cf dev` returns `404` responses. |
-| A Worker with a static assets directory that contains `index.html` | Automatic configuration treats the project as a static site and writes `cloudflare.config.ts` and `wrangler.config.ts`. `cf build` succeeds, but the result is a static assets Worker named after `package.json`, without your Worker code or bindings.                  |
+| Project                                                            | Result                                                                                                                                                                                                                                                                         |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| A Worker without a framework or static assets                      | The command fails with `cloudflare.config.ts is required when --experimental-new-config is enabled.` and a stack trace.                                                                                                                                                        |
+| A Worker that uses the Cloudflare Vite plugin                      | Automatic configuration writes a new `cloudflare.config.ts` for a single-page application, without your entrypoint or bindings. In a project without `index.html`, `cf build` fails with `Could not resolve entry module "index.html".`, and `cf dev` returns `404` responses. |
+| A Worker with a static assets directory that contains `index.html` | Automatic configuration treats the project as a static site and writes `cloudflare.config.ts` and `wrangler.config.ts`. `cf build` succeeds, but the result is a static assets Worker named after `package.json`, without your Worker code or bindings.                        |
 
 When automatic configuration runs, it also changes `package.json`, including
 the `deploy` script. It can also change the lockfile, `.gitignore`, and
@@ -142,7 +142,8 @@ For the complete procedure, refer to
 
 - **Live logs**: `cf` cannot stream live logs yet. Run
   `npx wrangler tail <WORKER_NAME>` instead of installing Wrangler.
-- **Single secrets**: `cf` cannot set a single secret yet. For options, refer
+- **Secret prompts**: `cf workers secrets update` sets a single secret, but
+  takes the value as an option instead of prompting for it. For options, refer
   to
   [Commands not yet supported](/cf/wrangler/reference/#commands-not-yet-supported).
 

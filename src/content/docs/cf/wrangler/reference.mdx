@@ -22,7 +22,15 @@ understand what `cf migrate` changed or to finish a conversion by hand.
 
 Most Wrangler commands have a `cf` equivalent, although the command name and
 arguments can differ. For example, Worker versions and deployments are under
-`cf workers versions` and `cf workers deployments`.
+`cf workers versions` and `cf workers deployments`, and
+`wrangler secret put` becomes `cf workers secrets update`:
+
+```sh
+cf workers secrets update <SECRET_NAME> --worker <WORKER_NAME> --type secret_text --text <VALUE>
+```
+
+`cf workers secrets update` takes the value as an option and does not prompt
+for it, so the value can end up in your shell history.
 
 To find the `cf` command for a task, use any of the following:
 
@@ -60,7 +68,8 @@ with `npx wrangler` instead of installing Wrangler. Wrangler does not read
   npx wrangler tail <WORKER_NAME>
   ```
 
-- **`wrangler secret put`**: `cf` cannot set a single secret yet. Run
+- **Prompting for a secret value**: `cf workers secrets update` cannot prompt
+  for a secret. To enter the value at a prompt, run
   `npx wrangler secret put <SECRET_NAME> --name <WORKER_NAME>`, or upload
   secrets with a new Worker version by passing `--secrets-file <PATH>` to
   `cf deploy` or `cf workers versions create`.
@@ -110,7 +119,7 @@ described in
 | `env.<NAME>`                                                     | A `case` in `switch (ctx.mode)`                        | Refer to [Convert environments to modes](#environments-to-modes).                                |
 | `previews`                                                       | A branch on `ctx.isPreview`                            | Required item. Review the branch.                                                                |
 | `site`                                                           | —                                                      | Not supported. Move the site to [Workers Static Assets](/workers/static-assets/).                |
-| D1 `migrations_dir`, `migrations_pattern`, `migrations_table`    | —                                                      | Pass `--dir`, `--pattern`, and `--table` to `cf d1 migrations apply`.                            |
+| D1 `migrations_dir`, `migrations_pattern`, `migrations_table`    | —                                                      | Required item. Pass `--dir`, `--pattern`, and `--table` to `cf d1 migrations apply`.             |
 | `build`, `minify`, `alias`, and other build fields               | Build settings                                         | Refer to [Build settings](#build-settings).                                                      |
 
 For every field and builder, refer to
@@ -135,7 +144,8 @@ the bundler:
 
 With the Wrangler bundler, `cf migrate` writes these settings to
 `wrangler.config.ts` for you and adds `types: { generate: false }`. With the
-Vite bundler, it lists the fields in a required item for you to move.
+Vite bundler, it lists the fields in a required item for you to move, except
+`upload_source_maps`, which it reports as an informational item.
 `wrangler.config.ts` is experimental and can change during the beta.
 
 ## Convert environments to modes {/* environments-to-modes */}

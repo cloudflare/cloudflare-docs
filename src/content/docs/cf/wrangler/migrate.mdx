@@ -68,8 +68,9 @@ queue, a cron trigger, a route, and a Durable Object:
   not write files when `git status` reports changes anywhere in the
   repository. Files that `.gitignore` excludes do not count.
 - Install the project's dependencies. With the Wrangler bundler, the Worker's
-  package needs Wrangler 4.136.0 or later installed. `cf migrate` uses it to
-  write `wrangler.config.ts`, and `cf dev`, `cf build`, and `cf deploy` run it.
+  package needs Wrangler installed. `cf migrate` uses Wrangler 4.100.0 or later
+  to write `wrangler.config.ts`, and `cf dev`, `cf build`, and `cf deploy` need
+  Wrangler 4.136.0 or later to run it.
 - Do not run `cf dev`, `cf build`, or `cf deploy` in the project first. In an
   unmigrated project they
   [write their own configuration or fail](/cf/wrangler/#unmigrated-projects).
@@ -186,6 +187,8 @@ The project needs its own `cf` dependency because `cloudflare.config.ts`
 imports from `cf/config`. `cf migrate` installs it with the package manager
 that the project uses, based on the `packageManager` field or the lockfile.
 With npm, the install also rewrites `package.json` with two-space indentation.
+Other package managers can also reformat it. For example, pnpm expands
+single-line objects and sorts dependencies.
 
 If the only `package.json` is in a parent directory, such as a workspace root,
 `cf migrate` does not change it. Install `cf` in the package that contains the
@@ -410,11 +413,11 @@ runs Vite directly, so run the command yourself first, for example
 
 ### Source maps {/* source-maps */}
 
-With the Vite bundler, `cf migrate` lists `upload_source_maps` in its required
-item for build settings. To keep uploading Worker source maps, turn on
-`build.sourcemap` for the Worker's Vite environment, then delete the TODO
-comment. By default, the Cloudflare Vite plugin beta names the Worker's
-environment `ssr`:
+With the Vite bundler, `cf migrate` does not move `upload_source_maps`. It
+reports the field as an informational item, not a required one, and does not
+add a TODO comment for it. To keep uploading Worker source maps, turn on
+`build.sourcemap` for the Worker's Vite environment. By default, the Cloudflare
+Vite plugin beta names the Worker's environment `ssr`:
 
 ```ts title="vite.config.ts" {6-12}
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -437,8 +440,8 @@ How `cf migrate` reports source maps can change during the beta.
 ### D1 migrations {/* d1-migrations */}
 
 `cf migrate` does not convert the `migrations_dir`, `migrations_pattern`, or
-`migrations_table` fields of a D1 binding. Pass them to
-`cf d1 migrations apply` instead:
+`migrations_table` fields of a D1 binding. It lists them as a required item.
+Pass them to `cf d1 migrations apply` instead:
 
 | Wrangler field       | `cf d1 migrations apply` option              |
 | -------------------- | -------------------------------------------- |

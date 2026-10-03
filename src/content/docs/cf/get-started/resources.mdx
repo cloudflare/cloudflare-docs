@@ -39,6 +39,12 @@ Note the `id` of the zone. Zone-scoped commands accept the zone ID or the
 domain name. For details, refer to
 [Select a zone](/cf/get-started/#select-a-zone).
 
+To find a zone by its domain name, `cf` needs an account. If your credentials
+can access more than one account, `cf` asks you to choose one. In a script, set
+`CLOUDFLARE_ACCOUNT_ID` or pass the zone ID, because otherwise the commands in
+this guide fail. For details, refer to
+[Select an account](/cf/get-started/#select-an-account).
+
 ## 2. List DNS records
 
 List the DNS records in the zone:

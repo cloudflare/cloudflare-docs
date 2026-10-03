@@ -134,6 +134,22 @@ function scalarExamplePropertyValue(
 	return '"value"';
 }
 
+// Options that are optional in the types but that a deploy still needs, so the
+// bindings example shows them. `cf deploy` rejects a dispatch namespace binding
+// without `namespace`.
+const EXAMPLE_BINDING_OPTIONS: Record<string, string[]> = {
+	dispatchNamespace: ["namespace"],
+};
+
+function exampleBindingChildren(ref: ConfigReference) {
+	const extra = EXAMPLE_BINDING_OPTIONS[ref.name] ?? [];
+	return uniqueRequiredChildren(ref.children).concat(
+		ref.children.filter(
+			(child) => !child.required && extra.includes(child.name),
+		),
+	);
+}
+
 function uniqueRequiredChildren(children: ReferenceProperty[]) {
 	return children.filter(
 		(child, index) =>
@@ -539,7 +555,7 @@ function bindingLines(): CodeLine[] {
 			refLine(2, "", env, ": {"),
 			...CONFIG_REFERENCE.bindings.flatMap((ref) => {
 				const binding = `MY_${ref.name.replace(/([a-z])([A-Z])/g, "$1_$2").toUpperCase()}`;
-				const required = uniqueRequiredChildren(ref.children);
+				const required = exampleBindingChildren(ref);
 				if (required.length) {
 					return generatedObjectLines(
 						ref,
@@ -629,7 +645,8 @@ function exportLines() {
 			"OldClass: exports.",
 			[
 				{ name: "state", value: '"renamed"' },
-				{ name: "renamedTo", value: '"NewClass"' },
+				// The target must be a live entry in the same map.
+				{ name: "renamedTo", value: '"LiveClass"' },
 			],
 		],
 		transferred: [

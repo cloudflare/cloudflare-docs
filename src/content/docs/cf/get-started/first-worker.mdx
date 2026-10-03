@@ -61,7 +61,8 @@ these files:
   which runs your code in the Workers runtime during development and builds
   it for deployment.
 - `package.json` has `dev`, `build`, and `deploy` scripts that run the
-  matching `cf` commands. It lists `cf` and the Vite plugin 2.0 beta
+  matching `cf` commands, and a `typecheck` script that regenerates types with
+  `cf workers types` and then runs `tsc`. It lists `cf` and the Vite plugin 2.0 beta
   (`@cloudflare/vite-plugin@beta`), which `cf` uses, but not Wrangler.
 - `.cloudflare/types/index.d.ts` holds generated binding and runtime types. The
   Vite plugin updates it when you run `cf dev` or `cf build`. The generated
@@ -160,7 +161,9 @@ cf init my-worker --package-manager npm
 ```
 
 To skip the installation, add `--no-install`. Then run your package manager's
-install command in the project before you run `cf dev`.
+install command in the project before you run `cf dev`. With `--no-install`,
+`cf init` also skips type generation, so `.cloudflare/types/index.d.ts` does
+not exist until you run `cf dev`, `cf build`, or `cf workers types`.
 
 ## Start from an existing project
 
@@ -173,14 +176,16 @@ cf init .
 
 `cf` detects the framework and shows the settings it found, including the
 Worker name, framework, build command, and output directory. After you confirm,
-`cf` changes the project. For a Vite app, it:
+`cf` changes the project. In a non-interactive session, such as a script or CI
+job, `cf init .` applies the changes without asking. For a Vite app, it:
 
 - Installs `cf` and `@cloudflare/vite-plugin` as development dependencies.
 - Adds the Cloudflare plugin to `vite.config.ts`, or creates the file.
 - Creates `cloudflare.config.ts`, with observability turned on.
 - Adds a `deploy` script that runs `cf deploy`.
 - Adds `.wrangler`, `.dev.vars*`, and `.env*` entries to `.gitignore`. In a Git
-  repository without a `.gitignore` file, it creates one.
+  repository without a `.gitignore` file, it creates one that contains only
+  these entries, so add `node_modules/` yourself.
 
 `cf` does not add `.cloudflare/`, where it writes builds and generated types, to
 `.gitignore`. Add it yourself:

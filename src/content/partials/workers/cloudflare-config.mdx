@@ -26,8 +26,11 @@ Cloudflare API, so this is the practical minimum for any `cf` command you run
 inside the project.
 
 Set `"type": "module"` in the project's `package.json`. Without it, Node.js
-prints a warning each time it loads the file. With `"type": "commonjs"`,
-loading fails with `Cannot use import statement outside a module`.
+prints a warning each time it loads the file. In a project that uses the
+Cloudflare Vite plugin, `cf build` also fails, because Vite then loads
+`vite.config.ts` as CommonJS and reports that `@cloudflare/vite-plugin` is ESM
+only. With `"type": "commonjs"`, loading fails with
+`Cannot use import statement outside a module`.
 
 ## Create the minimum configuration
 
