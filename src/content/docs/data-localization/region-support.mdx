@@ -15,7 +15,7 @@ head:
 
 The Data Localization Suite allows you to restrict where your data is processed and stored. The table below shows which regions are available for each DLS feature:
 
-- **Geo Key Manager** — restricts where your TLS private keys are stored.
+- **Geo Key Manager** — restricts where your private TLS keys are decrypted.
 - **Regional Services** — restricts which Cloudflare data centers can decrypt and inspect your HTTPS traffic.
 - **Customer Metadata Boundary (CMB)** — restricts where your logs and analytics data are stored.
 
@@ -29,7 +29,7 @@ Regional Services regions come in two types:
 Managed and custom regions apply to **Regional Services**. The other Data Localization Suite features use their own region settings:
 
 - **Customer Metadata Boundary** can be set to the **United States** or the **European Union**. By default no boundary is applied. FedRAMP customers set it to the United States.
-- **Geo Key Manager** controls where TLS private keys are stored using its own set of locations.
+- **Geo Key Manager** uses its own set of locations to control where private TLS keys are decrypted.
 
 The tables below show which managed regions each product supports.
 
