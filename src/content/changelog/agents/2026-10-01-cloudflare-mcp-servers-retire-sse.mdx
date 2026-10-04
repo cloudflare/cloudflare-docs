@@ -1,0 +1,15 @@
+---
+title: Cloudflare MCP servers retire the /sse URL
+description: Cloudflare's product-specific MCP servers no longer serve /sse. Update MCP client configurations to use /mcp.
+products:
+  - agents
+date: 2026-10-01
+---
+
+Cloudflare's [product-specific MCP servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#product-specific-mcp-servers) no longer serve the `/sse` URL. Use the `/mcp` URL for each server instead, for example `https://bindings.mcp.cloudflare.com/mcp`.
+
+Until now, `/sse` was an alias for the same Streamable HTTP handler as `/mcp`. Every request to `/sse` now returns `410 Gone` with the server's `/mcp` URL. Most MCP clients show that URL in their connection error.
+
+If your MCP client is configured with an `/sse` URL, change it to `/mcp`. OAuth sign-ins made through an `/sse` URL stop working, and your client asks you to sign in again once you connect to `/mcp`. Connections that already use `/mcp` are not affected.
+
+The Cloudflare consent page shown when an MCP client connects has also been updated. **Cancel** now returns the client to its own app with an `access_denied` error. The page shows where the client will send your authorization. If that is an app on your own computer, it also shows a warning.
