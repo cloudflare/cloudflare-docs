@@ -128,9 +128,9 @@ Refer to [Minimum TLS version - SSL/TLS](/ssl/edge-certificates/additional-optio
 
 </TabItem> <TabItem label="API">
 
-In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). Besides the `settings` specifications, you must include `type` and `method` within the `ssl` object, as explained below.
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). A `PATCH` request replaces the existing `ssl.settings` object. Retrieve and reuse all current settings to avoid resetting unrelated values.
 
-1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to check what are the current values for `ssl.type` and `ssl.method`.
+1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to retrieve the current `ssl.settings` object.
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
@@ -181,17 +181,15 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
   }
 ```
 
-2. After you take note of these values, make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, providing both the minimum TLS version you want to define and the same `type` and `method` values that you obtained from the previous step.
+2. Copy the complete `ssl.settings` object. Change only `min_tls_version`, then make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Omit settings that were not present in the `GET` response.
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
   method="PATCH"
 	json={{
 		ssl: {
-			method: "http",
-			type: "dv",
 			settings: {
-				"min_tls_version:": "1.2"
+				min_tls_version: "1.2"
 				}
 			}
 		}}
@@ -213,9 +211,9 @@ Refer to [Customize cipher suites - SSL/TLS](/ssl/edge-certificates/additional-o
 
 <Details header="Restrict cipher suites for custom hostname">
 
-In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). Besides the `settings` specifications, you must include `type` and `method` within the `ssl` object, as explained below.
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). A `PATCH` request replaces the existing `ssl.settings` object. Retrieve and reuse all current settings to avoid resetting unrelated values.
 
-1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to check what are the current values for `ssl.type` and `ssl.method`.
+1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to retrieve the current `ssl.settings` object.
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
@@ -240,7 +238,13 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
       ],
       "issuer": "",
       "method": "http",
-      "settings": {},
+      "settings": {
+        "ciphers": ["ECDHE-RSA-AES256-GCM-SHA384"],
+        "early_hints": "on",
+        "http2": "on",
+        "min_tls_version": "1.2",
+        "tls_1_3": "on"
+      },
       "signature": "SHA256WithRSA",
       "type": "dv",
       "uploaded_on": "2020-02-06T18:11:23.531995Z",
@@ -266,17 +270,19 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
   }
 ```
 
-2. After you take note of these values, make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, providing both the list of authorized cipher suites and the same `type` and `method` values that you obtained from the previous step.
+2. Copy the complete `ssl.settings` object. Change only `ciphers`, then make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint. Omit settings that were not present in the `GET` response.
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
   method="PATCH"
 	json={{
 		ssl: {
-			method: "http",
-			type: "dv",
 			settings: {
-				"ciphers": ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-RSA-AES128-GCM-SHA256"]
+				ciphers: ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-RSA-AES128-GCM-SHA256"],
+				early_hints: "on",
+				http2: "on",
+				min_tls_version: "1.2",
+				tls_1_3: "on"
 				}
 			}
 		}}
