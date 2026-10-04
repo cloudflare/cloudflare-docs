@@ -1,0 +1,61 @@
+---
+title: Build agents from a Durable Object, a Lifecycle, and capabilities
+description: The Agents SDK Lifecycle is now stable. Install it on any Durable Object and add the Pi harness, an MCP client, schedules, WebSockets, and more as capabilities.
+products:
+  - agents
+  - durable-objects
+date: 2026-10-04
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Agents SDK](/agents/) now starts from a plain [Durable Object](/durable-objects/). Install a [Lifecycle](/agents/lifecycle/) on it, then add the [capabilities](/agents/capabilities/) your agent needs. The Lifecycle is no longer experimental.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { Scheduler } from "agents/schedules";
+
+export class Assistant extends DurableObject<Env> {
+	readonly harness = new PiHarness({
+		/* model and tools */
+	});
+	readonly mcp = new MCPClientManager("assistant", "1.0.0", { env: this.env });
+	readonly scheduler = new Scheduler({ callbacks: {} });
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.mcp)
+		.use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+The Lifecycle runs startup, offers each request to the installed capabilities, and owns the object's durable job queue and its single alarm. Capabilities never overwrite each other's alarms, and their work resumes after eviction, deploys, and crashes.
+
+These capabilities ship in the `agents` package:
+
+| Capability                                                   | Import              | Status       |
+| ------------------------------------------------------------ | ------------------- | ------------ |
+| [`PiHarness`](/agents/harnesses/pi/)                         | `agents/harness/pi` | Beta         |
+| [`MCPClientManager`](/agents/capabilities/mcp-client/)       | `agents/mcp/client` | Stable       |
+| [`Scheduler`](/agents/capabilities/scheduler/)               | `agents/schedules`  | Stable       |
+| [`WebSockets`](/agents/capabilities/websockets/)             | `agents/websockets` | Stable       |
+| [`State`](/agents/capabilities/state/)                       | `agents/state`      | Stable       |
+| [`Queue`](/agents/capabilities/queue/)                       | `agents/queue`      | Experimental |
+| [`RoutedAgents`](/agents/capabilities/routed-agents/)        | `agents/routing`    | Experimental |
+| [`Browser`](/agents/capabilities/browser/)                   | `agents/browser`    | Experimental |
+| [`Sessions`](/agents/capabilities/sessions/)                 | `agents/sessions`   | Experimental |
+| [`Streams`](/agents/capabilities/streams/)                   | `agents/streams`    | Experimental |
+| [`Tasks`](/agents/capabilities/tasks/)                       | `agents/tasks`      | Experimental |
+
+`Sessions`, `Streams`, and `Tasks` are the pieces for [building your own harness](/agents/capabilities/#build-your-own-harness). To write a capability of your own, refer to [Build a capability](/agents/lifecycle/build-a-capability/).
+
+The `Agent` class is not going away. It is a Durable Object with the Lifecycle and a set of capabilities already installed, and `this.schedule()`, `this.queue()`, `this.addMcpServer()`, and `this.setState()` call those capabilities. Its documentation now lives under [Agent class](/agents/agent-class/), next to the features that need it, such as `@callable()` methods, chat agents, voice, and email. [Project Think](/agents/harnesses/think/) still extends `Think`.
+
+To build your first agent this way, refer to the [quick start](/agents/getting-started/quick-start/). To move an existing Durable Object onto the Lifecycle, refer to [Add to an existing project](/agents/getting-started/add-to-existing-project/).
