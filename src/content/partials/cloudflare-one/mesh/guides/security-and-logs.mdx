@@ -1,0 +1,9 @@
+---
+{}
+---
+
+## Secure and monitor the connection
+
+Use [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to control which sources can reach each destination IP and port. You can combine network policies with [device posture checks](/cloudflare-one/reusable-components/posture-checks/) for enrolled client devices.
+
+Review allowed and blocked connections in [Gateway network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network). Client device traffic includes the enrolled user identity. Mesh node traffic uses the identity `warp_connector@<your-team-name>.cloudflareaccess.com`.

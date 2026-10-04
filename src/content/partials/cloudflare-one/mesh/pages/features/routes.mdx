@@ -2,7 +2,14 @@
 {}
 ---
 
-import { DashButton, Tabs, TabItem, APIRequest, GlossaryTooltip, Render } from "~/components";
+import {
+	DashButton,
+	Tabs,
+	TabItem,
+	APIRequest,
+	GlossaryTooltip,
+	Render,
+} from "~/components";
 import MeshHostnameRoutingDiagram from "~/components/cf/MeshHostnameRoutingDiagram.astro";
 
 By default, a Mesh node is reachable only by its own [Mesh IP](/mesh/concepts/#mesh-ips). To make other devices on the subnet behind the node reachable — servers, databases, printers, IoT devices that cannot run the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) — add a route to the node. A Mesh node supports two types of routes:
@@ -30,6 +37,7 @@ flowchart LR
   node --> db
   node --> printer
 ```
+
 ## Manage CIDR routes
 
 Use CIDR routes to forward traffic from your mesh node to devices on your local network.
@@ -147,37 +155,9 @@ This ensures that responses to Mesh clients are forwarded to the Mesh node for d
 
 ## Site-to-site routing
 
-When you have Mesh nodes at multiple sites, devices on one subnet can reach devices on another subnet through Cloudflare.
+Mesh nodes can route traffic between private subnets at different sites. Each node advertises its local CIDR and routes the remote CIDR through Cloudflare.
 
-```mermaid
-flowchart TD
-  subgraph siteA["Site A — 10.0.0.0/24"]
-    serverA["Server <br> 10.0.0.50"] --- nodeA["Mesh node <br> 10.0.0.1"]
-  end
-  subgraph siteB["Site B — 192.168.1.0/24"]
-    serverB["Server <br> 192.168.1.50"] --- nodeB["Mesh node <br> 192.168.1.1"]
-  end
-  nodeA <--> CF((Cloudflare))
-  nodeB <--> CF
-```
-
-For this to work:
-
-1. Each Mesh node must advertise the local subnet as a [CIDR route](#add-a-route) so Cloudflare knows which node to forward traffic to.
-2. The remote subnet CIDRs must route through Cloudflare on each node. In your Mesh node's [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration, add the remote site's CIDR to the include list (or remove it from the exclude list).
-3. Each site's router needs static routes pointing remote subnets to the local Mesh node:
-
-**Site A router:**
-
-- **Destination**: `192.168.1.0/24` → **Next hop**: `10.0.0.1` (local Mesh node)
-- **Destination**: `100.96.0.0/12` → **Next hop**: `10.0.0.1`
-
-**Site B router:**
-
-- **Destination**: `10.0.0.0/24` → **Next hop**: `192.168.1.1` (local Mesh node)
-- **Destination**: `100.96.0.0/12` → **Next hop**: `192.168.1.1`
-
-For production site-to-site deployments, consider enabling [high availability](/mesh/features/high-availability/) on each node. HA provides failover for the CIDR routes advertised by a node — if the active replica goes down, Cloudflare promotes a standby so traffic to the subnet continues to flow.
+To configure both sites, their routers, return routes, and verification tests, refer to [Connect two private networks with Cloudflare Mesh](/mesh/guides/connect-sites/).
 
 ## DNS filtering
 
@@ -186,11 +166,9 @@ To filter DNS queries from the subnet using [Cloudflare Gateway](/cloudflare-one
 1. **Configure DNS on your router**: Point your router's DNS to the Gateway resolver IPs:
    - `172.64.36.1`
    - `172.64.36.2`
-
 2. **Add IP routes to your router**: On your router, add static routes pointing the Gateway resolver IPs to your Mesh node's local IP. This allows DNS traffic to reach Cloudflare through the node.
    - **Destination**: `172.64.36.1` → **Next hop**: `10.0.0.1` (local Mesh node)
    - **Destination**: `172.64.36.2` → **Next hop**: `10.0.0.1`
-
 3. **Configure Split Tunnels**: Ensure the following IPs route through the Mesh node in your [Split Tunnels](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration:
    - The subnet's internal DNS resolver IP
    - Gateway initial resolved IP range: `172.64.128.0/20` (IPv4) and `2606:4700:0cf1:4000::/64` (IPv6)
@@ -220,10 +198,10 @@ For a deeper look at the packet flow behind hostname routing, refer to the [anno
 
 - **Route the following IPv4 ranges through Cloudflare** in the [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) configuration of **both** the Mesh node's device profile **and** your client device profiles. In Include mode, add each range. In Exclude mode, ensure none of them (or their parent ranges) are excluded.
 
-  | Purpose                     | IPv4            |
-  | --------------------------- | --------------- |
-  | Mesh device IP range        | `100.96.0.0/12` |
-  | Cloudflare source IP range  | `100.64.0.0/12` |
+  | Purpose                    | IPv4            |
+  | -------------------------- | --------------- |
+  | Mesh device IP range       | `100.96.0.0/12` |
+  | Cloudflare source IP range | `100.64.0.0/12` |
 
   The hostname routing (token IP) range (`172.64.128.0/20`) and all Cloudflare One IPv6 ranges are [automatically routed through Cloudflare](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/#automatically-managed-ranges) and do not need to be added manually.
 

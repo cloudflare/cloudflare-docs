@@ -84,7 +84,7 @@ export function Toolbar({ status, children, className }: ToolbarProps) {
 			)}
 		>
 			{status != null && (
-				<span className="font-mono text-[9px] tracking-widest text-neutral-500 uppercase select-none dark:text-neutral-400">
+				<span className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase select-none dark:text-neutral-400">
 					{status}
 				</span>
 			)}
@@ -200,7 +200,7 @@ export function LabeledButton({
 			disabled={disabled}
 			className={cn(
 				"inline-flex items-center justify-center gap-1.5 px-2 py-1 font-mono text-[10px] font-medium tracking-widest uppercase",
-				"cursor-pointer rounded-sm border shadow-xs select-none active:scale-[0.97]",
+				"cursor-pointer rounded-sm border shadow-xs select-none active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100",
 				"transition-[background-color,opacity,transform] duration-200 ease-out",
 				"border-neutral-200 dark:border-neutral-800",
 				"bg-white hover:bg-neutral-50 dark:bg-neutral-900 dark:hover:bg-neutral-800",
