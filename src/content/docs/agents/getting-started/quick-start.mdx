@@ -3,114 +3,119 @@ title: Quick start
 pcx_content_type: get-started
 sidebar:
   order: 1
-description: Build your first agent in 10 minutes — a counter with persistent state that syncs to a React frontend in real-time.
+description: Build your first agent on a Durable Object with the Lifecycle and the Pi harness, then add a scheduled capability and deploy it.
 products:
   - agents
 ---
 
 import {
+	PackageManagers,
+	Steps,
 	TypeScriptExample,
 	WranglerConfig,
-	PackageManagers,
-	Render,
 } from "~/components";
 
-Build AI agents that persist, think, and act. Agents run on Cloudflare's global network, maintain state across requests, and connect to clients in real-time via WebSockets.
+An agent on Cloudflare is a [Durable Object](/durable-objects/) with a [Lifecycle](/agents/lifecycle/) and the [capabilities](/agents/capabilities/) you add to it. In this guide, you build an assistant that runs the [Pi harness](/agents/harnesses/pi/) on Workers AI, answers over HTTP, and writes a plan every morning on a schedule.
 
-**What you will build:** A counter agent with persistent state that syncs to a React frontend in real-time.
+You do not need an API key. The agent uses [Workers AI](/workers-ai/) through the `AI` binding.
 
-**Time:** ~10 minutes
+## Prerequisites
 
-## Create a new project
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- Node.js 24 or later
 
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args={"--template cloudflare/agents-starter"}
-/>
+## Create a project
 
-Then install dependencies and start the dev server:
+<Steps>
 
-```sh
-cd agents-starter
-npm install
-npm run dev
-```
+1. Create a Worker project:
 
-This creates a project with:
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args="my-agent --type=hello-world --lang=ts"
+   />
 
-- `src/server.ts` — Your agent code
-- `src/client.tsx` — React frontend
-- `wrangler.jsonc` — Cloudflare configuration
-- `tsconfig.json` — Extends `agents/tsconfig` for correct decorator and module settings
-- `vite.config.ts` — Includes the `agents/vite` plugin for decorator support
+2. Go to the project directory and install the Agents SDK and the Pi packages:
 
-The starter template includes two important SDK integrations. If you are setting up a project manually, add both:
+   ```sh
+   cd my-agent
+   ```
 
-**tsconfig.json** — extends `agents/tsconfig`, which sets `target: "ES2021"` and other recommended options:
+   <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai" />
 
-```json
+</Steps>
+
+## Configure Wrangler
+
+Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
 {
-	"extends": "agents/tsconfig"
+	"name": "my-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["Assistant"] }],
 }
 ```
 
-**vite.config.ts** — includes the `agents()` plugin, which handles TC39 decorator transforms (required for `@callable()` in Vite 8):
+</WranglerConfig>
+
+The `nodejs_compat` flag is required by the `agents` package. `new_sqlite_classes` gives the Durable Object the SQLite storage that the Lifecycle and the harness use.
+
+## Write the agent
+
+Replace `src/index.ts` with an `Assistant` Durable Object:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { cloudflare } from "@cloudflare/vite-plugin";
-import react from "@vitejs/plugin-react";
-import agents from "agents/vite";
-import { defineConfig } from "vite";
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { routeAgentRequest } from "agents";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
 
-export default defineConfig({
-	plugins: [agents(), react(), cloudflare()],
-});
-```
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
 
-Open [http://localhost:5173](http://localhost:5173) to see your agent in action.
+	readonly harness = new PiHarness({
+		harness: ({ storage, context }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(storage, { models, registry: this.registry }, context);
+		},
+		defaults: {
+			model: this.ai("@cf/zai-org/glm-4.7-flash"),
+			thinkingLevel: "low",
+		},
+	});
 
-## Your first agent
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
 
-Build a simple counter agent from scratch. Replace `src/server.ts`:
-
-<TypeScriptExample>
-
-```ts title="src/server.ts"
-import { Agent, routeAgentRequest, callable } from "agents";
-
-// Define the state shape
-export type CounterState = {
-	count: number;
-};
-
-// Create the agent
-export class CounterAgent extends Agent<Env, CounterState> {
-	// Initial state for new instances
-	initialState: CounterState = { count: 0 };
-
-	// Methods marked with @callable can be called from the client
-	@callable()
-	increment() {
-		this.setState({ count: this.state.count + 1 });
-		return this.state.count;
-	}
-
-	@callable()
-	decrement() {
-		this.setState({ count: this.state.count - 1 });
-		return this.state.count;
-	}
-
-	@callable()
-	reset() {
-		this.setState({ count: 0 });
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { status, text } = await this.harness.prompt(await request.text());
+		return Response.json({ status, text });
 	}
 }
 
-// Route requests to agents
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+	async fetch(request: Request, env: Env): Promise<Response> {
 		return (
 			(await routeAgentRequest(request, env)) ??
 			new Response("Not found", { status: 404 })
@@ -121,121 +126,105 @@ export default {
 
 </TypeScriptExample>
 
-Update `wrangler.jsonc` to register the agent:
+Here is what each part does:
 
-<WranglerConfig>
+- `Assistant` extends the platform `DurableObject`. Each named instance is one agent with its own SQLite database.
+- `PiHarness` is a capability that runs the [Pi](https://pi.dev/) agent loop. It stores the transcript in the object's database and keeps runs going after the object is evicted.
+- `Lifecycle.install(this)` takes over the object's `fetch` and `alarm` handlers. `.use(this.harness)` installs the harness.
+- `onRequest()` handles requests that no capability claimed. A `POST` sends a prompt, and a `GET` returns the transcript.
+- `routeAgentRequest()` sends `/agents/assistant/:name` to the `Assistant` instance called `:name`.
 
-```jsonc
-{
-	"name": "my-agent",
-	"main": "src/server.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "CounterAgent",
-				"class_name": "CounterAgent",
-			},
-		],
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["CounterAgent"],
-		},
-	],
-}
+Generate types for the `Env` interface:
+
+```sh
+npx wrangler types
 ```
 
-</WranglerConfig>
+## Run the agent locally
 
-**Key points:**
+<Steps>
 
-- `name` in bindings becomes the property on `env` (for example, `env.CounterAgent`)
-- `class_name` must exactly match your exported class name
-- `new_sqlite_classes` enables SQLite storage for state persistence
-- `nodejs_compat` flag is required for the agents package
+1. Start the development server:
 
-## Connect from React
+   ```sh
+   npx wrangler dev
+   ```
 
-Replace `src/client.tsx`:
+   The `AI` binding always runs remotely, so Wrangler asks you to log in the first time.
 
-```tsx title="src/client.tsx"
-import "./styles.css";
-import { createRoot } from "react-dom/client";
-import { useState } from "react";
-import { useAgent } from "agents/react";
-import type { CounterAgent, CounterState } from "./server";
+2. In another terminal, send the agent a prompt:
 
-export default function App() {
-	const [count, setCount] = useState(0);
+   ```sh
+   curl -X POST http://localhost:8787/agents/assistant/demo \
+     -d "What is 47 times 19? Reply with the number only."
+   ```
 
-	// Connect to the Counter agent
-	const agent = useAgent<CounterAgent, CounterState>({
-		agent: "CounterAgent",
-		onStateUpdate: (state) => setCount(state.count),
-	});
+   ```json output
+   { "status": "done", "text": "893" }
+   ```
 
-	return (
-		<div style={{ padding: "2rem", fontFamily: "system-ui" }}>
-			<h1>Counter Agent</h1>
-			<p style={{ fontSize: "3rem" }}>{count}</p>
-			<div style={{ display: "flex", gap: "1rem" }}>
-				<button onClick={() => agent.stub.decrement()}>-</button>
-				<button onClick={() => agent.stub.reset()}>Reset</button>
-				<button onClick={() => agent.stub.increment()}>+</button>
-			</div>
-		</div>
-	);
-}
+3. Read the transcript:
 
-const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
-```
+   ```sh
+   curl http://localhost:8787/agents/assistant/demo
+   ```
 
-Key points:
+</Steps>
 
-- `useAgent` connects to your agent via WebSocket
-- `onStateUpdate` fires whenever the agent's state changes
-- `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
+The transcript lives in the `demo` instance's database. A request to `/agents/assistant/another-name` reaches a different agent with an empty transcript.
 
-<Render file="what-just-happened" product="agents" />
+## Add a capability
 
-## Connect from vanilla JavaScript
+Capabilities share the same Lifecycle, so adding one is a new field and one more `.use()` call. Add a `Scheduler` that asks the agent for a plan every morning:
 
-If you are not using React:
-
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { AgentClient } from "agents/client";
+// ...
+import { Scheduler } from "agents/schedules";
 
-const agent = new AgentClient({
-	agent: "CounterAgent",
-	name: "my-counter", // optional, defaults to "default"
-	onStateUpdate: (state) => {
-		console.log("New count:", state.count);
-	},
-});
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+	readonly harness = new PiHarness({ /* ... */ });
 
-// Call methods
-await agent.call("increment");
-await agent.call("reset");
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			morningPlan: async () => {
+				await this.harness.submit("Write a two-line plan for today.");
+			},
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.harness).use(this.scheduler);
+
+	async onStart(): Promise<void> {
+		await this.scheduler.set("0 8 * * *", "morningPlan");
+	}
+
+	// onRequest() is unchanged.
+}
 ```
 
 </TypeScriptExample>
 
-## Deploy to Cloudflare
+- `onStart()` runs once each time the object starts. A cron schedule with the same callback and payload already exists after the first start, so `set()` does not add a second one.
+- `harness.submit()` returns once Pi has stored the prompt, before the model runs. The harness finishes the run in the background and wakes the object if it is evicted.
+- `Scheduler` and `PiHarness` both store their future work in the Lifecycle's job queue, so they share the object's single alarm.
+
+## Deploy
+
+Deploy the Worker to Cloudflare:
 
 ```sh
-npm run deploy
+npx wrangler deploy
 ```
 
-Your agent is now live on Cloudflare's global network, running close to your users.
+Your agent is now live at `https://my-agent.<YOUR_SUBDOMAIN>.workers.dev/agents/assistant/demo`.
 
-<Render file="common-integration-patterns" product="agents" />
+## Next steps
 
-<Render file="troubleshooting" product="agents" />
-
-<Render file="next-steps" product="agents" />
+- To stream Pi sessions to a browser over WebSockets, refer to [Pi harness](/agents/harnesses/pi/).
+- To give the agent tools from MCP servers, queues, or connected clients, refer to [Capabilities](/agents/capabilities/).
+- To understand startup, request handling, and jobs, refer to [Lifecycle](/agents/lifecycle/).
+- To build with the batteries-included `Agent` class instead, refer to [Get started with the Agent class](/agents/agent-class/get-started/).

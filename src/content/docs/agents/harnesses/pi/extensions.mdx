@@ -134,7 +134,7 @@ this.registry.install({
 
 ## Add skills
 
-`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/runtime/execution/agent-skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. It has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
+`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/tools/agent-skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. It has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
 
 ```ts
 import { skills } from "agents/harness/pi";

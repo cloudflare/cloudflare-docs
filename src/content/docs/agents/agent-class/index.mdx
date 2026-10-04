@@ -12,11 +12,42 @@ products:
 
 import { Render, LinkCard } from "~/components";
 
-This page provides an overview of the Agents SDK. For detailed documentation on each feature, refer to the linked reference pages.
+The `Agent` class is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/lifecycle/) and a set of [capabilities](/agents/capabilities/) already installed. Extend it when you want those defaults in one base class, along with features that only the Agent class has, such as `@callable()` methods, email handling, and the chat and voice classes built on it.
 
-## Overview
+The pages in this section document the `Agent` class and the classes that extend it. To compose capabilities on a plain Durable Object instead, refer to [Capabilities](/agents/capabilities/).
 
-The Agents SDK provides two main APIs:
+## What the Agent class installs
+
+`Agent` extends `DurableObject`, installs a Lifecycle, and adds these capabilities. Its methods call the capability underneath:
+
+| Agent API                                                              | Capability                                       |
+| ---------------------------------------------------------------------- | ------------------------------------------------ |
+| `this.schedule()`, `this.scheduleEvery()`, `this.cancelSchedule()`     | [`Scheduler`](/agents/capabilities/#scheduler)   |
+| `this.queue()`, `this.dequeue()`, `this.getQueue()`                    | [`Queue`](/agents/capabilities/#queue)           |
+| `this.addMcpServer()`, `this.removeMcpServer()`, `this.mcp`            | [`MCPClientManager`](/agents/capabilities/#mcp-client) |
+| `this.state`, `this.setState()`, `onStateChanged()`                    | [`State`](/agents/capabilities/#state)           |
+| `onConnect()`, `onMessage()`, `this.broadcast()`, `getConnections()`   | [`WebSockets`](/agents/capabilities/#websockets) |
+| `this.tasks`                                                           | [`Tasks`](/agents/capabilities/#tasks)           |
+
+To add another capability, such as the [Pi harness](/agents/harnesses/pi/), install it on `this.lifecycle` in the constructor:
+
+```ts
+import { Agent } from "agents";
+import { PiHarness } from "agents/harness/pi";
+
+export class Assistant extends Agent<Env> {
+	harness = new PiHarness({
+		/* model and tools */
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+}
+```
+
+The Agents SDK provides two main APIs for the Agent class:
 
 | API                           | Description                                                                      |
 | ----------------------------- | -------------------------------------------------------------------------------- |
@@ -25,7 +56,7 @@ The Agents SDK provides two main APIs:
 
 :::note
 
-Agents require [Cloudflare Durable Objects](/durable-objects/). Refer to [Configuration](/agents/runtime/operations/configuration/) to learn how to add the required bindings.
+Agents require [Cloudflare Durable Objects](/durable-objects/). Refer to [Configuration](/agents/platform/configuration/) to learn how to add the required bindings.
 
 :::
 
@@ -54,7 +85,7 @@ Each Agent can have millions of instances. Each instance is a separate micro-ser
 
 <Render file="unique-agents" product="agents" />
 
-## Lifecycle
+## Hooks
 
 ```mermaid
 flowchart TD
@@ -101,13 +132,13 @@ flowchart TD
 | **MCP Client**           | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                                         | [MCP Client API](/agents/model-context-protocol/apis/client-api/)                      |
 | **AI Models**            | Workers AI, OpenAI, Anthropic bindings                                                           | [Using AI models](/agents/agent-class/using-ai-models/)                         |
 | **Protocol messages**    | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                                  | [Protocol messages](/agents/agent-class/protocol-messages/)                  |
-| **Context**              | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/)                      |
-| **Tracing**              | `wrapAISDK()`                                                                                    | [Tracing](/agents/runtime/operations/observability/tracing/)                           |
-| **Diagnostics channels** | `subscribe()`, diagnostics channels                                                              | [Diagnostics channels](/agents/runtime/operations/observability/diagnostics-channels/) |
+| **Context**              | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/lifecycle/get-current-agent/)                      |
+| **Tracing**              | `wrapAISDK()`                                                                                    | [Tracing](/agents/platform/observability/tracing/)                           |
+| **Diagnostics channels** | `subscribe()`, diagnostics channels                                                              | [Diagnostics channels](/agents/platform/observability/diagnostics-channels/) |
 | **Sub-agents**           | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/agent-class/sub-agents/)                                    |
 | **Agents as tools**      | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agents as tools](/agents/agent-class/agent-tools/)                              |
-| **Agent Skills**         | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/runtime/execution/agent-skills/)                                |
-| **Sessions**             | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/runtime/lifecycle/sessions/)                                        |
+| **Agent Skills**         | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/tools/agent-skills/)                                |
+| **Sessions**             | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/capabilities/sessions/)                                        |
 | **Think**                | `Think` base class, workspace tools, lifecycle hooks, extensions                                 | [Think](/agents/harnesses/think/)                                                      |
 | **Chat SDK**             | `createChatSdkState()`, `ChatSdkStateAgent`                                                      | [Chat SDK](/agents/agent-class/communication-channels/chat-sdk/)                                    |
 
@@ -211,14 +242,14 @@ Refer to [Routing](/agents/agent-class/routing/) for custom paths, CORS, and ins
 ## Next steps
 
 <LinkCard
-	title="Quick start"
-	href="/agents/getting-started/quick-start/"
-	description="Build your first agent in about 10 minutes."
+	title="Get started with the Agent class"
+	href="/agents/agent-class/get-started/"
+	description="Build a counter agent with synced state in about 10 minutes."
 />
 
 <LinkCard
 	title="Configuration"
-	href="/agents/runtime/operations/configuration/"
+	href="/agents/platform/configuration/"
 	description="Learn about wrangler.jsonc setup and deployment."
 />
 

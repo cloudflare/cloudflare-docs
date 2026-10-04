@@ -1,0 +1,76 @@
+---
+title: getCurrentAgent()
+description: Read the current Durable Object, request, and WebSocket connection from shared code with getCurrentAgent() from agents/lifecycle.
+pcx_content_type: reference
+sidebar:
+  order: 4
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`getCurrentAgent()` returns the Durable Object that is handling the current invocation, along with its request or WebSocket connection. Use it in shared code that does not have access to `this`, such as an AI SDK tool or a logging helper.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { getCurrentAgent, Lifecycle } from "agents/lifecycle";
+
+function requestOrigin(): string | undefined {
+	const { request } = getCurrentAgent();
+	return request ? new URL(request.url).origin : undefined;
+}
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onRequest(): Response {
+		return Response.json({ origin: requestOrigin() });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Pass your class as a type parameter when shared code needs its methods:
+
+```ts
+const { agent } = getCurrentAgent<MyAgent>();
+```
+
+## Return value
+
+| Property     | Type                      | Description                                                        |
+| ------------ | ------------------------- | ------------------------------------------------------------------ |
+| `agent`      | `T \| undefined`          | The Durable Object handling the invocation                         |
+| `connection` | `Connection \| undefined` | The WebSocket connection, inside `WebSockets` capability handlers  |
+| `request`    | `Request \| undefined`    | The HTTP request, inside `onRequest()` or a connect handler        |
+| `email`      | `unknown`                 | The email, inside the `Agent` class email handler                  |
+
+Every value is `undefined` outside an invocation that Lifecycle started.
+
+## Context availability
+
+Lifecycle sets the context while it calls host hooks and user callbacks:
+
+| Invocation                                 | `agent` | `connection` | `request` |
+| ------------------------------------------ | ------- | ------------ | --------- |
+| `onStart()`, `onAlarm()`, `onJob()`        | Yes     | No           | No        |
+| `onRequest()`                              | Yes     | No           | Yes       |
+| `WebSockets` `onConnect` handler           | Yes     | Yes          | Yes       |
+| `WebSockets` `onMessage`, `onClose`, `onError` handlers | Yes | Yes   | No        |
+| `Scheduler` and `Queue` callbacks          | Yes     | No           | No        |
+
+Capability hooks run outside the host context. A capability that calls user code wraps the call in `this.lifecycle.runInHostContext()`. For more information, refer to [Build a capability](/agents/lifecycle/build-a-capability/).
+
+`Scheduler` and `Queue` callbacks run from the alarm, in a fresh invocation. They do not see the request or connection that created the schedule or queue item.
+
+## Native RPC
+
+Lifecycle does not wrap native Durable Object RPC methods, so `getCurrentAgent()` returns `undefined` values inside them. The [`Agent` class](/agents/agent-class/get-current-agent/) wraps its methods for you.
+
+## The `Agent` class
+
+`getCurrentAgent()` from `agents` is the same function, typed for the `Agent` class. It also returns the current email inside `onEmail()`. For more information, refer to [`getCurrentAgent()` on the Agent class](/agents/agent-class/get-current-agent/).
