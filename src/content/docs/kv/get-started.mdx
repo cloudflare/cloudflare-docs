@@ -3,7 +3,7 @@ title: Getting started
 description: Create a KV namespace, write key-value pairs, and read data from Workers KV using Wrangler or the dashboard.
 pcx_content_type: get-started
 summary: |
-    Create a basic key-value store which stores the notification configuration of all users in an application, where each user may have `enabled` or `disabled` notifications.
+  Create a basic key-value store which stores the notification configuration of all users in an application, where each user may have `enabled` or `disabled` notifications.
 reviewed: 2025-05-19
 sidebar:
   order: 2
@@ -11,7 +11,19 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig, TypeScriptExample, DashButton } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	Steps,
+	FileTree,
+	Details,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+	TypeScriptExample,
+	DashButton,
+	APIRequest,
+} from "~/components";
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
@@ -171,6 +183,36 @@ To create a KV namespace via Wrangler:
 </Steps>
 
 </TabItem></Tabs>
+
+### KV Instant namespaces
+
+<Render file="kv-instant-beta" product="kv" />
+
+Use [Workers KV Instant](/kv/reference/kv-instant/) for small, read-heavy application configurations values that update infrequently and are proactively propagated across Cloudflare's network.
+
+To optionally create a KV Instant namespace named `APP_CONFIG` with [Wrangler](/workers/wrangler/), pass `--experimental-mode instant`:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler@latest"
+	args="kv namespace create APP_CONFIG --experimental-mode instant"
+/>
+
+To create the namespace with [Cloudflare CLI](/cf/), pass `--namespaceMode instant`:
+
+```sh
+cf kv namespaces create --title APP_CONFIG --namespaceMode instant
+```
+
+Alternatively, create it through the API with `mode: "instant"`:
+
+<APIRequest
+	path="/accounts/{account_id}/storage/kv/namespaces"
+	method="POST"
+	json={{ title: "APP_CONFIG", mode: "instant" }}
+/>
+
+KV Instance namespaces have additional limitations compared to classic namespaces. Refer to [KV Instant limits](/kv/platform/limits/#kv-instant) and [API differences](/kv/reference/kv-instant/#compare-api-behavior) before choosing this mode.
 
 ## 3. Bind your Worker to your KV namespace
 
