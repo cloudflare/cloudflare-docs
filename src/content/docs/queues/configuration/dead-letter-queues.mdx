@@ -14,6 +14,8 @@ A Dead Letter Queue (DLQ) is a common concept in a messaging system, and represe
 
 With Cloudflare Queues, a Dead Letter Queue is defined within your [consumer configuration](/queues/configuration/configure-queues/). Messages are delivered to the DLQ when they reach the configured retry limit for the consumer. Without a DLQ configured, messages that reach the retry limit are deleted permanently.
 
+The DLQ must use the same [jurisdiction](/queues/configuration/data-location/) as its source queue. If you specify a queue name that does not exist as the DLQ, Cloudflare automatically creates that queue in the same jurisdiction as the source queue.
+
 For example, the following consumer configuration would send messages to our DLQ named `"my-other-queue"` after retrying delivery (by default, 3 times):
 
 <WranglerConfig>
