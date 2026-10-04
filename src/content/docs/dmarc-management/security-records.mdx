@@ -27,6 +27,21 @@ To set up email security records:
 3. In **Email record overview**, select **View records**.
 4. Use the available options to set up [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), and [DMARC records](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/). This page will also list any previous records you might already have in your account.
 
+## Cloudflare-managed DMARC records
+
+When you enable DMARC Management, Cloudflare adds its own reporting address to your `_dmarc` TXT record so it can receive and process DMARC reports on your behalf. If no `_dmarc` record exists, Cloudflare creates one with a default policy of `p=none` (monitoring mode).
+
+You can identify Cloudflare-managed `_dmarc` records by two characteristics:
+
+- **TTL** is set to **Auto** (Cloudflare-managed records are not manually set)
+- **Content** includes a `rua` address ending in `@dmarc-reports.cloudflare.net`
+
+:::caution[Only one `_dmarc` TXT record is allowed]
+Per [RFC 7489 §6.6.3](https://tools.ietf.org/html/rfc7489#section-6.6.3), a zone must have exactly one `_dmarc` TXT record. If two records exist simultaneously, receiving mail servers treat your DMARC policy as undefined and ignore it entirely — including `p=reject` or `p=quarantine` enforcement. If you see a duplicate `_dmarc` record after enabling DMARC Management, refer to [Enable DMARC Management](/dmarc-management/enable/) for guidance on identifying and removing it.
+:::
+
+Deleting the Cloudflare-managed `_dmarc` record from your DNS settings stops DMARC report delivery to Cloudflare. Your original `_dmarc` record and its policy remain unaffected.
+
 ## Edit or delete records
 
 Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for more information.
