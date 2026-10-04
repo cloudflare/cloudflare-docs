@@ -1,0 +1,120 @@
+---
+title: State
+description: Store one validated value in a Durable Object with the State capability, and sync it to useAgent clients in real time with WebSockets.
+pcx_content_type: reference
+sidebar:
+  order: 7
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`State` from `agents/state` stores one JSON value in the object's SQLite database. It loads the value on first read, keeps it cached in memory, validates every change, and calls you back after each one. Combine it with [`WebSockets`](/agents/capabilities/websockets/) to sync the value with connected clients.
+
+## Install the capability
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { State } from "agents/state";
+
+type Settings = { theme: "light" | "dark"; notifications: boolean };
+
+export class SettingsAgent extends DurableObject<Env> {
+	readonly settings = new State<Settings>({
+		initialState: { theme: "light", notifications: true },
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.settings);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method === "PUT") {
+			this.settings.set(await request.json<Settings>());
+		}
+		return Response.json(this.settings.get());
+	}
+}
+```
+
+</TypeScriptExample>
+
+| Method                    | Description                                                                         |
+| ------------------------- | ----------------------------------------------------------------------------------- |
+| `get()`                   | Returns the current value, or `undefined` when nothing is stored                    |
+| `set(next, source?)`      | Validates and stores `next`, then calls `onChanged`. `source` defaults to `"server"` |
+
+`set()` writes synchronously. Install one `State` per value you store.
+
+## Options
+
+| Option                | Description                                                                                       |
+| --------------------- | ------------------------------------------------------------------------------------------------- |
+| `initialState`        | Stored on first read when no value exists                                                          |
+| `validateStateChange` | `(next, source) => void`. Throw to reject a change before it is stored. It must be synchronous     |
+| `onChanged`           | `(state, source) => void \| Promise<void>`. Runs after a change is stored. A failure does not undo the write |
+
+`source` is `"server"` for changes your code makes, or the `Connection` that sent the change.
+
+## Sync state with clients
+
+Pass the same `State` instance to `WebSockets` and to the Lifecycle. Call `broadcastState()` from `onChanged` to tell other clients about each change:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { State } from "agents/state";
+import { WebSockets } from "agents/websockets";
+
+type Counter = { count: number };
+
+export class CounterAgent extends DurableObject<Env> {
+	readonly state: State<Counter> = new State<Counter>({
+		initialState: { count: 0 },
+		validateStateChange: (next) => {
+			if (!Number.isSafeInteger(next.count) || next.count < 0) {
+				throw new Error("count must be a non-negative integer");
+			}
+		},
+		onChanged: (_state, source) => this.webSockets.broadcastState(source),
+	});
+	readonly webSockets: WebSockets = new WebSockets({ state: this.state });
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.state)
+		.use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+On connect, `WebSockets` sends each client the current value after its identity frame. When a client calls `setState()`, the change goes through `validateStateChange` before it is stored. A rejected change is logged and answered with a generic error frame. `broadcastState(source)` sends the new value to every connection except `source`.
+
+Read and update the value from React:
+
+```tsx
+import { useAgent } from "agents/react";
+
+function Counter() {
+	const agent = useAgent<{ count: number }>({
+		agent: "counter-agent",
+		name: "demo",
+	});
+	const count = agent.state?.count ?? 0;
+	return <button onClick={() => agent.setState({ count: count + 1 })}>{count}</button>;
+}
+```
+
+Use the `readonly` option on `WebSockets` to refuse state updates from some connections. A readonly connection still receives state and can call methods.
+
+`connection.setState()` is a different feature. It stores a value on one connection and never syncs it to other clients.
+
+## Storage
+
+`State` stores its value in the `cf_agents_state` table. Store large or relational data in your own tables instead, because every change rewrites the whole value.
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs a `State` and a `WebSockets` wired together. Its `initialState`, `this.state`, `this.setState()`, and `onStateChanged()` call them. For more information, refer to [Store and sync state](/agents/agent-class/state/).

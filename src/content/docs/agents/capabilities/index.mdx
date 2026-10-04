@@ -46,298 +46,117 @@ The following capabilities ship with the `agents` package. Capabilities marked E
 | Capability                            | Import              | Status       | What it does                                                         |
 | ------------------------------------- | ------------------- | ------------ | -------------------------------------------------------------------- |
 | [`PiHarness`](/agents/harnesses/pi/)  | `agents/harness/pi` | Beta         | Runs the Pi agent loop, with recovery after eviction                 |
-| [`MCPClientManager`](#mcp-client)     | `agents/mcp/client` | Stable       | Connects to MCP servers and keeps the connections across restarts    |
-| [`Scheduler`](#scheduler)             | `agents/schedules`  | Stable       | Runs callbacks after a delay, at a date, on a cron, or on an interval |
-| [`WebSockets`](#websockets)           | `agents/websockets` | Stable       | Accepts hibernating connections that `useAgent` can reach            |
-| [`State`](#state)                     | `agents/state`      | Stable       | Stores one validated value, and syncs it to clients with `WebSockets` |
-| [`Queue`](#queue)                     | `agents/queue`      | Experimental | Runs background callbacks one at a time, in push order               |
-| [`RoutedAgents`](#routed-agents)      | `agents/routing`    | Experimental | Keeps a catalog of independent agents and forwards requests to them  |
-| [`Browser`](#browser)                 | `agents/browser`    | Experimental | Keeps one persistent browser session open for the agent              |
-| [`Sessions`](#sessions)               | `agents/sessions`   | Experimental | Stores conversation history as a tree of messages                    |
-| [`Streams`](#streams)                 | `agents/streams`    | Experimental | Stores incremental output that clients can replay and follow         |
-| [`Tasks`](#tasks)                     | `agents/tasks`      | Experimental | Runs replayable background work with journaled steps                 |
-
-`PiHarness`, `MCPClientManager`, `RoutedAgents`, and `Browser` give an agent its behavior. `Scheduler`, `Queue`, `WebSockets`, and `State` cover background work and connections. `Sessions`, `Streams`, and `Tasks` are lower-level pieces for [building your own harness](#build-your-own-harness).
+| [`MCPClientManager`](/agents/capabilities/mcp-client/)     | `agents/mcp/client` | Stable       | Connects to MCP servers and keeps the connections across restarts    |
+| [`Scheduler`](/agents/capabilities/scheduler/)             | `agents/schedules`  | Stable       | Runs callbacks after a delay, at a date, on a cron, or on an interval |
+| [`WebSockets`](/agents/capabilities/websockets/)           | `agents/websockets` | Stable       | Accepts hibernating connections that `useAgent` can reach            |
+| [`State`](/agents/capabilities/state/)                     | `agents/state`      | Stable       | Stores one validated value, and syncs it to clients with `WebSockets` |
+| [`Queue`](/agents/capabilities/queue/)                     | `agents/queue`      | Experimental | Runs background callbacks one at a time, in push order               |
+| [`RoutedAgents`](/agents/capabilities/routed-agents/)      | `agents/routing`    | Experimental | Keeps a catalog of independent agents and forwards requests to them  |
+| [`Browser`](/agents/capabilities/browser/)                 | `agents/browser`    | Experimental | Keeps one persistent browser session open for the agent              |
+| [`Sessions`](/agents/capabilities/sessions/)               | `agents/sessions`   | Experimental | Stores conversation history as a tree of messages                    |
+| [`Streams`](/agents/capabilities/streams/)                 | `agents/streams`    | Experimental | Stores incremental output that clients can replay and follow         |
+| [`Tasks`](/agents/capabilities/tasks/)                     | `agents/tasks`      | Experimental | Runs replayable background work with journaled steps                 |
 
 To write a capability of your own, refer to [Build a capability](/agents/lifecycle/build-a-capability/).
 
-## MCP client
+## Capabilities by purpose
 
-`MCPClientManager` connects your agent to [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers. It stores the servers you add, reconnects to them on startup, and handles OAuth callbacks before your `onRequest()` runs:
+### Give the agent behavior
 
-<TypeScriptExample>
+- [Pi harness](/agents/harnesses/pi/) runs a full agent loop with tools, retries, and recovery.
+- [MCP client](/agents/capabilities/mcp-client/) connects to MCP servers and keeps the connections across restarts.
+- [Routed agents](/agents/capabilities/routed-agents/) lets one hub own many independent agents, such as one per chat.
+- [Browser](/agents/capabilities/browser/) keeps a persistent browser session for the model to drive.
 
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { MCPClientManager } from "agents/mcp/client";
+### Run background work
 
-export class ToolAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
-		env: this.env,
-	});
-	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
-}
-```
+- [Scheduler](/agents/capabilities/scheduler/) runs callbacks after a delay, at a date, on a cron, or on an interval.
+- [Queue](/agents/capabilities/queue/) runs callbacks one at a time, in push order, after the request returns.
 
-</TypeScriptExample>
+### Connect clients
 
-Pass `env` when you connect to MCP servers over Durable Object RPC. Use `listTools()` for the raw tool list or `getAITools()` for AI SDK tools. For more information, refer to the [MCP client API](/agents/model-context-protocol/apis/client-api/).
-
-## Scheduler
-
-`Scheduler` runs registered callbacks after a delay, at a date, from a cron expression, or at a fixed interval:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { Scheduler } from "agents/schedules";
-
-export class ReminderAgent extends DurableObject<Env> {
-	readonly scheduler = new Scheduler({
-		callbacks: {
-			sendReminder: (payload: { message: string }) => {
-				console.log(payload.message);
-			},
-		},
-	});
-	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
-
-	async onRequest(): Promise<Response> {
-		const schedule = await this.scheduler.set(60, "sendReminder", {
-			message: "One minute has passed",
-		});
-		return Response.json(schedule, { status: 201 });
-	}
-}
-```
-
-</TypeScriptExample>
-
-Register callbacks in the constructor so that every wake rebuilds the same map. `set()` and `every()` check the callback name and payload type against it. Cron and interval schedules deduplicate, so you can create them in `onStart()`.
-
-## WebSockets
-
-`WebSockets` accepts WebSocket upgrades and speaks the Agents protocol, so a plain Durable Object works with `useAgent` and `AgentClient`:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject, RpcTarget } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { WebSockets } from "agents/websockets";
-
-class RoomMethods extends RpcTarget {
-	ping(): string {
-		return "pong";
-	}
-}
-
-export class RoomAgent extends DurableObject<Env> {
-	readonly webSockets = new WebSockets({
-		callables: new RoomMethods(),
-		handlers: {
-			onMessage: (connection, message) => connection.send(message),
-		},
-	});
-	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
-}
-```
-
-</TypeScriptExample>
-
-Clients call the methods on `callables` with `agent.stub.ping()` or `agent.call("ping")`. Connections hibernate by default, so idle clients stay connected while the object leaves memory.
-
-## State
-
-`State` stores one validated value in the object's storage. Pass it to `WebSockets` to sync it with `useAgent().state`:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { State } from "agents/state";
-import { WebSockets } from "agents/websockets";
-
-export class CounterAgent extends DurableObject<Env> {
-	readonly state: State<{ count: number }> = new State({
-		initialState: { count: 0 },
-		onChanged: (_state, source) => this.webSockets.broadcastState(source),
-	});
-	readonly webSockets: WebSockets = new WebSockets({ state: this.state });
-	readonly lifecycle = Lifecycle.install(this)
-		.use(this.state)
-		.use(this.webSockets);
-}
-```
-
-</TypeScriptExample>
-
-`state.get()` reads the value and `state.set(next)` validates and stores it. Pass `validateStateChange` to reject a change by throwing.
-
-## Queue
-
-`Queue` runs background callbacks one at a time, in push order, from the object's alarm:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { Queue } from "agents/queue";
-
-export class UploadAgent extends DurableObject<Env> {
-	readonly queue = new Queue({
-		callbacks: {
-			processUpload: (payload: { fileName: string }) => {
-				console.log(`Processing ${payload.fileName}`);
-			},
-		},
-		retry: { maxAttempts: 3 },
-	});
-	readonly lifecycle = Lifecycle.install(this).use(this.queue);
-
-	async onRequest(): Promise<Response> {
-		const item = await this.queue.push("processUpload", {
-			fileName: "report.pdf",
-		});
-		return Response.json(item, { status: 202 });
-	}
-}
-```
-
-</TypeScriptExample>
-
-`push()` returns once the item is stored, without waiting for the callback. An interrupted callback can run again, so make external effects idempotent.
-
-## Routed agents
-
-`RoutedAgents` lets one hub Durable Object own many independent agents, such as one agent per chat. It stores each agent's ID and metadata, and forwards requests under `/{route}/{id}` to the right agent:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { RoutedAgents } from "agents/routing";
-import type { ChatAgent } from "./chat-agent";
-
-export class UserHub extends DurableObject<Env> {
-	readonly chats = new RoutedAgents<ChatAgent, { title: string }>({
-		namespace: this.env.ChatAgent,
-		route: "chats",
-	});
-	readonly lifecycle = Lifecycle.install(this).use(this.chats);
-}
-```
-
-</TypeScriptExample>
-
-The hub can be a plain Durable Object. Each routed agent must extend the [`Agent` class](/agents/agent-class/), because deletion uses its teardown. Manage the catalog with `create()`, `list()`, `get()`, `setMetadata()`, and `delete()`.
-
-## Browser
-
-`Browser` keeps one [Browser Run](/browser-run/) session open across requests, so tabs, cookies, and logins carry over:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Browser, browserRun } from "agents/browser";
-import { Lifecycle } from "agents/lifecycle";
-
-export class ResearchAgent extends DurableObject<Env> {
-	readonly browser = new Browser({ provider: browserRun(this.env.BROWSER) });
-	readonly lifecycle = Lifecycle.install(this).use(this.browser);
-}
-```
-
-</TypeScriptExample>
-
-Give the browser to a model with `browserTool()`. For more information, refer to [Browser](/agents/tools/browser/).
+- [WebSockets](/agents/capabilities/websockets/) accepts hibernating connections and exposes methods to `useAgent` clients.
+- [State](/agents/capabilities/state/) stores one validated value and syncs it to clients through `WebSockets`.
 
 ## Build your own harness
 
-A harness is the loop around the model. [`PiHarness`](/agents/harnesses/pi/) is one you can install today. To write your own, combine these three capabilities:
+A harness is the loop around the model. To write your own, combine three lower-level capabilities:
 
-- `Sessions` stores the conversation.
-- `Streams` stores the model's output as it arrives.
-- `Tasks` runs each turn as replayable background work.
+- [Sessions](/agents/capabilities/sessions/) stores the conversation.
+- [Streams](/agents/capabilities/streams/) stores the model's output as it arrives, so clients can reconnect and resume.
+- [Tasks](/agents/capabilities/tasks/) runs each turn as replayable steps that survive eviction.
 
-### Sessions
-
-`Sessions` stores conversation messages as a tree, with branches, compaction, full-text search, and attachments:
+This sketch stores the user's message, runs the turn as a task, and streams the reply over Server-Sent Events (SSE):
 
 <TypeScriptExample>
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
 import { Lifecycle } from "agents/lifecycle";
-import { Sessions } from "agents/sessions";
-
-export class ChatAgent extends DurableObject<Env> {
-	readonly sessions = new Sessions();
-	readonly lifecycle = Lifecycle.install(this).use(this.sessions);
-	readonly session = this.sessions.session();
-}
-```
-
-</TypeScriptExample>
-
-One `Sessions` capability holds many sessions by ID. Call `session()` with no ID when the object represents a single conversation.
-
-### Streams
-
-`Streams` stores incremental output as numbered chunks. A client can reconnect, replay what it missed, and follow new chunks:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
-import { Streams } from "agents/streams";
-
-export class OutputAgent extends DurableObject<Env> {
-	readonly streams = new Streams();
-	readonly lifecycle = Lifecycle.install(this).use(this.streams);
-}
-```
-
-</TypeScriptExample>
-
-Producers call `open()`, append JSON chunks, and finish with `close()` or `error()`. `sseResponse()` serves a stream as resumable Server-Sent Events (SSE).
-
-### Tasks
-
-`Tasks` runs background work as named steps. After an interruption, completed steps return their stored results and the run continues from the first unfinished step:
-
-<TypeScriptExample>
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { Lifecycle } from "agents/lifecycle";
+import { Sessions, type SessionMessage } from "agents/sessions";
+import { sseResponse, Streams } from "agents/streams";
 import { Tasks, type TaskStep } from "agents/tasks";
 
-export class ReportAgent extends DurableObject<Env> {
+// Replace with your model call. It yields text deltas.
+declare function generateReply(history: SessionMessage[]): AsyncIterable<string>;
+
+type TurnInput = { streamId: string };
+
+export class MyHarness extends DurableObject<Env> {
+	readonly sessions = new Sessions();
+	readonly streams = new Streams();
 	readonly tasks = new Tasks({
 		definitions: {
-			"publish-report@v1": async (input: { topic: string }, step: TaskStep) => {
-				const draft = await step.do("draft", () => `Draft about ${input.topic}`);
-				await step.sleep("review", "10 minutes");
-				return { draft };
+			"turn@v1": async ({ streamId }: TurnInput, step: TaskStep) => {
+				const text = await step.do("generate", async () => {
+					const history = await this.session.getHistory();
+					const stream = await this.streams.open(streamId);
+					let reply = "";
+					for await (const delta of generateReply(history)) {
+						reply += delta;
+						stream.append({ delta });
+					}
+					stream.close();
+					return reply;
+				});
+				await step.do("save", async () => {
+					await this.session.appendMessage({
+						id: streamId,
+						role: "assistant",
+						parts: [{ type: "text", text }],
+					});
+				});
 			},
 		},
 	});
-	readonly lifecycle = Lifecycle.install(this).use(this.tasks);
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.sessions)
+		.use(this.streams)
+		.use(this.tasks);
+	readonly session = this.sessions.session();
+
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		if (request.method === "POST") {
+			await this.session.appendMessage({
+				id: crypto.randomUUID(),
+				role: "user",
+				parts: [{ type: "text", text: await request.text() }],
+			});
+			const streamId = crypto.randomUUID();
+			await this.tasks.run("turn@v1", { streamId });
+			return Response.json({ streamId }, { status: 202 });
+		}
+		const streamId = url.searchParams.get("stream");
+		if (!streamId) return new Response("Missing stream", { status: 400 });
+		return sseResponse(this.streams, streamId, { request });
+	}
 }
 ```
 
 </TypeScriptExample>
 
-`tasks.run(name, input)` returns a durable receipt. A durable sleep parks the run without keeping the object in memory.
+A model call cannot resume halfway. If the `generate` step is interrupted, it runs again from the start. Check `step.interrupted` in the handler to decide what to do with a partial reply.
 
 ## Capabilities on the Agent class
 

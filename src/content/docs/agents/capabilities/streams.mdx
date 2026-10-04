@@ -1,0 +1,186 @@
+---
+title: Streams
+description: Store incremental output in a Durable Object with the Streams capability, so clients can replay what they missed, follow new chunks, and resume over SSE.
+pcx_content_type: reference
+sidebar:
+  order: 9
+  badge: Experimental
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::caution[Experimental]
+Everything exported from `agents/streams` may change between releases.
+:::
+
+`Streams` from `agents/streams` stores incremental output, such as tokens from a model, as an ordered log of chunks. Each chunk gets the next number in the stream, called its cursor. A client that reconnects replays from its last cursor and then follows new chunks. A producer that dies leaves exactly the chunks it wrote, so a new producer can continue from the stream's cursor.
+
+`Streams` needs no alarm.
+
+## Install the capability
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Streams } from "agents/streams";
+
+export class ReplyAgent extends DurableObject<Env> {
+	readonly streams = new Streams();
+	readonly lifecycle = Lifecycle.install(this).use(this.streams);
+}
+```
+
+</TypeScriptExample>
+
+Pass `{ maxChunkBytes }` to change the largest chunk you can append. The default is 1 MiB.
+
+## Write a stream
+
+```ts
+const stream = await this.streams.open("reply:123");
+stream.append({ text: "Hello" });
+stream.append({ text: " world" });
+stream.close();
+```
+
+- `append(chunk)` writes one JSON chunk synchronously and returns its sequence number. It wakes every live reader.
+- `close()` marks the stream completed. `error(reason)` marks it failed.
+- `open()` is safe to call again. Opening a live stream returns a writer at its current `cursor`. Opening a settled stream throws `StreamClosedError`.
+
+Pass `{ tag }` to `open()` to label a stream with an application key, such as a request ID. Tags are not unique, so one operation can produce several streams, for example a retried reply. `list({ tag, limit: 1 })` returns the newest one.
+
+## Read a stream
+
+```ts
+for await (const chunk of this.streams.read("reply:123", { from: 0 })) {
+	console.log(chunk);
+}
+```
+
+`read()` replays the stored chunks from `from`, follows new chunks as they arrive, and ends when the stream settles. Reading does not depend on the producer being alive.
+
+When each delivery has a cost, such as one SSE flush or one RPC call, read in batches:
+
+```ts
+for await (const batch of this.streams.readBatches("reply:123", { batchSize: 50 })) {
+	send(batch);
+}
+```
+
+`readBatches()` also accepts `onUpToDate`, which runs once when the reader catches up with the stored chunks.
+
+| Method               | Description                                                                    |
+| -------------------- | ------------------------------------------------------------------------------ |
+| `status(id)`         | Returns `{ state, cursor }` for a stream, or `null`. `state` is `streaming`, `completed`, or `errored` |
+| `list(options?)`     | Lists streams, newest first. Filter by `state` or `tag`                        |
+| `delete(id)`         | Deletes a settled stream and its chunks                                        |
+
+## Serve a stream over SSE
+
+`sseResponse()` serves a stream as Server-Sent Events (SSE):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { sseResponse, Streams } from "agents/streams";
+
+export class ReplyAgent extends DurableObject<Env> {
+	readonly streams = new Streams();
+	readonly lifecycle = Lifecycle.install(this).use(this.streams);
+
+	onRequest(request: Request): Promise<Response> {
+		const id = new URL(request.url).searchParams.get("stream") ?? "reply:123";
+		return sseResponse(this.streams, id, { request });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each event's SSE `id` is the chunk's sequence number. A reconnecting `EventSource` sends `Last-Event-ID`, and the response continues from the next chunk, with no client code. `?from=` works too. The response sends an `up-to-date` event when it reaches the stored tail, heartbeat comments while it waits, and a final `done` or `error` event. The request's abort signal stops the response when the client disconnects.
+
+## Produce a stream from a task
+
+A [`Tasks`](/agents/capabilities/tasks/) step can write to a stream. Start the producer loop at the stream's cursor, so a replay after an interruption continues instead of writing chunks twice:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Streams } from "agents/streams";
+import { Tasks, type TaskStep } from "agents/tasks";
+
+type GenerateInput = { streamId: string; total: number };
+
+export class GenerateAgent extends DurableObject<Env> {
+	readonly streams = new Streams();
+	readonly tasks = new Tasks({
+		definitions: {
+			"generate@v1": async (input: GenerateInput, step: TaskStep) => {
+				await step.do("stream", async () => {
+					const stream = await this.streams.open(input.streamId);
+					for (let i = stream.cursor; i < input.total; i++) {
+						stream.append({ i, text: `chunk ${i}` });
+					}
+					stream.close();
+				});
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.streams)
+		.use(this.tasks);
+}
+```
+
+</TypeScriptExample>
+
+## Turn a stream into a message
+
+A stream is temporary. Once its content is saved somewhere else, such as a session message, delete its rows. `close()` can run your own synchronous writes and delete the stream in one transaction:
+
+```ts
+stream.close({
+	commit: () => saveMessageSync(message),
+	discard: true,
+});
+```
+
+Either the commit runs and the stream is deleted, or the commit throws and the stream stays open. `commit` must be synchronous. `error(reason, { commit, discard })` works the same way for a failed producer.
+
+## Storage
+
+`Streams` stores chunks in blocks of up to 256 KB, so a long stream is a few rows. Each append is one billed row write. Streams are kept until you delete them or close them with `discard: true`.
+
+`AIChatAgent` and [Project Think](/agents/harnesses/think/) store each in-progress reply in `Streams`.
+
+## On the Agent class
+
+Install `Streams` on an Agent in the constructor:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { Streams } from "agents/streams";
+
+export class ReplyAgent extends Agent<Env> {
+	readonly streams = new Streams();
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.streams);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The [streams example](https://github.com/cloudflare/agents/tree/main/examples/next/streams) serves a task-produced stream over SSE.

@@ -1,0 +1,125 @@
+---
+title: Scheduler
+description: Run callbacks on a Durable Object after a delay, at a date, from a cron expression, or on an interval with the Scheduler capability.
+pcx_content_type: reference
+sidebar:
+  order: 4
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`Scheduler` from `agents/schedules` runs registered callbacks in the future: after a delay, at a date, from a cron expression, or at a fixed interval. Schedules are stored as jobs in the [Lifecycle job queue](/agents/lifecycle/job-queue/), so they survive eviction and share the object's alarm with other capabilities.
+
+## Install the capability
+
+Register callbacks by name in the constructor, then install the scheduler on the [Lifecycle](/agents/lifecycle/):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler, type Schedule } from "agents/schedules";
+
+type Reminder = { message: string };
+
+export class ReminderAgent extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			sendReminder: (payload: Reminder, schedule: Schedule<Reminder>) => {
+				console.log(`Reminder ${schedule.id}: ${payload.message}`);
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
+
+	async onRequest(): Promise<Response> {
+		const schedule = await this.scheduler.set(300, "sendReminder", {
+			message: "Five minutes have passed",
+		});
+		return Response.json(schedule, { status: 201 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each schedule stores the callback's name, not the function. The callbacks map is rebuilt every time the object starts, so a schedule created before an eviction finds its callback after the object wakes. Register every callback unconditionally in the field initializer.
+
+`set()` and `every()` check the callback name and payload type against the map. A callback receives the payload and the schedule that fired. It runs inside the host's invocation context, so [`getCurrentAgent()`](/agents/lifecycle/get-current-agent/) returns the object.
+
+## Schedule work
+
+`set()` takes the time as its first argument. The type of that argument picks the mode:
+
+| `when`                  | Mode      | Example                                           |
+| ----------------------- | --------- | ------------------------------------------------- |
+| `number`                | Delayed   | `set(60, "sendReminder", payload)` runs in 60 seconds |
+| `Date`                  | Scheduled | `set(new Date("2026-12-25T09:00:00Z"), ...)`      |
+| `string`                | Cron      | `set("0 8 * * 1-5", ...)` runs at 08:00 UTC on weekdays |
+
+`every()` creates a fixed-interval schedule:
+
+```ts
+await this.scheduler.every(30, "sendReminder", { message: "Every 30 seconds" });
+```
+
+The first interval run happens after `intervalSeconds`, not immediately. If a run is still going when the next one is due, the scheduler skips it.
+
+### Deduplicate schedules
+
+Cron and interval schedules are idempotent by default. Calling `set()` or `every()` again with the same callback, timing, and payload returns the existing schedule. You can create recurring schedules in `onStart()` without adding a row on every wake:
+
+```ts
+async onStart(): Promise<void> {
+	await this.scheduler.set("0 * * * *", "sendReminder", { message: "Hourly" });
+}
+```
+
+Delayed and dated schedules create a new row on every call. Pass `{ idempotent: true }` as the fourth argument to deduplicate them on callback and payload.
+
+## Manage schedules
+
+| Method              | Description                                                      |
+| ------------------- | ---------------------------------------------------------------- |
+| `get(id)`           | Returns one schedule, or `undefined`                             |
+| `list(criteria?)`   | Returns schedules, filtered by `id`, `type`, or `timeRange`      |
+| `cancel(id)`        | Removes a schedule. Returns `true` if one was removed            |
+
+```ts
+const crons = await this.scheduler.list({ type: "cron" });
+for (const schedule of crons) {
+	await this.scheduler.cancel(schedule.id);
+}
+```
+
+A one-time schedule is deleted after it runs. A cron or interval schedule moves to its next run time.
+
+## Options
+
+| Option                       | Description                                                                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `callbacks`                  | Named callbacks `(payload, schedule) => unknown`                                                              |
+| `retry`                      | Default retry policy for callbacks. Defaults to three attempts, a 100 ms base delay, and a 3,000 ms maximum delay |
+| `hungScheduleTimeoutSeconds` | Seconds before a running interval counts as abandoned. Defaults to `30`                                       |
+| `onError`                    | Observes a callback's failure after its last retry                                                            |
+
+Pass `{ retry }` as the fourth argument to `set()` or `every()` to override the retry policy for one schedule.
+
+A callback that throws on every attempt is reported to `onError`. A one-time schedule is then removed, and a recurring schedule continues at its next run.
+
+## Limits
+
+- Cron schedules have minute precision. Interval schedules have second precision.
+- Callbacks run one at a time with every other job on the object. Keep them short, and move long work to [`Tasks`](/agents/capabilities/tasks/) or [`Queue`](/agents/capabilities/queue/).
+- Payloads must be JSON-serializable.
+
+## Observability
+
+The scheduler publishes `schedule:create`, `schedule:execute`, `schedule:retry`, `schedule:error`, and `schedule:cancel` events to the `agents:schedule` [diagnostics channel](/agents/platform/observability/diagnostics-channels/).
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs a `Scheduler` as `this.scheduler`. Its `this.schedule()`, `this.scheduleEvery()`, `this.listSchedules()`, and `this.cancelSchedule()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Schedule tasks](/agents/agent-class/schedule-tasks/).

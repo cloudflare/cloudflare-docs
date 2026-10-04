@@ -1,0 +1,120 @@
+---
+title: Browser
+description: Keep one persistent Browser Run session open for a Durable Object with the Browser capability, and give it to a model as a tool.
+pcx_content_type: reference
+sidebar:
+  order: 3
+  badge: Experimental
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+
+:::caution[Experimental]
+The `Browser` capability may change between releases.
+:::
+
+`Browser` from `agents/browser` gives an agent one [Browser Run](/browser-run/) session that stays open between requests. Tabs, cookies, and logins carry over from one model turn to the next. The capability stores the session in the object's database and reconnects to it after a wake.
+
+For one-off page reads, such as fetching a page as Markdown, use [quick actions](/agents/tools/browser/#quick-actions) instead. They need no Durable Object.
+
+## Install the capability
+
+<PackageManagers pkg="agents @cloudflare/codemode ai zod" />
+
+Add the Browser Run and Worker Loader bindings:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat"],
+	"browser": { "binding": "BROWSER" },
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+Construct the browser with a Browser Run provider, and install it on the [Lifecycle](/agents/lifecycle/):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Browser, browserRun } from "agents/browser";
+import { Lifecycle } from "agents/lifecycle";
+
+export class ResearchAgent extends DurableObject<Env> {
+	readonly browser = new Browser({
+		provider: browserRun(this.env.BROWSER, { keepAliveMs: 10 * 60_000 }),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.browser);
+}
+```
+
+</TypeScriptExample>
+
+| Option            | Description                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `provider`        | Where the browser runs. Create one with `browserRun(binding, options)`              |
+| `name`            | Which browser this is. Use a different name for each extra browser on one object    |
+| `timeoutMs`       | Default timeout for Chrome DevTools Protocol (CDP) commands                         |
+
+`browserRun()` accepts Browser Run options such as `keepAliveMs`, `recording`, and hostname `guardrails`.
+
+## Give the browser to a model
+
+`browserTool()` from `agents/browser/ai-sdk` turns the browser into one AI SDK tool. The model writes CDP code, and the tool runs it in a sandbox against the persistent browser:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Browser, browserRun } from "agents/browser";
+import { browserTool } from "agents/browser/ai-sdk";
+import { Lifecycle } from "agents/lifecycle";
+import { generateText, type LanguageModel } from "ai";
+
+export { CodemodeRuntime } from "agents/browser";
+
+declare const model: LanguageModel;
+
+export class ResearchAgent extends DurableObject<Env> {
+	readonly browser = new Browser({ provider: browserRun(this.env.BROWSER) });
+	readonly lifecycle = Lifecycle.install(this).use(this.browser);
+
+	async onRequest(request: Request): Promise<Response> {
+		const { text } = await generateText({
+			model,
+			prompt: await request.text(),
+			tools: {
+				browser: browserTool({ browser: this.browser, loader: this.env.LOADER }),
+			},
+		});
+		return new Response(text);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Export `CodemodeRuntime` from your Worker's entry point. The tool's sandbox runs in a Durable Object facet of that class.
+
+- The model never opens or closes the browser. If the session was lost, the code runs in a new browser and the result includes `restarted: true`.
+- The tab the model works in is remembered between turns. Tabs a page opens come back as `newTabs`.
+- For TanStack AI, import `browserTool` from `agents/browser/tanstack-ai` instead.
+
+## Control the browser from your code
+
+| Method                     | Description                                                     |
+| -------------------------- | --------------------------------------------------------------- |
+| `connect()`                | Opens a CDP connection to the session, creating it if needed    |
+| `liveView()`               | Returns a [Live View](/browser-run/features/live-view/) link so a person can watch or take over |
+| `close()`                  | Closes the session. The next use starts a new browser           |
+
+## Related resources
+
+- [Browser tools](/agents/tools/browser/) covers `createBrowserTools()`, quick actions, Live View, and session recording.
+- [Browser agent](/agents/examples/browser-agent/) builds a complete agent that uses a browser.

@@ -38,7 +38,7 @@ Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, mode
 
 ## How it works
 
-`PiHarness` is a new "Lifecycle capability" provided by the Cloudflare Agents SDK. Pi Durable provides the agent harness and the [Lifecycle](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md) is responsible for keeping the agent running in the Durable Object. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes, and network issues. A Lifecycle capability is a reusable piece of a Durable Object that the Lifecycle starts and gives SQLite storage and a durable job queue. `PiHarness` uses them in two ways:
+`PiHarness` is a new "Lifecycle capability" provided by the Cloudflare Agents SDK. Pi Durable provides the agent harness and the [Lifecycle](/agents/lifecycle/) is responsible for keeping the agent running in the Durable Object. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes, and network issues. A Lifecycle capability is a reusable piece of a Durable Object that the Lifecycle starts and gives SQLite storage and a durable job queue. `PiHarness` uses them in two ways:
 
 - **Storage.** Pi keeps its transcripts, inbox, and tasks in its own tables in the object's SQLite database. The table names start with `pi_`, so they do not collide with your own tables.
 - **Wake-up.** Pi's scheduler runs in memory, and an evicted object has none. When a session has work in progress, `PiHarness` schedules a Lifecycle job for it. The job keeps a heartbeat while Pi works and completes when the session is idle. If the object is evicted mid-run, the job's alarm restarts it, Pi reopens its storage, and the run continues.
@@ -75,9 +75,65 @@ The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models,
 
 </WranglerConfig>
 
+## Use it in a Durable Object
+
+Create a Durable Object, install a [Lifecycle](/agents/lifecycle/), and add the harness to it. Configure the Pi `Harness` with a model, tools, and skills in the factory:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = env.Assistant.getByName("demo");
+		return Response.json({ text: await agent.ask("What is 47 × 19?") });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Address the object by name, for example with `env.Assistant.getByName("demo")`. You can install other [capabilities](/agents/capabilities/), such as `Scheduler` or `WebSockets`, on the same Lifecycle.
+
+The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, and `context`, a background context for opening Pi. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
+
+The factory runs inside the object's startup, once per isolate, before any session is used. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
+
+
 ## Use it in an Agent
 
-Creating a Pi agent requires configuring the Pi `Harness` with a model, skills, and tools, then registering the `PiHarness` with the `Agent` class. Every `Agent` already has a Lifecycle, so add the harness to it in the constructor:
+The [`Agent` class](/agents/agent-class/) already has a Lifecycle. Add the harness to it in the constructor:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -128,54 +184,6 @@ export default {
 ```
 
 </TypeScriptExample>
-
-The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, and `context`, a background context for opening Pi. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
-
-The factory runs inside the object's startup, once per isolate, before any session is used. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
-
-## Use it in a plain Durable Object
-
-You do not need the `Agent` class. Install a Lifecycle on a `DurableObject` and add the harness to it:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { createModels } from "@earendil-works/pi-ai/models";
-import { createRegistry, Harness } from "@earendil-works/pi-durable";
-import { PiHarness } from "agents/harness/pi";
-import { Lifecycle } from "agents/lifecycle";
-import { createAI } from "agents/models/pi-ai";
-
-export class Assistant extends DurableObject<Env> {
-	ai = createAI({ binding: this.env.AI });
-	registry = createRegistry();
-
-	harness = new PiHarness({
-		harness: ({ storage, context }) => {
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry },
-				context,
-			);
-		},
-		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
-	});
-
-	lifecycle = Lifecycle.install(this).use(this.harness);
-
-	async ask(prompt: string) {
-		const { text } = await this.harness.prompt(prompt);
-		return text;
-	}
-}
-```
-
-</TypeScriptExample>
-
-Address the object by name, for example with `env.Assistant.getByName("demo")`.
 
 ## Options
 
