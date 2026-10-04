@@ -75,6 +75,12 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 
 You can create API tokens via the API and use them to generate corresponding Access Key ID and Secret Access Key values. To get started, refer to [Create API tokens via the API](/fundamentals/api/how-to/create-via-api/). Below are the specifics for R2.
 
+:::warning[The S3 Secret Access Key is a SHA-256 hash of the token value]
+
+When you use an API-created token as S3 credentials, the **Secret Access Key is the SHA-256 hex digest of the API token `value`** — not the raw `value` itself. Using the raw value authenticates the request but fails signature validation with `The request signature we calculated does not match the signature you provided`, which reads like a permissions problem and is a common debugging trap. Refer to [Get S3 API credentials from an API token](#get-s3-api-credentials-from-an-api-token) below for the exact derivation.
+
+:::
+
 ### Access Policy
 
 An Access Policy specifies what resources the token can access and the permissions it has.
@@ -220,8 +226,10 @@ Determine what [permission groups](/fundamentals/api/how-to/create-via-api/#perm
 
 You can get the Access Key ID and Secret Access Key values from the response of the [Create Token](/api/resources/user/subresources/tokens/methods/create/) API:
 
-- Access Key ID: The `id` of the API token.
-- Secret Access Key: The SHA-256 hash of the API token `value`.
+- **Access Key ID**: The `id` of the API token.
+- **Secret Access Key**: The **SHA-256 hash of the API token `value`**. Using the raw `value` as the Secret Access Key results in `The request signature we calculated does not match the signature you provided` on every S3 request.
+
+The same derivation applies when you [roll a token](/api/resources/user/subresources/tokens/methods/roll/) (`PUT /tokens/{token_id}/value`): the rolled response contains a new `value`, and the new Secret Access Key is the SHA-256 hash of that new value. The Access Key ID (the token `id`) does not change, which makes roll-based rotation atomic for S3 consumers.
 
 Refer to [Authenticate against R2 API using auth tokens](/r2/examples/authenticate-r2-auth-tokens/) for a tutorial with JavaScript, Python, and Go examples.
 
