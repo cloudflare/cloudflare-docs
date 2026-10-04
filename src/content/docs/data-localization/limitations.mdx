@@ -46,7 +46,11 @@ Regional hostnames configured through the dashboard or the Regional Hostnames AP
 
 If a hostname has both a regional hostname configuration and an active Spectrum application, these are independent systems. The Spectrum application may override the regional hostname's IP steering with its own IP assignment. As a result, traffic may not be processed in the region configured via the Regional Hostnames API. If you need to regionalize a Spectrum application, contact your [Account Team](/support/contacting-cloudflare-support/) about Spectrum-specific regionalization options. Spectrum-specific regionalization only applies to HTTP and HTTPS [application types](/spectrum/reference/configuration-options/#application-type).
 
-Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests) (secondary HTTP requests that your Cloudflare Workers make to other services). Regional Services operates on your hostname's IPs. We recommend using [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) (which cryptographically signs DNS records to prevent tampering) and/or [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) (which encrypts DNS queries) to ensure that DNS responses are secure and correct.
+### Workers subrequests and Service bindings
+
+[Subrequests](/workers/platform/limits/#subrequests) that a Worker makes with `fetch()` to a regionalized hostname in a different zone are processed in that hostname's configured region. Regional Services does not reroute subrequests to a hostname in the same zone as the calling Worker, unless the Worker enables the [`global_fetch_strictly_public`](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) compatibility flag. Regional Services does not apply to Worker-to-Worker calls made through [Service bindings](/workers/runtime-apis/bindings/service-bindings/). Refer to [Workers](/data-localization/how-to/workers/#workers-subrequests) for details.
+
+Regional Services operates on your hostname's IPs. We recommend using [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) (which cryptographically signs DNS records to prevent tampering) and/or [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) (which encrypts DNS queries) to ensure that DNS responses are secure and correct.
 
 ## Customer Metadata Boundary
 
