@@ -11,15 +11,17 @@ products:
   - workers
 ---
 
-import { DirectoryListing, LinkButton } from "~/components";
+import { DirectoryListing, LinkButton, Render } from "~/components";
 
-:::caution
-This documentation describes the Miniflare API, which is only relevant for advanced use cases. Instead, most users should use [Wrangler](/workers/wrangler) to build, run & deploy their Workers locally
+:::note[Use Wrangler for most projects]
+This documentation describes the Miniflare API, which is only relevant for advanced use cases. Most users should use [Wrangler](/workers/wrangler/) to build, run, and deploy their Workers.
 :::
 
 **Miniflare** is a simulator for developing and testing
-[**Cloudflare Workers**](https://workers.cloudflare.com/). It's written in
-TypeScript, and runs your code in a sandbox implementing Workers' runtime APIs.
+[**Cloudflare Workers**](https://workers.cloudflare.com/). It is written in
+TypeScript and uses a local `workerd` process to implement Workers runtime APIs.
+
+<Render file="local-development-security" product="workers" />
 
 - 🎉 **Fun:** develop Workers easily with detailed logging, file watching and
   pretty error pages supporting source maps.
