@@ -45,11 +45,20 @@ Local Explorer supports the following binding types:
 | [R2](/r2/)                                            | List objects, view metadata                    | Upload and delete objects                   |
 | [D1](/d1/)                                            | Browse tables and rows, run SQL queries        | Insert, update, and delete rows through SQL |
 | [Durable Objects](/durable-objects/) (SQLite storage) | Browse SQLite tables and rows, run SQL queries | Insert, update, and delete rows through SQL |
+| [Email Service](/email-service/)                      | Inspect locally routed and sent email          | Send test messages to `email()` handlers    |
 | [Workflows](/workflows/)                              | List instances, view status and step history   | Trigger new runs, retry failed instances    |
 
 ### D1 and Durable Objects SQL Studio
 
 For [D1](/d1/) databases and [Durable Objects](/durable-objects/) that use the [SQLite storage API](/durable-objects/api/sqlite-storage-api/), Local Explorer includes a SQL Studio. This is the same experience available in the Cloudflare dashboard for deployed D1 databases. It provides both a visual table browser with inline editing and a SQL query editor where you can run arbitrary queries.
+
+### Email Service
+
+Local Explorer captures email activity during local development. The **Routing** view lists messages delivered to the `email()` handler. Select a message to inspect its headers, body, attachments, and handler actions. You can also compose a test message and deliver it to the handler.
+
+The **Sending** view lists messages sent through local [`send_email` bindings](/email-service/api/send-emails/workers-api/). Select a message to inspect its recipients, headers, attachments, and captured body.
+
+For configuration and testing examples, refer to [Email routing local development](/email-service/local-development/routing/) and [Email sending local development](/email-service/local-development/sending/).
 
 ## Observability
 
