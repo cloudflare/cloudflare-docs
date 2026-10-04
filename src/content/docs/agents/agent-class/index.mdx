@@ -30,12 +30,12 @@ Each `Agent` API calls a capability underneath. To move an agent off the `Agent`
 
 | Agent API                                                              | Capability                                       |
 | ---------------------------------------------------------------------- | ------------------------------------------------ |
-| `this.schedule()`, `this.scheduleEvery()`, `this.cancelSchedule()`     | [`Scheduler`](/agents/capabilities/#scheduler)   |
-| `this.queue()`, `this.dequeue()`, `this.getQueue()`                    | [`Queue`](/agents/capabilities/#queue)           |
-| `this.addMcpServer()`, `this.removeMcpServer()`, `this.mcp`            | [`MCPClientManager`](/agents/capabilities/#mcp-client) |
-| `this.state`, `this.setState()`, `onStateChanged()`                    | [`State`](/agents/capabilities/#state)           |
-| `onConnect()`, `onMessage()`, `this.broadcast()`, `getConnections()`   | [`WebSockets`](/agents/capabilities/#websockets) |
-| `this.tasks`                                                           | [`Tasks`](/agents/capabilities/#tasks)           |
+| `this.schedule()`, `this.scheduleEvery()`, `this.cancelSchedule()`     | [`Scheduler`](/agents/capabilities/scheduler/)   |
+| `this.queue()`, `this.dequeue()`, `this.getQueue()`                    | [`Queue`](/agents/capabilities/queue/)           |
+| `this.addMcpServer()`, `this.removeMcpServer()`, `this.mcp`            | [`MCPClientManager`](/agents/capabilities/mcp-client/) |
+| `this.state`, `this.setState()`, `onStateChanged()`                    | [`State`](/agents/capabilities/state/)           |
+| `onConnect()`, `onMessage()`, `this.broadcast()`, `getConnections()`   | [`WebSockets`](/agents/capabilities/websockets/) |
+| `this.tasks`                                                           | [`Tasks`](/agents/capabilities/tasks/)           |
 
 To stay on the `Agent` class and add another capability, such as the [Pi harness](/agents/harnesses/pi/), install it on `this.lifecycle` in the constructor:
 
@@ -146,7 +146,7 @@ flowchart TD
 | **Sub-agents**           | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/agent-class/sub-agents/)                                    |
 | **Agents as tools**      | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agents as tools](/agents/agent-class/agent-tools/)                              |
 | **Agent Skills**         | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/tools/agent-skills/)                                |
-| **Sessions**             | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/capabilities/sessions/)                                        |
+| **Sessions**             | `Sessions` capability: message trees, compaction, search                                         | [Sessions](/agents/capabilities/sessions/)                                        |
 | **Think**                | `Think` base class, workspace tools, lifecycle hooks, extensions                                 | [Think](/agents/harnesses/think/)                                                      |
 | **Chat SDK**             | `createChatSdkState()`, `ChatSdkStateAgent`                                                      | [Chat SDK](/agents/agent-class/communication-channels/chat-sdk/)                                    |
 

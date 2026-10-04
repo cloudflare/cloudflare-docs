@@ -1,0 +1,166 @@
+---
+title: MCP client
+description: Connect a Durable Object to MCP servers with the MCPClientManager capability, including OAuth, reconnection after restarts, and AI SDK tools.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+`MCPClientManager` from `agents/mcp/client` connects your agent to [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers. It stores the servers you add in the object's SQLite database, reconnects to them when the object starts, and handles OAuth callbacks before your `onRequest()` runs.
+
+## Install the capability
+
+Install the Agents SDK and the MCP client package:
+
+<PackageManagers pkg="agents @modelcontextprotocol/client@2.0.0" />
+
+Construct the manager with a client name and version, then install it on the [Lifecycle](/agents/lifecycle/):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+
+export class ToolAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
+		env: this.env,
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+}
+```
+
+</TypeScriptExample>
+
+| Option               | Description                                                                                               |
+| -------------------- | --------------------------------------------------------------------------------------------------------- |
+| `env`                | The Worker's bindings. Required to reconnect to MCP servers reached over Durable Object RPC after a wake. |
+| `createAuthProvider` | Builds the OAuth provider for a stored HTTP server. Use it to replace the default provider.               |
+
+## Add a server
+
+Adding a server takes three calls. `registerServer()` stores it, `connectToServer()` opens the transport, and `discoverIfConnected()` lists its tools, prompts, and resources:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+
+export class ToolAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
+		env: this.env,
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		if (request.method !== "POST" || !url.pathname.endsWith("/connect")) {
+			return Response.json({ tools: this.mcp.listTools() });
+		}
+
+		await this.mcp.registerServer("docs", {
+			name: "Cloudflare Docs",
+			url: "https://docs.mcp.cloudflare.com/mcp",
+			callbackUrl: `${url.origin}/agents/tool-agent/${this.lifecycle.name}/callback`,
+			transport: { type: "auto" },
+		});
+
+		const connection = await this.mcp.connectToServer("docs");
+		if (connection.state === "authenticating") {
+			return Response.redirect(connection.authUrl);
+		}
+		if (connection.state === "connected") {
+			await this.mcp.discoverIfConnected("docs");
+		}
+		return Response.json({ state: connection.state });
+	}
+}
+```
+
+</TypeScriptExample>
+
+`connectToServer()` returns one of these states:
+
+| State              | Meaning                                                              |
+| ------------------ | -------------------------------------------------------------------- |
+| `"connected"`      | The transport is open. Call `discoverIfConnected()` to load tools.   |
+| `"authenticating"` | The server needs OAuth. Send the user to `authUrl`.                  |
+| `"failed"`         | The connection failed. The result includes an `error` message.       |
+
+The server stays registered after the object leaves memory. On the next start, the manager reconnects to every stored server.
+
+## Handle OAuth
+
+When a server needs OAuth, the manager sends the user back to the `callbackUrl` you registered. Route that URL to the same named object. The manager matches the callback by origin and path, completes the token exchange, and responds before your `onRequest()` runs.
+
+To control the response the user sees after authorizing, call `configureOAuthCallback()` in `onStart()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+
+export class ToolAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+
+	onStart(): void {
+		this.mcp.configureOAuthCallback({
+			successRedirect: "/settings/integrations",
+			errorRedirect: "/settings/integrations?error=mcp",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+`configureOAuthCallback()` also accepts a `customHandler` that returns your own `Response`, such as a page that closes an OAuth popup.
+
+## Use tools
+
+| Method                                  | Returns                                                         |
+| --------------------------------------- | --------------------------------------------------------------- |
+| `listTools(filter?)`                    | The raw MCP tools from every ready server                       |
+| `getAITools(filter?)`                   | The same tools as an AI SDK tool set, ready for `streamText()`  |
+| `callTool({ serverId, name, arguments })` | The result of one tool call                                   |
+| `listPrompts()`, `listResources()`      | Prompts and resources from every ready server                   |
+
+Pass a `filter` such as `{ serverId: "docs" }` to limit the results to some servers.
+
+The manager reconnects in the background after a wake. Call `waitForConnections()` before you read tools, so that servers that are still reconnecting are included:
+
+```ts
+await this.mcp.waitForConnections({ timeout: 10_000 });
+const tools = this.mcp.getAITools();
+```
+
+## Manage servers
+
+- `listServers()` returns every stored server.
+- `removeServer(id)` closes the connection and deletes the server.
+- `mcpConnections[id].connectionState` reports the live state of one server.
+
+## Call the manager over RPC
+
+RPC methods do not start the Lifecycle. Call `await this.lifecycle.start()` before you read tools or servers in an RPC method:
+
+```ts
+async tools() {
+	await this.lifecycle.start();
+	return this.mcp.listTools();
+}
+```
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs `MCPClientManager` as `this.mcp`. Its `addMcpServer()` method runs the register, connect, and discover steps in one call, and builds the callback URL for you. For more information, refer to [McpClient](/agents/model-context-protocol/apis/client-api/).

@@ -1,0 +1,161 @@
+---
+title: WebSockets
+description: Accept hibernating WebSocket connections on a Durable Object, expose RPC methods to useAgent clients, and tag and broadcast to connections with the WebSockets capability.
+pcx_content_type: reference
+sidebar:
+  order: 6
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Lifecycle](/agents/lifecycle/) does not accept WebSocket connections on its own. `WebSockets` from `agents/websockets` is the capability that does. It accepts upgrades, hibernates idle connections, and speaks the Agents protocol, so a plain Durable Object works with `useAgent` and `AgentClient` from the [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
+
+## Install the capability
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+export class RoomAgent extends DurableObject<Env> {
+	readonly webSockets: WebSockets = new WebSockets({
+		handlers: {
+			onConnect: (connection) => {
+				connection.send(JSON.stringify({ type: "welcome", id: connection.id }));
+			},
+			onMessage: (connection, message) => {
+				for (const other of this.webSockets.getConnections()) {
+					if (other.id !== connection.id) other.send(message);
+				}
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+`WebSockets` claims every upgrade, even without handlers. It is a catch-all for upgrades, so the Lifecycle offers each upgrade to other capabilities first. Without the capability, the Lifecycle declines upgrades.
+
+## Handle connections
+
+The handlers run inside the host's invocation context, with the connection available from [`getCurrentAgent()`](/agents/lifecycle/get-current-agent/):
+
+| Handler                                      | When it runs                                                     |
+| -------------------------------------------- | ---------------------------------------------------------------- |
+| `onConnect(connection, ctx)`                 | After the upgrade is accepted. `ctx.request` is the upgrade request |
+| `onMessage(connection, message)`             | For each message that is not an Agents protocol frame            |
+| `onClose(connection, code, reason, wasClean)` | When the connection closes                                      |
+| `onError(connection, error)`                 | When the connection fails mid-session                            |
+
+A `Connection` has an `id`, `send()`, and `close()`. `connection.setState()` stores a small value on the connection itself. That value survives hibernation and is read back with `connection.state`.
+
+Use these methods on the capability to reach other connections:
+
+| Method                  | Description                                          |
+| ----------------------- | ---------------------------------------------------- |
+| `getConnections(tag?)`  | Every open connection, or those with one tag         |
+| `getConnection(id)`     | One connection by ID, or `undefined`                 |
+
+### Tag connections
+
+Pass `getConnectionTags` to label each connection when it is accepted. The connection ID is always the first tag:
+
+```ts
+readonly webSockets = new WebSockets({
+	getConnectionTags: (_connection, ctx) => {
+		const room = new URL(ctx.request.url).searchParams.get("room");
+		return room ? [`room:${room}`] : [];
+	},
+});
+```
+
+Then send to one group with `this.webSockets.getConnections("room:general")`.
+
+## Expose methods to clients
+
+Pass an `RpcTarget` as `callables`. Its methods are what clients call with `agent.stub.method()` or `agent.call("method")`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+class CounterMethods extends RpcTarget {
+	readonly storage: DurableObjectStorage;
+
+	constructor(storage: DurableObjectStorage) {
+		super();
+		this.storage = storage;
+	}
+
+	async increment(): Promise<number> {
+		const count = ((await this.storage.get<number>("count")) ?? 0) + 1;
+		await this.storage.put("count", count);
+		return count;
+	}
+}
+
+export class CounterAgent extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		callables: new CounterMethods(this.ctx.storage),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+The methods run inside the host's invocation context, with the calling connection in scope. Treat their arguments as untrusted input, because any connected client can call them.
+
+Connect from React with `useAgent`:
+
+```tsx
+import { useAgent } from "agents/react";
+
+function Counter() {
+	const agent = useAgent({ agent: "counter-agent", name: "demo" });
+	return <button onClick={() => agent.stub.increment()}>+1</button>;
+}
+```
+
+Route the binding from your Worker with [`routeAgentRequest()`](/agents/lifecycle/#route-requests-to-your-agent), and authenticate the request before you route it.
+
+## Choose a transport
+
+The client picks the transport with its `transport` option:
+
+| Transport                   | Behavior                                                                                                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `"cf-websocket"` (default)  | Hibernating connections. Callables travel as JSON `rpc` frames. Idle clients stay connected while the object leaves memory |
+| `"capnweb"` (experimental)  | Native [Cap'n Web](https://github.com/cloudflare/capnweb) calls. A returned `RpcTarget` is a live stub, streams work, and calls pipeline. An open connection keeps the object in memory |
+
+Both transports call the same handlers and show up in `getConnections()`.
+
+With the default transport, a message wakes a hibernated object. The constructor and Lifecycle startup run again before `onMessage`. Keep anything you need after a wake in storage or in `connection.setState()`.
+
+## Sync state
+
+Pass a [`State`](/agents/capabilities/state/) capability as `state` to sync one value with `useAgent().state`. For more information, refer to [Sync state with clients](/agents/capabilities/state/#sync-state-with-clients).
+
+## Control the protocol per connection
+
+By default, every connection gets the Agents protocol frames: an identity frame on connect, then the current state when `state` is set.
+
+| Option     | Description                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `protocol` | `true` (default), `false`, or a function that decides per connection. A connection without the protocol still sends and receives messages and calls methods |
+| `readonly` | A function that decides per connection whether its state updates are refused. Change it later with `setReadonly(connection)`         |
+
+Set `protocol: false` to send the connect frames yourself with `sendConnectFrames()`, or with `sendIdentity()` and `sendState()`.
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs `WebSockets` and calls its own `onConnect()`, `onMessage()`, `onClose()`, and `onError()` methods. Its `@callable()` methods are its client interface. For more information, refer to [WebSockets](/agents/agent-class/websockets/).

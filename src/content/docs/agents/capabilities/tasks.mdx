@@ -1,0 +1,193 @@
+---
+title: Tasks
+description: Run durable, replayable background work in a Durable Object with the Tasks capability, using journaled steps, durable sleeps, retries, and idempotency keys.
+pcx_content_type: reference
+sidebar:
+  order: 10
+  badge: Experimental
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::caution[Experimental]
+Everything exported from `agents/tasks` may change between releases.
+:::
+
+`Tasks` from `agents/tasks` runs background work as a sequence of named steps. A run survives eviction, deploys, and crashes. When a run resumes, completed steps return their stored results, sleeps check their stored deadlines, and work continues from the first unfinished step.
+
+Each run's next wake time is a job in the [Lifecycle job queue](/agents/lifecycle/job-queue/), so `Tasks` shares the object's alarm with `Scheduler` and every other capability.
+
+## Install the capability
+
+Declare task definitions in the constructor, then install the capability on the [Lifecycle](/agents/lifecycle/):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Tasks, type TaskStep } from "agents/tasks";
+
+type ReportInput = { reportId: string; topic: string };
+
+export class ReportAgent extends DurableObject<Env> {
+	readonly tasks = new Tasks({
+		definitions: {
+			"build-report@v1": async (input: ReportInput, step: TaskStep) => {
+				await step.status("Researching");
+				const research = await step.do(
+					"research",
+					{ retries: { limit: 4, delay: "2 seconds", backoff: "exponential" } },
+					({ signal }) => this.research(input.topic, signal),
+				);
+
+				await step.sleep("editorial-delay", "30 seconds");
+
+				await step.status("Publishing");
+				await step.do("publish", ({ idempotencyKey }) =>
+					this.publish(input.reportId, research, idempotencyKey),
+				);
+				return { reportId: input.reportId };
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.tasks);
+
+	async research(topic: string, signal: AbortSignal): Promise<string> {
+		const response = await fetch(`https://example.com/search?q=${topic}`, { signal });
+		return response.text();
+	}
+
+	async publish(id: string, body: string, idempotencyKey: string): Promise<void> {
+		await this.env.REPORTS.put(`reports/${id}.txt`, body, {
+			customMetadata: { idempotencyKey },
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The definitions map is the registry. Storage keeps only the definition name, and the map is rebuilt every time the object starts, so a run that was in progress before an eviction finds its handler afterwards. Put a version in the name, such as `"build-report@v2"`, instead of changing the steps of a definition with runs in progress.
+
+| Option        | Description                                                                     |
+| ------------- | ------------------------------------------------------------------------------- |
+| `definitions` | Named task handlers `(input, step) => result`                                   |
+| `retries`     | Default step retry policy. Defaults to five attempts with exponential backoff  |
+| `stepTimeout` | Default timeout for one step attempt. Defaults to five minutes                  |
+| `onError`     | Observes a run that fails                                                       |
+
+## Start a run
+
+```ts
+const receipt = await this.tasks.run(
+	"build-report@v1",
+	{ reportId: "42", topic: "durable execution" },
+	{ idempotencyKey: "report:42" },
+);
+```
+
+`run()` stores the run and returns a receipt without waiting for it to finish. A second `run()` with the same `idempotencyKey` joins the existing run instead of starting another, and its receipt has `accepted: false`.
+
+`run()` also accepts `runId` to choose the ID yourself, `metadata` to store JSON with the run, and `retain: false` to delete the run's record once it settles.
+
+Inputs, step results, metadata, and final results must be JSON-serializable and at most 1 MiB each.
+
+`tasks.handle(name)` returns a typed handle for one definition, with its own `run()`, `get()`, `getByIdempotencyKey()`, and `cancel()`:
+
+```ts
+const buildReport = this.tasks.handle("build-report@v1");
+const run = await buildReport.get(receipt.runId);
+```
+
+## Steps
+
+| Method                        | Behavior                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------- |
+| `step.do(name, config?, fn)`  | Runs `fn` once and stores its result. A replay returns the stored result without running `fn` |
+| `step.sleep(name, duration)`  | Stores a wake time and suspends the run. Nothing stays in memory while it waits             |
+| `step.sleepUntil(name, when)` | Sleeps until a date or Unix timestamp in milliseconds                                       |
+| `step.status(message)`        | Updates the run's progress message                                                          |
+| `step.idempotencyKey(name)`   | Returns the stable key that `step.do(name, ...)` passes to its callback                     |
+
+Each `step.do()` attempt receives `{ attempt, idempotencyKey, signal }`. The signal aborts when the run is cancelled or the attempt times out. `config` sets `retries` and `timeout` for one step.
+
+A step that throws retries after a durable delay. Throw `NonRetryableError` from `agents/tasks` to fail the run immediately.
+
+## Write replay-safe handlers
+
+Every attempt runs the handler again from its first line. To keep that safe:
+
+- Put every external side effect inside a `step.do()`.
+- Keep code between steps fast and deterministic. Capture `Date.now()` and random values as step results before you branch on them.
+- Give steps in a loop stable names, such as `` `import:${index}` ``.
+- Pass the attempt's `idempotencyKey` to external services. An interrupted step runs again, so delivery is at least once.
+
+`step.interrupted` is `{ name, attempt }` when the previous attempt's isolate died partway through a step, and `null` otherwise. Check it before you repeat work that cannot be undone:
+
+```ts
+if (step.interrupted?.name === "deliver") {
+	// The delivery might have happened. Check before sending again.
+}
+```
+
+If a replay finds stored steps its code could not have written, the run fails with `TaskReplayDivergedError` or `DuplicateTaskStepError`. If a deploy removes a definition that has runs in progress, those runs fail with `MissingTaskDefinitionError`.
+
+## Inspect and cancel runs
+
+```ts
+const snapshot = await this.tasks.get(receipt.runId);
+const recent = await this.tasks.list({ definition: "build-report@v1" });
+await this.tasks.cancel(receipt.runId, "superseded");
+await this.tasks.delete({ settledBefore: new Date(Date.now() - 86_400_000) });
+```
+
+A run's `state` is one of these values:
+
+| State       | Meaning                                                    |
+| ----------- | ---------------------------------------------------------- |
+| `pending`   | Accepted, and not started yet                              |
+| `running`   | An attempt is running                                      |
+| `waiting`   | Suspended until a wake time, for a sleep or a retry        |
+| `completed` | Finished, with a `result`                                  |
+| `failed`    | Finished, with an `error`                                  |
+| `cancelled` | Cancelled, with an optional `reason`                       |
+
+Cancellation is cooperative. A waiting run settles immediately. A running attempt is aborted through its signal and settles at its next step. An external effect that already happened cannot be undone.
+
+## Choose an API
+
+| You need                                                      | Use                                                       |
+| ------------------------------------------------------------- | --------------------------------------------------------- |
+| Short async work during a request                              | An ordinary `await`                                       |
+| A callback at a time, on a cron, or on an interval            | [`Scheduler`](/agents/capabilities/scheduler/)            |
+| Background callbacks in push order                            | [`Queue`](/agents/capabilities/queue/)                    |
+| Multi-step work on one object, with retries and sleeps        | `Tasks`                                                   |
+| Orchestration across services, with a dashboard               | [Cloudflare Workflows](/workflows/)                       |
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs `Tasks` as `this.tasks`. Declare definitions on its `taskDefinitions` field:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { TaskHandlers, TaskStep } from "agents/tasks";
+
+export class ReportAgent extends Agent<Env> {
+	override readonly taskDefinitions = {
+		"build-report@v1": async (input: { topic: string }, step: TaskStep) => {
+			return step.do("draft", () => `Draft about ${input.topic}`);
+		},
+	} satisfies TaskHandlers;
+}
+```
+
+</TypeScriptExample>
+
+`AIChatAgent` and [Project Think](/agents/harnesses/think/) run their chat turns on this capability. The Agent class also keeps its older [fiber](/agents/agent-class/durable-execution/) APIs, `runFiber()` and `startFiber()`.
+
+The [tasks example](https://github.com/cloudflare/agents/tree/main/examples/next/tasks) runs a report task with a durable sleep on a plain Durable Object.

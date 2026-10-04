@@ -1,0 +1,124 @@
+---
+title: Queue
+description: Run durable background callbacks one at a time, in push order, from a Durable Object's alarm with the Queue capability.
+pcx_content_type: reference
+sidebar:
+  order: 5
+  badge: Experimental
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::caution[Experimental]
+The `Queue` capability may change between releases.
+:::
+
+`Queue` from `agents/queue` runs background work after the current request returns. Each item stores a callback name and a payload, runs from the object's alarm one at a time in push order, retries when the callback throws, and survives the object leaving memory.
+
+`Queue` is not [Cloudflare Queues](/queues/). It needs no binding, and items stay inside one Durable Object.
+
+## Install the capability
+
+Register callbacks by name in the constructor, then install the queue on the [Lifecycle](/agents/lifecycle/):
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { getCurrentAgent, Lifecycle } from "agents/lifecycle";
+import { Queue, type QueueItem } from "agents/queue";
+
+type Upload = { fileName: string; bytes: number };
+
+export class UploadAgent extends DurableObject<Env> {
+	readonly queue = new Queue({
+		callbacks: {
+			processUpload: (payload: Upload, item: QueueItem<Upload>) => {
+				const { agent } = getCurrentAgent<UploadAgent>();
+				console.log(`${agent?.lifecycle.name} processed ${payload.fileName} (${item.id})`);
+			},
+		},
+		retry: { maxAttempts: 3, baseDelayMs: 100, maxDelayMs: 1_000 },
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.queue);
+
+	async onRequest(request: Request): Promise<Response> {
+		const body = await request.json<Upload>();
+		const item = await this.queue.push("processUpload", body);
+		return Response.json(item, { status: 202 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+`push()` returns once the item is stored. The callback runs from the next alarm, in a fresh invocation, so the request does not wait for it. The callback does not see the request or connection that pushed the item.
+
+## Options
+
+| Option      | Description                                                                                                           |
+| ----------- | --------------------------------------------------------------------------------------------------------------------- |
+| `callbacks` | Named callbacks `(payload, item) => unknown`. Register them in the field initializer so every wake has the same names |
+| `retry`     | Default retry policy. Defaults to `{ maxAttempts: 3, baseDelayMs: 100, maxDelayMs: 3000 }`                             |
+| `onError`   | Observes an item's failure after its last attempt                                                                     |
+
+## Push items
+
+```ts
+await this.queue.push("processUpload", payload, {
+	id: `upload:${payload.fileName}`,
+	retry: { maxAttempts: 5 },
+});
+```
+
+- `id` sets a stable ID. Pushing an existing ID replaces that item and keeps its place in the queue. Use it when the same work might be queued twice.
+- `retry` overrides the queue's retry policy for this item.
+
+Once the Lifecycle has started, `push()` writes the item before its promise resolves. A push in the same synchronous block as your own SQL writes commits with them.
+
+## Manage items
+
+| Method                 | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `get(id)`              | Returns one pending item, or `undefined`                               |
+| `list(criteria?)`      | Returns pending items in push order. Filter with `{ callback }`        |
+| `cancel(id)`           | Removes a pending item. Returns `true` if one was removed              |
+| `cancelAll(callback?)` | Removes every pending item, or every item for one callback. Returns the count |
+
+A `QueueItem` has these fields:
+
+```ts
+type QueueItem<T = unknown> = {
+	id: string;
+	callback: string;
+	payload: T;
+	createdAt: number; // Unix timestamp in seconds
+	retry?: RetryOptions;
+};
+```
+
+## How items run
+
+1. `push()` stores the item as a job in the [Lifecycle job queue](/agents/lifecycle/job-queue/), due now.
+2. The alarm runs pending items in push order, awaiting each callback before the next.
+3. A callback that throws retries with exponential backoff, up to its `maxAttempts`.
+4. After the last attempt, the item is dropped, `onError` runs, and the queue publishes a `queue:error` event.
+5. If the isolate dies mid-callback, the Lifecycle backup alarm wakes the object and the item runs again.
+
+Callbacks can run more than once, so make their external effects idempotent. Keep each callback short, because a slow callback delays every other job on the object. For multi-step work that needs to resume where it stopped, use [`Tasks`](/agents/capabilities/tasks/).
+
+## Limits
+
+- Items run one at a time, not in parallel.
+- There is no priority. Items run in push order.
+- Failed items are dropped after their last attempt. There is no dead-letter queue.
+
+## Observability
+
+The queue publishes `queue:create`, `queue:retry`, and `queue:error` events to the `agents:*` [diagnostics channels](/agents/platform/observability/diagnostics-channels/).
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs a `Queue`. Its `this.queue()`, `this.dequeue()`, and `this.getQueue()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Queue tasks](/agents/agent-class/queue-tasks/).

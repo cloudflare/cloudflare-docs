@@ -1,0 +1,119 @@
+---
+title: Routed agents
+description: Run one agent per chat, document, or task behind a hub Durable Object with the RoutedAgents capability, which keeps a catalog and forwards requests and WebSockets.
+pcx_content_type: reference
+sidebar:
+  order: 2
+  badge: Experimental
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+:::caution[Experimental]
+The `RoutedAgents` capability may change between releases.
+:::
+
+Many applications give each user an open-ended set of agents: one per chat, document, or task. `RoutedAgents` from `agents/routing` lets one hub Durable Object own that set. The hub keeps a catalog of entry IDs and metadata in its own database, and forwards requests and WebSocket upgrades under one path segment to the right agent.
+
+Each routed agent is an independent top-level Durable Object, with its own storage, alarm, and placement. Listing, searching, and deleting entries only touch the hub, so they never wake the routed agents.
+
+## Install the capability
+
+The hub can be a plain Durable Object. The routed agents must extend the [`Agent` class](/agents/agent-class/), because deletion uses its teardown.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Agent, routeAgentRequest } from "agents";
+import { Lifecycle } from "agents/lifecycle";
+import { RoutedAgents } from "agents/routing";
+
+type ChatMetadata = { title: string };
+
+export class ChatAgent extends Agent<Env> {
+	// One agent per chat: its own storage, alarms, and connections.
+}
+
+export class UserHub extends DurableObject<Env> {
+	readonly chats = new RoutedAgents<ChatAgent, ChatMetadata>({
+		namespace: this.env.ChatAgent,
+		route: "chats",
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.chats);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method === "POST") {
+			const entry = await this.chats.create({ metadata: { title: "New chat" } });
+			return Response.json(entry, { status: 201 });
+		}
+		return Response.json(await this.chats.list());
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+| Option      | Description                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------- |
+| `namespace` | The Durable Object binding for the routed agents. It can point at a class in another Worker    |
+| `route`     | One URL-safe path segment the capability claims, such as `"chats"`                            |
+
+Install `RoutedAgents` before `WebSockets`, so that upgrades under the route reach the routed agent and only the hub's own upgrades reach `WebSockets`.
+
+## Route requests
+
+Requests under `/{route}/{id}` reach the routed agent behind that entry. The rest of the path is kept:
+
+```txt
+/agents/user-hub/alice                  -> UserHub "alice"
+/agents/user-hub/alice/chats/{id}       -> the ChatAgent behind entry {id}
+/agents/user-hub/alice/chats/{id}/...   -> the same ChatAgent, with the suffix
+```
+
+A forwarded WebSocket upgrade is answered by the routed agent, which then owns the socket. Its messages never wake the hub. Connect to a routed agent from React with `basePath`:
+
+```tsx
+const chat = useAgent({
+	agent: "ChatAgent",
+	basePath: `agents/user-hub/alice/chats/${encodeURIComponent(chatId)}`,
+});
+```
+
+Choose a `route` that cannot appear elsewhere in the hub's paths. Forwarding matches the segment anywhere in the path.
+
+## Manage entries
+
+| Method                      | Description                                                                         |
+| --------------------------- | ----------------------------------------------------------------------------------- |
+| `create({ metadata? })`     | Creates an entry without waking the routed agent. Returns the entry                 |
+| `get(id)`                   | Returns a typed stub for RPC, or `null` for an unknown or deleted entry             |
+| `list()`                    | Returns active entries, most recently updated first                                 |
+| `setMetadata(id, metadata)` | Replaces an entry's metadata. Returns `false` for an unknown entry                  |
+| `delete(id)`                | Hides the entry, tells the routed agent to delete its storage, then removes the row |
+
+Clients only see entry IDs. The hub maps each entry to a random Durable Object name that never leaves the hub.
+
+The catalog holds existence, ownership, and metadata. Conversation data stays in the routed agent. To keep listing and search cheap, have the routed agent push a summary back to the hub with `setMetadata()` through an RPC method on the hub.
+
+## Delete entries
+
+`delete(id)` is safe to retry. It hides the entry first, then tells the routed agent to delete itself. The routed agent wipes its storage the next time it wakes. If the call fails partway, the entry stays hidden and a second `delete(id)` finishes the job.
+
+Before you delete the hub itself, call `await this.lifecycle.dispose()`. Disposal tells every remaining routed agent to delete itself, retrying each one a few times. Then delete the hub's storage with `this.ctx.storage.deleteAll()`. A routed agent that is still unreachable after those retries is left behind, with no catalog row to retry from. An `Agent` hub does this for you in `this.destroy()`.
+
+## Related resources
+
+- The [routing example](https://github.com/cloudflare/agents/tree/main/examples/next/routing) runs one `ChatAgent` per chat behind a plain Durable Object hub, with `WebSockets` for the hub's own methods.
+- [Routing on the Agent class](/agents/agent-class/routing/) covers `routeAgentRequest()` options, custom paths, and `getAgentByName()`.
