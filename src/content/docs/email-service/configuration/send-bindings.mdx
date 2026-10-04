@@ -1,7 +1,7 @@
 ---
-title: Configure send bindings
-description: Restrict which senders and recipients a Workers send_email binding can use with Email Service.
-pcx_content_type: how-to
+title: Send bindings
+description: Email Service send binding restrictions and Wrangler configuration variants.
+pcx_content_type: configuration
 sidebar:
   order: 5
 products:
@@ -10,11 +10,11 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-When you add a `send_email` binding to a Worker, you can restrict which addresses it may send from and to. Configure these restrictions in your Wrangler configuration file. For the binding API itself, refer to the [Workers API](/email-service/api/send-emails/workers-api/).
+When you add a `send_email` binding to a Worker, you can restrict its sender and recipient addresses. The following Wrangler configuration variants apply these restrictions. For the binding API, refer to the [Email Sending Workers API](/email-service/api/send-emails/workers-api/).
 
 ## Binding types
 
-Each entry in `send_email` can be configured to restrict what the binding can do. The sender address must always belong to a domain you have onboarded to Email Service.
+Each `send_email` entry supports a different restriction choice. The sender address must belong to an onboarded Email Service domain.
 
 - **No restriction attribute**: The binding can send to any verified destination address in your account.
 - **`destination_address`**: The binding can only send to the single destination address configured here. If you call `send()` with `to` set to `null` or `undefined`, the configured address is used.
@@ -57,5 +57,5 @@ Each entry in `send_email` can be configured to restrict what the binding can do
 
 ## Next steps
 
-- [Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Worker using the binding.
+- [Email Sending Workers API](/email-service/api/send-emails/workers-api/) — send emails from a Worker using the binding.
 - [Domain configuration](/email-service/configuration/domains/) — onboard the domains you send from.
