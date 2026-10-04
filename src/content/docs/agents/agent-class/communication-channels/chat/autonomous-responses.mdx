@@ -66,7 +66,7 @@ return Response.json({
 
 `submitMessages()` stores pending work first and appends the messages to the conversation Session only when the submission starts executing. It accepts serializable `UIMessage[]` values, not the function form supported by `saveMessages((messages) => ...)`.
 
-Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) outside Think when the durable unit is a surrounding application job, such as accepting a webhook once, restoring provider state, posting a visible reply, and recording recovery policy. `submitMessages()` owns Think's conversation admission; managed fibers own external side effects around that turn.
+Use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) outside Think when the durable unit is a surrounding application job, such as accepting a webhook once, restoring provider state, posting a visible reply, and recording recovery policy. `submitMessages()` owns Think's conversation admission; managed fibers own external side effects around that turn.
 
 For the full Think API, refer to [`submitMessages()`](/agents/harnesses/think/programmatic-submissions/#submitmessages).
 ### When to use `saveMessages` vs `onChatResponse`
@@ -152,7 +152,7 @@ export class DigestAgent extends AIChatAgent {
 
 </TypeScriptExample>
 
-The function form of `saveMessages` — `saveMessages((messages) => [...])` — reads the latest persisted messages at execution time. This avoids stale baselines when multiple calls queue up (for example, rapid webhook arrivals). Refer to [Schedule tasks](/agents/runtime/execution/schedule-tasks/) for more on `schedule()` and cron syntax.
+The function form of `saveMessages` — `saveMessages((messages) => [...])` — reads the latest persisted messages at execution time. This avoids stale baselines when multiple calls queue up (for example, rapid webhook arrivals). Refer to [Schedule tasks](/agents/agent-class/schedule-tasks/) for more on `schedule()` and cron syntax.
 
 ### Processing a queue
 
@@ -528,24 +528,24 @@ Use `cancelFiber(fiberId)` when the durable unit was accepted with `startFiber()
 
 <LinkCard
 	title="Chat agents"
-	href="/agents/communication-channels/chat/chat-agents/"
+	href="/agents/agent-class/communication-channels/chat/chat-agents/"
 	description="Full API reference for AIChatAgent, saveMessages, persistMessages, and onChatResponse."
 />
 
 <LinkCard
 	title="Schedule tasks"
-	href="/agents/runtime/execution/schedule-tasks/"
+	href="/agents/agent-class/schedule-tasks/"
 	description="Delayed, cron, and interval scheduling for agent callbacks."
 />
 
 <LinkCard
 	title="Webhooks"
-	href="/agents/communication-channels/webhooks/"
+	href="/agents/agent-class/communication-channels/webhooks/"
 	description="Receive webhook events and route them to agent instances."
 />
 
 <LinkCard
 	title="Email routing"
-	href="/agents/communication-channels/email/"
+	href="/agents/agent-class/communication-channels/email/"
 	description="Handle inbound emails in your agent."
 />

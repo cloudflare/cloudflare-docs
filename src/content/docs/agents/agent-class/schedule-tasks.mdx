@@ -3,7 +3,7 @@ title: Schedule tasks
 description: Schedule delayed, date-based, cron, and interval tasks on Agents with persistent SQLite-backed execution.
 pcx_content_type: reference
 sidebar:
-  order: 10
+  order: 9
 products:
   - agents
 ---
@@ -704,7 +704,7 @@ Schedule a task for future execution.
 - `when` - When to execute: `number` (seconds delay), `Date` (specific time), or `string` (cron expression)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
-- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/runtime/execution/retries/) for details
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/agent-class/retries/) for details
 - `options.idempotent` - Deduplicate by callback + payload. Defaults to `true` for cron schedules, `false` for delayed and Date-based schedules
 
 **Returns:** A `Schedule` object with the task details
@@ -752,7 +752,7 @@ Schedule a task to run repeatedly at a fixed interval.
 - `intervalSeconds` - Number of seconds between executions (must be greater than 0)
 - `callback` - Name of the method to call
 - `payload` - Data to pass to the callback (must be JSON-serializable)
-- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/runtime/execution/retries/) for details.
+- `options.retry` - Optional retry configuration. Refer to [Retries](/agents/agent-class/retries/) for details.
 
 **Returns:** A `Schedule` object with `type: "interval"`
 
@@ -916,24 +916,24 @@ dispose2(); // Now the agent can go idle
 
 <LinkCard
 	title="Push notifications"
-	href="/agents/communication-channels/webhooks/push-notifications/"
+	href="/agents/agent-class/communication-channels/webhooks/push-notifications/"
 	description="Send browser push notifications using scheduling and web-push."
 />
 
 <LinkCard
 	title="Queue tasks"
-	href="/agents/runtime/execution/queue-tasks/"
+	href="/agents/agent-class/queue-tasks/"
 	description="Immediate background task processing."
 />
 
 <LinkCard
 	title="Run Workflows"
-	href="/agents/runtime/execution/run-workflows/"
+	href="/agents/agent-class/run-workflows/"
 	description="Durable multi-step background processing."
 />
 
 <LinkCard
 	title="Agents API"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Complete API reference for the Agents SDK."
 />
