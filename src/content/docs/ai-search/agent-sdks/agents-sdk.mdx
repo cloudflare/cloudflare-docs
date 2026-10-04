@@ -229,7 +229,7 @@ npx wrangler types
 npm run dev
 ```
 
-`AIChatAgent` speaks its chat protocol over a WebSocket, so drive it from a chat client rather than a plain `curl` request. The quickest way is to point a UI built with the Agents SDK [`useAgentChat`](/agents/communication-channels/chat/chat-agents/) hook at your local server.
+`AIChatAgent` speaks its chat protocol over a WebSocket, so drive it from a chat client rather than a plain `curl` request. The quickest way is to point a UI built with the Agents SDK [`useAgentChat`](/agents/agent-class/communication-channels/chat/chat-agents/) hook at your local server.
 
 Send a message such as `How do I get started?`. On the first message, the agent creates and seeds the instance, so the first response can take a minute or two while the seed document indexes.
 

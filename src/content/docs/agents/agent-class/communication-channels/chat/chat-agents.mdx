@@ -579,7 +579,7 @@ Use `abortRequest()` when you know the request ID. Use `abortAllRequests()` for 
 
 Automatic stream resumption (the `resume` option on `useAgentChat`) is **client reconnect recovery** — it resumes an active stream when a client disconnects and reconnects. It does not cover Durable Object eviction. If the Worker process or Durable Object is evicted while the model call is in flight, the stream itself is gone. Durable chat recovery handles that case.
 
-A mid-stream Durable Object eviction permanently severs the LLM connection. Durable recovery wraps every `AIChatAgent` and [`Think`](/agents/harnesses/think/) chat turn in a [`runFiber()`](/agents/runtime/execution/durable-execution/). The fiber provides automatic `keepAlive` during streaming and a recovery hook on restart.
+A mid-stream Durable Object eviction permanently severs the LLM connection. Durable recovery wraps every `AIChatAgent` and [`Think`](/agents/harnesses/think/) chat turn in a [`runFiber()`](/agents/agent-class/durable-execution/). The fiber provides automatic `keepAlive` during streaming and a recovery hook on restart.
 
 The fiber row survives in SQLite after an eviction. On the next activation, the framework detects the interrupted fiber. It reconstructs the partial response from buffered stream chunks and calls `onChatRecovery`.
 
@@ -828,7 +828,7 @@ While a turn is being recovered, the agent broadcasts a `cf_agent_chat_recoverin
 
 Transcript repairs — healing orphaned tool calls (preserved as errored results rather than deleted, so the record survives and the model does not silently re-run the tool) and normalizing malformed or missing tool inputs before a provider call — are emitted on the `transcript` observability channel.
 
-For how chat recovery fits into the broader long-running agents story, refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/agentic-patterns/long-running-agents/#recovering-interrupted-llm-streams). For the underlying fiber API, refer to [Durable Execution](/agents/runtime/execution/durable-execution/).
+For how chat recovery fits into the broader long-running agents story, refer to [Long-running agents: Recovering interrupted LLM streams](/agents/concepts/agentic-patterns/long-running-agents/#recovering-interrupted-llm-streams). For the underlying fiber API, refer to [Durable Execution](/agents/agent-class/durable-execution/).
 
 ## Client API
 
@@ -1611,7 +1611,7 @@ export class ChatAgent extends AIChatAgent {
 
 :::note
 
-This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/runtime/execution/sub-agents/). To run Think or `AIChatAgent` sub-agents as retained, streaming tools, refer to [Agents as tools](/agents/runtime/execution/agent-tools/).
+This section covers **in-process** subagents using the AI SDK's `ToolLoopAgent`. For **Durable Object sub-agents** with their own isolated storage and typed RPC, refer to [Sub-agents](/agents/agent-class/sub-agents/). To run Think or `AIChatAgent` sub-agents as retained, streaming tools, refer to [Agents as tools](/agents/agent-class/agent-tools/).
 
 :::
 
@@ -1773,7 +1773,7 @@ If you are upgrading from an earlier version, replace deprecated calls with thei
 
 <LinkCard
 	title="Client SDK"
-	href="/agents/communication-channels/chat/client-sdk/"
+	href="/agents/agent-class/communication-channels/chat/client-sdk/"
 	description="useAgent hook and AgentClient class."
 />
 
@@ -1791,7 +1791,7 @@ If you are upgrading from an earlier version, replace deprecated calls with thei
 
 <LinkCard
 	title="Durable execution"
-	href="/agents/runtime/execution/durable-execution/"
+	href="/agents/agent-class/durable-execution/"
 	description="runFiber(), stash(), and crash recovery for long-running work."
 />
 

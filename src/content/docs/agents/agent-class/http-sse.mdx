@@ -3,7 +3,7 @@ title: HTTP and Server-Sent Events
 description: Handle HTTP requests and stream responses with Server-Sent Events (SSE) from Cloudflare Agents.
 pcx_content_type: reference
 sidebar:
-  order: 9
+  order: 5
 products:
   - agents
 ---
@@ -146,8 +146,8 @@ export class ChatAgent extends Agent<Env> {
 
 SSE connections can be long-lived. Handle client disconnects gracefully:
 
-- **Persist progress** — Write to [agent state](/agents/runtime/lifecycle/state/) so clients can resume
-- **Use agent routing** — Clients can [reconnect to the same agent instance](/agents/runtime/communication/routing/) without session stores
+- **Persist progress** — Write to [agent state](/agents/agent-class/state/) so clients can resume
+- **Use agent routing** — Clients can [reconnect to the same agent instance](/agents/agent-class/routing/) without session stores
 - **No timeout limits** — Cloudflare Workers have no effective limit on SSE response duration
 
 <TypeScriptExample>
@@ -190,19 +190,19 @@ export class ResumeAgent extends Agent {
 
 **Recommendation:** Use WebSockets for interactive applications. Use SSE for streaming AI responses or server-push notifications.
 
-Refer to [WebSockets](/agents/runtime/communication/websockets/) for WebSocket documentation.
+Refer to [WebSockets](/agents/agent-class/websockets/) for WebSocket documentation.
 
 ## Next steps
 
 <LinkCard
 	title="WebSockets"
-	href="/agents/runtime/communication/websockets/"
+	href="/agents/agent-class/websockets/"
 	description="Bi-directional real-time communication."
 />
 
 <LinkCard
 	title="State management"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="Persist stream progress and agent state."
 />
 

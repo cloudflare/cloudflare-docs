@@ -3,7 +3,7 @@ title: Readonly connections
 description: Restrict WebSocket clients to view-only access so they receive state updates without modifying Agent state.
 pcx_content_type: concept
 sidebar:
-  order: 28
+  order: 7
 products:
   - agents
 ---
@@ -455,7 +455,7 @@ function GameComponent() {
 
 ## How it works
 
-Readonly status is stored in the connection's WebSocket attachment, which persists through the WebSocket Hibernation API. The flag is namespaced internally so it cannot be accidentally overwritten by `connection.setState()`. The same mechanism is used by [protocol message control](/agents/runtime/communication/protocol-messages/) — both flag coexist safely in the attachment. This means:
+Readonly status is stored in the connection's WebSocket attachment, which persists through the WebSocket Hibernation API. The flag is namespaced internally so it cannot be accidentally overwritten by `connection.setState()`. The same mechanism is used by [protocol message control](/agents/agent-class/protocol-messages/) — both flag coexist safely in the attachment. This means:
 
 - **Survives hibernation** — the flag is serialized and restored when the agent wakes up
 - **No cleanup needed** — connection state is automatically discarded when the connection closes
@@ -627,7 +627,7 @@ export class AuditedAgent extends Agent<Env, State> {
 
 ## Related resources
 
-- [Store and sync state](/agents/runtime/lifecycle/state/)
-- [Protocol messages](/agents/runtime/communication/protocol-messages/) — suppress JSON protocol frames for binary-only clients (can be combined with readonly)
-- [WebSockets](/agents/runtime/communication/websockets/)
-- [Callable methods](/agents/runtime/lifecycle/callable-methods/)
+- [Store and sync state](/agents/agent-class/state/)
+- [Protocol messages](/agents/agent-class/protocol-messages/) — suppress JSON protocol frames for binary-only clients (can be combined with readonly)
+- [WebSockets](/agents/agent-class/websockets/)
+- [Callable methods](/agents/agent-class/callable-methods/)

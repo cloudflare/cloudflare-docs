@@ -12,13 +12,13 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-You can build this loop yourself on top of the [Agents SDK runtime](/agents/runtime/agents-api/), use an opinionated harness like [Project Think](/agents/harnesses/think/), or run an external harness such as [Pi](/agents/harnesses/pi/) on a Durable Object.
+You can build this loop yourself on top of the [Agents SDK runtime](/agents/agent-class/), use an opinionated harness like [Project Think](/agents/harnesses/think/), or run an external harness such as [Pi](/agents/harnesses/pi/) on a Durable Object.
 
 ## How harnesses fit
 
 Harnesses sit on top of the Agents SDK runtime:
 
-- **The runtime** gives the agent durable infrastructure: the [`Agent` class](/agents/runtime/lifecycle/agent-class/), [state](/agents/runtime/lifecycle/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/runtime/communication/routing/), [WebSockets](/agents/runtime/communication/websockets/), [scheduling](/agents/runtime/execution/schedule-tasks/), [fibers](/agents/runtime/execution/durable-execution/), and [observability](/agents/runtime/operations/observability/).
+- **The runtime** gives the agent durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/operations/observability/).
 - **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
 
 The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
@@ -60,7 +60,7 @@ A harness usually owns:
 
 <LinkCard
 	title="Agents SDK runtime"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Build your own harness directly on the Agent class."
 />
 
@@ -72,6 +72,6 @@ A harness usually owns:
 
 <LinkCard
 	title="Durable execution with fibers"
-	href="/agents/runtime/execution/durable-execution/"
+	href="/agents/agent-class/durable-execution/"
 	description="Recover long-running agent work after Durable Object eviction."
 />

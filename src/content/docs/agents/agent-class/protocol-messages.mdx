@@ -3,7 +3,7 @@ title: Protocol messages
 description: Control the identity, state, and MCP protocol messages sent to WebSocket clients on Agent connect.
 pcx_content_type: concept
 sidebar:
-  order: 27
+  order: 8
 products:
   - agents
 ---
@@ -24,7 +24,7 @@ On every new connection, the Agent sends three protocol messages:
 
 State and MCP messages are also broadcast to all connections whenever they change.
 
-For most web clients this is fine — the [Client SDK](/agents/communication-channels/chat/client-sdk/) and `useAgent` hook consume these messages automatically. However, some clients cannot handle JSON text frames:
+For most web clients this is fine — the [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/) and `useAgent` hook consume these messages automatically. However, some clients cannot handle JSON text frames:
 
 - **Binary-only clients** — MQTT devices, IoT sensors, custom binary protocols
 - **Lightweight clients** — Embedded systems with minimal WebSocket stacks
@@ -173,7 +173,7 @@ An overridable hook that determines if a connection should receive protocol mess
 
 Default: returns `true` (all connections receive protocol messages).
 
-This hook is evaluated once on connect. The result is persisted in the connection's WebSocket attachment and survives [hibernation](/agents/runtime/communication/websockets/#hibernation).
+This hook is evaluated once on connect. The result is persisted in the connection's WebSocket attachment and survives [hibernation](/agents/agent-class/websockets/#hibernation).
 
 ### `isConnectionProtocolEnabled`
 
@@ -188,18 +188,18 @@ Safe to call at any time, including after the agent wakes from hibernation.
 
 ## How it works
 
-Protocol status is stored as an internal flag in the connection's WebSocket attachment — the same mechanism used by [readonly connections](/agents/runtime/communication/readonly-connections/). This means:
+Protocol status is stored as an internal flag in the connection's WebSocket attachment — the same mechanism used by [readonly connections](/agents/agent-class/readonly-connections/). This means:
 
 - **Survives hibernation** — the flag is serialized and restored when the agent wakes up
 - **No cleanup needed** — connection state is automatically discarded when the connection closes
 - **Zero overhead** — no database tables or queries, just the connection's built-in attachment
 - **Safe from user code** — `connection.state` and `connection.setState()` never expose or overwrite the flag
 
-Unlike [readonly](/agents/runtime/communication/readonly-connections/) which can be toggled dynamically with `setConnectionReadonly()`, protocol status is set once on connect and cannot be changed afterward. To change a connection's protocol status, the client must disconnect and reconnect.
+Unlike [readonly](/agents/agent-class/readonly-connections/) which can be toggled dynamically with `setConnectionReadonly()`, protocol status is set once on connect and cannot be changed afterward. To change a connection's protocol status, the client must disconnect and reconnect.
 
 ## Related resources
 
-- [Readonly connections](/agents/runtime/communication/readonly-connections/)
-- [WebSockets](/agents/runtime/communication/websockets/)
-- [Store and sync state](/agents/runtime/lifecycle/state/)
+- [Readonly connections](/agents/agent-class/readonly-connections/)
+- [WebSockets](/agents/agent-class/websockets/)
+- [Store and sync state](/agents/agent-class/state/)
 - [MCP Client API](/agents/model-context-protocol/apis/client-api/)

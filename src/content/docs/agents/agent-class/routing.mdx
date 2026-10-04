@@ -3,7 +3,7 @@ title: Routing
 description: Route HTTP and WebSocket requests to Agents SDK instances using routeAgentRequest() and getAgentByName().
 pcx_content_type: reference
 sidebar:
-  order: 2
+  order: 4
 products:
   - agents
 ---
@@ -100,7 +100,7 @@ buildAgentUrl("https://app.example.com", address, {
 
 Inside an Agent, `this.selfPath` provides the required root-first identity. If the root Durable Object binding name differs from its class name, pass the binding name as `rootBinding`. The pathname supports both HTTP requests and WebSocket connections.
 
-For a custom route prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`. Refer to [Sub-agents](/agents/runtime/execution/sub-agents/#direct-http-and-websocket-urls) for callback and webhook examples.
+For a custom route prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`. Refer to [Sub-agents](/agents/agent-class/sub-agents/#direct-http-and-websocket-urls) for callback and webhook examples.
 
 ## Instance naming patterns
 
@@ -907,7 +907,7 @@ class SecureAgent extends Agent {
 
 <LinkCard
 	title="Client SDK"
-	href="/agents/communication-channels/chat/client-sdk/"
+	href="/agents/agent-class/communication-channels/chat/client-sdk/"
 	description="Connect from browsers with useAgent and AgentClient."
 />
 
@@ -919,7 +919,7 @@ class SecureAgent extends Agent {
 
 <LinkCard
 	title="Callable methods"
-	href="/agents/runtime/lifecycle/callable-methods/"
+	href="/agents/agent-class/callable-methods/"
 	description="RPC from clients over WebSocket."
 />
 
