@@ -208,6 +208,8 @@ const integrations = [
 	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
+		// Read by the Worker, so link checking needs to be told about it.
+		redirectsFile: "public/__redirects",
 		markdown: {
 			processor: satteri({
 				features: { smartPunctuation: false },
@@ -237,7 +239,12 @@ const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "error",
+			"nimbus/internal-link": [
+				"error",
+				// Served outside this build: the API reference app and the Worker's R2 handler.
+				{ ignore: ["/api/**", "**/llms-full.txt"] },
+			],
+			"nimbus/redirected-link": "warn",
 		},
 	}),
 ];
