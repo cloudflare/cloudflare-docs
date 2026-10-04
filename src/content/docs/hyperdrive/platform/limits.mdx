@@ -14,10 +14,10 @@ The following limits apply to Hyperdrive configurations, connections, and querie
 
 These limits apply when creating or updating Hyperdrive configurations.
 
-| Limit                          | Free                  | Paid                  |
-| ------------------------------ | --------------------- | --------------------- |
-| Maximum configured databases   | 10 per account        | 25 per account        |
-| Maximum username length [^1]   | 63 characters (bytes) | 63 characters (bytes) |
+| Limit                             | Free                  | Paid                  |
+| --------------------------------- | --------------------- | --------------------- |
+| Maximum configured databases      | 10 per account        | 25 per account        |
+| Maximum username length [^1]      | 63 characters (bytes) | 63 characters (bytes) |
 | Maximum database name length [^1] | 63 characters (bytes) | 63 characters (bytes) |
 
 [^1]: This is a limit enforced by PostgreSQL. Some database providers may enforce smaller limits.
@@ -26,10 +26,10 @@ These limits apply when creating or updating Hyperdrive configurations.
 
 These limits apply to connections between Hyperdrive and your origin database.
 
-| Limit                              | Free                     | Paid                      |
-| ---------------------------------- | ------------------------ | ------------------------- |
-| Initial connection timeout         | 15 seconds               | 15 seconds                |
-| Idle connection timeout            | 10 minutes               | 10 minutes                |
+| Limit                                                        | Free            | Paid             |
+| ------------------------------------------------------------ | --------------- | ---------------- |
+| Initial connection timeout                                   | 15 seconds      | 15 seconds       |
+| Idle connection timeout                                      | 10 minutes      | 10 minutes       |
 | Maximum origin database connections (per configuration) [^2] | ~20 connections | ~100 connections |
 
 Hyperdrive does not limit the number of concurrent client connections from your Workers. However, Hyperdrive limits connections to your origin database because most hosted databases have connection limits.
@@ -40,9 +40,9 @@ Hyperdrive does not limit the number of concurrent client connections from your 
 
 When Hyperdrive cannot acquire a connection to your origin database, you may see one of the following errors:
 
-| Error message | Cause |
-| ------------- | ----- |
-| `Failed to acquire a connection from the pool.` | The connection pool is exhausted because connections are held open too long. Long-running queries or transactions are a common cause. |
+| Error message                                          | Cause                                                                                                                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Failed to acquire a connection from the pool.`        | The connection pool is exhausted because connections are held open too long. Long-running queries or transactions are a common cause.                           |
 | `Server connection attempt failed: connection_refused` | Your origin database is rejecting connections. This can occur when a firewall blocks Hyperdrive, or when your database provider's connection limit is exceeded. |
 
 For a complete list of error codes, refer to [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/).
@@ -51,12 +51,11 @@ For a complete list of error codes, refer to [Troubleshoot and debug](/hyperdriv
 
 These limits apply to queries sent through Hyperdrive.
 
-| Limit                              | Free      | Paid      |
-| ---------------------------------- | --------- | --------- |
-| Maximum query (statement) duration | 60 seconds | 60 seconds |
-| Maximum cached query response size | 50 MB     | 50 MB     |
+| Limit                              | Free  | Paid  |
+| ---------------------------------- | ----- | ----- |
+| Maximum cached query response size | 50 MB | 50 MB |
 
-Queries exceeding the maximum duration are terminated. Query responses larger than 50 MB are not cached but are still returned to your Worker.
+Query responses larger than 50 MB are not cached but are still returned to your Worker.
 
 ## Request a limit increase
 
