@@ -68,8 +68,8 @@ The name of a snippet can only contain the characters `a-z`, `0-9`, and `_` (und
 
 The required body parameters are:
 
-- `files`: The file with your JavaScript code.
-- `metadata`: Object containing `main_module`, which must match the filename of the uploaded file.
+- `files`: One or more JavaScript files. Every file is treated as an ES module, so it must use `import`/`export` syntax. The main module must `export default` an object with a `fetch` handler. Additional files can be imported from the main module by relative path (for example, `import { helper } from "./helper.js"`). Unlike Workers, non-ESM files such as JSON, text, binary, or WebAssembly files are not supported and are rejected when you upload them.
+- `metadata`: Object containing `main_module`, which must match the filename of the uploaded file that contains the default export.
 
 To make this example work, save your JavaScript code in a file named `example.js`, and then execute `curl` command with a `PUT` request from the folder where `example.js` is located.
 
