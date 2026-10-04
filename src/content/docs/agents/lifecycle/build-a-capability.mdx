@@ -1,0 +1,206 @@
+---
+title: Build a capability
+description: Write your own reusable Lifecycle capability with LifecycleCapability, including storage, request middleware, durable jobs, events, and user callbacks.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+A capability is a class that the [Lifecycle](/agents/lifecycle/) starts and calls. It owns its own tables, its own jobs, and the routes it handles. Every capability in the Agents SDK, from `Scheduler` to `PiHarness`, is built this way, and you can write your own with the same API.
+
+This guide builds an `UptimeMonitor` capability. It checks a URL on an interval, stores each result, serves the history over HTTP, and calls back into the host when the URL is down.
+
+## Extend `LifecycleCapability`
+
+Extend `LifecycleCapability` and pass a stable, non-empty ID to `super()`. Lifecycle uses the ID to route jobs and events back to the capability, so do not change it after you deploy:
+
+<TypeScriptExample>
+
+```ts
+import { LifecycleCapability } from "agents/lifecycle";
+
+type UptimeMonitorOptions = {
+	url: string;
+	intervalMs: number;
+	onDown?: (status: number) => void | Promise<void>;
+};
+
+class UptimeMonitor extends LifecycleCapability {
+	readonly options: UptimeMonitorOptions;
+
+	constructor(options: UptimeMonitorOptions) {
+		super("uptime-monitor");
+		this.options = options;
+	}
+}
+```
+
+</TypeScriptExample>
+
+After you install the capability, `this.lifecycle` gives it these services:
+
+| Service                     | Description                                                                         |
+| --------------------------- | ----------------------------------------------------------------------------------- |
+| `storage`                   | The Durable Object's storage, including `storage.sql`                               |
+| `jobs`                      | The capability's own view of the [job queue](/agents/lifecycle/job-queue/)          |
+| `ready()`                   | Resolves once startup has finished, starting the object if needed                   |
+| `status()`                  | `"zero"`, `"starting"`, or `"started"`                                              |
+| `name`, `className`         | The object's name and its exported class name                                       |
+| `runInHostContext(fn)`      | Runs a user callback inside the host's invocation context                           |
+| `events.emit(type, data)`   | Publishes a best-effort event to the `agents:*` diagnostics channels                |
+| `sockets`, `routes`         | WebSocket access and routing between parent and child objects                       |
+
+The capability never receives the host object itself. Pass bindings and callbacks it needs through its constructor.
+
+## Create tables on startup
+
+Lifecycle calls `onStart()` on every capability before the host's `onStart()`. Use it to create or migrate the capability's tables. Prefix table names so they do not collide with the host's tables:
+
+<TypeScriptExample>
+
+```ts
+class UptimeMonitor extends LifecycleCapability {
+	// ...
+
+	override onStart(): void {
+		this.lifecycle.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS uptime_checks (
+				checked_at INTEGER NOT NULL,
+				status INTEGER NOT NULL
+			)
+		`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Run work on a schedule
+
+Push a job to wake the capability later, and handle it in `onJob()`. Return `{ rescheduleAt }` to run it again:
+
+<TypeScriptExample>
+
+```ts
+import {
+	LifecycleCapability,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+class UptimeMonitor extends LifecycleCapability {
+	// ...
+
+	async startMonitoring(): Promise<void> {
+		await this.lifecycle.ready();
+		await this.lifecycle.jobs.push({
+			id: "check",
+			fn: "check",
+			time: Date.now(),
+		});
+	}
+
+	async onJob({ job }: LifecycleJobContext): Promise<LifecycleJobOutcome> {
+		if (job.fn !== "check") return;
+		const response = await fetch(this.options.url, { method: "HEAD" });
+		this.lifecycle.storage.sql.exec(
+			"INSERT INTO uptime_checks (checked_at, status) VALUES (?, ?)",
+			Date.now(),
+			response.status,
+		);
+		this.lifecycle.events.emit("uptime:check", { status: response.status });
+
+		const { onDown } = this.options;
+		if (!response.ok && onDown) {
+			await this.lifecycle.runInHostContext(() => onDown(response.status));
+		}
+		return { rescheduleAt: Date.now() + this.options.intervalMs };
+	}
+}
+```
+
+</TypeScriptExample>
+
+The job has a fixed ID, so calling `startMonitoring()` again replaces the pending check instead of adding a second one.
+
+Capability hooks run outside the host's invocation context. Call user code through `runInHostContext()` so that [`getCurrentAgent()`](/agents/lifecycle/get-current-agent/) returns the host inside it. `Scheduler` and `Queue` call their registered callbacks the same way.
+
+## Handle requests
+
+Implement `onRequest()` to act as middleware in front of the host. Return a `Response` to handle the request, or `undefined` to pass it on:
+
+<TypeScriptExample>
+
+```ts
+import {
+	LifecycleCapability,
+	type CapabilityRequestContext,
+} from "agents/lifecycle";
+
+class UptimeMonitor extends LifecycleCapability {
+	// ...
+
+	onRequest({ request }: CapabilityRequestContext): Response | undefined {
+		if (!new URL(request.url).pathname.endsWith("/uptime")) return;
+		const checks = this.lifecycle.storage.sql
+			.exec(
+				"SELECT checked_at, status FROM uptime_checks ORDER BY checked_at DESC LIMIT 20",
+			)
+			.toArray();
+		return Response.json(checks);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Match only the routes the capability owns. A capability that handles every request should set `claims = "catch-all"`, so that Lifecycle runs it after all other capabilities.
+
+## Install the capability
+
+Install the capability like any other:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class SiteAgent extends DurableObject<Env> {
+	readonly uptime = new UptimeMonitor({
+		url: "https://example.com/",
+		intervalMs: 5 * 60_000,
+		onDown: (status) => console.warn(`example.com returned ${status}`),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.uptime);
+
+	async onRequest(): Promise<Response> {
+		await this.uptime.startMonitoring();
+		return new Response("Monitoring started", { status: 202 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+A request to `/agents/site-agent/example/uptime` returns the stored checks. Every other request reaches the host's `onRequest()`.
+
+The same capability works on the [`Agent` class](/agents/agent-class/). Install it with `this.lifecycle.use(this.uptime)` in the Agent's constructor.
+
+## Other hooks
+
+A capability can also implement these hooks:
+
+| Hook                                                          | Purpose                                                              |
+| ------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `onWebSocketUpgrade(context)`                                 | Claim a WebSocket upgrade by returning a `Response`                  |
+| `onWebSocketMessage`, `onWebSocketClose`, `onWebSocketError`  | Handle events for sockets the capability accepted                    |
+| `onJobError(context, error)`                                  | Decide what happens after a job fails its last retry                 |
+| `onMemoryLimit(context)`                                      | Apply policy after an alarm ends in a memory-limit reset             |
+| `dispose()`                                                   | Release live resources during explicit teardown                      |
+
+Events are best-effort telemetry, not a durable outbox. If delivery is part of your business logic, store an outbox in the capability's own table.

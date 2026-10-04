@@ -14,7 +14,7 @@ import { TypeScriptExample, LinkCard, WranglerConfig } from "~/components";
 
 Agents need memory to be useful over time. Without it, every conversation starts from zero. The agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
 
-The [Session API](/agents/runtime/lifecycle/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
+The [Session API](/agents/capabilities/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
 
 Use this page when you need more than simple synced state or flat chat history. For small UI state, use [Store and sync state](/agents/agent-class/state/). For basic chat persistence, `AIChatAgent` stores messages for you. For opinionated long-term memory, Think builds on Session and context blocks.
 
@@ -415,7 +415,7 @@ The Session generates tools dynamically based on what provider types are present
 
 The tools include descriptions and parameter schemas that tell the LLM which blocks are available and what they are for. The agent decides when and how to use them based on the conversation.
 
-For the full tool signatures and all Session methods, refer to the [Session API reference](/agents/runtime/lifecycle/sessions/).
+For the full tool signatures and all Session methods, refer to the [Session API reference](/agents/capabilities/sessions/).
 
 ## The system prompt
 
@@ -556,7 +556,7 @@ const truncated = truncateOlderMessages(history);
 
 <LinkCard
 	title="Session API reference"
-	href="/agents/runtime/lifecycle/sessions/"
+	href="/agents/capabilities/sessions/"
 	description="Full API reference for Session, covering messages, context blocks, compaction, search, tools, and custom providers."
 />
 

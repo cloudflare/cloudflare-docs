@@ -205,9 +205,9 @@ When a user authenticates to your MCP server, their identity information and tok
 The `McpAgent` class provides full access to the [Agent state APIs](/agents/agent-class/state/):
 
 - [`state`](/agents/agent-class/state/) — Current persisted state
-- [`initialState`](/agents/agent-class/state/#set-the-initial-state-for-an-agent) — Default state when instance starts
+- [`initialState`](/agents/agent-class/state/#defining-initial-state) — Default state when instance starts
 - [`setState`](/agents/agent-class/state/) — Update and persist state
-- [`onStateChanged`](/agents/agent-class/state/#synchronizing-state) — React to state changes
+- [`onStateChanged`](/agents/agent-class/state/#client-side-state-sync) — React to state changes
 - [`sql`](/agents/agent-class/#sql-api) — Execute SQL queries on embedded database
 
 :::note[State resets after the session ends]

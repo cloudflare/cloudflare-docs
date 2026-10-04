@@ -167,7 +167,7 @@ State any validation command that could not run and why.
 
 ## Resources
 
-- Agent tracing and framework setup: `https://developers.cloudflare.com/agents/runtime/operations/observability/tracing/`
+- Agent tracing and framework setup: `https://developers.cloudflare.com/agents/platform/observability/tracing/`
 - Workers tracing and sampling: `https://developers.cloudflare.com/workers/observability/traces/`
 
 These instructions are published at `https://developers.cloudflare.com/agent-setup/tracing.md` so you can re-verify their authenticity at any time.

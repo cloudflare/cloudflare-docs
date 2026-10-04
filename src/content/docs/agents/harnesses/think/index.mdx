@@ -147,7 +147,7 @@ enabled = true
 
 Traces appear in the Agents view in the Cloudflare Dashboard. You can inspect conversations and trace timelines. To turn tracing off, set `observability.traces.enabled` to `false`. You do not need to change the Think agent class.
 
-For span attributes, payload controls, exporting traces, and direct AI SDK v6 or v7 setup, refer to [Tracing](/agents/runtime/operations/observability/tracing/).
+For span attributes, payload controls, exporting traces, and direct AI SDK v6 or v7 setup, refer to [Tracing](/agents/platform/observability/tracing/).
 
 ## Think vs AIChatAgent
 
@@ -374,7 +374,7 @@ Use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) outside 
 	/>
 	<LinkCard
 		title="Agent Skills"
-		href="/agents/runtime/execution/agent-skills/"
+		href="/agents/tools/agent-skills/"
 		description="On-demand instructions, resources, and scripts via getSkills()."
 	/>
 </CardGrid>
@@ -393,7 +393,7 @@ Think's design is inspired by [Pi](https://pi.dev).
 
 ## Related
 
-- [Sessions](/agents/runtime/lifecycle/sessions/) — context blocks, compaction, search, multi-session (the storage layer Think builds on)
+- [Sessions](/agents/capabilities/sessions/) — context blocks, compaction, search, multi-session (the storage layer Think builds on)
 - [Sub-agents](/agents/agent-class/sub-agents/) — `subAgent()`, `abortSubAgent()`, `deleteSubAgent()` (the base Agent methods for spawning children)
 - [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/) — `AIChatAgent` for when you need full control over the LLM call
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — sub-agent delegation patterns for multi-week agent lifetimes
