@@ -150,7 +150,7 @@ cloudflared tunnel list
 
     If you are connecting a <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/">private network</a>:
 
-    <Code code={`tunnel: <Tunnel-UUID>\ncredentials-file: /root/.cloudflared/<Tunnel-UUID>.json\nwarp-routing:\n  enabled: true`} lang="yml" />
+    <Code code={`tunnel: <Tunnel-UUID>\ncredentials-file: /root/.cloudflared/<Tunnel-UUID>.json`} lang="yml" />
 
 3.  Confirm that the configuration file has been successfully created by running:
 
@@ -202,3 +202,4 @@ To get information on the tunnel you just created, run:
 ```sh
 cloudflared tunnel info <UUID or NAME>
 ```
+
