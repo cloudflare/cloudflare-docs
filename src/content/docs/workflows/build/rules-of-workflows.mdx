@@ -565,7 +565,7 @@ export class MyWorkflow extends WorkflowEntrypoint {
 
 ### Batch multiple Workflow invocations
 
-When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createBatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API. However, each individual instance in the batch will still count towards the [creation rate limit](/workflows/reference/limits/). Unlike `create`, `createBatch` is idempotent: if an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/), it will be skipped and excluded from the returned array.
+When creating multiple Workflow instances, use the [`createBatch`](/workflows/build/workers-api/#createbatch) method to batch the invocations together. This allows you to create multiple Workflow instances in a single request, which will reduce the number of requests made to the Workflows API. However, each individual instance in the batch will still count towards the [creation rate limit](/workflows/reference/limits/). Unlike `create`, `createBatch` does not throw if an existing instance with the same ID is still within its [retention limit](/workflows/reference/limits/). Instead, it skips that instance and reports it in the `errors` array of the result.
 
 <TypeScriptExample filename="index.ts">
 
@@ -589,8 +589,11 @@ export default {
 
 		// ✅ Good: Batch calls together
 		// This improves throughput.
-		let createdInstances = await env.MY_WORKFLOW.createBatch(instances);
-		return Response.json({ instances: createdInstances });
+		let { created, errors } = await env.MY_WORKFLOW.createBatch({ instances });
+		return Response.json({
+			instances: created.map((instance) => instance.id),
+			errors,
+		});
 	},
 };
 ```

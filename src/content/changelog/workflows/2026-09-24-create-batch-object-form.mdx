@@ -1,0 +1,50 @@
+---
+title: Create Workflow instance batches by count or list
+description: Create up to 100 Workflow instances by count or from a list, and get per-instance errors in the result.
+products:
+  - workflows
+  - workers
+date: 2026-09-24 12:00:00 UTC
+---
+
+import { TypeScriptExample } from "~/components";
+
+[`createBatch()`](/workflows/build/workers-api/#createbatch) now accepts an options object that creates up to 100 Workflow instances in one call. The result lists the created instances and explains why any others were not created. Local development supports this form in Wrangler X.Y.Z and later.
+
+To create instances that share the same options, pass `count`. Each instance receives a generated ID:
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.createBatch({
+	count: 10,
+	params: { report: "daily" },
+});
+```
+
+</TypeScriptExample>
+
+To give each instance its own ID or options, pass `instances`:
+
+<TypeScriptExample>
+
+```ts
+const { created, errors } = await env.MY_WORKFLOW.createBatch({
+	instances: [
+		{ id: "order-1", params: { orderId: 1 } },
+		{ id: "order-2", params: { orderId: 2 } },
+	],
+});
+
+for (const error of errors) {
+	console.log(error.index, error.id, error.code, error.message);
+}
+```
+
+</TypeScriptExample>
+
+`created` contains the created instances. `errors` contains each entry that was not created, identified by its position in the input. IDs that already exist and IDs repeated within the batch are reported as errors instead of being skipped silently.
+
+Passing an array to `createBatch()` is deprecated. Existing code that uses the array form continues to work.
+
+For more information, refer to [`createBatch`](/workflows/build/workers-api/#createbatch).
