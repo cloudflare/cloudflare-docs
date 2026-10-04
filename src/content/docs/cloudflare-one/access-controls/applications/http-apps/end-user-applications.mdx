@@ -1,0 +1,209 @@
+---
+pcx_content_type: how-to
+products:
+  - cloudflare-one
+  - workers
+title: Add end-user authentication to an application
+description: Add Cloudflare authentication and an application-scoped user directory to a Worker or public web application.
+sidebar:
+  order: 3
+tags:
+  - Authentication
+  - REST API
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+End-user applications add Cloudflare authentication to applications that you build for customers, partners, or other external users. Each application is connected to one user population. The population is separate from your Zero Trust organization user directory.
+
+When a user authenticates for the first time, Access creates a user record in the population. Access then sends the authenticated identity to your application. Your application uses the population-scoped user ID as its user key and decides what that user can do.
+
+Use an end-user application when you need application-scoped authentication. To control employee access with Access policies, use a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) instead.
+
+## How end-user authentication works
+
+1. You create a user population and an Access application with `type` set to `end_user`.
+2. You attach a Worker or public hostname to the Access application.
+3. The user signs in with one of the application's allowed identity providers.
+4. Access creates the user in the attached population after successful authentication.
+5. Access forwards the signed identity to your application.
+
+End-user applications have the following requirements:
+
+- Exactly one user population
+- A public hostname or Workers destination
+- Managed OAuth enabled
+- No custom Access policies
+- No application-level SCIM or MFA configuration
+
+Access applies an internal allow-everyone policy. Any user who successfully authenticates with an allowed identity provider can reach the application. Enforce roles, subscriptions, tenant membership, and other authorization rules in your application.
+
+You cannot change an existing application to or from the `end_user` type. Create another application if you need a different authentication model.
+
+## Add authentication to a Worker
+
+This example deploys a Worker, attaches an end-user Access application, and reads the authenticated identity through `ctx.access`.
+
+### Prerequisites
+
+- A Cloudflare account with [Zero Trust configured](/cloudflare-one/setup/)
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Access
+- An API token that can manage Access applications and user populations
+- The account ID for the Cloudflare account
+
+### 1. Create the Worker
+
+Create a Workers project:
+
+<PackageManagers type="exec" pkg="create-cloudflare@latest" args="end-user-app" />
+
+Replace the generated Worker code with the following example. The Worker rejects requests without an Access context, then returns the population-scoped user ID and verified email address.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+type EndUserIdentity = {
+	email?: string;
+	user_uuid?: string;
+};
+
+export default {
+	async fetch(request, env, ctx) {
+		if (!ctx.access) {
+			return new Response("Authentication required", { status: 401 });
+		}
+
+		const identity = (await ctx.access.getIdentity()) as EndUserIdentity | null;
+		if (!identity?.user_uuid) {
+			return new Response("Authenticated user ID unavailable", { status: 403 });
+		}
+
+		return Response.json({
+			id: identity.user_uuid,
+			email: identity.email,
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Deploy the Worker:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Record the Worker ID returned by the Workers API or shown in the Worker settings. This is not the Worker name.
+
+### 2. Create a user population
+
+Create a population for the application:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/user_populations" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "name": "End-user app users"
+  }'
+```
+
+Save the `result.id` value from the response as the user population ID.
+
+### 3. Get the identity provider ID
+
+List the identity providers configured in your Zero Trust organization:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Save the `id` for each identity provider that users can select.
+
+### 4. Attach authentication to the Worker
+
+Create the `end_user` application. Replace the Worker, population, and identity provider placeholders with their IDs.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "type": "end_user",
+    "name": "End-user authentication for my Worker",
+    "destinations": [
+      {
+        "type": "worker",
+        "worker_id": "<WORKER_ID>"
+      }
+    ],
+    "allowed_idps": ["<IDENTITY_PROVIDER_ID>"],
+    "user_populations": ["<USER_POPULATION_ID>"],
+    "oauth_configuration": {
+      "enabled": true
+    }
+  }'
+```
+
+The `worker` destination covers the Worker's production and preview deployments. Use `preview_worker` to cover only preview deployments. End-user applications also support `all_workers` and `all_preview_workers` destinations.
+
+### 5. Test the application
+
+<Steps>
+1. Open the Worker's URL in a private browser window.
+2. Authenticate with one of the allowed identity providers.
+3. Confirm that the Worker returns your `id` and `email`.
+4. Reload the page and confirm that the `id` does not change.
+</Steps>
+
+Access derives the user ID from the attached population and the verified identity. The same identity gets a different user ID when it authenticates against another population.
+
+## Add authentication to another web application
+
+End-user authentication can protect any HTTP application on a public hostname proxied by Cloudflare. Create the user population as described in [Create a user population](#2-create-a-user-population), then create the application with a public domain:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "type": "end_user",
+    "name": "Customer application",
+    "domain": "app.example.com",
+    "allowed_idps": ["<IDENTITY_PROVIDER_ID>"],
+    "user_populations": ["<USER_POPULATION_ID>"],
+    "oauth_configuration": {
+      "enabled": true
+    }
+  }'
+```
+
+After authentication, Access sends a signed JSON Web Token (JWT) in the `Cf-Access-Jwt-Assertion` request header. Validate the token before trusting its claims. Use the JWT `sub` claim or the `user_uuid` returned by the Access identity endpoint as the application user ID. For implementation instructions, refer to [Validate JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/).
+
+## Use OAuth clients
+
+Managed OAuth is always active for `end_user` applications. Use the OAuth authorization code flow with Proof Key for Code Exchange (PKCE) for native applications, command-line tools, and browser applications that call protected APIs with bearer tokens.
+
+Add each callback URL to `oauth_configuration.dynamic_client_registration.allowed_uris`. Clients can discover the authorization server from the protected resource metadata and dynamically register an OAuth client. Access issues an opaque access token. The client sends that token as a bearer token, and Access forwards the resolved identity to your application.
+
+For endpoint discovery, callback configuration, token lifetime settings, and token handling, refer to [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/).
+
+## User records
+
+The first successful login creates an active SCIM user in the attached population. The record contains the population-scoped user ID and the normalized email address returned by the identity provider. If Access cannot create or find the population user, authentication fails before the request reaches your application.
+
+To inspect or manage these records, use the user population endpoints:
+
+```txt
+GET    /accounts/{account_id}/access/user_populations/{population_id}/users
+POST   /accounts/{account_id}/access/user_populations/{population_id}/users
+GET    /accounts/{account_id}/access/user_populations/{population_id}/users/{user_id}
+PUT    /accounts/{account_id}/access/user_populations/{population_id}/users/{user_id}
+PATCH  /accounts/{account_id}/access/user_populations/{population_id}/users/{user_id}
+DELETE /accounts/{account_id}/access/user_populations/{population_id}/users/{user_id}
+```
+
+The user endpoints accept and return SCIM 2.0 user resources.
