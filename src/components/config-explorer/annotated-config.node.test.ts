@@ -59,6 +59,20 @@ describe("annotated config explorer", () => {
 		}
 	});
 
+	it("annotates Issues enablement with its generated description", () => {
+		const worker = buildAnnotatedCategories("test").find(
+			(category) => category.id === "worker",
+		)!;
+		const enabled = worker.lines
+			.flatMap((line) => line.references)
+			.find((ref) => ref.id === "WorkerConfig.observability.issues.enabled")!;
+
+		expect(enabled.signature).toBe("enabled?: boolean");
+		expect(enabled.descriptionHtml).toBe(
+			"Whether real-time Issues are enabled.",
+		);
+	});
+
 	it("includes builder options and full signatures in notes", () => {
 		const bindings = buildAnnotatedCategories("test").find(
 			(category) => category.id === "bindings",

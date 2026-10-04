@@ -11,6 +11,8 @@ import {
 } from "vitest";
 
 import AnnotatedConfigExplorer from "./AnnotatedConfigExplorer.astro";
+import { slug } from "./annotated-config";
+import { allReferences } from "./config-examples";
 
 const CODE = `import { bindings, defineConfig } from "cf/config";
 import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
@@ -198,6 +200,25 @@ describe("AnnotatedConfigExplorer without code", () => {
 			explorer.querySelectorAll('[role="tabpanel"][data-ace-panel]'),
 		).toHaveLength(5);
 	});
+
+	it.each(["observability", "assets", "placement"])(
+		"renders clickable references for every %s field",
+		(name) => {
+			const [explorer] = mount(html.reference);
+			const panel = explorer.querySelector("#reference-panel-worker")!;
+			const prefix = `WorkerConfig.${name}`;
+			const references = allReferences().filter(
+				(ref) => ref.id === prefix || ref.id.startsWith(`${prefix}.`),
+			);
+
+			expect(references.length).toBeGreaterThan(1);
+			for (const reference of references) {
+				expect(
+					panel.querySelector(`#reference-worker-${slug(reference.id)}`),
+				).not.toBeNull();
+			}
+		},
+	);
 
 	it("expands only the selected category", async () => {
 		const [explorer] = mount(html.reference);
