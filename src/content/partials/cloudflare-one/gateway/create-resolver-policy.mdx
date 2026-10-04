@@ -78,4 +78,4 @@ When a user's query matches a resolver policy, Gateway will send the query to yo
 2. Private resolvers behind the default virtual network for your account
 3. Private resolvers behind a custom virtual network
 
-Gateway will cache the fastest resolver for use in subsequent queries. Resolver priority is cached on a per user basis for each data center.
+Within each of the three above scenarios, Gateway selects a resolver at random using uniform traffic distribution. If the selected resolver does not respond in time, Gateway will attempt the next resolver based on observed round-trip time.
