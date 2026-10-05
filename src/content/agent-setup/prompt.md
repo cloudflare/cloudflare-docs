@@ -49,10 +49,6 @@ codex mcp login cloudflare
 
 ```
 pi mcp add cloudflare --url https://mcp.cloudflare.com/mcp
-pi mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
-pi mcp add cloudflare-bindings --url https://bindings.mcp.cloudflare.com/mcp
-pi mcp add cloudflare-builds --url https://builds.mcp.cloudflare.com/mcp
-pi mcp add cloudflare-observability --url https://observability.mcp.cloudflare.com/mcp
 pi mcp login cloudflare
 ```
 
