@@ -1,0 +1,34 @@
+---
+title: Detect organization-specific risks with CASB custom findings
+description: Create custom CASB posture finding types with Rego to detect the misconfigurations that matter to your organization.
+products:
+  - casb
+date: 2026-10-05
+---
+
+[Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) now supports **custom findings**. You can define your own posture finding types with [Rego](https://www.openpolicyagent.org/docs/policy-language) to detect the security misconfigurations specific to your organization, alongside the standard finding types provided by Cloudflare.
+
+Standard finding types are built to apply broadly, so they cannot account for your organization's exceptions and thresholds. For example, you may only want to flag publicly shared files not owned by your Marketing team, or admin accounts without two-factor authentication. Custom findings let you write detections that match your own policies, producing higher-confidence findings to act on and automate.
+
+### Key capabilities
+
+- **Create or duplicate** — Write a finding type from scratch, or duplicate a standard finding type and adjust its detection logic.
+- **Rego detection logic** — Define when an asset should produce a finding, and validate your expression against the asset schema before saving.
+- **Scoped to your integrations** — Apply a custom finding type to all integrations for a provider or only to the integrations you select.
+- **Works with remediation policies** — Use custom finding types to trigger [CASB remediation policies](/cloudflare-one/cloud-and-saas-findings/policies/) and send webhooks, just like standard finding types.
+
+### Get started
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. Select **Create finding**, or select **Duplicate** on an existing finding type.
+3. Enter the finding details, choose a **Provider** and **Asset class**, and write your Rego detection logic.
+4. Select **Validate**, then save the finding type.
+
+CASB evaluates custom finding types as assets are created or updated. Matching assets appear as finding instances under **Posture Findings**.
+
+### Learn more
+
+- Learn how to [manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/) in Cloudflare One.
+- Learn how to [create and manage CASB remediation policies](/cloudflare-one/cloud-and-saas-findings/policies/) in Cloudflare One.
+
+CASB custom findings are now available in Cloudflare One.
