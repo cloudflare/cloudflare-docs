@@ -95,6 +95,8 @@ Users who match a policy configured with a _Same as application session timeout_
 
 <Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 
+For [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/), SSH sessions are limited by a configurable session duration, which defaults to 24 hours. Active sessions that exceed the configured duration will be disconnected. When a target matches multiple infrastructure applications, the shortest session duration applies.
+
 ### Cloudflare One Client session duration
 
 When [Authenticate with Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.

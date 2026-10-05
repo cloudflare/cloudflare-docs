@@ -212,7 +212,9 @@ The following SSH features are not supported:
 
 ### Session duration
 
-SSH sessions have a maximum expected duration of 10 hours. For more information, refer to [Troubleshoot Access](/cloudflare-one/access-controls/troubleshooting/#long-lived-ssh-sessions-disconnect).
+Infrastructure applications enforce a configurable SSH session duration, which defaults to 24 hours. Active sessions that exceed the configured duration will be disconnected. When a target matches multiple infrastructure applications, the shortest session duration applies.
+
+Separately, all connections proxied through Cloudflare Gateway have a maximum guaranteed duration of 10 hours due to periodic service releases. For more information, refer to [Troubleshoot Access](/cloudflare-one/access-controls/troubleshooting/#long-lived-ssh-sessions-disconnect).
 
 ## Troubleshooting
 
