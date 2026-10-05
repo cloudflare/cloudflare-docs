@@ -30,7 +30,7 @@ Before enabling Google tag gateway for advertisers on your zone, review the foll
 
 **Cache rules**: The measurement path must not be cached. If you have [Cache Rules](/cache/how-to/cache-rules/) or Page Rules configured to cache everything, add an exception to exclude the measurement path.
 
-**Rocket Loader**: If [Rocket Loader](/speed/optimization/content/rocket-loader/) is enabled on your zone, it can interfere with how Google tags are injected on your pages. If you observe tag loading issues after enabling, disable Rocket Loader for the affected pages or the entire zone.
+**Rocket Loader**: If [Rocket Loader](/speed/optimization/content/rocket-loader/) is enabled on your zone, it can interfere with how Google tags are injected on your pages. If you observe tag loading issues after turning on Google tag gateway for advertisers, turn off Rocket Loader for the affected pages or the entire zone.
 
 :::tip
 Use [Cloudflare Trace](/rules/trace-request/) to simulate a request to your measurement path and verify that no existing rules would block or modify it before going live.
