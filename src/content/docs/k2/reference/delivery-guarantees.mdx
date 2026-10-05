@@ -1,0 +1,115 @@
+---
+title: Delivery guarantees
+description: K2 delivers every record to every subscription at least once. Learn how subscriptions, leases, and retention affect delivery.
+pcx_content_type: concept
+products:
+  - k2
+sidebar:
+  order: 1
+---
+
+K2 delivers every record to every subscription on a stream at least once. A
+consumer can receive the same record more than once, so design consumers to
+handle duplicate records.
+
+This page explains how K2 delivers records from a stream to your consumers. For
+the requests that consumers send, refer to [Consume records](/k2/features/consume/).
+
+## Summary
+
+| Guarantee     | Behavior                                                                                                   |
+| ------------- | ---------------------------------------------------------------------------------------------------------- |
+| Delivery      | At least once, per subscription.                                                                           |
+| Fan-out       | Every subscription receives every record. A stream can have up to 100 subscriptions.                       |
+| Sharing work  | Within a subscription, K2 never leases the same records to two workers at the same time.                   |
+| Redelivery    | Records are delivered again if their batch is released with a nack, or if the lease expires before an ack. |
+| Retention     | Consuming a record does not delete it. Records remain in the stream until the retention period ends.       |
+| Batches       | Records are acknowledged, released, and redelivered as a batch. There is no per-record acknowledgement.    |
+| Ordering      | K2 does not guarantee the order in which records are processed across workers that share a subscription.   |
+| Deduplication | K2 does not deduplicate records, on produce or on consume.                                                 |
+
+## Subscriptions are independent
+
+Each [subscription](/k2/concepts/#subscriptions) tracks its own position in
+the stream. Every subscription receives every record, and consuming from one
+subscription does not affect any other subscription.
+
+Records are not removed when they are consumed. They stay in the stream until
+the [retention period](/k2/configuration/#retention) ends. This means you can:
+
+- Add a new subscription later and read records that were produced before it existed, by creating it with `start_at` set to `earliest`.
+- Run several independent applications on the same stream. For example, an alerting system, an archiver, and a feature pipeline can each have their own subscription.
+
+Retention applies whether or not a record has been consumed. If a subscription
+falls further behind than the retention period, for example because its
+consumers are down, K2 deletes the records it has not read yet. Set the
+retention period to cover the longest consumer downtime you need to tolerate.
+
+## Sharing a subscription across workers
+
+Any number of workers can consume from the same subscription. K2 splits the
+records between them, so each worker receives a subset of the records.
+
+- Each batch is a [lease](/k2/features/consume/#leases) held by exactly one `worker_id`.
+- Each `worker_id` can hold one lease at a time.
+- A subscription can have up to 128 active leases at a time.
+- K2 never leases the same records to two workers at the same time.
+
+## How a batch is delivered
+
+When a worker [requests a batch](/k2/features/consume/#request-a-batch), K2
+leases it to that worker for five minutes. The batch then ends in one of the
+following ways:
+
+| What the worker does                                                       | Result                                                                                          |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [Acknowledges (acks)](/k2/features/consume/#acknowledge-a-batch) the batch | The records are marked as processed for this subscription, and the lease is released.           |
+| [Releases (nacks)](/k2/features/consume/#release-a-batch) the batch        | K2 delivers the records again in the next batch requested by any worker, with a new `batch_id`. |
+| [Extends](/k2/features/consume/#extend-a-lease) the lease                  | The lease is set to expire five minutes after the request.                                      |
+| Requests a batch again while it holds the lease                            | K2 returns the same batch and records, and refreshes the lease.                                 |
+| Does nothing until the lease expires                                       | K2 delivers the records again to the next worker that requests a batch, with a new `batch_id`.  |
+
+Acknowledgements, nacks, and redelivery apply to the whole batch. If one record
+in a batch fails, you cannot acknowledge the others on their own. Either handle
+the failed record in your consumer, or nack the batch so that K2 delivers every
+record in it again.
+
+The subscription does not move past released or expired records until the new
+batch that contains them is acknowledged.
+
+If a lease expires and K2 has already delivered the records in a new batch, an
+acknowledgement from the original worker has no effect. This is why K2 delivers
+records at least once rather than exactly once: a worker can process a batch,
+fail to acknowledge it in time, and the same records are then processed by
+another worker.
+
+## Producing records
+
+A successful produce request means K2 has stored every record in the batch.
+Batch writes are atomic, so either all records in a batch are stored or none
+are.
+
+Some produce failures have an unknown outcome, and the batch may or may not have
+been stored. If you retry the batch, K2 can store the records twice. For details,
+refer to [Handle errors](/k2/features/produce/#handle-errors).
+
+Duplicates can therefore come from two places: a producer retrying a batch, or
+K2 redelivering a batch to a consumer.
+
+## Handle duplicate records
+
+To make duplicates safe, make your consumer idempotent, so that processing the
+same record twice has the same effect as processing it once. For example:
+
+- Include a unique ID in each record when you produce it, either in the content or in a header.
+- Use that ID as the primary key when you write to a database, so a second insert of the same record is rejected or ignored.
+- Pass that ID as an idempotency key to downstream APIs, such as a payment or email API, so they reject the duplicate on your behalf.
+
+To reduce redelivery, acknowledge each batch as soon as you finish processing it,
+and extend the lease if processing takes longer than five minutes.
+
+## Related resources
+
+- [Consume records](/k2/features/consume/)
+- [Produce records](/k2/features/produce/)
+- [Limits](/k2/platform/limits/#subscriptions-and-consuming-records)
