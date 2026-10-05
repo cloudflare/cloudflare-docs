@@ -267,7 +267,7 @@ interface Env {
 	SECRET_DATA: string;
 }
 
-const app = new Hono();
+const app = new Hono<{ Bindings: Env }>();
 
 // Handle URL generation requests
 app.get("/generate/*", async (c) => {
@@ -288,12 +288,13 @@ app.get("/generate/*", async (c) => {
 	);
 
 	// Replace "/generate/" prefix with "/"
-	let pathname = c.req.path.replace("/generate/", "/");
+	const url = new URL(c.req.url);
+	url.pathname = url.pathname.replace("/generate/", "/");
 
 	const timestamp = Math.floor(Date.now() / 1000);
 
 	// Data to authenticate: pathname + timestamp
-	const dataToAuthenticate = `${pathname}${timestamp}`;
+	const dataToAuthenticate = `${url.pathname}${timestamp}`;
 
 	// Sign the data
 	const mac = await crypto.subtle.sign(
@@ -308,7 +309,7 @@ app.get("/generate/*", async (c) => {
 	// Add verification parameter to URL
 	url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
 
-	return c.text(`${pathname}${url.search}`);
+	return c.text(url.toString());
 });
 
 // Handle verification for all other requests
@@ -367,7 +368,7 @@ app.all("*", async (c) => {
 	}
 
 	// If verification passes, proxy the request to example.com
-	return proxy(`https://example.com/${c.req.path}`, ...c.req);
+	return proxy(`https://example.com${c.req.path}`, { ...c.req });
 });
 
 export default app;
