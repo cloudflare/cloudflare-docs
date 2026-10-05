@@ -41,6 +41,13 @@ codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
 codex mcp login cloudflare
 ```
 
+### Pi
+
+```
+pi mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+pi mcp login cloudflare
+```
+
 ### OpenCode — `~/.config/opencode/opencode.jsonc`
 
 Add under `"mcp"`:
