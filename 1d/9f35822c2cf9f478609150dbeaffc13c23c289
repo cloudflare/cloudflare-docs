@@ -1,0 +1,21 @@
+src/scripts/copy-prompt.node.test.ts
+  s_41e15f96bbbada::t_21361a576aea37 3,82-94
+src/scripts/copy-prompt.ts
+  s_41e15f96bbbada::t_bd849e9e27f52a 1-5,18-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1d9f35822c2cf9f478609150dbeaffc13c23c289",
+  "prompts": {},
+  "sessions": {
+    "s_41e15f96bbbada": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0fcca-7a99-73cf-84bb-ccfe6ae39bd3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
