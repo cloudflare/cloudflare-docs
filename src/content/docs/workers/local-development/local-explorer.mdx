@@ -39,13 +39,22 @@ Local Explorer is available by default and detects the bindings defined in your 
 
 Local Explorer supports the following binding types:
 
-| Binding                                               | View                                           | Edit                                        |
-| ----------------------------------------------------- | ---------------------------------------------- | ------------------------------------------- |
-| [KV](/kv/)                                            | Browse keys, view values and metadata          | Create, update, and delete key-value pairs  |
-| [R2](/r2/)                                            | List objects, view metadata                    | Upload and delete objects                   |
-| [D1](/d1/)                                            | Browse tables and rows, run SQL queries        | Insert, update, and delete rows through SQL |
-| [Durable Objects](/durable-objects/) (SQLite storage) | Browse SQLite tables and rows, run SQL queries | Insert, update, and delete rows through SQL |
-| [Workflows](/workflows/)                              | List instances, view status and step history   | Trigger new runs, retry failed instances    |
+| Binding                                                                   | View                                           | Edit                                                                |
+| ------------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------- |
+| [KV](/kv/)                                                                | Browse keys, view values and metadata          | Create, update, and delete key-value pairs                          |
+| [R2](/r2/)                                                                | List objects, view metadata                    | Upload and delete objects                                           |
+| [D1](/d1/)                                                                | Browse tables and rows, run SQL queries        | Insert, update, and delete rows through SQL                         |
+| [Durable Objects](/durable-objects/) (SQLite storage)                     | Browse SQLite tables and rows, run SQL queries | Insert, update, and delete rows through SQL                         |
+| [Workflows](/workflows/)                                                  | List instances, view status and step history   | Trigger new runs, retry failed instances                            |
+| [Email sending](/email-service/local-development/sending/) (`send_email`) | List sent emails, view content and headers     | View only                                                           |
+| [Flagship](/flagship/)                                                    | List feature flags, test flag evaluations      | Create, update, and delete flags, edit targeting rules and rollouts |
+
+Local Explorer also supports the following Worker triggers:
+
+| Trigger                                                    | View                                                              | Test                                                                                                    |
+| ---------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| [Email Routing](/email-service/local-development/routing/) | List received emails, view content, headers, and handler outcomes | Send test emails, resend or edit and resend captured emails                                             |
+| [Cron Triggers](/workers/configuration/cron-triggers/)     | View configured cron schedules and invocation results             | Invoke the `scheduled()` handler with configured or ad hoc cron expressions and a chosen scheduled time |
 
 ### D1 and Durable Objects SQL Studio
 
