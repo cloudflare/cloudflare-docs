@@ -38,10 +38,6 @@ Then register the MCP servers using the default config location for your agent. 
 
 ```
 codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
-codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-bindings --url https://bindings.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-builds --url https://builds.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-observability --url https://observability.mcp.cloudflare.com/mcp
 codex mcp login cloudflare
 ```
 
