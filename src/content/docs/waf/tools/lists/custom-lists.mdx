@@ -64,7 +64,7 @@ List items in custom lists with IP addresses must be in one of the following for
 
 The same list can contain both individual addresses and CIDR ranges.
 
-You can use uppercase or lowercase characters for IPv6 addresses in lists. However, when you save the list, uppercase characters are converted to lowercase.
+Cloudflare stores IPv6 addresses in canonical form. When you save a list, Cloudflare converts uppercase characters to lowercase and removes leading zeros from each segment. For example, `2400:d400:0011:19::2` is stored as `2400:d400:11:19::2`. This normalization does not affect matching. When searching list items, use the canonical form displayed in the list.
 
 <Details header="CSV file format">
 
