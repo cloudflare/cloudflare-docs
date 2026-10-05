@@ -45,6 +45,17 @@ codex mcp add cloudflare-observability --url https://observability.mcp.cloudflar
 codex mcp login cloudflare
 ```
 
+### Pi
+
+```
+pi mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+pi mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
+pi mcp add cloudflare-bindings --url https://bindings.mcp.cloudflare.com/mcp
+pi mcp add cloudflare-builds --url https://builds.mcp.cloudflare.com/mcp
+pi mcp add cloudflare-observability --url https://observability.mcp.cloudflare.com/mcp
+pi mcp login cloudflare
+```
+
 ### OpenCode — `~/.config/opencode/opencode.jsonc`
 
 Add under `"mcp"`:
@@ -62,6 +73,7 @@ Then run:
 ```
 opencode mcp auth cloudflare
 ```
+
 
 ### Devin Desktop — `~/.codeium/windsurf/mcp_config.json`
 
