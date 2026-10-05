@@ -7,6 +7,7 @@
  */
 import type { GetStaticPaths } from "astro";
 import { renderMarkdown, renderMarkdownInline } from "~/util/markdown";
+import { stripMarkdownDescription } from "~/util/description";
 import { getEntry } from "astro:content";
 import { getSidebar } from "@cloudflare/nimbus-docs";
 import DocsLayout from "~/layouts/DocsLayout.astro";
@@ -45,13 +46,21 @@ const sidebar = await getSidebar(sectionSlug, {
 	transform: externalAppLinksTransform,
 });
 const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
+// Setting markdownUrl makes the layout emit the llms.txt directive for agents.
+const markdownUrl = Astro.site
+	? new URL(`${sectionSlug}index.md`, Astro.site).href
+	: `${sectionSlug}index.md`;
+// field.summary is Markdown; meta tags and the edge-generated index.md
+// frontmatter need plain text (no root-relative links).
+const metaDescription = stripMarkdownDescription(field.summary);
 const editUrl =
 	"https://github.com/cloudflare/cloudflare-docs/edit/production/src/content/fields/index.yaml";
 ---
 
 <DocsLayout
 	title={field.name}
-	description={field.summary}
+	description={metaDescription}
+	markdownUrl={markdownUrl}
 	sidebar={sidebar}
 	headings={false}
 	breadcrumbs={breadcrumbs}
