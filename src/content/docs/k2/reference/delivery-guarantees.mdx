@@ -47,8 +47,9 @@ retention period to cover the longest consumer downtime you need to tolerate.
 
 ## Share a subscription across workers
 
-Any number of workers can consume from the same subscription. K2 splits the
-records between them, so each worker receives a subset of the records.
+Multiple workers can consume from the same subscription. K2 splits the
+records between them, so each worker receives a subset of the records. Up to
+128 workers can hold a lease on the same subscription at the same time.
 
 - Each batch is a [lease](/k2/features/consume/#leases) held by exactly one `worker_id`.
 - Each `worker_id` can hold one lease at a time.
