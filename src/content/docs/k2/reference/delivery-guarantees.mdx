@@ -45,7 +45,7 @@ falls further behind than the retention period, for example because its
 consumers are down, K2 deletes the records it has not read yet. Set the
 retention period to cover the longest consumer downtime you need to tolerate.
 
-## Sharing a subscription across workers
+## Share a subscription across workers
 
 Any number of workers can consume from the same subscription. K2 splits the
 records between them, so each worker receives a subset of the records.
@@ -83,7 +83,7 @@ records at least once rather than exactly once: a worker can process a batch,
 fail to acknowledge it in time, and the same records are then processed by
 another worker.
 
-## Producing records
+## Produce records
 
 A successful produce request means K2 has stored every record in the batch.
 Batch writes are atomic, so either all records in a batch are stored or none
