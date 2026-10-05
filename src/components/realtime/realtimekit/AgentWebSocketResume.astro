@@ -1,0 +1,35 @@
+---
+import RealtimeSequenceDiagram from "../sfu/RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "do", label: "Agent Durable Object", tone: "blue" as const },
+	{ id: "agent", label: "Agent WebSocket", tone: "accent" as const },
+	{ id: "meeting", label: "Meeting" },
+];
+
+const events = [
+	{ from: "do", to: "agent", label: "connection.get" },
+	{ from: "agent", to: "do", label: "connection.id", dashed: true },
+	{
+		type: "note" as const,
+		from: "do",
+		to: "agent",
+		label: "WebSocket drops with a code other than 1000",
+	},
+	{
+		type: "note" as const,
+		from: "agent",
+		to: "meeting",
+		label: "Agent stays joined for 5 s and queues events",
+	},
+	{ from: "do", to: "agent", label: "Upgrade with ?connection_id=" },
+	{ from: "agent", to: "do", label: "Queued events, in order" },
+	{ from: "agent", to: "do", label: "Live events" },
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="The agent Durable Object stores the connection ID from connection.get. When the WebSocket drops with a code other than 1000, the agent stays in the meeting for 5 seconds and queues events. The Durable Object reconnects with connection_id and receives queued events in order, then live events."
+	participants={participants}
+	events={events}
+/>

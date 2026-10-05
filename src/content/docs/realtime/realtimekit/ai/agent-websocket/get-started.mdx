@@ -1,0 +1,431 @@
+---
+pcx_content_type: get-started
+title: Build an agent
+description: Configure an agent preset, add the agent to a RealtimeKit meeting, connect to the Agent WebSocket, and run the agent in a Durable Object.
+sidebar:
+  order: 2
+  badge: Beta
+products:
+  - realtime
+---
+
+import { Details, Steps, WranglerConfig } from "~/components";
+import AgentWebSocketFlow from "~/components/realtime/realtimekit/AgentWebSocketFlow.astro";
+import AgentWebSocketResume from "~/components/realtime/realtimekit/AgentWebSocketResume.astro";
+
+An agent is a meeting participant that your backend controls over a WebSocket. To add one, configure a preset, add the agent as a participant, and connect to the Agent WebSocket with the agent's participant token.
+
+<AgentWebSocketFlow />
+
+## Requirements
+
+- A RealtimeKit app and meeting. Refer to the [quickstart](/realtime/realtimekit/quickstart/).
+- A Cloudflare API token with RealtimeKit access.
+- To receive live transcripts, [real-time transcription](/realtime/realtimekit/ai/transcription/#turn-on-real-time-transcription) turned on in the presets of the participants you want transcribed. Without it, the agent receives no `transcript.received` events.
+
+## 1. Configure an agent preset
+
+The agent joins the meeting with a [preset](/realtime/realtimekit/concepts/preset/), like any other participant. You can use an existing preset, but a dedicated agent preset keeps agent settings separate from human participants. Create one in the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit) or with the [Create a preset API](/api/resources/realtime_kit/subresources/presets/methods/create/).
+
+To hide the agent from other participants, set `hidden_participant` with the [Update a preset API](/api/resources/realtime_kit/subresources/presets/methods/update/):
+
+```bash
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets/$PRESET_ID" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "permissions": {
+      "hidden_participant": true
+    }
+  }'
+```
+
+`hidden_participant` changes only what other participants see. The agent receives the same events either way.
+
+## 2. Create a meeting and a participant token for your agent
+
+If you do not have a meeting yet, create one with the [Create a meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/):
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Weekly product review"
+  }'
+```
+
+The response `data.id` is the meeting ID. Use it as `$MEETING_ID` in the next request.
+
+Then [add a participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to the meeting with the agent preset:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings/$MEETING_ID/participants" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Notes bot",
+    "preset_name": "agent",
+    "custom_participant_id": "notes-bot"
+  }'
+```
+
+The response `data.token` is the agent's participant token. Reuse the same participant for every session of the meeting. A [participant token](/realtime/realtimekit/concepts/participant/#participant-tokens) is valid for 100 days.
+
+## 3. Connect to the Agent WebSocket
+
+Open a WebSocket to the Agent WebSocket route with the participant token and the `realtimekit.v1` subprotocol:
+
+```txt
+GET wss://api.realtime.cloudflare.com/agent-ws/v1?subscriptions=transcript,participant,broadcast
+Authorization: Bearer <PARTICIPANT_TOKEN>
+Sec-WebSocket-Protocol: realtimekit.v1
+```
+
+The token selects the meeting. HTTP `101` means the connection is ready. The agent then joins the meeting and sends `session.started`.
+
+## 4. Set connection parameters
+
+| Parameter       | Value                                                                       |
+| --------------- | --------------------------------------------------------------------------- |
+| `subscriptions` | Optional. Any of `transcript`, `participant`, `broadcast`, comma-separated. |
+| `connection_id` | Optional. Resumes an earlier connection. Refer to [Reconnect](#reconnect).  |
+
+`subscriptions` decides which events the agent receives. Session events are always sent.
+
+| Category      | Events                                  | Needs                                                                                                                       |
+| ------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `transcript`  | `transcript.received`                   | [Real-time transcription](/realtime/realtimekit/ai/transcription/#turn-on-real-time-transcription) on the speakers' presets |
+| `participant` | `participant.join`, `participant.leave` | Nothing                                                                                                                     |
+| `broadcast`   | `broadcast.received`                    | Your app [sends broadcasts](/realtime/realtimekit/broadcast-apis/)                                                          |
+
+:::note
+The `transcript` subscription only delivers events if real-time transcription is on. Set `permissions.transcription_enabled: true` in the presets of the participants whose speech you want transcribed. Refer to [Turn on real-time transcription](/realtime/realtimekit/ai/transcription/#turn-on-real-time-transcription).
+:::
+
+Subscribe only to what you use. Fewer events means less queueing during reconnects. For payloads and delivery rules, refer to [Events](/realtime/realtimekit/ai/agent-websocket/events/).
+
+## 5. Run the agent in a Durable Object
+
+This example puts the steps above together. A Worker adds the agent to a meeting, and a Durable Object holds the agent's WebSocket and logs final transcripts and participant joins.
+
+A Durable Object fits the agent: one instance per meeting, a long-lived outbound WebSocket, and storage for the resume `connection_id`.
+
+<Steps>
+
+1. **Configure the Worker.** Bind the Durable Object and set the app details:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"name": "meeting-agent",
+   	"main": "src/index.ts",
+   	"compatibility_date": "$today",
+   	"vars": {
+   		"ACCOUNT_ID": "<ACCOUNT_ID>",
+   		"APP_ID": "<APP_ID>",
+   		"AGENT_PRESET": "agent",
+   	},
+   	"durable_objects": {
+   		"bindings": [{ "name": "MEETING_AGENT", "class_name": "MeetingAgent" }],
+   	}
+   }
+   ```
+
+   </WranglerConfig>
+
+   Store the API token as a secret:
+
+   ```sh
+   npx wrangler secret put CLOUDFLARE_API_TOKEN
+   ```
+
+2. **Add and remove the agent.** `POST` adds a participant with the agent preset and starts the meeting's Durable Object. `DELETE` removes the agent from the meeting:
+
+   ```ts title="src/index.ts"
+   export { MeetingAgent } from "./agent";
+
+   export default {
+   	async fetch(request, env): Promise<Response> {
+   		const url = new URL(request.url);
+   		const match = url.pathname.match(/^\/meetings\/([^/]+)\/agent$/);
+   		if (!match) return new Response("Not found", { status: 404 });
+   		const meetingId = match[1];
+   		const agent = env.MEETING_AGENT.getByName(meetingId);
+
+   		// Authenticate the caller before adding or removing an agent.
+
+   		if (request.method === "DELETE") {
+   			await agent.stop();
+   			return new Response("Agent stopped", { status: 200 });
+   		}
+   		if (request.method !== "POST") {
+   			return new Response("Method not allowed", { status: 405 });
+   		}
+
+   		const res = await fetch(
+   			`https://api.cloudflare.com/client/v4/accounts/${env.ACCOUNT_ID}/realtime/kit/${env.APP_ID}/meetings/${meetingId}/participants`,
+   			{
+   				method: "POST",
+   				headers: {
+   					Authorization: `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
+   					"Content-Type": "application/json",
+   				},
+   				body: JSON.stringify({
+   					name: "Notes bot",
+   					preset_name: env.AGENT_PRESET,
+   					custom_participant_id: `agent-${meetingId}`,
+   				}),
+   			},
+   		);
+   		if (!res.ok) return new Response("Add participant failed", { status: 502 });
+   		const { data } = await res.json<{ data: { token: string } }>();
+
+   		await agent.start(data.token);
+   		return new Response("Agent started", { status: 202 });
+   	},
+   } satisfies ExportedHandler<Env>;
+   ```
+
+3. **Hold the WebSocket in a Durable Object.** The Durable Object connects, stores `connection_id`, handles events, reconnects, and leaves the meeting on `stop()`:
+
+   ```ts title="src/agent.ts"
+   import { DurableObject } from "cloudflare:workers";
+
+   const AGENT_WS = "https://api.realtime.cloudflare.com/agent-ws/v1";
+   const SUBSCRIPTIONS = "transcript,participant";
+
+   export class MeetingAgent extends DurableObject<Env> {
+   	ws?: WebSocket;
+
+   	async start(token: string) {
+   		await this.ctx.storage.put("token", token);
+   		await this.ctx.storage.delete("connectionId");
+   		await this.connect();
+   	}
+
+   	async stop() {
+   		// Closing with 1000 makes the agent leave the meeting immediately.
+   		await this.ctx.storage.deleteAll();
+   		await this.ctx.storage.deleteAlarm();
+   		this.ws?.close(1000, "agent_stopped");
+   		this.ws = undefined;
+   	}
+
+   	async connect() {
+   		const token = await this.ctx.storage.get<string>("token");
+   		if (!token || this.ws) return;
+
+   		const url = new URL(AGENT_WS);
+   		url.searchParams.set("subscriptions", SUBSCRIPTIONS);
+   		const connectionId = await this.ctx.storage.get<string>("connectionId");
+   		if (connectionId) url.searchParams.set("connection_id", connectionId);
+
+   		// Workers open outbound WebSockets with fetch and an Upgrade header.
+   		const res = await fetch(url, {
+   			headers: {
+   				Upgrade: "websocket",
+   				Authorization: `Bearer ${token}`,
+   				"Sec-WebSocket-Protocol": "realtimekit.v1",
+   			},
+   		});
+   		const ws = res.webSocket;
+   		if (!ws) {
+   			console.error("upgrade failed", res.status, await res.text());
+   			if (res.status === 404) await this.ctx.storage.delete("connectionId");
+   			if (res.status >= 500 || res.status === 404) this.retry();
+   			return;
+   		}
+
+   		ws.accept();
+   		this.ws = ws;
+   		ws.addEventListener("message", (e) => this.onFrame(JSON.parse(e.data as string)));
+   		ws.addEventListener("close", (e) => this.onClose(e.code, e.reason));
+   		ws.send(
+   			JSON.stringify({
+   				category: "request",
+   				request_id: "connection",
+   				name: "connection.get",
+   				data: {},
+   			}),
+   		);
+   	}
+
+   	async onFrame(frame: any) {
+   		if (frame.category === "result" && frame.request_id === "connection" && frame.data) {
+   			await this.ctx.storage.put("connectionId", frame.data.connection.id);
+   			return;
+   		}
+   		if (frame.category !== "message") return;
+
+   		switch (frame.name) {
+   			case "transcript.received":
+   				if (frame.data.is_final) {
+   					console.log(`${frame.data.speaker.display_name}: ${frame.data.text}`);
+   				}
+   				break;
+   			case "participant.join":
+   				console.log("joined", frame.data.participant.display_name);
+   				break;
+   			case "session.ended":
+   				console.log("session ended", frame.data.reason);
+   				break;
+   		}
+   	}
+
+   	async onClose(code: number, reason: string) {
+   		this.ws = undefined;
+   		if (code === 4409 || code === 4403) return; // replaced, or fix the token
+   		if (code === 1000 || reason === "queue_overflow") {
+   			// Start fresh next time. Call start() again for the next session.
+   			await this.ctx.storage.delete("connectionId");
+   			if (code === 1000) return;
+   		}
+   		this.retry();
+   	}
+
+   	retry() {
+   		// Resume within 5 seconds to avoid a gap.
+   		this.ctx.storage.setAlarm(Date.now() + 1000);
+   	}
+
+   	async alarm() {
+   		await this.connect();
+   	}
+   }
+   ```
+
+4. **Deploy and start the agent.**
+
+   ```sh
+   npx wrangler deploy
+   curl -X POST https://meeting-agent.<SUBDOMAIN>.workers.dev/meetings/<MEETING_ID>/agent
+   ```
+
+   Join the meeting from a browser and speak. Run `npx wrangler tail` to see transcripts and joins.
+
+   When the meeting is over, remove the agent:
+
+   ```sh
+   curl -X DELETE https://meeting-agent.<SUBDOMAIN>.workers.dev/meetings/<MEETING_ID>/agent
+   ```
+
+</Steps>
+
+## Billing and ending the session
+
+The agent is a meeting participant, so it is billed like one. RealtimeKit charges participant minutes for the agent from when it joins a session until it leaves. Refer to [RealtimeKit pricing](/realtime/realtimekit/pricing/) for rates and to the [billing FAQ](/realtime/realtimekit/faq/#billing) for how participant minutes are counted.
+
+A session stays active while any participant is connected, and that includes the agent. If everyone else leaves but the agent stays connected, the session does not end. RealtimeKit keeps billing participant minutes for the agent, and for any [recording](/realtime/realtimekit/recording-guide/) in progress, until the agent leaves or someone ends the session.
+
+Use one of these to end a session:
+
+| Method                                                                                                                       | Effect                                                                                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Close the Agent WebSocket with code `1000`                                                                                   | The agent leaves immediately. The session ends when no other participants remain.                                                    |
+| Call the [Kick all participants API](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/) | Removes every participant, including the agent, and ends the session. The agent receives `participant.kick_all` and `session.ended`. |
+
+To end the session for everyone, for example when the scheduled meeting time is over, call the Kick all participants API:
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings/$MEETING_ID/active-session/kick-all" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+## Connection reference
+
+### Requests
+
+Send `{ "category": "request", "request_id", "name", "data": {} }`. Each request gets one `result` with the same `request_id`, and either `data` or `error`.
+
+| Name              | Returns                                 |
+| ----------------- | --------------------------------------- |
+| `connection.get`  | `{ connection: { id, subscriptions } }` |
+| `connection.ping` | `{}`                                    |
+
+```json
+{
+	"category": "result",
+	"request_id": "r1",
+	"name": "connection.get",
+	"data": {
+		"connection": {
+			"id": "conn_6f1c2a7e",
+			"subscriptions": ["transcript", "participant"]
+		}
+	},
+	"error": null
+}
+```
+
+Failed results have `data: null` and `error.code` set to `INVALID_REQUEST`, `UNSUPPORTED_REQUEST`, or `INTERNAL_ERROR`. The connection stays open.
+
+### Reconnect
+
+<AgentWebSocketResume />
+
+Store `connection.id` and pass it as `connection_id` to resume. It identifies the WebSocket connection, not the participant or session.
+
+- Closing with `1000` makes the agent leave the meeting immediately.
+- Any other close starts a 5-second grace period. The agent stays joined and queues events.
+- Events sent while the agent was out of the meeting are lost. A second `session.started` marks the gap.
+
+| Close code | Reason                 | Action                                        |
+| ---------- | ---------------------- | --------------------------------------------- |
+| `1000`     | `session_ended`        | Open a new connection for the next session    |
+| `1013`     | `queue_overflow`       | Open a new connection without `connection_id` |
+| `1013`     | `upstream_lost`        | Resume with `connection_id`                   |
+| `1013`     | `upstream_unavailable` | Resume with `connection_id` and backoff       |
+| `4403`     | `upstream_rejected`    | Fix the token or participant                  |
+| `4409`     | `replaced`             | Do not reconnect                              |
+
+<Details header="What a resume does">
+
+Unsent events are always delivered first, in order.
+
+| State                                                                        | Result                                                                                |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Within the grace period, or previous WebSocket still open                    | Same connection continues with no gap. A previous WebSocket closes with `4409`.       |
+| Agent already left, or closed with `upstream_lost` or `upstream_unavailable` | Agent joins again. You get a new `session.started`, then live events.                 |
+| Closed with `session_ended`, `queue_overflow`, or `upstream_rejected`        | HTTP `101`, then the same close again. Open a new connection without `connection_id`. |
+
+- If you include `subscriptions` on resume, it replaces the stored list. Already-queued events are not re-filtered.
+- A fresh token for the same participant is accepted. A `connection_id` does not expire.
+- For a heartbeat, send `connection.ping` every 20 seconds. Reconnect if no result arrives within 10 seconds.
+
+</Details>
+
+### Errors
+
+A rejected upgrade returns an HTTP error instead of `101`:
+
+```json
+{
+	"success": false,
+	"error": {
+		"code": "UNAUTHENTICATED",
+		"message": "Invalid participant token.",
+		"retryable": false
+	}
+}
+```
+
+| Status | Code                   | Cause                                                       |
+| ------ | ---------------------- | ----------------------------------------------------------- |
+| `400`  | `BAD_REQUEST`          | `realtimekit.v1` subprotocol missing                        |
+| `400`  | `INVALID_QUERY`        | Unknown parameter or subscription, or empty `connection_id` |
+| `401`  | `UNAUTHENTICATED`      | Missing, invalid, or expired token                          |
+| `404`  | `CONNECTION_NOT_FOUND` | Unknown `connection_id`, or another participant's           |
+
+### Limits
+
+| Limit                        | Value            |
+| ---------------------------- | ---------------- |
+| Unsent events per connection | 10,000           |
+| Resume grace period          | 5 seconds        |
+| `request_id` length          | 1–128 characters |
+
+## Send events
+
+Sending chat messages and broadcasts from the agent is planned. Today, the agent is receive-only. To act on the meeting now, call the [RealtimeKit REST API](/api/resources/realtime_kit/) from your Worker, for example to [kick participants](/api/resources/realtime_kit/subresources/active-session/methods/kick_participants/).
