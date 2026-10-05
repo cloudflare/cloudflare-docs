@@ -39,18 +39,14 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		npx skills add https://github.com/cloudflare/skills
 		```
 
-	3. **Add Cloudflare MCP servers**
+	3. **Add the Cloudflare MCP server**
 
-		Add MCP servers to `.opencode.jsonc`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
+		Add the Cloudflare MCP server to `.opencode.jsonc`. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcp": {
-		    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-bindings": { "type": "remote", "url": "https://bindings.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-builds": { "type": "remote", "url": "https://builds.mcp.cloudflare.com/mcp", "enabled": true },
-		    "cloudflare-observability": { "type": "remote", "url": "https://observability.mcp.cloudflare.com/mcp", "enabled": true }
+		    "cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true }
 		  }
 		}
 		```
@@ -128,9 +124,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		with the correct URL. Run `opencode mcp list` to check connected servers.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
-		current documentation at runtime. If you prefer not to use the MCP server, point
-		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		Point the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.
 	</TroubleshootingItem>
