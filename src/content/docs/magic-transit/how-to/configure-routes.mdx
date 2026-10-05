@@ -6,20 +6,20 @@ title: Configure routes
 sidebar:
   order: 2
 head: []
-description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through CNI with Dataplane v2, you also have access to BGP peering (beta).
+description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. You can also use BGP peering to exchange routes dynamically.
 tags:
   - IPsec
 ---
 
 import { Aside, APIRequest, DashButton, TabItem, Tabs } from "~/components";
 
-Magic Transit Virtual Network uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic Transit Virtual Network routing table through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
+Magic Transit Virtual Network uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic Transit Virtual Network routing table through static route configuration or routes learned from BGP peering over IPsec and GRE tunnels or CNI with Dataplane v2 (closed beta).
 
 Refer to [Traffic Steering](/magic-transit/reference/traffic-steering/) for more information about all the technical aspects related to:
 
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
-- BGP peering (beta)
+- BGP peering
 
 :::caution[Anycast routing]
 Cloudflare uses anycast to route traffic. Anycast is a network addressing and routing method that routes incoming requests to different locations. Traffic can arrive at a different geographic location than expected. Not all requests go to the closest data center because Internet routing and peering relationships are complex, and Cloudflare optimizes for performance and reliability.
@@ -269,8 +269,8 @@ Example:
 
 BGP peering is available when using the following on-ramps:
 
+- [IPsec and GRE tunnels](/magic-transit/how-to/configure-tunnel-endpoints/). Requires [Unified Routing](/magic-transit/reference/traffic-steering/#unified-routing).
 - [CNI with Dataplane v2](/network-interconnect/) (closed beta and not available to new customers).
-- [IPsec and GRE tunnels (beta)](/magic-transit/how-to/configure-tunnel-endpoints/). Requires [Unified Routing](/magic-transit/reference/traffic-steering/#unified-routing).
 
 ### Choose an ASN for BGP peering
 
@@ -278,11 +278,11 @@ The Magic Transit Virtual Network routing table is managed by the customer. You 
 
 By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Magic Transit Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
 
-:::note
-If you are setting up BGP over IPsec or GRE tunnels you cannot change this value.
-:::
+The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel.
 
 To set this ASN:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Go to the Routes page.
 
@@ -291,6 +291,20 @@ To set this ASN:
 2. Select **WAN configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
+
+</TabItem> <TabItem label="API">
+
+Create a `PUT` request to update the BGP settings for your account. The following example sets the CF Account ASN to `65000`:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/bgp/settings"
+  method="PUT"
+  json={{
+		"cloudflare_asn": 65000
+  }}
+/>
+
+</TabItem> </Tabs>
 
 Magic Transit customers should also be aware of the following:
 

@@ -82,7 +82,7 @@ The same CIDR (`10.0.0.0/8`) can exist in each virtual network because they are 
 
 Each virtual network maintains its own routing table. Routes added to one virtual network do not appear in another virtual network routing table. However, if traffic does not match a route in the selected virtual network, Cloudflare may fall back to the default virtual network routing table for WAN routes.
 
-You can add entries to a virtual network routing table through static route configuration or routes learned from BGP peering (beta). Static routes are available for all connection types. BGP peering is currently available over CNI and IPsec/GRE tunnels (beta). For more information on how routes are prioritized within a virtual network, refer to [Traffic steering](/cloudflare-wan/reference/traffic-steering/).
+You can add entries to a virtual network routing table through static route configuration or routes learned from BGP peering. Static routes are available for all connection types. BGP peering is available over IPsec/GRE tunnels and CNI (closed beta). For more information on how routes are prioritized within a virtual network, refer to [Traffic steering](/cloudflare-wan/reference/traffic-steering/).
 
 ## Virtual networks across Cloudflare
 
@@ -112,7 +112,7 @@ If you are familiar with enterprise networking concepts, a virtual network is an
 - Each virtual network maintains its own routing table.
 - Routes are isolated between virtual networks.
 - The same IP prefix can exist in multiple virtual networks without conflict.
-- BGP routes learned on a connection populate only that connection virtual network routing table. BGP peering is currently supported for IPsec/GRE tunnels (beta) and CNI (beta).
+- BGP routes learned on a connection populate only that connection virtual network routing table. BGP peering is supported for IPsec/GRE tunnels and CNI (closed beta).
 
 If you are familiar with cloud networking concepts, a virtual network is analogous to a VPC (Virtual Private Cloud).
 
