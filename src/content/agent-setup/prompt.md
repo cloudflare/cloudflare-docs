@@ -74,7 +74,6 @@ Then run:
 opencode mcp auth cloudflare
 ```
 
-
 ### Devin Desktop — `~/.codeium/windsurf/mcp_config.json`
 
 Add under `"mcpServers"` (note: `serverUrl`, not `url`):
