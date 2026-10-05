@@ -76,11 +76,13 @@ It accepts an optional `PluginConfig` parameter.
 
   See [Debugging](/workers/vite-plugin/reference/debugging/) for more information.
 
-- `tunnel` <Type text='boolean | { name?: string; autoStart?: boolean }' /> <MetaInfo text='optional' />
+- `tunnel` <Type text='boolean | { name?: string; autoStart?: boolean; allowedMail?: string[] }' /> <MetaInfo text='optional' />
 
   Expose your local dev server over a [Cloudflare Tunnel](/tunnel/).
 
-  Provide an object to configure a named tunnel or control whether the tunnel starts automatically. Press `t + Enter` to start or close the tunnel. Set `tunnel.autoStart` to `true` if you want the tunnel to open when Vite starts.
+  Provide an object to configure a named tunnel, require email authentication for a Quick Tunnel, or control whether the tunnel starts automatically. Press `t + Enter` to start or close the tunnel. Set `tunnel.autoStart` to `true` if you want the tunnel to open when Vite starts.
+
+  Set `tunnel.allowedMail` to the email addresses or domain patterns allowed to authenticate to a Quick Tunnel. This option cannot be used with `tunnel.name`.
 
   <TypeScriptExample filename="vite.config.ts">
   ```ts

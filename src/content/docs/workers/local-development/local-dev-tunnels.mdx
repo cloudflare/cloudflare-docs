@@ -52,6 +52,40 @@ export default defineConfig({
 
 If you want the tunnel to open automatically when Vite starts, set `tunnel.autoStart` to `true`.
 
+### Protect a Quick Tunnel
+
+You can require visitors to authenticate by email before they can access a Quick Tunnel.
+
+**Wrangler**
+
+Pass `--tunnel-allowed-mail` for each email address allowed to authenticate:
+
+<PackageManagers type="exec" pkg="wrangler" args="dev --tunnel --tunnel-allowed-mail=alice@example.com --tunnel-allowed-mail=bob@example.com" />
+
+**Cloudflare Vite plugin**
+
+Set `tunnel.allowedMail` to the email addresses allowed to authenticate:
+
+<TypeScriptExample filename="vite.config.ts">
+```ts
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({
+			tunnel: {
+				autoStart: true,
+				allowedMail: ["alice@example.com", "bob@example.com"],
+			},
+		}),
+	],
+});
+```
+</TypeScriptExample>
+
+Email authentication is only supported for Quick Tunnels and cannot be combined with a named tunnel. For domain patterns and more information, refer to [Restrict access by email](/tunnel/get-started/quick-tunnels/#restrict-access-by-email).
+
 When using `vite preview`, Vite's preview host validation still applies:
 
 - For Quick tunnel, add `.trycloudflare.com` to `preview.allowedHosts`.
@@ -84,7 +118,7 @@ export default defineConfig({
 
 ## Security considerations
 
-Anyone with the tunnel URL can reach your dev server, so review what your app exposes before enabling a tunnel.
+A Quick Tunnel may be publicly accessible. Without email authentication, anyone with the tunnel URL can reach your dev server, so review what your app exposes before enabling a tunnel.
 
 - Pay special attention to ungated preview or admin endpoints.
 - Review any [remote bindings](/workers/local-development/#remote-bindings) connected to real resources.
