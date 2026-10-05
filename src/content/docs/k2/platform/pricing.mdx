@@ -23,6 +23,8 @@ K2 is available on the [Workers Paid plan](/workers/platform/pricing/). K2 charg
 2. **Data consumed**: The volume of data read from streams by consumers.
 3. **Data retained**: The volume of data stored in streams.
 
+All three dimensions are measured in logical bytes: the size of your records before any compression or encoding, such as gzip compression of an HTTP request body or base64 encoding of record content. K2 compresses records internally when it stores them, but this does not reduce the billed volume. One GB is 1,000,000,000 bytes.
+
 <a id="k2-pricing"></a>
 
 ## K2 pricing
