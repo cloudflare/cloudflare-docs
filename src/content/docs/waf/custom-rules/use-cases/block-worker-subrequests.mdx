@@ -1,0 +1,33 @@
+---
+pcx_content_type: configuration
+description: Block or restrict Worker subrequests from other Cloudflare zones.
+products:
+  - waf
+title: Block Worker subrequests from other zones
+---
+
+The [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field identifies the zone that spawned a [Workers subrequest](/workers/platform/limits/#subrequests). You can use this field in [custom rules](/waf/custom-rules/) to mitigate unwanted Worker traffic.
+
+:::caution
+Do not use the [`CF-Worker`](/fundamentals/reference/http-headers/#cf-worker) request header in WAF rules. The header is added after rule evaluation, so it is not available when WAF rules run. Use the `cf.worker.upstream_zone` field instead, which holds the same value.
+:::
+
+### Block subrequests from a specific zone
+
+- **When incoming requests match**:
+
+  If you are using the expression editor:<br/>
+  `(cf.worker.upstream_zone eq "example.com")`
+
+- **Then take action**: _Block_
+
+### Block all Worker subrequests except from your own zone
+
+- **When incoming requests match**:
+
+  If you are using the expression editor:<br/>
+  `(not cf.worker.upstream_zone in {"" "your-zone.com"})`
+
+- **Then take action**: _Block_
+
+The empty string matches requests that did not come from a Worker, so this expression only blocks subrequests from other zones. Direct visitor traffic is not affected.
