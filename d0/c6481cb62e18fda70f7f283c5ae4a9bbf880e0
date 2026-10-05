@@ -1,0 +1,21 @@
+src/content/changelog/ai-gateway/2026-08-05-user-insights.mdx
+  s_e535a95c37d3de::t_abf097004c9f6e 2,9,11,13,15
+src/content/docs/ai-gateway/observability/user-insights.mdx
+  s_e535a95c37d3de::t_53a6b9bc064b6f 2,11,15,21,34,36,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d0c6481cb62e18fda70f7f283c5ae4a9bbf880e0",
+  "prompts": {},
+  "sessions": {
+    "s_e535a95c37d3de": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_03af8636bffeqVr2GcwItJC8of",
+        "model": "@cf/moonshotai/kimi-k2.6"
+      },
+      "human_author": "Ayush Kumar <akumar@cloudflare.com>"
+    }
+  }
+}

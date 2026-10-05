@@ -1,0 +1,19 @@
+src/components/cf/CustomBindingsDiagram.astro
+  s_c64f980074552c::t_8ea59cd51ba17f 7,19,25,38,41-44,49-64,69-73,76-78,97,134,252,267-335
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7331deb01d87f9aec398c17252337e522c48f62c",
+  "prompts": {},
+  "sessions": {
+    "s_c64f980074552c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fe2ab8488ffejg5EiWsNAlSfQU",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

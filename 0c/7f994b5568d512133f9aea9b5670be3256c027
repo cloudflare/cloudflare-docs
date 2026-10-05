@@ -1,0 +1,19 @@
+src/assets/images/hyperdrive/configuration/hyperdrive-dynamic-workers.svg
+  s_f2a0735dad4e03::t_56e64c703ec129 1-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0c7f994b5568d512133f9aea9b5670be3256c027",
+  "prompts": {},
+  "sessions": {
+    "s_f2a0735dad4e03": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fef0ad68cffeamhMKWX2tpaexA",
+        "model": "@cf/moonshotai/kimi-k2.6"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

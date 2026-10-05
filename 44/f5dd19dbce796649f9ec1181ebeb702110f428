@@ -1,0 +1,23 @@
+src/content/docs/workers/configuration/versions-and-deployments/version-overrides.mdx
+  68f55a551c1f0373 74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "44f5dd19dbce796649f9ec1181ebeb702110f428",
+  "prompts": {
+    "68f55a551c1f0373": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1e79d26ccffeYaiMvzLPXhzYmf",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}

@@ -1,0 +1,29 @@
+src/content/docs/workers/previews/index.mdx
+  c291592a01582357 6,9-56
+src/content/docs/workers/previews/configuration.mdx
+  c291592a01582357 2-3,6,9,11,13,15-20,22,24,26,28,30,32-34,36,38,40,42-44,49-67,72,75-138,141-153,156,159-160,163-164,166,171,173,175,177,179-181,183-186,188,190,192,194-214,217-218
+src/content/docs/workers/previews/get-started.mdx
+  c291592a01582357 3,5-6,9,11,13,15-16,18-37,39,41,43-52,54,56-76,78,80,82,84,87-89,93,97-105,107,109-111
+src/content/docs/workers/previews/resources.mdx
+  c291592a01582357 2-3,5-6,11,13,15,17-30,32,34,36,38-47,52,54,76,78,103,108,110,112,124,126,128,130-134,136-145,147-154,156-164,166-169,173-199,201,203,205,207,209,211,213
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "7b6d5ddd2254211850d87e2af5455c89bce01fe8",
+  "prompts": {
+    "c291592a01582357": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1d891e3a5ffeTJzhFTI01W7QMk",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "yomna",
+      "messages": [],
+      "total_additions": 594,
+      "total_deletions": 746,
+      "accepted_lines": 594,
+      "overriden_lines": 0
+    }
+  }
+}

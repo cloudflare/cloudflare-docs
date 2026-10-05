@@ -1,0 +1,20 @@
+src/content/docs/workers/get-started/guide.mdx
+  s_657f2288a9dc87::t_05097356c32ff8 91
+  s_657f2288a9dc87::t_84e3f0a2093ff7 54-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "66684550dee6254368d91c2b64665001da8df10f",
+  "prompts": {},
+  "sessions": {
+    "s_657f2288a9dc87": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0039d2f98ffeMASqyWofUfiAfl",
+        "model": "@cf/zai-org/glm-5.2"
+      },
+      "human_author": "mvm <vance@cloudflare.com>"
+    }
+  }
+}
