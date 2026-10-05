@@ -134,9 +134,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		Run `codex mcp list` to confirm it appears, then use `/mcp` inside the Codex TUI to check its status.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
-		current documentation at runtime. If you prefer not to use the MCP server, point
-		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		Point the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.
 	</TroubleshootingItem>
