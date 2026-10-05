@@ -23,14 +23,36 @@ In addition to the predefined finding types that detect security issues in your 
 
 CASB evaluates your assets against two kinds of finding types. They differ in who manages the definition. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library** to see the **Origin** of each finding type.
 
-| Origin   | Managed by              | You can                                                                               | You cannot                                                                |
-| -------- | ----------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Standard | Cloudflare CASB         | Inspect the detection logic. Duplicate the finding type to create a custom copy.      | Create, edit, or delete standard finding types.                           |
-| Custom   | Your Cloudflare account | Create, edit, duplicate, and delete custom finding types. Define the detection logic. | Convert a custom finding type to standard. Disable a custom finding type. |
+- **Standard** (Origin: _Standard_): A predefined finding type that Cloudflare CASB creates and manages. You can inspect and duplicate it, but not change it.
+- **Custom** (Origin: _Custom_): A finding type that you create and manage in your account with Rego expressions.
+
+The following table shows what you can do with each kind of finding type:
+
+| Capability                                                        | Standard | Custom |
+| ----------------------------------------------------------------- | -------- | ------ |
+| Inspect detection logic                                           | ✅       | ✅     |
+| Create posture finding types                                      | ❌       | ✅     |
+| Duplicate posture finding types                                   | ✅       | ✅     |
+| Edit posture finding types                                        | ❌       | ✅     |
+| Delete posture finding types                                      | ❌       | ✅     |
+| Disable posture finding types                                     | ❌       | ❌     |
+| Create, duplicate, edit, delete, or disable content finding types | ❌       | ❌     |
 
 A custom finding type created by duplicating a standard finding type shares the same logic at the time of duplication. You can edit and delete the copy.
 
 ## How custom finding types work
+
+### Example scenario
+
+A security team that uses Google Workspace wants to know whenever an administrator account does not have two-factor authentication (2FA) turned on. CASB does not include a standard finding type for this policy, so the team creates a custom finding type.
+
+1. **Define the finding type.** In the Findings library, the team creates a custom finding type named "Admin without 2FA". They set the severity to _High_, choose Google Workspace as the provider, and write a Rego expression that returns `"fail"` when an account is an administrator and 2FA is off.
+2. **See the results.** As CASB receives updates for the company's Google Workspace accounts, it evaluates each one. Accounts that match appear as finding instances under **Posture Findings**.
+3. **Take action.** The team creates a CASB policy for this finding type that sends a webhook to their ticketing system. Each new finding instance opens a ticket for the account owner.
+
+The following sections describe each part of this flow.
+
+### Finding type fields
 
 A custom finding type has the following fields:
 
@@ -41,11 +63,20 @@ A custom finding type has the following fields:
 | **Severity**      | The impact of the finding type: _Low_, _Medium_, _High_, or _Critical_. For more information, refer to [Severity levels](/cloudflare-one/cloud-and-saas-findings/manage-findings/#severity-levels). |
 | **Provider**      | The [integration vendor](/cloudflare-one/integrations/cloud-and-saas/) the finding type detects against.                                                                                            |
 | **Asset Class**   | The set of asset fields available to the detection logic. These fields appear under **Available asset fields** in the finding type builder.                                                         |
-| **Category Type** | The category of finding instances CASB generates. This value is always _Posture_.                                                                                                                   |
+| **Category Type** | The classification of the finding it generates.                                                                                                                                                     |
 | **Integrations**  | The integrations CASB evaluates the finding type against. Select **Apply to all integrations** to evaluate every integration your account owns for the provider.                                    |
 | **Rego Package**  | The detection logic CASB uses to generate finding instances.                                                                                                                                        |
 
-CASB evaluates a custom finding type against an asset when it receives an update for an asset in the selected integrations. CASB does not run a new finding type retroactively against existing assets.
+CASB evaluates a custom finding type against an asset when the asset is created or updated in the selected integrations. CASB does not run a new finding type retroactively against existing assets.
+
+Continuing the [example scenario](#example-scenario), two Google Workspace administrators, Alice and Bob, both have 2FA turned off:
+
+| Day       | Event                                                  | Finding instance created?                                                          |
+| --------- | ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| Sunday    | Alice's account is updated.                            | No. The "Admin without 2FA" finding type does not exist yet.                       |
+| Monday    | The team creates the "Admin without 2FA" finding type. | No. Alice's account has not changed since the finding type was created.            |
+| Tuesday   | Bob's account is created or updated.                   | Yes. CASB evaluates Bob's account.                                                 |
+| Wednesday | Alice's account is updated again.                      | Yes. CASB evaluates Alice's account. No ticket exists for Alice until this update. |
 
 ### Detection logic
 
@@ -60,6 +91,15 @@ result := "fail" if {
 }
 ```
 
+The expression works as follows:
+
+- `default result := "pass"` sets the result to `"pass"` for every asset unless a rule changes it.
+- `result := "fail" if { ... }` changes the result to `"fail"` when every line inside the braces is true. A `"fail"` result creates a finding instance.
+- `input.asset.isAdmin == true` checks that the account is an administrator.
+- `input.asset.is2faEnabled == false` checks that 2FA is off.
+
+Both conditions must be true, so a non-administrator without 2FA, or an administrator with 2FA, stays at `"pass"`.
+
 Follow these rules:
 
 - Define a `result` that returns either `"pass"` or `"fail"`. A `"fail"` result means the asset matches the definition and creates a finding instance.
@@ -69,7 +109,7 @@ Follow these rules:
 
 ### Validation
 
-**Validate** compiles the expression and checks it against the asset schema. It reports syntax errors and unsupported built-ins. Validation does not run the expression against your data.
+**Validate** compiles the expression and checks it against the asset schema. It reports syntax errors and unsupported built-ins. Validation does not run the expression against your data. To confirm the expression detects the intended conditions, [verify detection](#verify-detection) after you create the finding type.
 
 ## Create a custom finding type
 
@@ -91,8 +131,8 @@ CASB applies the custom finding type when it receives future asset updates withi
 <Steps>
 1. Create or update an asset within the finding type's integration scope. The asset must receive an update after you create or change the custom finding type.
 2. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Posture Findings**.
-3. Find the custom finding type and select **Manage**.
-4. Confirm that the updated asset appears as a finding instance when the expression returns `"fail"`.
+3. Find the custom finding type. The **Finding Instances** column shows how many assets currently match.
+4. Select **Manage** to view the matching assets.
 </Steps>
 
 If the asset does not appear, check the provider, asset class, integration scope, field names, field types, and Rego result.
@@ -102,10 +142,18 @@ If the asset does not appear, check the provider, asset class, integration scope
 You can select a custom finding type in a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) the same way you select a standard finding type. When you [create a policy](/cloudflare-one/cloud-and-saas-findings/policies/#create-a-policy), select the custom finding type from the **Finding type** list.
 
 - Policies with custom finding types can send webhooks. Remediation actions are not supported.
-- A policy triggers only if it applies to all integrations, or if every integration selected in the policy is also in the custom finding type's integration scope. If you [edit](#edit-a-custom-finding-type) the integration scope so it no longer includes all of the policy's integrations, the policy stops triggering.
-- Neither custom finding types nor policies apply retroactively. A policy acts only on finding instances that CASB creates after both the custom finding type and the policy exist.
+- A policy acts on findings from the integrations it selects, or from all integrations if **Apply to all integrations** is set. It can only act on integrations within the custom finding type's integration scope. If you [edit](#edit-a-custom-finding-type) the scope to remove an integration, CASB no longer creates finding instances for that integration, so the policy has nothing to act on there.
 - If the custom finding type is [quarantined](#quarantined-custom-finding-types), CASB creates no new finding instances, so the policy does not trigger.
-- If you [delete](#delete-a-custom-finding-type) the custom finding type, CASB disables the policy. Actions the policy already took, such as sent webhooks, are not reversed. To re-enable the policy, edit it to use a different finding type.
+- You cannot delete a custom finding type while a policy uses it. [Delete the policy](/cloudflare-one/cloud-and-saas-findings/policies/#edit-turn-off-or-delete-a-policy) first, then [delete the custom finding type](#delete-a-custom-finding-type).
+
+### Example scenario
+
+Continuing the [example scenario](#example-scenario), the team wants a ticket opened each time CASB finds an administrator without 2FA.
+
+1. **Create the policy.** The team creates a CASB policy and selects "Admin without 2FA" from the **Finding type** list.
+2. **Set the scope.** They select **Apply to all integrations**, so the policy covers every Google Workspace integration the finding type is evaluated against.
+3. **Choose the action.** The policy sends a webhook to the team's ticketing system.
+4. **See it work.** When CASB evaluates an updated administrator account as `"fail"`, it creates a finding instance. The policy fires the webhook, and a ticket opens for the account owner.
 
 ## Manage custom finding types
 
@@ -123,6 +171,16 @@ Open a standard finding type to inspect its detection logic. If the logic is a u
 
 The duplicate is a separate custom finding type. Changes to the duplicate do not affect the original.
 
+#### Example scenario
+
+Continuing the [example scenario](#example-scenario), the "Admin without 2FA" finding type applies to every Google Workspace integration. The team now wants a stricter version for their production integration only, with a severity of _Critical_. You cannot edit severity after creation, so they duplicate the finding type.
+
+1. They select **Duplicate** on "Admin without 2FA". CASB copies the fields and Rego expression into the builder.
+2. They rename the copy "Admin without 2FA (production)", set the severity to _Critical_, and limit the integration scope to the production integration. The expression stays the same.
+3. They select **Validate**, then **Create finding**.
+
+The original finding type keeps running unchanged. Administrators in the production integration now also receive findings for the copy.
+
 ### Edit a custom finding type
 
 You can only edit the name, description, and integration scope. To change the provider, asset class, severity, or Rego expression, [duplicate the finding type](#duplicate-a-finding-type).
@@ -137,7 +195,7 @@ You can only edit the name, description, and integration scope. To change the pr
 ### Delete a custom finding type
 
 :::caution
-Deleting a custom finding type cannot be undone. CASB also deletes the finding type's existing finding instances. If a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) uses the custom finding type, CASB disables the policy.
+Deleting a custom finding type cannot be undone. CASB also deletes the finding type's existing finding instances. You cannot delete a custom finding type while a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) uses it. Delete the policy first.
 :::
 
 <Steps>
@@ -203,7 +261,7 @@ If you cannot identify why CASB quarantined the expression, contact [Cloudflare 
 - An account can have up to 250 custom finding types.
 - Up to 25 custom finding types can apply to one integration.
 - Custom finding types support posture findings only. They do not support Data Loss Prevention (DLP) content findings.
-- The complete Rego policy, including declarations CASB adds, can be up to 64 KiB.
+- The complete Rego policy, including declarations CASB adds, can be up to 4 KiB.
 - Network access is not available.
 - The editor does not accept package or import declarations.
 - New and updated custom finding types do not apply retroactively.
