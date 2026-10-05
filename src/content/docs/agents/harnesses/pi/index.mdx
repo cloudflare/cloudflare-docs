@@ -47,13 +47,13 @@ Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, mode
 
 ## Install
 
-Install `agents` with pi-durable and pi-ai:
+Install `agents` with Pi Durable and Pi AI:
 
 <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai" />
 
 Both Pi packages are optional peer dependencies of `agents`. `PiHarness` needs version 1.0 or later of each.
 
-The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing `pi-ai` provider. The examples on this page use Workers AI through the `AI` binding and the [pi-ai model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
+The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing Pi AI provider. The examples on this page use Workers AI through the `AI` binding and the [Pi AI model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -182,7 +182,7 @@ Address the object by name, for example with `env.Assistant.getByName("demo")`.
 | Option     | Description                                                                                                                                                        |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `harness`  | Required. Receives `{ storage, context }` and returns Pi's `Harness`, usually from `Harness.open()`.                                                               |
-| `defaults` | What a new session starts with: `model`, a pi-ai `Model` such as `ai("@cf/...")`, and `thinkingLevel`. Change one session's model later with `session.setModel()`. |
+| `defaults` | What a new session starts with: `model`, a Pi AI `Model` such as `ai("@cf/...")`, and `thinkingLevel`. Change one session's model later with `session.setModel()`. |
 
 Without a model, a session's prompts end unanswered until you set one.
 
@@ -263,7 +263,7 @@ const all = await this.harness.sessions.list();
 | `wait(operationId, signal)` | Wait for an operation. Aborting `signal` stops the wait, not the work.                                |
 | `abort(operationId)`        | Withdraw a queued operation, or abort the run it joined. With no id, abort everything in the session. |
 | `reset(handoff)`            | Start a new context, optionally from a handoff note.                                                  |
-| `setModel(model)`           | Change this session's model to a pi-ai `Model`, such as `ai("@cf/zai-org/glm-4.7-flash")`.            |
+| `setModel(model)`           | Change this session's model to a Pi AI `Model`, such as `ai("@cf/zai-org/glm-4.7-flash")`.            |
 | `messages()`                | The active transcript, as Pi's `EntryRecord` entries since the newest reset.                          |
 | `events()`                  | Pi's event stream for this session.                                                                   |
 | `busy()`                    | Whether the session is running.                                                                       |
@@ -327,9 +327,9 @@ While Pi has work, the job's heartbeat alarm fires every 30 seconds. A crashed o
 />
 
 <LinkCard
-	title="pi-ai model provider"
+	title="Pi AI model provider"
 	href="/agents/models/pi-ai/"
-	description="Workers AI and AI Gateway models for pi-ai and Pi Durable."
+	description="Workers AI and AI Gateway models for Pi AI and Pi Durable."
 />
 
 <LinkCard

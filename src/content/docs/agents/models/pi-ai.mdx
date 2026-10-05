@@ -1,7 +1,7 @@
 ---
-title: pi-ai
+title: Pi AI
 pcx_content_type: how-to
-description: Use createAI from agents/models/pi-ai to run Workers AI and third-party models through AI Gateway with pi-ai, pi-durable, and the Pi harness.
+description: Use createAI from agents/models/pi-ai to run Workers AI and third-party models through AI Gateway with Pi AI, Pi Durable, and the Pi harness.
 tags:
   - AI
 sidebar:
@@ -17,7 +17,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-`agents/models/pi-ai` is a [pi-ai](https://github.com/earendil-works/pi/tree/main/packages/ai) provider for Workers AI and AI Gateway. It has the same `createAI` factory and options as the [AI SDK provider](/agents/models/ai-sdk/), and returns pi-ai `Model` objects. Use it with pi-ai's `stream` and `complete`, with [pi-durable](https://github.com/earendil-works/pi/tree/main/packages/durable), with the [Pi harness](/agents/harnesses/pi/), or with any framework built on a pi-ai `Models` registry.
+`agents/models/pi-ai` is a [Pi AI](https://github.com/earendil-works/pi/tree/main/packages/ai) provider for Workers AI and AI Gateway. It has the same `createAI` factory and options as the [AI SDK provider](/agents/models/ai-sdk/), and returns Pi AI `Model` objects. Use it with Pi AI's `stream` and `complete`, with [Pi Durable](https://github.com/earendil-works/pi/tree/main/packages/durable), with the [Pi harness](/agents/harnesses/pi/), or with any framework built on a Pi AI `Models` registry.
 
 :::caution[Beta]
 This provider is in beta. Its API may change in a minor release.
@@ -45,7 +45,7 @@ Add the `AI` binding to your Wrangler configuration:
 
 ## Call a model
 
-The provider carries pi-ai's entry points, so nothing is registered globally:
+The provider carries Pi AI's entry points, so nothing is registered globally:
 
 <TypeScriptExample>
 
@@ -73,7 +73,7 @@ export default {
 
 </TypeScriptExample>
 
-`ai.stream()` returns pi-ai's `AssistantMessageEvent` stream. `ai.completeSimple()` and `ai.streamSimple()` take pi-ai's simple options, such as a `reasoning` level and `maxTokens`:
+`ai.stream()` returns Pi AI's `AssistantMessageEvent` stream. `ai.completeSimple()` and `ai.streamSimple()` take Pi AI's simple options, such as a `reasoning` level and `maxTokens`:
 
 ```ts
 const model = ai("anthropic/claude-opus-4.8");
@@ -113,13 +113,13 @@ ai(getBuiltinModel("anthropic", "claude-opus-4-8"));
 
 Any other string throws a `TypeError`. The provider does not guess what a prefix means.
 
-The second and third forms keep pi-ai's model metadata, including `api`, `compat`, `thinkingLevelMap`, cost, context window, and maximum tokens. That metadata decides how each vendor is asked to think. For example, Claude Opus gets `thinking: { type: "adaptive" }` and GPT-5 gets `reasoning.effort`. `ai(model)` does not change the object you pass.
+The second and third forms keep Pi AI's model metadata, including `api`, `compat`, `thinkingLevelMap`, cost, context window, and maximum tokens. That metadata decides how each vendor is asked to think. For example, Claude Opus gets `thinking: { type: "adaptive" }` and GPT-5 gets `reasoning.effort`. `ai(model)` does not change the object you pass.
 
 Third-party models go through AI Gateway, which holds the credential through [Unified Billing](/ai-gateway/features/unified-billing/) or a [key stored on the gateway](/ai-gateway/configuration/bring-your-own-keys/). Your Worker holds no provider key.
 
 ## Use it with the Pi harness
 
-pi-durable's `Harness` takes a pi-ai `Models` registry. Register the provider on one, then pass models from `ai()` to the [Pi harness](/agents/harnesses/pi/):
+Pi Durable's `Harness` takes a Pi AI `Models` registry. Register the provider on one, then pass models from `ai()` to the [Pi harness](/agents/harnesses/pi/):
 
 ```ts
 import { createModels } from "@earendil-works/pi-ai/models";
@@ -138,7 +138,7 @@ await session.setModel(ai("anthropic/claude-opus-4.8"));
 
 A Pi session stores only its model's provider and id, then looks the model up in the `Models` registry. Use the `@cf/` and `<provider>/<id>` forms there: both belong to the `cloudflare` provider (`CLOUDFLARE_PROVIDER_ID`) that you registered. A model object keeps its vendor's provider id, which this registry does not know. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
 
-The provider's model list is every Workers AI model pi-ai knows, plus every `<provider>/<id>` in pi-ai's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-4.8")` resolves.
+The provider's model list is every Workers AI model Pi AI knows, plus every `<provider>/<id>` in Pi AI's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-4.8")` resolves.
 
 ## Cache, tag, and time out requests
 
@@ -159,11 +159,11 @@ const model = ai("anthropic/claude-opus-4.8", {
 
 The options are the same as the [AI SDK provider's options](/agents/models/ai-sdk/#set-options): `id`, `skipCache`, `cacheTtl`, `cacheKey`, `collectLog`, `metadata`, `eventId`, `requestTimeoutMs`, `retries`, `fallback`, `headers`, `sessionAffinity`, `reasoningEffort`, and `chatTemplateKwargs`.
 
-pi-ai's own call options map onto them. `headers` merge last, `metadata` joins the gateway metadata, `sessionId` sets session affinity, and `reasoning` maps through the model's own `thinkingLevelMap`. A call option wins over a model option, which wins over `createAI`.
+Pi AI's own call options map onto them. `headers` merge last, `metadata` joins the gateway metadata, `sessionId` sets session affinity, and `reasoning` maps through the model's own `thinkingLevelMap`. A call option wins over a model option, which wins over `createAI`.
 
-`@cf/` models also take pi-ai metadata overrides: `name`, `contextWindow`, `maxTokens`, `reasoning`, `input`, `cost`, and `streamIdleTimeoutMs`. A Workers AI id that pi-ai does not list resolves with a 128,000 token context window, 8,192 output tokens, and zero cost, so pass overrides when you know the real values.
+`@cf/` models also take Pi AI metadata overrides: `name`, `contextWindow`, `maxTokens`, `reasoning`, `input`, `cost`, and `streamIdleTimeoutMs`. A Workers AI id that Pi AI does not list resolves with a 128,000 token context window, 8,192 output tokens, and zero cost, so pass overrides when you know the real values.
 
-A pi-ai model is plain data. Per-model options are stored on it under symbol keys, which `JSON.stringify` and `structuredClone` drop. A model you store and read back still routes to its vendor, but loses its options. Pass them again with `ai(model, options)` after you load it.
+A Pi AI model is plain data. Per-model options are stored on it under symbol keys, which `JSON.stringify` and `structuredClone` drop. A model you store and read back still routes to its vendor, but loses its options. Pass them again with `ai(model, options)` after you load it.
 
 ## Fall back to another model
 
@@ -198,7 +198,7 @@ The gateway's own failures, such as a missing gateway or an unpaid account, beco
 
 ## How requests are routed
 
-The provider routes by the model's pi-ai `api`:
+The provider routes by the model's Pi AI `api`:
 
 | Model                         | `api`                | Transport                                             |
 | ----------------------------- | -------------------- | ----------------------------------------------------- |
@@ -207,13 +207,13 @@ The provider routes by the model's pi-ai `api`:
 | OpenAI, from any registry     | `openai-responses`   | AI Gateway universal request to `v1/responses`        |
 | Groq, DeepSeek, xAI, and more | `openai-completions` | AI Gateway universal request to `v1/chat/completions` |
 
-For a third-party model, pi-ai's own converter builds the vendor's request body. The provider sends it to AI Gateway, and pi-ai parses the vendor's response stream. The provider never rewrites the model's `api`, `provider`, or `id`, so thinking signatures and encrypted reasoning items work on the next turn.
+For a third-party model, Pi AI's own converter builds the vendor's request body. The provider sends it to AI Gateway, and Pi AI parses the vendor's response stream. The provider never rewrites the model's `api`, `provider`, or `id`, so thinking signatures and encrypted reasoning items work on the next turn.
 
-These four `api` values are the only ones the provider routes. Models from several pi-ai registries use other values and cannot be routed yet, including `mistral-conversations`, `google-generative-ai`, `google-vertex`, `amazon-bedrock`, `azure-openai-responses`, and `openai-codex`. Such a model's stream ends with an `error` event that names its `api`.
+These four `api` values are the only ones the provider routes. Models from several Pi AI registries use other values and cannot be routed yet, including `mistral-conversations`, `google-generative-ai`, `google-vertex`, `amazon-bedrock`, `azure-openai-responses`, and `openai-codex`. Such a model's stream ends with an `error` event that names its `api`.
 
-On the `openai-completions` wire, the provider sends reasoning only as OpenAI's `reasoning_effort`. A model whose `compat.thinkingFormat` is anything else, such as `deepseek`, `qwen`, or `openrouter`, has its reasoning level dropped. A `cloudflare-compat` diagnostic on the message records the drop. Use pi-ai's own provider for that vendor if you need its thinking format.
+On the `openai-completions` wire, the provider sends reasoning only as OpenAI's `reasoning_effort`. A model whose `compat.thinkingFormat` is anything else, such as `deepseek`, `qwen`, or `openrouter`, has its reasoning level dropped. A `cloudflare-compat` diagnostic on the message records the drop. Use Pi AI's own provider for that vendor if you need its thinking format.
 
-`reasoningEffort` and `chatTemplateKwargs` are Workers AI options. On a third-party model they are dropped and recorded in a `cloudflare-compat` diagnostic. Use the pi-ai `reasoning` level instead.
+`reasoningEffort` and `chatTemplateKwargs` are Workers AI options. On a third-party model they are dropped and recorded in a `cloudflare-compat` diagnostic. Use the Pi AI `reasoning` level instead.
 
 ## Generate images
 
@@ -233,4 +233,4 @@ const result = await ai.generateImages(images, {
 - [AI SDK provider](/agents/models/ai-sdk/)
 - [Pi harness](/agents/harnesses/pi/)
 - [Model catalog](/ai/models/)
-- [pi-ai](https://github.com/earendil-works/pi/tree/main/packages/ai)
+- [Pi AI](https://github.com/earendil-works/pi/tree/main/packages/ai)
