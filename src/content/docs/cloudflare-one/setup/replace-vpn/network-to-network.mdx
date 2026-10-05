@@ -20,7 +20,7 @@ To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-o
 
 ## How it works
 
-[Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) lets you deploy mesh nodes — lightweight network connectors that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
+[Cloudflare Mesh](/mesh/) (formerly WARP Connector) lets you deploy mesh nodes — lightweight network connectors that you install on a single Linux device in each network. That device handles traffic for the entire network: it sends outbound traffic to Cloudflare and receives inbound traffic back, then passes it to the right device on the network. Because of this, other devices on the network do not need to install any software.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ To explore other connection scenarios, refer to [Replace your VPN](/cloudflare-o
 - A second Linux device or virtual machine on a separate private network. This is where you install your second mesh node.
 
 :::note
-Mesh nodes are currently Linux-only. For more details on requirements, refer to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+Mesh nodes are currently Linux-only. For more details on requirements, refer to [Cloudflare Mesh](/mesh/).
 :::
 
 ## Step 1: Create your first mesh node
@@ -38,7 +38,7 @@ Mesh nodes are currently Linux-only. For more details on requirements, refer to 
 
    <DashButton url="/?to=/:account/mesh" />
 
-2. Select **Add a node**.
+2. Select **Add participant** > **Add node**.
 3. Enter a name for the node (for example, `office-a`).
 4. Follow the wizard to configure enrollment and device profile settings.
 5. Copy the install commands from the wizard and run them on your Linux device.
@@ -66,7 +66,7 @@ If the mesh node is installed on your network's router (the device that serves a
 
 If the mesh node is installed on a different device, other devices on the network need a static route so they know to send cross-network traffic to the mesh node. Without this route, devices do not know where to send traffic destined for the other network.
 
-For details on routing options, refer to [Routes](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/).
+For details on routing options, refer to [Routes](/mesh/features/routes/).
 
 ## Step 6: Verify your connection
 
@@ -78,7 +78,7 @@ After verifying your connection, consider securing your connected networks with 
 
 - **Set up Gateway policies**: By default, all traffic between your network segments flows through Cloudflare without restriction. Gateway policies let you scan, filter, and log traffic between your networks. For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/), [Network policies](/cloudflare-one/traffic-policies/network-policies/), and [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
 - **Create an Access application**: Restrict access to specific services or hosts on your connected networks with identity-based rules. For more information, refer to [Secure a private IP or hostname](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/).
-- **Enable high availability**: Deploy multiple replicas of each mesh node for automatic failover. For more information, refer to [High availability](/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/).
+- **Enable high availability**: Deploy multiple replicas of each mesh node for automatic failover. For more information, refer to [High availability](/mesh/features/high-availability/).
 
 For in-depth guidance on policy design and device posture checks, refer to the [Replace your VPN learning path](/learning-paths/replace-vpn/concepts/).
 
@@ -86,5 +86,5 @@ For in-depth guidance on policy design and device posture checks, refer to the [
 
 If you have issues connecting, refer to these resources:
 
-- [Tips and best practices](/cloudflare-one/networks/connectors/cloudflare-mesh/tips/): review common Cloudflare Mesh configuration tips and troubleshooting strategies.
+- [Tips and best practices](/mesh/best-practices/): review common Cloudflare Mesh configuration tips and troubleshooting strategies.
 - [Troubleshoot tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/): diagnose tunnel connectivity and routing problems.

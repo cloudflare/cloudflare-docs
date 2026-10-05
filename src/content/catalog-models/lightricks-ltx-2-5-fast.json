@@ -13,6 +13,13 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.09,
+		"@720p (per second)": 0.09,
+		"@1080p (per second)": 0.15,
+		"@2k (per second)": 0.19,
+		"@4k (per second)": 0.37
+	},
 	"examples": [
 		{
 			"name": "Text-to-Video",
@@ -96,13 +103,25 @@
 	"terms": null,
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/lightricks/ltx-2-5-fast.png",
 	"metadata": {
-		"Image-to-Video": "Yes",
 		"Audio Generation": "Yes",
+		"Image-to-Video": "Yes",
 		"Max Duration": "20 seconds",
 		"Resolutions": "1280x720, 720x1280, 1920x1080, 1080x1920, 2560x1440, 1440x2560, 3840x2160, 2160x3840"
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "lightricks",
+			"pricing": {
+				"default": 0.09,
+				"720p": 0.09,
+				"1080p": 0.15,
+				"2k": 0.19,
+				"4k": 0.37
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-11 22:03:47",
 	"schema": {
@@ -111,10 +130,10 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video",
 					"type": "string",
 					"minLength": 1,
-					"maxLength": 10000
+					"maxLength": 10000,
+					"description": "Text prompt describing the video"
 				},
 				"image_uri": {
 					"description": "HTTPS URI for the first frame",
@@ -127,8 +146,8 @@
 					"format": "uri"
 				},
 				"duration": {
-					"description": "Video duration in seconds",
 					"default": 8,
+					"description": "Video duration in seconds",
 					"anyOf": [
 						{
 							"type": "number",
@@ -234,9 +253,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

@@ -60,9 +60,31 @@ const hasOutput = hasText || hasMedia;
 const hasRawResponse = !!example.raw_response;
 const hasResponse = hasOutput || hasRawResponse;
 
-const rawResponseJson = hasRawResponse
-	? JSON.stringify(example.raw_response, null, 2)
-	: "";
+const MAX_STREAM_ITEMS = 3;
+const MAX_RAW_JSON_CHARS = 8000;
+
+/**
+ * Safely stringify a raw value by truncating any root array and trimming the
+ * resulting string. Raw responses can be huge (hundreds of streamed SSE
+ * chunks), so this keeps page size reasonable for readers and agents.
+ */
+function safeStringify(raw: unknown): string {
+	let value: unknown = raw;
+	if (Array.isArray(value) && value.length > MAX_STREAM_ITEMS) {
+		const omitted = value.length - MAX_STREAM_ITEMS;
+		value = [
+			...value.slice(0, MAX_STREAM_ITEMS - 1),
+			`... ${omitted} more chunks omitted ...`,
+			value[value.length - 1],
+		];
+	}
+	const json = JSON.stringify(value, null, 2);
+	return json.length > MAX_RAW_JSON_CHARS
+		? `${json.slice(0, MAX_RAW_JSON_CHARS)}\n... response truncated ...`
+		: json;
+}
+
+const safeResponse = hasRawResponse ? safeStringify(example.raw_response) : "";
 
 // Only enable the side-by-side layout when a code block and renderable media
 // are both present — text-only or JSON-only responses stack better vertically.
@@ -101,68 +123,62 @@ function getLabel(label: string): string {
 ---
 
 <div class:list={["example-card", { "side-by-side": sideBySide }]}>
-	{
-		hasSnippets && (
-			<div class="example-code">
-				{snippets.length === 1 ? (
-					<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
-				) : (
-					<Tabs>
-						{snippets.map((snippet) => (
-							<TabItem label={getLabel(snippet.label)}>
-								<Code code={snippet.code} lang={getLang(snippet.label)} />
-							</TabItem>
-						))}
-					</Tabs>
-				)}
-			</div>
-		)
-	}
-
-	{
-		hasResponse && (
-			<div class="example-response">
-				{hasOutput && hasRawResponse ? (
-					<Tabs>
-						<TabItem label="Output">
-							<OutputBody
-								alt={example.name}
-								textOutput={textOutput}
-								imageUrl={imageUrl}
-								imageUrls={imageUrls}
-								videoUrl={videoUrl}
-								audioUrl={audioUrl}
-							/>
+	{hasSnippets && (
+		<div class="example-code">
+			{snippets.length === 1 ? (
+				<Code code={snippets[0].code} lang={getLang(snippets[0].label)} />
+			) : (
+				<Tabs>
+					{snippets.map((snippet) => (
+						<TabItem label={getLabel(snippet.label)}>
+							<Code code={snippet.code} lang={getLang(snippet.label)} />
 						</TabItem>
-						<TabItem label="Raw response">
-							<div class="example-raw-response">
-								<Code code={rawResponseJson} lang="json" />
-							</div>
-						</TabItem>
-					</Tabs>
-				) : hasOutput ? (
-					<OutputBody
-						alt={example.name}
-						textOutput={textOutput}
-						imageUrl={imageUrl}
-						imageUrls={imageUrls}
-						videoUrl={videoUrl}
-						audioUrl={audioUrl}
-					/>
-				) : (
-					<div class="example-raw-response">
-						<Code code={rawResponseJson} lang="json" />
-					</div>
-				)}
-			</div>
-		)
-	}
+					))}
+				</Tabs>
+			)}
+		</div>
+	)}
 
-	{
-		!hasResponse && !hasSnippets && example.input && (
-			<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
-		)
-	}
+	{hasResponse && (
+		<div class="example-response">
+			{hasOutput && hasRawResponse ? (
+				<Tabs>
+					<TabItem label="Output">
+						<OutputBody
+							alt={example.name}
+							textOutput={textOutput}
+							imageUrl={imageUrl}
+							imageUrls={imageUrls}
+							videoUrl={videoUrl}
+							audioUrl={audioUrl}
+						/>
+					</TabItem>
+					<TabItem label="Raw response">
+						<div class="example-raw-response">
+							<Code code={safeResponse} lang="json" />
+						</div>
+					</TabItem>
+				</Tabs>
+			) : hasOutput ? (
+				<OutputBody
+					alt={example.name}
+					textOutput={textOutput}
+					imageUrl={imageUrl}
+					imageUrls={imageUrls}
+					videoUrl={videoUrl}
+					audioUrl={audioUrl}
+				/>
+			) : (
+				<div class="example-raw-response">
+					<Code code={safeResponse} lang="json" />
+				</div>
+			)}
+		</div>
+	)}
+
+	{!hasResponse && !hasSnippets && example.input && (
+		<Code code={JSON.stringify(example.input, null, 4)} lang="json" />
+	)}
 </div>
 
 <style>

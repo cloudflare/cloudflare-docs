@@ -1,0 +1,50 @@
+---
+title: Cloudflare Basin is now generally available
+description: Cloudflare Data Platform is now Basin, bringing generally available ingestion, Iceberg table management, and SQL analytics together on R2.
+products:
+  - basin
+  - basin-pipelines
+  - basin-catalog
+  - basin-sql
+date: 2026-10-01
+---
+
+import { PackageManagers } from "~/components";
+
+[Basin](/basin/), formerly the Cloudflare Data Platform, is now generally available. Basin brings an end-to-end analytics platform to the Developer Platform, enabling you to collect data from a variety of sources, such as apps, infrastructure, devices, and other Cloudflare services, then query it to answer analytical questions.
+
+## Basin Pipelines
+
+[Basin Pipelines](/basin-pipelines/), formerly Cloudflare Pipelines, ingests events from Workers, HTTP endpoints, and Cloudflare [Logpush](/logpush/). It transforms events with SQL and ingests them into Iceberg tables or files on R2. With Basin Pipelines you can:
+
+- Ingest application and device events through HTTP endpoints or Workers bindings.
+- Filter and reshape Cloudflare logs before storing them as Iceberg tables, Parquet, or JSON.
+- Catch schema mismatches with typed bindings and investigate dropped events in the dashboard.
+
+## Basin Catalog
+
+[Basin Catalog](/basin-catalog/), formerly R2 Data Catalog, manages and automatically maintains [Apache Iceberg tables](https://iceberg.apache.org/) to keep them fast, cost-efficient, and accessible to any compatible query engine. With Basin Catalog you can:
+
+- Connect DuckDB, Spark, Snowflake, or PyIceberg to the same tables.
+- Maintain growing tables with compaction, snapshot expiration, and manifest optimization.
+- Share analytical data across tools and clouds without paying egress fees.
+
+## Basin SQL
+
+[Basin SQL](/basin-sql/), formerly R2 SQL, is a serverless, distributed SQL engine for querying large Apache Iceberg tables in Basin Catalog without managing or scaling compute. With Basin SQL you can:
+
+- Summarize and rank data with standard and approximate aggregates, grouping sets, and window functions.
+- Combine and inspect datasets with joins, subqueries, common table expressions, set operations, schema discovery, and `EXPLAIN`.
+- Transform strings, timestamps, JSON, and complex values with more than 190 functions.
+
+## Get started
+
+To get started with creating an end-to-end data pipeline, run:
+
+<PackageManagers type="exec" pkg="wrangler" args="basin pipelines setup" />
+
+Or get started by referring to the [Basin getting started guide](/basin/get-started/guide/).
+
+:::note
+Existing Cloudflare Pipelines, R2 Data Catalog, and R2 SQL resources and configurations will continue to work and will be deprecated over time.
+:::

@@ -14,7 +14,7 @@ This is **your Worker's cache** — configured through your Worker's code and Wr
 
 - The `cache.enabled` flag in your Wrangler configuration, which turns caching on or off. You can override it [per entrypoint](#per-entrypoint-caching) and control [cross-version behavior](#cross-version-caching).
 - The `Cache-Control` (and `cdn-cache-control`, `cloudflare-cdn-cache-control`) headers your Worker sets on its responses, per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111).
-- The optional `Cache-Tag` response header for bulk purging, and [`ctx.cache.purge()`](/workers/cache/purge/) for programmatic invalidation.
+- The optional `Cache-Tag` response header for bulk purging or invalidation, and [`ctx.cache.purge()`](/workers/cache/purge/) and [`ctx.cache.invalidate()`](/workers/cache/purge/#invalidate-cached-responses) to purge or invalidate from code.
 
 That is the entire configuration surface.
 

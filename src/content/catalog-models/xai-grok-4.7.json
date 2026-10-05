@@ -1,0 +1,1252 @@
+{
+	"model_id": "xai/grok-4.7",
+	"provider_id": "xai",
+	"name": "Grok 4.7",
+	"description": "xAI's Grok 4.7, a frontier reasoning model for coding, agentic tasks, and knowledge work. Accepts text and image inputs, and supports function calling, structured outputs, and configurable reasoning effort (low, medium, high, xhigh).",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Coding",
+		"Agentic",
+		"Tool Use",
+		"Multimodal"
+	],
+	"context_length": 500000,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input <200k (per 1M)": 2,
+		"Cached input <200k (per 1M)": 0.5,
+		"Output <200k (per 1M)": 6,
+		"Input >=200k (per 1M)": 4,
+		"Cached input >=200k (per 1M)": 1,
+		"Output >=200k (per 1M)": 12
+	},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic chat completion request",
+			"input": {
+				"messages": [
+					{
+						"content": "What are the three laws of thermodynamics?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The three fundamental laws of thermodynamics (excluding the later-added zeroth law) are:\n\n- **First law** (conservation of energy): Energy cannot be created or destroyed, only converted between forms. For a closed system, the change in internal energy \\(\\Delta U\\) equals heat added \\(Q\\) minus work done by the system \\(W\\) (\\(\\Delta U = Q - W\\)).\n\n- **Second law** (entropy): The total entropy of an isolated system never decreases; it increases for irreversible processes and stays constant for reversible ones. Equivalently, heat does not spontaneously flow from a colder body to a hotter one, and no process can convert heat entirely into work without losses.\n\n- **Third law**: The entropy of a perfect crystalline substance approaches a universal constant (often taken as zero) as temperature approaches absolute zero. Absolute zero is unattainable in any finite number of steps.\n\n(The zeroth law, which defines thermal equilibrium and temperature, is sometimes listed alongside these.)"
+			},
+			"raw_response": {
+				"id": "aa4ae961-5289-9990-b9fd-14db5eb33bc1",
+				"object": "chat.completion",
+				"created": 1790013433,
+				"model": "grok-4.7",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "The three fundamental laws of thermodynamics (excluding the later-added zeroth law) are:\n\n- **First law** (conservation of energy): Energy cannot be created or destroyed, only converted between forms. For a closed system, the change in internal energy \\(\\Delta U\\) equals heat added \\(Q\\) minus work done by the system \\(W\\) (\\(\\Delta U = Q - W\\)).\n\n- **Second law** (entropy): The total entropy of an isolated system never decreases; it increases for irreversible processes and stays constant for reversible ones. Equivalently, heat does not spontaneously flow from a colder body to a hotter one, and no process can convert heat entirely into work without losses.\n\n- **Third law**: The entropy of a perfect crystalline substance approaches a universal constant (often taken as zero) as temperature approaches absolute zero. Absolute zero is unattainable in any finite number of steps.\n\n(The zeroth law, which defines thermal equilibrium and temperature, is sometimes listed alongside these.)",
+							"reasoning_content": "The question is: \"What are the three laws of thermodynamics?\"\nThe three laws of thermodynamics, as commonly referred to, are the first, second, and third laws. The zeroth law is sometimes listed separately as it sets the foundation for temperature.\n\nHere they are:\n\n**First Law**: Energy is conserved.",
+							"refusal": null
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 214,
+					"completion_tokens": 200,
+					"total_tokens": 959,
+					"prompt_tokens_details": {
+						"text_tokens": 214,
+						"audio_tokens": 0,
+						"image_tokens": 0,
+						"cached_tokens": 128
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 545,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					},
+					"num_sources_used": 0,
+					"cost_in_usd_ticks": 47060000
+				},
+				"system_fingerprint": "fp_c60958d81f66f847",
+				"service_tier": "default"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.7',\n  { messages: [{ content: 'What are the three laws of thermodynamics?', role: 'user' }] },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.7\",\n  \"messages\": [\n    {\n      \"content\": \"What are the three laws of thermodynamics?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Image Understanding",
+			"description": "Analyze an image supplied alongside a text prompt",
+			"input": {
+				"messages": [
+					{
+						"content": [
+							{
+								"image_url": {
+									"url": "https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png"
+								},
+								"type": "image_url"
+							},
+							{
+								"text": "Describe the person in this image and their surroundings in one sentence.",
+								"type": "text"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "A young woman with dark hair pulled back, wearing a navy knit sweater, gold necklace, and several rings, sits smiling while holding a small microphone with a fuzzy windscreen in a softly lit room with framed photos and a lamp."
+			},
+			"raw_response": {
+				"id": "f3f060d5-351e-96cb-b367-1091568e9f60",
+				"object": "chat.completion",
+				"created": 1790013440,
+				"model": "grok-4.7",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "A young woman with dark hair pulled back, wearing a navy knit sweater, gold necklace, and several rings, sits smiling while holding a small microphone with a fuzzy windscreen in a softly lit room with framed photos and a lamp.",
+							"reasoning_content": "The user wants me to describe the person in the image and their surroundings in one sentence. Let me observe the image carefully.\n",
+							"refusal": null
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 2679,
+					"completion_tokens": 46,
+					"total_tokens": 2951,
+					"prompt_tokens_details": {
+						"text_tokens": 272,
+						"audio_tokens": 0,
+						"image_tokens": 2407,
+						"cached_tokens": 128
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 226,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					},
+					"num_sources_used": 0,
+					"cost_in_usd_ticks": 67980000
+				},
+				"system_fingerprint": "fp_c60958d81f66f847",
+				"service_tier": "default"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.7',\n  {\n    messages: [\n      {\n        content: [\n          {\n            image_url: { url: 'https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png' },\n            type: 'image_url',\n          },\n          {\n            text: 'Describe the person in this image and their surroundings in one sentence.',\n            type: 'text',\n          },\n        ],\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.7\",\n  \"messages\": [\n    {\n      \"content\": [\n        {\n          \"image_url\": {\n            \"url\": \"https://v3.fal.media/files/koala/NLVPfOI4XL1cWT2PmmqT3_Hope.png\"\n          },\n          \"type\": \"image_url\"\n        },\n        {\n          \"text\": \"Describe the person in this image and their surroundings in one sentence.\",\n          \"type\": \"text\"\n        }\n      ],\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Function Calling",
+			"description": "Force the model to return a typed function call",
+			"input": {
+				"messages": [
+					{
+						"content": "What is the current temperature in San Francisco?",
+						"role": "user"
+					}
+				],
+				"tool_choice": "required",
+				"tools": [
+					{
+						"function": {
+							"description": "Get the current temperature for a city",
+							"name": "get_temperature",
+							"parameters": {
+								"additionalProperties": false,
+								"properties": {
+									"city": {
+										"type": "string"
+									},
+									"unit": {
+										"enum": [
+											"celsius",
+											"fahrenheit"
+										],
+										"type": "string"
+									}
+								},
+								"required": [
+									"city",
+									"unit"
+								],
+								"type": "object"
+							},
+							"strict": true
+						},
+						"type": "function"
+					}
+				]
+			},
+			"output": {
+				"tool_calls": [
+					{
+						"id": "call-6774f30b-801b-4ad9-9c49-c8809040decc-0",
+						"function": {
+							"name": "get_temperature",
+							"arguments": "{\"city\":\"San Francisco\",\"unit\":\"fahrenheit\"}"
+						},
+						"type": "function"
+					}
+				]
+			},
+			"raw_response": {
+				"id": "c6f138a4-af95-98d8-aa31-016f3650c2ec",
+				"object": "chat.completion",
+				"created": 1790013442,
+				"model": "grok-4.7",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "",
+							"reasoning_content": "The user wants the current temperature in San Francisco. I have a tool for that: get_temperature. It requires city and unit.\n",
+							"tool_calls": [
+								{
+									"id": "call-6774f30b-801b-4ad9-9c49-c8809040decc-0",
+									"function": {
+										"name": "get_temperature",
+										"arguments": "{\"city\":\"San Francisco\",\"unit\":\"fahrenheit\"}"
+									},
+									"type": "function"
+								}
+							],
+							"refusal": null
+						},
+						"finish_reason": "tool_calls"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 333,
+					"completion_tokens": 17,
+					"total_tokens": 428,
+					"prompt_tokens_details": {
+						"text_tokens": 333,
+						"audio_tokens": 0,
+						"image_tokens": 0,
+						"cached_tokens": 128
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 78,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					},
+					"num_sources_used": 0,
+					"cost_in_usd_ticks": 10440000
+				},
+				"system_fingerprint": "fp_c60958d81f66f847",
+				"service_tier": "default"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.7',\n  {\n    messages: [{ content: 'What is the current temperature in San Francisco?', role: 'user' }],\n    tool_choice: 'required',\n    tools: [\n      {\n        function: {\n          description: 'Get the current temperature for a city',\n          name: 'get_temperature',\n          parameters: {\n            additionalProperties: false,\n            properties: {\n              city: { type: 'string' },\n              unit: { enum: ['celsius', 'fahrenheit'], type: 'string' },\n            },\n            required: ['city', 'unit'],\n            type: 'object',\n          },\n          strict: true,\n        },\n        type: 'function',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.7\",\n  \"messages\": [\n    {\n      \"content\": \"What is the current temperature in San Francisco?\",\n      \"role\": \"user\"\n    }\n  ],\n  \"tool_choice\": \"required\",\n  \"tools\": [\n    {\n      \"function\": {\n        \"description\": \"Get the current temperature for a city\",\n        \"name\": \"get_temperature\",\n        \"parameters\": {\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"city\": {\n              \"type\": \"string\"\n            },\n            \"unit\": {\n              \"enum\": [\n                \"celsius\",\n                \"fahrenheit\"\n              ],\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"city\",\n            \"unit\"\n          ],\n          \"type\": \"object\"\n        },\n        \"strict\": true\n      },\n      \"type\": \"function\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Structured Output",
+			"description": "Constrain the response to a JSON schema",
+			"input": {
+				"messages": [
+					{
+						"content": "Classify the sentiment of: The launch was smooth and customers loved it.",
+						"role": "user"
+					}
+				],
+				"response_format": {
+					"json_schema": {
+						"name": "sentiment_result",
+						"schema": {
+							"additionalProperties": false,
+							"properties": {
+								"confidence": {
+									"maximum": 1,
+									"minimum": 0,
+									"type": "number"
+								},
+								"sentiment": {
+									"enum": [
+										"positive",
+										"neutral",
+										"negative"
+									],
+									"type": "string"
+								}
+							},
+							"required": [
+								"sentiment",
+								"confidence"
+							],
+							"type": "object"
+						},
+						"strict": true
+					},
+					"type": "json_schema"
+				}
+			},
+			"output": {
+				"text": "{\"confidence\":0.95,\"sentiment\":\"positive\"}"
+			},
+			"raw_response": {
+				"id": "db60c6df-4285-9e1a-97b8-30bb8136e5ac",
+				"object": "chat.completion",
+				"created": 1790013445,
+				"model": "grok-4.7",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "{\"confidence\":0.95,\"sentiment\":\"positive\"}",
+							"reasoning_content": "The user wants me to classify the sentiment of the sentence: \"The launch was smooth and customers loved it.\"\n",
+							"refusal": null
+						},
+						"finish_reason": "stop"
+					}
+				],
+				"usage": {
+					"prompt_tokens": 300,
+					"completion_tokens": 12,
+					"total_tokens": 454,
+					"prompt_tokens_details": {
+						"text_tokens": 300,
+						"audio_tokens": 0,
+						"image_tokens": 0,
+						"cached_tokens": 128
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 142,
+						"audio_tokens": 0,
+						"accepted_prediction_tokens": 0,
+						"rejected_prediction_tokens": 0
+					},
+					"num_sources_used": 0,
+					"cost_in_usd_ticks": 13320000
+				},
+				"system_fingerprint": "fp_c60958d81f66f847",
+				"service_tier": "default"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xai/grok-4.7',\n  {\n    messages: [\n      {\n        content: 'Classify the sentiment of: The launch was smooth and customers loved it.',\n        role: 'user',\n      },\n    ],\n    response_format: {\n      json_schema: {\n        name: 'sentiment_result',\n        schema: {\n          additionalProperties: false,\n          properties: {\n            confidence: { maximum: 1, minimum: 0, type: 'number' },\n            sentiment: { enum: ['positive', 'neutral', 'negative'], type: 'string' },\n          },\n          required: ['sentiment', 'confidence'],\n          type: 'object',\n        },\n        strict: true,\n      },\n      type: 'json_schema',\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xai/grok-4.7\",\n  \"messages\": [\n    {\n      \"content\": \"Classify the sentiment of: The launch was smooth and customers loved it.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"response_format\": {\n    \"json_schema\": {\n      \"name\": \"sentiment_result\",\n      \"schema\": {\n        \"additionalProperties\": false,\n        \"properties\": {\n          \"confidence\": {\n            \"maximum\": 1,\n            \"minimum\": 0,\n            \"type\": \"number\"\n          },\n          \"sentiment\": {\n            \"enum\": [\n              \"positive\",\n              \"neutral\",\n              \"negative\"\n            ],\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"sentiment\",\n          \"confidence\"\n        ],\n        \"type\": \"object\"\n      },\n      \"strict\": true\n    },\n    \"type\": \"json_schema\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.x.ai/developers/models/grok-4.7",
+	"terms": "https://x.ai/legal/terms-of-service-enterprise",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/xai/grok-4.7.png",
+	"metadata": {
+		"Architecture": "Transformer",
+		"Input Modalities": "Text, Image",
+		"Reasoning": "Configurable (low, medium, high, xhigh)"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"under_200k_per_1m_input_tokens": 2,
+				"under_200k_per_1m_input_cached_tokens": 0.5,
+				"under_200k_per_1m_output_tokens": 6,
+				"over_200k_per_1m_input_tokens": 4,
+				"over_200k_per_1m_input_cached_tokens": 1,
+				"over_200k_per_1m_output_tokens": 12
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-22 17:41:44",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"minItems": 1,
+					"maxItems": 500,
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "system"
+									},
+									"content": {
+										"type": "string"
+									},
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "user"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"minItems": 1,
+												"type": "array",
+												"items": {
+													"anyOf": [
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "text"
+																},
+																"text": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"type",
+																"text"
+															],
+															"additionalProperties": false
+														},
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "image_url"
+																},
+																"image_url": {
+																	"type": "object",
+																	"properties": {
+																		"url": {
+																			"type": "string"
+																		},
+																		"detail": {
+																			"type": "string",
+																			"enum": [
+																				"auto",
+																				"low",
+																				"high"
+																			]
+																		}
+																	},
+																	"required": [
+																		"url"
+																	],
+																	"additionalProperties": false
+																}
+															},
+															"required": [
+																"type",
+																"image_url"
+															],
+															"additionalProperties": false
+														}
+													]
+												}
+											}
+										]
+									},
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "assistant"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"maxItems": 128,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string",
+													"const": "function"
+												},
+												"function": {
+													"type": "object",
+													"properties": {
+														"name": {
+															"type": "string"
+														},
+														"arguments": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"name",
+														"arguments"
+													],
+													"additionalProperties": false
+												}
+											},
+											"required": [
+												"id",
+												"type",
+												"function"
+											],
+											"additionalProperties": false
+										}
+									},
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "tool"
+									},
+									"content": {
+										"type": "string"
+									},
+									"tool_call_id": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"role",
+									"content",
+									"tool_call_id"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"max_completion_tokens": {
+					"anyOf": [
+						{
+							"type": "integer",
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"max_tokens": {
+					"anyOf": [
+						{
+							"type": "integer",
+							"exclusiveMinimum": 0,
+							"maximum": 9007199254740991
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"n": {
+					"anyOf": [
+						{
+							"type": "integer",
+							"minimum": 1,
+							"maximum": 10
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"parallel_tool_calls": {
+					"type": [
+						"boolean",
+						"null"
+					]
+				},
+				"prompt_cache_key": {
+					"type": [
+						"string",
+						"null"
+					]
+				},
+				"reasoning_effort": {
+					"anyOf": [
+						{
+							"type": "string",
+							"enum": [
+								"low",
+								"medium",
+								"high",
+								"xhigh"
+							]
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"response_format": {
+					"anyOf": [
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "text"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"additionalProperties": false
+						},
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "json_object"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"additionalProperties": false
+						},
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "json_schema"
+								},
+								"json_schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string"
+										},
+										"schema": {
+											"type": "object",
+											"propertyNames": {
+												"type": "string"
+											},
+											"additionalProperties": {}
+										},
+										"strict": {
+											"type": "boolean"
+										}
+									},
+									"required": [
+										"name",
+										"schema"
+									],
+									"additionalProperties": false
+								}
+							},
+							"required": [
+								"type",
+								"json_schema"
+							],
+							"additionalProperties": false
+						}
+					]
+				},
+				"search_parameters": {
+					"type": "object",
+					"properties": {
+						"from_date": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"max_search_results": {
+							"anyOf": [
+								{
+									"type": "integer",
+									"exclusiveMinimum": 0,
+									"maximum": 9007199254740991
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"mode": {
+							"anyOf": [
+								{
+									"type": "string",
+									"enum": [
+										"off",
+										"on",
+										"auto"
+									]
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"return_citations": {
+							"type": [
+								"boolean",
+								"null"
+							]
+						},
+						"sources": {
+							"anyOf": [
+								{
+									"maxItems": 20,
+									"type": "array",
+									"items": {}
+								},
+								{
+									"type": "null"
+								}
+							]
+						},
+						"to_date": {
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"additionalProperties": false
+				},
+				"seed": {
+					"anyOf": [
+						{
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"service_tier": {
+					"type": "string",
+					"enum": [
+						"default",
+						"priority"
+					]
+				},
+				"stream": {
+					"type": [
+						"boolean",
+						"null"
+					]
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"required": [
+						"include_usage"
+					],
+					"additionalProperties": false
+				},
+				"temperature": {
+					"anyOf": [
+						{
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"tool_choice": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "function"
+								},
+								"function": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"name"
+									],
+									"additionalProperties": false
+								}
+							},
+							"required": [
+								"type",
+								"function"
+							],
+							"additionalProperties": false
+						}
+					]
+				},
+				"tools": {
+					"anyOf": [
+						{
+							"maxItems": 128,
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "function"
+									},
+									"function": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											},
+											"parameters": {
+												"type": "object",
+												"propertyNames": {
+													"type": "string"
+												},
+												"additionalProperties": {}
+											},
+											"strict": {
+												"type": "boolean"
+											}
+										},
+										"required": [
+											"name",
+											"parameters"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"function"
+								],
+								"additionalProperties": false
+							}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"top_p": {
+					"anyOf": [
+						{
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"user": {
+					"type": [
+						"string",
+						"null"
+					]
+				},
+				"web_search_options": {
+					"type": "object",
+					"properties": {
+						"filters": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						},
+						"search_context_size": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"user_location": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						}
+					},
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "chat.completion"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"finish_reason": {
+								"type": [
+									"string",
+									"null"
+								]
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"reasoning_content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"refusal": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string"
+														},
+														"type": {
+															"type": "string"
+														},
+														"function": {
+															"type": "object",
+															"properties": {
+																"name": {
+																	"type": "string"
+																},
+																"arguments": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"name",
+																"arguments"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"id",
+														"type",
+														"function"
+													],
+													"additionalProperties": false
+												}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							},
+							"logprobs": {
+								"anyOf": [
+									{
+										"type": "object",
+										"properties": {
+											"content": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"content"
+										],
+										"additionalProperties": false
+									},
+									{
+										"type": "null"
+									}
+								]
+							}
+						},
+						"required": [
+							"index",
+							"finish_reason",
+							"message"
+						],
+						"additionalProperties": false
+					}
+				},
+				"citations": {
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"output_files": {
+					"anyOf": [
+						{
+							"type": "array",
+							"items": {}
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"service_tier": {
+					"type": "string",
+					"enum": [
+						"default",
+						"priority"
+					]
+				},
+				"system_fingerprint": {
+					"type": [
+						"string",
+						"null"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						},
+						"prompt_tokens_details": {
+							"type": "object",
+							"properties": {
+								"text_tokens": {
+									"type": "number"
+								},
+								"audio_tokens": {
+									"type": "number"
+								},
+								"image_tokens": {
+									"type": "number"
+								},
+								"cached_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"text_tokens",
+								"audio_tokens",
+								"image_tokens",
+								"cached_tokens"
+							],
+							"additionalProperties": false
+						},
+						"completion_tokens_details": {
+							"type": "object",
+							"properties": {
+								"reasoning_tokens": {
+									"type": "number"
+								},
+								"audio_tokens": {
+									"type": "number"
+								},
+								"accepted_prediction_tokens": {
+									"type": "number"
+								},
+								"rejected_prediction_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"reasoning_tokens",
+								"audio_tokens",
+								"accepted_prediction_tokens",
+								"rejected_prediction_tokens"
+							],
+							"additionalProperties": false
+						},
+						"cost_in_usd_ticks": {
+							"type": "number"
+						},
+						"num_sources_used": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices",
+				"service_tier"
+			],
+			"additionalProperties": false
+		}
+	}
+}

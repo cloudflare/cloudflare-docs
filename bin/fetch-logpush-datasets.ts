@@ -1,6 +1,7 @@
 #!/usr/bin/env tsx
 
 import fs from "fs";
+import { createHash } from "node:crypto";
 import { join } from "path";
 
 import YAML from "yaml";
@@ -95,6 +96,11 @@ try {
 } catch (err) {
 	fail(`fetch failed: ${err}`);
 }
+
+const archiveSha256 = createHash("sha256")
+	.update(fs.readFileSync(archivePath))
+	.digest("hex");
+console.log(`Logpush dataset archive SHA-256: ${archiveSha256}`);
 
 // Remove any stale extracted content so we never sync pages from an old run.
 fs.rmSync(EXTRACTED_DIR, { recursive: true, force: true });

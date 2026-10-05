@@ -1,0 +1,97 @@
+---
+title: "Introducing Clef: Cloudflare's first open-source decision models, now on Workers AI"
+description: Clef and Clef-flash, the first models trained by the Cloudflare Workers AI team, are decision models that return typed answers with probabilities. They lead 7 of 10 decision benchmarks, run up to 13x faster than Jev, and are open source under Apache 2.0.
+products:
+  - workers-ai
+date: 2026-10-01T09:00:00-04:00
+---
+
+import { TypeScriptExample } from "~/components";
+
+Meet [`@cf/cloudflare/clef`](/workers-ai/models/clef/) and [`@cf/cloudflare/clef-flash`](/workers-ai/models/clef-flash/), the first models trained by the Cloudflare Workers AI team, available on Workers AI today.
+
+Clef is a decision model, in the same family as [Typesafe's Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Instead of generating text, it reads an input state and a set of typed questions, then returns a probability for every allowed answer. Your agent gets a structured decision it can act on immediately, for example: route the ticket, block the request, or escalate to a human. There is no free-form output to parse and no reasoning tokens to wait for.
+
+Both models are hosted on Workers AI as [Clef](/workers-ai/models/clef/) and [Clef-flash](/workers-ai/models/clef-flash/). We are also open-sourcing the weights under the Apache 2.0 license on Hugging Face: [Clef](https://huggingface.co/Cloudflare/clef) and [Clef-flash](https://huggingface.co/Cloudflare/clef-flash). Read the [launch blog post](https://blog.cloudflare.com/clef-decision-models/) for the full story, including how we trained them.
+
+We are also launching a reinforcement learning (RL) fine-tuning service to help you tune Clef for your own workloads. [Sign up to work with us as a design partner](https://www.cloudflare.com/resource/clef-rl-interest).
+
+## Built for the hot path
+
+Clef is designed to be fast so decisions come back in milliseconds. Across our 43 benchmark runs, we achieved speeds where Clef is 2.5x faster than Jev at the median, and Clef-flash 13x faster.
+
+| Latency | Clef     | Clef-flash   | Jev      |
+| ------- | -------- | ------------ | -------- |
+| Median  | 209.3 ms | **38.8 ms**  | 524.1 ms |
+| p95     | 238.6 ms | **122.4 ms** | 536.0 ms |
+
+Hosting on Workers AI adds to that speed. Requests run on GPUs across Cloudflare's network, running close to your users, so the network round trip stays short. You can put Clef directly in the request path of your agent, then hand off to an LLM on Workers AI to take action.
+
+## Leading the benchmarks
+
+Across 10 decision benchmarks, a Clef model scores highest on 7, ahead of Jev and other open decision models. A few highlights:
+
+| Benchmark                    | Clef      | Clef-flash | Jev   |
+| ---------------------------- | --------- | ---------- | ----- |
+| BFCL (case exact)            | 98.47     | **98.76**  | 95.75 |
+| BANKING77 (macro-F1)         | **94.20** | 90.93      | 79.74 |
+| CLINC150+OOS (macro-F1)      | **97.43** | 66.77      | 89.27 |
+| Home appliances (case exact) | 82.95     | **97.73**  | 52.27 |
+
+On Typesafe's own workflow evals, Clef beats Jev in 3 of 4 areas: invoice processing, customer service, and security incidents. The full results are on the [Hugging Face model card](https://huggingface.co/Cloudflare/clef).
+
+## Drop-in compatible with Jev
+
+| Model                                                         | Size | Best for                             | Context window |
+| ------------------------------------------------------------- | ---- | ------------------------------------ | -------------- |
+| [`@cf/cloudflare/clef`](/workers-ai/models/clef/)             | 27B  | Highest-precision decisions          | 64K tokens     |
+| [`@cf/cloudflare/clef-flash`](/workers-ai/models/clef-flash/) | 9B   | Latency-critical, hot-path decisions | 64K tokens     |
+
+Clef follows the System One API, so you can switch an existing Jev integration to Clef by changing the endpoint and model. Ask up to 64 questions per request, in three types:
+
+- **`noul`**: A yes/no question. Returns the probability that the answer is yes.
+- **`choice`**: Pick one option from a set you define. Returns the chosen option, a probability per option, and a confidence value.
+- **`score`**: Rate against an ordered rubric. Returns a probability-weighted score and a probability per level.
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run("@cf/cloudflare/clef", {
+	model: "clef",
+	state: "Checkout has been failing for every customer for the last hour.",
+	questions: {
+		urgent: {
+			type: "noul",
+			instructions: "Is this support request urgent?",
+		},
+		team: {
+			type: "choice",
+			instructions: "Which team should handle this request?",
+			criteria: {
+				billing: "Payments, invoices, and refunds",
+				technical: "Outages, errors, and configuration",
+				sales: "Plans and upgrades",
+			},
+		},
+	},
+});
+
+// response.answers.urgent.noul -> probability the request is urgent
+// response.answers.team.choice -> highest-probability team
+```
+
+</TypeScriptExample>
+
+## What you can build with decision models
+
+- **Support triage**: Decide whether a ticket is urgent and which team owns it, then route it without a human in the loop.
+- **Threat intelligence**: Classify a website by category. Paired with [Browser Run](/browser-run/), Clef fetched, rendered, and classified a domain in 2.2 seconds, compared to 4.7 seconds for `gpt-oss-120b` in the same workflow.
+- **Trust and safety**: Score user submissions against your own policy rubric and act on the probability.
+- **Agent guardrails**: Let an agent check "should I take this action?" in tens of milliseconds before calling a tool.
+- **Visual classification**: Pass up to four images alongside the state. Unlike text-only decision models, Clef has a vision encoder.
+
+## Get started
+
+Use Clef through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`) or the REST API at `/ai/run`. You can also use [AI Gateway](/ai-gateway/) with these endpoints.
+
+For more information, refer to the [Clef model page](/workers-ai/models/clef/), the [Clef-flash model page](/workers-ai/models/clef-flash/), and [pricing](/workers-ai/platform/pricing/).

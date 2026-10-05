@@ -21,23 +21,28 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<div class="row worker-row">
 			<div class="node-card worker-card">
 				<div class="node-header">
-					<span class="node-icon worker-icon" aria-hidden="true"
-						><Icon name="workers" /></span
-					>
-					<a class="node-title" href="/workers/">Worker</a>
+					<span class="node-icon worker-icon" aria-hidden="true">
+						<Icon name="workers" />
+					</span>
+					<a class="node-title" href="/workers/">
+						Worker
+					</a>
 				</div>
 				<p class="node-caption">
-					Bind via <a
+					Bind via{" "}
+					<a
 						class="inline-pill workers-vpc-pill"
 						href="/workers-vpc/configuration/vpc-services/"
-						><code>vpc_services</code></a
 					>
+						<code>vpc_services</code>
+					</a>
 					<span class="caption-separator">or</span>
 					<a
 						class="inline-pill workers-vpc-pill"
 						href="/workers-vpc/configuration/vpc-networks/"
-						><code>vpc_networks</code></a
 					>
+						<code>vpc_networks</code>
+					</a>
 				</p>
 			</div>
 		</div>
@@ -45,27 +50,27 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<div class="row on-ramps-row">
 			<div class="node-card tunnel-card">
 				<div class="node-header">
-					<span class="node-icon tunnel-icon" aria-hidden="true"
-						><Icon name="tunnel" /></span
-					>
-					<a class="node-title" href="/tunnel/">Cloudflare Tunnel</a>
+					<span class="node-icon tunnel-icon" aria-hidden="true">
+						<Icon name="tunnel" />
+					</span>
+					<a class="node-title" href="/tunnel/">
+						Cloudflare Tunnel
+					</a>
 				</div>
 				<p class="node-caption">
-					Reach private applications or networks through <code>cloudflared</code
-					>
+					Reach private applications or networks through{" "}
+					<code>cloudflared</code>
 				</p>
 			</div>
 
 			<div class="node-card mesh-card">
 				<div class="node-header">
-					<span class="node-icon mesh-icon" aria-hidden="true"
-						><Icon name="cloudflare-mesh" /></span
-					>
-					<a
-						class="node-title"
-						href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
-						>Cloudflare Mesh</a
-					>
+					<span class="node-icon mesh-icon" aria-hidden="true">
+						<Icon name="cloudflare-mesh" />
+					</span>
+					<a class="node-title" href="/mesh/">
+						Cloudflare Mesh
+					</a>
 				</div>
 				<p class="node-caption">
 					Reach the full account through <code>cf1:network</code>
@@ -74,10 +79,12 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 
 			<div class="node-card wan-card">
 				<div class="node-header">
-					<span class="node-icon wan-icon" aria-hidden="true"
-						><Icon name="cloudflare-wan" /></span
-					>
-					<a class="node-title" href="/cloudflare-wan/">Cloudflare WAN</a>
+					<span class="node-icon wan-icon" aria-hidden="true">
+						<Icon name="cloudflare-wan" />
+					</span>
+					<a class="node-title" href="/cloudflare-wan/">
+						Cloudflare WAN
+					</a>
 				</div>
 				<p class="node-caption">
 					Reach destinations through GRE, IPsec, or CNI on-ramps
@@ -88,25 +95,27 @@ const logsHref = "/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/";
 		<div class="row gateway-row">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
-					>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/"
-						>Cloudflare Gateway</a
-					>
+					<span class="node-icon gateway-icon" aria-hidden="true">
+						<Icon name="gateway" />
+					</span>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/">
+						Cloudflare Gateway
+					</a>
 				</div>
 				<p class="node-caption">
 					Mesh and WAN traffic flows through Gateway, with policies enforced and
-					traffic <a class="logs-link" href={logsHref}>logged</a>.
+					traffic{" "}
+					<a class="logs-link" href={logsHref}>
+						logged
+					</a>
+					.
 				</p>
 				<div class="pill-row">
-					{
-						policies.map((p) => (
-							<a class="policy-pill" href={p.href}>
-								{p.label}
-							</a>
-						))
-					}
+					{policies.map((p) => (
+						<a class="policy-pill" href={p.href}>
+							{p.label}
+						</a>
+					))}
 				</div>
 			</div>
 		</div>

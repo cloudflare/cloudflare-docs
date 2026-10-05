@@ -116,7 +116,7 @@ You can also pipe secrets from other tools or environment variables:
 
 ```bash
 # Pipe from another CLI tool
-npx some-cli-tool --get-secret | npx wrangler secret put API_KEY
+npx <some-cli-tool> --get-secret | npx wrangler secret put API_KEY
 # Pipe from an environment variable or .env file
 echo "$API_KEY" | npx wrangler secret put API_KEY
 ```

@@ -1,0 +1,284 @@
+---
+title: Move sandboxes side by side
+description: Run a Sandbox SDK 1.0 class next to the 0.12 class in one Worker, move each sandbox with its files, and delete the 0.12 class when none remain.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Run a Sandbox SDK 1.0 class next to your 0.12 class in the same Worker, and move each sandbox the first time a request reaches it. Commands and connections in sandboxes that have not moved keep running. When no sandbox needs the 0.12 class, delete it.
+
+## Before you start
+
+- Your application runs `@cloudflare/sandbox` 0.12.10, with a class and binding named `Sandbox`.
+- Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+- You have a staging copy of the Worker with its own Wrangler configuration file, a different Worker `name`, and a different `name` for each container.
+
+The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A stopped 0.12 container has no files to copy. The archive travels base64-encoded in one RPC message, which is limited to 32 MiB. For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+
+Keep the 0.12 exports, variables, and secrets that other migration pages tell you to remove, such as `ContainerProxy`, `SANDBOX_TRANSPORT`, and `R2_ACCESS_KEY_ID`, until you delete the 0.12 class. The 0.12 class still reads them.
+
+## Add the 1.0 class
+
+<Steps>
+
+1. Install version 1 of the package, and keep 0.12 under the alias `sandbox-0x`:
+
+   <PackageManagers pkg="@cloudflare/sandbox sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
+
+   Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
+
+2. Give the 0.12 class a method that reports whether its container runs, and one that returns the storage that your 1.0 code reads. If your code exports the class from the package, replace that export with a subclass:
+
+   ```ts title="src/index.ts"
+   import { getSandbox, Sandbox as SandboxBase } from "sandbox-0x";
+
+   // Preview tokens, named tunnels, and outbound rules set at runtime.
+   const STORAGE_0X = [
+   	"portTokens",
+   	"tunnels",
+   	"tunnels:meta",
+   	"OUTBOUND_CONFIGURATION",
+   ];
+
+   export class Sandbox extends SandboxBase<Env> {
+   	// A 0.12 container keeps its files only while it runs.
+   	isRunning(): boolean {
+   		return this.ctx.container?.running ?? false;
+   	}
+
+   	exportStorage(): Promise<Map<string, unknown>> {
+   		return this.ctx.storage.get(STORAGE_0X);
+   	}
+   }
+   ```
+
+   If you already have a subclass, add the constant and the methods to it.
+
+3. Create a `Dockerfile.v1` for the 1.0 class. Keep your 0.12 `Dockerfile` until you delete the 0.12 class:
+
+   ```dockerfile title="Dockerfile.v1"
+   FROM node:24-trixie-slim
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   WORKDIR /workspace
+   CMD ["sleep", "infinity"]
+   ```
+
+   The copy step needs `tar`, `gzip`, and `base64`, which this image includes. Add the tools your commands use. When another migration page adds a line to your `Dockerfile`, such as the `cloudflared` copy on Move tunnels, add it to `Dockerfile.v1`.
+
+4. Add the 1.0 class to the Wrangler configuration, with its own container, binding, and migration. Leave the `Sandbox` entries as they are. Replace `my-worker-sandbox-v1` with a name that your account does not use yet:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"containers": [
+   		{
+   			"class_name": "Sandbox",
+   			"image": "./Dockerfile",
+   			// Your other 0.12 settings, unchanged.
+   		},
+   		{
+   			"class_name": "SandboxV1",
+   			"name": "my-worker-sandbox-v1",
+   			"scheduling_policy": "durable_object",
+   			"images": {
+   				"sandbox": {
+   					"dockerfile": "./Dockerfile.v1",
+   				},
+   			},
+   		},
+   	],
+   	"durable_objects": {
+   		"bindings": [
+   			{ "class_name": "Sandbox", "name": "Sandbox" },
+   			{ "class_name": "SandboxV1", "name": "SandboxV1" },
+   		],
+   	},
+   	"migrations": [
+   		{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" },
+   		{ "new_sqlite_classes": ["SandboxV1"], "tag": "v2" },
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   If your Worker declares its classes with `exports` in the Wrangler configuration, add an entry there instead of a migration:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"exports": {
+   		"Sandbox": { "type": "durable-object", "storage": "sqlite" },
+   		"SandboxV1": { "type": "durable-object", "storage": "sqlite" },
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+5. Add methods to the 1.0 class that move one sandbox. The copy runs once for each name, and stores `moved` so that later requests skip it:
+
+   ```ts title="src/index.ts"
+   export class SandboxV1 extends DurableObject<Env> {
+   	// ...
+
+   	private moving: Promise<void> | null = null;
+
+   	async moveFrom0x(name: string): Promise<void> {
+   		// Requests that arrive during the copy wait for the same copy.
+   		this.moving ??= this.copyFrom0x(name).finally(() => {
+   			this.moving = null;
+   		});
+   		await this.moving;
+   	}
+
+   	private async copyFrom0x(name: string): Promise<void> {
+   		if (await this.ctx.storage.get("moved")) {
+   			return;
+   		}
+
+   		const stub0x = this.env.Sandbox.getByName(name);
+   		const stored = await stub0x.exportStorage();
+   		await this.ctx.storage.put(Object.fromEntries(stored));
+
+   		if (await stub0x.isRunning()) {
+   			const legacy = getSandbox(this.env.Sandbox, name);
+   			const path = "/tmp/workspace.tar.gz";
+   			await legacy.exec(`tar -czf ${path} -C /workspace .`);
+   			const archive = await legacy.readFile(path, {
+   				encoding: "base64",
+   			});
+
+   			await this.ensureRunning();
+   			const extract = await this.container.exec(
+   				["sh", "-c", "base64 -d | tar -xzf - -C /workspace"],
+   				{ stdin: new Blob([archive.content]).stream() },
+   			);
+   			const result = await extract.output();
+
+   			if (result.exitCode !== 0) {
+   				const stderr = new TextDecoder().decode(result.stderr);
+   				throw new Error(stderr);
+   			}
+
+   			await this.ctx.storage.put("moved", true);
+   			// destroy() would delete named tunnels and DNS records.
+   			await legacy.stop();
+   			return;
+   		}
+
+   		await this.ctx.storage.put("moved", true);
+   	}
+   }
+   ```
+
+   `ensureRunning()` and `container` are the helpers from your 1.0 class that start the container and return `this.ctx.container`. The method copies the 0.12 storage first, so preview URLs, named tunnels, and outbound rules move even when the 0.12 container has stopped. If the copy fails, the method throws before it stores `moved` or stops the 0.12 container, and the next request runs the copy again.
+
+   0.12 `stop()` keeps the storage of the 0.12 class, and the tunnels and DNS records in your account. 0.12 `destroy()` deletes the preview tokens, the tunnel entries, and each named tunnel with its DNS record. Processes end with the 0.12 container, so start the ones your application needs in the 1.0 container, as [Move background processes](/sandbox/sdk/migrate/background-processes/#start-processes-again-after-the-switch) describes. To start the same commands, read them from `legacy.listProcesses()` before `stop()`.
+
+6. Send every request through the move. Add this function to your Worker, and replace each `getSandbox(env.Sandbox, name)` call with `await sandboxFor(env, name)`:
+
+   ```ts title="src/index.ts"
+   async function sandboxFor(env: Env, name: string) {
+   	const sandbox = env.SandboxV1.getByName(name);
+   	await sandbox.moveFrom0x(name);
+   	return sandbox;
+   }
+   ```
+
+   New sandboxes start on the 1.0 class, because no 0.12 container runs for their names.
+
+7. Generate types, and deploy:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   The deploy reports no changes to the 0.12 container application. Running 0.12 containers keep their files and processes.
+
+</Steps>
+
+## Check the move
+
+Send a request for a sandbox whose 0.12 container runs and has files in `/workspace`. The first request copies the files and returns a result from the 1.0 container. A second request for the same name skips the copy and returns faster. Send a request for a new name, which starts only a 1.0 container.
+
+## Delete the 0.12 class
+
+<Steps>
+
+1. Move the remaining sandboxes. Your Worker cannot list Durable Objects, so use the records of your application to send one request for each sandbox that has not moved.
+
+2. Remove the 0.12 code. Delete the 0.12 class, `STORAGE_0X`, the `sandbox-0x` import, and the `moving` field, `moveFrom0x()`, and `copyFrom0x()` from the 1.0 class. Call `env.SandboxV1.getByName(name)` where your code called `sandboxFor()`. Also remove the 0.12 exports, variables, and secrets that you kept, such as `ContainerProxy`, `SANDBOX_TRANSPORT`, and `R2_ACCESS_KEY_ID`.
+
+3. Remove the `Sandbox` container and binding from the Wrangler configuration, and add a migration that deletes the class:
+
+   :::caution
+   Deleting the class deletes its Durable Objects and their storage, including any 0.12 backup handles. You cannot undo it. With `migrations`, Wrangler refuses a rollback past this deploy. With `exports`, a rollback deploys, and every call to the old class fails with `Durable Object Namespace was deleted`.
+   :::
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"migrations": [
+   		{ "new_sqlite_classes": ["Sandbox"], "tag": "v1" },
+   		{ "new_sqlite_classes": ["SandboxV1"], "tag": "v2" },
+   		{ "deleted_classes": ["Sandbox"], "tag": "v3" },
+   	],
+   }
+   ```
+
+   </WranglerConfig>
+
+   If your Worker uses `exports` in the Wrangler configuration, mark the class as deleted instead:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"exports": {
+   		"Sandbox": { "type": "durable-object", "state": "deleted" },
+   		"SandboxV1": { "type": "durable-object", "storage": "sqlite" },
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Remove the alias, generate types, and deploy:
+
+   <PackageManagers type="remove" pkg="sandbox-0x" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+5. Deleting the class does not delete its container application. Wrangler named that application from your Worker and class names, such as `my-worker-sandbox`. List the applications to find it:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers list" />
+
+6. Delete the old application. Replace `<OLD_APPLICATION_ID>` with its ID from the list:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers delete <OLD_APPLICATION_ID>" />
+
+   The old application runs its containers, and bills for them, until you delete it.
+
+</Steps>
+
+## Related resources
+
+- [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/)
+- [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/)
+- [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/)
+- [Durable Object Container API](/containers/api/durable-object-container/)

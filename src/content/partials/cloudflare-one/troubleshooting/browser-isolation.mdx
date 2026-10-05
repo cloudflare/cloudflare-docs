@@ -8,6 +8,10 @@ If you encounter a `No Browsers Available` alert, please file feedback via the C
 ### Maximum Sessions Reached
 This alert appears if your device attempts to establish more than two concurrent remote browser instances. A browser isolation session is shared across all tabs and windows within the same browser (for example, all Chrome tabs share one session). You can use two different browsers (such as Chrome and Firefox) concurrently, but opening a third will trigger this alert. To release a session, close all tabs and windows in one of your local browsers.
 
+### Audio or video stops when switching windows
+
+Browser Isolation supports one active window at a time. When you switch to a different isolated tab or window, Browser Isolation deactivates the previous window, pausing any audio or video playing there. This is expected behavior. For more details, refer to [Single active window](/cloudflare-one/remote-browser-isolation/known-limitations/#single-active-window).
+
 ## Rendering and performance
 
 ### WebGL Rendering Error
@@ -28,6 +32,11 @@ On Windows devices, Clientless Web Isolation may load with a blank screen if the
 | 2 (enabled) | Enabled / Default | ✅ Works |
 
 To fix this, either disable **Anonymize local IPs exposed by WebRTC** in your browser flags or ensure `IGMPLevel` is enabled (set to `2`) in your Windows network settings.
+
+### Font rendering differences
+Text on a website may render in a different font through Browser Isolation than it does in a local browser. This happens when the website's CSS specifies a proprietary font (for example, Arial or Times New Roman) without a generic fallback. The remote browser runs in a Linux-based environment that does not include licensed fonts typically bundled with Windows or macOS. When no matching font is found, the browser substitutes its own default.
+
+To resolve this, add a generic fallback family (such as `sans-serif` or `serif`) to the end of the website's `font-family` CSS declarations. For more information, refer to [Font rendering](/cloudflare-one/remote-browser-isolation/known-limitations/#font-rendering).
 
 ### Rendering issues (CSS/Images)
 If a website displays incorrectly (for example, broken CSS or missing images), it may indicate that the remote browser is unable to fetch specific resources from the origin server. Check your [Gateway HTTP logs](/cloudflare-one/traffic-policies/troubleshooting/) for any blocked subresources that might be required by the page.

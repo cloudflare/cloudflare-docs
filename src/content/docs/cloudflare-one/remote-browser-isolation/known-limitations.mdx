@@ -26,6 +26,17 @@ Our Network Vector Rendering (NVR) technology sends drawing instructions to the 
 - Netflix and Spotify Web Player are unavailable.
 - H.265/HEVC (a video compression format) is not a supported video format at this time.
 
+## Single active window
+
+Browser Isolation supports one active window at a time. All tabs and windows in the same local browser (for example, all Chrome tabs) share a single isolated session. Within that session, the remote browser actively renders and processes only the tab or window currently in focus. Browser Isolation deactivates background tabs and windows until you switch to them.
+
+This means that workflows requiring simultaneous activity across multiple windows are unavailable.
+
+For example:
+- Audio or video playing in one isolated window will pause when you switch to a different isolated window.
+- Real-time content (such as live dashboards or streaming media) will not update in background windows.
+- Applications that rely on multi-window communication or synchronization are not supported.
+
 ## Browser compatibility
 
 | Browser                                      | Compatibility |
@@ -72,6 +83,30 @@ Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
 - [Destination IP](/cloudflare-one/traffic-policies/http-policies/#destination-ip)
 
 You cannot use these selectors to isolate traffic and isolation matches for these selectors will not appear in your Gateway logs. Additionally, you cannot apply other policies based on these selectors while in isolation. For example, if you have a Block policy that matches traffic based on destination IP, Gateway will not block the matching traffic if it is already isolated by an Isolate policy.
+
+## Font rendering
+
+The remote browser runs in a Linux-based container that does not include proprietary or licensed fonts such as Arial, Times New Roman, or other fonts typically bundled with Windows or macOS. If a website's CSS specifies one of these fonts without a generic fallback, the remote browser cannot match the named font and falls back to its own default, which may render text differently than expected.
+
+For example, the following CSS will produce different results in the remote browser than on a local Windows machine:
+
+```css
+/* No generic fallback — text may render differently in Browser Isolation */
+body {
+  font-family: Arial;
+}
+```
+
+To avoid font rendering differences, website owners should always include a generic fallback family at the end of their `font-family` declarations:
+
+```css
+/* Generic fallback ensures consistent rendering */
+body {
+  font-family: Arial, sans-serif;
+}
+```
+
+Websites that load custom fonts as web fonts (for example, from Google Fonts or a self-hosted source) are not affected, because the remote browser downloads and uses the font file directly.
 
 ## File download size
 

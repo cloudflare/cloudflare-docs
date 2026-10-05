@@ -46,7 +46,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 11
+          version: 11.28.2
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -83,12 +83,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Post codeowners comment
-        run: pnpm exec tsx bin/post-codeowners-comment/index.ts
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check Astro and CF Worker
         run: pnpm run check
@@ -136,7 +130,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 11
+          version: 11.28.2
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -198,7 +192,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 11
+          version: 11.28.2
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -236,7 +230,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 11
+          version: 11.28.2
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -271,7 +265,7 @@ jobs:
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
         with:
-          version: 11
+          version: 11.28.2
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
@@ -302,8 +296,16 @@ jobs:
           echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
 
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}"
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}"
+          # These two deploys are independent (different Worker names in the
+          # same dispatch namespace), so run them concurrently instead of
+          # back-to-back.
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}" &
+          short_sha_pid=$!
+          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}" &
+          branch_slug_pid=$!
+
+          wait "$short_sha_pid"
+          wait "$branch_slug_pid"
 
       - name: Post preview URL on PR
         env:

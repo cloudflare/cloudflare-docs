@@ -17,7 +17,7 @@ The `/screenshot` endpoint renders the webpage by processing its HTML and JavaSc
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot
 ```
 
 ## Required fields
@@ -41,7 +41,7 @@ You must provide either `url` or `html`:
 Sets the HTML content of the page to `Hello World!` and then takes a screenshot. The option `omitBackground` hides the default white background and allows capturing screenshots with transparency.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -122,7 +122,7 @@ Some webpages require authentication before you can view their content. Browser 
 Provide valid session cookies to access pages that require login:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -144,7 +144,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 Use the `authenticate` parameter for pages behind HTTP Basic Authentication:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -162,7 +162,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 Add custom authorization headers using `setExtraHTTPHeaders`:
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -179,7 +179,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 Navigate to `https://cloudflare.com/`, change the page size (`viewport`) and wait until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`) before capturing a `fullPage` screenshot.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -206,7 +206,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 Instruct the browser to go to `https://example.com`, embed custom JavaScript (`addScriptTag`) and add extra styles (`addStyleTag`), both inline (`addStyleTag.content`) and by loading an external stylesheet (`addStyleTag.url`).
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -231,7 +231,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 To capture a screenshot of a specific element on a webpage, use the `selector` option with a valid CSS selector. You can also configure the `viewport` to control the page dimensions during rendering.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/screenshot' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

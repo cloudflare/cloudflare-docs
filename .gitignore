@@ -5,6 +5,7 @@ distllms/
 
 # generated types
 .astro/
+.astro-cache/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
@@ -65,7 +66,9 @@ tools/relevant_changed_files.txt
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
 .flue/vitest-results.json
+.flue/replay-results/
 
 # nimbus-docs generated files
+.nimbus/coordinates.json
 .nimbus/lint.json
 .nimbus/routes.json

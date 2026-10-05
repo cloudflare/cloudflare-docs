@@ -38,4 +38,5 @@ Chunking affects both how your content is retrieved and how much context is pass
 
 - **Index size:** Smaller chunk sizes produce more chunks and more total vectors. Refer to the [AI Search limits](/ai-search/platform/limits-pricing/) to ensure your configuration stays within instance limits.
 - **Generation model context window:** Generation models have a limited context window that must fit all retrieved chunks (`max_num_results` × `chunk size`), the user query, and the model's output. Be careful with large chunks or high `max_num_results` values to avoid context overflows.
+- **Ingestion cost:** Overlapping text is counted in every chunk it appears in, so a higher chunk overlap can increase billable ingestion tokens. Refer to [How ingestion tokens are counted](/ai-search/platform/limits-pricing/#how-ingestion-tokens-are-counted).
 - **Cost and performance:** Larger chunks and higher `max_num_results` settings result in more tokens passed to the model, which can increase latency and cost. You can monitor this usage in [AI Gateway](/ai-gateway/).

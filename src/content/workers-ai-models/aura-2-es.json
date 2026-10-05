@@ -1,15 +1,5 @@
 {
-    "id": "c5255b94-2161-4779-bd25-54f061829a2a",
-    "source": 1,
     "name": "@cf/deepgram/aura-2-es",
-    "description": "Aura-2 is a context-aware text-to-speech (TTS) model that applies natural pacing, expressiveness, and fillers based on the context of the provided text. The quality of your text input directly impacts the naturalness of the audio output.",
-    "task": {
-        "id": "b52660a1-9a95-4ab2-8b1d-f232be34604a",
-        "name": "Text-to-Speech",
-        "description": "Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages."
-    },
-    "created_at": "2025-10-09 22:42:37.002",
-    "tags": [],
     "properties": [
         {
             "property_id": "async_queue",
@@ -38,6 +28,16 @@
             "value": "true"
         }
     ],
+    "id": "c5255b94-2161-4779-bd25-54f061829a2a",
+    "source": 1,
+    "description": "Aura-2 is a context-aware text-to-speech (TTS) model that applies natural pacing, expressiveness, and fillers based on the context of the provided text. The quality of your text input directly impacts the naturalness of the audio output.",
+    "task": {
+        "id": "b52660a1-9a95-4ab2-8b1d-f232be34604a",
+        "name": "Text-to-Speech",
+        "description": "Text-to-Speech (TTS) is the task of generating natural sounding speech given text input. TTS models can be extended to have a single model that generates speech for multiple speakers and multiple languages."
+    },
+    "created_at": "2025-10-09 22:42:37.002",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -93,10 +93,7 @@
                     "type": "number",
                     "description": "The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type."
                 }
-            },
-            "required": [
-                "text"
-            ]
+            }
         },
         "output": {
             "type": "string",
@@ -104,5 +101,6 @@
             "format": "binary",
             "description": "The generated audio in MP3 format"
         }
-    }
+    },
+    "deprecated": false
 }

@@ -93,33 +93,29 @@ const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
 				{...code}
 				lang="js"
 				code={js}
-				meta={filename
-					? `title="${filename.replace(".ts", ".js")}"`
-					: undefined}
+				meta={
+					filename ? `title="${filename.replace(".ts", ".js")}"` : undefined
+				}
 			/>
-			{
-				playgroundHref && (
-					<div class="flex justify-end pt-3">
-						<LinkButton
-							href={playgroundHref}
-							variant="primary"
-							target="_blank"
-							rel="noopener"
-						>
-							Run Worker in Playground
-						</LinkButton>
-					</div>
-				)
-			}
+			{playgroundHref && (
+				<div class="flex justify-end pt-3">
+					<LinkButton
+						href={playgroundHref}
+						variant="primary"
+						target="_blank"
+						rel="noopener"
+					>
+						Run Worker in Playground
+					</LinkButton>
+				</div>
+			)}
 		</TabItem>
 		<TabItem label="TypeScript">
-			{
-				filename ? (
-					<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
-				) : (
-					<Fragment set:html={slot} />
-				)
-			}
+			{filename ? (
+				<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
+			) : (
+				<Fragment set:html={slot} />
+			)}
 		</TabItem>
 	</Wrapper>
 </div>

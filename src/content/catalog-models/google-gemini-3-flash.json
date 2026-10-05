@@ -13,6 +13,14 @@
 	"context_length": 1000000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input <=200k (per 1M)": 0.5,
+		"Cached input <=200k (per 1M)": 0.05,
+		"Output <=200k (per 1M)": 3,
+		"Input >200k (per 1M)": 0.5,
+		"Cached input >200k (per 1M)": 0.05,
+		"Output >200k (per 1M)": 3
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -30,7 +38,7 @@
 				]
 			},
 			"output": {
-				"text": "While there are technically four laws (starting with the Zeroth Law), here are the **three primary laws of thermodynamics** that describe how energy, heat, and work behave in a system:\n\n### 1. The First Law: The Law of Conservation of Energy\nThis law states that **energy cannot be created or destroyed, only transformed from one form to another.** The total energy in an isolated system remains constant.\n\n*   **The Principle:** If you add heat to a system, that energy must go somewhere\u2014it either increases the internal energy of the system (making it hotter) or it is used by the system to do work on its surroundings.\n*   **The Equation:** $\\Delta U = Q - W$ \n    *(Change in internal energy = Heat added to the system - Work done by the system)*\n*   **Simple Takeaway:** You can't get something for nothing.\n\n---\n\n### 2. The Second Law: The Law of Entropy\nThis law states that the **total entropy (disorder) of an isolated system can never decrease over time.** It explains the \"arrow of time\" and why certain processes are irreversible.\n\n*   **The Principle:** Heat will naturally flow from a hotter object to a colder object, never spontaneously the other way. In any energy transfer, some energy is always \"lost\" as waste heat, meaning no machine can ever be 100% efficient.\n*   **The Result:** Systems naturally move toward a state of maximum disorder or randomness.\n*   **Simple Takeaway:** Things tend to get messy, and you can't even break even (because you always lose some energy to friction/heat).\n\n---\n\n### 3. The Third Law: The Law of Absolute Zero\nThis law states that **as the temperature of a system approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of the system approaches a constant minimum.**\n\n*   **The Principle:** In a \"perfect crystal,\" the entropy at absolute zero would be exactly zero because all molecular motion would stop completely.\n*   **The Catch:** It is physically impossible to reach absolute zero in a finite number of steps because as you get closer, it requires more and more work to remove the remaining heat.\n*   **Simple Takeaway:** You can\u2019t reach a state of zero energy/motion; you can\u2019t quit the game.\n\n***\n\n### Summary (The \"Ginsberg's Theorem\" Mnemonic)\nScientists often use a humorous summary to remember these laws:\n1.  **First Law:** You can't win (You can't get more energy out than you put in).\n2.  **Second Law:** You can't break even (You always lose some energy as heat).\n3.  **Third Law:** You can't get out of the game (You can never reach absolute zero).\n\n***\n\n**Note on the \"Zeroth Law\":** \nThere is also a **Zeroth Law**, which was identified after the first three but is more fundamental. It states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This is the law that allows us to use thermometers."
+				"text": "While there are technically four laws (starting with the \"Zeroth Law\"), the **Three Laws of Thermodynamics** are the fundamental principles that describe how energy, heat, and matter behave.\n\nHere is a breakdown of the three laws:\n\n---\n\n### 1. The First Law: Conservation of Energy\n**Definition:** Energy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n\n*   **In simple terms:** You can't get something for nothing.\n*   **The Equation:** $\\Delta U = Q - W$\n    *   ($\\Delta U$ is the change in internal energy, $Q$ is heat added, and $W$ is work done by the system).\n*   **Example:** In a car engine, the chemical energy of the gasoline is converted into heat and then into mechanical work to move the car.\n\n### 2. The Second Law: Entropy\n**Definition:** The total entropy (disorder) of an isolated system can never decrease over time; it can only remain constant or increase. This law dictates the \"arrow of time.\"\n\n*   **In simple terms:** Things tend to get messy and disorganized over time. Heat always flows spontaneously from a hotter object to a colder object, never the other way around without adding work.\n*   **Key Concept:** This law explains why 100% efficiency is impossible\u2014some energy is always \"lost\" as waste heat.\n*   **Example:** If you place a hot cup of coffee in a cold room, the coffee cools down as heat spreads into the room. The heat will never spontaneously jump back from the room into the coffee to make it boil again.\n\n### 3. The Third Law: Absolute Zero\n**Definition:** As the temperature of a system approaches absolute zero ($0$ Kelvin or $-273.15^\\circ$ Celsius), the entropy of a perfect crystal approaches a constant minimum (usually zero).\n\n*   **In simple terms:** You can\u2019t reach absolute zero.\n*   **Key Concept:** As atoms get colder, they slow down. At absolute zero, all molecular motion would essentially stop. However, because moving heat requires a temperature difference, it is physically impossible to reach a temperature of exactly zero Kelvin in a finite number of steps.\n*   **Example:** Scientists use advanced lasers and magnets to get atoms within billionths of a degree of absolute zero, but they can never quite hit the \"stop\" button entirely.\n\n---\n\n### Summary Mnemonic\nThere is a famous (and slightly cynical) way to remember these laws, often called **\"Ginsberg\u2019s Theorem\"**:\n\n1.  **First Law:** You can't win. (You can't get more energy out than you put in).\n2.  **Second Law:** You can't break even. (You always lose some energy to entropy).\n3.  **Third Law:** You can't get out of the game. (You can't reach absolute zero to stop the process).\n\n***\n\n**Note on the Zeroth Law:** If you ever hear about a \"Zeroth Law,\" it simply states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This is the law that allows us to use thermometers."
 			},
 			"raw_response": {
 				"candidates": [
@@ -39,8 +47,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "While there are technically four laws (starting with the Zeroth Law), here are the **three primary laws of thermodynamics** that describe how energy, heat, and work behave in a system:\n\n### 1. The First Law: The Law of Conservation of Energy\nThis law states that **energy cannot be created or destroyed, only transformed from one form to another.** The total energy in an isolated system remains constant.\n\n*   **The Principle:** If you add heat to a system, that energy must go somewhere\u2014it either increases the internal energy of the system (making it hotter) or it is used by the system to do work on its surroundings.\n*   **The Equation:** $\\Delta U = Q - W$ \n    *(Change in internal energy = Heat added to the system - Work done by the system)*\n*   **Simple Takeaway:** You can't get something for nothing.\n\n---\n\n### 2. The Second Law: The Law of Entropy\nThis law states that the **total entropy (disorder) of an isolated system can never decrease over time.** It explains the \"arrow of time\" and why certain processes are irreversible.\n\n*   **The Principle:** Heat will naturally flow from a hotter object to a colder object, never spontaneously the other way. In any energy transfer, some energy is always \"lost\" as waste heat, meaning no machine can ever be 100% efficient.\n*   **The Result:** Systems naturally move toward a state of maximum disorder or randomness.\n*   **Simple Takeaway:** Things tend to get messy, and you can't even break even (because you always lose some energy to friction/heat).\n\n---\n\n### 3. The Third Law: The Law of Absolute Zero\nThis law states that **as the temperature of a system approaches absolute zero (0 Kelvin or -273.15\u00b0C), the entropy of the system approaches a constant minimum.**\n\n*   **The Principle:** In a \"perfect crystal,\" the entropy at absolute zero would be exactly zero because all molecular motion would stop completely.\n*   **The Catch:** It is physically impossible to reach absolute zero in a finite number of steps because as you get closer, it requires more and more work to remove the remaining heat.\n*   **Simple Takeaway:** You can\u2019t reach a state of zero energy/motion; you can\u2019t quit the game.\n\n***\n\n### Summary (The \"Ginsberg's Theorem\" Mnemonic)\nScientists often use a humorous summary to remember these laws:\n1.  **First Law:** You can't win (You can't get more energy out than you put in).\n2.  **Second Law:** You can't break even (You always lose some energy as heat).\n3.  **Third Law:** You can't get out of the game (You can never reach absolute zero).\n\n***\n\n**Note on the \"Zeroth Law\":** \nThere is also a **Zeroth Law**, which was identified after the first three but is more fundamental. It states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This is the law that allows us to use thermometers.",
-									"thoughtSignature": "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"
+									"text": "While there are technically four laws (starting with the \"Zeroth Law\"), the **Three Laws of Thermodynamics** are the fundamental principles that describe how energy, heat, and matter behave.\n\nHere is a breakdown of the three laws:\n\n---\n\n### 1. The First Law: Conservation of Energy\n**Definition:** Energy cannot be created or destroyed, only transformed from one form to another. The total energy of an isolated system remains constant.\n\n*   **In simple terms:** You can't get something for nothing.\n*   **The Equation:** $\\Delta U = Q - W$\n    *   ($\\Delta U$ is the change in internal energy, $Q$ is heat added, and $W$ is work done by the system).\n*   **Example:** In a car engine, the chemical energy of the gasoline is converted into heat and then into mechanical work to move the car.\n\n### 2. The Second Law: Entropy\n**Definition:** The total entropy (disorder) of an isolated system can never decrease over time; it can only remain constant or increase. This law dictates the \"arrow of time.\"\n\n*   **In simple terms:** Things tend to get messy and disorganized over time. Heat always flows spontaneously from a hotter object to a colder object, never the other way around without adding work.\n*   **Key Concept:** This law explains why 100% efficiency is impossible\u2014some energy is always \"lost\" as waste heat.\n*   **Example:** If you place a hot cup of coffee in a cold room, the coffee cools down as heat spreads into the room. The heat will never spontaneously jump back from the room into the coffee to make it boil again.\n\n### 3. The Third Law: Absolute Zero\n**Definition:** As the temperature of a system approaches absolute zero ($0$ Kelvin or $-273.15^\\circ$ Celsius), the entropy of a perfect crystal approaches a constant minimum (usually zero).\n\n*   **In simple terms:** You can\u2019t reach absolute zero.\n*   **Key Concept:** As atoms get colder, they slow down. At absolute zero, all molecular motion would essentially stop. However, because moving heat requires a temperature difference, it is physically impossible to reach a temperature of exactly zero Kelvin in a finite number of steps.\n*   **Example:** Scientists use advanced lasers and magnets to get atoms within billionths of a degree of absolute zero, but they can never quite hit the \"stop\" button entirely.\n\n---\n\n### Summary Mnemonic\nThere is a famous (and slightly cynical) way to remember these laws, often called **\"Ginsberg\u2019s Theorem\"**:\n\n1.  **First Law:** You can't win. (You can't get more energy out than you put in).\n2.  **Second Law:** You can't break even. (You always lose some energy to entropy).\n3.  **Third Law:** You can't get out of the game. (You can't reach absolute zero to stop the process).\n\n***\n\n**Note on the Zeroth Law:** If you ever hear about a \"Zeroth Law,\" it simply states that if two systems are each in thermal equilibrium with a third system, they are in thermal equilibrium with each other. This is the law that allows us to use thermometers.",
+									"thoughtSignature": "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"
 								}
 							]
 						},
@@ -49,8 +57,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 8,
-					"candidatesTokenCount": 677,
-					"totalTokenCount": 1132,
+					"candidatesTokenCount": 697,
+					"totalTokenCount": 1107,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -61,14 +69,14 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 677
+							"tokenCount": 697
 						}
 					],
-					"thoughtsTokenCount": 447
+					"thoughtsTokenCount": 402
 				},
 				"modelVersion": "gemini-3-flash-preview",
-				"createTime": "2026-07-14T02:14:06.911390Z",
-				"responseId": "bptVap7QN-yN3dAPh4DzyAY",
+				"createTime": "2026-07-24T21:49:35.132185Z",
+				"responseId": "791jatmICOSg3dAPo6eioAg",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -112,7 +120,7 @@
 				}
 			},
 			"output": {
-				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the most common and recommended way to do it:\n\n### Basic Example\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n---\n\n### Key Details to Remember\n\n#### 1. `json.load()` vs `json.loads()`\n*   **`json.load(file_object)`**: Used to read data directly from a **file**.\n*   **`json.loads(string)`**: Used to parse a **string** that contains JSON data (the \"s\" stands for \"string\").\n\n#### 2. Using a Context Manager (`with`)\nIt is best practice to use the `with` statement. This ensures that the file is automatically closed as soon as the data is loaded, even if an error occurs during the process.\n\n#### 3. Handling Encodings\nIf your JSON file contains special characters (like emojis or non-English characters), it is safer to specify the encoding:\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n#### 4. Error Handling\nIf the file doesn't exist or the JSON is formatted incorrectly, your script will crash. You can wrap it in a `try-except` block to handle these cases gracefully:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Summary Table\n| Function | Input Source | Output |\n| :--- | :--- | :--- |\n| `json.load()` | File Object | Python Object (dict/list) |\n| `json.loads()` | String | Python Object (dict/list) |\n| `json.dump()` | Python Object | Write to File |\n| `json.dumps()` | Python Object | Return as String |"
+				"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the most common and recommended way to do it:\n\n### The Standard Method\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python\u2019s built-in JSON library.\n2.  **`with open(...)`**: This is a \"context manager.\" It ensures the file is properly closed after you are done reading it, even if an error occurs.\n3.  **`'r'`**: Opens the file in **read** mode.\n4.  **`encoding='utf-8'`**: This is optional but highly recommended to ensure special characters (like emojis or non-English letters) are handled correctly.\n5.  **`json.load(file)`**: This function takes the file object and converts the JSON data into a Python object (usually a `dict` or a `list`).\n\n---\n\n### `json.load()` vs `json.loads()`\nIt is easy to confuse these two functions:\n*   **`json.load()`** (no 's'): Used to read from a **file object**.\n*   **`json.loads()`** (stands for \"load string\"): Used to parse a **string** containing JSON data.\n\n**Example of `json.loads()`:**\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"]) # Output: Alice\n```\n\n---\n\n### Handling Errors\nIf the file doesn't exist or the JSON is formatted incorrectly, your program will crash. You can wrap the code in a `try-except` block to handle this gracefully:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Pro Tip: Using Pandas (for Data Science)\nIf your JSON file contains a list of records (like a table), the **Pandas** library is often much faster and easier:\n\n```python\nimport pandas as pd\n\ndf = pd.read_json('data.json')\nprint(df.head())\n```"
 			},
 			"raw_response": {
 				"candidates": [
@@ -121,8 +129,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the most common and recommended way to do it:\n\n### Basic Example\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n---\n\n### Key Details to Remember\n\n#### 1. `json.load()` vs `json.loads()`\n*   **`json.load(file_object)`**: Used to read data directly from a **file**.\n*   **`json.loads(string)`**: Used to parse a **string** that contains JSON data (the \"s\" stands for \"string\").\n\n#### 2. Using a Context Manager (`with`)\nIt is best practice to use the `with` statement. This ensures that the file is automatically closed as soon as the data is loaded, even if an error occurs during the process.\n\n#### 3. Handling Encodings\nIf your JSON file contains special characters (like emojis or non-English characters), it is safer to specify the encoding:\n```python\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n```\n\n#### 4. Error Handling\nIf the file doesn't exist or the JSON is formatted incorrectly, your script will crash. You can wrap it in a `try-except` block to handle these cases gracefully:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Summary Table\n| Function | Input Source | Output |\n| :--- | :--- | :--- |\n| `json.load()` | File Object | Python Object (dict/list) |\n| `json.loads()` | String | Python Object (dict/list) |\n| `json.dump()` | Python Object | Write to File |\n| `json.dumps()` | Python Object | Return as String |",
-									"thoughtSignature": "AY89a183n1HvGbI4q4zTRFxjxdRZcs7jbevbsOFvybvFJzvn34yQuUE0/cuxyD7rb2vYlKXbeB2vwLHig4Soy7MMIdUGx+Wd7GdMwUB8FM8aNtKvR3Ey9L7cEsL6mDd9Oc1Hi20PUrohGxDWiqv0HQyp2CkyuV2G4ufvLSuCQHG4ebaZUG/TtrCI3RjmxnpwXXJWvRwvfWfZOQsgS++CxtMnGoN+pnwu633crqMdSXcVgLGiysUmHXdpg7A3SFZlEM9X6drRS8N+SibUScLJHUJWcVMoi2Jw4IvphSOHxNSJUI9ebWcWliZ/T5+H4HICGl4VT4suZ23qxYYVrEHkkALu+30dOq8a/CJ/iKuoapBonAZhp0QTBtFKtBXhAT1El/KZnWeqDNnecawLfKH1mSw/CMk+INUkwWY/RRxbdmOVgqapGM6q6W51zZFKrOLBWVuNLf/xvRISv3rJPaTggKtXRJsplvkFyh0lOVnMqbR8fz1fJpwW1C4V6u9r1zqVWIm/wmXnp6quU0qOE9qsw7FeCbhuuhy7tzTKRMk1sQVPYcBAE1IE2A2khPW+4iXFsCU8FTVxg4WwAQhu5SQkG4P5VHqprD5TH4gjOIZL+iaVGK7yRlGHBn0zrPP90Z/4+L1yhCg/bf4A2SBMSepGmdo6PXLEVDNIFVROzi5XCdZ1K97LwFRMOZ5jUdXVaAX/S2vSomD8gIcOCelVZoeWTKW+1l/SqOKPtrYU9a4XWu3EXn2VkvtJNJnbL0xGEF3NgA7HDnivsyXR/o05eQzky2fy6XA4kE92H47pzG4eL+wIlVUGurLmNb5F19g+V3ss5k35mGaZ+8QzBXVHM3bAHVoyYeDqQugmNekN8q32EZ52ZnxuwoWUt1b/B7Spr1Ev2oomG6paGyHIldCW3LeaFYnjHhGoS4vNoCLd64Lvfg6W1aLER+r+F2f9rEYtZhmJRV6fFUsH+JfkHCgECS0q2cc7vtnW4989wdZvJ+r3zQR56k/UYo4xgxWyb8mUce6LZ2BT6y2nj4cuaycC+Svd/GfPhAP7yqWdyxuUj59l/AMrsdlV1agYqM+4DGvSehVMDMsYI7BqMwwEY+WJHQlxDIzM6Y+qOnNsyukPX4IY0+kx7ZntubtXZAJ0OEx980/XPmuNT+X+JQmyz1Bb47w56wDihRaPBmPgboRe2J76a3wH54diqrUWyUftVyOIuwQ/b3rAYS1IF/D2UENiaXjPNGcBkQuof0+vSyguVl3ynYE2Z2tPumUwBW8zNJ9ONxgtN/1H/BG9fOHPmCf7UT0/Wy+ftrSr6zqsRXCfZPKw5sv21Lt6y3XHJxsu+kDCC9I/gOEPmHpZbxyx4cmxYl7xFTf55ryG8HkojNW7+OHM4AyDjQNqesLh9VEwpnIKOXbgX62S9zMO96rtcnzZkJ+y04rMHlBxJ3AgsyNKe/7jJ9If0BPMJNortvReEs4kkzk3DulslLX0KvvRf+0n1h9GeRdEH7RBv9P/VOsn73P1+gYzssXq52kj4UQXbOs="
+									"text": "To read a JSON file in Python, you use the built-in `json` module.\n\nHere is the most common and recommended way to do it:\n\n### The Standard Method\n```python\nimport json\n\n# Open the file and load the data\nwith open('data.json', 'r', encoding='utf-8') as file:\n    data = json.load(file)\n\n# Now 'data' is a Python dictionary or list\nprint(data)\n```\n\n### Breakdown of the code:\n1.  **`import json`**: Imports Python\u2019s built-in JSON library.\n2.  **`with open(...)`**: This is a \"context manager.\" It ensures the file is properly closed after you are done reading it, even if an error occurs.\n3.  **`'r'`**: Opens the file in **read** mode.\n4.  **`encoding='utf-8'`**: This is optional but highly recommended to ensure special characters (like emojis or non-English letters) are handled correctly.\n5.  **`json.load(file)`**: This function takes the file object and converts the JSON data into a Python object (usually a `dict` or a `list`).\n\n---\n\n### `json.load()` vs `json.loads()`\nIt is easy to confuse these two functions:\n*   **`json.load()`** (no 's'): Used to read from a **file object**.\n*   **`json.loads()`** (stands for \"load string\"): Used to parse a **string** containing JSON data.\n\n**Example of `json.loads()`:**\n```python\nimport json\n\njson_string = '{\"name\": \"Alice\", \"age\": 30}'\ndata = json.loads(json_string)\n\nprint(data[\"name\"]) # Output: Alice\n```\n\n---\n\n### Handling Errors\nIf the file doesn't exist or the JSON is formatted incorrectly, your program will crash. You can wrap the code in a `try-except` block to handle this gracefully:\n\n```python\nimport json\n\ntry:\n    with open('data.json', 'r') as file:\n        data = json.load(file)\nexcept FileNotFoundError:\n    print(\"The file was not found.\")\nexcept json.JSONDecodeError:\n    print(\"The file is not a valid JSON format.\")\n```\n\n### Pro Tip: Using Pandas (for Data Science)\nIf your JSON file contains a list of records (like a table), the **Pandas** library is often much faster and easier:\n\n```python\nimport pandas as pd\n\ndf = pd.read_json('data.json')\nprint(df.head())\n```",
+									"thoughtSignature": "AY89a19gXBYi6TaPLwfAGabkFykrt/VT0/7TNJg4gxnDwsvi+dRCrWduSfukGMbFawR9yTOOOX0pGghcixRX1DIU/Itu9t80Igw3jfw9rKDQS7mB9K+wmeEyqLlL7J5x2mIuhvvjkgFwXGWGlkTWXe4DX+701K79JeiDVgvOVoa0E0aWUXz/4FInnHCc3FhgEpjXnHSsvXS1jVfOgYrfxnJb5FaQ4C4rWI7Y7q+xdH8kD37tiPBc4hLo/4OOR92ufuOY/hPkQfdyGXm9FOg6jSFD5NOnIC/S+6yaDwrj9Ruvgig9Y7wxikcXLfT68sR3x3ekEO+awkk69xbo42AJ7g9WxOKImcUQVZv7mpPLrKRwH5NZnmZTSowsbZ7rnMtbhiiTqbULB2irj9orfaCUpNISpU7eXn37LD5E5mWcI2zkhfLgUAj2H487UTnCUOX7GassWppELpwE5UrRf4SraDKsYyL28tqYThLtX2TB+G5Qku8zPqApKoERXYW376q8tRws/SA3uBLNovZtc3ihERcb5CfptNebVFTZjG3vfPuErVOLk4wpQKyVMcrR7TWH/COhP/Y6oDRl5etAsHHhVZV3M46J71eGFrni61zqlm/6dOl/BMreovZ2lvQVy6Zf8SXMZwXxvOyoUBxltPrFzSpRq+ju6sRHO3JKsE6wFXjWfzjHy/5fISMrLgr7pTUsDG8Y4GlUXiY/WMFw2gldNnMWSjAxKJNl9mJQuKmIQpfYgbfUeKa8eHnXVohl4u0oD9RcRx/1UTpvt57nKL8KfOhTWUyn32gw6Y0jvil+jZfiV6vvI9kSFIfWqXqyuld/3xou8+4Pdg9oxc/enc4EEtOor+0vl0d05+DhnDUPe4o2gt6N8/xpRGdMUYtx2twut6NHPVrZzt6lhqw0Rh/1+LMPgwgkQOaAg86MDcAQOE63DxPaubbWVIvswQX/cCQ1TQT1SVnas1KG3HNQhYZfSrrgXeDp7OYntzKAoaNd1wtry6ZB88NYC9R48AI05bWaduwnTWHJv/n2q64p5KYlOMrnRPsmvNvDhHQfIeGL8k4IVc2v6XqL5mkTwBRxla1d3U/rZGiGF3Pt9SXpZtZKw2WfPxn4T938FrblqrDMy0tNF0Wesao0b0IGyiS75J5RFWtZFXNKZrEyd1/mUkQOhgIQqSuRU9lrMLJEgyKRgjv9nQy/bcpuP1fZhLQBo/BE/e2yuBy7k7MyKZLQTuntqQNrastY6/z9UV/Gv7KIe8L7KNaN1ljVHWHDnBgrlq3xL6VY4Mtgb8zCi372eKRQl/E2EPW/aRngzYj1q0k+G+O58wSebWusR52vpMpdQ7VHSudS14Dvqxap3Fz69CL7UOqEJ4A="
 								}
 							]
 						},
@@ -131,8 +139,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 20,
-					"candidatesTokenCount": 501,
-					"totalTokenCount": 833,
+					"candidatesTokenCount": 582,
+					"totalTokenCount": 875,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -143,14 +151,14 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 501
+							"tokenCount": 582
 						}
 					],
-					"thoughtsTokenCount": 312
+					"thoughtsTokenCount": 273
 				},
 				"modelVersion": "gemini-3-flash-preview",
-				"createTime": "2026-07-14T02:14:14.559830Z",
-				"responseId": "dptVataVIoGR3dAPg-rnoA8",
+				"createTime": "2026-07-24T21:49:42.962953Z",
+				"responseId": "9t1jaonjOoGL3dAPnayyuA0",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -203,7 +211,7 @@
 				}
 			},
 			"output": {
-				"text": "A road trip from San Francisco to Los Angeles can take several different paths depending on whether you want speed or scenery. \n\n**Important Note:** If you plan on taking the scenic Highway 1 (Pacific Coast Highway), there is currently a major road closure south of Big Sur (near Lucia) due to landslides. You can visit Big Sur from the north, but you currently cannot drive all the way through to LA on the coast. You have to cut back to Highway 101.\n\nHere are the best stops based on the route you choose:\n\n### 1. The Scenic Route (Highway 1 & 101)\n*Best for: Nature lovers, photographers, and first-timers. Plan for 2\u20133 days.*\n\n*   **Monterey & Carmel-by-the-Sea:** Visit the Monterey Bay Aquarium, drive the \"17-Mile Drive\" for famous golf course views, and walk through the fairytale-style cottages in Carmel.\n*   **Big Sur:** Even with the closure, you can drive down to see the iconic **Bixby Creek Bridge** and **Pfeiffer Big Sur State Park**.\n*   **Hearst Castle (San Simeon):** A massive, opulent hilltop estate built by newspaper tycoon William Randolph Hearst. (Accessible by taking the 101 south and cutting back to the coast).\n*   **San Luis Obispo (SLO):** A great halfway point. Visit \"Bubblegum Alley\" or hike Bishop Peak.\n*   **Solvang:** A charming, authentic Danish village in the middle of California. Great for pastries and windmills.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Stop at the Old Mission, walk State Street for shopping, or visit Stearns Wharf.\n\n### 2. The Wine & Inland Route (Highway 101)\n*Best for: Foodies, wine enthusiasts, and those who want a mix of speed and beauty. Plan for 1\u20132 days.*\n\n*   **Paso Robles:** One of the best wine regions in the state. Don't miss **Sensorio**, a massive outdoor light installation (best seen at dusk).\n*   **Pismo Beach:** Famous for its wide sandy beaches and the \"Oceano Dunes\" where you can drive vehicles on the sand.\n*   **Los Olivos:** A tiny, sophisticated town in the Santa Ynez Valley perfect for wine tasting and high-end boutiques.\n\n### 3. The Fast Route (I-5 South)\n*Best for: Getting there as quickly as possible. Plan for 6 hours.*\n\n*   **Harris Ranch (Coalinga):** A famous \"oasis\" in the middle of the farmland known for its high-quality steaks and resort-style atmosphere.\n*   **Bravo Farms (Kettleman City):** A quirky stop with a petting zoo, ice cream, and a multi-story \"treehouse\" structure for kids to climb.\n*   **Pyramid Lake:** Located just before you descend the \"Grapevine\" into LA, it offers a nice overlook and a visitor center.\n\n### Pro-Tips for your trip:\n1.  **Check the Weather:** If you take the coast, it can be very foggy (the \"June Gloom\") in the mornings.\n2.  **Gas Up:** If you decide to go through Big Sur, gas is extremely expensive and sparse. Fill up in Monterey or Carmel.\n3.  **The \"Grapevine\":** If taking the I-5, be aware of the \"Grapevine\" (Tejon Pass). It is a steep mountain pass that can occasionally close due to snow in winter or high winds.\n\n**How many days are you planning to take for the trip?** I can help you narrow down a specific itinerary!"
+				"text": "The stops you choose will depend entirely on which route you take. Since I mentioned the 5-6 hour timeframe earlier, that usually refers to the **I-5 (Inland)** route, but most people prefer the **Highway 1 (Coastal)** route for a \"road trip\" experience.\n\nHere are the best stops for the three most common routes:\n\n### 1. The Scenic Route: Highway 1 (Pacific Coast Highway)\n*Best for: Incredible views, photo ops, and a multi-day trip.*\n* **Santa Cruz:** Walk the historic Beach Boardwalk or see the Redwood trees at Roaring Camp.\n* **Monterey & Carmel-by-the-Sea:** Visit the world-famous Monterey Bay Aquarium and drive the \"17-Mile Drive\" for views of Pebble Beach.\n* **Big Sur:** Cross the iconic **Bixby Creek Bridge** and stop at **McWay Falls** (a waterfall that drops right onto the beach).\n* **San Simeon:** Tour **Hearst Castle**, the massive estate of William Randolph Hearst, or see the Elephant Seal Rookery at Piedras Blancas.\n* **Solvang:** A charming, \"Little Denmark\" village known for Dutch architecture and bakeries.\n* **Santa Barbara:** Known as the \"American Riviera,\" it has beautiful Spanish architecture and great shopping on State Street.\n\n### 2. The Middle Ground: US-101\n*Best for: A balance of speed and scenery (approx. 6\u20137 hours).*\n* **Paso Robles:** If you like wine, this is one of California\u2019s premier wine regions with beautiful rolling hills.\n* **San Luis Obispo (SLO):** Visit the historic mission, walk through the \"Bubblegum Alley,\" or hike Bishop Peak.\n* **Pismo Beach:** Famous for its wide sandy beaches and \"Clam Chowder\" at Splash Caf\u00e9.\n* **Ventura:** A great spot to see the pier and grab fresh seafood before hitting the LA traffic.\n\n### 3. The Quickest Route: I-5 (The Grapevine)\n*Best for: Getting there as fast as possible (approx. 5\u20136 hours).*\n* **Harris Ranch (Coalinga):** A famous landmark and massive ranch. It's the best place for a high-quality steak dinner or a deli sandwich in the middle of the valley.\n* **Bravo Farms (Kettleman City):** A fun, kitschy stop with a petting zoo, ice cream, nuts, and a \"seven-story\" treehouse for kids to climb.\n* **Tejon Ranch Outlets:** Located at the base of \"The Grapevine,\" it\u2019s great for discount designer shopping before the final stretch into LA.\n\n---\n\n### A few \"Pro Tips\" for your drive:\n1.  **Check for Closures:** If you take **Highway 1 (Big Sur)**, check Caltrans before you go. That road is prone to landslides and parts are occasionally closed for repairs.\n2.  **The \"Grapevine\":** If taking the I-5, you will pass over a high mountain ridge called the Grapevine. In winter, it can occasionally close due to snow; in summer, keep an eye on your engine temperature as it's a long, steep climb.\n3.  **LA Traffic:** Try to time your arrival in Los Angeles either before 2:00 PM or after 8:00 PM to avoid the worst of the gridlock.\n\n**Which route sounds more like your style?** I can give you more specific recommendations for food or hotels once you choose!"
 			},
 			"raw_response": {
 				"candidates": [
@@ -212,8 +220,8 @@
 							"role": "model",
 							"parts": [
 								{
-									"text": "A road trip from San Francisco to Los Angeles can take several different paths depending on whether you want speed or scenery. \n\n**Important Note:** If you plan on taking the scenic Highway 1 (Pacific Coast Highway), there is currently a major road closure south of Big Sur (near Lucia) due to landslides. You can visit Big Sur from the north, but you currently cannot drive all the way through to LA on the coast. You have to cut back to Highway 101.\n\nHere are the best stops based on the route you choose:\n\n### 1. The Scenic Route (Highway 1 & 101)\n*Best for: Nature lovers, photographers, and first-timers. Plan for 2\u20133 days.*\n\n*   **Monterey & Carmel-by-the-Sea:** Visit the Monterey Bay Aquarium, drive the \"17-Mile Drive\" for famous golf course views, and walk through the fairytale-style cottages in Carmel.\n*   **Big Sur:** Even with the closure, you can drive down to see the iconic **Bixby Creek Bridge** and **Pfeiffer Big Sur State Park**.\n*   **Hearst Castle (San Simeon):** A massive, opulent hilltop estate built by newspaper tycoon William Randolph Hearst. (Accessible by taking the 101 south and cutting back to the coast).\n*   **San Luis Obispo (SLO):** A great halfway point. Visit \"Bubblegum Alley\" or hike Bishop Peak.\n*   **Solvang:** A charming, authentic Danish village in the middle of California. Great for pastries and windmills.\n*   **Santa Barbara:** Known as the \"American Riviera.\" Stop at the Old Mission, walk State Street for shopping, or visit Stearns Wharf.\n\n### 2. The Wine & Inland Route (Highway 101)\n*Best for: Foodies, wine enthusiasts, and those who want a mix of speed and beauty. Plan for 1\u20132 days.*\n\n*   **Paso Robles:** One of the best wine regions in the state. Don't miss **Sensorio**, a massive outdoor light installation (best seen at dusk).\n*   **Pismo Beach:** Famous for its wide sandy beaches and the \"Oceano Dunes\" where you can drive vehicles on the sand.\n*   **Los Olivos:** A tiny, sophisticated town in the Santa Ynez Valley perfect for wine tasting and high-end boutiques.\n\n### 3. The Fast Route (I-5 South)\n*Best for: Getting there as quickly as possible. Plan for 6 hours.*\n\n*   **Harris Ranch (Coalinga):** A famous \"oasis\" in the middle of the farmland known for its high-quality steaks and resort-style atmosphere.\n*   **Bravo Farms (Kettleman City):** A quirky stop with a petting zoo, ice cream, and a multi-story \"treehouse\" structure for kids to climb.\n*   **Pyramid Lake:** Located just before you descend the \"Grapevine\" into LA, it offers a nice overlook and a visitor center.\n\n### Pro-Tips for your trip:\n1.  **Check the Weather:** If you take the coast, it can be very foggy (the \"June Gloom\") in the mornings.\n2.  **Gas Up:** If you decide to go through Big Sur, gas is extremely expensive and sparse. Fill up in Monterey or Carmel.\n3.  **The \"Grapevine\":** If taking the I-5, be aware of the \"Grapevine\" (Tejon Pass). It is a steep mountain pass that can occasionally close due to snow in winter or high winds.\n\n**How many days are you planning to take for the trip?** I can help you narrow down a specific itinerary!",
-									"thoughtSignature": "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"
+									"text": "The stops you choose will depend entirely on which route you take. Since I mentioned the 5-6 hour timeframe earlier, that usually refers to the **I-5 (Inland)** route, but most people prefer the **Highway 1 (Coastal)** route for a \"road trip\" experience.\n\nHere are the best stops for the three most common routes:\n\n### 1. The Scenic Route: Highway 1 (Pacific Coast Highway)\n*Best for: Incredible views, photo ops, and a multi-day trip.*\n* **Santa Cruz:** Walk the historic Beach Boardwalk or see the Redwood trees at Roaring Camp.\n* **Monterey & Carmel-by-the-Sea:** Visit the world-famous Monterey Bay Aquarium and drive the \"17-Mile Drive\" for views of Pebble Beach.\n* **Big Sur:** Cross the iconic **Bixby Creek Bridge** and stop at **McWay Falls** (a waterfall that drops right onto the beach).\n* **San Simeon:** Tour **Hearst Castle**, the massive estate of William Randolph Hearst, or see the Elephant Seal Rookery at Piedras Blancas.\n* **Solvang:** A charming, \"Little Denmark\" village known for Dutch architecture and bakeries.\n* **Santa Barbara:** Known as the \"American Riviera,\" it has beautiful Spanish architecture and great shopping on State Street.\n\n### 2. The Middle Ground: US-101\n*Best for: A balance of speed and scenery (approx. 6\u20137 hours).*\n* **Paso Robles:** If you like wine, this is one of California\u2019s premier wine regions with beautiful rolling hills.\n* **San Luis Obispo (SLO):** Visit the historic mission, walk through the \"Bubblegum Alley,\" or hike Bishop Peak.\n* **Pismo Beach:** Famous for its wide sandy beaches and \"Clam Chowder\" at Splash Caf\u00e9.\n* **Ventura:** A great spot to see the pier and grab fresh seafood before hitting the LA traffic.\n\n### 3. The Quickest Route: I-5 (The Grapevine)\n*Best for: Getting there as fast as possible (approx. 5\u20136 hours).*\n* **Harris Ranch (Coalinga):** A famous landmark and massive ranch. It's the best place for a high-quality steak dinner or a deli sandwich in the middle of the valley.\n* **Bravo Farms (Kettleman City):** A fun, kitschy stop with a petting zoo, ice cream, nuts, and a \"seven-story\" treehouse for kids to climb.\n* **Tejon Ranch Outlets:** Located at the base of \"The Grapevine,\" it\u2019s great for discount designer shopping before the final stretch into LA.\n\n---\n\n### A few \"Pro Tips\" for your drive:\n1.  **Check for Closures:** If you take **Highway 1 (Big Sur)**, check Caltrans before you go. That road is prone to landslides and parts are occasionally closed for repairs.\n2.  **The \"Grapevine\":** If taking the I-5, you will pass over a high mountain ridge called the Grapevine. In winter, it can occasionally close due to snow; in summer, keep an eye on your engine temperature as it's a long, steep climb.\n3.  **LA Traffic:** Try to time your arrival in Los Angeles either before 2:00 PM or after 8:00 PM to avoid the worst of the gridlock.\n\n**Which route sounds more like your style?** I can give you more specific recommendations for food or hotels once you choose!",
+									"thoughtSignature": "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"
 								}
 							]
 						},
@@ -222,8 +230,8 @@
 				],
 				"usageMetadata": {
 					"promptTokenCount": 64,
-					"candidatesTokenCount": 796,
-					"totalTokenCount": 1357,
+					"candidatesTokenCount": 762,
+					"totalTokenCount": 1356,
 					"trafficType": "ON_DEMAND",
 					"promptTokensDetails": [
 						{
@@ -234,14 +242,14 @@
 					"candidatesTokensDetails": [
 						{
 							"modality": "TEXT",
-							"tokenCount": 796
+							"tokenCount": 762
 						}
 					],
-					"thoughtsTokenCount": 497
+					"thoughtsTokenCount": 530
 				},
 				"modelVersion": "gemini-3-flash-preview",
-				"createTime": "2026-07-14T02:14:20.450752Z",
-				"responseId": "fJtVasDBG-jOu-gPvavt4Q4",
+				"createTime": "2026-07-24T21:49:48.502515Z",
+				"responseId": "_N1javPVHrSk3dAP45z02AQ",
 				"gatewayMetadata": {
 					"keySource": "Unified"
 				}
@@ -274,25 +282,64 @@
 					}
 				],
 				"generationConfig": {
-					"maxOutputTokens": 1500,
+					"maxOutputTokens": 4096,
 					"temperature": 0.8
 				}
 			},
-			"error": {
-				"kind": "runner-failure",
-				"message": "normalizer returned empty output -- check modality vs response shape, or recapture",
-				"timestamp": "2026-07-14T02:14:38.375Z"
+			"output": {
+				"text": "The humidity in the room was wrong. That was the first thing Detective Elias Thorne noticed. It wasn\u2019t the metallic tang of blood or the heavy stillness of a man who had stopped breathing three hours ago. It was the smell of a thunderstorm in a room with no open windows.\n\nJulian Vane, a man who had made millions selling security software, sat slumped in his designer leather chair. His throat had been opened with surgical precision, but Thorne\u2019s eyes didn't linger on the gore. They were drawn to the mahogany desk, where a small, silver saucer sat perfectly centered.\n\nIn the middle of the saucer was a single, glowing sugar cube.\n\nThorne leaned in, his shadow stretching long across the Persian rug. He didn\u2019t reach for his tweezers yet. The cube wasn't just white; it pulsed with a soft, rhythmic violet light, timed exactly to the pace of a resting human heartbeat. \n\n\"Miller,\" Thorne called out without looking back at his partner. \"Tell me the victim had a penchant for bioluminescent snacks.\"\n\n\"He was a hedge fund manager, Elias,\" Miller replied, snapping photos of the entryway. \"The most exotic thing he consumed was unpasteurized goat cheese.\"\n\nThorne pulled a magnifying loupe from his coat pocket. As he peered through the glass, his breath hitched. Inside the crystalline structure of the sugar, frozen like a prehistoric insect in amber, was a microscopic set of brass gears. They were no larger than a grain of dust, and they were turning slowly in reverse.\n\nIt wasn't just a clue. It was a piece of machinery that shouldn't exist, ticking away inside a condiment. \n\n\"Get the lead-lined evidence bag,\" Thorne whispered, the hair on his arms standing up as the violet pulse of the cube suddenly skipped a beat, matching his own racing heart. \"I don't think we're looking for a murderer anymore. I think we're looking for a clockmaker.\""
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "The humidity in the room was wrong. That was the first thing Detective Elias Thorne noticed. It wasn\u2019t the metallic tang of blood or the heavy stillness of a man who had stopped breathing three hours ago. It was the smell of a thunderstorm in a room with no open windows.\n\nJulian Vane, a man who had made millions selling security software, sat slumped in his designer leather chair. His throat had been opened with surgical precision, but Thorne\u2019s eyes didn't linger on the gore. They were drawn to the mahogany desk, where a small, silver saucer sat perfectly centered.\n\nIn the middle of the saucer was a single, glowing sugar cube.\n\nThorne leaned in, his shadow stretching long across the Persian rug. He didn\u2019t reach for his tweezers yet. The cube wasn't just white; it pulsed with a soft, rhythmic violet light, timed exactly to the pace of a resting human heartbeat. \n\n\"Miller,\" Thorne called out without looking back at his partner. \"Tell me the victim had a penchant for bioluminescent snacks.\"\n\n\"He was a hedge fund manager, Elias,\" Miller replied, snapping photos of the entryway. \"The most exotic thing he consumed was unpasteurized goat cheese.\"\n\nThorne pulled a magnifying loupe from his coat pocket. As he peered through the glass, his breath hitched. Inside the crystalline structure of the sugar, frozen like a prehistoric insect in amber, was a microscopic set of brass gears. They were no larger than a grain of dust, and they were turning slowly in reverse.\n\nIt wasn't just a clue. It was a piece of machinery that shouldn't exist, ticking away inside a condiment. \n\n\"Get the lead-lined evidence bag,\" Thorne whispered, the hair on his arms standing up as the violet pulse of the cube suddenly skipped a beat, matching his own racing heart. \"I don't think we're looking for a murderer anymore. I think we're looking for a clockmaker.\"",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 13,
+					"candidatesTokenCount": 409,
+					"totalTokenCount": 1275,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 13
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 409
+						}
+					],
+					"thoughtsTokenCount": 853
+				},
+				"modelVersion": "gemini-3-flash-preview",
+				"createTime": "2026-07-24T23:10:39.662413Z",
+				"responseId": "7_Bjao23KPaH3dAP_vWlwAY",
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
 			},
 			"code_snippets": [
 				{
 					"label": "typescript",
 					"language": "typescript",
-					"code": "const response = await env.AI.run(\n  'google/gemini-3-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 1500, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
+					"code": "const response = await env.AI.run(\n  'google/gemini-3-flash',\n  {\n    contents: [\n      {\n        parts: [{ text: 'Write a short story opening about a detective finding an unusual clue.' }],\n        role: 'user',\n      },\n    ],\n    generationConfig: { maxOutputTokens: 4096, temperature: 0.8 },\n  },\n)\nconsole.log(response)"
 				},
 				{
 					"label": "curl",
 					"language": "bash",
-					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 1500,\n      \"temperature\": 0.8\n    }\n  }\n}'"
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-3-flash\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a short story opening about a detective finding an unusual clue.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"maxOutputTokens\": 4096,\n      \"temperature\": 0.8\n    }\n  }\n}'"
 				}
 			]
 		}
@@ -313,6 +360,19 @@
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"under_200k_per_1m_input_tokens": 0.5,
+				"under_200k_per_1m_input_cached_tokens": 0.05,
+				"under_200k_per_1m_output_tokens": 3,
+				"over_200k_per_1m_input_tokens": 0.5,
+				"over_200k_per_1m_input_cached_tokens": 0.05,
+				"over_200k_per_1m_output_tokens": 3
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:09",
 	"schema": {
@@ -469,8 +529,7 @@
 									}
 								},
 								"required": [
-									"role",
-									"content"
+									"role"
 								],
 								"additionalProperties": {}
 							}
@@ -559,6 +618,13 @@
 								}
 							},
 							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
@@ -631,13 +697,9 @@
 												"type": "string"
 											},
 											"content": {
-												"anyOf": [
-													{
-														"type": "string"
-													},
-													{
-														"type": "null"
-													}
+												"type": [
+													"string",
+													"null"
 												]
 											},
 											"tool_calls": {
@@ -652,22 +714,29 @@
 												]
 											},
 											"audio": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
 													},
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"transcript": {
-														"type": "string"
+													{
+														"type": "null"
 													}
-												},
-												"additionalProperties": {}
+												]
 											}
 										},
 										"required": [
@@ -676,13 +745,9 @@
 										"additionalProperties": {}
 									},
 									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},

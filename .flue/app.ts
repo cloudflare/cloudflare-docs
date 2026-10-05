@@ -4,7 +4,7 @@ import { createAgentRouter } from "@flue/runtime/routing";
 import {
 	cloudflareBindingProvider,
 	type CloudflareAIBinding,
-} from "@flue/runtime/cloudflare";
+} from "@flue/runtime/cloudflare/workers-ai";
 import { Hono } from "hono";
 import {
 	verifyGitHubSignature,
@@ -17,12 +17,22 @@ import {
 	type WebhookClassification,
 } from "./lib/webhook-classify";
 import { startReviewPipeline, type PipelineEnv } from "./lib/pipeline-entry";
-import CodeReviewFile from "./agents/code-review-file";
-import StyleGuideFile from "./agents/style-guide-file";
+import {
+	devReviewRoutes,
+	hasValidInternalToken,
+} from "./lib/dev-review-routes";
+import { devCommentSpamRoutes } from "./lib/dev-comment-spam-routes";
+import { devSpamRoutes } from "./lib/dev-spam-routes";
+import { clefEvalRoutes } from "./lib/dev-clef-eval-routes";
+import {
+	processRecommendationEvent,
+	type RecommendationEnv,
+} from "./lib/run-reviewer-recommendations";
+import { parseRecommendationsMode } from "./lib/reviewer-recommendations";
+import CodeReviewer from "./agents/code-reviewer";
+import StyleGuideReviewer from "./agents/style-guide-reviewer";
 import ConventionsReviewer from "./agents/conventions-reviewer";
-import ReconcileReviewer from "./agents/reconcile-reviewer";
-import ReviewValidator from "./agents/review-validator";
-import SpamFilter from "./agents/spam-filter";
+import ReviewJudge from "./agents/review-judge";
 
 const bindings = workerEnv as unknown as {
 	AI: CloudflareAIBinding;
@@ -51,6 +61,9 @@ type WebhookEnv = PipelineEnv & {
 const app = new Hono();
 
 app.get("/health", (c) => c.json({ ok: true }));
+app.route("/dev/review-run", devReviewRoutes);
+app.route("/dev/comment-spam-run", devCommentSpamRoutes);
+app.route("/dev/spam-run", devSpamRoutes);
 
 // Trigger a review for a PR by number. Fetches the real PR from GitHub,
 // builds the same classification a webhook would, and routes through
@@ -62,7 +75,8 @@ app.post("/dev/review/:number", async (c) => {
 	if (!secret) return c.text("Internal token not configured", 500);
 
 	const provided = c.req.header("x-dev-secret");
-	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
 
 	const prNumber = Number(c.req.param("number"));
 	if (!Number.isInteger(prNumber) || prNumber <= 0)
@@ -83,10 +97,13 @@ app.post("/dev/review/:number", async (c) => {
 		isDependabotReviewEvent: pr.user?.login === "dependabot[bot]",
 		isSpamFilterEvent: pr.user?.login !== "dependabot[bot]",
 		isCodeReviewEvent: pr.user?.login !== "dependabot[bot]",
+		isChangelogDateEvent: pr.user?.login !== "dependabot[bot]",
 		isDraft: pr.draft,
 		command: null,
 		commentId: undefined,
 		commentPrAuthorLogin: undefined,
+		isCommentSpamEvent: false,
+		commentIsOnPullRequest: false,
 	};
 
 	if (!isActionable(classification)) {
@@ -95,6 +112,52 @@ app.post("/dev/review/:number", async (c) => {
 
 	await startReviewPipeline(env, classification, "");
 	return c.json({ acted: true, number: prNumber }, 202);
+});
+
+// Dev-only: feed a reviewer-recommendation event into the queue consumer
+// pipeline without touching the live queue. Accepts a JSON payload shaped
+// exactly like a queue message body (see lib/reviewer-recommendations.ts) and
+// runs the same processRecommendationEvent path. Gated behind
+// DOCS_FLUE_INTERNAL_TOKEN like /dev/review. Useful for testing the comment
+// lifecycle against a real PR before the producer is wired into the queue.
+app.post("/dev/recommendations", async (c) => {
+	const env = c.env as unknown as RecommendationEnv;
+	const secret = (env as unknown as WebhookEnv).DOCS_FLUE_INTERNAL_TOKEN;
+	if (!secret) return c.text("Internal token not configured", 500);
+
+	const provided = c.req.header("x-dev-secret");
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
+
+	let payload: unknown;
+	try {
+		payload = await c.req.json();
+	} catch {
+		return c.text("Invalid JSON payload", 400);
+	}
+
+	let result: Awaited<ReturnType<typeof processRecommendationEvent>>;
+	try {
+		result = await processRecommendationEvent(payload, env);
+	} catch (err) {
+		return c.json(
+			{
+				applied: false,
+				error: err instanceof Error ? err.message : String(err),
+			},
+			502,
+		);
+	}
+	return c.json(
+		{
+			applied: result.applied,
+			reason: result.reason ?? null,
+			mode: parseRecommendationsMode(
+				env.DOCS_FLUE_RECOMMENDATIONS_MODE ?? env.DOCS_FLUE_REVIEW_MODE,
+			),
+		},
+		result.applied ? 202 : 200,
+	);
 });
 
 // GitHub webhook ingress. Stateless: verify the HMAC, classify the payload, and
@@ -150,28 +213,34 @@ app.post("/webhooks/github", async (c) => {
 // (DOCS_FLUE_AGENT_EVALS=1), so eval routes are never live in production or
 // normal dev.
 const EVAL_AGENTS = [
-	CodeReviewFile,
-	StyleGuideFile,
+	CodeReviewer,
+	StyleGuideReviewer,
 	ConventionsReviewer,
-	ReconcileReviewer,
-	ReviewValidator,
-	SpamFilter,
+	ReviewJudge,
 ] as const;
 
-app.use("/eval/agents/*", async (c, next) => {
+const evalGate = async (
+	c: Parameters<Parameters<typeof app.use>[1]>[0],
+	next: () => Promise<void>,
+) => {
 	const env = c.env as unknown as WebhookEnv;
 	if (env.DOCS_FLUE_ENABLE_EVAL_ROUTES !== "1") return c.text("Not Found", 404);
 	const secret = env.DOCS_FLUE_INTERNAL_TOKEN;
 	if (!secret) return c.text("Not Found", 404);
 	const provided = c.req.header("x-dev-secret");
-	if (!provided || provided !== secret) return c.text("Unauthorized", 401);
+	if (!(await hasValidInternalToken(provided, secret)))
+		return c.text("Unauthorized", 401);
 	await next();
-});
+};
+
+app.use("/eval/agents/*", evalGate);
+app.use("/eval/clef/*", evalGate);
+app.route("/eval/clef", clefEvalRoutes);
 
 for (const agent of EVAL_AGENTS) {
 	const name = agent.agentName;
 	if (!name) continue;
-	app.route(`/eval/agents/${name}`, createAgentRouter(agent));
+	app.mount(`/eval/agents/${name}`, createAgentRouter(agent).fetch);
 }
 
 export default app;

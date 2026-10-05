@@ -566,7 +566,7 @@ All four examples are the same architecture seen through four lenses:
 | Route reads vs. writes    | Caching reads, invalidating them on writes    | Wraps a Durable Object behind a `Cache-Tag`       |
 | Forward the request as-is | Caching a third-party origin under your terms | Fetches the upstream and overlays `Cache-Control` |
 
-The only thing that changes between rows is what the outer entrypoint does before the call and what the inner entrypoint does on a miss. The cache stage in the middle is the same primitive every time — keyed by the inner entrypoint, the request path and query string, and `ctx.props`; configured by the inner entrypoint's `Cache-Control` and `Cache-Tag`; invalidated by `ctx.cache.purge()` from whichever entrypoint owns the data.
+The only thing that changes between rows is what the outer entrypoint does before the call and what the inner entrypoint does on a miss. The cache stage in the middle is the same primitive every time — keyed by the inner entrypoint, the request path and query string, and `ctx.props`; configured by the inner entrypoint's `Cache-Control` and `Cache-Tag`; purged by `ctx.cache.purge()` or invalidated by `ctx.cache.invalidate()` from whichever entrypoint owns the data.
 
 That uniformity is what makes the patterns compose. Nothing stops you from stacking them in a single Worker:
 

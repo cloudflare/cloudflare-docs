@@ -11,6 +11,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.05,
+		"@480p (per second)": 0.05,
+		"@720p (per second)": 0.1,
+		"@1080p (per second)": 0.2
+	},
 	"examples": [
 		{
 			"name": "Adaptive 480P Text-to-Video",
@@ -62,6 +68,17 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "alibaba",
+			"pricing": {
+				"default": 0.05,
+				"480p": 0.05,
+				"720p": 0.1,
+				"1080p": 0.2
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-25 16:36:31",
 	"schema": {

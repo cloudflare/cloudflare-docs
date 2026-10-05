@@ -8,6 +8,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input audio tokens (per 1M)": 3,
+		"Input text tokens (per 1M)": 0.75,
+		"output_audio_tokens": 12,
+		"output_text_tokens": 4.5
+	},
 	"examples": [
 		{
 			"name": "Simple Text-to-Speech",
@@ -136,6 +142,17 @@
 	"metadata": {},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_audio_tokens": 3,
+				"input_text_tokens": 0.75,
+				"output_audio_tokens": 12,
+				"output_text_tokens": 4.5
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:10",
 	"schema": {
@@ -144,9 +161,9 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to convert to speech. Maximum 10,000 characters.",
 					"type": "string",
-					"maxLength": 10000
+					"maxLength": 10000,
+					"description": "The text to convert to speech. Maximum 10,000 characters."
 				},
 				"voice": {
 					"description": "The voice to use for speech synthesis",
@@ -226,8 +243,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "Base64-encoded audio data (WAV format)",
-					"type": "string"
+					"type": "string",
+					"description": "Base64-encoded audio data (WAV format)"
 				}
 			},
 			"required": [

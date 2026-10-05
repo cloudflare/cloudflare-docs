@@ -67,7 +67,7 @@ To connect a repository, refer to [Workers Builds](/workers/ci-cd/builds/).
 
 - **`wrangler deploy`** publishes container images (when needed) and rolls out container instances for the Worker you deploy.
 - **`wrangler versions upload`** (the default non-production branch deploy command in Workers Builds) uploads a new Worker version only. It does not publish a new image or roll out container instances.
-- **[Preview URLs](/workers/versions-and-deployments/preview-urls/) are not generated for Workers that implement [Durable Objects](/durable-objects/)**, which includes Containers Workers. A successful non-production Workers Builds run still creates a Worker version, but not a full-app preview URL.
+- **[Version URLs](/workers/versions-and-deployments/version-urls/) are not generated for Workers that implement [Durable Objects](/durable-objects/)**, which includes Containers Workers. A successful non-production Workers Builds run still creates a Worker version, but not a full-app Version URL.
 
 | Goal                                                                    | What to do                                                                                                                                                                                                                                                                                                  |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

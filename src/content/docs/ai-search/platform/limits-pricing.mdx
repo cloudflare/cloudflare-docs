@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Limits & pricing
-description: View AI Search usage limits and pricing details for Free and Paid Workers plans.
+description: Review AI Search limits, included monthly usage, and usage-based pricing.
 sidebar:
   order: 4
 products:
@@ -12,19 +12,22 @@ products:
 
 The following limits apply based on your [Workers plan](/workers/platform/pricing/):
 
-| Limit                                       | Workers Free                            | Workers Paid                            |
-| ------------------------------------------- | --------------------------------------- | --------------------------------------- |
-| AI Search instances per account             | 100                                     | 5,000                                   |
-| Namespaces per account                      | 100                                     | 100                                     |
-| Files per instance                          | 100,000                                 | 1M or 500K for hybrid search            |
-| Pages per crawl, `discover` parse type      | 100,000                                 | 100,000                                 |
-| Max file size                               | 4 MB                                    | 4 MB                                    |
-| Queries per month                           | 20,000                                  | Unlimited                               |
-| Instances per cross-instance search request | 10                                      | 10                                      |
-| Maximum pages crawled per day               | 500                                     | Unlimited                               |
-| Max custom metadata fields                  | 5 per AI Search instance                | 5 per AI Search instance                |
-| Metadata per vector                         | 10 KiB total, including system overhead | 10 KiB total, including system overhead |
-| Filterable indexed string data              | First 64 UTF-8 bytes per string         | First 64 UTF-8 bytes per string         |
+| Limit                                        | Workers Free                            | Workers Paid                            |
+| -------------------------------------------- | --------------------------------------- | --------------------------------------- |
+| AI Search instances per account              | 100                                     | 5,000                                   |
+| Namespaces per account                       | 100                                     | 100                                     |
+| Files per instance                           | 100,000                                 | 1M or 500K for hybrid search            |
+| Pages per crawl, `discover` parse type       | 100,000                                 | 100,000                                 |
+| Maximum PDF file size with OCR enabled       | 10 MiB                                  | 10 MiB                                  |
+| Maximum plain-text or code file size         | 10 MiB                                  | 10 MiB                                  |
+| Maximum size for PDFs without OCR and other file formats | 4 MiB                        | 4 MiB                                   |
+| Included semantic queries per month          | 1,000                                   | 1,000                                   |
+| Included full-text queries per month         | 1,000                                   | 1,000                                   |
+| Instances per cross-instance search request  | 10                                      | 10                                      |
+| Maximum pages crawled per day                | 500                                     | Unlimited                               |
+| Max custom metadata fields                   | 5 per AI Search instance                | 5 per AI Search instance                |
+| Metadata per vector                          | 10 KiB total, including system overhead | 10 KiB total, including system overhead |
+| Filterable indexed string data               | First 64 UTF-8 bytes per string         | First 64 UTF-8 bytes per string         |
 
 Website crawling is bounded by several of these limits at once. A `discover` crawl accepts up to 100,000 pages, but the files per instance and maximum pages crawled per day limits also apply, so the number of pages you end up with is whichever of those values is lowest. On Workers Free, the daily limit of 500 pages is the binding one.
 
@@ -36,14 +39,39 @@ To request an adjustment to a limit, complete the [Limit Increase Request Form](
 
 ## Pricing
 
-During the open beta, AI Search is free within these limits. [Workers AI](/workers-ai/platform/pricing/) and [AI Gateway](/ai-gateway/reference/pricing/) usage is billed separately. Pricing details will be communicated at least 30 days before any billing begins.
+AI Search billing begins on November 1, 2026. Cloudflare will send a reminder email the week before billing begins.
 
-Storage, vector indexing, and the [Browser Run](/browser-run/pricing/) usage that website crawling consumes are included with AI Search. You are not billed separately for them.
+Every account receives the following included usage each month:
+
+- 5 million ingestion tokens
+- 10 GB-month of storage
+- 1,000 semantic queries
+- 1,000 full-text queries
+
+Usage beyond the included amounts is billed at these rates:
+
+| Usage                                | Price                                  |
+| ------------------------------------ | -------------------------------------- |
+| Base ingestion                       | $0.75 per million tokens               |
+| Image processing                     | An additional $0.50 per million tokens |
+| Storage                              | $2.00 per GB-month                     |
+| Semantic, vector, and hybrid queries | $0.75 per 1,000 queries                |
+| Full-text queries                    | $0.10 per 1,000 queries                |
+
+Image processing tokens share the 5 million token ingestion allotment. Optical character recognition (OCR) is available on every account. OCR usage is billed as image processing ingestion tokens.
+
+### How ingestion tokens are counted
+
+AI Search counts ingestion tokens the same way for every instance, regardless of the embedding model you choose:
+
+- Tokens are counted on the final chunks that AI Search indexes, after parsing and chunking. Because [chunk overlap](/ai-search/configuration/indexing/chunking/) repeats text between neighboring chunks, overlapping text is counted in each chunk it appears in.
+- Each chunk is tokenized with the `cl100k_base` tokenizer. You can estimate usage for your own content with any `cl100k_base` implementation, such as [tiktoken](https://github.com/openai/tiktoken).
+- For images and scanned documents processed with OCR, the extracted text is also counted as image processing tokens, in addition to base ingestion.
+
+Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
+
+Storage, vector indexing, and [Browser Run](/browser-run/pricing/) usage for website crawling are included with AI Search. They are not billed separately.
 
 ## Historical billing
 
-Instances created before AI Search moved to managed infrastructure ran on Cloudflare services in your own account, so older invoices may include separate charges for [R2](/r2/pricing/), [Vectorize](/vectorize/platform/pricing/), [Workers AI](/workers-ai/platform/pricing/), [AI Gateway](/ai-gateway/reference/pricing/), and [Browser Run](/browser-run/pricing/).
-
-After the move, storage, vector indexing, and Browser Run usage for crawling are included. Workers AI and AI Gateway are still billed separately.
-
-If your instance crawled a website, those pages now live in built-in storage. The dedicated R2 bucket AI Search originally created in your account is no longer used. It remains in your account, and any objects left in it may still count toward [R2 storage usage](/r2/pricing/). AI Search no longer writes to this bucket, so you can delete it if you no longer need its contents.
+If your instance crawled a website, those pages now live in built-in storage. The dedicated R2 bucket AI Search originally created in your account is no longer used. Objects left in it may still count toward [R2 storage usage](/r2/pricing/). AI Search no longer writes to this bucket, so you can delete it if you no longer need its contents.

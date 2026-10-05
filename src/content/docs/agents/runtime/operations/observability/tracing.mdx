@@ -247,7 +247,7 @@ For custom spans, add payload attributes manually. Use `gen_ai.input.messages`, 
 
 ## Exporting traces
 
-Span attributes follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai), so any tool that reads OpenTelemetry data can consume them. To send traces to an external destination, [configure an OpenTelemetry Protocol (OTLP) endpoint](/workers/observability/exporting-opentelemetry-data/) in Workers Observability.
+Span attributes follow the [OpenTelemetry Generative AI semantic conventions](https://github.com/open-telemetry/semantic-conventions-genai), so any tool that reads OpenTelemetry data can consume them. To send traces to an external destination, [configure OpenTelemetry export](/workers/observability/opentelemetry-export/) in Workers Observability.
 
 ## Pricing
 
@@ -255,12 +255,7 @@ Agent traces use [Workers tracing](/workers/observability/traces/) and follow Wo
 
 The Agents view shows your agent's operations. The full Worker trace may include additional spans from SDK internals and other Worker-level operations. To inspect the full trace, select **View in Observability**.
 
-Every span counts as one observability event, including spans not shown in the Agents view. Tracing is free while in beta. Beginning October 1, 2026, tracing will be included in existing Workers Observability pricing:
-
-| Tier         | Included events                                     | Retention |
-| ------------ | --------------------------------------------------- | --------- |
-| Workers Free | 200,000 per day                                     | 3 days    |
-| Workers Paid | 20 million per month ($0.60 per additional million) | 7 days    |
+Beginning December 1, 2026, agent traces contribute to account-level ingestion and storage usage under [Cloudflare Observability pricing](/observability/pricing/). Traces have seven-day retention.
 
 ## Limitations
 

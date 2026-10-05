@@ -15,14 +15,15 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 		<li class="flow-step">
 			<div class="node-card client-card">
 				<div class="node-header">
-					<span class="node-icon client-icon" aria-hidden="true"
-						><Icon name="warp-client" /></span
-					>
+					<span class="node-icon client-icon" aria-hidden="true">
+						<Icon name="warp-client" />
+					</span>
 					<a
 						class="node-title"
 						href="/cloudflare-one/team-and-resources/devices/cloudflare-one-client/"
-						>Client device</a
 					>
+						Client device
+					</a>
 				</div>
 				<p class="node-caption">
 					Requests <code>bank.example.com</code>
@@ -32,38 +33,46 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 		<li class="flow-connector">
 			<span class="connector-label">DNS query</span>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card gateway-card">
 				<div class="node-header">
-					<span class="node-icon gateway-icon" aria-hidden="true"
-						><Icon name="gateway" /></span
-					>
-					<a class="node-title" href="/cloudflare-one/traffic-policies/"
-						>Cloudflare Gateway</a
-					>
+					<span class="node-icon gateway-icon" aria-hidden="true">
+						<Icon name="gateway" />
+					</span>
+					<a class="node-title" href="/cloudflare-one/traffic-policies/">
+						Cloudflare Gateway
+					</a>
 				</div>
 				<p class="node-caption">
 					Returns a temporary initial resolved IP, matches the connection to a
 					Host egress policy, then rewrites the destination to the real IP.
 				</p>
 				<div class="pill-row">
-					<span class="token-pill"><code>172.64.128.0/20</code></span>
+					<span class="token-pill">
+						<code>172.64.128.0/20</code>
+					</span>
 				</div>
 			</div>
 		</li>
 
 		<li class="flow-connector">
 			<span class="connector-label">Host selector match</span>
-			<span class="connector-arrow" aria-hidden="true">↓</span>
+			<span class="connector-arrow" aria-hidden="true">
+				↓
+			</span>
 		</li>
 
 		<li class="flow-step">
 			<div class="node-card internet-card">
 				<div class="node-header">
-					<span class="node-icon internet-icon" aria-hidden="true">↗</span>
+					<span class="node-icon internet-icon" aria-hidden="true">
+						↗
+					</span>
 					<span class="node-title">Public Internet</span>
 				</div>
 				<p class="node-caption">

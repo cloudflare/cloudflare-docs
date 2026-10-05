@@ -38,7 +38,8 @@ definition = definition.split(/\r?\n/)[0]!;
   data-content={renderMarkdown(definition)}
   class="glossary-tooltip"
   tabindex="0"
-  >{link ? <a href={link}><slot /></a> : <slot />}</span><script>
+  >{link ? <a href={link}><slot /></a> : <slot />}</span>
+<script>
 	import { addTooltip } from "~/util/tippy";
 
 	function initTooltips() {

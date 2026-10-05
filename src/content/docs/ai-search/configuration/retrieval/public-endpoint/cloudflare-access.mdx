@@ -42,7 +42,7 @@ Access only protects your custom domain. The default `<PUBLIC_ENDPOINT_ID>.searc
 Set `default_domain_enabled` to `false` before you create the Access application.
 
 ```bash
-curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_ID>" \
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -84,7 +84,7 @@ An application with no policy denies every request. Add at least one [Allow poli
 | ------ | --------- | ---------------- | -------------- |
 | Allow  | Include   | Emails ending in | `@example.com` |
 
-Use the email, country, IP range, or identity provider group [selectors](/cloudflare-one/access-controls/policies/#cloudflare-access-selectors) to match your organization. Refer to [Common policies](/cloudflare-one/access-controls/policies/common-policies/) for more examples.
+Use the email, country, IP range, or identity provider group [selectors](/cloudflare-one/access-controls/policies/#selectors) to match your organization. Refer to [Common policies](/cloudflare-one/access-controls/policies/common-policies/) for more examples.
 
 ## 4. Authenticate non-browser clients
 

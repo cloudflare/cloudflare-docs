@@ -515,17 +515,145 @@ entries:
     keywords: [request, schema validation, learned profile]
     summary: Returns `true` when an evaluated request [violates the learned profile](/waf/detections/application-profiles/fields/).
 
+  - name: cf.schema_validation.learned.path.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, path, parameter]
+    summary: Names of path parameters detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["accountId"]
+    example_block: |-
+      any(cf.schema_validation.learned.path.violated_parameters[*] == "accountId")
+
+  - name: cf.schema_validation.learned.query.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, query, parameter]
+    summary: Names of query parameters detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["bookingId"]
+
+  - name: cf.schema_validation.learned.headers.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, header, parameter]
+    summary: Names of request headers detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["x-api-key"]
+
+  - name: cf.schema_validation.learned.cookies.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, cookie, parameter]
+    summary: Names of cookies detected as [violating the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["session"]
+
+  - name: cf.schema_validation.learned.body.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, learned profile, body, parameter]
+    summary: The JSON path of a detected request body [violation of the learned schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    description: |-
+      Body validation reports the first detected violation. A value of `$` identifies the body without a more specific path.
+    example_value: |-
+      ["$"]
+
+  - name: cf.schema_validation.learned.query.undeclared_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [request, schema validation, learned profile, query, undeclared parameter]
+    summary: Names of query parameters detected in the request but [not declared in the learned schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
+    description: |-
+      Query parameter names are URL-decoded.
+    example_value: |-
+      ["utm"]
+    example_block: |-
+      any(cf.schema_validation.learned.query.undeclared_parameters[*] == "utm")
+
   - name: cf.schema_validation.uploaded.violated
     data_type: Boolean
     categories: [Request]
     keywords: [request, schema validation, uploaded schema]
     summary: Returns `true` when an evaluated request [violates the supplied schema](/waf/detections/application-profiles/fields/).
 
+  - name: cf.schema_validation.uploaded.path.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, path, parameter]
+    summary: Names of path parameters detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["accountId"]
+
+  - name: cf.schema_validation.uploaded.query.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, query, parameter]
+    summary: Names of query parameters detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["bookingId"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.query.violated_parameters[*] == "bookingId")
+
+  - name: cf.schema_validation.uploaded.headers.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, header, parameter]
+    summary: Names of request headers detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["x-api-key"]
+
+  - name: cf.schema_validation.uploaded.cookies.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, cookie, parameter]
+    summary: Names of cookies detected as [violating the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    example_value: |-
+      ["session"]
+
+  - name: cf.schema_validation.uploaded.body.violated_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, schema validation, uploaded schema, body, parameter]
+    summary: The JSON path of a detected request body [violation of the uploaded schema](/waf/detections/application-profiles/fields/#violated-parameters).
+    description: |-
+      Body validation reports the first detected violation. A value of `$` identifies the body without a more specific path.
+    example_value: |-
+      ["$"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.body.violated_parameters[*] == "$")
+
+  - name: cf.schema_validation.uploaded.query.undeclared_parameters
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [request, schema validation, uploaded schema, query, undeclared parameter]
+    summary: Names of query parameters detected in the request but [not declared in the uploaded schema](/waf/detections/application-profiles/fields/#undeclared-query-parameters).
+    description: |-
+      Query parameter names are URL-decoded.
+    example_value: |-
+      ["utm"]
+    example_block: |-
+      any(cf.schema_validation.uploaded.query.undeclared_parameters[*] == "utm")
+
   - name: cf.api_gateway.fallthrough_detected
     data_type: Boolean
     categories: [Request]
     keywords: [request, api shield, client, visitor]
     summary: Indicates whether the request matched a saved endpoint in [Endpoint Management](/api-shield/management-and-monitoring/).
+
+  - name: cf.web_asset.labels
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, operation, endpoint, label, web assets]
+    summary: An array of labels associated with the operation matched by the request.
+    description: |-
+      Use this field to create rules based on labels applied to operations in Web Assets, including API endpoints. For more information, refer to [Label operations](/security/web-assets/label-operations/).
+    example_value: |-
+      ["cf-log-in"]
+    example_block: |-
+      any(cf.web_asset.labels[*] == "cf-log-in")
 
   - name: cf.bot_management.verified_bot
     data_type: Boolean
@@ -613,6 +741,19 @@ entries:
       Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
     example_block: |-
       any(cf.bot_management.detection_ids[*] eq 33554817)
+
+  - name: cf.bot_management.tags
+    data_type: Array<String>
+    categories: [Request, Bots]
+    keywords: [request, bots, client, visitor, tags]
+    plan_info_label: Enterprise add-on
+    summary: Provides the tags associated with bot traffic.
+    description: |-
+      Use this field to match requests associated with a specific bot tag.
+
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+    example_block: |-
+      any(cf.bot_management.tags[*] eq "API")
 
   - name: cf.client.bot
     data_type: Boolean
@@ -1173,6 +1314,28 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
 
+  - name: cf.waf.content_scan.truncated
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request body exceeded the size limit for content scanning and was truncated before scanning.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+      When this field is true, the scan results may be incomplete. Refer to [Size limit](/waf/detections/malicious-uploads/#size-limit).
+    example_block: |-
+      # Block requests to a specific endpoint whose content was not fully scanned
+      cf.waf.content_scan.truncated and http.request.uri.path eq "/upload"
+
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
@@ -1512,27 +1675,19 @@ entries:
     description: |-
       The possible values are the following:
 
-      | Value | Category name             | Description                                                                                                       |
-      | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-      | `S1`  | Violent crimes            | Violent crimes against people or animals.                                                                         |
-      | `S2`  | Non-violent crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
-      | `S3`  | Sex-related crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
-      | `S4`  | Child sexual exploitation | Sexual exploitation of children.                                                                                  |
-      | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
-      | `S6`  | Specialized advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
-      | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
-      | `S8`  | Intellectual property     | Violate a third party's intellectual property rights.                                                             |
-      | `S9`  | Indiscriminate weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
-      | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
-      | `S11` | Suicide and self-harm     | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
-      | `S12` | Sexual content            | Erotic content.                                                                                                   |
-      | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
-      | `S14` | Code interpreter abuse    | Misuse of code execution capabilities.                                                                            |
+      | Value                     | Category name           | Description                                                                                                                                                                                                                       |
+      | ------------------------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      | `VIOLENCE_AND_WEAPONS`    | Violence and weapons    | Content that promotes, glorifies, threatens, or provides instructions for physical violence or the acquisition, creation, or use of weapons.                                                                                      |
+      | `NON_VIOLENT_CRIME`       | Non-violent crime       | Content that encourages or facilitates nonviolent crimes, including fraud, theft, hacking, and the illegal drug trade.                                                                                                            |
+      | `SEXUAL_CONTENT`          | Sexual content          | Sexually explicit or suggestive content, including sexual exploitation, trafficking, assault, harassment, and other non-consensual sexual acts involving adults.                                                                  |
+      | `CHILD_SAFETY`            | Child safety            | Content that sexualizes, exploits, abuses, grooms, or otherwise endangers minors.                                                                                                                                                 |
+      | `HATE_AND_DISCRIMINATION` | Hate and discrimination | Content that attacks, demeans, discriminates against, or incites hatred toward people based on protected characteristics. This category also includes content that promotes dishonesty, manipulation, or professional misconduct. |
+      | `SELF_HARM_AND_SUICIDE`   | Self-harm and suicide   | Content that encourages, glorifies, or provides instructions for self-harm or suicide.                                                                                                                                            |
 
       Requires a Cloudflare Enterprise plan. You must also enable [AI Security for Apps](/waf/detections/ai-security-for-apps/).
     example_block: |-
-      # Matches requests where an unsafe topic categorized as "S2" (Non-violent crimes) or "S10" (Hate) was detected in the LLM prompt:
-      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
+      # Matches requests where an unsafe topic categorized as "NON_VIOLENT_CRIME" or "HATE_AND_DISCRIMINATION" was detected in the LLM prompt:
+      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"NON_VIOLENT_CRIME" "HATE_AND_DISCRIMINATION"}))
 
   - name: cf.llm.prompt.injection_score
     data_type: Number

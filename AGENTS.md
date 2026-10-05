@@ -45,9 +45,18 @@ cloudflare-docs/
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
 ├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
 ├── astro.config.ts         # Astro + Nimbus configuration
+├── openapi.lock.json       # Pinned Cloudflare API schema version (see "OpenAPI schema pinning")
 ├── package.json
 └── tsconfig.json
 ```
+
+## OpenAPI schema pinning
+
+`<APIRequest>` renders against the Cloudflare API OpenAPI schema pinned by the repo-root `openapi.lock.json` (an upstream [`cloudflare/api-schemas`](https://github.com/cloudflare/api-schemas) commit SHA plus the snapshot's sha256). `prebuild`/`predev` download and verify the pinned snapshot from middlecache; a weekly workflow (`.github/workflows/bump-openapi-schema.yml` + `bin/bump-openapi-lock.ts`) opens a PR when a newer snapshot exists. Source: `src/util/openapi-schema.ts`.
+
+- Builds fail if an `<APIRequest>` path/method does not exist in the pinned schema. Fix the page to match the current API, or merge the pending bump PR.
+- Set `OPENAPI_SCHEMA=latest` to render against the newest published snapshot (escape hatch; CI always uses the pin).
+- Snapshots expire after 365 days. A build that 404s on the pinned snapshot is on a stale branch — rebase onto `production`.
 
 ## Content — writing and editing docs
 

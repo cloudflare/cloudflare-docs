@@ -50,6 +50,8 @@ After the binding is declared, access the DevTools endpoint using `env.MYBROWSER
 const browser = await puppeteer.launch(env.MYBROWSER);
 ```
 
+Browser bindings also provide typed methods for [session management, outbound Worker routing, and DevTools operations](/browser-run/reference/browser-binding-api/).
+
 :::note[Quick Actions compatibility]
 
 The browser binding's `.quickAction()` method requires a compatibility date of `2026-03-24` or later. Ensure your `wrangler.json` includes:

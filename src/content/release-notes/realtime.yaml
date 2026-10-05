@@ -6,13 +6,14 @@ entries:
   - publish_date: "2026-08-13"
     title: DataChannels reliability and ordering (ordered, maxRetransmits, maxPacketLifeTime)
     description: |-
-      DataChannels now accept reliability settings on both publisher (`location: "local"`) and subscriber (`location: "remote"`) channels, so unreliable and unordered delivery is honored end to end.
+      Publishers can choose ordering and retry settings for each named DataChannel. Every subscriber mirrors the published channel's policy in its API request and browser configuration. Use separate named channels for different policies.
 
       - `ordered` (default `true`) controls in-order delivery. When `false`, a delayed message does not block later messages.
       - Set `ordered: false` and omit both retry fields for reliable, unordered delivery.
-      - `maxRetransmits` or `maxPacketLifeTime` enable partial reliability; set `maxRetransmits: 0` for fully unreliable delivery.
-      - Set the same fields on local and remote `/datachannels/new` calls, and mirror them on `createDataChannel()` for negotiated channels.
-      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Connection API](/realtime/sfu/https-api/)
+      - Set at most one of `maxRetransmits` and `maxPacketLifeTime`. Omit both for reliable delivery; `maxRetransmits: 0` explicitly requests no retransmissions.
+      - `maxPacketLifeTime` limits transport attempts, not end-to-end message age.
+      - Set the same delivery policy on local and remote `/datachannels/new` calls and each `createDataChannel()` call. Channel IDs remain endpoint-specific; `waitForAck` and `canReply` remain subscription-specific.
+      - Docs: [DataChannels](/realtime/sfu/features/datachannels/), [Connection API](/realtime/sfu/api/)
   - publish_date: "2026-07-23"
     title: DataChannels return-to-publisher (canReply)
     description: |-
@@ -22,7 +23,7 @@ entries:
       - Reverse traffic is not fanned out to other subscribers.
       - Exclusive: at most one subscriber holds `canReply` per publisher DataChannel; a new grant replaces the previous holder.
       - Grant or revoke without re-pulling via `PUT .../datachannels/update`.
-      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/limits/)
+      - Docs: [DataChannels](/realtime/sfu/features/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/platform/limits/)
   - publish_date: "2026-06-10"
     title: DataChannels subscriber acknowledgment gate (waitForAck)
     description: |-
@@ -31,7 +32,7 @@ entries:
       - Opt-in per subscriber; defaults to `false`, so existing behavior is unchanged.
       - The acknowledgment is consumed by the SFU and is not forwarded, so the channel stays unidirectional.
       - Send the acknowledgment within 30 seconds of creating the remote DataChannel.
-      - Docs: [DataChannels](/realtime/sfu/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/limits/)
+      - Docs: [DataChannels](/realtime/sfu/features/datachannels/), [Limits, timeouts and quotas](/realtime/sfu/platform/limits/)
   - publish_date: "2025-11-21"
     title: WebSocket adapter video (JPEG) support
     description: |-
@@ -40,7 +41,7 @@ entries:
       - Stream audio and video between WebRTC tracks and WebSocket endpoints
       - Video egress-only as JPEG at approximately 1 FPS for snapshots, thumbnails, and computer vision pipelines
       - Clarified media formats for PCM audio and JPEG video over Protocol Buffers
-      - Updated docs: [Adapters](/realtime/sfu/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
+      - Updated docs: [Adapters](/realtime/sfu/features/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/features/media-transport-adapters/websocket-adapter/)
   - publish_date: "2025-08-29"
     title: Media Transport Adapters (WebSocket) open beta
     description: |-
@@ -49,7 +50,7 @@ entries:
       - Ingest (WebSocket → WebRTC) and Stream (WebRTC → WebSocket)
       - Opus for WebRTC tracks; PCM over WebSocket via Protocol Buffers
 
-      Docs: [Adapters](/realtime/sfu/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
+      Docs: [Adapters](/realtime/sfu/features/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/features/media-transport-adapters/websocket-adapter/)
   - publish_date: "2024-09-25"
     title: TURN service is generally available (GA)
     description: |-
