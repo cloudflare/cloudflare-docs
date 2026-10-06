@@ -23,8 +23,9 @@ import {
 
 Learn how to:
 
-- Enable and disable [Basin Catalog](/basin-catalog/) on your buckets.
+- Enable, disable, and delete [Basin Catalog](/basin-catalog/) on your buckets.
 - Enable and disable [table maintenance](/basin-catalog/table-maintenance/) features like compaction and snapshot expiration.
+- Manage the credential that table maintenance uses.
 - Authenticate Iceberg engines using API tokens.
 
 <a id="enable-r2-data-catalog-on-a-bucket"></a>
@@ -55,14 +56,24 @@ To enable the catalog on your bucket, run the `basin catalog enable` command:
 
 After enabling, Wrangler will return your catalog URI and warehouse name.
 
+To view the catalog URI, warehouse name, and status of an existing catalog, run the `basin catalog get` command:
+
+<PackageManagers type="exec" pkg="wrangler" args={"basin catalog get <BUCKET_NAME>"} />
+
 </TabItem>
 </Tabs>
+
+New catalogs have compaction turned on with a target file size of 128 MB, and snapshot expiration turned off. Table maintenance runs only after the catalog has a [maintenance credential](#manage-the-maintenance-credential). The dashboard generates this credential when you create a catalog, if you have permission to create account API tokens.
 
 <a id="disable-r2-data-catalog-on-a-bucket"></a>
 
 ## Disable Basin Catalog on a bucket
 
 When you disable the catalog on a bucket, it immediately stops serving requests from the catalog interface. Any Iceberg table references stored in that catalog become inaccessible until you re-enable it.
+
+Disabling a catalog also turns off compaction and snapshot expiration. Maintenance runs that already started can complete. Your R2 bucket, data files, and table metadata are kept.
+
+To re-enable the catalog, select **Enable** next to the catalog on the **Basin Catalog** page, or run `basin catalog enable`. Re-enabling restores access to your tables but does not turn table maintenance back on. Turn on [compaction](#enable-compaction) and [snapshot expiration](#enable-snapshot-expiration) again after you re-enable the catalog.
 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
@@ -71,8 +82,9 @@ When you disable the catalog on a bucket, it immediately stops serving requests 
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable.
-3. Go to the **Settings** tab and scroll to the **Disable** section.
-4. Select **Disable** and confirm.
+3. Go to the **Settings** tab, then go to **Danger zone** > **Disable Basin Catalog**.
+4. Select **Disable**.
+5. Enter the bucket name to confirm, then select **Disable**.
 </Steps>
 
 </TabItem>
@@ -83,6 +95,50 @@ To disable the catalog on your bucket, run the `basin catalog disable` command:
 
 </TabItem>
 </Tabs>
+
+## Delete a catalog
+
+Deleting a catalog permanently removes the catalog and its Iceberg table metadata from Cloudflare. Your R2 bucket and its data files are kept. To use the bucket with an Iceberg engine again, create a new catalog on the bucket.
+
+Unlike disabling, deleting a catalog cannot be undone. To stop access temporarily, [disable the catalog](#disable-basin-catalog-on-a-bucket) instead.
+
+By default, you can only delete an empty catalog, which has no namespaces or tables. To delete a catalog that is not empty, use force delete. Force delete removes all namespaces, tables, views, maintenance settings, and stored credentials, up to 25,000 metadata objects. For larger catalogs, drop tables and namespaces with your Iceberg engine first.
+
+Deleting a catalog does not delete data files. It also cancels pending [table purges](/basin-catalog/deleting-data/#purge-a-table), so files from tables purged during the grace period are not deleted. To remove data files after you delete a catalog, delete the objects in the R2 bucket or delete the bucket.
+
+<Tabs syncKey='dashPlusAPI'>
+<TabItem label='Dashboard'>
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
+
+   <DashButton url="/?to=/:account/data-catalog/overview" />
+2. Select the catalog you want to delete.
+3. Go to the **Settings** tab, then go to **Danger zone** > **Delete Basin Catalog**.
+4. Select **Delete**.
+5. If the catalog is not empty, select **Force delete**.
+6. Enter the bucket name to confirm, then select **Delete**.
+</Steps>
+
+</TabItem>
+<TabItem label='API'>
+
+Send a `POST` request to the `delete` endpoint. To delete a catalog that is not empty, add `force=true`.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/basin-catalog/<BUCKET_NAME>/delete?force=true" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem>
+</Tabs>
+
+Deleting a catalog can fail with `409` in these cases:
+
+- The catalog is not empty and you did not use force delete.
+- The catalog has more than 25,000 metadata objects. Error code `40902`.
+- Table maintenance is running. Try again in a few minutes.
 
 ## Enable compaction
 
@@ -101,14 +157,15 @@ Refer to [Authenticate your Iceberg engine](#authenticate-your-iceberg-engine) f
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to enable compaction on.
-3. Go to the **Settings** tab and scroll to the **Table Maintenance** section.
-4. Select **Enable** or **Edit** next to compaction.
-5. Toggle compaction on and optionally set a target file size. The default is 128 MB.
-6. Select **Save**.
+3. Go to the **Settings** tab, then go to **Table maintenance**.
+4. Turn on **Compaction**.
+5. (Optional) Select a **Target file size**. The default is 128 MB.
 </Steps>
 
+The dashboard saves each change immediately.
+
 :::note
-If no service credential has been generated for this catalog, the dashboard will prompt you to generate one. Compaction requires a credential to access and rewrite files in your bucket.
+If the catalog has no valid [maintenance credential](#manage-the-maintenance-credential), the dashboard prompts you to generate one. Compaction requires a credential to access and rewrite files in your bucket.
 :::
 
 </TabItem>
@@ -134,15 +191,15 @@ Enable compaction for a specific table:
 
 :::note[Table-level vs Catalog-level compaction]
 
-- **Catalog-level**: Applies to all tables in the bucket; requires an API token as a service credential.
-- **Table-level**: Applies to a specific table only.
+- **Catalog-level**: Applies to all tables in the bucket. Requires an API token, which Wrangler stores as the [maintenance credential](#manage-the-maintenance-credential).
+- **Table-level**: Applies to a specific table only. Turn on catalog-level compaction first.
 
 :::
 
 </TabItem>
 </Tabs>
 
-Once enabled, compaction applies retroactively to all existing tables (for catalog-level compaction) or the specified table (for table-level compaction).
+When you turn on catalog-level compaction, Basin Catalog configures up to 50 existing tables. Tables that you create later are configured automatically. If the catalog has more than 50 tables, turn on compaction for the remaining tables individually. For more information, refer to [Turn on maintenance for existing tables](/basin-catalog/table-maintenance/#turn-on-maintenance-for-existing-tables).
 
 ## Disable compaction
 
@@ -156,10 +213,8 @@ Disabling compaction will prevent the process from running for all tables (catal
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable compaction on.
-3. Go to the **Settings** tab and scroll to the **Table Maintenance** section.
-4. Select **Edit** next to compaction.
-5. Toggle compaction off.
-6. Select **Save**.
+3. Go to the **Settings** tab, then go to **Table maintenance**.
+4. Turn off **Compaction**.
 </Steps>
 
 </TabItem>
@@ -190,8 +245,10 @@ Disable compaction for a specific table:
 
 Snapshot expiration automatically removes old table snapshots and any unreferenced data files to reduce metadata overhead and storage costs. You can configure:
 
-- **Max snapshot age** - Snapshots older than this duration are expired. Specify a value followed by a unit (`d` for days, `h` for hours, `m` for minutes, `s` for seconds). For example, `7d` expires snapshots older than 7 days.
-- **Min snapshots to keep** - The minimum number of snapshots to retain, regardless of age.
+- **Maximum snapshot age**: Snapshots older than this duration are expired. Specify a value followed by a unit (`d` for days, `h` for hours, `m` for minutes, `s` for seconds). For example, `7d` expires snapshots older than 7 days. The dashboard default is `7d`.
+- **Minimum snapshots to keep**: The minimum number of snapshots to retain, regardless of age. The value must be at least `1`. The dashboard default is `3`.
+
+The defaults are different in Wrangler and the Cloudflare API. For more information, refer to [Configure snapshot expiration](/basin-catalog/table-maintenance/#configure-snapshot-expiration).
 
 <Tabs syncKey='CLIvDash'>
 <TabItem label='Dashboard'>
@@ -201,12 +258,12 @@ Snapshot expiration automatically removes old table snapshots and any unreferenc
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to enable snapshot expiration on.
-3. Go to the **Settings** tab and scroll to the **Table Maintenance** section.
-4. Select **Enable** or **Edit** next to snapshot expiration.
-5. Toggle snapshot expiration on.
-6. Set the **Max snapshot age** and **Min snapshots to keep** values.
-7. Select **Save**.
+3. Go to the **Settings** tab, then go to **Table maintenance**.
+4. Turn on **Snapshot expiration**.
+5. Set the **Maximum snapshot age** and **Minimum snapshots to keep** values.
 </Steps>
+
+The dashboard saves each valid change immediately.
 
 </TabItem>
 <TabItem label='Wrangler CLI'>
@@ -248,10 +305,8 @@ Disabling snapshot expiration prevents the process from running for all tables (
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
 2. Select the catalog you want to disable snapshot expiration on.
-3. Go to the **Settings** tab and scroll to the **Table Maintenance** section.
-4. Select **Edit** next to snapshot expiration.
-5. Toggle snapshot expiration off.
-6. Select **Save**.
+3. Go to the **Settings** tab, then go to **Table maintenance**.
+4. Turn off **Snapshot expiration**.
 </Steps>
 
 </TabItem>
@@ -275,6 +330,40 @@ Disable snapshot expiration for a specific table:
 
 </TabItem>
 </Tabs>
+
+## Manage the maintenance credential
+
+Table maintenance and [table purges](/basin-catalog/deleting-data/#purge-a-table) use a stored Cloudflare API token, called the maintenance credential, to read and rewrite files in your bucket. Each catalog has one maintenance credential.
+
+The maintenance credential needs read and write access to Basin Catalog and R2 storage. Basin Catalog checks the token with a read request when you save it. A read-only token passes this check, but maintenance cannot commit changes with it.
+
+You can set the maintenance credential in these ways:
+
+- **Dashboard, Generate**: Creates an account API token named `[Basin Catalog] Table Maintenance: <BUCKET_NAME>` with the **Workers R2 Storage Write** and **Workers R2 Data Catalog Write** permission groups. You must have permission to create account API tokens.
+- **Dashboard, Update**: Stores an API token that you paste. This option does not require permission to create account API tokens.
+- **Wrangler**: The `--token` flag of the catalog-level `compaction enable` and `snapshot-expiration enable` commands stores the token as the maintenance credential.
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Basin Catalog** page.
+
+   <DashButton url="/?to=/:account/data-catalog/overview" />
+2. Select a catalog.
+3. Go to the **Settings** tab, then go to **Credentials** > **Basin Catalog**.
+4. Select **Generate** to create a new token, or select **Update** to paste an existing token.
+</Steps>
+
+The **Credentials** section shows the status of the maintenance credential:
+
+| Status                           | Description                                                                         |
+| -------------------------------- | ----------------------------------------------------------------------------------- |
+| Credential configured            | The credential is valid.                                                            |
+| No credential configured         | The catalog has no credential. Table maintenance does not run.                      |
+| Credential invalid               | The token no longer works, for example, because it was deleted. Table maintenance stopped. |
+| Credential could not be verified | The status check failed. Reload the page to try again.                              |
+
+On the **Basin Catalog** page, the **Table Maintenance** column shows **Blocked** when the credential is missing or invalid, and **Unverified** when the status check failed.
+
+The **Credentials** section also has a **Basin SQL studio** credential. Basin SQL Studio uses this credential to query your tables from the dashboard. It is separate from the maintenance credential.
 
 ## Authenticate your Iceberg engine
 
@@ -376,7 +465,9 @@ To enable R2 Local Uploads, you can use the following Wrangler command:
 
 ## Limitations
 
-- Basin Catalog does not currently support R2 buckets in a non-default jurisdiction.
+- Basin Catalog does not currently support R2 buckets in a non-default jurisdiction, such as EU, FedRAMP, or FedRAMP High.
+
+For other limits, refer to [Limits](/basin-catalog/platform/limits/).
 
 ## Learn more
 
