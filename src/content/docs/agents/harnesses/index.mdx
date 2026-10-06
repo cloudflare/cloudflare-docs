@@ -1,38 +1,66 @@
 ---
 title: Harnesses
-description: Understand agent harnesses — the loop that controls planning, tool use, and response flow.
+description: A harness is the agent loop around the model. Pick a harness, run it on a Durable Object with the Lifecycle, and plug in the capabilities it needs.
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 3
 ---
 
-import { LinkCard } from "~/components";
+import { LinkCard, TypeScriptExample } from "~/components";
 
-A harness is the loop that makes an agent behave like an agent instead of a single model call.
+A harness is the loop that makes an agent behave like an agent instead of a single model call. On Cloudflare, the harness is the agent: you pick one, and it runs inside a [Durable Object](/durable-objects/).
 
-It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
+The harness does the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-A harness runs inside a Durable Object, next to the other [capabilities](/agents/capabilities/) the agent uses. Install the [Pi harness](/agents/harnesses/pi/) as a capability, extend [Project Think](/agents/harnesses/think/), or build your own loop from lower-level capabilities.
+## Run a harness on a Durable Object
 
-## How harnesses fit
+Running an agent on Cloudflare takes three steps:
 
-Harnesses sit on top of the [Lifecycle](/agents/lifecycle/) and its capabilities:
+1. **Pick a harness.** Install the [Pi harness](/agents/harnesses/pi/), extend [Project Think](/agents/harnesses/think/), or build your own.
+2. **Run it on a Durable Object.** Install the harness with the [Lifecycle](/agents/lifecycle/). The Lifecycle runs startup, routes requests, and owns the object's job queue and alarm, so the harness wakes and carries on after eviction, deploys, and crashes.
+3. **Plug in capabilities.** Add an [MCP client](/agents/capabilities/#mcp-client), a [scheduler](/agents/capabilities/#scheduler), [WebSockets](/agents/capabilities/#websockets), or any other [capability](/agents/capabilities/) the agent needs. Each one is a field and one more `.use()` call.
 
-- **The Lifecycle** gives the agent a durable home: startup, request routing, and a job queue that wakes the object after eviction.
-- **Capabilities** give it storage and connections: [MCP clients](/agents/capabilities/#mcp-client), [schedules](/agents/capabilities/#scheduler), [WebSockets](/agents/capabilities/#websockets), and more.
-- **The harness** gives it behavior: model calls, prompt construction, tool selection, streaming, and recovery.
+<TypeScriptExample>
 
-The Lifecycle answers "where does this agent live and how does it stay durable?" The harness answers "what does this agent do on each turn?"
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler } from "agents/schedules";
 
-## Choose an approach
+export class Assistant extends DurableObject<Env> {
+	// The harness: the agent loop.
+	readonly harness = new PiHarness({
+		/* model and tools */
+	});
 
-Use Pi (beta) when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own the agent loop, transcript, and recovery. `PiHarness` is a capability, so you install it on a plain Durable Object with `Lifecycle.use()`, next to any other capability. You choose how clients reach it.
+	// A capability plugged in next to it.
+	readonly scheduler = new Scheduler({ callbacks: {} });
 
-Use Project Think when you want an opinionated chat-agent harness with defaults for memory, workspace tools, streaming, lifecycle hooks, sub-agent RPC, and durable chat recovery. Think is a class: your agent extends `Think`, which builds on the [`Agent` class](/agents/agent-class/).
+	// The Lifecycle runs both on the Durable Object.
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.scheduler);
+}
+```
 
-Build your own harness when you need full control over the model call, message format, tool loop, or UI protocol. Combine [Sessions, Streams, and Tasks](/agents/capabilities/#build-your-own-harness) to store the conversation, stream output, and run turns as replayable work.
+</TypeScriptExample>
 
-## Current harnesses
+For a complete, runnable agent, refer to the [Quick start](/agents/getting-started/quick-start/).
+
+## Choose a harness
+
+Use **Pi** (beta) when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own the agent loop, transcript, and recovery. `PiHarness` installs on a plain Durable Object with `Lifecycle.use()`, next to any other capability. You choose how clients reach it, such as HTTP, WebSockets, or RPC. Start here if you are not sure.
+
+Use **Project Think** when you want an opinionated chat-agent harness with defaults for memory, workspace tools, streaming, lifecycle hooks, sub-agent RPC, and durable chat recovery. Think is a class: your agent extends `Think`, which builds on the [`Agent` class](/agents/agent-class/).
+
+**Build your own** when you need full control over the model call, message format, tool loop, or UI protocol. Combine [Sessions, Streams, and Tasks](/agents/capabilities/#build-your-own-harness) to store the conversation, stream output, and run turns as replayable work.
+
+<LinkCard
+	title="Pi (beta)"
+	href="/agents/harnesses/pi/"
+	description="Run Pi Durable sessions on a Durable Object, with storage in SQLite and recovery after eviction."
+/>
 
 <LinkCard
 	title="Project Think"
@@ -41,38 +69,34 @@ Build your own harness when you need full control over the model call, message f
 />
 
 <LinkCard
-	title="Pi (beta)"
-	href="/agents/harnesses/pi/"
-	description="Run Pi Durable sessions inside an Agent or Durable Object, with storage in SQLite and recovery after eviction."
+	title="Build your own"
+	href="/agents/capabilities/#build-your-own-harness"
+	description="Combine Sessions, Streams, and Tasks into your own agent loop."
 />
 
-## What a harness usually owns
+## What a harness owns
 
 A harness usually owns:
 
-- **Prompt construction** — system prompts, memory, retrieved context, and per-turn instructions.
-- **Model execution** — the call to Workers AI, OpenAI, Anthropic, Gemini, or another provider.
-- **Tool orchestration** — server tools, client tools, MCP tools, approval flows, and continuation after tool results.
-- **Message persistence** — how user, assistant, and tool messages are saved and replayed.
-- **Streaming and recovery** — how responses stream to clients and resume after disconnects or Durable Object eviction.
-- **Extension points** — hooks before and after turns, steps, tool calls, and recovery events.
+- **Prompt construction**: system prompts, memory, retrieved context, and per-turn instructions.
+- **Model execution**: the call to Workers AI, OpenAI, Anthropic, Gemini, or another provider. For model setup, refer to [Models](/agents/models/).
+- **Tool orchestration**: server tools, client tools, MCP tools, approval flows, and continuation after tool results.
+- **Message persistence**: how user, assistant, and tool messages are saved and replayed.
+- **Streaming and recovery**: how responses stream to clients and resume after disconnects or Durable Object eviction.
+- **Extension points**: hooks before and after turns, steps, tool calls, and recovery events.
+
+The harness does not own where the agent lives or how it wakes up. The Durable Object and the Lifecycle handle that, and capabilities add the rest.
 
 ## Related resources
 
 <LinkCard
 	title="Capabilities"
 	href="/agents/capabilities/"
-	description="Combine Sessions, Streams, and Tasks to build your own harness."
+	description="Plug MCP clients, schedules, queues, and real-time clients into your agent."
 />
 
 <LinkCard
 	title="Lifecycle"
 	href="/agents/lifecycle/"
-	description="Install the Lifecycle that runs harnesses and other capabilities on a Durable Object."
-/>
-
-<LinkCard
-	title="Durable execution with fibers"
-	href="/agents/agent-class/durable-execution/"
-	description="Recover long-running work on the Agent class after Durable Object eviction."
+	description="How the Lifecycle runs a harness and its capabilities on a Durable Object."
 />

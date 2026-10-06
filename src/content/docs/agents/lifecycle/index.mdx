@@ -1,9 +1,9 @@
 ---
 title: Lifecycle
-description: Install the Agents SDK Lifecycle on a Durable Object to run startup, route requests to capabilities, and share one durable job queue and alarm.
+description: The Lifecycle keeps a harness and its capabilities running on a Durable Object. It runs startup, routes requests, and shares one durable job queue and alarm.
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 7
   group:
     hideIndex: false
 products:
@@ -12,9 +12,9 @@ products:
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-Every agent on Cloudflare is a [Durable Object](/durable-objects/). `Lifecycle` from `agents/lifecycle` is the piece that turns a Durable Object into a host for [capabilities](/agents/capabilities/). It runs startup, offers each request to the installed capabilities, and owns the object's durable job queue and its single alarm.
+Every agent on Cloudflare is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/). `Lifecycle` from `agents/lifecycle` is what keeps it running there. It runs startup, offers each request to the harness and the other installed [capabilities](/agents/capabilities/), and owns the object's durable job queue and its single alarm. That is how a harness wakes and finishes its work after eviction, deploys, and crashes.
 
-You install the Lifecycle on a class that extends `DurableObject`. The [`Agent` class](/agents/agent-class/) installs the same Lifecycle for you.
+You install the Lifecycle on a class that extends `DurableObject`. Most agents only need `Lifecycle.install(this)` and one `.use()` call for each capability. This section covers what the Lifecycle does underneath, and how to [build your own capability](/agents/lifecycle/build-a-capability/). The legacy [`Agent` class](/agents/agent-class/) installs the same Lifecycle for you.
 
 ## Install the Lifecycle
 
