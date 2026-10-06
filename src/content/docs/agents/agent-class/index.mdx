@@ -1,24 +1,32 @@
 ---
 title: Agent class
-description: Reference for the Agent base class, its hooks, SQL storage, and error handling in the Agents SDK.
+description: Reference for the legacy Agent base class, its hooks, SQL storage, and error handling in the Agents SDK. New agents should start with a harness on a Durable Object.
 pcx_content_type: reference
 sidebar:
-  order: 8
+  order: 11
   group:
     hideIndex: false
+    badge: Legacy
 products:
   - agents
 ---
 
 import { Render, LinkCard } from "~/components";
 
-The `Agent` class is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/lifecycle/) and a set of [capabilities](/agents/capabilities/) already installed. Extend it when you want those defaults in one base class, along with features that only the Agent class has, such as `@callable()` methods, email handling, and the chat and voice classes built on it.
+<Render file="agent-class-legacy" product="agents" />
 
-The pages in this section document the `Agent` class and the classes that extend it. To compose capabilities on a plain Durable Object instead, refer to [Capabilities](/agents/capabilities/).
+The `Agent` class is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/lifecycle/) and a fixed set of [capabilities](/agents/capabilities/) already installed. Extend it when you need a feature that only the `Agent` class has today:
 
-## What the Agent class installs
+- `@callable()` methods and the `useAgent` client
+- [Chat agents](/agents/agent-class/communication-channels/chat/) with `AIChatAgent` and `useAgentChat`
+- [Voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), and the other [communication channels](/agents/agent-class/communication-channels/)
+- [Project Think](/agents/harnesses/think/), which extends `Agent`
 
-`Agent` extends `DurableObject`, installs a Lifecycle, and adds these capabilities. Its methods call the capability underneath:
+The pages in this section document the `Agent` class and the classes that extend it.
+
+## Move from the Agent class to a harness
+
+Each `Agent` API calls a capability underneath. To move an agent off the `Agent` class, extend `DurableObject`, install the Lifecycle, and use the capability from this table directly. For how request, alarm, and WebSocket handling work on the Lifecycle, refer to [Move an existing Durable Object onto the Lifecycle](/agents/getting-started/add-to-existing-project/#move-an-existing-durable-object-onto-the-lifecycle).
 
 | Agent API                                                              | Capability                                       |
 | ---------------------------------------------------------------------- | ------------------------------------------------ |
@@ -29,7 +37,7 @@ The pages in this section document the `Agent` class and the classes that extend
 | `onConnect()`, `onMessage()`, `this.broadcast()`, `getConnections()`   | [`WebSockets`](/agents/capabilities/#websockets) |
 | `this.tasks`                                                           | [`Tasks`](/agents/capabilities/#tasks)           |
 
-To add another capability, such as the [Pi harness](/agents/harnesses/pi/), install it on `this.lifecycle` in the constructor:
+To stay on the `Agent` class and add another capability, such as the [Pi harness](/agents/harnesses/pi/), install it on `this.lifecycle` in the constructor:
 
 ```ts
 import { Agent } from "agents";

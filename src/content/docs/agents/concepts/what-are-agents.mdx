@@ -79,12 +79,12 @@ Agents operate in a continuous loop of:
 
 ## Building agents on Cloudflare
 
-On Cloudflare, each agent is a [Durable Object](/durable-objects/) with a [Lifecycle](/agents/lifecycle/) and the [capabilities](/agents/capabilities/) you add to it:
+On Cloudflare, an agent is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/), with the [capabilities](/agents/capabilities/) you plug in:
 
-- **Persistent state**: each agent instance has its own SQLite database for context and memory.
-- **Durable work**: the Lifecycle keeps a job queue that wakes the agent after eviction, deploys, and crashes.
 - **A harness**: the [Pi harness](/agents/harnesses/pi/) runs the observe, plan, and execute loop for you.
-- **Capabilities**: MCP clients, schedules, queues, and real-time WebSocket clients install on the same object.
+- **Persistent state**: each agent instance has its own SQLite database for context and memory.
+- **Durable work**: the [Lifecycle](/agents/lifecycle/) keeps a job queue that wakes the agent after eviction, deploys, and crashes.
+- **Capabilities**: MCP clients, schedules, queues, and real-time WebSocket clients plug in on the same object.
 - **Hibernation**: agents sleep when idle and wake on demand, so you only pay for what you use.
 
 ## Next steps

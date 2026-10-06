@@ -1,6 +1,6 @@
 ---
 title: Getting started
-description: Start building agents on Cloudflare as Durable Objects with a Lifecycle and the capabilities you need.
+description: Start running agents on Cloudflare. Pick a harness, run it on a Durable Object, and plug in the capabilities you need.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -12,26 +12,20 @@ products:
 
 import { DirectoryListing, LinkCard } from "~/components";
 
-An agent on Cloudflare is a Durable Object with a [Lifecycle](/agents/lifecycle/) and the [capabilities](/agents/capabilities/) you add to it. Pick the path that matches what you want to build first.
+An agent on Cloudflare is a [harness](/agents/harnesses/) running on a Durable Object, with the [capabilities](/agents/capabilities/) you plug in. Pick the path that matches what you want to build first.
 
 ## Choose a path
 
 <LinkCard
 	title="Quick start"
 	href="/agents/getting-started/quick-start/"
-	description="Build an assistant on a Durable Object with the Pi harness and Workers AI, then add a schedule."
+	description="Run the Pi harness on a Durable Object with Workers AI, then plug in a scheduler."
 />
 
 <LinkCard
 	title="Add to an existing project"
 	href="/agents/getting-started/add-to-existing-project/"
 	description="Add an agent to an existing Worker, or move an existing Durable Object onto the Lifecycle."
-/>
-
-<LinkCard
-	title="Get started with the Agent class"
-	href="/agents/agent-class/get-started/"
-	description="Build a counter with the Agent class, with state that syncs to a React frontend."
 />
 
 <LinkCard
@@ -45,6 +39,8 @@ An agent on Cloudflare is a Durable Object with a [Lifecycle](/agents/lifecycle/
 	href="/agents/getting-started/testing-your-agent/"
 	description="Write tests with Vitest and the Workers test pool."
 />
+
+To build on the legacy `Agent` class instead, refer to [Get started with the Agent class](/agents/agent-class/get-started/).
 
 ## All getting started pages
 

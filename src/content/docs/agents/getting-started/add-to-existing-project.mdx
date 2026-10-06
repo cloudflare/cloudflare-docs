@@ -1,6 +1,6 @@
 ---
 title: Add to an existing project
-description: Add the Agents SDK Lifecycle and capabilities to an existing Worker or Durable Object, and move its fetch, alarm, and WebSocket handlers onto the Lifecycle.
+description: Run an agent in an existing Worker or Durable Object. Install the Lifecycle, add a harness and capabilities, and move fetch, alarm, and WebSocket handlers onto the Lifecycle.
 pcx_content_type: how-to
 sidebar:
   order: 2
@@ -15,7 +15,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-You can turn any Durable Object into an agent by installing the [Lifecycle](/agents/lifecycle/). This guide covers adding a new agent to an existing Worker, and moving an existing Durable Object onto the Lifecycle.
+An agent is a [harness](/agents/harnesses/) running on a Durable Object. Any Durable Object can run one once it installs the [Lifecycle](/agents/lifecycle/). This guide covers adding a new agent to an existing Worker, and moving an existing Durable Object onto the Lifecycle so it can run a harness and plug in [capabilities](/agents/capabilities/).
 
 ## Install the package
 
@@ -109,7 +109,7 @@ The `agents` package requires the `nodejs_compat` compatibility flag:
 
 </Steps>
 
-Now add the capabilities you need. For a list, refer to [Capabilities](/agents/capabilities/).
+The object is ready to run an agent. Install a harness with `.use()`, as in the [Quick start](/agents/getting-started/quick-start/#run-a-harness-on-a-durable-object), then plug in the [capabilities](/agents/capabilities/) you need.
 
 ## Move an existing Durable Object onto the Lifecycle
 
@@ -215,6 +215,7 @@ Lifecycle requires a named object. If your code creates IDs with `newUniqueId()`
 
 ## Next steps
 
-- [Capabilities](/agents/capabilities/) lists the capabilities you can add.
+- [Harnesses](/agents/harnesses/) compares the harnesses you can run.
+- [Capabilities](/agents/capabilities/) lists the capabilities you can plug in.
 - [Quick start](/agents/getting-started/quick-start/) builds an agent with the Pi harness.
-- [Add an Agent to an existing project](/agents/agent-class/add-to-existing-project/) covers the same steps for the `Agent` class.
+- [Add an Agent to an existing project](/agents/agent-class/add-to-existing-project/) covers the same steps for the legacy `Agent` class.

@@ -3,7 +3,7 @@ title: Quick start
 pcx_content_type: get-started
 sidebar:
   order: 1
-description: Build your first agent on a Durable Object with the Lifecycle and the Pi harness, then add a scheduled capability and deploy it.
+description: Run your first agent on Cloudflare. Install the Pi harness on a Durable Object, plug in a scheduler, and deploy it.
 products:
   - agents
 ---
@@ -15,7 +15,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-An agent on Cloudflare is a [Durable Object](/durable-objects/) with a [Lifecycle](/agents/lifecycle/) and the [capabilities](/agents/capabilities/) you add to it. In this guide, you build an assistant that runs the [Pi harness](/agents/harnesses/pi/) on Workers AI, answers over HTTP, and writes a plan every morning on a schedule.
+An agent on Cloudflare is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/). The [Lifecycle](/agents/lifecycle/) keeps the harness running, and you plug in the [capabilities](/agents/capabilities/) it needs. In this guide, you run the [Pi harness](/agents/harnesses/pi/) on Workers AI, answer prompts over HTTP, and plug in a scheduler that asks for a plan every morning.
 
 You do not need an API key. The agent uses [Workers AI](/workers-ai/) through the `AI` binding.
 
@@ -72,9 +72,9 @@ Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configu
 
 The `nodejs_compat` flag is required by the `agents` package. `new_sqlite_classes` gives the Durable Object the SQLite storage that the Lifecycle and the harness use.
 
-## Write the agent
+## Run a harness on a Durable Object
 
-Replace `src/index.ts` with an `Assistant` Durable Object:
+Replace `src/index.ts` with an `Assistant` Durable Object that runs the Pi harness:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -129,8 +129,8 @@ export default {
 Here is what each part does:
 
 - `Assistant` extends the platform `DurableObject`. Each named instance is one agent with its own SQLite database.
-- `PiHarness` is a capability that runs the [Pi](https://pi.dev/) agent loop. It stores the transcript in the object's database and keeps runs going after the object is evicted.
-- `Lifecycle.install(this)` takes over the object's `fetch` and `alarm` handlers. `.use(this.harness)` installs the harness.
+- `PiHarness` is the harness. It runs the [Pi](https://pi.dev/) agent loop, stores the transcript in the object's database, and keeps runs going after the object is evicted.
+- `Lifecycle.install(this)` takes over the object's `fetch` and `alarm` handlers. `.use(this.harness)` runs the harness on the object.
 - `onRequest()` handles requests that no capability claimed. A `POST` sends a prompt, and a `GET` returns the transcript.
 - `routeAgentRequest()` sends `/agents/assistant/:name` to the `Assistant` instance called `:name`.
 
@@ -173,9 +173,9 @@ npx wrangler types
 
 The transcript lives in the `demo` instance's database. A request to `/agents/assistant/another-name` reaches a different agent with an empty transcript.
 
-## Add a capability
+## Plug in a capability
 
-Capabilities share the same Lifecycle, so adding one is a new field and one more `.use()` call. Add a `Scheduler` that asks the agent for a plan every morning:
+The harness and its capabilities share the same Lifecycle, so plugging one in is a new field and one more `.use()` call. Add a `Scheduler` that asks the agent for a plan every morning:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -225,6 +225,6 @@ Your agent is now live at `https://my-agent.<YOUR_SUBDOMAIN>.workers.dev/agents/
 ## Next steps
 
 - To stream Pi sessions to a browser over WebSockets, refer to [Pi harness](/agents/harnesses/pi/).
-- To give the agent tools from MCP servers, queues, or connected clients, refer to [Capabilities](/agents/capabilities/).
+- To plug in MCP servers, queues, or connected clients, refer to [Capabilities](/agents/capabilities/).
+- To compare Pi with Project Think or a harness of your own, refer to [Harnesses](/agents/harnesses/).
 - To understand startup, request handling, and jobs, refer to [Lifecycle](/agents/lifecycle/).
-- To build with the batteries-included `Agent` class instead, refer to [Get started with the Agent class](/agents/agent-class/get-started/).
