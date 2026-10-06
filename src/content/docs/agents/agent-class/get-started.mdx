@@ -1,0 +1,244 @@
+---
+title: Get started with the Agent class
+pcx_content_type: get-started
+sidebar:
+  order: 0
+  label: Get started
+description: Build a counter with the Agent class, with persistent state that syncs to a React frontend in real time.
+products:
+  - agents
+---
+
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+	Render,
+} from "~/components";
+
+<Render file="agent-class-legacy" product="agents" />
+
+Build AI agents that persist, think, and act. Agents run on Cloudflare's global network, maintain state across requests, and connect to clients in real-time via WebSockets.
+
+**What you will build:** A counter agent with persistent state that syncs to a React frontend in real-time.
+
+**Time:** ~10 minutes
+
+## Create a new project
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"--template cloudflare/agents-starter"}
+/>
+
+Then install dependencies and start the dev server:
+
+```sh
+cd agents-starter
+npm install
+npm run dev
+```
+
+This creates a project with:
+
+- `src/server.ts` — Your agent code
+- `src/client.tsx` — React frontend
+- `wrangler.jsonc` — Cloudflare configuration
+- `tsconfig.json` — Extends `agents/tsconfig` for correct decorator and module settings
+- `vite.config.ts` — Includes the `agents/vite` plugin for decorator support
+
+The starter template includes two important SDK integrations. If you are setting up a project manually, add both:
+
+**tsconfig.json** — extends `agents/tsconfig`, which sets `target: "ES2021"` and other recommended options:
+
+```json
+{
+	"extends": "agents/tsconfig"
+}
+```
+
+**vite.config.ts** — includes the `agents()` plugin, which handles TC39 decorator transforms (required for `@callable()` in Vite 8):
+
+```ts
+import { cloudflare } from "@cloudflare/vite-plugin";
+import react from "@vitejs/plugin-react";
+import agents from "agents/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [agents(), react(), cloudflare()],
+});
+```
+
+Open [http://localhost:5173](http://localhost:5173) to see your agent in action.
+
+## Your first agent
+
+Build a simple counter agent from scratch. Replace `src/server.ts`:
+
+<TypeScriptExample>
+
+```ts title="src/server.ts"
+import { Agent, routeAgentRequest, callable } from "agents";
+
+// Define the state shape
+export type CounterState = {
+	count: number;
+};
+
+// Create the agent
+export class CounterAgent extends Agent<Env, CounterState> {
+	// Initial state for new instances
+	initialState: CounterState = { count: 0 };
+
+	// Methods marked with @callable can be called from the client
+	@callable()
+	increment() {
+		this.setState({ count: this.state.count + 1 });
+		return this.state.count;
+	}
+
+	@callable()
+	decrement() {
+		this.setState({ count: this.state.count - 1 });
+		return this.state.count;
+	}
+
+	@callable()
+	reset() {
+		this.setState({ count: 0 });
+	}
+}
+
+// Route requests to agents
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Update `wrangler.jsonc` to register the agent:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-agent",
+	"main": "src/server.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "CounterAgent",
+				"class_name": "CounterAgent",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["CounterAgent"],
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+**Key points:**
+
+- `name` in bindings becomes the property on `env` (for example, `env.CounterAgent`)
+- `class_name` must exactly match your exported class name
+- `new_sqlite_classes` enables SQLite storage for state persistence
+- `nodejs_compat` flag is required for the agents package
+
+## Connect from React
+
+Replace `src/client.tsx`:
+
+```tsx title="src/client.tsx"
+import "./styles.css";
+import { createRoot } from "react-dom/client";
+import { useState } from "react";
+import { useAgent } from "agents/react";
+import type { CounterAgent, CounterState } from "./server";
+
+export default function App() {
+	const [count, setCount] = useState(0);
+
+	// Connect to the Counter agent
+	const agent = useAgent<CounterAgent, CounterState>({
+		agent: "CounterAgent",
+		onStateUpdate: (state) => setCount(state.count),
+	});
+
+	return (
+		<div style={{ padding: "2rem", fontFamily: "system-ui" }}>
+			<h1>Counter Agent</h1>
+			<p style={{ fontSize: "3rem" }}>{count}</p>
+			<div style={{ display: "flex", gap: "1rem" }}>
+				<button onClick={() => agent.stub.decrement()}>-</button>
+				<button onClick={() => agent.stub.reset()}>Reset</button>
+				<button onClick={() => agent.stub.increment()}>+</button>
+			</div>
+		</div>
+	);
+}
+
+const root = createRoot(document.getElementById("root")!);
+root.render(<App />);
+```
+
+Key points:
+
+- `useAgent` connects to your agent via WebSocket
+- `onStateUpdate` fires whenever the agent's state changes
+- `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
+
+<Render file="what-just-happened" product="agents" />
+
+## Connect from vanilla JavaScript
+
+If you are not using React:
+
+<TypeScriptExample>
+
+```ts
+import { AgentClient } from "agents/client";
+
+const agent = new AgentClient({
+	agent: "CounterAgent",
+	name: "my-counter", // optional, defaults to "default"
+	onStateUpdate: (state) => {
+		console.log("New count:", state.count);
+	},
+});
+
+// Call methods
+await agent.call("increment");
+await agent.call("reset");
+```
+
+</TypeScriptExample>
+
+## Deploy to Cloudflare
+
+```sh
+npm run deploy
+```
+
+Your agent is now live on Cloudflare's global network, running close to your users.
+
+<Render file="common-integration-patterns" product="agents" />
+
+<Render file="troubleshooting" product="agents" />
+
+<Render file="next-steps" product="agents" />

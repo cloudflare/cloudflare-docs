@@ -79,13 +79,13 @@ Agents operate in a continuous loop of:
 
 ## Building agents on Cloudflare
 
-The Cloudflare Agents SDK provides the infrastructure for building production agents:
+On Cloudflare, an agent is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/), with the [capabilities](/agents/capabilities/) you plug in:
 
-- **Persistent state** — Each agent instance has its own SQLite database for storing context and memory
-- **Real-time sync** — State changes automatically broadcast to all connected clients via WebSockets
-- **Hibernation** — Agents sleep when idle and wake on demand, so you only pay for what you use
-- **Global edge deployment** — Agents run close to your users on Cloudflare's network
-- **Built-in capabilities** — Scheduling, task queues, workflows, email handling, and more
+- **A harness**: the [Pi harness](/agents/harnesses/pi/) runs the observe, plan, and execute loop for you.
+- **Persistent state**: each agent instance has its own SQLite database for context and memory.
+- **Durable work**: the [Lifecycle](/agents/lifecycle/) keeps a job queue that wakes the agent after eviction, deploys, and crashes.
+- **Capabilities**: MCP clients, schedules, queues, and real-time WebSocket clients plug in on the same object.
+- **Hibernation**: agents sleep when idle and wake on demand, so you only pay for what you use.
 
 ## Next steps
 
@@ -96,9 +96,9 @@ The Cloudflare Agents SDK provides the infrastructure for building production ag
 />
 
 <LinkCard
-	title="Agents API"
-	href="/agents/agent-class/"
-	description="Complete API reference for the Agents SDK."
+	title="Capabilities"
+	href="/agents/capabilities/"
+	description="Add a harness, MCP client, schedules, and clients to an agent."
 />
 
 <LinkCard

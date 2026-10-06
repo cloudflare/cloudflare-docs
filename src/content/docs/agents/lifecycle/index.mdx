@@ -1,0 +1,213 @@
+---
+title: Lifecycle
+description: The Lifecycle keeps a harness and its capabilities running on a Durable Object. It runs startup, routes requests, and shares one durable job queue and alarm.
+pcx_content_type: concept
+sidebar:
+  order: 7
+  group:
+    hideIndex: false
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Every agent on Cloudflare is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/). `Lifecycle` from `agents/lifecycle` is what keeps it running there. It runs startup, offers each request to the harness and the other installed [capabilities](/agents/capabilities/), and owns the object's durable job queue and its single alarm. That is how a harness wakes and finishes its work after eviction, deploys, and crashes.
+
+You install the Lifecycle on a class that extends `DurableObject`. Most agents only need `Lifecycle.install(this)` and one `.use()` call for each capability. This section covers what the Lifecycle does underneath, and how to [build your own capability](/agents/lifecycle/build-a-capability/). The legacy [`Agent` class](/agents/agent-class/) installs the same Lifecycle for you.
+
+## Install the Lifecycle
+
+<PackageManagers pkg="agents" />
+
+Construct the Lifecycle as a field on your Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onStart(): void {
+		// Runs once for each in-memory object lifetime, before any work.
+	}
+
+	onRequest(request: Request): Response {
+		return new Response(`Hello from ${this.lifecycle.name}`);
+	}
+
+	onAlarm(): void {
+		// Runs once for each alarm, after due jobs.
+	}
+}
+```
+
+</TypeScriptExample>
+
+`Lifecycle.install(this)` installs the `fetch`, `alarm`, `webSocketMessage`, `webSocketClose`, and `webSocketError` handlers on your class. Do not define those methods yourself. Implement the hooks Lifecycle calls instead:
+
+| Hook                 | When it runs                                                                    |
+| -------------------- | ------------------------------------------------------------------------------- |
+| `onStart(props)`     | Once per in-memory lifetime, after every capability has started                 |
+| `onRequest(request)` | For each HTTP request that no capability handled                                |
+| `onAlarm()`          | Once per alarm, after Lifecycle has run the due jobs                            |
+| `onJob(context)`     | When a job the host pushed through `lifecycle.jobs` comes due                   |
+
+The expanded form separates construction from handler installation:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = new Lifecycle(this);
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.installHandlers();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Calling `installHandlers()` more than once throws an error.
+
+## Add capabilities
+
+A capability is a reusable piece of a Durable Object. It owns its own tables and behavior, and implements only the Lifecycle hooks it needs. Construct each capability as a field, then register it with `use()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { Scheduler } from "agents/schedules";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("my-agent", "1.0.0", { env: this.env });
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			sendReminder: (payload: { message: string }) => {
+				console.log(payload.message);
+			},
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.mcp)
+		.use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+Declare capability fields before the `lifecycle` field. Class fields initialize in order, so a capability declared after `lifecycle` is still `undefined` when `use()` runs.
+
+Register every capability before startup. `use()` throws after startup begins, or when a capability with the same identifier is already installed. For the list of capabilities, refer to [Capabilities](/agents/capabilities/).
+
+## Route requests to your agent
+
+Use `routeAgentRequest()` in the Worker's `fetch` handler to reach a named Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The default URL shape is `/agents/:binding/:name`, where `:binding` is the kebab-case Durable Object binding name. A request to `/agents/my-agent/alice` reaches the `MyAgent` instance named `alice`.
+
+You can also call the object directly with `env.MyAgent.getByName(name).fetch(request)`.
+
+### Use named objects
+
+Lifecycle reads the object's name from `ctx.id.name` and exposes it as `lifecycle.name`. Address objects with `getByName()` or `idFromName()`. Startup fails for an object addressed with an ID from `newUniqueId()` or `idFromString()`, because those IDs carry no name.
+
+## Startup and request handling
+
+Lifecycle starts on the first request, alarm, or WebSocket event of each in-memory lifetime:
+
+1. Each capability runs its `onStart()` hook, in registration order.
+2. The host runs `onStart()`.
+3. Lifecycle handles the event that woke the object.
+
+A warm object skips startup. If startup fails, the event fails and the next event tries again.
+
+For an HTTP request, Lifecycle offers the request to each capability in registration order. The first capability that returns a `Response` handles it. A capability that returns `undefined` passes the request on. A request that no capability handles reaches the host's `onRequest()`.
+
+```txt
+routeAgentRequest(request)
+└─ stub.fetch(request)
+   └─ Lifecycle fetch
+      ├─ startup (cold objects only)
+      ├─ capabilities, in registration order
+      │  └─ the first Response handles the request
+      └─ host onRequest()
+```
+
+A capability declares `claims: "catch-all"` when it handles everything offered to a hook. Lifecycle always runs catch-alls after every selective capability. The `WebSockets` capability is a catch-all for upgrades, so other capabilities can claim their own upgrade routes first. Without a capability that accepts upgrades, Lifecycle declines WebSocket upgrades.
+
+There is no `next()` callback. A capability either handles a request or declines it.
+
+## Call your agent over RPC
+
+Public methods on a Durable Object are [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/). RPC calls do not pass through `fetch`, so Lifecycle does not start the object for them. Call `lifecycle.start()` first in a method that needs started capabilities:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler } from "agents/schedules";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({ callbacks: {} });
+	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
+
+	async pendingSchedules(): Promise<number> {
+		await this.lifecycle.start();
+		return (await this.scheduler.list()).length;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Concurrent calls to `start()` share one startup. `lifecycle.isStarted()` returns `true` once every capability and the host `onStart()` have finished. Many capability methods, such as `scheduler.set()` and `harness.prompt()`, wait for startup on their own.
+
+## Jobs and alarms
+
+A Durable Object has one alarm. Lifecycle owns it and schedules it from a durable queue of jobs, so capabilities such as `Scheduler`, `Queue`, `Tasks`, and `PiHarness` never overwrite each other's alarms.
+
+Do not call `ctx.storage.setAlarm()` on an object that uses Lifecycle. Push a job through `lifecycle.jobs` instead. For more information, refer to [Jobs and alarms](/agents/lifecycle/job-queue/).
+
+## Clean up
+
+`lifecycle.dispose()` calls each capability's `dispose()` hook in reverse registration order. Disposal releases live resources, such as MCP transports and listeners. It does not delete stored data.
+
+Eviction does not call `dispose()`. Call it during explicit teardown, before you delete the object's storage with `ctx.storage.deleteAll()`.
+
+## Related resources
+
+- [Capabilities](/agents/capabilities/) lists the capabilities you can install.
+- [Jobs and alarms](/agents/lifecycle/job-queue/) describes the durable job queue.
+- [Build a capability](/agents/lifecycle/build-a-capability/) shows how to write your own.
+- [`getCurrentAgent()`](/agents/lifecycle/get-current-agent/) reads the current object, request, and connection.

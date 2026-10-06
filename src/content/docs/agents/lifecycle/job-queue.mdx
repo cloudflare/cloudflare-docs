@@ -1,0 +1,126 @@
+---
+title: Jobs and alarms
+description: Push durable jobs onto the Lifecycle job queue, handle them with onJob(), and control retries, rescheduling, and the single Durable Object alarm.
+pcx_content_type: reference
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+A Durable Object has one [alarm](/durable-objects/api/alarms/). The [Lifecycle](/agents/lifecycle/) owns that alarm and schedules it from a durable queue of jobs stored in the object's SQLite database. `Scheduler`, `Queue`, `Tasks`, and `PiHarness` all store their future work as jobs, so they share the alarm without overwriting each other.
+
+You can push jobs from the host Durable Object or from your own [capability](/agents/lifecycle/build-a-capability/).
+
+## Push a job from the host
+
+A job names a function, a due time in Unix milliseconds, and an optional JSON payload. Push it through `lifecycle.jobs` and handle it in `onJob()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+export class CleanupAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(): Promise<Response> {
+		await this.lifecycle.jobs.push({
+			id: "cleanup",
+			fn: "deleteExpired",
+			time: Date.now() + 60_000,
+			retry: { maxAttempts: 3 },
+		});
+		return new Response("Cleanup scheduled", { status: 202 });
+	}
+
+	async onJob({ job }: LifecycleJobContext): Promise<LifecycleJobOutcome> {
+		if (job.fn !== "deleteExpired") return;
+		this.ctx.storage.sql.exec(
+			"DELETE FROM sessions WHERE expires_at < ?",
+			Date.now(),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The job is durable once `push()` resolves. If the object is evicted, the alarm wakes it when the job is due.
+
+## Job options
+
+`push()` accepts these options:
+
+| Option               | Description                                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `fn`                 | Required. The function name your `onJob()` dispatches on.                                                       |
+| `time`               | Required. Due time in Unix milliseconds.                                                                        |
+| `payload`            | Optional JSON-serializable value passed to `onJob()` as `job.payload`.                                          |
+| `id`                 | Stable job ID. Pushing an existing ID replaces that job. Lifecycle generates an ID when you omit it.            |
+| `retry`              | Retry policy for failed dispatches: `maxAttempts`, `baseDelayMs`, and `maxDelayMs`.                             |
+| `singleflight`       | Skip the job while a previous run of it is still in progress.                                                   |
+| `hungTimeoutSeconds` | Seconds before an in-progress single-flight run counts as hung. Defaults to `30`.                               |
+| `exclusive`          | Hold back other alarm work while this job is pending. The `Agent` class uses this for deferred destruction.     |
+
+Job IDs are scoped to their owner. The host and each capability can use the same ID without conflict. A capability cannot replace or cancel a job that another owner pushed.
+
+`lifecycle.jobs` also has `cancel(id)`, `reschedule(id, time)`, `get(id)`, and `list()`.
+
+## Control what happens after a job runs
+
+The value `onJob()` returns decides what happens to the job:
+
+| Return value             | Result                                                     |
+| ------------------------ | ---------------------------------------------------------- |
+| Nothing                  | The job completes and Lifecycle deletes it.                |
+| `{ rescheduleAt: time }` | The job stays in the queue until `time`.                   |
+| `"yield"`                | The job stays due, and the object wakes again immediately. |
+
+Return `{ rescheduleAt }` for recurring work, such as a poll every five minutes. Return `"yield"` to split a long job into smaller pieces.
+
+## Retries and failures
+
+When `onJob()` throws, Lifecycle retries the job in the same invocation, up to the job's `retry.maxAttempts`. Platform failures, such as a deploy that replaces the isolate or a memory-limit reset, keep the job for a fresh invocation instead of using up its attempts.
+
+A capability can implement `onJobError(context, error)` to decide what happens after the last attempt fails. A host job that fails every attempt completes.
+
+Before it runs any job, Lifecycle sets a backup alarm. If the isolate dies mid-run, that alarm wakes the object to resume the work.
+
+## How the alarm runs
+
+When the alarm fires, Lifecycle:
+
+1. Runs every due job in due-time order.
+2. Runs the host's `onAlarm()`.
+3. Sets the alarm for the next due job.
+
+Every change to the queue resets the alarm, so you never set it yourself. Do not call `ctx.storage.setAlarm()` on an object that uses Lifecycle, because that alarm would replace the one Lifecycle manages.
+
+Keep each `onJob()` call short. Lifecycle awaits jobs one at a time, so a slow job delays every other job on the object. For long work, start it, record its progress in storage, and return. [`Tasks`](/agents/capabilities/#tasks) does this for you with replayable steps.
+
+## Memory-limit protection
+
+A job that exhausts the isolate's memory can crash every alarm that retries it. Lifecycle counts consecutive alarm invocations that end in a memory-limit reset. Each one delays the next alarm with a growing backoff, up to five minutes. After three in a row, Lifecycle stops the retry loop and removes the jobs that capabilities marked as recovery loops. Set the limit with the `maxAlarmMemoryLimitStrikes` option:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this, {
+		maxAlarmMemoryLimitStrikes: 5,
+	});
+}
+```
+
+</TypeScriptExample>
