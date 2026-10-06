@@ -112,6 +112,19 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/directory/");
 		});
+
+		it.each(["?", "?foo=bar", "?foo=bar%2F", "?cf_page=%2Fpost-slug%2F"])(
+			"redirects requests without a trailing slash and with query %s",
+			async (query) => {
+				const request = new Request(`http://fakehost/docs${query}`);
+				const response = await SELF.fetch(request, { redirect: "manual" });
+				expect(response.status).toBe(301);
+				// The query string is carried over to the destination.
+				expect(response.headers.get("Location")).toBe(
+					`/directory/${new URL(request.url).search}`,
+				);
+			},
+		);
 	});
 
 	describe("json endpoints", () => {
@@ -210,6 +223,19 @@ describe("Cloudflare Docs", () => {
 
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
+		});
+
+		it("llms.txt declares utf-8 charset", async () => {
+			for (const path of ["/llms.txt", "/workers/llms.txt"]) {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+				);
+
+				expect(response.status).toBe(200);
+				expect(response.headers.get("Content-Type")).toBe(
+					"text/plain; charset=utf-8",
+				);
+			}
 		});
 
 		it("agent setup prompt declares utf-8 charset", async () => {

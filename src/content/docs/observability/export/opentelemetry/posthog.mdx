@@ -1,0 +1,115 @@
+---
+pcx_content_type: how-to
+title: Export to PostHog
+description: Send Cloudflare logs to PostHog with OpenTelemetry.
+sidebar:
+  order: 5
+products:
+  - observability
+---
+
+import { DashButton, Steps } from "~/components";
+
+PostHog provides product analytics, logs, and error tracking. Export Cloudflare logs to correlate them with sessions and events.
+
+![PostHog logs view with attributes expanded and a timeline view at the top](~/assets/images/workers-observability/posthog-example.png)
+
+This guide configures PostHog to receive Cloudflare logs.
+
+## Prerequisites
+
+Before you begin, you need:
+
+- An active [PostHog account](https://app.posthog.com/signup)
+- Your PostHog project API key
+- Cloudflare logs available for export
+
+## 1. Get your PostHog project API key
+
+<Steps>
+
+1. Log in to your [PostHog account](https://app.posthog.com/).
+2. Go to [**Project settings**](https://app.posthog.com/settings/project).
+3. Find **Project API key** in the project details.
+4. Copy the project API key.
+
+</Steps>
+
+The project API key starts with `phc_`.
+
+## 2. Select your PostHog endpoint
+
+PostHog uses different endpoints for each data region:
+
+| Region           | Logs endpoint                        |
+| ---------------- | ------------------------------------ |
+| **US** (default) | `https://us.i.posthog.com/i/v1/logs` |
+| **EU**           | `https://eu.i.posthog.com/i/v1/logs` |
+
+Find your region in your PostHog project settings. Your PostHog URL also contains `us` or `eu`.
+
+## 3. Configure a Cloudflare Observability destination
+
+:::caution
+PostHog accepts logs through its OpenTelemetry Protocol (OTLP) endpoint. It does not accept traces through OTLP.
+:::
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Observability** > **Destinations**.
+
+   <DashButton url="/?to=/:account/observability/destinations" />
+
+2. Select **Add destination**.
+3. Configure the destination:
+   - **Destination name**: `posthog-logs`
+   - **Destination type**: _Logs_
+   - **OTLP endpoint**: Your PostHog regional logs endpoint
+   - **Custom header name**: `Authorization`
+   - **Custom header value**: `Bearer <YOUR_PROJECT_API_KEY>`
+4. Select **Save**.
+
+</Steps>
+
+![Cloudflare destination configuration for PostHog logs with destination name, type selection, OTLP endpoint, and custom headers](~/assets/images/workers-observability/posthog-example-destination-modal.png)
+
+## 4. Enable export
+
+Creating a destination does not start exporting logs. To export [Workers Logs](/workers/observability/logs/workers-logs/), [configure OpenTelemetry export for your Worker](/workers/observability/opentelemetry-export/). PostHog does not support [Workers Traces](/workers/observability/traces/) or [Cloudflare Traces](/observability/traces/) through OTLP.
+
+## 5. View logs in PostHog
+
+<Steps>
+
+1. Log in to your [PostHog account](https://app.posthog.com/).
+2. Go to **Logs**.
+3. Review exported severity levels, timestamps, and attributes.
+
+</Steps>
+
+You can filter logs by severity, time range, attributes, and keywords.
+
+## Troubleshooting
+
+### Logs do not appear in PostHog
+
+<Steps>
+
+1. Verify that the API key starts with `phc_`.
+2. Confirm that the endpoint matches your PostHog region.
+3. Check the destination status in the Cloudflare dashboard.
+4. Check whether sampling excludes the expected logs.
+
+</Steps>
+
+### Fix authentication errors
+
+Confirm that the `Authorization` value includes the `Bearer` prefix. Also verify that the project API key remains active.
+
+Alternatively, add the token to the endpoint query string: `https://us.i.posthog.com/i/v1/logs?token=<YOUR_PROJECT_API_KEY>`.
+
+## Related resources
+
+- [PostHog logs documentation](https://posthog.com/docs/logs)
+- [PostHog getting started with logs](https://posthog.com/docs/logs/start-here)
+- [OpenTelemetry logs specification](https://opentelemetry.io/docs/specs/otel/logs/)

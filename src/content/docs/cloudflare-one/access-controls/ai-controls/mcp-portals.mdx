@@ -44,7 +44,7 @@ The following diagram shows how requests flow through an MCP server portal.
 4. When the user calls a tool, the portal identifies the target server from the [tool namespace](#tool-namespacing), attaches the appropriate credentials, and proxies the request. If [Gateway routing](#route-portal-traffic-through-gateway) is turned on, the request passes through Cloudflare Gateway for HTTP logging and DLP inspection.
 5. The upstream server processes the request and returns a response through the same path.
 
-For servers that use automatic OAuth registration, background synchronization of tools and prompts runs approximately every two hours using admin credentials. This sync connects directly to upstream servers and does not route through Gateway.
+For servers that use Dynamic Client Registration (DCR), background synchronization of tools and prompts runs approximately every two hours using admin credentials. This sync connects directly to upstream servers and does not route through Gateway.
 
 ### Transport
 
@@ -63,6 +63,20 @@ You do not need to specify which transport your upstream server uses. The portal
 | All other URLs       | Streamable HTTP on original URL, then SSE on original URL, then Streamable HTTP on `{url}/mcp`, then SSE on `{url}/sse` |
 
 If a connection attempt returns a `404`, `405`, or `406` error, the portal falls back to the next strategy. All other errors stop the connection attempt.
+
+### Client identity header
+
+When a portal sends a request to an upstream MCP server, it adds an `X-Forwarded-User-Agent` header that identifies the downstream MCP client.
+
+The portal selects the header value in the following order:
+
+| Source             | Behavior                                                                                                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `clientInfo.name`  | Preferred when the MCP client sends a valid value. The portal removes the ` (via mcp-remote <VERSION>)` suffix before forwarding the name. |
+| HTTP `User-Agent`  | Used when valid MCP client information is unavailable.                                                                                     |
+| Neither is present | The portal omits `X-Forwarded-User-Agent` and continues the request.                                                                       |
+
+An upstream server can record this header in logs or use it for diagnostics. Do not use it for authentication or authorization because the MCP client controls the value.
 
 ### Built-in portal tools
 
@@ -106,7 +120,7 @@ To add an MCP server:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
-3. Select **Add an MCP server**.
+3. Select **Add MCP server**.
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
 6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search), enter `https://docs.mcp.cloudflare.com/mcp`.
@@ -116,14 +130,15 @@ To add an MCP server:
    Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/access-controls/ai-controls/secure-mcp-servers/).
    :::
 
-8. Select **Save and connect server**.
-9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
+8. Under **OAuth credentials**, select **Automatic (recommended)** to use DCR. Add the [dashboard callback URL](#dashboard-callback-url) to the OAuth provider's redirect URI allowlist.
+9. Select **Save and connect server**.
+10. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the admin credential for that MCP server. You can [configure an MCP portal](#create-a-portal) to use this admin credential to make requests.
 
 Cloudflare Access will validate the server connection and retrieve a list of prompts and tools. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
 
 ### Connect a private MCP server
 
-MCP server portals can connect to an MCP server available only on your private network. The MCP server URL and its [OAuth protected resource metadata](https://www.rfc-editor.org/rfc/rfc9728.html) can use a private hostname. OAuth authorization server endpoints, such as the authorization and token endpoints, must be accessible on the public Internet. If Cloudflare automatically registers the OAuth client through Dynamic Client Registration (DCR), the registration endpoint must also be accessible on the public Internet.
+MCP server portals can connect to an MCP server available only on your private network. The MCP server URL and its [OAuth protected resource metadata](https://www.rfc-editor.org/rfc/rfc9728.html) can use a private hostname. OAuth authorization server endpoints, such as the authorization and token endpoints, must be accessible on the public Internet. If Cloudflare automatically registers the OAuth client through DCR, the registration endpoint must also be accessible on the public Internet.
 
 Before you add the server, connect its network to Cloudflare. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or another [Cloudflare One connector](/cloudflare-one/networks/connectors/). Configure a [private hostname route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) for the server.
 
@@ -139,7 +154,6 @@ To add the private MCP server:
 
 </Steps>
 
-
 ### Configure manual OAuth credentials
 
 Use manual OAuth credentials when the upstream provider does not support [OAuth Dynamic Client Registration](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization#dynamic-client-registration). This flow uses an OAuth application that you register with the upstream provider.
@@ -150,7 +164,7 @@ Use manual OAuth credentials when the upstream provider does not support [OAuth 
 2. In **Zero Trust** > **Access controls** > **MCP Portals**, go to the **MCP servers** tab.
 3. Find the server, select the three dots > **Edit**, and go to **Authentication**.
 4. Under **OAuth credentials**, select **Manual credentials**.
-5. Copy the displayed **Redirect URI to register at the upstream provider**. Add it to the OAuth application's allowed redirect URIs.
+5. Copy the displayed **Redirect URI to register at the upstream provider**. Add it to the OAuth application's allowed redirect URIs. For more information, refer to [Shared Cloudflare callback URL](#shared-cloudflare-callback-url).
 6. Select **Discover OAuth endpoints**. If discovery fails, expand **Show OAuth endpoints (advanced)** and enter the **Authorization endpoint** and **Token endpoint**. You can also enter an optional **Revocation endpoint** and **Issuer**.
 7. Enter the OAuth application's **Client ID** and **Client secret**.
 8. (Optional) Enter the space-separated **Scope** values requested from users.
@@ -158,14 +172,6 @@ Use manual OAuth credentials when the upstream provider does not support [OAuth 
 10. Select **Save server**.
 
 </Steps>
-
-The dashboard uses the [shared Cloudflare callback URL](#shared-cloudflare-callback-url-opt-in) when you switch a server from automatic to manual credentials:
-
-```txt
-https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
-```
-
-Always register the redirect URI displayed in the dashboard. OAuth providers typically require an exact URI match.
 
 Cloudflare stores the client secret encrypted and does not return it through the dashboard or API. When editing the server, leave **Client secret** blank to keep the existing value. To rotate the secret, create or activate the replacement at the upstream provider, enter the new value, and save the server.
 
@@ -213,7 +219,7 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-For servers that use automatic OAuth registration, Cloudflare Access synchronizes tools and prompts approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
+For servers that use DCR, Cloudflare Access synchronizes tools and prompts approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
 
 Resources are not synchronized or stored. When an MCP client sends a `resources/list` request, the portal fetches resources live from the upstream servers. Servers that cannot connect or respond are omitted from the result.
 
@@ -231,7 +237,29 @@ The MCP server page will show the updated list of tools and prompts. By default,
 
 You can also trigger a sync via the API. The sync endpoint returns the current server state after synchronization, including the updated [server status](#server-status), tool count, and [error details](#error-details) if the sync failed.
 
-### Upstream OAuth callback URL
+### Upstream OAuth callback URLs
+
+MCP server portals use upstream OAuth callback URLs to authorize administrators and end users so they can access MCP servers.
+
+OAuth providers typically exact-match the full URI, including the path.
+
+#### Dashboard callback URL
+
+When Cloudflare registers the OAuth client using DCR, the dashboard uses the following callback URL:
+
+```txt
+https://dash.cloudflare.com/<account-tag>/one/access-controls/ai-controls/mcp-server/oauth-callback/<server-id>
+```
+
+The dashboard callback URL is scoped to the account and server.
+
+Add the dashboard callback URL to the OAuth provider's redirect URI allowlist before authorizing the upstream MCP server. Otherwise, authorization may fail.
+
+DCR uses the dashboard callback URL even when the **Use the Cloudflare-hosted OAuth callback** setting is on.
+
+End users never use the dashboard callback URL to authorize the upstream MCP server.
+
+#### Portal callback URL
 
 When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
 
@@ -241,21 +269,23 @@ By default, the portal uses a callback URL on your portal domain:
 https://<your-portal-hostname>/servers-callback
 ```
 
-Allowlist this URL as a redirect URI at the upstream OAuth provider. OAuth providers typically exact-match the full URI including path.
+Add the callback URL to the OAuth provider's redirect URI allowlist.
 
-#### Shared Cloudflare callback URL (opt-in)
+#### Shared Cloudflare callback URL
 
-If you turn on the shared callback URL for an MCP server, every portal that uses that server uses this Cloudflare-owned URL instead:
+When you configure an MCP server with manual OAuth credentials in the dashboard, Cloudflare uses the following shared callback URL for dashboard and per-user authorization:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
 ```
 
-Use the shared callback URL when an upstream vendor only allows a small number of redirect URIs, or when you want one callback URL for a server across multiple portals. This setting is off by default and configured separately for each OAuth server. To turn it on, go to **Zero Trust** > **Access controls** > **MCP Portals** > **MCP servers**, add or edit an OAuth server, and turn on **Use the Cloudflare-hosted OAuth callback** under **Basic information** > **Advanced settings**.
+The **Use the Cloudflare-hosted OAuth callback** setting is not available when you configure manual OAuth credentials in the dashboard.
 
-:::note
-If an upstream OAuth provider rejects the callback URL, check whether **Use the Cloudflare-hosted OAuth callback** is turned on for that MCP server. If it is on, allowlist the shared Cloudflare URL. If it is off, allowlist `https://<your-portal-hostname>/servers-callback` for each portal that uses the server. OAuth providers typically exact-match the full URI including path.
-:::
+When Cloudflare uses DCR to register the OAuth client, turn on **Use the Cloudflare-hosted OAuth callback** to use the shared callback URL for per-user authorization. If the setting is off, per-user authorization uses the [portal-scoped callback URL](#portal-callback-url).
+
+Use the shared callback URL if the upstream OAuth provider limits the number of allowed redirect URIs or if you want one callback URL for a server across multiple portals. The **Use the Cloudflare-hosted OAuth callback** setting is off by default. Configure it separately for each MCP server that uses DCR.
+
+To turn on the setting, go to **Zero Trust** > **Access controls** > **MCP Portals** > **MCP servers**, add or edit an MCP server that uses DCR, and turn on **Use the Cloudflare-hosted OAuth callback** under **Basic information** > **Advanced settings**.
 
 ## Create a portal
 
@@ -587,7 +617,7 @@ The `auth_type` field accepts the following values:
 
 | Value             | Description                                                                                                                                          |
 | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. You can use automatic OAuth registration or provide manual OAuth credentials.                           |
+| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                   |
 | `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
 | `unauthenticated` | The server does not require authentication.                                                                                                          |
 
@@ -1219,10 +1249,9 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 
 ### OAuth authentication fails with a redirect URI error when connecting to an upstream MCP server.
 
-Errors such as `invalid_redirect_uri`, `invalid_client_metadata`, or `Redirect URI not allowed` indicate that the upstream MCP server rejected the callback URL that the portal registered during the OAuth flow. Refer to [Upstream OAuth callback URL](#upstream-oauth-callback-url) for background on how the callback URL is determined.
+Errors such as `invalid_redirect_uri`, `invalid_client_metadata`, or `Redirect URI not allowed` indicate that the upstream OAuth provider rejected a redirect URI that Cloudflare used to perform callback. Verify that you added the correct callback URL to the upstream OAuth provider's redirect URI allowlist. For more information, refer to [Upstream OAuth callback URLs](#upstream-oauth-callback-urls).
 
-1. By default, the upstream provider must allowlist `https://<your-portal-hostname>/servers-callback` as a redirect URI (for example, `https://my-portal.example.com/servers-callback`). OAuth providers typically exact-match the full URI including path. Contact the upstream MCP server vendor if you do not control the allowlist.
-2. If the portal is configured to use the [shared Cloudflare callback URL](#shared-cloudflare-callback-url-opt-in), the upstream provider must instead allowlist `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`.
+Contact the upstream MCP server vendor if you do not control the allowlist.
 
 ### Tool calls fail when Gateway routing is turned on.
 

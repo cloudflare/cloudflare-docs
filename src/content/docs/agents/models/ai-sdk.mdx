@@ -1,0 +1,436 @@
+---
+title: AI SDK
+pcx_content_type: how-to
+description: Use createAI from agents/models/ai-sdk to call Workers AI models and route third-party AI SDK models through AI Gateway.
+tags:
+  - AI
+sidebar:
+  order: 1
+  badge: Beta
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+`agents/models/ai-sdk` is an [AI SDK](https://ai-sdk.dev/) provider for Workers AI and AI Gateway. `createAI` returns a full `ProviderV4`, so its models work anywhere the AI SDK takes a model: `generateText`, `streamText`, tools, structured output, and [Think](/agents/harnesses/think/).
+
+:::caution[Beta]
+This provider is in beta. Its API may change in a minor release.
+:::
+
+## Install
+
+The provider needs `ai@^7` and `@ai-sdk/provider@^4`. Both are optional peer dependencies of `agents`:
+
+<PackageManagers pkg="agents ai @ai-sdk/provider" />
+
+Add a vendor's AI SDK provider only if you call that vendor's models, for example `@ai-sdk/anthropic` or `@ai-sdk/openai`.
+
+Add the `AI` binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI",
+	},
+}
+```
+
+</WranglerConfig>
+
+## Call a Workers AI model
+
+Pass a `@cf/` id. Model ids autocomplete from `@cloudflare/workers-types`:
+
+<TypeScriptExample>
+
+```ts
+import { createAI } from "agents/models/ai-sdk";
+import { generateText } from "ai";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
+
+		const { text } = await generateText({
+			model: ai("@cf/zai-org/glm-4.7-flash"),
+			prompt: "Say hello in three words",
+		});
+
+		return Response.json({ text });
+	},
+};
+```
+
+</TypeScriptExample>
+
+Any string that is not a `@cf/` id throws a `TypeError` that names the provider package to install.
+
+## Call a third-party model
+
+Build the model with the vendor's own AI SDK provider, then pass it to `ai()`. The request goes through AI Gateway, which holds the credential, so the vendor's `apiKey` is a placeholder:
+
+<TypeScriptExample>
+
+```ts
+import { createAnthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
+import { createAI } from "agents/models/ai-sdk";
+import { generateText } from "ai";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
+		const anthropic = createAnthropic({ apiKey: "cloudflare" });
+		const openai = createOpenAI({ apiKey: "cloudflare" });
+
+		const claude = await generateText({
+			model: ai(anthropic("claude-opus-4-8")),
+			prompt: "Say hello in three words",
+		});
+
+		const gpt = await generateText({
+			model: ai(openai.responses("gpt-5-mini")),
+			prompt: "Say hello in three words",
+		});
+
+		return Response.json({ claude: claude.text, gpt: gpt.text });
+	},
+};
+```
+
+</TypeScriptExample>
+
+Use the vendor's own model id. The provider does not rewrite ids, so `claude-opus-4.8` reaches Anthropic as written and Anthropic rejects it.
+
+Providers on [Unified Billing](/ai-gateway/features/unified-billing/) answer with no key of yours. For any other provider, [store a key on the gateway](/ai-gateway/configuration/bring-your-own-keys/). Until you do, the vendor's own error comes back unchanged.
+
+`ai()` clones the model for each call and never changes the object you passed. If you add middleware, wrap the model with `ai()` first:
+
+```ts
+wrapLanguageModel({ model: ai(anthropic("claude-opus-4-8")), middleware });
+```
+
+A model that is already wrapped in middleware hides the settings the provider needs, so `ai()` rejects it.
+
+## Stream, call tools, and return structured output
+
+Both kinds of model work with every AI SDK call:
+
+<TypeScriptExample>
+
+```ts
+import { createAI } from "agents/models/ai-sdk";
+import { generateText, isStepCount, Output, streamText, tool } from "ai";
+import { z } from "zod";
+
+const getWeather = tool({
+	description: "Get the current weather for a city.",
+	inputSchema: z.object({ city: z.string() }),
+	execute: ({ city }) => ({ city, conditions: "clear", temperatureC: 21 }),
+});
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
+		const model = ai("@cf/zai-org/glm-4.7-flash");
+		const { pathname } = new URL(request.url);
+
+		if (pathname === "/stream") {
+			const result = streamText({
+				model,
+				prompt: "Write a haiku about Durable Objects",
+			});
+			return result.toTextStreamResponse();
+		}
+
+		if (pathname === "/tools") {
+			const { text } = await generateText({
+				model,
+				prompt: "What is the weather in Lisbon?",
+				tools: { getWeather },
+				stopWhen: isStepCount(3),
+			});
+			return Response.json({ text });
+		}
+
+		const { output } = await generateText({
+			model,
+			prompt: "One surprising fact about octopuses.",
+			output: Output.object({ schema: z.object({ fact: z.string() }) }),
+		});
+		return Response.json(output);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Use it in Think
+
+Return a model from `getModel()`:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import { createAI } from "agents/models/ai-sdk";
+
+export class Assistant extends Think<Env> {
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.7-code");
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Cache responses
+
+AI Gateway can cache responses. Set `cacheTtl` in seconds, and optionally a `cacheKey`. Pass `skipCache: true` on a call to bypass the cache:
+
+```ts
+const ai = createAI({ binding: env.AI, id: "prod", cacheTtl: 60 });
+
+// A longer TTL for one model.
+const faq = ai("@cf/zai-org/glm-4.7-flash", {
+	cacheTtl: 3600,
+	cacheKey: "faq-v1",
+});
+
+// Skip the cache for one call.
+await generateText({
+	model: faq,
+	prompt: "What changed today?",
+	providerOptions: { cloudflare: { skipCache: true } },
+});
+```
+
+## Tag requests for logs and analytics
+
+Attach `metadata` to the gateway log entry. Set it once on the provider and add to it per call. Metadata merges key by key:
+
+```ts
+const ai = createAI({ binding: env.AI, metadata: { app: "support-bot" } });
+
+await generateText({
+	model: ai(anthropic("claude-opus-4-8")),
+	prompt: "Summarize this ticket",
+	providerOptions: {
+		cloudflare: { metadata: { userId: "u_123" }, eventId: "ticket-42" },
+	},
+});
+```
+
+`eventId` groups several requests into one gateway event, such as all the model calls in one agent turn.
+
+## Fall back to another model
+
+`fallback` lists models to try in order if the primary model fails before it produces any output. Mix Workers AI ids and model objects:
+
+```ts
+const model = ai(anthropic("claude-opus-4-8"), {
+	fallback: [ai(openai.responses("gpt-5-mini")), "@cf/zai-org/glm-4.7-flash"],
+});
+```
+
+A request that the vendor rejects falls back. So does a stream that fails before its first output part. Once a model has produced output, its answer is final, errors included. `providerMetadata.cloudflare.model` names the model that answered.
+
+Each fallback model uses the chain's gateway options. The chain's `id`, `cacheTtl`, and the other gateway options win over a fallback model's own, and `metadata` merges. Headers and Workers AI options a fallback model was built with stay its own.
+
+Fallback runs in your Worker today.
+
+## Set options
+
+Set gateway options on the provider, on a model, or per call under `providerOptions.cloudflare`. A per-call option wins over a per-model option, which wins over the provider's:
+
+```ts
+// Provider
+const ai = createAI({ binding: env.AI, id: "prod", metadata: { app: "demo" } });
+
+// Model
+const model = ai(anthropic("claude-opus-4-8"), { cacheTtl: 3600 });
+
+// Call
+await generateText({
+	model,
+	prompt: "hi",
+	providerOptions: {
+		cloudflare: { skipCache: true, metadata: { userId: "u1" } },
+	},
+});
+```
+
+The provider removes `providerOptions.cloudflare` before the call reaches a vendor's model, so the vendor never sees it.
+
+Gateway options can be given flat or nested: `{ cacheTtl: 60 }` and `{ gateway: { cacheTtl: 60 } }` are the same.
+
+| Option               | Type                                                  | Description                                                                                |
+| -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `id`                 | `string`                                              | Gateway id. Defaults to `"default"`, which is created the first time you use it.           |
+| `gateway`            | `string \| GatewayOptions`                            | The gateway id, or the gateway options nested.                                             |
+| `skipCache`          | `boolean`                                             | Bypass the gateway cache.                                                                  |
+| `cacheTtl`           | `number`                                              | Cache lifetime in seconds.                                                                 |
+| `cacheKey`           | `string`                                              | Cache key to use instead of the one derived from the request.                              |
+| `collectLog`         | `boolean`                                             | Whether the gateway stores the request and response in its log.                            |
+| `metadata`           | `Record<string, string \| number \| boolean \| null>` | Values attached to the gateway log entry.                                                  |
+| `eventId`            | `string`                                              | Groups several requests into one gateway event.                                            |
+| `requestTimeoutMs`   | `number`                                              | Timeout for the upstream request.                                                          |
+| `retries`            | `{ maxAttempts, retryDelayMs, backoff }`              | Gateway retry policy for the upstream call. `maxAttempts` is 1 to 5.                       |
+| `fallback`           | `(WorkersAIModelId \| LanguageModelV4)[]`             | Models to try in order. Model and call only.                                               |
+| `headers`            | `Record<string, string>`                              | Extra request headers, merged last. Model and call only.                                   |
+| `sessionAffinity`    | `string`                                              | Workers AI only. Sends requests with the same key to one replica for prefix caching.       |
+| `reasoningEffort`    | `"low" \| "medium" \| "high" \| null`                 | Workers AI only. `null` turns reasoning off on models that allow it.                       |
+| `chatTemplateKwargs` | `Record<string, unknown>`                             | Workers AI only. Sent as `chat_template_kwargs`, for example `{ enable_thinking: false }`. |
+
+For a vendor's model, ask for reasoning with the AI SDK's `reasoning` call option or the vendor's own `providerOptions`.
+
+## Read gateway metadata
+
+Every result, and every stream's `finish` part, carries `providerMetadata.cloudflare`. For a vendor's model it sits next to the vendor's own metadata:
+
+```ts
+const { providerMetadata } = await generateText({
+	model: ai(anthropic("claude-opus-4-8")),
+	prompt: "hi",
+});
+
+providerMetadata?.cloudflare;
+// {
+//   model: "claude-opus-4-8",
+//   provider: "anthropic",
+//   gateway: "default",
+//   logId: "01M1KZWN069WWNPC18V05NKHSS",
+//   cacheStatus: "MISS",
+//   ...
+// }
+```
+
+| Field         | Description                                                    |
+| ------------- | -------------------------------------------------------------- |
+| `model`       | The model that answered, after any fallback.                   |
+| `gateway`     | The gateway id the request went through.                       |
+| `provider`    | The gateway provider, for a vendor's model.                    |
+| `logId`       | The gateway log entry, from `cf-aig-log-id`.                   |
+| `eventId`     | The gateway event, from `cf-aig-event-id`.                     |
+| `requestId`   | The gateway request id, from `cf-aig-request-id`.              |
+| `traceId`     | The trace this request belongs to, from `cf-aig-trace-id`.     |
+| `runId`       | From `cf-aig-run-id`, when the gateway sends one.              |
+| `cacheStatus` | `HIT` or `MISS`, from `cf-aig-cache-status`.                   |
+| `step`        | The step of a gateway route that answered, from `cf-aig-step`. |
+
+Only `model` and `gateway` are always present. Check for the other fields before you use them.
+
+## Handle errors
+
+The provider throws `CloudflareAIError`, which extends the AI SDK's `APICallError`. The AI SDK's retry loop reads its `isRetryable` flag:
+
+```ts
+import { CloudflareAIError } from "agents/models/ai-sdk";
+
+try {
+	await generateText({ model: ai("@cf/zai-org/glm-4.7-flash"), prompt: "hi" });
+} catch (error) {
+	if (error instanceof CloudflareAIError) {
+		console.log(error.status, error.code, error.logId, error.model);
+		// error.attempts lists every fallback model that failed.
+	}
+}
+```
+
+`code` is one of `"auth"`, `"rate-limit"`, `"not-found"`, `"bad-request"`, `"provider-error"`, `"gateway-error"`, or `"unknown"`.
+
+For a vendor's model, `CloudflareAIError` covers the gateway's own failures, such as a missing gateway or an unpaid account. The vendor's own errors, such as an unknown model id or a rate limit, come from the vendor's provider in its own error type.
+
+## Use other modalities
+
+Embeddings, images, speech, transcription, and reranking use Workers AI models from the same provider. Each method also has its `ProviderV4` name, such as `ai.embeddingModel()`:
+
+```ts
+import {
+	embedMany,
+	generateImage,
+	generateSpeech,
+	rerank,
+	transcribe,
+} from "ai";
+
+const { embeddings } = await embedMany({
+	model: ai.embedding("@cf/baai/bge-base-en-v1.5"),
+	values: ["hello", "world"],
+});
+
+const { image } = await generateImage({
+	model: ai.image("@cf/black-forest-labs/flux-1-schnell"),
+	prompt: "A cyberpunk lizard",
+});
+
+const { audio } = await generateSpeech({
+	model: ai.speech("@cf/deepgram/aura-1"),
+	text: "Hello from Cloudflare.",
+});
+
+const { text } = await transcribe({
+	model: ai.transcription("@cf/openai/whisper-large-v3-turbo"),
+	audio: audio.uint8Array,
+});
+
+const { rerankedDocuments } = await rerank({
+	model: ai.reranking("@cf/baai/bge-reranker-base"),
+	documents: ["a cyberpunk lizard", "a rainy Tuesday"],
+	query: "Which one is cooler?",
+});
+```
+
+Model-specific settings go under `providerOptions.cloudflare`:
+
+| Modality      | Call options used                                                                         | `providerOptions.cloudflare`                               |
+| ------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Image         | `prompt`, `n`, `size`, `seed`, `files`, `mask`                                            | `steps`, `guidance`, `negativePrompt`, `strength`          |
+| Speech        | `text`, `voice` (as `speaker`), `outputFormat` (as `encoding`), `language` (MeloTTS only) | None                                                       |
+| Transcription | `audio`, `mediaType`                                                                      | `language`, `task`, `initialPrompt`, `prefix`, `vadFilter` |
+| Reranking     | `query`, `documents`, `topN` (as `top_k`)                                                 | None                                                       |
+
+An option a model does not take is listed in the result's `warnings` instead of being sent. For example, `flux-1-schnell` takes only a prompt and `steps`. Image generation makes one image per request, so `generateImage` with a larger `n` sends parallel requests.
+
+To route a vendor's own embedding, image, speech, or transcription model through AI Gateway, pass it to `ai.routed(model)`. `ai.routed()` takes the gateway options, `headers`, and `sessionAffinity`.
+
+## Use a provider registry
+
+`createAI` returns a `ProviderV4`, so it works with `createProviderRegistry` and as the AI SDK's global default provider:
+
+```ts
+import { createProviderRegistry, generateText } from "ai";
+
+const registry = createProviderRegistry({ cloudflare: ai });
+await generateText({
+	model: registry.languageModel("cloudflare:@cf/zai-org/glm-4.7-flash"),
+	prompt: "Hi",
+});
+
+// Bare strings now resolve through this provider.
+globalThis.AI_SDK_DEFAULT_PROVIDER = createAI({ binding: env.AI });
+await generateText({ model: "@cf/zai-org/glm-4.7-flash", prompt: "Hi" });
+```
+
+A string still has to be a `@cf/` id. Reach a vendor's model with a model object.
+
+## Limitations
+
+- AI Gateway's universal request carries JSON only. A multipart body, such as a file upload sent as `FormData`, throws a `TypeError`.
+- `@cf/deepgram/nova-3` and `@cf/deepgram/flux` are not supported. They throw a `CloudflareAIError` before any request is sent. Use `@cf/openai/whisper-large-v3-turbo` for transcription.
+- `reasoningEffort`, `chatTemplateKwargs`, and `sessionAffinity` apply to Workers AI models only.
+
+## Related resources
+
+- [pi-ai provider](/agents/models/pi-ai/)
+- [Model catalog](/ai/models/)
+- [AI Gateway Worker binding methods](/ai-gateway/usage/worker-binding-methods/)
+- [Unified Billing](/ai-gateway/features/unified-billing/)

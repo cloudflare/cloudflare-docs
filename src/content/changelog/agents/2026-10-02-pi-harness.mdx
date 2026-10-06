@@ -1,0 +1,133 @@
+---
+title: Run the Pi Durable harness on Cloudflare with the Agents SDK
+description: The PiHarness beta in the Agents SDK runs the Pi Durable harness durably inside an Agent or Durable Object.
+products:
+  - agents
+  - workers
+date: 2026-10-02
+---
+
+import {
+	CopyPromptButton,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
+
+The [Agents SDK](/agents/) now provides first-class support for building agents using the Pi harness. You can build long-running agents using the combination of [Pi 1.0](https://earendil.com/posts/pi-1-0/), [Pi Durable](https://earendil.com/posts/pi-durable/), and the new `PiHarness` class that the Cloudflare Agents SDK provides, ensuring your agent's work is durably persisted, even if interrupted mid-turn.
+
+Built with [Earendil](https://earendil.com/), this integration is our first step toward first-class support for third-party agent harnesses on Cloudflare.
+
+<CopyPromptButton
+	tooltip="Build and deploy a Pi Durable agent"
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/pi/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi, then use them to build and deploy my first Pi Durable agent on Cloudflare with the Agents SDK. Give me the deployed URL."
+/>
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
+
+:::caution[Beta]
+
+`PiHarness` is in beta. [Pi Durable](https://earendil.com/posts/pi-durable/) is a new, experimental package, and the `PiHarness` API will likely change as Pi Durable matures.
+
+:::
+
+`PiHarness` is a new "Lifecycle capability" provided by the Cloudflare Agents SDK. Pi Durable provides the agent harness and the Lifecycle is responsible for keeping the agent running in the Durable Object. The Lifecycle is a core concept in the Agents SDK ensuring that long-running work can run in a Durable Object, surviving restarts, crashes, and network issues. We will share more on Lifecycle capabilities in the near future.
+
+## Install
+
+<PackageManagers pkg="agents@latest @earendil-works/pi-durable @earendil-works/pi-ai" />
+
+Both Pi packages are optional peer dependencies of `agents`, so you only install them if you use the harness.
+
+## Use it in an Agent
+
+Creating a Pi agent requires configuring the Pi `Harness` with a model, skills, and tools, then registering the `PiHarness` with the `Agent` class.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing Pi AI provider.
+
+## Add tools with extensions
+
+Both tools and system prompt sections are provided to the Pi `Harness` via extensions.
+
+<TypeScriptExample>
+
+```ts
+import { Type } from "@earendil-works/pi-ai";
+import type { ToolRegistration } from "@earendil-works/pi-durable";
+import { skills } from "agents/harness/pi";
+
+const WordCount = Type.Object({ text: Type.String() });
+
+const wordCount: ToolRegistration<typeof WordCount> = {
+	name: "word_count",
+	description: "Count the words in a text.",
+	parameters: WordCount,
+	replay: "safe",
+	async execute({ text }) {
+		const words = text.split(/\s+/).filter(Boolean).length;
+		return { content: [{ type: "text", text: String(words) }] };
+	},
+};
+
+// In the harness factory, before Harness.open():
+registry.install({
+	name: "editor",
+	sections: [
+		{ key: "preamble", render: () => "You are an editor.", tag: false },
+	],
+	tools: [wordCount],
+});
+registry.install(await skills(sources));
+```
+
+</TypeScriptExample>
+
+For more information on creating and configuring extensions, refer to [Extensions](/agents/harnesses/pi/extensions/).
+
+## Learn more
+
+- [Pi harness documentation](/agents/harnesses/pi/)
+- [Pi harness extensions](/agents/harnesses/pi/extensions/)
+- [pi-ai model provider](/agents/models/pi-ai/)
+- [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi), with WebSockets, a browser UI, and a `@cloudflare/computer` Workspace for the model's tools
+- [Lifecycle](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md)
+- [Pi Durable announcement](https://earendil.com/posts/pi-durable/) from Earendil

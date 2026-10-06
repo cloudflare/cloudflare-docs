@@ -8,7 +8,7 @@ import { MetaInfo, Type } from "~/components";
 
 An array of message objects. Each message has:
 
-- `content` <Type text="string" /> - The message content.
+- `content` <Type text="string | array" /> - Text, or an array containing `text`, `image_url`, and `file` parts. Image URLs must use `https://` or `data:image/<subtype>;base64,...`. File parts use a `data:<mime>;base64,...` URI, include a filename, and have a 10 MiB decoded limit.
 - `role` <Type text="string" /> - The role: `user`, `system`, or `assistant`.
 
 ---
@@ -23,6 +23,7 @@ Set to `true` to return a stream of results as they are generated. Defaults to `
 
 Per-request overrides for retrieval and model behavior. Supports the following nested options:
 
+- `custom_metadata` <Type text="object" /> - Adds up to two string, number, or boolean entries to AI Gateway logs. The keys `ai-search`, `task`, `origin`, and keys beginning with `cf.` are reserved.
 - `retrieval.filters` <Type text="object" /> - Narrow down search results based on metadata. Refer to [Metadata filtering](/ai-search/configuration/retrieval/filtering/) for syntax and examples.
 - `retrieval.max_num_results` <Type text="number" /> - Maximum number of chunks to return. Defaults to `10`, maximum `50`.
 - `retrieval.retrieval_type` <Type text="string" /> - One of `vector`, `keyword`, or `hybrid`.

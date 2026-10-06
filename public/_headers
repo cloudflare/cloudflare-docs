@@ -7,13 +7,16 @@
 /_astro/*
 	Cache-Control: public, max-age=604800, immutable
 
-/*/llms.txt:
+/llms.txt
   Content-Type: text/plain; charset=utf-8
 
-/*/llms-full.txt:
+/*/llms.txt
   Content-Type: text/plain; charset=utf-8
 
-/*/index.md:
+/*/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+
+/*/index.md
   Content-Type: text/markdown; charset=utf-8
 
 /agent-setup/prompt.md

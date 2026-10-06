@@ -170,17 +170,11 @@ Your application is now live at the hostname you configured. Cloudflare automati
 Non-HTTP services (SSH, TCP, RDP) require `cloudflared` on the client side. Refer to the [protocols reference](/tunnel/concepts/routing/#supported-protocols) for details.
 :::
 
-## Quick tunnels (development)
+## Quick Tunnels (development)
 
-For local development, you can instantly expose localhost without a Cloudflare account:
+Quick Tunnels expose a local HTTP service through a temporary `trycloudflare.com` URL. You can create a public URL or restrict access by email without a Cloudflare account.
 
-```sh
-cloudflared tunnel --url http://localhost:8080
-```
-
-This generates a random `trycloudflare.com` subdomain that proxies traffic to your local server. Quick tunnels are for testing only — they have a 200 concurrent request limit and do not support Server-Sent Events (SSE).
-
-For production use, [create a tunnel](#create-a-tunnel) instead.
+To share a local service, refer to [Quick Tunnels](/tunnel/get-started/quick-tunnels/).
 
 ## Next steps
 

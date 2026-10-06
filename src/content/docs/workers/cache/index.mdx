@@ -390,7 +390,7 @@ Because the upper tier and the Smart Placement target are chosen independently t
 
 ## Purging the cache
 
-Your Worker can invalidate its own cache at any time using `ctx.cache.purge()`. Tags are the most flexible mechanism — tag responses with `Cache-Tag` when returning them, and purge those tags later:
+Your Worker can purge its own cache at any time using `ctx.cache.purge()`. Tags are the most flexible mechanism — tag responses with `Cache-Tag` when returning them, and purge those tags later:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -405,7 +405,7 @@ export default {
 
 </TypeScriptExample>
 
-You can also [import `cache` from `cloudflare:workers`](/workers/cache/purge/#two-ways-to-call-purge) and call `cache.purge({...})` when you do not have `ctx` in scope — for example, from a utility module. For all purge modes and patterns, refer to [Purging the cache](/workers/cache/purge/).
+You can also [import `cache` from `cloudflare:workers`](/workers/cache/purge/#two-ways-to-call-purge) and call `cache.purge({...})` when you do not have `ctx` in scope — for example, from a utility module. To mark cached responses stale instead of deleting them, call [`ctx.cache.invalidate()`](/workers/cache/purge/#invalidate-cached-responses) with the same options. The cache then revalidates them with your Worker, which can answer `304 Not Modified` to keep the cached body. For all purge modes and patterns, refer to [Purge and invalidate the cache](/workers/cache/purge/).
 
 ## Pricing
 

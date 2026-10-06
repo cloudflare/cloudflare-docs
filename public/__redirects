@@ -3,6 +3,12 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+/workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
+/workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
+/workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
+/workers/observability/exporting-opentelemetry-data/axiom/ /observability/export/opentelemetry/axiom/ 301
+/workers/observability/exporting-opentelemetry-data/sentry/ /observability/export/opentelemetry/sentry/ 301
+/workers/observability/exporting-opentelemetry-data/posthog/ /observability/export/opentelemetry/posthog/ 301
 
 # ProductFeatures component removed
 /dns/reference/all-features/ /dns/ 301
@@ -15,6 +21,10 @@
 
 # Workers Previews
 /workers/previews/automation-examples/ /workers/previews/examples/ 301
+
+# Build Output reference pages removed
+/cf/projects/build-output/ /cf/projects/#build 301
+/workers/build-output/ /cf/projects/#build 301
 
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
@@ -30,6 +40,9 @@
 
 # Privacy Proxy
 /privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/ /ohttp-relay/ 301
 
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
@@ -57,6 +70,9 @@
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
@@ -799,6 +815,7 @@
 /d1/configuration/remote-development/ /d1/best-practices/remote-development/ 301
 /d1/reference/database-commands/ /d1/sql-api/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
+/changelog/post/2026-08-07-us-jurisdiction/ /changelog/post/2026-10-02-us-jurisdiction/ 301
 
 # Data Localization Suite
 /data-localization/regional-services/get-started/ /data-localization/regional-services/regional-hostnames/ 301
@@ -1693,8 +1710,9 @@
 /page-shield/reference/page-shield-api/ /client-side-security/reference/api/ 301
 
 # pipelines
-/pipelines/concepts/how-pipelines-work/ /pipelines/ 301
-/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
+/pipelines/concepts/how-pipelines-work/ /basin-pipelines/ 301
+/pipelines/platform/wrangler-commands/ /basin-pipelines/reference/wrangler-commands/ 301
+/pipelines/ /basin-pipelines/ 301
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
 /queues/javascript-apis/ /queues/configuration/javascript-apis/ 301
@@ -2098,11 +2116,22 @@
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/objects/multipart-objects/ /r2/objects/upload-objects/ 301
-/r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
+/r2/sql/platform/troubleshooting/ /basin-sql/troubleshooting/ 301
+/r2/data-catalog/ /basin-catalog/ 301
+/r2-data-catalog/ /basin-catalog/ 301
 
 # r2 sql
-/r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
-/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
+/r2-sql/platform/wrangler-commands/ /basin-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /basin-sql/reference/limitations-best-practices/ 301
+/r2-sql/ /basin-sql/ 301
+
+# Basin changelog product routes
+/changelog/product/pipelines/ /changelog/product/basin-pipelines/ 301
+/changelog/product/r2-data-catalog/ /changelog/product/basin-catalog/ 301
+/changelog/product/r2-sql/ /changelog/product/basin-sql/ 301
+/changelog/rss/pipelines.xml /changelog/rss/basin-pipelines.xml 301
+/changelog/rss/r2-data-catalog.xml /changelog/rss/basin-catalog.xml 301
+/changelog/rss/r2-sql.xml /changelog/rss/basin-sql.xml 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -2678,7 +2707,7 @@
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/downloads/ /cloudflare-one/connections/connect-networks/downloads/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
@@ -2923,6 +2952,9 @@
 # DYNAMIC REDIRECTS
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/* /ohttp-relay/:splat 301
 
 # Agent Skills legacy discovery path
 /.well-known/skills/* /.well-known/agent-skills/:splat 301
@@ -3181,7 +3213,13 @@
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
 
 # R2 Data Catalog promoted to a top-level product (was nested under R2)
-/r2/data-catalog/* /r2-data-catalog/:splat 301
+/r2/data-catalog/* /basin-catalog/:splat 301
+/r2-data-catalog/* /basin-catalog/:splat 301
+
+# Basin product route migrations
+/pipelines/* /basin-pipelines/:splat 301
+/r2-sql/* /basin-sql/:splat 301
+
 /style-guide/formatting/* /style-guide/style-and-grammar/formatting/:splat 301
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301

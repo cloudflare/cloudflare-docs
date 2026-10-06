@@ -87,7 +87,6 @@ To get started with R2:
 Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API.
 
 - Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
-
 - The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
 
 It is ideal for projects that require:
@@ -153,19 +152,21 @@ To get started with Hyperdrive:
 - [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
 - Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/concepts/how-hyperdrive-works/).
 
-## Pipelines
+<a id="pipelines"></a>
 
-Pipelines is a streaming ingestion service that allows you to ingest high volumes of real time data, without managing any infrastructure.
+## Basin Pipelines
 
-Pipelines allows you to:
+Basin Pipelines is a streaming ingestion service that allows you to ingest high volumes of real time data, without managing any infrastructure.
+
+Basin Pipelines allows you to:
 
 - Ingest data at extremely high throughput (tens of thousands of records per second or more)
 - Batch and write data directly to object storage, ready for querying
 - (Future) Transform and aggregate data during ingestion
 
-To get started with Pipelines:
+To get started with Basin Pipelines:
 
-- [Create a Pipeline](/pipelines/getting-started/) that can batch and write records to R2.
+- [Create a pipeline](/basin-pipelines/getting-started/) that can batch and write records to R2.
 
 ### Analytics Engine
 

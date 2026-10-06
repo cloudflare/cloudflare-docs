@@ -716,6 +716,11 @@ product:migration-guides:
       - any-glob-to-any-file:
           - src/content/docs/migration-guides/**
 
+product:monetization-gateway:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/monetization-gateway/**
+
 product:moq:
   - changed-files:
       - any-glob-to-any-file:
@@ -819,9 +824,9 @@ product:phishnet:
 product:pipelines:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/pipelines/**
+          - src/content/docs/basin-pipelines/**
           - src/assets/images/pipelines/**
-          - src/content/changelog/pipelines/**
+          - src/content/changelog/basin-pipelines/**
 
 product:posture-checks:
   - changed-files:
@@ -836,7 +841,7 @@ product:posture-checks:
 product:privacy-gateway:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/privacy-gateway/**
+          - src/content/docs/ohttp-relay/**
 
 product:privacy-pass:
   - changed-files:
@@ -877,16 +882,16 @@ product:r2:
 product:r2-data-catalog:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/r2-data-catalog/**
+          - src/content/docs/basin-catalog/**
           - src/assets/images/r2-data-catalog/**
-          - src/content/changelog/r2-data-catalog/**
+          - src/content/changelog/basin-catalog/**
 
 product:r2-sql:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/r2-sql/**
+          - src/content/docs/basin-sql/**
           - src/assets/images/r2-sql/**
-          - src/content/changelog/r2-sql/**
+          - src/content/changelog/basin-sql/**
 
 product:radar:
   - changed-files:
@@ -1161,6 +1166,12 @@ product:web-analytics:
           - src/content/release-notes/beacon-min-js.yaml
           - src/content/changelog/web-analytics/**
           - src/assets/images/changelog/web-analytics/**
+
+product:web-search:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/web-search/**
+          - src/content/changelog/web-search/**
 
 product:web3:
   - changed-files:

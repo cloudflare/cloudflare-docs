@@ -1,0 +1,8 @@
+import { CopyPromptButton } from "~/components";
+
+Copy this prompt into your coding agent to set up your first Artifacts repository and start pushing code to it.
+
+<CopyPromptButton
+	tooltip="Set up your first Artifacts repository"
+	prompt="Set me up with Cloudflare Artifacts so I can start pushing code to my first repository. Read https://developers.cloudflare.com/artifacts/llms.txt and https://developers.cloudflare.com/cf/llms.txt for current instructions. Use the Cloudflare cf CLI, installing it if needed. Help me authenticate, confirm my account and namespace, and verify Artifacts access. Create a new TypeScript Worker project with an ARTIFACTS binding and use it locally to create a repository on Cloudflare. Push an initial README commit and clone the repository separately to verify it works. Give me the repository's Git remote and instructions for pushing my own code. Keep credentials out of source control, Git configuration, remote URLs, and logs. Do not deploy or change billing settings. Stop the local server afterward. If anything fails, explain the blocker rather than claiming setup is complete."
+/>

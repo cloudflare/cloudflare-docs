@@ -84,6 +84,30 @@ Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
 
 You cannot use these selectors to isolate traffic and isolation matches for these selectors will not appear in your Gateway logs. Additionally, you cannot apply other policies based on these selectors while in isolation. For example, if you have a Block policy that matches traffic based on destination IP, Gateway will not block the matching traffic if it is already isolated by an Isolate policy.
 
+## Font rendering
+
+The remote browser runs in a Linux-based container that does not include proprietary or licensed fonts such as Arial, Times New Roman, or other fonts typically bundled with Windows or macOS. If a website's CSS specifies one of these fonts without a generic fallback, the remote browser cannot match the named font and falls back to its own default, which may render text differently than expected.
+
+For example, the following CSS will produce different results in the remote browser than on a local Windows machine:
+
+```css
+/* No generic fallback — text may render differently in Browser Isolation */
+body {
+  font-family: Arial;
+}
+```
+
+To avoid font rendering differences, website owners should always include a generic fallback family at the end of their `font-family` declarations:
+
+```css
+/* Generic fallback ensures consistent rendering */
+body {
+  font-family: Arial, sans-serif;
+}
+```
+
+Websites that load custom fonts as web fonts (for example, from Google Fonts or a self-hosted source) are not affected, because the remote browser downloads and uses the font file directly.
+
 ## File download size
 
 When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512 MB.

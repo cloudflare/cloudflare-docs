@@ -30,9 +30,11 @@ interface Props {
 	 * from a single top-level variant selector.
 	 */
 	variantTitle?: string;
+	/** Hide the "Filter parameters" search input. */
+	hideSearch?: boolean;
 }
 
-const { schema, title, variantTitle } = Astro.props;
+const { schema, title, variantTitle, hideSearch = false } = Astro.props;
 const hideRequired = title === "Output";
 
 // Check if schema is a flat/simple schema (no properties, no oneOf/anyOf with properties)
@@ -429,6 +431,7 @@ const variantRows =
 			rows={rows}
 			schemaId={schemaId}
 			hideRequired={hideRequired}
+			hideSearch={hideSearch}
 			client:visible
 		/>
 	)}

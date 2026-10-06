@@ -54,6 +54,8 @@ When using the API or Terraform, add schema operations separately. For automatio
 
 Changes may take several minutes, depending on the operation count.
 
+Multiple uploaded schemas can be active at the same time. When a new schema contains an operation that is already covered by an active schema, the new schema replaces the validation definition for that operation only. Operations that are not included in the new schema continue to use their existing validation definitions.
+
 <a id="view-active-schemas" />
 <a id="delete-active-schemas" />
 

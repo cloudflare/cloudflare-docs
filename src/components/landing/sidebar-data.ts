@@ -107,6 +107,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Sandboxes", "/sandbox/"),
 					link("Vectorize", "/vectorize/"),
 					link("AI Search", "/ai-search/"),
+					link("Web Search API", "/web-search/"),
 					link("AI Crawl Control", "/ai-crawl-control/"),
 				],
 			},
@@ -117,12 +118,22 @@ export const sidebarSections: SidebarSection[] = [
 				collapsed: true,
 				nodes: [
 					link("R2", "/r2/"),
-					link("R2 Data Catalog", "/r2-data-catalog/"),
-					link("R2 SQL", "/r2-sql/"),
-					link("Pipelines", "/pipelines/"),
+					{
+						type: "group",
+						label: "Basin",
+						collapsed: true,
+						nodes: [
+							link("Overview", "/basin/"),
+							link("Basin Pipelines", "/basin-pipelines/"),
+							link("Basin Catalog", "/basin-catalog/"),
+							link("Basin SQL", "/basin-sql/"),
+						],
+					},
+					link("K2", "/k2/"),
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),
+					link("Artifacts", "/artifacts/"),
 				],
 			},
 			{
@@ -213,6 +224,13 @@ export const sidebarSections: SidebarSection[] = [
 			},
 			{
 				type: "group",
+				label: "Monetize",
+				icon: "ph:coins",
+				collapsed: true,
+				nodes: [link("Monetization Gateway", "/monetization-gateway/")],
+			},
+			{
+				type: "group",
 				label: "Delivery & Performance",
 				icon: "speed",
 				collapsed: true,
@@ -236,6 +254,7 @@ export const sidebarSections: SidebarSection[] = [
 				icon: "analytics",
 				collapsed: true,
 				nodes: [
+					link("Observability", "/observability/"),
 					link("Analytics", "/analytics/"),
 					link("Web Analytics", "/web-analytics/"),
 					link("Logs", "/logs/"),

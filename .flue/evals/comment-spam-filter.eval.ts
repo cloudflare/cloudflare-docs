@@ -1,24 +1,19 @@
 import { expect } from "vitest";
-import { describeEval, toolCalls } from "vitest-evals";
-import { createFlueAgentHarness } from "./harness";
+import { describeEval } from "vitest-evals";
+import { createClefHarness } from "./clef-harness";
+import type { SpamVerdict } from "../lib/clef";
 import type { CommentSpamContext } from "../lib/comment-spam";
 
 const baseUrl = process.env.FLUE_BASE_URL ?? "http://localhost:5173";
 const token = process.env.DOCS_FLUE_INTERNAL_TOKEN;
 
-const harness = createFlueAgentHarness<CommentSpamContext>({
+const harness = createClefHarness<CommentSpamContext>({
 	baseUrl,
-	agentName: "comment-spam-filter",
-	dataKey: "comment_spam_verdict",
-	message: "Evaluate this comment for spam and submit your verdict.",
+	kind: "comment",
 	token,
 });
 
-type Verdict = {
-	is_spam?: boolean;
-	confidence?: string;
-	reason?: string;
-};
+type Verdict = SpamVerdict;
 
 const parent = {
 	kind: "pull_request" as const,
@@ -30,7 +25,7 @@ const parent = {
 	author: "docs-writer",
 };
 
-describeEval("comment spam filter", { harness }, (it) => {
+describeEval("comment spam gate (clef)", { harness }, (it) => {
 	it("flags an obvious link-drop spam comment", async ({ run }) => {
 		const result = await run({
 			comment: {
@@ -43,14 +38,10 @@ describeEval("comment spam filter", { harness }, (it) => {
 			parent,
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(true);
-		expect(verdict!.confidence).toBe("high");
-		expect(verdict!.reason).toBeTruthy();
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_comment_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(true);
+		expect(verdict.confidence).toBe("high");
 	});
 
 	it("flags bot-flood gibberish", async ({ run }) => {
@@ -71,13 +62,10 @@ describeEval("comment spam filter", { harness }, (it) => {
 			},
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(true);
-		expect(verdict!.confidence).toBe("high");
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_comment_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(true);
+		expect(verdict.confidence).toBe("high");
 	});
 
 	it("never flags a support question posted as a comment", async ({ run }) => {
@@ -92,12 +80,9 @@ describeEval("comment spam filter", { harness }, (it) => {
 			parent,
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(false);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_comment_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(false);
 	});
 
 	it("never flags short reactions like +1 or thanks", async ({ run }) => {
@@ -112,11 +97,41 @@ describeEval("comment spam filter", { harness }, (it) => {
 			parent,
 		});
 
-		const verdict = result.output as Verdict;
+		const verdict = result.output as unknown as Verdict;
 		expect(verdict).toBeDefined();
-		expect(verdict!.is_spam).toBe(false);
-		expect(toolCalls(result).map((c) => c.name)).toContain(
-			"submit_comment_spam_verdict",
-		);
+		expect(verdict.is_spam).toBe(false);
+	});
+
+	it("flags an email-reply artifact", async ({ run }) => {
+		const result = await run({
+			comment: {
+				id: 5818809330,
+				body: "Confirm Approved\n\nOn Tue, Sep 30, 2026 at 10:02 AM github-actions[bot] <notifications@github.com> wrote:\n\n> Please confirm the preview looks right.\n\n--\nReply to this email directly, view it on GitHub, or unsubscribe.\nYou are receiving this because you were mentioned.\nMessage ID: <cloudflare/cloudflare-docs/pull/33664/c5818809330@github.com>",
+				url: "https://github.com/cloudflare/cloudflare-docs/pull/33664#issuecomment-5818809330",
+				author: "emailing-user",
+				author_association: "NONE",
+			},
+			parent,
+		});
+
+		const verdict = result.output as unknown as Verdict;
+		expect(verdict.is_spam).toBe(true);
+		expect(verdict.confidence).toBe("high");
+	});
+
+	it("does not flag an email reply with a real question", async ({ run }) => {
+		const result = await run({
+			comment: {
+				id: 5818809331,
+				body: "Thanks, but the build command in your example is wrong: Pages needs `npm run build`, not `npm build`. Should the docs be corrected?\n\nOn Tue, Sep 30, 2026 at 10:02 AM docs-writer <notifications@github.com> wrote:\n\n> Rewrites the Pages build configuration docs.\n\n--\nReply to this email directly, view it on GitHub, or unsubscribe.\nYou are receiving this because you commented.\nMessage ID: <cloudflare/cloudflare-docs/pull/33664/c5818809331@github.com>",
+				url: "https://github.com/cloudflare/cloudflare-docs/pull/33664#issuecomment-5818809331",
+				author: "careful-reader",
+				author_association: "NONE",
+			},
+			parent,
+		});
+
+		const verdict = result.output as unknown as Verdict;
+		expect(verdict.is_spam).toBe(false);
 	});
 });

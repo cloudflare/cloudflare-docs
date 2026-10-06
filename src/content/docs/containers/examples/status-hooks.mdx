@@ -1,128 +1,169 @@
 ---
 summary: Execute Workers code in reaction to Container status changes
 pcx_content_type: example
-title: Status Hooks
+title: Monitor container lifecycle
 sidebar:
   order: 5
 description: Execute Workers code in reaction to Container status changes
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
   - workers
 ---
 
-import { TabItem, Tabs, TypeScriptExample } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	PackageManagers,
+	Render,
+} from "~/components";
 
-Use `monitor()` with the Durable Object Container API to run code after the Container exits or errors. The `Container` class adds named lifecycle hooks and an inactivity callback.
+Log when a Container becomes ready, exits successfully, or fails. The Durable Object starts a named image and uses `monitor()` to observe its exit.
 
-The direct API example requires the Container to expose `GET /health` on port `4000`. The endpoint must return a successful response when the application is ready. Because `container.start()` does not wait for readiness, the Worker polls this endpoint before forwarding requests.
+## Configure the Worker
 
-<Tabs>
-	<TabItem label="Durable Object Container API">
+<WranglerConfig>
+
+```toml
+name = "container-lifecycle"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[observability]
+enabled = true
+
+[[containers]]
+class_name = "MyContainer"
+scheduling_policy = "durable_object"
+
+[containers.images.base]
+dockerfile = "./Dockerfile"
+
+[[durable_objects.bindings]]
+name = "MY_CONTAINER"
+class_name = "MyContainer"
+
+[exports.MyContainer]
+type = "durable-object"
+storage = "sqlite"
+```
+
+</WranglerConfig>
+
+## Observe readiness and exit
+
+`start()` initiates startup. The Worker waits for a successful `/health` response before forwarding traffic. Concurrent requests share that readiness check, and a failed check can be retried by the next request.
 
 <TypeScriptExample filename="src/index.ts">
+
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-interface Env {}
+interface Env {
+	MY_CONTAINER: DurableObjectNamespace<MyContainer>;
+}
+
+const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
 
 export class MyContainer extends DurableObject<Env> {
-	private ready: Promise<void> | undefined;
+	private starting: Promise<void> | undefined;
+	private monitoring: Promise<void> | undefined;
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		const container = ctx.container!;
+		if (container.running) {
+			void ctx.blockConcurrencyWhile(() =>
+				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+			);
+			this.observeExit();
+		}
+	}
 
 	async fetch(request: Request): Promise<Response> {
-		const container = this.ctx.container!;
-		if (!container.running) {
-			this.ready = undefined;
-		}
-		this.ready ??= this.startAndMonitor().catch((error: unknown) => {
-			this.ready = undefined;
-			throw error;
+		// Concurrent requests share startup and readiness checks.
+		this.starting ??= this.startAndWaitForPort().finally(() => {
+			this.starting = undefined;
 		});
-		await this.ready;
+		await this.starting;
 
 		const url = new URL(request.url);
 		url.protocol = "http:";
 		url.host = "container";
 		const forwarded = new Request(url, request);
 		forwarded.headers.delete("host");
-		return container.getTcpPort(4000).fetch(forwarded);
+		return this.ctx.container!.getTcpPort(8080).fetch(forwarded);
 	}
 
-	private async startAndMonitor(): Promise<void> {
+	private async startAndWaitForPort(): Promise<void> {
 		const container = this.ctx.container!;
-		await container.setInactivityTimeout(5 * 60 * 1000);
 		if (!container.running) {
-			container.start();
+			container.start({
+				image: container.images.base,
+				instance: "lite",
+				enableInternet: false,
+			});
 		}
+		this.observeExit();
+		await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 
-		this.ctx.waitUntil(
-			container
-				.monitor()
-				.then(() => console.log("Container stopped"))
-				.catch((error: unknown) => console.error("Container error:", error)),
-		);
-
-		const port = container.getTcpPort(4000);
+		const port = container.getTcpPort(8080);
 		let lastError: unknown;
 		for (let attempt = 0; attempt < 100; attempt++) {
 			try {
-				const response = await port.fetch("http://container/health");
+				const response = await port.fetch("http://container/health", {
+					signal: AbortSignal.timeout(1000),
+				});
+				await response.body?.cancel();
 				if (!response.ok) {
 					throw new Error(`Health check returned ${response.status}`);
 				}
-				console.log("Container successfully started");
+				console.log("Container is ready");
 				return;
 			} catch (error) {
 				lastError = error;
 				await scheduler.wait(200);
 			}
 		}
-		throw new Error("Container did not become ready on port 4000", {
+		throw new Error("Container did not become ready on port 8080", {
 			cause: lastError,
 		});
 	}
-}
-```
-</TypeScriptExample>
 
-	</TabItem>
-	<TabItem label="Container class">
-
-<TypeScriptExample filename="src/index.ts">
-```ts
-import { Container, type StopParams } from "@cloudflare/containers";
-
-export class MyContainer extends Container {
-	defaultPort = 4000;
-	sleepAfter = "5m";
-
-	override onStart() {
-		console.log("Container successfully started");
-	}
-
-	override onStop(stopParams: StopParams) {
-		if (stopParams.exitCode === 0) {
-			console.log("Container stopped gracefully");
-		} else {
-			console.log("Container stopped with exit code:", stopParams.exitCode);
-		}
-
-		console.log("Container stop reason:", stopParams.reason);
-	}
-
-	override async onActivityExpired() {
-		console.log("Container became idle, stopping it now");
-		await this.stop();
-	}
-
-	override onError(error: unknown) {
-		console.log("Container error:", error);
+	private observeExit(): void {
+		if (this.monitoring) return;
+		this.monitoring = this.ctx
+			.container!.monitor()
+			.then(() => console.log("Container exited successfully"))
+			.catch((error: unknown) => console.error("Container failed:", error))
+			.finally(() => {
+				this.monitoring = undefined;
+			});
+		this.ctx.waitUntil(this.monitoring);
 	}
 }
+
+export default {
+	fetch(request: Request, env: Env): Promise<Response> {
+		return env.MY_CONTAINER.getByName("demo").fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
 ```
+
 </TypeScriptExample>
 
-	</TabItem>
-</Tabs>
+`monitor()` resolves without a value after a successful exit. It rejects for failures, including nonzero process exits. The constructor restores monitoring and the inactivity timeout when the Durable Object restarts with a running Container.
 
-The `monitor()` promise resolves without a value when the container exits successfully. For nonzero exits, it rejects with an error containing the exit code. The `setInactivityTimeout()` method does not invoke a callback when the timeout expires. Use the [`Container` class lifecycle hooks](/containers/api/container-class/#lifecycle-hooks) for structured stop parameters and an inactivity callback.
+A pending monitor can keep the Durable Object active for up to 15 minutes. The five-minute inactivity timeout starts after the Durable Object becomes inactive, not five minutes after the last HTTP request. Monitoring is not a durable event subscription across restarts. Refer to [`monitor()`](/containers/api/durable-object-container/#monitor).
+
+<Render file="containers/example-http-server" />
+
+## Run the example
+
+Start a Docker-compatible engine. Install Wrangler in your project, using version 4.136.0 or later for [local development](/containers/guides/local-dev/).
+
+<PackageManagers type="add" pkg="wrangler" dev />
+
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+Visit `http://localhost:8787/` and inspect the Worker logs for readiness. Container completion or failure is logged when observed by `monitor()`.
