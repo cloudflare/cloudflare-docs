@@ -46,11 +46,11 @@ The following table shows the capabilities of a CASB customer's account for both
 
 ### Example scenario
 
-A security team at a company that uses Google Workspace wants to have visibility into when an administrator account does not have two-factor authentication turned on. Given that this is a niche need, CASB does not include a standard finding type for this exact scenario, so the team creates a custom finding type.
+A security team at a company that uses Google Workspace wants to have visibility into when a group for executives, the board, or the legal team is open to people outside the company. The company names these groups with the prefixes `exec-`, `board-`, and `legal-`, and one of them, the outside counsel group, is allowed to have external members. Given that this depends on the company's own group naming convention and exception, CASB does not include a standard finding type for this exact scenario, so the team creates a custom finding type.
 
-1. **Define the finding type.** In the Findings library, the team creates a custom finding type. They name it "Admin without 2FA", set the severity to High, choose Google Workspace as the provider, and write a short Rego expression that returns "fail" when an account is an administrator and two-factor authentication is off.
-2. **See the results.** As CASB receives updates for the company's Google Workspace user accounts, it evaluates each one. Accounts that match appear as finding instances under **Posture Findings**, so the team can see which administrators are affected.
-3. **Take action.** The team creates a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) for this finding type that sends a webhook to their ticketing system. Each new finding instance now opens a ticket for the account owner to fix.
+1. **Define the finding type.** In the Findings library, the team creates a custom finding type. They name it "Sensitive group open to outsiders", set the severity to High, choose Google Workspace as the provider, and write a Rego expression that returns "fail" when a group whose address starts with `exec-`, `board-`, or `legal-` allows external members (unless it is the outside counsel group), lets anyone join, or lets anyone post.
+2. **See the results.** As CASB receives updates for the company's Google Workspace groups, it evaluates each one. Groups that match appear as finding instances under **Posture Findings**, so the team can see which sensitive groups are open. Groups with other names are never flagged.
+3. **Take action.** The team creates a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) for this finding type that sends a webhook to their messaging admin automation. Each new finding instance now triggers the automation to restrict the group.
 
 The sections below describe each part of this flow in detail.
 
@@ -71,38 +71,59 @@ A custom finding type consists of the following fields:
 
 CASB evaluates a custom finding type against an asset when it is created or updated and exists within the set of configured integrations. They are not run retroactively against existing assets.
 
-Continuing the [example scenario](#example-scenario), two Google Workspace administrators, Alice and Bob, both have 2FA turned off:
+Continuing the [example scenario](#example-scenario), one board group has an external member, and a new executive group is open to anyone:
 
-| Day       | Event                                                           | Finding created?                                                                                          |
-| --------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Sunday    | Alice's Google Workspace account is updated.                    | No. The "Admin without 2FA" finding type doesn't exist yet.                                               |
-| Monday    | The security team creates the "Admin without 2FA" finding type. | No. CASB does not evaluate Alice's account, because it hasn't changed since the finding type was created. |
-| Tuesday   | Bob's account is created without 2FA.                           | Yes. CASB evaluates Bob's account and creates a finding instance.                                         |
-| Wednesday | Alice's account is updated again.                               | Yes. CASB evaluates Alice's account and creates a finding instance.                                       |
+| Day       | Event                                                                                     | Finding created?                                                                                                                |
+| --------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Sunday    | The `board-directors@example.com` group allows external members and is updated.           | No. The "Sensitive group open to outsiders" finding type doesn't exist yet.                                                     |
+| Monday    | The security team creates the "Sensitive group open to outsiders" finding type.           | No. CASB does not evaluate `board-directors`, because it hasn't changed since the finding type was created.                     |
+| Tuesday   | The `exec-staff@example.com` group is created and anyone can join it.                     | Yes. CASB evaluates the new group and creates a finding instance.                                                               |
+| Wednesday | A member is added to `board-directors`.                                                   | Yes. CASB evaluates the group again and creates a finding instance, because it still allows external members.                   |
+| Thursday  | The `legal-outside-counsel@example.com` group, which allows external members, is updated. | No. CASB evaluates the group and its result is "pass", because it is the approved exception, so no finding instance is created. |
 
 ## Rego detection logic
 
 Custom finding types are written in [Rego](https://www.openpolicyagent.org/docs/policy-language), the open-source policy language used by Open Policy Agent (OPA). For an introduction to Rego, refer to the [OPA documentation](https://www.openpolicyagent.org/docs/policy-language). CASB uses Rego v1 and supports a restricted subset of [Rego built-ins](https://www.openpolicyagent.org/docs/policy-reference/builtins) and operations.
 
-The following expression is the one the security team writes in the [example scenario](#example-scenario). It detects administrators who do not have two-factor authentication turned on:
+The following expression is the one the security team writes in the [example scenario](#example-scenario). It detects sensitive groups that are open to people outside the company:
 
 ```txt
+sensitive_prefixes := ["exec-", "board-", "legal-"]
+external_exceptions := {"legal-outside-counsel@example.com"}
+
 default result := "pass"
 
+email := lower(input.asset.email)
+
+sensitive if strings.any_prefix_match(email, sensitive_prefixes)
+
 result := "fail" if {
-	input.asset.isAdmin == true
-	input.asset.is2faEnabled == false
+	sensitive
+	input.asset.allowExternalMembers == true
+	not email in external_exceptions
+}
+
+result := "fail" if {
+	sensitive
+	input.asset.whoCanJoin == "ANYONE_CAN_JOIN"
+}
+
+result := "fail" if {
+	sensitive
+	input.asset.whoCanPostMessage == "ANYONE_CAN_POST"
 }
 ```
 
 This expression works as follows:
 
+- `sensitive_prefixes` and `external_exceptions` hold the company's values. They are written into the expression, because CASB can't fetch lists from another system during evaluation.
 - `default result := "pass"` sets the result to "pass" for every asset unless a rule below changes it. Therefore, assets that do not match are never flagged.
-- `result := "fail" if { ... }` changes the result to "fail" when everything inside the braces is true. A "fail" result creates a finding instance.
-- `input.asset.isAdmin == true` checks that the account is an administrator.
-- `input.asset.is2faEnabled == false` checks that two-factor authentication is off.
-
-In Rego, every line inside the braces must be true, so a non-administrator account without 2FA, or an administrator account with 2FA, stays at "pass".
+- `email := lower(input.asset.email)` lowercases the group's address, so that `Board-Directors@example.com` is treated the same as `board-directors@example.com`.
+- `sensitive` is true when the address starts with any of the three prefixes. `strings.any_prefix_match` checks the whole list in one call. Groups with other names never match.
+- `result := "fail" if { ... }` changes the result to "fail" when everything inside the braces is true. This will create a finding instance.
+- The first rule checks if sensitive groups allow external members without explicit approvals.
+- The second rule checks for sensitive groups that let anyone join.
+- The third rule checks for sensitive groups that let anyone post.
 
 ### Rego guidelines for custom finding type expressions
 
@@ -199,23 +220,34 @@ If no instances appear after assets in the finding type's integrations have been
 - Check the field types used in the written Rego expression
 - Check the expected output of the written Rego expression
 
+## Custom finding types restrictions and limits
+
+- An account can have up to 250 custom finding types.
+- Up to 25 custom finding types can apply to one integration.
+- Custom finding types support posture finding types. They do not support Data Loss Prevention (DLP) content finding types.
+- New and updated custom finding types do not apply retroactively.
+- The complete Rego policy, including Cloudflare-added declarations, can be up to 4 KiB.
+- Network access is not available during Rego expression evaluation.
+- Package declarations and import declarations are not accepted in the editor.
+
 ## Using custom finding types in policies
 
 Custom finding types can be used in [CASB policies](/cloudflare-one/cloud-and-saas-findings/policies/) the same way standard finding types are used. When a [policy is created](/cloudflare-one/cloud-and-saas-findings/policies/#create-a-policy), the custom finding type is selected from the **Finding type** list.
 
 ### Example scenario
 
-Continuing the previous [example](#example-scenario), the security team wants a ticket opened each time CASB finds an administrator without 2-Factor Authentication enabled.
+Continuing the previous [example](#example-scenario), the security team wants a group restricted automatically each time CASB finds a sensitive group that is open to people outside the company.
 
-1. **Create the policy.** The team creates a CASB policy and selects "Admin without 2FA" from the **Finding type** list.
+1. **Create the policy.** The team creates a CASB policy and selects "Sensitive group open to outsiders" from the **Finding type** list.
 2. **Set the scope.** The policy is set to **Apply to all integrations**, so it covers every Google Workspace integration the finding type is evaluated against.
-3. **Choose the action.** The policy sends a webhook to the team's ticketing system.
-4. **See it work.** When an administrator's account is updated and CASB evaluates it as "fail", CASB creates a finding instance. The policy then fires the webhook, and a ticket opens for the account owner.
+3. **Choose the action.** The policy sends a webhook to the team's messaging admin automation.
+4. **See it work.** When a group is created or updated and CASB evaluates it as "fail", CASB creates a finding instance. The policy then fires the webhook, and the automation restricts the group's membership and posting settings.
 
 ### Guidelines for using policies with custom finding types
 
 - Custom finding types can be used for policies that trigger webhooks.
-- A policy acts on findings from the integrations it selects, or from all integrations if **Apply to all integrations** is set. It can only act on integrations within the custom finding type's integration scope. The two lists do not need to match. If the [integration scope of the custom finding type](#edit-a-custom-finding-type) is edited to remove an integration, CASB no longer creates finding instances for that integration, so the policy has nothing to act on there.
+- A policy can only act on findings within the integrations it selects, or from all integrations if **Apply to all integrations** is set. It can only act on integrations within the custom finding type's integration scope. The two lists do not need to match.
+- If the [integration scope of the custom finding type](#edit-a-custom-finding-type) is edited to remove an integration, CASB no longer creates finding instances for that integration, so the policy has nothing to act on there.
 - If the custom finding type is [quarantined](#quarantined-custom-finding-types), CASB creates no new finding instances, so the policy does not trigger.
 - A custom finding type cannot be deleted while a policy uses it. [Delete the policy](/cloudflare-one/cloud-and-saas-findings/policies/#edit-turn-off-or-delete-a-policy) first, then [delete the custom finding type](#delete-a-custom-finding-type).
 
@@ -229,13 +261,13 @@ Open a standard posture finding type to inspect its detection logic. If the logi
 
 #### Example scenario
 
-Continuing the [previous example](#example-scenario), the "Admin without 2FA" finding type applies to every Google Workspace integration. The security team now wants a stricter version for their production integration only, with a severity of Critical. Severity cannot be edited after creation, so they duplicate the finding type instead.
+Continuing the [previous example](#example-scenario), leadership asks that the executive and board groups be treated as Critical, with no exceptions, while the legal groups stay at High. Severity cannot be edited after creation, so the security team duplicates the finding type instead.
 
-1. **Duplicate.** The team selects **Duplicate** on "Admin without 2FA". CASB copies the name, description, severity, provider, asset class, integration scope, and Rego expression into the builder.
-2. **Adjust.** They rename the copy "Admin without 2FA (production)", set the severity to Critical, and limit the integration scope to the production integration. The Rego expression stays the same.
+1. **Duplicate.** The team selects **Duplicate** on "Sensitive group open to outsiders". CASB copies the name, description, severity, provider, asset class, integration scope, and Rego expression into the builder.
+2. **Adjust.** They rename the copy "Executive and board group open to outsiders" and set the severity to Critical. In the Rego expression, they change `sensitive_prefixes` to `["exec-", "board-"]`, and remove `external_exceptions` and the `not email in external_exceptions` line.
 3. **Create.** They select **Validate**, then **Create finding**. The copy is a new custom finding type.
 
-The original "Admin without 2FA" keeps running unchanged. For this company specifically, their account will also receive findings for the "Admin without 2FA (production)" custom finding type.
+The original "Sensitive group open to outsiders" keeps running unchanged. For this company specifically, an `exec-` or `board-` group that breaks a rule now receives a finding from both finding types, one at High and one at Critical.
 
 #### Steps
 
@@ -334,16 +366,6 @@ A quarantined custom finding type still counts toward the limits of 250 custom f
 :::
 
 If the cause of the quarantine cannot be identified, contact [Cloudflare Support](/support/contacting-cloudflare-support/). Provide the custom finding type ID and as much detail as possible.
-
-## Custom finding types restrictions and limits
-
-- An account can have up to 250 custom finding types.
-- Up to 25 custom finding types can apply to one integration.
-- Custom finding types support posture finding types. They do not support Data Loss Prevention (DLP) content finding types.
-- New and updated custom finding types do not apply retroactively.
-- The complete Rego policy, including Cloudflare-added declarations, can be up to 4 KiB.
-- Network access is not available during Rego expression evaluation.
-- Package declarations and import declarations are not accepted in the editor.
 
 ## Example expressions
 
