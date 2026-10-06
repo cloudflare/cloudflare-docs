@@ -8,6 +8,8 @@ products:
   - d1
 ---
 
+import { APIRequest, Steps } from "~/components";
+
 D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
 
 D1 also allows you to export a database. This can be useful for [local development](/d1/best-practices/local-development/) or testing.
@@ -148,9 +150,65 @@ To export only D1 table data:
 npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./data.sql --no-schema
 ```
 
+### Export a D1 database with virtual tables
+
+If your database contains virtual tables, such as FTS5 tables, use the D1 export API with `dump_options.compatibility` set to `sqlite3_cli_only` to include them in the dump. Use the standard export for most other databases.
+
+:::warning
+
+This dump is compatible only with the SQLite CLI. You cannot import it into D1.
+
+:::
+
+Create an API token with **D1 Edit** permission for the account containing your database. For more information, refer to [Create API token](/fundamentals/api/get-started/create-token/).
+
+<Steps>
+1. Set your account ID, database ID, and API token:
+
+   ```sh
+   export ACCOUNT_ID="<ACCOUNT_ID>"
+   export DATABASE_ID="<DATABASE_ID>"
+   export CLOUDFLARE_API_TOKEN="<API_TOKEN>"
+   ```
+
+2. Start an export by sending a `POST` request to the D1 export endpoint:
+
+   <APIRequest
+     path="/accounts/{account_id}/d1/database/{database_id}/export"
+     method="POST"
+     json={{
+       output_format: "polling",
+       dump_options: {
+         compatibility: "sqlite3_cli_only",
+       },
+     }}
+   />
+
+   Save the `at_bookmark` value from the response. The export runs as a polling task.
+
+3. While the status is `active`, poll using the original bookmark. Stop on `complete` or `error`. Check any error message before retrying:
+
+   <APIRequest
+     path="/accounts/{account_id}/d1/database/{database_id}/export"
+     method="POST"
+     json={{
+       output_format: "polling",
+       current_bookmark: "<AT_BOOKMARK>",
+     }}
+   />
+
+4. When the export is complete, use the signed URL in the response to download the SQL dump. Save the file as `database.sql`.
+
+5. Load the SQL statements into a SQLite database file:
+
+   ```sh
+   sqlite3 ./database.db < ./database.sql
+   ```
+</Steps>
+
 ### Known limitations
 
-- Export is not supported for virtual tables, including databases with virtual tables. D1 supports virtual tables for full-text search using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html). As a workaround, delete any virtual tables, export, and then recreate virtual tables.
+- Standard export is not supported for databases containing virtual tables, such as FTS5 tables. To export these databases for use with the SQLite CLI, use the [SQLite CLI compatibility option](#export-a-d1-database-with-virtual-tables).
 - A running export will block other database requests.
 - Any numeric value in a column is affected by JavaScript's 52-bit precision for numbers. If you store a very large number (in `int64`), then retrieve the same value, the returned value may be less precise than your original number.
 
