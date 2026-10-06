@@ -292,9 +292,13 @@ export default {
 			});
 		}
 
-		// Without ctx.waitUntil(), the `postLog` function may or may not complete.
-		ctx.waitUntil(postLog(stack));
-		return fetch(request);
+		try {
+			return await fetch(request);
+		} catch (err) {
+			// Without ctx.waitUntil(), the `postLog` function may or may not complete.
+			ctx.waitUntil(postLog(err.stack));
+			return new Response("Internal Server Error", { status: 500 });
+		}
 	},
 };
 ```
@@ -313,11 +317,13 @@ addEventListener("fetch", (event) => {
 });
 
 async function handleEvent(event) {
-	// ...
-
-	// Without event.waitUntil(), the `postLog` function may or may not complete.
-	event.waitUntil(postLog(stack));
-	return fetch(event.request);
+	try {
+		return await fetch(event.request);
+	} catch (err) {
+		// Without event.waitUntil(), the `postLog` function may or may not complete.
+		event.waitUntil(postLog(err.stack));
+		return new Response("Internal Server Error", { status: 500 });
+	}
 }
 
 function postLog(data) {
