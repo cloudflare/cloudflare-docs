@@ -1,0 +1,154 @@
+{
+	"model_id": "bria/v-rmbg-3.0",
+	"provider_id": "bria",
+	"name": "Video Remove Background 3.0",
+	"description": "Bria's video background removal replaces the background of a clip up to 60 seconds long with a solid color or with transparency. Transparent output needs the mov_proresks (ProRes) preset. Frame rate and audio are preserved, and the output resolution matches the input unless auto_zoom crops to the subject.",
+	"task": "video-to-video",
+	"tags": [
+		"Video Editing",
+		"Video-to-Video",
+		"Background Removal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.0225
+	},
+	"examples": [
+		{
+			"name": "White Background",
+			"description": "Replace the background of a short 4K clip with white, using Bria's sample input and the default mp4_h264 preset. For a transparent result, set background_color to Transparent and output_container_and_codec to mov_proresks.",
+			"input": {
+				"video": "https://labs-assets.bria.ai/sandbox-example-inputs/5586521-uhd_3840_2160_25fps_original.mp4",
+				"background_color": "White"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bria/v-rmbg-3.0/white-background.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bria/v-rmbg-3.0/white-background.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/v-rmbg-3.0',\n  {\n    video:\n      'https://labs-assets.bria.ai/sandbox-example-inputs/5586521-uhd_3840_2160_25fps_original.mp4',\n    background_color: 'White',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/v-rmbg-3.0\",\n  \"input\": {\n    \"video\": \"https://labs-assets.bria.ai/sandbox-example-inputs/5586521-uhd_3840_2160_25fps_original.mp4\",\n    \"background_color\": \"White\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bria.ai/video-editing/editing/remove-background",
+	"terms": "https://bria.ai/terms-of-use",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bria/v-rmbg-3.0.png",
+	"metadata": {
+		"Background Colors": "Transparent, Black, White, Gray, Red, Green, Blue, Yellow, Cyan, Magenta, Orange",
+		"Maximum Source Duration": "60 seconds",
+		"Maximum Source Resolution": "16000 x 16000",
+		"Output Presets": "mp4_h264, mp4_h265, mov_h265, mov_proresks",
+		"Source Formats": "MP4, MOV, WEBM, AVI, GIF",
+		"Transparent Output": "mov_proresks only"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bria",
+			"pricing": {
+				"default": 0.0225
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-06 18:53:29",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "Public URL of the input video: MP4, MOV, WEBM, AVI, or GIF, up to 60 seconds and 16000x16000."
+				},
+				"background_color": {
+					"description": "Color that replaces the removed background; set it explicitly. Transparent needs the mov_proresks preset: with any other preset Bria uses Black and returns a `warning`.",
+					"type": "string",
+					"enum": [
+						"Transparent",
+						"Black",
+						"White",
+						"Gray",
+						"Red",
+						"Green",
+						"Blue",
+						"Yellow",
+						"Cyan",
+						"Magenta",
+						"Orange"
+					]
+				},
+				"output_container_and_codec": {
+					"description": "Output container and codec. Default mp4_h264. mov_proresks (ProRes) is the preset that keeps transparency.",
+					"type": "string",
+					"enum": [
+						"mp4_h264",
+						"mp4_h265",
+						"mov_h265",
+						"mov_proresks"
+					]
+				},
+				"auto_zoom": {
+					"description": "Crop once to the subject for the whole video. Output resolution and aspect ratio may change, and processing is slower. Default false.",
+					"type": "boolean"
+				},
+				"preserve_audio": {
+					"description": "Keep the input audio track. Default true.",
+					"type": "boolean"
+				},
+				"spill_suppression": {
+					"description": "Strength of green-fringe removal for green-screen footage, from 0 (off) to 1. Default 0.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the processed video."
+				},
+				"warning": {
+					"description": "Present when Bria adjusted the request, such as a Transparent background with a preset that has no alpha channel.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
