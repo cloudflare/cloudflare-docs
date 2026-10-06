@@ -26,7 +26,7 @@ Today an agent receives live meeting activity, such as transcripts, participant 
 
 The agent is a meeting participant. Its [preset](/realtime/realtimekit/concepts/preset/) decides how it joins the meeting, and its subscriptions decide which events it receives.
 
-To create a preset and choose subscriptions, refer to [Build an agent](/realtime/realtimekit/ai/agent-websocket/get-started/).
+To create a preset and choose subscriptions, refer to [Build an agent](/realtime/realtimekit/ai/agent-participant/get-started/).
 
 ## How it works
 
@@ -37,15 +37,15 @@ To create a preset and choose subscriptions, refer to [Build an agent](/realtime
 3. The agent joins the meeting and forwards the events you subscribed to.
 4. When the session ends, the server sends `session.ended` and closes the WebSocket.
 
-<LinkButton href="/realtime/realtimekit/ai/agent-websocket/get-started/">
+<LinkButton href="/realtime/realtimekit/ai/agent-participant/get-started/">
 	Build an agent with Durable Objects
 </LinkButton>
 
 ## Billing
 
-The agent is billed as a participant for as long as it is connected. A connected agent keeps the session active even after everyone else leaves, so your backend must remove it. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-websocket/get-started/#billing-and-ending-the-session).
+The agent is billed as a participant for as long as it is connected. A connected agent keeps the session active even after everyone else leaves, so your backend must remove it. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-participant/get-started/#billing-and-ending-the-session).
 
 ## Reference
 
-- [Build an agent](/realtime/realtimekit/ai/agent-websocket/get-started/): create a preset, run the agent in a Durable Object and connect to the WebSocket
-- [Events](/realtime/realtimekit/ai/agent-websocket/events/): event types, payloads and delivery rules
+- [Build an agent](/realtime/realtimekit/ai/agent-participant/get-started/): create a preset, run the agent in a Durable Object and connect to the WebSocket
+- [Events](/realtime/realtimekit/ai/agent-participant/events/): event types, payloads and delivery rules

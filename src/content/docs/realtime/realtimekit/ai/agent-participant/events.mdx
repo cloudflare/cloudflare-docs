@@ -67,7 +67,7 @@ When you handle events:
 - **Make handlers idempotent.** An event can arrive twice if the server restarts while sending it.
 - **Changing `subscriptions` on resume does not re-filter queued events.** Events already queued under the old list are still delivered.
 
-For close codes and resume behavior, refer to [Reconnect](/realtime/realtimekit/ai/agent-websocket/get-started/#reconnect).
+For close codes and resume behavior, refer to [Reconnect](/realtime/realtimekit/ai/agent-participant/get-started/#reconnect).
 
 ## Session events
 
@@ -120,7 +120,7 @@ Sent when the session ends or the agent is kicked. The server then closes with `
 
 Treat unknown reasons as `all_participants_left`. A late final transcript can be missed after `session.ended`.
 
-A connected agent counts as a participant, so the session does not end on its own while the agent is connected. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-websocket/get-started/#billing-and-ending-the-session).
+A connected agent counts as a participant, so the session does not end on its own while the agent is connected. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-participant/get-started/#billing-and-ending-the-session).
 
 ### `participant.kick_all`
 
