@@ -119,6 +119,6 @@ Callbacks can run more than once, so make their external effects idempotent. Kee
 
 The queue publishes `queue:create`, `queue:retry`, and `queue:error` events to the `agents:*` [diagnostics channels](/agents/platform/observability/diagnostics-channels/).
 
-## On the Agent class
+## On the legacy Agent class
 
 The [`Agent` class](/agents/agent-class/) installs a `Queue`. Its `this.queue()`, `this.dequeue()`, and `this.getQueue()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Queue tasks](/agents/agent-class/queue-tasks/).

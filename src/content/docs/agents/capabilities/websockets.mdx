@@ -156,6 +156,6 @@ By default, every connection gets the Agents protocol frames: an identity frame 
 
 Set `protocol: false` to send the connect frames yourself with `sendConnectFrames()`, or with `sendIdentity()` and `sendState()`.
 
-## On the Agent class
+## On the legacy Agent class
 
 The [`Agent` class](/agents/agent-class/) installs `WebSockets` and calls its own `onConnect()`, `onMessage()`, `onClose()`, and `onError()` methods. Its `@callable()` methods are its client interface. For more information, refer to [WebSockets](/agents/agent-class/websockets/).

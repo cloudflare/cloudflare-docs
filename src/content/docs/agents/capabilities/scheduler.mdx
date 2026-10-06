@@ -120,6 +120,6 @@ A callback that throws on every attempt is reported to `onError`. A one-time sch
 
 The scheduler publishes `schedule:create`, `schedule:execute`, `schedule:retry`, `schedule:error`, and `schedule:cancel` events to the `agents:schedule` [diagnostics channel](/agents/platform/observability/diagnostics-channels/).
 
-## On the Agent class
+## On the legacy Agent class
 
 The [`Agent` class](/agents/agent-class/) installs a `Scheduler` as `this.scheduler`. Its `this.schedule()`, `this.scheduleEvery()`, `this.listSchedules()`, and `this.cancelSchedule()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Schedule tasks](/agents/agent-class/schedule-tasks/).
