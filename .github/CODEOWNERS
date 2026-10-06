@@ -466,10 +466,10 @@ package.json @cloudflare/content-engineering
 
 # flagship
 
-/src/content/directory/flagship.yaml @abhishekkankani @akshitsinha @irvinebroque @ishita1805 @karishnu @palashgo @roerohan @thebongy @vaibhavshn @cloudflare/flagship @cloudflare/product-owners
-/src/content/docs/flagship/ @abhishekkankani @akshitsinha @irvinebroque @ishita1805 @karishnu @palashgo @roerohan @thebongy @vaibhavshn @cloudflare/flagship @cloudflare/product-owners
-/src/icons/flagship.svg @abhishekkankani @akshitsinha @irvinebroque @ishita1805 @karishnu @palashgo @roerohan @thebongy @vaibhavshn @cloudflare/flagship @cloudflare/product-owners
-/src/content/changelog/flagship/ @abhishekkankani @akshitsinha @irvinebroque @ishita1805 @karishnu @palashgo @roerohan @thebongy @vaibhavshn @cloudflare/flagship @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/flagship.yaml @akshitsinha @irvinebroque @ishita1805 @karishnu @vaibhavshn @madhugb @cloudflare/flagship @cloudflare/product-owners
+/src/content/docs/flagship/ @akshitsinha @irvinebroque @ishita1805 @karishnu @vaibhavshn @madhugb @cloudflare/flagship @cloudflare/product-owners
+/src/icons/flagship.svg @akshitsinha @irvinebroque @ishita1805 @karishnu @vaibhavshn @madhugb @cloudflare/flagship @cloudflare/product-owners
+/src/content/changelog/flagship/ @akshitsinha @irvinebroque @ishita1805 @karishnu @vaibhavshn @madhugb @cloudflare/flagship @cloudflare/pm-changelogs @cloudflare/product-owners
 
 # fundamentals
 
