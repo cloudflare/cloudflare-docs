@@ -115,6 +115,6 @@ Use the `readonly` option on `WebSockets` to refuse state updates from some conn
 
 `State` stores its value in the `cf_agents_state` table. Store large or relational data in your own tables instead, because every change rewrites the whole value.
 
-## On the Agent class
+## On the legacy Agent class
 
 The [`Agent` class](/agents/agent-class/) installs a `State` and a `WebSockets` wired together. Its `initialState`, `this.state`, `this.setState()`, and `onStateChanged()` call them. For more information, refer to [Store and sync state](/agents/agent-class/state/).

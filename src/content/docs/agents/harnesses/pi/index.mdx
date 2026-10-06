@@ -1,7 +1,7 @@
 ---
 title: Pi
 pcx_content_type: overview
-description: Run the Pi Durable harness on Cloudflare with the Agents SDK. PiHarness keeps your agent's work durable inside an Agent or Durable Object, even if it is interrupted mid-turn.
+description: Run the Pi Durable harness on Cloudflare with the Agents SDK. PiHarness keeps your agent's work durable inside a Durable Object, even if it is interrupted mid-turn.
 tags:
   - AI
 sidebar:
@@ -131,9 +131,9 @@ The `harness` factory receives `storage`, Pi's storage over the object's SQLite 
 The factory runs inside the object's startup, once per isolate, before any session is used. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
 
 
-## Use it in an Agent
+## Use it on the legacy Agent class
 
-The [`Agent` class](/agents/agent-class/) already has a Lifecycle. Add the harness to it in the constructor:
+If your agent already extends the legacy [`Agent` class](/agents/agent-class/), it already has a Lifecycle. Add the harness to it in the constructor:
 
 <TypeScriptExample filename="src/index.ts">
 

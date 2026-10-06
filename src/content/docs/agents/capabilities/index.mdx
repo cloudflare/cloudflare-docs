@@ -1,6 +1,6 @@
 ---
 title: Capabilities
-description: Add a harness, MCP client, scheduling, queues, WebSockets, state, sessions, streams, and durable tasks to a Durable Object with Lifecycle capabilities.
+description: Plug capabilities into your agent next to its harness — MCP clients, scheduling, queues, WebSockets, state, sessions, streams, and durable tasks.
 pcx_content_type: concept
 sidebar:
   order: 5
@@ -12,23 +12,28 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-A capability is a reusable piece of a Durable Object. Each one owns its tables and behavior, exposes a focused API, and implements only the [Lifecycle](/agents/lifecycle/) hooks it needs. You build an agent by installing the capabilities you want on one Durable Object:
+Your agent is a [harness](/agents/harnesses/) running on a Durable Object. Capabilities are what you plug in next to it: an MCP client, a scheduler, real-time clients, and more. Each capability owns its tables and behavior, exposes a focused API, and implements only the [Lifecycle](/agents/lifecycle/) hooks it needs. Plug one in with a field and one more `.use()` call:
 
 <TypeScriptExample>
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
 import { Scheduler } from "agents/schedules";
 import { WebSockets } from "agents/websockets";
 
 export class MyAgent extends DurableObject<Env> {
+	readonly harness = new PiHarness({
+		/* model and tools */
+	});
 	readonly mcp = new MCPClientManager("my-agent", "1.0.0", { env: this.env });
 	readonly scheduler = new Scheduler({ callbacks: {} });
 	readonly webSockets = new WebSockets();
 
 	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
 		.use(this.mcp)
 		.use(this.scheduler)
 		.use(this.webSockets);
@@ -37,11 +42,11 @@ export class MyAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-Capabilities share the object's storage and its alarm, but they do not depend on each other. Install each one once. Bindings and callbacks a capability needs go in its constructor.
+The harness and the capabilities share the object's storage and its alarm, but they do not depend on each other. Install each one once. Bindings and callbacks a capability needs go in its constructor.
 
 ## Available capabilities
 
-The following capabilities ship with the `agents` package. Capabilities marked Experimental may change between releases.
+The following capabilities ship with the `agents` package. The harness itself is a capability too, so `PiHarness` is listed first. Capabilities marked Experimental may change between releases.
 
 | Capability                            | Import              | Status       | What it does                                                         |
 | ------------------------------------- | ------------------- | ------------ | -------------------------------------------------------------------- |
@@ -158,6 +163,6 @@ export class MyHarness extends DurableObject<Env> {
 
 A model call cannot resume halfway. If the `generate` step is interrupted, it runs again from the start. Check `step.interrupted` in the handler to decide what to do with a partial reply.
 
-## Capabilities on the Agent class
+## Capabilities on the legacy Agent class
 
-The [`Agent` class](/agents/agent-class/) installs `Scheduler`, `Queue`, `MCPClientManager`, `State`, `WebSockets`, and `Tasks` for you. Its methods, such as `this.schedule()`, `this.queue()`, `this.addMcpServer()`, and `this.setState()`, call those capabilities. Install any other capability on an Agent with `this.lifecycle.use()` in its constructor.
+The legacy [`Agent` class](/agents/agent-class/) installs `Scheduler`, `Queue`, `MCPClientManager`, `State`, `WebSockets`, and `Tasks` for you. Its methods, such as `this.schedule()`, `this.queue()`, `this.addMcpServer()`, and `this.setState()`, call those capabilities. Install any other capability on an Agent with `this.lifecycle.use()` in its constructor.
