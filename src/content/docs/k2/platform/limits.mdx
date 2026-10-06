@@ -5,7 +5,7 @@ pcx_content_type: reference
 products:
   - k2
 sidebar:
-  order: 1
+  order: 2
 ---
 
 import { Render } from "~/components";
@@ -29,14 +29,15 @@ Higher retention limits are available by request.
 
 ## Produce records
 
-| Feature                              | Limit                   |
-| ------------------------------------ | ----------------------- |
-| Maximum request size                 | 5 MB (5,000,000 bytes)  |
-| Maximum record size                  | ~1 MB (1,000,000 bytes) |
-| Maximum headers per record           | 32                      |
-| Maximum header name size             | 256 bytes               |
-| Maximum header value size            | 8 KiB (8,192 bytes)     |
-| Maximum total header size per record | 64 KiB (65,536 bytes)   |
+| Feature                               | Limit                   |
+| ------------------------------------- | ----------------------- |
+| Maximum produce throughput per stream | 30 MB/s                 |
+| Maximum request size                  | 5 MB (5,000,000 bytes)  |
+| Maximum record size                   | ~1 MB (1,000,000 bytes) |
+| Maximum headers per record            | 32                      |
+| Maximum header name size              | 256 bytes               |
+| Maximum header value size             | 8 KiB (8,192 bytes)     |
+| Maximum total header size per record  | 64 KiB (65,536 bytes)   |
 
 The maximum request size applies to the HTTP request body both before and after
 gzip decompression + a small amount of internal metadata. For the Workers
@@ -46,6 +47,10 @@ The maximum record size applies to the decoded record content, and to the
 record content and headers combined. Header sizes are measured in UTF-8 bytes.
 
 There is no limit on the number of records in a request, other than the maximum request size.
+
+The maximum produce throughput applies to the total data produced to a stream
+across all producers. To request a higher limit, refer to
+[limit increases](#account-limits).
 
 ## Subscriptions and consuming records
 
