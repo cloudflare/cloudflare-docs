@@ -28,7 +28,7 @@ const facetMatchMaps = Object.fromEntries(
 
 <div data-models class="not-prose">
 	<aside
-		data-models-deprecated
+		data-models-unavailable
 		role="alert"
 		hidden
 		class="border-danger/25 bg-danger-muted text-foreground my-4 flex items-start gap-3 rounded-lg border px-4 py-3"
@@ -44,8 +44,9 @@ const facetMatchMaps = Object.fromEntries(
 				Model not available
 			</p>
 			<p class="m-0 mt-0.5">
-				<code data-models-deprecated-id class="font-mono"></code> is deprecated,
-				removed, or not found. Choose an available model from the catalog below.
+				<code data-models-unavailable-id class="font-mono"></code> is
+				deprecated, removed, or not found. Choose an available model from the
+				catalog below.
 			</p>
 		</div>
 	</aside>
@@ -537,18 +538,20 @@ const facetMatchMaps = Object.fromEntries(
 
 	const initParams = new URLSearchParams(window.location.search);
 
-	const deprecatedModelId = initParams.get("deprecated");
+	// The workers reroute 404s under /workers-ai/models/ and /ai/models/ here
+	// with the requested model id, which is either a bare slug
+	// (llama-3-8b-instruct) or a namespaced id (@cf/meta/llama-3-8b-instruct).
+	// Anything else is not a model id we generated, so the notice stays hidden.
+	const unavailableModelId = initParams.get("unavailable");
 	if (
-		/^(?:@[a-z0-9-]+\/)?[a-z0-9._-]+\/[a-z0-9._-]+$/i.test(
-			deprecatedModelId ?? "",
-		)
+		/^@?[a-z0-9._-]+(?:\/[a-z0-9._-]+){0,2}$/i.test(unavailableModelId ?? "")
 	) {
-		const notice = root.querySelector<HTMLElement>("[data-models-deprecated]");
+		const notice = root.querySelector<HTMLElement>("[data-models-unavailable]");
 		const modelId = notice?.querySelector<HTMLElement>(
-			"[data-models-deprecated-id]",
+			"[data-models-unavailable-id]",
 		);
 		if (notice && modelId) {
-			modelId.textContent = deprecatedModelId;
+			modelId.textContent = unavailableModelId;
 			notice.hidden = false;
 		}
 	}
