@@ -19,6 +19,14 @@ When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/h
 
 ## Between Cloudflare and origin server
 
+### What connection means here
+
+A **TCP connection** is established when its TCP handshake completes. For a new **TCP-based HTTPS connection**, setup also requires SSL/TLS negotiation. TCP can therefore be established while HTTPS setup remains unfinished.
+
+Requests can reuse established connections, and a proxied request may traverse multiple connections. A connection timeout does not, by itself, identify which operation timed out or what caused it. Reused connections and QUIC do not have the same per-request TCP/TLS setup sequence as a new TCP-based HTTPS connection.
+
+The TCP establishment and request-acknowledgment rows describe specific TCP timeout conditions. They are not an exhaustive list of every operation that can produce [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). Neither value is a universal TCP-plus-TLS setup budget. A timeout while TLS remains pending can be reported as `522` rather than [525](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
+
 :::note
 
 If you are using [Cloudflare tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/), refer to [Origin configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/) to view or modify your connection settings.
@@ -26,8 +34,8 @@ If you are using [Cloudflare tunnels](/cloudflare-one/networks/connectors/cloudf
 
 | Type                                                                                      | Limit (seconds) | HTTP status code at limit                                                                                                              | [Configurable](/fundamentals/reference/connection-limits/#configurable-limits) |
 | ----------------------------------------------------------------------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| <GlossaryTooltip term="TCP three-way handshake">Complete TCP Connection</GlossaryTooltip> | 19              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
-| <GlossaryTooltip term="ACK (Acknowledge)">TCP ACK</GlossaryTooltip> Timeout               | 90              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
+| <GlossaryTooltip term="TCP three-way handshake">TCP connection establishment</GlossaryTooltip> | 19              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
+| <GlossaryTooltip term="ACK (Acknowledge)">TCP request acknowledgment</GlossaryTooltip> timeout | 90              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
 | <GlossaryTooltip term="TCP Keep-Alive">TCP Keep-Alive</GlossaryTooltip> Interval          | 30              | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
 | <GlossaryTooltip term="idle connection">Proxy Idle</GlossaryTooltip> Timeout              | 900             | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
 | <GlossaryTooltip term="proxy read timeout">Proxy Read Timeout</GlossaryTooltip>           | 125             | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | [Yes, for Enterprise zones](/api/resources/zones/subresources/settings/methods/edit/)                       |
