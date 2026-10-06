@@ -9,6 +9,8 @@ products:
   - browser-run
 ---
 
+import { TypeScriptExample } from "~/components";
+
 [Kitesurf](https://blog.cloudflare.com/kitesurf) is Cloudflare's stateless, highly scalable browser that runs entirely on top of [Workers](/workers/) and is designed for AI agents. Instead of shipping a full desktop browser engine like Chromium, Kitesurf focuses on what matters to an agent — token count, context windows, scalability, performance, and cost — while trading away features that only humans need, such as tabs, themes, extensions, and pixel-perfect rendering.
 
 For common agentic tasks like screenshots and HTML extraction, Kitesurf uses significantly less CPU and memory than Chromium, which means you can run more sessions and scale better for bursty, AI-driven workloads.
@@ -56,6 +58,31 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser
   }' \
   --output "screenshot.png"
 ```
+
+### Use Kitesurf with the browser binding
+
+From a Worker, pass `browser: "kitesurf"` in the options of the [browser binding](/browser-run/quick-actions/#workers-binding)'s `quickAction()` method:
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return await env.BROWSER.quickAction("screenshot", {
+			url: "https://example.com",
+			browser: "kitesurf",
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The binding validates the value, so any engine name other than `kitesurf` fails with `Invalid input: expected "kitesurf"`. Leave out `browser` to use the default Chromium browser.
 
 ### Use Kitesurf with the CDP endpoint
 
