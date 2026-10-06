@@ -528,7 +528,7 @@ This is useful when you are scheduling multiple instances at once. A call to `cr
   - `options` - either a `count` of instances to create with shared options, or a list of `instances`, each with its own options.
 
 :::note
-Local development support for this form of `createBatch` requires Wrangler X.Y.Z or later.
+To use this form of `createBatch` in local development and get its types from `wrangler types`, use Wrangler 4.148.0 or later.
 :::
 
 To create instances that share the same options, pass `count` with optional `params` and `retention`. Each instance receives a generated ID:
@@ -558,6 +558,27 @@ const result = await env.MY_WORKFLOW.createBatch({
 		{ id: "id-ghi789", params: { hello: "world-2" } },
 	],
 });
+```
+
+</TypeScriptExample>
+
+`options` takes one of the following shapes:
+
+<TypeScriptExample omitTabs>
+
+```ts
+type WorkflowBatchCreateOptions =
+	| {
+			count: number;
+			params?: unknown;
+			retention?: {
+				successRetention?: WorkflowRetentionDuration;
+				errorRetention?: WorkflowRetentionDuration;
+			};
+	  }
+	| {
+			instances: WorkflowInstanceCreateOptions[];
+	  };
 ```
 
 </TypeScriptExample>

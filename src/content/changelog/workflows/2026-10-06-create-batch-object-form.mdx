@@ -4,12 +4,12 @@ description: Create up to 100 Workflow instances by count or from a list, and ge
 products:
   - workflows
   - workers
-date: 2026-09-24 12:00:00 UTC
+date: 2026-10-06 12:00:00 UTC
 ---
 
 import { TypeScriptExample } from "~/components";
 
-[`createBatch()`](/workflows/build/workers-api/#createbatch) now accepts an options object that creates up to 100 Workflow instances in one call. The result lists the created instances and explains why any others were not created. Local development supports this form in Wrangler X.Y.Z and later.
+[`createBatch()`](/workflows/build/workers-api/#createbatch) now accepts an options object that creates up to 100 Workflow instances in one call. The result lists the created instances and explains why any others were not created. To use this form in local development and get its types from `wrangler types`, use Wrangler 4.148.0 or later.
 
 To create instances that share the same options, pass `count`. Each instance receives a generated ID:
 
