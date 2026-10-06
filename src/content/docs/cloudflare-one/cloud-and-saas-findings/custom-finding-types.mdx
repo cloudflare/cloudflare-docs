@@ -52,7 +52,7 @@ A security team at a company that uses Google Workspace wants to have visibility
 2. **See the results.** As CASB receives updates for the company's Google Workspace groups, it evaluates each one. Groups that match appear as finding instances under **Posture Findings**, so the team can see which sensitive groups are open. Groups with other names are never flagged.
 3. **Take action.** The team creates a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) for this finding type that sends a webhook to their messaging admin automation. Each new finding instance now triggers the automation to restrict the group.
 
-The sections below describe each part of this flow in detail.
+The following sections describe each part of this flow in detail.
 
 ### Finding type fields
 
@@ -75,8 +75,8 @@ Continuing the [example scenario](#example-scenario), one board group has an ext
 
 | Day       | Event                                                                                     | Finding created?                                                                                                                |
 | --------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Sunday    | The `board-directors@example.com` group allows external members and is updated.           | No. The "Sensitive group open to outsiders" finding type doesn't exist yet.                                                     |
-| Monday    | The security team creates the "Sensitive group open to outsiders" finding type.           | No. CASB does not evaluate `board-directors`, because it hasn't changed since the finding type was created.                     |
+| Sunday    | The `board-directors@example.com` group allows external members and is updated.           | No. The "Sensitive group open to outsiders" finding type does not exist yet.                                                     |
+| Monday    | The security team creates the "Sensitive group open to outsiders" finding type.           | No. CASB does not evaluate `board-directors`, because it has not changed since the finding type was created.                     |
 | Tuesday   | The `exec-staff@example.com` group is created and anyone can join it.                     | Yes. CASB evaluates the new group and creates a finding instance.                                                               |
 | Wednesday | A member is added to `board-directors`.                                                   | Yes. CASB evaluates the group again and creates a finding instance, because it still allows external members.                   |
 | Thursday  | The `legal-outside-counsel@example.com` group, which allows external members, is updated. | No. CASB evaluates the group and its result is "pass", because it is the approved exception, so no finding instance is created. |
@@ -116,8 +116,8 @@ result := "fail" if {
 
 This expression works as follows:
 
-- `sensitive_prefixes` and `external_exceptions` hold the company's values. They are written into the expression, because CASB can't fetch lists from another system during evaluation.
-- `default result := "pass"` sets the result to "pass" for every asset unless a rule below changes it. Therefore, assets that do not match are never flagged.
+- `sensitive_prefixes` and `external_exceptions` hold the company's values. They are written into the expression, because CASB cannot fetch lists from another system during evaluation.
+- `default result := "pass"` sets the result to "pass" for every asset unless another rule in the expression changes it. Therefore, assets that do not match are never flagged.
 - `email := lower(input.asset.email)` lowercases the group's address, so that `Board-Directors@example.com` is treated the same as `board-directors@example.com`.
 - `sensitive` is true when the address starts with any of the three prefixes. `strings.any_prefix_match` checks the whole list in one call. Groups with other names never match.
 - `result := "fail" if { ... }` changes the result to "fail" when everything inside the braces is true. This will create a finding instance.
@@ -137,7 +137,7 @@ This expression works as follows:
 
 Select **Validate** in the finding type builder to check a Rego expression before creating the finding. Validation compiles the expression and checks it against the asset schema. It reports any syntax errors or unsupported Rego built-ins it finds.
 
-Note that validation does not execute the expression against data. To confirm the expression detects the intended conditions, [verify the finding type's behavior](#verify-custom-finding-type-behavior) after it is created.
+Validation does not execute the expression against data. To confirm the expression detects the intended conditions, [verify the finding type's behavior](#verify-custom-finding-type-behavior) after it is created.
 
 ### Supported Rego built-ins
 
@@ -230,7 +230,7 @@ If no instances appear after assets in the finding type's integrations have been
 - Network access is not available during Rego expression evaluation.
 - Package declarations and import declarations are not accepted in the editor.
 
-## Using custom finding types in policies
+## Use custom finding types in policies
 
 Custom finding types can be used in [CASB policies](/cloudflare-one/cloud-and-saas-findings/policies/) the same way standard finding types are used. When a [policy is created](/cloudflare-one/cloud-and-saas-findings/policies/#create-a-policy), the custom finding type is selected from the **Finding type** list.
 
@@ -311,15 +311,15 @@ Deleting a custom finding type will stop all evaluations against future asset up
 
 Deleting a finding instance cannot be undone.
 
-### Can I disable a custom finding type?
+### Disable a custom finding type
 
-No. Custom finding types cannot be disabled. To stop CASB from evaluating a custom finding type, [delete it](#delete-a-custom-finding-type). Deleting a custom finding type cannot be undone and deletes its existing finding instances.
+Custom finding types cannot be disabled. To stop CASB from evaluating a custom finding type, [delete it](#delete-a-custom-finding-type). Deleting a custom finding type cannot be undone and deletes its existing finding instances.
 
 To stop a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) that uses a custom finding type from triggering, turn off the policy instead. Refer to [Edit, turn off, or delete a policy](/cloudflare-one/cloud-and-saas-findings/policies/#edit-turn-off-or-delete-a-policy).
 
 ## Quarantined custom finding types
 
-Quarantine is a status CASB applies when a custom finding type's expression can't be evaluated safely.
+Quarantine is a status CASB applies when a custom finding type's expression cannot be evaluated safely.
 
 A quarantined custom finding type displays a warning icon next to its entry in **Cloud & SaaS findings** > **Findings library**.
 
@@ -341,9 +341,9 @@ A custom finding type will be quarantined if CASB is unable to evaluate the find
 
 **Validate** compiles the expression and checks it against the asset schema, but does not run the expression against asset data. An expression can pass validation and still be quarantined later.
 
-### Can I manually quarantine a custom finding type?
+### Manually quarantine a custom finding type
 
-No. A custom finding type cannot be manually quarantined, and the status cannot be removed, from the dashboard or the API.
+A custom finding type cannot be manually quarantined, and the status cannot be removed, from the dashboard or the API.
 
 Editing a quarantined custom finding type's name, description, or integration scope does not remove the status.
 
