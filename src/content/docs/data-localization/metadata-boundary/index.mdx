@@ -11,6 +11,8 @@ sidebar:
   order: 5
 ---
 
+import { Render } from "~/components";
+
 As part of the Data Localization Suite, the Customer Metadata Boundary (CMB) ensures that Customer Logs stay in the region you select.
 
 Customer Logs are traffic metadata — information generated when visitors access your site, such as request URLs, timestamps, and firewall events — that could identify your end users. These logs are tagged with your [Account ID](/fundamentals/account/find-account-and-zone-ids/) and will be stored exclusively in the European Union (`eu`) or the United States (`us`), depending on the region you configure. Customer Metadata Boundary supports these two regions only; by default no boundary is applied and logs may be stored in Cloudflare's core data centers globally. CMB uses its own region setting, separate from [Regional Services regions](/data-localization/region-support/#region-types). For example, if you select the `eu` Customer Metadata Boundary, metadata will **only** be sent to Cloudflare's core data center (the centralized processing facility, as distinct from the globally distributed edge data centers) located in the European Union.
@@ -51,6 +53,18 @@ To allow authorized users to view logs and analytics regardless of where their s
 
 Additionally, you can configure [Logpush](/logs/logpush/) (Cloudflare's log export service) to push Customer Logs to your own storage services, SIEMs (Security Information and Event Management systems), and log management providers.
 
+## Prerequisites for an EU boundary
+
+Before you can set Customer Metadata Boundary to `eu`, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/), an older API for downloading logs that is superseded by [Logpush](/logs/logpush/).
+
+When the boundary is set to `eu`, most analytics and logging sections in the Cloudflare dashboard will show no data. Your logs are still stored in the EU as configured. To read them, use [Security Analytics](/waf/analytics/security-analytics/), which respects the boundary, or set up [Logpush](/logs/logpush/) to export [HTTP request](/logs/logpush/logpush-job/datasets/zone/http_requests/) logs to a storage destination you control.
+
+### Data unavailability
+
+<Render file="customer_metadata_boundary_error" product="analytics" />
+
 ## Product specific-behavior
 
-For detailed information about product-specific behavior regarding Metadata Boundary, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page.
+For product exceptions, refer to [What stays in your region](/data-localization/what-stays-in-your-region/).
+
+For defects currently under investigation, refer to [Known issues](/data-localization/known-issues/).

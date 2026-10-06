@@ -8,7 +8,7 @@ tags:
   - TLS
   - Compliance
 sidebar:
-  order: 4
+  order: 6
 
 ---
 
@@ -45,4 +45,16 @@ sequenceDiagram
 
 <br/>
 
+## Latency on the first connection
+
+When using Geo Key Manager or [Keyless SSL](/ssl/keyless-ssl/) (a service where your private key stays on your own infrastructure), latency is added only when establishing a new connection.
+
+If the data center handling the connection does not hold your private key, it must contact a key server in an authorized region. This adds latency corresponding to the round-trip time between the two locations, which can be as much as a second if the key server is on the other side of the world. Once the handshake is complete, the key server is not involved. If the visitor reconnects within the TLS Session Resumption window, which reuses previous connection parameters, the private key is not required.
+
+Learn more about how it works in the [Geo Key Manager blog post](https://blog.cloudflare.com/geo-key-manager-how-it-works/).
+
+## Additional information
+
 For detailed information on setup and supported options, refer to [Geo Key Manager documentation](/ssl/edge-certificates/geokey-manager/).
+
+For product exceptions, refer to [What stays in your region](/data-localization/what-stays-in-your-region/).

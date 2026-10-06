@@ -1,0 +1,89 @@
+---
+title: What stays in your region
+pcx_content_type: reference
+description: The four data residency settings, the regions each one supports, and every product exception.
+products:
+  - data-localization
+tags:
+  - Compliance
+sidebar:
+  order: 2
+reviewed: 2026-07-23
+head:
+  - tag: title
+    content: What stays in your region
+---
+
+import { Aside } from "~/components";
+
+Cloudflare can keep four kinds of data in a region you choose. Each setting has its own region list, so check that first: it is the most common surprise.
+
+| What you are choosing                                                                          | Setting                                                   | Regions available                                                                                                       |
+| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Traffic being decrypted and inspected                                                          | **Processing region**<br/>(Regional Services)             | 35 regions, or a custom list of data centers. Countries, plus FedRAMP, IRAP, ISO 27001 EU and NATO.                     |
+| Content you store ([R2](/r2/), [Durable Objects](/durable-objects/))                            | **Storage region**<br/>(Jurisdictional Restrictions)      | EU, US, FedRAMP. Durable Objects: EU and FedRAMP only.                                                                  |
+| Logs and analytics                                                                             | **Log region**<br/>(Customer Metadata Boundary)           | EU or US only.                                                                                                          |
+| TLS private keys                                                                               | **Key region**<br/>(Geo Key Manager)                      | 11 regions.                                                                                                             |
+
+For the full region list per setting, refer to [Region support](/data-localization/region-support/).
+
+<Aside type="caution" title="Outside the EU and the US">
+
+Cloudflare can decrypt and inspect traffic inside your country, but your logs and stored content will reside in the EU or the US. There is no exception today.
+
+</Aside>
+
+If a product is not listed below, it is in scope. These three lists cover every exception.
+
+## 1. Not available with data residency
+
+- [Argo Smart Routing](/argo-smart-routing/)
+- [Onion Routing](/network/onion-routing/)
+- [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/)
+- [Trace](/rules/trace-request/)
+- HTTP/3 (QUIC)
+- [Encrypted Client Hello](/ssl/edge-certificates/ech/)
+- [ICMP](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/)
+- [Smart Placement](/workers/configuration/smart-placement/)
+- [Vectorize](/vectorize/)
+- Smart Tiered Caching
+- [Network Error Logging](/fundamentals/reference/network-error-logging/)
+- [Web Analytics and Real User Monitoring (RUM)](/web-analytics/)
+- [CASB](/cloudflare-one/applications/casb/)
+- [Log Explorer](/log-explorer/)
+- `workers.dev` and `pages.dev`
+
+These require Cloudflare to choose a location for you, or route around the region you set.
+
+For `workers.dev` and `pages.dev`, use your own domain. Regular and Custom [Tiered Cache](/cache/how-to/tiered-cache/) work; only Smart Tiered Caching does not. [Workers KV](/kv/), [Workers AI](/workers-ai/) and [Stream](/stream/) run outside your processing region.
+
+## 2. Works, with something missing
+
+| What you lose                               | Affects                                                                                                                                                                                                                                                                                         |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Analytics, unless your log region is US     | [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/); API Shield Discovery, Volumetric Abuse Detection and [Sequence Analytics](/api-shield/security/sequence-analytics/); [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/); [Logpull](/logs/logpull/) (use [Logpush](/logs/logpush/) instead) |
+| Processing region limited to US FedRAMP Moderate | [Access](/cloudflare-one/access-controls/), [Browser Isolation](/cloudflare-one/browser-isolation/)                                                                                                                                                                                         |
+| Not regionalized at all                     | Gateway DNS filtering, [Access JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), [Turnstile](/turnstile/) Siteverify API                                                                                                                      |
+| Unavailable                                 | Gateway [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/)                                                                                                                                                                                                      |
+| Bypasses your processing region             | DNS [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), which carry global IPs                                                                                                                                                                                    |
+| Separate regionalization path               | [Spectrum](/spectrum/) applications. A [regional hostname](/data-localization/regional-services/regional-hostnames/) does not regionalize a Spectrum application on the same hostname.                                                                                                           |
+| Storage region set on request only          | [Cache Reserve](/cache/advanced-configuration/cache-reserve/), which otherwise defaults to the data center nearest your origin                                                                                                                                                                  |
+
+## 3. No storage region yet
+
+- [D1](/d1/)
+- [Workers KV](/kv/)
+- [Images](/images/)
+- [AI Gateway](/ai-gateway/observability/logging/) logs
+
+Logs for these products stay in your log region. The stored objects have no region setting today.
+
+## Before you start
+
+**Bring your own domain.** Cloudflare-managed hostnames and storage are never regionalized. Developer platform products regionalize through a custom domain assigned to a region. R2, Images, Pages, Stream and Workers stay global until you set one.
+
+**An empty dashboard does not mean your data left the region.** With an EU log region, many dashboards render no data; the pipeline behind them runs only in the US. Your logs are still in the EU. Read them with [Logpush](/logs/logpush/), and turn on [out-of-region access](/data-localization/metadata-boundary/out-of-region-access/) so your team can reach them from anywhere.
+
+**Two prerequisites.** An EU log region requires [disabling Log Retention](/logs/logpull/#enable-log-retention) on all zones first. Single-country processing regions have no failover; multi-country regions such as the EU keep the standard SLA.
+
+Open defects are tracked on [Known issues](/data-localization/known-issues/).

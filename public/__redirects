@@ -822,6 +822,8 @@
 /data-localization/key-management/ /data-localization/geo-key-manager/ 301
 /data-localization/key-management/geo-key-manager/ /data-localization/geo-key-manager/ 301
 /data-localization/key-management/keyless-ssl/ /ssl/keyless-ssl/ 301
+/data-localization/compatibility/ /data-localization/what-stays-in-your-region/ 301
+/data-localization/limitations/ /data-localization/what-stays-in-your-region/ 301
 # ddos-protection
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301

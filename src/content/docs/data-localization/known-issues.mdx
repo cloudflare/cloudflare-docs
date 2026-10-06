@@ -1,0 +1,39 @@
+---
+title: Known issues
+pcx_content_type: reference
+description: Open data residency defects under investigation, with the date each was last reviewed.
+products:
+  - data-localization
+tags:
+  - Compliance
+sidebar:
+  order: 8
+reviewed: 2026-07-23
+head:
+  - tag: title
+    content: Known issues
+---
+
+This page tracks open defects in data residency behavior. These are bugs under investigation, not product characteristics. Each entry is removed once the defect is closed.
+
+If you are looking for permanent product exceptions instead, refer to [What stays in your region](/data-localization/what-stays-in-your-region/).
+
+## Notifications may not fire with an EU log region
+
+**Last reviewed:** 2026-07-23
+
+Email and webhook notifications for DDoS and WAF events may not fire reliably when your log region is set to `eu`. This behavior is intermittent and under investigation.
+
+If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
+
+## Some dashboard analytics render empty with an EU log region
+
+**Last reviewed:** 2026-07-23
+
+With an EU log region, some dashboard analytics views render no data even though the underlying logs are stored in the EU as configured. The analytics pipeline behind these views runs only in the US.
+
+Your data has not left your region. Use [Security Analytics](/waf/analytics/security-analytics/), which respects your log region, or export logs with [Logpush](/logs/logpush/).
+
+## Reporting a defect
+
+If you hit residency behavior that contradicts the documentation, contact your [account team](/support/contacting-cloudflare-support/) so it can be tracked here.

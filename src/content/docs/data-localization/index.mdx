@@ -23,27 +23,37 @@ import {
 
 <Plan type="ent-add-on" />
 
-The Data Localization Suite (DLS) is a collection of tools that enable customers to choose the location where Cloudflare inspects and stores data, while maintaining the security and performance benefits of our global network. Organizations subject to data residency regulations such as [GDPR](https://www.cloudflare.com/trust-hub/gdpr/) can use DLS to control where their encryption keys are stored, where traffic metadata and logs are kept, and where HTTPS traffic is decrypted and processed.
+Cloudflare data residency lets you choose where your data is processed and stored, while keeping the security and performance benefits of the global network. Organizations subject to data residency regulations such as [GDPR](https://www.cloudflare.com/trust-hub/gdpr/) can control where TLS private keys are stored, where logs and analytics are kept, where stored content resides, and where HTTPS traffic is decrypted and processed.
+
+These controls are sold as the Data Localization Suite (DLS).
+
+New here? Start with [What stays in your region](/data-localization/what-stays-in-your-region/), which lists the four settings, the regions each one supports, and every product exception on one page.
 
 ---
 
-## Features
+## Settings
 
-<Feature header="Geo Key Manager" href="/data-localization/geo-key-manager/">
+<Feature header="Processing region" href="/data-localization/regional-services/">
 
-Control where your private encryption keys are stored, ensuring compliance with data sovereignty requirements.
-
-</Feature>
-
-<Feature header="Customer Metadata Boundary" href="/data-localization/metadata-boundary/">
-
-Ensure that any traffic metadata — logs and analytics that could identify your end users — stays in the region you selected.
+Choose which Cloudflare data centers are allowed to decrypt and inspect your HTTPS traffic. Configured with Regional Services.
 
 </Feature>
 
-<Feature header="Regional Services" href="/data-localization/regional-services/">
+<Feature header="Storage region" href="/data-localization/what-stays-in-your-region/#3-no-storage-region-yet">
 
-Comply with regional restrictions by choosing which Cloudflare data centers are allowed to decrypt and process your HTTPS traffic.
+Choose where content you store resides. Configured per product with jurisdictional restrictions in [R2](/r2/reference/data-location/) and [Durable Objects](/durable-objects/reference/data-location/).
+
+</Feature>
+
+<Feature header="Log region" href="/data-localization/metadata-boundary/">
+
+Keep logs and analytics that could identify your end users in the region you selected. Configured with the Customer Metadata Boundary.
+
+</Feature>
+
+<Feature header="Key region" href="/data-localization/geo-key-manager/">
+
+Restrict where your TLS private keys are stored. Configured with Geo Key Manager.
 
 </Feature>
 

@@ -1,23 +1,26 @@
 ---
-title: Region support
+title: Regions by setting
 pcx_content_type: reference
-description: Supported regions for Geo Key Manager, Regional Services, and Customer Metadata Boundary.
+description: Which regions are available for the processing, storage, log, and key region settings.
 products:
   - data-localization
 tags:
   - Compliance
 sidebar:
-  order: 2
+  order: 3
 head:
   - tag: title
-    content: Region support
+    content: Regions by setting
 ---
 
-The Data Localization Suite allows you to restrict where your data is processed and stored. The table below shows which regions are available for each DLS feature:
+Each data residency setting has its own region list. A country available as a processing region is not necessarily available as a log or storage region, which is the most common source of surprise. Check this page before committing to a region.
 
-- **Geo Key Manager** — restricts where your TLS private keys are stored.
-- **Regional Services** — restricts which Cloudflare data centers can decrypt and inspect your HTTPS traffic.
-- **Customer Metadata Boundary (CMB)** — restricts where your logs and analytics data are stored.
+- **Processing region** (Regional Services) restricts which Cloudflare data centers can decrypt and inspect your HTTPS traffic.
+- **Storage region** (jurisdictional restrictions) restricts where content you store resides. EU, US, and FedRAMP only.
+- **Log region** (Customer Metadata Boundary) restricts where your logs and analytics are stored. EU or US only.
+- **Key region** (Geo Key Manager) restricts where your TLS private keys are stored.
+
+For product exceptions rather than region availability, refer to [What stays in your region](/data-localization/what-stays-in-your-region/).
 
 ## Region types
 

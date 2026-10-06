@@ -7,7 +7,7 @@ products:
 tags:
   - Compliance
 sidebar:
-  order: 6
+  order: 4
 ---
 
 import { GlossaryTooltip, Steps } from "~/components";
@@ -127,6 +127,25 @@ Setting up Regional Services follows the same path regardless of which option yo
 
 For availability and Service Level Agreements (SLAs), refer to your Cloudflare Enterprise contract. For Regional Services configurations restricted to a single country (except the US), Cloudflare's SLA includes specific exclusions: because traffic cannot fail over to data centers outside that country, there is no automatic failover if in-country capacity is unavailable. Multi-country regions (for example, the European Union) generally maintain the standard SLA.
 
+## Unsupported features and protocols
+
+The following are not supported by Regional Services and will not work on regionalized hostnames:
+
+- [ICMP](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/), used for network diagnostics like `ping`
+- [Encrypted Client Hello (ECH)](/ssl/edge-certificates/ech/), which encrypts the initial part of a TLS connection
+- [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), a Cloudflare for SaaS origin-to-origin setup
+- [Onion Routing (Tor)](/network/onion-routing/)
+
+Because Regional Services uses [Spectrum](/spectrum/) in the background, [Spectrum limitations](/spectrum/reference/limitations/) also apply.
+
+Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests), the secondary HTTP requests that your Workers make to other services. Regional Services operates on your hostname's IPs. Cloudflare recommends [DNSSEC](/learning-paths/application-security/default-traffic-security/dnssec/) and [DNS over HTTPS](/1.1.1.1/encryption/dns-over-https/) to ensure that DNS responses are secure and correct.
+
+### Regional hostnames and Spectrum applications
+
+Regional hostnames configured through the dashboard or the Regional Hostnames API only apply to hostnames [proxied](/dns/proxy-status/) through Cloudflare. They do not regionalize [Spectrum](/spectrum/) applications.
+
+If a hostname has both a regional hostname configuration and an active Spectrum application, these are independent systems. The Spectrum application may override the regional hostname's IP steering with its own IP assignment, so traffic may not be processed in the region configured via the Regional Hostnames API. If you need to regionalize a Spectrum application, contact your [account team](/support/contacting-cloudflare-support/) about Spectrum-specific regionalization options, which apply only to HTTP and HTTPS [application types](/spectrum/reference/configuration-options/#application-type).
+
 ## Additional information
 
-For more details about the products that are compatible with Regional Services, refer to the [Cloudflare product compatibility](/data-localization/compatibility/) page. If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.
+For product exceptions, refer to [What stays in your region](/data-localization/what-stays-in-your-region/). If you have purchased these products as part of your Enterprise subscription plan, Cloudflare will only terminate TLS connections for these products in the geographic region you have configured for Regional Services.
