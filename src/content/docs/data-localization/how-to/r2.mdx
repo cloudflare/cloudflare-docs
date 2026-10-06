@@ -1,7 +1,7 @@
 ---
 title: R2 Object Storage
 pcx_content_type: how-to
-description: Configure R2 Object Storage with Regional Services and Customer Metadata Boundary.
+description: Configure a processing region, a storage region, and a log region for R2 Object Storage.
 products:
   - data-localization
   - r2
@@ -14,11 +14,11 @@ sidebar:
 
 import { Details, DashButton } from "~/components";
 
-The following sections describe how to configure R2 Object Storage with Regional Services and Customer Metadata Boundary to control where object requests are processed and where logs are stored.
+Set a processing region to control where object requests are processed. Set a storage region, expressed as a jurisdiction, to control where bucket contents reside. Set a log region to control where logs are stored.
 
-## Regional Services
+## Processing region
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that processing of requests to an [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
+To set a processing region for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare, and ensure that processing of requests to an [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
 
 1. In the Cloudflare dashboard, go to the **R2** page.
 
@@ -26,16 +26,15 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 
 2. Follow the steps to [create a Bucket](/r2/buckets/create-buckets/).
 3. [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
-4. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the configured bucket custom domain to create a `regional_hostnames` with a specific region.
+4. Run the [API POST](/data-localization/processing-region/regional-hostnames/#configure-a-processing-region-via-api) command on the configured bucket custom domain to create a `regional_hostnames` with a specific region.
 
-Regional Services only applies to the custom domain configured for an R2 Bucket.
+A processing region only applies to the custom domain configured for an R2 Bucket. It does not control where the bucket contents reside. For that, set a storage region.
 
 ### Send logs to R2 via S3-Compatible endpoint
 
-The following instructions will show you how to set up a Logpush job using an S3-compatible endpoint to store logs in an R2 bucket in the jurisdiction of your choice.
+Set up a Logpush job that uses an S3-compatible endpoint to store logs in an R2 bucket in the storage region of your choice.
 
 1. Create an [R2 bucket](/r2/get-started/) in your Cloudflare account and select the [jurisdiction](/r2/reference/data-location/#set-jurisdiction-via-the-cloudflare-dashboard) you would like to use.
-
 2. Generate an API token for your R2 bucket. You have the following two options:
 
 <Details header="Generate a token for a specific bucket (recommended)">
@@ -99,13 +98,13 @@ This command will output a hash similar to `dxxxx391b`.
 
 Complete the configuration by selecting the fields you want to push to your R2 bucket.
 
-## Customer Metadata Boundary
+## Log region
 
-With Customer Metadata Boundary set to `EU`, **R2** > **Bucket** > [**Metrics**](/r2/platform/metrics-analytics/) tab in the account dashboard will be populated.
+With an EU log region, the **R2** > **Bucket** > [**Metrics**](/r2/platform/metrics-analytics/) tab in the account dashboard is populated.
 
 :::note
 
-Additionally, customers can create R2 buckets with [jurisdictional restrictions set to EU](/r2/reference/data-location/#jurisdictional-restrictions). In this case, we recommend [using jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
+You can also create R2 buckets with the [storage region set to the `eu` jurisdiction](/r2/reference/data-location/#jurisdictional-restrictions). In that case, Cloudflare recommends [using jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
 
 :::
 

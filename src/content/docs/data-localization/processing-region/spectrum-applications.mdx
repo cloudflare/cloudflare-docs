@@ -16,13 +16,13 @@ Regionalized Spectrum Applications are configured with the help of your account 
 
 :::
 
-Regionalized Spectrum Applications regionalize HTTP/S traffic using [Spectrum](/spectrum/), Cloudflare's Layer 4 proxy. Unlike [Regional Hostnames](/data-localization/regional-services/regional-hostnames/) — which steer proxied hostnames using Cloudflare's shared anycast IP addresses — a Regionalized Spectrum Application assigns a dedicated IP to your hostname, and that IP signals that all traffic to it must be processed in a specific region.
+Regionalized Spectrum Applications regionalize HTTP/S traffic using [Spectrum](/spectrum/), Cloudflare's Layer 4 proxy. [Regional Hostnames](/data-localization/processing-region/regional-hostnames/) steer proxied hostnames using Cloudflare's shared anycast IP addresses. A Regionalized Spectrum Application instead assigns a dedicated IP to your hostname, and that IP signals that all traffic to it must be processed in a specific region.
 
-Choose this option when you need to regionalize traffic that is addressed by IP, or when you need to combine Regional Services with [Spectrum Static IPs](/spectrum/about/static-ip/) or [Bring Your Own IP (BYOIP)](/byoip/).
+Choose this option when you need to regionalize traffic that is addressed by IP, or when you need to combine a processing region with [Spectrum Static IPs](/spectrum/about/static-ip/) or [Bring Your Own IP (BYOIP)](/byoip/).
 
 ## How it works
 
-You create a Spectrum HTTP/S application for each hostname you want to regionalize. Cloudflare assigns a single processing region to the zone, and that region applies to **all** Spectrum HTTP/S applications in that zone — you configure one region per zone, not one per application. From then on, traffic to each application's IP terminates TLS and is processed only within the configured region, following the same in-region processing model described in [Regional Services](/data-localization/regional-services/).
+You create a Spectrum HTTP/S application for each hostname you want to regionalize. Cloudflare assigns a single processing region to the zone, and that region applies to **all** Spectrum HTTP/S applications in that zone: you configure one region per zone, not one per application. From then on, traffic to each application's IP terminates TLS and is processed only within the configured region, following the same in-region processing model described in [Processing region](/data-localization/processing-region/).
 
 ## Prerequisites
 
@@ -43,15 +43,15 @@ You create a Spectrum HTTP/S application for each hostname you want to regionali
 
    <Details header="Spectrum hostname limits and workarounds">
 
-   By default, an account is limited to **10 unique Spectrum hostnames** using Cloudflare-managed IPv4 addresses, across all zones on the account. Each hostname is backed by a dedicated IPv4 address, and this quota is applied at the account level — not per zone.
+   By default, an account is limited to **10 unique Spectrum hostnames** using Cloudflare-managed IPv4 addresses, across all zones on the account. Each hostname is backed by a dedicated IPv4 address, and this quota is applied at the account level, not per zone.
 
    If you need to regionalize more hostnames than this, refer to the workarounds in [Spectrum limitations: IPv4 hostname quota](/spectrum/reference/limitations/#ipv4-hostname-quota) (BYOIP, IPv6-only applications, CNAMEing subdomains to a single application, or Cloudflare for SaaS).
 
-   This quota is a Spectrum-wide limit, not specific to Regional Services. Contact your account team if you expect to exceed it.
+   This quota is a Spectrum-wide limit, not specific to processing regions. Contact your account team if you expect to exceed it.
 
    </Details>
 
-3. **Configure the processing region.** The region is assigned by Cloudflare, so communicate and work with your account team to confirm which [region](/data-localization/region-support/) should apply to your zone and to verify it has been configured. You can use any [managed region](/data-localization/region-support/#region-types), or request a [custom region](#custom-regions) if your compliance requirements are not met by the managed regions.
+3. **Configure the processing region.** The region is assigned by Cloudflare, so communicate and work with your account team to confirm which [region](/data-localization/regions-by-setting/) should apply to your zone and to verify it has been configured. You can use any [managed region](/data-localization/regions-by-setting/#region-types), or request a [custom region](#custom-regions) if your compliance requirements are not met by the managed regions.
 
 4. **Verify regionalization.** Confirm that traffic is processed in the expected region. Refer to [Verify the configuration](#verify-the-configuration).
 
@@ -59,7 +59,7 @@ You create a Spectrum HTTP/S application for each hostname you want to regionali
 
 ## Verify the configuration
 
-You can confirm regionalization using the same method as any other Regional Services configuration — refer to [Verify Regional Services behavior](/data-localization/how-to/#verify-regional-services-behavior) for the general guidance.
+You can confirm regionalization using the same method as any other processing region configuration. Refer to [Verify your processing region](/data-localization/how-to/#verify-your-processing-region) for the general guidance.
 
 Every Cloudflare HTTP response includes a `CF-RAY` header that ends with a three-letter [IATA airport code](https://en.wikipedia.org/wiki/IATA_airport_code) identifying the data center where TLS termination occurred. Send a request to your regionalized hostname and check that the code corresponds to a data center inside your configured region:
 
@@ -75,10 +75,10 @@ In this example, `MUC` (Munich) confirms that the request was processed in the E
 
 ## Custom regions
 
-If the [managed regions](/data-localization/region-support/#region-types) do not match your compliance requirements, you can request a custom region that restricts processing to a specific set of data centers. Custom regions are set up through your account team. To learn more about how custom regions work, refer to the [Custom regions blog post](https://blog.cloudflare.com/custom-regions/).
+If the [managed regions](/data-localization/regions-by-setting/#region-types) do not match your compliance requirements, you can request a custom region that restricts processing to a specific set of data centers. Custom regions are set up through your account team. To learn more about how custom regions work, refer to the [Custom regions blog post](https://blog.cloudflare.com/custom-regions/).
 
 ## Related resources
 
-- [Regional Services](/data-localization/regional-services/) — overview and in-region processing model.
-- [Available regions and product support](/data-localization/region-support/) — the full list of regions and their definitions.
-- [Spectrum](/spectrum/) — Cloudflare's Layer 4 proxy.
+- [Processing region](/data-localization/processing-region/): overview and in-region processing model.
+- [Available regions and product support](/data-localization/regions-by-setting/): the full list of regions and their definitions.
+- [Spectrum](/spectrum/): Cloudflare's Layer 4 proxy.

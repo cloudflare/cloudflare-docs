@@ -618,7 +618,7 @@
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
 /china-network/concepts/china-express/ /china-network/concepts/global-acceleration/ 301
 # cloudflare for platforms
-/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/regional-services/regional-hostnames/ 301
+/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/regional-services-for-saas/ /data-localization/processing-region/regional-hostnames/ 301
 /support/third-party-software/e-commerce/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/e-commerce/using-cloudflare-with-shopify/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/shopify/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wp-engine/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/wpengine/ 301
@@ -818,12 +818,16 @@
 /changelog/post/2026-08-07-us-jurisdiction/ /changelog/post/2026-10-02-us-jurisdiction/ 301
 
 # Data Localization Suite
-/data-localization/regional-services/get-started/ /data-localization/regional-services/regional-hostnames/ 301
-/data-localization/key-management/ /data-localization/geo-key-manager/ 301
-/data-localization/key-management/geo-key-manager/ /data-localization/geo-key-manager/ 301
+/data-localization/regional-services/get-started/ /data-localization/processing-region/regional-hostnames/ 301
+/data-localization/key-management/ /data-localization/key-region/ 301
+/data-localization/key-management/geo-key-manager/ /data-localization/key-region/ 301
 /data-localization/key-management/keyless-ssl/ /ssl/keyless-ssl/ 301
 /data-localization/compatibility/ /data-localization/what-stays-in-your-region/ 301
 /data-localization/limitations/ /data-localization/what-stays-in-your-region/ 301
+/data-localization/geo-key-manager/ /data-localization/key-region/ 301
+/data-localization/region-support/ /data-localization/regions-by-setting/ 301
+/data-localization/regional-services/ /data-localization/processing-region/ 301
+/data-localization/metadata-boundary/ /data-localization/log-region/ 301
 # ddos-protection
 /ddos-protection/managed-rulesets/http/location-aware-protection/ /ddos-protection/managed-rulesets/adaptive-protection/ 301
 /ddos-protection/managed-rulesets/network/fields/ /ddos-protection/managed-rulesets/network/network-overrides/override-expressions/ 301
@@ -3226,3 +3230,7 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
+
+# Data residency section renames
+/data-localization/regional-services/* /data-localization/processing-region/:splat 301
+/data-localization/metadata-boundary/* /data-localization/log-region/:splat 301

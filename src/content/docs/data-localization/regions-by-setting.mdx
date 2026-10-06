@@ -1,0 +1,99 @@
+---
+title: Regions by setting
+pcx_content_type: reference
+description: Which regions are available for the processing, storage, log, and key region settings.
+products:
+  - data-localization
+tags:
+  - Compliance
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Regions by setting
+---
+
+import { Aside } from "~/components";
+
+Each data residency setting has its own region list. A country available as a processing region is usually not available as a storage or log region. Check this page before you commit to a region.
+
+| Setting                                                    | Regions available |
+| ---------------------------------------------------------- | ----------------- |
+| [Processing region](/data-localization/processing-region/) | 35, listed below  |
+| [Storage region](/data-localization/storage-region/)       | EU, US, FedRAMP   |
+| [Log region](/data-localization/log-region/)               | EU, US            |
+| [Key region](/data-localization/key-region/)               | 11, listed below  |
+
+<Aside type="caution" title="Processing is not storage">
+
+Setting a processing region of Japan does not put your logs or stored content in Japan. Logs and storage are limited to the EU and the US, with no exceptions today. Only your traffic processing happens in Japan.
+
+</Aside>
+
+## Processing region
+
+A processing region restricts which data centers can decrypt and service your HTTPS traffic. Unless noted otherwise, Cloudflare uses only data centers physically located in the named country.
+
+**Countries:** Australia, Austria, Brazil, Canada, France, Germany, Hong Kong, India, Italy, Japan, Netherlands, Russia, Saudi Arabia, Singapore, South Africa, South Korea, Spain, Switzerland, Taiwan, Turkey, United Arab Emirates, United Kingdom, United States of America.
+
+**US states:** California, Florida, Texas.
+
+**Groups of countries:**
+
+| Region                           | Definition                                                                                                               |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| European Union                   | Data centers in the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en). |
+| NATO                             | Data centers in [NATO member countries](https://www.nato.int/nato-welcome/).                                             |
+| Exclusive of Hong Kong and Macau | Any data center worldwide **except** those in Hong Kong and Macau.                                                       |
+| Exclusive of Russia and Belarus  | Any data center worldwide **except** those in Russia and Belarus.                                                        |
+
+**Compliance frameworks.** These restrict by certification, not only by geography, so some include data centers outside the country you might expect:
+
+| Region                                                                                 | Definition                                                                                  |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| FedRAMP Moderate Compliant (Domestic)                                                  | FedRAMP Moderate certified data centers in the United States only.                          |
+| FedRAMP Moderate Compliant (International)                                             | FedRAMP Moderate certified data centers, **including locations outside the United States**. |
+| ISO 27001 Certified European Union                                                     | EU data centers that hold ISO 27001 certification.                                          |
+| [IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/) Protected | IRAP-assessed data centers, **including locations outside Australia**.                      |
+
+**Not a location.** Cloudflare Green Energy restricts traffic to data centers committed to powering their operations with [renewable energy](https://www.cloudflare.com/impact/). It carries no geographic guarantee, so it does not satisfy a data residency requirement on its own.
+
+Two notes on country regions:
+
+- **France** means Metropolitan France, the European territory of France.
+- **United Kingdom** is not in the EU. A UK processing region keeps traffic processing in the UK, but your logs and stored content still go to the EU or the US.
+
+### Region types
+
+- **Managed regions** are predefined and identified by a region key such as `eu` or `us`. These are the regions listed above. Most customers use a managed region.
+- **Custom regions** restrict processing to a specific set of data centers you agree with your account team, for when no managed region meets your requirements. Custom regions work with [Regionalized Spectrum Applications](/data-localization/processing-region/spectrum-applications/) and [Regionalized IP Bindings](/data-localization/processing-region/ip-bindings/), but not with [Regional Hostnames](/data-localization/processing-region/regional-hostnames/).
+
+## Storage region
+
+Set per resource as a jurisdiction, in [R2](/r2/reference/data-location/#available-jurisdictions) and [Durable Objects](/durable-objects/reference/data-location/#supported-locations):
+
+| Jurisdiction | Description                   |
+| ------------ | ----------------------------- |
+| `eu`         | The European Union            |
+| `us`         | The United States             |
+| `fedramp`    | FedRAMP-Moderate data centers |
+
+Other products that store content have no storage region yet. Refer to [Storage region](/data-localization/storage-region/).
+
+## Log region
+
+The EU (`eu`) or the US (`us`). By default, no log region is set and logs may be stored in Cloudflare's core data centers globally. FedRAMP customers use `us`.
+
+If you set a processing region inside the EU, the `eu` log region covers it: Austria, European Union, France, Germany, ISO 27001 Certified European Union, Italy, Netherlands, and Spain.
+
+For every other processing region, including the United Kingdom and Switzerland, you must still choose `eu` or `us` for your logs.
+
+## Key region
+
+A key region restricts where your TLS private keys are stored. Eleven regions are available, in two groups.
+
+**Available to all accounts:** European Union, United States of America.
+
+**Available with the current [Geo Key Manager](/ssl/edge-certificates/geokey-manager/)**, which added country-level control: Australia, Canada, FedRAMP Moderate Compliant (Domestic), Germany, India, Japan, Singapore, South Korea, United Kingdom.
+
+Key regions use their own country-based list, so they are not the same as processing regions. If you need a country that is not listed, it is not available as a key region today.

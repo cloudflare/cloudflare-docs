@@ -22,7 +22,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/).
 
-Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/). To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/).
+Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/processing-region/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/). To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/).
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
@@ -137,7 +137,7 @@ FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/traffic-policies/htt
 
 ## FedRAMP compliance
 
-When you use [Cloudflare Regional Services](/data-localization/regional-services/) in the United States and the Cloudflare One Client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
+When you use [Cloudflare Regional Services](/data-localization/processing-region/) in the United States and the Cloudflare One Client to on-ramp TLS traffic to Gateway, traffic will egress from a Cloudflare data center within Cloudflare's FedRAMP boundary. If a user's closest data center is non-FedRAMP compliant, their traffic will still egress from a FedRAMP compliant data center, maintaining FedRAMP compliance for the traffic.
 
 ```mermaid
 flowchart LR

@@ -18,26 +18,26 @@ Regionalized IP Bindings requires the Regional Services and Regional Services fo
 
 Regionalized IP Bindings let you regionalize traffic at the IP layer for prefixes you bring to Cloudflare through [Bring Your Own IP (BYOIP)](/byoip/). You bind a CIDR from one of your prefixes to a region, and Cloudflare processes traffic destined for those IP addresses only within the data centers in that region.
 
-This complements the other ways to use [Regional Services](/data-localization/regional-services/): where [Regional Hostnames](/data-localization/regional-services/regional-hostnames/) regionalize traffic by hostname, Regionalized IP Bindings regionalize traffic by IP prefix — ideal for address-map deployments and any service you address by IP rather than hostname. Because bindings are managed entirely through the API, you can regionalize broad configurations yourself once your entitlements are enabled, without per-zone setup from your account team.
+This complements the other ways to set a [processing region](/data-localization/processing-region/): where [Regional Hostnames](/data-localization/processing-region/regional-hostnames/) regionalize traffic by hostname, Regionalized IP Bindings regionalize traffic by IP prefix. This suits address-map deployments and any service you address by IP rather than hostname. Because bindings are managed entirely through the API, you can regionalize broad configurations yourself once your entitlements are enabled, without per-zone setup from your account team.
 
 ## How it works
 
-A prefix binding maps a CIDR (within a BYOIP prefix you own) to a [region key](#list-available-regions) (for example, `us` or `eu`). After Cloudflare provisions the binding, traffic to addresses in that CIDR terminates TLS and is processed only inside the configured region, following the same in-region processing model described in [Regional Services](/data-localization/regional-services/).
+A prefix binding maps a CIDR (within a BYOIP prefix you own) to a [region key](#list-available-regions) (for example, `us` or `eu`). After Cloudflare provisions the binding, traffic to addresses in that CIDR terminates TLS and is processed only inside the configured region, following the same in-region processing model described in [Processing region](/data-localization/processing-region/).
 
 Bindings are managed through the Data Localization Suite API under `/accounts/{account_id}/dls/`.
 
 ## Choose which CIDR to bind
 
-A binding covers a range of addresses within a prefix, not just a single address — you do **not** need to create one binding per IP address. The `cidr` you bind must:
+A binding covers a range of addresses within a prefix, not just a single address: you do **not** need to create one binding per IP address. The `cidr` you bind must:
 
 - Fall within the prefix identified by `prefix_id`.
 - Contain only unused IP addresses. Binding IP addresses that are already in use interrupts their traffic while the change propagates.
-- Be **more specific than the prefix itself** — a sub-range within it. For example, within a `/24` prefix you can bind any range from a `/25` down to a single address (a `/32` for IPv4, or a `/128` for IPv6). Binding the entire prefix (the full `/24`) is rejected with a [conflict error](#handle-a-conflict-error), because the whole prefix range is already in use once Cloudflare advertises it.
+- Be **more specific than the prefix itself**, meaning a sub-range within it. For example, within a `/24` prefix you can bind any range from a `/25` down to a single address (a `/32` for IPv4, or a `/128` for IPv6). Binding the entire prefix (the full `/24`) is rejected with a [conflict error](#handle-a-conflict-error), because the whole prefix range is already in use once Cloudflare advertises it.
 
 How you choose the CIDR depends on how you want to split the prefix across regions:
 
-- **One region for the whole prefix** — cover the prefix with sub-ranges that all point to the same region. For example, bind both `203.0.113.0/25` and `203.0.113.128/25` to `eu` to regionalize every address in a `/24`.
-- **Different regions for different addresses** — bind each range to the region you want (for example, `203.0.113.0/25` to `eu` and `203.0.113.128/25` to `us`). Cloudflare applies the most specific binding that matches a given address, so a narrower binding takes precedence over a broader one that overlaps it.
+- **One region for the whole prefix**: cover the prefix with sub-ranges that all point to the same region. For example, bind both `203.0.113.0/25` and `203.0.113.128/25` to `eu` to regionalize every address in a `/24`.
+- **Different regions for different addresses**: bind each range to the region you want (for example, `203.0.113.0/25` to `eu` and `203.0.113.128/25` to `us`). Cloudflare applies the most specific binding that matches a given address, so a narrower binding takes precedence over a broader one that overlaps it.
 
 A conflict occurs only when you try to create two bindings for the exact same CIDR. Bindings with overlapping but different CIDRs can coexist, and Cloudflare applies the most specific matching binding. To change the region for an existing CIDR, [update its binding](#update-the-region-for-a-binding) instead of creating another one.
 
@@ -59,7 +59,7 @@ These endpoints are authorized at the account level. The permissions you need de
 | List regions, get a region, list or get bindings | **DLS: Read**                               |
 | Create, update, or delete a prefix binding       | **DLS: Write** _and_ **IP Prefixes: Write** |
 
-Write operations require **IP Prefixes: Write** in addition to **DLS: Write** because the binding is created against a BYOIP prefix that you own in [Addressing](/byoip/) — Cloudflare verifies that you have permission to modify that prefix. A token with only **DLS: Write** can read regions and bindings but will be rejected when it tries to create or change a binding.
+Write operations require **IP Prefixes: Write** in addition to **DLS: Write** because the binding is created against a BYOIP prefix that you own in [Addressing](/byoip/): Cloudflare verifies that you have permission to modify that prefix. A token with only **DLS: Write** can read regions and bindings but will be rejected when it tries to create or change a binding.
 
 The **Super Administrator** and **Administrator** roles include all of these permissions. A custom role works as long as it includes the permission groups above.
 
@@ -97,7 +97,7 @@ Each binding references a region by its `region_key` (for example, `us` or `eu`)
 }
 ```
 
-Use the `type` query parameter (`managed` or `custom`) to filter the results by [region type](/data-localization/region-support/#region-types). Results are paginated — pass the `cursor` value from a response to fetch the next page.
+Use the `type` query parameter (`managed` or `custom`) to filter the results by [region type](/data-localization/regions-by-setting/#region-types). Results are paginated. Pass the `cursor` value from a response to fetch the next page.
 
 <Details header="Get a single region">
 
@@ -195,7 +195,7 @@ Because [each CIDR can have only one binding](#choose-which-cidr-to-bind), a cre
 
 You get this error in two cases:
 
-- **You tried to bind the entire prefix.** The full prefix range (for example, the whole `/24`) is already in use once Cloudflare advertises your prefix, so it cannot be bound to a region directly. Bind a more specific range within the prefix instead — a `/25` down to a single `/32` — and cover the prefix with several sub-ranges if you need to regionalize all of its addresses.
+- **You tried to bind the entire prefix.** The full prefix range (for example, the whole `/24`) is already in use once Cloudflare advertises your prefix, so it cannot be bound to a region directly. Bind a more specific range within the prefix instead, from a `/25` down to a single `/32`, and cover the prefix with several sub-ranges if you need to regionalize all of its addresses.
 - **The CIDR is already bound.** A binding for that exact range already exists, for example from an earlier request that succeeded.
 
 To resolve it:
@@ -289,6 +289,6 @@ Remove a binding to stop regionalizing traffic for its CIDR.
 
 ## Related resources
 
-- [Regional Services](/data-localization/regional-services/) — overview and in-region processing model.
-- [Available regions and product support](/data-localization/region-support/) — the full list of regions and their definitions.
-- [Bring Your Own IP (BYOIP)](/byoip/) — onboard your own IP prefixes to Cloudflare.
+- [Processing region](/data-localization/processing-region/): overview and in-region processing model.
+- [Available regions and product support](/data-localization/regions-by-setting/): the full list of regions and their definitions.
+- [Bring Your Own IP (BYOIP)](/byoip/): onboard your own IP prefixes to Cloudflare.

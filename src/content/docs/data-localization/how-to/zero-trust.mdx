@@ -1,7 +1,7 @@
 ---
 title: Zero Trust
 pcx_content_type: how-to
-description: Use Zero Trust products with the Data Localization Suite, including Gateway and CASB.
+description: Use Zero Trust products with data residency, including Gateway and CASB.
 products:
   - data-localization
   - cloudflare-one
@@ -14,11 +14,11 @@ sidebar:
 
 import { Render } from "~/components";
 
-The following sections describe how to configure Zero Trust products with the Data Localization Suite, including which features support Regional Services and Customer Metadata Boundary.
+The following sections describe how to configure data residency for Zero Trust products, including which features support processing regions and log regions.
 
 ## Gateway
 
-Regional Services can be used with Gateway in all [supported regions](/data-localization/region-support/). Be aware that Regional Services only apply when using the Cloudflare One Client in Traffic and DNS mode.
+You can set a processing region for Gateway in all [supported regions](/data-localization/regions-by-setting/). A processing region only applies when using the Cloudflare One Client in Traffic and DNS mode.
 
 ### Egress policies
 
@@ -29,7 +29,7 @@ Zero Trust [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-polici
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
+Within your processing region, Cloudflare Gateway only performs [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (in default [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
@@ -42,19 +42,19 @@ You are able to [log the payload of matched DLP rules](/cloudflare-one/data-loss
 
 ### DNS policies
 
-Regional Services controls where Cloudflare decrypts traffic. Because most DNS traffic is not encrypted, Gateway DNS (domain name filtering) cannot be regionalized using Regional Services.
+A processing region controls where Cloudflare decrypts traffic. Because most DNS traffic is not encrypted, Gateway DNS (domain name filtering) cannot be regionalized with a processing region.
 
 Refer to the [Cloudflare One Client settings](/data-localization/how-to/zero-trust/#cloudflare-one-client-settings) section below for more information.
 
 ### Custom certificates
 
-You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
+You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway, but these cannot yet be restricted to a specific region.
 
 ### Logs and Analytics
 
-By default, Cloudflare will store and deliver logs from data centers across our global network. To maintain regional control over your data, you can use [Customer Metadata Boundary](/data-localization/metadata-boundary/) and restrict data storage to a specific geographic region. For more information refer to the section about [Logpush datasets supported](/data-localization/metadata-boundary/logpush-datasets/).
+By default, Cloudflare stores and delivers logs from data centers across our global network. To maintain regional control over your data, set a [log region](/data-localization/log-region/) and restrict log storage to a specific geographic region. For more information, refer to the section about [Logpush datasets supported](/data-localization/log-region/logpush-datasets/).
 
-Customers also have the option to reduce the logs that Cloudflare stores:
+You can also reduce the logs that Cloudflare stores:
 
 - You can [exclude PII from logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/)
 - You can [disable logging, or only log blocked requests](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#selective-logging).
@@ -65,19 +65,19 @@ Customers also have the option to reduce the logs that Cloudflare stores:
 
 ## Access
 
-To ensure that all reverse proxy requests for applications protected by Cloudflare Access will only occur in FedRAMP-compliant data centers, you should use [Regional Services](/data-localization/regional-services/regional-hostnames/) with the region set to FedRAMP.
+To ensure that all reverse proxy requests for applications protected by Cloudflare Access occur only in FedRAMP-compliant data centers, set a [processing region](/data-localization/processing-region/regional-hostnames/) of FedRAMP.
 
 ## Cloudflare Tunnel
 
-The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services, which controls where user traffic is decrypted and processed.
+The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from your processing region, which controls where user traffic is decrypted and processed.
 
-For public hostnames served through a tunnel, Regional Services is configured at the DNS record level. The tunnel connector region and the Regional Services region operate independently.
+For public hostnames served through a tunnel, you set the processing region at the DNS record level. The tunnel connector region and the processing region operate independently.
 
 ## Cloudflare One Client settings
 
 ### Local Domain Fallback
 
-You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
+You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) to use a private DNS resolver, which you can manage yourself.
 
 ### Split Tunnels
 

@@ -1,7 +1,7 @@
 ---
 title: Cache
 pcx_content_type: how-to
-description: Configure Cache with Regional Services and Customer Metadata Boundary.
+description: Configure a processing region and a log region for Cache.
 products:
   - data-localization
   - cache
@@ -13,11 +13,11 @@ sidebar:
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-The following sections describe how to configure Cache with Regional Services and Customer Metadata Boundary to control where cached content is stored and served from.
+Set a processing region to control where cached content is stored and served from. Set a log region to control where Cache analytics are stored.
 
-## Regional Services
+## Processing region
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
+To set a processing region for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare, and ensure that [eligible assets](/cache/concepts/default-cache-behavior/) are cached only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -34,24 +34,24 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 <TabItem label="API">
 
 1. To create records with the API, use the [API POST](/api/resources/dns/subresources/records/methods/create/) command.
-2. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
+2. Run the [API POST](/data-localization/processing-region/regional-hostnames/#configure-a-processing-region-via-api) command on the hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>
 
 :::note
 
-Take into consideration that only [Generic Global Tiered Cache](/cache/how-to/tiered-cache/#generic-global-tiered-cache) and [Custom Tiered Cache](/cache/how-to/tiered-cache/#custom-tiered-cache) respect Regional Services. [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) is incompatible with Regional Services.
+Only [Generic Global Tiered Cache](/cache/how-to/tiered-cache/#generic-global-tiered-cache) and [Custom Tiered Cache](/cache/how-to/tiered-cache/#custom-tiered-cache) respect your processing region. [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) is incompatible with processing regions.
 
 :::
 
 ### Egress to origin
 
-Regional Services controls where user traffic is decrypted and processed within Cloudflare's network. It does not by itself guarantee the geolocation of the egress IPs used by the Cloudflare CDN when connecting to your origin server. Egress IPs to your origin are site-local IPs from the in-region data center where the request was processed.
+Your processing region controls where user traffic is decrypted and processed within Cloudflare's network. It does not by itself guarantee the geolocation of the egress IPs used by the Cloudflare CDN when connecting to your origin server. Egress IPs to your origin are site-local IPs from the in-region data center where the request was processed.
 
-If you need guaranteed egress IP geolocation — for example, to allowlist Cloudflare IPs on your origin from a specific country — use [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) in combination with Regional Services.
+If you need guaranteed egress IP geolocation, for example to allowlist Cloudflare IPs on your origin from a specific country, use [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) in combination with a processing region.
 
-## Customer Metadata Boundary
+## Log region
 
-[Cache Analytics](/cache/performance-review/cache-analytics/), Generic Global Tiered Cache and Custom Tiered Cache are compatible with Customer Metadata Boundary. With Customer Metadata Boundary set to EU, the **Caching** > **Tiered Cache** tab in the zone dashboard will not be populated.
+[Cache Analytics](/cache/performance-review/cache-analytics/), Generic Global Tiered Cache, and Custom Tiered Cache are compatible with log regions. With an EU log region, the **Caching** > **Tiered Cache** tab in the zone dashboard is not populated.
 
 For more information on CDN and caching, refer to the [Cache documentation](/cache/).

@@ -1,8 +1,8 @@
 id: wogVyr
-name: Data Localization Suite
+name: Data residency
 
 entry:
-  title: Data Localization Suite
+  title: Data residency
   url: /data-localization/
   group: Cloudflare One
   additional_groups:
@@ -16,6 +16,6 @@ entry:
     ]
 
 meta:
-  title: Cloudflare Data Localization Suite docs
-  description: Control where Cloudflare stores and inspects data
+  title: Cloudflare data residency docs
+  description: Control where Cloudflare processes and stores your data. Sold as the Data Localization Suite (DLS).
   author: "@cloudflare"

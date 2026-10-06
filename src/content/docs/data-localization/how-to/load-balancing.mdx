@@ -1,7 +1,7 @@
 ---
 title: Load Balancing
 pcx_content_type: how-to
-description: Configure Load Balancing with Regional Services and Customer Metadata Boundary.
+description: Configure a processing region and a log region for Load Balancing.
 products:
   - data-localization
   - load-balancing
@@ -11,13 +11,13 @@ sidebar:
 
 import { TabItem, Tabs, DashButton } from "~/components";
 
-The following sections describe how to configure Load Balancing with Regional Services and Customer Metadata Boundary to control where load balancing decisions and traffic processing occur.
+Set a processing region to control where load balancing decisions and traffic processing occur. Set a log region to control where Load Balancing analytics are stored.
 
-## Regional Services
+## Processing region
 
-You can load balance traffic at different levels of the networking stack depending on the [proxy mode](/load-balancing/understand-basics/proxy-modes/): Layer 7 (`HTTP/S`) and Layer 4 (`TCP`) are supported; however, `DNS-only` is not supported, as it is not [proxied](/dns/proxy-status/).
+You can load balance traffic at different levels of the networking stack depending on the [proxy mode](/load-balancing/understand-basics/proxy-modes/). Layer 7 (`HTTP/S`) and Layer 4 (`TCP`) are supported. `DNS-only` is not supported, because it is not [proxied](/dns/proxy-status/).
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that the Load Balancer is available only in-region, follow these steps for the dashboard or API configuration:
+To set a processing region for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare, and ensure that the load balancer is available only in-region, follow these steps for the dashboard or API configuration:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -35,14 +35,14 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 <TabItem label="API">
 
 1. Follow the instructions outlined to [create a load balancer](/load-balancing/load-balancers/create-load-balancer/#create-a-load-balancer) via API.
-2. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the Load Balancer hostname to create a `regional_hostnames` with a specific region.
+2. Run the [API POST](/data-localization/processing-region/regional-hostnames/#configure-a-processing-region-via-api) command on the load balancer hostname to create a `regional_hostnames` with a specific region.
 
 </TabItem> </Tabs>
 
-## Customer Metadata Boundary
+## Log region
 
-[Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are not available outside the US region when using Customer Metadata Boundary.
+[Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are not available outside the US region.
 
-With Customer Metadata Boundary set to `EU`, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
+With an EU log region, the **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard is not populated.
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more information.

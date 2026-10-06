@@ -18,15 +18,15 @@ Interested customers need to contact their account team to enable DNS Regionalis
 
 :::
 
-Regional Hostnames are the most common way to use [Regional Services](/data-localization/regional-services/): you assign a region to a proxied hostname, and Cloudflare steers traffic for that hostname — using its shared anycast IP addresses — to in-region data centers for TLS termination and processing. For other ways to regionalize traffic, refer to [Ways to use Regional Services](/data-localization/regional-services/#ways-to-use-regional-services).
+Regional Hostnames are the most common way to set a [processing region](/data-localization/processing-region/): you assign a region to a proxied hostname, and Cloudflare steers traffic for that hostname to in-region data centers for TLS termination and processing, using its shared anycast IP addresses. For other ways to regionalize traffic, refer to [Ways to set a processing region](/data-localization/processing-region/#ways-to-set-a-processing-region).
 
-Regional Hostnames support [managed regions](/data-localization/region-support/#region-types). If you need a custom region, use [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/) or [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/) instead.
+Regional Hostnames support [managed regions](/data-localization/regions-by-setting/#region-types). If you need a custom region, use [Regionalized Spectrum Applications](/data-localization/processing-region/spectrum-applications/) or [Regionalized IP Bindings](/data-localization/processing-region/ip-bindings/) instead.
 
 You can configure Regional Hostnames through the dashboard or via API.
 
-## Configure Regional Services in the dashboard
+## Configure a processing region in the dashboard
 
-To use Regional Services, you need to first create a DNS record in the dashboard:
+To set a processing region, you need to first create a DNS record in the dashboard:
 
 1. In the Cloudflare dashboard, go to the **Records** page.
 
@@ -41,13 +41,13 @@ Some regions may not appear on the dropdown because newly announced regions ment
 
 :::
 
-Refer to the table on [Available regions and product support](/data-localization/region-support/) for the complete list of available regions, their definitions and product support
+Refer to the table on [Available regions and product support](/data-localization/regions-by-setting/) for the complete list of available regions, their definitions, and product support.
 
-## Configure Regional Services via API
+## Configure a processing region via API
 
-You can also use Regional Services via API.
+You can also set a processing region via the API.
 
-Users with the Super Administrator, Administrator, or Domain Administrator roles can edit Regional Services configurations. The Domain Administrator Read Only role does not currently include read access to Regional Services configurations. Use the **DNS: Read/Write** API permission for the `/addressing/` endpoints to read or write Regional Services configurations.
+Users with the Super Administrator, Administrator, or Domain Administrator roles can edit processing region configurations. The Domain Administrator Read Only role does not currently include read access to processing region configurations. Use the **DNS: Read/Write** API permission for the `/addressing/` endpoints to read or write processing region configurations.
 
 These are some examples of API requests.
 
@@ -199,4 +199,4 @@ These are some examples of API requests.
 
 ## Terraform support
 
-You can also configure Regional Services using Terraform. For more details, refer to the [`cloudflare_regional_hostname` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/regional_hostname) in the Terraform documentation.
+You can also configure a processing region using Terraform. For more details, refer to the [`cloudflare_regional_hostname` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/regional_hostname) in the Terraform documentation.

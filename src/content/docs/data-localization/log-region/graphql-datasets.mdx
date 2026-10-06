@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: GraphQL datasets
-description: GraphQL Analytics API fields that respect Customer Metadata Boundary configuration.
+description: GraphQL Analytics API fields that respect your log region.
 products:
   - data-localization
 tags:
@@ -11,9 +11,9 @@ sidebar:
   order: 3
 ---
 
-The [GraphQL Analytics API](/analytics/graphql-api/) allows you to programmatically query your Cloudflare analytics data (such as request counts, security events, and performance metrics). When Customer Metadata Boundary (CMB) is enabled, not all analytics data fields are available in every region.
+The [GraphQL Analytics API](/analytics/graphql-api/) allows you to programmatically query your Cloudflare analytics data (such as request counts, security events, and performance metrics). When a log region is configured, not all analytics data fields are available in every region.
 
-The table below shows a non-exhaustive list of GraphQL Analytics API fields that respect CMB configuration. Fields marked "US and EU" return data regardless of your CMB region. Fields marked "US only" return data only when CMB is set to US — if your CMB is set to EU, queries for these fields will return empty results.
+The table below shows a non-exhaustive list of GraphQL Analytics API fields that respect your log region. Fields marked "US and EU" return data regardless of your log region. Fields marked "US only" return data only when your log region is set to US. If your log region is set to EU, queries for these fields will return empty results.
 
 | Suite/Category                              | Product                                                              | GraphQL Analytics API Field(s) supported in                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | ------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

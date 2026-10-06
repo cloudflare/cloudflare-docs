@@ -7,7 +7,7 @@ products:
 tags:
   - Compliance
 sidebar:
-  order: 8
+  order: 9
 reviewed: 2026-07-23
 head:
   - tag: title
@@ -18,6 +18,8 @@ This page tracks open defects in data residency behavior. These are bugs under i
 
 If you are looking for permanent product exceptions instead, refer to [What stays in your region](/data-localization/what-stays-in-your-region/).
 
+Empty dashboard analytics with an EU log region is not a defect. The pipeline behind those views runs only in the US, and your logs remain in the EU. Refer to [Log region](/data-localization/log-region/#dashboard-analytics-visibility).
+
 ## Notifications may not fire with an EU log region
 
 **Last reviewed:** 2026-07-23
@@ -25,14 +27,6 @@ If you are looking for permanent product exceptions instead, refer to [What stay
 Email and webhook notifications for DDoS and WAF events may not fire reliably when your log region is set to `eu`. This behavior is intermittent and under investigation.
 
 If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
-
-## Some dashboard analytics render empty with an EU log region
-
-**Last reviewed:** 2026-07-23
-
-With an EU log region, some dashboard analytics views render no data even though the underlying logs are stored in the EU as configured. The analytics pipeline behind these views runs only in the US.
-
-Your data has not left your region. Use [Security Analytics](/waf/analytics/security-analytics/), which respects your log region, or export logs with [Logpush](/logs/logpush/).
 
 ## Reporting a defect
 
