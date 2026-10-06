@@ -3,7 +3,7 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 ---
 
 <RealtimeDiagramFrame
-	ariaLabel="Meeting participants and the agent share a RealtimeKit meeting. The agent joins as a participant. Through the Agent WebSocket, your Worker or Durable Object receives transcripts, participant presence, and broadcasts. Sending chat and broadcasts back is planned."
+	ariaLabel="Meeting participants and the agent share a RealtimeKit meeting. The agent joins as a participant. Through the Agent Participant WebSocket, your Worker or Durable Object receives transcripts, participant presence, and broadcasts. Sending chat and broadcasts back is planned."
 	className="rt-agent-caps"
 >
 	<div class="rtac-desktop">
@@ -43,7 +43,7 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 		<div class="rt-diagram__node rt-diagram__node--blue rtac-backend">
 			<span class="rt-diagram__eyebrow">My code</span>
 			<strong>Durable Object</strong>
-			<small>Agent WebSocket &harr; JSON</small>
+			<small>WebSocket &harr; JSON</small>
 		</div>
 	</div>
 
@@ -59,14 +59,14 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 			<span>RealtimeKit meeting</span>
 		</div>
 		<div class="rt-diagram__mobile-route">
-			<span>Agent WebSocket</span>
+			<span>Agent Participant</span>
 			<small>Listen →</small>
 			<span>Worker or Durable Object</span>
 		</div>
 		<div class="rt-diagram__mobile-route">
 			<span>Worker or Durable Object</span>
 			<small>Send (planned) →</small>
-			<span>Agent WebSocket</span>
+			<span>Agent Participant</span>
 		</div>
 	</div>
 </RealtimeDiagramFrame>

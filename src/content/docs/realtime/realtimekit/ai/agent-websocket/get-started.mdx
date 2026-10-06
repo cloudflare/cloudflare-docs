@@ -1,7 +1,7 @@
 ---
 pcx_content_type: get-started
 title: Build an agent
-description: Configure an agent preset, add the agent to a RealtimeKit meeting, connect to the Agent WebSocket, and run the agent in a Durable Object.
+description: Configure an agent preset, add the agent to a RealtimeKit meeting, connect to the Agent's WebSocket URL, and run the agent in a Durable Object.
 sidebar:
   order: 2
   badge: Beta
@@ -13,7 +13,7 @@ import { Details, Steps, WranglerConfig } from "~/components";
 import AgentWebSocketFlow from "~/components/realtime/realtimekit/AgentWebSocketFlow.astro";
 import AgentWebSocketResume from "~/components/realtime/realtimekit/AgentWebSocketResume.astro";
 
-An agent is a meeting participant that your backend controls over a WebSocket. To add one, configure a preset, add the agent as a participant, and connect to the Agent WebSocket with the agent's participant token.
+An agent is a meeting participant that your backend controls over a WebSocket. To add one, configure a preset, add the agent as a participant, and connect to the Websocket endpoint with the agent's participant token.
 
 <AgentWebSocketFlow />
 
@@ -72,9 +72,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime
 
 The response `data.token` is the agent's participant token. Reuse the same participant for every session of the meeting. A [participant token](/realtime/realtimekit/concepts/participant/#participant-tokens) is valid for 100 days.
 
-## 3. Connect to the Agent WebSocket
+## 3. Connect to the Agent's WebSocket URL
 
-Open a WebSocket to the Agent WebSocket route with the participant token and the `realtimekit.v1` subprotocol:
+Open a WebSocket to the endpoint with the participant token and the `realtimekit.v1` subprotocol:
 
 ```txt
 GET wss://api.realtime.cloudflare.com/agent-ws/v1?subscriptions=transcript,participant,broadcast
@@ -188,7 +188,7 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
    } satisfies ExportedHandler<Env>;
    ```
 
-3. **Hold the WebSocket in a Durable Object.** The Durable Object connects, stores `connection_id`, handles events, reconnects, and leaves the meeting on `stop()`:
+3. **Establish the WebSocket in a Durable Object.** The Durable Object connects, stores `connection_id`, handles events, reconnects, and leaves the meeting on `stop()`:
 
    ```ts title="src/agent.ts"
    import { DurableObject } from "cloudflare:workers";
@@ -323,7 +323,7 @@ Use one of these to end a session:
 
 | Method                                                                                                                       | Effect                                                                                                                               |
 | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Close the Agent WebSocket with code `1000`                                                                                   | The agent leaves immediately. The session ends when no other participants remain.                                                    |
+| Close the WebSocket with code `1000`                                                                                         | The agent leaves immediately. The session ends when no other participants remain.                                                    |
 | Call the [Kick all participants API](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/) | Removes every participant, including the agent, and ends the session. The agent receives `participant.kick_all` and `session.ended`. |
 
 To end the session for everyone, for example when the scheduled meeting time is over, call the Kick all participants API:

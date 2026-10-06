@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Events
-description: Event types, payloads, ordering, and delivery rules for the RealtimeKit Agent WebSocket.
+description: Event types, payloads, ordering, and delivery rules for RealtimeKit Agent Participant.
 sidebar:
   order: 3
   badge: Beta
@@ -11,7 +11,7 @@ products:
 
 import AgentWebSocketEvents from "~/components/realtime/realtimekit/AgentWebSocketEvents.astro";
 
-The Agent WebSocket sends meeting activity as JSON messages. This page covers each event type and how delivery works.
+Agent Participant sends meeting activity as JSON messages. This page covers each event type and how delivery works.
 
 ## How events flow
 
@@ -50,7 +50,7 @@ Pass categories, not event names: `?subscriptions=transcript,participant`. An un
 
 To keep receiving events after a dropped WebSocket, send a `connection.get` request after you connect and store the returned `connection.id`. When you reconnect, pass it as the `connection_id` query parameter.
 
-Resume works only when the WebSocket between your backend and the Agent WebSocket drops unexpectedly, for example after a network error or an abrupt close with a code other than `1000`. If your backend closes the WebSocket normally with `1000`, the agent leaves the meeting immediately and there is nothing to resume.
+Resume works only when the WebSocket between your backend and the Agent's WebSocket drops unexpectedly, for example after a network error or an abrupt close with a code other than `1000`. If your backend closes the WebSocket normally with `1000`, the agent leaves the meeting immediately and there is nothing to resume.
 
 What you receive depends on how long you were away:
 
