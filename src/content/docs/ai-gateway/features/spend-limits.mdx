@@ -17,6 +17,8 @@ Unlike [rate limiting](/ai-gateway/features/rate-limiting/), which caps the numb
 
 Spend limits apply to both [Unified Billing](/ai-gateway/features/unified-billing/) requests and [BYOK](/ai-gateway/configuration/bring-your-own-keys/) requests for models with known pricing.
 
+To set budgets or block model access based on the verified identity of the caller, such as an IdP group or email domain, use [policies](/ai-gateway/features/policies/).
+
 ![Spend limits rules configured on a gateway](~/assets/images/ai-gateway/spend-limits-rules.png)
 
 ## How it works
@@ -37,7 +39,7 @@ Each rule can be scoped by one or more dimensions:
 
 Each dimension can be configured in one of two modes:
 
-| Mode                | Behavior                                                          | Example                                                                                                        |
+| Mode                | Behavior                                                          | Example                                                                                                       |
 | ------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | **Split by value**  | Each distinct value gets its own independent budget bucket.       | For example, if you pass in `agent_id`, splitting by `agent_id` gives every agent its own budget.             |
 | **Filter by value** | The rule applies only when the dimension equals a specific value. | For example, if you pass in `agent_id`, filtering `agent_id` to `agent_42` limits only that agent's requests. |
@@ -48,13 +50,13 @@ If a dimension is not configured on a rule, all values share one budget bucket. 
 
 Given a request with model `openai/gpt-5.5` and an `agent_id` metadata value of `agent_42`:
 
-| Scenario                   | Dimensions                                                       | Budget bucket                                  |
-| -------------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
-| Global budget for everyone | None                                                             | One shared bucket                              |
-| Per-agent budget           | `agent_id` metadata: split by value                              | Separate bucket per agent                      |
-| Per-provider, per-agent    | `agent_id` metadata: split by value, `provider`: split by value  | Separate bucket per agent+provider combination |
-| Specific model only        | `model`: filter by value `openai/gpt-5.5`                        | Only applies to `openai/gpt-5.5` requests      |
-| Per-agent, per-model       | `agent_id` metadata: split by value, `model`: split by value     | Separate bucket per agent+model combination    |
+| Scenario                   | Dimensions                                                      | Budget bucket                                  |
+| -------------------------- | --------------------------------------------------------------- | ---------------------------------------------- |
+| Global budget for everyone | None                                                            | One shared bucket                              |
+| Per-agent budget           | `agent_id` metadata: split by value                             | Separate bucket per agent                      |
+| Per-provider, per-agent    | `agent_id` metadata: split by value, `provider`: split by value | Separate bucket per agent+provider combination |
+| Specific model only        | `model`: filter by value `openai/gpt-5.5`                       | Only applies to `openai/gpt-5.5` requests      |
+| Per-agent, per-model       | `agent_id` metadata: split by value, `model`: split by value    | Separate bucket per agent+model combination    |
 
 ## Configure spend limits
 
