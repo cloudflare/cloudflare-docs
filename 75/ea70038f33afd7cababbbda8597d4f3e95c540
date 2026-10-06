@@ -1,0 +1,19 @@
+src/content/docs/analytics/graphql-api/getting-started/compose-graphql-query.mdx
+  s_663af416531968::t_8797896f6e7d8a 27,43,57,63,74,79,87,91,100,106,126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "75ea70038f33afd7cababbbda8597d4f3e95c540",
+  "prompts": {},
+  "sessions": {
+    "s_663af416531968": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcb22a94bffeUIxOFfG8RLTQ8c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

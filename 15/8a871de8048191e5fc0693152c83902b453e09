@@ -1,0 +1,27 @@
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/index.mdx
+  s_54356bca1e5f0c::t_5a212988295ba9 3,22,24,27,38,44,51,53,58-59,71,73,80-81,95,98,106-109,121,145-163,171-172,184,187,189,191,196-198,202,207,213,217,219,221
+src/content/docs/security/web-assets/index.mdx
+  s_54356bca1e5f0c::t_fe43dce496182b 55-56
+src/content/docs/security/web-assets/manage-operations.mdx
+  s_54356bca1e5f0c::t_70718f9a3f2316 6,19,23,50,54-83,159-177,194
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/schema-learning.mdx
+  s_54356bca1e5f0c::t_64cb06e760d75e 13-15,27,29,37-39,48-50,53,55,67,71
+src/content/docs/security/web-assets/get-started.mdx
+  s_54356bca1e5f0c::t_fbf2e38f6fd6b6 25,49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "158a871de8048191e5fc0693152c83902b453e09",
+  "prompts": {},
+  "sessions": {
+    "s_54356bca1e5f0c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0474c4cd4ffelE4T74MKIJHsSK",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Zhiyuan Zheng <zhiyuan@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/d1/best-practices/cache-d1-reads.mdx
+  s_cbccae06a38f5b::t_a242251efbe80d 1-222
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f336f6e48ba743477adae2d47e75244a26c6fee0",
+  "prompts": {},
+  "sessions": {
+    "s_cbccae06a38f5b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f1a78c4d0ffeM6LzDSSh4caOoI",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

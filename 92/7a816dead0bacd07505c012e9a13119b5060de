@@ -1,0 +1,31 @@
+public/__redirects
+  s_205c87219322bc::t_3d2eedbd1c2408 19-22
+src/content/docs/cf/projects/index.mdx
+  s_205c87219322bc::t_be98fe49b2cd0d 23
+src/content/docs/cf/wrangler/index.mdx
+  s_205c87219322bc::t_4b317da2e562df 32-42
+src/content/docs/workers/configuration/cloudflare-config/index.mdx
+  s_205c87219322bc::t_401ddafeb767e3 3-5
+src/content/docs/workers/configuration/index.mdx
+  s_205c87219322bc::t_931d8c7d4d7828 15-16
+src/content/docs/workers/vite-plugin/index.mdx
+  s_205c87219322bc::t_38bd3561ca5132 19
+src/content/partials/workers/cloudflare-config.mdx
+  s_205c87219322bc::t_aa164f4e3c950c 16-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "927a816dead0bacd07505c012e9a13119b5060de",
+  "prompts": {},
+  "sessions": {
+    "s_205c87219322bc": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f235-6ae0-71f3-9ee3-68feb36a1724",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}
