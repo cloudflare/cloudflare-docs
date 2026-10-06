@@ -64,7 +64,7 @@
 		"@base-ui/react": "1.8.0",
 		"@cloudflare/ai-search-snippet": "0.0.43",
 		"@cloudflare/config": "0.20.0",
-		"@cloudflare/nimbus-docs": "0.15.0",
+		"@cloudflare/nimbus-docs": "0.16.0",
 		"@cloudflare/vitest-pool-workers": "0.22.0",
 		"@cloudflare/workers-types": "5.20260929.1",
 		"@eslint/js": "9.39.4",

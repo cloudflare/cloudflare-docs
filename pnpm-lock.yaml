@@ -54,8 +54,8 @@ importers:
         specifier: 0.20.0
         version: 0.20.0
       '@cloudflare/nimbus-docs':
-        specifier: 0.15.0
-        version: 0.15.0(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)
+        specifier: 0.16.0
+        version: 0.16.0(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)
       '@cloudflare/vitest-pool-workers':
         specifier: 0.22.0
         version: 0.22.0(@cloudflare/workers-types@5.20260929.1)(@vitest/runner@4.1.11)(@vitest/snapshot@4.1.11)(vitest@4.1.11(@types/node@26.6.3)(happy-dom@20.14.5)(vite@8.3.1(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))
@@ -820,8 +820,8 @@ packages:
     resolution: {integrity: sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg==}
     engines: {node: '>=22.0.0'}
 
-  '@cloudflare/nimbus-docs@0.15.0':
-    resolution: {integrity: sha512-tDdjGShx9yo6gtwj+HmLU7RGi2jjISBtNl3ln8MD0bfsaIaXAs2wTXsGXbIRWaZSt172UfOahMa7sGsdEBDhUw==}
+  '@cloudflare/nimbus-docs@0.16.0':
+    resolution: {integrity: sha512-5ZZiBSiKS/pkSMEMNDkrCShDKx8/nOMIIXMQT1aoHYdJTTCvaJKhI2IY0yR5YscJDJr6jPX0i6oOme2NludJHg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
@@ -6880,7 +6880,7 @@ snapshots:
 
   '@cloudflare/kv-asset-handler@0.5.0': {}
 
-  '@cloudflare/nimbus-docs@0.15.0(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)':
+  '@cloudflare/nimbus-docs@0.16.0(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)':
     dependencies:
       '@astrojs/markdown-satteri': 0.4.2
       '@astrojs/mdx': 8.0.2(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.2)(astro@7.3.5(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@types/node@26.6.3)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
@@ -6901,6 +6901,9 @@ snapshots:
       hast-util-sanitize: 5.0.2
       hast-util-to-html: 9.0.5
       jsonc-parser: 3.3.1
+      mdast-util-gfm: 3.1.0(supports-color@10.2.2)
+      mdast-util-mdx: 3.0.0(supports-color@10.2.2)
+      mdast-util-to-markdown: 2.1.2
       mri: 1.2.0
       picomatch: 4.0.7
       remark-lint-emphasis-marker: 4.0.1
