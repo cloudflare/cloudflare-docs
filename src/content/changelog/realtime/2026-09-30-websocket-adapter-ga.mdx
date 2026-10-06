@@ -1,16 +1,25 @@
 ---
 title: Realtime SFU WebSocket adapter is generally available
-description: Connect WebSocket services to Realtime SFU media, with 15-second streaming reconnect and idempotent close.
+description: Connect transcription, recording, and AI services to live WebRTC media with the generally available Realtime SFU WebSocket adapter.
 date: 2026-09-30
 ---
 
-The Cloudflare Realtime SFU WebSocket adapter is generally available. Connect your service to SFU tracks to send or receive PCM audio, or receive video as JPEG frames, without implementing WebRTC.
+The [WebSocket adapter](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for [Cloudflare's Realtime SFU](/realtime/sfu/) is now generally available. The SFU (selective forwarding unit) is managed WebRTC infrastructure for live audio, video, and data across [Cloudflare's global network in 330+ cities](https://www.cloudflare.com/products/turn-sfu/).
 
-For WebRTC-to-WebSocket streaming, the automatic reconnect window increases from 5 to 15 seconds. The SFU retries the same endpoint after a disconnect. Create a new adapter if the window expires. Audio ingest does not automatically reconnect.
+The adapter connects live calls to any server that accepts WebSockets, such as a [Durable Object](/durable-objects/). It delivers uncompressed pulse-code modulation (PCM) audio and JPEG video frames. Your backend can process this media without implementing a WebRTC client.
 
-Adapter close is idempotent. You can safely repeat a close request, including for an adapter that is already closed. Inspect each item's result and retry failed items with bounded backoff.
+## What you can build
 
-A successful response for an already-closed adapter omits the byte count:
+- Transcribe or record call audio, or let a voice agent hear and respond to participants. The [AI audio example](/realtime/sfu/examples/ai-audio/) uses Durable Objects and Workers AI for transcription and speech generation. Separate adapters receive PCM audio and send generated speech back to participants.
+- Analyze images or build previews from live video. The [WebRTC-to-JPEG example](https://github.com/cloudflare/realtime-examples/tree/main/video-to-jpeg) sends a browser's camera stream to a Durable Object as JPEG frames at one frame per second by default.
+
+## What changes for existing integrations
+
+Existing adapter creation requests and media formats stay the same.
+
+For WebRTC-to-WebSocket streaming, the SFU now automatically retries the same endpoint for up to 15 seconds instead of 5, with no additional API setting.
+
+The [close API](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#close-adapter) is now idempotent and returns success even if the adapter has already closed:
 
 ```json
 {
@@ -18,4 +27,4 @@ A successful response for an already-closed adapter omits the byte count:
 }
 ```
 
-Refer to the [WebSocket adapter guide](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for endpoint setup, media formats, API examples, and recovery behavior.
+Refer to the [WebSocket adapter guide](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for setup, media formats, and API requests.
