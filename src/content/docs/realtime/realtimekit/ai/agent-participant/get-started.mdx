@@ -9,7 +9,12 @@ products:
   - realtime
 ---
 
-import { Details, Steps, WranglerConfig } from "~/components";
+import {
+	Details,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 import AgentWebSocketFlow from "~/components/realtime/realtimekit/AgentWebSocketFlow.astro";
 import AgentWebSocketResume from "~/components/realtime/realtimekit/AgentWebSocketResume.astro";
 
@@ -143,7 +148,9 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
 
 2. **Add and remove the agent.** `POST` adds a participant with the agent preset and starts the meeting's Durable Object. `DELETE` removes the agent from the meeting:
 
-   ```ts title="src/index.ts"
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
    export { MeetingAgent } from "./agent";
 
    export default {
@@ -188,9 +195,13 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
    } satisfies ExportedHandler<Env>;
    ```
 
+   </TypeScriptExample>
+
 3. **Establish the WebSocket in a Durable Object.** The Durable Object connects, stores `connection_id`, handles events, reconnects, and leaves the meeting on `stop()`:
 
-   ```ts title="src/agent.ts"
+   <TypeScriptExample filename="src/agent.ts">
+
+   ```ts
    import { DurableObject } from "cloudflare:workers";
 
    const AGENT_WS = "https://api.realtime.cloudflare.com/agent-ws/v1";
@@ -295,6 +306,8 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
    	}
    }
    ```
+
+   </TypeScriptExample>
 
 4. **Deploy and start the agent.**
 
