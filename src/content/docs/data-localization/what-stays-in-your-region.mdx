@@ -18,12 +18,12 @@ import { Aside } from "~/components";
 
 Cloudflare can keep four kinds of data in a region you choose. Each setting has its own region list, so check that first: it is the most common surprise.
 
-| What you are choosing                       | Setting                                                    | Regions available                                                                      |
-| ------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Traffic being decrypted and inspected       | [Processing region](/data-localization/processing-region/) | 35 regions, or a custom list of data centers. Countries, plus FedRAMP, IRAP, and NATO. |
-| Content you store in R2 and Durable Objects | [Storage region](/data-localization/storage-region/)       | EU, US, or FedRAMP only                                                                |
-| Logs and analytics                          | [Log region](/data-localization/log-region/)               | EU or US only                                                                          |
-| TLS private keys                            | [Key region](/data-localization/key-region/)               | 11 regions                                                                             |
+| What you are choosing                       | Setting                                                    | Regions available                                                                                    |
+| ------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Traffic being decrypted and inspected       | [Processing region](/data-localization/processing-region/) | 35 regions, or a custom list of data centers. Countries, plus FedRAMP, IRAP, ISO 27001 EU, and NATO. |
+| Content you store in R2 and Durable Objects | [Storage region](/data-localization/storage-region/)       | EU, US, or FedRAMP only                                                                              |
+| Logs and analytics                          | [Log region](/data-localization/log-region/)               | EU or US only                                                                                        |
+| TLS private keys                            | [Key region](/data-localization/key-region/)               | 11 regions                                                                                           |
 
 For the full region list per setting, refer to [Regions by setting](/data-localization/regions-by-setting/). If your contract or the dashboard uses different names, refer to [names you may see elsewhere](/data-localization/#names-you-may-see-elsewhere).
 
@@ -80,10 +80,10 @@ Logs for these products stay in your log region. The stored objects have no regi
 
 ## Before you start
 
-**Bring your own domain.** Cloudflare-managed hostnames and storage are never regionalized. Developer platform products regionalize through a custom domain assigned to a region. R2, Images, Pages, Stream and Workers stay global until you set one.
+1. **Bring your own domain.** Cloudflare-managed hostnames and storage are never regionalized.
+2. **Developer platform products regionalize through a custom domain assigned to a region.** R2, Images, Pages, Stream and Workers stay global until you set one.
+3. **An empty dashboard does not mean your data left the region.** With an EU log region, many dashboards render no data; the pipeline behind them runs only in the US. Your logs are still in the EU. Read them with [Logpush](/logs/logpush/), and turn on [out-of-region access](/data-localization/log-region/out-of-region-access/) so your team can reach them from anywhere.
 
-**An empty dashboard does not mean your data left the region.** With an EU log region, many dashboards render no data; the pipeline behind them runs only in the US. Your logs are still in the EU. Read them with [Logpush](/logs/logpush/), and turn on [out-of-region access](/data-localization/log-region/out-of-region-access/) so your team can reach them from anywhere.
-
-**Two prerequisites.** An EU log region requires [disabling Log Retention](/logs/logpull/enabling-log-retention/#turn-off-log-retention) on all zones first. Single-country processing regions have no failover; multi-country regions such as the EU keep the standard SLA.
+Two prerequisites. An EU log region requires [disabling Log Retention](/logs/logpull/enabling-log-retention/#turn-off-log-retention) on all zones first. Single-country processing regions have no failover; multi-country regions such as the EU keep the standard SLA.
 
 Open defects are tracked on [Known issues](/data-localization/known-issues/).
