@@ -18,7 +18,7 @@ Running an agent on Cloudflare takes three steps:
 
 1. **Pick a harness.** Install the [Pi harness](/agents/harnesses/pi/), extend [Project Think](/agents/harnesses/think/), or build your own.
 2. **Run it on a Durable Object.** Install the harness with the [Lifecycle](/agents/lifecycle/). The Lifecycle runs startup, routes requests, and owns the object's job queue and alarm, so the harness wakes and carries on after eviction, deploys, and crashes.
-3. **Plug in capabilities.** Add an [MCP client](/agents/capabilities/#mcp-client), a [scheduler](/agents/capabilities/#scheduler), [WebSockets](/agents/capabilities/#websockets), or any other [capability](/agents/capabilities/) the agent needs. Each one is a field and one more `.use()` call.
+3. **Plug in capabilities.** Add an [MCP client](/agents/capabilities/mcp-client/), a [scheduler](/agents/capabilities/scheduler/), [WebSockets](/agents/capabilities/websockets/), or any other [capability](/agents/capabilities/) the agent needs. Each one is a field and one more `.use()` call.
 
 <TypeScriptExample>
 
