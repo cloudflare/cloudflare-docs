@@ -68,7 +68,6 @@ entries:
 
       - Added edit, pin, and delete controls to Chat messages in RtkChat
       - Added optional background support for audio/video in Android.
-      Refer to the [documentation](/realtime/realtimekit/quickstart/#background-audio-and-video-android) for implementation details.
 
       **Fixes**
 
