@@ -1,0 +1,412 @@
+---
+pcx_content_type: how-to
+description: Define your own posture finding types with Rego in Cloudflare CASB.
+products:
+  - cloudflare-one
+title: Custom finding types
+sidebar:
+  order: 3
+tags:
+  - Compliance
+---
+
+import { Details, Steps } from "~/components";
+
+In addition to providing predefined finding types to detect security issues within SaaS and cloud applications, Cloudflare CASB allows custom finding types to be defined from scratch, providing full control over the security conditions CASB detects.
+
+## Prerequisites
+
+- A [Cloud or SaaS integration](/cloudflare-one/integrations/cloud-and-saas/) has been added.
+- Familiarity with [Rego](https://www.openpolicyagent.org/docs/policy-language).
+
+## Standard and custom finding types
+
+Cloudflare CASB provides two ways that security risks are detected. In [Cloudflare One](https://one.dash.cloudflare.com), they are differentiated in **Cloud & SaaS > Findings library** as entries with **Origin** value "Standard" or "Custom".
+
+- **Standard finding type** - A predefined finding type created and managed by Cloudflare CASB. It can be inspected and duplicated, but not changed.
+- **Custom finding type** - A finding type that is created and managed in the account with Rego expressions.
+
+The following table shows the capabilities of a CASB customer's account for both standard and custom finding types:
+
+| Capability                      | Standard finding types | Custom finding types |
+| ------------------------------- | ---------------------- | -------------------- |
+| Inspect detection logic         | ✅                     | ✅                   |
+| Create posture finding types    | ❌                     | ✅                   |
+| Create content finding types    | ❌                     | ❌                   |
+| Duplicate posture finding types | ✅                     | ✅                   |
+| Duplicate content finding types | ❌                     | ❌                   |
+| Edit posture finding types      | ❌                     | ✅                   |
+| Edit content finding types      | ❌                     | ❌                   |
+| Delete posture finding types    | ❌                     | ✅                   |
+| Delete content finding types    | ❌                     | ❌                   |
+| Disable posture finding types   | ❌                     | ❌                   |
+| Disable content finding types   | ❌                     | ❌                   |
+
+## How custom finding types work
+
+### Example scenario
+
+A security team at a company that uses Google Workspace wants to have visibility into when a group for executives, the board, or the legal team is open to people outside the company. The company names these groups with the prefixes `exec-`, `board-`, and `legal-`, and one of them, the outside counsel group, is allowed to have external members. Given that this depends on the company's own group naming convention and exception, CASB does not include a standard finding type for this exact scenario, so the team creates a custom finding type.
+
+1. **Define the finding type.** In the Findings library, the team creates a custom finding type. They name it "Sensitive group open to outsiders", set the severity to High, choose Google Workspace as the provider, and write a Rego expression that returns "fail" when a group whose address starts with `exec-`, `board-`, or `legal-` allows external members (unless it is the outside counsel group), lets anyone join, or lets anyone post.
+2. **See the results.** As CASB receives updates for the company's Google Workspace groups, it evaluates each one. Groups that match appear as finding instances under **Posture Findings**, so the team can see which sensitive groups are open. Groups with other names are never flagged.
+3. **Take action.** The team creates a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) for this finding type that sends a webhook to their messaging admin automation. Each new finding instance now triggers the automation to restrict the group.
+
+The following sections describe each part of this flow in detail.
+
+### Finding type fields
+
+A custom finding type consists of the following fields:
+
+| Field             | Description                                                                                                                                 |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Finding Name**  | The display name of the finding type.                                                                                                       |
+| **Description**   | A definition for what the finding type detects against.                                                                                     |
+| **Severity**      | The impact of the finding type: Low, Medium, High, or Critical.                                                                             |
+| **Provider**      | The [integration vendor](/cloudflare-one/integrations/cloud-and-saas/) the finding type detects against.                                    |
+| **Asset Class**   | The set of asset fields available to the detection logic. These fields appear under **Available asset fields** in the finding type builder. |
+| **Category Type** | The classification of the findings it generates.                                                                                            |
+| **Integrations**  | The integrations CASB evaluates this finding type against. Select **Apply to all integrations** to use all of them.                         |
+| **Rego Package**  | The detection logic CASB uses to generate findings.                                                                                         |
+
+CASB evaluates a custom finding type against an asset when it is created or updated and exists within the set of configured integrations. They are not run retroactively against existing assets.
+
+Continuing the [example scenario](#example-scenario), one board group has an external member, and a new executive group is open to anyone:
+
+| Day       | Event                                                                                     | Finding created?                                                                                                                |
+| --------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Sunday    | The `board-directors@example.com` group allows external members and is updated.           | No. The "Sensitive group open to outsiders" finding type does not exist yet.                                                     |
+| Monday    | The security team creates the "Sensitive group open to outsiders" finding type.           | No. CASB does not evaluate `board-directors`, because it has not changed since the finding type was created.                     |
+| Tuesday   | The `exec-staff@example.com` group is created and anyone can join it.                     | Yes. CASB evaluates the new group and creates a finding instance.                                                               |
+| Wednesday | A member is added to `board-directors`.                                                   | Yes. CASB evaluates the group again and creates a finding instance, because it still allows external members.                   |
+| Thursday  | The `legal-outside-counsel@example.com` group, which allows external members, is updated. | No. CASB evaluates the group and its result is "pass", because it is the approved exception, so no finding instance is created. |
+
+## Rego detection logic
+
+Custom finding types are written in [Rego](https://www.openpolicyagent.org/docs/policy-language), the open-source policy language used by Open Policy Agent (OPA). For an introduction to Rego, refer to the [OPA documentation](https://www.openpolicyagent.org/docs/policy-language). CASB uses Rego v1 and supports a restricted subset of [Rego built-ins](https://www.openpolicyagent.org/docs/policy-reference/builtins) and operations.
+
+The following expression is the one the security team writes in the [example scenario](#example-scenario). It detects sensitive groups that are open to people outside the company:
+
+```txt
+sensitive_prefixes := ["exec-", "board-", "legal-"]
+external_exceptions := {"legal-outside-counsel@example.com"}
+
+default result := "pass"
+
+email := lower(input.asset.email)
+
+sensitive if strings.any_prefix_match(email, sensitive_prefixes)
+
+result := "fail" if {
+	sensitive
+	input.asset.allowExternalMembers == true
+	not email in external_exceptions
+}
+
+result := "fail" if {
+	sensitive
+	input.asset.whoCanJoin == "ANYONE_CAN_JOIN"
+}
+
+result := "fail" if {
+	sensitive
+	input.asset.whoCanPostMessage == "ANYONE_CAN_POST"
+}
+```
+
+This expression works as follows:
+
+- `sensitive_prefixes` and `external_exceptions` hold the company's values. They are written into the expression, because CASB cannot fetch lists from another system during evaluation.
+- `default result := "pass"` sets the result to "pass" for every asset unless another rule in the expression changes it. Therefore, assets that do not match are never flagged.
+- `email := lower(input.asset.email)` lowercases the group's address, so that `Board-Directors@example.com` is treated the same as `board-directors@example.com`.
+- `sensitive` is true when the address starts with any of the three prefixes. `strings.any_prefix_match` checks the whole list in one call. Groups with other names never match.
+- `result := "fail" if { ... }` changes the result to "fail" when everything inside the braces is true. This will create a finding instance.
+- The first rule checks if sensitive groups allow external members without explicit approvals.
+- The second rule checks for sensitive groups that let anyone join.
+- The third rule checks for sensitive groups that let anyone post.
+
+### Rego guidelines for custom finding type expressions
+
+- The expression must define a `result` that returns either "pass" or "fail". A "fail" result means the asset matches the finding type and creates a finding instance.
+- Add `default result := "pass"` so assets that do not match a fail condition return "pass".
+- No need to add a package declaration or any import statements, this includes `import rego.v1`. CASB adds these automatically, and the editor does not accept them.
+- Fields from the selected asset class can be read from `input.asset`.
+- Some asset classes include related assets, such as a file and its owner. When available, reference fields from related assets through `input.associated`.
+
+### Rego validation
+
+Select **Validate** in the finding type builder to check a Rego expression before creating the finding. Validation compiles the expression and checks it against the asset schema. It reports any syntax errors or unsupported Rego built-ins it finds.
+
+Validation does not execute the expression against data. To confirm the expression detects the intended conditions, [verify the finding type's behavior](#verify-custom-finding-type-behavior) after it is created.
+
+### Supported Rego built-ins
+
+Custom finding types support the following Rego built-ins and operators. Any built-in not listed here is unsupported.
+
+<Details header="Supported built-ins and operators">
+
+| Category                   | Built-ins                                                                                                                                                                                                                                                                                                                    |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Operators                  | `=`, `==`, `!=`, `>`, `>=`, `<`, `<=`, `in`                                                                                                                                                                                                                                                                                  |
+| Aggregates                 | `count`, `max`, `min`, `product`, `sort`, `sum`                                                                                                                                                                                                                                                                              |
+| Arrays                     | `array.concat`, `array.flatten`, `array.reverse`, `array.slice`                                                                                                                                                                                                                                                              |
+| Conversion                 | `to_number`                                                                                                                                                                                                                                                                                                                  |
+| Encoding and serialization | `base64.decode`, `base64.encode`, `base64.is_valid`, `base64url.decode`, `base64url.encode`, `base64url.encode_no_pad`, `hex.decode`, `hex.encode`, `json.is_valid`, `json.marshal`, `json.marshal_with_options`, `json.unmarshal`, `urlquery.decode`, `urlquery.decode_object`, `urlquery.encode`, `urlquery.encode_object` |
+| Glob and graph             | `glob.match`, `glob.quote_meta`, `graph.reachable`, `graph.reachable_paths`, `walk`                                                                                                                                                                                                                                          |
+| CIDR                       | `net.cidr_contains`, `net.cidr_contains_matches`, `net.cidr_intersects`, `net.cidr_is_valid`, `net.cidr_merge`                                                                                                                                                                                                               |
+| Numbers                    | `abs`, `ceil`, `div`, `floor`, `minus`, `mul`, `plus`, `rem`, `round`                                                                                                                                                                                                                                                        |
+| JSON and objects           | `json.filter`, `json.remove`, `object.filter`, `object.get`, `object.keys`, `object.remove`, `object.subset`, `object.union`, `object.union_n`                                                                                                                                                                               |
+| Regular expressions        | `regex.globs_match`, `regex.is_valid`, `regex.match`, `regex.replace`, `regex.template_match`                                                                                                                                                                                                                                |
+| Semantic versions          | `semver.compare`, `semver.is_valid`                                                                                                                                                                                                                                                                                          |
+| Sets                       | `and`, `intersection`, `or`, `union`                                                                                                                                                                                                                                                                                         |
+| Strings                    | `concat`, `contains`, `endswith`, `format_int`, `indexof`, `indexof_n`, `lower`, `replace`, `split`, `sprintf`, `startswith`, `strings.any_prefix_match`, `strings.any_suffix_match`, `strings.count`, `substring`, `trim`, `trim_left`, `trim_prefix`, `trim_right`, `trim_space`, `trim_suffix`, `upper`                   |
+| Time                       | `time.add_date`, `time.clock`, `time.date`, `time.diff`, `time.format`, `time.now_ns`, `time.parse_duration_ns`, `time.parse_ns`, `time.parse_rfc3339_ns`, `time.weekday`                                                                                                                                                    |
+| Types                      | `is_array`, `is_boolean`, `is_null`, `is_number`, `is_object`, `is_set`, `is_string`, `type_name`                                                                                                                                                                                                                            |
+| Units                      | `units.parse`, `units.parse_bytes`                                                                                                                                                                                                                                                                                           |
+| URI                        | `uri.is_valid`, `uri.parse`                                                                                                                                                                                                                                                                                                  |
+| UUID                       | `uuid.parse`, `uuid.rfc4122`                                                                                                                                                                                                                                                                                                 |
+
+</Details>
+
+### Rego references
+
+Custom finding type expressions use Rego v1 syntax and the Cloudflare-supported Rego built-ins listed in this section.
+
+- [Rego policy language](https://www.openpolicyagent.org/docs/policy-language) - Rego language documentation.
+- [OPA built-ins](https://www.openpolicyagent.org/docs/policy-reference/builtins) - Full list of OPA built-ins. Custom finding types support a subset of this list.
+- [OPA style guide](https://www.openpolicyagent.org/docs/style-guide) - General guidance for writing Rego expressions.
+- [OPA Playground](https://play.openpolicyagent.org/) - Sandbox for writing and testing general Rego expressions.
+
+:::note
+The OPA documentation and Playground include built-ins that custom finding types do not support. An expression that works in the Playground may fail validation in Cloudflare One. Use only the built-ins listed on this page.
+:::
+
+## Create a custom finding type
+
+<Steps>
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. Select **Create finding**.
+3. Under **General Information**, enter a finding name and description. Then, select a severity.
+4. Under **Scope Definition**, select a provider and asset class.
+5. Choose whether the finding type applies to all integrations for the provider or to selected integrations.
+6. Under **Detection Logic**, enter the Rego expression. Use **Available asset fields** to identify supported fields.
+7. Select **Validate**. Resolve each validation error before continuing.
+8. Select **Create finding**.
+</Steps>
+
+CASB applies the custom finding type when it receives future asset updates within the selected scope. Matching assets appear as posture finding instances.
+
+## Verify custom finding type behavior
+
+To confirm that a custom finding type is detecting matches, check its finding instances.
+
+<Steps>
+1. In **Cloud & SaaS findings**, go to **Posture Findings**.
+2. Find the custom finding type.
+3. Refer to the **Finding Instances** column to confirm that matches have been found. The **Finding Instances** column shows how many assets currently match.
+4. Select **Manage** to view the matching assets.
+</Steps>
+
+:::note
+CASB evaluates assets only when it receives asset creations or updates. Assets that have not changed since the finding type was created are not evaluated, so they do not appear in **Finding Instances**.
+:::
+
+If no instances appear after assets in the finding type's integrations have been created or updated, perform the following checks:
+
+- Check the specified provider
+- Check the specified asset class
+- Check the specified integration scope
+- Check the written field names in the written Rego expression
+- Check the field types used in the written Rego expression
+- Check the expected output of the written Rego expression
+
+## Custom finding types restrictions and limits
+
+- An account can have up to 250 custom finding types.
+- Up to 25 custom finding types can apply to one integration.
+- Custom finding types support posture finding types. They do not support Data Loss Prevention (DLP) content finding types.
+- New and updated custom finding types do not apply retroactively.
+- The complete Rego policy, including Cloudflare-added declarations, can be up to 4 KiB.
+- Network access is not available during Rego expression evaluation.
+- Package declarations and import declarations are not accepted in the editor.
+
+## Use custom finding types in policies
+
+Custom finding types can be used in [CASB policies](/cloudflare-one/cloud-and-saas-findings/policies/) the same way standard finding types are used. When a [policy is created](/cloudflare-one/cloud-and-saas-findings/policies/#create-a-policy), the custom finding type is selected from the **Finding type** list.
+
+### Example scenario
+
+Continuing the previous [example](#example-scenario), the security team wants a group restricted automatically each time CASB finds a sensitive group that is open to people outside the company.
+
+1. **Create the policy.** The team creates a CASB policy and selects "Sensitive group open to outsiders" from the **Finding type** list.
+2. **Set the scope.** The policy is set to **Apply to all integrations**, so it covers every Google Workspace integration the finding type is evaluated against.
+3. **Choose the action.** The policy sends a webhook to the team's messaging admin automation.
+4. **See it work.** When a group is created or updated and CASB evaluates it as "fail", CASB creates a finding instance. The policy then fires the webhook, and the automation restricts the group's membership and posting settings.
+
+### Guidelines for using policies with custom finding types
+
+- Custom finding types can be used for policies that trigger webhooks.
+- A policy can only act on findings within the integrations it selects, or from all integrations if **Apply to all integrations** is set. It can only act on integrations within the custom finding type's integration scope. The two lists do not need to match.
+- If the [integration scope of the custom finding type](#edit-a-custom-finding-type) is edited to remove an integration, CASB no longer creates finding instances for that integration, so the policy has nothing to act on there.
+- If the custom finding type is [quarantined](#quarantined-custom-finding-types), CASB creates no new finding instances, so the policy does not trigger.
+- A custom finding type cannot be deleted while a policy uses it. [Delete the policy](/cloudflare-one/cloud-and-saas-findings/policies/#edit-turn-off-or-delete-a-policy) first, then [delete the custom finding type](#delete-a-custom-finding-type).
+
+## Manage custom finding types
+
+Standard or custom posture finding types can be duplicated, supported fields on a custom finding type can be edited, and a custom finding type that is no longer needed can be deleted.
+
+### Duplicate a finding type
+
+Open a standard posture finding type to inspect its detection logic. If the logic is a useful starting point, duplicate the finding type to create an editable copy.
+
+#### Example scenario
+
+Continuing the [previous example](#example-scenario), leadership asks that the executive and board groups be treated as Critical, with no exceptions, while the legal groups stay at High. Severity cannot be edited after creation, so the security team duplicates the finding type instead.
+
+1. **Duplicate.** The team selects **Duplicate** on "Sensitive group open to outsiders". CASB copies the name, description, severity, provider, asset class, integration scope, and Rego expression into the builder.
+2. **Adjust.** They rename the copy "Executive and board group open to outsiders" and set the severity to Critical. In the Rego expression, they change `sensitive_prefixes` to `["exec-", "board-"]`, and remove `external_exceptions` and the `not email in external_exceptions` line.
+3. **Create.** They select **Validate**, then **Create finding**. The copy is a new custom finding type.
+
+The original "Sensitive group open to outsiders" keeps running unchanged. For this company specifically, an `exec-` or `board-` group that breaks a rule now receives a finding from both finding types, one at High and one at Critical.
+
+#### Steps
+
+<Steps>
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. In the finding type menu, select **Duplicate**.
+3. Review the copied name, description, severity, provider, asset class, integration scope, and Rego expression.
+4. Change the copied fields as needed.
+5. Select **Validate**. Resolve each validation error before continuing.
+6. Select **Create finding**.
+</Steps>
+
+The duplicate finding type is a separate custom finding type. Changes to the duplicate do not affect the original finding type.
+
+### Edit a custom finding type
+
+Only the following fields can be edited after a custom finding type is created:
+
+- Name
+- Description
+- Integration scope
+
+To change the provider, asset class, severity, or Rego expression, [duplicate the finding type](#duplicate-a-finding-type).
+
+<Steps>
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. In the custom finding type menu, select **Edit**.
+3. Update the name, description, or integration scope.
+4. Select **Save**.
+</Steps>
+
+### Delete a custom finding type
+
+<Steps>
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. In the custom finding type menu, select **Delete**.
+3. Confirm the deletion.
+</Steps>
+
+Deleting a custom finding type will stop all evaluations against future asset updates and deletes the associated finding instances.
+
+Deleting a finding instance cannot be undone.
+
+### Disable a custom finding type
+
+Custom finding types cannot be disabled. To stop CASB from evaluating a custom finding type, [delete it](#delete-a-custom-finding-type). Deleting a custom finding type cannot be undone and deletes its existing finding instances.
+
+To stop a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) that uses a custom finding type from triggering, turn off the policy instead. Refer to [Edit, turn off, or delete a policy](/cloudflare-one/cloud-and-saas-findings/policies/#edit-turn-off-or-delete-a-policy).
+
+## Quarantined custom finding types
+
+Quarantine is a status CASB applies when a custom finding type's expression cannot be evaluated safely.
+
+A quarantined custom finding type displays a warning icon next to its entry in **Cloud & SaaS findings** > **Findings library**.
+
+While a custom finding type is quarantined:
+
+- Existing finding instances remain visible.
+- CASB does not evaluate the expression when it receives asset updates, so no new finding instances are created.
+- Other custom and standard finding types on the same integrations continue to run normally.
+
+The **Policies** list does not show when a policy uses a quarantined custom finding type.
+
+### Why a custom finding is quarantined
+
+A custom finding type will be quarantined if CASB is unable to evaluate the finding type against assets. Common causes include:
+
+- Nested iteration over large arrays, such as comparing every item in a list to every other item.
+- Timing out due to evaluation against large or deeply nested asset fields.
+- Running regular expressions against every element of a large collection when a simpler check, such as `startswith` or `endswith`, is sufficient.
+
+**Validate** compiles the expression and checks it against the asset schema, but does not run the expression against asset data. An expression can pass validation and still be quarantined later.
+
+### Manually quarantine a custom finding type
+
+A custom finding type cannot be manually quarantined, and the status cannot be removed, from the dashboard or the API.
+
+Editing a quarantined custom finding type's name, description, or integration scope does not remove the status.
+
+### Resolve a quarantined custom finding
+
+Custom finding type expressions cannot be edited. To resolve a quarantined custom finding type, duplicate it and correct the expression in the copy:
+
+<Steps>
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Cloud & SaaS findings** > **Findings library**.
+2. In the quarantined custom finding type menu, select **Duplicate**.
+3. Rewrite the expression to reduce its runtime and memory use. Refer to [Why a custom finding is quarantined](#why-a-custom-finding-is-quarantined).
+4. Select **Validate**. Resolve each validation error before continuing.
+5. Select **Create finding**. The duplicate is a new custom finding type and is not quarantined.
+6. If a [CASB policy](/cloudflare-one/cloud-and-saas-findings/policies/) uses the quarantined custom finding type, update the policy to use the new custom finding type.
+7. [Delete the quarantined custom finding type](#delete-a-custom-finding-type).
+</Steps>
+
+:::note
+A quarantined custom finding type still counts toward the limits of 250 custom finding types per account and 25 per integration. If a limit has been reached, copy the expression and delete the quarantined custom finding type before the replacement is created.
+:::
+
+If the cause of the quarantine cannot be identified, contact [Cloudflare Support](/support/contacting-cloudflare-support/). Provide the custom finding type ID and as much detail as possible.
+
+## Example expressions
+
+### Iterate over an array
+
+For the Anthropic `AnthropicComplianceRole` asset class, the following expression detects a role with the Cowork permission:
+
+```txt
+default result := "pass"
+
+result := "fail" if {
+	some permission in input.asset.permissions
+	permission.action == "cowork"
+}
+```
+
+### Handle a nullable value
+
+For the Anthropic `AnthropicComplianceUser` asset class, the following expression detects a non-null email in the `example.com` domain:
+
+```txt
+default result := "pass"
+
+result := "fail" if {
+	input.asset.email != null
+	regex.match(`(?i)@example\.com$`, input.asset.email)
+}
+```
+
+### Use an associated asset
+
+For the Google Workspace `GoogleWorkspaceLicenseAssignment` asset class, the following expression detects a non-suspended, non-administrator user with an AI Ultra license:
+
+```txt
+ai_ultra_sku_id := "1010470008"
+
+default result := "pass"
+
+result := "fail" if {
+	input.asset.skuId == ai_ultra_sku_id
+	input.associated.user.isAdmin == false
+	input.associated.user.isSuspended == false
+}
+```
