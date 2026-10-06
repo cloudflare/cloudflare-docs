@@ -1,0 +1,25 @@
+src/content/changelog/agents/2026-10-02-pi-harness.mdx
+  s_8f467c684acac7::t_ef3c117d425ac4 85
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_8f467c684acac7::t_b56e64cf6f7fef 50,56,185,266,330,332
+src/content/docs/agents/models/index.mdx
+  s_8f467c684acac7::t_60b5e1f4b48c4b 4,23,72,74
+src/content/docs/agents/models/pi-ai.mdx
+  s_8f467c684acac7::t_c8ff9fab88f04c 2,4,20,48,76,116,122,141,162,164,166,201,210,212,214,216,236
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4a34bd16ee5decec23b5cdef48778e4a1f77ed5e",
+  "prompts": {},
+  "sessions": {
+    "s_8f467c684acac7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a10741-569f-7029-8bc9-b2bb4625a3ab",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
