@@ -18,6 +18,8 @@ When a request to a custom domain includes a valid Cloudflare Access JWT, AI Gat
 
 AI Gateway also adds the verified Access user ID to request metadata as [`cf.user_id`](/ai-gateway/observability/custom-metadata/#reserved-metadata). This value is the Access JWT `sub` claim, not the user's email address. You can then filter logs, analytics, and spend by the authenticated user.
 
+The user ID, email, and IdP groups from the Access JWT are also available to [policies](/ai-gateway/features/policies/), so you can set budgets and model access rules for each user or group.
+
 Before AI Gateway forwards the request to the upstream provider, it removes Cloudflare-only credentials such as the Access JWT and AI Gateway authorization headers.
 
 Once a custom domain is protected by Access, every request to that domain must pass an Access policy. Requests that only include an AI Gateway token, without a valid Access token, are blocked by Access before they reach the gateway. Update existing integrations to authenticate through Access, or keep sending gateway-token traffic to the default `gateway.ai.cloudflare.com` endpoint, which is not protected by Access.

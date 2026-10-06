@@ -1,0 +1,618 @@
+---
+pcx_content_type: configuration
+title: Policies
+description: Use identity-based policies to control which users can call which models and providers on your AI Gateway, and how much each user or group can spend.
+sidebar:
+  order: 4
+  badge: Beta
+products:
+  - ai-gateway
+---
+
+import { CURL, DashButton, Steps } from "~/components";
+
+Policies let you control **who** can use **which models and providers** on a gateway, and **how much they can spend**. AI Gateway evaluates each request against the identity of the caller, then allows it, blocks it with a `403`, or checks it against one or more spend limits.
+
+Use policies to:
+
+- Give a team or an email domain a shared monthly budget.
+- Cap spend for each individual user.
+- Block a group from using expensive models.
+- Allow only specific models for a group.
+
+Policies differ from gateway-level [spend limits](/ai-gateway/features/spend-limits/), which split budgets by request metadata only. Policies use the verified identity of the caller from [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), and can also block or allow access to models.
+
+![Policies tab listing a company-wide spend cap, an email domain spend cap, and a policy that blocks Claude Opus models](~/assets/images/ai-gateway/policies-list.png)
+
+## How it works
+
+When a request arrives, AI Gateway:
+
+1. Reads the identity of the caller from a [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/) JWT, the request country, and the [`cf-aig-metadata`](/ai-gateway/observability/custom-metadata/) header.
+2. Evaluates every policy on the gateway against that identity and the model and provider of the request.
+3. Allows the request, blocks it with a `403`, or checks the spend limits that apply. If any applicable limit is used up, AI Gateway rejects the request with a `429`.
+
+If a gateway has no policies, AI Gateway allows all requests. After you add the first policy, AI Gateway rejects any request that does not match at least one policy.
+
+:::caution[Your first policy turns on enforcement]
+
+When a gateway has at least one policy, requests that do not match any policy are blocked with a `403`. Before you add restrictive policies, add a policy that covers the traffic you want to allow. For example, add a spend cap that applies to **Everyone** on **All models and providers**.
+
+:::
+
+:::note[Cached responses skip policies]
+
+AI Gateway checks the [cache](/ai-gateway/features/caching/) before it evaluates policies. A request served from the cache is not evaluated by any policy, including block policies, and does not count toward a budget. If you use policies to block access to a model, turn off caching for that traffic.
+
+:::
+
+## Policy components
+
+Each policy has four parts:
+
+| Part        | Description                                                                                                       |
+| ----------- | ----------------------------------------------------------------------------------------------------------------- |
+| Who (actor) | The identity the policy targets. For spend caps, the actor also decides which budget bucket the request draws on. |
+| Resources   | The models or providers the policy covers.                                                                        |
+| Action      | What happens when the policy matches: allow until capped, allow without a cap, or block.                          |
+| Conditions  | Optional [Common Expression Language (CEL)](https://cel.dev/) expression that narrows when the policy applies.    |
+
+### Who
+
+The **Who** setting controls who the policy applies to. For spend caps, it also names the budget bucket that matching requests share.
+
+| Option                     | Applies to                                                  | Budget                                       |
+| -------------------------- | ----------------------------------------------------------- | -------------------------------------------- |
+| **Everyone**               | All requests to the gateway.                                | One budget shared by all requests.           |
+| **User**                   | A single user, identified by email address.                 | One budget for that user.                    |
+| **Email domain ending in** | Users whose email ends in a domain, such as `@example.com`. | One budget shared by everyone in the domain. |
+| **Actor bucket**           | A custom actor string that you define.                      | Depends on the actor string.                 |
+
+Use **Actor bucket** for budgets the other options cannot express. An actor is a string that can contain identity fields inside braces. AI Gateway resolves those fields for each request:
+
+- `team:engineering` is a fixed string. All matching requests share one budget.
+- `user:{cf.user.id}` resolves to each Access user ID. Each user gets their own budget.
+- `user:{metadata.user_id}` resolves to the `user_id` value in `cf-aig-metadata`. Each value gets its own budget.
+
+If AI Gateway cannot resolve a field in the actor for a request, the policy does not apply to that request.
+
+### Resources
+
+The **Resources** setting limits a policy to specific models or providers:
+
+- **All models and providers**
+- **Model** — one or more model IDs, such as `openai/gpt-5.5`
+- **Provider** — one or more providers, such as `anthropic`
+- **Model and provider** — specific models from a specific provider
+
+Model IDs support the `*` wildcard. For example, `openai/gpt-*` matches `openai/gpt-5.5` and `openai/gpt-5.5-mini`. A wildcard does not match across a `/` character. Provider names do not support wildcards.
+
+### Action
+
+| Action                  | Behavior                                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| **Allow until capped**  | Allows matching requests until spend in the budget reaches the amount for the time window. |
+| **Allow without a cap** | Allows matching requests with no spend limit.                                              |
+| **Block**               | Rejects matching requests with a `403`.                                                    |
+
+Spend caps use a calendar-based time window aligned to UTC. When the window resets, the budget starts again from zero:
+
+| Time window | Resets                                       |
+| ----------- | -------------------------------------------- |
+| Hourly      | At the start of every hour.                  |
+| Daily       | Every day at 00:00 UTC.                      |
+| Weekly      | Every Monday at 00:00 UTC.                   |
+| Monthly     | On the first day of each month at 00:00 UTC. |
+
+### Conditions
+
+Conditions are optional. Use them to target requests by attributes that the **Who** setting does not cover, such as a user's identity provider (IdP) group or country.
+
+In the dashboard, use the **Builder** tab to add conditions on these fields:
+
+- **Country**
+- **User email**
+- **User ID**
+- **User groups**
+
+To write the expression directly, use the **Raw CEL** tab. A condition must return a boolean.
+
+The following identity fields are available in conditions and actor strings:
+
+| Field               | Source                                                                                 |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `cf.user.id`        | The `sub` claim of the Cloudflare Access JWT.                                          |
+| `cf.user.email`     | The email address in the Cloudflare Access JWT.                                        |
+| `cf.user.groups`    | The IdP groups in the Cloudflare Access JWT.                                           |
+| `cf.custom.<claim>` | Custom claims in the Cloudflare Access JWT.                                            |
+| `cf.country`        | The two-letter country code of the request.                                            |
+| `metadata.<key>`    | A key from the [`cf-aig-metadata`](/ai-gateway/observability/custom-metadata/) header. |
+
+The following are examples of valid conditions:
+
+```txt
+"contractors" in cf.user.groups
+cf.user.email.endsWith("@example.com")
+cf.country == "US"
+metadata.environment == "production"
+true
+```
+
+`cf.user.*` fields are only available when the request is authenticated with [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). If you do not use Access, pass identity values in `cf-aig-metadata` and reference them with `metadata.<key>`. The `cf-aig-metadata` header must be a flat JSON object with up to five keys. AI Gateway ignores the header if it contains nested objects or arrays.
+
+## How policies are evaluated
+
+AI Gateway evaluates all policies for every request. The order in which you create policies does not matter.
+
+1. **Match.** A policy matches when its resource matches the request model and provider, and its condition is true.
+2. **Block wins.** If any matching policy blocks the request, AI Gateway rejects it with a `403`. No other policy can override a block.
+3. **Group by budget.** AI Gateway groups the remaining matching policies by their resolved actor and resource. Each group is one budget bucket.
+4. **Resolve each bucket.** If a bucket contains an **Allow without a cap** policy, AI Gateway does not check spend for that bucket. If a bucket contains several spend caps with the same time window, the highest amount applies.
+5. **Check every bucket.** The request must be under the limit in every bucket that applies. For example, a user can be subject to a company budget, a team budget, and a personal budget at the same time. If any budget is used up, AI Gateway rejects the request with a `429`.
+6. **Deny by default.** If no policy matches the request, AI Gateway rejects it with a `403`.
+
+If a block policy references an identity field that is missing from the request, AI Gateway blocks the request when the resource matches. Other policies that reference a missing field do not apply to that request.
+
+## Create a policy
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select your gateway.
+3. Go to **Policies** and select **Add policy**.
+4. Under **Who and what does this policy target?**, select who the policy applies to in **Who**, and the models or providers it covers in **Resources**.
+5. Under **What should happen?**, select an action. For **Allow until capped**, enter an **Amount (USD)** and select a **Time window**.
+6. (Optional) Under **Under what conditions?**, select **Add condition** to add a condition, or write an expression in **Raw CEL**.
+7. Review the summary in **Preview**, then select **Create policy**.
+
+</Steps>
+
+![Create a policy form with a monthly spend cap of 1,000 US dollars for everyone on all models and providers](~/assets/images/ai-gateway/policies-create-policy.png)
+
+The policy takes effect as soon as you create it. To change a policy, select the edit icon next to it. To remove a policy, select the delete icon.
+
+The following example blocks users in the `contractors` IdP group from all Claude Opus models:
+
+![Create a policy form that blocks the anthropic/claude-opus-* models when the user groups contain contractors](~/assets/images/ai-gateway/policies-block-policy.png)
+
+## Test policies
+
+Use **Test policies** on the **Policies** tab to check how your policies handle a request before real traffic reaches them. Testing does not send a request to a provider or record any spend.
+
+<Steps>
+
+1. Under **Identity**, enter the identity fields to test. The fields shown depend on the fields your policies use. To test other attributes, such as metadata, select **JSON** and enter an identity object.
+2. Under **Request**, enter a **Model**. AI Gateway fills in the **Provider** for known models.
+3. Select **Test policies**.
+
+</Steps>
+
+The result shows whether the request is allowed or blocked.
+
+![Test policies panel showing that a request from a user in the contractors group to anthropic/claude-opus-4-7 is blocked](~/assets/images/ai-gateway/policies-test.png)
+
+Test results do not account for spend already recorded against a budget.
+
+## Send identity with requests
+
+Policies need identity data on each request. You can provide it in two ways.
+
+### With Cloudflare Access
+
+Put your gateway behind [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). AI Gateway validates the Access JWT on each request and makes `cf.user.id`, `cf.user.email`, `cf.user.groups`, and `cf.custom.*` available to policies. Clients cannot forge these values.
+
+### With custom metadata
+
+Pass identity values in the [`cf-aig-metadata`](/ai-gateway/observability/custom-metadata/) header, then reference them as `metadata.<key>` in conditions and actors:
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/$ACCOUNT_ID/$GATEWAY_ID/openai/chat/completions \
+  --header "Authorization: Bearer $OPENAI_API_KEY" \
+  --header "Content-Type: application/json" \
+  --header 'cf-aig-metadata: {"user_id": "user-1234", "team": "research"}' \
+  --data '{
+    "model": "gpt-5.5",
+    "messages": [{"role": "user", "content": "What is Cloudflare?"}]
+  }'
+```
+
+:::note
+
+Your application sets the `cf-aig-metadata` header, so AI Gateway cannot verify it. Only rely on metadata for policies when requests come from a trusted backend. Use Cloudflare Access when you need verified user identity.
+
+:::
+
+## Responses when a policy rejects a request
+
+When a block policy matches, or no policy matches, AI Gateway returns a `403`:
+
+```json
+{
+	"success": false,
+	"error": {
+		"message": "Access denied by policy"
+	}
+}
+```
+
+When a spend cap is reached, AI Gateway returns a `429`:
+
+```json
+{
+	"success": false,
+	"error": {
+		"message": "Spending limit exceeded",
+		"bucket": "<BUCKET_ID>",
+		"spent": 1000.42,
+		"limit": 1000
+	}
+}
+```
+
+## Manage policies with the API
+
+You can create and manage policies with the Cloudflare API. All endpoints are scoped to a gateway:
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies
+```
+
+Authenticate with an [API token](/fundamentals/api/get-started/create-token/) that has AI Gateway edit permissions.
+
+### Policy object
+
+| Field        | Type                 | Description                                                                                                                              |
+| ------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`         | `string`             | Generated by AI Gateway.                                                                                                                 |
+| `name`       | `string`             | A label for the policy. Also used to identify the policy in simulation requests.                                                         |
+| `actor`      | `string`             | The budget bucket. Can contain identity fields in braces, such as `user:{cf.user.id}`.                                                   |
+| `resource`   | `string` or `object` | `"*"`, `{ "model": ... }`, `{ "provider": ... }`, or `{ "model": ..., "provider": ... }`. Values can be a string or an array of strings. |
+| `condition`  | `string`             | A CEL expression. Use `"true"` to match every request.                                                                                   |
+| `action`     | `object`             | Refer to [Action object](#action-object).                                                                                                |
+| `created_at` | `number`             | Unix timestamp in seconds.                                                                                                               |
+| `updated_at` | `number`             | Unix timestamp in seconds.                                                                                                               |
+
+### Action object
+
+The following action objects are supported:
+
+```jsonc
+// Allow without a cap
+{ "type": "no-limit" }
+
+// Block matching requests
+{ "type": "block" }
+
+// Block every request except those that match the resource (allowlist)
+{ "type": "block", "except": true }
+
+// Spend cap
+{ "type": "limit", "amount": 1000, "period": "monthly", "technique": "named-interval" }
+```
+
+For a spend cap:
+
+- `amount` is in US dollars and must be greater than zero.
+- `period` is `hourly`, `daily`, `weekly`, or `monthly`. Refer to [Action](#action) for when each period resets.
+- `technique` must be `named-interval`.
+
+### Stage, test, and commit changes
+
+The API supports a staging workflow so you can test changes before they affect live traffic:
+
+1. **Stage.** Create or update a policy without `commit=true`. AI Gateway saves the change as a draft and does not enforce it.
+2. **Simulate.** Call the simulate endpoint. It evaluates your live policies and staged drafts against a sample request.
+3. **Commit.** Commit all drafts with the commit endpoint, or commit a single change by passing `commit=true`.
+
+Policies that you create in the dashboard take effect immediately.
+
+### List policies
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+Add `?includeStaging=true` to include staged drafts. Drafts include `"staging": true`.
+
+```json
+{
+	"success": true,
+	"result": [
+		{
+			"id": "d682e5be-1cbe-4328-b7ec-0976fc8644f5",
+			"name": "Everyone spend cap",
+			"actor": "company:all",
+			"resource": "*",
+			"condition": "true",
+			"action": {
+				"type": "limit",
+				"amount": 1000,
+				"period": "monthly",
+				"technique": "named-interval"
+			},
+			"created_at": 1791244351,
+			"updated_at": 1791244351
+		}
+	]
+}
+```
+
+### Create a policy
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies?commit=true"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Block contractors from Claude Opus",
+		actor: "company:all",
+		resource: { model: "anthropic/claude-opus-*" },
+		condition: '"contractors" in cf.user.groups',
+		action: { type: "block" },
+	}}
+/>
+
+Without `commit=true`, AI Gateway saves the policy as a draft. The response includes the generated `id` and whether the policy was committed:
+
+```json
+{
+	"success": true,
+	"result": {
+		"id": "1fbd5ff2-f94d-408d-aa43-dda6ebf9984a",
+		"name": "Block contractors from Claude Opus",
+		"actor": "company:all",
+		"resource": { "model": "anthropic/claude-opus-*" },
+		"condition": "\"contractors\" in cf.user.groups",
+		"action": { "type": "block" },
+		"created_at": 1791244512,
+		"updated_at": 1791244512
+	},
+	"committed": true
+}
+```
+
+If the condition or actor contains a CEL syntax error, AI Gateway returns a `400` with details about the error.
+
+### Get a policy
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies/{policy_id}"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+Add `?includeStaging=true` to return the staged draft of the policy if one exists. The response then includes `"uncommitted": true`.
+
+### Update a policy
+
+Send only the fields you want to change:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies/{policy_id}?commit=true"
+	method="PUT"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		action: {
+			type: "limit",
+			amount: 2000,
+			period: "monthly",
+			technique: "named-interval",
+		},
+	}}
+/>
+
+Without `commit=true`, AI Gateway saves the change as a draft. You can only update a policy that has been committed.
+
+```json
+{ "success": true, "committed": true }
+```
+
+### Delete a policy
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies/{policy_id}"
+	method="DELETE"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+Deleting a policy also removes any staged draft of it.
+
+### Commit staged policies
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies/commit"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+AI Gateway commits all staged drafts for the gateway:
+
+```json
+{
+	"success": true,
+	"result": {
+		"committed": 3,
+		"failed": 0,
+		"policies": []
+	}
+}
+```
+
+If any draft fails to commit, `success` is `false` and `result.errors` lists each failed `policyId` and its error.
+
+### Simulate a request
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/policies/simulate"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		identity: {
+			cf: {
+				user: {
+					id: "test-user-123",
+					email: "alice@example.com",
+					groups: ["engineering"],
+				},
+			},
+		},
+		model: "openai/gpt-5.5",
+		provider: "openai",
+		bucketUsage: {
+			"Everyone spend cap": { spent: 1000 },
+		},
+	}}
+/>
+
+- `identity` is the identity to test. Structure it the way your policies expect, with `cf` for Access fields and `metadata` for metadata fields.
+- `model` and `provider` describe the request.
+- `bucketUsage` is optional. It sets simulated spend for a budget, keyed by policy `name`.
+
+```json
+{
+	"success": true,
+	"result": {
+		"evaluation": { "decision": "check_limits", "buckets": [] },
+		"enforcement": {
+			"allowed": false,
+			"reason": "limit_exceeded",
+			"bucket": "<BUCKET_ID>",
+			"spent": 1000,
+			"limit": 1000,
+			"policyName": "Everyone spend cap"
+		},
+		"policiesEvaluated": 3
+	}
+}
+```
+
+`evaluation.decision` is `no-limit`, `block`, or `check_limits`. `enforcement.allowed` is `true`, or `false` with a `reason` of `blocked` or `limit_exceeded`.
+
+## Examples
+
+### Company budget and team budget
+
+A request from an engineer must pass both budgets:
+
+```json
+[
+	{
+		"name": "Company budget",
+		"actor": "company:example",
+		"resource": "*",
+		"condition": "true",
+		"action": {
+			"type": "limit",
+			"amount": 20000,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	},
+	{
+		"name": "Engineering budget",
+		"actor": "team:engineering",
+		"resource": "*",
+		"condition": "\"engineering\" in cf.user.groups",
+		"action": {
+			"type": "limit",
+			"amount": 10000,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	}
+]
+```
+
+### Individual caps inside a team budget
+
+The team shares one budget. The second policy stops any one person from using all of it:
+
+```json
+[
+	{
+		"name": "Finance budget",
+		"actor": "team:finance",
+		"resource": "*",
+		"condition": "\"finance\" in cf.user.groups",
+		"action": {
+			"type": "limit",
+			"amount": 10000,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	},
+	{
+		"name": "Finance per-user cap",
+		"actor": "user:{cf.user.email}",
+		"resource": "*",
+		"condition": "\"finance\" in cf.user.groups",
+		"action": {
+			"type": "limit",
+			"amount": 400,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	}
+]
+```
+
+### Higher cap for one user
+
+Both policies resolve to the same bucket for `alice@example.com`, so the higher amount applies to that user. Other members of the group keep the default cap:
+
+```json
+[
+	{
+		"name": "Research default",
+		"actor": "user:{cf.user.email}",
+		"resource": "*",
+		"condition": "\"research\" in cf.user.groups",
+		"action": {
+			"type": "limit",
+			"amount": 400,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	},
+	{
+		"name": "Alice override",
+		"actor": "user:{cf.user.email}",
+		"resource": "*",
+		"condition": "cf.user.email == \"alice@example.com\"",
+		"action": {
+			"type": "limit",
+			"amount": 600,
+			"period": "monthly",
+			"technique": "named-interval"
+		}
+	}
+]
+```
+
+### Allow only specific models
+
+This policy blocks interns from every model except those listed. Interns still need an allow or spend cap policy that covers the listed models. Otherwise, the default deny blocks their requests:
+
+```json
+{
+	"name": "Interns allowlist",
+	"actor": "company:all",
+	"resource": { "model": ["openai/gpt-5.5-mini", "anthropic/claude-haiku-*"] },
+	"condition": "\"interns\" in cf.user.groups",
+	"action": { "type": "block", "except": true }
+}
+```
+
+## Limitations
+
+- **Cost is estimated.** Spend is based on the [cost AI Gateway calculates](/ai-gateway/observability/costs/) for each request, including any [custom cost](/ai-gateway/configuration/custom-costs/). Requests for models without known pricing do not count toward a budget. Refer to your provider dashboard for exact billing.
+- **Budgets can be exceeded slightly.** AI Gateway records the cost of a request after it completes. Concurrent requests can push spend over the limit before enforcement catches up.
+- **Cached responses skip policies.** Requests served from the [cache](/ai-gateway/features/caching/) are not evaluated by policies, including block policies, and do not count toward a budget.
+- **Changes take time to propagate.** A new or updated policy can take up to 15 minutes to apply everywhere.
+- **Failures allow traffic.** If AI Gateway cannot evaluate policies or read current spend, it allows the request.
+- **No remaining-budget headers.** Responses do not include headers that report remaining budget.
