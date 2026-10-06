@@ -1,0 +1,63 @@
+---
+title: "WAF Release - 2026-10-06"
+description: Cloudflare WAF managed rulesets 2026-10-06 release
+date: 2026-10-06
+---
+
+import { RuleID } from "~/components";
+
+This release introduces a new detection to mitigate a heap-based buffer overflow vulnerability in F5 BIG-IP, and enhances existing command injection protections by incorporating tested beta logic into the baseline rule.
+
+**Key Findings**
+
+- CVE-2026-94127: A heap-based buffer overflow vulnerability in F5 BIG-IP. Attackers can exploit this flaw to execute arbitrary code on the affected system.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="e6fd9291701d4fea96741ba1a056caff" />
+			</td>
+			<td>N/A</td>
+			<td>Command Injection - Generic 8 - uri - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "Command Injection - Generic 8 - uri" (ID:{" "}<RuleID id="ff8df24181aa4573a81be531ee159e2e" />).</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f0c31de76290471e842c77ca7206c737" />
+			</td>
+			<td>N/A</td>
+			<td>F5 BIG-IP - UnAuth Heap-Overflow - CVE:CVE-2026-94127</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+        <tr>
+            <td>Cloudflare Managed Ruleset</td>
+            <td>
+                <RuleID id="86b0681d72234ef7bd6f67c7549f7356" />
+            </td>
+            <td>N/A</td>
+            <td>Next.js - Cache Poisoning - CVE:CVE-2026-94543</td>
+            <td>Block</td>
+            <td>Block</td>
+            <td>Rule metadata description refined. Detection unchanged.</td>
+        </tr>
+	</tbody>
+</table>
