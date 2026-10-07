@@ -1,6 +1,6 @@
 ---
 title: Data localization
-description: Ensure Artifacts stores and processes repo data only within a selected jurisdiction.
+description: Store Artifacts repo data within a selected jurisdiction and keep request processing in the same region.
 pcx_content_type: how-to
 sidebar:
   order: 6
@@ -8,7 +8,9 @@ products:
   - artifacts
 ---
 
-Artifacts jurisdictions ensure repo data is stored and processed only within a selected location. Set a jurisdiction when you create a namespace to apply the restriction to every repo in that namespace.
+Artifacts jurisdictions ensure repo data is stored and processed by Artifacts only within a selected location. Set a jurisdiction when you create a namespace to apply the restriction to every repo in that namespace.
+
+The jurisdiction controls where Artifacts stores repo data and runs the backend that serves it. It does not control where Cloudflare receives and handles requests before they reach that backend. To keep request processing in the same region, refer to [Keep request processing within a region](#keep-request-processing-within-a-region).
 
 ## Supported jurisdictions
 
@@ -37,3 +39,16 @@ curl --request POST \
 The selected jurisdiction applies to every repo in the namespace. You cannot change the jurisdiction after creating the namespace. The `jurisdiction` parameter is optional. If you omit it, the namespace remains unrestricted.
 
 For endpoint details, refer to the [Artifacts REST API reference](/artifacts/api/rest-api/#create-a-namespace).
+
+## Keep request processing within a region
+
+Requests to the Artifacts REST API (`api.cloudflare.com`) and to the Artifacts Git remote (`<ACCOUNT_ID>.artifacts.cloudflare.net`) can be received and handled at any Cloudflare data center before they reach a repo in a restricted namespace. For example, a `git push` from the United States to a repo in an `eu` namespace is first processed in the United States.
+
+To keep both storage and request processing within a region:
+
+1. Create the namespace with a jurisdiction, as described in [Create a namespace with a jurisdiction](#create-a-namespace-with-a-jurisdiction).
+2. Interact with repos in the namespace only through the [Artifacts Workers binding](/artifacts/api/workers-binding/). Do not send repo data through the Artifacts REST API or the Artifacts Git remote.
+3. Serve the Worker that uses the binding on a [Custom Domain](/workers/configuration/routing/custom-domains/) with [Regional Services](/data-localization/regional-services/) enabled for the same region. Regional Services ensures Cloudflare only receives and processes requests to that hostname within the selected region.
+4. Disable the Worker's [`workers.dev`](/workers/configuration/routing/workers-dev/#disabling-workersdev) URL and [Preview URLs](/workers/previews/), because these hostnames do not use Regional Services.
+
+This is the same approach Durable Objects uses for jurisdictions. For more information, refer to [Durable Objects data location](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
