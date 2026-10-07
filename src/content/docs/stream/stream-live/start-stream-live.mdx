@@ -163,28 +163,29 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs/{i
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-## Recommendations, requirements and limitations
+## Requirements, recommendations, and limitations
 
 If you are experiencing buffering, freezing, experiencing latency, or having other similar issues, visit [live stream troubleshooting](/stream/stream-live/troubleshooting/).
 
+### Requirements
+
+- Stream Live only supports H.264 video and AAC audio codecs as inputs. For AAC audio, ADTS is supported but LATM is not.
+- Input combined bitrate should be between 2Mbps and 14Mbps.
+- Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
+- [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) must be between 2 and 10 seconds. Closed GOPs are required, which is default with most encoders.
+
 ### Recommendations
 
-- Your creators should use an appropriate bitrate for their live streams, typically well under 12Mbps (12000Kbps). High motion, high frame rate content typically should use a higher bitrate, while low motion content like slide presentations should use a lower bitrate.
-- Your creators should use a [GOP duration](https://en.wikipedia.org/wiki/Group_of_pictures) (keyframe interval) of between 2 to 8 seconds. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP duration will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency, while increasing latency for viewers. This is a tradeoff inherent to video encoding, and not a limitation of Cloudflare Stream.
-- When possible, select CBR (constant bitrate) instead of VBR (variable bitrate) as CBR helps to ensure a stable streaming experience while preventing buffering and interruptions.
+- Use an appropriate bitrate for their live streams, typically under 10Mbps. High motion, high frame rate content should use a higher bitrate, while low motion content like slide presentations should use a lower bitrate.
+- Use a GOP size (keyframe interval) of between 4 to 8 seconds when using standard HLS/DASH playback. The default in most encoding software and hardware, including Open Broadcaster Software (OBS), is within this range. Setting a lower GOP will reduce latency for viewers, while also reducing encoding efficiency. Setting a higher GOP duration will improve encoding efficiency and bandwidth usage, but increases latency for viewers. This is a tradeoff inherent to HLS packaging, and not a limitation of Cloudflare Stream.
+- When possible, select CBR (constant bitrate) instead of VBR (variable bitrate).
 
 #### Low-Latency HLS broadcast recommendations <Badge text="Beta" variant="caution" size="small" />
 
-- Turn off B Frames or set them to 0. B Frames are incompatible with LL-HLS and will result in jitter and sporadic buffering delays.
-- For lowest latency, use a GOP size (or "keyframe interval") of 2 - 4 seconds.
+- B Frames _are not supported_ in LL-HLS and will cause jitter in playback. Turn off B Frames or set them to 0.
+- Use a GOP size (keyframe interval) of 2 - 4 seconds for LL-HLS.
 - Broadcast to the RTMP endpoint if possible, SRT otherwise.
 - If using OBS, select the "ultra low" latency profile.
-
-### Requirements
-
-- Closed GOPs are required. This means that if there are any B frames in the video, they should always refer to frames within the same GOP. This setting is the default in most encoding software and hardware, including [OBS Studio](https://obsproject.com/).
-- Stream Live only supports H.264 video and AAC audio codecs as inputs. This requirement does not apply to inputs that are relayed to Stream Connect outputs. Stream Live supports ADTS but does not presently support LATM.
-- Clients must be configured to reconnect when a disconnection occurs. Stream Live is designed to handle reconnection gracefully by continuing the live stream.
 
 ### Limitations
 
