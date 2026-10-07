@@ -1,0 +1,19 @@
+src/content/docs/waf/tools/lists/custom-lists.mdx
+  s_b76d66092a5a19::t_d8ed99ed7422a2 67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f04fdc8211d24b1f1b4b257b6e357437e9524580",
+  "prompts": {},
+  "sessions": {
+    "s_b76d66092a5a19": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ef328d5edffeCDbFEYIEAUdkFM",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}
