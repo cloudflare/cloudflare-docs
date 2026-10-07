@@ -127,6 +127,69 @@ describe("Cloudflare Docs", () => {
 		);
 	});
 
+	describe("unavailable model pages", () => {
+		it.each([
+			[
+				"/workers-ai/models/llama-3-8b-instruct/",
+				"/workers-ai/models/?unavailable=llama-3-8b-instruct",
+			],
+			[
+				// The `@` is percent-encoded by the asset layer before the 404 lands,
+				// so the id must survive the round trip without double-encoding.
+				"/ai/models/%40cf/meta/llama-3-8b-instruct/",
+				"/ai/models/?unavailable=%40cf%2Fmeta%2Fllama-3-8b-instruct",
+			],
+			[
+				"/ai/models/openai/retired-model/",
+				"/ai/models/?unavailable=openai%2Fretired-model",
+			],
+		])("redirects %s to the catalog", async (path, location) => {
+			const response = await SELF.fetch(new Request(`http://fakehost${path}`), {
+				redirect: "manual",
+			});
+			expect(response.status).toBe(302);
+			expect(response.headers.get("Location")).toBe(location);
+		});
+
+		it("serves a model page that still exists", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/ai/models/openai/tts-1/"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(200);
+		});
+
+		it.each(["/workers-ai/models/", "/ai/models/"])(
+			"serves the catalog at %s",
+			async (path) => {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+					{ redirect: "manual" },
+				);
+				expect(response.status).toBe(200);
+			},
+		);
+
+		it("leaves markdown requests as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/workers-ai/models/retired-model/index.md"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+		});
+
+		it("leaves schema endpoints as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request(
+					"http://fakehost/workers-ai/models/retired-model/schema-input.json",
+				),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
+		});
+	});
+
 	describe("json endpoints", () => {
 		it("compatibility flags", async () => {
 			const request = new Request(

@@ -53,7 +53,7 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 </WranglerConfig>
 
 - `binding`: The name of the key you want to expose on the `env` object.
-- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
+- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account. If the target Worker uses an [environment](/workers/wrangler/environments/#service-bindings), use `<WORKER_NAME>-<ENVIRONMENT_NAME>`.
 
 ## Interfaces
 
