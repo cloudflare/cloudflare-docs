@@ -1,0 +1,35 @@
+public/realtime/static/realtime-api-2024-05-21.yaml
+  s_8b87deab2c186f::t_5d6edafda97d87 18-19,612
+src/content/docs/realtime/sfu/api/index.mdx
+  s_8b87deab2c186f::t_8c5f409d0157cb 48,78-82,122
+src/content/docs/realtime/sfu/best-practices/index.mdx
+  s_8b87deab2c186f::t_e0b4f0e2712805 43,49
+src/content/docs/realtime/sfu/concepts/negotiation.mdx
+  s_8b87deab2c186f::t_95f1eb2f69f265 39,68-76,78,90
+src/content/docs/realtime/sfu/concepts/sessions-tracks.mdx
+  s_8b87deab2c186f::t_a49d56f1a5752b 27,29,46,51
+src/content/docs/realtime/sfu/features/datachannels.mdx
+  s_8b87deab2c186f::t_c58c3e697c2b6b 28,38-40,71,164,180,236,244
+src/content/docs/realtime/sfu/get-started/connection-patterns.mdx
+  s_8b87deab2c186f::t_2c776af1931272 13,24,32,36,51,54,67,93,97,99,132,134,170,208,231,258,273-281,289,304,309,317,326,354
+src/content/docs/realtime/sfu/observability/error-codes.mdx
+  s_8b87deab2c186f::t_267b3766254e05 31,43-46,58,78-82,87,100,112
+src/content/docs/realtime/sfu/platform/limits.mdx
+  s_8b87deab2c186f::t_fa56750d9ba91d 19,21,36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8781b1237989d567d344cf6abf4ebedfa9b76106",
+  "prompts": {},
+  "sessions": {
+    "s_8b87deab2c186f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0c416-74f6-71c3-ba9f-3dc03ac9bf65",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}
