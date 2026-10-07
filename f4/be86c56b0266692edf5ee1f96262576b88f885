@@ -1,0 +1,37 @@
+src/content/docs/agents/capabilities/index.mdx
+  s_7131be7e5a394e::t_52e596dfb8ba67 3,15,21,28-30,36,45,49,166,168
+src/content/docs/agents/capabilities/mcp-client.mdx
+  s_7131be7e5a394e::t_d1cedc400bad97 164
+src/content/docs/agents/capabilities/queue.mdx
+  s_7131be7e5a394e::t_31a8d72f099a0d 122
+src/content/docs/agents/capabilities/scheduler.mdx
+  s_7131be7e5a394e::t_c55039d1eefa51 123
+src/content/docs/agents/capabilities/sessions.mdx
+  s_7131be7e5a394e::t_cd371ac6c870bd 161
+src/content/docs/agents/capabilities/state.mdx
+  s_7131be7e5a394e::t_d212a3f1076964 118
+src/content/docs/agents/capabilities/streams.mdx
+  s_7131be7e5a394e::t_73787dddf223ad 164
+src/content/docs/agents/capabilities/tasks.mdx
+  s_7131be7e5a394e::t_bf53c00be9e1e8 170
+src/content/docs/agents/capabilities/websockets.mdx
+  s_7131be7e5a394e::t_71d8453326438e 159
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_7131be7e5a394e::t_5f399d86141597 4,134,136
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f4be86c56b0266692edf5ee1f96262576b88f885",
+  "prompts": {},
+  "sessions": {
+    "s_7131be7e5a394e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11212-d70d-71e4-aea3-bae68f8d2bc4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
