@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, Tabs, TabItem } from "~/components";
 
-When Gateway blocks traffic with a [DNS](/cloudflare-one/traffic-policies/dns-policies/#block) or [HTTP Block policy](/cloudflare-one/traffic-policies/http-policies/#block), you can configure a block page to display in your users' browsers. You can provide a descriptive reason for blocking traffic and contact information, or you can redirect your users' browsers to another page. You can apply these customizations globally for every Block policy, or override the settings on a per-policy basis.
+When Gateway blocks traffic with a [DNS](/cloudflare-one/traffic-controls/dns-policies/#block) or [HTTP Block policy](/cloudflare-one/traffic-controls/http-policies/#block), you can configure a block page to display in your users' browsers. You can provide a descriptive reason for blocking traffic and contact information, or you can redirect your users' browsers to another page. You can apply these customizations globally for every Block policy, or override the settings on a per-policy basis.
 
 ## Prerequisites
 
@@ -46,7 +46,7 @@ To redirect users to a non-Cloudflare block page:
 
 Gateway will now redirect users to a custom page when user traffic matches a Block policy with the block page configured.
 
-To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloudflare-one/traffic-policies/http-policies/#redirect).
+To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloudflare-one/traffic-controls/http-policies/#redirect).
 
 #### Policy context
 
@@ -150,4 +150,4 @@ If the HTTP request comes from a different IP address than the DNS request, Gate
 
 On dual-stack networks, the source IP address of the DNS query and the block page connection may differ. The DNS query may go over IPv4 while the browser connects to the block page over IPv6, or the other way around. When this happens, the block page may fail to load. It may also display without policy context (rule ID, block reason, or custom redirect parameters).
 
-To resolve this issue, configure a [dedicated DNS resolver IP address](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/#dedicated-dns-resolver-ip) for your DNS location. With dedicated IP addresses, the block server can identify the account based on the destination IP address regardless of the source address.
+To resolve this issue, configure a [dedicated DNS resolver IP address](/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/#dedicated-dns-resolver-ip) for your DNS location. With dedicated IP addresses, the block server can identify the account based on the destination IP address regardless of the source address.
