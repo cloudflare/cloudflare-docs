@@ -19,70 +19,19 @@ const { header, open, id } = Astro.props;
 <details
 	open={open}
 	id={id}
-	class="border-border my-4 rounded-lg border px-4 py-3"
+	class="border-border my-4 rounded-lg border px-4 py-2"
 >
 	<summary
 		class="cursor-pointer font-medium"
 		set:html={renderMarkdown(header)}
 	/>
-	<div class="details-content">
-		<slot />
-	</div>
+	<slot />
 </details>
 
 <style>
-	summary {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.75rem;
-		list-style: none;
-		border-radius: 0.25rem;
-	}
-
-	summary::-webkit-details-marker {
-		display: none;
-	}
-
-	summary::before {
-		content: "";
-		flex: 0 0 0.5rem;
-		width: 0.5rem;
-		height: 0.5rem;
-		margin-top: 0.625em;
-		border-right: 1.5px solid currentColor;
-		border-bottom: 1.5px solid currentColor;
-		transform: rotate(-45deg);
-	}
-
-	details[open] > summary::before {
-		transform: rotate(45deg);
-	}
-
-	summary:focus-visible {
-		outline: 2px solid var(--nb-link);
-		outline-offset: 4px;
-	}
-
-	/* Markdown headers can contain code and links. */
+	/* marked wraps the header in <p>; keep it inline with the marker. */
 	summary :global(p) {
+		display: inline;
 		margin: 0;
-	}
-
-	.details-content {
-		margin-top: 1rem;
-		padding-bottom: 0.25rem;
-	}
-
-	/* The page's prose rhythm only applies to its direct children. */
-	.details-content > :global(* + *) {
-		margin-top: 1rem;
-	}
-
-	.details-content > :global(:first-child) {
-		margin-top: 0;
-	}
-
-	.details-content > :global(:last-child) {
-		margin-bottom: 0;
 	}
 </style>

@@ -60,7 +60,7 @@ const { start, class: className, ...attrs } = Astro.props;
 	/* Spacing between a step's block children. */
 	.steps :global(ol > li > * + *),
 	.steps :global([data-step] > * + *) {
-		margin-top: 1rem;
+		margin-top: 0.5rem;
 	}
 
 	/* Number marker — aligned to the first line (line-height == circle height). */
@@ -100,10 +100,6 @@ const { start, class: className, ...attrs } = Astro.props;
 	}
 
 	.steps :global(ol > li > p) {
-		margin-bottom: 0;
-	}
-
-	.steps :global(ol > li > p:first-child) {
-		margin-top: 0;
+		margin: 0;
 	}
 </style>
