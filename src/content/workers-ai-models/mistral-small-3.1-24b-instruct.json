@@ -23,6 +23,10 @@
         {
             "property_id": "function_calling",
             "value": "true"
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
         }
     ],
     "id": "31690291-ebdc-4f98-bcfc-a44844e215b7",
