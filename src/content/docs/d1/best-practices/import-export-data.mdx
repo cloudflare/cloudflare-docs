@@ -206,6 +206,84 @@ Create an API token with **D1 Edit** permission for the account containing your 
    ```
 </Steps>
 
+#### Export with Python
+
+This Python example implements the export flow with `sqlite3_cli_only` compatibility to include virtual tables in the dump:
+
+```python title="export-d1.py"
+#!/usr/bin/env python3
+"""Export a D1 database with virtual tables for the SQLite CLI."""
+
+import argparse
+import json
+import os
+import shutil
+import time
+from urllib.request import Request, urlopen
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--account-id", required=True)
+parser.add_argument("--database-id", required=True)
+parser.add_argument(
+    "--api-token", default=os.environ.get("API_TOKEN")
+)
+parser.add_argument("--output", default="database.sql")
+args = parser.parse_args()
+if not args.api_token:
+    parser.error("Set API_TOKEN or pass --api-token.")
+
+body = {
+    "output_format": "polling",
+    "dump_options": {"compatibility": "sqlite3_cli_only"},
+}
+
+while True:
+    request = Request(
+        "https://api.cloudflare.com/client/v4/accounts/"
+        f"{args.account_id}/d1/database/{args.database_id}/export",
+        data=json.dumps(body).encode(),
+        headers={
+            "Authorization": f"Bearer {args.api_token}",
+            "Content-Type": "application/json",
+        },
+    )
+    with urlopen(request, timeout=60) as response:
+        data = json.load(response)
+    if not data["success"]:
+        raise RuntimeError(data["errors"])
+
+    task = data["result"]
+    if task.get("success") is False:
+        raise RuntimeError(task.get("error", "Export failed"))
+    if task.get("status") == "complete":
+        break
+    if task.get("status") != "active":
+        raise RuntimeError(
+            task.get("error", "Unexpected export response")
+        )
+
+    # Poll this export in the next loop instead of starting a new one.
+    body["current_bookmark"] = task["at_bookmark"]
+    time.sleep(1)
+
+with urlopen(task["result"]["signed_url"], timeout=60) as response:
+    with open(args.output, "wb") as file:
+        # Stream the dump to disk without loading it all into memory.
+        shutil.copyfileobj(response, file)
+print(f"Saved {args.output}")
+```
+
+To run the example locally, copy it into `export-d1.py`. Then provide your account ID, database ID, and API token:
+
+```sh
+python3 export-d1.py \
+  --account-id="$ACCOUNT_ID" \
+  --database-id="$DATABASE_ID" \
+  --api-token="$CLOUDFLARE_API_TOKEN"
+```
+
+The script saves the dump to `database.sql` by default. Use `--output=<FILENAME>` to change the filename.
+
 ### Known limitations
 
 - Standard export is not supported for databases containing virtual tables, such as FTS5 tables. To export these databases for use with the SQLite CLI, use the [SQLite CLI compatibility option](#export-a-d1-database-with-virtual-tables).
