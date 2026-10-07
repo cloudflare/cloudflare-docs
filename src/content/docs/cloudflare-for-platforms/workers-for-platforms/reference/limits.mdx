@@ -1,14 +1,14 @@
 ---
 pcx_content_type: concept
 title: Limits
-description: Review Workers for Platforms limits for scripts, triggers, Durable Objects, cache, tags, and API rate limits.
+description: Review Workers for Platforms limits for scripts, Durable Objects, cache, tags, and API rate limits.
 sidebar:
   order: 2
 products:
   - cloudflare-for-platforms
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render } from "~/components"
 
 ## Script limits
 
@@ -19,81 +19,6 @@ Cloudflare provides an unlimited number of scripts for Workers for Platforms cus
 The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) by default because some fields in this object are sensitive and can be used to manipulate Cloudflare features (for example, `cacheKey`, `resolveOverride`, `scrapeShield`.)
 
 To access the `cf` object, you need to enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
-
-## Triggers
-
-User Workers can only be invoked by your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/), through `fetch()` or [RPC](/workers/runtime-apis/rpc/) calls on the stub returned by `env.DISPATCHER.get()`. You cannot attach event triggers directly to a user Worker:
-
-- **[Queue consumers](/queues/configuration/javascript-apis/#consumer)**: A user Worker cannot be registered as the consumer of a queue. The [Create Queue Consumer API](/api/resources/queues/subresources/consumers/methods/create/) does not accept the name of a script in a dispatch namespace, and the `queue` binding in the [upload metadata](/workers/configuration/multipart-upload-metadata/#bindings) only attaches a queue producer.
-- **[Cron Triggers](/workers/configuration/cron-triggers/)**: You cannot configure Cron Triggers on a user Worker.
-
-As a result, Cloudflare does not call a [`queue()`](/queues/configuration/javascript-apis/#consumer) or [`scheduled()`](/workers/runtime-apis/handlers/scheduled/) handler exported by a user Worker. User Workers can still use a queue [producer binding](/queues/configuration/javascript-apis/#producer) to send messages.
-
-### Handle triggers in your dynamic dispatch Worker
-
-To run user Worker code in response to a queue message or a schedule, attach the trigger to your dynamic dispatch Worker (or another Worker that has a [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/)), then forward the event to the relevant user Worker.
-
-For example, configure your dynamic dispatch Worker as the queue consumer:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "dispatch_namespaces": [
-    {
-      "binding": "DISPATCHER",
-      "namespace": "my-dispatch-namespace",
-    },
-  ],
-  "queues": {
-    "consumers": [
-      {
-        "queue": "user-jobs",
-      },
-    ],
-  },
-}
-```
-
-</WranglerConfig>
-
-Include the target user Worker in each message, and forward the message from the `queue()` handler:
-
-```ts
-interface Env {
-  DISPATCHER: DispatchNamespace;
-}
-
-interface UserJob {
-  scriptName: string;
-  payload: unknown;
-}
-
-export default {
-  async queue(batch: MessageBatch<UserJob>, env: Env): Promise<void> {
-    for (const message of batch.messages) {
-      const { scriptName, payload } = message.body;
-      try {
-        const userWorker = env.DISPATCHER.get(scriptName);
-        const response = await userWorker.fetch("https://user-worker/queue", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        if (response.ok) {
-          message.ack();
-        } else {
-          message.retry();
-        }
-      } catch {
-        message.retry();
-      }
-    }
-  },
-};
-```
-
-The user Worker handles the forwarded message in its `fetch()` handler, or in an RPC method if it exports a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#the-workerentrypoint-class). The same pattern applies to Cron Triggers: add the schedule to your dynamic dispatch Worker and call the relevant user Workers from its `scheduled()` handler.
 
 ## Durable Object namespace limits
 
