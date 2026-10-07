@@ -41,6 +41,7 @@ Create WAF custom rulesets in one account and share them to other accounts withi
 ### Key behaviors
 
 - **Read-only in destination accounts**: Shared WAF policies cannot be edited in the receiving accounts. To modify the rules, update them in the source account.
+- **Destination accounts cannot have their own account-level custom rules**: Sharing takes over the account-level WAF custom rules phase in each destination account. While a share is active, the destination account cannot deploy its own account-level custom rulesets. If a destination account already has account-level custom rules, the shared ruleset is not applied until those rules are removed. Zone-level custom rules, rate limiting rules, and managed rulesets in the destination account are not affected.
 - **Source account owns the policy**: If the source account is removed from the Organization, the shared policy is removed from all destination accounts.
 - **No cross-Organization sharing**: Policies can only be shared within a single Organization. You cannot share policies between different Organizations.
 - **Multiple rulesets**: You can share multiple WAF custom rulesets from the same or different source accounts.
