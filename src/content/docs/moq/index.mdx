@@ -36,7 +36,7 @@ Copy this prompt to create a relay and save its tokens using `cf`:
 
 <CopyPromptButton
 	tooltip="Create a MoQ relay with cf"
-	prompt="Create a Cloudflare Media over QUIC relay. Use the Cloudflare cf CLI (install if needed). Consult https://developers.cloudflare.com/moq/ only as needed. Confirm my account, relay name, and secure token storage location. Ensure the credential has MoQ Write access to that account (moq.write for OAuth); if an API call returns 403, ask me to approve the missing permission before continuing. Inspect commands under cf realtime moq relays with --help and cf schema. Check existing relays and ask before reusing a match. Preview creation with --dry-run, then create the relay. Capture the creation response in a restricted local file without displaying the two token secrets, which are shown only once. Identify the publish-and-subscribe token and the subscribe-only token; give subscribers only the latter. Retrieve the relay and list its token metadata to verify the relay ID and permissions. Report the relay ID, token storage location, and the documented publisher/subscriber connection commands with token placeholders. Keep token values out of chat and source control. Explain that connection URLs containing tokens may appear in access logs. Distinguish provisioning checks from an actual media-transfer test. Do not change billing. If a step fails, explain the blocker and what remains."
+	prompt="Create a Cloudflare Media over QUIC relay. Use the Cloudflare cf CLI (install if needed). Consult https://developers.cloudflare.com/moq/ only as needed. Confirm my account, relay name, and secure token storage location. Use a credential with MoQ Write access to that account. If cf is not signed in, run cf auth login --scopes moq.write account:read user:read, ask me to approve it in the browser, and wait for my confirmation; then verify the identity and account with cf auth whoami before any resource API call. If an API call returns 403, check which endpoint and credential failed and ask before requesting another permission. Inspect commands under cf realtime moq relays with --help and cf schema. Check existing relays and ask before reusing a match. Preview creation with --dry-run, then create the relay. Capture the creation response in a restricted local file without displaying the two token secrets, which are shown only once. Identify the publish-and-subscribe token and the subscribe-only token; give subscribers only the latter. Retrieve the relay and list its token metadata to verify the relay ID and permissions. Report the relay ID, token storage location, and the documented publisher/subscriber connection commands with token placeholders. Keep token values out of chat and source control. Explain that connection URLs containing tokens may appear in access logs. Distinguish provisioning checks from an actual media-transfer test. Do not change billing. If a step fails, explain the blocker and what remains."
 />
 
 #### Provision the relay manually
@@ -78,6 +78,7 @@ The CLI and API return a relay ID and two default tokens: one that can publish a
 Draft-16 requires authentication. Clients send a token in the URL path when opening a MoQ session. Using the open-source [moq-rs](https://github.com/cloudflare/moq-rs) tools:
 
 **Publisher:**
+
 ```sh
 ffmpeg -stream_loop -1 -re -i input.mp4 \
   -f mp4 -movflags empty_moov+frag_every_frame+separate_moof+omit_tfhd_offset - \
@@ -86,6 +87,7 @@ ffmpeg -stream_loop -1 -re -i input.mp4 \
 ```
 
 **Subscriber:**
+
 ```sh
 moq-sub --name my-namespace \
   "https://draft-16.cloudflare.mediaoverquic.com/<subscribe_token>" \
