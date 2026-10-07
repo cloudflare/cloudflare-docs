@@ -1,0 +1,171 @@
+public/__redirects
+  s_8f467c684acac7::t_ddc1c11dbda24b 222-250,256,259-263,266,272,279,281-283,285-287,290-291,293,298-299,301-305,307-311,313,322,327,344,349-352,354,356-357,359-360
+src/components/cf/AgentsPlatformDiagram.astro
+  s_8f467c684acac7::t_5814e5b7e25f4d 6,11,16,21,26,31,33-36,98,109
+src/content/changelog/agents/2025-03-18-npm-i-agents.mdx
+  s_8f467c684acac7::t_c66c206f31daa9 70,130-131
+src/content/changelog/agents/2025-04-07-mcp-servers-agents-sdk-updates.mdx
+  s_8f467c684acac7::t_900044c83e8038 55
+src/content/changelog/agents/2025-11-26-agents-resumable-streaming.mdx
+  s_8f467c684acac7::t_f5ace0061bff8b 27,63
+src/content/changelog/agents/2026-02-03-agents-workflows-integration.mdx
+  s_8f467c684acac7::t_6bfec5ee8b1fe4 178
+src/content/changelog/agents/2026-02-17-agents-sdk-v0.5.0.mdx
+  s_8f467c684acac7::t_568b439f32867a 76,84
+src/content/changelog/agents/2026-03-02-agents-sdk-v0.7.0.mdx
+  s_8f467c684acac7::t_04cbf13708f79e 120
+src/content/changelog/agents/2026-05-13-agents-sdk-v0.12.4.mdx
+  s_8f467c684acac7::t_855b090af4ddce 128
+src/content/changelog/agents/2026-06-02-agents-sdk-v0.14.0.mdx
+  s_8f467c684acac7::t_6498ea6cc1fcb6 163
+src/content/changelog/agents/2026-06-16-agents-sdk-v0.16.1.mdx
+  s_8f467c684acac7::t_8015c69dfb8080 122
+src/content/changelog/agents/2026-09-11-voice-diagnostics-turn-metrics.mdx
+  s_8f467c684acac7::t_3b35d9e36d336e 72
+src/content/docs/agents/agent-class/agent-tools.mdx
+  s_8f467c684acac7::t_59e9a1b99522ac 6,513,519
+src/content/docs/agents/agent-class/callable-methods.mdx
+  s_8f467c684acac7::t_b05d5fad15acd5 6,746,752,758
+src/content/docs/agents/agent-class/communication-channels/chat/autonomous-responses.mdx
+  s_8f467c684acac7::t_3a04a056b5c20a 69,155,531,537,543,549
+src/content/docs/agents/agent-class/communication-channels/chat/chat-agents.mdx
+  s_8f467c684acac7::t_8ee25db770a241 582,831,1614,1776,1794
+src/content/docs/agents/agent-class/communication-channels/chat/client-sdk.mdx
+  s_8f467c684acac7::t_65705e3a865300 641,645,664,670
+src/content/docs/agents/agent-class/communication-channels/index.mdx
+  s_8f467c684acac7::t_8b995708a6a178 5
+src/content/docs/agents/agent-class/communication-channels/webhooks/index.mdx
+  s_8f467c684acac7::t_95abed3cdedf95 521,650,656,662
+src/content/docs/agents/agent-class/communication-channels/webhooks/push-notifications.mdx
+  s_8f467c684acac7::t_a88cc4e10a4bcd 407,413,419
+src/content/docs/agents/agent-class/durable-execution.mdx
+  s_8f467c684acac7::t_3391897a4a4965 63,498-501
+src/content/docs/agents/agent-class/http-sse.mdx
+  s_8f467c684acac7::t_06a44418cae36d 6,149-150,193,199,205
+src/content/docs/agents/agent-class/index.mdx
+  s_8f467c684acac7::t_a4c780004d9711 2-3,6-8,70,92-100,102-103,107-108,112,129,135-139,209,227
+src/content/docs/agents/agent-class/internals.mdx
+  s_8f467c684acac7::t_b3275cb2809aa8 6,213,510,528
+src/content/docs/agents/agent-class/protocol-messages.mdx
+  s_8f467c684acac7::t_4df4feb84aeb89 6,27,176,191,198,202-204
+src/content/docs/agents/agent-class/queue-tasks.mdx
+  s_8f467c684acac7::t_1786ea6e8a6010 6,50,341,356,368,380,386,392
+src/content/docs/agents/agent-class/readonly-connections.mdx
+  s_8f467c684acac7::t_06d7a75c9ad02e 6,458,630-633
+src/content/docs/agents/agent-class/retries.mdx
+  s_8f467c684acac7::t_71caaa734f3186 6,510,516,522
+src/content/docs/agents/agent-class/routing.mdx
+  s_8f467c684acac7::t_18efefff789edb 6,103,910,922
+src/content/docs/agents/agent-class/run-workflows.mdx
+  s_8f467c684acac7::t_306978cc45eae6 6,904,910
+src/content/docs/agents/agent-class/schedule-tasks.mdx
+  s_8f467c684acac7::t_56ff47b172a330 6,707,755,919,925,931,937
+src/content/docs/agents/agent-class/state.mdx
+  s_8f467c684acac7::t_7cfd3bde2d1cb0 6,30,189,429,645,722,734,740
+src/content/docs/agents/agent-class/sub-agents.mdx
+  s_8f467c684acac7::t_d955e64856dc49 8,19,564,582-584
+src/content/docs/agents/agent-class/using-ai-models.mdx
+  s_8f467c684acac7::t_5af1c759152fb4 8,29,35,82,245
+src/content/docs/agents/agent-class/websockets.mdx
+  s_8f467c684acac7::t_b4eac7b6305351 6,13,227,258,557,563,569
+src/content/docs/agents/concepts/agentic-patterns/human-in-the-loop.mdx
+  s_8f467c684acac7::t_d12ca51132566d 578
+src/content/docs/agents/concepts/agentic-patterns/long-running-agents.mdx
+  s_8f467c684acac7::t_07f82de50ed8f8 127,223,230,232,273,365,538,698-706
+src/content/docs/agents/concepts/calling-llms.mdx
+  s_8f467c684acac7::t_d21d2a041e7e2a 17,21,85,205,211,217,223
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_8f467c684acac7::t_dc504c7698cf49 19,565
+src/content/docs/agents/concepts/tools.mdx
+  s_8f467c684acac7::t_3bef9c554c1965 54-56
+src/content/docs/agents/concepts/what-are-agents.mdx
+  s_8f467c684acac7::t_980a2b04d61494 100,106
+src/content/docs/agents/concepts/workflows.mdx
+  s_8f467c684acac7::t_305a759465db57 190
+src/content/docs/agents/examples/browser-agent.mdx
+  s_8f467c684acac7::t_e8c412195e5d13 147
+src/content/docs/agents/examples/chat-agent.mdx
+  s_8f467c684acac7::t_57976203e71730 351,357,363
+src/content/docs/agents/examples/email-agent.mdx
+  s_8f467c684acac7::t_99561d4d20ce1f 751,757,763
+src/content/docs/agents/examples/slack-agent.mdx
+  s_8f467c684acac7::t_085febb50e39b3 463
+src/content/docs/agents/examples/voice-agent.mdx
+  s_8f467c684acac7::t_a65818854db058 293,299,305
+src/content/docs/agents/harnesses/index.mdx
+  s_8f467c684acac7::t_8e31c0ede2b1aa 15,21,63,75
+src/content/docs/agents/harnesses/think/channels.mdx
+  s_8f467c684acac7::t_455a27690b21ea 186
+src/content/docs/agents/harnesses/think/client-tools.mdx
+  s_8f467c684acac7::t_ab2f02de2df8ce 121
+src/content/docs/agents/harnesses/think/index.mdx
+  s_8f467c684acac7::t_20b81cbf5be18d 154,303,305,397-398,400
+src/content/docs/agents/harnesses/think/messengers.mdx
+  s_8f467c684acac7::t_d12c7ee2dd34ad 199
+src/content/docs/agents/harnesses/think/recovery.mdx
+  s_8f467c684acac7::t_cf2aeb13d3944c 13,119,161
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_8f467c684acac7::t_a8aff3c48b3372 27
+src/content/docs/agents/harnesses/think/workflows.mdx
+  s_8f467c684acac7::t_a20a455082f1ea 178
+src/content/docs/agents/index.mdx
+  s_8f467c684acac7::t_1a3472be1aed71 27-29,42
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_8f467c684acac7::t_9a7f318d811d07 53,205,207-211
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_8f467c684acac7::t_12dcbbc5a5a309 65,729,1072,1137,1249,1255
+src/content/docs/agents/model-context-protocol/guides/connect-mcp-client.mdx
+  s_8f467c684acac7::t_d7f4f2a1ae3eea 233
+src/content/docs/agents/platform/limits.mdx
+  s_8f467c684acac7::t_01c879eeff1ebe 31
+src/content/docs/agents/runtime/execution/agent-skills.mdx
+  s_8f467c684acac7::t_46f10b35d10195 19
+src/content/docs/agents/runtime/lifecycle/get-current-agent.mdx
+  s_8f467c684acac7::t_f15f9598fdac09 324,330,336
+src/content/docs/agents/runtime/lifecycle/sessions.mdx
+  s_8f467c684acac7::t_8b0b23538093d2 909-910
+src/content/docs/agents/runtime/operations/configuration.mdx
+  s_8f467c684acac7::t_b5c7e6008244cb 332,940,946,952
+src/content/docs/agents/runtime/operations/cross-domain-authentication.mdx
+  s_8f467c684acac7::t_5b33bdb6937b2a 259,265,277
+src/content/docs/agents/runtime/operations/observability/tracing.mdx
+  s_8f467c684acac7::t_85323134b208e4 282
+src/content/docs/agents/tools/ai-search.mdx
+  s_8f467c684acac7::t_76f4fb1d712f50 13
+src/content/docs/agents/tools/codemode/browser.mdx
+  s_8f467c684acac7::t_3fde164b6e8cf0 218
+src/content/docs/agents/tools/mcp.mdx
+  s_8f467c684acac7::t_efc4957ccc5a92 56
+src/content/docs/agents/tools/sandbox.mdx
+  s_8f467c684acac7::t_7d1f564a121b52 199
+src/content/docs/ai-search/agent-sdks/agents-sdk.mdx
+  s_8f467c684acac7::t_9fde63e091b7cf 232
+src/content/docs/ai-search/how-to/human-in-the-loop-knowledge-base.mdx
+  s_8f467c684acac7::t_f719487d7f0fa4 368
+src/content/docs/ai-search/how-to/talk-to-your-knowledge-base.mdx
+  s_8f467c684acac7::t_202775c155a9b0 21,56,201,294
+src/content/docs/workers/demos/chatgpt-app.mdx
+  s_8f467c684acac7::t_47e07ae98f3039 873
+src/content/docs/workflows/get-started/durable-agents.mdx
+  s_8f467c684acac7::t_4225b8a82856ab 651
+src/content/partials/agents/common-integration-patterns.mdx
+  s_8f467c684acac7::t_8b32c8b6a995d7 52
+src/content/partials/agents/next-steps.mdx
+  s_8f467c684acac7::t_c8fc451f38c879 15,17-19,25,31,37,43,49,55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cf3e766c09b10c4ee1049a1f7108d1c166588a3b",
+  "prompts": {},
+  "sessions": {
+    "s_8f467c684acac7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a10741-569f-7029-8bc9-b2bb4625a3ab",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

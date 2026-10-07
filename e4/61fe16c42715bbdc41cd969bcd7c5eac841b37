@@ -1,0 +1,19 @@
+src/content/docs/agents/lifecycle/build-a-capability.mdx
+  s_8f467c684acac7::t_c72cb6dbf39550 33-35,37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e461fe16c42715bbdc41cd969bcd7c5eac841b37",
+  "prompts": {},
+  "sessions": {
+    "s_8f467c684acac7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a10741-569f-7029-8bc9-b2bb4625a3ab",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
