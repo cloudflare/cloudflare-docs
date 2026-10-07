@@ -114,7 +114,7 @@
 		"github-slugger": "2.0.0",
 		"globals": "17.12.0",
 		"happy-dom": "20.14.5",
-		"he": "1.2.0",
+		"he": "2.0.0",
 		"husky": "9.1.7",
 		"js-yaml": "5.4.2",
 		"jsonc-parser": "3.3.1",
