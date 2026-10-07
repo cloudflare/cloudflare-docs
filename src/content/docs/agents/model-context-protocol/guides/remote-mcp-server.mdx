@@ -125,6 +125,10 @@ You now have a remote MCP server that MCP clients can connect to.
 
 Now that your remote MCP server is running, you can use the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote) to connect Claude Desktop or other MCP clients to it — even if your MCP client does not support remote transport or authorization on the client side. This lets you test what an interaction with your remote MCP server will be like with a real MCP client.
 
+:::note[Before you connect through mcp-remote]
+`mcp-remote` has five published CVE records, [CVE-2026-51994](https://www.cve.org/CVERecord?id=CVE-2026-51994), [CVE-2026-51995](https://www.cve.org/CVERecord?id=CVE-2026-51995), [CVE-2026-51996](https://www.cve.org/CVERecord?id=CVE-2026-51996), [CVE-2026-51997](https://www.cve.org/CVERecord?id=CVE-2026-51997) and [CVE-2026-52001](https://www.cve.org/CVERecord?id=CVE-2026-52001), covering versions 0.1.16 through 0.1.38. No later release has been stated to fix them. Pin a version you have reviewed instead of letting `npx` resolve the latest release, and connect `mcp-remote` only to servers you trust. If your MCP client can connect to a remote server by URL directly, that path does not need `mcp-remote`.
+:::
+
 For example, to connect from Claude Desktop:
 
 1. Update your Claude Desktop configuration to point to the URL of your MCP server:
