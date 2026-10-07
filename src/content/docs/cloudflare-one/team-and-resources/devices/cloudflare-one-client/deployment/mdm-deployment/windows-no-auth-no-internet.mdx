@@ -91,5 +91,6 @@ To block RFC 1918 traffic during lockdown, set `no_auth_no_internet_block_rfc_19
 ## Limitations
 
 - The lockdown is enforced only when there is an active interactive user session (for example, a user is logged in and the device is not locked).
+- A [pre-login](cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/windows-prelogin/) registration is also considered a valid registration, and the lockdown will not be enforced when a pre-login registration is in use. 
 - Since authentication now occurs in an embedded WebView2 window, IdP flows that depend on the user's default browser (for example, browser-specific extensions or password managers) may not work.
 - Some Windows applications, including Copilot and Teams (personal), may retain internet access while the Cloudflare One Client authentication window is open.
