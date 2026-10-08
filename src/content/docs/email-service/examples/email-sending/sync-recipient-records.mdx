@@ -17,7 +17,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use [Email Sending event subscriptions](/email-service/platform/event-subscriptions/) to update application records after delivery problems. This example uses [Cloudflare Queues](/queues/) and [Workers KV](/kv/) to remove recipients from transactional notifications.
+Use [Email Sending event subscriptions](/email-service/reference/event-subscriptions/) to update application records after delivery problems. This example uses [Cloudflare Queues](/queues/) and [Workers KV](/kv/) to remove recipients from transactional notifications.
 
 :::note[Suppression lists]
 Email Sending automatically [suppresses](/email-service/concepts/suppressions/) hard bounces and spam complaints. This example also prevents your application from selecting those recipients.
@@ -47,7 +47,7 @@ Remove records for every `message.complained` event. These events indicate that 
 
 Remove bounced records only when `payload.bounce.type` is `"hard"`. Temporary failures produce `message.deferred` events while retries remain. Exhausted temporary retries can produce `message.bounced` events with a `"soft"` bounce type.
 
-For payload details, refer to [Available Email Sending events](/email-service/platform/event-subscriptions/#available-email-sending-events).
+For payload details, refer to [Available Email Sending events](/email-service/reference/event-subscriptions/#available-email-sending-events).
 
 ## Create the queue and subscription
 
@@ -175,7 +175,7 @@ Monitor the dead letter queue for failed events. Reprocess them after fixing the
 
 ## Explore related resources
 
-- [Event subscriptions](/email-service/platform/event-subscriptions/) — review event schemas.
+- [Event subscriptions](/email-service/reference/event-subscriptions/) — review event schemas.
 - [Suppression lists](/email-service/concepts/suppressions/) — understand automatic suppressions.
 - [Queues retries](/queues/configuration/batching-retries/) — control message retries.
 - [Workers KV consistency](/kv/concepts/how-kv-works/#consistency) — account for propagation delays.
