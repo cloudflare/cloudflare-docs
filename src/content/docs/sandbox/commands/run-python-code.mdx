@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Run Python code in a sandbox and return its output. The image sets the Python version and the packages the code can import. Files that one run writes stay in the sandbox for the next run.
+Run Python code in a sandbox and return its output. The image sets the Python version and the packages the code can import. Each run starts a new Python process. Files that one run writes stay for the next run while the container keeps running. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ Run Python code in a sandbox and return its output. The image sets the Python ve
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-4. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+4. Add an inactivity timeout to your Durable Object. When the Durable Object [leaves memory and starts again](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart), the constructor sets the timeout again if the container is still running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
@@ -128,7 +128,7 @@ Run Python code in a sandbox and return its output. The image sets the Python ve
    			],
    			{
    				stdin: new Response(code).body!,
-   				// Files that the code writes here stay until the instance stops
+   				// Files that the code writes here stay until the container stops
    				cwd: "/workspace",
    			},
    		);
@@ -236,7 +236,11 @@ To return an image, such as a `matplotlib` chart, have the code save it in `/wor
    }
    ```
 
-3. Run code that saves a chart, then open `/sandboxes/ada/chart.png` in your browser:
+3. Deploy your Worker again:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+4. Run code that saves a chart, then open `/sandboxes/ada/chart.png` in your browser:
 
    ```python title="chart.py"
    import matplotlib
@@ -264,4 +268,4 @@ To run another language, change the base image and the command that reads standa
 
 - [Build an AI code interpreter](/sandbox/get-started/build-an-ai-code-interpreter/): run code that a model writes in a Dynamic Worker.
 - [Stream command output](/sandbox/commands/stream-command-output/): show output while long code runs.
-- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files in `/workspace` after the instance stops.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files in `/workspace` after the container stops.

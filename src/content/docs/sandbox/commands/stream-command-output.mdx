@@ -206,7 +206,7 @@ events.addEventListener("exit", (event) => {
 
 A disconnect signals only the process that `exec()` started. Processes that the command starts, such as the commands in an `sh -c` script, keep the output streams open until they exit. To stop a command and the processes it starts after a time limit, run it under GNU coreutils `timeout`:
 
-```ts
+```ts title="src/index.ts"
 const build = ["timeout", "--kill-after=5", "60", "sh", "-c", "npm test"];
 ```
 
