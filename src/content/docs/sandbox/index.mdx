@@ -32,11 +32,11 @@ Start a sandbox and run untrusted or generated code
 
 <Plan type="workers-paid" />
 
-A sandbox is an isolated place to run code. The code cannot directly read the memory or data of your application. Your Worker decides which application APIs and data the code receives, and whether the code can reach the public Internet.
+A sandbox is an isolated place to run code. The code cannot directly read the memory or data of your application. Your [Worker](/workers/), the application code that handles your traffic on Cloudflare, decides which application APIs and data the code receives, and whether the code can reach the public Internet.
 
 You can use a sandbox for agent-written code, user-uploaded applications, data analysis, development previews, build pipelines, or any other work that should not share a process with your application.
 
-Cloudflare provides two sandbox environments. Both are accessible through a [Worker](/workers/), the application that already handles your traffic.
+Cloudflare provides two sandbox environments. Both are accessible through your Worker.
 
 If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/sandbox/sdk/), or move it to the current version with [Migrate from Sandbox SDK 0.x](/sandbox/sdk/migrate/).
 
@@ -44,15 +44,18 @@ If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/
 
 ## Containers
 
-[Containers](/containers/) run an image you provide. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker starts the instance and sends it work. HTTP from the Internet reaches the instance only through your Worker.
+[Containers](/containers/) run an image you provide. An image holds the files, packages, and default command of a Linux environment.
 
-Each instance is a microVM with its own kernel and network, so no other workload shares it.
+Each Linux sandbox is a [Durable Object](/durable-objects/), an object with a unique name and its own storage. The Durable Object starts a container instance: a Linux virtual machine that runs your image. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker reaches the Durable Object by name and sends it work. HTTP from the Internet reaches the instance only through your Worker. For how the Durable Object and the instance relate, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
+
+No other workload shares an instance. For how each environment isolates code, refer to [Choose a sandbox environment](/sandbox/concepts/#how-each-environment-isolates-code).
 
 A sandbox container uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta.
 
-A Durable Object in your Worker starts the instance from an image and runs a command in it:
+Inside the Durable Object, `this.ctx.container` controls the instance. This excerpt starts the instance from an image and runs a command in it:
 
 ```ts
+const container = this.ctx.container;
 container.start({
 	image: "cloudflare/debian-trixie",
 	entrypoint: ["sleep", "infinity"],
@@ -80,11 +83,11 @@ const output = await process.output();
 
 The Workers runtime runs each Dynamic Worker apart from your Worker and from other Dynamic Workers. A Dynamic Worker reaches your application only through the methods and data you pass to it.
 
-Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it:
+Your Worker loads the untrusted module as a new Worker, blocks its outbound requests, and calls it. In this excerpt, `env.LOADER` is the [Worker Loader binding](/dynamic-workers/getting-started/#configure-worker-loader) that creates Dynamic Workers, `untrustedModule` is a string that holds the untrusted code, and `CodeEntrypoint` is a TypeScript type for the `Code` class that the untrusted code exports:
 
 ```ts
 const sandbox = env.LOADER.load({
-	compatibilityDate: "$today",
+	compatibilityDate: "2026-10-01",
 	mainModule: "code.js",
 	modules: { "code.js": untrustedModule },
 	globalOutbound: null,
@@ -211,6 +214,8 @@ Run models on Cloudflare, then execute the code they generate in a sandbox.
 ---
 
 ## More resources
+
+These resources cover deployment, reference, pricing, and related tools:
 
 | Topic              | Links                                                                                                                                                                           |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
