@@ -90,13 +90,13 @@ cf realtime kit presets create "<APP_ID>" --body @preset.json
 
 ### Create a meeting and add participants
 
-After configuring the presets with either method, create the meeting and assign participant roles:
+After configuring the presets, create the meeting and assign participant roles:
 
 <Steps>
 1. Create a meeting using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/). Save the returned meeting `id` for the next step.
-2. Add each presenter and viewer to the meeting using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). Assign `webinar_presenter` to presenters and `webinar_viewer` to viewers.
-3. Deliver each participant's returned `authToken` only to the frontend session for that specific user.
-4. Initialize [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/) with the participant's `authToken`. UI Kit renders the webinar interface, including stage controls, based on the participant's preset.
+2. Add each presenter and viewer to the meeting using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). Set `preset_name` to the exact presenter or viewer preset name you verified. If you use the defaults, these names are `webinar_presenter` and `webinar_viewer`. If you created separate presets, use their names instead.
+3. Deliver each participant's returned `data.token` only to the frontend session for that specific user.
+4. Initialize [RealtimeKit UI Kit](/realtime/realtimekit/ui-kit/) with that participant token as `authToken`. UI Kit renders the webinar interface, including stage controls, based on the participant's preset.
 </Steps>
 
 ## Manage stage requests

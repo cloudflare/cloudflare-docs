@@ -21,7 +21,9 @@ To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloud
 
 ### Create the token manually
 
-The [Quickstart token steps](/realtime/realtimekit/quickstart/#create-the-token-manually) show dashboard, `cf` CLI, and API options. Scope the token to your account with the **Realtime Admin** permission. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
+Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin** and scope the token to your account. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
+
+The [Quickstart token steps](/realtime/realtimekit/quickstart/#create-the-token-manually) also provide `cf` CLI and API options.
 
 Cloudflare API tokens authenticate requests to Cloudflare APIs. Use these tokens only in your backend. Never expose an API token to your frontend or share it with an end user.
 
@@ -208,6 +210,8 @@ Read more about presets [here](/realtime/realtimekit/concepts/preset/).
 
 </Details>
 
+<span id="client-side-sdks"></span>
+
 ## Client SDKs
 
 <Details header="How do I decide which SDK to select?">
@@ -253,6 +257,8 @@ We support auto-selection of microphones with the label `bluetooth`, `headset`, 
 If auto-selection fails, end users can manually select the microphone from the Settings button in the meeting and the SDK will remember the selection for future sessions. If you have a device that you believe is commonly used, please contact support to request first-hand auto-selection support for it.
 
 </Details>
+
+<span id="screen-share"></span>
 
 ## Screen sharing
 
