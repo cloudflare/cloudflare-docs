@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Type, MetaInfo, Render, WranglerCommand } from "~/components";
+import { Type, MetaInfo, Render, WranglerCommand, PackageManagers } from "~/components";
 
 ## `kv namespace`
 
@@ -19,6 +19,20 @@ Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using ve
 <WranglerCommand command="kv namespace create" headingLevel={3} />
 
 To restrict where a namespace durably stores data, specify `--jurisdiction` when creating it. Refer to [Data location](/kv/reference/data-location/) for supported jurisdictions.
+
+#### KV Instant namespaces
+
+<Render file="kv-instant-beta" product="kv" />
+
+To create a [Workers KV Instant](/kv/reference/kv-instant/) namespace, pass `--experimental-mode instant`. This example creates a namespace named `APP_CONFIG` for small, infrequently updated configuration:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler@latest"
+	args="kv namespace create APP_CONFIG --experimental-mode instant"
+/>
+
+You can also use the `--x-mode instant` alias.
 
 <WranglerCommand command="kv namespace list" headingLevel={3} />
 
