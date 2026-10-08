@@ -560,7 +560,7 @@ Clients written for the bridge API, such as `CloudflareSandboxClient` in the Ope
 
 ## Remove WarmPool
 
-Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept 0.x sandboxes started ahead of time, because a 0.x start took seconds. On 1.0, a sandbox on a prepared image runs its first command in under 600 ms at the median.
+Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept 0.x sandboxes started ahead of time, because a 0.x start took seconds. With the Durable Object scheduling policy, the median time from creating a sandbox to running a command in it was 648 milliseconds in an independent benchmark, so a pool saves little time.
 
 <Steps>
 
