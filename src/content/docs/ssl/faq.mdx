@@ -93,3 +93,12 @@ If you are on a Business or Enterprise plan, you can [upload a certificate](/ssl
 ### Does Cloudflare issue both RSA and ECDSA certificates for Universal certificates?
 
 Universal certificates on free zones only receive an ECDSA certificate. Paid zones receive an RSA and ECDSA certificate.
+
+### I upgraded my zone from Free to a paid plan. Why does my Universal certificate not include an RSA certificate?
+
+When you upgrade your zone from the Free plan to a paid plan, Cloudflare does not automatically re-issue your Universal SSL certificate. Your existing ECDSA-only certificate continues to serve until the certificate pack next renews. At renewal, Cloudflare issues both an RSA and an ECDSA certificate.
+
+If you need an RSA certificate before the next renewal, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+
+For more details, refer to [Certificate type](/ssl/edge-certificates/universal-ssl/limitations/#certificate-type).
+
