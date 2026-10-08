@@ -26,6 +26,12 @@ Once you turn on this detection, Cloudflare inspects all incoming traffic and id
 
 When Cloudflare detects one or more content objects in a request, it sends them to an antivirus (AV) scanner for analysis. The AV scanner is the same one used in [Cloudflare Zero Trust](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/).
 
+:::note
+
+Cloudflare buffers upload content at the edge for scanning before forwarding it to your origin. For large uploads, if your origin receives the buffered content slowly, forwarding may take long enough for the connection to time out, causing the request to fail.
+
+:::
+
 Based on the scan results, the detection populates [fields](#content-scanning-fields) you can reference in rule expressions. For example, you can create a rule to block requests with malicious files, or a more specific rule that also matches on file size, file type, or URI path.
 
 :::note[Notes]
