@@ -1,0 +1,11 @@
+---
+title: AI Gateway log IDs and request IDs now use UUIDv7
+description: New log IDs and request IDs are lowercase UUIDv7, and a single-step request returns one ID in cf-aig-request-id, cf-aig-log-id, and cf-aig-event-id.
+date: 2026-10-08
+---
+
+New AI Gateway [log](/ai-gateway/observability/logging/) IDs and request IDs are lowercase UUIDv7, such as `019a7b3e-5f2c-7c41-9d3e-2b8f6a1c4e07`. Previously, log IDs were 26-character ULIDs and request IDs were random UUIDs.
+
+For a request that AI Gateway answers in a single step, the `cf-aig-request-id`, `cf-aig-log-id`, and `cf-aig-event-id` response headers now carry the same value. If you set your own `cf-aig-event-id`, AI Gateway still returns it.
+
+Existing log IDs do not change, and the [logs API](/api/resources/ai_gateway/subresources/logs/methods/list/) accepts both formats. Treat log IDs as opaque strings, and update any code that checks for the ULID format.
