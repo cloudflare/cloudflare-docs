@@ -130,8 +130,8 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
    		const { excludes, ttl = DEFAULT_TTL_SECONDS, ...rest } = options;
    		const backup = await this.backups.backup({
    			...rest,
-   			// 0.12 matched each pattern from the top of the directory.
-   			exclude: excludes?.map((pattern) => `/${pattern}`),
+   			// 0.12 matched each pattern at any depth in the directory.
+   			exclude: excludes?.map((pattern) => `**/${pattern}`),
    		});
    		const expiresAt = Date.now() + ttl * 1000;
    		await this.env.BACKUP_BUCKET.put(
@@ -206,10 +206,10 @@ Each 0.12 name has one of these replacements:
 | `dir`                                     | `dir`. 0.12 accepted only directories under `/workspace`, `/home`, `/tmp`, `/var/tmp`, and `/app`. `DirectoryBackup` accepts any absolute path, so check the directory in your code when a request chooses it. |
 | `name`                                    | `name`, stored in the record and in the custom metadata of the object                                                                                                                                          |
 | `ttl`                                     | The expiry time in `backups/<ID>.meta.json`. As in 0.12, an expired backup stays in the bucket until you delete it with `this.backups.delete(backup)`. Delete its `.meta.json` object at the same time.        |
-| `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `/`, because a `.gitignore` pattern without a `/` matches at any depth.                                                           |
+| `excludes`                                | `exclude`, in `.gitignore` syntax. `createBackup()` starts each pattern with `**/`, because a `.gitignore` pattern with a `/` in the middle, such as `dist/cache`, matches only from the top of the directory. |
 | `gitignore`                               | `gitignore`. It applies the `.gitignore` files inside the directory and `.git/info/exclude`, and the image does not need `git`.                                                                                |
 | `localBucket`, `multipart`, `compression` | Remove them. Every backup goes through the R2 binding in parts.                                                                                                                                                |
-| `BackupNotFoundError`                     | `SandboxBackupError` with the code `BACKUP_NOT_FOUND`                                                                                                                                                          |
+| `BackupNotFoundError`                     | The error that your `restoreBackup()` throws when the `.meta.json` object is missing, or `SandboxBackupError` with the code `BACKUP_NOT_FOUND` when the backup object is missing                               |
 | `BackupExpiredError`                      | The error that your `restoreBackup()` throws                                                                                                                                                                   |
 | `InvalidBackupConfigError`                | `TypeError`                                                                                                                                                                                                    |
 | `BackupCreateError`, `BackupRestoreError` | `SandboxFileError` for a Linux error, such as a directory that does not exist, or `SandboxBackupError` with the code `BACKUP_TRANSFER` or `BACKUP_INTEGRITY`                                                   |
@@ -231,10 +231,33 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
 2. Add a method to `MySandbox` that converts a 0.12 backup object:
 
    ```ts title="src/index.ts"
+   // 0.12 restored only backups with a UUID, into one of these directories.
+   const BACKUP_ID =
+   	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+   const BACKUP_ROOTS = ["/workspace", "/home", "/tmp", "/var/tmp", "/app"];
+
+   function checkOldBackup(old: { id: string; dir: string }) {
+   	const segments = old.dir.split("/").slice(1);
+   	const inRoot = BACKUP_ROOTS.some(
+   		(root) => old.dir === root || old.dir.startsWith(`${root}/`),
+   	);
+
+   	if (
+   		!BACKUP_ID.test(old.id) ||
+   		!inRoot ||
+   		segments.some((part) => part === "" || part === "." || part === "..") ||
+   		old.dir.includes("\0")
+   	) {
+   		throw new TypeError(`Invalid 0.12 backup ${old.id} for ${old.dir}`);
+   	}
+   }
+
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
    	async convert(old: { id: string; dir: string }): Promise<Backup> {
+   		checkOldBackup(old);
+
    		const meta = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/meta.json`);
    		const image = await this.env.BACKUP_BUCKET.get(`backups/${old.id}/data.sqsh`);
 
@@ -252,11 +275,15 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
 
    		await this.ensureRunning();
 
-   		// unsquashfs needs the whole image on disk, so it goes to /var/tmp first.
+   		// Refuses a path through a symbolic link. unsquashfs needs the whole
+   		// image on disk, so it goes to /var/tmp first. The files replace the
+   		// directory only after they are all extracted.
    		const script =
-   			'cat > "$1" && rm -rf -- "$2" &&' +
-   			' unsquashfs -no-progress -d "$2" "$1" > /dev/null;' +
-   			' code=$?; rm -f -- "$1"; exit $code';
+   			'[ "$(realpath -m -- "$2")" = "$2" ] || exit 2;' +
+   			' mkdir -p -- "$(dirname -- "$2")" && rm -rf -- "$2.convert" &&' +
+   			' cat > "$1" && unsquashfs -no-progress -d "$2.convert" "$1" > /dev/null &&' +
+   			' rm -rf -- "$2" && mv -- "$2.convert" "$2";' +
+   			' code=$?; rm -rf -- "$1" "$2.convert"; exit $code';
    		const process = await this.container.exec(
    			["sh", "-c", script, "sh", `/var/tmp/${old.id}.sqsh`, old.dir],
    			{ stdin: image.body },
@@ -277,7 +304,9 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
    }
    ```
 
-   The converted backup keeps the expiry time that 0.12 gave the original, in its own `.meta.json` object. The container needs free disk space for the image and the extracted files together. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
+   `convert()` deletes and replaces `old.dir`, so it checks the backup first, as 0.12 did before a restore. The ID must be a UUID, and the directory must be an absolute path under one of the directories that 0.12 accepted, with no empty, `.`, or `..` segments. Code in the sandbox can replace a directory with a symbolic link, and `rm -rf` follows a link in the path, so the script exits with code `2` when the path resolves somewhere else. Take `old` from the 0.12 backup object that your code stored, not from a request.
+
+   The converted backup keeps the expiry time that 0.12 gave the original, in its own `.meta.json` object. The container needs free disk space for the image, the extracted files, and the files already in the directory, all at once. On a `lite` instance, `squashfs-tools` 4.7 and later, as in Alpine 3.23, fail with `FATAL ERROR: Requested memory size too large`. For those versions, add `-mem 64M` to the `unsquashfs` command. Debian 13 installs version 4.6.1, which extracts on `lite` with its default settings.
 
 3. Where your code calls `restoreBackup()` with an object that 0.12 created, call `convert()` instead. A 0.12 object has no `format` field. `convert()` leaves the files in the directory, so it also does the restore. Store the record that it returns in place of the 0.12 object.
 
@@ -292,7 +321,7 @@ For every error, refer to [DirectoryBackup errors](/sandbox/reference/directory-
 
 </Steps>
 
-A converted directory keeps its files, empty directories, symbolic links, hard links, and permissions. Modification times keep whole seconds only, because SquashFS does not store fractions of a second. If `unsquashfs` fails, the directory is incomplete, and calling `convert()` again replaces it.
+A converted directory keeps its files, empty directories, symbolic links, hard links, and permissions. Modification times keep whole seconds only, because SquashFS does not store fractions of a second. If `unsquashfs` fails, the directory keeps its files, and calling `convert()` again retries the conversion.
 
 ## Related resources
 

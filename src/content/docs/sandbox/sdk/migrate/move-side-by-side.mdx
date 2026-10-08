@@ -154,8 +154,16 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
 
    		if (await stub0x.isRunning()) {
    			const legacy = getSandbox(this.env.Sandbox, name);
+   			// Stop the background processes, so no file changes during the copy.
+   			await legacy.killAllProcesses();
+
    			const path = "/tmp/workspace.tar.gz";
-   			await legacy.exec(`tar -czf ${path} -C /workspace .`);
+   			const packed = await legacy.exec(`tar -czf ${path} -C /workspace .`);
+
+   			if (!packed.success) {
+   				throw new Error(packed.stderr);
+   			}
+
    			const archive = await legacy.readFile(path, {
    				encoding: "base64",
    			});
@@ -172,9 +180,9 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
    				throw new Error(stderr);
    			}
 
-   			await this.ctx.storage.put("moved", true);
    			// destroy() would delete named tunnels and DNS records.
    			await legacy.stop();
+   			await this.ctx.storage.put("moved", true);
    			return;
    		}
 
@@ -183,9 +191,11 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
    }
    ```
 
-   `ensureRunning()` and `container` are the helpers from your 1.0 class that start the container and return `this.ctx.container`. The method copies the 0.12 storage first, so preview URLs, named tunnels, and outbound rules move even when the 0.12 container has stopped. If the copy fails, the method throws before it stores `moved` or stops the 0.12 container, and the next request runs the copy again.
+   `ensureRunning()` and `container` are the helpers from your 1.0 class that start the container and return `this.ctx.container`. The method copies the 0.12 storage first, so preview URLs, named tunnels, and outbound rules move even when the 0.12 container has stopped. If the copy or `stop()` fails, the method throws before it stores `moved`, and the next request runs the move again.
 
-   0.12 `stop()` keeps the storage of the 0.12 class, and the tunnels and DNS records in your account. 0.12 `destroy()` deletes the preview tokens, the tunnel entries, and each named tunnel with its DNS record. Processes end with the 0.12 container, so start the ones your application needs in the 1.0 container, as [Move background processes](/sandbox/sdk/migrate/background-processes/#start-processes-again-after-the-switch) describes. To start the same commands, read them from `legacy.listProcesses()` before `stop()`.
+   The copy holds the files as they are when `tar` runs. `killAllProcesses()` stops the processes that 0.12 `startProcess()` started. A command that another request runs through 0.12 can still write files, so send no other requests to the 0.12 class for the sandbox while it moves. Requests that go through `sandboxFor()` in the next step wait for the move.
+
+   0.12 `stop()` keeps the storage of the 0.12 class, and the tunnels and DNS records in your account. 0.12 `destroy()` deletes the preview tokens, the tunnel entries, and each named tunnel with its DNS record. Processes end with the 0.12 container, so start the ones your application needs in the 1.0 container, as [Move background processes](/sandbox/sdk/migrate/background-processes/#start-processes-again-after-the-switch) describes. To start the same commands, read them from `legacy.listProcesses()` before `killAllProcesses()`.
 
 6. Send every request through the move. Add this function to your Worker, and replace each `getSandbox(env.Sandbox, name)` call with `await sandboxFor(env, name)`:
 
@@ -198,6 +208,8 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
    ```
 
    New sandboxes start on the 1.0 class, because no 0.12 container runs for their names.
+
+   Pass the name that 0.12 used. If your Worker passed `normalizeId: true` to `getSandbox()`, lowercase the name before you call `sandboxFor()`, so that both classes use the 0.12 Durable Object of the sandbox.
 
 7. Generate types, and deploy:
 
