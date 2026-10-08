@@ -1632,6 +1632,7 @@
 /pages/framework-guides/react/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/svelte/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
 /pages/framework-guides/vue/ /pages/framework-guides/deploy-a-vue-site/ 301
+/pages/framework-guides/deploy-a-vite3-project/ /pages/framework-guides/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301

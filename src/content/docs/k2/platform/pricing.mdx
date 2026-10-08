@@ -1,0 +1,78 @@
+---
+pcx_content_type: concept
+title: Pricing
+description: K2 pricing for data produced, data consumed, and data retained.
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: K2 - Pricing
+products:
+  - k2
+---
+
+:::note[Pricing availability]
+
+K2 is in public beta and billing is not enabled at this time. We will provide at least 30 days notice before billing begins. Pricing may change and is shared in advance so that you can estimate what your costs will be once Cloudflare starts billing for usage.
+
+:::
+
+K2 is available on the [Workers Paid plan](/workers/platform/pricing/). K2 charges based on three dimensions:
+
+- **Data produced**: The volume of data written to streams.
+- **Data consumed**: The volume of data read from streams by consumers.
+- **Data retained**: The volume of data stored in streams.
+
+All three dimensions are measured in uncompressed bytes: the size of your records before any compression, such as gzip compression of an HTTP request body.
+
+<a id="k2-pricing"></a>
+
+## K2 pricing
+
+|                   | Workers Paid [^1]  |
+| ----------------- | ------------------ |
+| **Data produced** | $0.04 / GB         |
+| **Data consumed** | $0.04 / GB         |
+| **Data retained** | $0.02 / GB / month |
+
+### Data produced
+
+Data produced is the volume of records written to a stream, through the [HTTP API or a Workers binding](/k2/features/produce/).
+
+### Data consumed
+
+Data consumed is the volume of records read from a stream through [subscriptions](/k2/features/consume/). Each subscription reads every record independently, so a stream with more subscriptions consumes more data.
+
+### Data retained
+
+Data retained is the volume of records stored in a stream, billed per GB per month. How much data a stream stores depends on how much you produce and on the stream's [retention period](/k2/configuration/#retention).
+
+## Billing examples
+
+### Example: one consumer
+
+An application produces 100 GB of events per month to a stream. One subscription consumes every record, and the stream stores an average of 25 GB over the month.
+
+| Dimension     | Usage  | Rate               | Cost      |
+| ------------- | ------ | ------------------ | --------- |
+| Data produced | 100 GB | $0.04 / GB         | $4.00     |
+| Data consumed | 100 GB | $0.04 / GB         | $4.00     |
+| Data retained | 25 GB  | $0.02 / GB / month | $0.50     |
+| **Total**     |        |                    | **$8.50** |
+
+### Example: fan-out to three consumers
+
+The same stream is read by three subscriptions, for example an alerting system, an archiver, and an analytics pipeline. Each subscription consumes every record.
+
+| Dimension     | Usage               | Rate               | Cost       |
+| ------------- | ------------------- | ------------------ | ---------- |
+| Data produced | 100 GB              | $0.04 / GB         | $4.00      |
+| Data consumed | 300 GB (3 × 100 GB) | $0.04 / GB         | $12.00     |
+| Data retained | 25 GB               | $0.02 / GB / month | $0.50      |
+| **Total**     |                     |                    | **$16.50** |
+
+## Cloudflare billing policy
+
+To learn more about how usage is billed, refer to [Cloudflare Billing Policy](/billing/understand/billing-policy/).
+
+[^1]: K2 both bills and measures usage based on a gigabyte <br/> (1 GB = 1,000,000,000 bytes) and not a gibibyte (GiB). <br/>

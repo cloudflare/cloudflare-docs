@@ -78,5 +78,10 @@
 		"deeplink": "/?to=/:account/observability/destinations",
 		"name": "OpenTelemetry",
 		"parent": ["Observability", "Export"]
+	},
+	{
+		"deeplink": "/?to=/:account/observability/logs",
+		"name": "Logs",
+		"parent": ["Observability"]
 	}
 ]

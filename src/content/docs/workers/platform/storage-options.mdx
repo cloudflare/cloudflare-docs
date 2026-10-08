@@ -137,6 +137,24 @@ To get started with Queues:
 - [Set up your first queue](/queues/get-started/).
 - Learn more [about how Queues works](/queues/reference/how-queues-works/).
 
+### K2
+
+K2 is a durable event log. Producers write records to a stream, and K2 stores them for a configurable retention period. Consumers read records in batches through subscriptions, and each subscription reads every record independently.
+
+K2 is ideal for:
+
+- Moving large volumes of event data, with pricing based on data volume rather than the number of messages.
+- Delivering the same events to multiple independent consumers. For example, events from your applications can be read by an alerting system, a system that stores them durably, and a system that builds machine learning features.
+- Retaining events so that consumers can replay them, or so that a new consumer can read events produced before it was added.
+
+Use Queues when each message is a unit of work that needs to be completed, retried, and tracked individually. Use K2 when you produce and consume records in bulk, and what matters is that every record is processed rather than the state of any one record.
+
+To get started with K2:
+
+- [Create a stream](/k2/get-started/) and consume records from it.
+- Learn about [K2 concepts](/k2/concepts/), including streams, subscriptions, and leases.
+- Review K2 [Limits](/k2/platform/limits/).
+
 ### Hyperdrive
 
 Hyperdrive is a service that accelerates queries you make to MySQL and Postgres databases, making it faster to access your data from across the globe, irrespective of your users’ location.

@@ -254,7 +254,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
-    "model": "anthropic/claude-sonnet-4-5",
+    "model": "anthropic/claude-sonnet-5",
     "max_tokens": 512,
     "messages": [
       {
@@ -276,7 +276,7 @@ const anthropic = new Anthropic({
 });
 
 const message = await anthropic.messages.create({
-	model: "anthropic/claude-sonnet-4-5",
+	model: "anthropic/claude-sonnet-5",
 	max_tokens: 512,
 	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });
