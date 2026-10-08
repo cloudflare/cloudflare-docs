@@ -11,6 +11,7 @@ products:
 import {
 	CopyPromptButton,
 	DashButton,
+	Render,
 	Steps,
 	Tabs,
 	TabItem,
@@ -61,29 +62,40 @@ In the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtim
 <DashButton url="/?to=/:account/realtime/kit" />
 
 </TabItem>
-<TabItem label="cf CLI or API" class="space-y-4">
+<TabItem label="cf CLI" class="space-y-4">
 
-Use the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/), or inspect the same request with `cf schema realtime kit presets create`. Include all required fields and apply these webinar settings:
+[Install and sign in to `cf`](/cf/get-started/), then inspect the create request:
 
-- `config.view_type` set to `WEBINAR`.
-- `permissions.stage_enabled` set to `true` for both presets.
-- `permissions.can_accept_production_requests` set to `true` for participants who moderate stage requests.
+```sh
+cf schema realtime kit presets create
+```
 
-Set `permissions.stage_access`, `permissions.media.audio.can_produce`, `permissions.media.video.can_produce`, and `permissions.media.screenshare.can_produce` to the same value, based on the stage behavior you want:
+<Render file="realtimekit/webinar-preset-settings" product="realtime" />
 
-| Stage behavior        | Applies to                                | Value         |
-| --------------------- | ----------------------------------------- | ------------- |
-| _Allowed to join_     | Presenters                                | `ALLOWED`     |
-| _Can request to join_ | Viewers who can request to join the stage | `CAN_REQUEST` |
-| _Can only view_       | View-only viewers                         | `NOT_ALLOWED` |
-
-For the complete request schema, refer to [Presets](/api/resources/realtime_kit/subresources/presets/).
-
-To use `cf`, save the complete request body in `preset.json` and run:
+Create the preset:
 
 ```sh
 cf realtime kit presets create "<APP_ID>" --body @preset.json
 ```
+
+Repeat with the other role's name and settings.
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+<Render file="realtimekit/webinar-preset-settings" product="realtime" />
+
+Send the request using your account-scoped RealtimeKit API token:
+
+```sh
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data @preset.json
+```
+
+Repeat with the other role's name and settings.
 
 </TabItem>
 </Tabs>
