@@ -56,6 +56,18 @@ describe("Preview anti-indexing", () => {
 			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
 		});
 
+		it("is present on unavailable model redirects", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/workers-ai/models/retired-model/"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(302);
+			expect(response.headers.get("Location")).toBe(
+				"/workers-ai/models/?unavailable=retired-model",
+			);
+			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
+		});
+
 		it("is present on JSON endpoints", async () => {
 			const response = await SELF.fetch(
 				new Request(

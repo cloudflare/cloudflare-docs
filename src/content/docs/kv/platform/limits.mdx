@@ -10,6 +10,8 @@ products:
 
 import { Render } from "~/components";
 
+## Workers KV
+
 | Feature                                                                     | Free                  | Paid         |
 | --------------------------------------------------------------------------- | --------------------- | ------------ |
 | Reads                                                                       | 100,000 reads per day | Unlimited    |
@@ -28,6 +30,22 @@ import { Render } from "~/components";
 [^1]: Within a single invocation, a Worker can make up to 1,000 operations to external services (for example, 500 Workers KV reads and 500 R2 reads). A bulk request to Workers KV counts for 1 request to an external service.
 
 [^2]: The maximum value is [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+
+## Workers KV Instant
+
+<Render file="kv-instant-beta" product="kv" />
+
+| Feature           | Limit                                                          |
+| ----------------- | -------------------------------------------------------------- |
+| Writes/namespace  | 1 per second                                                   |
+| Storage/namespace | 1 MB                                                           |
+| Keys/namespace    | 10,000                                                         |
+| Key size          | 300 bytes                                                      |
+| Key metadata      | Not supported                                                  |
+| Value size        | Any size that keeps the total namespace within 1 MB            |
+| List pagination   | Not supported. All matching keys are returned in one response. |
+
+## Additional limits
 
 <Render file="limits_increase" product="workers" />
 

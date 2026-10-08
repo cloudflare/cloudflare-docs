@@ -18,7 +18,8 @@ When you evaluate a flag using the binding's `*Details` methods or the OpenFeatu
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `TARGETING_MATCH` | A targeting rule's conditions matched the evaluation context, and the rule's variant was returned.                               |
 | `SPLIT`           | A targeting rule with a percentage rollout matched. The user fell within the rollout percentage and received the rule's variant. |
-| `DEFAULT`         | No targeting rule matched the evaluation context. The flag's default variant was returned.                                       |
+| `STATIC`          | The flag is enabled and has no targeting rules, so its default variant was returned.                                             |
+| `DEFAULT`         | The flag has targeting rules, but none matched the evaluation context. The flag's default variant was returned.                  |
 | `DISABLED`        | The flag is disabled. The default variant was returned regardless of targeting rules.                                            |
 | `CACHED`          | The SDK returned a cached evaluation result.                                                                                     |
 | `ERROR`           | Evaluation failed and the default value was returned.                                                                            |
@@ -53,11 +54,17 @@ switch (details.reason) {
 	case "SPLIT":
 		console.log(`Included in rollout, variant: ${details.variant}`);
 		break;
+	case "STATIC":
+		console.log("Flag has no targeting rules, using default variant");
+		break;
 	case "DEFAULT":
 		console.log("No rule matched, using default variant");
 		break;
 	case "DISABLED":
 		console.log("Flag is disabled");
+		break;
+	default:
+		// Handle other reasons, such as "CACHED" or "ERROR".
 		break;
 }
 
