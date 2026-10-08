@@ -16,7 +16,7 @@ import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
 Start a server that runs until the container stops, such as a development server, a tunnel, or a code kernel. Unlike a job, nothing waits for the server to exit. Your Durable Object starts it on first use, waits until it answers, and starts it again in each new container.
 
-For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/). If the sandbox runs one server and keeps no files that you need, you can make the server the main process instead, as in [Preview a web application](/sandbox/previews/). When the main process exits, the instance stops, and its files end with it.
+For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/). If the sandbox runs one server and keeps no files that you need, you can make the server the main process instead, as in [Preview a web application](/sandbox/previews/). The main process is the process that the container starts with, and the container stops when it exits. For more information, refer to [What stops an instance](/sandbox/concepts/lifetime/#what-stops-an-instance).
 
 ## Prerequisites
 
@@ -136,17 +136,17 @@ For a process that runs until it finishes, such as a build or an agent task, ref
 
    </TypeScriptExample>
 
-   `SERVE` starts nothing when the server in the directory already runs, and a new container, which has no server, gets one. This also covers a Durable Object that restarts while its container keeps running.
+   `SERVE` starts nothing when the server in the directory already runs, and a new container, which has no server, gets one. This also covers a Durable Object that leaves memory and starts again while its container keeps running.
 
-   The process ID file also records the boot ID, which changes in every instance. A [snapshot](/sandbox/files/save-and-restore-a-workspace/) restores the file, and a new instance reuses the same process IDs, so a restored process ID can belong to an unrelated process. `current()` ignores a process ID from another instance.
+   The process ID file also records the boot ID, which changes each time a container starts. `current()` ignores a process ID from an earlier container, because a [snapshot](/sandbox/files/save-and-restore-a-workspace/) can restore the file, and the restored process ID can belong to an unrelated process.
 
-   `setsid` starts the server in a new process group, so `STOP` also stops the processes that the server starts. The shell that runs `SERVE` stays in the container until the server exits. Do not start the server with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+   `setsid` starts the server in a new process group, a set of processes that one `kill` can signal together, so `STOP` also stops the processes that the server starts, unless a process moves to its own group. The shell that runs `SERVE` stays in the container until the server exits. Do not start the server with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
    `STOP` removes the process ID once the server exits, so a server started in the same directory right after it never reads as exited. A server that ignores `SIGTERM` receives `SIGKILL` after 10 seconds.
 
    `waitForServer()` treats any HTTP response as ready. If the server exits first, it throws with the end of the log. The log grows until the server stops, so keep the output of a busy server small, or send it to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
-2. Add a constructor to your Durable Object. It sets the inactivity timeout again when a restarted Durable Object finds the container running:
+2. Add a constructor to your Durable Object. When the Durable Object [leaves memory and starts again](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart), the constructor sets the inactivity timeout again if the container is still running:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -218,7 +218,7 @@ For a process that runs until it finishes, such as a build or an agent task, ref
 
    Requests that arrive together share one start. `startServer()` returns before the server records its process ID, so a second `SERVE` in that window would start a second server. The second server fails on the port, overwrites the process ID file, and leaves `STOP` unable to stop the first one. After the server answers, each request runs `SERVE` again, which starts nothing while the server runs and restarts it if it exited.
 
-   A running server does not keep the container running. Requests that reach the server through your Durable Object keep it running, as other requests do. When the inactivity timeout ends, the container stops, and the server stops with it. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+   A running server does not keep the container running. In this example, requests to the server keep the container running, and the inactivity timeout decides when it stops after the last request. The server stops with the container. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
 
 3. Add routes to your Worker that call these methods:
 

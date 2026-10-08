@@ -93,7 +93,7 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-3. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+3. Add an inactivity timeout to your Durable Object. When the Durable Object [leaves memory and starts again](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart), the constructor sets the timeout again if the container is still running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
@@ -217,9 +217,9 @@ Expose a live shell in a Linux sandbox on a web page. The page runs [xterm.js](h
    }
    ```
 
-   Each WebSocket gets its own tmux client. `tmux new-session -A` attaches the client to the named session, or creates the session if it does not exist. The handler writes keystrokes to the standard input of the client, applies resize messages, and forwards the client output unchanged.
+   Each WebSocket gets its own tmux client. The `pty` option runs the client attached to a pseudo-terminal, a terminal device that the client reads keystrokes from and draws its screen on. `tmux new-session -A` attaches the client to the named session, or creates the session if it does not exist. The handler writes keystrokes to the standard input of the client, applies resize messages, and forwards the client output unchanged.
 
-   The handler accepts the WebSocket with `accept()` instead of the [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Hibernation would discard the process handle of the tmux client.
+   The handler accepts the WebSocket with `accept()`, which keeps the Durable Object in memory with the process handle of the tmux client. The [Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) lets the Durable Object leave memory while the WebSocket stays open, which would discard that handle.
 
    The shell runs as `root`. The [`user` option of `exec()`](/containers/api/durable-object-container/#exec), such as `user: "1000:1000"`, changes the Linux user of the shell. It does not limit what the shell can read or change. For more information, refer to [Sandbox security](/sandbox/concepts/security/#everything-in-one-sandbox-is-shared).
 

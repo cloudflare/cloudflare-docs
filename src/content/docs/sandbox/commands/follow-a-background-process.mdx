@@ -253,7 +253,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    { "state": "matched", "line": "ready" }
    ```
 
-   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, `lost` when it ended without recording an exit code, and `timed-out` when the time limit passes first. The method returns `undefined` when no process uses the ID. A process that was still running when an earlier instance stopped is `lost`, even when its log matches, because `current()` checks the boot ID.
+   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, `lost` when it ended without recording an exit code, and `timed-out` when the time limit passes first. The method returns `undefined` when no process uses the ID. A process that was still running when an earlier container stopped is `lost`, even when its log matches, because `current()` checks the boot ID.
 
 </Steps>
 
