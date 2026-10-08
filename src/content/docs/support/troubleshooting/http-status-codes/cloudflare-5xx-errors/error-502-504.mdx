@@ -42,7 +42,7 @@ A `502` or a `504` error originating from Cloudflare appears as follows, a blank
 
 ![Example of an unbranded error 502.](~/assets/images/support/image5.png)
 
-If the error does not mention `cloudflare`, contact your hosting provider for assistance. Refer to [502/504 errors from your origin](#502504-from-your-origin-web-server) for more information.
+If the error page is Cloudflare-branded, the `502` or `504` came from your origin web server instead. Refer to [502/504 errors from your origin](#502504-from-your-origin-web-server) and contact your hosting provider.
 
 This error can occur due to a compression issue at the origin, such as when the origin server serves gzip-encoded compressed content but fails to update the `content-length` header, or if the origin is serving broken gzip compressed content. To diagnose this, you can try disabling compression at your origin to confirm if it resolves the error.
 
