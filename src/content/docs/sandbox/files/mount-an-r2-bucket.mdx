@@ -218,7 +218,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    }
    ```
 
-   If a process still uses the directory, `unmount()` throws `SandboxS3MountError` with code `S3_MOUNT_BUSY`. Stop the process, then call `unmount()` again.
+   Call `finish()` only after every job that writes to the mount has ended. `unmount()` denies storage requests before it unmounts, so a process that still writes loses those writes. If a process still uses the directory, `unmount()` throws `SandboxS3MountError` with code `S3_MOUNT_BUSY` and requests stay denied. Stop the process, then call `unmount()` again.
 
 9. Add routes to your Worker that run a job and finish it:
 

@@ -55,6 +55,13 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
    			stderr: "ignore",
    		});
 
+   		// exec() returns before the process records its ID. Wait for it, so
+   		// a request that follows the output right away finds it running.
+   		for (let i = 0; i < 50; i++) {
+   			if ((await this.status(id))?.state !== "starting") break;
+   			await scheduler.wait(100);
+   		}
+
    		await this.ctx.storage.put(`process:${id}`, argv);
    		await this.ctx.storage.setAlarm(Date.now() + 60_000);
    		return true;

@@ -134,6 +134,13 @@ For a process that runs until the container stops, such as a development server 
    			stderr: "ignore",
    		});
 
+   		// exec() returns before the process records its ID. Wait for it, so
+   		// a request that follows the output right away finds it running.
+   		for (let i = 0; i < 50; i++) {
+   			if ((await this.status(id))?.state !== "starting") break;
+   			await scheduler.wait(100);
+   		}
+
    		await this.ctx.storage.put(`process:${id}`, argv);
    		await this.ctx.storage.setAlarm(Date.now() + 60_000);
    		return true;
@@ -251,8 +258,10 @@ For a process that runs until the container stops, such as a development server 
    				const exitCode = ended?.state === "exited" ? ended.exitCode : null;
    				await send("exit", { exitCode });
    				await writer.close();
-   			} catch {
+   			} catch (error) {
    				stop();
+   				// End the response, so a connected client does not wait forever.
+   				await writer.abort(error).catch(() => {});
    			} finally {
    				clearInterval(heartbeat);
    			}
@@ -474,11 +483,17 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   // Prints the first matching line and exits with 0, or exits with 3 when
-   // the process ends without printing one.
-   const WAIT = `dir=$1; pattern=$2
+   // Prints the first matching line and exits with 0. Exits with 3 when the
+   // process ends without printing one, 4 when there is no such process, and
+   // 5 when the process was lost, for example in an earlier instance.
+   const WAIT = `${CURRENT}
+   dir=$1; pattern=$2
+   [ -d "$dir" ] || exit 4
    while :; do
      exited=false; [ -e "$dir/exit-code" ] && exited=true
+     if ! $exited && [ -e "$dir/pid" ] && ! { current "$dir" && kill -0 "$pid" 2>/dev/null; }; then
+       sleep 0.1; [ -e "$dir/exit-code" ] || exit 5; exited=true
+     fi
      line=$(grep -h -m 1 -E -e "$pattern" "$dir/stdout.log" "$dir/stderr.log" 2>/dev/null | head -n 1)
      [ -n "$line" ] && { printf '%s\\n' "$line"; exit 0; }
      $exited && exit 3
@@ -523,6 +538,14 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    			return { state: "exited" };
    		}
 
+   		if (result.exitCode === 4) {
+   			return undefined;
+   		}
+
+   		if (result.exitCode === 5) {
+   			return { state: "lost" };
+   		}
+
    		// 124 when the time limit passes, or 137 if timeout also sends SIGKILL.
    		if (result.exitCode === 124 || result.exitCode === 137) {
    			return { state: "timed-out" };
@@ -545,7 +568,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    { "state": "matched", "line": "ready" }
    ```
 
-   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, and `timed-out` when the time limit passes first.
+   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, `lost` when it ended without recording an exit code, and `timed-out` when the time limit passes first. The method returns `undefined` when no process uses the ID. A process that was still running when an earlier instance stopped is `lost`, even when its log matches, because `current()` checks the boot ID.
 
 </Steps>
 
