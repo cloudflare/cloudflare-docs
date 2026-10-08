@@ -1,0 +1,57 @@
+---
+title: Getting started
+description: Start building Agents on Cloudflare that maintain state, make decisions, and execute workflows.
+pcx_content_type: overview
+sidebar:
+  order: 1
+  group:
+    hideIndex: true
+products:
+  - agents
+---
+
+import { DirectoryListing, LinkCard } from "~/components";
+
+Start building agents that can remember context, communicate with users, and act on their own. Pick the path that matches what you want to build first.
+
+## Choose a path
+
+<LinkCard
+	title="Quick start"
+	href="/agents/getting-started/quick-start/"
+	description="Build a small stateful counter agent and learn the core Agent, state, and client SDK model."
+/>
+
+<LinkCard
+	title="Build a chat agent"
+	href="/agents/examples/chat-agent/"
+	description="Build a streaming AI chat agent with Workers AI, server tools, client tools, and approvals."
+/>
+
+<LinkCard
+	title="Add Agents to an existing project"
+	href="/agents/getting-started/add-to-existing-project/"
+	description="Install the Agents SDK into an existing Workers application and wire up routing."
+/>
+
+<LinkCard
+	title="Testing your Agents"
+	href="/agents/getting-started/testing-your-agent/"
+	description="Write tests with Vitest and the Workers test pool."
+/>
+
+<LinkCard
+	title="Hyundai Bluetooth"
+	href="https://hyundaibluetooth.com"
+	description="Visit Hyundai Bluetooth."
+/>
+
+<LinkCard
+	title="Hyundai owner’s manual"
+	href="https://ownersmanual.hyundai.com/ivi/ccNC_Lite/AV/USA/English/Systemoverview_home.html"
+	description="Open the Hyundai owner’s manual system overview."
+/>
+
+## All getting started pages
+
+<DirectoryListing />
