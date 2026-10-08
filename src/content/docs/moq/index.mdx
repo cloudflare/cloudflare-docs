@@ -32,11 +32,11 @@ Each relay provides an isolated scope — your namespaces, tracks, and objects a
 
 #### Set up with your coding agent
 
-Copy this prompt to create a relay using the`cf` cli:
+Copy this prompt to create a relay using the `cf` CLI:
 
 <CopyPromptButton
 	tooltip="Create a MoQ relay with cf"
-	prompt="Create a Cloudflare Media over QUIC relay. Read https://developers.cloudflare.com/moq/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI, installing it if needed. Use cf cli search to find commands and inspect their --help or cf schema output as needed. Help me authenticate, confirm my account and relay name, and verify MoQ access. Create the relay and securely save both token secrets when they are returned, since they are shown only once. Identify the publish-and-subscribe token and the subscribe-only token, and use the latter for subscribers. Verify the relay and token permissions. Give me the relay ID, token storage location, and publisher and subscriber commands with token placeholders. Explain the logging risks of tokens in connection URLs. Keep secrets out of chat and source control. Report what was verified and any remaining media-transfer test or blocker."
+	prompt="Create a Cloudflare Media over QUIC relay and securely save its two one-time token secrets. Read https://developers.cloudflare.com/moq/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI (install if needed). Inspect commands with cf cli search, --help, or cf schema. Confirm my account and relay name, and help me authenticate as needed. Use the publish-and-subscribe token for publishers and the subscribe-only token for subscribers. Verify the relay and token permissions. Report the relay ID, token storage location, provisioning results, and publisher and subscriber commands with token placeholders. State whether media transfer was tested and identify any remaining tests or blockers. Keep secrets out of chat and source control, and explain the logging risks of tokens in connection URLs."
 />
 
 #### Provision the relay manually

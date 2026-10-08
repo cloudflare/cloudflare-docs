@@ -72,11 +72,11 @@ We recommend creating separate apps for staging and production.
 
 ### Set up with your coding agent
 
-Copy this prompt to create an app and inspect its presets using `cf`:
+Copy this prompt to create staging and production apps and inspect their presets using `cf`:
 
 <CopyPromptButton
-	tooltip="Create a RealtimeKit app with the `cf` CLI"
-	prompt="Create two Cloudflare RealtimeKit apps for my application (one for staging and one for production). Read https://developers.cloudflare.com/realtime/realtimekit/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI, installing it if needed. Use cf cli search to find commands and inspect their --help or cf schema output as needed. Help me authenticate, confirm my account and app name, and verify RealtimeKit access. Create the app and save its app ID. Securely store any access tokens returned by app APIs in my backend secret storage. Verify the app exists in the correct account and inspect its available presets. Give me the account ID, app ID, where any credentials were saved, and any preset setup needed before adding participants. Keep credentials out of frontend code, source control, chat, and logs. Do not create meetings or deploy. If anything fails, explain the blocker and what remains."
+	tooltip="Create staging and production RealtimeKit apps with the cf CLI"
+	prompt="Create two Cloudflare RealtimeKit apps: one for staging and one for production. Read https://developers.cloudflare.com/realtime/realtimekit/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI (install if needed). Inspect commands with cf cli search, --help, or cf schema. Confirm my account and an app name for each environment, and help me authenticate as needed. Store any returned access tokens in backend secret storage, clearly associated with their environment. Verify both apps belong to my account and inspect each app's presets. Report the account ID and, for each environment, its app name and ID, secret locations, available presets, and remaining setup or blockers. Keep credentials out of frontend code, source control, chat, and logs. Do not create meetings or deploy."
 />
 
 ### Create the app manually
