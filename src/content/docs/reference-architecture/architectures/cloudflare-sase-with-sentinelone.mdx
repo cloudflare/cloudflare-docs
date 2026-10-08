@@ -1,177 +1,221 @@
 ---
-title: Enhancing security posture with SentinelOne and Cloudflare One
 pcx_content_type: reference-architecture
-products: [access, gateway, cloudflare-one-client]
+title: Cloudflare SASE with SentinelOne
 sidebar:
   order: 1
   label: Cloudflare SASE with SentinelOne
-reviewed: 2025-04-30
+meta:
+  title: "SentinelOne and Cloudflare: An AI-driven security ecosystem for autonomous, risk-based protection"
+products:
+  - access
+  - gateway
+  - cloudflare-one-client
+  - dlp
+  - casb
+  - browser-isolation
+  - email-security
+  - waf
+updated: 2026-10-01
 description: >-
-  The integration between Cloudflare One and SentinelOne provides organizations with a comprehensive security solution. The integration works through a service-to-service posture check that identifies devices based on their serial numbers.
+  This reference architecture outlines how Cloudflare and SentinelOne integrate
+  to create an AI-driven security ecosystem combining autonomous endpoint
+  protection with zero trust network access, shared risk intelligence, and
+  automated remediation and recovery workflows.
 ---
 
 import { Render } from "~/components";
 
+## Abstract
+
+This reference architecture outlines how Cloudflare and SentinelOne solutions integrate to create an AI-driven security ecosystem that combines autonomous endpoint protection with zero trust network access, shared risk intelligence, and automated remediation and recovery workflows. Organizations can leverage this integration to enforce risk-based access policies, accelerate threat hunting with generative AI, and orchestrate autonomous responses across both platforms.
+
 ## Introduction
 
-The integration between Cloudflare One and SentinelOne provides organizations with a comprehensive security solution that combines endpoint protection with [Zero Trust Network Access](https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/). This integration enables organizations to make access decisions based on device security posture, ensuring that only healthy and compliant devices can access protected resources. This reference architecture describes how organizations can implement and leverage this integration to enhance their security posture. The integration can assist in advancing an organization's or agency's Zero Trust Architecture Maturity Model, with the goal of one's organization eventually achieving Advanced or Optimal across all [CISA's 5 Pillars of Zero Trust.](https://www.cisa.gov/sites/default/files/2023-04/CISA_Zero_Trust_Maturity_Model_Version_2_508c.pdf)
+Today's cybersecurity landscape presents organizations with a complex set of challenges. The expanding attack surface created by remote work, cloud migration, and increasingly automated, AI-assisted threats requires a cohesive approach that spans endpoint protection, network security, and identity.
 
-## Who is this document for and what will you learn?
+Cloudflare One and the SentinelOne Singularity™ Platform provide a powerful integrated solution to these challenges. By combining SentinelOne's AI-driven, autonomous endpoint protection with Cloudflare's secure network and zero trust capabilities, organizations can implement comprehensive protection that secures both their devices and their network traffic, while simplifying operations through automation, shared risk intelligence, and consistent policy.
 
-This reference architecture is designed for IT and security professionals who are implementing or planning to implement a Zero Trust security model using Cloudflare and SentinelOne. It provides detailed guidance on integration setup, configuration options, and common deployment scenarios. To build a stronger baseline understanding of these technologies, we recommend reviewing both platforms' core documentation.
+### Why integrate Cloudflare and SentinelOne?
 
-Recommended resources for a stronger understanding of Cloudflare's SentinelOne integration:
+**Autonomous, context-aware zero trust:** Identity alone is no longer sufficient for trust. Cloudflare Access ingests real-time SentinelOne device posture — agent operational state, network connectivity, infection status, and active-threat count — while SentinelOne endpoint detection and response (EDR) signals also feed Cloudflare's user risk score. Together they enforce dynamic, risk-based policies, so that only healthy, threat-free devices operated by low-risk users can reach sensitive resources, blocking compromised endpoints even when user credentials are valid.
 
-- [SentinelOne device posture integration](/cloudflare-one/integrations/service-providers/sentinelone/)
+**Unified visibility with AI-powered analytics:** Network and endpoint data too often reside in disconnected silos. This integration streams Cloudflare's rich network telemetry (from Cloudflare Gateway, Cloudflare WAF, DNS, Cloudflare Access, and Cloudflare Email Security) via Logpush into SentinelOne Singularity AI SIEM, where it is retained in the Singularity Data Lake alongside endpoint telemetry. Analysts can correlate network blocks with the exact endpoint processes behind them — and Purple AI™ lets them hunt across the combined dataset using natural language queries.
 
-## Integration overview
+**Autonomous remediation and recovery:** By connecting enforcement points across Cloudflare and SentinelOne, security teams move from manual reaction to autonomous protection. A threat detected on the endpoint can trigger an immediate block at the Cloudflare edge (and vice versa) through Singularity Hyperautomation — and, uniquely, SentinelOne can roll back ransomware damage on affected Windows endpoints, reducing both mean time to respond (MTTR) and mean time to recover.
 
-Cloudflare One can integrate with SentinelOne to enforce device-based access policies for applications and resources. The integration works through a service-to-service posture check that identifies devices based on their serial numbers. This allows organizations to ensure that only managed and secure devices can access sensitive resources.
+### Key integration points
 
-## Technical components
+The integration between Cloudflare and SentinelOne creates a powerful security ecosystem where device security posture directly influences access decisions. This continuous verification process is enhanced by bidirectional data sharing between the platforms:
 
-### SentinelOne components
+1. **Device posture assessment:** SentinelOne's real-time endpoint telemetry — agent activity, network status, operational state, infection status, and active-threat count — informs Cloudflare Zero Trust access decisions. A service-to-service posture check reads endpoint data from SentinelOne via the Cloudflare One Client, matching devices by serial number.
+2. **User risk scoring:** SentinelOne EDR signals feed Cloudflare's user risk score (user and entity behavior analytics, or UEBA), classifying each user as Low, Medium, or High. Where Okta is the identity provider, Cloudflare can share this risk score to Okta to enforce SSO-level policies.
+3. **Unified security logging:** Cloudflare forwards network and security telemetry via Logpush to SentinelOne Singularity AI SIEM, where it is stored and correlated in the Singularity Data Lake.
+4. **Autonomous remediation and recovery workflows:** Security events trigger coordinated, automated responses across both platforms — orchestrated via Singularity Hyperautomation — including on-endpoint rollback of ransomware damage and automatic updates to Cloudflare policies.
 
-The SentinelOne platform provides critical endpoint security capabilities:
+## Integration architecture overview
 
-The SentinelOne agent must be deployed on all managed devices and provides real-time security monitoring and threat detection. Key posture data points include:
+The integration between Cloudflare and SentinelOne establishes a comprehensive security architecture centered on a bi-directional intelligence exchange. This ecosystem connects autonomous endpoint security with zero trust network access, AI-powered analytics, and automated response and recovery.
 
-- Infection status of the device
-- Number of active threats detected
-- Agent activity status
-- Network connectivity status
-- Operational state of the agent
+![Figure 1 — High-level architecture: Integration between Cloudflare and SentinelOne.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure1.svg "Figure 1 — High-level architecture: Integration between Cloudflare and SentinelOne.")
 
-The SentinelOne Management Console provides centralized control and visibility, including the APIs necessary for integration with Cloudflare.
+The architecture enables secure access to internet applications (SaaS, web apps), self-hosted applications (on premises, data center), and SaaS applications protected through identity proxy.
+
+### Key use cases
+
+The integration between Cloudflare and SentinelOne enables six use cases that address critical security challenges:
+
+1. **Risk-based zero trust access** — Enforce real-time, multi-signal conditional access using SentinelOne device posture and a SentinelOne-informed user risk score directly in Cloudflare Access policies.
+2. **AI-accelerated threat hunting** — Stream Cloudflare Gateway, WAF, DNS, and Access logs into Singularity AI SIEM, then hunt across the unified Singularity Data Lake using natural language with Purple AI.
+3. **Autonomous edge containment** — Use Singularity Hyperautomation to automatically trigger no-code remediation actions within Cloudflare based on detected threats.
+4. **Ransomware containment and one-click recovery** — Combine autonomous endpoint containment with network access revocation and Singularity's one-click Rollback to restore both security and productivity.
+5. **Insider risk and data protection** — Combine Cloudflare DLP inspection with SentinelOne behavioral analytics and network device discovery to detect and block data theft.
+6. **Proactive application defense** — Enrich application security with SentinelOne threat intelligence and AI triage, creating an adaptive immune system for web assets.
+
+## Use case: Risk-based zero trust access with agent health and active-threat posture
+
+This use case demonstrates how the integration helps prevent compromised or unmanaged devices from accessing corporate resources — using multiple discrete signals rather than a single score.
+
+### Phase 1: Continuous posture and risk assessment
+
+The SentinelOne Singularity agent continuously monitors the endpoint, maintaining real-time device state: whether the agent is active, whether it is connected to the SentinelOne service, the agent's operational state, whether the device is infected, and the number of active threats. In parallel, SentinelOne EDR signals feed Cloudflare's user risk score (UEBA), which classifies each user as Low, Medium, or High risk.
+
+### Phase 2: Policy evaluation
+
+When a user requests access to an application, Cloudflare Access intercepts the request and evaluates a device posture policy composed of discrete SentinelOne attributes — for example, `Is Active = true`, `Infected = false`, `Active Threats = 0`, and a healthy `Operational State` — together with user identity and the current user risk score.
+
+### Phase 3: Access enforcement
+
+Cloudflare permits the connection only if every posture attribute passes and the user's risk score is within the tolerance defined in the zero trust policy; otherwise, the user is presented with a Cloudflare Access block page, typically instructing them to remediate the device. Where Okta is the identity provider, Cloudflare can also share the user risk score to trigger SSO-level step-up authentication or session revocation.
+
+![Figure 2 — Risk-based zero trust access.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure2.svg "Figure 2 — Risk-based zero trust access.")
+
+## Use case: AI-accelerated threat hunting with Purple AI
+
+This use case focuses on providing comprehensive visibility and eliminating blind spots between network traffic and endpoint activity — while compressing investigation time.
+
+### Phase 1: Data ingestion
+
+Cloudflare Logpush filters and forwards HTTP requests, DNS queries, Gateway and firewall events, and Access authentication logs to Singularity AI SIEM, where they are normalized and stored in the Singularity Data Lake alongside endpoint telemetry.
+
+### Phase 2: Correlation and enrichment
+
+Singularity automatically correlates related endpoint events into a single attack narrative using Storyline™, and the Data Lake unifies this endpoint context with Cloudflare network telemetry so analysts can query one schema instead of stitching together separate tools.
+
+### Phase 3: Natural-language investigation
+
+Using Purple AI, an analyst investigates in plain language — for example, "show every device that reached this command-and-control domain through Cloudflare Gateway in the last 24 hours" — and pivots instantly from a network block to the exact endpoint process that caused the infection, collapsing hours of manual query-writing into seconds.
+
+![Figure 3 — AI-accelerated threat hunting.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure3.svg "Figure 3 — AI-accelerated threat hunting.")
+
+## Use case: Autonomous edge containment with Singularity Hyperautomation
+
+This use case demonstrates how Singularity Hyperautomation helps reduce the MTTR for rapidly evolving threats — without custom scripting.
+
+### Phase 1: Threat detection
+
+Singularity Endpoint detects a specific indicator of compromise (IOC), such as a malicious IP address or domain contacted by multiple endpoints, and Storyline classifies the behavior.
+
+### Phase 2: No-code orchestration
+
+A Singularity Hyperautomation workflow is triggered by the detection, using pre-built connectors and logic rather than bespoke code.
+
+### Phase 3: Edge mitigation
+
+The workflow calls the Cloudflare API to add the malicious indicator to a blocklist in Cloudflare Gateway or WAF, instantly protecting the entire organization — including devices that do not run the agent — from that threat source.
+
+![Figure 4 — Autonomous edge containment.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure4.svg "Figure 4 — Autonomous edge containment.")
+
+## Use case: Ransomware containment and one-click recovery
+
+This use case outlines how the combined integration pillars contain an active endpoint compromise, prevent lateral movement, and restore affected systems — going beyond detection to recovery.
+
+### Phase 1: Autonomous detection and containment
+
+The Singularity agent detects ransomware behavior and autonomously kills the malicious processes and quarantines the device at machine speed — even when the endpoint is offline. It updates the device's posture (`Infected = true`, `Active Threats > 0`) and raises an alert to the SentinelOne console.
+
+### Phase 2: Instant network access revocation
+
+On the very next request, Cloudflare Access re-evaluates the SentinelOne posture attributes, fails the policy, and blocks the user from SaaS apps, email, and internal tools — effectively quarantining the identity from the network while the endpoint is contained.
+
+### Phase 3: Remediation and one-click rollback
+
+Singularity Hyperautomation automates a response playbook: it isolates the endpoint, adds the user to a custom list in Cloudflare to enforce heightened policies, and — on Windows endpoints — initiates SentinelOne's one-click Rollback to restore encrypted files to their pre-attack state. Once the device is verified clean and its posture returns to a healthy state, Cloudflare access is automatically restored.
+
+![Figure 5 — Ransomware containment and one-click recovery.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure5.svg "Figure 5 — Ransomware containment and one-click recovery.")
+
+## Use case: Insider risk and data protection with unmanaged-device visibility
+
+This use case demonstrates how the unified approach helps prevent and respond to data exfiltration by trusted insider actors — including from devices the organization does not manage.
+
+### Phase 1: DLP monitoring
+
+Cloudflare DLP scans upload traffic. It detects source code markers or other sensitive-data patterns and logs the event to Singularity AI SIEM via Logpush, while momentarily blocking the specific request.
+
+### Phase 2: Behavioral correlation and device discovery
+
+Singularity AI SIEM correlates this DLP event with endpoint behavior captured by Storyline — for example, recent USB mass-storage usage, bulk file access, or archive creation — and raises the user's risk. In parallel, Singularity Network Discovery (formerly Ranger®) identifies whether the activity involved an unmanaged or rogue device on the network, closing a common insider blind spot.
+
+### Phase 3: Adaptive control
+
+Singularity Hyperautomation updates the Cloudflare Zero Trust policy to require step-up authentication or route the user's sessions through Remote Browser Isolation (RBI), preventing further data movement — even for legitimate tasks — until the user is cleared by HR or security.
+
+![Figure 6 — Insider risk and data protection.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure6.svg "Figure 6 — Insider risk and data protection.")
+
+## Use case: Proactive application defense with shared threat intelligence
+
+This use case explores the power of the integrated solutions to defend public applications against botnets and evolving exploits.
+
+### Phase 1: Attack identification
+
+Cloudflare WAF blocks a series of SQL injection or credential-stuffing attempts from a specific subnet. These logs are streamed to Singularity AI SIEM.
+
+### Phase 2: Intelligence enrichment and AI triage
+
+Singularity Threat Intelligence enriches the log data, attributing the subnet to a known threat actor or campaign, and Purple AI summarizes the activity and recommended response so the analyst can decide quickly.
+
+### Phase 3: Defensive tuning
+
+Singularity Hyperautomation triggers a workflow to update Cloudflare's application-layer defenses: it increases bot-mitigation sensitivity for the affected region and creates a proactive block rule for the entire autonomous system number (ASN) associated with the attack, hardening the application before a larger assault begins.
+
+![Figure 7 — Proactive application defense.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure7.svg "Figure 7 — Proactive application defense.")
+
+## Implementation components
+
+The integration between Cloudflare and SentinelOne leverages key components from each platform to create a cohesive security ecosystem.
 
 ### Cloudflare components
 
-Cloudflare's Zero Trust infrastructure provides the policy enforcement layer:
+| Component | Purpose |
+|-----------|---------|
+| **Zero Trust Network Access (ZTNA)** | Controls access to applications based on identity, device posture, and user risk score |
+| **Secure Web Gateway (SWG)** | Inspects and filters Internet-bound traffic; URL filtering, malware protection, and file type controls |
+| **Data Loss Prevention (DLP)** | Prevents unauthorized data exfiltration using built-in and custom data profiles |
+| **Remote Browser Isolation (RBI)** | Executes web content in a secure cloud environment with file and keyboard controls |
+| **Email Security** | Prevents email-based threats including phishing, malicious attachments, and BEC |
+| **CASB** | API-driven monitoring of SaaS usage, permissions, and data security posture |
+| **WAF and Bot Management** | ML-driven detection, custom rules, managed rule sets, and rate limiting |
 
-The Cloudflare One Client must be deployed alongside the SentinelOne agent on managed devices. This client creates the secure connection to Cloudflare's network and enables device posture checking.
+### SentinelOne components
 
-The Cloudflare dashboard provides the configuration interface for:
+| Component | Purpose |
+|-----------|---------|
+| **Singularity Endpoint (agent)** | AI-driven autonomous endpoint protection including behavioral AI, on-device response, one-click Rollback, and Storyline attack correlation |
+| **Device posture and risk telemetry** | Shares real-time agent activity, network status, infection status, active-threat count, and EDR signals with Cloudflare |
+| **Singularity AI SIEM and Data Lake** | Centralizes security monitoring, high-scale log ingestion, threat detection, and unified endpoint + Cloudflare network telemetry |
+| **Singularity XDR** | Extended detection and response: cross-domain detection, automated investigation, threat hunting, and guided remediation |
+| **Singularity Hyperautomation** | No-code security orchestration for automated containment, enrichment, recovery, and bi-directional actioning |
+| **Purple AI** | Generative-AI security analyst for natural-language threat hunting, automated investigation summaries, and recommended next actions |
+| **Singularity Threat Intelligence** | IOC and actor attribution with campaign and TTP context for enriching Cloudflare network events |
 
-- Service provider integration settings
-- Device posture policies
-- Access policies that incorporate device posture checks
+## Summary
 
-## Implementation architecture
-
-### Authentication and authorization flow
-
-![Figure 1: SentinelOne is used in Cloudflare policies as part of authorization flow.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure1.svg "Figure 1: SentinelOne is used in Cloudflare policies as part of authorization flow.")
-
-When a user attempts to access a protected resource, the following sequence occurs:
-
-1. The user's device connects to Cloudflare's network through the Cloudflare One Client.
-2. Cloudflare queries the SentinelOne API to check the device's security posture.
-3. The SentinelOne platform returns current device status including infection state, threats, and agent health.
-4. Cloudflare evaluates this information against configured policies.
-5. Access is granted or denied based on policy evaluation.
-
-### Integration setup
-
-The integration requires specific configuration steps:
-
-First, a service account must be created in SentinelOne with appropriate permissions. This involves generating an API token and noting the REST API URL for your instance.
-
-Next, SentinelOne must be configured as a service provider in the Cloudflare Zero Trust dashboard. This includes:
-
-- Providing the API token and REST API URL
-- Setting an appropriate polling frequency
-- Testing the connection to ensure proper communication
-
-Finally, device posture checks must be configured to define the security requirements for access. For detailed setup instructions, refer to [SentinelOne device posture integration](/cloudflare-one/integrations/service-providers/sentinelone/).
-
-## Security capabilities
-
-### Device posture verification
-
-The integration enables robust device security verification through multiple attributes:
-
-Infection Status monitoring ensures that compromised devices cannot access sensitive resources. Active Threat Detection prevents devices with ongoing security incidents from maintaining access. Agent Health Monitoring confirms that the security stack remains functional and properly configured.
-
-### User risk detection
-
-SentinelOne provides [endpoint detection and response (EDR)](https://www.sentinelone.com/cybersecurity-101/endpoint-security/what-is-endpoint-detection-and-response-edr/) signals that help determine user risk scores. This allows organizations to identify and manage users who may present security risks, enabling proactive security measures before incidents occur.
-
-## Core architecture
-
-![Figure 2: SentinelOne and Cloudflare Zero Trust technical architecture.](~/assets/images/reference-architecture/cloudflare-sase-with-sentinelone/figure2.svg "Figure 2: SentinelOne and Cloudflare Zero Trust technical architecture.")
-
-_Note: Labels in this image may reflect a previous product name._
-
-The integration architecture begins at the managed endpoint device level, where two critical components coexist. The SentinelOne agent serves as the primary security enforcer, continuously monitoring the device for threats, assessing device health, and providing real-time security status updates. Alongside it, the Cloudflare One Client establishes secure connectivity and manages the device's interaction with Cloudflare's Zero Trust infrastructure. These components work in tandem to ensure both endpoint security and secure network access.
-
-When a user attempts to access protected resources, the architecture initiates a sophisticated verification process. The Cloudflare One Client first establishes a secure tunnel to Cloudflare's global network, creating an encrypted channel for all communications. This connection ensures that all traffic between the device and protected resources remains secure and can be properly evaluated against security policies.
-
-### Cloudflare Zero Trust platform operations
-
-At the heart of the architecture lies the Cloudflare Zero Trust platform, which consists of three main engines working in concert. The **Device Posture Engine** serves as the first line of defense, actively querying the SentinelOne platform to verify the device's security status. It checks multiple attributes including infection status, active threats, agent health, and network connectivity state. This information forms the foundation for access decisions.
-
-The **Access Policy Engine** then takes this device posture information and combines it with other contextual factors to make access decisions. It evaluates predefined policies that can include criteria such as device security status, user identity, location, and other risk factors. This engine ensures that only devices meeting all security requirements can access protected resources.
-
-The **Secure Web Gateway** adds another layer of protection by filtering all traffic, preventing access to malicious sites, and enforcing data loss prevention policies. This component ensures that even after access is granted, all traffic is continuously monitored and protected.
-
-### SentinelOne platform integration
-
-The SentinelOne platform plays a crucial role in this architecture through three main components. The **Management Console** provides centralized control over all endpoints, allowing security teams to configure policies, monitor device status, and respond to security events. The **API Services** component facilitates real-time communication with Cloudflare, providing critical security information about managed devices.
-
-The **Security Analytics** component continuously processes security telemetry from all endpoints, identifying threats, assessing risks, and providing detailed security insights. This information flows to Cloudflare through **API Services**, enabling dynamic access decisions based on the latest security intelligence.
-
-### Authentication and access flow
-
-When a user requires access to protected resources, the architecture follows a specific flow:
-
-First, the device's security status is evaluated through the **SentinelOne agent**, which reports detailed health and security information to the SentinelOne platform. Simultaneously, the **Cloudflare One Client** initiates the access request to Cloudflare's Zero Trust platform.
-
-Next, Cloudflare's **Device Posture Engine** queries the SentinelOne platform through its **API Services** to verify the device's security status. This check includes all current security metrics, threat status, and compliance information. The **Access Policy Engine** then evaluates this information against defined security policies.
-
-If all security requirements are met, access is granted through the secure tunnel established by the Cloudflare One Client. Throughout the session, continuous monitoring ensures that any change in device security status can trigger immediate reevaluation of access permissions.
-
-### Security and monitoring capabilities
-
-The architecture provides comprehensive security through multiple mechanisms. At the endpoint level, the SentinelOne agent provides advanced threat detection and response capabilities. The **Security Analytics** component processes this security telemetry in real-time, enabling quick identification of threats and security issues.
-
-Cloudflare's **Secure Web Gateway** provides network-level protection, filtering traffic and preventing access to malicious resources. This component works in conjunction with the **Access Policy Engine** to ensure that all traffic, both to internal and external resources, meets security requirements.
-
-## Operational benefits
-
-This integrated architecture delivers several key operational benefits. It enables organizations to implement true Zero Trust access control, where every access request is verified based on current security status. The integration between SentinelOne and Cloudflare provides seamless security enforcement, combining endpoint protection with network-level access control.
-
-The architecture also supports dynamic policy enforcement, where changes in device security status can automatically trigger access restrictions. This ensures that compromised or non-compliant devices can be quickly isolated from sensitive resources, maintaining organizational security.
-
-## Deployment considerations
-
-### Network architecture
-
-Organizations should consider their network architecture when implementing this integration. Key factors include:
-
-- Distribution of endpoints across different networks
-- Bandwidth and latency requirements for posture checks
-- Integration with existing security tools and workflows
-
-The integration between Cloudflare One and SentinelOne requires thoughtful planning to ensure successful implementation. At its foundation, organizations need to prepare their environment by having the SentinelOne agent and Cloudflare One Client deployed on all devices that will be subject to posture checks. This foundational step ensures that both security monitoring and secure network connectivity are in place before building additional security controls.
-
-When implementing the integration, organizations should approach it as a service provider relationship where SentinelOne acts as a trusted source of device security information. This relationship is established through secure API communications, with careful attention paid to proper credential management and regular verification of the connection between the platforms. The integration relies on SentinelOne's ability to provide real-time device security status, which Cloudflare then uses to make access decisions.
-
-### Policy design
-
-Effective policy design is crucial for security and usability. Consider implementing policies that:
-
-- Start with basic hygiene requirements and gradually increase security requirements
-- Account for different user roles and access needs
-- Include fallback options for exceptional circumstances
-
-Policy configuration represents another crucial aspect of the deployment. Organizations can leverage SentinelOne's detailed device posture information to create nuanced access policies. These policies can take into account multiple factors such as device infection status, active threats, and agent health. By monitoring these various attributes, organizations can ensure that only devices meeting their security requirements can access protected resources.
-
-Regular testing and monitoring play vital roles in maintaining the effectiveness of the integration. Through Cloudflare's logging and testing capabilities, organizations can verify that posture checks are functioning as intended and that policies are being enforced correctly. This ongoing verification helps ensure that the security benefits of the integration are consistently realized.
-
-## Conclusion
-
-The integration between Cloudflare One and SentinelOne provides organizations with a powerful tool for implementing Zero Trust security principles. By combining endpoint protection with access control, organizations can ensure that only secure and compliant devices can access sensitive resources. This approach significantly reduces the risk of compromised devices accessing corporate resources while maintaining user productivity through seamless authentication and authorization processes.
+The integration between Cloudflare and SentinelOne provides organizations with a comprehensive security solution that combines autonomous endpoint security, zero trust network access, AI-powered analytics, and application protection. By leveraging the strengths of both platforms, organizations can achieve better visibility into their security posture, automate responses to threats, and recover from destructive attacks such as ransomware without lengthy manual rebuilds.
 
 ## Related resources
 
-- [Overview of SentinelOne and Cloudflare partnership](https://www.cloudflare.com/partners/technology-partners/sentinelone/)
+- [SentinelOne device posture integration](/cloudflare-one/integrations/service-providers/sentinelone/)
+- [Cloudflare One overview](/cloudflare-one/)
+- [Cloudflare Zero Trust documentation](/cloudflare-one/policies/access/)
+- [SentinelOne Singularity Platform](https://www.sentinelone.com/platform/)
+- [Logpush documentation](/logs/about-logpush/)
+- [Cloudflare DLP overview](/cloudflare-one/policies/data-loss-prevention/)
