@@ -18,7 +18,7 @@ The [OpenAI Agents API](https://developers.openai.com/api/docs/guides/agents-api
 
 ![Architecture showing an application creating an OpenAI task, webhooks starting a Cloudflare container, and the application fetching the result](~/assets/images/sandbox/openai-agents-api-arch.jpg)
 
-The [template](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api) contains the Worker and the container image that this guide deploys.
+The [template](https://github.com/cloudflare/sandbox-sdk/tree/main/templates/openai-agents-api) contains the Worker and the container image that this guide deploys.
 
 ## Prerequisites
 
@@ -69,7 +69,7 @@ export OPENAI_AGENT_ID="agent_..."
 
    Select **Deploy to Cloudflare**:
 
-   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api)
+   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/sandbox-sdk/tree/main/templates/openai-agents-api)
 
    Enter these values when prompted:
 
@@ -98,7 +98,7 @@ export OPENAI_AGENT_ID="agent_..."
    - `agent.session.idle`
    - `agent.session.failed`
 
-   Copy the signing secret that OpenAI returns. In **Settings** &gt; **Variables and Secrets** for the Worker, replace `OPENAI_WEBHOOK_SECRET` with it, then select **Deploy**. If you deployed manually, run this command in the `openai/agents-api` directory instead:
+   Copy the signing secret that OpenAI returns. In **Settings** &gt; **Variables and Secrets** for the Worker, replace `OPENAI_WEBHOOK_SECRET` with it, then select **Deploy**. If you deployed manually, run this command in the `templates/openai-agents-api` directory instead:
 
    ```bash
    npx wrangler secret put OPENAI_WEBHOOK_SECRET
@@ -180,7 +180,7 @@ To deploy from your terminal instead of with the button in step 2:
 
     ```bash
     git clone https://github.com/cloudflare/sandbox-sdk.git
-    cd sandbox-sdk/openai/agents-api
+    cd sandbox-sdk/templates/openai-agents-api
     npm install
     npx wrangler login
     ```
@@ -249,7 +249,7 @@ Open the session event stream again, then send more input:
 
 ## Build an application on the Agents API
 
-The [basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api/basic) in the template is a TypeScript application that uses the OpenAI Agents API TypeScript SDK. It creates self-hosted sessions that run on the executor Worker. Its HTTP endpoints send the first input, send follow-up input, and clean up. The `POST /demo` endpoint runs the whole workflow: it creates a session, writes and reads a file in the container, sends a follow-up message, and then deletes the OpenAI session and its executor.
+The [basic example](https://github.com/cloudflare/sandbox-sdk/tree/main/templates/openai-agents-api/basic) in the template is a TypeScript application that uses the OpenAI Agents API TypeScript SDK. It creates self-hosted sessions that run on the executor Worker. Its HTTP endpoints send the first input, send follow-up input, and clean up. The `POST /demo` endpoint runs the whole workflow: it creates a session, writes and reads a file in the container, sends a follow-up message, and then deletes the OpenAI session and its executor.
 
 ## Clean up
 
@@ -313,7 +313,7 @@ With `EXECUTOR_SNAPSHOTS_ENABLED` set to `false`, each new executor starts with 
 
 ## Add tools to the container
 
-The `openai/agents-api/Dockerfile` file in the template defines the executor image. Add Debian packages to its `apt-get install` command. For example, to add `jq` and Python:
+The `templates/openai-agents-api/Dockerfile` file in the template defines the executor image. Add Debian packages to its `apt-get install` command. For example, to add `jq` and Python:
 
 ```dockerfile
 RUN apt-get update \
@@ -329,7 +329,7 @@ RUN apt-get update \
 
 You can also install language tools in the image, such as global npm packages. Do not put API keys or other secrets in the Dockerfile. Pass them at runtime through Worker secrets and container environment variables.
 
-To build and deploy the new image, run `npm run deploy` in the `openai/agents-api` directory. New containers start from it. A session that starts from a snapshot keeps the filesystem of its old image, so it does not get the new packages.
+To build and deploy the new image, run `npm run deploy` in the `templates/openai-agents-api` directory. New containers start from it. A session that starts from a snapshot keeps the filesystem of its old image, so it does not get the new packages.
 
 ## Security considerations
 
@@ -343,7 +343,7 @@ For more information about what a sandbox exposes to the code inside it, refer t
 
 ## Related resources
 
-- [OpenAI Agents API template](https://github.com/cloudflare/sandbox-sdk/tree/main/openai/agents-api)
+- [OpenAI Agents API template](https://github.com/cloudflare/sandbox-sdk/tree/main/templates/openai-agents-api)
 - [OpenAI Agents API documentation](https://developers.openai.com/api/docs/guides/agents-api/overview)
 - [OpenAI Python Cloudflare webhook example](https://github.com/OpenAI/agents-api-python-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
 - [OpenAI TypeScript Cloudflare webhook example](https://github.com/OpenAI/agents-api-typescript-preview/tree/main/examples/self_hosted_sandbox/webhook_managed/cloudflare)
