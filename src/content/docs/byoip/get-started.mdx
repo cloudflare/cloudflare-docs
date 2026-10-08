@@ -19,7 +19,7 @@ import {
   Steps,
 } from "~/components";
 
-Use this guide to onboard your own IP prefixes to Cloudflare. Before you begin, contact your account team to confirm that your contract includes BYOIP and that your account has the required service configuration.
+Use this guide to onboard your own IP prefixes to Cloudflare. Before you begin, you must contact your account team to confirm that your contract includes BYOIP and that your account has the required service configuration.
 
 Review the [BYOIP Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-network-services/#bring-your-own-ip-terms) before you onboard a prefix.
 
@@ -29,19 +29,19 @@ This guide does not apply to prefixes used with [Cloudflare Magic Transit](/magi
 
 ## Before you begin
 
-Make sure that:
+You must meet all of the following requirements. Cloudflare cannot onboard your prefix if any registration, IRR, RPKI, or ownership validation check fails.
 
-- Your prefix is registered with one of the following Regional Internet Registries (RIRs):
+- You must register your prefix with one of the following Regional Internet Registries (RIRs):
   - [AFRINIC](https://afrinic.net/)
   - [APNIC](https://www.apnic.net/)
   - [ARIN](https://www.arin.net/)
   - [LACNIC](https://lacnic.net/)
   - [RIPE](https://www.ripe.net/)
-- Your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records contain:
+- Your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records must contain:
   - A `route` or `route6` object that exactly matches each prefix you want to onboard.
   - An `origin` that matches the ASN Cloudflare will use to advertise the prefix.
-- Your [Route Origin Authorizations (ROAs)](/byoip/concepts/route-filtering-rpki/) are accurate. Verify them with [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/).
-- You have your Cloudflare account ID and an API token with the permissions required by each operation in this guide. If you are unfamiliar with the Cloudflare API, refer to [Cloudflare API fundamentals](/fundamentals/api/).
+- Your [Route Origin Authorizations (ROAs)](/byoip/concepts/route-filtering-rpki/) must be accurate. You must verify them with [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/).
+- You must have your Cloudflare account ID and an API token with the permissions required by each operation in this guide. If you are unfamiliar with the Cloudflare API, refer to [Cloudflare API fundamentals](/fundamentals/api/).
 
 <Render file="cloudflare-asn-callout" product="byoip" />
 
