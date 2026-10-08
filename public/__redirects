@@ -19,6 +19,16 @@
 # Sandbox (claude-managed-agents moved to coding agents)
 /sandbox/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
 
+# Deprecated product-specific MCP servers (replaced by the Cloudflare API MCP server)
+/ai-gateway/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/ai-search/mcp-server/ /ai-search/api/search/mcp/ 301
+/analytics/graphql-api/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/dns/reference/analytics-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/logs/auditlogs-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/logs/logpush-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/workers/ci-cd/builds/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/workers/observability/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+
 # Workers Previews
 /workers/previews/automation-examples/ /workers/previews/examples/ 301
 
