@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as a directory with `s3fs`. Your Worker keeps the R2 credentials and signs each storage request. In this example, a command reads an input file from the mount and writes a digest next to it.
+The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as a directory. A prefix is the start of the object keys, such as `jobs/ada`. In the sandbox, `s3fs` presents the objects under the prefix as files through FUSE, the Linux interface that lets a process provide a filesystem. Your Worker keeps the R2 credentials and signs each storage request. In this example, a command reads an input file from the mount and writes a digest next to it.
 
 ## Prerequisites
 
@@ -38,7 +38,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    <PackageManagers pkg="@cloudflare/sandbox" />
 
-2. Create a `Dockerfile` in your project root with FUSE, `s3fs`, and the `sandbox-shim` binary that `S3Mount` uses:
+2. Create a `Dockerfile` in your project root. It installs FUSE and `s3fs`, and copies `sandbox-shim`, the helper binary that `S3Mount` runs in the container:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim

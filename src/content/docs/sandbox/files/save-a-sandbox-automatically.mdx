@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps } from "~/components";
 
-An alarm in the Durable Object saves a Container snapshot of an idle sandbox and stops it. While the sandbox is in use, the alarm also saves checkpoints. The next request starts the sandbox from the last snapshot.
+An [alarm](/durable-objects/api/alarms/), a call that the Durable Object schedules for itself, saves a Container snapshot of an idle sandbox and stops its instance. The instance is the Linux virtual machine that runs your image, and a snapshot is a saved copy of the files on its disk. While the sandbox is in use, the alarm also saves checkpoints. The next request starts a new instance from the last snapshot. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
@@ -98,7 +98,7 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   `savedAt` holds when the files were last saved or restored. `busy` counts the running commands, and the Durable Object does not save or stop a sandbox while a command runs. A request in progress keeps the Durable Object in memory, so `busy` does not need storage. If the stored snapshot cannot be restored, `start()` fails. To handle that failure, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+   `savedAt` holds when the files were last saved or restored. `busy` counts the running commands, and the alarm starts a save only when no command is running. A request in progress keeps the Durable Object in memory, so `busy` does not need storage. If the stored snapshot cannot be restored, `start()` fails. To handle that failure, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
 3. Add a method that saves a snapshot, and an alarm handler that saves and stops an idle sandbox and saves a checkpoint of a sandbox in use:
 
@@ -156,9 +156,9 @@ Container snapshots are in public beta. Features and behavior may change.
 
    A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the idle and checkpoint checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
 
-   A snapshot saves the writable root filesystem. It does not include mounted directories, memory, or running processes. A background process that writes a file during a save can leave part of that file in the snapshot.
+   A background process that writes a file during a save can leave part of that file in the snapshot. To save a consistent checkpoint, finish background writes before the save. For what a snapshot leaves out, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
-   Each save creates a new snapshot. The Durable Object container API has no method to delete a snapshot. A snapshot expires 30 days after it is created or last restored. To save fewer snapshots, increase `CHECKPOINT_INTERVAL_MS` or remove checkpoints.
+   Each save creates a new snapshot. The Durable Object container API has no method to delete a snapshot. Snapshots expire according to the [snapshot retention limit](/containers/platform/limits/#snapshot-limits). To save fewer snapshots, increase `CHECKPOINT_INTERVAL_MS` or remove checkpoints.
 
 4. Add a method that returns the state of the sandbox:
 
