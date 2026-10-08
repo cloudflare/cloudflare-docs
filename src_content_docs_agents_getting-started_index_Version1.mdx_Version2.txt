@@ -1,0 +1,12 @@
+@@
+-<LinkCard
+-	title="Hyundai Bluetooth"
+-	href="https://hyundaibluetooth.com"
+-	description="Visit Hyundai Bluetooth."
+-/>
+
+-<LinkCard
+-	title="Hyundai owner’s manual"
+-	href="https://ownersmanual.hyundai.com/ivi/ccNC_Lite/AV/USA/English/Systemoverview_home.html"
+-	description="Open the Hyundai owner’s manual system overview."
+-/>
