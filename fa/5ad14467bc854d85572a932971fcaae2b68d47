@@ -1,0 +1,29 @@
+public/realtime/static/realtime-api-2024-05-21.yaml
+  s_8b87deab2c186f::t_d5630454d84513 34-37,514-520,525-544,571-607,992-997,1035-1040,1120-1121,1125-1128,1190-1197,1203,1208-1212,1215-1219,1229,1240-1273,1288-1292
+src/content/docs/realtime/sfu/api/index.mdx
+  s_8b87deab2c186f::t_ce4412553e6b12 46-87
+src/content/docs/realtime/sfu/examples/embedded-devices.mdx
+  s_8b87deab2c186f::t_03d4f4556d0a84 96
+src/content/docs/realtime/sfu/observability/error-codes.mdx
+  s_8b87deab2c186f::t_19e5f32fd4b305 17,64-86
+src/content/docs/realtime/sfu/observability/index.mdx
+  s_8b87deab2c186f::t_fbad10eefe1c8d 67
+src/content/docs/realtime/sfu/platform/limits.mdx
+  s_8b87deab2c186f::t_61d6ec8eb7a163 30,32-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fa5ad14467bc854d85572a932971fcaae2b68d47",
+  "prompts": {},
+  "sessions": {
+    "s_8b87deab2c186f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0c416-74f6-71c3-ba9f-3dc03ac9bf65",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}
