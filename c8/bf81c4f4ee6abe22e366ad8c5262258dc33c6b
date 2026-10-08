@@ -1,0 +1,21 @@
+src/components/cf/Details.astro
+  s_1e1b1d1815345d::t_6fa305c424f7ef 22,28,32,34
+src/components/ui/steps/Steps.astro
+  s_1e1b1d1815345d::t_d384024f567e67 63,103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c8bf81c4f4ee6abe22e366ad8c5262258dc33c6b",
+  "prompts": {},
+  "sessions": {
+    "s_1e1b1d1815345d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a112ca-5fc5-7c93-ae34-447051bb5f12",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
