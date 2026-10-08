@@ -264,9 +264,11 @@ export class MyWorkflow extends WorkflowEntrypoint {
 			return Math.random();
 		});
 
-		// ✅ Good: calls that have no side effects can be done outside of steps
-		// For Hyperdrive, create the connection inside each step instead of here.
-		const db = createDBConnection(this.env.DB_URL, this.env.DB_TOKEN);
+		// ✅ Good: create a database client outside steps if it makes no network requests.
+		// This setup may run again when the Workflow restarts.
+		// Run database queries inside a step.
+		// For Hyperdrive, create a new connection inside each step.
+		const db = createDBClient(this.env.DB_URL, this.env.DB_TOKEN);
 
 		// ✅ Good: run functions with side effects inside of a step
 		// after running successfully will not run again
