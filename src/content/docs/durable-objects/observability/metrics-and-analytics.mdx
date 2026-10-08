@@ -56,6 +56,8 @@ Memory usage is powered by the [`durableObjectsPeriodicGroups`](#query-via-the-g
 
 If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
 
+To identify allocating code in a deployed Durable Object, [capture a Heap profile in production](/workers/observability/profiling-in-production/#profile-a-durable-object-dashboard).
+
 ## View logs
 
 You can view Durable Object logs from the Cloudflare dashboard. Logs are aggregated by the script name and the Durable Object class name.
@@ -78,7 +80,7 @@ To start using Durable Object logging:
 
    <DashButton url="/?to=/:account/workers/durable-objects" />
 4. Select an existing Durable Object namespace.
-5. Select the **Logs** tab.
+5. Select the **Observability** tab.
 
 </Steps>
 
