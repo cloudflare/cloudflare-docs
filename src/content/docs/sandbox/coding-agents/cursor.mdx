@@ -13,10 +13,10 @@ products:
 reviewed: 2026-09-24
 ---
 
-import { Steps } from "~/components";
+import { Steps, WranglerConfig } from "~/components";
 import { VendorAgentConnections } from "~/components/react/sandbox/VendorAgentConnections";
 
-Run Cursor Cloud Agents on Cloudflare through [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in its own Linux sandbox: a [Container](/containers/) that one Durable Object starts for that session.
+Run Cursor Cloud Agents on Cloudflare through [self-hosted machines](https://cursor.com/docs/cloud-agent/self-hosted). Each Cursor session assigned to the deployment runs in its own Linux sandbox: a [Container](/containers/) that one [Durable Object](/durable-objects/) starts for that session.
 
 Cursor hosts the agent loop, inference, and planning. Cloudflare runs commands, file edits, repository operations, and other tools inside infrastructure that you control.
 
@@ -44,7 +44,7 @@ For more information, refer to [Cursor team pools](https://cursor.com/docs/cloud
 
 ## Deploy the template
 
-The template deploys a Worker, a Durable Object namespace, a container application, an R2 bucket binding, and a cron trigger.
+The template deploys a Worker, a Durable Object that coordinates each session, a container, an R2 bucket binding that connects the Worker to its snapshot bucket, and a [cron trigger](/workers/configuration/cron-triggers/) that runs the Worker on a schedule. It uses the [`Container` class](/containers/api/container-class/) from `@cloudflare/containers` and the `default` [scheduling policy](/containers/configuration/scheduling-policy/#use-the-default-scheduling-policy), so `max_instances` and image [rollouts](/containers/configuration/rollouts/) apply to all of its containers.
 
 <Steps>
 1. Clone the template and install its dependencies:
@@ -88,6 +88,8 @@ The template deploys a Worker, a Durable Object namespace, a container applicati
 
 6. In `wrangler.jsonc`, set `vars.CURSOR_POOL` to the Cursor team pool name:
 
+   <WranglerConfig>
+
    ```jsonc
    {
      "vars": {
@@ -95,6 +97,8 @@ The template deploys a Worker, a Durable Object namespace, a container applicati
      }
    }
    ```
+
+   </WranglerConfig>
 
 7. Set `containers[].max_instances` to the maximum number of concurrent sessions that the deployment must support.
 
@@ -158,6 +162,8 @@ Repository snapshots are an optional cache for repository-bound agents. A snapsh
 
 2. In `wrangler.jsonc`, set `vars.WORKER_PUBLIC_URL` to the deployed Worker URL:
 
+   <WranglerConfig>
+
    ```jsonc
    {
      "vars": {
@@ -166,6 +172,8 @@ Repository snapshots are an optional cache for repository-bound agents. A snapsh
      }
    }
    ```
+
+   </WranglerConfig>
 
 3. Deploy the updated configuration:
 
@@ -190,7 +198,7 @@ A cron trigger runs the Worker every five minutes. Each run lists the sessions t
 
 The Worker claims each session with a unique worker ID. Cursor then assigns the session only to that Worker. A Durable Object for the session starts one container with the session environment and repository information.
 
-The container stops after five minutes without work, or after `WORKER_IDLE_RELEASE_TIMEOUT_SECONDS` if you set that variable. The Durable Object also stops the container after eight hours, or after `MAX_RUN_LIFETIME_SECONDS` if you set that variable.
+`WORKER_IDLE_RELEASE_TIMEOUT_SECONDS` sets how long the container waits without work before it stops. `MAX_RUN_LIFETIME_SECONDS` sets the longest time that the Durable Object keeps the container running. For the default values, refer to [`src/config.ts`](https://github.com/anysphere/cloudflare-workers/blob/main/src/config.ts) in the template.
 
 The container connects out to Cursor, so it needs no inbound port or public IP address. The Worker exposes only its health route and the optional snapshot routes.
 
