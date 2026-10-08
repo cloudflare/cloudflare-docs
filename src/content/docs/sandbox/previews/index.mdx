@@ -87,7 +87,7 @@ Use a browser to open a web server that runs in a sandbox. The server has no pub
    		const container = this.ctx.container;
 
    		if (!container) {
-   			throw new Error("The container binding is not configured");
+   			throw new Error("No container is configured");
    		}
 
    		if (!container.running) {
