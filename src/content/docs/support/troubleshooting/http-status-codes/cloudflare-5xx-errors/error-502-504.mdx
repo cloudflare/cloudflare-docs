@@ -44,7 +44,7 @@ A `502` or a `504` error originating from Cloudflare appears as follows, a blank
 
 If the error page is Cloudflare-branded, the `502` or `504` came from your origin web server instead. Refer to [502/504 errors from your origin](#502504-from-your-origin-web-server) and contact your hosting provider.
 
-This error can occur due to a compression issue at the origin, such as when the origin server serves gzip-encoded compressed content but fails to update the `content-length` header, or if the origin is serving broken gzip compressed content. To diagnose this, you can try disabling compression at your origin to confirm if it resolves the error.
+An unbranded `502` or `504` can occur due to a compression issue at the origin, such as when the origin server serves gzip-encoded compressed content but fails to update the `content-length` header, or if the origin is serving broken gzip compressed content. To diagnose this, you can try disabling compression at your origin to confirm if it resolves the error.
 
 Additionally, in some cases, a particular data center may experience a sudden increase in traffic. To ensure minimal impact for customers, our automated processes will redirect traffic to another data center. These adjustments typically happen seamlessly and take just a few seconds. However, during this process, some clients may experience temporary latency or HTTP `502` errors. You can find more information about our automated traffic management tools in this [blogpost](https://blog.cloudflare.com/meet-traffic-manager).
 
