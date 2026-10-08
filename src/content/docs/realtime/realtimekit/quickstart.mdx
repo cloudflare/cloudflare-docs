@@ -39,7 +39,7 @@ Use an API token with **Realtime Admin** access scoped to your account for the C
 Follow [Create API token](/fundamentals/api/get-started/create-token/) to create a user-owned token with **Realtime Admin** access scoped to your account. Save the token in backend secret storage.
 
 </TabItem>
-<TabItem label="cf CLI" class="space-y-4">
+<TabItem label="CLI" class="space-y-4">
 
 [Install `cf`](/cf/get-started/), then authenticate with the starter credential described in [Create tokens via API](/fundamentals/api/how-to/create-via-api/#generating-the-initial-token). Use the **Create additional tokens** template for user-token creation. Keep this starter credential separate from the RealtimeKit backend token you create.
 
@@ -68,15 +68,15 @@ Follow [Create tokens via API](/fundamentals/api/how-to/create-via-api/) to crea
 
 ## Create a RealtimeKit app
 
-Use separate apps for staging and production.
+We recommend creating separate apps for staging and production.
 
 ### Set up with your coding agent
 
 Copy this prompt to create an app and inspect its presets using `cf`:
 
 <CopyPromptButton
-	tooltip="Create a RealtimeKit app with cf"
-	prompt="Create a Cloudflare RealtimeKit app for my application. Read https://developers.cloudflare.com/realtime/realtimekit/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI, installing it if needed. Use cf cli search to find commands and inspect their --help or cf schema output as needed. Help me authenticate, confirm my account and app name, and verify RealtimeKit access. Create the app and save its app ID. Securely store any access tokens returned by app APIs in my backend secret storage. Verify the app exists in the correct account and inspect its available presets. Give me the account ID, app ID, where any credentials were saved, and any preset setup needed before adding participants. Keep credentials out of frontend code, source control, chat, and logs. Do not create meetings or deploy. If anything fails, explain the blocker and what remains."
+	tooltip="Create a RealtimeKit app with the `cf` CLI"
+	prompt="Create two Cloudflare RealtimeKit apps for my application (one for staging and one for production). Read https://developers.cloudflare.com/realtime/realtimekit/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI, installing it if needed. Use cf cli search to find commands and inspect their --help or cf schema output as needed. Help me authenticate, confirm my account and app name, and verify RealtimeKit access. Create the app and save its app ID. Securely store any access tokens returned by app APIs in my backend secret storage. Verify the app exists in the correct account and inspect its available presets. Give me the account ID, app ID, where any credentials were saved, and any preset setup needed before adding participants. Keep credentials out of frontend code, source control, chat, and logs. Do not create meetings or deploy. If anything fails, explain the blocker and what remains."
 />
 
 ### Create the app manually
@@ -89,7 +89,7 @@ In the RealtimeKit dashboard, select **Create App** and enter an app name.
 <DashButton url="/?to=/:account/realtime/kit" />
 
 </TabItem>
-<TabItem label="cf CLI" class="space-y-4">
+<TabItem label="CLI" class="space-y-4">
 
 [Install and sign in to `cf`](/cf/get-started/), then create the app:
 
