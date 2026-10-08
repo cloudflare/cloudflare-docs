@@ -366,13 +366,13 @@ package.json @cloudflare/content-engineering
 
 # data-localization
 
-/src/content/changelog/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/assets/images/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/partials/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/directory/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/release-notes/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/icons/data-localization.svg @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/directory/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/release-notes/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/icons/data-localization.svg @aberglund-cf @angelampcosta @Arkanayan @cagrawal-cf @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # ddos-http
 
