@@ -19,7 +19,7 @@ This page compares the two ways to move sandboxes from Sandbox SDK 0.12 to 1.0, 
 
 - Your application runs `@cloudflare/sandbox` 0.12.10.
 - Your 1.0 class is written. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
-- You have a staging copy of the Worker with its own Wrangler configuration file. Set a different Worker `name` and a different `name` for each container in that file, because the `--name` option of `wrangler deploy` does not rename container applications.
+- You have a staging copy of the Worker with its own Wrangler configuration file. Wrangler deploys each `containers` entry in that file as a container application, which runs the containers of its class. Set a different Worker `name` and a different `name` for each container application in that file, because the `--name` option of `wrangler deploy` does not rename them.
 
 ## Choose a path
 
@@ -40,7 +40,7 @@ Rehearse your path on the staging Worker, with sandboxes running in it, before y
 
 ## What the switch does to live sandboxes
 
-The switch happens when the deploy that moves your class to `scheduling_policy: "durable_object"` goes live. Each part of a 0.12 sandbox changes as follows:
+The switch happens when the deploy that moves your class to `scheduling_policy: "durable_object"` goes live. Your 1.0 class runs its containers in a new container application, and the 0.12 container application stays. The containers of each application hold their own files and processes. Durable Object storage is separate from both applications. Each part of a 0.12 sandbox changes as follows:
 
 | Part | At the switch |
 | --- | --- |
@@ -119,7 +119,7 @@ Delete the old container application. Replace `<OLD_APPLICATION_ID>` with its ID
 
 The old application runs its containers, and bills for them, until you delete it. Deleting it stops the containers that 0.12 started and deletes their files. Durable Objects and their storage stay.
 
-The keys that 0.12 wrote stay in the storage of each Durable Object. Keep `portTokens`, `tunnels`, `tunnels:meta`, and `OUTBOUND_CONFIGURATION` while your class reads them, as the pages that move preview URLs, tunnels, and outbound rules do. If you delete other keys, name each key in a `delete()` call. Do not call `deleteAll()`, which also deletes your own keys and any 0.12 backup handles that you still need to convert.
+Keep the 0.12 keys `portTokens`, `tunnels`, `tunnels:meta`, and `OUTBOUND_CONFIGURATION` in Durable Object storage while your class reads them, as the pages that move preview URLs, tunnels, and outbound rules do. If you delete other 0.12 keys, name each key in a `delete()` call. Do not call `deleteAll()`, which also deletes your own keys and any 0.12 backup handles that you still need to convert.
 
 ## Related resources
 

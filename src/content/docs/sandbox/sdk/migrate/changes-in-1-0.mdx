@@ -21,7 +21,7 @@ In 0.x, the `Sandbox` class from the package starts the container, keeps it runn
 
 </SandboxSdkVersions>
 
-`this.ctx.container` does what the 0.x SDK server did. It runs commands, connects to ports, intercepts outbound requests, and saves snapshots. The package keeps only small helpers, such as the `Files` class.
+`this.ctx.container` does what the 0.x SDK server did. It runs commands, connects to ports, routes outbound requests from the container to code in your Worker, and saves the root filesystem of a container as a snapshot that a later container can start from. The package keeps only small helpers, such as the `Files` class.
 
 Decisions that depend on your application stay in your code: how long a sandbox runs, what it can reach, and what happens when a call fails. For example, a cancelled command may already have changed files, and only your application knows whether running it again is safe.
 
@@ -37,17 +37,17 @@ Some 0.x features have no equivalent. For each 0.x API and its replacement, refe
 
 ## Decisions your code makes
 
-A container has no Internet access unless `start()` passes `enableInternet: true`. To allow one destination, your class registers an outbound handler for its hostname. The handler can add a credential that the container never sees. For more information, refer to [Sandbox security](/sandbox/concepts/security/).
+A container has no Internet access unless `start()` passes `enableInternet: true`. To allow one destination, your class registers an outbound handler for its hostname. An outbound handler is Worker code that receives each request that the container sends to that hostname. The handler can add a credential that the container never sees. For more information, refer to [Sandbox security](/sandbox/concepts/security/).
 
 `exec()` takes an array of arguments and starts that process without a shell. Text passed as an argument cannot start a second command. A shell runs only when you start one, such as `["sh", "-c", "npm ci && npm test"]`. Each call also sets its own `cwd` and `env`. No session carries them from one call to the next.
 
-Your class decides how long a sandbox runs by setting the inactivity timeout after `start()`, and again in the constructor when a restarted Durable Object finds the container running. A deploy does not replace running containers. A new image applies only to containers that start after the deploy. The same holds for code that your class runs only when it starts a container, such as the calls that register outbound handlers. A handler that is already registered runs the code of the new version, with the props it was registered with. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
+Your class decides how long a sandbox runs, through the inactivity timeout that it sets on the container. A deploy does not replace running containers. A new image applies only to containers that start after the deploy. The same holds for code that your class runs only when it starts a container, such as the calls that register outbound handlers. A handler that is already registered runs the code of the new version, with the props it was registered with. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
 Your image provides every tool that your commands use. The 0.x image includes Python, Git, `curl`, `wget`, `jq`, `unzip`, and `ps`. `cloudflare/debian-trixie` and `node:24-trixie-slim`, which these pages use, include none of them. `Files`, `S3Mount`, and `DirectoryBackup` also need the `sandbox-shim` helper in the image. For the `COPY` line, refer to [`@cloudflare/sandbox` requirements](/sandbox/reference/#requirements).
 
 The package writes nothing to Durable Object storage. A preview token, a process record, or a snapshot ID exists only if your class stores it. The keys that 0.x wrote stay in storage. The package ignores them, and your class can read them, as the pages that move preview URLs, tunnels, and outbound rules do.
 
-The package also retries nothing and sets no time limits. To stop a command that runs too long, run it under GNU coreutils `timeout`, as [Replace timeouts](/sandbox/sdk/migrate/commands/#replace-timeouts) describes.
+The package also retries nothing and sets no time limits. To limit how long a command runs, refer to [Replace timeouts](/sandbox/sdk/migrate/commands/#replace-timeouts).
 
 ## Related resources
 

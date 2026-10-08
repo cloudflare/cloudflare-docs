@@ -24,11 +24,11 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
 
 <Steps>
 
-1. Add the scripts and methods from [Run background processes](/sandbox/commands/run-background-processes/) to your class, including the alarm handler, and `follow()` and `waitForLog()` from [Follow a background process](/sandbox/commands/follow-a-background-process/).
+1. From [Run background processes](/sandbox/commands/run-background-processes/), add the `ROOT`, `RUN`, `CURRENT`, and `STATUS` constants, the `Status` type, and the `run()` function to your class file. Add its `status()`, `logs()`, `stop()`, and `alarm()` methods to your class. Leave out its `INACTIVITY_TIMEOUT_MS` constant and its constructor, which your class file already has. From [Follow a background process](/sandbox/commands/follow-a-background-process/), add the `WAIT` constant and the `follow()` and `waitForLog()` methods.
 
    A Durable Object has one alarm. If your class already has an `alarm()` handler, such as the one from [Move every sandbox in one deploy](/sandbox/sdk/migrate/plan-the-move/#move-every-sandbox-in-one-deploy), merge the process checks into it rather than adding a second.
 
-2. Change `startProcess()` to start the container with `ensureRunning()`, and to run each process with the working directory and environment that 0.12 gave it:
+2. Add `startProcess()`. Unlike the version in Run background processes, it starts the container with `ensureRunning()`, and runs each process with the working directory and environment that 0.12 gave it:
 
    ```ts title="src/index.ts" ins={5,19,20}
    export class MySandbox extends DurableObject<Env> {
@@ -71,8 +71,6 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
 
    0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets, except `PATH`.
 
-3. Remove `INACTIVITY_TIMEOUT_MS` from the scripts that you added in step 1. Your class file already defines it, so the constructor and the alarm handler keep the inactivity timeout of your class.
-
 </Steps>
 
 On this page, `sandbox` is the stub that `getByName()` returns.
@@ -95,7 +93,7 @@ const started = await sandbox.startProcess("dev", [
 ]);
 ```
 
-Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_6snsuw`, use `crypto.randomUUID()`. The ID becomes a directory name, so use only characters that are safe in a path.
+Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_6snsuw`, use `crypto.randomUUID()`. The ID becomes a directory name, so reject an ID unless it matches `^[A-Za-z0-9_-]+$` before you pass it to any process method. An ID such as `../app` would otherwise reach a directory outside `ROOT`.
 
 `startProcess()` returns `false` when a process already uses the ID. 0.12 replaced the record instead, and the first process kept running without one. An ended process keeps its directory, so `startProcess()` also returns `false` for its ID. To start that ID again, delete the directory first, as [Stop processes](#stop-processes) describes.
 
@@ -239,7 +237,7 @@ await sandbox.stop("dev");
 
 `stop()` sends `SIGTERM` to the process group, which reaches the processes that the command started. 0.12 sent `SIGKILL` 5 seconds later to any process still running, and ignored the `signal` argument. To stop a process that ignores `SIGTERM`, change `TERM` to `KILL` in `stop()`.
 
-Replace `killAllProcesses()` with a `stop()` call for each running process that `listProcesses()` returns. Remove `cleanupCompletedProcesses()` and the `autoCleanup` option, which did nothing in 0.12. To delete the directory of an ended process, run `rm -rf` on it.
+Replace `killAllProcesses()` with a `stop()` call for each running process that `listProcesses()` returns. Remove `cleanupCompletedProcesses()` and the `autoCleanup` option, which did nothing in 0.12. To delete the directory of an ended process, check its ID against the same pattern, then run `rm -rf` on `${ROOT}/${id}`.
 
 ## Replace callbacks
 

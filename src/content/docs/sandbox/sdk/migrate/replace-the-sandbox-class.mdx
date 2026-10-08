@@ -74,8 +74,8 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
    The new entry makes these changes:
 
-   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`, so remove them. The `Dockerfile` moves to `images`, and the instance type moves to `start()`.
-   - The container application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application, and the deploy fails after the new Worker version is already live.
+   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`, so remove them. The `Dockerfile` moves to `images`, and the [instance type](/containers/platform/limits/#instance-types), which sets the CPU, memory, and disk of each container, moves to the `instance` option of `start()`.
+   - Wrangler deploys this entry as a container application, which runs the containers of your class. The application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application, and the deploy fails after the new Worker version is already live.
    - Leave `durable_objects` and your `migrations` or `exports` as they are. The class keeps its name, so it needs no class migration.
 
    Also remove `SANDBOX_TRANSPORT`, `SANDBOX_INSTANCE_TIMEOUT_MS`, `SANDBOX_PORT_TIMEOUT_MS`, and `SANDBOX_POLL_INTERVAL_MS` from `vars`, and keep `nodejs_compat`, which 1.0 requires.
@@ -182,9 +182,9 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   Call `ensureRunning()` before each use of the container. It runs `startContainer()` once for each new container, and once more when a restarted Durable Object finds the container running. A deploy restarts the Durable Object and can stop setup partway, so every step after `start()` must be safe to run again. `running` is `true` as soon as `start()` returns, so requests that arrive during setup wait for the same `startContainer()` call. If a setup step throws, `startContainer()` stops the container, so no request runs commands in a container that is not set up.
+   Call `ensureRunning()` before each use of the container. It runs `startContainer()` once for each new container, and once more when a restarted Durable Object finds the container running. A Durable Object [restarts](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart) when it leaves memory and later runs its constructor again, and its container can keep running. A deploy restarts the Durable Object and can stop setup partway, so every step after `start()` must be safe to run again. `running` is `true` as soon as `start()` returns, so requests that arrive during setup wait for the same `startContainer()` call. If a setup step throws, `startContainer()` stops the container, so no request runs commands in a container that is not set up.
 
-   `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout does not survive a Durable Object restart. The constructor sets it again when a restarted Durable Object finds the container running. The timeout accepts at most 6 hours. If your commands do not need the Internet, set `enableInternet` to `false`.
+   `start()` returns before the container is ready, and the first `exec()` waits for it. The inactivity timeout does not survive a restart, so the constructor sets it again when the container is running. For the values that the timeout accepts, refer to [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout). If your commands do not need the Internet, set `enableInternet` to `false`.
 
 7. Replace each class field and `getSandbox()` option that your code sets:
 
@@ -194,7 +194,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    | `keepAlive` | An [alarm](/durable-objects/api/alarms/) that runs more often than the inactivity timeout while work remains. |
    | `envVars`, `setEnvVars()` | `env` on `start()` for the main process, and `env` on each `exec()` call. Commands do not inherit the `start()` variables, except `PATH`. |
    | `entrypoint` | `entrypoint` on `start()`, or `CMD` in the image. |
-   | `enableInternet` | `enableInternet` on `start()`, which every call must pass. 0.12 defaulted to `true`. |
+   | `enableInternet` | `enableInternet` on `start()`, which every call must pass. |
    | `labels`, `setLabels()` | `labels` on `start()`. |
    | `defaultPort`, `requiredPorts` | `this.container.getTcpPort(port)`. Refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/). |
    | `allowedHosts`, `deniedHosts`, `outboundByHost`, `outbound`, `interceptHttps` | Refer to [Move outbound rules](/sandbox/sdk/migrate/outbound-traffic/). |
@@ -224,7 +224,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object leaves memory, so it misses a stop that happens before the next request. While the call keeps the Durable Object in memory, the inactivity timeout does not start, and the container keeps running past the timeout. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance). For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+   For when the call resolves and when it rejects, refer to [`monitor()`](/containers/api/durable-object-container/#monitor). The call ends when the Durable Object leaves memory, so it misses a stop that happens before the next request. While the call keeps the Durable Object in memory, the inactivity timeout does not start, and the container keeps running past the timeout. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance). For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
 
