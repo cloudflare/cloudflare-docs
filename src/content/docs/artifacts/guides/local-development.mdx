@@ -16,10 +16,10 @@ The local Artifacts simulator lets you develop against a Git-compatible reposito
 
 When you run a Worker locally, the `artifacts` binding uses the local simulator unless you explicitly set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your existing development workflow relied on an implicit remote binding, set `remote = true` to keep using the deployed service.
 
-| Setting | Binding destination | Local Git installation | Cloudflare credentials for local development |
-| --- | --- | --- | --- |
-| Omitted `remote` or `remote = false` | Local simulator | Required | Not required |
-| `remote = true` | Deployed Artifacts service | Not required to start the binding | Required |
+| Setting                              | Binding destination        | Local Git installation            | Cloudflare credentials for local development |
+| ------------------------------------ | -------------------------- | --------------------------------- | -------------------------------------------- |
+| Omitted `remote` or `remote = false` | Local simulator            | Required                          | Not required                                 |
+| `remote = true`                      | Deployed Artifacts service | Not required to start the binding | Required                                     |
 
 The local simulator is available through `wrangler dev`, the Cloudflare Vite plugin, and Workers Vitest. It does not provide a local REST API, Artifacts CLI, dashboard, SSH endpoint, or Git LFS server.
 
@@ -27,13 +27,15 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
 
 <Steps>
 
-1. Install Git on your development machine. Make `git` available on the `PATH` of the process that starts your dev server or tests. Verify the installation in that environment:
+1. Install Git 2.32 or newer on your development machine. Make `git` available on the `PATH` of the process that starts your dev server or tests. Verify the version in that environment:
 
    ```sh
    git --version
    ```
 
-   Local Artifacts checks Git during startup. If Git is unavailable, startup fails with installation instructions. Restart your dev tool after changing `PATH`. This first version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future; it is not included in this version. Deployed Artifacts does not require Git on your development machine.
+   Use an up-to-date, security-patched Git release.
+
+   If Git is unavailable or older than 2.32, local Artifacts fails at startup with installation or upgrade instructions. Restart your dev tool after changing `PATH`. This version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future; it is not included in this version. Deployed Artifacts does not require Git on your development machine.
 
 2. Add a binding to your Wrangler config file. If your project already has a binding, leave `remote` unset or set it to `false`:
 

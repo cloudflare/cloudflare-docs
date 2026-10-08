@@ -43,7 +43,7 @@ You also need:
 - Wrangler installed. Local Artifacts development does not require Cloudflare credentials. Authenticate Wrangler before deploying or using a remote binding.
 - Access to Artifacts in your Cloudflare account for the deployment step.
 - A namespace name, for example `default`.
-- Git installed on your development machine and available on `PATH`. The local simulator checks this at startup.
+- Git 2.32 or newer installed on your development machine and available on `PATH`. The local simulator checks the Git version at startup.
 - `jq`, if you want to extract response fields automatically.
 
 ## 1. Create a Worker project
@@ -208,7 +208,6 @@ export ARTIFACTS_TOKEN=$(printf '%s' "$RESPONSE" | jq -r '.token')
 
 In the previous step, your Worker created an empty Artifacts repo. Now you will create a local Git repo, add a file, and push it to Artifacts — the same way you would push to any Git remote.
 
-
 ```sh
 mkdir artifacts-demo
 cd artifacts-demo
@@ -240,7 +239,8 @@ Use the `remote` URL returned by your Worker after each dev-server restart. The 
 
 ## 7. Deploy your Worker
 
-Switch back to your Worker project directory: 
+Switch back to your Worker project directory:
+
 ```sh
 cd artifacts-worker
 ```
