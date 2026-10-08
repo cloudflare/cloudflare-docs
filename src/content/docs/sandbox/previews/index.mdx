@@ -226,7 +226,8 @@ To keep the sandbox running while a page has a connection open, accept both ends
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
-   function bridge(upstream: WebSocket): Response {
+   function bridge(response: Response): Response {
+   	const upstream = response.webSocket!;
    	const [client, server] = Object.values(new WebSocketPair());
 
    	// Receive binary messages as `ArrayBuffer` instead of `Blob`
@@ -257,7 +258,15 @@ To keep the sandbox running while a page has a connection open, accept both ends
    	relay(server, upstream);
    	relay(upstream, server);
 
-   	return new Response(null, { status: 101, webSocket: client });
+   	// Pass on the subprotocol that the server chose. A browser closes a
+   	// connection that requested one and receives none.
+   	const headers = new Headers();
+   	const protocol = response.headers.get("Sec-WebSocket-Protocol");
+   	if (protocol) {
+   		headers.set("Sec-WebSocket-Protocol", protocol);
+   	}
+
+   	return new Response(null, { status: 101, webSocket: client, headers });
    }
    ```
 
@@ -268,7 +277,7 @@ To keep the sandbox running while a page has a connection open, accept both ends
    ```ts title="src/index.ts" {2-3}
    try {
    	const response = await container.getTcpPort(port).fetch(request);
-   	return response.webSocket ? bridge(response.webSocket) : response;
+   	return response.webSocket ? bridge(response) : response;
    } catch {
    ```
 

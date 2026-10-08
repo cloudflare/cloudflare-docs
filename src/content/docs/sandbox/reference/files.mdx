@@ -16,7 +16,7 @@ import { TypeScriptExample } from "~/components";
 
 `Files` reads and changes files and directories in a running container. It does not start or stop the container.
 
-Each method runs the `sandbox-shim` helper binary in the container through [`exec()`](/containers/api/durable-object-container/#exec) and waits for it to finish. Paths follow Linux rules, and `Files` does not restrict which paths a caller can open.
+Each method runs the `sandbox-shim` helper binary in the container through [`exec()`](/containers/api/durable-object-container/#exec). Every method except `readFile()` waits for the helper to finish; `readFile()` returns once the file is open and streams its contents. Paths follow Linux rules, and `Files` does not restrict which paths a caller can open.
 
 <TypeScriptExample>
 

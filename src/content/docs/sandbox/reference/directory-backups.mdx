@@ -193,7 +193,7 @@ The record that `backup()` returns. It is a plain object that you can store in D
 - `sha256` <Type text="string" /> — SHA-256 of the stored object, as 64 lowercase hexadecimal characters. Every `restore()` checks it.
 - `format` <Type text='"tar+zstd/1"' /> — archive format of the object.
 
-A record works only with the same `storage.binding` and `storage.prefix` that created it. A record that does not match this shape throws `TypeError`.
+`restore()` and `delete()` use the object at `<prefix><id>.tar.zst` in the bucket and prefix that the `DirectoryBackup` instance was created with, so pass a record to an instance whose storage holds that object. `restore()` checks the size and SHA-256 of the object against the record. A record that does not match this shape throws `TypeError`.
 
 ### `DirectoryBackupStorage`
 
