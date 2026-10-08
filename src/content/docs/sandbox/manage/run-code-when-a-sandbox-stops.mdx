@@ -41,7 +41,7 @@ The runtime does not wake a Durable Object when its container stops. Your Durabl
    }
    ```
 
-   Keep the inactivity timeout longer than the check interval, so the container keeps running between alarms. While `monitor()` waits, the inactivity timeout does not start, so the alarm enforces the idle limit. If the alarms stop, the timeout still stops the container after the Durable Object leaves memory. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+   Keep the inactivity timeout longer than the check interval, so the container keeps running between alarms. While `monitor()` waits, the inactivity timeout does not start, so the alarm enforces the idle limit. If the alarms stop, the timeout still stops the container after the Durable Object leaves memory. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance).
 
 2. In `MyContainer`, add a constructor, a method that watches the container, and a method that records the stop:
 
