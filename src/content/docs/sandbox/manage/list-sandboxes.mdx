@@ -61,7 +61,7 @@ Each user gets a registry, a Durable Object that records the sandboxes of that u
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-2. Add the registry class to your Worker. Each user gets one `SandboxDirectory`, which stores the user's sandbox sessions in SQLite:
+2. Add the registry class to your Worker. Each user gets one `SandboxDirectory`, which stores a row in SQLite for each sandbox of that user. The row holds a sandbox name that is unique within that user, called `session` in this example. The full Durable Object name of the sandbox is `<OWNER>/<SESSION>`:
 
    ```ts title="src/index.ts"
    export class SandboxDirectory extends DurableObject<Env> {
@@ -239,6 +239,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/containers/appl
 - The application ID appears in `wrangler containers list`. The application is named after the Worker and the Durable Object class, such as `sandbox-linux-mycontainer`.
 - The [API token](/fundamentals/api/get-started/create-token/) needs the **Containers Read** permission, which covers every Container application in the account. Use it for administration and cleanup, not in routes that users call.
 - `name_prefix` filters by the start of the name, and `state=active` returns only sandboxes that are starting, running, or stopping. Stopped sandboxes stay in the list.
+- A response holds one page of results. While a response has `result_info.next_page_token`, pass that value as `page_token` in the next request to get the next page.
 - A new sandbox can take a few seconds to appear, and sandboxes that run under `wrangler dev` do not appear.
 
 ## Related resources

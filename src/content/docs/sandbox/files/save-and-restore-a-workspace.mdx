@@ -17,7 +17,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-A Durable Object saves the filesystem of a sandbox as a Container snapshot, stores the snapshot ID, and starts the next instance from the snapshot. In this example, the sandbox keeps a notes file in `/workspace`.
+A Durable Object saves the filesystem of a sandbox as a Container snapshot, stores the snapshot ID, and starts the next instance from the snapshot. An instance is the Linux virtual machine that runs your image, and a snapshot is a saved copy of the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/). In this example, the sandbox keeps a notes file in `/workspace`.
 
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
@@ -31,7 +31,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
 <Steps>
 
-1. Add an inactivity timeout to your Durable Object. The constructor sets the timeout again when a restarted Durable Object finds the container running:
+1. Add an inactivity timeout to your Durable Object. A Durable Object [restarts](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart) when it leaves memory and runs its constructor again, and its instance can keep running. The constructor sets the timeout again when it finds the container running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
@@ -82,6 +82,8 @@ Container snapshots are in public beta. Features and behavior may change.
 
    If the stored snapshot cannot be restored, the request fails with an error such as `Snapshot "<SNAPSHOT_ID>" was not found.` Later requests fail the same way until the stored ID changes. The method does not fall back to the image, because the sandbox would then start with an empty workspace.
 
+   A snapshot is tied to the image it was saved from, and it cannot be applied to a different image. To carry files to a new image, [back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/) instead. For more information, refer to [Container snapshots](/containers/guides/snapshots/#create-a-container-snapshot).
+
 2. Add a method that runs one operation at a time, and a method that saves the filesystem and stops the instance:
 
    ```ts title="src/index.ts"
@@ -113,7 +115,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
    A command that writes a file while the snapshot runs can succeed and then disappear when `destroy()` stops the instance. `exclusive()` makes every operation that touches the disk wait for the save, and the save wait for them. Run each such method through it.
 
-   A snapshot saves the writable root filesystem. It does not include mounted directories, memory, or running processes. Finish writing files before you save. For more information about what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
+   Finish writing files before you save. For what a snapshot saves and what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 3. Add a method that adds a line to a file and returns the file, so you can check what a restore brings back:
 
