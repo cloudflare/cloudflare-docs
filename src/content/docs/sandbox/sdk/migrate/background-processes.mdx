@@ -64,7 +64,7 @@ This page replaces `startProcess()`, the `Process` methods, `listProcesses()`, `
 
    0.12 ran each process in `/workspace`, with the variables from `envVars`. `exec()` starts in `/`, even when the image sets `WORKDIR`. It does not inherit the variables that `start()` sets, except `PATH`.
 
-3. In `status()`, replace `10 * 60 * 1000` with `INACTIVITY_TIMEOUT_MS`, so that each check keeps your inactivity timeout.
+3. Remove `INACTIVITY_TIMEOUT_MS` from the scripts that you added in step 1. Your class file already defines it, so the constructor and the alarm handler keep the inactivity timeout of your class.
 
 </Steps>
 
@@ -94,7 +94,7 @@ Each process needs an ID. Where 0.12 generated one, such as `proc_1790379992394_
 
 `python3 -m http.server`, which 0.12 ran as a preview server, exits on startup in a 1.0 container. For the cause and a replacement, refer to [The hostname is longer than a DNS label](/containers/guides/local-dev/#the-hostname-is-longer-than-a-dns-label).
 
-Remove the `timeout` option, which did not stop a background process in 0.12. To limit how long a process runs, start it with the `timeout` command, such as `["timeout", "300", "npm", "test"]`. The command exits with code `124` when the time passes.
+Remove the `timeout` option, which did not stop a background process in 0.12. To limit how long a process runs, start it with the `timeout` command, such as `["timeout", "300", "npm", "test"]`. The command exits with code `124` when the time passes, or `137` with `--kill-after` when the process ignores `SIGTERM`.
 
 For the `sessionId` option, refer to [Replace sessions](/sandbox/sdk/migrate/commands/#replace-sessions).
 

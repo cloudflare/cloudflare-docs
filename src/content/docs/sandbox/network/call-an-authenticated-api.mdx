@@ -155,10 +155,12 @@ The container sends its request to `api.github.com` as usual. The Durable Object
 
    ```ts title="src/index.ts"
    if (url.pathname === "/username") {
-   	const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   	const sandbox = env.MY_CONTAINER.getByName("github");
    	return Response.json({ username: await sandbox.getUsername() });
    }
    ```
+
+   The route uses a sandbox name of its own. An instance that is already running keeps the Internet access it started with, so `enableInternet: false` applies only to an instance that this method starts.
 
 4. Deploy your Worker, then send a request to `/username` on the `workers.dev` URL that Wrangler prints:
 
@@ -214,7 +216,7 @@ A Dynamic Worker gets a method that calls one fixed GitHub endpoint, instead of 
 
    ```ts title="src/index.ts"
    const sandbox = env.LOADER.load({
-   	compatibilityDate: "$today",
+   	compatibilityDate: "2026-10-01",
    	mainModule: "code.js",
    	modules: {
    		"code.js": `

@@ -45,7 +45,7 @@ The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`
    ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false > /var/log/dockerd.log 2>&1 & exec sleep infinity"]
    ```
 
-   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files` or `S3Mount`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
+   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files`, `S3Mount`, or `DirectoryBackup`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
 
 2. Keep `enableInternet: true` in `start()`, so that Docker can pull images. 0.12 allowed Internet access by default.
 
@@ -386,7 +386,7 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    				{ cwd: "/workspace", env: ENV },
    			);
    			const result = await process.output();
-   			const timedOut = result.exitCode === 124;
+   			const timedOut = result.exitCode === 124 || result.exitCode === 137;
 
    			output.push({
    				stdout: decoder.decode(result.stdout),
@@ -410,7 +410,7 @@ In 0.12, `Shell` and `Editor` from `@cloudflare/sandbox/openai` ran the commands
    }
    ```
 
-   `timeout` [stops the command and every process it started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts), and the command exits with code `124`. 0.12 set no time limit when the action had no `timeoutMs`, and this class sets 60 seconds.
+   `timeout` [stops the command and the processes it started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts) that stay in its process group. The command exits with code `124`, or `137` if `timeout` also sends `SIGKILL`. 0.12 set no time limit when the action had no `timeoutMs`, and this class sets 60 seconds.
 
 2. Add an `Editor` that applies the patches from the agent with `Files`:
 

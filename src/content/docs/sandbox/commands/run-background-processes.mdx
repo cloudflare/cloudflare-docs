@@ -77,7 +77,7 @@ For a process that runs until the container stops, such as a development server 
 
    </TypeScriptExample>
 
-   `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+   `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`, unless a process moves to its own group. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
    Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that you want to keep to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
@@ -554,6 +554,6 @@ A development server prints a line, such as `ready`, when it accepts requests. T
 - [Stream command output](/sandbox/commands/stream-command-output/): commands that finish while the request is open.
 - [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/): processes that run until the container stops.
 - [Preview a web application](/sandbox/previews/): a web server as the main process.
-- [Process workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/process-workspace): a deployable Worker with these scripts, plus routes that list processes and wait for one to exit.
+- [Process workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/process-workspace): a deployable Worker that runs processes with the same approach, plus routes that list processes and wait for one to exit. Its scripts do not record the boot ID.
 - [Sandbox lifetime](/sandbox/concepts/lifetime/)
 - [Durable Object alarms](/durable-objects/api/alarms/)

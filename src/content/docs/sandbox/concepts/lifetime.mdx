@@ -70,7 +70,7 @@ Deploying a new version of your Worker restarts every Durable Object. A running 
 
 A running instance keeps the image, entrypoint, and environment variables that it started with. `start()` throws while an instance runs, so a new image or new startup options apply only to instances that start after the deploy. To move a sandbox to a new image, stop its instance, for example with `destroy()`, and start a new one. The files and processes of the old instance end with it.
 
-Requests, streamed responses, and WebSockets that the previous version was handling end during the deploy. A browser terminal disconnects and must connect again.
+Requests, streamed responses, and WebSockets that a sandbox is handling during a deploy can keep running on the previous version. Until that work ends, the previous version can also handle new requests for the sandbox, so new code reaches a busy sandbox late. A deploy is therefore not a way to cancel work. The runtime can still shut down a Durable Object, so make clients such as a browser terminal connect again when their connection closes. For more information, refer to [Shutdown behavior](/durable-objects/concepts/durable-object-lifecycle/#shutdown-behavior).
 
 After the deploy, the instance keeps running for the inactivity timeout that the previous version set. The new version must set the timeout again, as described in [The timeout does not survive a restart](#the-timeout-does-not-survive-a-restart).
 

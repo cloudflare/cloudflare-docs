@@ -149,7 +149,7 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
 </Steps>
 
-The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker started a Linux VM and ran the command you sent.
+The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker started a Linux container and ran the command you sent. When you deploy, each instance runs in its own virtual machine instead of in Docker.
 
 ## Next steps
 

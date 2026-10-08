@@ -89,7 +89,7 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
 
    		const decoder = new TextDecoder();
    		const run = async (step: string, argv: string[], cwd?: string) => {
-   			// `timeout` stops the command and every process it started.
+   			// Limit each step to 10 minutes.
    			const process = await container.exec(
    				["timeout", "--kill-after=5", "600", ...argv],
    				{ cwd },
@@ -141,7 +141,7 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
 
    `--` stops `git` from reading a repository value that starts with `-` as an option.
 
-   A step that runs longer than 10 minutes returns exit code `124`. `timeout` stops the step [together with every process the step started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The `finally` block stops the instance after the run.
+   A step that runs longer than 10 minutes returns exit code `124`, or `137` if `timeout` also sends `SIGKILL`. `timeout` stops the step together with the processes it starts that stay in its process group. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The `finally` block stops the instance after the run.
 
    `output()` holds the whole output of a step in the memory of the Durable Object. For test suites that print a lot, [stream the output](/sandbox/commands/stream-command-output/) instead.
 
