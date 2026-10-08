@@ -30,7 +30,10 @@ You can [use the API](/api/resources/ssl/subresources/certificate_packs/methods/
 
 If you upgraded your zone from Free to a paid plan and your Universal SSL certificate includes only an ECDSA certificate (no RSA certificate), this is expected behavior. Cloudflare does not automatically re-issue the Universal SSL certificate when you change your plan.
 
-Your RSA certificate will be issued when the certificate pack next renews. To get an RSA certificate sooner, [order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+Your RSA certificate will be issued when the certificate pack next renews. To get an RSA certificate sooner, you can:
+
+- [Order an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
+- [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) and then re-enable it. Cloudflare will provision a new certificate pack with both RSA and ECDSA certificates. Be aware that your zone will have no SSL/TLS coverage while the new certificate is being provisioned, so this option is only suitable for zones that can tolerate a brief period of downtime.
 
 For details, refer to [Certificate type](/ssl/edge-certificates/universal-ssl/limitations/#certificate-type).
 
