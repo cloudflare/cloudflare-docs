@@ -93,7 +93,8 @@ You also need:
    # The install script from the Claude Code package puts its native binary in place
    RUN npm install --global @anthropic-ai/claude-code@2.1.280
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    # Keep the container running between requests

@@ -47,7 +47,8 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
    	&& apt-get install -y --no-install-recommends ca-certificates fuse3 s3fs \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    CMD ["sleep", "infinity"]
    ```

@@ -36,7 +36,8 @@ Every class in the package has these requirements. A class page lists any others
 - The container image contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version:
 
   ```dockerfile
-  COPY --from=docker.io/cloudflare/sandbox:<VERSION> /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+  COPY --from=docker.io/cloudflare/sandbox:<VERSION> \
+  	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
   ```
 
   The helper is a statically linked `linux/amd64` binary. It runs in any `linux/amd64` image.
@@ -51,7 +52,8 @@ This configuration meets every requirement. The `Dockerfile` copies the helper i
 ```dockerfile title="Dockerfile"
 FROM node:24-trixie-slim
 
-COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
 RUN mkdir /workspace
 CMD ["sleep", "infinity"]

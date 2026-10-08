@@ -34,7 +34,8 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 2. Copy the helper binary into your image, if the `Dockerfile` does not copy it yet:
 
    ```dockerfile title="Dockerfile"
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
    ```
 
    Use the `cloudflare/sandbox` tag that matches the installed package version.
