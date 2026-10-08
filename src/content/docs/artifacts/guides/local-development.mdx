@@ -77,7 +77,7 @@ To reset local Artifacts, stop the dev server and back up any repositories you n
 
 ## Use an HTTPS import explicitly
 
-Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git contacts the host named in that URL. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
+Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git on your development machine contacts the specified host, including private-network hosts. Only import URLs you trust. Imports do not follow HTTP redirects; supply the final HTTPS Git URL, especially when using credentials. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
 
 A successful local import does not retain URL credentials in repository metadata or the Git configuration. If the process exits during an import, treat any partial local storage as sensitive until you inspect or reset it. Keep import URLs with credentials out of logs. For the binding arguments, refer to [Workers binding](/artifacts/api/workers-binding/#importparams).
 
