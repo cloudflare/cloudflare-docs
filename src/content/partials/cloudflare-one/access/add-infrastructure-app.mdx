@@ -17,14 +17,15 @@ import {
 2. Select **Create new application**.
 3. Select **Infrastructure**.
 4. Enter any name for the application.
-5. In **Target criteria**, choose which targets this application covers. Match targets by <GlossaryTooltip term="target hostname">hostname</GlossaryTooltip>, tag, or both. Use `include` to match any value. Use `require` to match all values. Use `exclude` to reject matching targets.
-6. Enter the **Protocol** and **Port** that will be used to connect to the server.
-7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target criteria and protocol with a different port number.
+5. (Optional) Select a **Session duration** from the dropdown menu. This sets the maximum time an infrastructure connection can remain open before it is automatically closed. Defaults to 24 hours.
+6. In **Target criteria**, choose which targets this application covers. Match targets by <GlossaryTooltip term="target hostname">hostname</GlossaryTooltip>, tag, or both. Use `include` to match any value. Use `require` to match all values. Use `exclude` to reject matching targets.
+7. Enter the **Protocol** and **Port** that will be used to connect to the server.
+8. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target criteria and protocol with a different port number.
    :::note
    Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
    :::
-8. Select **Next**.
-9. To secure your targets, configure a policy that defines who can connect and how they can connect:
+9. Select **Next**.
+10. To secure your targets, configure a policy that defines who can connect and how they can connect:
    1. Enter any name for your policy.
    2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to [Access policies](/cloudflare-one/access-controls/policies/) and review the list of [infrastructure policy selectors](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#infrastructure-policy-selectors).
    3. In **Connection context**, configure the following settings:
@@ -35,7 +36,7 @@ import {
       Cloudflare will not create new users on the target. UNIX users must already be present on the server.
       :::
 
-10. Select **Add application**.
+11. Select **Add application**.
 
 </TabItem>
 <TabItem label="API">
@@ -50,6 +51,7 @@ The following example uses the operator-based target criteria format with `inclu
 	json={{
 		name: "Example infrastructure app",
 		type: "infrastructure",
+		session_duration: "24h",
 		target_criteria: [
 			{
 				port: 22,
@@ -111,9 +113,10 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 
     ```tf
     resource "cloudflare_zero_trust_access_application" "infra-app" {
-    	account_id = var.cloudflare_account_id
-    	name       = "Example infrastructure app"
-    	type       = "infrastructure"
+    	account_id       = var.cloudflare_account_id
+    	name             = "Example infrastructure app"
+    	type             = "infrastructure"
+    	session_duration = "24h"
 
     	target_criteria {
     		port     = 22

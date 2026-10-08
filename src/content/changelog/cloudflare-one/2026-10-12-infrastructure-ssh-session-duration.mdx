@@ -1,0 +1,18 @@
+---
+title: Infrastructure application session duration defaults to 24 hours
+description: Infrastructure applications have a configurable session duration, defaulting to 24 hours.
+date: 2026-10-12
+products:
+  - cloudflare-one
+  - access
+---
+
+[Infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) now have a configurable session duration with a default value of 24 hours. You can set the session duration when creating or editing an infrastructure application in the dashboard or via the API.
+
+![Session duration setting in infrastructure application configuration](~/assets/images/changelog/access/infrastructure-ssh-session-duration.png)
+
+When the session duration elapses, any active SSH connections through that application will be closed, and users will need to reconnect. Previously, infrastructure applications did not enforce a session duration limit. Sessions could persist beyond 24 hours in some cases, but were never guaranteed beyond 10 hours due to [Gateway connection limits](/cloudflare-one/access-controls/troubleshooting/#long-lived-ssh-sessions-disconnect).
+
+When a target matches multiple infrastructure applications, the shortest session duration applies.
+
+For more information, refer to [Session duration](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#session-duration).
