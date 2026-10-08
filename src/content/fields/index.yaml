@@ -1601,6 +1601,49 @@ entries:
     description: |-
       Requires a Cloudflare Enterprise plan. You must also enable [leaked credentials detection](/waf/detections/leaked-credentials/).
 
+  - name: cf.appsec.request.failed_detections
+    data_type: Array<String>
+    categories: [Request]
+    keywords:
+      [request, cloudflare, detection, failure, waf, ai, client, visitor]
+    summary: IDs of supported detections that reported failures for the request.
+    description: |-
+      The field contains IDs of detections that reported failures before custom rules are evaluated, so you can act on those failures.
+
+      The default value is `[]`, which means no detection failures were reported.
+
+      Duplicate IDs are removed. Array order is not guaranteed.
+
+      The field does not alter the existing behavior of detections. Use it in rules to choose how to handle requests with reported failures.
+
+      Supported in zone and account custom rules and rate limiting rules. Also supported in zone Request Header Transform Rules.
+
+      The field is available on all plans, but using it does not grant access to detections or rule features that your plan does not include.
+
+      The possible IDs are:
+
+      ID                         | Detection
+      ---------------------------|---------------------------------------
+      `waf_content_scan`         | Content scanning
+      `waf_score`                | WAF attack score
+      `waf_signature`            | Attack signature detection
+      `waf_credential_check`     | Leaked credentials detection
+      `llm_prompt_pii`           | LLM prompt PII detection
+      `llm_prompt_injection`     | LLM prompt injection detection
+      `llm_prompt_custom_topic`  | LLM prompt custom topic detection
+      `llm_prompt_unsafe_topic`  | LLM prompt unsafe topic detection
+    example_value: |-
+      ["waf_score"]
+    example_block: |-
+      # Match any reported detection failure
+      len(cf.appsec.request.failed_detections) gt 0
+
+      # Match a reported WAF attack score failure
+      any(cf.appsec.request.failed_detections[*] eq "waf_score")
+
+      # Join IDs for a request header value
+      join(cf.appsec.request.failed_detections, ",")
+
   - name: cf.llm.prompt.detected
     data_type: Boolean
     categories: [Request]
