@@ -1,0 +1,105 @@
+---
+title: Table properties
+description: Learn which Iceberg table and namespace properties Basin Catalog reserves, blocks, or sets to different defaults.
+pcx_content_type: reference
+sidebar:
+  order: 2
+products:
+  - basin-catalog
+---
+
+Iceberg tables, views, and namespaces have a map of string properties. Basin Catalog reads some of these properties to control Cloudflare-specific behavior. It also blocks or changes the default of some standard Iceberg properties.
+
+## Why Basin Catalog uses Iceberg properties
+
+Some Basin Catalog settings apply to one table or namespace, for example, how long to wait before purged data is deleted. The Iceberg REST catalog specification does not define a place for settings like these.
+
+Basin Catalog could add custom query parameters or endpoints to the Iceberg API. Spark, Trino, PyIceberg, DuckDB, and other clients do not send them, so those settings would only work from Cloudflare-specific code. Instead, Basin Catalog uses properties with a reserved prefix:
+
+- Any Iceberg client can set a property, for example, with `ALTER TABLE ... SET TBLPROPERTIES` in Spark.
+- The setting is stored in the table or namespace metadata, next to the data it controls.
+- The Iceberg REST API stays the same as the specification. For more information, refer to [Iceberg REST API compatibility](/basin-catalog/reference/iceberg-rest-api/).
+- The `cloudflare-data-catalog.` prefix prevents collisions with your own properties and with future Iceberg properties.
+
+Other Iceberg catalogs use the same approach. For example, Apache Polaris reserves the `polaris.` prefix.
+
+## Reserved properties
+
+Basin Catalog reserves the `cloudflare-data-catalog.` prefix. Basin Catalog recognizes the following properties:
+
+| Property                                                | Applies to         | Allowed values       | Default           |
+| ------------------------------------------------------- | ------------------ | -------------------- | ----------------- |
+| `cloudflare-data-catalog.deletion.grace-period-seconds` | Tables, namespaces | Non-negative integer | `518400` (6 days) |
+| `cloudflare-data-catalog.maintenance.interval-seconds`  | Tables             | `3600` only          | `3600` (1 hour)   |
+
+Basin Catalog validates the value of a recognized property. If the value is not allowed, Basin Catalog rejects the request with an error. Basin Catalog does not change the value for you. Properties with the reserved prefix that Basin Catalog does not recognize are stored without changes.
+
+### `cloudflare-data-catalog.deletion.grace-period-seconds`
+
+This property sets how long Basin Catalog waits before it deletes the data files of a purged table. For more information, refer to [Purge a table](/basin-catalog/deleting-data/#purge-a-table).
+
+Basin Catalog uses the first value it finds in this order:
+
+1. The table property.
+2. The property of the namespace that contains the table.
+3. The default of `518400` seconds (6 days).
+
+A dropped view uses the namespace property or the default.
+
+Basin Catalog validates this property when a client drops a table with `purgeRequested=true`. It does not validate the value when you set it. If the value is not a non-negative integer, the drop fails with `400` and the error type `InvalidGracePeriodPropertyValue`. An invalid namespace value causes purge requests to fail for every table in the namespace that does not set its own value.
+
+To set a one-day grace period on a table with Spark:
+
+```py
+spark.sql("""
+    ALTER TABLE r2dc.namespace_name.table_name
+    SET TBLPROPERTIES ('cloudflare-data-catalog.deletion.grace-period-seconds' = '86400')
+""")
+```
+
+To set a one-day grace period on all tables in a namespace:
+
+```py
+spark.sql("""
+    ALTER NAMESPACE r2dc.namespace_name
+    SET PROPERTIES ('cloudflare-data-catalog.deletion.grace-period-seconds' = '86400')
+""")
+```
+
+### `cloudflare-data-catalog.maintenance.interval-seconds`
+
+This property sets how often [table maintenance](/basin-catalog/table-maintenance/) can run for a table. The only supported value is `3600`. Basin Catalog rejects any other value with `400` and the error type `InvalidMaintenanceIntervalPropertyValue`. Basin Catalog checks the value when a client creates a table, registers a table, or commits a property change.
+
+## Blocked table properties
+
+Basin Catalog controls where table metadata and data files are written. Requests that set or remove the following table properties fail with `409` and the error type `FailedToSetProperties`:
+
+- Any property that starts with `write.data.path`
+- Any property that starts with `write.metadata`, including `write.metadata.path` and `write.metadata.metrics.*`
+
+These three `write.metadata` properties are allowed:
+
+- `write.metadata.compression-codec`
+- `write.metadata.delete-after-commit.enabled`
+- `write.metadata.previous-versions-max`
+
+## Properties with different defaults
+
+`write.metadata.delete-after-commit.enabled` defaults to `true` in Basin Catalog. The Iceberg default is `false`.
+
+After each commit, Iceberg keeps a log of recent `metadata.json` files. The `write.metadata.previous-versions-max` property sets the length of this log. When a file drops out of the log, Basin Catalog deletes it in the background on a best-effort basis. If you set `write.metadata.delete-after-commit.enabled` to `false`, the old files stay in your bucket, but Basin Catalog no longer tracks them.
+
+## Table creation properties
+
+When a client creates a table, the `format-version` property sets the Iceberg table format version. Allowed values are `1`, `2`, and `3`. The default is `2`. Basin Catalog uses this value to create the table and does not store it as a table property. Other values fail with `400` and the error type `InvalidFormatVersion`.
+
+## Namespace properties
+
+Namespace properties have these rules:
+
+- Property keys must be lowercase. Keys with uppercase characters fail with `400`.
+- The `location` property cannot be changed or removed after the namespace is created.
+
+## View properties in the dashboard
+
+The dashboard shows table properties on the **Metadata** tab of each table in the **Explorer**. The `comment` and `owner` properties appear as the table description and owner in the table header.
