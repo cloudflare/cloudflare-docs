@@ -50,7 +50,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 | WebSockets | Stop delivering data. Clients receive no close frame. |
 | Pending alarms | Call your 1.0 `alarm()` handler once for each sandbox that was active. |
 | `schedule()` callbacks | Never run. |
-| 0.12 storage keys | Stay in Durable Object storage, unused. |
+| 0.12 storage keys | Stay in Durable Object storage. The pages that move preview URLs, tunnels, and outbound rules read `portTokens`, `tunnels`, `tunnels:meta`, and `OUTBOUND_CONFIGURATION`. |
 
 ## Move every sandbox in one deploy
 
@@ -81,7 +81,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
 3. Prepare clients for sockets that go silent. Open terminals and preview WebSockets stop receiving data at the switch, and the browser does not see them close. Have your client reconnect when a socket receives nothing for a set time, or tell users to reload after the deploy.
 
-4. Save the files that users need. No 1.0 sandbox can read the files in a 0.12 container. Before you deploy, save the files with 0.12 `createBackup()`. After the switch, restore them as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+4. Save the files that users need. Once a 0.12 container stops, its files are gone, and the short time after the deploy when 1.0 code still reaches it is no way to copy them. Before you deploy, save the files with 0.12 `createBackup()`. After the switch, restore them as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
 
 5. Rehearse on the staging Worker first. With sandboxes running there and a client connected, upload and deploy the 1.0 version to the staging Worker as steps 6 and 7 describe. Check that requests from your application work after the switch.
 
@@ -105,7 +105,7 @@ The switch happens when the deploy that moves your class to `scheduling_policy: 
 
 ## Check the move
 
-Send requests from your application to a sandbox, such as a command and a file read. Each Durable Object starts a 1.0 container on its first request. List the container applications in your account:
+Send requests from your application to a sandbox, such as a command and a file read. Each Durable Object starts a 1.0 container on its first request once `running` is `false`. For a short time after the deploy, a request can still reach the 0.12 container, where a command runs in the 0.12 image. Wait a few minutes after the deploy before you check. List the container applications in your account:
 
 <PackageManagers type="exec" pkg="wrangler" args="containers list" />
 
@@ -119,7 +119,7 @@ Delete the old container application. Replace `<OLD_APPLICATION_ID>` with its ID
 
 The old application runs its containers, and bills for them, until you delete it. Deleting it stops the containers that 0.12 started and deletes their files. Durable Objects and their storage stay.
 
-The keys that 0.12 wrote stay in the storage of each Durable Object and do nothing. If you delete them, name each key in a `delete()` call. Do not call `deleteAll()`, which also deletes your own keys and any 0.12 backup handles that you still need to convert.
+The keys that 0.12 wrote stay in the storage of each Durable Object. Keep `portTokens`, `tunnels`, `tunnels:meta`, and `OUTBOUND_CONFIGURATION` while your class reads them, as the pages that move preview URLs, tunnels, and outbound rules do. If you delete other keys, name each key in a `delete()` call. Do not call `deleteAll()`, which also deletes your own keys and any 0.12 backup handles that you still need to convert.
 
 ## Related resources
 

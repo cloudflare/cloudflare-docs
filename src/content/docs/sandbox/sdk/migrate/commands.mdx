@@ -111,7 +111,7 @@ const result = await test.output();
 
 In 0.12, a `cd` or `export` in one `exec()` call carried into the next call, including in the default session. In 1.0, it lasts until its command exits. Run steps that depend on each other in one command, such as `["bash", "-c", "cd app && npm ci && npm test"]`.
 
-`ExecutionSession` methods map like the top-level methods. Remove `deleteSession()`, which has nothing to delete. To keep the work of two sessions apart, as the `isolation` option did, give each one its own sandbox name.
+`ExecutionSession` methods map like the top-level methods. Remove `deleteSession()`, which has nothing to delete. 0.12 accepted an `isolation` option and ignored it, so sessions in one sandbox always shared processes and files. To keep the work of two sessions apart, give each one its own sandbox name.
 
 ## Replace timeouts
 
