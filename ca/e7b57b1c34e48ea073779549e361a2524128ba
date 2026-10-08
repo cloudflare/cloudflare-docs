@@ -1,0 +1,159 @@
+public/__redirects
+  s_de76d3e303a90e::t_521c4c0ff29427 621,821-823,827-830,3233-3236
+src/content/changelog/access/2025-07-01-Access-Supports-Customer-Metadata-Boundary.mdx
+  s_de76d3e303a90e::t_c57a85ec24a8a2 9
+src/content/changelog/data-localization/2026-06-23-regionalized-ip-bindings.mdx
+  s_de76d3e303a90e::t_f8dd0b3f0e3bc7 11,15
+src/content/changelog/dex/2026-02-19-dex-supports-cmb-eu.mdx
+  s_de76d3e303a90e::t_77fe0a20bab4d1 10
+src/content/changelog/dns/2026-03-20-dns-analytics-cmb-eu.mdx
+  s_de76d3e303a90e::t_1d924d6547cc55 9
+src/content/changelog/magic-transit/2025-07-30-mt-mwan-health-check-cmb-eu.mdx
+  s_de76d3e303a90e::t_6f60a69fd84725 10
+src/content/directory/data-localization.yaml
+  s_de76d3e303a90e::t_3acd19dde3bfdf 2,5,19-20
+src/content/docs/bots/account-abuse-protection.mdx
+  s_de76d3e303a90e::t_b13c31c55b22fa 78
+src/content/docs/cloudflare-one/insights/dex/index.mdx
+  s_de76d3e303a90e::t_f7aa14e116caf2 17
+src/content/docs/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/index.mdx
+  s_de76d3e303a90e::t_724399751fae63 325
+src/content/docs/cloudflare-one/insights/logs/index.mdx
+  s_de76d3e303a90e::t_5abdcac7d0f2f8 46
+src/content/docs/cloudflare-one/insights/logs/logpush/index.mdx
+  s_de76d3e303a90e::t_38ea8cca3a54cf 61
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard.mdx
+  s_de76d3e303a90e::t_c61b8c3ca7edd1 55
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency.mdx
+  s_de76d3e303a90e::t_0330b1bb6192ad 60
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/tunnel-health-checks.mdx
+  s_de76d3e303a90e::t_26fdaae83ee3f0 23
+src/content/docs/cloudflare-one/traffic-policies/http-policies/tls-decryption.mdx
+  s_de76d3e303a90e::t_ef3c806ef57d67 25,140
+src/content/docs/cloudflare-wan/configuration/common-settings/check-tunnel-health-dashboard.mdx
+  s_de76d3e303a90e::t_dc3f15182c6754 61
+src/content/docs/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency.mdx
+  s_de76d3e303a90e::t_371f21ce2617b8 63
+src/content/docs/cloudflare-wan/reference/tunnel-health-checks.mdx
+  s_de76d3e303a90e::t_a71e936a9dd7cf 22
+src/content/docs/d1/configuration/data-location.mdx
+  s_de76d3e303a90e::t_63b34e4dc11c13 23
+src/content/docs/data-localization/changelog.mdx
+  s_de76d3e303a90e::t_ca1d9055d45a9f 4
+src/content/docs/data-localization/how-to/cache.mdx
+  s_de76d3e303a90e::t_b3851b7ad6925d 4,16,18,20,37,43,49,51,53,55
+src/content/docs/data-localization/how-to/cloudflare-for-saas.mdx
+  s_de76d3e303a90e::t_b7e8e497940742 4,14,16,18,34,38,44,46,50,63-65,67,69
+src/content/docs/data-localization/how-to/durable-objects.mdx
+  s_de76d3e303a90e::t_299cfdd87ff411 4,12,14,16,19,21,23-33
+src/content/docs/data-localization/how-to/load-balancing.mdx
+  s_de76d3e303a90e::t_8566bf2843a698 4,14,16,18,20,38,42,44,46
+src/content/docs/data-localization/how-to/pages.mdx
+  s_de76d3e303a90e::t_8699b98a5487df 4,14,16,18,37,43,47,49,53
+src/content/docs/data-localization/how-to/r2.mdx
+  s_de76d3e303a90e::t_ae85b46072468d 4,17,19,21,29,31,35,101,103,107
+src/content/docs/data-localization/how-to/workers.mdx
+  s_de76d3e303a90e::t_513b2e040940f4 4,14,16,18,26,30,32,34,36,38,40,42,44,48
+src/content/docs/data-localization/how-to/zero-trust.mdx
+  s_1b7a4d51c2a485::t_d234f60efd58c8 4,17,21,32,45,51,55,57,68,72,74,80
+src/content/docs/data-localization/index.mdx
+  s_de76d3e303a90e::t_e698fdf6190316 2,4,13,26,28,30,36,38,42,44,48,50,54,56,62-80,113
+src/content/docs/data-localization/key-region.mdx
+  s_de76d3e303a90e::t_81c89e8c2bc6c5 3-4,11,14-16,20,22,24,28,30,47,51
+src/content/docs/data-localization/known-issues.mdx
+  s_de76d3e303a90e::t_64f77c95097099 10,21-22
+src/content/docs/data-localization/log-region/faq.mdx
+  s_de76d3e303a90e::t_3b20699b345823 12,15,17,21,29,33,35,37,39,41,43-50
+src/content/docs/data-localization/log-region/index.mdx
+  s_de76d3e303a90e::t_7c55b2ce24974a 3-4,11,16,18,20,22-34,48-49,60,62,66,68,70,72,78
+src/content/docs/data-localization/log-region/logpush-datasets.mdx
+  s_bc9fe6e30a3ad1::t_6724e6532cca2f 4,15,17-19,23,27-60
+src/content/docs/data-localization/processing-region/http-requests.mdx
+  s_60020fa739d180::t_ae6a7213a4f626 14,18,25,29
+src/content/docs/data-localization/processing-region/index.mdx
+  s_de76d3e303a90e::t_6bfbce349fd91c 3,15,17,19-23,27,29,37,41,72,76,78,80-82,84-88,90,92,96,100,102,106-108,110,116,120,127,129,139-141
+src/content/docs/data-localization/processing-region/regional-hostnames.mdx
+  s_de76d3e303a90e::t_fdbd5a83a7e1fc 21,23,27,29,44,46,48,50,202
+src/content/docs/data-localization/processing-region/spectrum-applications.mdx
+  s_de76d3e303a90e::t_0a41d10cc9e4df 19,21,25,46,50,54,62,78,82-84
+src/content/docs/data-localization/regions-by-setting.mdx
+  s_de76d3e303a90e::t_b4fcf52cf91bea 16-99
+src/content/docs/data-localization/storage-region.mdx
+  s_de76d3e303a90e::t_d37f3453817077 1-111
+src/content/docs/data-localization/what-stays-in-your-region.mdx
+  s_de76d3e303a90e::t_d7c33ba9ae6caf 21-26,28,62-70,85,87
+src/content/docs/durable-objects/reference/data-location.mdx
+  s_de76d3e303a90e::t_19256091c3f3c4 17
+src/content/docs/fundamentals/account/account-security/audit-logs.mdx
+  s_de76d3e303a90e::t_794acbe6d4c7d4 51,53
+src/content/docs/fundamentals/concepts/traffic-flow-cloudflare.mdx
+  s_de76d3e303a90e::t_36b0dbfc4c633e 56,66
+src/content/docs/fundamentals/manage-members/roles.mdx
+  s_de76d3e303a90e::t_64cc11ce4e70cd 127-128
+src/content/docs/fundamentals/reference/policies-compliances/cloudflare-cookies.mdx
+  s_de76d3e303a90e::t_be109621109409 19
+src/content/docs/kv/reference/data-location.mdx
+  s_de76d3e303a90e::t_9cf4d7c3cddafa 20
+src/content/docs/logs/logpush/logpush-job/datasets/cmb.mdx
+  s_de76d3e303a90e::t_8e625991689878 4
+src/content/docs/magic-transit/network-health/check-tunnel-health-dashboard.mdx
+  s_de76d3e303a90e::t_d164060712e9e3 61
+src/content/docs/magic-transit/network-health/index.mdx
+  s_de76d3e303a90e::t_0024c83479ee6c 32
+src/content/docs/magic-transit/network-health/update-tunnel-health-checks-frequency.mdx
+  s_de76d3e303a90e::t_c9794296b8ae83 44
+src/content/docs/magic-transit/reference/tunnel-health-checks.mdx
+  s_de76d3e303a90e::t_15eac847d39a44 24
+src/content/docs/reference-architecture/design-guides/extending-cloudflares-benefits-to-saas-providers-end-customers.mdx
+  s_de76d3e303a90e::t_76e87262d61b16 21,44,54,87
+src/content/docs/reference-architecture/diagrams/sase/gateway-for-protective-dns.mdx
+  s_de76d3e303a90e::t_6ffb3d239d33ba 77
+src/content/docs/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips.mdx
+  s_de76d3e303a90e::t_a2fb74f3f8bb0e 79
+src/content/partials/cloudflare-for-platforms/regional-services.mdx
+  s_de76d3e303a90e::t_39f352dd046d28 6
+src/content/partials/load-balancing/load-balancer-create.mdx
+  s_de76d3e303a90e::t_35a452adab23b8 18
+src/content/release-notes/ddos.yaml
+  s_de76d3e303a90e::t_b2c2a3ac2cd429 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cae7b57b1c34e48ea073779549e361a2524128ba",
+  "prompts": {},
+  "sessions": {
+    "s_1b7a4d51c2a485": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefae72cbffefVClOxsmj9WGSO",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    },
+    "s_60020fa739d180": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefaec8a3ffe0GjAQGlsOxZr37",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    },
+    "s_bc9fe6e30a3ad1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefae9c8effeVGeHAaqDDk61jx",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    },
+    "s_de76d3e303a90e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefc17d0effeh0M3rvDgmymUV3",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    }
+  }
+}
