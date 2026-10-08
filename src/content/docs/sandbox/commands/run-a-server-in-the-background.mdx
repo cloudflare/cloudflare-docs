@@ -126,7 +126,11 @@ For a process that runs until it finishes, such as a build or an agent task, ref
 
    async function stopServer(container: Container, dir: string): Promise<void> {
    	const stop = await container.exec(["sh", "-c", STOP, "sh", dir]);
-   	await stop.exitCode;
+   	const exitCode = await stop.exitCode;
+
+   	if (exitCode !== 0) {
+   		throw new Error(`Stopping the server failed with exit code ${exitCode}`);
+   	}
    }
    ```
 
