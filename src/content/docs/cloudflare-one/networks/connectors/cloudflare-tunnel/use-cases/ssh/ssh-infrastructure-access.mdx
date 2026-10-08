@@ -212,7 +212,16 @@ The following SSH features are not supported:
 
 ### Session duration
 
-Infrastructure applications enforce a configurable SSH session duration, which defaults to 24 hours. Active sessions that exceed the configured duration will be disconnected. When a target matches multiple infrastructure applications, the shortest session duration applies.
+Infrastructure applications enforce a configurable session duration, which defaults to 24 hours. When the session duration elapses, any active SSH connections through that application are closed and users must reconnect. When a target matches multiple infrastructure applications, the shortest session duration applies.
+
+To configure the session duration:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select an existing infrastructure application and choose **Configure**, or create a new infrastructure application.
+3. Select a **Session duration** from the dropdown menu.
+4. Save the application.
+
+You can also set `session_duration` via the [API](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) when creating or updating an infrastructure application. The value must be a non-negative duration in whole seconds (for example, `30m`, `8h`, or `2h45m`).
 
 Separately, all connections proxied through Cloudflare Gateway have a maximum guaranteed duration of 10 hours due to periodic service releases. For more information, refer to [Troubleshoot Access](/cloudflare-one/access-controls/troubleshooting/#long-lived-ssh-sessions-disconnect).
 

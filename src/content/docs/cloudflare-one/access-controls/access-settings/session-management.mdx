@@ -95,7 +95,7 @@ Users who match a policy configured with a _Same as application session timeout_
 
 <Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 
-For [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/), SSH sessions are limited by a configurable session duration, which defaults to 24 hours. Active sessions that exceed the configured duration will be disconnected. When a target matches multiple infrastructure applications, the shortest session duration applies.
+For [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/), connections are limited by a configurable [session duration](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#session-duration), which defaults to 24 hours. When the session duration elapses, any active SSH connections through that application are closed and users must reconnect. When a target matches multiple infrastructure applications, the shortest session duration applies.
 
 ### Cloudflare One Client session duration
 
