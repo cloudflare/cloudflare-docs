@@ -10,6 +10,8 @@ products:
 
 Cloudflare Observability supports logs from the products listed in the table. Turn on each dataset in the location shown under **Enablement**. Datasets enabled through [Log Explorer](/log-explorer/) appear in Logs once your account has Log Explorer and that dataset turned on. Event sizes are estimates and vary by record.
 
+You can also query [sampled analytics datasets](#sampled-analytics-datasets) for your zones in Logs without turning anything on.
+
 ## Supported datasets
 
 | Dataset                                                                                                    | Identifier                    | Enablement                                                                 | Average event size | Default retention |
@@ -18,7 +20,7 @@ Cloudflare Observability supports logs from the products listed in the table. Tu
 | [Containers](/containers/faq/#how-do-container-logs-work)                                                  | `containers`                  | [On Worker](/containers/faq/#how-do-container-logs-work)                   | 1.88 KB            | 7 days            |
 | [R2 Data Access Logs](/r2/buckets/data-access-logs/)                                                       | `r2`                          | [On Bucket](/r2/buckets/data-access-logs/#turn-on-data-access-logs)        | 1.55 KB            | 7 days            |
 | [AI Gateway](/ai-gateway/observability/logging/)                                                           | `ai-gateway`                  | [On Gateway](/ai-gateway/observability/logging/)                           | 2 KB               | 7 days            |
-| [Issues](/workers/observability/issues/)                                                                   | `real-time-issues`            | [On Worker](/workers/observability/issues/)                                 | 2.64 KB            | 7 days            |
+| [Issues](/workers/observability/issues/)                                                                   | `real-time-issues`            | [On Worker](/workers/observability/issues/)                                | 2.64 KB            | 7 days            |
 | [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/)                                    | `http_requests`               | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.56 KB            | 30 days           |
 | [Firewall Events](/logs/logpush/logpush-job/datasets/zone/firewall_events/)                                | `firewall_events`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.36 KB            | 30 days           |
 | [Access Requests](/logs/logpush/logpush-job/datasets/account/access_requests/)                             | `access_requests`             | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 446 B              | 30 days           |
@@ -46,6 +48,23 @@ Cloudflare Observability supports logs from the products listed in the table. Tu
 | [WARP Toggle Changes](/logs/logpush/logpush-job/datasets/account/warp_toggle_changes/)                     | `warp_toggle_changes`         | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 327 B              | 30 days           |
 | [Zaraz Events](/logs/logpush/logpush-job/datasets/zone/zaraz_events/)                                      | `zaraz_events`                | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 7.30 KB            | 30 days           |
 | [Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) | `zero_trust_network_sessions` | [On Account](/log-explorer/manage-datasets/#enable-log-explorer)           | 1.21 KB            | 30 days           |
+
+## Sampled analytics datasets
+
+Logs also lists HTTP requests and firewall events from the [GraphQL Analytics API](/analytics/graphql-api/). These datasets need no enablement and have no additional charge. The following sampled analytics datasets are available:
+
+| Dataset         | GraphQL dataset          | Availability                  | Retention        |
+| --------------- | ------------------------ | ----------------------------- | ---------------- |
+| HTTP requests   | `httpRequestsAdaptive`   | All plans                     | At least 31 days |
+| Firewall events | `firewallEventsAdaptive` | Pro, Business, and Enterprise | At least 31 days |
+
+These datasets use [adaptive sampling](/analytics/graphql-api/sampling/). Results can omit individual events, and counts can be estimates. Available fields, exact retention, and how far back charts reach depend on your plan. Refer to [GraphQL Analytics API limits](/analytics/graphql-api/limits/) for details.
+
+To query these datasets for a zone, you need the Zone Analytics Read permission for that zone.
+
+In the dataset selector, sampled analytics datasets appear as **HTTP requests** and **Firewall events**. Log Explorer datasets appear under a **Log Explorer** heading, listed by identifier, such as `http_requests`.
+
+For unsampled HTTP requests and firewall events, turn on those datasets through [Log Explorer](/log-explorer/manage-datasets/#enable-log-explorer). Log Explorer is a paid add-on. Refer to [Pricing](#pricing) for the unsampled security dataset price.
 
 ## Pricing
 
