@@ -12,7 +12,6 @@ import {
 	CopyPromptButton,
 	DashButton,
 	Render,
-	Steps,
 	Tabs,
 	TabItem,
 	YouTube,
@@ -37,16 +36,7 @@ Use an API token with **Realtime Admin** access scoped to your account for the C
 <Tabs>
 <TabItem label="Dashboard" class="space-y-4">
 
-<Steps>
-1. Open **API Tokens** in your Cloudflare profile and select **Create Token**.
-
-   <DashButton url="/profile/api-tokens" />
-
-2. Select **Realtime** > **Realtime Admin** and scope the token to your account.
-3. Configure [access policies and restrictions](/fundamentals/api/reference/permissions/), then create the token and save it in backend secret storage.
-</Steps>
-
-For the full procedure, refer to [Create API token](/fundamentals/api/get-started/create-token/).
+Follow [Create API token](/fundamentals/api/get-started/create-token/) to create a user-owned token with **Realtime Admin** access scoped to your account. Save the token in backend secret storage.
 
 </TabItem>
 <TabItem label="cf CLI" class="space-y-4">
