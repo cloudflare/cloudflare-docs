@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Clone a private repository into a sandbox while the access token stays in your Worker. If the clone URL contains the token, every command in the sandbox can read it. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com`. An entrypoint in your Worker receives each request, checks it, and adds the token.
+Clone a private repository into a sandbox while the access token stays in your Worker. If the clone URL contains the token, every command in the sandbox can read it. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com` and delivers them to an entrypoint in your Worker, a class that the Worker exports to handle requests. The entrypoint checks each request and adds the token.
 
 ## Prerequisites
 
@@ -152,8 +152,7 @@ Clone a private repository into a sandbox while the access token stays in your W
    			],
    			{
    				env: {
-   					// The intercept terminates TLS with a certificate that the container
-   					// CA certificate signs. Git reads the CA certificate from this path
+   					// Trust the CA that signs the certificate of the intercept
    					GIT_SSL_CAINFO: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
    				},
    			},
@@ -168,6 +167,8 @@ Clone a private repository into a sandbox while the access token stays in your W
    	}
    }
    ```
+
+   The intercept answers each HTTPS request with its own certificate, signed by a Cloudflare certificate authority (CA). Git accepts the certificate only when it trusts that CA, so `GIT_SSL_CAINFO` points Git to the CA certificate file.
 
 6. Add a route to your Worker that clones the repository:
 
