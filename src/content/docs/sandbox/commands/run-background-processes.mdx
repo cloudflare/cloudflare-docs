@@ -107,7 +107,7 @@ For a process that runs until the container stops, such as a development server 
    		const container = this.ctx.container;
 
    		if (!container) {
-   			throw new Error("The container binding is not configured");
+   			throw new Error("No container is configured");
    		}
 
    		if (!container.running) {
