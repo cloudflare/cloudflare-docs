@@ -7,6 +7,8 @@ products:
   - support
 ---
 
+import { Steps } from "~/components";
+
 ## 499 Client Close Request
 
 Cloudflare records a 499 status code in logs and analytics when a client closes the connection before the request is complete. No 499 HTTP response is sent to the client — the code only appears in logs.
@@ -21,54 +23,67 @@ Common patterns that produce elevated 499 rates include:
 
 | Pattern | Signals to look for | Starting point |
 |---|---|---|
-| **Client deadline shorter than path latency** | Rate elevated on specific endpoints; matched completed requests on those endpoints show elevated `OriginResponseDurationMs` or longer edge times | Compare matched completed requests for the same endpoint and window; check origin-side timing |
-| **Cache miss increasing latency** | Cache hit rate dropped for affected paths; 499 rate tracks the hit-rate change | Check cache configuration for affected paths |
-| **Possible edge or network issue** | `OriginIP` absent; `CacheCacheStatus` is MISS or BYPASS; rate notably elevated in one data center relative to matched cohorts elsewhere; no origin-side or cache explanation | Collect evidence across matched cohorts, then contact Cloudflare Support if unresolved |
+| **Client deadline shorter than path latency** | Rate elevated on specific endpoints. Matched completed requests on those endpoints show elevated `OriginResponseDurationMs` or longer edge times | Compare matched completed requests for the same endpoint and window. Check origin-side timing |
+| **Cache miss increasing latency** | Cache hit rate dropped for affected paths. The 499 rate tracks the hit-rate change | Check cache configuration for affected paths |
+| **Possible edge or network issue** | Rate notably elevated in one data center relative to matched cohorts elsewhere, with no explanation established from client timing, origin-side evidence, or cache behavior | Collect request-linked evidence and matched-cohort comparisons. Contact Cloudflare Support if unresolved |
 
 ### How to investigate
 
-Use [Instant Logs](/logs/instant-logs/) or a [Logpush](/logs/logpush/) export filtered to `EdgeResponseStatus = 499`. No single field identifies the cause — compare 499 log entries against completed requests for the same endpoint, client population, and time window:
+Use [Instant Logs](/logs/instant-logs/) or a [Logpush](/logs/logpush/) export to collect requests for the affected endpoint, client population, protocol, and time window. Keep both the `499` log entries and the other eligible requests. An export filtered only to `EdgeResponseStatus = 499` cannot provide comparison requests or the denominator needed to calculate a `499` rate.
 
-- **`OriginIP`** — indicates whether an origin IP was recorded for the request. An absent value does not establish where the request stopped: cache-served responses do not require an origin fetch; an aborted or partially logged request may also lack an origin IP. Use `CacheCacheStatus` to distinguish these cases.
-- **`CacheCacheStatus`** — the log field name for cache disposition in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/). If `OriginIP` is absent and `CacheCacheStatus` is HIT or STALE, the request was served from cache — the missing origin IP is expected. If `OriginIP` is absent and `CacheCacheStatus` is MISS or BYPASS, the cache phase indicates an origin fetch was expected; however, an aborted request may lack phase fields. Treat this combination as an unresolved phase and collect request-linked and origin-side evidence before attributing a cause.
+Calculate the `499` rate as requests with `EdgeResponseStatus = 499` divided by all eligible requests in the same population. If the logs are sampled, account for sampling consistently in both counts. For Instant Logs, use the returned `sampleInterval` values when estimating request counts. Use matched completed requests separately to compare timing fields.
+
+No single field identifies the cause. Correlate these fields with matched request populations and request-linked evidence:
+
+- **`OriginIP`** — the origin IP recorded for the request. An absent value does not establish where the request stopped. A request served from cache may not require an origin fetch. An aborted or incompletely logged request may also lack an origin IP. Correlate this field with `CacheCacheStatus` and request-linked evidence.
+- **`CacheCacheStatus`** — records cache disposition in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/). Values such as `hit` or `stale` indicate a cache-served response, where an absent origin IP may be expected. The `dynamic` value means the request is not eligible for cache and can include firewall-blocked requests. Values such as `miss` or `bypass` help identify requests to investigate. They do not establish that an origin connection was attempted or where an aborted request stopped. Collect request-linked and origin-side evidence before attributing a cause.
 - **`EdgeColoCode`** — if 499 errors are elevated at one data center, compare the 499 rate relative to eligible traffic for the same endpoint, client population, and protocol across data centers in the same window. A rate notably higher in one location than in matched cohorts elsewhere is a useful lead, but location alone does not identify an infrastructure fault.
-- **UTC time window and volume trend** — compare 499 counts against completed requests in the same window and for the same endpoints. Differences in traffic mix across cohorts can produce different 499 rates without identifying a fault.
+- **UTC time window and volume trend** — compare `499` rates for the same endpoint, client population, and protocol across time windows. Use all eligible requests in each matched population as the denominator. Differences in traffic mix can produce different `499` rates without identifying a fault.
 
 To investigate a 499 spike:
 
-1. Identify which endpoints and time windows are affected. Compare 499 rates against completed requests for the same endpoint, client population, and protocol to establish a consistent baseline.
-2. For the affected endpoints, check matched completed requests (not the 499 entries themselves) for elevated `OriginResponseDurationMs` values. The `OriginResponseDurationMs` field reflects the upstream response time recorded when a response completes, including routing, tiering, connection, and response time; it is not recorded in the same way for an aborted request. Use same-endpoint, same-window completed requests and origin-side logs to identify where latency is highest.
-3. Check `OriginIP` and `CacheCacheStatus` for the 499 log entries and group by `EdgeColoCode`. If `OriginIP` is absent and `CacheCacheStatus` is MISS or BYPASS with no cache or origin explanation, and the rate is notably higher in one data center than in matched cohorts elsewhere in the same window, contact Cloudflare Support with the data center name, the matched-cohort 499 rate comparison, and the affected time window.
+<Steps>
+
+1. Identify the affected endpoints and time windows. Calculate the `499` rate using all eligible requests for the same endpoint, client population, and protocol. Compare that rate with the normal baseline for the same population. Use matched completed requests for the separate timing comparison in the next step.
+2. Compare `OriginResponseDurationMs` on matched completed requests with the normal baseline for the same endpoint, client population, and protocol. The field measures upstream response time from the first Cloudflare data center that receives the request. It includes Argo Smart Routing and Tiered Cache time, plus time to connect to and receive a response from the origin. An elevated value does not identify where the delay occurred. Correlate it with origin-side timing and request-linked evidence. Do not use a timing value from a `499` entry alone to infer the failed phase or assign the delay to the origin server.
+3. Review `OriginIP` and `CacheCacheStatus` for the affected requests. Compare the `499` rate across data centers using matched endpoint, client, and protocol populations in the same window. An absent origin IP with `miss` or `bypass` is a lead to correlate with request-linked and origin-side evidence. If the elevated rate remains unexplained, contact Cloudflare Support with the affected window, sample Ray IDs, and matched-cohort comparisons.
+
+</Steps>
 
 ### TCP connection timing
 
-Cloudflare's [connection limits reference](/fundamentals/reference/connection-limits/) publishes a 19-second complete TCP connection limit for the origin-connect phase. A client that disconnects during origin connection establishment will produce a 499 log entry.
+The [Connection limits reference](/fundamentals/reference/connection-limits/) publishes a 19-second TCP connection establishment limit for the origin-connect phase. A client that disconnects during origin connection establishment will produce a 499 log entry.
 
 This is one phase in which a 499 can occur. Clients can also disconnect during the HTTP request phase, while response headers are being sent, or while the response body is being delivered. Identifying which phase was in progress when the client disconnected requires comparing `EdgeTimeToFirstByteMs`, `EdgeResponseBodyBytes`, and matched completed requests rather than inferring it from the 499 entry alone.
 
 ### Long-running and streaming responses
 
-A 499 can occur before the first byte is delivered or after response-body delivery has begun, if the client disconnects before the response is complete. For example, a client with a short deadline may disconnect during origin connection or response; a client with a longer deadline may disconnect partway through receiving a large response body.
+A 499 can occur before the first byte is delivered or after response-body delivery has begun, if the client disconnects before the response is complete. For example, a client with a short deadline may disconnect during origin connection or response. A client with a longer deadline may disconnect partway through receiving a large response body.
 
 For streaming responses (HLS, DASH, or other media formats) and other long-running requests, clients use varying connection and read timeout defaults, some configurable at the application level and some not.
 
 To investigate 499 errors for long-running or streaming responses:
 
+<Steps>
+
 1. Confirm the effective timeout in use — check the client or SDK documentation and, if possible, confirm with your development team whether the timeout is configurable.
-2. In Cloudflare Logs, check `EdgeTimeToFirstByteMs` and compare it against `EdgeResponseBodyBytes` and total response duration for the 499 log entries versus completed requests on the same paths. This identifies whether the disconnect occurred at first byte or during body delivery.
-3. If the affected paths are cacheable and the cache hit rate has dropped for those paths, check the cache configuration. A lower hit rate increases origin fetches and can raise latency for both first-byte and body delivery. 4. Group the 499 entries by `EdgeColoCode` and compare the rate relative to eligible traffic for the same paths and client population across data centers. If one data center is significantly elevated with no origin-side or cache explanation, contact Cloudflare Support.
+2. Check `EdgeTimeToFirstByteMs` and `EdgeResponseBodyBytes` for the `499` log entries. Compare them with matched completed requests on the same paths. Positive response-body bytes support that body delivery had begun. Zero or missing body bytes do not, by themselves, establish that the disconnect occurred before the first byte. Use client-side timing or request-linked evidence when the phase remains unclear.
+3. If the affected paths are cacheable and their cache hit rate has dropped, check the cache configuration. A lower hit rate increases origin fetches and can raise latency for both first-byte and body delivery.
+4. Compare the `499` rate across data centers using matched paths, client populations, and protocols. Use all eligible requests in each population as the denominator. If one data center is significantly elevated with no origin-side or cache explanation, contact Cloudflare Support.
+
+</Steps>
 
 ### Transaction-sensitive requests
 
-When a 499 occurs on a request that was intended to modify server state, the outcome is ambiguous: the connection closed before a response was received, and the log entry alone does not establish whether the operation committed at the origin before the connection closed.
+When a `499` is logged for a request intended to modify server state, the log entry alone does not establish the operation's outcome. The client may have received response headers or part of the response body before disconnecting. If the application has not confirmed the result, reconcile the operation before retrying it.
 
-To handle ambiguous outcomes:
+To handle an unconfirmed outcome:
 
-- Reconcile the affected request and operation identifiers against your application's transaction records to determine whether the operation was recorded before the connection closed.
-- Implement idempotency keys for transaction-sensitive endpoints. An idempotency key allows you to resubmit an ambiguous request and receive the result of the original operation if it was already processed, without committing it again.
+- Match the affected request and operation identifiers to your application's transaction records or operation-status endpoint. Follow the application's reconciliation and retry policy if the outcome remains pending or unknown.
+- Where your application supports idempotency keys, use them for state-changing endpoints. Reuse the same key when retrying the same operation, following the application's documented key scope, retention period, and retry behavior.
 
 :::note
-[RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2) defines `DELETE` as idempotent in its intended effect — repeating the operation is defined to produce the same end state. This does not resolve whether the first operation was recorded before the connection closed. Reconcile against application transaction records in the same way as other state-changing requests.
+[RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2) defines `DELETE` as idempotent in its intended effect. Repeating the same request is defined to have the same intended effect as making it once. This does not establish the first request's outcome. Use application-level evidence to resolve an unconfirmed result.
 :::
 
 ### When to contact Cloudflare Support
@@ -76,7 +91,7 @@ To handle ambiguous outcomes:
 Contact support when:
 
 - 499 errors spike clearly above your zone's normal baseline for the same endpoints and window, and the spike is not explained by a corresponding change in origin response time or cache hit rate.
-- `OriginIP` is absent and `CacheCacheStatus` is MISS, BYPASS, or DYNAMIC for the affected log entries, with no cache or origin-side explanation, and matched cohort comparison across data centers does not isolate the cause.
+- The affected requests have no recorded `OriginIP` and a `CacheCacheStatus` of `miss` or `bypass`, and the elevated `499` rate remains unexplained after reviewing matched request populations, client timing, and origin-side evidence. Include these field values as investigation clues, not as proof of a Cloudflare fault.
 - The 499 rate is significantly elevated in one data center relative to matched traffic in other data centers serving the same zone in the same window, with no origin-side or cache explanation.
 
 When you contact support, include:
@@ -87,4 +102,4 @@ When you contact support, include:
 - The `OriginIP` and `CacheCacheStatus` values for those log entries
 - The `EdgeColoCode` distribution for the 499 entries and the same-window 499 rate in matched cohorts at other data centers
 - Whether other zones or hostnames experienced the same spike simultaneously
-- For Enterprise customers: a [Logpush](/logs/logpush/) export filtered to `EdgeResponseStatus = 499` for the time window
+- For Enterprise customers: a [Logpush](/logs/logpush/) export containing the affected `499` entries and matched comparison requests for the time window
