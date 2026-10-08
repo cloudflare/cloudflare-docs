@@ -3,7 +3,7 @@ productName: AI Gateway
 entries:
   - term: cf-aig-event-id
     general_definition: |-
-      [cf-aig-event-id](/ai-gateway/evaluations/add-human-feedback-api/#2-retrieve-the-cf-aig-log-id) is a unique identifier for an event, used to trace specific events through the system.
+      [cf-aig-event-id](/ai-gateway/observability/logging/) is a unique identifier for an event, used to trace specific events through the system.
 
   - term: cf-aig-step
     general_definition: |-
@@ -11,7 +11,7 @@ entries:
 
   - term: cf-aig-log-id
     general_definition: |-
-      The [cf-aig-log-id](/ai-gateway/evaluations/add-human-feedback-api/#2-retrieve-the-cf-aig-log-id) is a unique identifier for the specific log entry to which you want to add feedback. Treat it as an opaque string.
+      The [cf-aig-log-id](/ai-gateway/observability/logging/) is a unique identifier for the specific log entry to which you want to add feedback. Treat it as an opaque string.
 
   - term: cf-aig-request-id
     general_definition: |-
