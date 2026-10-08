@@ -343,6 +343,8 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so serve it at the root of a hostname and forward every path to your Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
 
+   If your class already has a `fetch()` handler, for example from [Move terminals](/sandbox/sdk/migrate/terminals/), rename this handler to `serveOpenCode()`, make it `private`, and call it from your `fetch()` handler for the requests that your Worker routes to OpenCode, for example by the hostname of the request. If your class also forwards preview URLs, remove the `X-Sandbox-Port` header in the Worker route that forwards OpenCode requests, as [Forward the WebSocket](/sandbox/sdk/migrate/terminals/#forward-the-websocket) shows.
+
 5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open your Worker URL in a browser. It redirects to `/?url=` and loads OpenCode.
 
 </Steps>
@@ -561,7 +563,7 @@ Clients written for the bridge API, such as `CloudflareSandboxClient` in the Ope
 
 ## Remove WarmPool
 
-Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept 0.x sandboxes started ahead of time, because a 0.x start took seconds. With the Durable Object scheduling policy, the median time from creating a sandbox to running a command in it was 648 milliseconds in an independent benchmark, so a pool saves little time.
+Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept 0.x sandboxes started ahead of time, because a 0.x start took seconds. Containers that use the Durable Object scheduling policy start faster, so a pool saves little time. For the measurements, refer to [Cloudflare Containers, rebuilt to scale agent sandboxes](https://blog.cloudflare.com/faster-agent-sandboxes/).
 
 <Steps>
 
@@ -583,7 +585,7 @@ Start each sandbox when a request needs it, and remove `WarmPool`. The pool kept
 
    </WranglerConfig>
 
-   If your Worker uses `exports`, mark the class as deleted instead:
+   If your Worker declares its Durable Object classes in the `exports` field of the Wrangler configuration, mark the class as deleted instead:
 
    <WranglerConfig>
 

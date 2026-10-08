@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `tunnels.get()` runs `cloudflared` in the container and returns a public URL. A quick tunnel gets a random `trycloudflare.com` URL, and a named tunnel gets a hostname in your account, such as `ada.example.com`. In 1.0, your Durable Object starts `cloudflared` with `exec()`. Named tunnels that 0.12 created stay in your account, and keep their hostnames once `cloudflared` runs again.
+In Sandbox SDK 0.12, `tunnels.get()` runs `cloudflared` in the container and returns a public URL. `cloudflared` is the connector for [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), and sends requests for that URL to a server in the container. A quick tunnel gets a random `trycloudflare.com` URL, and a named tunnel gets a hostname in your account, such as `ada.example.com`. In 1.0, your Durable Object starts `cloudflared` with `exec()`. Named tunnels that 0.12 created stay in your account, and keep their hostnames once `cloudflared` runs again.
 
 Your Worker already routes requests to the container, so most tunnels can become preview URLs instead. For those, refer to [Move preview URLs](/sandbox/sdk/migrate/preview-urls/).
 
@@ -303,14 +303,26 @@ Code in the sandbox can read the run token from the environment of the `cloudfla
 
 ## Find tunnels that 0.12 left behind
 
-After an in-place switch, no 0.12 `destroy()` runs, so tunnels and DNS records for sandboxes that no longer exist stay in your account. 0.12 names each tunnel `sandbox-<DURABLE_OBJECT_ID>-<NAME>`, and tags it with `createdBy: "sandbox-sdk"` metadata. List those tunnels:
+After an in-place switch, no 0.12 `destroy()` runs, so tunnels and DNS records for sandboxes that no longer exist stay in your account. 0.12 names each tunnel `sandbox-<DURABLE_OBJECT_ID>-<NAME>`, and tags it with `createdBy: "sandbox-sdk"` metadata.
+
+The commands in this section run in your shell. Set `ACCOUNT_ID` to the account that holds the 0.12 tunnels, `ZONE_ID` to the zone that holds their DNS records, and `CLOUDFLARE_API_TOKEN` to a token with the Cloudflare Tunnel Edit and DNS Edit permissions. These shell variables are for this cleanup only, and your Worker still does not need an account or zone ID. The `list_pages` function requests each [page of results](/fundamentals/api/how-to/make-api-calls/#pagination) until a page is empty. List those tunnels:
 
 ```sh
 API=https://api.cloudflare.com/client/v4
 
-curl --get "$API/accounts/$ACCOUNT_ID/cfd_tunnel" \
-	--data is_deleted=false --data per_page=100 \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" |
+list_pages() {
+	page=1
+	while body=$(curl --fail --silent --show-error --get "$@" \
+		--data page="$page" \
+		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN") &&
+		[ "$(printf '%s' "$body" | jq '.result | length')" -gt 0 ]; do
+		printf '%s\n' "$body"
+		page=$((page + 1))
+	done
+}
+
+list_pages "$API/accounts/$ACCOUNT_ID/cfd_tunnel" \
+	--data is_deleted=false --data per_page=1000 |
 	jq -r '.result[]
 		| select(.metadata.createdBy == "sandbox-sdk")
 		| "\(.id) \(.name) \(.status)"'
@@ -319,9 +331,8 @@ curl --get "$API/accounts/$ACCOUNT_ID/cfd_tunnel" \
 0.12 gives each DNS record the comment `sandbox-<DURABLE_OBJECT_ID>`. List those records:
 
 ```sh
-curl --get "$API/zones/$ZONE_ID/dns_records" \
-	--data comment.startswith=sandbox- \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" |
+list_pages "$API/zones/$ZONE_ID/dns_records" \
+	--data comment.startswith=sandbox- --data per_page=1000 |
 	jq -r '.result[] | "\(.id) \(.name) \(.comment)"'
 ```
 
@@ -353,6 +364,6 @@ Call `resumeTunnel(8080)`, and send the request again. The response comes from y
 ## Related resources
 
 - [Move preview URLs](/sandbox/sdk/migrate/preview-urls/)
-- [Quick tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
+- [Quick tunnels](/tunnel/get-started/quick-tunnels/)
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)

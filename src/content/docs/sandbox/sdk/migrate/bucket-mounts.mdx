@@ -34,6 +34,8 @@ This page replaces `mountBucket()`, `unmountBucket()`, their options, and their 
    	&& rm -rf /var/lib/apt/lists/*
    ```
 
+   FUSE lets a process provide a filesystem, and `s3fs` uses it to present the objects in a bucket as files. For what else `S3Mount` needs, refer to [Requirements](/sandbox/reference/s3-mounts/#requirements).
+
 2. Export `S3Gateway` from the main module of your Worker:
 
    ```ts title="src/index.ts"
@@ -212,7 +214,7 @@ export class MySandbox extends DurableObject<Env> {
 
 Remove the `mountData()` calls from the other methods. A path that you mount after `intercept()` does not work, so mount every path that the sandbox needs here. To mount a path later, open a new sandbox. A restarted Durable Object runs `startContainer()` again, and `mount()` reuses a mount that already matches.
 
-Each mount uses one of the [64 intercept targets](/containers/api/durable-object-container/#interceptoutboundhttp) of the container, and `unmount()` does not free it. Move outbound rules uses two. Give each job its own sandbox name instead of mounting a new prefix for each job in one container.
+Mounts and the rules from Move outbound rules share the intercept entries of the container, and `unmount()` does not free them. Refer to [Intercept limit](/containers/api/durable-object-container/#intercept-limit). Give each job its own sandbox name instead of mounting a new prefix for each job in one container.
 
 ## Replace localBucket
 

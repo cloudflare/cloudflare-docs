@@ -34,6 +34,8 @@ If your code relies on this, or on contexts that you create, follow [Keep Python
 | `runCode()` with `language: "javascript"` or `"typescript"` | [Run JavaScript in a Dynamic Worker](#run-javascript-in-a-dynamic-worker) |
 | `runCodeStream()`, `onStdout`, `onStderr`, `onResult` | [Replace streaming output](#replace-streaming-output) |
 
+Variables that 0.12 contexts held stay in the 0.12 container, and 0.12 context IDs are not in the storage of your Durable Object. After the switch, run your setup code again, and create your contexts again before the first `runCode()` call.
+
 ## Keep Python variables between calls
 
 A kernel is a Python process that runs the code of each call with IPython, and keeps its variables until it exits. Your Durable Object starts one kernel for each context, on its own port.
@@ -473,8 +475,6 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    ```
 
 </Steps>
-
-Variables that 0.12 contexts held stay in the 0.12 container. After the switch, run your setup code again, and create your contexts again, because 0.12 context IDs are not in the storage of your Durable Object.
 
 ## Run JavaScript in a Dynamic Worker
 
