@@ -10,7 +10,7 @@ products:
   - durable-objects
 ---
 
-In Sandbox SDK 0.12, the SDK server in the container handled file calls. It created missing directories, returned binary files as base64, and hid dotfiles. In 1.0, [`Files`](/sandbox/reference/files/) runs a small helper in the container for each call, and does only what the call asks.
+In Sandbox SDK 0.12, a server that the SDK ran in the container handled file calls. It created missing directories, returned binary files as base64, and left dotfiles, whose names begin with `.`, out of listings. In 1.0, [`Files`](/sandbox/reference/files/) runs a small helper in the container for each call, and does only what the call asks.
 
 ## Before you start
 
@@ -31,7 +31,7 @@ This page replaces `readFile()`, `readFileStream()`, `writeFile()`, `exists()`, 
 
 ## Change each file call
 
-These calls keep their meaning, under a new name or with a different result:
+Each 0.12 call maps to one 1.0 call, under a new name or with a different result:
 
 | 0.12 | 1.0 |
 | --- | --- |
@@ -137,7 +137,7 @@ try {
 }
 ```
 
-Two calls behave differently from 0.12:
+Removing and renaming behave differently from 0.12:
 
 - `deleteFile()` refused a directory. `remove()` removes one with `recursive: true`, and rejects with `EISDIR` without it.
 - `renameFile()` and `moveFile()` ran `mv`. When the destination was an existing directory, `mv` moved the source into it. `rename()` follows Linux `rename` rules instead: it replaces the destination, and rejects with `ENOTEMPTY` when the destination is a directory that holds files. Pass the full new path, such as `/workspace/archive/report.txt`.
