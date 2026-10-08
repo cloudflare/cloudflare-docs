@@ -91,8 +91,10 @@ Show the output of a command in a browser while the command runs. The Durable Ob
    				]);
    				await send("exit", { exitCode: await process.exitCode });
    				await writer.close();
-   			} catch {
+   			} catch (error) {
    				stop();
+   				// End the response, so a connected client does not wait forever.
+   				await writer.abort(error).catch(() => {});
    			} finally {
    				clearInterval(heartbeat);
    			}
