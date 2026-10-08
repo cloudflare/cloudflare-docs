@@ -10,6 +10,8 @@ tags:
 - Authentication
 ---
 
+import { CURL } from "~/components";
+
 With Cloudflare Access, you can require that users obtain approval before they can access a specific self-hosted application or SaaS application. The administrator will receive an email notification to approve or deny the request. Unlike a typical Allow policy, the user will have to request access at the end of each session. This allows you to define the users who should have persistent access and those who must request temporary access.
 
 ## Set up temporary authentication
@@ -35,3 +37,23 @@ When a user accesses the application, they will be prompted to enter a purpose j
 Approvers will receive a request similar to the example below. The approver can then grant access for a set amount of time, up to a maximum of 24 hours.
 
 ![Temporary authentication approval page shown to administrators](~/assets/images/cloudflare-one/policies/temp-auth-approval.png)
+
+## Review temporary authentication logs
+
+Temporary authentication requests have separate logs from Access authentication events. The just-in-time (JIT) request logs include the requester, application, purpose justification, request status, expiration time, approval count, and approver email addresses.
+
+To list requests across your account, send a `GET` request to the JIT request logs endpoint. You can filter the results by `status`, `search`, `since`, and `until`, and use `page` and `per_page` for pagination. Valid status values are `PENDING`, `APPROVED`, `DENIED`, and `CANCELED`.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/logs/jit_requests?status=APPROVED&page=1&per_page=25"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
+
+To review one request's lifecycle, use its `knock_request_id`. The response lists events in chronological order, including request creation, approver decisions, cancellation, approval completion, and successful login.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/logs/jit_requests/{knock_request_id}"
+	method="GET"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+/>
