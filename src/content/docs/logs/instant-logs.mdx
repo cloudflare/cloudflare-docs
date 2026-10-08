@@ -8,7 +8,7 @@ products:
   - logs
 ---
 
-import { APIRequest, DashButton } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 Instant Logs allows Cloudflare customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
 
@@ -20,15 +20,33 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 ## Instant Logs via Cloudflare Dashboard
 
-1. In the Cloudflare dashboard, go to the **Instant Logs** page.
+:::caution[Dashboard navigation updated]
+The **Analytics > Instant Logs** menu entry has moved. Instant Logs is now integrated into **Observability > Logs** as a live streaming mode. The standalone Instant Logs page remains accessible via direct link (see [Instant Logs page (legacy)](#instant-logs-page-legacy) below), but the Analytics navigation entry no longer appears in the dashboard.
+:::
 
-   <DashButton url="/?to=/:account/:zone/analytics/instant-logs" />
+### Observability Logs — live streaming
 
-2. Select **Start streaming**.
+<Steps>
+1. In the Cloudflare dashboard, go to **Observability** > **Logs** for your zone.
+2. Select the **⋯** (actions) menu at the top of the logs table.
+3. Select **Stream live logs**.
+4. (optional) Select **Add filter** to narrow down the events shown.
+</Steps>
 
-3. (optional) Select **Add filter** to narrow down the events to be shown.
+Filters and columns from the Logs view carry over into the live stream. Filters that cannot be streamed display a message instead of being silently dropped.
 
-Fields supported in our [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
+### Instant Logs page (legacy)
+
+The standalone Instant Logs page is still accessible directly:
+
+<DashButton url="/?to=/:account/:zone/analytics/instant-logs" />
+
+<Steps>
+1. Select **Start streaming**.
+2. (optional) Select **Add filter** to narrow down the events to be shown.
+</Steps>
+
+Fields supported in our [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard; use the CLI instead.
 
 Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.
 
