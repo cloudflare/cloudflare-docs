@@ -32,8 +32,8 @@ These values apply to the named TCP conditions. Do not interpret either number a
 
 ### Resolution
 
+- Review firewall, security, rate-limiting, and network settings for your connection path first. Blocked or rate-limited Cloudflare IP ranges at the origin or an intermediate firewall are the most common cause of `522` errors. For standard proxied origin connections, confirm that your rules allow [all published Cloudflare IP ranges](https://www.cloudflare.com/ips/). For [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), check the addresses assigned to your setup.
 - Verify the configured origin address and port. Confirm the service is running and accepting connections. Review its capacity and logs for overload or connection limits, and review its [HTTP keep-alive settings](/fundamentals/reference/connection-limits/#keep-alives).
-- Review firewall, security, rate-limiting, and network settings for your connection path. For standard proxied origin connections, check [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/). For [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), check the addresses assigned to your setup.
 - Review origin and network logs for the reported time. If the origin connection uses HTTPS, include SSL/TLS negotiation in the investigation.
 - If you use Cloudflare Tunnel, review the connector and local service logs using the [Tunnel troubleshooting guide](/tunnel/troubleshooting/).
 - Ask your hosting provider or network administrator to investigate the connection timeout and relevant connection-path settings. Share the [error details](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider).
