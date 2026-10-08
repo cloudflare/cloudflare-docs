@@ -635,8 +635,9 @@ To create an MCP server with a pre-registered OAuth client, set `auth_type` to `
 		hostname: "https://github-mcp.example.com/mcp",
 		auth_type: "oauth",
 		auth_credentials:
-			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","redirect_uris":["https://mcp.example.com/servers-callback"],"token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
+			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
 		client_secret: "<client-secret>",
+		is_shared_oauth_callback_enabled: true,
 	}}
 />
 
@@ -645,9 +646,11 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: At least one registered redirect URI. This can be omitted when `is_shared_oauth_callback_enabled` is `true`; Cloudflare then adds the shared callback URL.
+- `registration_info.redirect_uris`: Required when `is_shared_oauth_callback_enabled` is `false`. Cloudflare uses only the first URI in the array. When `is_shared_oauth_callback_enabled` is `true`, omit this field. Cloudflare adds the [shared callback URL](#shared-cloudflare-callback-url).
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
+
+Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare then uses the shared callback for dashboard authorization and for users who connect through any portal that contains the server.
 
 Do not include `client_secret` or OAuth tokens inside `auth_credentials`. Send `client_secret` as the separate sibling field shown above.
 
