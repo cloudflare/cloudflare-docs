@@ -216,7 +216,70 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 Compressed files stay in `/workspace` until the instance stops. To delete a file sooner, call `remove()` after the caller has read the response.
 
-For other file operations, such as listing a directory or renaming a file, refer to [Files API](/sandbox/reference/files/).
+For other file operations, refer to [Files API](/sandbox/reference/files/).
+
+## Replace a file in one step
+
+A process that reads a file while `writeFile()` writes it can read part of the file. To replace a file in one step, write the new content to a temporary file in the same directory, then rename the temporary file onto the original. `rename()` replaces the destination in one step, so a reader gets either the old file or the new one. The temporary file must be on the same filesystem, because `rename()` rejects with `EXDEV` across filesystems.
+
+This example adds a `replace()` method:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	async replace(path: string, content: string): Promise<void> {
+		await this.startSandbox();
+		const temporary = `${path}.${crypto.randomUUID()}.partial`;
+
+		try {
+			await this.files.writeFile(temporary, content, { cwd: workspace });
+			await this.files.rename(temporary, path, { cwd: workspace });
+		} catch (error) {
+			await this.files.remove(temporary, { cwd: workspace, force: true });
+			throw error;
+		}
+	}
+}
+```
+
+If a caller chooses `path`, check it first, as [Accept paths from callers](#accept-paths-from-callers) describes.
+
+## List a directory tree
+
+`readDirectory()` returns the entries of one directory. To list a tree, read each subdirectory in turn. This example adds a `listTree()` method that returns every path under a directory. It does not follow symbolic links to directories, because their entries have the type `symlink`:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	async listTree(directory: string): Promise<string[]> {
+		await this.startSandbox();
+		const paths: string[] = [];
+		const pending = [directory];
+		let current: string | undefined;
+
+		while ((current = pending.pop()) !== undefined) {
+			const entries = await this.files.readDirectory(current, {
+				cwd: workspace,
+			});
+
+			for (const entry of entries) {
+				const path = `${current}/${entry.name}`;
+				paths.push(path);
+
+				if (entry.type === "directory") {
+					pending.push(path);
+				}
+			}
+		}
+
+		return paths;
+	}
+}
+```
+
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `find` command through [`exec()`](/containers/api/durable-object-container/#exec) is faster, and its `signal` option can cancel it. The output of `find` counts toward the [memory limit](/workers/platform/limits/#memory) when you read it with `output()`.
 
 ## Accept paths from callers
 
@@ -283,6 +346,6 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#ev
 
 ## Related resources
 
-- [Files API](/sandbox/reference/files/): every method, including `readDirectory()`, `rename()`, and `remove()`.
+- [Files API](/sandbox/reference/files/): every method, with its errors and options.
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the instance stops.
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): write files that other systems read.
