@@ -130,13 +130,18 @@ This section will be updated as we add RHEL support to match Red Hat's support l
 
 The Cloudflare One Client supports the current major version of iOS and iPadOS as well as the two previous major versions. Devices must have the latest available update installed (for example, `17.7.2`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new iOS and iPadOS versions compared to other mobile operating systems.
 
-As of December 2025, the following versions of iOS and iPadOS are supported:
+:::note
+Starting with iOS and iPadOS 27, Apple introduced [Connectivity Assist](https://support.apple.com/127686) on by default, which falls back to cellular network connectivity when Wi-Fi connectivity is failing. This means unless Connectivity Assist is actively turned off, then protections provided by Cloudflare One Client (and any other Zero Trust networking or VPN app) may be unintentionally bypassed when Wi-Fi connectivity exists but is slow. This is because Wi-Fi remains the active network connection, whereas turning Wi-Fi off entirely and using cellular network connectivity would result in expected functionality. To avoid this edge case, turn off Connectivity Assist.
+:::
+
+As of October 2026, the following versions of iOS and iPadOS are supported:
 
 | iOS or iPadOS version            | Supported until               |
 | -------------------------------- | ----------------------------- |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;27 | Release of 2029 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;26 | Release of 2028 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;18 | Release of 2027 major version |
-| iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | Release of 2026 major version |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | November 2026 |
 
 ### Android
 
