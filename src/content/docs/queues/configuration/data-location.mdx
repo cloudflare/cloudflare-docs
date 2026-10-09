@@ -1,0 +1,62 @@
+---
+title: Data location
+description: Restrict where Cloudflare Queues stores and processes messages by setting a jurisdiction.
+pcx_content_type: configuration
+sidebar:
+  order: 1.5
+products:
+  - queues
+---
+
+import { DashButton, Steps } from "~/components";
+
+By default, Queues stores and processes messages across Cloudflare's global network. You can restrict a queue to a jurisdiction to meet data residency requirements, such as the [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+Workers can produce to and consume from a restricted queue from any location. The jurisdiction only restricts where Queues stores and processes messages.
+
+## Supported jurisdictions
+
+| Parameter | Location                      |
+| --------- | ----------------------------- |
+| `eu`      | European Union                |
+| `us`      | United States                 |
+| `fedramp` | FedRAMP-Moderate data centers |
+
+## Create a queue with a jurisdiction
+
+### Use the dashboard
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Queues**.
+
+   <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select **Create queue**.
+3. Enter a queue name and select a jurisdiction.
+4. Select **Create queue**.
+
+</Steps>
+
+### Use the REST API
+
+Set the `jurisdiction` parameter when you create a queue with the [Create Queue](/api/resources/queues/methods/create/) endpoint:
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/queues \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "queue_name": "my-eu-queue",
+    "jurisdiction": "eu"
+  }'
+```
+
+You can only set a jurisdiction when you create a queue. You cannot add, change, or remove the jurisdiction later.
+
+The dashboard displays a queue's jurisdiction on the Queues overview and settings pages.
+
+## Dead Letter Queues
+
+A [Dead Letter Queue (DLQ)](/queues/configuration/dead-letter-queues/) must use the same jurisdiction as its source queue. If you specify a queue name that does not exist as the DLQ, Cloudflare automatically creates that queue in the same jurisdiction as the source queue.
