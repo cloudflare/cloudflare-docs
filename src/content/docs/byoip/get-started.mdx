@@ -11,12 +11,12 @@ sidebar:
 ---
 
 import {
-  Tabs,
-  TabItem,
-  GlossaryTooltip,
-  Details,
-  Render,
-  Steps,
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Details,
+	Render,
+	Steps,
 } from "~/components";
 
 Use this guide to onboard your own IP prefixes to Cloudflare. Before you begin, you must contact your account team to confirm that your contract includes BYOIP and that your account has the required service configuration.
@@ -50,39 +50,41 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 ### Add your prefix
 
 <Steps>
+
 1. Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to add the prefix to the Cloudflare account that will own it.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","asn":13335,"delegate_loa_creation":true}'
-```
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","asn":13335,"delegate_loa_creation":true}'
+   ```
 
-```json title="Response" {4,16-20}
-{
-  "result": {
-    "id": "72823e95d6c64d48a8111fec81179816",
-    "created_at": "2025-02-25T00:34:11.423722Z",
-    "modified_at": "2025-02-25T00:34:11.423722Z",
-    "cidr": "203.0.113.0/24",
-    "account_id": "654c5f71c324478cc9f68d60065d4620",
-    "description": "",
-    "approved": "P",
-    "on_demand_enabled": false,
-    "on_demand_locked": false,
-    "advertised": null,
-    "advertised_modified_at": null,
-    "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
-    "asn": 13335,
-    "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
-    "delegate_loa_creation": true,
-    "irr_validation_state": "pending",
-    "rpki_validation_state": "pending",
-    "ownership_validation_state": "pending"
-  }
-}
-```
+   ```json title="Response" {4,16-20}
+   {
+     "result": {
+       "id": "72823e95d6c64d48a8111fec81179816",
+       "created_at": "2025-02-25T00:34:11.423722Z",
+       "modified_at": "2025-02-25T00:34:11.423722Z",
+       "cidr": "203.0.113.0/24",
+       "account_id": "654c5f71c324478cc9f68d60065d4620",
+       "description": "",
+       "approved": "P",
+       "on_demand_enabled": false,
+       "on_demand_locked": false,
+       "advertised": null,
+       "advertised_modified_at": null,
+       "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
+       "asn": 13335,
+       "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
+       "delegate_loa_creation": true,
+       "irr_validation_state": "pending",
+       "rpki_validation_state": "pending",
+       "ownership_validation_state": "pending"
+     }
+   }
+   ```
 
 2. Save the prefix `id` and `ownership_validation_token` from the response. You will use them in later steps.
-   </Steps>
+
+</Steps>
 
 :::note[Letter of Agency]
 This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you must upload the LOA manually, [update the prefix](/api/resources/addressing/subresources/prefixes/methods/edit/) after it is approved, and contact your account team. Manual LOA processing can increase onboarding time.
@@ -96,14 +98,15 @@ Prove ownership by adding the validation token to either your IRR record or reve
 <TabItem label="IRR record">
 
 <Steps>
+
 1. Copy the `ownership_validation_token` returned when you added the prefix.
 2. Add the following value to a `description` or `remarks` field in the matching IRR `route` or `route6` object. Replace `<OWNERSHIP_VALIDATION_TOKEN>` with your token.
 
-```text
-cf-validation: <OWNERSHIP_VALIDATION_TOKEN>
-```
+   ```text
+   cf-validation: <OWNERSHIP_VALIDATION_TOKEN>
+   ```
 
-The process for updating an IRR object depends on the registry. Refer to [IRR best practices](/byoip/concepts/irr-entries/best-practices/) for more information.
+   The process for updating an IRR object depends on the registry. Refer to [IRR best practices](/byoip/concepts/irr-entries/best-practices/) for more information.
 
 </Steps>
 
@@ -111,31 +114,33 @@ The process for updating an IRR object depends on the registry. Refer to [IRR be
 <TabItem label="Reverse DNS">
 
 <Steps>
+
 1. Determine which reverse DNS zones are required for your prefix. IPv4 reverse DNS delegations commonly align on octet boundaries, and IPv6 delegations align on nibble boundaries. A prefix that does not align with the next boundary must be divided into smaller reverse zones.
 
-<Details header="Examples">
+   <Details header="Examples">
 
-Use the following formula to determine the number of zones at the next delegation boundary:
+   Use the following formula to determine the number of zones at the next delegation boundary:
 
-```text
-2^(next boundary - current prefix length)
-```
+   ```text
+   2^(next boundary - current prefix length)
+   ```
 
-The IPv4 prefix `192.0.2.0/23` requires two `/24` reverse zones: one for `192.0.2.0/24` and one for `192.0.3.0/24`.
+   The IPv4 prefix `192.0.2.0/23` requires two `/24` reverse zones: one for `192.0.2.0/24` and one for `192.0.3.0/24`.
 
-The IPv6 prefix `2001:db8::/34` requires four `/36` reverse zones: `2001:db8::/36`, `2001:db8:1000::/36`, `2001:db8:2000::/36`, and `2001:db8:3000::/36`.
+   The IPv6 prefix `2001:db8::/34` requires four `/36` reverse zones: `2001:db8::/36`, `2001:db8:1000::/36`, `2001:db8:2000::/36`, and `2001:db8:3000::/36`.
 
-</Details>
+   </Details>
 
 2. Create the required reverse DNS zones. If you use Cloudflare for authoritative DNS, refer to [Set up a reverse DNS zone](/dns/additional-options/reverse-zones/#set-up-a-reverse-zone). Otherwise, follow your DNS provider's instructions.
 3. In each reverse zone, create a TXT record named `cf-validation` whose value is the ownership validation token.
 
-```text
-cf-validation.<REVERSE_ZONE> IN TXT "<OWNERSHIP_VALIDATION_TOKEN>"
-```
+   ```text
+   cf-validation.<REVERSE_ZONE> IN TXT "<OWNERSHIP_VALIDATION_TOKEN>"
+   ```
 
 4. At your RIR, delegate the reverse zones to the authoritative nameservers that host them.
-   </Steps>
+
+</Steps>
 
 </TabItem>
 </Tabs>
@@ -171,13 +176,14 @@ Service bindings determine which Cloudflare service receives traffic destined fo
 Each prefix requires a default service binding that covers the entire prefix. Cloudflare uses this binding for any IP address that does not have a more-specific binding.
 
 <Steps>
+
 1. Use the [List Services endpoint](/api/resources/addressing/subresources/services/methods/list/) to find the `id` of the service that will receive traffic by default.
 2. If necessary, use the [List Prefixes endpoint](/api/resources/addressing/subresources/prefixes/methods/list/) to find the prefix `id`.
 3. Use the [Create Service Binding endpoint](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) to bind the entire prefix to the default service.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bindings" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","service_id":"<DEFAULT_SERVICE_ID>"}'
-```
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bindings" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","service_id":"<DEFAULT_SERVICE_ID>"}'
+   ```
 
 </Steps>
 
@@ -212,18 +218,18 @@ The initial provisioning state in the response is `provisioning`:
 
 ```json title="Response" {9}
 {
-  "errors": [],
-  "messages": [],
-  "success": true,
-  "result": {
-    "cidr": "203.0.113.16/29",
-    "id": "<SERVICE_BINDING_ID>",
-    "provisioning": {
-      "state": "provisioning"
-    },
-    "service_id": "<SERVICE_ID>",
-    "service_name": "<SERVICE_NAME>"
-  }
+	"errors": [],
+	"messages": [],
+	"success": true,
+	"result": {
+		"cidr": "203.0.113.16/29",
+		"id": "<SERVICE_BINDING_ID>",
+		"provisioning": {
+			"state": "provisioning"
+		},
+		"service_id": "<SERVICE_ID>",
+		"service_name": "<SERVICE_NAME>"
+	}
 }
 ```
 
@@ -240,13 +246,14 @@ Cloudflare creates the BGP prefix in a withdrawn state. While it is withdrawn, y
 After the default binding and any more-specific bindings are active, advertise the prefix:
 
 <Steps>
+
 1. Use the [List BGP Prefixes endpoint](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/list/) to get the BGP prefix `id`.
 
 2. Use the [Update BGP Prefix endpoint](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/) to advertise the prefix.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bgp/prefixes/$BGP_PREFIX_ID" --request PATCH --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"on_demand":{"advertised":true}}'
-```
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bgp/prefixes/$BGP_PREFIX_ID" --request PATCH --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"on_demand":{"advertised":true}}'
+   ```
 
 </Steps>
 
@@ -261,6 +268,7 @@ Before Cloudflare advertises a production prefix, make sure that its service bin
 If the prefix will be used for CDN ingress, create an address map after the BGP prefix is advertised. An address map determines which BYOIP addresses Cloudflare returns for proxied DNS records in an account or zone.
 
 <Steps>
+
 1. Confirm that the BGP prefix is advertised and that the CDN service binding is active.
 
 2. Create an [address map](/byoip/address-maps/setup/) containing the BYOIP addresses that Cloudflare should return.
@@ -268,6 +276,7 @@ If the prefix will be used for CDN ingress, create an address map after the BGP 
 3. Associate the address map with the appropriate account or zones.
 
 4. Verify that DNS queries for proxied hostnames return the expected BYOIP addresses before moving production traffic.
-   </Steps>
+
+</Steps>
 
 Address maps are not required for prefixes used only with services that do not use Cloudflare's proxied DNS responses. For more information, refer to [About address maps](/byoip/address-maps/).
