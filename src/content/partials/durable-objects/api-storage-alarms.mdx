@@ -18,7 +18,7 @@ import { Type, MetaInfo, Render } from "~/components";
 - <code>setAlarm(scheduledTime <Type text="Date | number" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
   - Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
-  If `setAlarm()` is called with a time equal to or before `Date.now()`, the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
+  If `setAlarm()` is called with a time equal to or before `Date.now()`, the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. If you call `setAlarm()` this way from inside `alarm()`, the handler runs again almost immediately and can loop. For more information, refer to [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition). Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
 ### `deleteAlarm`
 

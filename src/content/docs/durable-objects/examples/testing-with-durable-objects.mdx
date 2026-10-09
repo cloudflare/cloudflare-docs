@@ -457,6 +457,67 @@ export class Counter extends DurableObject {
 ```
 </TypeScriptExample>
 
+### Test that alarms reschedule safely
+
+An `alarm()` handler that reschedules itself to the current time creates an [alarm loop](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition). Alarm loops are easy to miss in review and expensive in production. Add a regression test that runs the alarm repeatedly. The test checks that every rescheduled alarm is at least a minimum delay in the future. It also checks that the alarm stops rescheduling after a fixed number of failed attempts.
+
+The following test uses the `Session` class from [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition). It mocks `fetch()` so that every refresh fails, and records the delay of each `setAlarm()` call. It then runs the alarm until no alarm is scheduled:
+
+<TypeScriptExample filename="test/alarm-loop.test.ts">
+```ts
+import { env } from "cloudflare:workers";
+import { runInDurableObject, runDurableObjectAlarm } from "cloudflare:test";
+import { afterEach, describe, it, expect, vi } from "vitest";
+
+const MIN_DELAY_MS = 60 * 1000;
+const MAX_ATTEMPTS = 8;
+
+afterEach(() => {
+	vi.restoreAllMocks();
+});
+
+describe("Session alarm", () => {
+	it("reschedules failed refreshes in the future and stops at the limit", async () => {
+		// Force every refresh attempt to fail
+		vi.spyOn(globalThis, "fetch").mockResolvedValue(
+			new Response(null, { status: 503 }),
+		);
+
+		const stub = env.SESSION.getByName("alarm-loop-test");
+		const delays: number[] = [];
+
+		await runInDurableObject(stub, async (_instance, state) => {
+			await state.storage.put("checkpoint", { refreshAt: Date.now() - 1000 });
+			// Schedule in the future so the alarm only runs when the test triggers it
+			await state.storage.setAlarm(Date.now() + MIN_DELAY_MS);
+
+			// Record how far in the future the handler schedules each alarm
+			const setAlarm = state.storage.setAlarm.bind(state.storage);
+			vi.spyOn(state.storage, "setAlarm").mockImplementation((time, options) => {
+				delays.push(Number(time) - Date.now());
+				return setAlarm(time, options);
+			});
+		});
+
+		let runs = 0;
+		while (await runDurableObjectAlarm(stub)) {
+			runs++;
+			// Fails the test instead of hanging if the alarm never stops
+			expect(runs).toBeLessThanOrEqual(MAX_ATTEMPTS);
+		}
+
+		// A rescheduled alarm must never be due immediately
+		for (const delay of delays) {
+			expect(delay).toBeGreaterThanOrEqual(MIN_DELAY_MS);
+		}
+		expect(runs).toBe(MAX_ATTEMPTS);
+	});
+});
+```
+</TypeScriptExample>
+
+If a future change reintroduces `setAlarm(Date.now())`, the minimum delay assertion fails. If a change removes the attempt limit, the run count assertion fails.
+
 ### Testing eviction
 
 Use `evictDurableObject()` to evict a Durable Object instance during tests. Eviction tears down the instance to reset its in-memory state. This lets you test how your Durable Object recovers state from storage after being evicted.
