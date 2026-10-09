@@ -253,7 +253,7 @@ If your upstream OAuth provider restricts redirect URIs, add the URLs that match
 
 For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
 
-For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. You can omit `registration_info.redirect_uris` when creating the server; Cloudflare then adds the shared callback URL.
+For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare uses the shared callback URL regardless of the value of `registration_info.redirect_uris`. You can omit this field; it cannot override the shared callback URL.
 
 #### Dashboard callback URL
 
@@ -662,7 +662,7 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: Optional when `is_shared_oauth_callback_enabled` is `true`. Cloudflare adds the shared callback URL if you omit this field.
+- `registration_info.redirect_uris`: Optional when `is_shared_oauth_callback_enabled` is `true`. Cloudflare uses the shared callback URL even if you provide a different URI. This field cannot override the shared callback URL.
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
 
