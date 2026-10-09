@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-for-platforms/workers-for-platforms/configuration/static-assets.mdx
+  s_ae0ab0941ba7e6::t_2ba51b51899369 27,67,100,117,122,126,140,148,155-162,171-172,176-177,179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b7e2b50633111e6508aad06801f229726304efb6",
+  "prompts": {},
+  "sessions": {
+    "s_ae0ab0941ba7e6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a11e66-6109-7571-8600-eb55cf6d6869",
+        "model": "unknown"
+      },
+      "human_author": "Timo Wilhelm <twilhelm@cloudflare.com>"
+    }
+  }
+}
