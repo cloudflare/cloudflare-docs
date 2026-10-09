@@ -80,10 +80,30 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
-   	private async startTunnel(
+   	// The tunnel starts that requests in progress share, by port
+   	private readonly tunnelStarts = new Map<number, Promise<string>>();
+
+   	private startTunnel(
    		port: number,
    		args: string[],
    		env: Record<string, string> = {},
+   	): Promise<string> {
+   		let start = this.tunnelStarts.get(port);
+
+   		if (!start) {
+   			start = this.runTunnel(port, args, env).finally(() => {
+   				this.tunnelStarts.delete(port);
+   			});
+   			this.tunnelStarts.set(port, start);
+   		}
+
+   		return start;
+   	}
+
+   	private async runTunnel(
+   		port: number,
+   		args: string[],
+   		env: Record<string, string>,
    	): Promise<string> {
    		const dir = `${TUNNEL_ROOT}/${port}`;
    		const argv = ["cloudflared", "tunnel", "--no-autoupdate", ...args];
@@ -128,7 +148,7 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 
    `openTunnel()` replaces `tunnels.get(port)`, and returns the `trycloudflare.com` URL. The URL can take several seconds to resolve after the method returns. A quick tunnel ends with its container, as in 0.12.
 
-   Each call stops any `cloudflared` that already serves the port, and returns a new URL. 0.12 returned the tunnel that already served the port. To keep a URL, look it up with `listTunnels()` from the next step before you call `openTunnel()`.
+   Requests that arrive while a tunnel for the port is starting wait for the same start and get the same URL. Without the shared start, two requests can each start `cloudflared` in the same directory, and the recorded process ID can belong to the one that exits. A later call stops any `cloudflared` that already serves the port, and returns a new URL. 0.12 returned the tunnel that already served the port. To keep a URL, look it up with `listTunnels()` from the next step before you call `openTunnel()`.
 
 4. Add methods that list and close quick tunnels:
 
