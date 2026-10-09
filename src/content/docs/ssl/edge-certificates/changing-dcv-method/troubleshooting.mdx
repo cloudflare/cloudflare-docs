@@ -27,6 +27,7 @@ Use this checklist to identify common DCV issues:
 - [ ] [No redirects on the validation path](#redirection) - The `/.well-known/*` path must not redirect (especially HTTP to HTTPS in partial setups)
 - [ ] [DNS records are resolvable](#dns-settings-and-records) - DNSSEC must be valid, and records must resolve from all locations
 - [ ] [CAA records allow the CA](#caa-records) - CAA records must permit Cloudflare's partner CAs to issue certificates
+- [ ] [No stale or conflicting DCV records](#stale-or-conflicting-dcv-records) - `_acme-challenge` TXT records from prior orders can block validation
 - [ ] [No CA-side errors](#ca-errors) - Rate limits, policy blocks, or temporary CA issues
 
 ---
@@ -101,6 +102,25 @@ Resolve-DnsName -Name example.com -Type CAA
 ```
 </TabItem>
 </Tabs>
+
+### Stale or conflicting DCV records
+
+Cloudflare adds `_acme-challenge` TXT records when it requests a certificate from a certificate authority. Records from a previous or abandoned certificate order can persist and may not appear under **DNS** > **Records** in the dashboard.
+
+Review the following symptoms:
+
+- Certificate validation stays in **Pending Validation** even though the correct DCV records are in place.
+- You receive a renewal email, but adding the TXT record returns `An identical record already exists` when you have not configured a matching record.
+- `dig` returns `_acme-challenge` TXT records that you cannot find in the Cloudflare dashboard.
+- Your zone uses [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/), but the certificate authority resolves a stale `_acme-challenge` TXT record instead of the delegation CNAME.
+
+To confirm, query the record from your authoritative nameservers:
+
+```bash
+dig _acme-challenge.example.com TXT +short
+```
+
+If the query returns token values that you did not create, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have the stale records removed. After the records are removed, you can send a `PATCH` request to the [validation endpoint](/api/resources/ssl/subresources/verification/methods/edit/) using the same DCV method to trigger revalidation.
 
 ## Certificate authority (CA) errors
 
