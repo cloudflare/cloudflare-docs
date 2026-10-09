@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
-title: Workers Logpush
-description: Export encrypted AI Gateway logs to external storage using Workers Logpush.
+title: Logpush
+description: Export encrypted AI Gateway logs to external storage using Logpush.
 products:
   - ai-gateway
 ---
@@ -9,19 +9,17 @@ products:
 import { Render, Tabs, TabItem } from "~/components";
 
 AI Gateway allows you to securely export logs to an external storage location, where you can decrypt and process them.
-You can toggle Workers Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/ai-gateway/reference/pricing).
+You can toggle Logpush on and off in the [Cloudflare dashboard](https://dash.cloudflare.com) settings. This product is available on the Workers Paid plan. For pricing information, refer to [Logpush pricing](/logs/logpush/pricing/).
 
-Workers Logpush works with [AI Gateway logging](/ai-gateway/observability/logging/) and [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/).
-
-This guide explains how to set up Workers Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
+This guide explains how to set up Logpush for AI Gateway, generate an RSA key pair for encryption, and decrypt the logs once they are received.
 
 For Legacy Logs on Workers Paid, you can store 10 million logs per gateway. If saving stops at this limit, logs are not saved or exported. Delete older logs or turn on automatic deletion to resume exports.
 
-Workers Logpush supports four jobs per account. Each exported log can be up to 1 MB.
+Logpush supports four jobs per account. Each exported log can be up to 1 MB.
 
 :::note[Note]
 
-To export logs using Workers Logpush, you must have logs turned on for the gateway.
+To export logs using Logpush, you must have logs turned on for the gateway.
 
 :::
 
@@ -37,9 +35,9 @@ Once encrypted, both the AES-encrypted data and the RSA-encrypted AES key are se
 
 This method combines the best of both worlds: the efficiency of AES for data encryption with the secure key exchange capabilities of RSA, ensuring data integrity, confidentiality, and performance are all optimally maintained throughout the data lifecycle.
 
-## Setting up Workers Logpush
+## Setting up Logpush
 
-To configure Workers Logpush for AI Gateway, follow these steps:
+To configure Logpush for AI Gateway, follow these steps:
 
 ## 1. Generate an RSA key pair locally
 
@@ -92,17 +90,17 @@ node {file name}
 
 ## 2. Upload public key to gateway settings
 
-Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Workers Logpush, you will need logs enabled for that gateway.
+Once you have generated the key pair, upload the public key to your AI Gateway settings. This key will be used to encrypt your logs. In order to enable Logpush, you will need logs enabled for that gateway.
 
 ## 3. Set up Logpush
 
-Uploading your public key enables Workers Logpush for the gateway, but logs will not be exported until you also create and enable a Logpush job that specifies where to send them. Both steps are required.
+Uploading your public key enables Logpush for the gateway, but logs will not be exported until you also create and enable a Logpush job that specifies where to send them. Both steps are required.
 
 To create the Logpush job, choose your destination and follow the steps in the [Enable destinations](/logs/logpush/logpush-job/enable-destinations/) documentation. For example, to export logs to Cloudflare R2, refer to [Enable Cloudflare R2](/logs/logpush/logpush-job/enable-destinations/r2/). When configuring the job, select the AI Gateway dataset.
 
 ## 4. Receive encrypted logs
 
-After configuring Workers Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key. The logs will be sent to the object storage provider that you have selected.
+After configuring Logpush, logs will be sent encrypted using the public key you uploaded. To access the data, you will need to decrypt it using your private key. The logs will be sent to the object storage provider that you have selected.
 
 ## 5. Decrypt logs
 

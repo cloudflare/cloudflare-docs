@@ -12,21 +12,19 @@ AI Gateway is available to use on all plans.
 
 AI Gateway's core features available today are offered for free, and all it takes is a Cloudflare account and one line of code to [get started](/ai-gateway/get-started/). Core features include: dashboard analytics, caching, and rate limiting.
 
-We will continue to build and expand AI Gateway. Some new features may be additional core features that will be free while others may be part of a premium plan. We will announce these as they become available.
-
 You can monitor your usage in the AI Gateway dashboard.
 
 ## Logs
 
-Log pricing depends on when you created your first gateway.
+AI Gateway stores logs in either Workers Logs or Legacy Logs, depending on when your account created its first gateway.
 
-### New AI Gateway customers
+### Workers Logs
 
-Customers who create their first gateway on or after September 24, 2026 follow [Workers Logs pricing and retention](/workers/observability/logs/workers-logs/#pricing).
+Accounts that created their first gateway on or after September 24, 2026 store logs in Workers Logs and follow [Workers Logs pricing and retention](/workers/observability/logs/workers-logs/#pricing).
 
-### Existing AI Gateway customers
+### Legacy Logs
 
-Customers who created a gateway before September 24, 2026 use [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/). Persistent log storage is available on all plans with these limits:
+Accounts that created a gateway before September 24, 2026 use [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/). Persistent log storage is available on all plans with these limits:
 
 | Plan         | Log storage limit                      |
 | ------------ | -------------------------------------- |
@@ -51,11 +49,7 @@ A 5% fee is applied to all credits purchased through [Unified Billing](/ai-gatew
 
 ## Logpush
 
-Logpush is available to all AI Gateway customers on the Workers Paid plan.
-
-|          | Paid plan                          |
-| -------- | ---------------------------------- |
-| Requests | 10 million / month, +$0.05/million |
+[Logpush](/ai-gateway/observability/logging/logpush/) is available to all AI Gateway customers on the Workers Paid plan. Exports of AI Gateway logs are billed according to [Logpush pricing](/logs/logpush/pricing/), based on the volume of logs exported and transformed.
 
 ## Pricing notes
 
