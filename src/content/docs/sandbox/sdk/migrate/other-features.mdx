@@ -224,7 +224,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
    <PackageManagers pkg="@opencode-ai/sdk@1.18.32" />
 
-3. Replace `createOpencode()` with a method that starts the server once for each container. It uses the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server):
+3. Replace `createOpencode()` with a method that starts the server once for each container. It uses the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server), without its `INACTIVITY_TIMEOUT_MS` constant, which your class file already defines:
 
    ```ts title="src/index.ts (0.12)"
    const sandbox = getSandbox(env.Sandbox, "my-agent");
