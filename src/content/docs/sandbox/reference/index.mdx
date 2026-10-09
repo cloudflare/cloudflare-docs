@@ -27,13 +27,15 @@ For `start()`, `exec()`, snapshots, and the other methods of the container itsel
 
 ## Install
 
-<PackageManagers pkg="@cloudflare/sandbox" />
+<PackageManagers pkg="@cloudflare/sandbox@1.0.0" />
+
+Install an exact version. The helper binary in your image comes from the `cloudflare/sandbox` image with the same version, as [Requirements](#requirements) describes. Your package manager can save a version range, such as `^1.0.0`, so set the version in `package.json` to `1.0.0`. To upgrade, change both versions together.
 
 ## Requirements
 
 Every class in the package has these requirements. A class page lists any others.
 
-- The [container image](/containers/api/durable-object-container/#images), which supplies the filesystem of the container, contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version:
+- The [container image](/containers/api/durable-object-container/#images), which supplies the filesystem of the container, contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version. A helper from another release can reject the commands of the package:
 
   ```dockerfile
   COPY --from=docker.io/cloudflare/sandbox:<VERSION> \
