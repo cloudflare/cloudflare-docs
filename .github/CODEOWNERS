@@ -296,8 +296,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/changelog/access.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/changelog/browser-isolation.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/changelog/gateway.mdx @asamborski @cloudflare/product-owners
-/src/content/docs/cloudflare-one/integrations/ @claudiocn @jlu-cloudflare @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @claudiocn @jlu-cloudflare @kennyj42 @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/service-providers/ @claudiocn @jlu-cloudflare @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
