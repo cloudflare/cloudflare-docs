@@ -47,6 +47,10 @@ The **Requests summary** graph shows how your traffic changes over time, such as
 
 **Served by Cloudflare** indicates content served by Cloudflare that did not require contacting your origin web server. **Served by Origin** indicates traffic served from the origin web server.
 
+:::tip
+In Cache Analytics, **Served by Cloudflare** is almost always cache hits. More broadly, the same classification also covers Workers responses, [URL forwarding](/rules/url-forwarding/) redirects, and `/cdn-cgi/` endpoints. For the full list, refer to [Security Analytics — Request activity](/waf/analytics/security-analytics/#request-activity).
+:::
+
 Revalidated requests — where Cloudflare checks with your origin to confirm cached content is still current — are counted differently depending on the view. In the **Data Transfer** view, revalidated requests count as **Served by Cloudflare** because the response body is served from cache, not re-downloaded from the origin. In the **Requests** view, revalidated requests count as **Served by Origin** because Cloudflare still contacts the origin server to verify the content.
 
 **Cache status** graphs break down why traffic is served from Cloudflare versus the origin web server, organized by content type.
