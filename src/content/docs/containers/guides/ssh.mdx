@@ -56,6 +56,12 @@ Once SSH is configured and the Container is running, open the SSH connection wit
 wrangler containers ssh <INSTANCE_ID>
 ```
 
+To run a command instead of the default shell, pass it after `--`. For interactive commands, such as `top`, also pass `--tty` to allocate a terminal:
+
+```bash
+wrangler containers ssh <INSTANCE_ID> --tty -- top
+```
+
 ## Use as SSH proxy
 
 You can use `wrangler containers ssh` as an OpenSSH `ProxyCommand`. This lets your local SSH client connect through Wrangler.
