@@ -45,25 +45,20 @@ const r = await fetch(
 		},
 	},
 );
-const tokenCount = r.headers.get("x-markdown-tokens");
-const originalTokenCount = r.headers.get("x-original-tokens");
 const markdown = await r.text();
 ```
 
 </TypeScriptExample>
 
-The response to this request is now formatting in markdown:
+The response to this request is returned as Markdown:
 
 ```http
 HTTP/2 200
 date: Wed, 11 Feb 2026 11:44:48 GMT
 content-type: text/markdown; charset=utf-8
-content-length: 2899
 vary: accept
 cache-control: public, max-age=3600
 strict-transport-security: max-age=63072000; includeSubDomains
-x-markdown-tokens: 725
-x-original-tokens: 12345
 content-signal: ai-train=yes, search=yes, ai-input=yes
 
 ---
@@ -86,14 +81,12 @@ Because the body is replaced with converted Markdown, the following changes are 
 
 - `Content-Type` is set to `text/markdown; charset=utf-8`.
 - `Vary` includes `Accept` (any `Vary` dimensions your origin already declared are preserved) so that caches store separate variants for Markdown and HTML.
-- `Content-Length` is recalculated to match the size of the Markdown response.
+- `Content-Length` is removed because the converted response is streamed.
 - Headers that describe the original body are removed, because they no longer match the converted response: `Content-Encoding`, `Content-Range`, `Transfer-Encoding`, `ETag`, and `Last-Modified`. `ETag` and `Last-Modified` are dropped because conditional requests (`If-None-Match`, `If-Modified-Since`) cannot be honored for converted responses.
-
-Markdown for Agents also adds the token count headers described below.
 
 ### Token count headers
 
-Note that we include token count headers with the converted response. `x-markdown-tokens` indicates the estimated number of tokens in the Markdown document, and `x-original-tokens` indicates the estimated number of tokens in the original HTML document before conversion. You can use these values in your flow, for example to calculate the size of a context window, estimate the token savings from Markdown conversion, or decide on your chunking strategy.
+Streaming conversion does not generate `x-markdown-tokens` or `x-original-tokens` headers. To estimate context usage, count tokens in the returned Markdown using your model's tokenizer.
 
 ### Content Signals Policy
 
@@ -105,11 +98,16 @@ When the origin response does not include a `content-signal` header, Markdown fo
 
 ## Output format
 
-Markdown for Agents returns a Markdown document with a consistent, predictable structure so AI systems can rely on it without per-site parsing logic. The response always follows this layout:
+Markdown for Agents returns a Markdown document with the following layout, subject to [conversion limits](#limitations):
 
-1. **YAML frontmatter** with metadata extracted from the page's `<meta>` tags. Only emitted when at least one supported meta tag is present.
-2. **Body Markdown** converted from the document body. Non-content elements (such as headers, footers, navigation, scripts, and styles) are stripped during pre-processing. For the full list of elements that are removed, refer to [HTML pre-processing](/workers-ai/features/markdown-conversion/how-it-works/#html) in the Workers AI Markdown Conversion documentation.
-3. **JSON-LD** structured data preserved as a fenced `json` code block at the end of the document. Only emitted when the source HTML contains JSON-LD.
+1. **YAML frontmatter** with retained page metadata, when available.
+2. **Body Markdown** converted from the document body after [HTML pre-processing](#html-pre-processing).
+3. **Incomplete-conversion notice**, when content is truncated or oversized metadata is omitted. Refer to [Incomplete conversions](#incomplete-conversions).
+4. **JSON-LD** structured data retained as a fenced `json` code block at the end of the document, when available.
+
+### HTML pre-processing
+
+Markdown for Agents extracts supported metadata and JSON-LD before removing non-content elements. These include `<head>`, `<header>`, `<footer>`, `<nav>`, `<script>`, and `<style>` elements. Relative links and image URLs are resolved against the requested page URL.
 
 ### YAML frontmatter
 
@@ -121,9 +119,11 @@ When the source HTML contains supported `<meta>` tags, Markdown for Agents prepe
 | `description` | `<meta name="description">`, with fallback to `<meta property="og:description">` |
 | `image`       | `<meta property="og:image">`                                                     |
 
-Only fields with a value are emitted. If the source HTML does not contain any of the supported meta tags, the frontmatter block is omitted entirely.
+Only fields with retained values are emitted. The rendered frontmatter is limited to 64 KiB (65,536 bytes). Oversized fields are omitted. If the remaining fields exceed the combined limit, they are retained in priority order: `title`, `description`, then `image`.
 
-For `title` and `description`, the standard `<meta name="...">` form always takes priority over the Open Graph `<meta property="og:...">` form, regardless of the order they appear in the HTML. Open Graph values are used only as fallbacks when the standard form is missing.
+For `title` and `description`, an accepted standard `<meta name="...">` value takes priority over the Open Graph `<meta property="og:...">` form, regardless of their order in the HTML. Open Graph values provide fallbacks when the standard value is missing or oversized.
+
+Omitting oversized frontmatter fields adds an [incomplete-conversion notice](#incomplete-conversions). If no metadata remains, the frontmatter block is omitted entirely.
 
 Example output:
 
@@ -141,11 +141,13 @@ image: https://example.com/cover.png
 
 ### JSON-LD
 
-[JSON-LD](https://json-ld.org/) is a structured-data format used by search engines and AI systems to interpret a page's semantic content. Markdown for Agents preserves any `<script type="application/ld+json">` blocks from the source HTML by appending them at the end of the converted Markdown inside a single fenced `json` code block.
+[JSON-LD](https://json-ld.org/) is a structured-data format used by search engines and AI systems to interpret a page's semantic content. Markdown for Agents appends retained `<script type="application/ld+json">` blocks at the end of the converted Markdown inside a single fenced `json` code block.
 
-If the source HTML contains multiple JSON-LD scripts, all of them are concatenated within the same code block, each on its own line.
+Multiple retained JSON-LD scripts are concatenated within the same code block, each on its own line.
 
-JSON-LD is the only `<script>` content preserved in the output — all other `<script>` and `<style>` content is stripped during [HTML pre-processing](/workers-ai/features/markdown-conversion/how-it-works/#html).
+JSON-LD capture has a cumulative limit of 1 MiB (1,048,576 bytes) across scripts. If a script exceeds the remaining budget, that script and subsequent scripts are omitted. Earlier complete scripts are retained, and the response includes an [incomplete-conversion notice](#incomplete-conversions).
+
+JSON-LD is the only `<script>` content preserved in the output — all other `<script>` and `<style>` content is stripped during [HTML pre-processing](#html-pre-processing).
 
 Example output:
 
@@ -161,6 +163,22 @@ Example output:
 }
 ```
 ````
+
+### Incomplete conversions
+
+When source HTML is truncated at the [size limit](#limitations) or oversized metadata is omitted, the response includes an HTML comment after the body Markdown and before any retained JSON-LD. For example:
+
+```markdown
+<!-- Cloudflare Markdown for Agents: incomplete conversion; oversized JSON-LD omitted -->
+```
+
+The notice lists the applicable reasons, separated by semicolons:
+
+- `source HTML truncated at the conversion size limit`
+- `oversized front matter omitted`
+- `oversized JSON-LD omitted`
+
+Inspect the raw Markdown to detect this notice. HTML comments are not visible in rendered Markdown. A `200` status does not guarantee a complete conversion. Other conversion safety limits can terminate the response instead of producing partial output.
 
 ## How to enable
 
@@ -181,8 +199,11 @@ curl https://blog.cloudflare.com/markdown-for-agents/ \
 
 ## Limitations
 
-- We only convert from HTML, other types of documents may be included in the future.
-- The origin response cannot exceed 2 MB (2,097,152 bytes).
+Markdown for Agents only converts HTML. Conversion reads up to 6 MiB (6,291,456 bytes) of decompressed source HTML.
+
+If the origin declares a response size above this limit, conversion does not start. Cloudflare returns the original response if the client's `Accept` header allows its content type. Otherwise, Cloudflare returns `406 Not Acceptable`.
+
+If the decompressed HTML exceeds the limit during streaming, conversion finishes using the prefix already read. The response includes an [incomplete-conversion notice](#incomplete-conversions). Any JSON-LD script left incomplete by truncation is omitted.
 
 ## Other Markdown conversion APIs
 

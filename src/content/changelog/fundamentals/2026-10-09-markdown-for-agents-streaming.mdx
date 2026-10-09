@@ -1,0 +1,23 @@
+---
+title: Markdown for Agents response streaming and partial-output notices
+description: Markdown for Agents streams converted responses and identifies truncated content or omitted metadata in the returned Markdown.
+products:
+  - fundamentals
+date: 2026-10-09
+---
+
+[Markdown for Agents](/fundamentals/reference/markdown-for-agents/) streams HTML-to-Markdown conversion. Partial responses identify content omitted because of conversion limits.
+
+- **Input limit:** Conversion reads up to 6 MiB (6,291,456 bytes) of decompressed HTML.
+- **Metadata limits:** Rendered frontmatter is capped at 64 KiB, and JSON-LD capture at 1 MiB. Oversized metadata is omitted while retaining other converted content.
+- **Response headers:** Streamed responses omit `Content-Length` and do not generate `x-markdown-tokens` or `x-original-tokens`. Use your model's tokenizer to count tokens in the returned Markdown.
+
+When streaming conversion truncates source HTML or omits oversized metadata, the raw Markdown includes an HTML comment describing the cause. For example:
+
+```markdown
+<!-- Cloudflare Markdown for Agents: incomplete conversion; oversized JSON-LD omitted -->
+```
+
+A `200` response can contain incomplete output. Inspect the raw Markdown for the notice, which is not visible when rendered.
+
+Refer to the [Markdown for Agents reference](/fundamentals/reference/markdown-for-agents/) for limits and response behavior.
