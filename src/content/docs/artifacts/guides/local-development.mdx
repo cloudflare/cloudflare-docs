@@ -1,0 +1,84 @@
+---
+title: Develop with local Artifacts
+description: Use the local Artifacts binding with Wrangler, Vite, or Workers Vitest without accessing your deployed repositories.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - artifacts
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+The local Artifacts simulator lets you develop against a Git-compatible repository on your machine. Local repositories and tokens are separate from deployed Artifacts resources. Creating, pushing to, or deleting a local repo does not change a deployed repo.
+
+## Choose a binding mode
+
+When you run a Worker locally, the `artifacts` binding uses the local simulator unless you explicitly set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your existing development workflow relied on an implicit remote binding, set `remote = true` to keep using the deployed service.
+
+| Setting | Binding destination | Local Git installation | Cloudflare credentials for local development |
+| --- | --- | --- | --- |
+| Omitted `remote` or `remote = false` | Local simulator | Required | Not required |
+| `remote = true` | Deployed Artifacts service | Not required to start the binding | Required |
+
+The local simulator is available through `wrangler dev`, the Cloudflare Vite plugin, and Workers Vitest. It does not provide a local REST API, Artifacts CLI, dashboard, SSH endpoint, or Git LFS server.
+
+## Start local development
+
+<Steps>
+
+1. Install Git on your development machine. Make `git` available on the `PATH` of the process that starts your dev server or tests. Verify the installation in that environment:
+
+   ```sh
+   git --version
+   ```
+
+   Local Artifacts checks Git during startup. If Git is unavailable, startup fails with installation instructions. Restart your dev tool after changing `PATH`. This first version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future; it is not included in this version. Deployed Artifacts does not require Git on your development machine.
+
+2. Add a binding to your Wrangler config file. If your project already has a binding, leave `remote` unset or set it to `false`:
+
+   <WranglerConfig>
+
+   ```toml title="wrangler.toml"
+   name = "artifacts-worker"
+   main = "src/index.ts"
+   compatibility_date = "$today"
+
+   [[artifacts]]
+   binding = "ARTIFACTS"
+   namespace = "default"
+   ```
+
+   </WranglerConfig>
+
+   The namespace identifies local repositories. It does not import repos from a deployed namespace with the same name.
+
+3. Start the dev server:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+   Use the same Wrangler config file with the Cloudflare Vite plugin or Workers Vitest. For a Worker example that creates a repo, refer to [Get started with Workers](/artifacts/get-started/workers/).
+
+4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP and a port selected for this dev session. Get a fresh URL from the binding after restarting the dev server instead of hardcoding the port:
+
+   ```sh
+   git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
+   ```
+
+   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username and the repo token as the password.
+
+</Steps>
+
+## Keep or reset local repositories
+
+Local repository metadata and Git objects persist under your dev tool's resource persistence directory. For Wrangler, this is typically `.wrangler/state/` when persistence is on. Use the same project root and persistence settings to keep data across restarts. Turning off persistence, such as with Vite's `persistState: false`, makes the data temporary.
+
+To reset local Artifacts, stop the dev server and back up any repositories you need. Then delete only the `artifacts/` directory inside that tool's resource persistence directory. Do not delete unrelated binding data. Local tokens and repository data do not transfer to a remote binding.
+
+## Use an HTTPS import explicitly
+
+Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git on your development machine contacts the specified host, including private-network hosts. Only import URLs you trust. Imports do not follow HTTP redirects; supply the final HTTPS Git URL, especially when using credentials. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
+
+A successful local import does not retain URL credentials in repository metadata or the Git configuration. If the process exits during an import, treat any partial local storage as sensitive until you inspect or reset it. Keep import URLs with credentials out of logs. For the binding arguments, refer to [Workers binding](/artifacts/api/workers-binding/#importparams).
+
+To use deployed Artifacts during local development, set `remote = true` on the binding and authenticate your dev tool. The remote binding does not synchronize with the local simulator. For authentication options, refer to [Authentication](/artifacts/guides/authentication/).
