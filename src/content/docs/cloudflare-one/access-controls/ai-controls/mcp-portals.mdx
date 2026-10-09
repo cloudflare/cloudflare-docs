@@ -253,7 +253,7 @@ If your upstream OAuth provider restricts redirect URIs, add the URLs that match
 
 For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
 
-For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare uses the shared callback URL regardless of the value of `registration_info.redirect_uris`. You can omit this field; it cannot override the shared callback URL.
+For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare uses the shared callback URL regardless of the value of `registration_info.redirect_uris`, so you can omit this field. You cannot override the shared callback URL.
 
 #### Dashboard callback URL
 
