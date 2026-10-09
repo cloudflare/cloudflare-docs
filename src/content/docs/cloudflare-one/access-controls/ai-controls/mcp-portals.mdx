@@ -243,18 +243,6 @@ MCP server portals use upstream OAuth callback URLs to authorize administrators 
 
 OAuth providers typically exact-match the full URI, including the path.
 
-If your upstream OAuth provider restricts redirect URIs, add the URLs that match your server's configuration:
-
-| OAuth configuration | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider |
-| --- | --- | --- |
-| Automatic (DCR) | No | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server. |
-| Automatic (DCR) | Yes | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
-| Manual OAuth credentials | Not available | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration. |
-
-For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
-
-For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. You can omit `registration_info.redirect_uris` when creating the server; Cloudflare then adds the shared callback URL.
-
 #### Dashboard callback URL
 
 When Cloudflare registers the OAuth client using DCR, the dashboard uses the following callback URL:
@@ -275,15 +263,13 @@ End users never use the dashboard callback URL to authorize the upstream MCP ser
 
 When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
 
-When the **Use the Cloudflare-hosted OAuth callback** setting is off, the portal uses a callback URL on your portal domain:
+By default, the portal uses a callback URL on your portal domain:
 
 ```txt
 https://<your-portal-hostname>/servers-callback
 ```
 
 Add the callback URL to the OAuth provider's redirect URI allowlist.
-
-Use `/servers-callback`, not `/server-callback`, for automatic (DCR) servers when the shared callback setting is off. Manual OAuth servers use the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) instead.
 
 #### Shared Cloudflare callback URL
 
@@ -297,7 +283,7 @@ The **Use the Cloudflare-hosted OAuth callback** setting is not available when y
 
 When Cloudflare uses DCR to register the OAuth client, turn on **Use the Cloudflare-hosted OAuth callback** to use the shared callback URL for per-user authorization. If the setting is off, per-user authorization uses the [portal-scoped callback URL](#portal-callback-url).
 
-Use the shared callback URL if the upstream OAuth provider limits the number of allowed redirect URIs or if you want one callback URL for a server across multiple portals. DCR still uses the dashboard callback URL for administrator authorization, regardless of whether the **Use the Cloudflare-hosted OAuth callback** setting is on. The setting is off by default. Configure it separately for each MCP server that uses DCR.
+Use the shared callback URL if the upstream OAuth provider limits the number of allowed redirect URIs or if you want one callback URL for a server across multiple portals. The **Use the Cloudflare-hosted OAuth callback** setting is off by default. Configure it separately for each MCP server that uses DCR.
 
 To turn on the setting, go to **Zero Trust** > **Access controls** > **MCP Portals** > **MCP servers**, add or edit an MCP server that uses DCR, and turn on **Use the Cloudflare-hosted OAuth callback** under **Basic information** > **Advanced settings**.
 
@@ -637,8 +623,6 @@ The `auth_type` field accepts the following values:
 
 #### Manual OAuth credentials
 
-For manual OAuth, allowlist the shared callback URL at the upstream provider. Set `is_shared_oauth_callback_enabled` to `true` when creating the server through the API.
-
 To create an MCP server with a pre-registered OAuth client, set `auth_type` to `oauth` and provide both `auth_credentials` and `client_secret`. The `auth_credentials` value is required and must be a JSON-encoded string:
 
 <CURL
@@ -650,9 +634,8 @@ To create an MCP server with a pre-registered OAuth client, set `auth_type` to `
 		name: "GitHub MCP Server",
 		hostname: "https://github-mcp.example.com/mcp",
 		auth_type: "oauth",
-		is_shared_oauth_callback_enabled: true,
 		auth_credentials:
-			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
+			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","redirect_uris":["https://mcp.example.com/servers-callback"],"token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
 		client_secret: "<client-secret>",
 	}}
 />
@@ -662,7 +645,7 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: Optional when `is_shared_oauth_callback_enabled` is `true`. Cloudflare adds the shared callback URL if you omit this field.
+- `registration_info.redirect_uris`: At least one registered redirect URI. This can be omitted when `is_shared_oauth_callback_enabled` is `true`; Cloudflare then adds the shared callback URL.
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
 
