@@ -42,7 +42,7 @@ For a process that runs until the container stops, such as a development server 
    echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
    // Defines current(), which reads the process ID in a directory into $pid
-   // when the process started in this instance.
+   // when the process started in this container.
    const CURRENT = `current() {
    	read -r pid boot 2>/dev/null <"$1/pid" &&
    		[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ]

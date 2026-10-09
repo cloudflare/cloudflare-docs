@@ -178,7 +178,7 @@ The `S3Mount` class from `@cloudflare/sandbox` mounts one prefix of a bucket as 
 
    Any process in the sandbox can read, change, or delete every object under the prefix. Mount the narrowest prefix the job needs, and use `access: "read-only"` when the job only reads. The sandbox receives placeholder credentials, because `s3fs` requires a key pair. The mount works with `enableInternet: false`. For short-lived credentials, refer to [Credentials](/sandbox/reference/s3-mounts/#credentials).
 
-   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept, and `unmount()` does not remove it. An instance supports a [limited number of intercepts](/containers/api/durable-object-container/#interceptoutboundhttp). Give each job its own sandbox name instead of mounting a new prefix in the same instance.
+   Calling `mount()` again with the same settings reuses the existing mount. Each new mount adds an outbound intercept, and `unmount()` does not remove it. A container supports a [limited number of intercepts](/containers/api/durable-object-container/#interceptoutboundhttp). Give each job its own sandbox name instead of mounting a new prefix in the same container.
 
 7. Add a method that runs a command in the mounted directory:
 
@@ -322,5 +322,5 @@ Under `wrangler dev`, the container runs in Docker on your machine, and `S3Gatew
 
 - [S3Mount API](/sandbox/reference/s3-mounts/): every option and error.
 - [Artifact workspace example](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/artifact-workspace): a deployable Worker that mounts a prefix for each sandbox and processes a file in it.
-- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files on the sandbox disk between instances. Snapshots do not include mounted directories.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep files on the sandbox disk between containers. Snapshots do not include mounted directories.
 - [S3 API compatibility](/r2/api/s3/api/): the S3 operations that R2 supports.

@@ -1,6 +1,6 @@
 ---
 title: Sandboxes on Cloudflare
-description: Execute untrusted or generated code in Linux virtual machines or isolated Workers.
+description: Execute untrusted or generated code in Linux containers or isolated Workers.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -46,13 +46,13 @@ If your application uses `@cloudflare/sandbox` 0.x, refer to [Sandbox SDK 0.x](/
 
 [Containers](/containers/) run an image you provide. An image holds the files, packages, and default command of a Linux environment.
 
-Each Linux sandbox is a [Durable Object](/durable-objects/), an object with a unique name and its own storage. The Durable Object starts a container instance: a Linux virtual machine that runs your image. The instance is a full Linux environment, so you can run any language and keep processes running. Your Worker reaches the Durable Object by name and sends it work. HTTP from the Internet reaches the instance only through your Worker. For how the Durable Object and the instance relate, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
+Each Linux sandbox is a [Durable Object](/durable-objects/), an object with a unique name and its own storage. The Durable Object starts a [container](/containers/) from your image. The container is a full Linux environment, so you can run any language and keep processes running. Your Worker reaches the Durable Object by name and sends it work. HTTP from the Internet reaches the container only through your Worker. For how the Durable Object and the container relate, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
-No other workload shares an instance. For how each environment isolates code, refer to [Choose a sandbox environment](/sandbox/concepts/#how-each-environment-isolates-code).
+No other workload shares a container. For how each environment isolates code, refer to [Choose a sandbox environment](/sandbox/concepts/#how-each-environment-isolates-code).
 
 A sandbox container uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta.
 
-Inside the Durable Object, `this.ctx.container` controls the instance. This excerpt starts the instance from an image and runs a command in it:
+Inside the Durable Object, `this.ctx.container` controls the container. This excerpt starts the container from an image and runs a command in it:
 
 ```ts
 const container = this.ctx.container;
@@ -151,7 +151,7 @@ const result = await entrypoint.evaluate();
 </LinkTitleCard>
 
 <LinkTitleCard title="Work with files" href="/sandbox/files/" icon="document">
-	Move files, keep a workspace between instances, and mount an R2 bucket.
+	Move files, keep a workspace between containers, and mount an R2 bucket.
 </LinkTitleCard>
 
 <LinkTitleCard

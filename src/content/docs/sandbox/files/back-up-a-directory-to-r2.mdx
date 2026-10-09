@@ -1,6 +1,6 @@
 ---
 title: Back up a directory to R2
-description: Save a directory from a Linux sandbox to your R2 bucket, and restore it into the same sandbox after its instance or image changes.
+description: Save a directory from a Linux sandbox to your R2 bucket, and restore it into the same sandbox after its container or image changes.
 pcx_content_type: how-to
 sidebar:
   order: 4
@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. R2 keeps each backup until you delete it. A container instance, the Linux virtual machine that your Durable Object starts, loses its files when it stops. You can restore a backup into a later instance, including one that runs a different image. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
+The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. R2 keeps each backup until you delete it. A container loses its files when it stops. You can restore a backup into a later container, including one that runs a different image. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
 
 In this example, the directory is a project in `/workspace/project`.
 

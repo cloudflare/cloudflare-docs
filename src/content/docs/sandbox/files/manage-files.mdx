@@ -23,7 +23,7 @@ import {
 
 This guide streams an uploaded file into a sandbox, compresses it with `gzip`, and streams the compressed file back to the caller.
 
-The `Files` class from `@cloudflare/sandbox` reads and writes files in a running [container instance](/sandbox/concepts/lifetime/), the Linux virtual machine that your Durable Object starts. [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the instance, so your Durable Object starts it before each file operation.
+The `Files` class from `@cloudflare/sandbox` reads and writes files in a running [container](/sandbox/concepts/lifetime/). [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the container, so your Durable Object starts it before each file operation.
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    The `workspace` key names the image. Your code starts it as `container.images.workspace`.
 
-4. To start an instance before each file operation, replace the import and the `MyContainer` class in `src/index.ts` with a class that has a `startSandbox()` method. Keep the default export until step 6 replaces it:
+4. To start a container before each file operation, replace the import and the `MyContainer` class in `src/index.ts` with a class that has a `startSandbox()` method. Keep the default export until step 6 replaces it:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -112,7 +112,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
    		}
    	}
 
-   	// Files does not start an instance, so start one before each operation.
+   	// Files does not start a container, so start one before each operation.
    	private async startSandbox(): Promise<void> {
    		if (!this.container.running) {
    			this.container.start({
@@ -127,7 +127,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    </TypeScriptExample>
 
-   The constructor creates one `Files` object for the Durable Object, because `this.ctx.container` stays the same object for as long as the Durable Object runs. `startSandbox()` starts the `workspace` image when no instance is running, and sets the inactivity timeout after `start()`. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   The constructor creates one `Files` object for the Durable Object, because `this.ctx.container` stays the same object for as long as the Durable Object runs. `startSandbox()` starts the `workspace` image when no container is running, and sets the inactivity timeout after `start()`. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 5. To write the upload, run the command, and return the output file, add a `compress()` method to `MyContainer`:
 
@@ -214,7 +214,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 ## Remove output files
 
-Compressed files stay in `/workspace` until the instance stops. To delete a file sooner, call `remove()` after the caller has read the response.
+Compressed files stay in `/workspace` until the container stops. To delete a file sooner, call `remove()` after the caller has read the response.
 
 For other file operations, refer to [Files API](/sandbox/reference/files/).
 
@@ -347,5 +347,5 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#ev
 ## Related resources
 
 - [Files API](/sandbox/reference/files/): every method, with its errors and options.
-- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the instance stops.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the container stops.
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): write files that other systems read.
