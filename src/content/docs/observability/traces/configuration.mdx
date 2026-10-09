@@ -16,6 +16,12 @@ Configure [Cloudflare Traces](/observability/traces/) separately for each domain
 
 **Default sample rate (%)** sets how many requests Cloudflare traces. For example, a rate of `10%` traces about 10 out of every 100 requests. Trace rules can use a different rate for requests that match a rule.
 
+Cloudflare makes the sampling decision when the request arrives. Once a request is selected for tracing, Cloudflare captures the full request path. There is no overhead with enabling tracing.
+
+:::note[Free plan daily limit]
+Free accounts have a daily ingestion limit. When this limit is reached, Cloudflare stops ingesting new traces for the remainder of that day. Refer to [Cloudflare Observability pricing](/observability/pricing/) for limit details.
+:::
+
 ## Trace rules
 
 Trace rules override the default sample rate for matching requests. Cloudflare uses the first matching rule, so rule order matters.

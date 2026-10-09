@@ -56,3 +56,12 @@ Refer to [Workers spans and attributes](/workers/observability/traces/spans-and-
 :::note
 [Workers tracing](/workers/observability/traces/) needs to be enabled to see Workers spans in a Cloudflare Trace.
 :::
+
+## Features without spans
+
+Some Cloudflare features do not yet have dedicated spans. Requests processed by these features still appear in traces, but without span-level detail for that processing.
+
+- DDoS protection rules
+- Cloudflare Access
+- Cloudflare Tunnel
+
