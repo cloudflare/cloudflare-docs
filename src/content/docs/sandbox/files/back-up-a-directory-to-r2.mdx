@@ -329,6 +329,45 @@ An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects 
 
 A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until an [object lifecycle rule](/r2/buckets/object-lifecycles/) of the bucket aborts it.
 
+## Send other requests to a catch-all intercept
+
+If your Durable Object sends the other HTTP requests from the container to an entrypoint with [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), register the backup route first. A catch-all that a container registers first receives its backup traffic until a new container starts, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
+
+Replace `startSandbox()` with a version that registers both routes on each new container. `Outbound` is a `WorkerEntrypoint` that your Worker exports:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	// The setup that requests in progress share
+	private starting?: Promise<void>;
+
+	private startSandbox(): Promise<void> {
+		if (!this.container.running) {
+			this.starting ??= this.setUpSandbox().finally(() => {
+				this.starting = undefined;
+			});
+		}
+		return this.starting ?? Promise.resolve();
+	}
+
+	private async setUpSandbox(): Promise<void> {
+		this.container.start({
+			image: this.container.images.workspace,
+			enableInternet: false,
+		});
+		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+		// Register the backup route before the catch-all
+		await this.backups.intercept();
+		await this.container.interceptAllOutboundHttp(
+			this.ctx.exports.Outbound({ props: {} }),
+		);
+	}
+}
+```
+
+Requests that arrive during setup wait for it, so no backup starts before both routes exist, and no `intercept()` call replaces the access of a running backup. The routes belong to the container and stay in place when the Durable Object restarts, so a restarted Durable Object that finds the container running registers nothing.
+
 ## Related resources
 
 - [DirectoryBackup API](/sandbox/reference/directory-backups/): what a backup keeps, one operation at a time per container, cancellation, and every error.
