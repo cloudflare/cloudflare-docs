@@ -35,6 +35,7 @@ Cached responses are the cheapest path through Cloudflare. Every cache hit avoid
 |---|---|
 | Use [Workers Logs](/workers/observability/logs/workers-logs/) for log retention instead of Logpush | Logpush-enabled Workers requests and Logpush data transfer |
 | Use the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api) for Durable Objects with idle WebSocket connections | Duration (GB-s) charges — billing pauses while the Durable Object is hibernated |
+| Use a minimum delay and an attempt limit when you [reschedule Durable Object alarms](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition) | Requests and rows written by alarm loops |
 
 ### R2
 
