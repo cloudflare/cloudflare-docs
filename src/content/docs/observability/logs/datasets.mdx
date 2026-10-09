@@ -8,6 +8,8 @@ products:
   - observability
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare Observability supports logs from the products listed in the table. Turn on each dataset in the location shown under **Enablement**. Datasets enabled through [Log Explorer](/log-explorer/) appear in Logs once your account has Log Explorer and that dataset turned on. Event sizes are estimates and vary by record.
 
 You can also query [sampled analytics datasets](#sampled-analytics-datasets) for your zones in Logs without turning anything on.
@@ -60,9 +62,9 @@ Logs also lists HTTP requests and firewall events from the [GraphQL Analytics AP
 
 These datasets use [adaptive sampling](/analytics/graphql-api/sampling/). Results can omit individual events, and counts can be estimates. Available fields, exact retention, and how far back charts reach depend on your plan. Refer to [GraphQL Analytics API limits](/analytics/graphql-api/limits/) for details.
 
-To query these datasets for a zone, you need the Zone Analytics Read permission for that zone.
+To query these datasets for a zone, you need the Zone Analytics Read permission for that zone. Account administrators can grant it on the **Members** page.
 
-In the dataset selector, sampled analytics datasets appear as **HTTP requests** and **Firewall events**. Log Explorer datasets appear under a **Log Explorer** heading, listed by identifier, such as `http_requests`.
+<DashButton url="/?to=/:account/members" />
 
 For unsampled HTTP requests and firewall events, turn on those datasets through [Log Explorer](/log-explorer/manage-datasets/#enable-log-explorer). Log Explorer is a paid add-on. Refer to [Pricing](#pricing) for the unsampled security dataset price.
 
