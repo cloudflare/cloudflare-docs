@@ -1,0 +1,259 @@
+---
+pcx_content_type: reference
+title: Events
+description: Event types, payloads, ordering, and delivery rules for RealtimeKit Agent Participant.
+sidebar:
+  order: 3
+  badge: Beta
+products:
+  - realtime
+---
+
+import AgentWebSocketEvents from "~/components/realtime/realtimekit/AgentWebSocketEvents.astro";
+
+Agent Participant sends meeting activity as JSON messages. This page covers each event type and how delivery works.
+
+## How events flow
+
+<AgentWebSocketEvents />
+
+Every message has the same envelope:
+
+```json
+{ "category": "message", "name": "<event name>", "data": {} }
+```
+
+Dispatch on `name`. Ignore unknown fields and event names. Fields are `snake_case`, except inside app-defined broadcast payloads.
+
+## Subscriptions
+
+Session events are always sent. Other events require their category in the `subscriptions` query parameter.
+
+| Category      | Events                                                     |
+| ------------- | ---------------------------------------------------------- |
+| Always sent   | `session.started`, `session.ended`, `participant.kick_all` |
+| `participant` | `participant.join`, `participant.leave`                    |
+| `transcript`  | `transcript.received`                                      |
+| `broadcast`   | `broadcast.received`                                       |
+
+Pass categories, not event names: `?subscriptions=transcript,participant`. An unknown category rejects the connection with `400` `INVALID_QUERY`.
+
+## Delivery
+
+- **Live only.** There is no history or snapshot. A connection opened mid-session receives only later events.
+- **Ordered per source.** Transcripts arrive in order, and participant events arrive in order. There is no order across sources.
+- **At least once on server restart.** An event can arrive twice if the server restarts mid-send.
+- **Queued while you reconnect.** Up to 10,000 unsent events are kept per connection and replayed on resume.
+- **No silent gaps.** If the agent loses the meeting, the server closes with `1013` `upstream_lost`. After a rejoin, a second `session.started` marks the gap.
+
+## Events across reconnects
+
+To keep receiving events after a dropped WebSocket, send a `connection.get` request after you connect and store the returned `connection.id`. When you reconnect, pass it as the `connection_id` query parameter.
+
+Resume works only when the WebSocket between your backend and the Agent's WebSocket drops unexpectedly, for example after a network error or an abrupt close with a code other than `1000`. If your backend closes the WebSocket normally with `1000`, the agent leaves the meeting immediately and there is nothing to resume.
+
+What you receive depends on how long you were away:
+
+| Situation                                         | What you receive                                                                           |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Resumed within the 5-second grace period          | Queued events in their original order, then live events. Nothing is lost.                  |
+| Resumed after the agent left the meeting          | A new `session.started`, then live events. Events from while the agent was out are lost.   |
+| Closed with `queue_overflow`                      | Nothing to resume. More than 10,000 events were queued. Reconnect without `connection_id`. |
+| Closed with `session_ended` after `session.ended` | Nothing to resume. Open a new connection for the next session.                             |
+
+When you handle events:
+
+- **Treat a second `session.started` as a gap.** Joins, leaves, and transcripts from the gap are not replayed, so your participant list may be out of date.
+- **Make handlers idempotent.** An event can arrive twice if the server restarts while sending it.
+- **Changing `subscriptions` on resume does not re-filter queued events.** Events already queued under the old list are still delivered.
+
+For close codes and resume behavior, refer to [Reconnect](/realtime/realtimekit/ai/agent-participant/get-started/#reconnect).
+
+## Session events
+
+### `session.started`
+
+Sent once the agent joins a live session. Subscribed events follow it.
+
+```json
+{
+	"category": "message",
+	"name": "session.started",
+	"data": {
+		"session": {
+			"id": "ses_1",
+			"meeting_id": "mtg_1",
+			"started_at": "2026-09-23T10:00:00.000Z",
+			"ended_at": null
+		}
+	}
+}
+```
+
+`session.id` matches the session REST APIs and [webhooks](/realtime/realtimekit/webhooks/).
+
+### `session.ended`
+
+Sent when the session ends or the agent is kicked. The server then closes with `1000` `session_ended`. To follow the next session, open a new connection.
+
+```json
+{
+	"category": "message",
+	"name": "session.ended",
+	"data": {
+		"session": {
+			"id": "ses_1",
+			"meeting_id": "mtg_1",
+			"started_at": "2026-09-23T10:00:00.000Z",
+			"ended_at": "2026-09-23T10:45:12.000Z"
+		},
+		"reason": "host_ended_meeting"
+	}
+}
+```
+
+| `reason`                | Meaning                                                 |
+| ----------------------- | ------------------------------------------------------- |
+| `all_participants_left` | The last participant left and the close timeout elapsed |
+| `host_ended_meeting`    | A host ended the meeting for everyone                   |
+| `force_cleanup`         | The platform closed an orphaned session                 |
+
+Treat unknown reasons as `all_participants_left`. A late final transcript can be missed after `session.ended`.
+
+A connected agent counts as a participant, so the session does not end on its own while the agent is connected. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-participant/get-started/#billing-and-ending-the-session).
+
+### `participant.kick_all`
+
+A host removed every participant. No `participant.leave` events are sent for it. `session.ended` follows.
+
+```json
+{ "category": "message", "name": "participant.kick_all", "data": {} }
+```
+
+## Participant events
+
+Participant events are per connection, keyed by `peer_id`. A participant on two devices produces two joins with the same `participant_id` and different `peer_id` values. A reconnect gets a new `peer_id`.
+
+### `participant.join`
+
+```json
+{
+	"category": "message",
+	"name": "participant.join",
+	"data": {
+		"participant": {
+			"peer_id": "peer_7f3a",
+			"participant_id": "par_1",
+			"meeting_id": "mtg_1",
+			"custom_participant_id": "customer-user-1",
+			"display_name": "Alice",
+			"picture_url": null,
+			"preset_id": "pst_1",
+			"preset_name": "group_call_host",
+			"waitlisted": false
+		}
+	}
+}
+```
+
+| Field                   | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `peer_id`               | This connection                                     |
+| `participant_id`        | Participant ID, as in the REST API                  |
+| `custom_participant_id` | Your ID for the participant, or `null`              |
+| `display_name`          | Display name                                        |
+| `picture_url`           | Display picture URL, or `null`                      |
+| `preset_id`             | Preset ID, or `null`                                |
+| `preset_name`           | Preset name, or `null`                              |
+| `waitlisted`            | `true` while the connection waits for host approval |
+
+### `participant.leave`
+
+Same fields as `participant.join`, without `preset_name`. Match it to the join by `peer_id`.
+
+On a kick, only `peer_id` and `meeting_id` are set. Other fields are `null`, and `waitlisted` is `false`.
+
+### What is excluded
+
+- Participants already present when the agent joined. There is no initial list.
+- The agent's own join and leave.
+- Hidden, recorder, and livestreamer connections.
+
+## Transcript events
+
+### `transcript.received`
+
+Requires [real-time transcription](/realtime/realtimekit/ai/transcription/#turn-on-real-time-transcription) on the speakers' presets.
+
+```json
+{
+	"category": "message",
+	"name": "transcript.received",
+	"data": {
+		"text": "Hello everyone.",
+		"is_final": true,
+		"started_at": "2026-09-23T10:00:03.000Z",
+		"ended_at": "2026-09-23T10:00:05.000Z",
+		"confidence": 0.94,
+		"speaker": {
+			"peer_id": "peer_7f3a",
+			"participant_id": "par_1",
+			"custom_participant_id": "customer-user-1",
+			"display_name": "Alice"
+		}
+	}
+}
+```
+
+| Field        | Description                                                                      |
+| ------------ | -------------------------------------------------------------------------------- |
+| `text`       | Transcribed text                                                                 |
+| `is_final`   | `true` when the result is final. It does not mean the speaker's turn ended.      |
+| `started_at` | When the server received the transcript, to the second. Not when speech started. |
+| `ended_at`   | When speech ended, to the second                                                 |
+| `confidence` | Speech-to-text confidence, `0` to `1`                                            |
+| `speaker`    | The speaking connection. `peer_id` matches `participant.join`.                   |
+
+Partials (`is_final: false`) can be followed by a final for the same speech. There is no segment ID. Replace the latest partial per speaker, and store only finals.
+
+## Broadcast events
+
+Broadcasts are custom messages that participants send to the meeting. Any `type` and `payload` your app sends arrive at the agent, so broadcasts are how you feed app-specific signals to an agent.
+
+### Send a broadcast
+
+Send broadcasts from any participant with the [broadcast APIs](/realtime/realtimekit/broadcast-apis/):
+
+```ts
+await meeting.participants.broadcastMessage("my-broadcast", {
+	message: "Greetings!",
+	peerId: meeting.self.peerId,
+});
+```
+
+Reactions already work this way. The [Reactions Manager addon](/realtime/realtimekit/ui-kit/addons/#reactions) sends each reaction as a broadcast with type `reactions`.
+
+### `broadcast.received`
+
+```json
+{
+	"category": "message",
+	"name": "broadcast.received",
+	"data": {
+		"type": "reaction",
+		"payload": { "emoji": "🔥", "peerId": "peer_7f3a" },
+		"created_at": "2026-09-23T10:03:10.123Z"
+	}
+}
+```
+
+| Field        | Description                                |
+| ------------ | ------------------------------------------ |
+| `type`       | App-defined type, for example `reactions`  |
+| `payload`    | App-defined JSON object, forwarded as sent |
+| `created_at` | When the broadcast was sent                |
+
+- Filter on `type`. For reactions, `payload.reaction` is the emoji, and an empty string clears it.
+- `payload` keys are forwarded as sent, so they keep your app's casing, such as `peerId`.
+- The sender is not verified. Do not trust identity fields in `payload` for authorization.
+- The SDK also sends internal types, such as `spotlight`. Ignore types you do not handle.

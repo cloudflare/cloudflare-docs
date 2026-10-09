@@ -1,0 +1,51 @@
+---
+pcx_content_type: overview
+title: Agent Participant
+description: Add a server-side agent to a RealtimeKit meeting and stream transcripts, participant presence, and broadcasts to a Worker or Durable Object.
+sidebar:
+  order: 1
+  label: Overview
+  group:
+    label: Agent Participant
+    badge: Beta
+products:
+  - realtime
+---
+
+import { LinkButton } from "~/components";
+import AgentCapabilities from "~/components/realtime/realtimekit/AgentCapabilities.astro";
+import AgentWebSocketFlow from "~/components/realtime/realtimekit/AgentWebSocketFlow.astro";
+
+Agent Participant adds a server-side agent to a RealtimeKit meeting. Any backend that can open a WebSocket — a Cloudflare Worker, a Durable Object, or your own server — can connect to it. No client SDK or browser is required.
+
+Today an agent receives live meeting activity, such as transcripts, participant presence, and broadcasts. More capabilities are planned, including sending messages and working with meeting media.
+
+## What an agent can do
+
+<AgentCapabilities />
+
+The agent is a meeting participant. Its [preset](/realtime/realtimekit/concepts/preset/) decides how it joins the meeting, and its subscriptions decide which events it receives.
+
+To create a preset and choose subscriptions, refer to [Build an agent](/realtime/realtimekit/ai/agent-participant/get-started/).
+
+## How it works
+
+<AgentWebSocketFlow />
+
+1. Create a participant using [create-participant-api](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) for the agent, using your configured preset.
+2. Durable Object opens the WebSocket with that agent's participant token.
+3. The agent joins the meeting and forwards the events you subscribed to.
+4. When the session ends, the server sends `session.ended` and closes the WebSocket.
+
+<LinkButton href="/realtime/realtimekit/ai/agent-participant/get-started/">
+	Build an agent with Durable Objects
+</LinkButton>
+
+## Billing
+
+The agent is billed as a participant for as long as it is connected. A connected agent keeps the session active even after everyone else leaves, so your backend must remove it. Refer to [Billing and ending the session](/realtime/realtimekit/ai/agent-participant/get-started/#billing-and-ending-the-session).
+
+## Reference
+
+- [Build an agent](/realtime/realtimekit/ai/agent-participant/get-started/): create a preset, run the agent in a Durable Object and connect to the WebSocket
+- [Events](/realtime/realtimekit/ai/agent-participant/events/): event types, payloads and delivery rules
