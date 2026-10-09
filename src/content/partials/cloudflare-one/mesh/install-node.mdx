@@ -4,6 +4,8 @@
 
 import { Tabs, TabItem } from "~/components";
 
+For an explanation of each command, refer to [Run Mesh on Linux](/mesh/guides/run-mesh-on-linux/).
+
 IP forwarding is not required to reach the node by its Mesh IP. If the node will advertise [CIDR routes](/mesh/features/routes/), enable persistent forwarding before connecting it:
 
 ```sh
@@ -25,19 +27,37 @@ sudo warp-cli --accept-tos connector new <TOKEN> && sudo warp-cli --accept-tos c
 ```
 
 </TabItem>
-<TabItem label="RedHat / CentOS">
+<TabItem label="RHEL">
 
-On RHEL 9 and later, enable the Extra Packages for Enterprise Linux (EPEL) repository before installing `cloudflare-warp`. EPEL provides dependencies required by the Cloudflare One Client UI:
+Enable the Extra Packages for Enterprise Linux (EPEL) repository. EPEL provides dependencies required by `cloudflare-warp`:
 
 ```sh
-sudo dnf install -y epel-release
+sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+```
+
+On RHEL 10, also enable the CodeReady Linux Builder (CRB) repository:
+
+```sh
+sudo subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms
 ```
 
 Then install the package:
 
 ```sh
-curl -fsSl https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo &&
-sudo yum install -y cloudflare-warp
+curl -fsSL https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo &&
+sudo dnf install -y cloudflare-warp
+```
+
+```sh
+sudo warp-cli --accept-tos connector new <TOKEN> && sudo warp-cli --accept-tos connect
+```
+
+</TabItem>
+<TabItem label="Fedora">
+
+```sh
+curl -fsSL https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo &&
+sudo dnf install -y cloudflare-warp
 ```
 
 ```sh
