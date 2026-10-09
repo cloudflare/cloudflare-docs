@@ -13,6 +13,6 @@
 | **Network interface type** | Wi-Fi or LAN                                                                                                           |
 | **MTU**                    | 1381 bytes recommended [^2]                                                                                            |
 
-[^1]: On RHEL 9 and later, enable the [Extra Packages for Enterprise Linux (EPEL)](https://docs.fedoraproject.org/en-US/epel/) repository (`sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm`) before installing `cloudflare-warp`. On RHEL 10, also enable the CodeReady Linux Builder (CRB) repository. EPEL and CRB provide dependencies required by the client.
+[^1]: On RHEL 9 and later, enable the [Extra Packages for Enterprise Linux (EPEL)](https://docs.fedoraproject.org/en-US/epel/) repository (`sudo dnf install epel-release`) before installing `cloudflare-warp`. EPEL provides dependencies required by the client UI.
 
 [^2]: Minimum 1281 bytes with [Path MTU Discovery](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/path-mtu-discovery/)

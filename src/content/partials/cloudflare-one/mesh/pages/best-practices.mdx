@@ -2,13 +2,54 @@
 {}
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 Operational guidance for managing Cloudflare Mesh deployments — updating the client, configuring cloud providers, running alongside Cloudflare Tunnel, and common troubleshooting.
 
 ## Update a Mesh node
 
 Updating a Mesh node means updating the `cloudflare-warp` package on the Linux host. The node briefly disconnects during the update, which interrupts traffic routed through it. If you have [high availability](/mesh/features/high-availability/) enabled, traffic fails over to a standby replica automatically.
 
-For the update commands for each distribution, refer to [Update the client](/mesh/guides/run-mesh-on-linux/#update-the-client).
+<Tabs>
+<TabItem label="Debian / Ubuntu">
+
+1. Check the current version:
+
+   ```sh
+   warp-cli --version
+   ```
+
+2. Update the package:
+
+   ```sh
+   sudo apt-get update && sudo apt-get install --only-upgrade cloudflare-warp
+   ```
+
+</TabItem>
+<TabItem label="RedHat / CentOS">
+
+1. Check the current version:
+
+   ```sh
+   warp-cli --version
+   ```
+
+2. Update the package:
+
+   ```sh
+   sudo yum update cloudflare-warp
+   ```
+
+</TabItem>
+</Tabs>
+
+3. Verify the node has reconnected:
+
+   ```sh
+   warp-cli status
+   ```
+
+   You should see `Status update: Connected` in the output.
 
 ## Make IP forwarding persistent
 
