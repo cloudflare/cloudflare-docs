@@ -205,6 +205,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10054`    | A environment variable or secret exceeds the [size limit](/workers/platform/limits/#environment-variables).                 |
 | `10055`    | The number of environment variables or secrets exceeds the [limit/Worker](/workers/platform/limits/#environment-variables). |
 | `10056`    | [Binding](/workers/runtime-apis/bindings/) not found.                                                                       |
+| `10057`    | An [`inherit` binding](/workers/observability/errors/#inherit-binding-errors-10057) could not be resolved.                  |
 | `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
 | `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
 
@@ -221,6 +222,24 @@ This means that you are doing work in the top-level scope of your Worker that ta
 #### Script startup exceeded memory limit
 
 This means that you are doing work in the top-level scope of your Worker that allocates more than the [memory limit (128 MB)](/workers/platform/limits/#memory) of memory.
+
+### Inherit binding errors (10057)
+
+An `inherit` binding copies a binding from an earlier version of your Worker. You can use it to keep secrets and other bindings without sending their values again. If an `inherit` binding cannot be resolved, the upload fails with error 10057. The API returns one error for each binding that fails.
+
+The script upload endpoints, such as [Upload Worker Module](/api/resources/workers/subresources/scripts/methods/update/) and [Upload Version](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/), inherit from the most recently uploaded version of your Worker. That version is not always the deployed version. These endpoints return error 10057 when:
+
+- `version_id` is set to anything other than `"latest"`.
+- No earlier version exists, and the request sets `bindings_inherit=strict`.
+- The earlier version has no binding with the inherited name, and the request sets `bindings_inherit=strict`.
+
+Without `bindings_inherit=strict`, these endpoints drop an `inherit` binding that cannot be resolved.
+
+To inherit a binding from a specific version, use the [Versions](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) endpoints of the beta Workers API. These endpoints accept a version ID in `version_id`. They return error 10057 when:
+
+- `version_id` is not a version ID, a version ID prefix of at least eight characters, or `"latest"`.
+- The version does not exist.
+- The version has no binding with the inherited name.
 
 ## Runtime errors
 
