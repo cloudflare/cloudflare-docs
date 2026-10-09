@@ -283,7 +283,7 @@ setsid sh -c 'echo "$$ $(cat /proc/sys/kernel/random/boot_id)" >"$0/pid"; exec "
 	"$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
 echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
-// Succeeds while the process in the file runs and started in this instance.
+// Succeeds while the process in the file runs and started in this container.
 const taskRunningScript = `read -r pid boot <"$1" &&
 	[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ] &&
 	kill -0 "$pid"`;
@@ -667,7 +667,7 @@ Claude Code exits successfully even when a model request fails. The outcome come
 
 While no exit code exists, the Durable Object runs `kill -0` to check whether the process still exists. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
 
-The process ID file also records the boot ID, which changes in every instance. A new instance can reuse the same process IDs, so the check ignores a process ID that another instance recorded.
+The process ID file also records the boot ID, which changes in every container. A new container can reuse the same process IDs, so the check ignores a process ID that another container recorded.
 
 `readDiff()` marks new files with `git add --intent-to-add` so that the diff includes them. `git diff HEAD` compares the files with the checked-out commit, so the diff also includes changes that the agent staged.
 
@@ -920,7 +920,7 @@ If you do not plan to add authentication, delete the Container application and t
 
    <PackageManagers type="exec" pkg="wrangler" args="containers list" />
 
-2. Delete the application and its container instances:
+2. Delete the application and its containers:
 
    <PackageManagers
    	type="exec"

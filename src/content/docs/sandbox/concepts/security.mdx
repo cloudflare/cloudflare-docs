@@ -22,7 +22,7 @@ Isolation does not limit what the code does inside its own sandbox. Assume that 
 
 ## Everything in one sandbox is shared
 
-Every process in a Container runs in the same Linux environment, the [container instance](/sandbox/concepts/lifetime/). The processes can read the same files, see each other, and connect to the servers that other processes run on `localhost`. Code loaded into one Dynamic Worker shares its memory in the same way.
+Every process in a [Container](/sandbox/concepts/lifetime/) runs in the same Linux environment. The processes can read the same files, see each other, and connect to the servers that other processes run on `localhost`. Code loaded into one Dynamic Worker shares its memory in the same way.
 
 A separate Linux user does not keep a command away from files. `root` is the privileged Linux user. In a deployed sandbox, every process has the Linux capabilities of `root`, even when it runs under another user ID, so file permissions do not restrict it, and it can switch back to `root`. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
 
@@ -50,7 +50,7 @@ A Container keeps its files while it runs. A snapshot saves those files, includi
 
 The name decides which sandbox, and which saved files, a request reaches. It does not show who sent the request. Authenticate the caller in your Worker, and derive the sandbox name from that identity. Reusing a name or a snapshot for someone else gives them the earlier user's files. The how-to guides read the name from the URL only to keep the examples short.
 
-For more information about what a sandbox keeps between instances, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
+For more information about what a sandbox keeps between containers, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 ## Every opening is also a way out
 

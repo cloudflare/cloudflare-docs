@@ -170,7 +170,7 @@ A development server prints a line, such as `ready`, when it accepts requests. T
    ```ts
    // Prints the first matching line and exits with 0. Exits with 3 when the
    // process ends without printing one, 4 when there is no such process, and
-   // 5 when the process was lost, for example in an earlier instance.
+   // 5 when the process was lost, for example in an earlier container.
    const WAIT = `${CURRENT}
    dir=$1; pattern=$2
    [ -d "$dir" ] || exit 4

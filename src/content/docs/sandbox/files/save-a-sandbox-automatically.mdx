@@ -16,7 +16,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps } from "~/components";
 
-An [alarm](/durable-objects/api/alarms/), a call that the Durable Object schedules for itself, saves a Container snapshot of an idle sandbox and stops its instance. The instance is the Linux virtual machine that runs your image, and a snapshot is a saved copy of the files on its disk. While the sandbox is in use, the alarm also saves checkpoints. The next request starts a new instance from the last snapshot. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
+An [alarm](/durable-objects/api/alarms/), a call that the Durable Object schedules for itself, saves a Container snapshot of an idle sandbox and stops its container. A snapshot is a saved copy of the files on the disk of a container. While the sandbox is in use, the alarm also saves checkpoints. The next request starts a new container from the last snapshot. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
@@ -39,9 +39,9 @@ Container snapshots are in public beta. Features and behavior may change.
    const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
    ```
 
-   The inactivity timeout is longer than the check interval, so the instance keeps running between checks. If the checks stop, the timeout still stops the instance, and the sandbox keeps the files from its last save.
+   The inactivity timeout is longer than the check interval, so the container keeps running between checks. If the checks stop, the timeout still stops the container, and the sandbox keeps the files from its last save.
 
-2. In `MyContainer`, add a constructor. It sets the inactivity timeout again when a restarted Durable Object finds the container running, so the instance does not stop before the next check:
+2. In `MyContainer`, add a constructor. It sets the inactivity timeout again when a restarted Durable Object finds the container running, so the container does not stop before the next check:
 
    ```ts title="src/index.ts"
    constructor(ctx: DurableObjectState, env: Env) {
@@ -55,7 +55,7 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   Then replace `exec()`. It starts a new instance from the stored snapshot when there is one, schedules the first check, and records activity:
+   Then replace `exec()`. It starts a new container from the stored snapshot when there is one, schedules the first check, and records activity:
 
    ```ts title="src/index.ts"
    busy = 0;
@@ -129,7 +129,7 @@ Container snapshots are in public beta. Features and behavior may change.
    		try {
    			await this.save();
    		} catch (error) {
-   			// Keep the instance and try again at the next check.
+   			// Keep the container and try again at the next check.
    			console.error("Saving the sandbox failed", error);
    			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
    			await this.ctx.storage.setAlarm(Date.now() + CHECK_INTERVAL_MS);
@@ -150,7 +150,7 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   A save takes a few seconds, and the instance keeps running commands during it. If a request arrives during the save, the alarm does not stop the instance. A later snapshot saves the files written during the save. If a save fails, the handler keeps the instance running and schedules the next check, which tries again. If a deploy interrupts a save, the runtime [runs the alarm again](/durable-objects/api/alarms/).
+   A save takes a few seconds, and the container keeps running commands during it. If a request arrives during the save, the alarm does not stop the container. A later snapshot saves the files written during the save. If a save fails, the handler keeps the container running and schedules the next check, which tries again. If a deploy interrupts a save, the runtime [runs the alarm again](/durable-objects/api/alarms/).
 
    Checkpoints limit what a sandbox loses when something other than the alarm stops it, such as the inactivity timeout after the checks stop. The sandbox restores the last checkpoint, without the changes made after it.
 
@@ -218,7 +218,7 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   The sandbox saved a snapshot and stopped. The next request starts a new instance from the snapshot. Read the file:
+   The sandbox saved a snapshot and stopped. The next request starts a new container from the snapshot. Read the file:
 
    ```sh
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada --json '{"argv":["cat","/workspace/notes.txt"]}'
@@ -236,6 +236,6 @@ Container snapshots are in public beta. Features and behavior may change.
 ## Related resources
 
 - [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): save when your application decides, copy a sandbox, and start a sandbox over.
-- [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance): what a snapshot saves, and what a restored instance starts with.
+- [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance): what a snapshot saves, and what a restored container starts with.
 - [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/)
 - [`snapshotContainer()`](/containers/api/durable-object-container/#snapshotcontainer)

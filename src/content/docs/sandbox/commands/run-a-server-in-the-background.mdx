@@ -16,7 +16,7 @@ import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
 Start a server that runs until the container stops, such as a development server, a tunnel, or a code kernel. Unlike a job, nothing waits for the server to exit. Your Durable Object starts it on first use, waits until it answers, and starts it again in each new container.
 
-For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/). If the sandbox runs one server and keeps no files that you need, you can make the server the main process instead, as in [Preview a web application](/sandbox/previews/). The main process is the process that the container starts with, and the container stops when it exits. For more information, refer to [What stops an instance](/sandbox/concepts/lifetime/#what-stops-an-instance).
+For a process that runs until it finishes, such as a build or an agent task, refer to [Run background processes](/sandbox/commands/run-background-processes/). If the sandbox runs one server and keeps no files that you need, you can make the server the main process instead, as in [Preview a web application](/sandbox/previews/). The main process is the process that the container starts with, and the container stops when it exits. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance).
 
 ## Prerequisites
 
@@ -35,7 +35,7 @@ For a process that runs until it finishes, such as a build or an agent task, ref
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
 
    // Defines current(), which reads the process ID in a directory into $pid
-   // when the process started in this instance.
+   // when the process started in this container.
    const CURRENT = `current() {
    	read -r pid boot 2>/dev/null <"$1/pid" &&
    		[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ]
