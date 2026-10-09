@@ -18,7 +18,7 @@ Your Worker already routes requests to the container, so most tunnels can become
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `src/index.ts` has the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server), which start `cloudflared` and stop it.
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter and the `ensureRunning()` and `startContainer()` methods from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). `src/index.ts` has the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server), which start `cloudflared` and stop it. Leave out its `INACTIVITY_TIMEOUT_MS` constant, which your class file already defines.
 
 `startContainer()` must start the container with `enableInternet: true`, because `cloudflared` connects out to Cloudflare. Code in the sandbox can then reach the Internet too. For what that allows, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
