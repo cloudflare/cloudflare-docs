@@ -38,3 +38,33 @@ Select a span to open its details. The detail panel shows the span status, servi
 :::note[Cloudflare Trace]
 [Cloudflare Trace](/rules/trace-request/) simulates how Cloudflare configurations would handle a request. It does not show actual production traffic.
 :::
+
+## Frequently asked questions
+
+### Does tracing add latency to my requests?
+
+No. Tracing has no measurable overhead on request processing. Requests that are not sampled skip tracing entirely.
+
+### Why is there a gap in my trace?
+
+A Worker in the request path may not have Workers tracing enabled. Enable it using `observability.traces.enabled = true` in your [Wrangler configuration](/workers/observability/traces/#how-to-enable-tracing).
+
+### Why is there no outbound connection span?
+
+If the response was served from cache, Cloudflare did not contact your origin. The absence of a `dynamic` span confirms the response came from cache rather than an origin connection.
+
+### How do I capture the trace for a specific request?
+
+Filter by Ray ID in the dashboard. To guarantee a particular request is captured regardless of the default sample rate, create a [trace rule](/observability/traces/configuration/#trace-rules) that matches a custom debug header and sets the sample rate to 100%.
+
+### Can I sample only slow requests or errors?
+
+Not yet. Sampling is [head-based](https://opentelemetry.io/docs/concepts/sampling/#head-sampling) — the decision happens when a request arrives, before the outcome is known. Tail-based sampling is not currently supported.
+
+### Are request header values captured in spans?
+
+Header names and the operations performed on them are captured. Header values are not captured. URLs and query strings are captured.
+
+### Are span names a stable interface?
+
+No. Span names and structure may change as the product evolves. Do not build hard dependencies on the exact shape of Cloudflare-emitted spans.

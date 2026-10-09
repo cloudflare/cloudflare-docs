@@ -53,6 +53,14 @@ Cloudflare Traces include spans for supported Workers runtime operations, includ
 
 Refer to [Workers spans and attributes](/workers/observability/traces/spans-and-attributes/) for the complete runtime reference. You can also [create custom spans](/workers/observability/traces/custom-spans/) for application-specific operations.
 
+## Features without spans
+
+Some Cloudflare features do not yet have dedicated spans. Requests processed by these features still appear in traces, but without span-level detail for that processing.
+
+- DDoS protection rules
+- Cloudflare Access
+- Cloudflare Tunnel
+
 :::note
 [Workers tracing](/workers/observability/traces/) needs to be enabled to see Workers spans in a Cloudflare Trace.
 :::
