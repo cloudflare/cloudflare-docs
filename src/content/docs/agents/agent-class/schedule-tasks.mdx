@@ -490,6 +490,12 @@ class PollingAgent extends Agent {
 
 </TypeScriptExample>
 
+:::caution[Avoid scheduling loops]
+A callback that reschedules itself with a delay of `0`, or with a `Date` that has already passed, runs again almost immediately. If nothing changes between runs, the callback loops continuously. Scheduled tasks run on [Durable Object alarms](/durable-objects/api/alarms/), so a loop adds billed requests and storage writes until it stops.
+
+When you compute a delay at runtime, enforce a minimum value. Stop after a fixed number of failed attempts, as shown in [Exponential backoff retry](#exponential-backoff-retry). For fixed intervals, use [`scheduleEvery()`](#interval). For more information, refer to [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition).
+:::
+
 ### Exponential backoff retry
 
 <TypeScriptExample>
