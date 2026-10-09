@@ -71,9 +71,11 @@ const remainingExamples = model.examples?.slice(1) ?? [];
 const hasCatalogUsage = !!firstExample?.code_snippets?.length;
 
 // Clef decision models take typed questions, not chat messages.
-const isClef =
-	model.name === "@cf/cloudflare/clef" ||
-	model.name === "@cf/cloudflare/clef-flash";
+const isClef = [
+	"@cf/cloudflare/clef",
+	"@cf/cloudflare/clef-flash",
+	"@cf/cloudflare/clef-omni",
+].includes(model.name);
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
@@ -357,6 +359,14 @@ const headings: MarkdownHeading[] = [
 	)}
 
 	<ModelFeatures model={model} />
+
+	{isClef && (
+		<Render
+			file="clef-media-input-pricing"
+			product="workers-ai"
+			params={{ omni: model.name === "@cf/cloudflare/clef-omni" }}
+		/>
+	)}
 
 	{hasGlm52ReasoningEffortGuidance && (
 		<Fragment>
