@@ -1496,7 +1496,7 @@ This pattern does not scale. As traffic increases, the single Durable Object bec
 
 ### Do not reschedule alarms without a delay and a stop condition
 
-If `alarm()` calls `setAlarm()` with the current time or a time in the past, the alarm runs again almost immediately. If the condition that caused the reschedule does not change, the handler reschedules itself again. This creates an alarm loop.
+If `alarm()` calls `setAlarm()` with the current time or a time in the past, the alarm runs again immediately. If the condition that caused the reschedule does not change, the handler reschedules itself again. This creates an alarm loop.
 
 A single Durable Object in an alarm loop can run its alarm hundreds of times per second. The alarm is stored with the object, so the loop continues across evictions and deployments. It stops only when the handler stops rescheduling or the alarm is deleted.
 
