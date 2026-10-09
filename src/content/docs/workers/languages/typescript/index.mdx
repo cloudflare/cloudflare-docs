@@ -53,6 +53,8 @@ See [the `wrangler types` command docs](/workers/wrangler/commands/general/#type
 
 This will generate a `d.ts` file and (by default) save it to `worker-configuration.d.ts`. This will include `Env` types based on your Worker bindings _and_ runtime types based on your Worker's compatibility date and flags.
 
+`worker-configuration.d.ts` is generated and will be overwritten when you rerun `wrangler types`, so do not edit it manually. Define custom environment types in source-owned TypeScript, separate from the generated file. Use declaration merging with the public `Cloudflare.Env` interface.
+
 You should then add that file to your `tsconfig.json`'s `compilerOptions.types` array. If you have the `nodejs_compat` compatibility flag, you should also install `@types/node`.
 
 You can commit your types file to git if you wish.
@@ -166,7 +168,7 @@ We recommend you commit your generated types file for use in CI. You can run `wr
 
 </TabItem> </Tabs>
 
-Alternatively, if you commit your generated types file and want to verify it stays up-to-date in CI, you can use the `--check` flag:
+Alternatively, if you commit your generated types file, use `--check` in CI:
 
 <Tabs> <TabItem label="npm">
 
@@ -194,7 +196,7 @@ Alternatively, if you commit your generated types file and want to verify it sta
 
 </TabItem> </Tabs>
 
-This fails the CI job if the committed types file is out-of-date, prompting developers to regenerate and commit the updated types.
+`--check` compares the generated file's recorded environment/configuration hash and runtime header with the current Wrangler configuration and runtime inputs. It does not compare or validate the generated file body. It fails the CI job when the recorded inputs are out of date, prompting developers to regenerate and commit the updated types.
 
 ### Resources
 
