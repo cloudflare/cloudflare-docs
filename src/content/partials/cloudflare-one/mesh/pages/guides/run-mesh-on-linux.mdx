@@ -82,30 +82,7 @@ If this is your first Mesh node, configure the [required account settings](/mesh
 Treat the node token as a secret. Anyone with the token can register a host as this node. Do not commit tokens to source control or share them in tickets or chat.
 :::
 
-## 1. (Optional) Turn on IP forwarding
-
-IP forwarding lets the node pass packets between the Mesh and its local network. Turn it on only if the node will advertise [CIDR routes](/mesh/features/routes/). You do not need it to reach the node by its own Mesh IP.
-
-To turn on forwarding and keep it across reboots, run:
-
-```sh
-printf 'net.ipv4.ip_forward = 1\nnet.ipv6.conf.all.forwarding = 1\nnet.ipv6.conf.all.accept_ra = 2\n' | sudo tee /etc/sysctl.d/99-zzz-cloudflare-warp-connector.conf &&
-sudo sysctl --system
-```
-
-This command writes three kernel settings to a file in `/etc/sysctl.d/`, then reloads all settings:
-
-| Setting                            | Purpose                                                                                                       |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `net.ipv4.ip_forward = 1`          | Forwards IPv4 packets between interfaces.                                                                     |
-| `net.ipv6.conf.all.forwarding = 1` | Forwards IPv6 packets between interfaces.                                                                     |
-| `net.ipv6.conf.all.accept_ra = 2`  | Keeps accepting IPv6 router advertisements after forwarding is on. Without it, the host can lose IPv6 routes. |
-
-The `99-zzz-` prefix makes the file load last, so other files in `/etc/sysctl.d/` cannot override it.
-
-If the host runs in a cloud VPC, you may also need provider settings, such as turning off source/destination checks on AWS. For more information, refer to [Cloud VPC deployments](/mesh/best-practices/#cloud-vpc-deployments).
-
-## 2. Install the client
+## 1. Install the client
 
 Install the `cloudflare-warp` package from the Cloudflare package repository. Choose the section for your distribution.
 
@@ -205,7 +182,7 @@ Install from the repository instead of downloading the standalone `.rpm` file. T
 
 Fedora does not need EPEL.
 
-## 3. Register and connect the node
+## 2. Register and connect the node
 
 To register the host as your Mesh node and connect it, run the following command. Replace `<MESH_NODE_TOKEN>` with the node token from the [prerequisites](#prerequisites).
 
@@ -223,7 +200,7 @@ This command runs two `warp-cli` subcommands:
 
 If you use the same token on more than one host, each host joins as a replica of the same node. For more information, refer to [High availability](/mesh/features/high-availability/).
 
-## 4. Verify the node
+## 3. Verify the node
 
 <Steps>
 
@@ -248,6 +225,29 @@ If you use the same token on more than one host, each host joins as a replica of
    A **Connected** status does not prove that peers can reach the node. Test the application protocol you intend to use.
 
 </Steps>
+
+## Turn on IP forwarding for routes
+
+IP forwarding lets the node pass packets between the Mesh and its local network. Turn it on only if the node will advertise [CIDR routes](/mesh/features/routes/) to make a subnet behind it reachable. You do not need it to reach the node by its own Mesh IP. You can turn it on at any time, before or after you connect the node.
+
+To turn on forwarding and keep it across reboots, run:
+
+```sh
+printf 'net.ipv4.ip_forward = 1\nnet.ipv6.conf.all.forwarding = 1\nnet.ipv6.conf.all.accept_ra = 2\n' | sudo tee /etc/sysctl.d/99-zzz-cloudflare-warp-connector.conf &&
+sudo sysctl --system
+```
+
+This command writes three kernel settings to a file in `/etc/sysctl.d/`, then reloads all settings:
+
+| Setting                            | Purpose                                                                                                       |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `net.ipv4.ip_forward = 1`          | Forwards IPv4 packets between interfaces.                                                                     |
+| `net.ipv6.conf.all.forwarding = 1` | Forwards IPv6 packets between interfaces.                                                                     |
+| `net.ipv6.conf.all.accept_ra = 2`  | Keeps accepting IPv6 router advertisements after forwarding is on. Without it, the host can lose IPv6 routes. |
+
+The `99-zzz-` prefix makes the file load last, so other files in `/etc/sysctl.d/` cannot override it.
+
+If the host runs in a cloud VPC, you may also need provider settings, such as turning off source/destination checks on AWS. For more information, refer to [Cloud VPC deployments](/mesh/best-practices/#cloud-vpc-deployments).
 
 ## Manage the node
 
@@ -342,7 +342,7 @@ Confirm that you ran `warp-cli connector new` with a Mesh node token. If the hos
 
 ### Routed subnets are not reachable
 
-Confirm that [IP forwarding](#1-optional-turn-on-ip-forwarding) is on:
+Confirm that [IP forwarding](#turn-on-ip-forwarding-for-routes) is on:
 
 ```sh
 sysctl net.ipv4.ip_forward net.ipv6.conf.all.forwarding
