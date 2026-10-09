@@ -121,36 +121,24 @@ Install the `cloudflare-warp` package from the Cloudflare package repository. Ch
 1. Enable the [Extra Packages for Enterprise Linux (EPEL)](https://docs.fedoraproject.org/en-US/epel/) repository:
 
    ```sh
-   sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+   sudo dnf install -y epel-release
    ```
 
-   EPEL provides dependencies that `cloudflare-warp` needs on RHEL 9 and later, such as `libappindicator-gtk3`. The `$(rpm -E %rhel)` expression resolves to your major version (`9` or `10`).
+   EPEL provides dependencies that the Cloudflare One Client needs on RHEL 9 and later.
 
-2. (RHEL 10 only) Enable the CodeReady Linux Builder (CRB) repository:
-
-   ```sh
-   sudo subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms
-   ```
-
-   On RHEL 10, CRB provides the `libdbusmenu` and `libdbusmenu-gtk3` dependencies. RHEL 9 does not need CRB.
-
-   Cloud images that use Red Hat Update Infrastructure (RHUI) name the repository differently. To find its ID, run `dnf repolist --all | grep -i codeready`, then enable it with `sudo dnf config-manager --set-enabled <REPOSITORY_ID>`.
-
-3. Add the Cloudflare repository:
+2. Add the Cloudflare repository:
 
    ```sh
    curl -fsSL https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo
    ```
 
-   The repository file points `dnf` to the package build for your RHEL version and to the Cloudflare signing key.
+   The repository file points `yum` to the package build for your RHEL version and to the Cloudflare signing key.
 
-4. Install the package:
+3. Install the package:
 
    ```sh
-   sudo dnf install -y cloudflare-warp
+   sudo yum install -y cloudflare-warp
    ```
-
-   On first install, `dnf` imports the Cloudflare signing key from the repository file.
 
 </Steps>
 
@@ -273,7 +261,7 @@ sudo apt-get update && sudo apt-get install --only-upgrade -y cloudflare-warp
 </TabItem> <TabItem label="RHEL / Fedora">
 
 ```sh
-sudo dnf upgrade -y cloudflare-warp
+sudo yum update -y cloudflare-warp
 ```
 
 </TabItem> </Tabs>
@@ -311,7 +299,7 @@ To collect a full diagnostic bundle for Cloudflare support, run `warp-diag`. For
    </TabItem> <TabItem label="RHEL / Fedora">
 
    ```sh
-   sudo dnf remove -y cloudflare-warp
+   sudo yum remove -y cloudflare-warp
    ```
 
    </TabItem> </Tabs>
@@ -352,7 +340,7 @@ Both values must be `1`. Then confirm that the destination network can route ret
 
 ### Package install fails on RHEL
 
-Run `dnf repolist` and confirm that EPEL is enabled. On RHEL 10, also confirm that CRB is enabled. A missing `libappindicator-gtk3` dependency means EPEL is not enabled. A missing `libdbusmenu` dependency on RHEL 10 means CRB is not enabled. For more information, refer to the [EPEL getting started guide](https://docs.fedoraproject.org/en-US/epel/getting-started/).
+Run `yum repolist` and confirm that EPEL is enabled. For more information, refer to the [EPEL getting started guide](https://docs.fedoraproject.org/en-US/epel/getting-started/).
 
 For general client issues, refer to [Troubleshoot the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/).
 
