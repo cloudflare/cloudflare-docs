@@ -1,0 +1,169 @@
+---
+title: Move OpenCode servers
+description: Replace @cloudflare/sandbox/opencode 0.12 helpers with an OpenCode server that your Durable Object starts, and an OpenCode SDK client.
+pcx_content_type: how-to
+sidebar:
+  order: 18
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returned an OpenCode SDK client that reached it through the sandbox. In 1.0, your Durable Object starts the server and creates the client, with a `fetch` function that connects to the server port.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+This page replaces `@cloudflare/sandbox/opencode`, including `createOpencode()` and `proxyToOpencode()`.
+
+## Start OpenCode from your Durable Object
+
+<Steps>
+
+1. Install OpenCode in your `Dockerfile`, as in [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/#switch-the-worker-to-opencode):
+
+   ```dockerfile title="Dockerfile"
+   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
+   	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
+   ```
+
+   The 0.12 `opencode` image included OpenCode. Start the container with the `standard-1` instance type or larger, as `startContainer()` does. On `lite`, the server did not answer requests within 30 seconds.
+
+2. Install the OpenCode SDK in your Worker project:
+
+   <PackageManagers pkg="@opencode-ai/sdk@1.18.32" />
+
+3. Replace `createOpencode()` with a method that starts the server once for each container. It uses the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server), without its `INACTIVITY_TIMEOUT_MS` constant, which your class file already defines:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "my-agent");
+   const { client } = await createOpencode(sandbox, {
+   	directory: "/workspace",
+   	config: OPENCODE_CONFIG,
+   });
+   const session = await client.session.create({ title: "Fix tests" });
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import {
+   	createOpencodeClient,
+   	type OpencodeClient,
+   } from "@opencode-ai/sdk/v2/client";
+
+   const OPENCODE_PORT = 4096;
+   const OPENCODE_DIR = `${SERVERS}/opencode`;
+
+   // Your OpenCode configuration, without apiKey values.
+   const OPENCODE_CONFIG = {};
+
+   const OPENCODE = [
+   	"opencode",
+   	"serve",
+   	"--port",
+   	String(OPENCODE_PORT),
+   	"--hostname",
+   	"0.0.0.0",
+   ];
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private opencodeReady = false;
+
+   	private async openCode(): Promise<OpencodeClient> {
+   		await this.ensureRunning();
+
+   		if (!this.opencodeReady) {
+   			await startServer(this.container, OPENCODE_DIR, OPENCODE, {
+   				cwd: "/workspace",
+   				env: {
+   					...ENV,
+   					OPENCODE_CONFIG_CONTENT:
+   						JSON.stringify(OPENCODE_CONFIG),
+   					ANTHROPIC_API_KEY: this.env.ANTHROPIC_API_KEY,
+   				},
+   			});
+   			await waitForServer(
+   				this.container,
+   				OPENCODE_DIR,
+   				OPENCODE_PORT,
+   				30_000,
+   			);
+   			this.opencodeReady = true;
+   		}
+
+   		const port = this.container.getTcpPort(OPENCODE_PORT);
+   		return createOpencodeClient({
+   			baseUrl: "http://opencode",
+   			fetch: (request) => port.fetch(request),
+   		});
+   	}
+
+   	async createSession(title: string): Promise<string> {
+   		const client = await this.openCode();
+   		const session = await client.session.create({ title });
+
+   		if (!session.data) {
+   			throw new Error("OpenCode did not create the session");
+   		}
+
+   		return session.data.id;
+   	}
+   }
+   ```
+
+   Remove `apiKey` from your OpenCode configuration, and store each key as a secret. Like 0.12, the method passes the configuration as `OPENCODE_CONFIG_CONTENT` and the key in a provider variable such as `ANTHROPIC_API_KEY`. The container can read the key. To keep model credentials in your Worker, refer to [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/).
+
+   Set `this.opencodeReady = false` in `startContainer()`, inside `if (newContainer)`, because a new container has no server. If your Durable Object restarts while the container runs, `startServer()` finds the server that already runs. Use the client in methods of your class, such as `createSession()`.
+
+4. Serve the OpenCode web UI from the `fetch()` handler of your Durable Object:
+
+   ```ts title="src/index.ts"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	async fetch(request: Request): Promise<Response> {
+   		const url = new URL(request.url);
+   		const accept = request.headers.get("Accept") ?? "";
+   		const page =
+   			accept.includes("text/html") || url.pathname === "/";
+
+   		// The UI calls the server at the origin in ?url=.
+   		if (
+   			request.method === "GET" &&
+   			page &&
+   			!url.searchParams.has("url")
+   		) {
+   			url.searchParams.set("url", url.origin);
+   			return Response.redirect(url.toString(), 302);
+   		}
+
+   		await this.openCode();
+   		// The container port accepts only http: URLs.
+   		url.protocol = "http:";
+   		return this.container
+   			.getTcpPort(OPENCODE_PORT)
+   			.fetch(new Request(url, request));
+   	}
+   }
+   ```
+
+   This replaces `proxyToOpencode()`, which made the same redirect. The UI loads its files from `/`, so serve it at the root of a hostname and forward every path to your Durable Object, for example with `env.Sandbox.getByName("my-agent").fetch(request)`. The UI can run commands in the sandbox, so authenticate these requests in your Worker.
+
+   If your class already has a `fetch()` handler, for example from [Move terminals](/sandbox/sdk/migrate/terminals/), rename this handler to `serveOpenCode()`, make it `private`, and call it from your `fetch()` handler for the requests that your Worker routes to OpenCode, for example by the hostname of the request. If your class also forwards preview URLs, remove the `X-Sandbox-Port` header in the Worker route that forwards OpenCode requests, as [Forward the WebSocket](/sandbox/sdk/migrate/terminals/#forward-the-websocket) shows.
+
+5. Call `createSession("Fix tests")` from your Worker. It returns the new session ID, such as `ses_f1822cedcffe1CpcMlwM9eQSGZ`. Open your Worker URL in a browser. It redirects to `/?url=` and loads OpenCode.
+
+</Steps>
+
+## Related resources
+
+- [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/)
+- [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)
+- [Durable Object Container API](/containers/api/durable-object-container/)

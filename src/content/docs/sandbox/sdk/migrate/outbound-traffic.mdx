@@ -341,6 +341,102 @@ git ls-remote https://github.com/octocat/Hello-World HEAD
 
 In a sandbox that called `allowHost()` in 0.12, requests to that hostname still succeed after the switch.
 
+## Reach Workers bindings from the container
+
+In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my.kv`, and read Workers bindings from its `env` argument. In 1.0, a `WorkerEntrypoint` answers them, and your Durable Object registers it for that hostname.
+
+<Steps>
+
+1. Replace each handler with a `WorkerEntrypoint`, and export it from the main module of your Worker:
+
+   ```ts title="src/index.ts (0.12)"
+   MySandbox.outboundByHost = {
+   	"my.kv": async (request: Request, env: Env) => {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value ? 200 : 404,
+   		});
+   	},
+   };
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   type KvProps = { containerId: string };
+
+   export class KvGateway extends WorkerEntrypoint<Env, KvProps> {
+   	async fetch(request: Request): Promise<Response> {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await this.env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value === null ? 404 : 200,
+   		});
+   	}
+   }
+   ```
+
+   `this.env` has the same bindings as the `env` argument. Where a 0.12 handler read `ctx.containerId`, read `this.ctx.props.containerId`.
+
+2. Register the entrypoint in the `try` block of `startContainer()`:
+
+   ```ts title="src/index.ts" ins={23-28}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async startContainer(): Promise<void> {
+   		const newContainer = !this.container.running;
+
+   		if (newContainer) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   		}
+
+   		try {
+   			if (newContainer) {
+   				// Replaces onStart().
+   				await this.ctx.storage.put("startedAt", Date.now());
+   			}
+   			await this.container.interceptOutboundHttp(
+   				"my.kv",
+   				this.ctx.exports.KvGateway({
+   					props: { containerId: this.ctx.id.toString() },
+   				}),
+   			);
+   			await this.container.setInactivityTimeout(
+   				INACTIVITY_TIMEOUT_MS,
+   			);
+   		} catch (error) {
+   			// The next request starts a new container.
+   			await this.container.destroy();
+   			throw error;
+   		}
+   	}
+   }
+   ```
+
+   `this.ctx.id.toString()` is the value that 0.12 passed as `containerId`, so keys and paths built from it stay the same. The intercept also works with `enableInternet: false`. If you applied the rules in an entrypoint earlier on this page, keep `enableInternet: ENABLE_INTERNET`. Register one entrypoint for each hostname.
+
+   If your class also uses the `Outbound` entrypoint from [Apply the rules in an entrypoint](#apply-the-rules-in-an-entrypoint), add the handler to its `HANDLERS` map instead. A hostname intercept that you register after `interceptAllOutboundHttp()` receives no requests.
+
+3. Request the hostname from the container. After you store `hello from KV` under the key `greeting`, this command prints the value:
+
+   ```sh
+   node -e 'fetch("http://my.kv/greeting").then(async (r) => console.log(r.status, await r.text()))'
+   ```
+
+   ```txt output
+   200 hello from KV
+   ```
+
+</Steps>
+
 ## Related resources
 
 - [Durable Object container API](/containers/api/durable-object-container/#interceptoutboundhttp)
