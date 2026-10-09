@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `exposePort()` stores a token for each port in Durable Object storage. `proxyToSandbox()` routes hostnames such as `8080-ada-<TOKEN>.example.com` to the server on that port. In 1.0, your Worker routes those hostnames, and your Durable Object checks the token and forwards the request with `getTcpPort()`. The code on this page reads the tokens where 0.12 stored them, so the preview URLs that your users already have keep working.
+In Sandbox SDK 0.12, `exposePort()` stores a token for each port in Durable Object storage. The token is a secret in the preview URL, so anyone with the URL can reach the port. `proxyToSandbox()` routes hostnames such as `8080-ada-<TOKEN>.example.com` to the server on that port. In 1.0, your Worker routes those hostnames, and your Durable Object checks the token and forwards the request with `getTcpPort()`. The code on this page reads the tokens where 0.12 stored them, so the preview URLs that your users already have keep working.
 
 ## Before you start
 

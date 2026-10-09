@@ -38,7 +38,8 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
 
    RUN npm install --global --ignore-scripts @openai/codex@0.156.1
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
@@ -128,9 +129,9 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
 
    `--dangerously-bypass-approvals-and-sandbox` turns off the approval prompts and the built-in command sandbox of Codex. The container limits what commands from Codex can reach instead.
 
-   A custom provider sends no API key, and the `Outbound` entrypoint adds the gateway token.
+   A custom provider sends no API key, and the `Outbound` entrypoint, which receives each HTTP and HTTPS request from the sandbox, adds the gateway token.
 
-   Codex reads the certificate for intercepted HTTPS from `SSL_CERT_FILE`, which `trustEnv` in the runner sets.
+   Codex reads the certificate for intercepted HTTPS from `SSL_CERT_FILE`. The runner sets it in `trustEnv`, the environment variables that tell tools in the container which certificate to trust. For more information, refer to [Start the sandbox](/sandbox/get-started/build-a-coding-agent-runner/#start-the-sandbox).
 
 5. Replace the `outcome()` method:
 
@@ -201,11 +202,13 @@ Run the [Codex CLI](https://developers.openai.com/codex/cli) in a Linux sandbox 
    	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
    ```
 
-3. Check the task until its state is `succeeded` or `failed`:
+3. Check the task until its state is no longer `running`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/codex-1/task"
    ```
+
+   For what `succeeded`, `failed`, `lost`, and `none` mean, refer to [Read the outcome](/sandbox/get-started/build-a-coding-agent-runner/#read-the-outcome).
 
    A `succeeded` task includes the final message that Codex wrote.
 

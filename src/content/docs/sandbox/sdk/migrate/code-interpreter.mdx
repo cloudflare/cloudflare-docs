@@ -17,7 +17,7 @@ In Sandbox SDK 0.12, `runCode()` ran Python, JavaScript, and TypeScript in an in
 
 ## Before you start
 
-Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). To keep variables between calls, `src/index.ts` also needs the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server).
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/). To keep variables between calls, `src/index.ts` also needs the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server). Leave out its `INACTIVITY_TIMEOUT_MS` constant, which your class file already defines.
 
 A `runCode()` call without a `context` used a default context for its language, so plain calls in one sandbox shared variables:
 
@@ -33,6 +33,8 @@ If your code relies on this, or on contexts that you create, follow [Keep Python
 | --- | --- |
 | `runCode()` with `language: "javascript"` or `"typescript"` | [Run JavaScript in a Dynamic Worker](#run-javascript-in-a-dynamic-worker) |
 | `runCodeStream()`, `onStdout`, `onStderr`, `onResult` | [Replace streaming output](#replace-streaming-output) |
+
+Variables that 0.12 contexts held stay in the 0.12 container, and 0.12 context IDs are not in the storage of your Durable Object. After the switch, run your setup code again, and create your contexts again before the first `runCode()` call.
 
 ## Keep Python variables between calls
 
@@ -52,7 +54,8 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    		python3-numpy python3-pandas \
    	&& rm -rf /var/lib/apt/lists/*
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    COPY kernel.py /opt/kernel.py
@@ -472,8 +475,6 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    ```
 
 </Steps>
-
-Variables that 0.12 contexts held stay in the 0.12 container. After the switch, run your setup code again, and create your contexts again, because 0.12 context IDs are not in the storage of your Durable Object.
 
 ## Run JavaScript in a Dynamic Worker
 

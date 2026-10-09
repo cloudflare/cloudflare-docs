@@ -42,7 +42,7 @@ For a process that runs until the container stops, such as a development server 
    echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
    // Defines current(), which reads the process ID in a directory into $pid
-   // when the process started in this instance.
+   // when the process started in this container.
    const CURRENT = `current() {
    	read -r pid boot 2>/dev/null <"$1/pid" &&
    		[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ]
@@ -77,11 +77,11 @@ For a process that runs until the container stops, such as a development server 
 
    </TypeScriptExample>
 
-   `setsid` starts the command in a new process group. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`, unless a process moves to its own group. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
+   `setsid` starts the command in a new process group, a set of processes that one `kill` can signal together. Stopping the group also stops the processes the command starts, such as the `node` process behind `npm run dev`, unless a process moves to its own group. The script writes the exit code to a temporary file and then renames it, so a reader never sees a partial file. Do not start the command with `&` instead: a shell starts background jobs with `SIGINT` ignored.
 
-   Each process keeps its files in its own directory under `/var/lib/processes` on the instance disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that you want to keep to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
+   Each process keeps its files in its own directory under `/var/lib/processes` on the container disk. The logs grow until the process ends. When the disk fills, writes from the process fail, so delete old process directories, or send output that you want to keep to a [mounted bucket](/sandbox/files/mount-an-r2-bucket/).
 
-2. Add a constructor to your Durable Object. It sets the inactivity timeout again when a restarted Durable Object finds the container running:
+2. Add a constructor to your Durable Object. When the Durable Object [leaves memory and starts again](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart), the constructor sets the inactivity timeout again if the container is still running:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -189,7 +189,7 @@ For a process that runs until the container stops, such as a development server 
 
    `kill -0` checks that the process exists without sending it a signal. A process is `lost` when it ended without recording an exit code, for example because something sent `SIGKILL` to the script that records it.
 
-   The process ID file also records the boot ID, which changes in every instance. A [snapshot](/sandbox/files/save-and-restore-a-workspace/) restores the file, and a new instance reuses the same process IDs, so a restored process ID can belong to an unrelated process. `current()` ignores a process ID from another instance, so a process that was running when the snapshot was taken is `lost`.
+   The process ID file also records the boot ID, which changes each time a container starts. `current()` ignores a process ID from an earlier container, because a [snapshot](/sandbox/files/save-and-restore-a-workspace/) can restore the file, and the restored process ID can belong to an unrelated process. A process that was running when the snapshot was taken is therefore `lost`.
 
 4. Add a method that returns the output of a process so far:
 
@@ -268,7 +268,7 @@ For a process that runs until the container stops, such as a development server 
    }
    ```
 
-   A running process does not keep the container running. The alarm checks every process each minute, and each alarm keeps the container running. A Durable Object that restarted between alarms sets the 10-minute inactivity timeout again in its constructor. The container stops 10 minutes after the alarm finds that the last process has ended. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
+   A running process does not keep the container running. While any process runs, the alarm checks every process once a minute, and each alarm keeps the container running. After the last process ends, the inactivity timeout decides when the container stops. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running).
 
    A Durable Object has one alarm. If your class already has an `alarm()` handler, merge the process checks into it, and set the alarm to the earliest time that any check needs. For more information, refer to [Alarms](/durable-objects/api/alarms/).
 
@@ -330,7 +330,7 @@ For a process that runs until the container stops, such as a development server 
 
    </TypeScriptExample>
 
-   This example command prints `ready`, then prints a line each second for five minutes. Replace it with your own command. The route accepts only process IDs that are safe in a path, because each ID becomes a directory name.
+   This example command prints `ready`, then prints a line each second for five minutes. Replace it with your own command. `startProcess()` passes no `cwd` or `env` to `exec()`, so the command receives only `PATH` from the environment of the image. To set a working directory or variables, add them to that `exec()` call. For more information, refer to [Set the process context](/containers/guides/execute-commands/#set-the-process-context). The route accepts only process IDs that are safe in a path, because each ID becomes a directory name.
 
 8. Deploy your Worker:
 

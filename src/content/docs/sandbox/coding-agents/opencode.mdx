@@ -39,7 +39,8 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
    	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
@@ -122,7 +123,7 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
 
    `--auto` approves every tool call that the OpenCode configuration does not deny. Without it, OpenCode rejects permission requests in a run without a terminal. The container limits what commands from OpenCode can reach.
 
-   The built-in `cloudflare-ai-gateway` provider in OpenCode reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to the universal endpoint of the gateway: the gateway path with no suffix. The `Outbound` entrypoint in the runner allows that path and the paths under it. `CLOUDFLARE_API_TOKEN` is a placeholder, because OpenCode does not start without a token. The `Outbound` entrypoint replaces the token header with the gateway token.
+   The built-in `cloudflare-ai-gateway` provider in OpenCode reads the account and gateway IDs from the environment. For Anthropic models, it sends requests to `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>`, with no provider suffix. The `Outbound` entrypoint in the runner, which receives each HTTP and HTTPS request from the sandbox, allows that URL and the URLs under it. `CLOUDFLARE_API_TOKEN` is a placeholder, because OpenCode does not start without a token. The `Outbound` entrypoint replaces the token header with the gateway token.
 
    The `OPENCODE_DISABLE_*` variables make OpenCode use the model list built into the binary and turn off its update check, default plugins, language server downloads, and sharing. OpenCode still tries to install `@opencode-ai/plugin` from npm in the background. That request gets a `403` response from the `Outbound` entrypoint, and OpenCode continues.
 
@@ -196,11 +197,13 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
    ```
 
-3. Check the task until its state is `succeeded` or `failed`:
+3. Check the task until its state is no longer `running`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/opencode-1/task"
    ```
+
+   For what `succeeded`, `failed`, `lost`, and `none` mean, refer to [Read the outcome](/sandbox/get-started/build-a-coding-agent-runner/#read-the-outcome).
 
    A `succeeded` task includes the last text reply from OpenCode.
 

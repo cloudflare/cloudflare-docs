@@ -54,7 +54,8 @@ You will learn how to:
 
 You also need:
 
-- An [authenticated AI Gateway](/ai-gateway/configuration/authentication/) and a gateway token with the **Run** permission.
+- An account on the Workers Paid plan. Containers are available only on that plan. Refer to [Containers pricing](/containers/platform/pricing/).
+- An [authenticated AI Gateway](/ai-gateway/configuration/authentication/) and a gateway token with the **Run** permission. Save the token and the gateway ID, which follows your account ID in the gateway URL: `https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/`.
 - Anthropic credentials in AI Gateway, either [Unified Billing](/ai-gateway/features/unified-billing/) credits or an Anthropic API key stored as a [provider key](/ai-gateway/configuration/bring-your-own-keys/).
 - Your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/).
 
@@ -78,9 +79,9 @@ You also need:
 
 3. Install the [`@cloudflare/sandbox`](/sandbox/reference/) package and [Zod](https://zod.dev/):
 
-   <PackageManagers pkg="@cloudflare/sandbox zod" />
+   <PackageManagers pkg="@cloudflare/sandbox@1.0.0 zod" />
 
-4. Create a `Dockerfile` in your project root:
+4. Create a `Dockerfile` in your project root. Wrangler builds it into an image, which supplies the files and installed tools of the container:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
@@ -92,7 +93,8 @@ You also need:
    # The install script from the Claude Code package puts its native binary in place
    RUN npm install --global @anthropic-ai/claude-code@2.1.280
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    # Keep the container running between requests
@@ -101,9 +103,9 @@ You also need:
 
    Install everything the agent needs in the image, because the sandbox cannot download packages at run time.
 
-   Pin the Claude Code version. Its command-line flags and event format can change between releases. Use the `cloudflare/sandbox` tag that matches the `@cloudflare/sandbox` version you installed.
+   Pin the Claude Code version. Its command-line flags and event format can change between releases. The `cloudflare/sandbox` tag matches the `@cloudflare/sandbox` version you installed. If you change one version, change the other to match.
 
-5. Replace `wrangler.jsonc`. Replace `<ACCOUNT_ID>` with your account ID, and `default` with your gateway ID if it is different:
+5. Replace `wrangler.jsonc`. It configures a [Durable Object](/durable-objects/), a named object that handles requests, keeps its own storage, and starts the container. Replace `<ACCOUNT_ID>` with your account ID, and `default` with your gateway ID if it is different:
 
    <WranglerConfig>
 
@@ -179,7 +181,7 @@ In the next three sections, you create `src/outbound.ts` and `src/sandbox.ts` an
 
 ## 2. Allow only the gateway and GitHub
 
-Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through this entrypoint in your Worker. Without Internet access, the sandbox cannot reach other ports:
+Create `src/outbound.ts`. The sandbox sends every HTTP request on port `80` and HTTPS request on port `443` through the `Outbound` entrypoint, a class in your Worker whose `fetch()` method receives each intercepted request. Without Internet access, the sandbox cannot reach other ports:
 
 <TypeScriptExample filename="src/outbound.ts">
 
@@ -238,6 +240,13 @@ To allow another destination, add it to this entrypoint. Each destination you ad
 
 ## 3. Run Claude Code in the sandbox
 
+The code in this section uses these terms. The sections after the code explain how the tutorial uses each one:
+
+- A certificate authority (CA) signs HTTPS certificates. `caPath` is the certificate of the Cloudflare CA that Containers uses to re-sign HTTPS requests from the container, so that `Outbound` can read them. `trustEnv` tells tools in the container to trust it.
+- A process group is a set of processes that receive signals together. `taskScript` starts Claude Code in its own process group.
+- An [alarm](/durable-objects/api/alarms/) is a scheduled call to the `alarm()` method of a Durable Object.
+- An [instance type](/containers/platform/limits/#instance-types) sets the vCPU, memory, and disk of a container. This tutorial uses `standard-1`, which has more memory and disk than the default `lite` type.
+
 Create `src/sandbox.ts`. The `AgentSandbox` Durable Object clones a repository, runs one Claude Code task at a time, and reports the task state and the repository diff:
 
 <TypeScriptExample filename="src/sandbox.ts">
@@ -274,7 +283,7 @@ setsid sh -c 'echo "$$ $(cat /proc/sys/kernel/random/boot_id)" >"$0/pid"; exec "
 	"$dir" "$@" >"$dir/stdout.log" 2>"$dir/stderr.log"
 echo "$?" >"$dir/exit-code.tmp" && mv "$dir/exit-code.tmp" "$dir/exit-code"`;
 
-// Succeeds while the process in the file runs and started in this instance.
+// Succeeds while the process in the file runs and started in this container.
 const taskRunningScript = `read -r pid boot <"$1" &&
 	[ "$boot" = "$(cat /proc/sys/kernel/random/boot_id)" ] &&
 	kill -0 "$pid"`;
@@ -658,7 +667,7 @@ Claude Code exits successfully even when a model request fails. The outcome come
 
 While no exit code exists, the Durable Object runs `kill -0` to check whether the process still exists. The command runs through `sh`, because `kill` is a shell built-in and the slim image has no separate `kill` binary. If the process is gone, the Durable Object reads the exit code again, because the task can finish between the two reads. Only a process that ended without an exit code is `lost`.
 
-The process ID file also records the boot ID, which changes in every instance. If you restore the workspace from a snapshot, the file comes back, and the new instance reuses the same process IDs. The check ignores a process ID from another instance, so a task that was running when the snapshot was taken is `lost`.
+The process ID file also records the boot ID, which changes in every container. A new container can reuse the same process IDs, so the check ignores a process ID that another container recorded.
 
 `readDiff()` marks new files with `git add --intent-to-add` so that the diff includes them. `git diff HEAD` compares the files with the checked-out commit, so the diff also includes changes that the agent staged.
 
@@ -825,7 +834,7 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
 
 <Steps>
 
-1. Clone GitHub's `Hello-World` repository into a sandbox named `agent-1`:
+1. Clone the `octocat/Hello-World` repository into a sandbox named `agent-1`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/agent-1/repository" \
@@ -842,6 +851,8 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
    }
    ```
 
+   Clone a repository once per sandbox. A second clone into `agent-1` fails while its container runs, because `/workspace/repo` already exists. To start over, use a new sandbox name, such as `agent-2`, in every request in these steps.
+
 2. Start a task:
 
    ```sh
@@ -855,7 +866,7 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
    { "state": "running" }
    ```
 
-3. Check the task until its state is `succeeded` or `failed`:
+3. Check the task until its state is no longer `running`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/agent-1/task"
@@ -871,6 +882,8 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#th
    ```
 
    The reply differs on each run. This task takes a few seconds, and larger tasks take minutes. The alarm keeps the sandbox running until Claude Code exits, so you do not need to keep checking.
+
+   `lost` means that the process or its container stopped before Claude Code recorded an exit code. `none` means that the container has no task, for example because it stopped after the task ended. Neither state changes on later checks. To try again, start over with a new sandbox name.
 
 4. Read the changes:
 
@@ -896,6 +909,30 @@ If the model request fails, the task state is `failed` and `error` contains the 
 
 - `Failed to authenticate. API Error: 401 Unauthorized` means the gateway rejected the token. Check that the token belongs to the account and gateway in `wrangler.jsonc`. Claude Code retries a failing model request 10 times, so this error takes about three minutes to appear.
 - `API Error: 402 Insufficient wholesale credits` means the gateway uses Unified Billing and the account has no credits. Add credits, or store an Anthropic API key in the gateway.
+
+## 7. Clean up
+
+If you do not plan to add authentication, delete the Container application and the Worker.
+
+<Steps>
+
+1. List your Container applications and copy the ID of the application for this Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="containers list" />
+
+2. Delete the application and its containers:
+
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="containers delete <APPLICATION_ID>"
+   />
+
+3. Delete the Worker:
+
+   <PackageManagers type="exec" pkg="wrangler" args="delete" />
+
+</Steps>
 
 ## Next steps
 

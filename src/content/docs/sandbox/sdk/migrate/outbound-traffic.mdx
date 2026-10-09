@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `ContainerProxy` applies the outbound fields of your `Sandbox` class to each request that the container sends. In 1.0, your Durable Object registers your own `WorkerEntrypoint` for HTTP and HTTPS requests from the container, and the entrypoint applies the same rules in the same order.
+In Sandbox SDK 0.12, `ContainerProxy` applies the outbound fields of your `Sandbox` class to each request that the container sends. In 1.0, you write a `WorkerEntrypoint`, an exported class in your Worker that handles requests. Your Durable Object registers it as an outbound intercept, which sends HTTP and HTTPS requests from the container to the entrypoint. The entrypoint applies the same rules in the same order.
 
 ## Before you start
 
@@ -139,7 +139,7 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    The entrypoint blocks denied hostnames, then hostnames outside the allowed list. Next, it runs the first handler that matches, in this order: a hostname handler that the sandbox set at runtime, a hostname handler from your class, the catch-all handler set at runtime, and the catch-all handler of your class. With no handler, it sends the request to the Internet if you set an allowed list or allow the Internet. A blocked request gets status `520` with the body `Origin is disallowed`, as in 0.12.
 
-   The props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. Like 0.12, the entrypoint skips a handler whose name is not in `HANDLERS`, such as the handlers that 0.12 stored for bucket mounts.
+   Props are values that your Durable Object passes to the entrypoint when it registers the entrypoint. Here, the props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. Like 0.12, the entrypoint skips a handler whose name is not in `HANDLERS`, such as the handlers that 0.12 stored for bucket mounts.
 
 3. Add the certificate variables to `ENV`, and register the entrypoint in `startContainer()`:
 
@@ -225,7 +225,7 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    If your class uses `DirectoryBackup` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) in the `try` block, before your `intercept()`. Otherwise every backup and restore fails with `BACKUP_TRANSFER`, because your `Outbound` entrypoint receives backup requests from the container. Call it only in `startContainer()`, not on every request.
 
-   The HTTPS intercept signs responses with a certificate that the container does not trust by default. As in 0.12, the `TRUST` command adds the certificate to the system bundle, which curl and Git read. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
+   The HTTPS intercept signs responses with a certificate from a certificate authority (CA) that the container does not trust by default. As in 0.12, the `TRUST` command adds the CA certificate to the system bundle, so curl and Git, which read the bundle, trust intercepted HTTPS connections. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
 
    The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container. Each container gets a new certificate. A [snapshot](/containers/api/durable-object-container/#snapshotcontainer) saves the bundle with the certificate of the container it came from, so appending to the bundle would keep certificates from earlier containers. `TRUST` therefore keeps a copy of the system bundle as it was before any certificate was added, and writes the bundle again from that copy and the current certificate. Running it again for the same container writes the same bundle.
 
@@ -340,6 +340,102 @@ git ls-remote https://github.com/octocat/Hello-World HEAD
 ```
 
 In a sandbox that called `allowHost()` in 0.12, requests to that hostname still succeed after the switch.
+
+## Reach Workers bindings from the container
+
+In 0.12, an `outboundByHost` handler answered requests to a hostname such as `my.kv`, and read Workers bindings from its `env` argument. In 1.0, a `WorkerEntrypoint` answers them, and your Durable Object registers it for that hostname.
+
+<Steps>
+
+1. Replace each handler with a `WorkerEntrypoint`, and export it from the main module of your Worker:
+
+   ```ts title="src/index.ts (0.12)"
+   MySandbox.outboundByHost = {
+   	"my.kv": async (request: Request, env: Env) => {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value ? 200 : 404,
+   		});
+   	},
+   };
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   import { WorkerEntrypoint } from "cloudflare:workers";
+
+   type KvProps = { containerId: string };
+
+   export class KvGateway extends WorkerEntrypoint<Env, KvProps> {
+   	async fetch(request: Request): Promise<Response> {
+   		const key = new URL(request.url).pathname.slice(1);
+   		const value = await this.env.KV.get(key);
+   		return new Response(value ?? "", {
+   			status: value === null ? 404 : 200,
+   		});
+   	}
+   }
+   ```
+
+   `this.env` has the same bindings as the `env` argument. Where a 0.12 handler read `ctx.containerId`, read `this.ctx.props.containerId`.
+
+2. Register the entrypoint in the `try` block of `startContainer()`:
+
+   ```ts title="src/index.ts" ins={23-28}
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async startContainer(): Promise<void> {
+   		const newContainer = !this.container.running;
+
+   		if (newContainer) {
+   			this.container.start({
+   				image: this.container.images.sandbox,
+   				instance: "standard-1",
+   				env: ENV,
+   				// 0.12 allowed Internet access by default.
+   				enableInternet: true,
+   			});
+   		}
+
+   		try {
+   			if (newContainer) {
+   				// Replaces onStart().
+   				await this.ctx.storage.put("startedAt", Date.now());
+   			}
+   			await this.container.interceptOutboundHttp(
+   				"my.kv",
+   				this.ctx.exports.KvGateway({
+   					props: { containerId: this.ctx.id.toString() },
+   				}),
+   			);
+   			await this.container.setInactivityTimeout(
+   				INACTIVITY_TIMEOUT_MS,
+   			);
+   		} catch (error) {
+   			// The next request starts a new container.
+   			await this.container.destroy();
+   			throw error;
+   		}
+   	}
+   }
+   ```
+
+   `this.ctx.id.toString()` is the value that 0.12 passed as `containerId`, so keys and paths built from it stay the same. The intercept also works with `enableInternet: false`. If you applied the rules in an entrypoint earlier on this page, keep `enableInternet: ENABLE_INTERNET`. Register one entrypoint for each hostname.
+
+   If your class also uses the `Outbound` entrypoint from [Apply the rules in an entrypoint](#apply-the-rules-in-an-entrypoint), add the handler to its `HANDLERS` map instead. A hostname intercept that you register after `interceptAllOutboundHttp()` receives no requests.
+
+3. Request the hostname from the container. After you store `hello from KV` under the key `greeting`, this command prints the value:
+
+   ```sh
+   node -e 'fetch("http://my.kv/greeting").then(async (r) => console.log(r.status, await r.text()))'
+   ```
+
+   ```txt output
+   200 hello from KV
+   ```
+
+</Steps>
 
 ## Related resources
 

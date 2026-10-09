@@ -38,7 +38,8 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
 
    RUN npm install --global @anthropic-ai/claude-code@2.1.280
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
@@ -62,7 +63,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
 
    </WranglerConfig>
 
-3. In `src/outbound.ts`, make sure the `Outbound` entrypoint removes the `x-api-key` header before it adds the gateway token:
+3. In `src/outbound.ts`, make sure that the `Outbound` entrypoint, which receives each HTTP and HTTPS request from the sandbox, removes the `x-api-key` header before it adds the gateway token:
 
    ```ts title="src/outbound.ts"
    const headers = new Headers(request.headers);
@@ -72,7 +73,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
 
    Claude Code sends a placeholder API key. If the `x-api-key` header stays, AI Gateway forwards it to Anthropic, and the model request fails with `Invalid API key`.
 
-4. In `src/sandbox.ts`, replace the `ResultEvent` constant with a schema for the final event from Claude Code:
+4. In `src/sandbox.ts`, replace the event schema for the previous agent with this `ResultEvent` schema for the final event from Claude Code:
 
    ```ts title="src/sandbox.ts"
    const ResultEvent = z.object({
@@ -184,11 +185,13 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
    ```
 
-3. Check the task until its state is `succeeded` or `failed`:
+3. Check the task until its state is no longer `running`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/claude-1/task"
    ```
+
+   For what `succeeded`, `failed`, `lost`, and `none` mean, refer to [Read the outcome](/sandbox/get-started/build-a-coding-agent-runner/#read-the-outcome).
 
    A `succeeded` task includes the final reply from Claude Code.
 

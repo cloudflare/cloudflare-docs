@@ -1,6 +1,6 @@
 ---
 title: Work with files in a sandbox
-description: Move files in and out of a sandbox, keep a workspace after its instance stops, and share files through R2.
+description: Move files in and out of a sandbox, keep a workspace after its container stops, and share files through R2.
 pcx_content_type: navigation
 sidebar:
   order: 6
@@ -15,18 +15,18 @@ products:
 
 The `Files` class from `@cloudflare/sandbox` moves files between your Worker and a running sandbox, and provides common file system operations. For more information, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
 
-Each sandbox name maps to a Durable Object, which starts a Linux instance when needed. Stopping the instance deletes the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
+Each sandbox name reaches a [Durable Object](/durable-objects/), which starts a container when needed. Stopping the container deletes the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 ## Persistence
 
 You can keep files from a sandbox in several ways, from a snapshot of the root filesystem to one directory kept in R2:
 
-| Goal                                            | Guide                                                                                     | Trade-off                                                              |
-| ----------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Continue an agent workspace in a later session  | [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/) | Saves the root filesystem, but not mounted directories                 |
-| Keep a workspace without explicit save calls    | [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/)              | Same as snapshots, plus an alarm in your Durable Object                |
-| Keep a project across images, or beyond 30 days | [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/)                    | Saves one directory, and your Durable Object stores each backup record |
-| Share job inputs and outputs with other systems | [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/)                                  | Renames, locks, and permissions do not work as they do on a local disk |
+| Goal                                                                                                               | Guide                                                                                     | Trade-off                                                              |
+| ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Continue an agent workspace in a later session                                                                     | [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/) | Saves the root filesystem, but not mounted directories                 |
+| Keep a workspace without explicit save calls                                                                       | [Save a sandbox automatically](/sandbox/files/save-a-sandbox-automatically/)              | Same as snapshots, plus an alarm in your Durable Object                |
+| Keep a project across images, or past the [snapshot retention limit](/containers/platform/limits/#snapshot-limits) | [Back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/)                    | Saves one directory, and your Durable Object stores each backup record |
+| Share job inputs and outputs with other systems                                                                    | [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/)                                  | Renames, locks, and permissions do not work as they do on a local disk |
 
 ## Combine approaches
 

@@ -38,7 +38,8 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
 
    RUN npm install --global --ignore-scripts @earendil-works/pi-coding-agent@0.87.1
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]
@@ -129,7 +130,7 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
 
    Pi runs its tools without approval prompts. The container limits what commands from Pi can reach.
 
-   Pi does not start without an API key, so `CLOUDFLARE_API_KEY` is a placeholder. Pi sends the key in the `cf-aig-authorization` header, and the `Outbound` entrypoint replaces it with the gateway token. `PI_OFFLINE`, `PI_SKIP_VERSION_CHECK`, and `PI_TELEMETRY` turn off the model catalog refresh, version check, and telemetry in Pi.
+   Pi does not start without an API key, so `CLOUDFLARE_API_KEY` is a placeholder. Pi sends the key in the `cf-aig-authorization` header, and the `Outbound` entrypoint, which receives each HTTP and HTTPS request from the sandbox, replaces it with the gateway token. `PI_OFFLINE`, `PI_SKIP_VERSION_CHECK`, and `PI_TELEMETRY` turn off the model catalog refresh, version check, and telemetry in Pi.
 
    Pi still loads `AGENTS.md` and `CLAUDE.md` files from the repository. Without the `--approve` flag, it skips the protected project resources in the `.pi` directory of the repository. Leave `--approve` off for repositories you do not trust.
 
@@ -213,11 +214,13 @@ Run the [Pi](https://github.com/earendil-works/pi) coding agent in a Linux sandb
    	--data "Add a file NOTES.md with a one-sentence summary of this repository. Do not commit."
    ```
 
-3. Check the task until its state is `succeeded` or `failed`:
+3. Check the task until its state is no longer `running`:
 
    ```sh
    curl "$WORKER_URL/sandboxes/pi-1/task"
    ```
+
+   For what `succeeded`, `failed`, `lost`, and `none` mean, refer to [Read the outcome](/sandbox/get-started/build-a-coding-agent-runner/#read-the-outcome).
 
    A `succeeded` task includes the text of the last reply from Pi.
 

@@ -131,7 +131,7 @@ const result = await process.output();
 const timedOut = result.exitCode === 124 || result.exitCode === 137;
 ```
 
-0.12 threw `CommandError` with the message `Command timeout after 60000ms`, and the command kept running. In 1.0, a command that times out stops, so it cannot change files after the error.
+0.12 threw `CommandError` with the message `Command timeout after 60000ms`, and the command kept running. In 1.0, a command that times out stops with the processes still in its process group, so they cannot change files after the error.
 
 To cancel a command from your code instead, pass an `AbortSignal`. For how to clear its timer, refer to [`exec()`](/containers/api/durable-object-container/#exec).
 
@@ -151,9 +151,14 @@ const withOptions = await this.container.exec(command, {
 	cwd: "/workspace",
 	env: ENV,
 });
+
+for (const result of [bare, withOptions]) {
+	const { stdout } = await result.output();
+	console.log(new TextDecoder().decode(stdout).trim());
+}
 ```
 
-The output of `bare` shows the defaults, and the output of `withOptions` shows what 0.12 gave each command:
+The first line shows the defaults, and the second line shows what 0.12 gave each command:
 
 ```txt output
 pwd=/ NODE_ENV=unset

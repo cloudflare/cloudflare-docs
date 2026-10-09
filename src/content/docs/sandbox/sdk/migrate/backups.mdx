@@ -13,7 +13,7 @@ products:
 
 import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
-Replace 0.12 `createBackup()` and `restoreBackup()` with Durable Object methods of the same names, built on `DirectoryBackup`. Your Worker calls them with the same options, and backups keep the 0.12 time to live. `DirectoryBackup` saves the directory to the same `BACKUP_BUCKET` binding as a compressed archive, and restores it as ordinary files. 0.12 saved a SquashFS image and mounted it over the directory. Backups that 0.12 created convert to 1.0 backups the first time you restore them.
+Replace 0.12 `createBackup()` and `restoreBackup()` with Durable Object methods of the same names, built on `DirectoryBackup`. Your Worker calls them with the same options, and backups keep the 0.12 time to live. `DirectoryBackup` saves the directory to the same `BACKUP_BUCKET` binding as a compressed archive, and restores it as ordinary files. 0.12 saved the directory as a SquashFS image, a compressed read-only filesystem, and mounted the image over the directory. Backups that 0.12 created convert to 1.0 backups the first time you restore them.
 
 To save the whole filesystem instead of one directory, use a Container snapshot. For more information, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
 
@@ -29,12 +29,13 @@ This page replaces `createBackup()`, `restoreBackup()`, their options, and the b
 
 1. Install the package, if your Worker does not use it yet:
 
-   <PackageManagers pkg="@cloudflare/sandbox" />
+   <PackageManagers pkg="@cloudflare/sandbox@1.0.0" />
 
 2. Copy the helper binary into your image, if the `Dockerfile` does not copy it yet:
 
    ```dockerfile title="Dockerfile"
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
    ```
 
    Use the `cloudflare/sandbox` tag that matches the installed package version.

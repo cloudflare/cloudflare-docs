@@ -1,0 +1,105 @@
+---
+title: Run Docker inside the sandbox
+description: Replace a @cloudflare/sandbox 0.12 docker:dind-rootless image with docker:dind, and run Docker containers from your Durable Object.
+pcx_content_type: how-to
+sidebar:
+  order: 17
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+import { Steps } from "~/components";
+
+The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`, and copies in the musl build of the 0.x server. On a 1.0 container, its Docker daemon exits with `failed to set IP forwarding '/proc/sys/net/ipv4/ip_forward' = '1': open /proc/sys/net/ipv4/ip_forward: read-only file system`.
+
+## Before you start
+
+Your 1.0 class replaces the 0.12 `Sandbox` class, and has the `container` getter, the `ensureRunning()` and `startContainer()` methods, and the `ENV` constant from [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
+
+This page replaces a `Dockerfile` that starts from `docker:dind-rootless`.
+
+## Move the Docker setup
+
+<Steps>
+
+1. Replace your `Dockerfile`:
+
+   ```dockerfile title="Dockerfile"
+   FROM docker:dind
+
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+
+   ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false > /var/log/dockerd.log 2>&1 & exec sleep infinity"]
+   ```
+
+   The Docker daemon runs as `root`, with iptables and IP forwarding turned off. It logs to `/var/log`, because the `docker:dind` entrypoint mounts an empty `/tmp`. `sleep infinity` keeps the container running. Keep the `COPY` line only if your class uses `Files`, `S3Mount`, or `DirectoryBackup`. `sandbox-shim` is statically linked, so it runs on the Alpine-based `docker:dind` image.
+
+2. Keep `enableInternet: true` in `start()`, so that Docker can pull images. 0.12 allowed Internet access by default.
+
+3. Wait for Docker, and run containers with `--network=host`:
+
+   ```ts title="src/index.ts (0.12)"
+   const sandbox = getSandbox(env.Sandbox, "docker-sandbox");
+   const run = await sandbox.exec(
+   	"docker run --rm --network=host alpine:3.22 " +
+   		"echo Hello from Docker",
+   );
+   ```
+
+   ```ts title="src/index.ts (1.0)"
+   export class MySandbox extends DurableObject<Env> {
+   	// ...
+
+   	private async waitForDocker(): Promise<void> {
+   		const wait = await this.container.exec([
+   			"timeout",
+   			"30",
+   			"sh",
+   			"-c",
+   			"until docker version > /dev/null 2>&1; do sleep 0.2; done",
+   		]);
+
+   		if ((await wait.exitCode) !== 0) {
+   			throw new Error("Docker did not start within 30 seconds");
+   		}
+   	}
+
+   	async runImage(): Promise<string> {
+   		await this.ensureRunning();
+   		// The Docker daemon starts after the container, so wait for it
+   		await this.waitForDocker();
+
+   		const run = await this.container.exec(
+   			[
+   				"docker",
+   				"run",
+   				"--rm",
+   				"--network=host",
+   				"alpine:3.22",
+   				"echo",
+   				"Hello from Docker",
+   			],
+   			{ env: ENV },
+   		);
+   		const result = await run.output();
+   		return new TextDecoder().decode(result.stdout);
+   	}
+   }
+   ```
+
+   Without `--network=host`, `docker run` fails with `failed to disable IPv6 on container's interface eth0`. A `docker build` step that uses the network, such as a package install, also needs `docker build --network=host`. An inner container started this way shares the network access of the sandbox.
+
+4. Call `runImage()` from your Worker. It returns `Hello from Docker`. The first call also pulls `alpine:3.22`, and Docker writes its progress to `stderr`.
+
+</Steps>
+
+For more information, refer to [Docker-in-Docker in the Containers FAQ](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker).
+
+## Related resources
+
+- [Docker-in-Docker in the Containers FAQ](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker)
+- [Durable Object Container API](/containers/api/durable-object-container/)
+- [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/)

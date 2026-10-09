@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Clone a private repository into a sandbox while the access token stays in your Worker. If the clone URL contains the token, every command in the sandbox can read it. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com`. An entrypoint in your Worker receives each request, checks it, and adds the token.
+Clone a private repository into a sandbox while the access token stays in your Worker. If the clone URL contains the token, every command in the sandbox can read it. Instead, the Durable Object intercepts HTTPS requests from Git to `github.com` and delivers them to an entrypoint in your Worker, a class that the Worker exports to handle requests. The entrypoint checks each request and adds the token.
 
 ## Prerequisites
 
@@ -114,13 +114,39 @@ Clone a private repository into a sandbox while the access token stays in your W
 
    `git-upload-pack` serves clones and fetches. The entrypoint allows it for one repository and rejects every other request. Code in the sandbox cannot push through `git-receive-pack` or read other repositories, even when the token allows it.
 
-5. Add a method to your Durable Object that intercepts `github.com` and clones the repository:
+5. Add a method to your Durable Object that intercepts `github.com` and clones the repository, and a constructor that keeps the inactivity timeout after a restart:
 
    ```ts title="src/index.ts"
+   type CloneResult = { exitCode: number; stderr: string };
+
+   const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
+
    export class MyContainer extends DurableObject<Env> {
    	// ...
 
-   	async clone(): Promise<{ exitCode: number; stderr: string }> {
+   	// The clone that requests in progress share
+   	private cloning?: Promise<CloneResult>;
+
+   	constructor(ctx: DurableObjectState, env: Env) {
+   		super(ctx, env);
+   		const container = ctx.container;
+
+   		// A restarted Durable Object sets the timeout again
+   		if (container?.running) {
+   			void ctx.blockConcurrencyWhile(() =>
+   				container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS),
+   			);
+   		}
+   	}
+
+   	clone(): Promise<CloneResult> {
+   		this.cloning ??= this.cloneOnce().finally(() => {
+   			this.cloning = undefined;
+   		});
+   		return this.cloning;
+   	}
+
+   	private async cloneOnce(): Promise<CloneResult> {
    		const container = this.ctx.container;
 
    		if (!container) {
@@ -139,7 +165,14 @@ Clone a private repository into a sandbox while the access token stays in your W
    				enableInternet: false,
    			});
    			// Keep the clone for later requests
-   			await container.setInactivityTimeout(10 * 60 * 1000);
+   			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+   		}
+
+   		// A running container keeps the clone from an earlier request
+   		const cloned = await container.exec(["test", "-d", "/workspace/.git"]);
+
+   		if ((await cloned.output()).exitCode === 0) {
+   			return { exitCode: 0, stderr: "" };
    		}
 
    		const process = await container.exec(
@@ -152,8 +185,7 @@ Clone a private repository into a sandbox while the access token stays in your W
    			],
    			{
    				env: {
-   					// The intercept terminates TLS with a certificate that the container
-   					// CA certificate signs. Git reads the CA certificate from this path
+   					// Trust the CA that signs the certificate of the intercept
    					GIT_SSL_CAINFO: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
    				},
    			},
@@ -169,6 +201,8 @@ Clone a private repository into a sandbox while the access token stays in your W
    }
    ```
 
+   The intercept answers each HTTPS request with its own certificate, signed by a Cloudflare certificate authority (CA). Git accepts the certificate only when it trusts that CA, so `GIT_SSL_CAINFO` points Git to the CA certificate file.
+
 6. Add a route to your Worker that clones the repository:
 
    ```ts title="src/index.ts"
@@ -179,9 +213,9 @@ Clone a private repository into a sandbox while the access token stays in your W
    }
    ```
 
-   The route uses a sandbox name of its own. An instance that is already running keeps the image and Internet access it started with, so it would have no Git.
+   The route uses a sandbox name of its own. A container that is already running keeps the image and Internet access it started with, so it would have no Git.
 
-   When Git fails, the route responds with `500` and the error from Git. While the sandbox keeps running, a second request fails this way, because `/workspace` already holds the clone.
+   When Git fails, the route responds with `500` and the error from Git. Requests that arrive during a clone wait for it, and a later request returns without cloning again while the container keeps running.
 
    Authenticate callers first, so other people cannot read the repository through the sandbox. For more information, refer to [Sandbox security](/sandbox/concepts/security/#every-opening-is-also-a-way-out).
 
@@ -199,7 +233,7 @@ Clone a private repository into a sandbox while the access token stays in your W
    Cloning into '/workspace'...
    ```
 
-   The repository is in `/workspace`, and `git remote get-url origin` prints the URL without a token. A `git push` from the sandbox fails with `403`. The clone lasts until the instance stops. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance).
+   The repository is in `/workspace`, and `git remote get-url origin` prints the URL without a token. A `git push` from the sandbox fails with `403`. The clone lasts until the container stops. The constructor sets the inactivity timeout again when a restarted Durable Object finds the container running, because the timeout does not survive a restart. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance).
 
 </Steps>
 

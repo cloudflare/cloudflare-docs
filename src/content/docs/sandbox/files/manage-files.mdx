@@ -23,7 +23,7 @@ import {
 
 This guide streams an uploaded file into a sandbox, compresses it with `gzip`, and streams the compressed file back to the caller.
 
-The `Files` class from `@cloudflare/sandbox` reads and writes files in a running Linux instance, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the instance, so your Durable Object starts it before each file operation.
+The `Files` class from `@cloudflare/sandbox` reads and writes files in a running [container](/sandbox/concepts/lifetime/). [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the container, so your Durable Object starts it before each file operation.
 
 ## Prerequisites
 
@@ -37,14 +37,15 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox" />
+   <PackageManagers pkg="@cloudflare/sandbox@1.0.0" />
 
 2. To give `Files` its helper binary, create a `Dockerfile` in the project root. If you already have one, add the `COPY` line to it:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    RUN mkdir /workspace
    CMD ["sleep", "infinity"]
@@ -77,7 +78,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    The `workspace` key names the image. Your code starts it as `container.images.workspace`.
 
-4. To start an instance before each file operation, replace `src/index.ts` with a `MyContainer` class that has a `startSandbox()` method:
+4. To start a container before each file operation, replace the import and the `MyContainer` class in `src/index.ts` with a class that has a `startSandbox()` method. Keep the default export until step 6 replaces it:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -111,7 +112,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
    		}
    	}
 
-   	// Files does not start an instance, so start one before each operation.
+   	// Files does not start a container, so start one before each operation.
    	private async startSandbox(): Promise<void> {
    		if (!this.container.running) {
    			this.container.start({
@@ -126,7 +127,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    </TypeScriptExample>
 
-   The constructor creates one `Files` object for the Durable Object, because `this.ctx.container` stays the same object for as long as the Durable Object runs. `startSandbox()` starts the `workspace` image when no instance is running, and sets the inactivity timeout after `start()`. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
+   The constructor creates one `Files` object for the Durable Object, because `this.ctx.container` stays the same object for as long as the Durable Object runs. `startSandbox()` starts the `workspace` image when no container is running, and sets the inactivity timeout after `start()`. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart).
 
 5. To write the upload, run the command, and return the output file, add a `compress()` method to `MyContainer`:
 
@@ -158,7 +159,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    A Linux failure, such as a full disk, throws `SandboxFileError`. Its `code` holds the Linux error name, such as `ENOSPC`. To handle other errors, refer to [Files errors](/sandbox/reference/files/#errors).
 
-6. To send uploads to `compress()`, add a default export to `src/index.ts`:
+6. To send uploads to `compress()`, replace the default export in `src/index.ts`:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -211,21 +212,74 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 </Steps>
 
-## List, rename, and remove files
+## Remove output files
 
-`Files` has methods for other file operations. Each method accepts the same `cwd` option as `writeFile()` and `readFile()`:
+Compressed files stay in `/workspace` until the container stops. To delete a file sooner, call `remove()` after the caller has read the response.
 
-| Method            | Use it to                                            |
-| ----------------- | ---------------------------------------------------- |
-| `readDirectory()` | List directory entries                               |
-| `stat()`          | Read the type, size, owner, and timestamps of a path |
-| `mkdir()`         | Create a directory                                   |
-| `rename()`        | Rename or move a file or directory                   |
-| `remove()`        | Delete a file, or a directory with `recursive: true` |
+For other file operations, refer to [Files API](/sandbox/reference/files/).
 
-Compressed files stay in `/workspace` until the instance stops. To delete a file sooner, call `remove()` after the caller has read the response.
+## Replace a file in one step
 
-For more information, refer to [Files API](/sandbox/reference/files/).
+A process that reads a file while `writeFile()` writes it can read part of the file. To replace a file in one step, write the new content to a temporary file in the same directory, then rename the temporary file onto the original. `rename()` replaces the destination in one step, so a reader gets either the old file or the new one. The temporary file must be on the same filesystem, because `rename()` rejects with `EXDEV` across filesystems.
+
+This example adds a `replace()` method:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	async replace(path: string, content: string): Promise<void> {
+		await this.startSandbox();
+		const temporary = `${path}.${crypto.randomUUID()}.partial`;
+
+		try {
+			await this.files.writeFile(temporary, content, { cwd: workspace });
+			await this.files.rename(temporary, path, { cwd: workspace });
+		} catch (error) {
+			await this.files.remove(temporary, { cwd: workspace, force: true });
+			throw error;
+		}
+	}
+}
+```
+
+If a caller chooses `path`, check it first, as [Accept paths from callers](#accept-paths-from-callers) describes.
+
+## List a directory tree
+
+`readDirectory()` returns the entries of one directory. To list a tree, read each subdirectory in turn. This example adds a `listTree()` method that returns every path under a directory. It does not follow symbolic links to directories, because their entries have the type `symlink`:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	async listTree(directory: string): Promise<string[]> {
+		await this.startSandbox();
+		const paths: string[] = [];
+		const pending = [directory];
+		let current: string | undefined;
+
+		while ((current = pending.pop()) !== undefined) {
+			const entries = await this.files.readDirectory(current, {
+				cwd: workspace,
+			});
+
+			for (const entry of entries) {
+				const path = `${current}/${entry.name}`;
+				paths.push(path);
+
+				if (entry.type === "directory") {
+					pending.push(path);
+				}
+			}
+		}
+
+		return paths;
+	}
+}
+```
+
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `find` command through [`exec()`](/containers/api/durable-object-container/#exec) is faster, and its `signal` option can cancel it. The output of `find` counts toward the [memory limit](/workers/platform/limits/#memory) when you read it with `output()`.
 
 ## Accept paths from callers
 
@@ -292,6 +346,6 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/#ev
 
 ## Related resources
 
-- [Files API](/sandbox/reference/files/): every method, including `readDirectory()`, `rename()`, and `remove()`.
-- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the instance stops.
+- [Files API](/sandbox/reference/files/): every method, with its errors and options.
+- [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/): keep the files after the container stops.
 - [Mount an R2 bucket](/sandbox/files/mount-an-r2-bucket/): write files that other systems read.

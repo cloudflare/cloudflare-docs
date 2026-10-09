@@ -13,9 +13,9 @@ products:
   - durable-objects
 ---
 
-To move an application from Sandbox SDK 0.x to 1.0, replace the `Sandbox` class with a Durable Object class that you write. Then replace each 0.x feature that your application uses. Your class starts a container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. For the reasons behind these changes, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
+To move an application from Sandbox SDK 0.x to 1.0, replace the `Sandbox` class with a Durable Object class that you write. Then replace each 0.x feature that your application uses. Your class starts a container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. With this policy, your Durable Object chooses the image and instance size each time it starts a container. For the reasons behind these changes, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
 
-Containers that use the Durable Object scheduling policy start faster. In an independent benchmark that starts 100 sandboxes at once, the median time from creating a sandbox to running a command in it fell from 4.0 seconds to 648 milliseconds. For the measurements, refer to [Cloudflare Containers, rebuilt to scale agent sandboxes](https://blog.cloudflare.com/faster-agent-sandboxes/). Each `start()` call also chooses its own image, and a deploy does not restart running sandboxes.
+Containers that use the Durable Object scheduling policy start faster. For the measurements, refer to [Cloudflare Containers, rebuilt to scale agent sandboxes](https://blog.cloudflare.com/faster-agent-sandboxes/). A deploy does not restart running sandboxes.
 
 ## Support for Sandbox SDK 0.x
 
@@ -29,7 +29,7 @@ The migration pages compare 1.0 with 0.12, the last 0.x release. If your applica
 You cannot undo the deploy that moves your class to `scheduling_policy: "durable_object"`. After that deploy, 0.x code cannot start containers for the class, even after `wrangler rollback`.
 :::
 
-You can move every sandbox in one deploy, or run a 1.0 class next to the 0.x class and move sandboxes one at a time. Rehearse either way on a staging Worker first. To choose a way and prepare for the deploy, refer to [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
+You can move every sandbox in one deploy, or run a 1.0 class next to the 0.x class and move sandboxes one at a time. To choose a way, rehearse it, and prepare for the deploy, refer to [Plan the move to Sandbox SDK 1.0](/sandbox/sdk/migrate/plan-the-move/).
 
 ## Find the pages your application needs
 
@@ -39,7 +39,8 @@ Every application needs the first two pages in the following table. To find the 
 grep -rhow \
 	-e getSandbox -e sleepAfter -e keepAlive \
 	-e envVars -e onStart -e onStop \
-	-e onActivityExpired -e createSession \
+	-e onActivityExpired \
+	-e exec -e execStream -e createSession \
 	-e readFile -e writeFile -e listFiles -e watch \
 	-e startProcess -e streamProcessLogs \
 	-e exposePort -e proxyToSandbox -e wsConnect \
@@ -54,10 +55,11 @@ grep -rhow \
 	src | sort | uniq -c
 ```
 
-The command prints each name it finds and how often it appears. Some names, such as `watch` and `terminal`, can also match code that does not use the SDK. The 0.12 `codex-app-server` template prints:
+The command prints each name it finds and how often it appears. Some names, such as `exec`, `watch`, and `terminal`, can also match code that does not use the SDK. The 0.12 `codex-app-server` template prints:
 
 ```txt output
       1 enableInternet
+      8 exec
       6 getSandbox
       1 gitCheckout
       2 interceptHttps
@@ -84,8 +86,10 @@ Each name leads to one page:
 | `mountBucket()` | [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/) | Change calls |
 | `createBackup()`, `restoreBackup()` | [Move backups](/sandbox/sdk/migrate/backups/) | Add code |
 | `runCode()`, `createCodeContext()` | [Replace the code interpreter](/sandbox/sdk/migrate/code-interpreter/) | Add code |
-| `sandbox/opencode`, `sandbox/openai`, `sandbox/bridge`, `WarmPool` | [Move other 0.x features](/sandbox/sdk/migrate/other-features/) | Add or remove code |
-| `FROM docker:dind-rootless` in a `Dockerfile` | [Run Docker inside the sandbox](/sandbox/sdk/migrate/other-features/#run-docker-inside-the-sandbox) | Change the image |
+| `sandbox/opencode` | [Move OpenCode servers](/sandbox/sdk/migrate/opencode/) | Add code |
+| `sandbox/openai` | [Move the OpenAI shell and editor](/sandbox/sdk/migrate/openai-agents/) | Add code |
+| `sandbox/bridge`, `WarmPool` | [Remove the bridge and WarmPool](/sandbox/sdk/migrate/other-features/) | Add or remove code |
+| `FROM docker:dind-rootless` in a `Dockerfile` | [Run Docker inside the sandbox](/sandbox/sdk/migrate/docker/) | Change the image |
 
 Work through the pages on your staging Worker, test it with your own checks, and then deploy to production. For every 0.x API and its replacement, including features with no equivalent in 1.0, refer to the [API map](/sandbox/sdk/migrate/api-map/).
 

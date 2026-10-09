@@ -17,8 +17,8 @@ import { DirectoryListing } from "~/components";
 
 Any process in a sandbox can read a token that the sandbox holds. Keep the token in your Worker instead, and give the sandbox only the access it needs. A Container sends requests to a hostname that you choose, and your Worker intercepts each request and adds the token. A Dynamic Worker calls a method that your Worker passes it, and the method adds the token.
 
-A Container that starts with `enableInternet: false` reaches only the hostnames you intercept. A Dynamic Worker loaded with `globalOutbound: null` cannot make its own requests, and reaches your application only through the methods you pass.
+A Container that starts with `enableInternet: false` has no direct Internet access, and its HTTP and HTTPS requests reach your Worker only through the intercepts that you register. A Dynamic Worker loaded with `globalOutbound: null` cannot make its own requests, and reaches your application only through the methods you pass.
 
 <DirectoryListing descriptions />
 
-For every outbound option in each environment, refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.
+For the targets and DNS behavior of Container intercepts, refer to [`interceptOutboundHttp()`](/containers/api/durable-object-container/#interceptoutboundhttp) and [`interceptOutboundHttps()`](/containers/api/durable-object-container/#interceptoutboundhttps). For every outbound option of Dynamic Workers, refer to [Egress control](/dynamic-workers/usage/egress-control/).

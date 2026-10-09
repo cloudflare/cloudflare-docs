@@ -21,7 +21,7 @@ import {
 } from "~/components";
 import { PreviewHostname } from "~/components/react/sandbox/PreviewHostname";
 
-Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser, and each preview hostname is a separate origin. Code in one preview cannot read your application pages or the storage of another preview. Paths reach the server unchanged, so applications do not need a base path.
+Serve each sandbox preview from its own hostname, such as `ada.example-previews.com`. Code in a preview runs in the visitor's browser, and each preview hostname is a separate origin. An origin is the scheme, hostname, and port of a URL, and browsers separate pages and storage by origin. Code in one preview cannot read your application pages or the storage of another preview.
 
 <PreviewHostname>
 
@@ -102,7 +102,7 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
    </TypeScriptExample>
 
-   The server receives the full path and the preview hostname in the `Host` header.
+   The server receives the full path and the preview hostname in the `Host` header, so applications do not need a base path.
 
    Every request to a preview hostname goes to the preview. Keep routes that manage previews, such as stopping one, on other hostnames, so code in a preview cannot call them from its own origin. Authenticate preview visitors on the preview hostname, and do not send your application session cookie there.
 

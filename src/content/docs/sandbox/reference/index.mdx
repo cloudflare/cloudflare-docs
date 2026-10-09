@@ -21,22 +21,25 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-`@cloudflare/sandbox` works with a container you start from a Durable Object. Its classes run helper processes in the running container through [`exec()`](/containers/api/durable-object-container/#exec). The package does not start, stop, or monitor the container.
+`@cloudflare/sandbox` works with a container that a [Durable Object](/durable-objects/) starts. A Durable Object is a named object that handles requests and keeps its own storage. The classes of the package run helper processes in the running container through [`exec()`](/containers/api/durable-object-container/#exec). The package does not start, stop, or monitor the container.
 
 For `start()`, `exec()`, snapshots, and the other methods of the container itself, refer to the [Durable Object container API](/containers/api/durable-object-container/).
 
 ## Install
 
-<PackageManagers pkg="@cloudflare/sandbox" />
+<PackageManagers pkg="@cloudflare/sandbox@1.0.0" />
+
+Install an exact version. The helper binary in your image comes from the `cloudflare/sandbox` image with the same version, as [Requirements](#requirements) describes. Your package manager can save a version range, such as `^1.0.0`, so set the version in `package.json` to `1.0.0`. To upgrade, change both versions together.
 
 ## Requirements
 
 Every class in the package has these requirements. A class page lists any others.
 
-- The container image contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version:
+- The [container image](/containers/api/durable-object-container/#images), which supplies the filesystem of the container, contains the helper binary at `/usr/local/bin/sandbox-shim`. Copy it from the `cloudflare/sandbox` image whose tag matches the installed `@cloudflare/sandbox` version. A helper from another release can reject the commands of the package:
 
   ```dockerfile
-  COPY --from=docker.io/cloudflare/sandbox:<VERSION> /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+  COPY --from=docker.io/cloudflare/sandbox:<VERSION> \
+  	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
   ```
 
   The helper is a statically linked `linux/amd64` binary. It runs in any `linux/amd64` image.
@@ -51,7 +54,8 @@ This configuration meets every requirement. The `Dockerfile` copies the helper i
 ```dockerfile title="Dockerfile"
 FROM node:24-trixie-slim
 
-COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
 RUN mkdir /workspace
 CMD ["sleep", "infinity"]

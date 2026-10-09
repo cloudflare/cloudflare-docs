@@ -1,6 +1,6 @@
 ---
 title: Back up a directory to R2
-description: Save a directory from a Linux sandbox to your R2 bucket, and restore it into the same sandbox after its instance or image changes.
+description: Save a directory from a Linux sandbox to your R2 bucket, and restore it into the same sandbox after its container or image changes.
 pcx_content_type: how-to
 sidebar:
   order: 4
@@ -21,7 +21,9 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. A backup restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it. In this example, the directory is a project in `/workspace/project`.
+The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. R2 keeps each backup until you delete it. A container loses its files when it stops. You can restore a backup into a later container, including one that runs a different image. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
+
+In this example, the directory is a project in `/workspace/project`.
 
 ## Prerequisites
 
@@ -35,14 +37,15 @@ The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as on
 
 1. Install the package:
 
-   <PackageManagers pkg="@cloudflare/sandbox" />
+   <PackageManagers pkg="@cloudflare/sandbox@1.0.0" />
 
 2. Copy the helper binary into your image. If your project has no `Dockerfile`, create one in your project root:
 
    ```dockerfile title="Dockerfile"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    RUN mkdir /workspace
    CMD ["sleep", "infinity"]
@@ -324,7 +327,46 @@ export class MyContainer extends DurableObject<Env> {
 
 An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups. The rule leaves their records, and restoring one of those backups throws `BACKUP_NOT_FOUND`.
 
-A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until the default lifecycle rule of the bucket aborts it after seven days.
+A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until an [object lifecycle rule](/r2/buckets/object-lifecycles/) of the bucket aborts it.
+
+## Send other requests to a catch-all intercept
+
+If your Durable Object sends the other HTTP requests from the container to an entrypoint with [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), register the backup route first. A catch-all that a container registers first receives its backup traffic until a new container starts, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
+
+Replace `startSandbox()` with a version that registers both routes on each new container. `Outbound` is a `WorkerEntrypoint` that your Worker exports:
+
+```ts title="src/index.ts"
+export class MyContainer extends DurableObject<Env> {
+	// ...
+
+	// The setup that requests in progress share
+	private starting?: Promise<void>;
+
+	private startSandbox(): Promise<void> {
+		if (!this.container.running) {
+			this.starting ??= this.setUpSandbox().finally(() => {
+				this.starting = undefined;
+			});
+		}
+		return this.starting ?? Promise.resolve();
+	}
+
+	private async setUpSandbox(): Promise<void> {
+		this.container.start({
+			image: this.container.images.workspace,
+			enableInternet: false,
+		});
+		await this.container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
+		// Register the backup route before the catch-all
+		await this.backups.intercept();
+		await this.container.interceptAllOutboundHttp(
+			this.ctx.exports.Outbound({ props: {} }),
+		);
+	}
+}
+```
+
+Requests that arrive during setup wait for it, so no backup starts before both routes exist, and no `intercept()` call replaces the access of a running backup. The routes belong to the container and stay in place when the Durable Object restarts, so a restarted Durable Object that finds the container running registers nothing.
 
 ## Related resources
 

@@ -20,7 +20,7 @@ Run a Sandbox SDK 1.0 class next to your 0.12 class in the same Worker, and move
 - Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 - You have a staging copy of the Worker with its own Wrangler configuration file, a different Worker `name`, and a different `name` for each container.
 
-The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A stopped 0.12 container has no files to copy. The archive travels base64-encoded in one RPC message, which is limited to 32 MiB. For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
+The code on this page copies `/workspace` from the 0.12 container into the 1.0 container as one archive. A stopped 0.12 container has no files to copy. The 0.12 Durable Object returns the archive as base64 text in one remote procedure call (RPC), so the encoded archive must fit the [RPC size limit](/workers/runtime-apis/rpc/#limitations). For larger workspaces, save a 0.12 backup and convert it as [Move backups](/sandbox/sdk/migrate/backups/#convert-backups-that-012-created) describes.
 
 Keep the 0.12 exports, variables, and secrets that other migration pages tell you to remove, such as `ContainerProxy`, `SANDBOX_TRANSPORT`, and `R2_ACCESS_KEY_ID`, until you delete the 0.12 class. The 0.12 class still reads them.
 
@@ -30,9 +30,9 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
 
 1. Install version 1 of the package, and keep 0.12 under the alias `sandbox-0x`:
 
-   <PackageManagers pkg="@cloudflare/sandbox sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
+   <PackageManagers pkg="@cloudflare/sandbox@1.0.0 sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
 
-   Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
+   Your package manager can save a version range. In `package.json`, set `@cloudflare/sandbox` to `1.0.0`, the version of the `cloudflare/sandbox` image in your `Dockerfile`, and `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
 
 2. Give the 0.12 class a method that reports whether its container runs, and one that returns the storage that your 1.0 code reads. If your code exports the class from the package, replace that export with a subclass:
 
@@ -66,7 +66,8 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
    ```dockerfile title="Dockerfile.v1"
    FROM node:24-trixie-slim
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.0 \
+   	/usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    WORKDIR /workspace
    CMD ["sleep", "infinity"]

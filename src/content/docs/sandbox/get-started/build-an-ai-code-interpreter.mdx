@@ -47,6 +47,8 @@ You will learn how to:
 
 <Render file="prereqs" product="workers" />
 
+To deploy this project, use an account on the Workers Paid plan. Dynamic Workers are available only on that plan. Refer to [Dynamic Workers pricing](/dynamic-workers/pricing/).
+
 ## 1. Create the project
 
 <Steps>
@@ -69,7 +71,9 @@ You will learn how to:
 
    <PackageManagers pkg="ai workers-ai-provider zod" />
 
-4. Replace `wrangler.jsonc` to add a Workers AI binding and a Worker Loader binding:
+   The AI SDK sends requests to the model and handles its replies. The Workers AI provider connects the AI SDK to Workers AI. Zod checks the shape of the request body and of the input that the model sends.
+
+4. Replace `wrangler.jsonc` to add a Workers AI binding and a Worker Loader binding. A binding gives your Worker access to an API through `env`:
 
    <WranglerConfig>
 
@@ -186,6 +190,8 @@ The generated code becomes the body of an async function, so it can use `await` 
 
 ## 3. Let the model run code
 
+A tool is a function that the model can ask your Worker to call. Your Worker runs the function and sends the result back to the model, so the model never calls the `LOADER` binding itself.
+
 Replace `src/index.ts`. The Worker gives the model a `runJavaScript` tool and returns the answer from the model with every piece of code the model ran:
 
 <TypeScriptExample filename="src/index.ts">
@@ -287,7 +293,7 @@ The Worker validates the request body with Zod before it calls the model. If a W
 
    During `wrangler dev`, the Dynamic Worker runs locally. Workers AI requests always run on Cloudflare and count toward your [Workers AI usage](/workers-ai/platform/pricing/).
 
-2. POST a question to the URL Wrangler prints. The default is `http://localhost:8787`:
+2. Leave the development server running. Open a second terminal and POST a question to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --json '{"question":"How many prime numbers are there below 100,000?"}'
@@ -307,7 +313,9 @@ The Worker validates the request body with Zod before it calls the model. If a W
    }
    ```
 
-   The model writes different code and wording each time. `result` is `9592`.
+   The model writes different code and wording each time. For a successful run, check that `result` in the last entry of `runs` is `9592`.
+
+   If `answer` is empty, check `runs` for errors and send the request again. The Worker stops the model after five steps, which can end the conversation before the model answers. If the response status is `502`, read the logged error in the terminal that runs `wrangler dev`, fix its cause, and send the same request again.
 
 3. Ask a question that needs sorting:
 
@@ -315,7 +323,7 @@ The Worker validates the request body with Zod before it calls the model. If a W
    curl http://localhost:8787 --json '{"question":"Sort these words by length, then alphabetically: pear, fig, banana, kiwi, apple, date."}'
    ```
 
-   The answer lists `fig, date, kiwi, pear, apple, banana`.
+   Check that the answer orders the words as `fig, date, kiwi, pear, apple, banana`.
 
 </Steps>
 
@@ -341,6 +349,12 @@ For more information, refer to [Sandbox security](/sandbox/concepts/security/).
    The response has the same shape as the local response.
 
 </Steps>
+
+## 6. Clean up
+
+If you do not plan to add authentication, delete the Worker:
+
+<PackageManagers type="exec" pkg="wrangler" args="delete" />
 
 ## Next steps
 
