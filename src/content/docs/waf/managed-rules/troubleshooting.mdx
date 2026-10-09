@@ -46,6 +46,10 @@ If you contact Cloudflare Support to verify whether a WAF managed rule triggers 
 
 - WAF managed rulesets are designed to inspect standard HTTP request content. Requests that upload binary content (for example, file uploads) can resemble attack payloads and cause false positives. To scan file uploads for malicious content, use [Malicious uploads detection](/waf/detections/malicious-uploads/) instead of relying on managed rules for that traffic.
 
+- If you use [Zaraz](/zaraz/), the Cloudflare OWASP Core Ruleset can flag requests to the Zaraz endpoint (`/cdn-cgi/zaraz/`) as false positives. Add an [exception](/waf/managed-rules/waf-exceptions/) skipping the Cloudflare OWASP Core Ruleset for Zaraz requests. You can use an expression similar to the following:
+
+  `starts_with(http.request.uri.path, "/cdn-cgi/zaraz/")`
+
 ## Troubleshoot false negatives
 
 To identify false negatives, review the HTTP logs on your origin server.
