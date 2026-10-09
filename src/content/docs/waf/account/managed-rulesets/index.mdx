@@ -18,6 +18,10 @@ At the zone level, each [WAF managed ruleset](/waf/managed-rules/#available-mana
 
 For example, you could deploy the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times with different [paranoia levels](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#paranoia-level) and a different action (_Managed Challenge_ action for PL3 and _Log_ action for PL4). Higher paranoia levels enable additional rules that are more likely to produce false positives.
 
+:::note
+Avoid deploying the same managed ruleset at both the account level and the zone level. Account-level rulesets run before zone-level rulesets, so duplicated deployments evaluate the same request twice, and a zone-level exception will not prevent a match at the account level. Standardize your managed ruleset deployments at the account level, and deploy at the zone level only when a zone requires a specific configuration or exception.
+:::
+
 <Details header="Example: Deploy OWASP with two different configurations">
 
 The following example deploys the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) multiple times at the account level through the following [execute rules](/ruleset-engine/managed-rulesets/deploy-managed-ruleset/):
