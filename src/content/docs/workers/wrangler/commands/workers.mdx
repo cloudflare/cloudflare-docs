@@ -125,6 +125,8 @@ None of the options for this command are required. Many of these options can be 
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--tunnel` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Expose your local dev server over a Cloudflare Tunnel. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/).
+- `--tunnel-allowed-mail` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Email addresses or domain patterns allowed to authenticate to a Quick Tunnel. This option cannot be used with `--tunnel-name`.
 - `--tunnel-name` <Type text="string" /> <MetaInfo text="optional" />
   - Use an existing named Cloudflare Tunnel. Combine with `--tunnel` to open it automatically at startup.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
