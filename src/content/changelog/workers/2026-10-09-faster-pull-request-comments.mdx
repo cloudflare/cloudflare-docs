@@ -1,9 +1,9 @@
 ---
-title: Workers Builds pull request comments now update faster
-description: Workers Builds now updates pull request comments faster, reducing the wait for build status updates and preview URLs.
+title: Workers Builds now posts preview URLs in seconds
+description: Workers Builds now consistently posts preview URLs to GitHub and GitLab within a few seconds of a build completing.
 date: 2026-10-09
 ---
 
-During peak load, Workers Builds pull request comments could arrive up to approximately 30 minutes late. We have optimized comment processing, reducing observed delays to approximately 5 seconds. This helps you check build status and open preview URLs sooner when reviewing changes.
+Workers Builds now consistently posts preview URLs to GitHub pull requests and GitLab merge requests within a few seconds of a build completing, so you can start testing and reviewing your changes sooner. Previously, posting preview URLs could often take minutes.
 
-For details, refer to [Workers Builds GitHub integration](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment).
+For details, refer to [Workers Builds GitHub integration](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment) and [Workers Builds GitLab integration](/workers/ci-cd/builds/git-integration/gitlab-integration/#merge-request-comment).
