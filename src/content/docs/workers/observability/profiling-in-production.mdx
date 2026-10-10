@@ -27,6 +27,12 @@ Send requests that exercise the code you want to investigate. Capturing a profil
 
 The historical log time range and filters do not control capture. A profile records activity during the selected capture duration, not past requests shown in logs.
 
+## Enable source maps
+
+Enable source maps before capturing a profile so the flamegraph shows readable function names and file locations instead of minified code. If your Worker bundles and minifies code, frames without source maps reference the minified bundle and are difficult to read.
+
+To enable source maps, set `upload_source_maps` to `true` in your [Wrangler configuration](/workers/wrangler/configuration/), then deploy your Worker. Refer to [Source maps and stack traces](/workers/observability/source-maps/) for details.
+
 ## Capture a profile
 
 ### Use dashboard
