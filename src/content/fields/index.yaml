@@ -808,6 +808,17 @@ entries:
     keywords: [request, cloudflare, saas, platforms, client, visitor]
     summary: Returns the string representation of the per-hostname [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) JSON object set by SSL for SaaS customers.
 
+  - name: http.request.clearance.uuid
+    data_type: String
+    categories: [Request, Cloudflare]
+    keywords: [request, cloudflare, clearance, challenge, uuid, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Provides the stable UUID from a valid Cloudflare clearance cookie.
+    description: |-
+      Use this field as an Advanced Rate Limiting characteristic to keep the same request counter when Cloudflare refreshes the encrypted `cf_clearance` cookie value.
+
+      The value is an empty string when the request does not contain a valid clearance cookie. Use `http.request.clearance.uuid ne ""` in the counting expression to exclude those requests from the clearance counter.
+
   - name: cf.random_seed
     data_type: Bytes
     categories: [Request]
