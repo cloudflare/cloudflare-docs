@@ -6,4 +6,6 @@ products:
 date: 2026-10-09
 ---
 
-The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now serves [Cloudflare skills](https://github.com/cloudflare/skills) through the [Skills over MCP extension](https://modelcontextprotocol.io/extensions/skills/overview). MCP clients that support the extension discover the skills with `skills/list` and read their files at `skill://<name>/<path>`, with nothing extra to install. The skills are synced from GitHub every six hours.
+The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now serves [Cloudflare skills](https://github.com/cloudflare/skills) through the [Skills over MCP extension](https://modelcontextprotocol.io/extensions/skills/overview). MCP clients that support the extension discover the skills with `skills/list` and read their files at `skill://<name>/<path>`.
+
+To use them, add `https://mcp.cloudflare.com/mcp` to an [MCP client that supports the extension](https://modelcontextprotocol.io/extensions/client-matrix).
