@@ -1,0 +1,8 @@
+import { CopyPromptButton } from "~/components";
+
+To create a participant preset with a coding agent, copy this prompt:
+
+<CopyPromptButton
+	tooltip="Create a RealtimeKit participant preset with cf"
+	prompt="Set up a participant preset in my Cloudflare RealtimeKit app. Read https://developers.cloudflare.com/realtime/realtimekit/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI (install if needed). Inspect commands with cf cli search, --help, or cf schema. Confirm my account, app, meeting type, and the role's media and moderation permissions, and help me authenticate as needed. Reuse a preset that matches the requested role, or create one with only those capabilities. Leave existing presets unchanged. Verify its saved configuration and permissions, then report its ID, exact name for the Add Participant API, role capabilities, and any remaining steps or blockers. Keep credentials out of chat, logs, and source control. Do not create meetings."
+/>

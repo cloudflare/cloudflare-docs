@@ -1,0 +1,38 @@
+import { DashButton, Tabs, TabItem } from "~/components";
+
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
+
+In the RealtimeKit dashboard, open your app and go to **Presets**. Review an existing preset or create one with the permissions needed for the participant role.
+
+<DashButton url="/?to=/:account/realtime/kit" />
+
+</TabItem>
+<TabItem label="CLI" class="space-y-4">
+
+[Install and sign in to `cf`](/cf/get-started/), then inspect the create request:
+
+```sh
+cf schema realtime kit presets create
+```
+
+Create a `preset.json` file using the [complete preset schema](/api/resources/realtime_kit/subresources/presets/methods/create/). Include the preset name and the required `config`, `permissions`, and `ui` fields.
+
+```sh
+cf realtime kit presets create "<APP_ID>" --body @preset.json
+```
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+Create a `preset.json` file using the [Create Preset API schema](/api/resources/realtime_kit/subresources/presets/methods/create/), then send it to your app:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data @preset.json
+```
+
+</TabItem>
+</Tabs>

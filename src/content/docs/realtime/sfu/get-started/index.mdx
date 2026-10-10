@@ -8,7 +8,7 @@ products:
   - realtime
 ---
 
-import { DashButton, LinkButton, PackageManagers, Steps } from "~/components";
+import { LinkButton, PackageManagers, Render, Steps } from "~/components";
 
 Run a browser video room that publishes camera and microphone tracks through Realtime SFU. Open a second participant to receive the first participant's media and send media back.
 
@@ -24,19 +24,27 @@ For a conferencing application, start with [RealtimeKit](/realtime/realtimekit/)
 
 The example is experimental. Local development uses an identity mechanism restricted to localhost. A deployed room requires Cloudflare Access.
 
-## Run the video room
+## Create an SFU app
 
 <span id="create-your-first-app"></span>
 
+Choose a coding agent, the dashboard, the `cf` CLI, or the API. Use separate apps for environments that need isolation.
+
+### Set up with your coding agent
+
+<Render file="sfu/create-app-prompt" product="realtime" />
+
+### Create the app manually
+
+<Render file="sfu/create-app-options" product="realtime" />
+
+Keep the App Secret on your backend. Once you have the App ID and App Secret, continue with the video room.
+
+## Run the video room
+
 <Steps>
 
-1. **Create your SFU app.** In the Cloudflare dashboard, select your account and go to **Realtime** > **Serverless SFU**.
-
-   <DashButton url="/?to=/:account/realtime/sfu" />
-
-   Create an app and save its **App ID** and **App Secret**. You can also [create the app through the API](/api/resources/calls/subresources/sfu/methods/create/). Use separate apps for environments that need isolation.
-
-2. **Clone the example.** In a terminal, run:
+1. **Clone the example.** In a terminal, run:
 
    ```sh
    git clone https://github.com/cloudflare/realtime-examples.git
@@ -47,7 +55,7 @@ The example is experimental. Local development uses an identity mechanism restri
 
    <PackageManagers type="install" />
 
-3. **Configure the backend.** Create the ignored local secrets file:
+2. **Configure the backend.** Create the ignored local secrets file:
 
    ```sh
    cp .dev.vars.example .dev.vars
@@ -56,13 +64,13 @@ The example is experimental. Local development uses an identity mechanism restri
 
    In `.dev.vars`, set `REALTIME_SFU_APP_ID` to the App ID and `REALTIME_SFU_BEARER_TOKEN` to the App Secret. Keep this file private. These values are read by the Worker, not sent to the browser.
 
-4. **Start the application.** Run:
+3. **Start the application.** Run:
 
    <PackageManagers type="run" args="dev" />
 
    Open `http://localhost:8787/rooms/two-browser-check`. Enter a display name, join the room, and allow camera and microphone access.
 
-5. **Connect another participant.** Select **Open another participant**. In the new tab, join with a different display name.
+4. **Connect another participant.** Select **Open another participant**. In the new tab, join with a different display name.
 
    Use this action instead of the browser's **Duplicate Tab** action, which can copy the first participant's identity. Both participants should show local and remote video. Confirm that remote audio plays.
 
