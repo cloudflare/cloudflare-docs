@@ -20,6 +20,14 @@ Notably:
 - Alarms have guaranteed at-least-once execution and are retried automatically when the `alarm()` handler throws.
 - Retries are performed using exponential backoff starting at a 2 second delay from the first failure with up to 6 retries allowed.
 
+:::caution[Avoid alarm loops]
+If your `alarm()` handler calls `setAlarm()` with the current time or a time in the past, the handler runs again immediately. If nothing changes between runs, the handler keeps rescheduling itself. A single Durable Object in this loop can run its alarm hundreds of times per second until the code changes or the alarm is deleted.
+
+Each alarm invocation is billed as a request. Each `setAlarm()` call is billed as a row written. When you reschedule from inside `alarm()`, enforce a minimum delay, back off after failures, and stop after a fixed number of attempts.
+
+For more information, refer to [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition).
+:::
+
 :::note[How are alarms different from Cron Triggers?]
 
 Alarms are more fine grained than [Cron Triggers](/workers/configuration/cron-triggers/). A Worker can have up to three Cron Triggers configured at once, but it can have an unlimited amount of Durable Objects, each of which can have an alarm set.
@@ -93,6 +101,7 @@ export class AgentServer extends DurableObject {
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
   - If you call `setAlarm` when there is already one scheduled, it will override the existing alarm.
+  - If you call `setAlarm` with the current time or a time in the past, the alarm runs immediately. Calling it this way from inside `alarm()` can create an alarm loop. For more information, refer to [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition).
 
 :::caution[Calling `setAlarm` inside the constructor]
 If you wish to call `setAlarm` inside the constructor of a Durable Object, ensure that you are first checking whether an alarm has already been set.
@@ -129,6 +138,8 @@ This is due to the fact that, if the Durable Object wakes up after being inactiv
 :::note[Catching exceptions in alarm handlers]
 
 Because alarms are only retried up to 6 times on error, it's recommended to catch any exceptions inside your `alarm()` handler and schedule a new alarm before returning if you want to make sure your alarm handler will be retried indefinitely. Otherwise, a sufficiently long outage in a downstream service that you depend on or a bug in your code that goes unfixed for hours can exhaust the limited number of retries, causing the alarm to not be re-run in the future until the next time you call `setAlarm`.
+
+When you schedule your own retries, schedule them in the future. Increase the delay after each failure. Store an attempt count in storage and stop after a limit, so that a permanent failure does not reschedule the alarm forever. `alarmInfo.retryCount` does not count alarms you schedule yourself.
 
 :::
 

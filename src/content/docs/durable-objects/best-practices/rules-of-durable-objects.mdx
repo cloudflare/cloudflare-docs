@@ -1309,6 +1309,7 @@ Key points about alarms:
 - **`setAlarm(timestamp)`** schedules the `alarm()` handler to run at any time in the future (millisecond precision)
 - **Alarms do not repeat automatically** — you must call `setAlarm()` again to schedule the next execution
 - **Only schedule alarms when there is work to do** — avoid waking up every Durable Object on short intervals (seconds), as each alarm invocation incurs costs
+- **Reschedule with a delay and a stop condition** — rescheduling to the current time from `alarm()` creates an [alarm loop](#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition)
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1492,6 +1493,137 @@ export default {
 </TypeScriptExample>
 
 This pattern does not scale. As traffic increases, the single Durable Object becomes a chokepoint. Instead, identify natural coordination boundaries in your application (per user, per room, per document) and create separate Durable Objects for each.
+
+### Do not reschedule alarms without a delay and a stop condition
+
+If `alarm()` calls `setAlarm()` with the current time or a time in the past, the alarm runs again immediately. If the condition that caused the reschedule does not change, the handler reschedules itself again. This creates an alarm loop.
+
+A single Durable Object in an alarm loop can run its alarm hundreds of times per second. The alarm is stored with the object, so the loop continues across evictions and deployments. It stops only when the handler stops rescheduling or the alarm is deleted.
+
+Alarm loops are expensive even though each invocation does little work:
+
+- Each alarm invocation is billed as a request.
+- Each `setAlarm()` call is billed as a row written.
+- Each read and write the handler performs is billed as rows read and rows written.
+
+Compute duration stays relatively low, because a looping object is billed as one continuously active instance. Most of the cost appears as requests and rows written. For rates, refer to [Durable Objects pricing](/durable-objects/platform/pricing/).
+
+To prevent alarm loops:
+
+- **Enforce a minimum delay when you reschedule from `alarm()`.** Route every reschedule through one helper that clamps the time to at least `Date.now()` plus a minimum delay.
+- **Back off on failure.** Increase the delay after each failed attempt instead of retrying at a fixed short interval.
+- **Store an attempt counter and stop at a limit.** Keep the counter in storage so it survives eviction. `alarmInfo.retryCount` only counts automatic retries of the current alarm after the handler throws. It does not count alarms you schedule yourself.
+- **Return without rescheduling when there is no work.** An alarm handler does not need to call `setAlarm()` on every run.
+- **Test the next alarm time.** Refer to [Test that alarms reschedule safely](/durable-objects/examples/testing-with-durable-objects/#test-that-alarms-reschedule-safely).
+- **Set a [budget alert](/billing/manage/budget-alerts/).** Budget alerts notify you when usage-based spend crosses a dollar threshold.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	SESSION: DurableObjectNamespace<Session>;
+}
+
+interface Checkpoint {
+	refreshAt: number;
+}
+
+// 🔴 Bad: Reschedules to "now" while the refresh window stays open
+export class Session extends DurableObject<Env> {
+	async alarm() {
+		const checkpoint = await this.ctx.storage.get<Checkpoint>("checkpoint");
+		if (!checkpoint || Date.now() < checkpoint.refreshAt) {
+			return;
+		}
+
+		const refreshed = await this.tryRefresh();
+		if (!refreshed) {
+			// The alarm runs again immediately. If tryRefresh() keeps failing,
+			// this loops until the code changes or the alarm is deleted.
+			// setAlarm(checkpoint.refreshAt) has the same effect, because
+			// refreshAt is already in the past.
+			await this.ctx.storage.setAlarm(Date.now());
+		}
+	}
+
+	private async tryRefresh(): Promise<boolean> {
+		const response = await fetch("https://api.example.com/refresh", {
+			method: "POST",
+		});
+		return response.ok;
+	}
+}
+```
+</TypeScriptExample>
+
+Instead, enforce a minimum delay, back off on failure, and stop after a fixed number of attempts:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	SESSION: DurableObjectNamespace<Session>;
+}
+
+interface Checkpoint {
+	refreshAt: number;
+}
+
+const MIN_DELAY_MS = 60 * 1000; // 1 minute
+const MAX_DELAY_MS = 60 * 60 * 1000; // 1 hour
+const MAX_ATTEMPTS = 8;
+
+// ✅ Good: Minimum delay, exponential backoff, and a hard stop
+export class Session extends DurableObject<Env> {
+	async alarm() {
+		const checkpoint = await this.ctx.storage.get<Checkpoint>("checkpoint");
+		if (!checkpoint) {
+			return; // No work to do, so do not reschedule
+		}
+
+		if (Date.now() < checkpoint.refreshAt) {
+			await this.rescheduleAlarm(checkpoint.refreshAt);
+			return;
+		}
+
+		if (await this.tryRefresh()) {
+			await this.ctx.storage.delete("refreshAttempts");
+			return;
+		}
+
+		const attempts =
+			((await this.ctx.storage.get<number>("refreshAttempts")) ?? 0) + 1;
+
+		if (attempts >= MAX_ATTEMPTS) {
+			// Stop rescheduling and surface the failure instead
+			console.error(`Checkpoint refresh failed ${attempts} times, giving up`);
+			await this.ctx.storage.delete("refreshAttempts");
+			return;
+		}
+
+		await this.ctx.storage.put("refreshAttempts", attempts);
+		const backoff = Math.min(MIN_DELAY_MS * 2 ** attempts, MAX_DELAY_MS);
+		await this.rescheduleAlarm(Date.now() + backoff);
+	}
+
+	// Every reschedule from alarm() goes through this helper
+	private async rescheduleAlarm(runAt: number) {
+		await this.ctx.storage.setAlarm(Math.max(runAt, Date.now() + MIN_DELAY_MS));
+	}
+
+	private async tryRefresh(): Promise<boolean> {
+		const response = await fetch("https://api.example.com/refresh", {
+			method: "POST",
+		});
+		return response.ok;
+	}
+}
+```
+</TypeScriptExample>
+
+To stop an alarm loop that is already running, refer to [Unexpected charges from an alarm loop](/durable-objects/observability/troubleshooting/#unexpected-charges-from-an-alarm-loop).
 
 ## Testing and class lifecycle
 
