@@ -2,18 +2,34 @@
 {}
 ---
 
-:::note[Reduce latency with Placement]
+import { WranglerConfig } from "~/components";
 
-If your Worker makes **multiple sequential queries** per request, use [Placement](/workers/configuration/placement/) to run your Worker close to your database. Each query adds round-trip latency: 20-30ms from a distant region, or 1-3ms when placed nearby. Multiple queries compound this difference.
+:::tip[Place compute near your database]
 
-If your Worker makes only one query per request, placement does not improve end-to-end latency. The total round-trip time is the same whether it happens near the user or near the database.
+For a Worker that makes multiple sequential queries to one regional database, configure [Placement Hints](/workers/configuration/placement/#configure-explicit-placement-hints) before deploying. Running compute near the database reduces network latency for queries that reach the origin. Hyperdrive pools connections near your database, but adding a Hyperdrive binding does not automatically place your Worker there.
 
-```jsonc title="wrangler.jsonc"
+Find the database's cloud provider and region in your provider's dashboard or API. Set `worker.placement.region` in `cloudflare.config.ts`, or `placement.region` in Wrangler configuration, using the format `provider:region`. Merge the example into your existing configuration and replace its region with your database's region:
+
+<WranglerConfig
+	cfConfig={`export default {
+	worker: {
+		placement: {
+			region: "aws:us-east-1",
+		},
+	},
+};`}
+>
+
+```jsonc
 {
 	"placement": {
-		"region": "aws:us-east-1", // Match your database region, for example "gcp:us-east4" or "azure:eastus"
-	},
+		"region": "aws:us-east-1"
+	}
 }
 ```
+
+</WranglerConfig>
+
+If the region is unknown or your Worker uses multiple back-end locations, consider [Smart Placement](/workers/configuration/placement/#enable-smart-placement). Choose one placement option per Worker. Compare [request duration](/workers/observability/metrics-and-analytics/#request-duration) on deployed Workers with representative queries and cache behavior. Local development does not measure production placement.
 
 :::

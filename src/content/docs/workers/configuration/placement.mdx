@@ -7,7 +7,7 @@ products:
   - workers
 ---
 
-import { WranglerConfig, DashButton, Tabs, TabItem } from "~/components";
+import { WranglerConfig, DashButton, Tabs, TabItem, Render } from "~/components";
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) run in a data center closest to where the request was received. If your Worker makes requests to back-end infrastructure such as databases or APIs, it may be more performant to run that Worker closer to your back-end than the end user.
 
@@ -44,6 +44,14 @@ Consider a user in Sydney, Australia accessing an application running on Workers
 The latency from multiple round trips between Sydney and Frankfurt adds up. By placing the Worker near the database, Cloudflare reduces the total request duration.
 
 ![A user located in Sydney, AU connecting to a Worker in Frankfurt, DE which then makes multiple round trips to a database also located in Frankfurt, DE. ](~/assets/images/workers/platform/workers-smart-placement-enabled.png)
+
+## Place a Worker near a Hyperdrive database
+
+<Render file="placement-hint-partial" product="hyperdrive" />
+
+The [Hyperdrive configuration API](/api/resources/hyperdrive/subresources/configs/methods/get/) exposes origin connection information, but does not return the database's cloud region. Confirm that region with your database provider. For PlanetScale, refer to [Worker placement for PlanetScale](/hyperdrive/planetscale/#configure-worker-placement).
+
+Placement affects [fetch event handlers](/workers/runtime-apis/handlers/fetch/). It does not place RPC methods or named entrypoints. Refer to [placement limitations](#placement-behavior) before choosing an application architecture.
 
 ## Enable Smart Placement
 
