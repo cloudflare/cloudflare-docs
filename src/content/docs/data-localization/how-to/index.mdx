@@ -1,22 +1,22 @@
 ---
 title: Configuration guides
 pcx_content_type: navigation
-description: Configure Cloudflare products with Regional Services and Customer Metadata Boundary.
+description: Configure processing regions and log regions for individual Cloudflare products.
 products:
   - data-localization
 sidebar:
-  order: 7
+  order: 8
 ---
 
 import { DirectoryListing } from "~/components";
 
-Learn how to configure Cloudflare products with the Data Localization Suite, including Regional Services (which controls where traffic is decrypted and processed) and Customer Metadata Boundary (which controls where logs are stored).
+Configure data residency for individual Cloudflare products. Each guide covers the settings that product supports: a processing region, which controls where traffic is decrypted and processed, and a log region, which controls where logs and analytics are stored.
 
 <DirectoryListing />
 
-## Verify Regional Services behavior
+## Verify your processing region
 
-In order to verify that Regional Services is working, customers can confirm the behavior by executing one of the following `curl` commands on a regionalized hostname:
+To verify that your processing region is applied, run one of the following `curl` commands against a regionalized hostname:
 
 ```bash
 curl -X GET -I https://<HOSTNAME>/ 2>&1 | grep cf-ray
@@ -26,6 +26,6 @@ curl -X GET -I https://<HOSTNAME>/ 2>&1 | grep cf-ray
 curl -s https://<HOSTNAME>/cdn-cgi/trace | grep "colo="
 ```
 
-The first command will return a three-letter IATA code (an airport identifier that corresponds to the nearest Cloudflare data center) in the [Cf-Ray](/fundamentals/reference/http-headers/#cf-ray) header, indicating the Cloudflare data center location of processing and/or TLS termination (traffic decryption). The second command will directly return the three-letter IATA code.
+The first command returns a three-letter IATA code (an airport identifier that corresponds to the nearest Cloudflare data center) in the [Cf-Ray](/fundamentals/reference/http-headers/#cf-ray) header. This code identifies the data center where processing and TLS termination (traffic decryption) took place. The second command returns the three-letter IATA code directly.
 
-For example, when a hostname is configured to use the region European Union (EU), the three-letter IATA code will always return a data center inside of the EU.
+For example, when a hostname uses the European Union (EU) processing region, the three-letter IATA code always identifies a data center inside the EU.

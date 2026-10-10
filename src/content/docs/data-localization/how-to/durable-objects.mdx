@@ -1,7 +1,7 @@
 ---
 title: Durable Objects
 pcx_content_type: how-to
-description: Configure Durable Objects with Regional Services and Customer Metadata Boundary.
+description: Configure a storage region, a processing region, and a log region for Durable Objects.
 products:
   - data-localization
   - durable-objects
@@ -9,18 +9,27 @@ sidebar:
   order: 7
 ---
 
-The following sections describe how to configure Durable Objects with Regional Services and Customer Metadata Boundary to control where your Durable Objects run, persist data, and where logs are stored.
+Set a storage region to control where a Durable Object runs and persists data. Set a processing region to control where requests to it are decrypted and processed. Set a log region to control where logs are stored.
 
-## Regional Services
+## Storage region
 
-To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (meaning traffic routes through Cloudflare) through Cloudflare and ensure that processing of a Durable Object (DO) occurs only in-region, follow these steps:
+Set a storage region to control where the Durable Object runs and persists its data:
 
 1. Follow the steps in the Durable Objects [Get Started](/durable-objects/get-started/) guide.
-2. [Restrict Durable Objects to a jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction), in order to control where the DO itself runs and persists data, by creating a jurisidictional subnamespace in your Worker’s code.
-3. Follow the [Workers guide](/data-localization/how-to/workers/#regional-services) to configure a custom domain with Regional Services, in order to control the regions from which Cloudflare responds to requests.
+2. [Restrict the Durable Object to a jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) by creating a jurisdictional subnamespace in your Worker's code.
 
-## Customer Metadata Boundary
+A jurisdiction accepts `eu`, `us`, or `fedramp`. Refer to [Storage region](/data-localization/storage-region/) for the full list and its caveats.
 
-DO Logs and Analytics are not available outside the US region when using Customer Metadata Boundary. With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** > **Metrics** tab related to DO in the zone dashboard will not be populated.
+Workers can still invoke the Durable Object from anywhere in the world. The jurisdiction controls only where the object runs and stores data, so pair it with a processing region if you also need to control where requests are decrypted.
+
+## Processing region
+
+Set a processing region to control where requests to your Durable Object are decrypted and processed. This applies to hostnames [proxied](/dns/proxy-status/) through Cloudflare.
+
+Follow the [Workers guide](/data-localization/how-to/workers/#processing-region) to configure a custom domain with a processing region.
+
+## Log region
+
+DO logs and analytics are not available outside the US region. With an EU log region, the **Workers & Pages** > **Workers** > **Metrics** tab related to DO in the zone dashboard is not populated.
 
 Refer to the [Durable Objects documentation](/durable-objects/) for more information.

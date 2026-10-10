@@ -1,7 +1,7 @@
 ---
-title: Data Localization Suite
+title: Data residency
 pcx_content_type: overview
-description: Control where your data is inspected, processed, and stored with the Data Localization Suite.
+description: Control where Cloudflare processes and stores your data.
 products:
   - data-localization
 tags:
@@ -10,7 +10,7 @@ sidebar:
   order: 1
 head:
   - tag: title
-    content: Data Localization Suite
+    content: Cloudflare data residency
 ---
 
 import {
@@ -23,29 +23,58 @@ import {
 
 <Plan type="ent-add-on" />
 
-The Data Localization Suite (DLS) is a collection of tools that enable customers to choose the location where Cloudflare inspects and stores data, while maintaining the security and performance benefits of our global network. Organizations subject to data residency regulations such as [GDPR](https://www.cloudflare.com/trust-hub/gdpr/) can use DLS to control where their encryption keys are stored, where traffic metadata and logs are kept, and where HTTPS traffic is decrypted and processed.
+Cloudflare data residency lets you choose where your data is processed and stored, while keeping the security and performance benefits of the global network. If you are subject to regulations such as [GDPR](https://www.cloudflare.com/trust-hub/gdpr/), you can confine each kind of data to a region you choose.
+
+There are four settings. Each one covers a different kind of data, and each has its own region list.
+
+New here? Start with [What stays in your region](/data-localization/what-stays-in-your-region/): the four settings, the regions each supports, and every product exception, on one page.
 
 ---
 
-## Features
+## Settings
 
-<Feature header="Geo Key Manager" href="/data-localization/geo-key-manager/">
+<Feature header="Processing region" href="/data-localization/processing-region/">
 
-Control where your private encryption keys are stored, ensuring compliance with data sovereignty requirements.
-
-</Feature>
-
-<Feature header="Customer Metadata Boundary" href="/data-localization/metadata-boundary/">
-
-Ensure that any traffic metadata — logs and analytics that could identify your end users — stays in the region you selected.
+Where your HTTPS traffic is decrypted and inspected.
 
 </Feature>
 
-<Feature header="Regional Services" href="/data-localization/regional-services/">
+<Feature header="Storage region" href="/data-localization/storage-region/">
 
-Comply with regional restrictions by choosing which Cloudflare data centers are allowed to decrypt and process your HTTPS traffic.
+Where content you store resides, such as R2 buckets and Durable Objects.
 
 </Feature>
+
+<Feature header="Log region" href="/data-localization/log-region/">
+
+Where your logs and analytics are stored.
+
+</Feature>
+
+<Feature header="Key region" href="/data-localization/key-region/">
+
+Where your TLS private keys are stored.
+
+</Feature>
+
+---
+
+## Names you may see elsewhere
+
+Cloudflare documentation uses the four setting names above. Your contract, the dashboard, and the API still use the older feature names. They refer to the same things:
+
+| You may see                      | In these docs                                              |
+| -------------------------------- | ---------------------------------------------------------- |
+| Data Localization Suite (DLS)    | Data residency, the collective name for all four settings  |
+| Regional Services                | [Processing region](/data-localization/processing-region/) |
+| Jurisdictional Restrictions      | [Storage region](/data-localization/storage-region/)       |
+| Customer Metadata Boundary (CMB) | [Log region](/data-localization/log-region/)               |
+| Geo Key Manager                  | [Key region](/data-localization/key-region/)               |
+
+Two of the old names caused the most confusion:
+
+- **Regional Services** sounds like the whole product, but it only ever controlled traffic processing. It is one setting of four, which is why it is now called a processing region.
+- **Customer Metadata Boundary** sounds like it covers everything that is not page content, including stored files. It only ever covered logs and analytics, which is why it is now called a log region. For stored files, set a [storage region](/data-localization/storage-region/).
 
 ---
 
@@ -81,7 +110,7 @@ Comply with regional restrictions by choosing which Cloudflare data centers are 
 	href="https://blog.cloudflare.com/tag/data-localization-suite"
 	icon="open-book"
 >
-	Read articles about the latest updates to the Data Localization Suite.
+	Read articles about the latest updates to data residency settings.
 </LinkTitleCard>
 
 </CardGrid>

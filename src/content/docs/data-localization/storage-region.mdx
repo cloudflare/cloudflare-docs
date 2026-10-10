@@ -1,0 +1,111 @@
+---
+title: Storage region
+pcx_content_type: concept
+description: Restrict where content you store in R2 and Durable Objects resides, using jurisdictions.
+products:
+  - data-localization
+tags:
+  - Compliance
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Storage region
+---
+
+import { Aside, WranglerConfig } from "~/components";
+
+Your **storage region** restricts where content you store resides, such as R2 buckets and Durable Objects. You set it per resource, as a **jurisdiction**.
+
+This is the only setting that constrains stored content. Neither a [processing region](/data-localization/processing-region/) nor a [log region](/data-localization/log-region/) affects where your files reside, which is the most common misreading of those settings.
+
+In the dashboard and the API, this setting is called Jurisdictional Restrictions.
+
+## Available jurisdictions
+
+[R2](/r2/reference/data-location/#available-jurisdictions) and [Durable Objects](/durable-objects/reference/data-location/#supported-locations) support the same three jurisdictions:
+
+| Jurisdiction | Description                   |
+| ------------ | ----------------------------- |
+| `eu`         | The European Union            |
+| `us`         | The United States             |
+| `fedramp`    | FedRAMP-Moderate data centers |
+
+Enterprise customers must contact their [account team](/support/contacting-cloudflare-support/) to get access to the `fedramp` jurisdiction.
+
+<Aside type="caution" title="Location hints are not a residency control">
+
+Both R2 and Durable Objects also accept **location hints**. Hints are a best-effort performance optimization with no guarantee: Cloudflare may place your data elsewhere. Only jurisdictions guarantee placement. If you have a compliance requirement, set a jurisdiction.
+
+</Aside>
+
+## Set a jurisdiction
+
+A jurisdiction must be set when the resource is created. You cannot move an existing bucket or Durable Object into a jurisdiction afterward.
+
+### R2
+
+Choose **Specify jurisdiction** under **Location** when creating a bucket in the dashboard, or set the `jurisdiction` field on your [binding](/r2/api/workers/workers-api-usage/#3-bind-your-bucket-to-a-worker):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"r2_buckets": [
+		{
+			"binding": "MY_BUCKET",
+			"bucket_name": "<YOUR_BUCKET_NAME>",
+			"jurisdiction": "eu",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+With the S3 API, specify the jurisdiction in the endpoint. A jurisdiction-specific endpoint cannot access resources outside that jurisdiction:
+
+```txt
+https://<ACCOUNT_ID>.eu.r2.cloudflarestorage.com
+```
+
+Refer to [R2 data location](/r2/reference/data-location/#jurisdictional-restrictions) for full details.
+
+### Durable Objects
+
+Create a namespace restricted to a jurisdiction, then derive IDs from it:
+
+```js
+const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
+const euId = euSubnamespace.idFromName("my-name");
+```
+
+Two caveats apply:
+
+- Workers can still access a jurisdiction-restricted Durable Object from anywhere in the world. The jurisdiction controls only where the object runs and persists data. Pair it with a [processing region](/data-localization/processing-region/) to control where Cloudflare responds to requests.
+- The [`DurableObjectId`](/durable-objects/api/id/) is logged outside the jurisdiction for billing and debugging.
+
+Refer to [Durable Objects data location](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) for full details.
+
+## Products with no storage region
+
+These products store content, but have no jurisdiction setting today:
+
+- [D1](/d1/)
+- [Workers KV](/kv/)
+- [Images](/images/)
+- [AI Gateway](/ai-gateway/observability/logging/) logs
+
+Logs for these products still follow your [log region](/data-localization/log-region/). Only the stored objects are unconstrained.
+
+[Cache Reserve](/cache/advanced-configuration/cache-reserve/) is a special case: it defaults to the data center nearest your origin, and a storage region can be set on request through your account team.
+
+## Limitations
+
+[Logpush](/logs/logpush/logpush-job/enable-destinations/r2/) cannot write to an R2 bucket that has a jurisdiction assigned. As a workaround, configure a [Logpush job using an S3-compatible endpoint](/data-localization/how-to/r2/#send-logs-to-r2-via-s3-compatible-endpoint).
+
+## Related resources
+
+- [What stays in your region](/data-localization/what-stays-in-your-region/) for every product exception.
+- [Regions by setting](/data-localization/regions-by-setting/) for region availability across all four settings.
+- [Use R2 with data residency](/data-localization/how-to/r2/) and [Durable Objects](/data-localization/how-to/durable-objects/) configuration guides.
