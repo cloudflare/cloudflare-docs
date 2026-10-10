@@ -28,6 +28,22 @@ Run `wrangler deploy` in a project without a Wrangler configuration file and Wra
 Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
 :::
 
+:::caution[First deploy fails with `Types file not found`]
+When Wrangler configures an existing SvelteKit project, it runs the Svelte CLI (`sv add`) to install the Cloudflare adapter. This adds `wrangler types --check` to the `build` script in your `package.json`. The types file does not exist yet, so the first build fails with the following error:
+
+```txt
+✘ [ERROR] Types file not found at worker-configuration.d.ts.
+```
+
+To fix this, generate the types file, then deploy again:
+
+<PackageManagers type="exec" pkg="wrangler" args="types" />
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+You only need to do this once. Wrangler has already created your Wrangler configuration file, so the second deploy skips project setup.
+:::
+
 <AutoconfigDiagram
 	framework="SvelteKit"
 	configs={[
