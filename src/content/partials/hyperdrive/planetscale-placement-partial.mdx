@@ -6,7 +6,7 @@ import { WranglerConfig } from "~/components";
 
 :::tip[Place compute near your PlanetScale database]
 
-For requests that make multiple sequential queries, configure a [Placement Hint](/workers/configuration/placement/#configure-explicit-placement-hints) before deploying your Worker. Adding a Hyperdrive binding does not automatically place your Worker near PlanetScale.
+For requests that make multiple sequential queries to a database in one region, configure a [Placement Hint](/workers/configuration/placement/#configure-explicit-placement-hints) before deploying your Worker. Adding a Hyperdrive binding does not automatically place your Worker near PlanetScale.
 
 Find the region of the branch your Hyperdrive origin connects to in the PlanetScale dashboard or [branch API](https://planetscale.com/docs/api/reference/get_branch). Merge a region hint matching that provider and region into your existing Worker configuration. For example, a branch in AWS `us-east-1` uses `aws:us-east-1`:
 
@@ -30,6 +30,13 @@ Find the region of the branch your Hyperdrive origin connects to in the PlanetSc
 
 </WranglerConfig>
 
-Use the database branch's region rather than assuming its connection hostname identifies that region. If you use [global replica credentials](https://planetscale.com/blog/introducing-global-replica-credentials), queries can route to different regions. Review [placement options](/workers/configuration/placement/) for that workload and compare request duration on deployed Workers.
-
 :::
+
+Use the database branch's region for connections to its primary database. A connection hostname does not necessarily identify that region: for PlanetScale Vitess (MySQL), `aws.connect.psdb.cloud` routes to a nearby gateway, which forwards queries to the database. Even a hostname such as `us-east-1.connect.psdb.cloud` identifies the [gateway's region](https://planetscale.com/blog/introducing-global-replica-credentials#the-endpoint), which can differ from the database's region.
+
+For Vitess replica connections, choose placement based on where the credentials route queries:
+
+- If the credentials route to replicas in one region, use a region hint for that region. For a [region-scoped read-only credential](https://planetscale.com/docs/vitess/scaling/replicas#1-create-a-global-replica-credential-recommended), use the selected read-only region rather than the branch's primary region.
+- If [global replica credentials](https://planetscale.com/docs/vitess/scaling/replicas#1-create-a-global-replica-credential-recommended) can route reads to replicas in multiple regions, do not automatically pin the Worker to the primary region. Doing so can move compute away from a closer replica. Evaluate [Smart Placement](/workers/configuration/placement/#enable-smart-placement) by replacing `region` with `mode: "smart"` in the placement configuration, and compare it with default placement near users.
+
+Compare request duration on deployed Workers using representative queries and traffic from your users' locations before choosing a placement setting.
