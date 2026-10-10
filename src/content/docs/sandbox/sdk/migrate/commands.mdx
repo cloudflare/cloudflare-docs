@@ -115,7 +115,7 @@ In 0.12, a `cd` or `export` in one `exec()` call carried into the next call, inc
 
 ## Replace timeouts
 
-Start the command with GNU coreutils `timeout`, which [stops the command and every process it started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts):
+Start the command with GNU coreutils `timeout`, which [stops the command and the processes it started](/containers/guides/execute-commands/#stop-the-processes-a-command-starts) that stay in its process group:
 
 ```ts title="src/index.ts (0.12)"
 const result = await sandbox.exec("npm test", { timeout: 60_000 });
@@ -127,8 +127,8 @@ const process = await this.container.exec(
 	{ cwd: "/workspace", env: ENV },
 );
 const result = await process.output();
-// Exit code 124 means the command ran longer than 60 seconds
-const timedOut = result.exitCode === 124;
+// 124 or 137 means the command ran longer than 60 seconds
+const timedOut = result.exitCode === 124 || result.exitCode === 137;
 ```
 
 0.12 threw `CommandError` with the message `Command timeout after 60000ms`, and the command kept running. In 1.0, a command that times out stops, so it cannot change files after the error.

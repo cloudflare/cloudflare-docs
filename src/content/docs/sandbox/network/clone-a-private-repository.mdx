@@ -124,7 +124,7 @@ Clone a private repository into a sandbox while the access token stays in your W
    		const container = this.ctx.container;
 
    		if (!container) {
-   			throw new Error("The container binding is not configured");
+   			throw new Error("No container is configured");
    		}
 
    		await container.interceptOutboundHttps(
@@ -138,6 +138,8 @@ Clone a private repository into a sandbox while the access token stays in your W
    				// The container can reach only the hostnames you intercept
    				enableInternet: false,
    			});
+   			// Keep the clone for later requests
+   			await container.setInactivityTimeout(10 * 60 * 1000);
    		}
 
    		const process = await container.exec(
@@ -171,11 +173,13 @@ Clone a private repository into a sandbox while the access token stays in your W
 
    ```ts title="src/index.ts"
    if (url.pathname === "/clone" && request.method === "POST") {
-   	const sandbox = env.MY_CONTAINER.getByName("sandbox");
+   	const sandbox = env.MY_CONTAINER.getByName("repo");
    	const { exitCode, stderr } = await sandbox.clone();
    	return new Response(stderr, { status: exitCode === 0 ? 200 : 500 });
    }
    ```
+
+   The route uses a sandbox name of its own. An instance that is already running keeps the image and Internet access it started with, so it would have no Git.
 
    When Git fails, the route responds with `500` and the error from Git. While the sandbox keeps running, a second request fails this way, because `/workspace` already holds the clone.
 
@@ -195,7 +199,7 @@ Clone a private repository into a sandbox while the access token stays in your W
    Cloning into '/workspace'...
    ```
 
-   The repository is in `/workspace`, and `git remote get-url origin` prints the URL without a token. A `git push` from the sandbox fails with `403`.
+   The repository is in `/workspace`, and `git remote get-url origin` prints the URL without a token. A `git push` from the sandbox fails with `403`. The clone lasts until the instance stops. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance).
 
 </Steps>
 
