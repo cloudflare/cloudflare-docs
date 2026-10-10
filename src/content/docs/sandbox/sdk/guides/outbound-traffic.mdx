@@ -74,6 +74,12 @@ export class MySandbox extends Sandbox {
 
 </TypeScriptExample>
 
+:::caution
+`deniedHosts` applies to HTTP requests on port `80`. When `interceptHttps` is `true`, it also applies to HTTPS requests on port `443`. When `enableInternet` is `true`, traffic on other ports bypasses `deniedHosts` and can still leave the sandbox. A request to a hostname can also be allowed even if DNS resolves that hostname to an IP address covered by a CIDR in `deniedHosts`.
+
+To block a destination on every port, set `enableInternet = false` and allow only the destinations the sandbox needs.
+:::
+
 You can also disable internet access by default, but allow specific hosts and IPs:
 
 <TypeScriptExample>
@@ -206,7 +212,7 @@ MySandbox.outboundByHost = {
 
 ## HTTPS traffic
 
-Sandboxes intercept HTTPS traffic only when your class sets `interceptHttps` to `true`. It defaults to `false`, and then `allowedHosts`, `deniedHosts`, and outbound handlers apply to HTTP only. HTTPS requests reach every host while `enableInternet` is `true`, and fail while it is `false`.
+Sandboxes intercept HTTPS traffic only when your class sets `interceptHttps` to `true`. It defaults to `false`, and then `allowedHosts`, `deniedHosts`, and outbound handlers apply only to HTTP requests on port `80`. HTTPS requests reach every host while `enableInternet` is `true`, and fail while it is `false`. When `interceptHttps` is `true`, those policies also apply to HTTPS requests on port `443`.
 
 <TypeScriptExample>
 
