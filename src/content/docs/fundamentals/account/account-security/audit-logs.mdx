@@ -34,6 +34,11 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 - **Enhanced context and transparency**: Each log entry includes detailed context, such as the authentication method used, the interface (API or dashboard) through which the action was performed, and mappings to Cloudflare Ray IDs for improved traceability.
 - **Comprehensive activity capture**: Audit Logs records create, update, and delete actions across all supported products. Selective logging of `GET` requests for sensitive read operations is planned for a future release.
 
+:::note[Products that authenticate at the edge]
+Some Cloudflare products authenticate requests at the edge before they reach the core API gateway, and are not captured in Audit Logs. This includes operations using the [R2 S3-compatible API](/r2/api/s3/) and the Cache Purge API (coreless purge path). For these products, use product-specific observability tools such as [R2 Logpush](/logs/logpush/) to monitor access.
+:::
+
+
 ## Retention
 
 - Audit logs are retained for 18 months before being deleted. No additional setup is required.
