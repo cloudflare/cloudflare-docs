@@ -12,7 +12,8 @@ Consider the following two Workers, connected via a [Service Binding](/workers/r
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "counter-service",
-	"main": "./src/counterService.js"
+	"main": "./src/counterService.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -73,6 +74,7 @@ This function can then be called by the client Worker:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "client_worker",
 	"main": "./src/clientWorker.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "COUNTER_SERVICE",

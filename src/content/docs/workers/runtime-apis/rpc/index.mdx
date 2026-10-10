@@ -85,7 +85,8 @@ Consider the following example:
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "counter",
-	"main": "./src/counter.js"
+	"main": "./src/counter.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -137,6 +138,7 @@ The method `increment` can be called directly by the client, as can the public p
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "client-worker",
 	"main": "./src/clientWorker.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "COUNTER_SERVICE",

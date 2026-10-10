@@ -12,7 +12,8 @@ For example, if Worker B implements the public method `add(a, b)`:
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_b",
-	"main": "./src/workerB.js"
+	"main": "./src/workerB.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -64,6 +65,7 @@ Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_a",
 	"main": "./src/workerA.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "WORKER_B",

@@ -32,6 +32,7 @@ First, add a [binding](/workers/runtime-apis/bindings) to your Worker that gives
 ```jsonc
 {
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"ratelimits": [
 		{
 			"name": "MY_RATE_LIMITER",
@@ -110,6 +111,7 @@ For example, here is how you can define two rate limiting configurations for fre
 ```jsonc
 {
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"ratelimits": [
 		// Free user rate limiting
 		{

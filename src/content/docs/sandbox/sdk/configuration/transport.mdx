@@ -87,6 +87,7 @@ Enable RPC transport by adding `SANDBOX_TRANSPORT` to your Worker's `vars`:
 {
 	"name": "my-sandbox-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"vars": {
 		"SANDBOX_TRANSPORT": "rpc"

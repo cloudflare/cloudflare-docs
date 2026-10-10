@@ -47,11 +47,14 @@ import { defineConfig } from "vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-	plugins: [cloudflare()],
+	plugins: [cloudflare({ viteEnvironment: { name: "worker" } })],
+	environments: {
+		worker: { build: { sourcemap: true } },
+	},
 });
 ```
 
-The Cloudflare Vite plugin doesn't require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
+The Cloudflare Vite plugin looks for a `wrangler.jsonc`, `wrangler.json` or `wrangler.toml` in the root of your application.
 
 Refer to the [API reference](/workers/vite-plugin/reference/api/) for configuration options.
 
@@ -64,17 +67,20 @@ Refer to the [API reference](/workers/vite-plugin/reference/api/) for configurat
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "cloudflare-vite-get-started",
 	"compatibility_date": "$today",
-	"main": "./src/index.ts"
+	"main": "./src/index.ts",
+	"upload_source_maps": true
 }
 ```
 
 </WranglerConfig>
 
 The `name` field specifies the name of your Worker.
-By default, this is also used as the name of the Worker's Vite Environment (see [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information).
+The `viteEnvironment.name` option in the Vite configuration above sets the Worker's Vite Environment to `worker`. If omitted, the plugin uses the Worker name (see [Vite Environments](/workers/vite-plugin/reference/vite-environments/) for more information).
 The `main` field specifies the entry file for your Worker code.
 
 For more information about the Worker configuration, see [Configuration](/workers/wrangler/configuration/).
+
+The `worker` environment generates [source maps](/workers/observability/source-maps/) for your Worker. The client environment keeps its existing source map settings.
 
 ## Create your Worker entry file
 
