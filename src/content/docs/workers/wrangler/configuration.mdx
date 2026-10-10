@@ -47,6 +47,7 @@ It is best practice to treat Wrangler's configuration file as the [source of tru
 	// Top-level configuration
 	"name": "my-worker",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workers_dev": false,
 	"route": {
@@ -1877,8 +1878,10 @@ In many cases, this allows you to work provide just enough of an API to make a d
 
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
 
+Enable source map uploads for JavaScript and TypeScript Workers. Frameworks and custom builds must also [generate maps](/workers/observability/source-maps/#frameworks-and-custom-builds).
+
 - `upload_source_maps` <Type text="boolean" />
-  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy).
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload).
 
 Example:
 
@@ -2004,6 +2007,7 @@ A common example of using a redirected configuration is where a custom build too
         	"$schema": "./node_modules/wrangler/config-schema.json",
         	"name": "my-worker",
         	"main": "src/index.ts",
+            "upload_source_maps": true,
         	"vars": {
         		"MY_VARIABLE": "production variable",
         	},

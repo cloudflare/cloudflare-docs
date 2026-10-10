@@ -50,7 +50,7 @@ cd my-first-worker
 
 In your project directory, C3 will have generated the following:
 
-- `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file.
+- `wrangler.jsonc`: Your [Wrangler](/workers/wrangler/configuration/#sample-wrangler-configuration) configuration file. C3 enables [source map uploads](/workers/observability/source-maps/) for JavaScript and TypeScript projects so captured exception stacks point to your original code.
 - `index.js` (in `/src`): A minimal `'Hello World!'` Worker written in [ES module](/workers/reference/migrate-to-module-workers/) syntax.
 - `package.json`: A minimal Node dependencies configuration file.
 - `package-lock.json`: Refer to [`npm` documentation on `package-lock.json`](https://docs.npmjs.com/cli/v9/configuring-npm/package-lock-json).

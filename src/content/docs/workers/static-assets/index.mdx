@@ -67,6 +67,7 @@ The **assets directory** specified in your [Wrangler configuration file](/worker
       "$schema": "./node_modules/wrangler/config-schema.json",
       "name": "my-spa",
       "main": "src/index.js",
+      "upload_source_maps": true,
       "compatibility_date": "$today",
       "assets": {
         "directory": "./dist",
@@ -154,6 +155,7 @@ If you want the Worker code to execute before serving assets, you can use the `r
 	"name": "my-spa-worker",
 	"compatibility_date": "$today",
 	"main": "./src/index.ts",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/",
 		"not_found_handling": "single-page-application",

@@ -160,7 +160,8 @@ Then, update your configuration file's `main` field to point to the location of 
 {
 	"name": "my-worker",
 	"compatibility_date": "$today",
-	"main": "./dist/client/_worker.js", // or some other location if you moved the script out of the static asset directory
+	"main": "./dist/client/_worker.js",
+	"upload_source_maps": true, // or some other location if you moved the script out of the static asset directory
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -190,6 +191,7 @@ Once the Worker script has been compiled, you can update your configuration file
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -211,6 +213,7 @@ Workers, on the other hand, will default to serving static assets ahead of your 
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/",
 		"run_worker_first": true
@@ -245,6 +248,7 @@ export default class extends WorkerEntrypoint {
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -264,6 +268,7 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/",
 		"binding": "ASSETS"
@@ -285,6 +290,7 @@ If you had customized [placement](/workers/configuration/placement/), or set a [
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"placement": {
 		"mode": "smart"
 	},
@@ -335,6 +341,7 @@ To get a similar experience in Workers:
        "name": "my-worker",
        "compatibility_date": "$today",
        "main": "./worker/index.ts",
+       "upload_source_maps": true,
        "assets": {
            "directory": "./dist/client/"
        },
@@ -375,6 +382,7 @@ Where previously you were offered a `pages.dev` subdomain for your Pages project
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"workers_dev": true
 }
 ```

@@ -32,6 +32,7 @@ Two facts shape every pattern below. They follow directly from "the cache is in 
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -73,6 +74,7 @@ Disable caching on the default entrypoint so it runs on every request to authent
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -238,6 +240,7 @@ The fix is a gateway entrypoint that restores `Accept-Encoding` from `request.cf
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -335,6 +338,7 @@ You can cache those responses by wrapping the Durable Object behind a named entr
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -476,6 +480,7 @@ Workers Caching lets you put your own cache layer in front of that origin withou
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {

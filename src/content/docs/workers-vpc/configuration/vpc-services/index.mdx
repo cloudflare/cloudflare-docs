@@ -191,6 +191,7 @@ Once you have created a VPC Service, you can bind it to your Worker:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-worker",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"vpc_services": [
 		{
 			"binding": "PRIVATE_API",

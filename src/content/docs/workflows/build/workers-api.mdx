@@ -380,6 +380,7 @@ Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "billing-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"exports": {
 		"MyWorkflow": {
@@ -479,6 +480,7 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "workflows-starter",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workflows": [
 		{
@@ -514,6 +516,7 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "web-api-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workflows": [
 		{

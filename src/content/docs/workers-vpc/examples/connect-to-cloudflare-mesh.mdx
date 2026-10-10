@@ -27,6 +27,7 @@ Bind your Worker to Cloudflare Mesh using `network_id: "cf1:network"` in your Wr
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "mesh-gateway",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"vpc_networks": [
 		{

@@ -28,6 +28,8 @@ To group related exceptions, failed invocations, and error logs, use [Workers Is
 
 To send logs to a third party, use [OpenTelemetry export](/workers/observability/opentelemetry-export/) (recommended), [Workers Logpush](/workers/observability/logs/logpush/), or [Tail Workers](/workers/observability/logs/tail-workers/).
 
+Enable [source maps](/workers/observability/source-maps/) so captured JavaScript and TypeScript exception stacks point to the original files and lines. Framework builds must generate maps as well as upload them.
+
 ## Enable Workers Logs
 
 :::note[Wrangler version]
