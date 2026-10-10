@@ -60,7 +60,7 @@ When eviction happens mid-work, the upstream HTTP connection (to an LLM provider
 
 `keepAlive()` reduces the chance of eviction. `runFiber()` makes eviction survivable.
 
-For work that should run independently of the agent with per-step retries and multi-step orchestration, use [Workflows](/agents/runtime/execution/run-workflows/) instead. Fibers are for work that is part of the agent's own execution. Refer to [Long-running agents: Workflows vs agent-internal patterns](/agents/concepts/agentic-patterns/long-running-agents/#when-to-use-workflows-vs-agent-internal-patterns) for a comparison.
+For work that should run independently of the agent with per-step retries and multi-step orchestration, use [Workflows](/agents/agent-class/run-workflows/) instead. Fibers are for work that is part of the agent's own execution. Refer to [Long-running agents: Workflows vs agent-internal patterns](/agents/concepts/agentic-patterns/long-running-agents/#when-to-use-workflows-vs-agent-internal-patterns) for a comparison.
 
 ## keepAlive
 
@@ -495,7 +495,7 @@ Run an async function while keeping the DO alive. Heartbeat starts before `fn` a
 ## Related
 
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — how fibers compose with schedules, plans, and async operations
-- [Schedule tasks](/agents/runtime/execution/schedule-tasks/) — `keepAlive` details and the alarm system
-- [Sub-agents](/agents/runtime/execution/sub-agents/) — durable execution and schedules inside sub-agents
-- [Workflows](/agents/runtime/execution/run-workflows/) — durable multi-step execution outside the agent
-- [Chat agents](/agents/communication-channels/chat/chat-agents/) — `chatRecovery` and `onChatRecovery`
+- [Schedule tasks](/agents/agent-class/schedule-tasks/) — `keepAlive` details and the alarm system
+- [Sub-agents](/agents/agent-class/sub-agents/) — durable execution and schedules inside sub-agents
+- [Workflows](/agents/agent-class/run-workflows/) — durable multi-step execution outside the agent
+- [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/) — `chatRecovery` and `onChatRecovery`

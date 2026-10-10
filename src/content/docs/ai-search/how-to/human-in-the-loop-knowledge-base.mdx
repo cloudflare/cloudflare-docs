@@ -365,7 +365,7 @@ async () => {
 
 `aiSearch.search()` runs immediately. When the program reaches `aiSearch.saveDocument()`, the runtime records the call as pending and pauses the execution before the upload runs.
 
-Your client sends the chat message that starts the run, then drives the approval with the `@callable()` methods. The following script uses the [Agents SDK client](/agents/communication-channels/chat/client-sdk/) to do both. Save it as `client.mjs`, set `HOST` to your deployed Worker, and run it with `node client.mjs`:
+Your client sends the chat message that starts the run, then drives the approval with the `@callable()` methods. The following script uses the [Agents SDK client](/agents/agent-class/communication-channels/chat/client-sdk/) to do both. Save it as `client.mjs`, set `HOST` to your deployed Worker, and run it with `node client.mjs`:
 
 <TypeScriptExample filename="client.mjs">
 

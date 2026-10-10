@@ -62,7 +62,7 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
-Connections persist in the agent's [SQL storage](/agents/runtime/lifecycle/state/), and when an agent connects to an MCP server, all tools from that server become available automatically.
+Connections persist in the agent's [SQL storage](/agents/agent-class/state/), and when an agent connects to an MCP server, all tools from that server become available automatically.
 
 ## Adding MCP servers
 
@@ -726,7 +726,7 @@ async addMcpServer(
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
-  - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/runtime/execution/retries/) for details on `RetryOptions`.
+  - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/agent-class/retries/) for details on `RetryOptions`.
 
 #### Parameters (RPC transport)
 
@@ -1069,7 +1069,7 @@ const disposable = this.mcp.onServerStateChanged(() => {
 </TypeScriptExample>
 
 :::note
-MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/runtime/communication/protocol-messages/) returned `false`.
+MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) returned `false`.
 :::
 
 ### Lifecycle methods
@@ -1134,7 +1134,7 @@ await this.mcp.waitForConnections({ timeout: 10_000 });
 ```
 
 :::note
-`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
+`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/agent-class/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
 :::
 
 #### `this.mcp.closeConnection()`
@@ -1246,12 +1246,12 @@ export class MyAgent extends Agent {
 
 <LinkCard
 	title="Client SDK"
-	href="/agents/communication-channels/chat/client-sdk/"
+	href="/agents/agent-class/communication-channels/chat/client-sdk/"
 	description="Connect from browsers with onMcpUpdate."
 />
 
 <LinkCard
 	title="Store and sync state"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="Learn about agent persistence."
 />

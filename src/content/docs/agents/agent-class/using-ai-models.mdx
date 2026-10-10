@@ -5,7 +5,7 @@ pcx_content_type: concept
 tags:
   - AI
 sidebar:
-  order: 19
+  order: 16
 products:
   - agents
 ---
@@ -26,13 +26,13 @@ The [AI SDK](https://ai-sdk.dev/docs/introduction) provides a unified interface 
 
 ## Calling AI Models
 
-You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/runtime/agents-api/) handler, when a [scheduled task](/agents/runtime/execution/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/runtime/communication/websockets/) handler, or from any of your own methods.
+You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/agent-class/) handler, when a [scheduled task](/agents/agent-class/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/agent-class/websockets/) handler, or from any of your own methods.
 
 Agents can call AI models on their own — autonomously — and can handle long-running responses that take minutes (or longer) to respond in full. If a client disconnects mid-stream, the Agent keeps running and can catch the client up when it reconnects.
 
 ### Streaming over WebSockets {/* long-running-model-requests */}
 
-Modern reasoning models can take some time to both generate a response _and_ stream the response back to the client. Instead of buffering the entire response, you can stream it back over [WebSockets](/agents/runtime/communication/websockets/).
+Modern reasoning models can take some time to both generate a response _and_ stream the response back to the client. Instead of buffering the entire response, you can stream it back over [WebSockets](/agents/agent-class/websockets/).
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -79,7 +79,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also persist AI model responses back to [Agent state](/agents/runtime/lifecycle/state/) using `this.setState`. If a user disconnects, read the message history back and send it to the user when they reconnect.
+You can also persist AI model responses back to [Agent state](/agents/agent-class/state/) using `this.setState`. If a user disconnects, read the message history back and send it to the user when they reconnect.
 
 ## Workers AI
 
@@ -242,7 +242,7 @@ export class MyAgent extends Agent {
 
 Agents can call models across any service that supports the OpenAI API. For example, you can use the OpenAI SDK to call one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent.
 
-Agents can stream responses back over HTTP using Server-Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSocket API](/agents/runtime/communication/websockets/) to stream responses back to a client.
+Agents can stream responses back over HTTP using Server-Sent Events (SSE) from within an `onRequest` handler, or by using the native [WebSocket API](/agents/agent-class/websockets/) to stream responses back to a client.
 
 <TypeScriptExample filename="src/index.ts">
 

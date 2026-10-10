@@ -124,7 +124,7 @@ A hibernated agent can be woken by any of these sources:
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------- |
 | **HTTP request**         | Any request to the agent's URL triggers `onRequest()`                                                                                                                    | A webhook from GitHub                   |
 | **WebSocket connection** | A client connects, triggering `onConnect()`                                                                                                                              | A team member opens the dashboard       |
-| **RPC call**             | Another Worker or agent calls a method via [service binding](/workers/runtime-apis/bindings/service-bindings/) or [`@callable`](/agents/runtime/lifecycle/callable-methods/) | A coordinator agent delegates a task    |
+| **RPC call**             | Another Worker or agent calls a method via [service binding](/workers/runtime-apis/bindings/service-bindings/) or [`@callable`](/agents/agent-class/callable-methods/) | A coordinator agent delegates a task    |
 | **Scheduled alarm**      | A stored schedule fires, triggering your callback                                                                                                                        | Daily standup reminder at 9am           |
 | **Email**                | An inbound email triggers `onEmail()`                                                                                                                                    | A team member replies to a status email |
 
@@ -220,16 +220,16 @@ try {
 | Seconds          | Normal request handling                                 |
 | Minutes          | `keepAlive()` / `keepAliveWhile()`                      |
 | Minutes          | `startFiber()` when retryable acceptance matters        |
-| Minutes to hours | [Workflows](/agents/runtime/execution/run-workflows/)                |
+| Minutes to hours | [Workflows](/agents/agent-class/run-workflows/)                |
 | Hours to days    | Async pattern: start job, hibernate, wake on completion |
 
 ## Surviving crashes: fibers and recovery
 
 An agent can be evicted at any time — a deploy, a platform restart, or hitting resource limits. If the agent was mid-task, that work is lost unless it was checkpointed.
 
-[`runFiber()`](/agents/runtime/execution/durable-execution/) provides crash-recoverable execution. It persists a row in SQLite for the duration of the work, and lets you `stash()` intermediate state. If the agent is evicted, the fiber row survives, and `onFiberRecovered()` is called on the next activation.
+[`runFiber()`](/agents/agent-class/durable-execution/) provides crash-recoverable execution. It persists a row in SQLite for the duration of the work, and lets you `stash()` intermediate state. If the agent is evicted, the fiber row survives, and `onFiberRecovered()` is called on the next activation.
 
-Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) when the important boundary is durable acceptance. It adds an idempotency key, retained status records, inspection, cancellation, and cleanup on top of the same fiber machinery. By default it returns after acceptance; pass `waitForCompletion: true` when the request should stay open until the accepted job reaches a terminal status. This is a good fit for webhooks where the provider may retry delivery and the agent must avoid starting duplicate visible side effects.
+Use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) when the important boundary is durable acceptance. It adds an idempotency key, retained status records, inspection, cancellation, and cleanup on top of the same fiber machinery. By default it returns after acceptance; pass `waitForCompletion: true` when the request should stay open until the accepted job reaches a terminal status. This is a good fit for webhooks where the provider may retry delivery and the agent must avoid starting duplicate visible side effects.
 
 ```ts
 export class ProjectManager extends Agent<Env, ProjectState> {
@@ -270,7 +270,7 @@ In `wrangler dev`, fiber recovery works identically to production. Kill the wran
 
 :::
 
-For the full API reference — `FiberContext`, `FiberRecoveryContext`, concurrent fibers, inline vs fire-and-forget patterns — refer to [Durable Execution](/agents/runtime/execution/durable-execution/).
+For the full API reference — `FiberContext`, `FiberRecoveryContext`, concurrent fibers, inline vs fire-and-forget patterns — refer to [Durable Execution](/agents/agent-class/durable-execution/).
 
 ## Handling long async operations
 
@@ -362,7 +362,7 @@ export class ProjectManager extends Agent<Env, ProjectState> {
 
 ### Pattern: workflow delegation
 
-A production deployment involves multiple steps that must each retry independently — build, test, stage, promote. The project manager should not manage these steps internally; it delegates to a [Workflow](/agents/runtime/execution/run-workflows/) that handles retries and step sequencing:
+A production deployment involves multiple steps that must each retry independently — build, test, stage, promote. The project manager should not manage these steps internally; it delegates to a [Workflow](/agents/agent-class/run-workflows/) that handles retries and step sequencing:
 
 ```ts
 export class ProjectManager extends Agent<Env, ProjectState> {
@@ -535,7 +535,7 @@ Sub-agents have their own state, schedules, durable fibers, and lifecycle. They 
 
 Because facets do not have independent alarm slots, the top-level parent owns the physical Durable Object alarm. The Agents SDK records which sub-agent owns each schedule or fiber recovery lease, wakes the parent, and routes the callback back into the child. The parent does not need to stay active while the sub-agent works — it can start the work, hibernate, and be woken by the child-owned schedule or recovery check.
 
-For the full `subAgent()` API — typed RPC stubs, client routing, access control, storage isolation, and alarm-backed APIs — refer to [Sub-agents](/agents/runtime/execution/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/harnesses/think/sub-agents/).
+For the full `subAgent()` API — typed RPC stubs, client routing, access control, storage isolation, and alarm-backed APIs — refer to [Sub-agents](/agents/agent-class/sub-agents/). For AI-specific sub-agent streaming (running full LLM turns through a child agent), refer to [Think: Sub-agent RPC](/agents/harnesses/think/sub-agents/).
 ## Recovering interrupted LLM streams
 
 The patterns above handle the project manager's coordination work — scheduling, delegating, polling. But the project manager also uses an LLM directly: generating plans, summarizing progress, drafting status emails. Those LLM calls stream tokens over a connection that cannot be resumed if the agent is evicted mid-response.
@@ -695,13 +695,13 @@ The agent does not need to run continuously to do any of this. It just needs to 
 
 ## Related
 
-- [Durable Execution](/agents/runtime/execution/durable-execution/) — `runFiber()`, `startFiber()`, `stash()`, and crash recovery
-- [Schedule tasks](/agents/runtime/execution/schedule-tasks/) — delayed, cron, and interval tasks
-- [Retries](/agents/runtime/execution/retries/) — retry options and patterns
-- [Workflows](/agents/runtime/execution/run-workflows/) — durable multi-step processing
-- [Store and sync state](/agents/runtime/lifecycle/state/) — `setState()` and persistence
-- [WebSockets](/agents/runtime/communication/websockets/) — lifecycle hooks and hibernation
-- [Callable methods](/agents/runtime/lifecycle/callable-methods/) — RPC via `@callable` and service bindings
-- [Email routing](/agents/communication-channels/email/) — receiving inbound email
-- [Webhooks](/agents/communication-channels/webhooks/) — receiving external events
+- [Durable Execution](/agents/agent-class/durable-execution/) — `runFiber()`, `startFiber()`, `stash()`, and crash recovery
+- [Schedule tasks](/agents/agent-class/schedule-tasks/) — delayed, cron, and interval tasks
+- [Retries](/agents/agent-class/retries/) — retry options and patterns
+- [Workflows](/agents/agent-class/run-workflows/) — durable multi-step processing
+- [Store and sync state](/agents/agent-class/state/) — `setState()` and persistence
+- [WebSockets](/agents/agent-class/websockets/) — lifecycle hooks and hibernation
+- [Callable methods](/agents/agent-class/callable-methods/) — RPC via `@callable` and service bindings
+- [Email routing](/agents/agent-class/communication-channels/email/) — receiving inbound email
+- [Webhooks](/agents/agent-class/communication-channels/webhooks/) — receiving external events
 - [Human in the loop](/agents/concepts/agentic-patterns/human-in-the-loop/) — approval flows

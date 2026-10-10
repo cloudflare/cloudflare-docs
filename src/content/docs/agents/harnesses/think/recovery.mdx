@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Think always wraps chat turns in recoverable [fibers](/agents/runtime/execution/durable-execution/). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks. It persists partial output and schedules a continuation or retry.
+Think always wraps chat turns in recoverable [fibers](/agents/agent-class/durable-execution/). If the Durable Object is evicted mid-stream, Think reconstructs any buffered chunks. It persists partial output and schedules a continuation or retry.
 
 :::note
 Durable recovery works without configuration. Most apps never need to configure it. Use this page for provider-specific recovery, a stall watchdog, or terminal behavior.
@@ -116,7 +116,7 @@ onChatRecovery(ctx: ChatRecoveryContext): ChatRecoveryOptions {
 
 Use `ctx.createdAt` to skip stale recoveries. For example, if the interrupted turn is older than a few minutes, return `{ continue: false }` so the partial response is preserved without starting an old continuation.
 
-Durable bookkeeping remains active when automatic continuation is not appropriate. Return `{ continue: false }` to prevent another model call. For cancellation, side-effect, and cost controls, refer to [Control automatic continuation](/agents/communication-channels/chat/chat-agents/#control-automatic-continuation).
+Durable bookkeeping remains active when automatic continuation is not appropriate. Return `{ continue: false }` to prevent another model call. For cancellation, side-effect, and cost controls, refer to [Control automatic continuation](/agents/agent-class/communication-channels/chat/chat-agents/#control-automatic-continuation).
 
 ### Recovery budgets and limits
 
@@ -158,7 +158,7 @@ export class MyAgent extends Think<Env> {
 | `terminalMessage`      | generic message   | Message shown to the user when recovery is given up on.                                                                                                                             |
 | `onExhausted`          | —                 | Called once when recovery is given up on. Inspect `ctx.reason`.                                                                                                                     |
 
-`ctx.reason` on the exhausted hook is one of: `no_progress_timeout` (stuck), `max_attempts_exceeded` (no-progress alarm loop), `work_budget_exceeded` (runaway), `recovery_aborted` (your `shouldKeepRecovering` returned `false`), `out_of_memory` (memory-limit retry budget), or `stable_timeout` (extreme churn). Refer to [Stream recovery](/agents/communication-channels/chat/chat-agents/#stream-recovery) for the full shared reference. Think and `@cloudflare/ai-chat` use the same recovery configuration.
+`ctx.reason` on the exhausted hook is one of: `no_progress_timeout` (stuck), `max_attempts_exceeded` (no-progress alarm loop), `work_budget_exceeded` (runaway), `recovery_aborted` (your `shouldKeepRecovering` returned `false`), `out_of_memory` (memory-limit retry budget), or `stable_timeout` (extreme churn). Refer to [Stream recovery](/agents/agent-class/communication-channels/chat/chat-agents/#stream-recovery) for the full shared reference. Think and `@cloudflare/ai-chat` use the same recovery configuration.
 
 ## Repairing interrupted tool calls
 

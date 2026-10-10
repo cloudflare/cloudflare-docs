@@ -3,14 +3,14 @@ title: WebSockets
 description: Handle real-time WebSocket connections, messages, broadcasts, and lifecycle hooks in the Agents SDK.
 pcx_content_type: reference
 sidebar:
-  order: 8
+  order: 6
 products:
   - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, refer to the [Client SDK](/agents/communication-channels/chat/client-sdk/).
+Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, refer to the [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
 
 ## Lifecycle hooks
 
@@ -224,7 +224,7 @@ export class ChatAgent extends Agent {
 | `getConnection`                | `(id: string) => Connection \| undefined` | Get connection by ID                                                               |
 | `getConnectionTags`            | `(connection, ctx) => string[]`           | Override to tag connections                                                        |
 | `broadcast`                    | `(message, without?: string[]) => void`   | Send to all connections                                                            |
-| `isConnectionReadonly`         | `(connection) => boolean`                 | Check if a connection is [readonly](/agents/runtime/communication/readonly-connections/)    |
+| `isConnectionReadonly`         | `(connection) => boolean`                 | Check if a connection is [readonly](/agents/agent-class/readonly-connections/)    |
 | `isConnectionProtocolEnabled`  | `(connection) => boolean`                 | Check if protocol messages are enabled for this connection                         |
 
 ## Handling binary data
@@ -255,7 +255,7 @@ export class FileAgent extends Agent {
 </TypeScriptExample>
 
 :::note
-Agents automatically send JSON text frames (identity, state, MCP servers) to every connection. If your client only handles binary data and cannot process these frames, use [`shouldSendProtocolMessages`](/agents/runtime/communication/protocol-messages/) to suppress them.
+Agents automatically send JSON text frames (identity, state, MCP servers) to every connection. If your client only handles binary data and cannot process these frames, use [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) to suppress them.
 :::
 
 ## Error and close handling
@@ -554,19 +554,19 @@ For browser connections, use the Agents client SDK:
 - **Vanilla JS**: `AgentClient` from `agents/client`
 - **React**: `useAgent` hook from `agents/react`
 
-Refer to [Client SDK](/agents/communication-channels/chat/client-sdk/) for full documentation.
+Refer to [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/) for full documentation.
 
 ## Next steps
 
 <LinkCard
 	title="State synchronization"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="Sync state between agents and clients."
 />
 
 <LinkCard
 	title="Callable methods"
-	href="/agents/runtime/lifecycle/callable-methods/"
+	href="/agents/agent-class/callable-methods/"
 	description="RPC over WebSockets for method calls."
 />
 

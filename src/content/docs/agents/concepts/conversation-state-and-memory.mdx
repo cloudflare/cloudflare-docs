@@ -16,7 +16,7 @@ Agents need memory to be useful over time. Without it, every conversation starts
 
 The [Session API](/agents/runtime/lifecycle/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
 
-Use this page when you need more than simple synced state or flat chat history. For small UI state, use [Store and sync state](/agents/runtime/lifecycle/state/). For basic chat persistence, `AIChatAgent` stores messages for you. For opinionated long-term memory, Think builds on Session and context blocks.
+Use this page when you need more than simple synced state or flat chat history. For small UI state, use [Store and sync state](/agents/agent-class/state/). For basic chat persistence, `AIChatAgent` stores messages for you. For opinionated long-term memory, Think builds on Session and context blocks.
 
 :::caution[Experimental]
 
@@ -562,7 +562,7 @@ const truncated = truncateOlderMessages(history);
 
 <LinkCard
 	title="Store and sync state"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="setState() for simpler key-value persistence and real-time sync."
 />
 

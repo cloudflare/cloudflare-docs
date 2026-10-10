@@ -518,7 +518,7 @@ return Response.json(
 
 </TypeScriptExample>
 
-If the webhook owns application side effects around a turn, such as restoring a provider thread and posting a visible reply, use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) around that job. Managed fibers retain status, dedupe provider retries, and let `onFiberRecovered()` or `resolveFiber()` record the app-level recovery outcome.
+If the webhook owns application side effects around a turn, such as restoring a provider thread and posting a visible reply, use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) around that job. Managed fibers retain status, dedupe provider retries, and let `onFiberRecovered()` or `resolveFiber()` record the app-level recovery outcome.
 
 ### Multi-provider routing
 
@@ -647,18 +647,18 @@ const secret = this.env.GITHUB_WEBHOOK_SECRET;
 
 <LinkCard
 	title="Queue tasks"
-	href="/agents/runtime/execution/queue-tasks/"
+	href="/agents/agent-class/queue-tasks/"
 	description="Background task processing."
 />
 
 <LinkCard
 	title="Email routing"
-	href="/agents/communication-channels/email/"
+	href="/agents/agent-class/communication-channels/email/"
 	description="Handle inbound emails in your agent."
 />
 
 <LinkCard
 	title="Agents API"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Complete API reference for the Agents SDK."
 />
