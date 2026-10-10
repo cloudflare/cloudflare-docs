@@ -16,7 +16,9 @@ Connect to databases by configuring connection strings and credentials as [secre
 
 :::note[Connecting to a regional database from a Worker?]
 
-If your Worker is connecting to a regional database, you can reduce your query latency by using [Hyperdrive](/hyperdrive) and [Smart Placement](/workers/configuration/placement/) which are both included in any Workers plan. Hyperdrive will pool your databases connections globally across Cloudflare's network. Smart Placement will monitor your application to run your Workers closest to your backend infrastructure when this reduces the latency of your Worker invocations. Learn more about [how Smart Placement works](/workers/configuration/placement/).
+Use [Hyperdrive](/hyperdrive/) to pool connections to PostgreSQL and MySQL databases. For multiple sequential queries to one regional database, configure a [Placement Hint](/workers/configuration/placement/#configure-explicit-placement-hints) matching the database's cloud provider and region. Hyperdrive does not automatically configure Worker placement.
+
+If the region is unknown or your Worker uses multiple back-end locations, consider [Smart Placement](/workers/configuration/placement/#enable-smart-placement). It analyzes request duration using traffic from multiple locations. Compare request duration on deployed Workers to verify the effect.
 :::
 
 ## Database credentials

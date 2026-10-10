@@ -9,6 +9,8 @@ products:
   - workers
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Workers can connect to and query your data in both SQL and NoSQL databases, including:
 
 - Cloudflare's own [D1](/d1/), a serverless SQL-based database.
@@ -64,6 +66,10 @@ You can also use serverless driver libraries to connect to the HTTP-based proxie
 | [TiDB Cloud](https://docs.pingcap.com/tidbcloud/integrate-tidbcloud-with-cloudflare)                      | [@tidbcloud/serverless](https://github.com/tidbcloud/serverless-js)                                                                                                                                                                                                                          | API via client library                                                                                                                                                                                                                                                                                                                                                                                          |
 
 Once you have installed the necessary packages, use the APIs provided by these packages to connect to your database and perform operations on it. Refer to detailed links for service-specific instructions.
+
+## Place compute near a regional database
+
+<Render file="placement-hint-partial" product="hyperdrive" />
 
 ## Authentication
 

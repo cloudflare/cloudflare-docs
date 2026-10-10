@@ -2,17 +2,34 @@
 {}
 ---
 
-:::note
+import { WranglerConfig } from "~/components";
 
-To reduce latency, use a [Placement Hint](/workers/configuration/placement/#configure-explicit-placement-hints) to run your Worker close to your PlanetScale database. This is especially useful when a single request makes multiple queries.
+:::tip[Place compute near your PlanetScale database]
 
-```jsonc title="wrangler.jsonc"
+For requests that make multiple sequential queries, configure a [Placement Hint](/workers/configuration/placement/#configure-explicit-placement-hints) before deploying your Worker. Adding a Hyperdrive binding does not automatically place your Worker near PlanetScale.
+
+Find the region of the branch your Hyperdrive origin connects to in the PlanetScale dashboard or [branch API](https://planetscale.com/docs/api/reference/get_branch). Merge a region hint matching that provider and region into your existing Worker configuration. For example, a branch in AWS `us-east-1` uses `aws:us-east-1`:
+
+<WranglerConfig
+	cfConfig={`export default {
+	worker: {
+		placement: {
+			region: "aws:us-east-1",
+		},
+	},
+};`}
+>
+
+```jsonc
 {
 	"placement": {
-		// Match to your PlanetScale region, for example "gcp:us-east4" or "aws:us-east-1"
-		"region": "gcp:us-east4",
-	},
+		"region": "aws:us-east-1"
+	}
 }
 ```
+
+</WranglerConfig>
+
+Use the database branch's region rather than assuming its connection hostname identifies that region. If you use [global replica credentials](https://planetscale.com/blog/introducing-global-replica-credentials), queries can route to different regions. Review [placement options](/workers/configuration/placement/) for that workload and compare request duration on deployed Workers.
 
 :::
