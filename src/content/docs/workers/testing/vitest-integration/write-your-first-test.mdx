@@ -84,7 +84,7 @@ If you are not using Typescript, you can skip this section.
 
 First make sure you have run [`wrangler types`](/workers/wrangler/commands/), which generates [types for the Cloudflare Workers runtime](/workers/languages/typescript/) and an `Env` type based on your Worker's bindings.
 
-Then add a `tsconfig.json` in your tests folder and add `"@cloudflare/vitest-plugin"` to your types array to define types for `cloudflare:test`.
+Then add a `tsconfig.json` in your tests folder and add `"@cloudflare/vitest-plugin/types"` to your types array to define types for `cloudflare:test`.
 You should also add the output of `wrangler types` to the `include` array so that the types for the Cloudflare Workers runtime are available.
 
 <Details header="Example test/tsconfig.json">
