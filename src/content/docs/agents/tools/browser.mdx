@@ -1,6 +1,6 @@
 ---
 title: Browser
-description: Give Agents full Chrome DevTools Protocol access to inspect pages, scrape data, and capture screenshots with Browser Run.
+description: Give your agent a browser that remembers tabs, cookies, and logins between turns. Use it with Pi Durable, the AI SDK, or another harness.
 pcx_content_type: concept
 sidebar:
   order: 3
@@ -9,31 +9,177 @@ products:
 ---
 
 import {
-	InlineBadge,
+	PackageManagers,
 	LinkCard,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
-Agents can use [Browser Run](/browser-run/) to inspect and interact with web pages through the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/). <InlineBadge preset="beta" /> Browser tools are useful when an agent needs to understand rendered pages, capture screenshots, debug frontend behavior, or extract information that is only available after JavaScript runs.
+Give your agent a browser it can return to on later turns. [Browser Run](/browser-run/) keeps the remote browser open, so your agent can continue from the same page with its tabs, cookies, and login session intact while the browser session remains alive.
 
-Instead of a fixed set of browser actions (click, screenshot, navigate), the model writes code that runs CDP commands against a live browser session through the `cdp` connector — accessing all domains, commands, events, and types in the protocol. Executions use the [durable Code Mode runtime](/agents/tools/codemode/how-it-works/), so a run can pause for approval and resume with its browser session intact.
+Browser tools are experimental. The [Pi Durable integration](/agents/harnesses/pi/) is in beta. Use browser tools to interact with websites, inspect pages rendered with JavaScript, or capture screenshots.
 
-Use browser tools when you want an agent to:
+## Return to the same browser
 
-- Open and inspect live web pages.
-- Capture screenshots or page state.
-- Scrape rendered content that is not present in static HTML.
-- Debug frontend issues using CDP commands.
-- Combine page inspection with other tools, such as RAG or Sandbox.
+A research assistant can open a dashboard, inspect a report, and return to that page on a later turn. The `Browser` class keeps the remote browser session open between tool calls, including its tabs, cookies, and logins. The `browserTool` adapters let your harness use that browser through the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/).
 
-## How it works
+The browser runs outside your agent's Durable Object. The object saves its session identifier and reconnects after hibernation, as long as the browser session is still alive. By default, an idle browser stays alive for up to 10 minutes. This does not save a browser permanently: expiry or a crash loses its tabs, cookies, and login state.
 
-Browser Run provides isolated browser sessions that agents can control with CDP. The agent can navigate pages, evaluate JavaScript, read DOM state, capture screenshots, and inspect network or console output.
+### Use it with Pi Durable
 
-Because browser sessions run outside the Worker isolate, use them for work that needs a real browser environment rather than lightweight HTTP fetches.
+Start with a [Pi Durable agent](/agents/harnesses/pi/). Install the browser runtime alongside the Pi packages:
+
+<PackageManagers pkg="agents @cloudflare/codemode @earendil-works/pi-durable @earendil-works/pi-ai" />
+
+This example installs a `Browser` and `PiHarness` on a plain Durable Object. Pi chooses when to call the browser tool. [Lifecycle](/agents/runtime/lifecycle/) starts both components and provides their storage.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { Browser, browserRun } from "agents/browser";
+import { browserTool } from "agents/browser/pi";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+
+export { CodemodeRuntime } from "agents/browser";
+
+export class BrowserAssistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	browser = new Browser({ provider: browserRun(this.env.BROWSER) });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			this.registry.install({
+				name: "browser",
+				tools: [
+					browserTool({
+						ctx: this.ctx,
+						browser: this.browser,
+						loader: this.env.LOADER,
+					}),
+				],
+			});
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.browser).use(this.harness);
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const assistant = env.BrowserAssistant.getByName("demo");
+		const text = await assistant.ask(await request.text());
+		return Response.json({ text });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The example uses one named assistant for demonstration. In an application, choose an object name for each authenticated user or workspace.
+
+Configure the model, browser, Worker Loader, and Durable Object bindings:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "persistent-browser-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": { "binding": "AI" },
+	"browser": { "binding": "BROWSER" },
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"durable_objects": {
+		"bindings": [{ "name": "BrowserAssistant", "class_name": "BrowserAssistant" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["BrowserAssistant"] }],
+}
+```
+
+</WranglerConfig>
+
+Generate the `Env` type with [`wrangler types`](/workers/wrangler/commands/general/#types). The `LOADER` binding runs model-written browser code in a sandbox. The `CodemodeRuntime` export makes that runtime available to the Worker.
+
+To try persistence, send two prompts to the same assistant within the browser's idle timeout:
+
+```sh
+curl http://localhost:8787 --data 'Open https://example.com and tell me the page title.'
+curl http://localhost:8787 --data 'Take a screenshot of the page you already opened without navigating again.'
+```
+
+The second turn can use the existing tab. Pi stores a returned screenshot as an image in the tool result. An image-capable model can see it, and a UI can display it from the transcript. This example's HTTP response only returns the final text; refer to [Pi event streaming](/agents/harnesses/pi/#stream-events-to-clients) to build a UI.
+
+### Tabs, logins, and interruptions
+
+Each Pi conversation gets its own active tab by default. Sessions, forks, and subagents can work on different pages, but cookies and logins remain shared within the `Browser`. A tab scope is not a separate browser profile. Use separate browsers when users need separate login sessions.
+
+Within a conversation, browser calls run sequentially. The model can use `sessionId: "active"` in its CDP commands to return to its active tab. To share a tab deliberately, pass the same `scope` string to the Pi tools.
+
+If a browser expires, closes, or crashes, the next use creates a replacement. A returning scope receives `restarted: true` in the result, indicating that its previous browser state is gone. The tool runs against the new browser; it does not restore the old session.
+
+Pi does not automatically replay a browser call interrupted by eviction: repeating it could submit a form or click a button twice. The model receives an interrupted result and can decide how to continue. Stopping a conversation does not cancel a browser call already running. The call finishes or reaches `timeoutMs`, which defaults to 60 seconds.
+
+Set `keepAliveMs`, `recording`, and hostname `guardrails` on `browserRun(binding, options)`. From your application, call `browser.liveView()` to let a person inspect or control the same browser, and `browser.close()` to close it. The persistent browser currently supports Browser Run's Chromium engine.
+
+### Use another harness
+
+The same `Browser` instance works with the AI SDK and TanStack AI adapters. Pass `ctx` when using a plain Durable Object, as in the Pi example.
+
+| Harness     | Import                                          | Usage                                                               |
+| ----------- | ----------------------------------------------- | ------------------------------------------------------------------- |
+| Pi Durable  | `browserTool` from `agents/browser/pi`          | Install in a Pi registry extension's `tools` array.                 |
+| AI SDK      | `browserTool` from `agents/browser/ai-sdk`      | Add to the `tools` object passed to `generateText` or `streamText`. |
+| TanStack AI | `browserTool` from `agents/browser/tanstack-ai` | Add to the `tools` array passed to `chat`.                          |
+
+For example, create an AI SDK tool inside your Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { browserTool } from "agents/browser/ai-sdk";
+
+const tools = {
+	browser: browserTool({
+		ctx: this.ctx,
+		browser: this.browser,
+		loader: this.env.LOADER,
+		scope: conversationId,
+	}),
+};
+// Pass tools to generateText() or streamText().
+```
+
+</TypeScriptExample>
+
+Unlike Pi, the AI SDK and TanStack AI adapters share one active tab when `scope` is omitted. Pass your conversation identifier to give each conversation its own active tab. The AI SDK adapter exposes screenshots to your UI and sends the model a text summary. TanStack AI omits screenshots and directs the model to read page content instead.
+
+For a custom harness, use `Browser.connect({ scope })` from your tool implementation. It returns a CDP connection, the active tab identifier, and a `restarted` flag. Use `setActiveTarget()` to remember a tab and `cdp.disconnect()` to release the connection without closing the browser.
 
 ## Basic pattern
+
+The following sections describe `createBrowserTools` and `createBrowserRuntime` from `agents/browser/ai`. These APIs expose `browser_execute`, explicit session modes, and durable approval flows. They are separate from the persistent `browserTool` adapters described in [Return to the same browser](#return-to-the-same-browser).
+
+The model writes code using CDP, with access to its commands and events. The [durable Code Mode runtime](/agents/tools/codemode/how-it-works/) can pause executions for approval and resume them.
 
 Create browser tools with the Browser Run and Worker Loader bindings, then pass those tools to your model call.
 
@@ -117,7 +263,7 @@ export { CodemodeRuntime } from "agents/browser";
 
 ## Session lifecycle
 
-By default each execution gets a fresh browser session, torn down when the run ends (`one-shot`). Pass a `session` option for two more modes:
+With `createBrowserTools`, by default each execution gets a fresh browser session, torn down when the run ends (`one-shot`). Pass a `session` option for two more modes:
 
 <TypeScriptExample>
 
@@ -179,7 +325,7 @@ Quick Actions require a Worker `compatibility_date` of `2026-03-24` or later and
 
 [Live View](/browser-run/features/live-view/) lets a human watch or control a running browser session in real time. Use it for human-in-the-loop steps such as login, MFA, CAPTCHA, or sensitive input.
 
-Because the Code Mode runtime can pause a run with the browser session intact, a handoff follows this pattern:
+With `createBrowserRuntime`, the Code Mode runtime can pause a run with the browser session intact. A handoff follows this pattern:
 
 1. The model calls `cdp.getLiveViewUrl()` to get a link to the current tab.
 2. The agent surfaces the link to the user.
