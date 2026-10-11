@@ -1,0 +1,39 @@
+---
+title: Stable components for agent state, scheduled tasks, and live connections
+description: Add persistent state, scheduled tasks, WebSocket connections, and MCP connections alongside your agent harness on Cloudflare.
+date: 2026-10-11
+---
+
+import { TypeScriptExample } from "~/components";
+
+Agents SDK 0.28.0 makes its components for persistent state, scheduled tasks, WebSocket connections, and Model Context Protocol (MCP) connections stable. Use them alongside your chosen harness to remember preferences, run work later, and send updates to users.
+
+Install the components you need on a Cloudflare Durable Object. Lifecycle coordinates their startup, events, and durable jobs. For example, this object saves a preferred topic between requests:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { State } from "agents/state";
+
+export class Assistant extends DurableObject<Env> {
+	readonly preferences = new State({
+		initialState: { topic: "renewable energy" },
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.preferences);
+
+	async saveTopic(topic: string) {
+		await this.lifecycle.start();
+		this.preferences.set({ topic });
+	}
+}
+```
+
+</TypeScriptExample>
+
+The stable APIs are `Lifecycle`, `State`, `Scheduler`, `WebSockets`, and `MCPClientManager`. Existing applications using the `Agent` class can continue using its built-in components without migrating.
+
+Your harness still manages model calls, tools, and conversation recovery. [Pi Durable](/agents/harnesses/pi/) is one option; its `PiHarness` integration remains in beta.
+
+Refer to [Add state and scheduled work to your harness](/agents/runtime/lifecycle/compose-capabilities/) for a Pi Durable example and guidance for other harnesses.

@@ -1,0 +1,133 @@
+---
+title: Add state and scheduled work to your harness
+description: Add persistent state, scheduled tasks, live connections, and MCP tools alongside your agent harness on Cloudflare.
+pcx_content_type: concept
+sidebar:
+  order: 0
+  label: Add capabilities to your harness
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+An agent harness manages model calls, tools, and conversation history. Your application also needs to remember preferences, run tasks later, and send progress to users.
+
+The Agents SDK provides reusable components for these application features. Add them alongside [Pi Durable](/agents/harnesses/pi/) or your own harness running on Cloudflare Workers. You choose which components to install.
+
+## Choose the components your application needs
+
+For example, a research assistant might need these capabilities:
+
+| Application need                 | Component                                   | What it provides                                                          |
+| -------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------- |
+| Remember a user's research topic | `State` from `agents/state`                 | Saves application state in SQLite and restores it after restarts.         |
+| Prepare a briefing tomorrow      | `Scheduler` from `agents/schedules`         | Saves scheduled tasks and wakes the application to run them.              |
+| Send progress to an open browser | `WebSockets` from `agents/websockets`       | Manages client connections, messages, and optional state synchronization. |
+| Connect to external tools        | `MCPClientManager` from `agents/mcp/client` | Manages connections to Model Context Protocol (MCP) servers.              |
+
+These components are called _capabilities_. They work independently of the harness you use for model calls and tool execution.
+
+`Lifecycle`, `State`, `Scheduler`, `WebSockets`, and `MCPClientManager` are stable in Agents SDK 0.28.0 and later. Individual integrations have their own status: `PiHarness` is beta, and the optional Cap'n Web transport is experimental.
+
+## Give each assistant a home
+
+A [Durable Object](/durable-objects/) is a named instance of your application with its own persistent storage. You can create one per user, project, or conversation. Requests addressed to the same name reach the same object and its stored data.
+
+For example, `env.Assistant.getByName("research-project")` addresses one assistant. The object can leave memory when idle. Its stored preferences and scheduled tasks remain available when it starts again.
+
+[Lifecycle](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md) coordinates the capabilities inside that object. It initializes them, routes incoming events, and manages the alarm that wakes the object for durable jobs.
+
+Install the capabilities on a class that extends `DurableObject`. If you already extend the SDK's [`Agent` class](/agents/runtime/lifecycle/agent-class/), it installs these components for you. Existing `Agent` applications do not need to migrate.
+
+## Combine saved preferences, scheduled work, and Pi Durable
+
+This example saves a preferred topic and asks Pi to prepare discussion questions one day later. It uses the packages, Workers AI binding, and `Assistant` Durable Object binding from the [Pi setup](/agents/harnesses/pi/#install).
+
+<TypeScriptExample filename="src/assistant.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+import { Scheduler, type Schedule } from "agents/schedules";
+import { State } from "agents/state";
+
+type Brief = { topic: string };
+
+export class Assistant extends DurableObject<Env> {
+	readonly preferences = new State<Brief>({
+		initialState: { topic: "renewable energy" },
+	});
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+	readonly harness = new PiHarness({
+		harness: ({ storage, context }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+	});
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			prepareBrief: async (brief: Brief, schedule: Schedule<Brief>) => {
+				await this.harness.submit(
+					`Prepare discussion questions about ${brief.topic}.`,
+					{ operationId: schedule.id },
+				);
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.preferences)
+		.use(this.scheduler)
+		.use(this.harness);
+
+	async prepareTomorrow(topic: string) {
+		// Native Durable Object RPC does not start Lifecycle automatically.
+		await this.lifecycle.start();
+		this.preferences.set({ topic });
+		const schedule = await this.scheduler.set(24 * 60 * 60, "prepareBrief", {
+			topic,
+		});
+		return schedule.id;
+	}
+
+	async getPreferences() {
+		await this.lifecycle.start();
+		return this.preferences.get();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Export `Assistant` from your Worker entry point. From your Worker's request handler, address an assistant by name and call `prepareTomorrow(topic)` over [Durable Object RPC](/durable-objects/api/stub/). The delay is in seconds. `getPreferences()` returns the saved topic on later requests.
+
+Scheduler stores the topic with the task. Changing preferences later does not change an already scheduled briefing. When the task is due, the object wakes and submits the prompt to Pi.
+
+The scheduled callback uses the schedule ID as Pi's `operationId`. If the callback retries, Pi does not submit the same prompt twice. `submit()` returns after storing the input; Pi continues the model work separately. Retrieve the answer through [Pi's session and event APIs](/agents/harnesses/pi/#send-prompts).
+
+## Add live updates and external tools
+
+To send application state to connected clients, install `WebSockets` with your `State` capability. Connect the state's `onChanged` callback to `webSockets.broadcastState(source)`. The SDK's `useAgent` and `AgentClient` clients can then receive state updates from a plain Durable Object. Refer to the [capability wiring example](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md#websockets-are-an-opt-in-capability).
+
+Pi's conversation events are separate from application state. Forward its [session event stream](/agents/harnesses/pi/#stream-events-to-clients) when your UI needs tool activity or partial answers.
+
+To connect external tools, install `MCPClientManager` with the configuration your servers require. It manages the connections; your harness still needs an adapter that presents those tools to its model. Refer to [MCP client configuration](https://github.com/cloudflare/agents/blob/main/docs/agents/mcp-client.md).
+
+## Use another harness
+
+The state, scheduling, and connection components do not require Pi. Replace `PiHarness` with your own harness integration and call it from requests or scheduled callbacks. The harness and its dependencies must run in the [Workers runtime](/workers/runtime-apis/).
+
+Decide which data belongs to each layer. Use `State` for application data, such as preferences or progress. Let the harness manage its conversation history, pending tool calls, and model work.
+
+Installing Lifecycle does not checkpoint an arbitrary agent loop. To recover interrupted work, the harness must persist its progress and resume it after a restart. Pi Durable provides that recovery through `PiHarness`. For a custom integration, use the [Lifecycle capability interface and job queue](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md#the-job-queue).
