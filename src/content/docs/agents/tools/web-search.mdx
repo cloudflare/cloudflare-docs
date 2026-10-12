@@ -16,9 +16,9 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give your agent a `web_search` tool to find pages on the public web. The tool calls the [Web Search API](/web-search/) through your Workers AI binding and AI Gateway.
+Give your agent a `web_search` tool to find pages on the Internet. The tool calls the [Cloudflare Web Search API](/web-search/) through [AI Gateway](/ai-gateway/), via the Workers AI binding.
 
-Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, or to search without a model, use the search sources and renderer in `agents/websearch`.
+The `web_search` tool works with any harness. The Agents SDK provides built-in adapters for [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. If you're using a different harness, or need to use the `web_search` tool without calling a model, use the search sources and renderer in [`agents/websearch`](https://github.com/cloudflare/agents/tree/main/packages/agents/src/web/search).
 
 :::caution[Beta]
 Web search is in beta. Its API may change in future releases.
@@ -26,11 +26,10 @@ Web search is in beta. Its API may change in future releases.
 
 ## When to use it
 
-Web search finds pages. Use it alongside the other web tools when the agent needs to do more than find them:
 
 | Tool                                    | Use it to                                                                                                                                  |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `web_search`                            | Find pages on a topic when the agent does not have a URL, such as current events, recent releases, or documentation it was not trained on. |
+| `web_search`                            | Find pages on a topic when the agent does not have a URL, such as current events, recent releases, or documentation the model was not trained on. |
 | [`web_fetch`](/agents/tools/web-fetch/) | Read a page or document at a known URL, including the URLs that `web_search` returns.                                                      |
 | [Browser](/agents/tools/browser/)       | Use pages that need JavaScript, a login, or interaction.                                                                                   |
 
