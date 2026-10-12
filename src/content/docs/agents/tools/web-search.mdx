@@ -4,7 +4,6 @@ description: Give your agent a web search tool backed by the Cloudflare Web Sear
 pcx_content_type: integration-guide
 sidebar:
   order: 3
-  badge: Beta
 products:
   - agents
 ---
@@ -20,18 +19,13 @@ Give your agent a `web_search` tool to find pages on the Internet. The tool call
 
 The `web_search` tool works with any harness. The Agents SDK provides built-in adapters for [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. If you're using a different harness, or need to use the `web_search` tool without calling a model, use the search sources and renderer in [`agents/websearch`](https://github.com/cloudflare/agents/tree/main/packages/agents/src/web/search).
 
-:::caution[Beta]
-Web search is in beta. Its API may change in future releases.
-:::
-
 ## When to use it
 
-
-| Tool                                    | Use it to                                                                                                                                  |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Tool                                    | Use it to                                                                                                                                         |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `web_search`                            | Find pages on a topic when the agent does not have a URL, such as current events, recent releases, or documentation the model was not trained on. |
-| [`web_fetch`](/agents/tools/web-fetch/) | Read a page or document at a known URL, including the URLs that `web_search` returns.                                                      |
-| [Browser](/agents/tools/browser/)       | Use pages that need JavaScript, a login, or interaction.                                                                                   |
+| [`web_fetch`](/agents/tools/web-fetch/) | Read a page or document at a known URL, including the URLs that `web_search` returns.                                                             |
+| [Browser](/agents/tools/browser/)       | Use pages that need JavaScript, a login, or interaction.                                                                                          |
 
 The `web_search` tool description tells the model to read result URLs with `web_fetch` when that tool is available.
 
