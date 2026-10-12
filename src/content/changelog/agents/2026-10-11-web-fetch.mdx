@@ -1,0 +1,30 @@
+---
+title: Add document conversion and pagination to your agent's web fetch tool
+description: The Agents SDK web_fetch tool reads webpages and documents with conversion, pagination, and request controls across multiple agent harnesses.
+date: 2026-10-11
+---
+
+import { TypeScriptExample } from "~/components";
+
+Agents SDK 0.28.0 adds a beta `web_fetch` tool for reading URLs. It handles HTML, PDF, and supported Office documents through Workers AI Markdown Conversion, requests Markdown directly when available, and formats JSON for the model.
+
+Long pages come back in smaller windows with offsets to continue reading. Each result includes the final URL, HTTP status, and content type. You control allowed hosts, response size, timeouts, and redirects.
+
+Add the tool to a [Pi Durable](/agents/harnesses/pi/) extension registry before opening the harness:
+
+<TypeScriptExample>
+
+```ts
+import { webFetchTool } from "agents/webfetch/pi";
+
+this.registry.install({
+	name: "web-tools",
+	tools: [webFetchTool({ binding: this.env.AI })],
+});
+```
+
+</TypeScriptExample>
+
+The SDK also includes AI SDK and TanStack AI adapters. For another harness, use the public `fetchWeb`, `windowWebFetchPage`, and `renderWebFetchPage` functions to build its tool handler. Direct fetching does not require a Durable Object or browser.
+
+For setup, examples, and request controls, refer to [Web fetch](/agents/tools/web-fetch/).
