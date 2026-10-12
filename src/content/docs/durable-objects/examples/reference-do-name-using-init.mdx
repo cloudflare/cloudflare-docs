@@ -18,7 +18,7 @@ When working with Durable Objects, you will often need the name that was used to
 If the caller accesses the Durable Object with `getByName()` or `idFromName()`, you can read the name directly inside the Durable Object from `this.ctx.id.name`. You do not need the pattern on this page for that. Refer to [Durable Object ID](/durable-objects/api/id/#name) for details, including when `ctx.id.name` is `undefined`.
 :::
 
-The `RpcTarget` pattern shown below is useful when you need to pass metadata that is not available on `ctx.id`, or when `ctx.id.name` is `undefined` (for example, when the caller uses `idFromString()`). It creates a communication layer that automatically carries the metadata with each method call, which keeps your API clean.
+The `RpcTarget` pattern in the following examples is useful when you need to pass metadata that is not available on `ctx.id`, or when `ctx.id.name` is `undefined` (for example, when the caller uses `idFromString()`). It creates a communication layer that automatically carries the metadata with each method call, which keeps your API clean.
 
 Based on your needs, you can either store the metadata temporarily in the `RpcTarget` class, or use Durable Object storage to persist the metadata for the lifetime of the object.
 
