@@ -1,0 +1,183 @@
+---
+title: Think harness
+pcx_content_type: how-to
+description: Run Think's agent loop on a plain Durable Object with the experimental ThinkHarness capability, with durable transcripts, many sessions per object, and turns that resume after eviction.
+sidebar:
+  order: 2
+  badge: Experimental
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+`ThinkHarness` from `agents/harness/think` runs the agent loop from [Project Think](/agents/harnesses/think/) as a capability on a plain Durable Object. The model runs through the [AI SDK](/agents/models/ai-sdk/). Unlike the `Think` class, it does not need the `Agent` class, and one object can hold many sessions.
+
+:::caution[Experimental]
+`ThinkHarness` is experimental. The API may change in any release.
+:::
+
+The harness owns its storage, so you install only the harness:
+
+- Each session's transcript is stored as AI SDK `UIMessage` objects, in the same tables the [`Sessions`](/agents/capabilities/#sessions) capability uses.
+- Model output is stored while it streams, in the same tables the [`Streams`](/agents/capabilities/#streams) capability uses.
+- One Lifecycle job per session wakes the object after an eviction and continues the turn.
+
+## Install
+
+<PackageManagers pkg="agents ai zod" />
+
+The example uses [Workers AI](/workers-ai/) through the `AI` binding and `createAI` from `agents/models/ai-sdk`. To use other models, refer to [AI SDK models](/agents/models/ai-sdk/).
+
+## Create the harness
+
+Install the harness on the Lifecycle:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { tool } from "ai";
+import { z } from "zod";
+import { routeAgentRequest } from "agents";
+import { ThinkHarness } from "agents/harness/think";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/ai-sdk";
+
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+
+	readonly harness = new ThinkHarness({
+		model: this.ai("@cf/moonshotai/kimi-k2.7-code"),
+		system: "You are a helpful assistant.",
+		tools: {
+			weather: {
+				...tool({
+					description: "Get the weather for a city",
+					inputSchema: z.object({ city: z.string() }),
+					execute: async ({ city }) => `Sunny in ${city}`,
+				}),
+				// Safe to run again if an eviction cuts a call short.
+				recovery: "rerun",
+			},
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		const result = await this.harness.prompt(await request.text());
+		return Response.json(
+			result.status === "done"
+				? { text: result.text }
+				: { reason: result.reason },
+		);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Do not also install a `Sessions` capability that writes the harness's sessions. The harness caches what it wrote.
+
+| Option             | Description                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `model`            | Required. An AI SDK `LanguageModel`, or a function of `{ session }` that returns one.                                                            |
+| `system`           | The system prompt, or a function of `{ session }`.                                                                                               |
+| `tools`            | An AI SDK `ToolSet`, or a function of `{ session }`. Tools with `execute` run on the server. Tools without `execute` run on a client.            |
+| `maxSteps`         | The most model calls one operation makes. Defaults to `10`.                                                                                      |
+| `toolApproval`     | Decides per call whether a tool needs approval. A tool's own `needsApproval` also applies.                                                       |
+| `recovery`         | The budget for recovering interrupted work: `maxAttempts`, `backoffMs`, and `stallTimeoutMs`. Refer to [Recovery](#recovery).                    |
+| `configureSession` | Called with each session's `Session` handle the first time the harness uses it. Set compaction here.                                             |
+| `hooks`            | Callbacks into the turn loop, such as `beforeTurn`, `beforeToolCall`, `onStepFinish`, `onChunk`, `onTurnEnd`, `classifyError`, and `onRecovery`. |
+
+## Submit and wait
+
+`prompt()` submits input, waits for it to finish, and returns the transcript. To return before the model runs, call `submit()` and `wait()` separately:
+
+```ts
+const session = this.harness.session(); // The root session.
+
+// Durable before the model runs. The same operationId twice returns the same receipt.
+const receipt = await session.submit("Summarize the README", {
+	operationId: requestId,
+});
+const result = await session.wait(receipt.operationId);
+```
+
+A submission made while the session is busy waits its turn. Steering a running turn is not supported: `whenBusy: "steer"` throws `SteerNotSupportedError`.
+
+Each session also has `abort()`, `regenerate()`, `continue()`, `reset()`, `messages()`, `pending()`, `subscribe()` for live events, and `branches()`, `search()`, and `compact()` for its transcript. `harness.sessions` has `create()`, `fork()`, and `list()`.
+
+## Tools, approvals, and client tools
+
+The harness runs every server tool call itself, then calls the model again with the results, all in one assistant message.
+
+A call that needs approval, or a call to a client tool, settles the operation. Submit the answer to continue the turn:
+
+```ts
+await session.submit({ type: "approval", approvalId, approved: true });
+await session.submit({
+	type: "tool-result",
+	toolCallId,
+	result: { ok: true, output: "42" },
+});
+```
+
+Input submitted with `source: "client"` is untrusted. It may only add `user` messages, it cannot rewrite a stored message, and a tool result from a client only answers a client tool.
+
+## Serve `useAgentChat`
+
+`ThinkChat` serves one session over Think's chat WebSocket protocol, so the [`useAgentChat`](/agents/agent-class/communication-channels/chat/client-sdk/) React hook works unchanged. Install it with the [`WebSockets`](/agents/capabilities/#websockets) capability:
+
+```ts
+import { ThinkChat, ThinkHarness } from "agents/harness/think";
+import { WebSockets } from "agents/websockets";
+
+readonly webSockets = new WebSockets();
+readonly chat = new ThinkChat({
+	harness: this.harness,
+	webSockets: this.webSockets,
+});
+
+readonly lifecycle = Lifecycle.install(this)
+	.use(this.harness)
+	.use(this.webSockets)
+	.use(this.chat);
+```
+
+`ThinkChat` handles chat messages, regeneration, cancel, clear, client tool results, approvals, and stream resume after a reconnect or an eviction.
+
+## Recovery
+
+Every step of a turn reads only durable state, so a restarted object continues from its last write:
+
+- **During a model call**, chunks are written to a stream as they arrive. After an eviction, the harness rebuilds the partial message from the stream and calls the model again to continue the same message.
+- **During a tool call**, the harness records the call before it runs. After an eviction, a tool with `recovery: "rerun"` runs again. Any other tool is reported to the model as interrupted. Only use `rerun` for tools that are safe to repeat.
+- **Budget**: `recovery.maxAttempts` (default `10`) counts interruptions without progress. Past the budget, the operation settles as `unanswered` with the reason `interrupted`.
+- **Stalls**: a model stream that sends nothing for `recovery.stallTimeoutMs` (default two minutes) is treated as interrupted.
+
+## Compared with the Think class
+
+`ThinkHarness` reads and writes the same tables as the [`Think` class](/agents/harnesses/think/), and its root session is a Think agent's conversation. It does not yet have every Think feature. These are not supported yet:
+
+- Steering a running turn
+- Context blocks from `configureContext()`. Compute the system prompt in `system` or `beforeTurn` instead.
+- Workspace tools, actions, agent tools, skills, extensions, MCP tools, messengers, scheduled tasks, and workflows. Pass the tools these produce in `tools`.
+
+If you need those features today, extend the `Think` class instead.
+
+## Related resources
+
+- [Harnesses](/agents/harnesses/) compares the harnesses you can run.
+- [Project Think](/agents/harnesses/think/) documents the `Think` class.
+- [Example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/think)

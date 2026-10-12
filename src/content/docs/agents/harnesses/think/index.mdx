@@ -1,11 +1,11 @@
 ---
-title: Think
+title: Project Think
 pcx_content_type: overview
 description: Opinionated chat agent framework with built-in tools, persistent memory, lifecycle hooks, streaming, messengers, scheduled tasks, Workflows, and sub-agent RPC.
 tags:
   - AI
 sidebar:
-  order: 9
+  order: 6
   group:
     hideIndex: false
 products:
@@ -23,6 +23,8 @@ import {
 `@cloudflare/think` lets you build a stateful AI chat agent — one that streams replies, remembers the conversation, and calls tools — by extending a single base class. You provide a model with `getModel()`, and Think wires up the rest of the chat lifecycle for you: the agentic loop (the model calls tools, reads the results, and keeps going until it has an answer), message persistence, streaming, client tools, stream resumption, and extensions — all backed by Durable Object SQLite.
 
 Think works as both a **top-level agent** (WebSocket chat to browser clients via `useAgentChat`) and a **sub-agent** (a child agent that another agent drives over RPC via `chat()`).
+
+The `Think` class extends the legacy [`Agent` class](/agents/agent-class/). To run Think's agent loop as a capability on a plain Durable Object instead, use the experimental [Think harness](/agents/harnesses/think-harness/). It does not have every feature of the `Think` class yet.
 
 :::note[New to Cloudflare Agents?]
 If this is your first agent, start with the [Getting started tutorial](/agents/harnesses/think/getting-started/) for a guided build. For the bigger picture of what agents are and how they run, read [What are agents?](/agents/concepts/what-are-agents/). Think builds on two Cloudflare primitives worth a quick look: [Workers AI](/workers-ai/) provides the model, and each agent instance is a [Durable Object](/durable-objects/) that stores its state. The rest of this section is reference material you can dip into as you need it.

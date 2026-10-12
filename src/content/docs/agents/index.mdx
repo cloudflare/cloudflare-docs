@@ -49,7 +49,7 @@ Deploy once, and Cloudflare runs your agents across its global network, scaling 
 
 An agent on Cloudflare has these parts:
 
-- **A harness** is the agent. It runs the loop around the model: prompts, tool calls, retries, and recovery. Install the [Pi harness](/agents/harnesses/pi/), extend [Project Think](/agents/harnesses/think/), or build your own from [Sessions, Streams, and Tasks](/agents/capabilities/#build-your-own-harness).
+- **A harness** is the agent. It runs the loop around the model: prompts, tool calls, retries, and recovery. Install the [Pi harness](/agents/harnesses/pi/) (beta), or one of the experimental harnesses: the [Think harness](/agents/harnesses/think-harness/), the [AI SDK harness](/agents/harnesses/ai-sdk/), or the [Container harness](/agents/harnesses/container/), which runs Claude Code or Codex. You can also extend [Project Think](/agents/harnesses/think/), or [build your own](/agents/harnesses/#build-your-own-harness).
 - **A Durable Object** is where the agent lives. Each instance has its own storage and address, so each user or task gets its own agent.
 - **The Lifecycle** keeps the harness running on the Durable Object. It runs startup, routes requests, and owns the object's durable job queue and its single alarm, so work continues across eviction, deploys, and crashes.
 - **Capabilities** plug in what else the agent needs: an [MCP client](/agents/capabilities/#mcp-client), [schedules](/agents/capabilities/#scheduler), [queues](/agents/capabilities/#queue), [WebSockets](/agents/capabilities/#websockets) and [state](/agents/capabilities/#state) for clients, and [routed agents](/agents/capabilities/#routed-agents).

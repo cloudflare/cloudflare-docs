@@ -1,0 +1,143 @@
+---
+title: Container harness
+pcx_content_type: how-to
+description: Run a coding agent CLI such as Claude Code or Codex in a Cloudflare Container, driven from a Durable Object with the experimental ContainerHarness capability.
+sidebar:
+  order: 4
+  badge: Experimental
+products:
+  - agents
+  - containers
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+`ContainerHarness` from `agents/harness/container` runs an agent CLI, such as Claude Code or Codex, in a [Cloudflare Container](/containers/) and drives it from a Durable Object. It has the same interface as the [Pi harness](/agents/harnesses/pi/): `prompt()`, `submit()`, `wait()`, `abort()`, `messages()`, `pending()`, `session(id)`, and `sessions`.
+
+:::caution[Experimental]
+`ContainerHarness` is experimental. The API may change before it stabilizes. It uses the Containers [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/), which is in beta.
+:::
+
+The Durable Object keeps everything durable: sessions, operations, the transcript, and the CLI's own session files. The container is disposable. It stops after an idle timeout, and the next prompt starts a new container in which the CLI resumes its session.
+
+## Configure Wrangler
+
+Each agent object gets its own container through `ctx.container`. Use the `durable_object` scheduling policy. You do not need an image: the harness builds the container from the [`cloudflare/debian-trixie`](/containers/guides/image-management/#use-the-cloudflare-managed-image) image at runtime.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "coding-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [{ "name": "CodingAgent", "class_name": "CodingAgent" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["CodingAgent"] }],
+	"containers": [
+		{ "class_name": "CodingAgent", "scheduling_policy": "durable_object" },
+	],
+	"vars": {
+		"AI_GATEWAY_URL": "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>",
+	},
+}
+```
+
+</WranglerConfig>
+
+Store your [AI Gateway](/ai-gateway/) token as a secret:
+
+```sh
+npx wrangler secret put AI_GATEWAY_TOKEN
+```
+
+## Create the harness
+
+Pick what runs in the container with a preset, `claudeCode()` or `codex()`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { routeAgentRequest } from "agents";
+import { ContainerHarness, claudeCode } from "agents/harness/container";
+import { Lifecycle } from "agents/lifecycle";
+
+// Adds the credentials outside the container. Export it from the main module.
+export { ContainerEgress } from "agents/harness/container";
+
+export class CodingAgent extends DurableObject<Env> {
+	readonly harness = new ContainerHarness({
+		container: this.ctx.container!,
+		egress: this.ctx.exports.ContainerEgress,
+		agent: claudeCode({
+			baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
+			apiKey: this.env.AI_GATEWAY_TOKEN,
+		}),
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		const { status, text } = await this.harness.prompt(await request.text());
+		return Response.json({ status, text });
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+To run Codex instead, replace `claudeCode()` with `codex()` and point `baseUrl` at `${this.env.AI_GATEWAY_URL}/openai`. Leave out `baseUrl` to call the provider directly with its own key, and add `headers` for anything else a request needs.
+
+The routes in this example have no authentication. Each request drives an agent that runs commands and spends model credit, so put your own authentication in front of it before you deploy.
+
+## How it works
+
+- **First start**: the harness starts `cloudflare/debian-trixie`, creates an unprivileged `agent` user, installs the CLI, and snapshots the filesystem. Later starts restore the snapshot. Changing the preset, such as a new CLI version or extra `setup` steps, sets the container up again.
+- **Each turn** is one CLI process. The harness turns its output into messages and events, and copies the CLI's session files to the Durable Object as the turn runs.
+- **Credentials**: the CLI only sees a placeholder key and a placeholder host. The harness intercepts that host, and `ContainerEgress`, running in your Worker, adds the real credentials and forwards the request to `baseUrl`.
+- **Idle and restart**: five minutes after the last prompt, the harness snapshots the container and stops it. The next prompt starts a new container from the snapshot, and the CLI resumes its own session. Call `harness.stop()` to stop the container sooner.
+- **Lost containers**: if the container stops mid-run, that run settles as `unanswered` with the reason `container_lost`. Edits to the workspace since the last snapshot are lost. If the Durable Object is evicted mid-run, the container keeps working, and the object reattaches and replays what it missed.
+
+## Customize the CLI
+
+Pass `setup` steps to the preset to install plugins, skills, or settings. Steps run once, on the first start, and their result is kept in the snapshot. A step with `user: "agent"` runs as the user the CLI runs as:
+
+```ts
+claudeCode({
+	baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
+	apiKey: this.env.AI_GATEWAY_TOKEN,
+	setup: [
+		{
+			name: "my plugins",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"claude plugin marketplace add you/my-plugins && claude plugin install my-plugin@my-plugins",
+			],
+		},
+	],
+});
+```
+
+A token that a setup step uses stays in the snapshot, where the agent can read it. Prefer public sources or short-lived URLs.
+
+To run another CLI, build an image whose entrypoint serves the harness daemon with `cliAdapter` from `agents/harness/container/runtime`, and pass it to `containerAgent()`.
+
+## Related resources
+
+- [Harnesses](/agents/harnesses/) compares the harnesses you can run.
+- [Scheduling policies](/containers/configuration/scheduling-policy/) describes the `durable_object` policy.
+- [Example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/container)

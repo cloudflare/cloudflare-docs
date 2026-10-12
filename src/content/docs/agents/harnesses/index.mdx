@@ -16,7 +16,7 @@ The harness does the turn-by-turn work around the model: building the prompt, lo
 
 Running an agent on Cloudflare takes three steps:
 
-1. **Pick a harness.** Install the [Pi harness](/agents/harnesses/pi/), extend [Project Think](/agents/harnesses/think/), or build your own.
+1. **Pick a harness.** Install one of the [harnesses below](#choose-a-harness), such as the [Pi harness](/agents/harnesses/pi/), or [build your own](#build-your-own-harness).
 2. **Run it on a Durable Object.** Install the harness with the [Lifecycle](/agents/lifecycle/). The Lifecycle runs startup, routes requests, and owns the object's job queue and alarm, so the harness wakes and carries on after eviction, deploys, and crashes.
 3. **Plug in capabilities.** Add an [MCP client](/agents/capabilities/#mcp-client), a [scheduler](/agents/capabilities/#scheduler), [WebSockets](/agents/capabilities/#websockets), or any other [capability](/agents/capabilities/) the agent needs. Each one is a field and one more `.use()` call.
 
@@ -50,29 +50,44 @@ For a complete, runnable agent, refer to the [Quick start](/agents/getting-start
 
 ## Choose a harness
 
-Use **Pi** (beta) when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own the agent loop, transcript, and recovery. `PiHarness` installs on a plain Durable Object with `Lifecycle.use()`, next to any other capability. You choose how clients reach it, such as HTTP, WebSockets, or RPC. Start here if you are not sure.
+Except for Project Think, every harness below is a capability: it installs on a plain Durable Object with `Lifecycle.use()`, next to any other capability, and keeps many sessions per object through `sessions` and `session(id)`. Each session takes durable, idempotent submissions that you can wait on or abort.
 
-Use **Project Think** when you want an opinionated chat-agent harness with defaults for memory, workspace tools, streaming, lifecycle hooks, sub-agent RPC, and durable chat recovery. Think is a class: your agent extends `Think`, which builds on the [`Agent` class](/agents/agent-class/).
+| Harness                                               | Import                     | Status       | What runs the loop                                                       |
+| ----------------------------------------------------- | -------------------------- | ------------ | ------------------------------------------------------------------------ |
+| [Pi](/agents/harnesses/pi/)                           | `agents/harness/pi`        | Beta         | [Pi Durable](https://earendil.com/posts/pi-durable/)                     |
+| [Think harness](/agents/harnesses/think-harness/)     | `agents/harness/think`     | Experimental | Think's agent loop, on the AI SDK                                        |
+| [AI SDK harness](/agents/harnesses/ai-sdk/)           | `agents/harness/ai-sdk`    | Experimental | The AI SDK's `streamText`                                                |
+| [Container harness](/agents/harnesses/container/)     | `agents/harness/container` | Experimental | Claude Code, Codex, or another agent CLI in a Cloudflare Container       |
+| [OpenCode harness](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) | `agents/harness/opencode`  | Experimental | [OpenCode](https://opencode.ai/) v2, inside the Durable Object |
+| [Project Think](/agents/harnesses/think/)             | `@cloudflare/think`        | Experimental | Think's agent loop, as a class that extends the `Agent` class            |
 
-**Build your own** when you need full control over the model call, message format, tool loop, or UI protocol. Combine [Sessions, Streams, and Tasks](/agents/capabilities/#build-your-own-harness) to store the conversation, stream output, and run turns as replayable work.
+Use **Pi** when you want Pi Durable to own the agent loop, transcript, and recovery, including steering a running turn. You choose how clients reach it, such as HTTP, WebSockets, or RPC. Start here if you are not sure.
 
-<LinkCard
-	title="Pi (beta)"
-	href="/agents/harnesses/pi/"
-	description="Run Pi Durable sessions on a Durable Object, with storage in SQLite and recovery after eviction."
-/>
+Use the **Think harness** when you want an AI SDK model with durable recovery mid-message, approvals, client tools, and a `useAgentChat` chat UI through `ThinkChat`.
 
-<LinkCard
-	title="Project Think"
-	href="/agents/harnesses/think/"
-	description="An opinionated chat agent harness with built-in tools, persistent memory, lifecycle hooks, streaming, and sub-agent RPC."
-/>
+Use the **AI SDK harness** when you want a thin `streamText` loop with sessions and a queue of operations, and nothing more.
 
-<LinkCard
-	title="Build your own"
-	href="/agents/capabilities/#build-your-own-harness"
-	description="Combine Sessions, Streams, and Tasks into your own agent loop."
-/>
+Use the **Container harness** when you want a coding agent CLI with a real filesystem and shell. The CLI runs in a container that stops when idle, while the Durable Object keeps the sessions.
+
+Use the **OpenCode harness** to run OpenCode inside the Durable Object itself. Its only documentation for now is the example on GitHub.
+
+Use **Project Think** when you want every default built in: memory, workspace tools, actions, extensions, messengers, scheduled tasks, and sub-agent RPC. Think is a class: your agent extends `Think`, which builds on the legacy [`Agent` class](/agents/agent-class/). The Think harness runs the same loop as a capability, but does not have all of these features yet.
+
+## Build your own harness
+
+When you need full control over the model call, message format, tool loop, or UI protocol, write your own harness as a [capability](/agents/lifecycle/build-a-capability/):
+
+- Combine [Sessions, Streams, and Tasks](/agents/capabilities/#build-your-own-harness) to store the conversation, stream output, and run turns as replayable work.
+- If your agent runs somewhere other than the Durable Object, such as a container or a remote process, keep its durable record in `HarnessStore` from `agents/harness/store` (experimental). It stores sessions, operations with idempotency keys, and named logs of JSON entries per session, in whatever format your agent speaks. The Think harness and the Container harness use it.
+
+```ts
+import { openHarnessStore } from "agents/harness/store";
+
+const store = openHarnessStore(this.ctx.storage, { prefix: "my_harness_" });
+store.createSession({ id: "main" });
+store.enqueue({ session: "main", id: operationId, input: { text } });
+store.append("main", "messages", [{ data: message }]);
+```
 
 ## What a harness owns
 

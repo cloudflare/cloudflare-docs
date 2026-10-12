@@ -1,0 +1,108 @@
+---
+title: AI SDK harness
+pcx_content_type: how-to
+description: Run an AI SDK streamText loop on a Durable Object with the experimental AiSdkHarness capability, with sessions, transcripts, and a queue of operations in the object's storage.
+sidebar:
+  order: 3
+  badge: Experimental
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+`AiSdkHarness` from `agents/harness/ai-sdk` runs the [AI SDK](https://ai-sdk.dev/)'s `streamText` as a harness on a Durable Object. It keeps sessions, their transcripts, and a queue of operations in the object's storage. One operation runs at a time per session, and each run is one `streamText` call over the session's transcript.
+
+:::caution[Experimental]
+`AiSdkHarness` is experimental. The API may change in any release.
+:::
+
+Use it when you want a thin, AI SDK-native loop without the extra features of the [Think harness](/agents/harnesses/think-harness/). `AiSdkHarness` implements the shared harness interface that the experimental Channels API serves, so the same harness can answer browsers, terminals, and messaging platforms.
+
+## Install
+
+<PackageManagers pkg="agents ai zod" />
+
+The example uses [Workers AI](/workers-ai/) through the `AI` binding and `createAI` from `agents/models/ai-sdk`. To use other models, refer to [AI SDK models](/agents/models/ai-sdk/).
+
+## Create the harness
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { stepCountIs, tool } from "ai";
+import { z } from "zod";
+import { AiSdkHarness } from "agents/harness/ai-sdk";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/ai-sdk";
+
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+
+	readonly harness = new AiSdkHarness({
+		model: this.ai("@cf/moonshotai/kimi-k2.7-code"),
+		system: "You are a helpful assistant.",
+		tools: {
+			flipCoin: tool({
+				description: "Flip a coin, once the user approves",
+				inputSchema: z.object({}),
+				needsApproval: true,
+				execute: async () => (Math.random() < 0.5 ? "Heads" : "Tails"),
+			}),
+		},
+		stopWhen: stepCountIs(5),
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		const session = this.harness.session();
+		const { operationId } = await session.submit({
+			parts: [{ type: "text", text: await request.text() }],
+		});
+		return Response.json(await session.wait(operationId, request.signal));
+	}
+}
+```
+
+</TypeScriptExample>
+
+| Option        | Description                                                                                                                               |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `model`       | Required. An AI SDK `LanguageModel`.                                                                                                      |
+| `tools`       | An AI SDK `ToolSet`. Tools without `execute` run on the client of the participant whose message started the turn.                         |
+| `system`      | The system prompt.                                                                                                                        |
+| `stopWhen`    | When the run stops calling the model. Defaults to `stepCountIs(5)`.                                                                       |
+| `heartbeatMs` | How often a running session's wake job checks in. Defaults to 30 seconds.                                                                 |
+
+## Work with sessions
+
+`harness.session(id)` returns a handle on one session. Without an id, it returns the default session. Each session has:
+
+| Method                       | Description                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `submit(input, options)`     | Queue a message or a tool answer. Pass `operationId` to make the call idempotent.                       |
+| `wait(operationId, signal?)` | Resolve when the operation settles, as `done` with its `text` or `unanswered` with a `reason`.          |
+| `abort(operationId?)`        | Stop one operation, or everything in the session.                                                       |
+| `reset(handoff?)`            | Start a new context, optionally from a handoff note.                                                    |
+| `watch()`                    | The current state, then every change in order: operation status, run start and end, chunks, and saved messages. |
+
+`harness.sessions` has `create()`, `fork(from)`, and `list()`.
+
+A tool call that needs approval settles the operation. Submit the answer as a new operation to continue:
+
+```ts
+await session.submit({ type: "approval", approvalId, approved: true });
+```
+
+## Recovery
+
+The AI SDK keeps no state of its own. If an eviction cuts a run short, the harness starts the run again from the saved transcript, and the run's unsaved output is lost. Steering is not supported: `whenBusy: "steer"` queues the input as a follow-up.
+
+If you need runs that continue mid-message after an eviction, use the [Think harness](/agents/harnesses/think-harness/) instead.
+
+## Related resources
+
+- [Harnesses](/agents/harnesses/) compares the harnesses you can run.
+- [AI SDK models](/agents/models/ai-sdk/) configures Workers AI and third-party models.

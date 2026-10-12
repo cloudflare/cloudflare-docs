@@ -127,6 +127,8 @@ class UptimeMonitor extends LifecycleCapability {
 
 The job has a fixed ID, so calling `startMonitoring()` again replaces the pending check instead of adding a second one.
 
+`startMonitoring()` awaits `this.lifecycle.ready()` first. A public method on a capability can run before startup, because [RPC calls](/agents/lifecycle/#call-your-agent-over-rpc) do not start the object the way requests and alarms do. Await `ready()` at the top of any method that uses storage, jobs, or work that `onStart()` also starts. `ready()` resolves immediately inside startup, so `onStart()` can call the same method.
+
 Capability hooks run outside the host's invocation context. Call user code through `runInHostContext()` so that [`getCurrentAgent()`](/agents/lifecycle/get-current-agent/) returns the host inside it. `Scheduler` and `Queue` call their registered callbacks the same way.
 
 ## Handle requests

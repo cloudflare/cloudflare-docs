@@ -95,8 +95,10 @@ const tools = [
 					</div>
 					<div class="section-row">
 						<a href="/agents/harnesses/pi/">Pi</a>
-						<a href="/agents/harnesses/think/">Project Think</a>
-						<a href="/agents/capabilities/#build-your-own-harness">
+						<a href="/agents/harnesses/think-harness/">Think</a>
+						<a href="/agents/harnesses/ai-sdk/">AI SDK</a>
+						<a href="/agents/harnesses/container/">Containers</a>
+						<a href="/agents/harnesses/#build-your-own-harness">
 							Build your own
 						</a>
 					</div>
@@ -388,9 +390,13 @@ const tools = [
 
 	.section-row {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 6px;
 		margin-top: 9px;
+	}
+
+	.section-row a:last-child {
+		grid-column: 1 / -1;
 	}
 
 	.section-row a,
