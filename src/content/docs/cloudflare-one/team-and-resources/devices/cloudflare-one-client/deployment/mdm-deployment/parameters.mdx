@@ -23,7 +23,7 @@ Most of the parameters listed below are also configurable in Cloudflare One unde
 
 ## Required for full Cloudflare Zero Trust features
 
-For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/traffic-policies/http-policies/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), and [device posture](/cloudflare-one/reusable-components/posture-checks/).
+For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/traffic-controls/http-policies/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), and [device posture](/cloudflare-one/reusable-components/posture-checks/).
 
 ### `organization`
 
@@ -39,7 +39,7 @@ This field is used to enforce DNS policies when deploying the client in DoH-only
 
 ### `gateway_unique_id`
 
-Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations. If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
+Instructs the client to direct all DNS queries to a specific [Gateway DNS location](/cloudflare-one/traffic-controls/resolver-endpoints/). This value is only necessary if deploying without a [team name](#organization) or in an organization with multiple DNS locations. If you do not supply a DoH subdomain, we will automatically use the default Gateway DNS location for your organization.
 
 **Value Type:** `string`
 
