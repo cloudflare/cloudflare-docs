@@ -164,9 +164,11 @@ There is no hard limit on duration for HTTP-triggered Workers. As long as the cl
 
 ### Runtime updates
 
-Cloudflare regularly updates the Workers runtime. During routine updates, existing requests and connections to stateless Workers have a grace period of up to 20 minutes to finish before the old runtime process exits. This includes streaming HTTP responses and WebSocket connections.
+Cloudflare regularly updates the Workers runtime. During routine updates, processes running the previous version of the Workers runtime give existing stateless Workers requests and connections up to 20 minutes to finish. This includes streaming HTTP responses and WebSocket connections.
 
-The grace period applies to the runtime process. Requests reaching that process during the grace period may have less time remaining. When the grace period ends, the runtime terminates any remaining requests and connections.
+Once the updated version of the Workers runtime is ready, it handles new incoming HTTP requests. Processes running the previous version stop accepting these requests and drain existing work during their grace period.
+
+The grace period applies to each process running the previous version, not to each request. When it ends, that process terminates its remaining requests and connections.
 
 Crashes, resource pressure, and shutdowns can interrupt work earlier. Design long-running applications to handle disconnections and safely retry interrupted work.
 
