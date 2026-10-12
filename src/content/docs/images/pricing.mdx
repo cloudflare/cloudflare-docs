@@ -91,7 +91,7 @@ Only uploaded images count toward Images Stored; defining variants will not impa
 
 For images that are stored in Images, you will incur $1 for every 100,000 images delivered per month. This metric does not include transformed images that are stored in remote sources.
 
-Every image requested by the browser counts as one billable request.
+Cloudflare counts an image delivery as a billable request only when the response has an HTTP `200` status code and is larger than 1,024 bytes. Responses with another status code or a size of 1,024 bytes or less are not billed.
 
 #### Example
 
