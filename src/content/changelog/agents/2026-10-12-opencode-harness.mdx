@@ -1,6 +1,6 @@
 ---
 title: Run OpenCode 2.0 on Cloudflare with the Agents SDK
-description: The experimental OpenCodeHarness runs OpenCode 2.0 in a Durable Object or Agent, with Workers AI models and durable sessions.
+description: The experimental OpenCodeHarness runs OpenCode 2.0 in a plain Durable Object, with Workers AI models and durable sessions.
 products:
   - agents
   - workers
@@ -13,7 +13,7 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-The [Agents SDK](/agents/) now supports [OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) through the experimental `OpenCodeHarness`. Run OpenCode inside a plain Durable Object or an `Agent`, with sessions stored in SQLite and Lifecycle jobs that wake interrupted work after eviction.
+The [Agents SDK](/agents/) now supports [OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) through the experimental `OpenCodeHarness`. Run OpenCode inside a plain Durable Object, with sessions stored in SQLite and Lifecycle jobs that wake interrupted work after eviction.
 
 The `agents/models/opencode` provider connects OpenCode to Workers AI through the `AI` binding. OpenCode plugins extend the harness with custom tools, remote MCP servers, and skills. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
 

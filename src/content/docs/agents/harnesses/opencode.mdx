@@ -1,6 +1,6 @@
 ---
 title: OpenCode
-description: Run OpenCode 2.0 in a Durable Object or Agent with the Agents SDK, Workers AI models, bundled plugins, and durable sessions.
+description: Run OpenCode 2.0 in a plain Durable Object with the Agents SDK, Workers AI models, bundled plugins, and durable sessions.
 pcx_content_type: overview
 sidebar:
   order: 11
@@ -16,7 +16,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its Workerd SDK inside a plain Durable Object or an `Agent`. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
+[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its Workerd SDK inside a plain Durable Object. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
 
 OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCodeHarness` supplies SQLite storage and wakes the object after an interrupted run. The `agents/models/opencode` provider connects OpenCode to Workers AI through your `AI` binding.
 
@@ -40,7 +40,7 @@ OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCode
 ```mermaid
 flowchart LR
     client["Application or Worker"] -->|HTTP, WebSockets, or RPC| object
-    subgraph object["Agent or Durable Object"]
+    subgraph object["Durable Object"]
         lifecycle["Lifecycle jobs"] --> harness["OpenCodeHarness"]
         harness --> host["OpenCode Workerd host"]
         host <--> sqlite[("SQLite: opencode_ tables")]
@@ -188,52 +188,6 @@ Pass the factory's `storage` to `OpenCodeWorkerd.create()` so OpenCode uses the 
 The Lifecycle manages host startup. The factory runs again when the harness reopens an idle host, so it must support repeated calls.
 
 The `"demo"` object name is for this example. In an application, choose an object name based on an authenticated user or conversation.
-
-## Use it in an Agent
-
-If your application uses the `Agent` class, register the harness with the Agent's built-in Lifecycle:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { Agent } from "agents";
-import { OpenCodeWorkerd } from "@opencode/sdk/workerd";
-import { OpenCodeHarness } from "agents/harness/opencode";
-import { createAI } from "agents/models/opencode";
-import workerTools from "./worker-tools";
-
-export class Assistant extends Agent<Env> {
-	ai = createAI({ binding: this.env.AI });
-	harness = new OpenCodeHarness({
-		opencode: ({ storage }) =>
-			OpenCodeWorkerd.create({
-				storage,
-				models: { fetch: false },
-				plugins: [this.ai.plugin, workerTools],
-			}),
-		defaults: {
-			model: this.ai("@cf/moonshotai/kimi-k2.7-code", {
-				reasoningEffort: "low",
-			}),
-			agent: "build",
-		},
-	});
-
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
-
-	async ask(prompt: string) {
-		const { status, text, reason } = await this.harness.prompt(prompt);
-		return { status, text, reason };
-	}
-}
-```
-
-</TypeScriptExample>
-
-Use the same Wrangler configuration and Worker handler as the Durable Object example.
 
 ## Send prompts
 
