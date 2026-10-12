@@ -45,6 +45,17 @@
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 
+# Log Explorer (moved into Observability as unsampled security datasets)
+/log-explorer/ /observability/logs/unsampled-security-datasets/ 301
+/log-explorer/api/ /observability/logs/unsampled-security-datasets/api/ 301
+/log-explorer/changelog/ /observability/logs/unsampled-security-datasets/changelog/ 301
+/log-explorer/example-queries/ /observability/logs/unsampled-security-datasets/example-queries/ 301
+/log-explorer/faq/ /observability/logs/unsampled-security-datasets/faq/ 301
+/log-explorer/log-search/ /observability/logs/unsampled-security-datasets/log-search/ 301
+/log-explorer/manage-datasets/ /observability/logs/unsampled-security-datasets/manage-datasets/ 301
+/log-explorer/pricing/ /observability/logs/unsampled-security-datasets/pricing/ 301
+/log-explorer/sql-queries/ /observability/logs/unsampled-security-datasets/sql-queries/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
@@ -1492,7 +1503,7 @@
 
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
-/logs/log-explorer/ /log-explorer/log-search/ 301
+/logs/log-explorer/ /observability/logs/unsampled-security-datasets/log-search/ 301
 /logs/reference/glossary/ /logs/glossary/ 301
 /logs/about/ /logs/logpush/ 301
 /logs/tutorials/ /logs/logpush/ 301

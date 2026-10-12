@@ -10,13 +10,13 @@ products:
 
 import { TabItem, Tabs, Render, DashButton } from "~/components";
 
-Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
+Unsampled security datasets (legacy Log Explorer) let you store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
 
 :::note[Log Search is now part of Observability Logs]
-Log Explorer datasets are queried from the [Logs](/observability/logs/) page under **Observability** in the Cloudflare dashboard. The **Log Explorer** menu is no longer shown in the dashboard navigation. Your enabled datasets, saved queries, and SQL queries continue to work on the Logs page, and the previous Log Search page remains available at its direct URL.
+Unsampled security datasets are queried from the [Logs](/observability/logs/) page under **Observability** in the Cloudflare dashboard. The **Log Explorer** menu is no longer shown in the dashboard navigation. Your enabled datasets, saved queries, and SQL queries continue to work on the Logs page, and the previous Log Search page remains available at its direct URL.
 :::
 
-## When to use Log Explorer
+## When to use unsampled security datasets
 
 <Render file="log-explorer-use-cases" product="rules" />
 
@@ -27,9 +27,9 @@ Use [Cloudflare Trace](/rules/trace-request/), shown as **Rule simulator** in th
 - Seeing the evaluation order of your rules
 - Simulating requests from different geolocations or conditions
 
-The key difference is that Log Explorer shows actual traffic, while Cloudflare Trace shows simulated "what-if" scenarios. Both are separate from [Cloudflare Traces](/observability/traces/), which records how real requests move through Cloudflare.
+The key difference is that unsampled security datasets show actual traffic, while Cloudflare Trace shows simulated "what-if" scenarios. Both are separate from [Cloudflare Traces](/observability/traces/), which records how real requests move through Cloudflare.
 
-## Use Log Explorer
+## Query unsampled security datasets
 
 You can filter and view your logs via the Cloudflare dashboard or the API.
 
@@ -37,11 +37,11 @@ You can filter and view your logs via the Cloudflare dashboard or the API.
 
    <DashButton url="/?to=/:account/observability/logs" />
 
-2. Open the dataset selector and choose a Log Explorer dataset, such as **HTTP requests**. For zone-scoped datasets, select one domain or all domains.
+2. Open the dataset selector and choose an unsampled security dataset, such as **HTTP requests**. For zone-scoped datasets, select one domain or all domains.
 3. Select a preset or custom time range.
 4. Add filters by selecting a field, an operator, and a value. To write SQL instead, select **Open SQL editor**, enter a query against the selected dataset, and select **Run query**.
 
-SQL queries are available for Log Explorer datasets only. For the filter query language, functions, and keyboard shortcuts, refer to the built-in reference on the Logs page or the [Logs overview](/observability/logs/).
+SQL queries are available for unsampled security datasets only. For the filter query language, functions, and keyboard shortcuts, refer to the built-in reference on the Logs page or the [Logs overview](/observability/logs/).
 
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), open the SQL editor and enter the following SQL query:
 
@@ -98,14 +98,14 @@ After building your query, you can save it by selecting **Save search**. Provide
 
 ## Integration with Security Analytics
 
-You can also access the Log Explorer dashboard directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.
+You can also open Log Search directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query.
 
 ## Optimize your queries
 
-All the tables supported by Log Explorer contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`.
+All unsampled security datasets contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Observability** > **Logs**, select a Log Explorer dataset, and select **Open SQL editor**.
+2. Go to **Observability** > **Logs**, select an unsampled security dataset, and select **Open SQL editor**.
 3. Enter the following SQL query:
 
 ```sql

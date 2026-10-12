@@ -3,22 +3,22 @@ pcx_content_type: reference
 title: Manage datasets
 sidebar:
   order: 4
-description: Enable, disable, or delete Log Explorer datasets.
+description: Enable, disable, or delete unsampled security datasets.
 products:
   - log-explorer
 ---
 
 import { TabItem, Tabs, Render, DashButton, Steps } from "~/components";
 
-Log Explorer allows you to enable, disable, or delete datasets available to query in Log Search.
+You can enable, disable, or delete the unsampled security datasets (legacy Log Explorer) available to query in [Logs](/observability/logs/).
 
 :::note
-Canceling a Log Explorer subscription stops renewal, but it does not automatically stop log ingestion during the current billing cycle. To completely turn off Log Explorer, refer to [How do I turn off Log Explorer?](/log-explorer/faq/#how-do-i-turn-off-log-explorer).
+Canceling a Log Explorer subscription stops renewal, but it does not automatically stop log ingestion during the current billing cycle. To completely turn off Log Explorer, refer to [How do I turn off Log Explorer?](/observability/logs/unsampled-security-datasets/faq/#how-do-i-turn-off-log-explorer).
 :::
 
 ## Supported datasets
 
-Log Explorer currently supports the following datasets:
+The following unsampled security datasets are available:
 
 ### Zone level
 
@@ -64,7 +64,7 @@ To begin storing logs, enable the desired datasets through the dashboard or API.
 
 2. Select **Add dataset**.
 3. Choose a dataset and, for zone-level datasets, a zone.
-4. Under **Select fields**, choose the fields that Log Explorer should ingest.
+4. Under **Select fields**, choose the fields to ingest.
 5. Under **Filter logs**, choose whether to ingest all events or only events that match a filter.
 6. Select **Add**.
 
@@ -76,7 +76,7 @@ It may take a few minutes for the logs to become available for querying.
 
 #### Configure fields and filters
 
-Use **Select fields** to control which data points Log Explorer stores. Fields are grouped by category, and each category shows its selected field count. Select a category to add or remove all fields in that group, or expand the category to select individual fields. Each field shows its data type.
+Use **Select fields** to control which data points are stored. Fields are grouped by category, and each category shows its selected field count. Select a category to add or remove all fields in that group, or expand the category to select individual fields. Each field shows its data type.
 
 Required fields remain selected and are marked **Required**. Fields that Cloudflare no longer recommends are marked **Deprecated**. Select **Select all** to include every available field, or **Reset to default** to restore the dataset defaults.
 
@@ -86,7 +86,7 @@ To change the fields or filter for an enabled dataset, open the **Manage dataset
 
 ### API
 
-Use the Log Explorer API to enable each dataset you want to store. It may take a few minutes after a log stream is enabled before you can view the logs.
+Use the API to enable each dataset you want to store. It may take a few minutes after a log stream is enabled before you can view the logs.
 
 The following `curl` command is an example for enabling the zone-level dataset `http_requests`, as well as the expected response when the command succeeds.
 

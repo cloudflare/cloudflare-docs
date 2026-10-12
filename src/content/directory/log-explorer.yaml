@@ -4,7 +4,7 @@ name: Log Explorer
 
 entry:
   title: Log Explorer
-  url: /log-explorer/
+  url: /observability/logs/unsampled-security-datasets/
   group: Core platform
   additional_groups: [Analytics]
 

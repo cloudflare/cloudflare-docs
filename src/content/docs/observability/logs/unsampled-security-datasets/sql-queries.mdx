@@ -3,16 +3,16 @@ pcx_content_type: concept
 title: SQL queries supported
 sidebar:
   order: 3
-description: Review SQL syntax supported by Log Explorer.
+description: Review SQL syntax supported for unsampled security datasets.
 products:
   - log-explorer
 ---
 
 import { Details } from "~/components"
 
-This page outlines the SQL features supported by Log Explorer, including common aggregation functions, expressions, and query clauses.
+This page outlines the SQL features supported for unsampled security datasets (legacy Log Explorer), including common aggregation functions, expressions, and query clauses.
 
-The diagram below illustrates the general shape of a valid query supported in Log Explorer. It shows how standard SQL clauses — such as `SELECT`, `WHERE`, `GROUP BY`, and `ORDER BY` — can be composed to form supported queries.
+The diagram below illustrates the general shape of a valid query on these datasets. It shows how standard SQL clauses — such as `SELECT`, `WHERE`, `GROUP BY`, and `ORDER BY` — can be composed to form supported queries.
 
 ![Supported SQL grammar](~/assets/images/log-explorer/supported-sql-grammar-graph.png)
 
@@ -28,7 +28,7 @@ Examples of queries include:
 
 ### SQL Clauses in detail
 
-The following SQL clauses define the structure and logic of queries in Log Explorer:
+The following SQL clauses define the structure and logic of queries on unsampled security datasets:
 
 - `SELECT` - The `SELECT` clause specifies the columns that you want to retrieve from the database tables. It can include individual column names, expressions, or even wildcard characters to select all columns.
 - `FROM` - The `FROM` clause specifies the tables from which to retrieve data. It indicates the source of the data for the `SELECT` statement.
@@ -43,7 +43,7 @@ The sections that follow break down the remaining components shown in the diagra
 
 ## Functions
 
-Log Explorer supports a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions. 
+Queries support a range of SQL functions to transform, evaluate, or summarize data. These include scalar and aggregation functions. 
 
 ### Scalar functions 
 
