@@ -340,7 +340,7 @@ For [proxied (orange cloud)](/dns/proxy-status/) names, Cloudflare synthesizes H
 
 If you have disabled Universal SSL (for example, because you use [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) exclusively), Cloudflare will not generate HTTPS records for proxied names. Cloudflare only advertises an HTTPS record for names it knows have an active certificate — advertising HTTPS for a name without one would cause connections to fail.
 
-If you need HTTPS records while Universal SSL is disabled and a custom or Advanced Certificate is in place, re-enable Universal SSL or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+If you need HTTPS records while Universal SSL is turned off and a custom or Advanced Certificate is in place, turn Universal SSL back on or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
 For [DNS-only (grey cloud)](/dns/proxy-status/) names, you can manually add HTTPS records and Cloudflare will serve them. However, **all records with the same name must be DNS-only** for the manual HTTPS record to be served.
 
