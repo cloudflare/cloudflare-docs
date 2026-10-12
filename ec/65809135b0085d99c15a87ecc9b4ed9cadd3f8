@@ -1,0 +1,33 @@
+public/__redirects
+  s_04c150ec7b4d6f::t_4ee0d6d4be546b 22-31
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_04c150ec7b4d6f::t_17211044112f4e 93-100
+src/content/docs/agents/model-context-protocol/guides/oauth-mcp-client.mdx
+  s_04c150ec7b4d6f::t_6cc27fe9bcbe44 46-47,300,329-330
+src/content/docs/basin/get-started/prompting.mdx
+  s_04c150ec7b4d6f::t_4d8e16616cfc2b 30
+src/content/docs/workers/get-started/prompting.mdx
+  s_04c150ec7b4d6f::t_708f1429d6c467 23
+src/content/docs/workers/observability/index.mdx
+  s_04c150ec7b4d6f::t_c304a58a736da0 98-99
+src/content/docs/workers/observability/issues/automations.mdx
+  s_04c150ec7b4d6f::t_3da3f3b12ec864 91
+src/content/docs/workers/previews/test-and-debug.mdx
+  s_04c150ec7b4d6f::t_afa2da765cfc5e 108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ec65809135b0085d99c15a87ecc9b4ed9cadd3f8",
+  "prompts": {},
+  "sessions": {
+    "s_04c150ec7b4d6f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11db1-3c25-7698-8498-ba8cf676336a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
