@@ -193,7 +193,7 @@ Today we are launching the Web Search API in open beta…
 
 Some providers return descriptions of several thousand characters per result. Trimming keeps a five-result search to a few kilobytes of the model's context. When a result includes a last modified date, the model sees that too.
 
-Your application receives the full API response as `WebSearchToolOutput`: `items` with complete descriptions and every documented field, `metadata` with the AI Gateway `requestId` and `latencyMs`, and the `provider` that ran the search. Results without a URL are dropped, and a missing title falls back to the URL. Pi stores the output in `details.output`; the AI SDK returns it from `execute`. TanStack AI returns the formatted text.
+Your application receives the full API response as `WebSearchToolOutput`: `items` with complete descriptions and every documented field, `metadata` with the AI Gateway `requestId` and `latencyMs`, and the `provider` that ran the search. Results without a URL are dropped, and a missing title falls back to the URL. Pi stores the output in `details.output`. The AI SDK returns it from `execute`. TanStack AI returns the formatted text.
 
 The Web Search API does not paginate. The tool description tells the model to search again with a rephrased query when it needs more or different results.
 
