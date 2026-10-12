@@ -184,7 +184,7 @@ WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 
 
 ## Connection lifetime
 
-During routine Workers runtime updates, existing WebSocket connections to stateless Workers can remain open until the old runtime process exits. Connections still open when the [grace period for runtime updates](/workers/platform/limits/#runtime-updates) ends are disconnected. Crashes and shutdowns can disconnect clients earlier.
+During routine Workers runtime updates, existing WebSocket connections to Workers can remain open until the old runtime process exits. Connections still open when the [grace period for runtime updates](/workers/platform/limits/#runtime-updates) ends are disconnected. Crashes and shutdowns can disconnect clients earlier.
 
 Design clients to reconnect after a disconnection and restore application state.
 

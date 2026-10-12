@@ -1,12 +1,12 @@
 ---
-title: More time for stateless Workers requests to finish during runtime updates
-description: Stateless Workers requests and WebSocket connections have up to 20 minutes to continue during routine runtime updates.
+title: More time for requests to finish during Workers runtime updates
+description: Long-running requests and WebSocket connections have up to 20 minutes to continue during routine updates to the Workers runtime
 products:
   - workers
 date: 2026-10-12
 ---
 
-Pending requests and connections to stateless Workers now have a grace period of up to 20 minutes during Workers runtime updates. Previously, the grace period was up to 30 seconds.
+Pending requests and connections to Workers now have a grace period of up to 20 minutes during Workers runtime updates. Previously, the grace period was up to 30 seconds.
 
 This gives long-running HTTP requests, streamed AI responses, and live WebSocket sessions more time to continue before an update interrupts them.
 
@@ -14,6 +14,6 @@ This gives long-running HTTP requests, streamed AI responses, and live WebSocket
 
 Requests affected by an update already underway may have less than 20 minutes remaining. New requests do not extend the grace period. When it ends, any unfinished requests and open connections are terminated.
 
-Design your application to reconnect WebSockets and safely retry interrupted requests. Crashes, resource pressure, and shutdowns can interrupt work before the grace period ends.
+You should design your application to reconnect WebSockets, safely retry interrupted requests, and recover saved state after a restart. WebSockets can disconnect before the grace period ends, including connections using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/).
 
 For more information, refer to [Workers runtime updates](/workers/platform/limits/#runtime-updates).
