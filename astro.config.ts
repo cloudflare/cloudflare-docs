@@ -4,7 +4,6 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import skills from "astro-skills";
 import nimbus, {
 	defineConfig as defineNimbusConfig,
 } from "@cloudflare/nimbus-docs";
@@ -204,8 +203,6 @@ const markdown = {
 
 const integrations = [
 	react(),
-	// Injects /.well-known/agent-skills/* routes (index.json, SKILL.md, tarballs).
-	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
 		markdown: {
