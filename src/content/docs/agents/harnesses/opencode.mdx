@@ -17,7 +17,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its [Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object or an `Agent`.
+[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its Workerd SDK inside a plain Durable Object or an `Agent`. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
 
 OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCodeHarness` supplies SQLite storage and wakes the object after an interrupted run. The `agents/models/opencode` provider connects OpenCode to Workers AI through your `AI` binding.
 
