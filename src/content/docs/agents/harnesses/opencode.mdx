@@ -49,7 +49,6 @@ flowchart LR
 - **Wake-up.** Each active session has a Lifecycle job. While the session runs, the job keeps a heartbeat. If the object crashes or is evicted, an alarm restarts it, and OpenCode resumes interrupted work.
 - **Idle close.** OpenCode runs background timers while open. The harness closes an unused host after 30 seconds when no work or event subscriptions remain. It reopens the host on the next call, retaining durable state.
 
-Your application chooses the transport, authenticates users, and maps them to authorized objects and sessions. The example's browser identifier is not an authentication mechanism. Add authentication and prompt quotas before exposing it to users.
 
 | Capability                                         | Support                                                  |
 | -------------------------------------------------- | -------------------------------------------------------- |
@@ -58,7 +57,6 @@ Your application chooses the transport, authenticates users, and maps them to au
 | Custom tools, agents, and skills                   | Bundle OpenCode plugins with your Worker.                |
 | Remote Model Context Protocol (MCP) servers        | Register remote servers through a plugin.                |
 | Live events and durable event replay               | Use `session.events()` and `session.log()`.              |
-| Local files, shell commands, and stdio MCP servers | Require a separate execution environment.                |
 
 ## Install
 
@@ -88,7 +86,6 @@ Add the Workers AI binding, a SQLite-backed Durable Object, and `nodejs_compat` 
 
 </WranglerConfig>
 
-The remote `AI` binding calls Workers AI during local development and incurs [Workers AI usage](/workers-ai/platform/pricing/). Generate your `Env` types from this configuration with [`wrangler types`](/workers/wrangler/commands/#types).
 
 ## Use it in a Durable Object
 
