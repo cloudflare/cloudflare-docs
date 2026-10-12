@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 820 385" role="img" aria-labelledby="title description">
+  <title id="title">More time for stateless Workers requests during runtime updates</title>
+  <desc id="description">A timeline for stateless Workers compares the previous 30-second grace period with up to 20 minutes. An existing streaming response can finish during the grace period. A request arriving at 15 minutes has up to five minutes remaining. WebSockets still open at the end of the grace period disconnect. Requests and connections can still be interrupted earlier.</desc>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,sans-serif}.label{font-size:12px;font-weight:600;fill:#1a1a1a}.sublabel{font-size:11px;fill:#6b7280}.previous{font-size:11px;font-weight:600;fill:#9a3412}.grace{font-size:11px;font-weight:600;fill:#166534}.request,.stop{font-size:11px;font-weight:600;fill:#0369a1}
+  </style>
+  <defs>
+    <marker id="time-arrow" markerHeight="6" markerWidth="8" orient="auto" refX="7" refY="3">
+      <path fill="#d1d5db" d="m0 0 8 3-8 3z"/>
+    </marker>
+  </defs>
+  <rect width="820" height="385" fill="#fafafa" rx="8"/>
+  <path stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)" d="M220 34h550"/>
+  <text x="780" y="38" class="sublabel">time</text>
+  <path stroke="#d1d5db" d="M220 30v8m125-8v8m125-8v8m125-8v8m125-8v8"/>
+  <text x="220" y="54" class="sublabel" text-anchor="middle">0</text>
+  <text x="345" y="54" class="sublabel" text-anchor="middle">5 min</text>
+  <text x="470" y="54" class="sublabel" text-anchor="middle">10 min</text>
+  <text x="595" y="54" class="sublabel" text-anchor="middle">15 min</text>
+  <text x="720" y="54" class="sublabel" text-anchor="middle">20 min</text>
+
+  <path stroke="#ea580c" stroke-dasharray="4 3" stroke-width="1.5" d="M220 88v260"/>
+  <text x="220" y="76" class="sublabel" text-anchor="middle" style="fill:#c2410c">update starts</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" stroke-width="1.5" d="M720 88v260"/>
+  <text x="720" y="76" class="stop" text-anchor="middle">grace period ends</text>
+
+  <text x="40" y="116" class="label">Previous grace period</text>
+  <rect width="12.5" height="28" x="220" y="98" fill="#fff7ed" stroke="#fb923c" rx="3"/>
+  <text x="248" y="116" class="previous">30 seconds</text>
+
+  <text x="40" y="168" class="label">New grace period</text>
+  <rect width="500" height="28" x="220" y="150" fill="#f0fdf4" stroke="#86efac" rx="4"/>
+  <text x="470" y="168" class="grace" text-anchor="middle">up to 20 minutes</text>
+
+  <text x="40" y="222" class="label">Streaming response</text>
+  <rect width="250" height="28" x="220" y="204" fill="#eff6ff" stroke="#93c5fd" rx="4"/>
+  <text x="345" y="222" class="request" text-anchor="middle">response completes</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" d="M470 196v46"/>
+
+  <text x="40" y="278" class="label">Request starts later</text>
+  <text x="595" y="250" class="sublabel">starts at 15 min</text>
+  <rect width="125" height="28" x="595" y="260" fill="#eff6ff" stroke="#93c5fd" rx="4"/>
+  <text x="657.5" y="278" class="request" text-anchor="middle">up to 5 min left</text>
+
+  <text x="40" y="330" class="label">WebSocket</text>
+  <rect width="500" height="28" x="220" y="312" fill="#eff6ff" stroke="#93c5fd" rx="4"/>
+  <text x="470" y="330" class="request" text-anchor="middle">can stay connected until the end of the grace period</text>
+
+  <text x="720" y="363" class="stop" text-anchor="end">unfinished work stops · open connections close</text>
+</svg>
