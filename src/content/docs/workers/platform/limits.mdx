@@ -162,10 +162,13 @@ Duration measures wall-clock time from start to end of a Worker invocation.
 
 There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and streaming a response body. When the client disconnects or the response is complete, tasks associated with that request may be canceled. Use [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil) to perform work after returning a response. `waitUntil()` can extend execution for up to 30 seconds after the response is sent or the client disconnects.
 
-:::note
+### Runtime updates
 
-Cloudflare updates the Workers runtime a few times per week. The runtime gives in-flight requests a 30-second grace period to finish. If a request does not finish within this time, the runtime terminates it. This scenario is very unlikely because it requires a long-running request to coincide with a runtime update.
-:::
+Cloudflare regularly updates the Workers runtime. During routine updates, existing requests and connections to stateless Workers have a grace period of up to 20 minutes to finish before the old runtime process exits. This includes streaming HTTP responses and WebSocket connections.
+
+The grace period applies to the runtime process. Requests reaching that process during the grace period may have less time remaining. When the grace period ends, the runtime terminates any remaining requests and connections.
+
+Crashes, resource pressure, and shutdowns can interrupt work earlier. Design long-running applications to handle disconnections and safely retry interrupted work.
 
 ---
 
