@@ -164,6 +164,18 @@ When you turn on both options, Gateway will preserve the original path and query
 cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&cf_user_email=user@example.com
 ```
 
+### Forward
+
+API value: `forward`
+
+Forward invokes a Worker on permitted HTTP traffic. The Worker can modify a request before sending it to its original destination, transform the response, return a synthetic response, or run background work.
+
+Forward policies run in a separate phase after HTTP request filtering and original request body inspection. An Allow decision does not skip this phase, and a Forward policy does not override a Block decision. Gateway invokes the first matching Forward policy in order of precedence.
+
+Use request metadata selectors, identity, and device posture conditions to select traffic. Body inspection results, DLP matches, and response selectors cannot select a Worker. HTTPS traffic requires TLS decryption; Do Not Inspect traffic bypasses Forward. CONNECT tunnels, WebSockets, protocol upgrades, and trailers bypass middleware.
+
+Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) for setup, the middleware entrypoint, inspection order, and constraints. Start with a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/) for notifications, capture, or transformation.
+
 ### Isolate
 
 API value: `isolate`
@@ -243,6 +255,8 @@ API value: `off`
 :::caution[Visibility limitation]
 
 When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+
+Traffic matching Do Not Inspect also bypasses [Forward middleware](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/).
 
 Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/traffic-controls/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/).
 

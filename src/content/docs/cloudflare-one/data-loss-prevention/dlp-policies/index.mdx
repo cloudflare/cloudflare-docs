@@ -50,6 +50,10 @@ DLP Profiles may be used alongside other Cloudflare One rules in a [Gateway HTTP
 
 Gateway now applies the configured action when traffic matches the complete HTTP policy.
 
+### DLP with Worker middleware
+
+When you use [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) to invoke a Worker, Gateway scans the original request before the Worker and the final response after the Worker. A request blocked by DLP does not invoke the Worker. Modified request bytes are not scanned again before reaching the origin. Worker context does not include DLP match details, and DLP matches cannot select a Forward policy.
+
 ## 3. Test DLP policy
 
 You can test your DLP policy on any device connected to your [Zero Trust organization](/cloudflare-one/). To perform a basic test:

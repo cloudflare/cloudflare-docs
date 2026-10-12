@@ -1,0 +1,115 @@
+---
+title: Available context
+description: Reference for the request metadata, identity, and device posture Gateway sends to Worker middleware.
+pcx_content_type: reference
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+Gateway passes `context` as the second argument to `GatewayMiddleware.handle(request, context, next)`. Context describes the original request when Gateway selects a [Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/). Modifying the `Request` does not update context.
+
+Field names use camelCase. Optional fields are omitted when unavailable, and empty metadata lists are omitted. Availability depends on the connection method, destination, and authenticated session. Check optional values before using them.
+
+## Request and connection fields
+
+| Field               | Type                 | Description                                                                                  |
+| ------------------- | -------------------- | -------------------------------------------------------------------------------------------- |
+| `srcIp`             | `string`             | Source IP address as seen by Gateway. Use this field instead of a client-supplied IP header. |
+| `srcPort`           | `number`             | Source port.                                                                                 |
+| `dstIp`             | `string`, optional   | Destination IP address, when available.                                                      |
+| `dstPort`           | `number`, optional   | Destination port, when available.                                                            |
+| `protocol`          | `string`             | Connection protocol.                                                                         |
+| `detectedProtocol`  | `string`, optional   | Protocol identified by protocol detection.                                                   |
+| `sni`               | `string`, optional   | Server Name Indication from the TLS connection.                                              |
+| `onrampType`        | `string`, optional   | Connection method used to reach Gateway.                                                     |
+| `vnetId`            | `string`, optional   | Virtual network identifier.                                                                  |
+| `proxyEndpoint`     | `string`, optional   | Proxy endpoint associated with the connection.                                               |
+| `internalSrcIp`     | `string`, optional   | Internal source IP address, when available.                                                  |
+| `accountTag`        | `string`             | Cloudflare account identifier.                                                               |
+| `policyId`          | `string`             | UUID of the Forward policy that selected this Worker.                                        |
+| `privateAppAud`     | `string`, optional   | Audience identifier of the private Access application.                                       |
+| `infraAppAuds`      | `string[]`, optional | Audience identifiers of matching infrastructure applications.                                |
+| `host`              | `string`             | Original request host.                                                                       |
+| `uri`               | `string`             | Normalized original request URL.                                                             |
+| `embeddedProtocols` | `string[]`, optional | Detected protocols embedded in HTTP traffic.                                                 |
+| `domainCategories`  | `string[]`, optional | Destination domain category names, such as `Technology`.                                     |
+
+`context.uri` includes the scheme and authority. Normalization removes default ports and fragments, sorts query parameters, and normalizes encoding. It can differ from `request.url`. Use `request.url` when operating on the request itself and `context.uri` when comparing normalized metadata.
+
+Use standard `Request` APIs to access the method, headers, cookies, and body. Context does not include custom function results, DLP match details, or raw internal device records.
+
+## Identity
+
+Call `await context.identity()` to retrieve identity associated with the Gateway session. It returns an identity object or `undefined` when there is no identity. The getter is lazy, so scripts that do not need identity do not need to call it.
+
+| Field            | Type                             | Description                                                                                   |
+| ---------------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
+| `email`          | `string`, optional               | User email address.                                                                           |
+| `name`           | `string`, optional               | User display name.                                                                            |
+| `groups`         | Array of group objects, optional | Group memberships. Each group can have optional `id`, `email`, and `name` fields.             |
+| `samlAttributes` | `string[]`, optional             | SAML attributes associated with the identity.                                                 |
+| `oidcClaims`     | `string[]`, optional             | OIDC claims associated with the identity. This is a list, rather than a decoded token object. |
+
+Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute. A missing identity must be handled explicitly if your Worker requires an authenticated user.
+
+## Device posture
+
+Call `await context.devicePosture()` to retrieve passed posture check identifiers:
+
+```json
+{
+	"checks": {
+		"passed": ["<POSTURE_CHECK_UUID>"]
+	}
+}
+```
+
+`checks.passed` is a `string[]` of posture check UUIDs. An empty array means no checks passed. If posture is unavailable for the session, the getter throws. Handle this separately from a session with no passed checks. The getter does not return raw test results or a list of failed checks.
+
+## Example
+
+This script requires an identity and a specific passed posture check before continuing. Missing identity or unavailable posture returns a synthetic `403` response. Replace `<POSTURE_CHECK_UUID>` with a check in your account. The local interface includes only the fields this script uses.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+interface Context {
+	identity(): Promise<{ email?: string } | undefined>;
+	devicePosture(): Promise<{ checks: { passed: string[] } }>;
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint {
+	async handle(
+		request: Request,
+		context: Context,
+		next: (request: Request) => Promise<Response>,
+	): Promise<Response> {
+		const identity = await context.identity();
+		let passed: string[];
+		try {
+			passed = (await context.devicePosture()).checks.passed;
+		} catch {
+			return new Response(null, { status: 403 });
+		}
+		if (!identity?.email || !passed.includes("<POSTURE_CHECK_UUID>")) {
+			return new Response(null, { status: 403 });
+		}
+		return next(request);
+	}
+}
+```
+
+</TypeScriptExample>
+
+When the requirement can be expressed using built-in [identity selectors](/cloudflare-one/traffic-controls/identity-selectors/) or [device posture selectors](/cloudflare-one/traffic-controls/http-policies/#device-posture), configure it in your Gateway filtering policy. Use Worker logic for requirements that need custom code.
+
+## Header representation
+
+Gateway combines repeated `Cookie` headers with semicolons and other repeated headers with commas. `Set-Cookie` values retain separate entries. Use `response.headers.getSetCookie()` to read the individual response cookies. When modifying headers, copy them with `new Headers(response.headers)` to preserve their representation.

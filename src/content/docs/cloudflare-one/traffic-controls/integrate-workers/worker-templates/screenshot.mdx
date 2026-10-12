@@ -1,0 +1,114 @@
+---
+title: Capture a screenshot
+description: Capture a public webpage in an independent browser and save the screenshot to R2 without awaiting it in the user's response.
+pcx_content_type: tutorial
+difficulty: Beginner
+products:
+  - cloudflare-one
+  - workers
+  - r2
+  - browser-run
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Use [Browser Run](/browser-run/) to capture a screenshot after a selected request. Save the image in R2 while returning the original response to the user.
+
+The browser makes an independent visit to a fixed public URL. It does not inherit the user's cookies, authorization, Gateway session, or egress configuration. The result is a screenshot of the public page, rather than an exact capture of what the user saw. Use this template for a public page you control.
+
+## Configure the Worker
+
+[Create a private R2 bucket](/r2/buckets/create-buckets/) named `gateway-screenshots`, then add browser and R2 bindings to the [middleware configuration](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward):
+
+<WranglerConfig>
+
+```toml
+[browser]
+binding = "BROWSER"
+
+[[r2_buckets]]
+binding = "CAPTURES"
+bucket_name = "gateway-screenshots"
+```
+
+</WranglerConfig>
+
+The browser binding's `quickAction()` method requires a compatibility date of `2026-03-24` or later. Refer to [Browser Run configuration](/browser-run/reference/wrangler/).
+
+Replace `https://example.com/` with a public test page you control. The local browser interface includes only the Quick Action used here.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const PAGE = "https://example.com/";
+
+interface Env {
+	CAPTURES: R2Bucket;
+	BROWSER: {
+		quickAction(
+			action: "screenshot",
+			options: {
+				url: string;
+				viewport: { width: number; height: number };
+				gotoOptions: { timeout: number };
+			},
+		): Promise<Response>;
+	};
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint<Env> {
+	async handle(
+		request: Request,
+		context: unknown,
+		next: (request: Request) => Promise<Response>,
+	): Promise<Response> {
+		const response = await next(request);
+		const url = new URL(request.url);
+		if (
+			request.method === "GET" &&
+			url.origin + url.pathname === PAGE &&
+			response.ok
+		) {
+			this.ctx.waitUntil(
+				this.capture().catch(() => console.error("Screenshot capture failed")),
+			);
+		}
+		return response;
+	}
+
+	async capture(): Promise<void> {
+		const image = await this.env.BROWSER.quickAction("screenshot", {
+			url: PAGE,
+			viewport: { width: 1280, height: 720 },
+			gotoOptions: { timeout: 10_000 },
+		});
+		if (!image.ok) {
+			await image.body?.cancel();
+			throw new Error("Screenshot request failed");
+		}
+		await this.env.CAPTURES.put(
+			`${crypto.randomUUID()}.png`,
+			await image.arrayBuffer(),
+			{
+				httpMetadata: { contentType: "image/png" },
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The script uses a fixed browser destination and does not copy query parameters or session credentials from the user's request. The viewport limits the image to a regular viewport screenshot.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for the test page's **Host**, **URL Path**, and **HTTP Method** `GET`, scoped to your test user group.
+
+Visit the page through Gateway. Confirm that the page loads normally and a PNG object appears in R2. Open the object to check the screenshot. Browser Run Quick Actions require a remote browser binding; they cannot be validated entirely with local emulation.
+
+Screenshots consume [Browser Run usage](/browser-run/pricing/). Scope or sample captures to control volume. Browser queueing, navigation, and the R2 write must fit within [background execution limits](/workers/platform/limits/#duration). Use Queues or Workflows for reliable captures of slow pages.

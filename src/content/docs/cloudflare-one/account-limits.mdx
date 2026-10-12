@@ -58,6 +58,8 @@ This page lists the default account limits for rules, applications, fields, and 
 | DNS Logpush jobs                          | 5     |
 | HTTP Logpush jobs                         | 5     |
 
+HTTP policies using [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) count toward the HTTP policy limit. Invoked Workers are subject to [Workers limits](/workers/platform/limits/), including memory, CPU, subrequest, and background execution limits.
+
 ## Data Loss Prevention (DLP)
 
 <Render file="data-loss-prevention/dlp-limits-table" product="cloudflare-one" />

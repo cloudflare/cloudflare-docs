@@ -1,0 +1,32 @@
+---
+title: Worker templates
+description: Small Gateway Worker examples for notifications, capture, watermarking, coaching, and JSON redaction.
+pcx_content_type: overview
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  order: 3
+---
+
+These templates use the `GatewayMiddleware.handle(request, context, next)` entrypoint. Each script implements one task so you can adapt it to your own application.
+
+| Template                                                                                                              | What it does                                                                         |
+| --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [Send a Slack notification](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/slack-notification/)  | Send a background notification when a selected request completes.                    |
+| [Capture a screenshot](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/screenshot/)               | Capture a public page in an independent browser and save the image to R2.            |
+| [Capture a downloaded file](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/download-capture/)    | Save a bounded copy of an attachment to R2 while returning the download to the user. |
+| [Watermark HTML pages](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/watermark/)                | Add a visible user label to an HTML response.                                        |
+| [Store headers and bodies as JSON](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-capture/) | Archive selected headers and bounded JSON request and response bodies in R2.         |
+| [Display a coaching page](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/coaching-page/)         | Return an explanatory page without contacting the original destination.              |
+| [Redact a JSON field](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/json-redaction/)            | Replace a specific field in an application request before sending it upstream.       |
+
+## Use a template
+
+Follow [Set up Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward), replace the pass-through script with a template, and configure its bindings. Deploy the Worker before selecting it in a Forward policy. Each template lists a test and the traffic scope it expects.
+
+Begin with a test host and test user group. Page loads produce multiple HTTP requests, so scope notifications and screenshots to a specific method and path, rather than every request to a domain. Keep capture buckets private and configure [R2 lifecycle rules](/r2/buckets/object-lifecycles/) for retention. Capture only data your organization permits you to store.
+
+Background examples use [`this.ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). They return the user's response without awaiting the background operation. A background failure is logged and does not change the returned response. Background work has [limited execution time](/workers/platform/limits/#duration); use Queues or Workflows when you need durable processing.
+
+Body capture uses cloned streams. A slow capture consumer can cause a clone to buffer data while the other consumer advances. The examples limit captured bytes, but cloning is not a guarantee of constant memory use or zero impact on traffic. Keep capture policies narrow and test representative body sizes and transfer speeds.

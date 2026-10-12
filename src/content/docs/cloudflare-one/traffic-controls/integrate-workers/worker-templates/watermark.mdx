@@ -1,0 +1,97 @@
+---
+title: Watermark HTML pages
+description: Add a visible user watermark to HTML responses with Gateway Worker middleware and HTMLRewriter.
+pcx_content_type: tutorial
+difficulty: Beginner
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+Add a visible user label to HTML pages from an application you control. The Worker retrieves [Gateway identity](/cloudflare-one/traffic-controls/integrate-workers/available-context/#identity) and streams the response through [HTMLRewriter](/workers/runtime-apis/html-rewriter/).
+
+## Configure the Worker
+
+Use this script as `src/index.ts` in the [middleware project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+interface Context {
+	identity(): Promise<{ email?: string } | undefined>;
+}
+
+function escapeHtml(text: string): string {
+	return text
+		.replaceAll("&", "&amp;")
+		.replaceAll("<", "&lt;")
+		.replaceAll(">", "&gt;")
+		.replaceAll('"', "&quot;")
+		.replaceAll("'", "&#39;");
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint {
+	async handle(
+		request: Request,
+		context: Context,
+		next: (request: Request) => Promise<Response>,
+	): Promise<Response> {
+		const response = await next(request);
+		const contentType = response.headers.get("content-type") ?? "";
+		if (
+			request.method !== "GET" ||
+			response.status !== 200 ||
+			response.headers.has("content-encoding") ||
+			!response.body ||
+			!/^text\/html\b/i.test(contentType)
+		) {
+			return response;
+		}
+		const identity = await context.identity();
+		const label = escapeHtml(identity?.email ?? "Unidentified user");
+		const headers = new Headers(response.headers);
+		for (const name of [
+			"content-length",
+			"etag",
+			"content-md5",
+			"digest",
+			"content-digest",
+			"repr-digest",
+		]) {
+			headers.delete(name);
+		}
+		headers.set("cache-control", "private, no-store");
+		const rewritten = new HTMLRewriter()
+			.on("body", {
+				element(element) {
+					element.prepend(
+						`<aside style="position:fixed;bottom:1rem;right:1rem;z-index:2147483647;pointer-events:none">Viewed by ${label}</aside>`,
+						{ html: true },
+					);
+				},
+			})
+			.transform(
+				new Response(response.body, { status: response.status, headers }),
+			);
+		return rewritten;
+	}
+}
+```
+
+</TypeScriptExample>
+
+The script escapes the user label before inserting it into HTML. It removes stale length and integrity headers and marks the personalized response as non-cacheable. Other response headers, including Content Security Policy, are preserved.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for your test application's HTML pages and a test user group. Visit the page and confirm that the label contains your Gateway identity email. Test an image or JSON endpoint and confirm its body is unchanged.
+
+A page's Content Security Policy can prevent the inline style from being applied. The label will still be inserted, but its appearance depends on the page. Configure styling in your own application rather than weakening its security policy. Client-side rendering can also remove injected elements.
+
+This template changes uncompressed HTML with a `200` response only. Configure your test origin to serve uncompressed HTML. It does not watermark PDF files, images, or other binary downloads, and a visible label can be removed by the user. Test authentication flows and application rendering before widening the policy scope.

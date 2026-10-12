@@ -1,0 +1,71 @@
+---
+title: Display a coaching page
+description: Return a custom explanatory HTML page from a Gateway Worker without forwarding the request upstream.
+pcx_content_type: tutorial
+difficulty: Beginner
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  order: 6
+---
+
+import { TypeScriptExample } from "~/components";
+
+Display an explanation when a user visits a selected page. The Worker returns a synthetic response without calling `next()`, so Gateway does not send the request to the original destination.
+
+This template displays a notice with a link to an approved alternative. It does not implement a temporary exception, approval workflow, or an acknowledgement that unlocks the original site.
+
+## Configure the Worker
+
+Use this script as `src/index.ts` in the [middleware project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). Replace the approved application URL and explanation with your organization's guidance. It needs no bindings.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class GatewayMiddleware extends WorkerEntrypoint {
+	async handle(
+		request: Request,
+		context: unknown,
+		next: (request: Request) => Promise<Response>,
+	): Promise<Response> {
+		if (
+			request.method !== "GET" ||
+			!request.headers.get("accept")?.includes("text/html")
+		) {
+			return next(request);
+		}
+		return new Response(
+			`<!doctype html>
+      <html lang="en"><meta charset="utf-8">
+      <title>Use the approved application</title>
+      <h1>Keep work data in the approved application</h1>
+      <p>Use your company workspace when sharing work files.</p>
+      <p><a href="https://approved.example.com/">Open your company workspace</a></p>
+      </html>`,
+			{
+				status: 200,
+				headers: {
+					"content-type": "text/html; charset=utf-8",
+					"cache-control": "no-store",
+					"content-security-policy":
+						"default-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+					"x-content-type-options": "nosniff",
+				},
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for one test host, a selected page path, **HTTP Method** `GET`, and your test user group. Keep the approved alternative outside this policy's scope.
+
+Visit the selected page in a browser and confirm that the coaching page appears. Check the test origin's logs to confirm that no upstream request was made for this visit. A request without an HTML `Accept` header passes through normally.
+
+The method and `Accept` checks select when to show a page. They are not access controls because clients can change request headers. Use Gateway Block policies when you need to prevent access. A filtering Block decision occurs before Forward, so blocked traffic receives the Gateway block behavior rather than this coaching page. Synthetic responses still undergo Gateway response inspection.
