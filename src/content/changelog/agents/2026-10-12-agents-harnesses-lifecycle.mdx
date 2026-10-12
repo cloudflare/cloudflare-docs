@@ -1,0 +1,74 @@
+---
+title: Run an agent harness on a Durable Object, with a stable Lifecycle
+description: The Agents SDK Lifecycle, Scheduler, State, WebSockets, and MCP client are now stable. Run a harness such as Pi, Think, the AI SDK, or a coding agent in a Container on any Durable Object, and plug in capabilities.
+products:
+  - agents
+  - durable-objects
+date: 2026-10-12
+---
+
+import { TypeScriptExample } from "~/components";
+
+To run an agent on Cloudflare, pick a [harness](/agents/harnesses/), the loop around the model, and run it on a plain [Durable Object](/durable-objects/) with the [Lifecycle](/agents/lifecycle/). Then plug in the [capabilities](/agents/capabilities/) it needs:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { Scheduler } from "agents/schedules";
+
+export class Assistant extends DurableObject<Env> {
+	readonly harness = new PiHarness({
+		/* model and tools */
+	});
+	readonly mcp = new MCPClientManager("assistant", "1.0.0", { env: this.env });
+	readonly scheduler = new Scheduler({ callbacks: {} });
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.mcp)
+		.use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+In `agents@0.28.0`, `Lifecycle` is stable, along with the `Scheduler`, `State`, `WebSockets`, and `MCPClientManager` capabilities. The Lifecycle runs startup, routes requests, and owns the object's durable job queue and its single alarm, so the harness and its capabilities never overwrite each other's alarms, and their work resumes after eviction, deploys, and crashes.
+
+You can pick from these harnesses:
+
+| Harness                                                                                             | Import                     | Status       |
+| --------------------------------------------------------------------------------------------------- | -------------------------- | ------------ |
+| [Pi](/agents/harnesses/pi/)                                                                         | `agents/harness/pi`        | Beta         |
+| [Think harness](/agents/harnesses/think-harness/)                                                   | `agents/harness/think`     | Experimental |
+| [AI SDK harness](/agents/harnesses/ai-sdk/)                                                         | `agents/harness/ai-sdk`    | Experimental |
+| [Container harness](/agents/harnesses/container/), which runs Claude Code or Codex                  | `agents/harness/container` | Experimental |
+| [OpenCode harness](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) | `agents/harness/opencode`  | Experimental |
+
+To build your own, combine [Sessions](/agents/capabilities/sessions/), [Streams](/agents/capabilities/streams/), and [Tasks](/agents/capabilities/tasks/), or keep an outside agent's sessions in `HarnessStore` from `agents/harness/store`.
+
+These capabilities ship in the `agents` package:
+
+| Capability                                             | Import              | Status       |
+| ------------------------------------------------------ | ------------------- | ------------ |
+| [`MCPClientManager`](/agents/capabilities/mcp-client/) | `agents/mcp/client` | Stable       |
+| [`Scheduler`](/agents/capabilities/scheduler/)         | `agents/schedules`  | Stable       |
+| [`WebSockets`](/agents/capabilities/websockets/)       | `agents/websockets` | Stable       |
+| [`State`](/agents/capabilities/state/)                 | `agents/state`      | Stable       |
+| [`Queue`](/agents/capabilities/queue/)                 | `agents/queue`      | Experimental |
+| [`RoutedAgents`](/agents/capabilities/routed-agents/)  | `agents/routing`    | Experimental |
+| [`Browser`](/agents/capabilities/browser/)             | `agents/browser`    | Experimental |
+| [`Sessions`](/agents/capabilities/sessions/)           | `agents/sessions`   | Experimental |
+| [`Streams`](/agents/capabilities/streams/)             | `agents/streams`    | Experimental |
+| [`Tasks`](/agents/capabilities/tasks/)                 | `agents/tasks`      | Experimental |
+
+The `Agent` class is still supported, and is now documented as the legacy option under [Agent class](/agents/agent-class/). It is a Durable Object with the Lifecycle and a fixed set of capabilities already installed. Use it for the features that still need it, such as `@callable()` methods, chat agents, voice, and email. [Project Think](/agents/harnesses/think/) still extends `Agent`.
+
+To run your first agent this way, refer to the [quick start](/agents/getting-started/quick-start/). To move an existing Durable Object onto the Lifecycle, refer to [Add to an existing project](/agents/getting-started/add-to-existing-project/). Upgrade with:
+
+```sh
+npm install agents@latest
+```
