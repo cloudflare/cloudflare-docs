@@ -1,6 +1,6 @@
 ---
 title: Run OpenCode on Cloudflare with the Agents SDK
-description: The experimental OpenCodeHarness runs OpenCode 2.0 in an Agent or Durable Object, with Workers AI models and durable sessions.
+description: The experimental OpenCodeHarness runs OpenCode 2.0 in a Durable Object or Agent, with Workers AI models and durable sessions.
 products:
   - agents
   - workers
@@ -13,13 +13,13 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-The [Agents SDK](/agents/) now supports [OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) through the experimental `OpenCodeHarness`. Run OpenCode inside an `Agent` or a plain Durable Object, with sessions stored in SQLite and Lifecycle jobs that wake interrupted work after eviction.
+The [Agents SDK](/agents/) now supports [OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) through the experimental `OpenCodeHarness`. Run OpenCode inside a plain Durable Object or an `Agent`, with sessions stored in SQLite and Lifecycle jobs that wake interrupted work after eviction.
 
 The `agents/models/opencode` provider connects OpenCode to Workers AI through the `AI` binding. OpenCode plugins extend the harness with custom tools, remote MCP servers, and skills.
 
 <CopyPromptButton
 	tooltip="Build and deploy an OpenCode agent"
-	prompt="Read https://developers.cloudflare.com/agents/harnesses/opencode/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode, then use them to build and deploy an OpenCode 2.0 agent on Cloudflare with the Agents SDK. Use OpenCodeHarness and Workers AI, remove unsupported local tools, and add authentication and prompt quotas before exposing user sessions. Explain the experimental API and recovery limitations. Give me the deployed URL."
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/opencode/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode, then use them to build and deploy an OpenCode 2.0 agent on Cloudflare with the Agents SDK. Use a plain Durable Object with OpenCodeHarness and Workers AI, remove unsupported local tools, and add authentication and prompt quotas before exposing user sessions. Explain the experimental API and recovery limitations. Give me the deployed URL."
 />
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode)
@@ -28,18 +28,19 @@ Install Agents SDK 0.28.0 or later with the OpenCode packages:
 
 <PackageManagers pkg="agents@latest @opencode/sdk@2 @opencode/plugin@2" />
 
-Create a harness and register it with your Agent's Lifecycle:
+Create a harness and install a Lifecycle on your Durable Object:
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 import { OpenCodeWorkerd } from "@opencode/sdk/workerd";
 import { OpenCodeHarness } from "agents/harness/opencode";
 import { createAI } from "agents/models/opencode";
 import workerTools from "./worker-tools";
 
-export class Assistant extends Agent<Env> {
+export class Assistant extends DurableObject<Env> {
 	ai = createAI({ binding: this.env.AI });
 	harness = new OpenCodeHarness({
 		opencode: ({ storage }) =>
@@ -56,10 +57,7 @@ export class Assistant extends Agent<Env> {
 		},
 	});
 
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
+	lifecycle = Lifecycle.install(this).use(this.harness);
 
 	async ask(prompt: string) {
 		const { status, text, reason } = await this.harness.prompt(prompt);

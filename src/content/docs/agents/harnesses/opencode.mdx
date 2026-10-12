@@ -1,6 +1,6 @@
 ---
 title: OpenCode
-description: Run OpenCode 2.0 in an Agent or Durable Object with the Agents SDK, Workers AI models, bundled plugins, and durable sessions.
+description: Run OpenCode 2.0 in a Durable Object or Agent with the Agents SDK, Workers AI models, bundled plugins, and durable sessions.
 pcx_content_type: overview
 sidebar:
   order: 11
@@ -17,13 +17,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its [Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside an `Agent` or a plain Durable Object.
+[OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its [Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object or an `Agent`.
 
 OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCodeHarness` supplies SQLite storage and wakes the object after an interrupted run. The `agents/models/opencode` provider connects OpenCode to Workers AI through your `AI` binding.
 
 <CopyPromptButton
 	tooltip="Build and deploy an OpenCode agent"
-	prompt="Read https://developers.cloudflare.com/agents/harnesses/opencode/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode, then use them to build and deploy an OpenCode 2.0 agent on Cloudflare with the Agents SDK. Use OpenCodeHarness and the Workers AI provider, remove unsupported local tools, and add authentication and prompt quotas before exposing user sessions. Explain the experimental API and recovery limitations. Give me the deployed URL."
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/opencode/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode, then use them to build and deploy an OpenCode 2.0 agent on Cloudflare with the Agents SDK. Use a plain Durable Object with OpenCodeHarness and the Workers AI provider, remove unsupported local tools, and add authentication and prompt quotas before exposing user sessions. Explain the experimental API and recovery limitations. Give me the deployed URL."
 />
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode)
@@ -97,7 +97,7 @@ Add the Workers AI binding, a SQLite-backed Durable Object, and `nodejs_compat` 
 
 The remote `AI` binding calls Workers AI during local development and incurs [Workers AI usage](/workers-ai/platform/pricing/). Generate your `Env` types from this configuration with [`wrangler types`](/workers/wrangler/commands/#types).
 
-## Use it in an Agent
+## Use it in a Durable Object
 
 Create a plugin in `src/worker-tools.ts` to remove OpenCode's unsupported local tools and register a tool that can run inside the Worker:
 
@@ -136,7 +136,63 @@ export default Plugin.define({
 
 </TypeScriptExample>
 
-Create the harness with an OpenCode factory and register it with the Agent's Lifecycle:
+Create the harness with an OpenCode factory and install a Lifecycle on the Durable Object:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { OpenCodeWorkerd } from "@opencode/sdk/workerd";
+import { OpenCodeHarness } from "agents/harness/opencode";
+import { createAI } from "agents/models/opencode";
+import workerTools from "./worker-tools";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	harness = new OpenCodeHarness({
+		opencode: ({ storage }) =>
+			OpenCodeWorkerd.create({
+				storage,
+				config: { default_agent: "build" },
+				models: { fetch: false },
+				plugins: [this.ai.plugin, workerTools],
+			}),
+		defaults: {
+			model: this.ai("@cf/moonshotai/kimi-k2.7-code", {
+				reasoningEffort: "low",
+			}),
+			agent: "build",
+		},
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async ask(prompt: string) {
+		const { status, text, reason } = await this.harness.prompt(prompt);
+		return { status, text, reason };
+	}
+}
+
+export default {
+	async fetch(_request: Request, env: Env) {
+		const assistant = env.Assistant.getByName("demo");
+		return Response.json(await assistant.ask("What is the current UTC time?"));
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Pass the factory's `storage` to `OpenCodeWorkerd.create()` so OpenCode uses the prefixed database. Register `this.ai.plugin` to make the Workers AI models available. `models: { fetch: false }` skips OpenCode's external model catalog refresh; the provider registers models you name with `this.ai()`.
+
+The Lifecycle manages host startup. The factory runs again when the harness reopens an idle host, so it must support repeated calls.
+
+The `"demo"` object name is for this example. In an application, choose an object name based on an authenticated user or conversation.
+
+## Use it in an Agent
+
+If your application uses the `Agent` class, register the harness with the Agent's built-in Lifecycle:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -153,7 +209,6 @@ export class Assistant extends Agent<Env> {
 		opencode: ({ storage }) =>
 			OpenCodeWorkerd.create({
 				storage,
-				config: { default_agent: "build" },
 				models: { fetch: false },
 				plugins: [this.ai.plugin, workerTools],
 			}),
@@ -175,65 +230,11 @@ export class Assistant extends Agent<Env> {
 		return { status, text, reason };
 	}
 }
-
-export default {
-	async fetch(_request: Request, env: Env) {
-		const agent = env.Assistant.getByName("demo");
-		return Response.json(await agent.ask("What is the current UTC time?"));
-	},
-} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
-Pass the factory's `storage` to `OpenCodeWorkerd.create()` so OpenCode uses the prefixed database. Register `this.ai.plugin` to make the Workers AI models available. `models: { fetch: false }` skips OpenCode's external model catalog refresh; the provider registers models you name with `this.ai()`.
-
-The Lifecycle manages host startup. The factory runs again when the harness reopens an idle host, so it must support repeated calls.
-
-The `"demo"` object name is for this example. In an application, choose an object name based on an authenticated user or conversation.
-
-## Use it in a plain Durable Object
-
-Install a Lifecycle directly on a `DurableObject` and add the harness:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-import { OpenCodeWorkerd } from "@opencode/sdk/workerd";
-import { OpenCodeHarness } from "agents/harness/opencode";
-import { Lifecycle } from "agents/lifecycle";
-import { createAI } from "agents/models/opencode";
-import workerTools from "./worker-tools";
-
-export class Assistant extends DurableObject<Env> {
-	ai = createAI({ binding: this.env.AI });
-	harness = new OpenCodeHarness({
-		opencode: ({ storage }) =>
-			OpenCodeWorkerd.create({
-				storage,
-				models: { fetch: false },
-				plugins: [this.ai.plugin, workerTools],
-			}),
-		defaults: {
-			model: this.ai("@cf/moonshotai/kimi-k2.7-code", {
-				reasoningEffort: "low",
-			}),
-			agent: "build",
-		},
-	});
-	lifecycle = Lifecycle.install(this).use(this.harness);
-
-	async ask(prompt: string) {
-		const { status, text, reason } = await this.harness.prompt(prompt);
-		return { status, text, reason };
-	}
-}
-```
-
-</TypeScriptExample>
-
-Use the same Wrangler configuration and Worker handler as the Agent example.
+Use the same Wrangler configuration and Worker handler as the Durable Object example.
 
 ## Send prompts
 
