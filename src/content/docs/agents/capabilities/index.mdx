@@ -46,11 +46,10 @@ The harness and the capabilities share the object's storage and its alarm, but t
 
 ## Available capabilities
 
-The following capabilities ship with the `agents` package. The harness itself is a capability too, so `PiHarness` is listed first. Capabilities marked Experimental may change between releases.
+The following capabilities ship with the `agents` package. Capabilities marked Experimental may change between releases. Harnesses are capabilities too. For the harnesses and their status, refer to [Choose a harness](/agents/harnesses/#choose-a-harness).
 
 | Capability                            | Import              | Status       | What it does                                                         |
 | ------------------------------------- | ------------------- | ------------ | -------------------------------------------------------------------- |
-| [`PiHarness`](/agents/harnesses/pi/)  | `agents/harness/pi` | Beta         | Runs the Pi agent loop, with recovery after eviction                 |
 | [`MCPClientManager`](/agents/capabilities/mcp-client/)     | `agents/mcp/client` | Stable       | Connects to MCP servers and keeps the connections across restarts    |
 | [`Scheduler`](/agents/capabilities/scheduler/)             | `agents/schedules`  | Stable       | Runs callbacks after a delay, at a date, on a cron, or on an interval |
 | [`WebSockets`](/agents/capabilities/websockets/)           | `agents/websockets` | Stable       | Accepts hibernating connections that `useAgent` can reach            |
@@ -68,7 +67,7 @@ To write a capability of your own, refer to [Build a capability](/agents/lifecyc
 
 ### Give the agent behavior
 
-- [Pi harness](/agents/harnesses/pi/) runs a full agent loop with tools, retries, and recovery.
+- A [harness](/agents/harnesses/), such as the [Pi harness](/agents/harnesses/pi/), runs a full agent loop with tools, retries, and recovery.
 - [MCP client](/agents/capabilities/mcp-client/) connects to MCP servers and keeps the connections across restarts.
 - [Routed agents](/agents/capabilities/routed-agents/) lets one hub own many independent agents, such as one per chat.
 - [Browser](/agents/capabilities/browser/) keeps a persistent browser session for the model to drive.
@@ -90,6 +89,8 @@ A harness is the loop around the model. To write your own, combine three lower-l
 - [Sessions](/agents/capabilities/sessions/) stores the conversation.
 - [Streams](/agents/capabilities/streams/) stores the model's output as it arrives, so clients can reconnect and resume.
 - [Tasks](/agents/capabilities/tasks/) runs each turn as replayable steps that survive eviction.
+
+If the agent runs outside the Durable Object, such as in a container, keep its sessions and operations in [`HarnessStore`](/agents/harnesses/#build-your-own-harness) instead.
 
 This sketch stores the user's message, runs the turn as a task, and streams the reply over Server-Sent Events (SSE):
 

@@ -16,7 +16,7 @@ Agents need memory to be useful over time. Without it, every conversation starts
 
 An agent on Cloudflare has two kinds of memory, and both live in its Durable Object's SQLite database:
 
-- **Conversation history** is the messages and tool calls that make up a conversation. [Harnesses](/agents/harnesses/) store it for you. To store it yourself, use the [`Sessions`](/agents/capabilities/#sessions) capability from `agents/sessions`.
+- **Conversation history** is the messages and tool calls that make up a conversation. [Harnesses](/agents/harnesses/) store it for you. To store it yourself, use the [`Sessions`](/agents/capabilities/sessions/) capability from `agents/sessions`.
 - **Context** is what the model reads in its system prompt on every turn: its identity, facts it learned, and knowledge it can search. Assemble it with `ContextBlocks` from `agents/context`.
 
 The two are separate on purpose, so an agent can have a prompt without a transcript, or a transcript without a prompt.
@@ -25,7 +25,7 @@ The two are separate on purpose, so an agent can have a prompt without a transcr
 `agents/sessions` and `agents/context` are experimental. Their APIs may change between releases.
 :::
 
-For small UI state that syncs to clients, use the [`State`](/agents/capabilities/#state) capability instead.
+For small UI state that syncs to clients, use the [`State`](/agents/capabilities/state/) capability instead.
 
 ## Conversation history
 
@@ -127,7 +127,7 @@ Refresh the frozen system prompt after a compaction, so the prompt and the summa
 
 <LinkCard
 	title="Sessions"
-	href="/agents/capabilities/#sessions"
+	href="/agents/capabilities/sessions/"
 	description="Store conversation history with branches, streamed reads, compaction, attachments, and search."
 />
 
