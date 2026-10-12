@@ -317,15 +317,3 @@ export default Plugin.define({
 </TypeScriptExample>
 
 Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/runtime/execution/agent-skills/) for authoring guidance.
-
-## Recovery and limitations
-
-The wake-up job keeps a 30-second heartbeat during active work. After a crash, its alarm restarts the object without requiring a connected client. OpenCode reopens persisted state and resumes the interrupted session.
-
-- **Partial answers.** Recovery retains text OpenCode committed before interruption. Uncommitted streaming text can be lost, and a resumed model call can repeat text or finish early.
-- **Tool effects.** Durable sessions do not guarantee exactly-once external effects. Make tools safe to retry, or deduplicate effects in the service that performs them.
-- **Execution environment.** The Workerd profile has no local filesystem, shell, or terminal. To edit project files or run commands, connect a separate environment such as [Cloudflare Sandbox](/sandbox/) and expose it through plugin tools. OpenCode's built-in local tools do not automatically use that environment.
-- **Host lifetime.** The harness closes idle hosts. If you access the underlying host with `await harness.opencode()`, reacquire it for each use. Work through that handle does not keep the host open.
-- **Permissions.** Authentication and authorization belong to your application. Scope both sessions and external tools to the authenticated user.
-
-For a complete application, use the [OpenCode harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode). For the embedded host and plugin contracts, refer to [OpenCode's Cloudflare guide](https://opencode.ai/v2/docs/build/sdk/cloudflare/) and [plugin documentation](https://opencode.ai/v2/docs/build/plugins/).
