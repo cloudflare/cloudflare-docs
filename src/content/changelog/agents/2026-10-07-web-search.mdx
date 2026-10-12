@@ -6,11 +6,11 @@ date: 2026-10-12
 
 import { TypeScriptExample } from "~/components";
 
-Agents SDK 0.27.0 adds a beta `web_search` tool that searches the public web through the [Cloudflare Web Search API](/web-search/). Searches run through your Workers AI binding and AI Gateway, and are billed to the account the Worker runs in.
+The [Cloudflare Agents SDK](/agents) now provides a `web_search` tool that searches the public web through the [Cloudflare Web Search API](/web-search/), powered by [ceramic.ai, Exa, and Linkup](/web-search/providers/).
 
-The model chooses only the query and how many results it wants, up to a limit you set. Your application chooses the provider, gateway, and billing. The model reads a short numbered list of titles, URLs, and trimmed descriptions, while your application receives the full API response. When the [`web_fetch`](/agents/tools/web-fetch/) tool is also available, the model is told to use it to read the pages it finds.
+When you give the `web_search` tool to your agent, the model provides a query and max results, and receives back a short numbered list of titles, URLs, and trimmed descriptions. When you also provide the [`web_fetch`](/agents/tools/web-fetch/) tool to your agent, the model is told to use it to read the pages that the `web_search` tool returns.
 
-Add the tool to a [Pi Durable](/agents/harnesses/pi/) extension registry before opening the harness:
+To use the `web_search` tool, make sure you have [Agents SDK v0.27.0](https://github.com/cloudflare/agents/releases/tag/agents%400.27.0) or greater installed, and add it to a [Pi Durable](/agents/harnesses/pi/) [extension registry](agents/harnesses/pi/extensions/) before opening the harness:
 
 <TypeScriptExample>
 
