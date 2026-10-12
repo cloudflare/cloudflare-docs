@@ -16,7 +16,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give your agent a `web_search` tool to find pages on the public web. The tool calls the [Web Search API](/web-search/) through your Workers AI binding and AI Gateway. The Agents SDK handles the work around the search: keeping results small enough for the model's context, returning the full response to your application, and telling the model what to do when a search fails.
+Give your agent a `web_search` tool to find pages on the public web. The tool calls the [Web Search API](/web-search/) through your Workers AI binding and AI Gateway.
 
 Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, or to search without a model, use the search sources and renderer in `agents/websearch`.
 
@@ -24,18 +24,26 @@ Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, 
 Web search is in beta. Its API may change in future releases.
 :::
 
-## What the tool adds
+## When to use it
 
-A research agent might need to find current documentation, check a recent announcement, and then read the pages it found. Instead of handing the model the raw API response, `web_search` shapes each search for the model and keeps the full result for your application.
+Web search finds pages. Use it alongside the other web tools when the agent needs to do more than find them:
 
-| Task                           | What `web_search` does                                                                                                              |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| Keep the model's context small | Returns a numbered list of title, URL, and description, with each description trimmed to 600 characters by default.                 |
-| Keep cost under your control   | Lets the model choose only the query and a result count. Your application chooses the provider, gateway, billing, and result limit. |
-| Keep the full response         | Gives your application every result field and the AI Gateway request ID, without trimming.                                          |
-| Read what it found             | Tells the model to read result URLs with [`web_fetch`](/agents/tools/web-fetch/) when that tool is available.                       |
-| Recover from errors            | Gives the model guidance to fix its query, retry, or continue without search, with structured errors for your application.          |
-| Search without a model         | Exports the same search sources for scheduled jobs, tests, and code outside Workers.                                                |
+| Tool                                    | Use it to                                                                                                                                  |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `web_search`                            | Find pages on a topic when the agent does not have a URL, such as current events, recent releases, or documentation it was not trained on. |
+| [`web_fetch`](/agents/tools/web-fetch/) | Read a page or document at a known URL, including the URLs that `web_search` returns.                                                      |
+| [Browser](/agents/tools/browser/)       | Use pages that need JavaScript, a login, or interaction.                                                                                   |
+
+The `web_search` tool description tells the model to read result URLs with `web_fetch` when that tool is available.
+
+## Why use the tool
+
+You could call the Web Search API from a tool of your own. The `web_search` tool adds what a model needs around each search:
+
+- **You control the cost.** The model chooses only the query and a result count, up to the limit you set. Your application chooses the provider, gateway, and billing. Multiple search providers are supported, including Ceramic.ai, Exa, and Linkup. Refer to [Providers](/web-search/providers/) for the full list.
+- **The model gets a short list and your application gets everything.** The model reads titles, URLs, and trimmed descriptions, so a search uses a few kilobytes of context. Your application receives the full API response.
+- **Failures tell the model what to do next.** The model is guided to fix its query, retry, or continue without search. Your application receives a structured error.
+- **One tool for every harness.** The same options work with Pi Durable, AI SDK, and TanStack AI, and the same search sources work without a model.
 
 ## Add the tool to your harness
 
@@ -87,7 +95,7 @@ this.registry.install({
 
 Ask your agent a question that needs current information. The model can call `web_search` with a `query` and an optional `limit`.
 
-The Pi tool is marked `replay: "safe"`. Pi reruns a search interrupted by an eviction when the session recovers, which is a second billed search. Completed results remain stored and are not searched again during recovery. The tool also honors Pi's abort signal when you cancel a running call.
+The Pi tool is marked `replay: "safe"`. If an eviction interrupts a search, Pi reruns only that search when the session recovers, which is a second billed search. Finished calls already have their results in the transcript. The tool does not cache results, so when the model repeats a search, it makes and bills a new one. The tool also honors Pi's abort signal when you cancel a running call.
 
 ### AI SDK
 
@@ -212,15 +220,15 @@ const search = webSearchTool({
 
 </TypeScriptExample>
 
-| Option                | Default          | Effect                                                                                                                                     |
-| --------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `gateway`             | `"default"`      | AI Gateway ID that routes and bills the search.                                                                                            |
-| `provider`            | Platform default | `"ceramic"`, `"exa"`, or `"linkup"`. The model cannot choose or change it. Refer to [Providers](/web-search/providers/).                   |
-| `byokAlias`           | None             | Alias of a provider key stored on the gateway. The search fails instead of using AI Gateway credits when the key is not configured.        |
-| `limit`               | `5`              | Results per search when the model does not ask for a count, and the most it gets when it asks for more. Accepts integers from `1` to `10`. |
-| `maxDescriptionChars` | `600`            | Maximum characters per result description in the model's view. `Infinity` passes descriptions through whole.                               |
-| `timeoutMs`           | `30000`          | Deadline in milliseconds before the search fails with a retryable `web_search_timeout` error.                                              |
-| `description`         | Built-in         | Replaces the tool description the model sees.                                                                                              |
+| Option                | Default          | Effect                                                                                                                                                                                                                                                                            |
+| --------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gateway`             | `"default"`      | AI Gateway ID that routes and bills the search.                                                                                                                                                                                                                                   |
+| `provider`            | Platform default | Search provider that runs the search, such as `"exa"`. The model cannot choose or change it. Refer to [Providers](/web-search/providers/).                                                                                                                                        |
+| `byokAlias`           | None             | Alias of a provider key stored on the gateway. When omitted, AI Gateway uses the provider's key with the `default` alias if there is one, otherwise your AI Gateway credits. When set to an alias the gateway does not have, the search fails instead of falling back to credits. |
+| `limit`               | `5`              | Results per search when the model does not ask for a count, and the most it gets when it asks for more. Accepts integers from `1` to `10`.                                                                                                                                        |
+| `maxDescriptionChars` | `600`            | Maximum characters per result description in the model's view. `Infinity` passes descriptions through whole.                                                                                                                                                                      |
+| `timeoutMs`           | `30000`          | Deadline in milliseconds before the search fails with a retryable `web_search_timeout` error.                                                                                                                                                                                     |
+| `description`         | Built-in         | Replaces the tool description the model sees.                                                                                                                                                                                                                                     |
 
 An invalid `limit`, `maxDescriptionChars`, `timeoutMs`, or `byokAlias` throws a `RangeError` when you create the tool. A `limit` from the model above your `limit` is capped, not rejected.
 
