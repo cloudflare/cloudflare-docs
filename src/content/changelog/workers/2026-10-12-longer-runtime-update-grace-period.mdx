@@ -12,7 +12,7 @@ This gives long-running HTTP requests, streamed AI responses, and live WebSocket
 
 ![Workers runtime versions: existing work drains on the previous version; new HTTP requests use the updated version](~/assets/images/workers/runtime-update-grace-period.svg)
 
-For stateless Workers, new incoming HTTP requests go to the updated version of the Workers runtime once it is ready. Processes running the previous version stop accepting these requests and drain existing work. The grace period applies to each process running the previous version. When it ends, unfinished requests and open connections on that process are terminated.
+New incoming HTTP requests go to the updated version of the Workers runtime once it is ready. Processes running the previous version stop accepting these requests and drain existing work. The grace period applies to each process running the previous version. When it ends, unfinished requests and open connections on that process are terminated.
 
 You should design your application to reconnect WebSockets, safely retry interrupted requests, and recover saved state after a restart. WebSockets can disconnect before the grace period ends, including connections using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/).
 

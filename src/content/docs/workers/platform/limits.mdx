@@ -164,7 +164,7 @@ There is no hard limit on duration for HTTP-triggered Workers. As long as the cl
 
 ### Runtime updates
 
-Cloudflare regularly updates the Workers runtime. During routine updates, processes running the previous version of the Workers runtime give existing stateless Workers requests and connections up to 20 minutes to finish. This includes streaming HTTP responses and WebSocket connections.
+Cloudflare regularly updates the Workers runtime. During routine updates, processes running the previous version of the Workers runtime give existing Workers requests and connections up to 20 minutes to finish. This includes streaming HTTP responses and WebSocket connections.
 
 Once the updated version of the Workers runtime is ready, it handles new incoming HTTP requests. Processes running the previous version stop accepting these requests and drain existing work during their grace period.
 
