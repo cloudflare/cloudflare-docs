@@ -4,7 +4,6 @@ description: Give your agent a web fetch tool with document conversion, paginati
 pcx_content_type: integration-guide
 sidebar:
   order: 3
-  badge: Beta
 products:
   - agents
 ---
@@ -19,10 +18,6 @@ import {
 Give your agent a `web_fetch` tool to read a URL. The Agents SDK handles the work around the HTTP request: converting documents into readable text, splitting long pages into smaller results, and controlling which URLs the model can fetch.
 
 Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, use the public fetch, pagination, and formatting functions in `agents/webfetch`.
-
-:::caution[Beta]
-Web fetch is in beta. Its API may change in future releases.
-:::
 
 ## What the tool adds
 

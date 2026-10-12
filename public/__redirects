@@ -2751,9 +2751,14 @@
 /cloudflare-one/email-security/outbound-dlp/ /cloudflare-one/email-security/policies/outbound/outbound-dlp/ 301
 /cloudflare-one/email-security/settings/auto-moves/ /cloudflare-one/email-security/settings/detection-settings/auto-moves/ 301
 /cloudflare-one/email-security/directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/ 301
+/cloudflare-one/email-security/directories/manage-es-directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-es-directories/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/manage-groups-directory/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/manage-users-directory/ 301
 /cloudflare-one/email-security/settings/domain-management/domain/ /cloudflare-one/email-security/settings/domains-and-directories/domains/ 301
 /cloudflare-one/email-security/settings/phish-submissions/ /cloudflare-one/email-security/settings/submission-settings/ 301
 /cloudflare-one/email-security/settings/phish-submissions/phishnet-365/ /cloudflare-one/email-security/settings/submission-settings/phishnet-365/ 301
+/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace/ /cloudflare-one/email-security/settings/submission-settings/phishnet-google-workspace/ 301
 /cloudflare-one/email-security/settings/phish-submissions/submission-addresses/ /cloudflare-one/email-security/settings/submission-settings/submission-addresses/ 301
 /cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
 

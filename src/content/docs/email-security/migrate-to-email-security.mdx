@@ -63,7 +63,7 @@ Starting from October 1, 2025, Area 1 webhooks will be visible in Zero Trust Ema
 
 In Area 1, you can [create alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/#create-an-alert-webhook).
 
-In Zero Trust Email security, webhooks are instead referred to as logs. You can enable [detection logs](/cloudflare-one/insights/logs/logpush/email-security-logs/#enable-detection-logs) and/or [user action logs](/cloudflare-one/insights/logs/logpush/email-security-logs/#enable-user-action-logs). Additionally, you can enable [Outbound Data Loss Prevention](/cloudflare-one/email-security/outbound-dlp/) to protect sensitive information in outbound emails.
+In Zero Trust Email security, webhooks are instead referred to as logs. You can enable [detection logs](/cloudflare-one/insights/logs/logpush/email-security-logs/#enable-detection-logs) and/or [user action logs](/cloudflare-one/insights/logs/logpush/email-security-logs/#enable-user-action-logs). Additionally, you can enable [Outbound Data Loss Prevention](/cloudflare-one/email-security/policies/outbound/outbound-dlp/) to protect sensitive information in outbound emails.
 
 ## Set up system alerts
 
@@ -123,7 +123,7 @@ In Email security, you can check your metrics in the [Monitoring](/cloudflare-on
 
 Area 1 allows you to set up [message retraction](/email-security/email-configuration/retract-settings/) to move messages to specific folders. This is known as **retraction**.
 
-Moving messages to a specific folder is known as [auto-moves](/cloudflare-one/email-security/settings/auto-moves/) in Zero Trust Email security.
+Moving messages to a specific folder is known as [auto-moves](/cloudflare-one/email-security/settings/detection-settings/auto-moves/) in Zero Trust Email security.
 
 ## Create policies
 
@@ -131,9 +131,9 @@ This table displays the difference in terminology used when creating policies:
 
 | Area 1                                                                                        | Email security                                                                                             |
 | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [Allowed patterns](/email-security/email-configuration/lists/allowed-patterns/)               | [Allow policies](/cloudflare-one/email-security/settings/detection-settings/allow-policies/)               |
-| [Block lists](/email-security/email-configuration/lists/block-list/)                          | [Blocked senders](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/)             |
-| [Trusted domains](/email-security/email-configuration/lists/trusted-domains/)                 | [Trusted domains](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/)             |
+| [Allowed patterns](/email-security/email-configuration/lists/allowed-patterns/)               | [Allow policies](/cloudflare-one/email-security/policies/inbound/allow-policies/)               |
+| [Block lists](/email-security/email-configuration/lists/block-list/)                          | [Blocked senders](/cloudflare-one/email-security/policies/inbound/blocked-senders/)             |
+| [Trusted domains](/email-security/email-configuration/lists/trusted-domains/)                 | [Trusted domains](/cloudflare-one/email-security/policies/inbound/trusted-domains/)             |
 | [Text add-ons](/email-security/email-configuration/email-policies/text-addons/)               | [Text add-ons](/cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/)         |
 | [Link actions](/email-security/email-configuration/email-policies/link-actions/)              | [Link actions](/cloudflare-one/email-security/settings/detection-settings/configure-link-actions/)         |
 | [Added detections](/email-security/email-configuration/enhanced-detections/added-detections/) | [Additional detections](/cloudflare-one/email-security/settings/detection-settings/additional-detections/) |
@@ -159,7 +159,7 @@ In Email security, this feature is known as [impersonation registry](/cloudflare
 
 In Area 1, you can [integrate directories](/email-security/email-configuration/enhanced-detections/business-email-compromise/#integrating-a-directory) in your email provider.
 
-In Email security, you can add and sync [directories](/cloudflare-one/email-security/directories/).
+In Email security, you can add and sync [directories](/cloudflare-one/email-security/settings/domains-and-directories/directories/).
 
 ## API
 

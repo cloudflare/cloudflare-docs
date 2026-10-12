@@ -1,0 +1,71 @@
+---
+title: Run OpenCode 2.0 on Cloudflare with the Agents SDK
+description: The experimental OpenCodeHarness runs OpenCode 2.0 in a plain Durable Object, with Workers AI models and durable sessions.
+products:
+  - agents
+  - workers
+date: 2026-10-12
+---
+
+import {
+	CopyPromptButton,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
+
+The [Agents SDK](/agents/) now supports [OpenCode 2.0](https://opencode.ai/v2/docs/build/sdk/) through the experimental `OpenCodeHarness`. Run OpenCode inside a plain Durable Object, with sessions stored in SQLite and Lifecycle jobs that wake interrupted work after eviction.
+
+The `agents/models/opencode` provider connects OpenCode to Workers AI through the `AI` binding. OpenCode plugins extend the harness with custom tools, remote MCP servers, and skills. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
+
+<CopyPromptButton
+	tooltip="Build and deploy an OpenCode agent"
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/opencode/ and the example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode, then use them to build and deploy an OpenCode 2.0 agent on Cloudflare with the Agents SDK. Use a plain Durable Object with OpenCodeHarness and Workers AI, remove unsupported local tools, and add authentication and prompt quotas before exposing user sessions. Explain the experimental API and recovery limitations. Give me the deployed URL."
+/>
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode)
+
+Install Agents SDK 0.28.0 or later with the OpenCode packages:
+
+<PackageManagers pkg="agents@latest @opencode/sdk@2 @opencode/plugin@2" />
+
+Create a harness and install a Lifecycle on your Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { OpenCodeWorkerd } from "@opencode/sdk/workerd";
+import { OpenCodeHarness } from "agents/harness/opencode";
+import { createAI } from "agents/models/opencode";
+import workerTools from "./worker-tools";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	harness = new OpenCodeHarness({
+		opencode: ({ storage }) =>
+			OpenCodeWorkerd.create({
+				storage,
+				models: { fetch: false },
+				plugins: [this.ai.plugin, workerTools],
+			}),
+		defaults: {
+			model: this.ai("@cf/moonshotai/kimi-k2.7-code", {
+				reasoningEffort: "low",
+			}),
+			agent: "build",
+		},
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async ask(prompt: string) {
+		const { status, text, reason } = await this.harness.prompt(prompt);
+		return { status, text, reason };
+	}
+}
+```
+
+</TypeScriptExample>
+
+The [OpenCode harness guide](/agents/harnesses/opencode/) includes the `workerTools` plugin, Wrangler configuration, and session APIs. The [working example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) adds a browser UI, WebSocket streaming, and persistent note tools.

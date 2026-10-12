@@ -132,6 +132,7 @@ This quickstart walks you through enabling caching, deploying, and observing the
 {
  "name": "my-worker",
  "main": "src/index.ts",
+ "upload_source_maps": true,
  "compatibility_date": "$today",
  "cache": {
   "enabled": true,
@@ -288,6 +289,7 @@ The default entrypoint here is a gateway that should run on every request, so di
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {

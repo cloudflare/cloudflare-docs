@@ -77,7 +77,8 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_b",
-	"main": "./src/workerB.js"
+	"main": "./src/workerB.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -107,6 +108,7 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_a",
 	"main": "./src/workerA.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "WORKER_B",
