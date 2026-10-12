@@ -177,8 +177,7 @@ Code in one preview can set a cookie with `Domain=example-previews.com`, and eve
 
 ## Troubleshooting
 
-- **Error 1016 or 522 on a preview hostname**: For general causes, refer to [Error 1016](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/) and [Error 522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). For previews, check that the wildcard record exists and is proxied, and that its name matches your route: `*` for `*.example-previews.com/*`, or `*.previews` for `*.previews.example.com/*`. If the route does not match the hostname, the request does not reach your Worker.
-- **The server in the container uses HTTPS**: Serve plain HTTP from the container. Cloudflare handles TLS for the preview hostname, and your Worker forwards each request to the container with the `http:` scheme, because `getTcpPort().fetch()` does not accept `https:` URLs. If the server starts with an HTTPS option, such as `https.createServer()` in Node.js or a framework's HTTPS flag, start it with HTTP instead.
+**The server in the container uses HTTPS**: Serve plain HTTP from the container. Cloudflare handles TLS for the preview hostname, and your Worker forwards each request to the container over HTTP. A server that only accepts HTTPS, such as one started with `https.createServer()` in Node.js or with a framework's HTTPS flag, cannot handle these requests. Start the server with HTTP instead.
 
 ## Related resources
 
