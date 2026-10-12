@@ -121,14 +121,14 @@ For example, if your guest wireless router is dynamically assigned an IPv6 addre
 
 Now that we have covered various options for sending DNS queries to Cloudflare's DNS resolvers and identifying your organization's guest wireless network—either by its source IP address or a dedicated resolver address—you're ready to create new locations in Zero Trust.
 
-To get started, navigate to **DNS Locations** in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [**DNS Locations**](/cloudflare-one/traffic-controls/resolver-endpoints/) guide. When using IPv4 or IPv6 endpoint filtering and location matching, you can define a network and subnet mask in CIDR notation to represent your location's source IP addresses. For example:
+To get started, go to **DNS Locations** in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [**DNS Locations**](/cloudflare-one/traffic-controls/resolver-endpoints/) guide. When using IPv4 or IPv6 endpoint filtering and location matching, you can define a network and subnet mask in CIDR notation to represent your location's source IP addresses. For example:
 
 - If all your wireless networks share a public IP address within the same subnet, you can apply a policy to all locations at once using a single DNS location object.
 - To assign unique policies to specific locations, use a host address ending in /32 to represent each location individually.
 
 ### Creating DNS policies
 
-To get started, navigate to firewall policies and select DNS in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [DNS Policies](/cloudflare-one/traffic-controls/dns-policies/) guide.
+To get started, go to firewall policies and select DNS in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [DNS Policies](/cloudflare-one/traffic-controls/dns-policies/) guide.
 
 To keep your policies organized, we recommend using meaningful names that clearly indicate their purpose. For instance, a policy named **Guest-Security-Block** conveys:
 
