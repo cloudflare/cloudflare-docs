@@ -10,7 +10,7 @@ The Core Web Vitals tell you whether a page is slow but beyond perceived load ti
 
 ## LCP sub-parts
 
-LCP is now broken into four phases, so you can see which one is slowing your largest element:
+LCP is broken into four phases, so you can see which one is impacting your perceived load time:
 
 1. **Time to First Byte:** how long the browser waits for the HTML document (`timeToFirstByte` in GraphQL).
 2. **Resource load delay:** how long the browser takes to discover the LCP resource after the document starts arriving (`lcpResourceLoadDelay`).
@@ -23,7 +23,7 @@ You don't have to remember all this detail, there are tooltips available to guid
 
 ## INP sub-parts
 
-INP is broken into three phases:
+INP is broken into three phases, guiding you to the area slowing down responsiveness:
 
 1. **Input delay:** how long an interaction (click, tap or key press) is blocked before it can be processed (`inpInputDelay`).
 2. **Processing duration:** how long your event handlers take to run (`inpProcessingDuration`).
