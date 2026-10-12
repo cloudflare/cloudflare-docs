@@ -27,16 +27,25 @@ Contract customers can choose to store their logs in Log Explorer for up to two 
 
 ## Permissions
 
-Access to Log Explorer features is controlled through specific permissions. Each permission grants users the ability to perform certain actions, such as querying logs, managing datasets, or creating dashboards. 
+Access to Log Explorer features depends on how you connect. Account members need a [member role](/fundamentals/manage-members/roles/), and API tokens need an [API token permission](/fundamentals/api/reference/permissions/). The token permissions are not member roles and do not appear in the role picker.
 
-| Feature | Required Permission | Description |
-|----------|--------------------|--------------|
-| **Manage datasets** | `Logs Edit` | Add, enable, or disable datasets. |
-| **Log Search** | `Logs Read` | Query logs in the dashboard or via API. |
-| **Log Search (save query)** | `Logs Write` | Save log search queries. |
-| **Custom dashboards** | `Analytics Read` | Create and view custom dashboards. |
+| Feature                     | Member role                                                        | API token permission | Description                               |
+| --------------------------- | ------------------------------------------------------------------ | -------------------- | ----------------------------------------- |
+| **Log Search**              | Log Share Reader (Log Share and Administrator Read Only also work) | `Logs Read`          | Query logs in the dashboard or via API.   |
+| **Log Search (save query)** | Super Administrator or Administrator                               | `Logs Edit`          | Save, edit, or delete log search queries. |
+| **Manage datasets**         | Super Administrator or Administrator                               | `Logs Edit`          | Add, enable, or disable datasets.         |
+| **Custom dashboards**       | Analytics                                                          | `Analytics Read`     | Create and view custom dashboards.        |
 
-These permissions apply across both the dashboard and the API, and must be granted at either the account or zone level depending on which datasets you need to access.
+The API lists `Logs Edit` as `Logs Write`. They are the same permission.
+
+Grant roles and permissions at the account level to query account-level datasets. A role assigned to specific zones only covers that zone's datasets.
+
+For zone-level datasets and saved queries, Log Share can also make changes.
+
+Some datasets need an additional member role:
+
+- Zero Trust datasets, such as Gateway and DEX, need Cloudflare Zero Trust PII.
+- Audit log datasets need Audit Logs Viewer.
 
 Authentication with the API can be done via an API token or API key with an email. Refer to [Create API token](/fundamentals/api/get-started/create-token/) for further instructions.
 
