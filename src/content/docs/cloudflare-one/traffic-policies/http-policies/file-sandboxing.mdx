@@ -92,3 +92,7 @@ Gateway cannot scan requests containing the following files:
 
 - Files larger than 100 MB
 - PGP encrypted files
+
+:::note
+Quarantine policies will only match if a request contains a supported file type that has been selected within the policy. The option **Block requests for files that cannot be scanned** only applies for requests that have matched a Quarantine policy.
+:::
