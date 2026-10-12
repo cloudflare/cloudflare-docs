@@ -1,0 +1,38 @@
+---
+title: Give your agent a web search tool
+description: Agents SDK 0.27.0 adds a beta web_search tool backed by the Cloudflare Web Search API for Pi Durable, AI SDK, and TanStack AI.
+date: 2026-10-07
+---
+
+import { TypeScriptExample } from "~/components";
+
+Agents SDK 0.27.0 adds a beta `web_search` tool that searches the public web through the [Cloudflare Web Search API](/web-search/). Searches run through your Workers AI binding and AI Gateway, and are billed to the account the Worker runs in.
+
+The model chooses only the query and how many results it wants, up to a limit you set. Your application chooses the provider, gateway, and billing. The model reads a short numbered list of titles, URLs, and trimmed descriptions, while your application receives the full API response. When the [`web_fetch`](/agents/tools/web-fetch/) tool is also available, the model is told to use it to read the pages it finds.
+
+Add the tool to a [Pi Durable](/agents/harnesses/pi/) extension registry before opening the harness:
+
+<TypeScriptExample>
+
+```ts
+import { webSearchTool } from "agents/websearch/pi";
+
+this.registry.install({
+	name: "web-tools",
+	tools: [webSearchTool({ binding: this.env.AI, provider: "exa" })],
+});
+```
+
+</TypeScriptExample>
+
+The SDK also includes AI SDK and TanStack AI adapters. To search without a model, such as from a scheduled job, use `createAIWebSearch()` or `createHTTPWebSearch()` from `agents/websearch`.
+
+For setup, options, and error handling, refer to [Web search](/agents/tools/web-search/).
+
+## Also in Agents SDK 0.27.0
+
+- **Experimental harnesses:** `AiSdkHarness`, `ThinkHarness`, `ContainerHarness`, which runs Claude Code or Codex in a [Container](/containers/), and `OpenCodeHarness`. Each has the same shape as [`PiHarness`](/agents/harnesses/pi/).
+- **Channels moved to `agents/experimental/channels`:** Channels is being rebuilt around conversations and turns. The `agents/channels` entry point has been removed. The new experimental API includes `ChannelGateway`, the Web Channel and its client, and an AI SDK chat transport.
+- **`npx agents tui`:** A terminal client for a conversation's Web Channel.
+
+For the full list of changes, refer to the [Agents SDK changelog](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0270).
