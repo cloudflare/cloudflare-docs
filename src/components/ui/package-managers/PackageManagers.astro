@@ -5,7 +5,11 @@
  * an inline custom element restores the saved tab before paint.
  */
 import { getCfCommand, getTabs } from "~/util/package-managers";
-import type { CommandType, CommandOptions } from "~/util/package-managers";
+import type {
+	CommandType,
+	CommandOptions,
+	Manager,
+} from "~/util/package-managers";
 import CliPreferenceSwitch from "../cli-preference/CliPreferenceSwitch.astro";
 import { Code } from "../code";
 import PackageManagerTabs from "./PackageManagerTabs.astro";
@@ -15,6 +19,7 @@ interface Props extends CommandOptions {
 	type?: CommandType;
 	frame?: "terminal" | "none";
 	cfCommand?: string;
+	managers?: ReadonlyArray<Manager>;
 }
 
 // `frame` is accepted for MDX API parity but intentionally not honored:
@@ -28,8 +33,14 @@ const {
 	comment,
 	prefix,
 	cfCommand,
+	managers,
 } = Astro.props;
-const tabs = getTabs(type, pkg, { args, dev, global, comment, prefix });
+const tabs = getTabs(
+	type,
+	pkg,
+	{ args, dev, global, comment, prefix },
+	managers,
+);
 const uid = `pm-${crypto.randomUUID()}`;
 const normalizedCfCommand = cfCommand?.trim();
 const renderedCfCommand = normalizedCfCommand
