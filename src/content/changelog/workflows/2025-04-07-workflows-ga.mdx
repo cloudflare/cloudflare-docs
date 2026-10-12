@@ -12,11 +12,11 @@ import { Render, PackageManagers, TypeScriptExample } from "~/components"
 [Workflows](/workflows/) is now _Generally Available_ (or "GA"): in short, it's ready for production workloads. Alongside marking Workflows as GA, we've introduced a number of changes during the beta period, including:
 
 * A new `waitForEvent` API that allows a Workflow to wait for an event to occur before continuing execution.
-* Increased concurrency: you can [run up to 4,500 Workflow instances](/changelog/2025-02-25-workflows-concurrency-increased/) concurrently — and this will continue to grow.
+* Increased concurrency: you can [run up to 4,500 Workflow instances](/changelog/post/2025-02-25-workflows-concurrency-increased/) concurrently — and this will continue to grow.
 * Improved observability, including new CPU time metrics that allow you to better understand which Workflow instances are consuming the most resources and/or contributing to your bill.
 * Support for `vitest` for testing Workflows locally and in CI/CD pipelines.
 
-Workflows also supports the new [increased CPU limits](/changelog/2025-03-25-higher-cpu-limits/) that apply to Workers, allowing you to run more CPU-intensive tasks (up to 5 minutes of CPU time per instance), not including the time spent waiting on network calls, AI models, or other I/O bound tasks.
+Workflows also supports the new [increased CPU limits](/changelog/post/2025-03-25-higher-cpu-limits/) that apply to Workers, allowing you to run more CPU-intensive tasks (up to 5 minutes of CPU time per instance), not including the time spent waiting on network calls, AI models, or other I/O bound tasks.
 
 #### Human-in-the-loop
 
