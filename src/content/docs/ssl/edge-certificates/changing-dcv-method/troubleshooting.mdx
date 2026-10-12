@@ -105,7 +105,7 @@ Resolve-DnsName -Name example.com -Type CAA
 
 ### Stale or conflicting DCV records
 
-Cloudflare adds `_acme-challenge` TXT records when it requests a certificate from a certificate authority. Records from a previous or abandoned certificate order can persist and may not appear under **DNS** > **Records** in the dashboard.
+When Cloudflare handles TXT validation for you (full setup or Delegated DCV), Cloudflare adds `_acme-challenge` TXT records when it requests a certificate from a certificate authority. Records from a previous or abandoned certificate order can persist and may not appear under **DNS** > **Records** in the dashboard.
 
 Review the following symptoms:
 
@@ -117,10 +117,10 @@ Review the following symptoms:
 To confirm, query the record from your authoritative nameservers:
 
 ```bash
-dig _acme-challenge.example.com TXT +short
+dig _acme-challenge.example.com TXT +short @<AUTHORITATIVE_NAMESERVER>
 ```
 
-If the query returns token values that you did not create, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have the stale records removed. After the records are removed, you can send a `PATCH` request to the [validation endpoint](/api/resources/ssl/subresources/verification/methods/edit/) using the same DCV method to trigger revalidation.
+Compare each value that `dig` returns with the tokens listed for your certificates that are pending validation (refer to [Get DCV values](/ssl/edge-certificates/changing-dcv-method/methods/txt/#get-dcv-values)). If a value matches none of them and you can find the record in your DNS settings (under **DNS** > **Records**, or at your external DNS provider), it is yours to remove. If a value matches none of them and you cannot find the record in your DNS settings, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have the stale records removed. After the records are removed, you can send a `PATCH` request to the [validation endpoint](/api/resources/ssl/subresources/verification/methods/edit/) using the same DCV method to trigger revalidation.
 
 ## Certificate authority (CA) errors
 
