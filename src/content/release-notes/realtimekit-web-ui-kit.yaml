@@ -8,7 +8,7 @@ entries:
     description: |-
       **Enhancements**
 
-      - Consolidated UI Kit assets into a single R2 bucket. [Allowlist](/realtime/realtimekit/network-allowlist/) `rtk-assets.realtime.cloudflare.com` to access all assets.
+      - Web UI Kit assets now use a single hostname, `rtk-assets.realtime.cloudflare.com`. You no longer need to allowlist `rtk-uploads.realtime.cloudflare.com`. Refer to the [Network allowlist](/realtime/realtimekit/network-allowlist/) for domain requirements.
 
       **Fixes**
 
