@@ -146,30 +146,6 @@ Install the `cloudflare-warp` package from the Cloudflare package repository. Ch
 Install from the repository instead of downloading the standalone `.rpm` file. The repository resolves dependencies such as `nss-tools`, which RHEL does not install by default.
 :::
 
-### Fedora
-
-<Steps>
-
-1. Add the Cloudflare repository:
-
-   ```sh
-   curl -fsSL https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | sudo tee /etc/yum.repos.d/cloudflare-warp.repo
-   ```
-
-   The repository file points `dnf` to the package build for your Fedora release and to the Cloudflare signing key.
-
-2. Install the package:
-
-   ```sh
-   sudo dnf install -y cloudflare-warp
-   ```
-
-   On first install, `dnf` imports the Cloudflare signing key from the repository file.
-
-</Steps>
-
-Fedora does not need EPEL.
-
 ## 2. Register and connect the node
 
 To register the host as your Mesh node and connect it, run the following command. Replace `<MESH_NODE_TOKEN>` with the node token from the [prerequisites](#prerequisites).
@@ -258,7 +234,7 @@ Updating the client briefly disconnects the node. If you run [high availability]
 sudo apt-get update && sudo apt-get install --only-upgrade -y cloudflare-warp
 ```
 
-</TabItem> <TabItem label="RHEL / Fedora">
+</TabItem> <TabItem label="RHEL">
 
 ```sh
 sudo yum update -y cloudflare-warp
@@ -296,7 +272,7 @@ To collect a full diagnostic bundle for Cloudflare support, run `warp-diag`. For
    sudo apt-get remove -y cloudflare-warp
    ```
 
-   </TabItem> <TabItem label="RHEL / Fedora">
+   </TabItem> <TabItem label="RHEL">
 
    ```sh
    sudo yum remove -y cloudflare-warp
