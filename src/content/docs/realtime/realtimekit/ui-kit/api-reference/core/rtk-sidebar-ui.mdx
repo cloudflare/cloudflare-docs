@@ -5,6 +5,9 @@ description: API reference for rtk-sidebar-ui component (Web Components (HTML) L
 products:
   - realtime
 ---
+A tabbed container for meeting panels, such as chat and participants. It shows
+ the selected panel in a sidebar or full-screen view.
+
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -30,7 +33,8 @@ products:
 
 ```html
 <rtk-sidebar-ui
- currentTab="example">
+ currentTab="example"
+ iconPack="example">
 </rtk-sidebar-ui>
 ```
 
@@ -41,5 +45,6 @@ products:
 
   el.focusCloseButton= true;
   el.hideCloseAction= true;
+  el.hideHeader= true;
 </script>
 ```

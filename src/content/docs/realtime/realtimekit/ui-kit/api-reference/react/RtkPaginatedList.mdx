@@ -10,14 +10,17 @@ products:
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
 | `autoScroll` | `boolean` | ✅ | - | auto scroll list to bottom |
-| `createNodes` | `(data: unknown[])` | ✅ | - | Create nodes |
+| `createNodes` | `(data: unknown[]) => VNode[]` | ✅ | - | Create nodes |
 | `emptyListLabel` | `string` | ✅ | - | label to show when empty |
-| `fetchData` | `(timestamp: number, size: number, reversed: boolean)` | ✅ | - | Fetch the data |
+| `fetchData` | `(timestamp: number, size: number, reversed: boolean) => Promise<unknown[]>` | ✅ | - | Fetch the data |
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `onNewNode` | `(node: DataNode) => Promise<void>` | ✅ | - | Adds a new node to the beginning of the paginated list |
+| `onNodeDelete` | `(id: string) => Promise<void>` | ✅ | - | Deletes a node anywhere from the list |
+| `onNodeUpdate` | `(id: string, node: DataNode) => Promise<void>` | ✅ | - | Updates an existing node in the paginated list. |
 | `pageSize` | `number` | ✅ | - | Page Size |
 | `pagesAllowed` | `number` | ✅ | - | Number of pages allowed to be shown |
-| `rerenderList` | `()` | ✅ | - | Rerender paginated list |
-| `reset` | `(timestamp?: number)` | ❌ | - | Resets the paginated list to a given timestamp |
+| `rerenderList` | `() => Promise<void>` | ✅ | - | Rerender paginated list |
+| `reset` | `(timestamp?: number) => Promise<void>` | ❌ | - | Resets the paginated list to a given timestamp |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
 
 ## Usage Examples
@@ -41,7 +44,7 @@ function MyComponent() {
   return (
     <RtkPaginatedList
       autoScroll={true}
-      createNodes={[]}
+      createNodes={handleEvent}
       emptyListLabel="example"
     />
   );

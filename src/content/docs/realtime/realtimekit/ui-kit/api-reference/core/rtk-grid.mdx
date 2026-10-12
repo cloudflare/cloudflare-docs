@@ -18,7 +18,7 @@ The main grid component which abstracts all the grid handling logic and renders 
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `layout` | `GridLayout` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `overrides` | `any` | ✅ | - | @deprecated |
+| `overrides` | `any` | ✅ | - | **Deprecated** |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
@@ -36,7 +36,8 @@ The main grid component which abstracts all the grid handling logic and renders 
 ```html
 <rtk-grid
  aspectRatio="example"
- gridSize="md">
+ gridSize="md"
+ size="md">
 </rtk-grid>
 ```
 
@@ -45,6 +46,7 @@ The main grid component which abstracts all the grid handling logic and renders 
 <script>
   const el = document.querySelector("rtk-grid");
 
+  el.meeting= meeting;
   el.gap= 42;
 </script>
 ```

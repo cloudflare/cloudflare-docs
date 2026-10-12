@@ -9,6 +9,7 @@ products:
 
 | Property | Type | Required | Default | Description |
 |----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `initialTranscriptions` | `Transcript[]` | ✅ | - | Initial transcriptions |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
@@ -33,7 +34,7 @@ products:
 <script>
   const el = document.querySelector("rtk-ai-transcriptions");
 
+  el.meeting= meeting;
   el.initialTranscriptions= [];
-  el.meeting= meeting
 </script>
 ```

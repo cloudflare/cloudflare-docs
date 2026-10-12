@@ -5,6 +5,9 @@ description: API reference for rtk-livestream-toggle component (Web Components (
 products:
   - realtime
 ---
+A button for starting or stopping a meeting livestream. It appears only for
+ participants who have permission to host the livestream.
+
 ## Properties
 
 | Property | Type | Required | Default | Description |
@@ -28,7 +31,7 @@ products:
 ```html
 <rtk-livestream-toggle
  size="md"
- variant"button">
+ variant="button">
 </rtk-livestream-toggle>
 ```
 
@@ -37,6 +40,6 @@ products:
 <script>
   const el = document.querySelector("rtk-livestream-toggle");
 
-  el.meeting= meeting
+  el.meeting= meeting;
 </script>
 ```

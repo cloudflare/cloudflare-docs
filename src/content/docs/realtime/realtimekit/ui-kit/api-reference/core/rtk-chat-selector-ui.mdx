@@ -29,7 +29,8 @@ products:
 ```html
 <rtk-chat-selector-ui
  selectedGroupId="example"
- selfUserId="example">
+ selfUserId="example"
+ unreadCounts="example">
 </rtk-chat-selector-ui>
 ```
 
@@ -39,5 +40,6 @@ products:
   const el = document.querySelector("rtk-chat-selector-ui");
 
   el.groups= [];
+  el.unreadCounts= 42;
 </script>
 ```
