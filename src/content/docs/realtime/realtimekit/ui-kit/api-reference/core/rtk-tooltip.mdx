@@ -31,7 +31,9 @@ Tooltip component which follows RTK Design System.
 ### With Properties
 
 ```html
-<rtk-tooltip>
+<rtk-tooltip
+ label="example"
+ size="md">
 </rtk-tooltip>
 ```
 
@@ -40,7 +42,8 @@ Tooltip component which follows RTK Design System.
 <script>
   const el = document.querySelector("rtk-tooltip");
 
-  el.delay= 42;
-  el.disabled= true;
+  el.delay = 42;
+  el.disabled = true;
+  el.open = true;
 </script>
 ```

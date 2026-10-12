@@ -33,7 +33,7 @@ A component which renders list of messages.
 <!-- component.html -->
 <rtk-message-list-view
  estimateItemSize="42"
- [loadMore]="(lastmessage: message)"
+ loadMore="handleEvent"
  [messages]="[]">
 </rtk-message-list-view>
 ```

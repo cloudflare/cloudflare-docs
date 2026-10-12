@@ -31,7 +31,9 @@ products:
 
 ```html
 <rtk-chat-messages-ui
- selectedGroup="example">
+ selectedGroup="example"
+ selfUserId="example"
+ size="md">
 </rtk-chat-messages-ui>
 ```
 
@@ -40,7 +42,7 @@ products:
 <script>
   const el = document.querySelector("rtk-chat-messages-ui");
 
-  el.canPinMessages= true;
-  el.messages= [];
+  el.canPinMessages = true;
+  el.messages = [];
 </script>
 ```

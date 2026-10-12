@@ -30,7 +30,8 @@ products:
 ### With Properties
 
 ```html
-<rtk-participant-setup>
+<rtk-participant-setup
+ size="md">
 </rtk-participant-setup>
 ```
 
@@ -39,7 +40,7 @@ products:
 <script>
   const el = document.querySelector("rtk-participant-setup");
 
-  el.isPreview= true;
-  el.participant= participant
+  el.participant = participant;
+  el.isPreview = true;
 </script>
 ```

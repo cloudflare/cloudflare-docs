@@ -38,7 +38,8 @@ A single component which renders an entire meeting UI.
 ### With Properties
 
 ```html
-<rtk-meeting>
+<rtk-meeting
+ size="md">
 </rtk-meeting>
 ```
 
@@ -47,7 +48,8 @@ A single component which renders an entire meeting UI.
 <script>
   const el = document.querySelector("rtk-meeting");
 
-  el.applyDesignSystem= true;
-  el.config= defaultUiConfig
+  el.meeting = meeting;
+  el.applyDesignSystem = true;
+  el.config = defaultUiConfig;
 </script>
 ```

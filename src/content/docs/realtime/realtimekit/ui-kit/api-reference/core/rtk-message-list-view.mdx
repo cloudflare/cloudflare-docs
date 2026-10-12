@@ -38,7 +38,8 @@ A component which renders list of messages.
 <script>
   const el = document.querySelector("rtk-message-list-view");
 
-  el.estimateItemSize= 42;
-  el.messages= [];
+  el.estimateItemSize = 42;
+  el.loadMore = handleEvent;
+  el.messages = [];
 </script>
 ```

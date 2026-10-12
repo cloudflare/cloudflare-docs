@@ -33,7 +33,8 @@ A tabbed container for meeting panels, such as chat and participants. It shows
 
 ```html
 <rtk-sidebar-ui
- currentTab="example">
+ currentTab="example"
+ iconPack="example">
 </rtk-sidebar-ui>
 ```
 
@@ -42,7 +43,8 @@ A tabbed container for meeting panels, such as chat and participants. It shows
 <script>
   const el = document.querySelector("rtk-sidebar-ui");
 
-  el.focusCloseButton= true;
-  el.hideCloseAction= true;
+  el.focusCloseButton = true;
+  el.hideCloseAction = true;
+  el.hideHeader = true;
 </script>
 ```

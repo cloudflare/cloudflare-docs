@@ -40,7 +40,8 @@ A grid component that renders two lists of participants: `pinnedParticipants` an
 ```html
 <rtk-spotlight-grid
  aspectRatio="example"
- gridSize="md">
+ gridSize="md"
+ size="md">
 </rtk-spotlight-grid>
 ```
 
@@ -49,6 +50,8 @@ A grid component that renders two lists of participants: `pinnedParticipants` an
 <script>
   const el = document.querySelector("rtk-spotlight-grid");
 
-  el.gap= 42;
+  el.meeting = meeting;
+  el.gap = 42;
+  el.participants = [];
 </script>
 ```

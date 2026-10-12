@@ -36,7 +36,9 @@ A component which renders a chat composer
 
 ```html
 <rtk-chat-composer-view
- inputTextPlaceholder="example">
+ inputTextPlaceholder="example"
+ message="example"
+ quotedMessage="example">
 </rtk-chat-composer-view>
 ```
 
@@ -45,7 +47,8 @@ A component which renders a chat composer
 <script>
   const el = document.querySelector("rtk-chat-composer-view");
 
-  el.canSendFiles= true;
-  el.canSendTextMessage= true;
+  el.canSendFiles = true;
+  el.canSendTextMessage = true;
+  el.isEditing = true;
 </script>
 ```

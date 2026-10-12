@@ -33,7 +33,8 @@ A button which toggles recording state of a meeting.
 
 ```html
 <rtk-recording-toggle
- size="md">
+ size="md"
+ variant="button">
 </rtk-recording-toggle>
 ```
 
@@ -42,7 +43,7 @@ A button which toggles recording state of a meeting.
 <script>
   const el = document.querySelector("rtk-recording-toggle");
 
-  el.disabled= true;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.disabled = true;
 </script>
 ```
