@@ -136,13 +136,49 @@ In `https://ada.example-previews.com/app/`, a wildcard DNS record and the route 
 
 ## Serve previews under a subdomain
 
-[Universal SSL](/ssl/edge-certificates/universal-ssl/) covers a domain and its first-level subdomains, such as `ada.example-previews.com`. It does not cover deeper hostnames such as `ada.previews.example.com`. To serve previews under a subdomain, add [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) for it.
+To serve previews under a subdomain of a domain you already use, such as `previews.example.com`, name the wildcard record and the route after that subdomain:
+
+<Steps>
+
+1. In the DNS settings of `example.com`, add a proxied `AAAA` record with the name `*.previews` and the content `100::`. A [wildcard record](/dns/manage-dns-records/reference/wildcard-dns-records/#wildcards-are-multi-level-by-default) named `*` does not apply below `previews.example.com` if that hostname has its own record, and it also matches every other unused subdomain of `example.com`. A record named `*.previews` matches only preview hostnames.
+
+2. In `wrangler.jsonc`, set `PREVIEW_DOMAIN` to the subdomain and route its subdomains to your Worker:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"vars": {
+   		"PREVIEW_DOMAIN": "previews.example.com",
+   	},
+   	"routes": [
+   		{
+   			"pattern": "*.previews.example.com/*",
+   			"zone_name": "example.com",
+   		},
+   	],
+   	"workers_dev": true,
+   }
+   ```
+
+   </WranglerConfig>
+
+</Steps>
+
+:::caution[Certificates for deeper hostnames]
+[Universal SSL](/ssl/edge-certificates/universal-ssl/) covers a domain and its first-level subdomains, such as `ada.example-previews.com`. It does not cover deeper hostnames such as `ada.previews.example.com`. To serve previews under a subdomain, add [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) for it. Without one, browsers show a certificate error on preview hostnames.
+:::
 
 Previews under a domain that your application also uses share cookies with your application. Browsers send a cookie set with `Domain=example.com` to every subdomain, including every preview under `previews.example.com`.
 
 ## Set cookies on preview hostnames
 
 Code in one preview can set a cookie with `Domain=example-previews.com`, and every other preview then receives that cookie. Set cookies on preview hostnames without a `Domain` attribute, and do not trust a cookie because it arrived on a preview hostname.
+
+## Troubleshooting
+
+- **Error 1016 or 522 on a preview hostname**: For general causes, refer to [Error 1016](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/) and [Error 522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). For previews, check that the wildcard record exists and is proxied, and that its name matches your route: `*` for `*.example-previews.com/*`, or `*.previews` for `*.previews.example.com/*`. If the route does not match the hostname, the request does not reach your Worker.
+- **The server in the container uses HTTPS**: Serve plain HTTP from the container. Cloudflare handles TLS for the preview hostname, and your Worker forwards each request to the container with the `http:` scheme, because `getTcpPort().fetch()` does not accept `https:` URLs. If the server starts with an HTTPS option, such as `https.createServer()` in Node.js or a framework's HTTPS flag, start it with HTTP instead.
 
 ## Related resources
 
