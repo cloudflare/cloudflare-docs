@@ -34,7 +34,8 @@ A component which lists all participants, with ability to
 
 ```html
 <rtk-participants-stage-list
- search="example">
+ search="example"
+ size="md">
 </rtk-participants-stage-list>
 ```
 
@@ -43,7 +44,7 @@ A component which lists all participants, with ability to
 <script>
   const el = document.querySelector("rtk-participants-stage-list");
 
-  el.hideHeader= true;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.hideHeader = true;
 </script>
 ```

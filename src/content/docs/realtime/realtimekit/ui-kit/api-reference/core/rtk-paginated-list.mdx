@@ -35,7 +35,9 @@ products:
 
 ```html
 <rtk-paginated-list
- emptyListLabel="example">
+ emptyListLabel="example"
+ fetchData="md"
+ onNodeDelete="example">
 </rtk-paginated-list>
 ```
 
@@ -44,7 +46,8 @@ products:
 <script>
   const el = document.querySelector("rtk-paginated-list");
 
-  el.autoScroll= true;
-  el.createNodes= [];
+  el.autoScroll = true;
+  el.createNodes = handleEvent;
+  el.fetchData = true;
 </script>
 ```

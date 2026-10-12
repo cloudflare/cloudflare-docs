@@ -33,7 +33,8 @@ A grid component which renders only the participants in a simple grid.
 
 ```html
 <rtk-simple-grid
- aspectRatio="example">
+ aspectRatio="example"
+ size="md">
 </rtk-simple-grid>
 ```
 
@@ -42,7 +43,8 @@ A grid component which renders only the participants in a simple grid.
 <script>
   const el = document.querySelector("rtk-simple-grid");
 
-  el.gap= 42;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.gap = 42;
+  el.participants = [];
 </script>
 ```

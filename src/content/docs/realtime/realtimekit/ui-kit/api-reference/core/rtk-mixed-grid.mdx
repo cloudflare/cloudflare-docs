@@ -39,7 +39,8 @@ A grid component which handles screenshares, plugins and participants.
 ```html
 <rtk-mixed-grid
  aspectRatio="example"
- gridSize="md">
+ gridSize="md"
+ size="md">
 </rtk-mixed-grid>
 ```
 
@@ -48,6 +49,8 @@ A grid component which handles screenshares, plugins and participants.
 <script>
   const el = document.querySelector("rtk-mixed-grid");
 
-  el.gap= 42;
+  el.meeting = meeting;
+  el.gap = 42;
+  el.participants = [];
 </script>
 ```

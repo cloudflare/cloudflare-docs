@@ -34,7 +34,8 @@ A component which plays a participants video and allows for placement
 ### With Properties
 
 ```html
-<rtk-participant-tile>
+<rtk-participant-tile
+ size="md">
 </rtk-participant-tile>
 ```
 
@@ -43,7 +44,8 @@ A component which plays a participants video and allows for placement
 <script>
   const el = document.querySelector("rtk-participant-tile");
 
-  el.isPreview= true;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.participant = participant;
+  el.isPreview = true;
 </script>
 ```

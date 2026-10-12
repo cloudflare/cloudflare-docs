@@ -40,7 +40,9 @@ products:
 ### With Properties
 
 ```html
-<rtk-chat-message>
+<rtk-chat-message
+ senderDisplayPicture="example"
+ size="md">
 </rtk-chat-message>
 ```
 
@@ -49,8 +51,8 @@ products:
 <script>
   const el = document.querySelector("rtk-chat-message");
 
-  el.alignRight= true;
-  el.canDelete= true;
-  el.canEdit= true;
+  el.alignRight = true;
+  el.canDelete = true;
+  el.canEdit = true;
 </script>
 ```

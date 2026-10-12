@@ -32,7 +32,9 @@ A component which renders a text composer
 ### With Properties
 
 ```html
-<rtk-text-composer-view>
+<rtk-text-composer-view
+ placeholder="example"
+ value="example">
 </rtk-text-composer-view>
 ```
 
@@ -41,7 +43,8 @@ A component which renders a text composer
 <script>
   const el = document.querySelector("rtk-text-composer-view");
 
-  el.disabled= true;
-  el.maxLength= 42;
+  el.disabled = true;
+  el.keyDownHandler = handleEvent;
+  el.maxLength = 42;
 </script>
 ```

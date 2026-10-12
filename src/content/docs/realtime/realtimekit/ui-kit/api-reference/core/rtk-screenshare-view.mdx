@@ -33,7 +33,8 @@ A component which plays a participant's screenshared video.
 ### With Properties
 
 ```html
-<rtk-screenshare-view>
+<rtk-screenshare-view
+ size="md">
 </rtk-screenshare-view>
 ```
 
@@ -42,7 +43,8 @@ A component which plays a participant's screenshared video.
 <script>
   const el = document.querySelector("rtk-screenshare-view");
 
-  el.hideFullScreenButton= true;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.participant = participant;
+  el.hideFullScreenButton = true;
 </script>
 ```
