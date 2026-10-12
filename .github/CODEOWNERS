@@ -735,15 +735,15 @@ package.json @cloudflare/content-engineering
 
 # r2
 
-/src/content/docs/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/src/content/docs/r2/ @helloimalastair @rdimaio @vy-ton @cloudflare/product-owners
 /src/content/partials/r2/ @helloimalastair @irvinebroque @rdimaio @rita3ko @vy-ton @cloudflare/product-owners
 /src/content/release-notes/r2.yaml @helloimalastair @rdimaio @cloudflare/product-owners
-/src/assets/images/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/src/content/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/r2.yaml @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/src/icons/r2.svg @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/public/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/src/assets/images/changelog/r2/ @helloimalastair @rdimaio @vy-ton @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/r2/ @harshil1712 @helloimalastair @vy-ton @rdimaio @cloudflare/product-owners
+/src/content/changelog/r2/ @harshil1712 @helloimalastair @vy-ton @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/r2.yaml @helloimalastair @vy-ton @rdimaio @cloudflare/product-owners
+/src/icons/r2.svg @helloimalastair @vy-ton @rdimaio @cloudflare/product-owners
+/public/images/r2/ @helloimalastair @vy-ton @rdimaio @cloudflare/product-owners
 
 # basin-catalog
 
