@@ -73,6 +73,7 @@ Bind the KV namespace and register the Worker as the queue consumer:
 ```toml
 name = "recipient-record-sync"
 main = "src/index.ts"
+upload_source_maps = true
 compatibility_date = "$today"
 
 [[kv_namespaces]]

@@ -40,6 +40,7 @@ Your Worker needs two things: a Durable Object class with a SQLite storage backe
 ```toml
 compatibility_date = "$today"
 main = "src/index.ts"
+upload_source_maps = true
 
 [[migrations]]
 tag = "v1"
