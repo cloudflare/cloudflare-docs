@@ -143,7 +143,7 @@ When analyzing this data, it is important to take into account [connection limit
 - [Cache Analytics](/cache/performance-review/cache-analytics/): Critical for analyzing Cache Hit Ratio (CHR) and "Requests by Cache Status" to find uncached content that causes origin load.
 - [Ruleset Engine](/ruleset-engine/): Review and leverage the extensive library of [fields](/ruleset-engine/rules-language/fields/reference/), including network metrics like [TCP RTT and TCP fields](/changelog/post/2025-10-30-tcp-rtt-and-tcp-fields/), to implement precise custom logic for routing, caching, and security based on real-time connection properties.
 - Logging & Forensics:
-  - [Log Explorer](/observability/logs/unsampled-security-datasets/): For ad-hoc querying of request logs directly in the dashboard. Use [Custom Log Fields](/logs/logpush/logpush-job/custom-fields/) to log additional request headers, response headers and cookies.
+  - [Log Explorer](/observability/logs/unsampled-security-datasets/): For ad-hoc querying of request logs directly in the dashboard. Use [Custom Log Fields](/logs/logpush/logpush-job/custom-fields/) to log additional request headers, response headers, and cookies.
   - [Logpush](/logs/logpush/): For exporting logs to third-party SIEMs with optional [Log Output Options](/logs/logpush/logpush-job/log-output-options/), supporting formats such as CSV or JSON. Essential for analyzing custom fields and long-term trends, as well as calculating the Download Success Rate and analyzing Download Throughput for large files.
   - [Instant Logs](/logs/instant-logs/): Real-time traffic inspection for immediate debugging.
   - [Network Error Logging (NEL)](/network-error-logging/): Captures client-side connectivity issues that the server might never see.
