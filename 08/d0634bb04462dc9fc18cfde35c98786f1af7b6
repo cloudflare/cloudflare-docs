@@ -1,0 +1,593 @@
+.agents/references/components.md
+  s_d161f87b820022::t_147ed432736dcc 57-58,60,95,136,148-156,190,346,374,389,396,402,408,447,483,502,566,578,586,592,618-623,682,711,758,820,832
+.agents/references/style-guide.md
+  s_d161f87b820022::t_6cd85c347edb6d 30,46,295,303,385,402-403
+.agents/skills/contributing/references/changelog.md
+  s_d161f87b820022::t_d31e458cf78eda 43-44
+.agents/skills/contributing/references/choosing-components.md
+  s_d161f87b820022::t_b380c578b873ca 18,62,64
+.agents/skills/contributing/references/content-types.md
+  s_d161f87b820022::t_4495dec7459565 24
+.agents/skills/contributing/references/information-architecture.md
+  s_d161f87b820022::t_eff9c61c19950c 14,21,29,65,71,73
+.editorconfig
+  s_d161f87b820022::t_67fd722c81fbb9 10
+.flue/.agents/skills/style-guide-review/SKILL.md
+  s_d161f87b820022::t_2cf0c487531720 21-22,47,68-69
+.flue/.agents/skills/style-guide-review/reference/always/core-content.md
+  s_d161f87b820022::t_89aeb7df999734 19
+.flue/.agents/skills/style-guide-review/reference/components/anchor-heading.md
+  s_d161f87b820022::t_1badd2dc257e86 22
+.flue/.agents/skills/style-guide-review/reference/components/extra-flag-details.md
+  s_d161f87b820022::t_b24cd214e0ce86 3,9
+.flue/.agents/skills/style-guide-review/reference/components/file-tree.md
+  s_d161f87b820022::t_733c68181e1136 3
+.flue/.agents/skills/style-guide-review/reference/components/github-code.md
+  s_d161f87b820022::t_d343f0f11798f1 24
+.flue/.agents/skills/style-guide-review/reference/components/package-managers.md
+  s_d161f87b820022::t_6c312093e824f5 8
+.flue/.agents/skills/style-guide-review/reference/components/steps.md
+  s_d161f87b820022::t_5315b4cf0950e6 9
+.flue/.agents/skills/style-guide-review/reference/components/subtract-ip-calculator.md
+  s_d161f87b820022::t_d967c072c46e46 13
+.flue/.agents/skills/style-guide-review/reference/components/typescript-example.md
+  s_d161f87b820022::t_7946276bce2dab 10,28
+.flue/.agents/skills/style-guide-review/reference/conditional/code-blocks.md
+  s_d161f87b820022::t_017bef6cbe67ef 32-34
+.flue/.agents/skills/style-guide-review/reference/conditional/frontmatter.md
+  s_d161f87b820022::t_b8f79643b4c288 12
+.flue/.agents/skills/style-guide-review/reference/conditional/images.md
+  s_d161f87b820022::t_70a21a2917e81d 1-30
+.flue/.agents/skills/style-guide-review/reference/conditional/imports.md
+  s_d161f87b820022::t_eec72ce1dcb649 9
+.flue/.agents/skills/style-guide-review/reference/manifest.json
+  s_d161f87b820022::t_4d1cd54db01c51 32-37,105
+.flue/.agents/skills/style-guide-review/reference/rule-authoring.md
+  s_d161f87b820022::t_0e9907bd129091 1-52
+.flue/AGENTS.md
+  s_d161f87b820022::t_29867420491b2c 32,136-192
+.flue/agents/style-guide-file.ts
+  s_d161f87b820022::t_258585a0674b6d 39-40,57-58,90-94
+.flue/app.ts
+  s_d161f87b820022::t_d4aca45da5e84f 3,20-24,47,144-174
+.flue/bin/run-evals.ts
+  s_d161f87b820022::t_c8cda9ccfc2e1b 1-136
+.flue/cloudflare.ts
+  s_d161f87b820022::t_8874f5c08c2407 347
+.flue/evals/code-review.eval.ts
+  s_d161f87b820022::t_f32e3f029cb1e6 1-147
+.flue/evals/conventions.eval.ts
+  s_d161f87b820022::t_c5820627e6374a 1-168
+.flue/evals/harness.ts
+  s_d161f87b820022::t_2896285b9a48da 1-203
+.flue/evals/mocks/github-repo-tools.ts
+  s_d161f87b820022::t_34fd1b7bc93f3d 1-112
+.flue/evals/reconcile.eval.ts
+  s_d161f87b820022::t_f64860c2af026c 1-207
+.flue/evals/spam-filter.eval.ts
+  s_d161f87b820022::t_f30cb694385ee1 1-146
+.flue/evals/style-guide.eval.ts
+  s_d161f87b820022::t_788d36c2886896 1-333
+.flue/lib/code-review-files.ts
+  s_d161f87b820022::t_fd92f92284f0db 93
+.flue/lib/run-style-guide.ts
+  s_d161f87b820022::t_e16824fcd18b5a 46-47,64,97
+.flue/lib/style-guide-files.ts
+  s_d161f87b820022::t_926eaef80fba6f 29
+.flue/package.json
+  s_d161f87b820022::t_8e6d3313f629a7 12-14,27,32
+.flue/pnpm-lock.yaml
+  s_d161f87b820022::t_6a2d149d247f06 36-38,51-53,420-424,611-613,828-830,1167-1172,1539-1541,2100-2103,2427-2440,3069-3073,3261-3264,3458-3459,3782-3789,4175-4178,4720-4721,5035-5044
+.flue/vite.config.ts
+  s_d161f87b820022::t_9f53f049de1cb0 3-4,14-46,48-71
+.flue/vitest.evals.config.ts
+  s_d161f87b820022::t_ecae54e211543b 1-13
+.github/CODEOWNERS
+  s_d161f87b820022::t_a9af3097693ad1 53-56,73-77,90-98,103,107-126,130-136,140-146,148,150,152,154-158,165-170,172-176,181-183,187,189,206-207,213,229,243-246,250,253,263-267,292-294,312,332,340,343-345,350,353-354,359-360,365,392-395
+.github/workflows/flue-ci.yml
+  s_d161f87b820022::t_3033a68eff3e84 85-127
+.github/workflows/upload-r2-snapshot.yml
+  s_d161f87b820022::t_edf5dd50aa2c61 1-107
+.gitignore
+  s_d161f87b820022::t_570f3996357b05 67
+.gitlab-ci.yml
+  s_d161f87b820022::t_a056c097dfb39f 13
+AGENTS.md
+  s_d161f87b820022::t_82342d91f508d1 78,179
+pnpm-lock.yaml
+  s_d161f87b820022::t_4b0d075fe550b0 24-25,28,33-34,37,48-49,52,54-55,81-82,90-91,115,129-130,147-148,154,171-172,195-196,292,334,337,340,463-464,552-553,570-571,800-801,823-824,828,838-844,850-856,862-868,874-880,886-892,897-898,1285-1286,1646-1647,1781,1788,1795,1802,1809,1816,1823,1830,1837,1844,1851,1858,1865,1872,2358-2359,2464-2466,2579-2582,2591-2594,2670-2671,2832-2834,3184-3186,3220-3222,3238-3239,3704-3707,3728-3731,3755-3756,4276-4277,4294-4296,4508-4509,4669-4670,4681-4682,5049-5052,5109,5242-5243,5278-5284,5312-5314,5370-5373,5469-5471,5513-5515,5526-5527,5965-5969,5980-5982,6051-6053,6252,6254,6258,6263,6267-6268,6270-6271,6354,6365,6368,6424,6430-6431,6437,6450,6455,6460,6493,6703,6706,6712,6714,6717,6744,6747-6757,6763,6770-6771,6781-6783,6787-6789,6793-6795,6799-6801,6805-6808,7160,7441,7915,7920,8121,8123,8141,8154,8158,8256-8257,8265,8273,8286,8292,8421-8422,8429-8430,8538,8540,8548,8565,8568,8578,8582-8585,8590,8595,8598-8599,8605,8701,8786,8788-8790,9157-9158,9198,9200,9217,9812-9813,9846-9847,9864,9891,9956,10433,10447-10450,10953,10958,11126,11138,11606-11612,11860,11891,11951,11974,11976-11983,12041,12043,12105-12106,12182-12184,12242-12243,12255,12346,12411,12419,12426,12428,12430,12433,12450,12453,12636-12644,12655,12661,12663-12665,12706,12708,12711,12713
+public/realtime/static/realtime-api-2024-05-21.yaml
+  s_d161f87b820022::t_f2d2091ed85248 690-697,739-801,1247-1256
+src/assets/images/artifacts/snapshot-cache-flow.svg
+  s_d161f87b820022::t_dab4df07e969c6 1-99
+src/components/ArtifactsCIPipelineDiagram.astro
+  s_d161f87b820022::t_e9922a1e95632d 1-790
+src/components/ArtifactsCIWorkflowDiagram.astro
+  s_d161f87b820022::t_621bb9e7397df7 1-499
+src/components/ArtifactsPlatformSharedCIDiagram.astro
+  s_d161f87b820022::t_3e32b5917f3993 1-227
+src/components/Footer.astro
+  s_d161f87b820022::t_dbf9f08ccda39a 246-247
+src/components/OneTrust.astro
+  s_d161f87b820022::t_f50cb20bbf7745 11-13,15
+src/components/models/ModelDetailPage.astro
+  s_d161f87b820022::t_85965d499b16b3 29,144-147,338-343
+src/content/changelog/access/2026-07-31-mcp-portal-manual-oauth.mdx
+  s_d161f87b820022::t_5e0751dd62d79a 1-15
+src/content/changelog/access/2026-08-03-eager-redirect-cookie-setting.mdx
+  s_d161f87b820022::t_4446814f731137 1-17
+src/content/changelog/agents/2026-03-02-agents-sdk-v0.7.0.mdx
+  s_d161f87b820022::t_c3aa55d780b52d 75
+src/content/changelog/agents/2026-08-03-cloudflare-computer.mdx
+  s_d161f87b820022::t_f67f513a5fdf27 1-41
+src/content/changelog/agents/2026-08-04-agent-tracing.mdx
+  s_d161f87b820022::t_81292ef8d0d7d5 1-67
+src/content/changelog/ai-gateway/2026-08-05-ai-spend.mdx
+  s_d161f87b820022::t_c96f1839cd63c8 1-15
+src/content/changelog/ai-search/2026-07-30-ai-search-agent-sdks.mdx
+  s_d161f87b820022::t_05da2c8281fa45 1-73
+src/content/changelog/artifacts/2026-08-04-build-and-deploy-on-push.mdx
+  s_d161f87b820022::t_eab6f0f55116cf 1-75
+src/content/changelog/audit-logs/2026-07-27-audit-logs-v2-resource-history.mdx
+  s_d161f87b820022::t_bb9860f0251fa8 1-32
+src/content/changelog/browser-run/2026-07-31-br-dashboard-playground.mdx
+  s_d161f87b820022::t_285e839355b761 1-52
+src/content/changelog/cloudflare-one-client/2025-08-29-warp-AI-diag-analyzer.mdx
+  s_d161f87b820022::t_37d145bc1a3ac0 7
+src/content/changelog/cloudflare-one/2026-07-28-gateway-maximum-dns-ttl.mdx
+  s_d161f87b820022::t_d04495b8812a5c 1-21
+src/content/changelog/cloudflare-wan/2026-07-08-unified-routing-iplist-ids-sip.mdx
+  s_d161f87b820022::t_58a09717273b9f 1-14
+src/content/changelog/cloudflare-wan/2026-07-17-appliance-restart-reboot-shutdown.mdx
+  s_d161f87b820022::t_b46a1c1e48a968 1-20
+src/content/changelog/dns/2026-10-26-foundation-dns-nameserver-type.mdx
+  s_d161f87b820022::t_721e13e97ac202 1-31
+src/content/changelog/dns/2026-11-23-remove-foundation-dns-boolean.mdx
+  s_d161f87b820022::t_3c19d1178fc202 1-24
+src/content/changelog/pipelines/2026-08-03-pipelines-billing-enabled.mdx
+  s_d161f87b820022::t_0e9034f1eccb55 1-27
+src/content/changelog/r2-sql/2026-05-11-r2-sql-pricing-announced.mdx
+  s_d161f87b820022::t_427aa1a6c72c07 15
+src/content/changelog/r2-sql/2026-08-03-r2-sql-billing-enabled.mdx
+  s_d161f87b820022::t_5adddeda43d88d 1-25
+src/content/changelog/r2/2026-07-24-r2-sippy-azure-s3-compatible-support.mdx
+  s_d161f87b820022::t_d61cb2891ef75f 1-25
+src/content/changelog/r2/2026-08-03-r2-data-catalog-billing-enabled.mdx
+  s_d161f87b820022::t_524f618eb6d12a 1-29
+src/content/changelog/stream/2026-07-30-rotate-stream-broadcast-keys.mdx
+  s_d161f87b820022::t_2552b6e7661685 1-23
+src/content/changelog/waf/2026-07-29-waf-release.mdx
+  s_d161f87b820022::t_e19623100adc93 1-163
+src/content/changelog/waf/2026-08-04-waf-release.mdx
+  s_d161f87b820022::t_b3daa182192bd1 1-138
+src/content/changelog/waf/scheduled-waf-release.mdx
+  s_d161f87b820022::t_87ec27e29374ce 2-4,22,24-25,29,31,33,37-38,42,44,46,48,50-51,55,57,59,63
+src/content/changelog/workers-ai/2026-07-28-models-require-workers-paid.mdx
+  s_d161f87b820022::t_1c3dc911d3ccc5 1-25
+src/content/changelog/workers/2026-07-28-start-active-span.mdx
+  s_d161f87b820022::t_b42cfe94ec1912 1-58
+src/content/changelog/workers/2026-07-30-workers-builds-nodejs-24.mdx
+  s_d161f87b820022::t_b2dc78560616ef 1-11
+src/content/changelog/workers/2026-07-31-wrangler-startup-profile-summary.mdx
+  s_d161f87b820022::t_35cdcc3ed0df2a 1-43
+src/content/changelog/workers/2026-08-03-python-javascript-rpc.mdx
+  s_d161f87b820022::t_b279a2e302e7fe 1-114,116-122
+src/content/changelog/workers/2026-08-04-local-tracing.mdx
+  s_d161f87b820022::t_37d264bb91f94b 1-25
+src/content/docs/agents/harnesses/think/index.mdx
+  s_d161f87b820022::t_5c25643ffa76b7 135-151
+src/content/docs/agents/harnesses/think/recovery.mdx
+  s_d161f87b820022::t_51e0edf26e4501 48,235
+src/content/docs/agents/runtime/agents-api.mdx
+  s_d161f87b820022::t_f99b1f4931d2d0 88-110
+src/content/docs/agents/runtime/operations/observability/diagnostics-channels.mdx
+  s_d161f87b820022::t_0a2ea4d5d863a6 2-4,6,13,300-305
+src/content/docs/agents/runtime/operations/observability/index.mdx
+  s_d161f87b820022::t_21fb9bd97ef6e3 1-12
+src/content/docs/agents/runtime/operations/observability/tracing.mdx
+  s_d161f87b820022::t_13fed169f5b3f2 1-289
+src/content/docs/ai-crawl-control/configuration/ai-crawl-control-with-waf.mdx
+  s_d161f87b820022::t_5a6c76cf8c9e7a 12,109
+src/content/docs/ai-gateway/configuration/bring-your-own-keys.mdx
+  s_d161f87b820022::t_2960948321a66c 146-149
+src/content/docs/ai-gateway/features/unified-billing.mdx
+  s_d161f87b820022::t_ea64408f0043be 58-71
+src/content/docs/ai-gateway/observability/ai-spend.mdx
+  s_d161f87b820022::t_56a8fe342a46dc 1-62
+src/content/docs/ai-gateway/usage/providers/anthropic.mdx
+  s_d161f87b820022::t_1f59d5803f1052 9,127,140-143
+src/content/docs/ai-search/agent-sdks/agents-sdk.mdx
+  s_d161f87b820022::t_f9d6dc87a494c2 1-283
+src/content/docs/ai-search/agent-sdks/ai-sdk.mdx
+  s_d161f87b820022::t_0c37d966cb1ad5 1-359
+src/content/docs/ai-search/agent-sdks/index.mdx
+  s_d161f87b820022::t_fa43a285151897 1-19
+src/content/docs/ai-search/agent-sdks/langchain.mdx
+  s_d161f87b820022::t_90e730de8116f9 1-256
+src/content/docs/ai-search/configuration/index.mdx
+  s_d161f87b820022::t_5ec122f6c29104 6
+src/content/docs/api-shield/management-and-monitoring/api-routing.mdx
+  s_d161f87b820022::t_92055ad83a9b00 11,26-34,40-49
+src/content/docs/api-shield/management-and-monitoring/developer-portal.mdx
+  s_d161f87b820022::t_9eb017f80f8637 11,17-18,20-25,27-31,33
+src/content/docs/api-shield/management-and-monitoring/endpoint-labels.mdx
+  s_d161f87b820022::t_109820dcc9b9a5 14
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/index.mdx
+  s_d161f87b820022::t_32aaf2e3a12c3c 3,11,15,17,20,25-30,34-45,49-54,56,60-65,67,91-109,114-117,120,123,125,127,132-134,138,143,149,153,155,157
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/schema-learning.mdx
+  s_d161f87b820022::t_88432b02b8b70f 11,13-15,21-29,35-37,40,42,54,58
+src/content/docs/api-shield/security/api-discovery.mdx
+  s_d161f87b820022::t_9f7f9d23334d05 11,76-82
+src/content/docs/api-shield/security/authentication-posture.mdx
+  s_d161f87b820022::t_50533bcc94b47a 13,29-37
+src/content/docs/api-shield/security/jwt-validation/api.mdx
+  s_d161f87b820022::t_b2e905817b988a 54-57,158-168,532-533
+src/content/docs/api-shield/security/jwt-validation/index.mdx
+  s_d161f87b820022::t_4c4ff2a3d4300a 13,27-36,44-58
+src/content/docs/api-shield/security/schema-validation/index.mdx
+  s_d161f87b820022::t_07a1694f184e2e 47-55,63-71,77-87,101-112,120-129,141-149,159-167,175-183,189-197,209-218,263
+src/content/docs/api-shield/security/sequence-mitigation/manage-sequence-rules.mdx
+  s_d161f87b820022::t_03c8ed4c76c9b1 15,27-49
+src/content/docs/api-shield/security/volumetric-abuse-detection.mdx
+  s_d161f87b820022::t_4a671e3a15192f 11,29,45,71-72
+src/content/docs/artifacts/guides/build-and-deploy-on-push.mdx
+  s_d161f87b820022::t_4286baaa5cba41 1-250
+src/content/docs/bots/additional-configurations/ai-labyrinth.mdx
+  s_d161f87b820022::t_302bade9307d78 15,23-24,26-30
+src/content/docs/bots/additional-configurations/detection-ids/account-takeover-detections.mdx
+  s_d161f87b820022::t_943af37e05df2b 13,31-38,51-58
+src/content/docs/bots/additional-configurations/detection-ids/index.mdx
+  s_d161f87b820022::t_2c7c1e1fe74ca9 51-62
+src/content/docs/bots/additional-configurations/detection-ids/scraping-detections.mdx
+  s_d161f87b820022::t_b83b5db239175b 13,28-35
+src/content/docs/bots/additional-configurations/managed-robots-txt.mdx
+  s_d161f87b820022::t_c3782fbbeea8c2 14,118-125,178-179,181-182
+src/content/docs/bots/additional-configurations/static-resources.mdx
+  s_d161f87b820022::t_c66ee3b204d6f6 11,24-31
+src/content/docs/bots/bot-analytics.mdx
+  s_d161f87b820022::t_7e65c2779451e0 24,58
+src/content/docs/bots/concepts/feedback-loop.mdx
+  s_d161f87b820022::t_c4bd8388a19d66 11,47-55
+src/content/docs/bots/get-started/bot-fight-mode.mdx
+  s_d161f87b820022::t_6c90f49110a2f9 14,52-59,76
+src/content/docs/bots/get-started/bot-management.mdx
+  s_d161f87b820022::t_b5d27ff3e0906a 14,30-42
+src/content/docs/bots/get-started/super-bot-fight-mode.mdx
+  s_d161f87b820022::t_7785f1caf36e50 14,64-72,94,100
+src/content/docs/bots/troubleshooting/wordpress-loopback-issue.mdx
+  s_d161f87b820022::t_3fb172b81e35e3 13,25-32
+src/content/docs/cache/how-to/purge-cache/index.mdx
+  s_d161f87b820022::t_f93d907175f458 17-18
+src/content/docs/client-side-security/best-practices/handle-an-alert.mdx
+  s_d161f87b820022::t_5df4133070cedc 13,22,24,26-28,30
+src/content/docs/client-side-security/detection/monitor-connections-scripts.mdx
+  s_d161f87b820022::t_589b07cb8ff737 13,31,33,35-36,50,62-69,81,83,85-87,141-148
+src/content/docs/client-side-security/detection/review-changed-scripts.mdx
+  s_d161f87b820022::t_3d048b40f40226 12,25-30
+src/content/docs/client-side-security/detection/review-malicious-scripts.mdx
+  s_d161f87b820022::t_a0c89a49e24790 14,27-33,43,53-59,66
+src/content/docs/client-side-security/get-started.mdx
+  s_d161f87b820022::t_34d7a975488fc2 12,38-43
+src/content/docs/client-side-security/reference/settings.mdx
+  s_d161f87b820022::t_c7dd337270ffc2 11
+src/content/docs/client-side-security/rules/create-dashboard.mdx
+  s_d161f87b820022::t_e478d251b8902d 14
+src/content/docs/cloudflare-challenges/precursor.mdx
+  s_d161f87b820022::t_009b03237039db 34,43-46
+src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/quotas-and-billing.mdx
+  s_d161f87b820022::t_57f590e44b0038 1-45
+src/content/docs/cloudflare-one/access-controls/ai-controls/mcp-portals.mdx
+  s_d161f87b820022::t_31779958755be7 14,52,122-152,166,195,1034
+src/content/docs/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/index.mdx
+  s_d161f87b820022::t_712972cbeba89c 31-33,35-37,75-76,87,148-155
+src/content/docs/cloudflare-one/access-controls/service-credentials/service-tokens.mdx
+  s_d161f87b820022::t_46acff1afe7b65 35
+src/content/docs/cloudflare-one/integrations/identity-providers/idp-federation.mdx
+  s_d161f87b820022::t_9afc4fbcbdea0a 31-32,73,76,78,100,120
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/index.mdx
+  s_d161f87b820022::t_cabc1ec1c9f5e4 42-45
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/appliance-operations.mdx
+  s_d161f87b820022::t_2b6e7eef6b012d 1-17
+src/content/docs/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device.mdx
+  s_d161f87b820022::t_69d6fcd802c9c7 17,29,60-64,99-100
+src/content/docs/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/index.mdx
+  s_d161f87b820022::t_9a532662526160 339-341,528-531
+src/content/docs/cloudflare-one/remote-browser-isolation/troubleshooting.mdx
+  s_d161f87b820022::t_e834ebadaa9ca7 21
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters.mdx
+  s_d161f87b820022::t_7426b3540a18df 471-485
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/support-lifecycle.mdx
+  s_d161f87b820022::t_80df65124b8134 120,124-127
+src/content/docs/cloudflare-one/traffic-policies/dns-policies/maximum-dns-ttl.mdx
+  s_d161f87b820022::t_b92576f4d01351 1-130
+src/content/docs/cloudflare-one/traffic-policies/http-policies/tenant-control.mdx
+  s_d161f87b820022::t_19e3655e0e9cbf 227-244
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/appliance-operations.mdx
+  s_d161f87b820022::t_6cbe7f8b167e5f 1-14
+src/content/docs/ddos-protection/managed-rulesets/adaptive-protection.mdx
+  s_d161f87b820022::t_09eacd34dceb07 11,59-65,69-75
+src/content/docs/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard.mdx
+  s_d161f87b820022::t_5f98fa439c0c50 14,31-32,34-37,75-76
+src/content/docs/ddos-protection/managed-rulesets/http/http-overrides/override-examples.mdx
+  s_d161f87b820022::t_ae39015153f0cc 14,40-61,105-126
+src/content/docs/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard.mdx
+  s_d161f87b820022::t_db5c3ebbd47520 31-32
+src/content/docs/dns/faq.mdx
+  s_d161f87b820022::t_5638a9788b489b 66-67
+src/content/docs/dns/foundation-dns/setup.mdx
+  s_d161f87b820022::t_23ede7164338d6 100-102,117
+src/content/docs/dns/nameservers/nameserver-options.mdx
+  s_d161f87b820022::t_96882809e8cbf8 16
+src/content/docs/dns/nameservers/update-nameservers.mdx
+  s_d161f87b820022::t_e0fe918b4dbef2 76
+src/content/docs/dns/zone-setups/full-setup/setup.mdx
+  s_d161f87b820022::t_10e81bc4be8cf5 185
+src/content/docs/dns/zone-setups/full-setup/troubleshooting.mdx
+  s_d161f87b820022::t_affc6d5820b607 16-19
+src/content/docs/dns/zone-setups/partial-setup/setup.mdx
+  s_d161f87b820022::t_949b55efe2b4b1 80-83
+src/content/docs/dns/zone-setups/troubleshooting/pending-nameservers.mdx
+  s_d161f87b820022::t_dd819cf20f837a 4,9,11,13,15-124,127,130,132,134-135,137,139,142-159
+src/content/docs/fundamentals/account/find-account-and-zone-ids.mdx
+  s_d161f87b820022::t_c4b9cbd7ff724a 11,15,17-18,20,22-23,25-26,28,30-31,33,35,37,39-40,42,46-47,49,51-52,54-55
+src/content/docs/kv/concepts/kv-namespaces.mdx
+  s_d161f87b820022::t_bf7ef02321d8d3 22-25
+src/content/docs/kv/index.mdx
+  s_d161f87b820022::t_ac50c89d2ed2c0 175-180
+src/content/docs/kv/reference/data-location.mdx
+  s_d161f87b820022::t_369337fd93d7fd 1-42
+src/content/docs/load-balancing/additional-options/cname-flattening.mdx
+  s_d161f87b820022::t_3ef86690746091 1-175
+src/content/docs/load-balancing/additional-options/index.mdx
+  s_d161f87b820022::t_017762b9ed1fa1 15-18,22-23,27
+src/content/docs/logs/logpush/logpush-job/enable-destinations/splunk.mdx
+  s_d161f87b820022::t_11a0640050087a 14
+src/content/docs/moq/feature-matrix.mdx
+  s_d161f87b820022::t_9e9a42ddc473fc 4,10-50
+src/content/docs/moq/index.mdx
+  s_d161f87b820022::t_61c28e7cb5dcbb 19,23-80
+src/content/docs/r2/api/error-codes.mdx
+  s_d161f87b820022::t_afdddbaf1ac4d5 44
+src/content/docs/r2/api/s3/api.mdx
+  s_d161f87b820022::t_3a562abe243ae8 148,167
+src/content/docs/r2/api/workers/workers-api-reference.mdx
+  s_d161f87b820022::t_9c2fd792afd37b 184,200,276,278
+src/content/docs/r2/api/workers/workers-multipart-usage.mdx
+  s_d161f87b820022::t_a0b838d6c7962f 31,33-34
+src/content/docs/r2/buckets/cors.mdx
+  s_d161f87b820022::t_080b374a012ee8 43-44
+src/content/docs/r2/data-catalog/get-started.mdx
+  s_d161f87b820022::t_e85341d53f4234 73-74
+src/content/docs/r2/data-migration/sippy.mdx
+  s_d161f87b820022::t_613744fc1004ac 52,54,136-137,199-229
+src/content/docs/r2/objects/upload-objects.mdx
+  s_d161f87b820022::t_f328968c9c92da 822
+src/content/docs/r2/tutorials/mastodon.mdx
+  s_d161f87b820022::t_d0f219d59d92aa 58,61-62,89
+src/content/docs/realtime/sfu/datachannels.mdx
+  s_d161f87b820022::t_2a14eb3b169718 25,36,44-51,58-74,77-78,85,87,89-183
+src/content/docs/realtime/sfu/https-api.mdx
+  s_d161f87b820022::t_d5fc90f572e569 19-20,25-32
+src/content/docs/realtime/sfu/limits.mdx
+  s_d161f87b820022::t_5c8992219639df 26-27
+src/content/docs/registrar/faq.mdx
+  s_d161f87b820022::t_58f4a5c8d919e3 19,27,35,37,39,41-43,45,47,49,51,53-55,57,59,61,63,75-87,91,94,97,101,105-118,122-139,144,146,148,150-158,160,162,178,182-222,227,231,233,237,239,245,251,257,271,283,287,291,295,299
+src/content/docs/security-center/infrastructure/security-file.mdx
+  s_d161f87b820022::t_6d430d82a72539 46-47,51-52,56-58
+src/content/docs/security/web-assets/get-started.mdx
+  s_d161f87b820022::t_09f1d67a59ea91 25,49
+src/content/docs/security/web-assets/index.mdx
+  s_d161f87b820022::t_dc4854e6b873fc 55-60
+src/content/docs/security/web-assets/manage-operations.mdx
+  s_d161f87b820022::t_5576e3eef0a19d 6,19,23,50,54-83,159-177,194
+src/content/docs/ssl/keyless-ssl/configuration/public-dns.mdx
+  s_d161f87b820022::t_5aad3386b7123e 40-62
+src/content/docs/ssl/keyless-ssl/configuration/run-with-docker.mdx
+  s_d161f87b820022::t_8a801001ede191 1-69
+src/content/docs/ssl/keyless-ssl/troubleshooting.mdx
+  s_d161f87b820022::t_7cbfa93d26a6fe 32-41
+src/content/docs/ssl/origin-configuration/authenticated-origin-pull/index.mdx
+  s_d161f87b820022::t_6744d0a06cc85d 24-27
+src/content/docs/ssl/post-quantum-cryptography/pqc-to-origin.mdx
+  s_d161f87b820022::t_cc802d9f9f7af9 101-104,111
+src/content/docs/stream/stream-live/start-stream-live.mdx
+  s_d161f87b820022::t_756bdb985bf92c 109-111,120-157
+src/content/docs/stream/stream-live/troubleshooting.mdx
+  s_d161f87b820022::t_9c82557aa371f9 56,70
+src/content/docs/style-guide/components/api-request.mdx
+  s_d161f87b820022::t_cb8bdd273ee1ed 133
+src/content/docs/style-guide/components/buttons.mdx
+  s_d161f87b820022::t_61a7e2e155213e 17
+src/content/docs/style-guide/components/curl.mdx
+  s_d161f87b820022::t_359bcfec7fb5df 96
+src/content/docs/style-guide/components/github-code.mdx
+  s_d161f87b820022::t_e261de536d6adb 155
+src/content/docs/style-guide/components/product-changelog.mdx
+  s_d161f87b820022::t_f54ae09808e9e5 46,48,54-60
+src/content/docs/style-guide/components/subtract-ip-calculator.mdx
+  s_d161f87b820022::t_445b62e29ea54b 10,15,24,48
+src/content/docs/style-guide/components/typescript-example.mdx
+  s_d161f87b820022::t_d04d1e1394e31f 100
+src/content/docs/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1020.mdx
+  s_d161f87b820022::t_0ae6609ba7f3b5 10
+src/content/docs/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522.mdx
+  s_d161f87b820022::t_ecbbcdd7c0612a 18-19
+src/content/docs/tunnel/troubleshooting.mdx
+  s_d161f87b820022::t_b1e85ca1605778 154-206
+src/content/docs/use-cases/solutions/discover-secure-api-endpoints.mdx
+  s_d161f87b820022::t_07d413e88be718 19,146,154,165,175,263,273
+src/content/docs/use-cases/solutions/stop-malicious-bots.mdx
+  s_d161f87b820022::t_56ddbefc8ae4f1 13,17-24
+src/content/docs/waf/analytics/security-events.mdx
+  s_d161f87b820022::t_da5cf5964590db 89,160
+src/content/docs/waf/custom-rules/create-dashboard.mdx
+  s_d161f87b820022::t_3af53194374b8f 16
+src/content/docs/waf/custom-rules/skip/index.mdx
+  s_d161f87b820022::t_12aa96f69a6406 24
+src/content/docs/waf/detections/ai-security-for-apps/get-started.mdx
+  s_d161f87b820022::t_2a03df67236d23 25,28,123
+src/content/docs/waf/detections/leaked-credentials/get-started.mdx
+  s_d161f87b820022::t_5dacca2ec1fc09 46,114
+src/content/docs/waf/detections/malicious-uploads/get-started.mdx
+  s_d161f87b820022::t_db4ec682004d87 30,127
+src/content/docs/waf/feature-interoperability.mdx
+  s_d161f87b820022::t_0558750b0c7ab5 11
+src/content/docs/waf/managed-rules/check-for-exposed-credentials/upgrade-to-leaked-credentials-detection.mdx
+  s_d161f87b820022::t_2abbf42add647f 13
+src/content/docs/waf/managed-rules/deploy-zone-dashboard.mdx
+  s_d161f87b820022::t_dddb583e05e76b 15
+src/content/docs/waf/managed-rules/payload-logging/configure.mdx
+  s_d161f87b820022::t_781e99de883887 17
+src/content/docs/waf/managed-rules/payload-logging/view.mdx
+  s_d161f87b820022::t_31ded61e54be1f 13,20-23
+src/content/docs/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard.mdx
+  s_d161f87b820022::t_8988f4e02a5463 14
+src/content/docs/waf/managed-rules/reference/sensitive-data-detection.mdx
+  s_d161f87b820022::t_e5764c0b5e276e 11
+src/content/docs/waf/managed-rules/waf-exceptions/define-dashboard.mdx
+  s_d161f87b820022::t_ef4f2f41d1c3d1 15
+src/content/docs/waf/rate-limiting-rules/create-zone-dashboard.mdx
+  s_d161f87b820022::t_46d2194891fed8 15
+src/content/docs/waf/reference/phases.mdx
+  s_d161f87b820022::t_ca436a1f6b42ba 13
+src/content/docs/waf/tools/browser-integrity-check.mdx
+  s_d161f87b820022::t_47c308fb622e0d 10
+src/content/docs/waf/tools/ip-access-rules/create.mdx
+  s_d161f87b820022::t_d3e3411a5d19d5 22,25
+src/content/docs/waf/tools/scrape-shield/email-address-obfuscation.mdx
+  s_d161f87b820022::t_47ddfbc0b68224 32
+src/content/docs/waf/tools/scrape-shield/hotlink-protection.mdx
+  s_d161f87b820022::t_bdab5157cdd9f6 29
+src/content/docs/waf/tools/user-agent-blocking.mdx
+  s_d161f87b820022::t_baa162d4231761 38,46,49
+src/content/docs/waf/tools/zone-lockdown.mdx
+  s_d161f87b820022::t_27f8f928a5ede5 38,46,49
+src/content/docs/workers-ai/platform/errors.mdx
+  s_d161f87b820022::t_9a55fc74c90a6f 23
+src/content/docs/workers-ai/platform/pricing.mdx
+  s_d161f87b820022::t_bb5993b084366b 28-31
+src/content/docs/workers/ci-cd/builds/build-image.mdx
+  s_d161f87b820022::t_183819619e1513 26,30-31,117
+src/content/docs/workers/framework-guides/web-apps/react.mdx
+  s_d161f87b820022::t_0d82689ba8a8a5 32,34
+src/content/docs/workers/local-development/local-explorer.mdx
+  s_d161f87b820022::t_d06e7dac844f09 12,14,16,22,26,29,31-34,50,52-70,82-89,91-98,106
+src/content/docs/workers/observability/exporting-opentelemetry-data/index.mdx
+  s_d161f87b820022::t_c97deacbf732df 123
+src/content/docs/workers/observability/index.mdx
+  s_d161f87b820022::t_0d8eec33113829 5,77-81
+src/content/docs/workers/observability/logs/logpush.mdx
+  s_d161f87b820022::t_5cbc724fa12429 16,18-20,22,35,49,123,154-177,185-203
+src/content/docs/workers/observability/logs/workers-logs.mdx
+  s_d161f87b820022::t_93d0a843e32a76 27
+src/content/docs/workers/observability/traces/custom-spans.mdx
+  s_d161f87b820022::t_2830ce86aded1f 11,15,20-24,50-62,76-78,80,93-94,99-101,108-191,194,200-203,221-227,231-250,253,261-283,293,297-299,309-330,336-346
+src/content/docs/workers/observability/traces/index.mdx
+  s_d161f87b820022::t_7625c4992e391d 70-71,119
+src/content/docs/workers/runtime-apis/bindings/service-bindings/rpc.mdx
+  s_d161f87b820022::t_014b701553d172 170-172,188-201,204-206,214-221
+src/content/docs/workers/runtime-apis/rpc/index.mdx
+  s_d161f87b820022::t_c199f0af4a295d 16-17,94-96,129-130,152-154,174-195,198,219-221,231-242,249-251,261-272,279-281,299-319,333-348,363-365,374-384
+src/content/docs/workers/wrangler/commands/workers.mdx
+  s_d161f87b820022::t_238fd3b14a42af 530,532-557,563
+src/content/partials/api-shield/sequence-custom-rules.mdx
+  s_d161f87b820022::t_a1af8551f688ac 5,7-8,10-31
+src/content/partials/api-shield/set-up-session-identifiers.mdx
+  s_d161f87b820022::t_edc3bc99a1f766 5,7-8,10-16,18-22
+src/content/partials/bots/enable-bfm.mdx
+  s_d161f87b820022::t_10044851b9024b 5,7-8,10-14
+src/content/partials/bots/enable-sbfm.mdx
+  s_d161f87b820022::t_de6aa2d576f6fd 5,7-8,10-14,16-19,21
+src/content/partials/bots/latest-ml-model-enable.mdx
+  s_d161f87b820022::t_5afd5f13456bb1 5,11-12,14-18
+src/content/partials/bots/sbfm-upgrade.mdx
+  s_d161f87b820022::t_00d0cf3aeab870 7
+src/content/partials/client-side-security/rule-create.mdx
+  s_d161f87b820022::t_3e40b8a2619374 6
+src/content/partials/client-side-security/rule-review-violations.mdx
+  s_d161f87b820022::t_ada3e416a0fd76 5
+src/content/partials/cloudflare-challenges/javascript-detections-enable.mdx
+  s_d161f87b820022::t_927b3d066c4af1 5,7-8,10-12
+src/content/partials/cloudflare-one/casb/servicenow-integration.mdx
+  s_d161f87b820022::t_6936e2958be152 8,24-27
+src/content/partials/ddos-protection/managed-rulesets/delete-override.mdx
+  s_d161f87b820022::t_b79f3b109cf2fd 4-5,8,12-13,15-19
+src/content/partials/networking-services/mconn/maintenance/appliance-operations.mdx
+  s_d161f87b820022::t_c713b14ee126f1 1-84
+src/content/partials/networking-services/reference/traffic-steering.mdx
+  s_d161f87b820022::t_633b8a68bc4869 278
+src/content/partials/ssl/keyless-key-server-setup.mdx
+  s_d161f87b820022::t_758d1fbc302c5a 143-161,184-189
+src/content/partials/waf/dash-configure-all-rules.mdx
+  s_d161f87b820022::t_99608d35e39842 6,11-12,14-19,21,23-25,27-29,31-32
+src/content/partials/waf/dash-configure-rules-by-tag.mdx
+  s_d161f87b820022::t_0752ca64d8d3db 6
+src/content/partials/waf/dash-deploy-managed-ruleset-zone.mdx
+  s_d161f87b820022::t_43c645a76f19c9 7,9-10,12-25,27-29
+src/content/partials/waf/leaked-credentials-detection-enable.mdx
+  s_d161f87b820022::t_9ff38ef9a700ef 16
+src/content/partials/workers-ai/workers-paid-only-note.mdx
+  s_d161f87b820022::t_101972da6973c3 1-9
+src/content/partials/workers/service-binding-rpc-example.mdx
+  s_d161f87b820022::t_3940b456a9a6bc 105
+src/content/partials/workers/service-binding-rpc-functions-example.mdx
+  s_d161f87b820022::t_3767dedc202f3f 5,21-23,45-66,87-89,106-124
+src/content/release-notes/ai-search.yaml
+  s_d161f87b820022::t_4ce2220734b494 6-9
+src/content/release-notes/api-deprecations.yaml
+  s_d161f87b820022::t_25b678fabd25f8 42-60
+src/content/release-notes/realtime.yaml
+  s_d161f87b820022::t_ac2c381cb326db 6-15
+src/content/warp-releases/macos/beta/2026.7.1210.1.yaml
+  s_d161f87b820022::t_d9ff6baf82b752 1-21
+src/content/warp-releases/windows/beta/2026.7.1210.1.yaml
+  s_d161f87b820022::t_a2006d4939a78d 1-23
+src/content/workers-ai-models/glm-5.2.json
+  s_d161f87b820022::t_2e9ca56c5d09b3 4-7,4770
+src/content/workers-ai-models/kimi-k2.6.json
+  s_d161f87b820022::t_89315f49574813 14-17,4759
+src/content/workers-ai-models/kimi-k2.7-code.json
+  s_d161f87b820022::t_a50f335f68a9fa 4-7
+src/layouts/BaseLayout.astro
+  s_d161f87b820022::t_53149f20d34623 158
+src/pages/ruleset-engine/rules-language/fields/reference/[name].astro
+  s_d161f87b820022::t_4c65f9a20c7ac4 66-67,70
+src/scripts/mermaid.client.node.test.ts
+  s_d161f87b820022::t_df1342ce0ff65f 1-41
+src/scripts/mermaid.client.ts
+  s_d161f87b820022::t_8ed57826f3c7df 8,187-227,322
+src/scripts/onetrust-focus.client.ts
+  s_d161f87b820022::t_106a4089078759 1-32
+src/styles/globals.css
+  s_d161f87b820022::t_c15f794ea1a729 2
+src/styles/markdown-pipeline.css
+  s_d161f87b820022::t_3f88383f828a32 283
+src/styles/onetrust.css
+  s_d161f87b820022::t_0d7f516e83d9f7 1-717
+src/styles/prose.css
+  s_d161f87b820022::t_4d5024c3033024 133,169,183
+vitest.config.ts
+  s_d161f87b820022::t_ce7e5b71c20243 17-36
+worker/index.preview.ts
+  s_d161f87b820022::t_bb2bdef7355070 6-11,57-96,135-139,143-162
+worker/index.preview.worker.test.ts
+  s_d161f87b820022::t_2936333d7a768c 1-135
+wrangler.preview.test.json
+  s_d161f87b820022::t_ceb35f7b17db9f 1-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "08d0634bb04462dc9fc18cfde35c98786f1af7b6",
+  "prompts": {},
+  "sessions": {
+    "s_d161f87b820022": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa1d-271a-7160-954d-964de4f79c0f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

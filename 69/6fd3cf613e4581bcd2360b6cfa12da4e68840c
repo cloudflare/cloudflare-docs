@@ -1,0 +1,41 @@
+src/content/changelog/ai-search/2026-03-23-ai-search-public-endpoint-and-snippets.mdx
+  s_e8eb4d29827061::t_08f305efdf5f09 31,35,48
+src/content/docs/ai-search/api/search/mcp.mdx
+  s_e8eb4d29827061::t_ef05685fce809a 41
+src/content/docs/ai-search/api/search/public-endpoint.mdx
+  s_e8eb4d29827061::t_e68d75d4b8a17a 36,47,66
+src/content/docs/ai-search/configuration/retrieval/cloudflare-access.mdx
+  s_e8eb4d29827061::t_45feb66c3abcd1 51,72,112,133,153
+src/content/docs/ai-search/configuration/retrieval/embed-search-snippets.mdx
+  s_a0145a040cd686::t_bdbfeccee2e6c3 52,57,65,84,89,122,160
+src/content/docs/ai-search/configuration/retrieval/public-endpoint.mdx
+  s_a0145a040cd686::t_8b21137b42e847 34,37
+src/content/docs/ai-search/how-to/add-search-to-your-website.mdx
+  s_a0145a040cd686::t_98489ca61b27aa 69,81,90,98,106
+src/content/docs/ai-search/how-to/connect-mcp-client.mdx
+  s_e8eb4d29827061::t_b20906b2e3e027 60,85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "696fd3cf613e4581bcd2360b6cfa12da4e68840c",
+  "prompts": {},
+  "sessions": {
+    "s_a0145a040cd686": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_02e64860cffelCYXPQnrhJHSfh",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    },
+    "s_e8eb4d29827061": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_032573ea1ffeIkBv4AghNIbNIX",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    }
+  }
+}

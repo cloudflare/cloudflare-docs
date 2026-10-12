@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_eb0a497ec7e1fb::t_98538bfeea0f5a 7,199-205,209
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8d7a97fb4f14f242695a53cbc9a17fea66dd7e96",
+  "prompts": {},
+  "sessions": {
+    "s_eb0a497ec7e1fb": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc7f51411ffeApvg8PNY8iJRbH",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Swapnil Madavi <smadavi@cloudflare.com>"
+    }
+  }
+}

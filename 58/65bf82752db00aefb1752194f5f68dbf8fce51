@@ -1,0 +1,21 @@
+src/content/changelog/browser-run/2026-07-16-human-in-the-loop.mdx
+  s_e51b5d9f0552e8::t_e9700a59b608de 6
+src/content/release-notes/browser-run.yaml
+  s_e51b5d9f0552e8::t_1848f3d1173d9b 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5865bf82752db00aefb1752194f5f68dbf8fce51",
+  "prompts": {},
+  "sessions": {
+    "s_e51b5d9f0552e8": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09751c1f4ffeAU4ovjwa3j6Ufw",
+        "model": "@cf/zai-org/glm-5.2"
+      },
+      "human_author": "kathayl <kathyyliao@gmail.com>"
+    }
+  }
+}

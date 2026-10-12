@@ -1,0 +1,19 @@
+src/content/docs/ai-search/configuration/data-source/parse-types.mdx
+  s_c66e303bd944ce::t_361a19919b1d63 1-163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b3cbaf30b7da9b90bf6f94d372ef84f06f01973c",
+  "prompts": {},
+  "sessions": {
+    "s_c66e303bd944ce": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_04762b051ffejBKSrkOvU2FqTx",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    }
+  }
+}

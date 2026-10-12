@@ -1,0 +1,19 @@
+src/content/docs/tunnel/troubleshooting.mdx
+  s_bd758f44fe5dd6::t_258cdc98069c79 160-162,170-171,179-186,203
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "db0ba47dbcca1b006963fd864673fe44d332ec95",
+  "prompts": {},
+  "sessions": {
+    "s_bd758f44fe5dd6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0503742f0ffekVI25KLdRVAZkE",
+        "model": "gpt-5.2-pro"
+      },
+      "human_author": "Jeff Hochberg <jeffh@cloudflare.com>"
+    }
+  }
+}

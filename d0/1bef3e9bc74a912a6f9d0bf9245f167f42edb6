@@ -1,0 +1,20 @@
+src/content/docs/browser-run/faq.mdx
+  s_17f054f2f2d3f7::t_064feaecaaedf4 14
+  s_17f054f2f2d3f7::t_79ae8e43c33857 194-236
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d01bef3e9bc74a912a6f9d0bf9245f167f42edb6",
+  "prompts": {},
+  "sessions": {
+    "s_17f054f2f2d3f7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_097093f6bffeHzcL5UPFo6T5tm",
+        "model": "@cf/moonshotai/kimi-k2.7-code"
+      },
+      "human_author": "kathayl <kathyyliao@gmail.com>"
+    }
+  }
+}

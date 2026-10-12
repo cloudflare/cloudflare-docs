@@ -1,0 +1,19 @@
+src/content/docs/workers/observability/traces/spans-and-attributes.mdx
+  s_4baecb2f5e898d::t_ec349ec0173702 150-151
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "297307cefc86198a2c2b329b00c6840c68ed9f85",
+  "prompts": {},
+  "sessions": {
+    "s_4baecb2f5e898d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f79877d6effeC4GjdTncLdOwYe",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ashley Peacock <apeacock@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-09-21-invite-members-to-workers.mdx
+  s_02515eecbd78f0::t_53e5eb24c01deb 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e3cccde41f5dc1cde9f6ff49e6bb02018df9e9d7",
+  "prompts": {},
+  "sessions": {
+    "s_02515eecbd78f0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0c470-0b79-7781-9ef5-87dfa3473de3",
+        "model": "unknown"
+      },
+      "human_author": "dkozlov <dkozlov@cloudflare.com>"
+    }
+  }
+}
