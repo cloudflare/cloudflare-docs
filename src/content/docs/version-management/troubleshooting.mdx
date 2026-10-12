@@ -9,7 +9,7 @@ products:
   - version-management
 ---
 
-import { Details } from "~/components"
+import { DashButton, Details } from "~/components"
 
 Use this page to resolve common issues with Version Management. If the steps below do not solve your problem, [contact Cloudflare Support](/support/contacting-cloudflare-support/) and include the details listed in [Information for Support](#information-for-support).
 
@@ -56,6 +56,20 @@ If the source version contains rules or settings that are invalid or conflict wi
 <Details header="Version creation is stuck">
 
 If version creation appears stuck (the status does not change for an extended period), wait a few minutes and refresh the dashboard. If the issue persists, contact Cloudflare Support with the details listed in [Information for Support](#information-for-support).
+
+</Details>
+
+<Details header="Missing Global API Key">
+
+A [Global API Key](/fundamentals/api/get-started/keys/) is required to be able to compare or clone version.
+
+To retrieve your Global API key:
+
+1. In the Cloudflare dashboard and select **User Profile** > **API Tokens**.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+2. In the **API Keys** section, click `View` button of **Global API Key**.
 
 </Details>
 
