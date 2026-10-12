@@ -108,11 +108,24 @@ To control private chat for all participants, prefer preset permissions.
 
 <RTKCodeSnippet id="web-react">
 
-## Compose chat components
+## Build a custom chat layout
 
-If you need more layout control, compose the lower-level chat components. `RtkChatMessagesUiPaginated` loads public messages when `privateChatRecipient` is empty and private messages when you pass a participant.
+You can create your own chat layout from the same UI Kit components that `RtkChat` uses. Place each component wherever your design needs it, such as the message list in a sidebar and the composer in a footer, and connect them through your own state.
 
-`RtkChatMessagesUiPaginated` emits `pinMessage`, `editMessage`, and `deleteMessage` events from its message menu but does not act on them. Handle these events and call the matching `meeting.chat` methods. Pass `meeting.chat.maxTextLimit` and `meeting.chat.rateLimits` to `RtkChatComposerView` so the composer enforces the same limits as the meeting.
+| Component                    | What it renders                                                                                                                         |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `RtkChatSelector`            | A dropdown to switch between public chat and private conversations. Emits `rtkChatSelectorChange` with the selected participant.        |
+| `RtkPinnedMessageSelector`   | A collapsible header that expands to show pinned messages.                                                                              |
+| `RtkChatMessagesUiPaginated` | The message list. Loads public messages when `privateChatRecipient` is empty, and the private conversation when you pass a participant. |
+| `RtkChatComposerView`        | The message input, with file, image, and emoji buttons.                                                                                 |
+
+When you build your own layout, your code connects the components to `meeting.chat`:
+
+- `RtkChatMessagesUiPaginated` emits `pinMessage`, `editMessage`, and `deleteMessage` events from its message menu but does not act on them. Handle these events and call the matching `meeting.chat` methods.
+- `RtkChatComposerView` emits `newMessage` and `editMessage` events. Send or edit the message with `meeting.chat`.
+- Pass `meeting.chat.maxTextLimit` and `meeting.chat.rateLimits` to `RtkChatComposerView` so the composer enforces the same limits as the meeting.
+
+The following example stacks the components vertically. Rearrange them to fit your layout.
 
 ```tsx
 import {
