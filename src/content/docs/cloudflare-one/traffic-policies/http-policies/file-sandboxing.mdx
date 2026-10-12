@@ -22,30 +22,34 @@ Gateway will log any file sandbox decisions in your [HTTP logs](/cloudflare-one/
 
 ```mermaid
 flowchart TD
-    A(["User starts file download"]) --> B["File sent to AV scanner"]
-    B --> C["Malicious file detected?"]
-    C -- Yes --> D["Download blocked"]
-    C -- No --> G["File sent to sandbox"]
-    G --> n1["First time file downloaded?"]
-    K["Malicious activity detected?"] -- Yes --> N["Download blocked"]
-    K -- No --> n3["Download allowed"]
-    n2["Interstitial page displayed for user during scan"] --> n4["File activity monitored"]
-    n1 -- Yes --> n2
-    n4 --> K
-    n1 -- No --> K
+    A(["User starts file download"]) --> B["AV scanning enabled?"]
+    B -- Yes --> C["File sent to AV scanner"]
+    B -- No --> F["Quarantine policy matched?"]
+    C --> D["Malicious file detected?"]
+    D -- Yes --> E["Download blocked"]
+    D -- No --> F
+    F -- Yes --> G["File sent to sandbox"]
+    F -- No --> L["Download allowed"]
+    G --> H["First time file downloaded?"]
+    H -- Yes --> I["Interstitial page displayed for user during scan"]
+    H -- No --> K["Malicious activity detected?"]
+    I --> J["File activity monitored"]
+    J --> K
+    K -- Yes --> E
+    K -- No --> L
 
-    B@{ shape: subproc}
-    C@{ shape: hex}
-    D@{ shape: terminal}
-    n1@{ shape: hex}
+    B@{ shape: hex}
+    C@{ shape: subproc}
+    D@{ shape: hex}
+    E@{ shape: terminal}
+    F@{ shape: hex}
+    H@{ shape: hex}
+    I@{ shape: display}
+    J@{ shape: rect}
     K@{ shape: hex}
-    N@{ shape: terminal}
-    n3@{ shape: terminal}
-    n2@{ shape: display}
-    n4@{ shape: rect}
-    style D stroke:#D50000
-    style N stroke:#D50000
-    style n3 stroke:#00C853
+    L@{ shape: terminal}
+    style E stroke:#D50000
+    style L stroke:#00C853
 ```
 
 ## Get started
