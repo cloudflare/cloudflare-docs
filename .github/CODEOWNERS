@@ -798,6 +798,7 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-ui-addons.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # reference-architecture
