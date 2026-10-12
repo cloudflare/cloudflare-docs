@@ -294,7 +294,7 @@ A persistent browser's recording spans every turn and every scope that shares th
 
 ## CDP API
 
-Model code runs in a sandbox with a `cdp` object. The persistent `browserTool` and the legacy `browser_execute` tool provide the same methods. Methods with arguments take a single object:
+Model code runs in a sandbox with a `cdp` object. Methods with arguments take a single object:
 
 | Method                                                  | Description                                                                        |
 | ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
@@ -304,59 +304,23 @@ Model code runs in a sandbox with a `cdp` object. The persistent `browserTool` a
 | `cdp.getDebugLog({ limit? })`                           | Return recent CDP traffic, including sends, receives, and warnings, for this run.  |
 | `cdp.clearDebugLog()`                                   | Clear the debug log.                                                               |
 
-With `browserTool`, the `cdp` object also follows these rules:
+The `cdp` object also follows these rules:
 
 - `sessionId: "active"` addresses the scope's active tab. `Browser.*` and `Target.*` commands take no `sessionId`.
 - `cdp.attachToTarget()` makes the tab active. Its handle keeps working in later runs.
 - The model cannot send `Browser.close` or `Browser.crash`, because your application owns the browser. To close a tab, the model sends `Target.closeTarget`.
 - A single `cdp.send` result over 1 MB fails the run. To capture a long page, take a viewport screenshot or use JPEG.
 
-The legacy tools add methods for Live View and session control. Refer to [Legacy CDP methods](#legacy-cdp-methods).
+## Read pages without a browser
 
-## Quick Actions
+To read a page or document at a known URL, use the [`web_fetch` tool](/agents/tools/web-fetch/) instead of a browser. It does not start a browser, so each read is a single HTTP request. It also converts PDFs and Office documents to Markdown and splits long pages into parts the model can read in turn.
 
-Use `browserTool` for interactive, multi-step work in a browser that persists. For stateless reads, such as reading a page as Markdown or listing its links, use [Browser Run Quick Actions](/browser-run/quick-actions/). Quick Actions need only the `browser` binding, so they do not need a Durable Object, Worker Loader, or sandbox.
+Use `browserTool` when the page needs a browser:
 
-Quick Actions do not share a browser or a login with `browserTool`. Each request loads its page in a separate browser, so a site the model logged in to with `browserTool` is not logged in for a Quick Action. To read a protected page, pass credentials such as `cookies` or `authenticate` through `options`.
-
-<TypeScriptExample>
-
-```ts
-import { createQuickActionTools } from "agents/browser/ai";
-
-const tools = createQuickActionTools({ browser: this.env.BROWSER });
-// browser_markdown, browser_extract, browser_links, browser_scrape
-```
-
-</TypeScriptExample>
-
-Pass `actions` to choose the tools, `maxChars` to bound results, and `options` for request settings:
-
-<TypeScriptExample>
-
-```ts
-const tools = createQuickActionTools({
-	browser: this.env.BROWSER,
-	maxChars: 20_000,
-	options: { gotoOptions: { waitUntil: "networkidle0" } },
-});
-```
-
-</TypeScriptExample>
-
-Every Quick Action result is bounded to `maxChars`, which defaults to 50,000 characters, to protect the model context window while preserving the result shape. Host-supplied request options, such as `cookies`, `authenticate`, `gotoOptions`, and `viewport`, are passed once through `options` and are not exposed to the model.
-
-Quick Actions require a Worker `compatibility_date` of `2026-03-24` or later and `remote: true` on the browser binding for local `wrangler dev`.
-
-## Build a browser agent
-
-For a complete walkthrough, including Browser Run setup, tool definitions, and screenshot capture, use the browser agent example.
-
-<LinkCard
-	title="Browser agent"
-	href="/agents/examples/browser-agent/"
-	description="Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues."
-/>
+- The page renders its content with JavaScript.
+- The page needs a login, or the model must click, type, or move through several pages.
+- The agent must return to the same page, tabs, or session on a later turn.
+- You need a screenshot of the page.
 
 ## Legacy browser tools
 
@@ -368,7 +332,7 @@ You might still use the legacy tools for the following:
 - **Kitesurf.** A [Kitesurf](/browser-run/kitesurf/) browser lives only as long as its CDP WebSocket, so it cannot be a persistent browser.
 - **Approval or human handoff within a run.** The [durable Code Mode runtime](/agents/tools/codemode/how-it-works/) can pause a run for approval and resume it with the browser session intact. `browserTool` does not pause runs.
 
-You do not need the legacy tools to get a fresh browser for each run. With `browserTool`, call [`browser.close()`](#close-the-browser) after a turn, or set a short `keepAliveMs`, so the next run starts a new browser. For stateless reads, use [Quick Actions](#quick-actions).
+You do not need the legacy tools to get a fresh browser for each run. With `browserTool`, call [`browser.close()`](#close-the-browser) after a turn, or set a short `keepAliveMs`, so the next run starts a new browser. To read a page without a browser, use the [`web_fetch` tool](/agents/tools/web-fetch/).
 
 ### Basic pattern
 
@@ -569,6 +533,51 @@ const tools = createBrowserTools({
 </TypeScriptExample>
 
 A Kitesurf browser is scoped to its CDP WebSocket, so it supports only one-shot execution. Session reuse, pause and resume, Live View, recording, `keepAliveMs`, protocol discovery with `cdp.spec()`, and Kitesurf-backed Quick Actions are not available.
+
+### Quick Action tools
+
+`createQuickActionTools` from `agents/browser/ai` gives the model tools for [Browser Run Quick Actions](/browser-run/quick-actions/). Each call is a one-shot request: Browser Run loads the page in a new browser, returns the result, and closes the browser. Quick Actions need only the `browser` binding, so they do not need a Durable Object, Worker Loader, or sandbox. To read a page, prefer the [`web_fetch` tool](/agents/tools/web-fetch/).
+
+Quick Actions do not share a browser or a login with `browserTool`. A site the model logged in to with `browserTool` is not logged in for a Quick Action. To read a protected page, pass credentials such as `cookies` or `authenticate` through `options`.
+
+<TypeScriptExample>
+
+```ts
+import { createQuickActionTools } from "agents/browser/ai";
+
+const tools = createQuickActionTools({ browser: this.env.BROWSER });
+// browser_markdown, browser_extract, browser_links, browser_scrape
+```
+
+</TypeScriptExample>
+
+Pass `actions` to choose the tools, `maxChars` to bound results, and `options` for request settings:
+
+<TypeScriptExample>
+
+```ts
+const tools = createQuickActionTools({
+	browser: this.env.BROWSER,
+	maxChars: 20_000,
+	options: { gotoOptions: { waitUntil: "networkidle0" } },
+});
+```
+
+</TypeScriptExample>
+
+Every Quick Action result is bounded to `maxChars`, which defaults to 50,000 characters, to protect the model context window while preserving the result shape. Host-supplied request options, such as `cookies`, `authenticate`, `gotoOptions`, and `viewport`, are passed once through `options` and are not exposed to the model.
+
+Quick Actions require a Worker `compatibility_date` of `2026-03-24` or later and `remote: true` on the browser binding for local `wrangler dev`.
+
+### Browser agent example
+
+The browser agent example uses the legacy tools. It covers Browser Run setup, tool definitions, and screenshot capture.
+
+<LinkCard
+	title="Browser agent"
+	href="/agents/examples/browser-agent/"
+	description="Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues."
+/>
 
 ### Think execute tool
 
