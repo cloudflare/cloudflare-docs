@@ -1512,7 +1512,7 @@ To prevent alarm loops:
 
 - **Enforce a minimum delay when you reschedule from `alarm()`.** Route every reschedule through one helper that clamps the time to at least `Date.now()` plus a minimum delay.
 - **Back off on failure.** Increase the delay after each failed attempt instead of retrying at a fixed short interval.
-- **Store an attempt counter and stop at a limit.** Keep the counter in storage so it survives eviction. `alarmInfo.retryCount` only counts automatic retries of the current alarm after the handler throws. It does not count alarms you schedule yourself.
+- **Stop at a deadline.** Base it on state the object already stores, such as when the work became due. Unlike an in-memory counter, this survives eviction and needs no extra storage writes. `alarmInfo.retryCount` does not count alarms you schedule yourself.
 - **Return without rescheduling when there is no work.** An alarm handler does not need to call `setAlarm()` on every run.
 - **Test the next alarm time.** Refer to [Test that alarms reschedule safely](/durable-objects/examples/testing-with-durable-objects/#test-that-alarms-reschedule-safely).
 - **Set a [budget alert](/billing/manage/budget-alerts/).** Budget alerts notify you when usage-based spend crosses a dollar threshold.
@@ -1557,7 +1557,7 @@ export class Session extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-Instead, enforce a minimum delay, back off on failure, and stop after a fixed number of attempts:
+Instead, enforce a minimum delay, back off on failure, and stop at a deadline. The following example derives both the backoff and the deadline from `refreshAt`, so retries need no extra storage writes:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1573,9 +1573,10 @@ interface Checkpoint {
 
 const MIN_DELAY_MS = 60 * 1000; // 1 minute
 const MAX_DELAY_MS = 60 * 60 * 1000; // 1 hour
-const MAX_ATTEMPTS = 8;
+const GIVE_UP_AFTER_MS = 24 * 60 * 60 * 1000; // 1 day
+const REFRESH_INTERVAL_MS = 60 * 60 * 1000; // 1 hour
 
-// ✅ Good: Minimum delay, exponential backoff, and a hard stop
+// ✅ Good: Minimum delay, backoff, and a deadline, with no extra storage writes
 export class Session extends DurableObject<Env> {
 	async alarm() {
 		const checkpoint = await this.ctx.storage.get<Checkpoint>("checkpoint");
@@ -1583,29 +1584,28 @@ export class Session extends DurableObject<Env> {
 			return; // No work to do, so do not reschedule
 		}
 
-		if (Date.now() < checkpoint.refreshAt) {
+		const overdueMs = Date.now() - checkpoint.refreshAt;
+		if (overdueMs < 0) {
 			await this.rescheduleAlarm(checkpoint.refreshAt);
 			return;
 		}
 
 		if (await this.tryRefresh()) {
-			await this.ctx.storage.delete("refreshAttempts");
+			// Move the deadline forward by scheduling the next refresh
+			const next: Checkpoint = { refreshAt: Date.now() + REFRESH_INTERVAL_MS };
+			await this.ctx.storage.put("checkpoint", next);
+			await this.rescheduleAlarm(next.refreshAt);
 			return;
 		}
 
-		const attempts =
-			((await this.ctx.storage.get<number>("refreshAttempts")) ?? 0) + 1;
-
-		if (attempts >= MAX_ATTEMPTS) {
+		if (overdueMs >= GIVE_UP_AFTER_MS) {
 			// Stop rescheduling and surface the failure instead
-			console.error(`Checkpoint refresh failed ${attempts} times, giving up`);
-			await this.ctx.storage.delete("refreshAttempts");
+			console.error(`Checkpoint refresh failed for ${overdueMs} ms, giving up`);
 			return;
 		}
 
-		await this.ctx.storage.put("refreshAttempts", attempts);
-		const backoff = Math.min(MIN_DELAY_MS * 2 ** attempts, MAX_DELAY_MS);
-		await this.rescheduleAlarm(Date.now() + backoff);
+		// Back off: wait about as long as the refresh has been failing
+		await this.rescheduleAlarm(Date.now() + Math.min(overdueMs, MAX_DELAY_MS));
 	}
 
 	// Every reschedule from alarm() goes through this helper
