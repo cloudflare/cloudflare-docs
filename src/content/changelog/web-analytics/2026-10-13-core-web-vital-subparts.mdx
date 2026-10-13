@@ -1,0 +1,49 @@
+---
+title: "Deeper Core Web Vitals Diagnostics: LCP & INP Sub-Part Metrics in Real User Monitoring"
+description: "Real User Monitoring now breaks LCP and INP into their sub-parts and splits connection time into TCP and TLS. This helps you find the cause of slow pages in the dashboard and through the GraphQL Analytics API."
+date: 2026-10-13
+products:
+  - web-analytics
+---
+
+The Core Web Vitals tell you whether a page is slow but beyond perceived load time, layout instability or responsiveness they don't guide you to the problematic area directly. To help you with this, Real User Monitoring (RUM) in Web Analytics now breaks Largest Contentful Paint (LCP) and Interaction to Next Paint (INP) into their respective sub-parts. It also splits connection time into TCP and TLS. You can see this visualised in the dashboard or query it through the GraphQL Analytics API.
+
+## LCP sub-parts
+
+LCP is broken into four phases, so you can see which one is impacting your perceived load time:
+
+1. **Time to First Byte:** how long the browser waits for the HTML document (`timeToFirstByte` in GraphQL).
+2. **Resource load delay:** how long the browser takes to discover the LCP resource after the document starts arriving (`lcpResourceLoadDelay`).
+3. **Resource load duration:** how long it takes to download that resource (`lcpResourceLoadTime`).
+4. **Element render delay:** the gap between the resource arriving and the element appearing on screen (`lcpElementRenderDelay`).
+
+You don't have to remember all this detail, there are tooltips available to guide you next to each sub-part metric in the dashboard.
+
+![LCP sub-parts visual in the dashboard](~/assets/images/web-analytics/dash-web_analytics-lcp-sub-parts.png)
+
+## INP sub-parts
+
+INP is broken into three phases, guiding you to the area slowing down responsiveness:
+
+1. **Input delay:** how long an interaction (click, tap or key press) is blocked before it can be processed (`inpInputDelay`).
+2. **Processing duration:** how long your event handlers take to run (`inpProcessingDuration`).
+3. **Presentation delay:** how long the browser takes to render the next frame after the handlers finish (`inpPresentationDelay`).
+
+![INP sub-parts visual in the dashboard](~/assets/images/web-analytics/dash-web_analytics-inp-sub-parts.png)
+
+## TCP and TLS timing
+
+The page load timing breakdown now separates connection setup from the TLS handshake, so you can tell a slow network path from a slow TLS negotiation:
+
+* **Connection time (excluding TLS)** (`connectionTimeWithoutTLS`)
+* **TLS handshake time:** (`tlsTime`).
+
+Note: we've retained `connectionTime` in the GraphQL API so you can still analyze the combined time.
+
+## Querying the GraphQL data
+
+The sub-parts are available on `rumWebVitalsEventsAdaptiveGroups` as percentiles, for example: `lcpResourceLoadDelayP50` or `inpInputDelayP50`. The connection split is available on `rumPerformanceEventsAdaptiveGroups` as `connectionTimeWithoutTLSP50` and `tlsTimeP50`, and so on for the other percentiles.
+
+The percentiles available are: P25, P50, P75, P90, P95, P99, P999. All values are in microseconds. A negative value means the data isn't available.
+
+To get started, open [Web Analytics in the dashboard](https://dash.cloudflare.com/?to=/:account/web-analytics/sites), select your site and navigate to the Core Web Vitals section. For more on the data, refer to [the Web Analytics docs](https://developers.cloudflare.com/web-analytics/) and [the GraphQL Analytics API docs](https://developers.cloudflare.com/analytics/graphql-api/).
