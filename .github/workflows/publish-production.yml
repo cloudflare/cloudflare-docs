@@ -4,8 +4,6 @@ on:
     branches:
       - production
 
-# Queue runs instead of overlapping, so an older commit can't finish deploying
-# after a newer one. Don't cancel: every merge should publish.
 concurrency:
   group: publish-production
   cancel-in-progress: false
