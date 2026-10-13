@@ -258,10 +258,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Analytics", "/analytics/"),
 					link("Web Analytics", "/web-analytics/"),
 					link("Logs", "/logs/"),
-					link(
-						"Log Explorer",
-						"/observability/logs/unsampled-security-datasets/",
-					),
+					link("Log Explorer", "/observability/logs/log-explorer/"),
 					link("Health Checks", "/health-checks/"),
 				],
 			},

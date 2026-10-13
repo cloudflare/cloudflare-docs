@@ -1,9 +1,9 @@
 ---
 pcx_content_type: reference
-title: Unsampled security datasets API
+title: Log Explorer API
 sidebar:
   order: 5
-description: Query and configure unsampled security datasets via the API.
+description: Query and configure Log Explorer via the API.
 products:
   - log-explorer
 ---
@@ -14,11 +14,11 @@ Configuration and Log searches are also available via a public API.
 
 Authentication with the API can be done via an API token or API key with an email. Refer to [Create API token](/fundamentals/api/get-started/create-token/) for further instructions.
 
-For detailed information on permissions required for each feature, refer to the [Permissions](/observability/logs/unsampled-security-datasets/#permissions) section.
+For detailed information on permissions required for each feature, refer to the [Permissions](/observability/logs/log-explorer/#permissions) section.
 
 ## Query data
 
-A SQL API is available for querying unsampled security datasets (legacy Log Explorer).
+Log Explorer includes a SQL API for submitting queries.
 
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), use the following SQL query:
 

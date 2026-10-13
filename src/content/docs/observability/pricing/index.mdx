@@ -9,7 +9,7 @@ products:
   - observability
 ---
 
-Beginning December 1, 2026, all Cloudflare logs and traces will use the same pricing model. Unsampled security datasets have a different price point of $1 per GB ingested and include 30-day retention. Queries, dashboards, alerts, and analytics do not incur additional charge.
+Beginning December 1, 2026, all Cloudflare logs and traces will use the same pricing model. Log Explorer datasets have a different price point of $1 per GB ingested and include 30-day retention. Queries, dashboards, alerts, and analytics do not incur additional charge.
 
 Refer to [Datasets](/observability/logs/datasets/) to review the price point and retention for each dataset.
 
@@ -67,7 +67,7 @@ Suppose a Paid account uses 75 GB of ingestion and 20 GB-month of storage during
 
 ### Longer retention
 
-Logs and traces in the shared allowance have a default seven-day retention. Unsampled security datasets include 30-day retention.
+Logs and traces in the shared allowance have a default seven-day retention. Log Explorer datasets include 30-day retention.
 Cloudflare plans to add configurable 30, 90, and 365-day retention periods in the future.
 
 ### Existing customers
@@ -76,9 +76,9 @@ Existing Workers Observability customers on Free, Pro, and Business plans automa
 
 For Paid accounts, data retained on December 1 begins contributing to storage usage from that date. Usage before December 1 is not charged retroactively.
 
-## Unsampled security datasets (legacy Log Explorer)
+## Log Explorer (Legacy)
 
-Unsampled security datasets are the datasets previously available in Log Explorer. They preserve complete event fidelity and use a different ingestion price point. Their usage does not consume the pooled allowances in [Plans](#plans). For usage estimates, monitoring, and deactivation, refer to [Pricing and managing usage](/observability/logs/unsampled-security-datasets/pricing/).
+Log Explorer datasets preserve complete event fidelity and use a different ingestion price point. Their usage does not consume the pooled allowances in [Plans](#plans). For usage estimates, monitoring, and deactivation, refer to [Pricing and managing usage](/observability/logs/log-explorer/pricing/).
 
 | Ingestion          | Retention | Queries              |
 | ------------------ | --------- | -------------------- |
