@@ -42,6 +42,7 @@
 		"flue:replay:spam": "tsx .flue/bin/replay-spam.ts",
 		"flue:replay:comment-spam": "tsx .flue/bin/replay-comment-spam.ts",
 		"lint": "eslint",
+		"lint:nimbus": "nimbus-docs lint",
 		"generate:config-reference": "node bin/generate-cf-config-reference.mjs",
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets && pnpm run generate:config-reference",

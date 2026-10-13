@@ -168,6 +168,14 @@ jobs:
           name: dist
           path: dist
 
+      - name: Upload Nimbus link data
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        with:
+          name: nimbus
+          path: .nimbus
+          include-hidden-files: true
+          if-no-files-found: error
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
@@ -212,6 +220,30 @@ jobs:
 
       - name: Tests (Workers)
         run: pnpm run test:postbuild
+
+      # Lint steps use `!cancelled()` so a lint failure doesn't skip the
+      # others. The report step is the gate: it prints the findings and fails.
+      - name: Download Nimbus link data
+        if: ${{ !cancelled() }}
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: nimbus
+          path: .nimbus
+
+      - name: Run Nimbus lint
+        id: nimbus-lint
+        if: ${{ !cancelled() }}
+        run: |
+          set +e
+          pnpm exec nimbus-docs lint --format json > "$RUNNER_TEMP/nimbus-lint.json"
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check internal links
+        if: ${{ !cancelled() }}
+        env:
+          LINT_EXIT_CODE: ${{ steps.nimbus-lint.outputs.exit_code }}
+        run: pnpm exec tsx bin/nimbus-lint-report.ts "$RUNNER_TEMP/nimbus-lint.json"
 
   notify:
     name: Notify
