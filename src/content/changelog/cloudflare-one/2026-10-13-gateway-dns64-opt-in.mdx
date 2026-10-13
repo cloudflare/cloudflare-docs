@@ -1,0 +1,21 @@
+---
+title: Request Gateway DNS64 through DNS locations and EDNS
+description: Configure DNS64 per Gateway DNS location or request synthesis per query with an empty EDNS option.
+date: 2026-10-13
+products:
+  - gateway
+---
+
+Cloudflare Gateway supports DNS64 opt-in through DNS location settings and EDNS. DNS64 synthesizes `AAAA` records from `A` records for IPv6-only networks with NAT64 translation.
+
+Turn on **Enable DNS64** for a location, or include an empty EDNS option `65051` in individual queries. Both mechanisms support UDP, TCP, DNS over TLS, and DNS over HTTPS.
+
+For example, request DNS64 through EDNS with `dig`:
+
+```bash
+dig @"<DNS_RESOLVER_IP>" ipv4only.arpa AAAA +ednsopt=65051 +short
+```
+
+The existing DoH header, `cf-dns-options: dns64`, remains supported independently. DNS64 is off unless the location setting or a per-query opt-in requests it.
+
+For configuration, API update behavior, and request examples, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).

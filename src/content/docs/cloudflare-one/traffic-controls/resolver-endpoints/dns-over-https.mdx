@@ -119,6 +119,24 @@ cf-dns-location: 9y65g5srsm
 Accept: application/dns-message
 ```
 
+## Request DNS64
+
+To request [DNS64 synthesis](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/) for a DoH query, include the `cf-dns-options` header with the value `dns64`. DNS64 synthesizes `AAAA` records from `A` records for IPv6-only networks with NAT64 translation.
+
+For example, replace `<YOUR_DOH_SUBDOMAIN>` with your location's DoH subdomain:
+
+```bash
+curl --get "https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query" \
+  --header "accept: application/dns-json" \
+  --header "cf-dns-options: dns64" \
+  --data-urlencode "name=ipv4only.arpa" \
+  --data-urlencode "type=AAAA"
+```
+
+The header requests synthesis for this request independently of the location's **Enable DNS64** setting. It supports both DNS-wire-format and JSON DoH requests. Use the same endpoint authentication as your other DoH requests.
+
+You can also turn on DNS64 for a location or send an empty EDNS option `65051` in a DNS-wire-format DoH request. For details and expected answers, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
+
 ## Filter DoH requests by user
 
 In order to filter DoH queries based on user identity, each query must include a user-specific authentication token. If you have several devices per user and want to apply device-specific policies, you will need to map each device to a different email.

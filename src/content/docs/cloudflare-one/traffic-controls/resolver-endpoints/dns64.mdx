@@ -1,0 +1,86 @@
+---
+pcx_content_type: configuration
+description: Configure DNS64 synthesis in Cloudflare Gateway using DNS location settings, EDNS options, or DNS over HTTPS headers.
+products:
+  - cloudflare-one
+title: DNS64
+tags:
+  - DNS
+  - IPv6
+sidebar:
+  order: 4
+reviewed: 2026-10-13
+---
+
+Cloudflare Gateway supports DNS64 for IPv6-only networks. DNS64 synthesizes `AAAA` records from `A` records when no `AAAA` records are available.
+
+Gateway uses the well-known NAT64 prefix `64:ff9b::/96`. Your network must provide Network Address Translation from IPv6 to IPv4 (NAT64) for this prefix. DNS64 provides DNS answers, not the network translation itself.
+
+## Request DNS64
+
+DNS64 is off by default. You can request synthesis through a location setting or a per-query opt-in. The location setting and EDNS option work with UDP, TCP, DNS over TLS (DoT), and DNS over HTTPS (DoH).
+
+Gateway supports these opt-in mechanisms:
+
+| Mechanism    | Configuration                                              | Scope                            |
+| ------------ | ---------------------------------------------------------- | -------------------------------- |
+| DNS location | **Enable DNS64**, or `dns64_enabled: true` through the API | Queries matched to that location |
+| EDNS option  | Option code `65051` with an empty payload                  | Individual DNS query             |
+| DoH header   | `cf-dns-options: dns64`                                    | Individual DoH request           |
+
+Each mechanism independently requests DNS64. Turning off the location setting does not prevent per-query opt-in.
+
+### DNS location setting
+
+To request DNS64 for a location, select **Enable DNS64** when [adding or editing a DNS location](/cloudflare-one/traffic-controls/resolver-endpoints/). Queries must [match that location](/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/#dns-query-location-matching) for the setting to apply.
+
+Through the API, set `dns64_enabled` to `true` when you [create a location](/api/resources/zero_trust/subresources/gateway/subresources/locations/methods/create/) or [update a location](/api/resources/zero_trust/subresources/gateway/subresources/locations/methods/update/). The field is Boolean and defaults to `false`.
+
+Location updates use `PUT`. Include `dns64_enabled` explicitly in every update. Omitting the field resets it to `false`, even if it was previously `true`. Preserve the other location settings in the update request.
+
+### EDNS option
+
+To request DNS64 for one DNS query, include a Cloudflare-specific Extension Mechanisms for DNS (EDNS) option in the query's `OPT` record:
+
+| Field         | Value   |
+| ------------- | ------- |
+| Option code   | `65051` |
+| Option length | `0`     |
+| Option data   | Empty   |
+
+A nonempty payload does not request DNS64. It does not turn off DNS64 requested by the location setting or DoH header. If a query contains multiple instances of option `65051`, any instance with an empty payload requests DNS64.
+
+For example, use `dig` to send an empty option to your location's resolver IP address:
+
+```bash
+dig @"<DNS_RESOLVER_IP>" ipv4only.arpa AAAA +ednsopt=65051 +short
+```
+
+To send the same query over TCP, add `+tcp`:
+
+```bash
+dig @"<DNS_RESOLVER_IP>" ipv4only.arpa AAAA +ednsopt=65051 +tcp +short
+```
+
+Use a DNS-wire-format request to send an EDNS option over DoH. The JSON DoH query format cannot carry this option.
+
+### DoH header
+
+To request DNS64 for a DoH request, include `cf-dns-options: dns64`. The header works independently of the location setting. For a request example, refer to [Request DNS64 over DoH](/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/#request-dns64).
+
+## Verify DNS64
+
+With DNS64 requested, an eligible `AAAA` query for `ipv4only.arpa` returns these synthesized addresses:
+
+```txt output
+64:ff9b::c000:aa
+64:ff9b::c000:ab
+```
+
+These addresses correspond to the domain's `A` records, `192.0.0.170` and `192.0.0.171`.
+
+To verify the location setting independently, omit the EDNS option and DoH header. With the location setting off and no per-query opt-in, this domain returns no `AAAA` answers.
+
+DNS64 does not change existing `AAAA` answers, `A` queries, or DNS error responses. It does not apply to DNS policy block responses or DNS override answers.
+
+Clients that independently validate DNS Security Extensions (DNSSEC) may reject synthesized answers. DNS64 cannot create valid DNSSEC signatures for the synthesized `AAAA` records.
