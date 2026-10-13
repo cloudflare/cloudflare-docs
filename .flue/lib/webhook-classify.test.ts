@@ -94,6 +94,45 @@ describe("classifyWebhook — changelog date check", () => {
 	});
 });
 
+describe("classifyWebhook — size label", () => {
+	it.each(["opened", "reopened", "synchronize", "ready_for_review"])(
+		"marks %s as a size label event",
+		(action) => {
+			const c = classifyWebhook("pull_request", {
+				action,
+				pull_request: { number: 50, user: { login: "octocat" } },
+			});
+			expect(c.isSizeLabelEvent).toBe(true);
+			expect(isActionable(c)).toBe(true);
+		},
+	);
+
+	it("includes Dependabot and draft PRs", () => {
+		const c = classifyWebhook("pull_request", {
+			action: "synchronize",
+			pull_request: {
+				number: 51,
+				draft: true,
+				user: { login: "dependabot[bot]" },
+			},
+		});
+		expect(c.isSizeLabelEvent).toBe(true);
+	});
+
+	it("ignores unrelated PR actions and issue events", () => {
+		expect(
+			classifyWebhook("pull_request", {
+				action: "labeled",
+				pull_request: { number: 52, user: { login: "octocat" } },
+			}).isSizeLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", { action: "opened", issue: { number: 53 } })
+				.isSizeLabelEvent,
+		).toBe(false);
+	});
+});
+
 describe("classifyWebhook — Dependabot", () => {
 	it("routes a Dependabot PR to the dependabot review path", () => {
 		const c = classifyWebhook("pull_request", {

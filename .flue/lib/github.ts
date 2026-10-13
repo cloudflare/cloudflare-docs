@@ -45,6 +45,8 @@ export interface GitHubPullRequest {
 	created_at: string;
 	updated_at: string;
 	labels: { name: string }[];
+	additions: number;
+	deletions: number;
 	base: { ref: string; sha: string; repo: { full_name: string } };
 	/** head.repo can be null when the fork has been deleted. */
 	head: { ref: string; sha: string; repo: { full_name: string } | null };
@@ -357,6 +359,25 @@ export async function getPullRequestFiles(
 		token,
 		`https://api.github.com/repos/${REPO}/pulls/${pullNumber}/files?per_page=100`,
 		`get PR files for ${pullNumber}`,
+	);
+}
+
+/** Remove a label from an issue or PR. A 404 is treated as success (not applied). */
+export async function removeLabel(
+	token: string,
+	issueNumber: number,
+	label: string,
+): Promise<void> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/labels/${encodeURIComponent(label)}`,
+		{
+			method: "DELETE",
+			headers: apiHeaders(token),
+		},
+	);
+	if (res.ok || res.status === 404) return;
+	throw new Error(
+		`Failed to remove label "${label}" from ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
 	);
 }
 
