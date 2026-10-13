@@ -8,6 +8,9 @@ on:
       - ".flue/**"
       - ".github/workflows/flue-ci.yml"
       - ".github/workflows/flue-deploy.yml"
+  # Merge queue runs. Path filters don't apply, so the required checks always
+  # report. Steps that need a PR are skipped for this event.
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -88,16 +91,23 @@ jobs:
         run: pnpm run check
 
       - name: Set up reviewdog
+        if: github.event_name == 'pull_request'
         uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
         with:
           reviewdog_version: v0.21.0
 
       - name: Run eslint
+        if: github.event_name == 'pull_request'
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm run lint --format eslint-formatter-checkstyle | \
             reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
+
+      # No PR to comment on in the merge queue, so lint without reviewdog.
+      - name: Run eslint (merge queue)
+        if: github.event_name == 'merge_group'
+        run: pnpm run lint
 
       - name: Check formatting
         # The codebase is always fully formatted, so checking all
@@ -275,6 +285,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Post PR CI failure comment
+        if: github.event_name == 'pull_request'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -283,7 +294,7 @@ jobs:
   publish-preview:
     name: Deploy Preview
     needs: build
-    if: github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
