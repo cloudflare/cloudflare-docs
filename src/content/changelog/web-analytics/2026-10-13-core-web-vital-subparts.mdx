@@ -6,7 +6,9 @@ products:
   - web-analytics
 ---
 
-The Core Web Vitals tell you whether a page is slow but beyond perceived load time, layout instability or responsiveness they don't guide you to the problematic area directly. To help you with this, Real User Monitoring (RUM) in Web Analytics now breaks Largest Contentful Paint (LCP) and Interaction to Next Paint (INP) into their respective sub-parts. It also splits connection time into TCP and TLS. You can see this visualised in the dashboard or query it through the GraphQL Analytics API.
+import { DashButton } from "~/components";
+
+The Core Web Vitals tell you whether a page is slow but beyond perceived load time, layout instability, or responsiveness they do not guide you to the problematic area directly. To help you with this, Real User Monitoring (RUM) in Web Analytics now breaks Largest Contentful Paint (LCP) and Interaction to Next Paint (INP) into their respective sub-parts. It also splits connection time into TCP and TLS. You can see this visualised in the dashboard or query it through the GraphQL Analytics API.
 
 ## LCP sub-parts
 
@@ -17,7 +19,7 @@ LCP is broken into four phases, so you can see which one is impacting your perce
 3. **Resource load duration:** how long it takes to download that resource (`lcpResourceLoadTime`).
 4. **Element render delay:** the gap between the resource arriving and the element appearing on screen (`lcpElementRenderDelay`).
 
-You don't have to remember all this detail, there are tooltips available to guide you next to each sub-part metric in the dashboard.
+You do not have to remember all this detail, there are tooltips available to guide you next to each sub-part metric in the dashboard.
 
 ![LCP sub-parts visual in the dashboard](~/assets/images/web-analytics/dash-web_analytics-lcp-sub-parts.png)
 
@@ -40,10 +42,16 @@ The page load timing breakdown now separates connection setup from the TLS hands
 
 Note: we've retained `connectionTime` in the GraphQL API so you can still analyze the combined time.
 
-## Querying the GraphQL data
+## How to query the GraphQL data
 
 The sub-parts are available on `rumWebVitalsEventsAdaptiveGroups` as percentiles, for example: `lcpResourceLoadDelayP50` or `inpInputDelayP50`. The connection split is available on `rumPerformanceEventsAdaptiveGroups` as `connectionTimeWithoutTLSP50` and `tlsTimeP50`, and so on for the other percentiles.
 
-The percentiles available are: P25, P50, P75, P90, P95, P99, P999. All values are in microseconds. A negative value means the data isn't available.
+The percentiles available are: P25, P50, P75, P90, P95, P99, P999. All values are in microseconds. A negative value means the data is not available.
 
-To get started, open [Web Analytics in the dashboard](https://dash.cloudflare.com/?to=/:account/web-analytics/sites), select your site and navigate to the Core Web Vitals section. For more on the data, refer to [the Web Analytics docs](https://developers.cloudflare.com/web-analytics/) and [the GraphQL Analytics API docs](https://developers.cloudflare.com/analytics/graphql-api/).
+## How to get started
+
+<DashButton url="/?to=/:account/:zone/speed/rum" />
+
+Head to the 'Core Web Vitals' section, here you can scroll down the report to see the sub-parts. The 'Page Load' section contains the Connection and TLS negotiation durations.
+
+For more on the data, refer to [the Web Analytics docs](/web-analytics/) and [the GraphQL Analytics API docs](/analytics/graphql-api/).
