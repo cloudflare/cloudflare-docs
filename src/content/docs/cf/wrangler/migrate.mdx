@@ -411,11 +411,15 @@ runs Vite directly, so run the command yourself first, for example
 
 ### Source maps {/* source-maps */}
 
-With the Vite bundler, `cf migrate` lists `upload_source_maps` in its required
-item for build settings. To keep uploading Worker source maps, turn on
-`build.sourcemap` for the Worker's Vite environment, then delete the TODO
-comment. By default, the Cloudflare Vite plugin beta names the Worker's
-environment `ssr`:
+With the Vite bundler, `cf migrate` does not move `upload_source_maps` and
+reports it as a follow-up item. `cf deploy` uploads every source map in the
+build output, and the Cloudflare Vite plugin generates source maps for the
+Worker's Vite environment by default from version 1.64.0. You do not need to
+replace `upload_source_maps: true`.
+
+To stop uploading source maps, set `build.sourcemap` to `false` for the
+Worker's Vite environment. By default, the Cloudflare Vite plugin beta names
+the Worker's environment `ssr`:
 
 ```ts title="vite.config.ts" {6-12}
 import { cloudflare } from "@cloudflare/vite-plugin";
@@ -426,12 +430,15 @@ export default defineConfig({
 	environments: {
 		ssr: {
 			build: {
-				sourcemap: true,
+				sourcemap: false,
 			},
 		},
 	},
 });
 ```
+
+On earlier versions of the Cloudflare Vite plugin, set `build.sourcemap` to
+`true` to generate source maps.
 
 How `cf migrate` reports source maps can change during the beta.
 
