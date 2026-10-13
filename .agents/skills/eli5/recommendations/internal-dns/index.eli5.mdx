@@ -121,7 +121,7 @@ In this example, a query for `ghi.example.local` routed to view ID 111 would go 
 
 When an employee queries an internal hostname, here's what happens:
 
-1. **Client makes DNS query:** User on WARP client queries `database.company.local`
+1. **Client makes DNS query:** User on DNS client queries `database.company.local`
 2. **Gateway evaluates policy:** Gateway checks resolver policies—is this user in London office? VPN? Specific device group?
 3. **Policy selects view:** Based on query context (source IP, device posture, user identity), resolver policy selects the appropriate view (e.g., "View 111 - London")
 4. **Zone lookup:** Gateway queries Internal DNS zones within that view for `database.company.local`
@@ -148,14 +148,14 @@ Example scenario: Create a "Developers" view that contains zones for both `prod.
 Before implementing Internal DNS, you'll need:
 
 - **Cloudflare Gateway:** Internal DNS requires Gateway resolver to route queries (included with Zero Trust plans)
-- **Connectivity method:** At least one way to route traffic through Cloudflare (WARP client, Magic WAN, or Cloudflare Tunnel)
+- **Connectivity method:** At least one way to route traffic through Cloudflare (DNS client, Magic WAN, or Cloudflare Tunnel)
 - **Internal IP ranges:** The private IP addresses you want your internal hostnames to resolve to (e.g., `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`)
 
 ## Getting started
 
 To implement Internal DNS:
 
-1. **Set up connectivity:** Choose how traffic reaches Cloudflare (WARP client for employee devices, Magic WAN for office networks, or Cloudflare Tunnel for servers)
+1. **Set up connectivity:** Choose how traffic reaches Cloudflare (DND client for employee devices, Magic WAN for office networks, or Cloudflare Tunnel for servers)
 2. **Create zones:** Define your internal DNS zones with the records you need (for example, create a `company.local` zone with records like `database.company.local → 10.0.1.100`)
 3. **Create views:** Group zones into logical views based on location, department, or environment—views determine which users see which zone responses
 4. **Configure policies:** Set up Gateway resolver policies that select the appropriate view based on query context (source IP, device posture, user identity)
