@@ -1,0 +1,44 @@
+{
+	"model_id": "google/gemini-4-argon",
+	"provider_id": "google",
+	"name": "Gemini 4 Argon",
+	"description": "Google's frontier model that excels at deep work in complex, real-world tasks across domains including coding, finance, legal, cybersecurity, and science.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Multimodal",
+		"Reasoning",
+		"Agentic",
+		"Coding"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": 65536,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Cached input tokens (per 1M)": 0.1,
+		"Output tokens (per 1M)": 10
+	},
+	"examples": [],
+	"supports_async": false,
+	"external_info": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-argon",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Default thinking level": "medium"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 10,
+				"input_cached_tokens": 0.1
+			}
+		}
+	]
+}
