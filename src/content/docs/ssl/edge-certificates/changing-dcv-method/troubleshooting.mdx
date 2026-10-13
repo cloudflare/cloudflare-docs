@@ -178,7 +178,9 @@ CA tokens have the following validity periods:
 
 In both cases — expiry and failure — the token value changes. If you are managing DCV manually, always retrieve the current token value via the [SSL Verification API](/api/resources/ssl/subresources/verification/methods/list/) immediately before placing or updating your DNS record. Do not reuse a previously noted token value.
 
-To trigger an immediate DCV recheck after placing your record — rather than waiting for Cloudflare's next scheduled attempt — use the [Edit SSL Certificate Pack Validation Method](/api/resources/ssl/subresources/verification/methods/edit/) endpoint, specifying the same `validation_method` you are currently using.
+After placing your record, you can request a recheck without waiting for the next scheduled attempt.
+
+<Render file="dcv-validate-patch" product="ssl" />
 
 Refer to [Validation backoff schedule](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) for the full retry schedule and token validity details.
 

@@ -38,7 +38,17 @@ A status of `active` means that the certificate has been deployed to Cloudflareâ
 
 ## Update DCV methods
 
-You cannot update the DCV method for an active certificate. To update the DCV method for a subdomain, wait until the DCV expires and then change the DCV method.
+To change the DCV method for a [Universal SSL](/ssl/edge-certificates/universal-ssl/) certificate pack, use the [Update SSL Certificate Pack Validation Method endpoint](/api/resources/ssl/subresources/verification/methods/edit/) and specify your chosen `validation_method`. This endpoint does not change the method for advanced certificates.
+
+Available methods depend on your DNS setup and [certificate authority](/ssl/reference/certificate-authorities/). For Google Trust Services, Let's Encrypt, and SSL.com, full DNS setups support `txt` only. Partial DNS setups support `txt` or `http`. [HTTP DCV](/ssl/edge-certificates/changing-dcv-method/methods/http/) does not support wildcard certificates.
+
+You can update the configured method while the certificate pack is `active`. This saves the method without rerunning DCV or replacing the active certificate. You do not need to wait for the existing domain validation to expire.
+
+For a certificate pack pending validation, changing the method initializes validation using that method. Retrieve the current validation records and complete any required steps. Cloudflare may select a different method during [automatic renewal](/ssl/edge-certificates/changing-dcv-method/troubleshooting/#certificate-renewal-falling-back-to-txt).
+
+## Request a DCV recheck
+
+<Render file="dcv-validate-patch" product="ssl" />
 
 [^1]: Meaning that Cloudflare is your Authoritative DNS provider.
 

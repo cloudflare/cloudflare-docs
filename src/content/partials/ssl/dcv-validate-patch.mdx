@@ -3,4 +3,8 @@
 
 ---
 
-To request an immediate recheck, send another [PATCH request](/api/resources/ssl/subresources/verification/methods/edit/) with the same `validation_method` as your current validation method.
+To request a DCV recheck for a Universal SSL certificate pack, use the [Update SSL Certificate Pack Validation Method endpoint](/api/resources/ssl/subresources/verification/methods/edit/). Omit `validation_method` or specify the current method.
+
+For an advanced certificate, use the [Certificate Pack PATCH endpoint](/api/resources/ssl/subresources/certificate_packs/methods/edit/). This endpoint keeps the current validation method.
+
+Cloudflare may queue the recheck rather than complete validation before returning the response. The certificate pack can still show `pending_validation` while the recheck is queued or validation remains incomplete.

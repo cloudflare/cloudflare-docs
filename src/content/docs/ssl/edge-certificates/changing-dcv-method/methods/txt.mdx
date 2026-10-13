@@ -58,7 +58,7 @@ Certificates with several packs (RSA and ECDSA for example) may also require sev
 
 ### Complete DCV
 
-Once you update your DNS records, you can either [wait for the next retry](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or request an immediate recheck.
+Once you update your DNS records, you can either [wait for the next scheduled DCV attempt](/ssl/edge-certificates/changing-dcv-method/validation-backoff-schedule/) or use the API to request another validation attempt.
 
 <Render file="dcv-validate-patch" product="ssl" />
 
