@@ -234,8 +234,29 @@ const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "error",
+			// Paths below are served by the Worker or another deployment, so the
+			// build's route list never contains them.
+			"nimbus/internal-link": [
+				"error",
+				{
+					ignore: [
+						"/api/**",
+						"/openapi.json",
+						"/.well-known/**",
+						"**/llms-full.txt",
+						"**/og.png",
+						"**/index.md",
+						// Model 404s are handled directly via custom worker/index.ts logic.
+						"/workers-ai/models/**",
+						"/ai/models/**",
+					],
+				},
+			],
+			// Reuses internal-link's `ignore` list.
+			"nimbus/redirected-link": "error",
 		},
+		// The Worker reads redirects from this file, not from `_redirects`.
+		redirectsFile: "public/__redirects",
 	}),
 ];
 
