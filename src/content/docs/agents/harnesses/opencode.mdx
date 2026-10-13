@@ -49,14 +49,13 @@ flowchart LR
 - **Wake-up.** Each active session has a Lifecycle job. While the session runs, the job keeps a heartbeat. If the object crashes or is evicted, an alarm restarts it, and OpenCode resumes interrupted work.
 - **Idle close.** OpenCode runs background timers while open. The harness closes an unused host after 30 seconds when no work or event subscriptions remain. It reopens the host on the next call, retaining durable state.
 
-
-| Capability                                         | Support                                                  |
-| -------------------------------------------------- | -------------------------------------------------------- |
-| Durable sessions and interrupted-turn recovery     | OpenCode persists state; Lifecycle jobs wake the object. |
-| Workers AI models                                  | Register the `agents/models/opencode` plugin.            |
-| Custom tools, agents, and skills                   | Bundle OpenCode plugins with your Worker.                |
-| Remote Model Context Protocol (MCP) servers        | Register remote servers through a plugin.                |
-| Live events and durable event replay               | Use `session.events()` and `session.log()`.              |
+| Capability                                     | Support                                                  |
+| ---------------------------------------------- | -------------------------------------------------------- |
+| Durable sessions and interrupted-turn recovery | OpenCode persists state; Lifecycle jobs wake the object. |
+| Workers AI models                              | Register the `agents/models/opencode` plugin.            |
+| Custom tools, agents, and skills               | Bundle OpenCode plugins with your Worker.                |
+| Remote Model Context Protocol (MCP) servers    | Register remote servers through a plugin.                |
+| Live events and durable event replay           | Use `session.events()` and `session.log()`.              |
 
 ## Install
 
@@ -64,7 +63,7 @@ Install the Agents SDK and OpenCode packages:
 
 <PackageManagers pkg="agents@latest @opencode/sdk@2 @opencode/plugin@2" />
 
-Use `agents` version 0.28.0 or later. The OpenCode packages are optional peer dependencies, required by this integration, with a supported range of `^2.0.24`.
+Use `agents` version 0.28.1 or later. The OpenCode packages are optional peer dependencies, required by this integration, with a supported range of `^2.0.24`.
 
 Add the Workers AI binding, a SQLite-backed Durable Object, and `nodejs_compat` to your Wrangler configuration:
 
@@ -85,7 +84,6 @@ Add the Workers AI binding, a SQLite-backed Durable Object, and `nodejs_compat` 
 ```
 
 </WranglerConfig>
-
 
 ## Use it in a Durable Object
 
@@ -232,7 +230,7 @@ const all = await this.harness.sessions.list();
 | `setAgent(agent)`                | Change the OpenCode agent, such as `"build"` or `"plan"`.                                                 |
 | `messages()`                     | Read the active context after the latest compaction.                                                      |
 | `history()`                      | Read the full transcript, including compacted messages.                                                   |
-| `events(signal)`                 | Subscribe to live and durable events for this session.                                                    |
+| `events()`                       | Open a stream with a snapshot of the session, then its live events.                                       |
 | `log({ after, follow, signal })` | Replay durable events, optionally following new ones.                                                     |
 | `busy()`                         | Check for running, queued, or interrupted work awaiting recovery.                                         |
 
@@ -240,11 +238,31 @@ const all = await this.harness.sessions.list();
 
 ## Stream events to clients
 
-`session.events()` returns an asynchronous iterable of live events, including text deltas. It does not include a transcript snapshot. Read `session.messages()` or `session.history()` for the transcript, then forward events over your chosen transport.
+`session.events()` returns a stream. Its `snapshot` holds the session's state when the stream opened: the full transcript, pending operations, whether the session is busy, and permissions OpenCode is waiting on. Call `start()` to receive every event after the snapshot, in batches:
 
-For replayable events, use `session.log()`. Save the `event.durable.seq` cursor and pass it as `after` when reconnecting. The durable log does not replay uncommitted live text deltas.
+<TypeScriptExample>
 
-Both subscriptions hold the host open. Stop them with an `AbortSignal` when no longer needed. Recreate subscriptions after the object restarts. The [example's WebSocket adapter](https://github.com/cloudflare/agents/blob/main/examples/next/harnesses/opencode/src/sockets.ts) shows snapshots, event forwarding, and reattachment after startup.
+```ts
+const stream = await this.harness.session(sessionId).events();
+socket.send(JSON.stringify({ type: "snapshot", ...stream.snapshot }));
+
+stream.start((events) => {
+	for (const event of events) {
+		socket.send(JSON.stringify({ type: "event", event }));
+	}
+});
+
+// When the client disconnects or the session is idle:
+await stream.stop();
+```
+
+</TypeScriptExample>
+
+Events use the same kinds as the [Pi harness](/agents/harnesses/pi/): `run_start` and `run_end`, `operation_start` and `operation_end` (with the result `wait()` returns), `message_start` and `message_end`, `text_delta`, `reasoning_delta`, `tool_start` and `tool_end`, plus events for permissions and compaction. An event can repeat what the snapshot already shows, so key messages by ID.
+
+For OpenCode's own events, durable and replayable, use `session.log()`. Save the `event.durable.seq` cursor and pass it as `after` when reconnecting. The durable log does not replay uncommitted live text deltas.
+
+Both hold the host open. Call `stream.stop()` when you no longer need a stream, and stop `log()` with an `AbortSignal`. Open them again after the object restarts. The [example's WebSocket adapter](https://github.com/cloudflare/agents/blob/main/examples/next/harnesses/opencode/src/sockets.ts) shows snapshots, event forwarding, and reattachment after startup.
 
 ## Add plugins
 
