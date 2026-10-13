@@ -172,7 +172,7 @@ The CI workflow (`.github/workflows/ci.yml`) runs on PRs to `production` and che
 3. ESLint (reported inline on PR via reviewdog)
 4. `pnpm run format:core:check` (Prettier formatting)
 5. `pnpm run build` (full build + MDX parsing + image path validation)
-   - Post Build runs `nimbus-docs lint` against the build's `.nimbus/` data (internal links, redirects)
+   - Build runs `nimbus-docs lint` against its own `.nimbus/` data (internal links, redirects)
 6. Redirect validation (`bin/validate-redirects.ts`)
 7. `pnpm run test` (all Vitest suites)
 
