@@ -174,7 +174,9 @@ Forward policies run in a separate phase after HTTP request filtering and origin
 
 Use request metadata selectors, identity, and device posture conditions to select traffic. Body inspection results, DLP matches, and response selectors cannot select a Worker. HTTPS traffic requires TLS decryption; Do Not Inspect traffic bypasses Forward. Gateway does not invoke a Worker for CONNECT tunnels, WebSockets, protocol upgrades, or trailers.
 
-Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) for setup, the Worker entrypoint, inspection order, and constraints. Start with a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/) for notifications, capture, or transformation.
+WebSocket traffic connects directly to the original upstream service and bypasses the Worker. Refer to [Known limitations](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations) for protocol restrictions and other constraints.
+
+Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) for setup, the Worker entrypoint, and inspection order. Start with a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/) for notifications, capture, or transformation.
 
 ### Isolate
 

@@ -146,7 +146,9 @@ Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresource
 
 For deployed Worker identifiers, refer to [List Workers](/api/resources/workers/subresources/workers/methods/list/).
 
-## Constraints
+## Known limitations
+
+WebSocket traffic bypasses the Worker selected by a Forward policy. Gateway connects directly to the original upstream service. The Worker does not receive the WebSocket upgrade request or messages, so its logic does not apply to those connections.
 
 | Area            | Behavior                                                                                                                                                                                            |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

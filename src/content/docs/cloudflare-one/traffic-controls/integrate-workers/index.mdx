@@ -15,6 +15,8 @@ Gateway handles the proxy connection, TLS decryption, and upstream routing. Your
 
 Gateway evaluates its HTTP filtering policies before invoking the Worker. A Forward policy does not override a Block policy or replace Gateway inspection. Refer to [How Forward works](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works) for the request and response inspection order.
 
+WebSocket traffic connects directly to the original upstream service and bypasses the Worker. Refer to [Known limitations](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations) for protocol restrictions and other constraints.
+
 - [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/): Deploy a Worker and select it in a Gateway HTTP policy.
 - [Available context](/cloudflare-one/traffic-controls/integrate-workers/available-context/): Read connection metadata, user identity, and device posture.
 - [Worker templates](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/): Start with a small script for notifications, capture, or content transformation.
