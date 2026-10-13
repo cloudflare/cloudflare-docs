@@ -105,5 +105,5 @@ jobs:
             git config user.email "$bot_email"
             git commit --no-verify -m "docs: add $model model"
             git_auth push origin "HEAD:refs/heads/$branch"
-            gh pr create --base "$base" --head "$branch" --title "docs: add $model model" --body "Adds the newly published \\`$model\\` model data from the automated catalog sync."
+            gh pr create --base "$base" --head "$branch" --title "docs: add $model model" --body "Adds the newly published \`$model\` model data from the automated catalog sync."
           done < <(while IFS= read -r file; do basename "$file" .json; done < "$manifest" | sort -u)
