@@ -52,7 +52,11 @@ Gateway requires a DoH endpoint for default DNS locations. For more information,
 
 ## DNS64
 
-For IPv6-only networks with NAT64 translation, Gateway can synthesize `AAAA` records from `A` records. Turn on **Enable DNS64** for a location, or request synthesis per query. For configuration and request examples, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
+Gateway can synthesize `AAAA` records from `A` records for IPv6-only networks. These networks require network address translation from IPv6 to IPv4 (NAT64).
+
+Turn on **Enable DNS64** for a location, or request synthesis for an individual query.
+
+For configuration and request examples, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
 
 ## Secure DNS locations
 

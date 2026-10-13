@@ -121,9 +121,9 @@ Accept: application/dns-message
 
 ## Request DNS64
 
-To request [DNS64 synthesis](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/) for a DoH query, include the `cf-dns-options` header with the value `dns64`. DNS64 synthesizes `AAAA` records from `A` records for IPv6-only networks with NAT64 translation.
+To request [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/) for a DoH query, include the `cf-dns-options` header with the value `dns64`. DNS64 synthesizes `AAAA` records from `A` records for IPv6-only networks. These networks require network address translation from IPv6 to IPv4 (NAT64).
 
-For example, replace `<YOUR_DOH_SUBDOMAIN>` with your location's DoH subdomain:
+To run this example, replace `<YOUR_DOH_SUBDOMAIN>` with the DoH subdomain for your location:
 
 ```bash
 curl --get "https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query" \
@@ -133,9 +133,13 @@ curl --get "https://<YOUR_DOH_SUBDOMAIN>.cloudflare-gateway.com/dns-query" \
   --data-urlencode "type=AAAA"
 ```
 
-The header requests synthesis for this request independently of the location's **Enable DNS64** setting. It supports both DNS-wire-format and JSON DoH requests. Use the same endpoint authentication as your other DoH requests.
+The header requests synthesis independently of the **Enable DNS64** location setting. It supports DoH requests in DNS wire format or JSON.
 
-You can also turn on DNS64 for a location or send an empty EDNS option `65051` in a DNS-wire-format DoH request. For details and expected answers, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
+Use the same endpoint authentication as your other DoH requests.
+
+You can also turn on DNS64 for a location. DoH requests in DNS wire format also support Extension Mechanisms for DNS (EDNS). Send an empty option `65051` to request DNS64.
+
+For configuration and expected answers, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
 
 ## Filter DoH requests by user
 
