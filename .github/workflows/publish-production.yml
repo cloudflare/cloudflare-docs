@@ -4,6 +4,10 @@ on:
     branches:
       - production
 
+concurrency:
+  group: publish-production
+  cancel-in-progress: false
+
 jobs:
   publish:
     if: github.repository == 'cloudflare/cloudflare-docs'
