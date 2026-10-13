@@ -23,6 +23,7 @@ import {
 } from "./lib/dev-review-routes";
 import { devCommentSpamRoutes } from "./lib/dev-comment-spam-routes";
 import { devSpamRoutes } from "./lib/dev-spam-routes";
+import { devSizeLabelRoutes } from "./lib/dev-size-label-routes";
 import { clefEvalRoutes } from "./lib/dev-clef-eval-routes";
 import {
 	processRecommendationEvent,
@@ -64,6 +65,7 @@ app.get("/health", (c) => c.json({ ok: true }));
 app.route("/dev/review-run", devReviewRoutes);
 app.route("/dev/comment-spam-run", devCommentSpamRoutes);
 app.route("/dev/spam-run", devSpamRoutes);
+app.route("/dev/size-label-run", devSizeLabelRoutes);
 
 // Trigger a review for a PR by number. Fetches the real PR from GitHub,
 // builds the same classification a webhook would, and routes through

@@ -134,6 +134,17 @@ Deterministic and inline (no agent, no Workflow), in `lib/pr-size-label.ts`. On 
 
 Labels are added and removed one at a time, never replaced wholesale, so product labels set by `actions/labeler` are untouched. Failures are logged and never block review routing. Counts are read after the push and GitHub computes them asynchronously, so a stale count self-corrects on the next event.
 
+### Size Label Replay
+
+`pnpm run flue:replay:size-label --pr <n,...>` replays size labeling against existing PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as the other replays and follows `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                          |
+| --------- | -------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the current labels, target label, and what it would add and remove     |
+| `comment` | Real path. Adds the target label and removes stale `size/*` labels; also fixes old PRs |
+
+Real webhooks ignore the mode and always act.
+
 ## Spam Gates
 
 Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.

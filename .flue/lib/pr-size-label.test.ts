@@ -70,6 +70,7 @@ describe("reconcileSizeLabel", () => {
 			target: "size/l",
 			added: true,
 			removed: ["size/s"],
+			dryRun: false,
 		});
 		const calls = fetchMock.mock.calls as unknown as [string, RequestInit][];
 		expect(calls.map(([url, init]) => `${init.method} ${url}`)).toEqual([
@@ -83,6 +84,23 @@ describe("reconcileSizeLabel", () => {
 		const fetchMock = vi.fn();
 		vi.stubGlobal("fetch", fetchMock);
 		await reconcileSizeLabel("t", pr(["size/xs"], 3, 2));
+		expect(fetchMock).not.toHaveBeenCalled();
+	});
+
+	it("reports the plan without API calls in dry-run mode", async () => {
+		const fetchMock = vi.fn();
+		vi.stubGlobal("fetch", fetchMock);
+		const result = await reconcileSizeLabel(
+			"t",
+			pr(["size/s", "size/m"], 600, 0),
+			{ dryRun: true },
+		);
+		expect(result).toEqual({
+			target: "size/l",
+			added: true,
+			removed: ["size/s", "size/m"],
+			dryRun: true,
+		});
 		expect(fetchMock).not.toHaveBeenCalled();
 	});
 

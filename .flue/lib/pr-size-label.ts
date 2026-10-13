@@ -47,13 +47,22 @@ export function planSizeLabelChanges(
 export async function reconcileSizeLabel(
 	token: string,
 	pr: GitHubPullRequest,
-): Promise<{ target: SizeLabel; added: boolean; removed: string[] }> {
+	options: { dryRun?: boolean } = {},
+): Promise<{
+	target: SizeLabel;
+	added: boolean;
+	removed: string[];
+	dryRun: boolean;
+}> {
 	const target = sizeLabelFor(pr.additions + pr.deletions);
 	const plan = planSizeLabelChanges(
 		pr.labels.map((l) => l.name),
 		target,
 	);
-	if (plan.add) await addLabels(token, pr.number, [plan.add]);
-	for (const name of plan.remove) await removeLabel(token, pr.number, name);
-	return { target, added: plan.add !== null, removed: plan.remove };
+	const dryRun = options.dryRun === true;
+	if (!dryRun) {
+		if (plan.add) await addLabels(token, pr.number, [plan.add]);
+		for (const name of plan.remove) await removeLabel(token, pr.number, name);
+	}
+	return { target, added: plan.add !== null, removed: plan.remove, dryRun };
 }
