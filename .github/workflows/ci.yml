@@ -123,8 +123,6 @@ jobs:
       - name: Tests
         run: pnpm run test:prebuild
 
-  # Runs in parallel with Pre Build: the build is the longest job, so waiting
-  # for Pre Build first adds its whole runtime to every run.
   build:
     name: Build
     runs-on: ubuntu-latest
