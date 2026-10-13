@@ -17,9 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Typos, CRLF, file extensions, ESLint and Prettier only look at one file at a
-  # time, so two PRs that pass them separately pass them combined. They run on
-  # PRs only; the merge queue keeps the checks that look across files.
+  # `github.event_name == 'pull_request'` doesn't apply to the merge queue.
   typos:
     name: Typos
     if: github.event_name == 'pull_request'
