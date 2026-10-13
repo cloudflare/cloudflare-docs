@@ -1,0 +1,21 @@
+---
+title: Workers subrequests now preserve context for BYOIP destinations
+description: Workers subrequests to Cloudflare-proxied BYOIP destinations now preserve request context and original client signals for security and Bot Management evaluation.
+products:
+  - workers
+  - byoip
+  - bots
+date: 2026-10-13
+---
+
+Cloudflare now preserves Workers context when a subrequest targets a Cloudflare-proxied hostname using [Bring Your Own IP (BYOIP)](/byoip/). These requests are identified as Cloudflare-to-Cloudflare traffic instead of external Internet traffic.
+
+Previously, some BYOIP subrequests could lose Workers context and original client signals. This could cause security rules to behave unexpectedly, Bot Management to evaluate an internal Cloudflare connection instead of the original client, or affected requests to return false `403` responses.
+
+Workers subrequests to BYOIP destinations now preserve the [`CF-Worker`](/fundamentals/reference/http-headers/#cf-worker) header and [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field. This supports consistent security rule evaluation across same-zone and cross-zone subrequests.
+
+[Bot Management fields](/bots/reference/bot-management-variables/#o2o-and-subrequests) on the destination zone now represent the original end-user connection for affected BYOIP subrequests. Bot scores, verified bot status, and JA3/JA4 fingerprints no longer represent the internal connection between Cloudflare services.
+
+Customers benefit from consistent security rule evaluation, accurate Bot Management results, and fewer unexpected failures when Workers access BYOIP-backed hostnames. The improvement is automatic and requires no configuration changes.
+
+For more information, refer to [Cloudflare BYOIP](/byoip/) and [Workers subrequests](/workers/platform/limits/#subrequests).
