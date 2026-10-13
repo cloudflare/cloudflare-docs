@@ -98,6 +98,7 @@ app.post("/dev/review/:number", async (c) => {
 		isSpamFilterEvent: pr.user?.login !== "dependabot[bot]",
 		isCodeReviewEvent: pr.user?.login !== "dependabot[bot]",
 		isChangelogDateEvent: pr.user?.login !== "dependabot[bot]",
+		isSizeLabelEvent: true,
 		isDraft: pr.draft,
 		command: null,
 		commentId: undefined,

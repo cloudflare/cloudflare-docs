@@ -120,6 +120,20 @@ Codeowner commands are authorized in the pipeline entry:
 
 `/review` and `/full-review` route Dependabot PRs to `DEPENDABOT_REVIEW`. `/draft-never-stale` only applies to open draft PRs. Draft PRs skip automatic review; commands can still run. `DOCS_FLUE_REVIEW_MODE=log` is the default and only logs rendered output. `comment` updates the singleton summary comment.
 
+## PR Size Labels
+
+Deterministic and inline (no agent, no Workflow), in `lib/pr-size-label.ts`. On every `opened`, `reopened`, `synchronize`, and `ready_for_review` PR event, including drafts and Dependabot, `runSizeLabelSafely` re-reads the PR and makes it carry exactly one `size/*` label from additions + deletions. It always acts and ignores `DOCS_FLUE_REVIEW_MODE`.
+
+| Label     | Additions + deletions |
+| --------- | --------------------- |
+| `size/xs` | Under 10              |
+| `size/s`  | Under 100             |
+| `size/m`  | Under 500             |
+| `size/l`  | Under 1,000           |
+| `size/xl` | 1,000 or more         |
+
+Labels are added and removed one at a time, never replaced wholesale, so product labels set by `actions/labeler` are untouched. Failures are logged and never block review routing. Counts are read after the push and GitHub computes them asynchronously, so a stale count self-corrects on the next event.
+
 ## Spam Gates
 
 Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.

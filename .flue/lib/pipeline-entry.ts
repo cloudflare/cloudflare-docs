@@ -45,6 +45,7 @@ import {
 import { setAutoReviewDisabled } from "./review/state";
 import { startReview, type ReviewWorkflowParams } from "./review/start";
 import { reconcileChangelogDateComment } from "./changelog-date-check";
+import { reconcileSizeLabel } from "./pr-size-label";
 import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
@@ -84,6 +85,11 @@ export async function startReviewPipeline(
 	if (c.isChangelogDateEvent) {
 		await runChangelogDateCheckSafely(env, c, number);
 		if (c.action === "closed") return;
+	}
+
+	// ── 1.6 Size label (additive; runs for every PR, Dependabot included) ───
+	if (c.isSizeLabelEvent) {
+		await runSizeLabelSafely(env, c, number);
 	}
 
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────
@@ -346,6 +352,32 @@ async function runChangelogDateCheckSafely(
 			c,
 			number,
 			"changelog_date_check_failed",
+			err instanceof Error ? err.message : String(err),
+		);
+	}
+}
+
+/**
+ * Deterministic and cheap (one PR read plus at most a few label writes), so it
+ * runs inline. Failures are logged and never block review routing.
+ */
+async function runSizeLabelSafely(
+	env: PipelineEnv,
+	c: WebhookClassification,
+	number: number,
+): Promise<void> {
+	const ghEnv = env as unknown as Record<string, string>;
+	try {
+		const token = await getInstallationToken(ghEnv);
+		const pr = await getPullRequest(token, number);
+		const result = await reconcileSizeLabel(token, pr);
+		log("size-label", c, number, `size_label_${result.target}`);
+	} catch (err) {
+		log(
+			"size-label",
+			c,
+			number,
+			"size_label_failed",
 			err instanceof Error ? err.message : String(err),
 		);
 	}
