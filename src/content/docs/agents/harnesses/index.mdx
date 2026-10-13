@@ -57,7 +57,7 @@ Except for Project Think, every harness below is a capability: it installs on a 
 | [Pi](/agents/harnesses/pi/)                           | `agents/harness/pi`        | Beta         | [Pi Durable](https://earendil.com/posts/pi-durable/)                     |
 | [AI SDK harness](/agents/harnesses/ai-sdk/)           | `agents/harness/ai-sdk`    | Experimental | The AI SDK's `streamText`                                                |
 | [Container harness](/agents/harnesses/container/)     | `agents/harness/container` | Experimental | Claude Code, Codex, or another agent CLI in a Cloudflare Container       |
-| [OpenCode harness](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) | `agents/harness/opencode`  | Experimental | [OpenCode](https://opencode.ai/) v2, inside the Durable Object |
+| [OpenCode](/agents/harnesses/opencode/)               | `agents/harness/opencode`  | Experimental | [OpenCode](https://opencode.ai/) 2.0, inside the Durable Object          |
 | [Project Think](/agents/harnesses/think/)             | `@cloudflare/think`        | Experimental | Think's agent loop, as a class that extends the `Agent` class            |
 
 Use **Pi** when you want Pi Durable to own the agent loop, transcript, and recovery, including steering a running turn. You choose how clients reach it, such as HTTP, WebSockets, or RPC. Start here if you are not sure.
@@ -66,7 +66,7 @@ Use the **AI SDK harness** when you want a thin `streamText` loop with sessions 
 
 Use the **Container harness** when you want a coding agent CLI with a real filesystem and shell. The CLI runs in a container that stops when idle, while the Durable Object keeps the sessions.
 
-Use the **OpenCode harness** to run OpenCode inside the Durable Object itself. Its only documentation for now is the example on GitHub.
+Use **OpenCode** when you want OpenCode 2.0's sessions, tools, and plugin system, running inside the Durable Object itself.
 
 Use **Project Think** when you want every default built in: memory, workspace tools, actions, extensions, messengers, scheduled tasks, and sub-agent RPC. Think is a class: your agent extends `Think`, which builds on the legacy [`Agent` class](/agents/agent-class/).
 
