@@ -8,7 +8,7 @@ products:
   - cloudflare-for-platforms
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 ## Script limits
 
@@ -59,6 +59,8 @@ For example, configure your dynamic dispatch Worker as the queue consumer:
 
 Include the target user Worker in each message, and forward the message from the `queue()` handler:
 
+<TypeScriptExample>
+
 ```ts
 interface Env {
   DISPATCHER: DispatchNamespace;
@@ -92,6 +94,8 @@ export default {
   },
 };
 ```
+
+</TypeScriptExample>
 
 The user Worker handles the forwarded message in its `fetch()` handler, or in an RPC method if it exports a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/#the-workerentrypoint-class). The same pattern applies to Cron Triggers: add the schedule to your dynamic dispatch Worker and call the relevant user Workers from its `scheduled()` handler.
 
