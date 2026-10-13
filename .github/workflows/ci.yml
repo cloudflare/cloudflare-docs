@@ -125,7 +125,6 @@ jobs:
 
   build:
     name: Build
-    needs: pre-build
     runs-on: ubuntu-latest
     outputs:
       succeeded: ${{ steps.build.outputs.succeeded }}
