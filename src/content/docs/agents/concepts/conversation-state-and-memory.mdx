@@ -29,7 +29,7 @@ For small UI state that syncs to clients, use the [`State`](/agents/capabilities
 
 ## Conversation history
 
-Each harness keeps its own transcript. The [Pi harness](/agents/harnesses/pi/) stores Pi's transcript, and the [Think harness](/agents/harnesses/think-harness/) stores AI SDK messages in the `Sessions` tables. You read history through the harness, for example with `harness.messages()`.
+Each harness keeps its own transcript. For example, the [Pi harness](/agents/harnesses/pi/) stores Pi's transcript in the object's database. You read history through the harness, for example with `harness.messages()`.
 
 When you build your own loop, install `Sessions` and store messages in it:
 
@@ -119,7 +119,7 @@ session
 	.compactAfter(80_000);
 ```
 
-`compactAfter()` compacts once the session's estimated token count passes the limit. The Think harness sets compaction in its `configureSession` option, and compacts again when a model call fails with a context overflow.
+`compactAfter()` compacts once the session's estimated token count passes the limit.
 
 Refresh the frozen system prompt after a compaction, so the prompt and the summarized history agree.
 

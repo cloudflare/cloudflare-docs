@@ -17,7 +17,7 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 `AiSdkHarness` is experimental. The API may change in any release.
 :::
 
-Use it when you want a thin, AI SDK-native loop without the extra features of the [Think harness](/agents/harnesses/think-harness/). `AiSdkHarness` implements the shared harness interface that the experimental Channels API serves, so the same harness can answer browsers, terminals, and messaging platforms.
+Use it when you want a thin, AI SDK-native loop. `AiSdkHarness` implements the shared harness interface that the experimental Channels API serves, so the same harness can answer browsers, terminals, and messaging platforms.
 
 ## Install
 
@@ -99,8 +99,6 @@ await session.submit({ type: "approval", approvalId, approved: true });
 ## Recovery
 
 The AI SDK keeps no state of its own. If an eviction cuts a run short, the harness starts the run again from the saved transcript, and the run's unsaved output is lost. Steering is not supported: `whenBusy: "steer"` queues the input as a follow-up.
-
-If you need runs that continue mid-message after an eviction, use the [Think harness](/agents/harnesses/think-harness/) instead.
 
 ## Related resources
 
