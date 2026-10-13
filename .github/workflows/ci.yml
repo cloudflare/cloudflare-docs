@@ -17,8 +17,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # PR-only: per-file checks are redundant in the merge queue.
   typos:
     name: Typos
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -59,6 +61,7 @@ jobs:
           cache: pnpm
 
       - name: Check for CRLF line endings
+        if: github.event_name == 'pull_request'
         run: |
           if git grep -Il $'\r'; then
             echo "::error::CRLF line endings detected. Configure your editor to use LF line endings (this repo has an .editorconfig file that most editors respect automatically)."
@@ -66,6 +69,7 @@ jobs:
           fi
 
       - name: Check for invalid file extensions
+        if: github.event_name == 'pull_request'
         run: |
           FILES=$(
             find src/content \
@@ -104,12 +108,8 @@ jobs:
           pnpm run lint --format eslint-formatter-checkstyle | \
             reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
 
-      # No PR to comment on in the merge queue, so lint without reviewdog.
-      - name: Run eslint (merge queue)
-        if: github.event_name == 'merge_group'
-        run: pnpm run lint
-
       - name: Check formatting
+        if: github.event_name == 'pull_request'
         # The codebase is always fully formatted, so checking all
         # prettier-scoped files is equivalent to checking only changed files.
         run: pnpm run format:check
@@ -257,7 +257,7 @@ jobs:
   notify:
     name: Notify
     needs: [pre-build, post-build]
-    if: always()
+    if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -284,7 +284,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Post PR CI failure comment
-        if: github.event_name == 'pull_request'
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
