@@ -1,0 +1,44 @@
+---
+title: Pi Durable agents can return to a persistent browser session
+description: Give Pi Durable agents a browser that keeps tabs, cookies, and logins between turns, with image results for screenshots.
+products:
+  - agents
+date: 2026-10-11
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Agents SDK 0.28.0](https://github.com/cloudflare/agents/releases/tag/agents%400.28.0) adds a persistent browser tool for [Pi Durable](/agents/harnesses/pi/). Your agent can open a website, inspect a page, and return on a later turn with its tabs, cookies, and login session intact while the browser session remains alive.
+
+Create a `Browser`, register it with your object's Lifecycle, and install `browserTool` in your Pi registry:
+
+<TypeScriptExample>
+
+```ts
+import { Browser, browserRun } from "agents/browser";
+import { browserTool } from "agents/browser/pi";
+
+// In your agent's constructor, alongside the PiHarness setup:
+this.browser = new Browser({ provider: browserRun(this.env.BROWSER) });
+this.lifecycle.use(this.browser);
+this.registry.install({
+	name: "browser",
+	tools: [
+		browserTool({
+			ctx: this.ctx,
+			browser: this.browser,
+			loader: this.env.LOADER,
+		}),
+	],
+});
+```
+
+</TypeScriptExample>
+
+Each Pi conversation gets its own active tab by default. Cookies and logins remain shared within the browser. Screenshots return as images that an image-capable model can inspect and your UI can display.
+
+The browser stays alive between turns, including when the Durable Object hibernates. Its default idle timeout is 10 minutes. If the session expires or crashes, the tool creates a fresh browser and reports `restarted: true`; the old tabs and login state are gone.
+
+You can also use the persistent browser with the AI SDK and TanStack AI adapters, or connect another harness through the public Browser and CDP APIs. Browser tools are experimental, and `PiHarness` is in beta.
+
+Refer to [persistent browser tools](/agents/tools/browser/#return-to-the-same-browser) for the complete Pi Durable example, required bindings, and behavior when a tool call is interrupted.
