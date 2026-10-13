@@ -1,0 +1,14 @@
+---
+import { z } from "astro:schema";
+
+const props = z.object({
+	key: z.string(),
+	mode: z.enum(["append", "replace"]).default("append"),
+});
+
+const { key, mode } = props.parse(Astro.props);
+---
+
+<div data-extra-flag-key={key} data-extra-flag-mode={mode}>
+	<slot />
+</div>

@@ -70,7 +70,7 @@ Here are some examples of how to express some common queries over sampled data.
 | Count events in a dataset          | `count()`                | `sum(_sample_interval)`                                 |
 | Sum a quantity, for example, bytes | `sum(bytes)`             | `sum(bytes * _sample_interval)`                         |
 | Average a quantity                 | `avg(bytes)`             | `sum(bytes * _sample_interval) / sum(_sample_interval)` |
-| Compute quantiles                  | `quantile(0.50)(bytes)`  | `quantileWeighted(0.50)(bytes, _sample_interval)`       |
+| Compute quantiles                  | `quantile(0.50)(bytes)`  | `quantileExactWeighted(0.50)(bytes, _sample_interval)`  |
 
 Note that the accuracy of results is not determined by the sample interval, similar to the mapping analogy mentioned earlier. A high sample interval can still provide precise results. Instead, accuracy depends on the total number of data points queried and their distribution.
 

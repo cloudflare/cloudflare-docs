@@ -1,0 +1,91 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+	lora: z.boolean(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const resp = await env.AI.run("${name}", {
+      encoding: "linear16",
+      sample_rate: "16000"
+    }, {
+      websocket: true
+    });
+    return resp;
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const deployWorker = `
+npx wrangler deploy
+`;
+
+const clientScript = `
+const ws = new WebSocket('wss://<your-worker-url.com>');
+ 
+ws.onopen = () => {
+  console.log('Connected to WebSocket');
+ 
+  // Generate and send random audio bytes
+  // You can replace this part with a function
+  // that reads from your mic or other audio source
+  const audioData = generateRandomAudio();
+  ws.send(audioData);
+  console.log('Audio data sent');
+};
+ 
+ws.onmessage = (event) => {
+  // Transcription will be received here
+  // Add your custom logic to parse the data
+  console.log('Received:', event.data);
+};
+ 
+ws.onerror = (error) => {
+  console.error('WebSocket error:', error);
+};
+ 
+ws.onclose = () => {
+  console.log('WebSocket closed');
+};
+ 
+// Generate random audio data (1 second of noise at 44.1kHz, mono)
+function generateRandomAudio() {
+  const sampleRate = 44100;
+  const duration = 1;
+  const numSamples = sampleRate * duration;
+  const buffer = new ArrayBuffer(numSamples * 2);
+  const view = new Int16Array(buffer);
+ 
+  for (let i = 0; i < numSamples; i++) {
+    view[i] = Math.floor(Math.random() * 65536 - 32768);
+  }
+ 
+  return buffer;
+}
+`;
+
+---
+
+<>
+	<Details header="Step 1: Create a Worker that establishes a WebSocket connection">
+		<Code code={worker} lang="ts" />
+	</Details>
+
+	<Details header="Step 2: Deploy your Worker">
+		<Code code={deployWorker} lang="sh" />
+	</Details>
+
+  <Details header="Step 3: Write a client script to connect to your Worker and send audio">
+    <Code code={clientScript} lang="js" />
+  </Details>
+</>

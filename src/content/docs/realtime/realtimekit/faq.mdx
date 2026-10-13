@@ -1,0 +1,109 @@
+---
+pcx_content_type: navigation
+title: FAQ
+slug: realtime/realtimekit/faq
+sidebar:
+  order: 8
+---
+import { Details } from "~/components";
+
+<Details header="How can I generate the Cloudflare API Token?">
+To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloudflare.com).
+
+Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
+When configuring permissions, ensure that **Realtime** / **Realtime Admin** permissions are selected.
+Configure any additional [access policies and restrictions](/fundamentals/api/reference/permissions/) as needed for your use case.
+</Details>
+
+### Meetings 
+<Details header="Can I schedule meetings in advance with RealtimeKit?">
+
+While RealtimeKit does not include a built-in scheduling system, you can implement the scheduling experience on top of it in your application.
+RealtimeKit meetings do not have start or end time, so your backend must store the schedule and enforce when users are allowed to join.
+A common approach is:
+
+- When a user schedules a meeting, your backend creates a meeting in RealtimeKit and stores the meeting `id` together with the start and end times.
+- When a user tries to join the meeting in your application, your backend checks whether the current time is within the allowed window.
+- If the checks pass, your backend [adds the participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to the meeting,
+  returns the participant auth token to the frontend and the frontend passes that token to the RealtimeKit SDK so the user can join.
+
+</Details>
+
+<Details header="How do I prevent participants from joining a meeting after a specific date or time?">
+	You can disable the meeting at the required time by setting its status to `INACTIVE` using a `PATCH` request to the 
+  [Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint.
+
+ This prevents participants from joining the meeting and prevents any new Sessions from starting.
+
+   ```bash
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{APP_ID}/meetings/{MEETING_ID} \
+  --request PATCH \
+  --header "Authorization: Bearer <CLOUDFLARE_API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{ "status": "INACTIVE" }'
+```
+</Details>
+
+### Participants
+
+<Details header="How do I generate an auth token for a participant?">
+  Your backend generates an authentication token by adding the user as a participant to a meeting with the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) API endpoint.
+  The API response includes a `token` field, which is the authentication token for that participant in that meeting.
+  
+  If you need a new token for an existing participant after the previous token has expired, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint.
+  
+  For more details, see [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+</Details>
+
+<Details header="Can the same user join from multiple devices or browser tabs?">
+	Yes. A single participant can be represented by multiple peers if the user
+	joins the same meeting from different devices or tabs. Each connection becomes
+	a separate peer, but they all map back to the same participant.
+</Details>
+
+<Details header="How can I prevent a user from joining a meeting again?">
+	Delete that user's participant for the meeting using the [Delete
+	Participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/)
+	API endpoint. 
+
+  Once the participant is deleted and you stop issuing new tokens for them, they will no longer be able to join that meeting.
+</Details>
+
+<Details header="Can the same participant join multiple sessions of a meeting?">
+	Yes. As long as the participant exists for that meeting and has a valid
+	authentication token, that participant can join multiple live sessions of the
+	same meeting over time.
+</Details>
+
+<Details header="Do I need to create a new participant for every session?">
+	In most cases, no. You typically create a participant once for a given user
+	and meeting, and then reuse that participant across sessions of that meeting.
+	You may need to refresh the participant’s authentication token over time, but
+	you do not need to recreate the participant.
+</Details>
+
+<Details header="What should I use for custom_participant_id?">
+	Use a stable internal identifier from your own system, such as a numeric user
+	id or UUID. Do not use personal data such as email addresses, phone numbers,
+	or other personally identifiable information.
+</Details>
+
+### Presets
+
+<Details header="Do I need a new preset for every meeting or participant?">
+Presets are **re-usable** set of rules and configurations that are defined at the App level. You can use the same preset for multiple participants.
+
+ 
+Read more about presets [here](/realtime/realtimekit/concepts/preset/).
+</Details>
+
+### Client Side SDKs
+<Details header="How do I decide which SDK to select?">
+	RealtimeKit support all the popular frameworks for web and mobile platforms.
+
+  We **recommend using our UI Kits** For most use cases.
+  
+  Please Note: When you use our UI Kit, you also get the core SDK with it, which can be used to build additional features based on your needs.
+
+  For more information please refer to our [SDK Selection Guide](/realtime/realtimekit/sdk-selection/)
+</Details>

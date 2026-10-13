@@ -1,0 +1,59 @@
+---
+title: Security Analytics (new dashboard)
+pcx_content_type: concept
+sidebar:
+  order: 3
+  label: Security Analytics
+description: Security Analytics shows information about all incoming HTTP requests or mitigated requests (rule matches).
+---
+
+import { Stream, GlossaryTooltip, DashButton } from "~/components";
+
+Security Analytics shows information about all incoming HTTP requests or only about requests mitigated by Cloudflare.
+
+Use Security Analytics as your starting point to understand and analyze traffic patterns, and to create security rules based on the filters you applied.
+
+To access Security Analytics in the new security dashboard, go to the **Analytics** page.
+
+<DashButton url="/?to=/:account/:zone/security/analytics" />
+
+<Stream
+	id="1a426a3ae597ae3935eb97b5f97f106f"
+	title="Application Security: Get started guide"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/appsec-get-started-guide.png"
+/>
+
+By default, Security Analytics queries filter on `requestSource = 'eyeball'`, which represents requests from end users. Note that requests from Cloudflare Workers (subrequests) are not visible in Security Analytics.
+
+## Traffic
+
+The **Traffic** tab displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
+
+In this tab you can perform several tasks:
+
+- View the traffic distribution for your domain.
+- Understand which traffic is being mitigated by Cloudflare security products, and where non-mitigated traffic is being served from (Cloudflare global network or [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/)).
+- Analyze suspicious traffic and create tailored custom [security rules](/security/rules/) based on applied filters.
+- [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
+
+For information on how to use the **Traffic** tab, refer to [Security Analytics](/waf/analytics/security-analytics/#adjusting-displayed-data).
+
+If you need to modify existing security-related rules you already configured, consider also using the [Events](#events) tab. This tab displays information about requests affected by Cloudflare security products.
+
+:::note
+The **Traffic** tab includes functionality available in the [Security Analytics](/waf/analytics/security-analytics/) page in the previous dashboard navigation structure.
+:::
+
+## Events
+
+Use the **Events** tab to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and to tailor your security configurations.
+
+The **Events** tab displays information about requests actioned or flagged by Cloudflare security products. Each incoming HTTP request might generate one or more security events. The tab only shows these events, not the HTTP requests themselves. To obtain information on all incoming HTTP requests, use the [Traffic](#traffic) tab.
+
+Users on a Free plan can view summarized events by date in sampled logs. Customers on paid plans have access to additional graphs and dashboards that summarize the most relevant information about the current behavior of Cloudflare's security features on your domain.
+
+For more information on the **Events** tab, refer to [Security Events](/waf/analytics/security-events/).
+
+:::note
+The **Events** tab corresponds to the [Security Events](/waf/analytics/security-events/) page in the previous dashboard navigation structure.
+:::

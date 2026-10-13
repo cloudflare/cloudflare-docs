@@ -1,0 +1,65 @@
+diff --git a/node_modules/@astrojs/starlight/components/SidebarSublist.astro b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
+index f90d79d..82ac8f0 100644
+--- a/node_modules/@astrojs/starlight/components/SidebarSublist.astro
++++ b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
+@@ -4,6 +4,7 @@ import type { SidebarEntry } from '../utils/routing/types';
+ import Icon from '../user-components/Icon.astro';
+ import Badge from '../user-components/Badge.astro';
+ import SidebarRestorePoint from './SidebarRestorePoint.astro';
++import SidebarIcon from "~/components/SidebarIcon.astro";
+ 
+ interface Props {
+ 	sublist: SidebarEntry[];
+@@ -24,7 +25,7 @@ const { sublist, nested } = Astro.props;
+ 						class:list={[{ large: !nested }, entry.attrs.class]}
+ 						{...entry.attrs}
+ 					>
+-						<span>{entry.label}</span>
++						<span>{entry.icon && <SidebarIcon {...entry.icon} />}{entry.label}</span>
+ 						{entry.badge && (
+ 							<Badge
+ 								variant={entry.badge.variant}
+diff --git a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
+index ca63d22..ebb1a17 100644
+--- a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
++++ b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
+@@ -22,7 +22,12 @@ export function shouldTransformFile(file: VFile, docsCollectionPath: string) {
+ 	if (!file?.path) return false;
+ 
+ 	// If the document is not part of the Starlight docs collection, skip it.
+-	if (!normalizePath(file.path).startsWith(docsCollectionPath)) return false;
++	if (
++		!normalizePath(file.path).startsWith(docsCollectionPath) &&
++		!normalizePath(file.path).includes("/src/content/partials/") &&
++		!normalizePath(file.path).includes("/src/content/changelog/")
++	  )
++		return false;
+ 
+ 	return true;
+ }
+diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
+index d8fa647..3b6e872 100644
+--- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
++++ b/node_modules/@astrojs/starlight/user-components/Tabs.astro
+@@ -3,10 +3,11 @@ import Icon from './Icon.astro';
+ import { processPanels } from './rehype-tabs';
+ 
+ interface Props {
++	IconComponent?: typeof Icon;
+ 	syncKey?: string;
+ }
+ 
+-const { syncKey } = Astro.props;
++const { syncKey, IconComponent = Icon } = Astro.props;
+ const panelHtml = await Astro.slots.render('default');
+ const { html, panels } = processPanels(panelHtml);
+ 
+@@ -84,7 +85,7 @@ if (isSynced) {
+ 								aria-selected={idx === 0 ? 'true' : 'false'}
+ 								tabindex={idx !== 0 ? -1 : 0}
+ 							>
+-								{icon && <Icon name={icon} />}
++								{icon && <IconComponent name={icon} />}
+ 								{label}
+ 							</a>
+ 						</li>

@@ -1,0 +1,15 @@
+---
+title: HTTP redirect and custom block page redirect
+description: Redirect traffic with a Gateway HTTP Redirect policy, or with the block page in an HTTP or DNS Block policy.
+date: 2025-04-11
+products:
+  - gateway
+hidden: false
+---
+
+You can now use more flexible redirect capabilities in Cloudflare One with Gateway.
+
+- A new **Redirect** action is available in the HTTP policy builder, allowing admins to redirect users to any URL when their request matches a policy. You can choose to preserve the original URL and query string, and optionally include policy context via query parameters.
+- For **Block** actions, admins can now configure a custom URL to display when access is denied. This block page redirect is set at the account level and can be overridden in DNS or HTTP policies. Policy context can also be passed along in the URL.
+
+Learn more in our documentation for [HTTP Redirect](/cloudflare-one/traffic-policies/http-policies/#redirect) and [Block page redirect](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#redirect-to-a-block-page).

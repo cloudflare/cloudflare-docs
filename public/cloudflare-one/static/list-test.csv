@@ -1,2 +1,4 @@
-https://example.com
-https://example1.com
+value,description
+192.0.2.0/24,This is an IP address range in CIDR format
+198.51.100.0/24,This is also an IP address range
+203.0.113.0/24,This is the third IP address range

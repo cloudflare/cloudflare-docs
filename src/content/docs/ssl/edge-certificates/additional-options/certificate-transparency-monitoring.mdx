@@ -36,7 +36,7 @@ CT Monitoring alerts are triggered not only by Cloudflare processes - including 
 
 ## Opt in and out
 
-Alerts are turned off by default. If you want to receive alerts, go to [**SSL/TLS** > **Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise zone, select **Add Email**.
+Alerts are turned off by default. If you want to receive alerts, go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates#ct-alerting-card) page and enable **Certificate Transparency Monitoring**. If you are in a Business or Enterprise zone, select **Add Email**.
 
 To stop receiving alerts, disable **Certificate Transparency Monitoring** or remove your email from the feature card.
 
@@ -54,7 +54,7 @@ You *should* take action when something is clearly wrong, such as if you:
 * Do not recognize the certificate issuer.
   :::note
 
-  Note that Cloudflare provisions backup certificates, so you may see a certificate listed that is not in active use for your site. The [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) will show all certificates requested for your site. 
+  Cloudflare provisions backup certificates, so you may see a certificate listed that is not in active use for your site. The [Edge Certificates page](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) will show all certificates requested for your site.
   :::
 * Have recently noticed problems with your website.
 
@@ -66,8 +66,6 @@ You *should* take action when something is clearly wrong, such as if you:
 
 Only Certificate Authorities can revoke malicious certificates. If you believe an illegitimate certificate was issued for your domain, contact the Certificate Authority listed as the **Issuer** in the email.
 
-* [DigiCert support](https://www.digicert.com/support/#Contact)
-
 * [GlobalSign support](https://support.globalsign.com/)
 
 * [GoDaddy support](https://www.godaddy.com/contact-us?sp_hp=B)
@@ -76,9 +74,11 @@ Only Certificate Authorities can revoke malicious certificates. If you believe a
 
 * [IdenTrust support](https://www.identrust.com/support/support-team)
 
-* [Let’s Encrypt support](https://letsencrypt.org/contact/)
+* [Let's Encrypt support](https://letsencrypt.org/contact/)
 
 * [Sectigo support](https://sectigo.com/support)
+
+* [SSL.com support](https://www.ssl.com/submit-a-ticket/)
 
 ### Option 2: Contact domain registrars
 

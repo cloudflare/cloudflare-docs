@@ -8,6 +8,9 @@ head:
     content: Querying Workers Analytics Engine from a Worker
 ---
 
+
+import { WranglerConfig } from "~/components";
+
 If you want to access Analytics Engine data from within a Worker you can use `fetch` to access the SQL API. The API can return JSON data that is easy to interact with in JavaScript.
 
 ## Authentication
@@ -36,7 +39,7 @@ const response = await fetch(API, {
 const responseJSON = await response.json();
 ```
 
-The data will be returned in the format described in the [FORMAT section of the API docs](/analytics/analytics-engine/sql-reference/#json) allowing you to extract meta information about the names and types of returned columns in addition to the data itself and a row count.
+The data will be returned in the format described in the [FORMAT](/analytics/analytics-engine/sql-reference/statements/#json) section of the documentation, allowing you to extract meta information about the names and types of returned columns in addition to the data itself and a row count.
 
 ## Example Worker
 
@@ -46,12 +49,16 @@ The following is a sample Worker which executes a query against a dataset of wea
 
 First the environment variables are set up with the account ID and API token.
 
-The account ID is set in `wrangler.toml`:
+The account ID is set in the [Wrangler configuration file](/workers/wrangler/configuration/):
+
+<WranglerConfig>
 
 ```toml
 [vars]
 ACCOUNT_ID = "<account_id>"
 ```
+
+</WranglerConfig>
 
 The API_TOKEN can be set as a secret, using the wrangler command line tool, by running the following and entering your token string:
 

@@ -1,0 +1,763 @@
+---
+pcx_content_type: navigation
+title: Chat
+slug: realtime/realtimekit/core/chat
+sidebar:
+  order: 11
+---
+
+import { Tabs, TabItem } from "~/components";
+
+This guide explains how to send and receive chat messages in a meeting using Cloudflare RealtimeKit.
+
+## Introduction
+
+There are three types of messages that can be sent in chat:
+
+- **Text messages**
+- **Images**
+- **Files**
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```js
+console.log("Chat object:", meeting.chat);
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+
+```js
+console.log("All chat messages:", meeting.chat.messages);
+```
+
+### Message Type
+
+The `Message` type is defined as follows:
+
+```typescript
+interface BaseMessage<T extends MessageType> {
+	type: T;
+	userId: string;
+	displayName: string;
+	time: Date;
+	id: string;
+	isEdited?: boolean;
+	read?: boolean;
+	pluginId?: string;
+	pinned?: boolean;
+	targetUserIds?: string[];
+}
+
+interface TextMessage extends BaseMessage<MessageType.text> {
+	message: string;
+}
+
+interface ImageMessage extends BaseMessage<MessageType.image> {
+	link: string;
+}
+
+interface FileMessage extends BaseMessage<MessageType.file> {
+	name: string;
+	size: number;
+	link: string;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage;
+```
+
+</TabItem>
+<TabItem label="React">
+
+The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+
+```jsx
+meeting.chat;
+```
+
+The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+
+```jsx
+meeting.chat.messages;
+```
+
+### Message Type
+
+The `Message` type is defined as follows:
+
+```typescript
+interface BaseMessage<T extends MessageType> {
+	type: T;
+	userId: string;
+	displayName: string;
+	time: Date;
+	id: string;
+	isEdited?: boolean;
+	read?: boolean;
+	pluginId?: string;
+	pinned?: boolean;
+	targetUserIds?: string[];
+}
+
+interface TextMessage extends BaseMessage<MessageType.text> {
+	message: string;
+}
+
+interface ImageMessage extends BaseMessage<MessageType.image> {
+	link: string;
+}
+
+interface FileMessage extends BaseMessage<MessageType.file> {
+	name: string;
+	size: number;
+	link: string;
+}
+
+type Message = TextMessage | ImageMessage | FileMessage;
+```
+
+</TabItem>
+</Tabs>
+
+## Sending a Chat Message
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+### Send a Text Message
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```js
+const message = "Is this the real life?";
+await meeting.chat.sendTextMessage(message);
+```
+
+### Send an Image
+
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
+
+```html
+<label for="img">Select image:</label>
+<input type="file" id="img" name="img" accept="image/*" />
+<button onclick="onSendImage()">Send Image</button>
+```
+
+```js
+async function onSendImage() {
+	const image = document.getElementById("img");
+	await meeting.chat.sendImageMessage(image.files[0]);
+}
+```
+
+### Send a File
+
+Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
+
+```html
+<label for="file">Select file:</label>
+<input type="file" id="file" name="file" />
+<button onclick="onSendFile()">Send File</button>
+```
+
+```js
+async function onSendFile() {
+	const file = document.getElementById("file");
+	await meeting.chat.sendFileMessage(file.files[0]);
+}
+```
+
+### Send Any Message Type
+
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+
+```typescript
+async function sendMessage(
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `sendMessage()` method to send a text message:
+
+```js
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
+```
+
+</TabItem>
+<TabItem label="React">
+
+There is a method in `meeting.chat` to send a message of each type.
+
+### Send a Text Message
+
+To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
+
+```jsx
+const message = "Is this the real life?";
+await meeting.chat.sendTextMessage(message);
+```
+
+### Send an Image
+
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
+
+```jsx
+import { useRef } from "react";
+
+function ChatComponent() {
+	const imageInputRef = useRef(null);
+
+	const onSendImage = async () => {
+		const image = imageInputRef.current;
+		if (image && image.files[0]) {
+			await meeting.chat.sendImageMessage(image.files[0]);
+		}
+	};
+
+	return (
+		<>
+			<label htmlFor="img">Select image:</label>
+			<input
+				type="file"
+				id="img"
+				name="img"
+				accept="image/*"
+				ref={imageInputRef}
+			/>
+			<button onClick={onSendImage}>Send Image</button>
+		</>
+	);
+}
+```
+
+### Send a File
+
+Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
+
+```jsx
+import { useRef } from "react";
+
+function ChatComponent() {
+	const fileInputRef = useRef(null);
+
+	const onSendFile = async () => {
+		const file = fileInputRef.current;
+		if (file && file.files[0]) {
+			await meeting.chat.sendFileMessage(file.files[0]);
+		}
+	};
+
+	return (
+		<>
+			<label htmlFor="file">Select file:</label>
+			<input type="file" id="file" name="file" ref={fileInputRef} />
+			<button onClick={onSendFile}>Send File</button>
+		</>
+	);
+}
+```
+
+### Send Any Message Type
+
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+
+```typescript
+async function sendMessage(
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `sendMessage()` method to send a text message:
+
+```jsx
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
+```
+
+</TabItem>
+</Tabs>
+
+## Receiving Chat Messages
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
+
+```js
+meeting.chat.on("chatUpdate", ({ message, messages }) => {
+	console.log(`Received message ${message}`);
+	console.log(`All messages in chat: ${messages.join(", ")}`);
+});
+```
+
+Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+
+When a chat message is received, the `meeting.chat.messages` list is also updated.
+
+```js
+console.log(JSON.stringify(meeting.chat.messages));
+
+meeting.chat.on("chatUpdate", () => {
+	console.log(JSON.stringify(meeting.chat.messages));
+});
+```
+
+</TabItem>
+<TabItem label="React">
+
+The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+// useRealtimeKitSelector hooks only works when `RealtimeKitProvider` is used.
+const messages = useRealtimeKitSelector((m) => m.chat.messages);
+```
+
+Alternatively:
+
+```jsx
+meeting.chat.on("chatUpdate", ({ message, messages }) => {
+	console.log(`Received message ${message}`);
+	console.log(`All messages in chat: ${messages.join(", ")}`);
+});
+```
+
+Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+
+When a chat message is received, the `meeting.chat.messages` list is also updated.
+
+```jsx
+console.log(JSON.stringify(meeting.chat.messages));
+
+meeting.chat.on("chatUpdate", () => {
+	console.log(JSON.stringify(meeting.chat.messages));
+});
+```
+
+</TabItem>
+</Tabs>
+
+## Editing Chat Messages
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+There is a method in `meeting.chat` to edit a message of each type.
+
+### Edit a Text Message
+
+To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
+
+```js
+const message = meeting.chat.messages[0];
+const messageId = message?.id;
+const newMessage = "Is this the real life?";
+
+await meeting.chat.editTextMessage(messageId, newMessage);
+```
+
+### Edit an Image
+
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
+
+```html
+<label for="img">Edit image:</label>
+<input type="file" id="img" name="img" accept="image/*" />
+<button onclick="onEditImage()">Edit Image</button>
+```
+
+```js
+async function onEditImage() {
+	const messageId = "...";
+	const image = document.getElementById("img");
+	await meeting.chat.editImageMessage(messageId, image.files[0]);
+}
+```
+
+### Edit a File
+
+Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
+
+```html
+<label for="file">Edit file:</label>
+<input type="file" id="file" name="file" />
+<button onclick="onEditFile()">Edit File</button>
+```
+
+```js
+async function onEditFile() {
+	const messageId = "...";
+	const file = document.getElementById("file");
+	await meeting.chat.editFileMessage(messageId, file.files[0]);
+}
+```
+
+### Edit Any Message Type
+
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+
+```typescript
+async function editMessage(
+	messageId: string,
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `editMessage()` method to edit a text message:
+
+```js
+const messageId = "...";
+const message = "Is this just fantasy?";
+await meeting.chat.editMessage(messageId, { type: "text", message });
+```
+
+</TabItem>
+<TabItem label="React">
+
+There is a method in `meeting.chat` to edit a message of each type.
+
+### Edit a Text Message
+
+To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
+
+```jsx
+const message = meeting.chat.messages[0];
+const messageId = message?.id;
+const newMessage = "Is this the real life?";
+
+await meeting.chat.editTextMessage(messageId, newMessage);
+```
+
+### Edit an Image
+
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
+
+```jsx
+import { useRef } from "react";
+
+function ChatComponent() {
+	const imageInputRef = useRef(null);
+
+	const onEditImage = async () => {
+		const messageId = "...";
+		const image = imageInputRef.current;
+		if (image && image.files[0]) {
+			await meeting.chat.editImageMessage(messageId, image.files[0]);
+		}
+	};
+
+	return (
+		<>
+			<label htmlFor="img">Edit image:</label>
+			<input
+				type="file"
+				id="img"
+				name="img"
+				accept="image/*"
+				ref={imageInputRef}
+			/>
+			<button onClick={onEditImage}>Edit Image</button>
+		</>
+	);
+}
+```
+
+### Edit a File
+
+Editing a file is similar to editing an image. To edit a file, use `meeting.chat.editFileMessage()`.
+
+```jsx
+import { useRef } from "react";
+
+function ChatComponent() {
+	const fileInputRef = useRef(null);
+
+	const onEditFile = async () => {
+		const messageId = "...";
+		const file = fileInputRef.current;
+		if (file && file.files[0]) {
+			await meeting.chat.editFileMessage(messageId, file.files[0]);
+		}
+	};
+
+	return (
+		<>
+			<label htmlFor="file">Edit file:</label>
+			<input type="file" id="file" name="file" ref={fileInputRef} />
+			<button onClick={onEditFile}>Edit File</button>
+		</>
+	);
+}
+```
+
+### Edit Any Message Type
+
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+
+```typescript
+async function editMessage(
+	messageId: string,
+	message:
+		| { type: "text"; message: string }
+		| { type: "image"; image: File }
+		| { type: "file"; file: File },
+) {
+	// ...
+}
+```
+
+Here is how you would use the `editMessage()` method to edit a text message:
+
+```jsx
+const messageId = "...";
+const message = "Is this just fantasy?";
+await meeting.chat.editMessage(messageId, { type: "text", message });
+```
+
+</TabItem>
+</Tabs>
+
+## Other Chat Functions
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The `meeting.chat` object exposes certain other methods for convenience when working with chat.
+
+### Get Messages by a User
+
+You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+
+```js
+// Find the userId of the user with name "Freddie".
+const { userId } = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const messages = meeting.chat.getMessagesByUser(userId);
+```
+
+### Get Messages of a Particular Type
+
+You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+
+```js
+const imageMessages = meeting.chat.getMessagesByType("image");
+```
+
+### Pinning a Chat Message
+
+You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+
+To pin a message:
+
+```js
+// Pin the first message in the chat (could be text, image, or file).
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+```
+
+Once you pin a message, it will be added to `meeting.chat.pinned`.
+
+```js
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+
+console.log(meeting.chat.pinned);
+console.log(meeting.chat.pinned.length > 0); // Should be true
+```
+
+You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
+
+```js
+// Unpin the first pinned message.
+const { id } = meeting.chat.pinned[0];
+await meeting.chat.unpin(id);
+```
+
+You can listen for events to know when a message is pinned or unpinned.
+
+```js
+meeting.chat.on("pinMessage", ({ message }) => {
+	console.log("A message was pinned", JSON.stringify(message));
+});
+
+meeting.chat.on("unpinMessage", ({ message }) => {
+	console.log("A message was unpinned", JSON.stringify(message));
+});
+```
+
+### Deleting a Chat Message
+
+The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
+
+```js
+const messageId = "...";
+await meeting.chat.deleteMessage(messageId);
+```
+
+</TabItem>
+<TabItem label="React">
+
+The `meeting.chat` object exposes certain other methods for convenience when working with chat.
+
+### Get Messages by a User
+
+You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
+
+```jsx
+// Find the userId of the user with name "Freddie".
+const { userId } = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const messages = meeting.chat.getMessagesByUser(userId);
+```
+
+### Get Messages of a Particular Type
+
+You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
+
+```jsx
+const imageMessages = meeting.chat.getMessagesByType("image");
+```
+
+### Pinning a Chat Message
+
+You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
+
+To pin a message:
+
+```jsx
+// Pin the first message in the chat (could be text, image, or file).
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+```
+
+Once you pin a message, it will be added to `meeting.chat.pinned`.
+
+```jsx
+const { id } = meeting.chat.messages[0];
+await meeting.chat.pin(id);
+
+console.log(meeting.chat.pinned);
+console.log(meeting.chat.pinned.length > 0); // Should be true
+```
+
+You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
+
+```jsx
+// Unpin the first pinned message.
+const { id } = meeting.chat.pinned[0];
+await meeting.chat.unpin(id);
+```
+
+You can listen for events to know when a message is pinned or unpinned.
+
+```jsx
+meeting.chat.on("pinMessage", ({ message }) => {
+	console.log("A message was pinned", JSON.stringify(message));
+});
+
+meeting.chat.on("unpinMessage", ({ message }) => {
+	console.log("A message was unpinned", JSON.stringify(message));
+});
+```
+
+### Deleting a Chat Message
+
+The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes a parameter `messageId` of type `string`.
+
+```jsx
+const messageId = "...";
+await meeting.chat.deleteMessage(messageId);
+```
+
+</TabItem>
+</Tabs>
+
+## Export chat messages
+
+You can programmatically retrieve all chat messages of a RealtimeKit session in the following ways:
+
+- Using the Chat Replay API
+- Setting up webhook for the `meeting.chatSynced` event
+
+### Get chat download URL
+
+To get the chat download URL, make an HTTP `GET` request to the [Chat Replay API endpoint](/api/resources/realtime_kit/subresources/sessions/methods/get_session_chat/). The API returns:
+
+```json
+{
+	"success": true,
+	"data": {
+		"chat_download_url": "string",
+		"chat_download_url_expiry": "string"
+	}
+}
+```
+
+- **`chat_download_url`** - A URL that allows you to download the entire chat dump of a session in CSV format from AWS S3
+- **`chat_download_url_expiry`** - The expiry timestamp of the `chat_download_url`. If the URL expires, call this endpoint again to obtain a new download URL
+
+For details on the Chat Replay API endpoint, refer to the [Realtime Kit API documentation](/api/resources/realtime_kit/subresources/sessions/methods/get_session_chat/).
+
+### Download the chat dump file
+
+You can download the chat dump file in CSV format by making an HTTP `GET` request to the `chat_download_url` obtained in the previous step.
+
+The process of downloading a file from an HTTP URL differs based on whether you are downloading on the client side or server side.
+
+#### Download on the client
+
+To download at client side:
+
+1. Make a `GET` request to the `chat_download_url`
+2. Convert the response to a blob
+3. Create an invisible `<a>` HTML element with a `download` attribute and add the blob to its `href`
+4. Programmatically click on the `<a>` element so that the browser automatically starts downloading, then remove the `<a>` element
+
+#### Download on the server
+
+To download on the server using Node.js streams:
+
+1. Create a writable stream for a local file
+2. Make a `GET` request to `chat_download_url`
+3. Get a readable stream using `res.body` and pipe to the writable stream created in the first step
+
+### CSV chat dump format
+
+The CSV file contains all chat messages along with participant information and metadata. It includes the following column headings:
+
+- **`id`** - Unique chat message ID
+- **`participantId`** - ID of the participant who sent the message
+- **`sessionId`** - The session ID from which the chat message was sent
+- **`meetingId`** - The ID of the meeting to which this session belongs
+- **`displayName`** - Display name of the participant who sent this message
+- **`pinned`** - A boolean that indicates if the current message was pinned
+- **`isEdited`** - A boolean that indicates if the current message was edited
+- **`payloadType`** - An ENUM that indicates the type of payload sent in the chat message. It can be one of `TEXT_MESSAGE`, `IMAGE_MESSAGE`, `FILE_MESSAGE`
+- **`payload`** - The actual payload sent in the chat message
+- **`createdAt`** - Timestamp when this chat message was sent

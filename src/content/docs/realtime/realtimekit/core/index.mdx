@@ -1,0 +1,155 @@
+---
+pcx_content_type: navigation
+title: Build using Core SDK
+slug: realtime/realtimekit/core
+sidebar:
+  order: 6
+  label: Initialize SDK
+---
+
+import RTKSDKSelector from "~/components/realtimekit/RTKSDKSelector/RTKSDKSelector.astro";
+import RTKCodeSnippet from "~/components/realtimekit/RTKCodeSnippet/RTKCodeSnippet.astro";
+
+### Initialize Core SDK
+
+To integrate the Core SDK, you will need to initialize it with a [participant's auth token](/api/resources/realtime_kit/#create-a-participant), and then use the provided SDK APIs to control the peer in the session.
+
+Initialization might differ slightly based on your tech stack. Please choose your preferred tech stack below.
+
+<RTKSDKSelector />
+
+<RTKCodeSnippet id="web-react">
+Install the client SDK
+```bash
+npm i @cloudflare/realtimekit-react
+```
+Use the `useRealtimeKitClient` hook to initialise the SDK. 
+```ts title=App.tsx
+import { useEffect } from 'react';
+import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+
+export default function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+    useEffect(() => {
+    	initMeeting({ authToken: "<auth-token>" });
+    }, []);
+
+	useEffect(() => {
+		// next - if (meeting) meeting.join();
+	}, [meeting])
+
+    return <div></div>;
+}
+```
+Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-web-components">
+Install the client SDK.
+```bash
+npm i @cloudflare/realtimekit
+```
+Alternatively, you can also use the CDN.
+```html
+ <script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+```
+You can initialise the SDK using `RealtimeKitClient.init`.
+```js
+	const authToken = <auth-token>;
+	RealtimeKitClient.init({
+	authToken,
+	}).then((meeting) => {
+		// next - meeting.join();
+	});
+```
+Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-angular">
+Install the client SDK.
+```bash
+npm i @cloudflare/realtimekit-angular
+```
+You can initialise the SDK using `RealtimeKitClient.init`.
+```ts
+class AppComponent {
+	title = "MyProject";
+	@ViewChild("myid") meetingComponent: RtkMeeting;
+	rtkMeeting: RealtimeKitClient;
+
+	async ngAfterViewInit() {
+		const meeting = await RealtimeKitClient.init({
+			authToken: "<auth-token>",
+		});
+		// next - meeting.join();
+	}
+}
+```
+Use the [Create Participant API](/api/resources/realtime_kit/#create-a-participant) to fetch the `authToken`.
+</RTKCodeSnippet>
+
+### Advanced Options
+
+The Core SDK provides additional configuration options for advanced use cases. These options can be passed during initialization to customize the behavior of the RealtimeKit client.
+
+| Option | Description | Type | Reqired |
+| ------ | ----------- | ------- | ------ |
+| **video**  | Should video be enabled by default | `boolean` | false |
+| **audio**  | Should audio be enabled by default | `boolean` | false |
+| **mediaConfiguration** | Allows you to pass custom media quality constraints | `MediaConfiguration` | false |
+| **autoSwitchAudioDevice** | Automatically switch to a ngAfterViewInit audio device | `boolean` | false |
+| **isNonPreferredDevice** | Allows you to set specific devices as "not preferred" | `(device: MediaDeviceInfo) => boolean` | false |
+| **recording** | Allows you to configure recording settings | RecordingConfig | false |
+
+Reference for the types:
+```ts
+interface AudioQualityConstraints {
+	echoCancellation?: boolean,
+	noiseSupression?: boolean,
+	autoGainControl?: boolean,
+	enableStereo?: boolean,
+	enableHighBitrate?: boolean
+}
+
+interface VideoQualityConstraints {
+	width: { ideal: number },
+	height: { ideal: number },
+	frameRate?: { ideal: number },
+}
+
+interface ScreenshareQualityConstraints {
+	width?: { max: number },
+	height?: { max: number },
+	frameRate?: {
+		ideal: number,
+		max: number
+	},
+	displaySurface?: 'window' | 'monitor' | 'browser';
+	selfBrowserSurface?: 'include' | 'exclude'
+}
+
+interface MediaConfiguration {
+	video?: VideoQualityConstraints,
+	audio?: AudioQualityConstraints,
+	screenshare?: ScreenshareQualityConstraints,
+}
+
+interface RecordingConfig {
+	fileNamePrefix?: string;
+	videoConfig?: {
+		height?: number;
+		width?: number;
+		codec?: string;
+	};
+}
+
+interface DefaultOptions {
+	video?: boolean;
+	audio?: boolean;
+	mediaConfiguration?: MediaConfiguration;
+	isNonPreferredDevice?: (device: MediaDeviceInfo) => boolean;
+	autoSwitchAudioDevice?: boolean;
+	recording?: RecordingConfig;
+}
+```

@@ -1,0 +1,38 @@
+---
+pcx_content_type: navigation
+title: Network health
+sidebar:
+  order: 6
+---
+
+import { DirectoryListing, Render } from "~/components"
+
+Magic Transit uses health checks probes to determine the status of tunnels. This information is used to steer traffic through the best available route, and to warn you about potential issues with a tunnel. Service-level indicators (SLI) and service-level objectives (SLOs) combine to determine when Cloudflare sends you tunnel health alerts. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information about SLI and SLOs.
+
+There are two types of health checks available: endpoint and tunnel health checks.
+
+ - Endpoint health checks evaluate connectivity from Cloudflare distributed data centers to your origin network. Designed to provide a broad picture of Internet health, endpoint probes flow over available tunnels and do not inform tunnel selection or steering logic.
+
+	Cloudflare global network servers issue endpoint health checks outside of customer network namespaces and typically target endpoints beyond the tunnel-terminating border router.
+
+	During onboarding, you specify IP addresses to configure endpoint health checks.
+
+- Tunnel health checks monitor the status of the tunnels that route traffic from Cloudflare to your origin network. Magic Transit relies on health checks to steer traffic to the best available routes.
+
+	During onboarding, you specify the tunnel endpoints or tunnel health check targets the tunnel probes originating from Cloudflare's global network will target.
+
+	Tunnel health check results are exposed via API. These results are aggregated from individual health check results done on Cloudflare servers.
+
+Refer to [Tunnel health checks](/magic-transit/reference/tunnel-health-checks/) for a deep dive on the different type of health checks, what they do and how they work.
+
+<Render
+	file="tunnel-health/health-checks-compatible-cmb-eu"
+	product="networking-services"
+	params={{
+		productName: "Magic Transit"
+	}}
+/>
+
+Refer to the pages below for details on how to use the various network health checks available.
+
+<DirectoryListing />

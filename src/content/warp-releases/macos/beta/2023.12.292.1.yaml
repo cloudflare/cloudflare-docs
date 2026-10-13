@@ -1,0 +1,44 @@
+releaseNotes: >-
+  This release contains exciting new features and bug fixes for both DEX and
+  notifications. Please take time over the next few weeks to play with the new
+  functionality and let us know what you think on both the community forum and
+  through your account teams.
+   
+  **Notable updates**
+
+  - Added ability for Client to display Gateway NETWORK and HTTP block
+  notifications to the user (feature to be available in dash in the coming
+  week).
+
+  - Added ability for administrators to specify multiple configurations in MDM
+  files that users can toggle between. This allows users to more easily switch
+  between production and test environments or China customers to switch between
+  their override endpoints within the UI.
+
+  - Improved existing re-auth notifications to be more visible and time
+  sensitive.
+
+  - Fixed an issue where DEX tests would run before the client was fully
+  connected.
+
+  - Fixed minor UI issue for customers in Include Split tunnel mode where the
+  client would incorrectly state "Your internet is protected" instead of only
+  DNS and Included routes are protected.
+
+  - Fixed an issue where the GUI app would be unresponsive to clicks after
+  waking up from sleep.
+
+  - Fixed an issue where the re-authenticate button was not completely visible
+  in the GUI.
+   
+  **Known issues**
+
+  - The new `display_name` MDM parameter that is part of the multiple
+  configurations feature is not correctly working. For this release the name
+  visible in the UI will be the organization value. A future beta release will
+  correct this; it is safe to include this parameter in updated MDM files now.
+version: 2023.12.292.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.12.292.1
+packageSize: 70335499
+releaseDate: 2023-12-16T03:40:27.993Z
+platformName: macOS

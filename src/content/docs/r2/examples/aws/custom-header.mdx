@@ -18,9 +18,11 @@ When using certain functionality, like the `cf-create-bucket-if-missing` header,
 import boto3
 
 client = boto3.resource('s3',
-  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
-  aws_access_key_id = '<access_key_id>',
-  aws_secret_access_key = '<access_key_secret>'
+  # Provide your Cloudflare account ID
+  endpoint_url = 'https://<ACCOUNT_ID>.r2.cloudflarestorage.com',
+  # Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+  aws_access_key_id = '<ACCESS_KEY_ID>',
+  aws_secret_access_key = '<SECRET_ACCESS_KEY>'
 )
 
 event_system = client.meta.events
@@ -46,8 +48,9 @@ import {
 } from "@aws-sdk/client-s3";
 
 const client = new S3Client({
-  region: "auto",
+  region: "auto", // Required by SDK but not used by R2
   endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  // Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
   credentials: {
     accessKeyId: ACCESS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,
@@ -87,9 +90,11 @@ To enable us to pass custom headers as an extra argument into the call to `clien
 import boto3
 
 client = boto3.resource('s3',
-  endpoint_url = 'https://<accountid>.r2.cloudflarestorage.com',
-  aws_access_key_id = '<access_key_id>',
-  aws_secret_access_key = '<access_key_secret>'
+  # Provide your Cloudflare account ID
+  endpoint_url = 'https://<ACCOUNT_ID>.r2.cloudflarestorage.com',
+  # Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
+  aws_access_key_id = '<ACCESS_KEY_ID>',
+  aws_secret_access_key = '<SECRET_ACCESS_KEY>'
 )
 
 event_system = client.meta.events
@@ -125,8 +130,10 @@ import {
 } from "@aws-sdk/client-s3";
 
 const client = new S3Client({
-  region: "auto",
+  region: "auto", // Required by SDK but not used by R2
+  // Provide your Cloudflare account ID
   endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
+  // Retrieve your S3 API credentials for your R2 bucket via API tokens (see: https://developers.cloudflare.com/r2/api/tokens)
   credentials: {
     accessKeyId: ACCESS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,

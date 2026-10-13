@@ -1,0 +1,36 @@
+releaseNotes: >-
+  This release contains several new features and improvements.
+
+
+  **Notable updates in this release**
+
+
+  - Add ability for Teams admins to allow users to switch between DoH only and
+  WARP.
+
+  - Improved stability of DoH resolver.
+
+  - Fixed UI bug with admin override where disconnected message would persist
+  when it shouldn't. 
+
+  - Fixed exception when downloading updates.
+
+  - Added ability to resize DNS logs window.
+
+  - Fixed UI issues when in tablet mode.
+
+
+  **Known issues**
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop.
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.295.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.5.295.0
+packageSize: 84258816
+releaseDate: 2021-07-01T14:36:19.064Z
+platformName: Windows

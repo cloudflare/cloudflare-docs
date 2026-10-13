@@ -1,0 +1,12 @@
+---
+{}
+---
+
+Use the `cloudflare_content_scanning` resource to enable content scanning for a zone. For example:
+
+```terraform
+resource "cloudflare_content_scanning" "zone_content_scanning_example" {
+	zone_id = "<ZONE_ID>"
+	enabled = true
+}
+```

@@ -1,0 +1,98 @@
+---
+pcx_content_type: troubleshooting
+title: Cloudflare 5xx errors
+source: null
+---
+
+import { GlossaryTooltip, DashButton } from "~/components";
+
+When troubleshooting most `5XX` errors, the correct course of action is to first contact your hosting provider or site administrator to troubleshoot and gather data. The following sections outline:
+
+- The [information](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to provide your hosting provider to help resolve the errors
+- The steps to access [error analytics](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#error-analytics) in the Cloudflare dashboard.
+
+:::note
+
+Cloudflare Support only assists the domain owner to resolve issues. If you are a site visitor, report the problem to the site owner.
+
+:::
+
+### Required error details for hosting provider
+
+When contacting your hosting provider, share the following information:
+
+- The specific `5XX` error code and message.
+- The time and timezone when the `5XX` error occurred.
+- The URL that resulted in the HTTP `5XX` error (for example, `https://www.example.com/images/icons/image1.png`).
+
+The cause of the error is not always found in the origin server's error logs. Be sure to check the logs of any load balancers, caches, proxies, or firewalls between Cloudflare and the origin web server.
+
+Additional details to provide to your hosting provider or site administrator can be found in the error descriptions below. Note that Cloudflare [Custom Errors](/rules/custom-errors/) can alter the appearance of default error pages discussed in this page.
+
+### Error analytics
+
+Error analytics per domain are available within [Zone Analytics](/analytics/account-and-zone-analytics/zone-analytics/). Error analytics provides insights into overall errors by HTTP error code and offers details such as the URLs, source IP addresses, and Cloudflare data centers needed to diagnose and resolve issues. Error Analytics are based on a 1% traffic sample.
+
+To view Error Analytics:
+
+1. In the Cloudflare dashboard, go to the **HTTP Traffic** page.
+
+   <DashButton url="/?to=/:account/:zone/analytics/traffic" />
+
+2. Select **Add filter**, select **Edge status code** or **Origin status code** and choose any `5xx` error code that you want to diagnose.
+
+### Log Explorer
+
+[Log Explorer](/log-explorer/) provides access to Cloudflare logs with all the context available within the Cloudflare platform. 
+You can monitor security and performance issues with custom dashboards or investigate and troubleshoot issues with log search.
+Log explorer [allows to build queries](/log-explorer/log-search/) filtering for specific Ray ID, which can be useful to investigate HTTP Errors.
+
+---
+
+## Error 500: internal server error
+
+For a complete description of this error refer to the [Error 500](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-500/) page.
+
+## Error 502 bad gateway or error 504 gateway timeout
+
+For a complete description of this error refer to the [Error 502/504](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-502-504/) page.
+
+## Error 503: service temporarily unavailable
+
+For a complete description of this error refer to the [Error 503](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-503/) page.
+
+## Error 520: web server returns an unknown error
+
+For a complete description of this error refer to the [Error 520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/) page.
+
+
+## Error 521: web server is down
+
+For a complete description of this error refer to the [Error 521](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-521/) page.
+
+## Error 522: connection timed out
+
+For a complete description of this error refer to the [Error 522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/) page.
+
+## Error 523: origin is unreachable
+
+For a complete description of this error refer to the [Error 523](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-523/) page.
+
+
+## Error 524: a timeout occurred
+
+For a complete description of this error refer to the [Error 524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/) page.
+
+
+## Error 525: SSL handshake failed
+
+For a complete description of this error refer to the [Error 525](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/) page.
+
+
+## Error 526: invalid SSL certificate
+
+For a complete description of this error refer to the [Error 526](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/) page.
+
+## Error 530
+
+For a complete description of this error refer to the [Error 530](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-530/) page.

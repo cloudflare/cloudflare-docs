@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This release contains minor bug fixes from the last release.
+
+
+  **Notable updates**
+
+  - Fixed issue where warp-diag logs were not included when you used Submit
+  Feedback through the app
+
+  - Fixed issue in re-connection logic where we would not always try to
+  re-connect if there was a network change detected
+version: 2021.11.276.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2021.11.276.0
+packageSize: 87826432
+releaseDate: 2021-11-29T21:30:45.443Z
+platformName: Windows

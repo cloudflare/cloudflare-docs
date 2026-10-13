@@ -1,0 +1,271 @@
+---
+pcx_content_type: navigation
+title: Custom Branding
+slug: realtime/realtimekit/ui-kit/branding
+sidebar:
+  order: 6
+---
+
+import { Tabs, TabItem } from "~/components";
+
+RealtimeKit's UI Kit provides all the necessary UI components to allow complete customization of all its UI Kit components. You can customize your meeting icons such as chat, clock, leave meeting, mic on and off, and more.
+
+## Prerequisites
+
+To get started with customizing the icons for your meetings, you need to first integrate RealtimeKit's Web SDK into your web application.
+
+### Install the SDK
+
+Install the package using npm, Yarn, or CDN.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+To set up UI Kit components and web-core, add the following script tags inside the `<head>` tag:
+
+```html
+<head>
+	<script type="module">
+		import { defineCustomElements } from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui@latest/loader/index.es2017.js";
+		defineCustomElements();
+	</script>
+	<!-- Import Web Core via CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/browser.js"></script>
+</head>
+```
+
+You can also import utilities or any other export from CDN:
+
+```html
+<head>
+	<script type="module">
+		import {
+			provideRtkDesignSystem,
+			extendConfig,
+		} from "https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js";
+	</script>
+</head>
+```
+
+</TabItem>
+<TabItem label="React">
+
+```bash
+npm install @cloudflare/realtimekit-ui @cloudflare/realtimekit
+```
+
+</TabItem>
+</Tabs>
+
+### Set up the meeting
+
+1. Create a meeting room using the [Create Meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/)
+2. Generate an `authToken` using the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/). An `authToken` is a unique token that is used to identify a user in the meeting
+3. Initialize the RealtimeKit client using `RealtimeKitClient.init({ authToken })`. It returns the meeting object
+4. Pass the meeting object to the UI Kit
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The `rtk-meeting` component generates the default UI experience.
+
+```html
+<body>
+	<rtk-meeting id="my-meeting"></rtk-meeting>
+
+	<script>
+		const init = async () => {
+			const meeting = await RealtimeKitClient.init({
+				authToken: "<participant_auth_token>",
+				defaults: {
+					audio: true,
+					video: true,
+				},
+			});
+
+			const meetingEl = document.getElementById("my-meeting");
+			meetingEl.meeting = meeting;
+		};
+
+		init();
+	</script>
+</body>
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+} from "@cloudflare/realtimekit-react";
+import { RtkMeeting } from "@cloudflare/realtimekit-react-ui";
+import { useEffect } from "react";
+
+function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		initMeeting({
+			authToken: "<participant_auth_token>",
+			defaults: {
+				audio: true,
+				video: true,
+			},
+		});
+	}, []);
+
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<RtkMeeting meeting={meeting} />
+		</RealtimeKitProvider>
+	);
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Customize the default icon pack
+
+RealtimeKit's default icon set is available at [icons.dyte.io](https://icons.dyte.io/). You can modify and generate your custom icon set from there.
+
+To replace RealtimeKit's default icon set with your own, pass the link to your icon set in the UI component.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+```html
+<body>
+	<rtk-meeting id="my-meeting"></rtk-meeting>
+
+	<script>
+		const init = async () => {
+			const meeting = await RealtimeKitClient.init({
+				authToken: "<participant_auth_token>",
+				defaults: {
+					audio: true,
+					video: true,
+				},
+			});
+
+			const meetingEl = document.getElementById("my-meeting");
+			meetingEl.meeting = meeting;
+
+			// Pass custom icon pack URL
+			meetingEl.iconPackUrl = "https://example.com/my-icon-pack.json";
+		};
+
+		init();
+	</script>
+</body>
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import {
+	RealtimeKitProvider,
+	useRealtimeKitClient,
+} from "@cloudflare/realtimekit-react";
+import { RtkMeeting } from "@cloudflare/realtimekit-react-ui";
+import { useEffect } from "react";
+
+function App() {
+	const [meeting, initMeeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		initMeeting({
+			authToken: "<participant_auth_token>",
+			defaults: {
+				audio: true,
+				video: true,
+			},
+		});
+	}, []);
+
+	return (
+		<RealtimeKitProvider value={meeting}>
+			<RtkMeeting
+				meeting={meeting}
+				iconPackUrl="https://example.com/my-icon-pack.json"
+			/>
+		</RealtimeKitProvider>
+	);
+}
+```
+
+</TabItem>
+</Tabs>
+
+## IconPack reference
+
+The IconPack is an object where:
+
+- **Object key** - Denotes the name of the icon
+- **Object value** - Stores the SVG string
+
+### Available icons
+
+The default icon pack includes the following icons:
+
+- `attach`
+- `call_end`
+- `chat`
+- `checkmark`
+- `chevron_down`
+- `chevron_left`
+- `chevron_right`
+- `chevron_up`
+- `clock`
+- `copy`
+- `disconnected`
+- `dismiss`
+- `download`
+- `emoji_multiple`
+- `full_screen_maximize`
+- `full_screen_minimize`
+- `image`
+- `image_off`
+- `join_stage`
+- `leave_stage`
+- `mic_off`
+- `mic_on`
+- `more_vertical`
+- `participants`
+- `people`
+- `pin`
+- `pin_off`
+- `poll`
+- `recording`
+- `rocket`
+- `search`
+- `send`
+- `settings`
+- `share`
+- `share_screen_person`
+- `share_screen_start`
+- `share_screen_stop`
+- `speaker`
+- `spinner`
+- `spotlight`
+- `stop_recording`
+- `subtract`
+- `vertical_scroll`
+- `vertical_scroll_disabled`
+- `video_off`
+- `video_on`
+- `wand`
+- `warning`
+- `wifi`
+
+Each icon in your custom icon pack JSON file should be defined as a key-value pair where the key matches one of the icon names above, and the value is the SVG string for that icon.
+
+## Next steps
+
+Explore additional customization options:
+
+- [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) - Complete meeting experience out of the box
+- [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) - Create custom meeting interfaces

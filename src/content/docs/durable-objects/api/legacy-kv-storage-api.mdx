@@ -1,0 +1,63 @@
+---
+title: KV-backed Durable Object Storage (Legacy)
+pcx_content_type: concept
+sidebar:
+  order: 7
+---
+
+import { Render, Type, MetaInfo, GlossaryTooltip, TypeScriptExample, Details } from "~/components";
+
+:::note
+This page documents the storage API for legacy KV-backed Durable Objects.
+
+For the newer SQLite-backed Durable Object storage API, refer to [SQLite-backed Durable Object Storage](/durable-objects/api/sqlite-storage-api).
+:::
+
+<Render file="api-storage-introduction" product="durable-objects" />
+
+<Render file="recommend-sqlite-do" product="durable-objects" />
+
+## Access storage
+
+Durable Objects gain access to Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` with the `ctx` parameter passed to the Durable Object constructor.
+
+The following code snippet shows you how to store and retrieve data using the Durable Object Storage API.
+
+<TypeScriptExample>
+```ts
+export class Counter extends DurableObject {
+  constructor(ctx: DurableObjectState, env: Env) {
+    super(ctx, env);
+  }
+
+  async increment(): Promise<number> {
+    let value: number = (await this.ctx.storage.get("value")) || 0;
+    value += 1;
+    await this.ctx.storage.put("value", value);
+    return value;
+  }
+}
+```
+</TypeScriptExample>
+
+JavaScript is a single-threaded and event-driven programming language. This means that JavaScript runtimes, by default, allow requests to interleave with each other which can lead to concurrency bugs. The Durable Objects runtime uses a combination of <GlossaryTooltip term="input gate">input gates</GlossaryTooltip> and <GlossaryTooltip term="output gate">output gates</GlossaryTooltip> to avoid this type of concurrency bug when performing storage operations. Learn more in our [blog post](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+
+## Asynchronous KV API
+
+KV-backed Durable Objects provide KV API methods which are asynchronous.
+
+<Render file="api-async-kv-legacy" product="durable-objects" />
+
+## Alarms
+
+<Render file="api-storage-alarms" product="durable-objects" />
+
+## Other
+
+<Render file="api-storage-other-methods" product="durable-objects" />
+
+## Related resources
+
+- [Durable Objects: Easy, Fast, Correct  Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
+- [WebSockets API](/durable-objects/best-practices/websockets/)

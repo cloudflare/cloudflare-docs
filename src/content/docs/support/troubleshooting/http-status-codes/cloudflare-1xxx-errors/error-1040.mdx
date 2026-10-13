@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1040
+source: null
+---
+
+## Error 1040: Invalid request rewrite (header modification not allowed)
+
+This error indicates that an attempt was made to modify a restricted HTTP header.
+
+### Common cause
+
+You are trying to modify an HTTP header that Request Header Transform Rules cannot change.
+
+### Resolution
+
+Make sure you are not trying to modify one of the [reserved HTTP request headers](/rules/transform/request-header-modification/#important-remarks).
+

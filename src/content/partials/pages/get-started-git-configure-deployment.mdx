@@ -1,0 +1,79 @@
+---
+{}
+---
+
+import { Details } from "~/components"
+
+Once you have selected a Git repository, select **Install & Authorize** and **Begin setup**. You can then customize your deployment in **Set up builds and deployments**.
+
+Your **project name** will be used to generate your project's hostname. By default, this matches your Git project name.
+
+**Production branch** indicates the branch that Cloudflare Pages should use to deploy the production version of your site. For most projects, this is the `main` or `master` branch. All other branches that are not your production branch will be used for [preview deployments](/pages/configuration/preview-deployments/).
+
+:::note
+
+
+You must have pushed at least one branch to your GitHub or GitLab project in order to select a **Production branch** from the dropdown menu.
+
+
+:::
+
+![Set up builds and deployments page with Project name and Production branch filled in](~/assets/images/pages/get-started/configuration.png)
+
+### Configure your build settings
+
+Depending on the framework, tool, or project you are deploying to Cloudflare Pages, you will need to specify the site's **build command** and **build output directory** to tell Cloudflare Pages how to deploy your site. The content of this directory is uploaded to Cloudflare Pages as your website's content.
+
+:::caution[No framework required]
+
+
+You do not need a framework to deploy with Cloudflare Pages. You can continue with the Get started guide without choosing a framework, and refer to [Deploy your site](/pages/framework-guides/deploy-anything/) for more information on deploying your site without a framework.
+
+
+:::
+
+The dashboard provides a number of framework-specific presets. These presets provide the default build command and build output directory values for the selected framework. If you are unsure what the correct values are for this section, refer to [Build configuration](/pages/configuration/build-configuration/). If you do not need a build step, leave the **Build command** field blank.
+
+![Build setting fields that need to be filled in](~/assets/images/pages/get-started/build-settings.png)
+
+Cloudflare Pages begins by working from your repository's root directory. The entire build pipeline, including the installation steps, will begin from this location. If you would like to change this, specify a new root directory location through the **Root directory (advanced)** > **Path** field.
+
+![Root directory field to be filled in](~/assets/images/pages/get-started/root-directory.png)
+
+
+<Details header="Understanding your build configuration">
+
+The build command is provided by your framework. For example, the Gatsby framework uses `gatsby build` as its build command. When you are working without a framework, leave the **Build command** field blank.
+
+The build output directory is generated from the build command. Each [framework](/pages/configuration/build-configuration/#framework-presets) has its own naming convention, for example, the build output directory is named `/public` for many frameworks.
+
+The root directory is where your site's content lives. If not specified, Cloudflare assumes that your linked Git repository is the root directory. The root directory needs to be specified in cases like monorepos, where there may be multiple projects in one repository.
+
+Refer to [Build configuration](/pages/configuration/build-configuration/) for more information.
+
+
+</Details>
+
+### Environment variables
+
+Environment variables are a common way of providing configuration to your build workflow. While setting up your project, you can specify a number of key-value pairs as environment variables. These can be further customized once your project has finished building for the first time.
+
+Refer to the [Hexo framework guide](/pages/framework-guides/deploy-a-hexo-site/#using-a-specific-nodejs-version) for more information on how to set up a Node.js version environment variable.
+
+After you have chosen your *Framework preset* or left this field blank if you are working without a framework, configured **Root directory (advanced)**, and customized your **Environment variables (optional)**, you are ready to deploy.
+
+## Your first deploy
+
+After you have finished setting your build configuration, select **Save and Deploy**. Your project build logs will output as Cloudflare Pages installs your project dependencies, builds the project, and deploys it to Cloudflare's global network.
+
+![Deployment details in the Cloudflare dashboard](~/assets/images/pages/get-started/deploy-log.png)
+
+When your project has finished deploying, you will receive a unique URL to view your deployed site.
+
+:::caution[DNS errors]
+
+
+If you encounter a DNS error after visiting your site after your first deploy, this might be because the DNS has not had time to propagate. To solve the error, wait for the DNS to propagate, or try another device or network to resolve the error.
+
+
+:::

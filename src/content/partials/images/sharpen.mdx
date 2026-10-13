@@ -3,16 +3,16 @@
 ---
 import { Tabs, TabItem } from "~/components"
 
-Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images. 
+Specifies strength of sharpening filter to apply to the image. The value is a floating-point number between `0` (no sharpening, default) and `10` (maximum). `1` is a recommended value for downscaled images.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     sharpen=2
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {sharpen: 2}}
   ```
   </TabItem>

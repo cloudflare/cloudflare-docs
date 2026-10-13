@@ -1,0 +1,42 @@
+---
+pcx_content_type: concept
+title: Firewall for AI (beta)
+tags:
+  - AI
+sidebar:
+  order: 5
+  group:
+    label: Firewall for AI
+    badge:
+      text: Beta
+---
+
+import {
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Details,
+	Steps,
+	Type,
+	DashButton,
+	Render,
+} from "~/components";
+
+Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
+
+- Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
+- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
+- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
+
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
+
+Cloudflare will populate the existing [Firewall for AI fields](/waf/detections/firewall-for-ai/fields/) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+
+## Availability
+
+Firewall for AI is available in closed beta to Enterprise customers proxying traffic containing LLM prompts through Cloudflare. Contact your account team to get access.
+
+## More resources
+
+- [Cloudflare AI Gateway](/ai-gateway/)
+- [Learning Center: What are the OWASP Top 10 risks for LLMs?](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/)

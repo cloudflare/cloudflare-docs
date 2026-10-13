@@ -1,0 +1,61 @@
+releaseNotes: >-
+  This release primarily contains improvements to stability and bug fixes. There
+  are no major new features introduced with this release.
+   
+  **Notable updates**
+   
+  - Added /Library/Application\ Support/Cloudflare/cfwarp_daemon_dns.txt log
+  file when DNS logging is enabled
+
+  - Added `do not fragment` bit to WARP tunnel traffic
+
+  - Added ability for posture rules that support file paths to use environment
+  variables as part of the path
+
+  - Modified output of `warp-cli account` and `warp-cli settings` to make
+  parsing information easier
+
+  - Modified UI behavior so items not relevant in Zero Trust or Consumer mode
+  are no longer just grayed out, they are hidden completely
+
+  - Fixed issue where warp-cli could be used determine a valid admin override
+  code
+
+  - Fixed issue where warp-cli could be used to enable/disable on wifi networks
+  when in Zero Trust mode
+
+  - Fixed issue where you would receive a notification immediately after install
+  that your internet was no longer private
+
+  - Fixed issue with domain based split tunnels when a wildcard is used.
+  Anything after the `*` was included in the wildcard search so `*.example.com`
+  would include  `badexample.com`
+
+  - Fixed issue where client was sending improper ICMP responses when MTU needed
+  to change
+
+  - Fixed issue where logs could grow too large
+
+  - Fixed issue where user could see an error dialog going between DNS modes
+
+  - Fixed issue where user was reminded to update after just asking to be
+  reminded later
+
+  - Fixed crash in UI when viewing DNS logs and clicking on Resolver tab
+
+  - Fixed issue where UI could sometimes appear not attached to menu bar
+
+  - Fix issue where app UI would not disappear consistently when bringing up
+  preferences
+
+  - Fixed issue where waking from sleep or changing networks may result in the
+  client staying in a broken state
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.7.175.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.7.175.0
+packageSize: 45552702
+releaseDate: 2022-07-14T19:12:50.797Z
+platformName: macOS

@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 451
+source: null
+---
+
+## 451 Unavailable For Legal Reason
+
+The `451` status code indicates that the server cannot deliver the requested resource due to legal actions or restrictions.
+
+For more details, refer to [RFC 7725](https://tools.ietf.org/html/rfc7725).
+
+### Common use cases
+
+This occurs when access to a resource is blocked due to court orders, copyright claims, or other legal demands. Typically search engines (for example, Google) and ISP (for example, ATT) are the ones affected by this response code, rather than the origin server itself. The server should include an explanation in the response body, detailing the legal demand or reason for the restriction.
+
+### Cloudflare-specific information
+
+Cloudflare may pass through a `451` response from the origin server if the requested resource is legally restricted.

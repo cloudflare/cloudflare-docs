@@ -1,0 +1,53 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1002 
+source: null
+---
+
+import { DashButton } from "~/components"
+
+## Error 1002: DNS points to Prohibited IP
+
+This error indicates that a Cloudflare DNS record points to a prohibited IP, preventing proper domain resolution.
+
+### Common causes
+
+- A DNS record in your Cloudflare DNS app points to one of [Cloudflare's IP addresses](https://www.cloudflare.com/ips/).
+- An incorrect target is specified for a CNAME record in your Cloudflare DNS app.
+- Your domain is not on Cloudflare but has a CNAME that refers to a Cloudflare domain.
+
+### Resolution
+
+Update your Cloudflare A or CNAME record to point to your origin IP address instead of a Cloudflare IP address:
+
+1. Contact your hosting provider to confirm your origin IP address or CNAME record target.
+
+2. In the Cloudflare dashboard, go to the **Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+3. Select the domain that generates error 1002.
+4. Select the **DNS** app.
+5. Select **Value** for the A record to update.
+6. Update the A record.
+
+To ensure your origin web server does not proxy its own requests through Cloudflare, configure your origin webserver to resolve your Cloudflare domain to:
+
+- The internal NAT'd IP address, or
+- The public IP address of the origin web server.
+
+## Error 1002: Restricted
+
+This error indicates that the domain resolves to a restricted or disallowed IP address.
+
+### Common cause
+
+The Cloudflare domain resolves to a local or disallowed IP address or an IP address not associated with the domain.
+
+### Resolution
+
+If you own the website:
+
+1. Confirm your origin web server IP addresses with your hosting provider,
+2. Log in to your Cloudflare account, and
+3. Update the A records in the Cloudflare DNS app to the IP address confirmed by your hosting provider.

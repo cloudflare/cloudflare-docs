@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This is a macOS only hotfix from the 2023.3.382.0 release
+   
+  **Notable updates**
+
+  - Fixes an issue for customers with multiple overlapping virtual networks
+  where the GUI would no longer show the vnet selection UI after a reboot.
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.415.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.3.415.0
+packageSize: 49312145
+releaseDate: 2023-04-17T15:28:46.936Z
+platformName: macOS

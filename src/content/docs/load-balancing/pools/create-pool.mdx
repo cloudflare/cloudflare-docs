@@ -25,7 +25,7 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 {" "}
 
-<Render file="endpoints-introduction-callout" />
+<Render file="endpoints-introduction-callout" product="load-balancing" />
 :::
 
 ---
@@ -34,11 +34,11 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="pool-create" />
+<Render file="pool-create" product="load-balancing" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="pool-create-api" />
+<Render file="pool-create-api" product="load-balancing" />
 
 </TabItem> </Tabs>
 
@@ -50,17 +50,17 @@ For more background information on pools, refer to [Pools](/load-balancing/pools
 
 To edit a pool in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-2. Click **Manage Pools**.
-3. On a specific pool, click **Edit**.
+1. Go to **Load Balancing**.
+2. Select the **Pools** tab.
+3. On a specific pool, select **Edit**.
 4. Update settings as needed.
-5. Click **Save**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="API">
 
 When you edit a pool with the API, your request type depends on how much you want to edit.
 
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/operations/account-load-balancer-pools-patch-pool) request. For broader changes, use a [PUT](/api/operations/account-load-balancer-pools-update-pool) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/resources/load_balancers/subresources/pools/methods/edit/) request. For broader changes, use a [PUT](/api/resources/load_balancers/subresources/pools/methods/update/) request.
 
 </TabItem> </Tabs>
 
@@ -81,13 +81,13 @@ If the pool is referenced by geo steering, the configuration is **not** automati
 
 To delete a pool in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-2. Click **Manage Pools**.
-3. On a specific pool, click **Delete**.
+1. Go to **Load Balancing**.
+2. Select the **Pools** tab.
+3. On a specific pool, select **Delete**.
 
 </TabItem> <TabItem label="API">
 
-To delete a pool using the API, send a [DELETE](/api/operations/account-load-balancer-pools-delete-pool) request.
+To delete a pool using the API, send a [DELETE](/api/resources/load_balancers/subresources/pools/methods/delete/) request.
 
 </TabItem> </Tabs>
 

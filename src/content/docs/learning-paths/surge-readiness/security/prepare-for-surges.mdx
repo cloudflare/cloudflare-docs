@@ -1,0 +1,19 @@
+---
+title: Prepare for surges and mitigate DDoS attacks
+pcx_content_type: overview
+sidebar:
+  label: Prepare for surges and attacks
+  order: 4
+---
+
+## Reduce server strain
+
+Utilize Cloudflare's [caching](/cache/) to enhance load times and reduce server strain. Also, features like the [Waiting Room](/waiting-room) and [Rate Limiting](/waf/rate-limiting-rules/) can be used to effectively manage excess demand and ensure a stable user experience.
+
+## Unlimited DDoS Protection
+
+Cloudflare's Advanced [DDoS protection](/ddos-protection/) is always on for Enterprise customers and is used to mitigate DDoS attacks of all forms and sizes including those that target UDP and ICMP protocols, as well as SYN/ACK, DNS amplification, SMURF, and Layer 7 attacks.
+
+## Browser Integrity Check
+
+[Browser Integrity Check](/waf/tools/browser-integrity-check/) looks for requests with HTTP headers commonly used by spammers, bots, and crawlers such as requests with a missing or non-standard user agent. If a threat is found, Cloudflare will present a challenge page before allowing access. This may affect your API and can be selectively disabled using [Page Rules](/rules/page-rules/).

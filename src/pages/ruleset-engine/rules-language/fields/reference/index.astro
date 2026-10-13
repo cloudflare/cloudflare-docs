@@ -1,0 +1,25 @@
+---
+import { getEntry } from "astro:content";
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import FieldCatalog from "~/components/FieldCatalog.tsx";
+
+const entry = await getEntry("fields", "index");
+
+if (!entry) {
+	throw new Error(`Failed to load fields data`);
+}
+
+const fields = entry.data.entries;
+---
+
+<StarlightPage
+	frontmatter={{ title: "Fields reference", tableOfContents: false }}
+>
+	<FieldCatalog fields={fields} client:load />
+</StarlightPage>
+
+<style>
+	:root {
+		--sl-content-width: 1350px !important;
+	}
+</style>

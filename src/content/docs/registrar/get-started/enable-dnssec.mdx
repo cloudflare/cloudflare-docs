@@ -4,10 +4,9 @@ pcx_content_type: how-to
 head:
   - tag: title
     content: Domain Name System Security Extensions (DNSSEC)
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The domain name system (DNS) translates domain names into numeric Internet addresses. However, DNS is a fundamentally insecure protocol. It does not guarantee where DNS records come from and accepts any requests given to it.
 
@@ -15,16 +14,14 @@ The domain name system (DNS) translates domain names into numeric Internet addre
 
 ## Enable or disable DNSSEC
 
-<Render file="enable-dnssec" />
+<Render file="enable-dnssec" product="registrar" />
 
 :::note
 
-
 If your domain is not on Cloudflare Registrar, you can enable DNSSEC in [**DNS**](/dns/dnssec/) on the Cloudflare dashboard.
-
 
 :::
 
 ## Confirming DNSSEC
 
-<Render file="verify-dnssec" />
+<Render file="verify-dnssec" product="registrar" />

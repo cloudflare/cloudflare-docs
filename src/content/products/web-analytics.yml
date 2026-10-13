@@ -9,14 +9,5 @@ product:
 
 meta:
   title: Cloudflare Web Analytics docs
-  description: Cloudflare Web Analytics helps you understand the performance of your web pages as experienced by your site visitors.
+  description: Get vital web analytics for your website
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com
-
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: web-analytics

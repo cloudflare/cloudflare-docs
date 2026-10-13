@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 This page covers the Vectorize API available within [Cloudflare Workers](/workers/), including usage examples.
 
@@ -83,6 +83,24 @@ For legacy Vectorize (V1) indexes, `topK` is limited to 20, and the `returnMetad
 
 :::
 
+### Query vectors by ID
+
+```ts
+let matches = await env.YOUR_INDEX.queryById("some-vector-id");
+```
+
+Query an index using a vector that is already present in the index.
+
+Query options remain the same as the query operation described above.
+
+```ts
+let matches = await env.YOUR_INDEX.queryById("some-vector-id", {
+	topK: 5,
+	returnValues: true,
+	returnMetadata: "all",
+});
+```
+
 ### Get vectors by ID
 
 ```ts
@@ -109,11 +127,27 @@ const details = await env.YOUR_INDEX.describe();
 
 Retrieves the configuration of a given index directly, including its configured `dimensions` and distance `metric`.
 
+### List Vectors
+
+List all vector identifiers in an index using paginated requests, returning up to 1000 vector identifiers per page.
+
+```sh
+wrangler vectorize list-vectors <index-name> [--count=<number>] [--cursor=<cursor-string>]
+```
+
+**Parameters:**
+
+- `<index-name>` - The name of your Vectorize index
+- `--count` (optional) - Number of vector IDs to return per page. Must be between 1 and 1000 (default: 100)
+- `--cursor` (optional) - Pagination cursor from the previous response to continue listing from that position
+
+For detailed guidance on pagination behavior and best practices, refer to [List vectors best practices](/vectorize/best-practices/list-vectors/).
+
 ### Create Metadata Index
 
 Enable metadata filtering on the specified property. Limited to 10 properties.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command:
 
@@ -125,7 +159,7 @@ wrangler vectorize create-metadata-index <index-name> --property-name='some-prop
 
 Allow Vectorize to delete the specified metadata index.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command:
 
@@ -137,7 +171,7 @@ wrangler vectorize delete-metadata-index <index-name> --property-name='some-prop
 
 List metadata properties on which metadata filtering is enabled.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command:
 
@@ -149,7 +183,7 @@ wrangler vectorize list-metadata-index <index-name>
 
 Get additional details about the index.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command:
 
@@ -182,9 +216,11 @@ let vectorExample = {
 
 [Bindings](/workers/runtime-apis/bindings/) allow you to attach resources, including Vectorize indexes or R2 buckets, to your Worker.
 
-Bindings are defined in either the [`wrangler.toml`](/workers/wrangler/configuration/) configuration associated with your Workers project, or via the Cloudflare dashboard for your project.
+Bindings are defined in either the [Wrangler configuration file](/workers/wrangler/configuration/) associated with your Workers project, or via the Cloudflare dashboard for your project.
 
 Vectorize indexes are bound by name. A binding for an index named `production-doc-search` would resemble the below:
+
+<WranglerConfig>
 
 ```toml
 [[vectorize]]
@@ -192,10 +228,10 @@ binding = "PROD_SEARCH" # the index will be available as env.PROD_SEARCH in your
 index_name = "production-doc-search"
 ```
 
+</WranglerConfig>
+
 Refer to the [bindings documentation](/workers/wrangler/configuration/#vectorize-indexes) for more details.
 
 ## TypeScript Types
 
-New Workers projects created via `npm create cloudflare@latest` automatically include the relevant TypeScript types for Vectorize.
-
-Older projects, or non-Workers projects looking to use Vectorize's [REST API](https://developers.cloudflare.com/api/operations/vectorize-list-vectorize-indexes) in a TypeScript project, should ensure `@cloudflare/workers-types` version `4.20230922.0` or later is installed.
+<Render file="wrangler-typegen" product="workers" />

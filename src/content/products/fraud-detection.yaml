@@ -3,5 +3,11 @@ name: Fraud Detection
 product:
   title: Fraud Detection
   group: Application security
-  url: /bots/concepts/sequence-rules/
-  grid_placeholder: true
+  url: /bots/additional-configurations/sequence-rules/
+
+meta:
+
+  title: Cloudflare Fraud Detection docs
+  description: Sequence rules use cookies to track the order and timing of requests
+  author: "@cloudflare"
+  

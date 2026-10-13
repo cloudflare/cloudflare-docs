@@ -1,11 +1,8 @@
 ---
-inputParameters: forwardingRuleName
-
+params:
+  - forwardingRuleName
 ---
 
-import { Markdown } from "~/components"
-
 :::note
-
-{props.one} require that the incoming traffic for the hostname referenced in visitors' requests is [proxied by Cloudflare](/dns/manage-dns-records/reference/proxied-dns-records/). 
+{props.forwardingRuleName} require that the incoming traffic for the hostname referenced in visitors' requests is [proxied by Cloudflare](/dns/proxy-status/).
 :::

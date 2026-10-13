@@ -1,6 +1,309 @@
 ---
-pcx_content_type: navigation
 title: Magic Firewall fields
-external_link: /ruleset-engine/rules-language/fields/magic-firewall/
+pcx_content_type: reference
+head:
+  - tag: title
+    content: Magic Firewall fields
+---
+
+import { Type } from "~/components";
+
+:::note
+Some Magic Firewall fields are available only to customers who purchased Magic Firewall's advanced features. Refer to [Magic Firewall plans](/magic-firewall/plans/) for more information.
+:::
+
+## `cf.colo.name`
+
+`cf.colo.name` <Type text='String' />
+
+The data center that is handling this traffic.
+
+Example value: `sfo06`
 
 ---
+
+## `cf.colo.region`
+
+`cf.colo.region` <Type text='String' />
+
+Region of the data center that is handling this traffic.
+
+Example value: `WNAM`
+
+---
+
+## `icmp`
+
+`icmp` <Type text='String' />
+
+The raw ICMP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+
+---
+
+## `icmp.type`
+
+`icmp.type` <Type text='Number' />
+
+The [ICMP type](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_type). Only applies to ICMP packets.
+
+Example value: `8`
+
+---
+
+## `icmp.code`
+
+`icmp.code` <Type text='Number' />
+
+The [ICMP code](https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#header_code). Only applies to ICMP packets.
+
+Example value: `2`
+
+---
+
+## `ip`
+
+`ip` <Type text='String' />
+
+The raw IP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+
+---
+
+## `ip.dst`
+
+`ip.dst` <Type text='IP address' />
+
+The destination address as specified in the IP packet.
+
+Example value: `192.0.2.2`
+
+---
+
+## `ip.dst.country`
+
+`ip.dst.country` <Type text='String' />
+
+Represents the 2-letter country code associated with the server IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
+For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
+---
+
+## `ip.src.country`
+
+`ip.src.country` <Type text='String' />
+
+Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
+For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
+For Magic Firewall, the `ip.geoip.country` field (which is deprecated) will match on either source or destination address. The `ip.geoip.country` field is still available for new and existing rules, but you should use the `ip.src.country` and/or `ip.dst.country` fields instead.
+
+---
+
+## `ip.hdr_len`
+
+`ip.hdr_len` <Type text='Number' />
+
+The length of the IPv4 header in bytes.
+
+Example value: `5`
+
+---
+
+## `ip.len`
+
+`ip.len` <Type text='Number' />
+
+The length of the packet including the header.
+
+Example value: `60`
+
+---
+
+## `ip.opt.type`
+
+`ip.opt.type` <Type text='Number' />
+
+The first byte of [IP options field](https://en.wikipedia.org/wiki/IPv4#Options), if the options field is set.
+
+Example value: `25`
+
+---
+
+## `ip.proto`
+
+`ip.proto` <Type text='String' />
+
+The transport layer for the packet, if it can be determined.
+
+Example values: `icmp`, `tcp`
+
+---
+
+## `ip.src`
+
+`ip.src` <Type text='IP address' />
+
+The source address of the IP Packet.
+
+---
+
+## `ip.src.country`
+
+`ip.src.country` <Type text='String' />
+
+Represents the 2-letter country code associated with the client IP address in [ISO 3166-1 Alpha 2](https://www.iso.org/obp/ui/#search/code/) format.
+
+Example value: `GB`
+
+For more information on the ISO 3166-1 Alpha 2 format, refer to [ISO 3166-1 Alpha 2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) on Wikipedia.
+
+---
+
+## `ip.ttl`
+
+`ip.ttl` <Type text='Number' />
+
+The time-to-live of the IP Packet.
+
+Example values: `54`
+
+---
+
+## `sip`
+
+`sip` <Type text='Boolean' />
+
+Determines if packets are valid L7 protocol [SIP](https://datatracker.ietf.org/doc/html/rfc2543). Requires UDP packets to operate.
+
+Use a guard clause as shown below to ensure the packet is UDP (wirefilter):
+
+`ip.proto == "udp"`
+
+---
+
+## `tcp`
+
+`tcp` <Type text='String' />
+
+The raw TCP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+
+---
+
+## `tcp.flags`
+
+`tcp.flags` <Type text='Number' />
+
+The numeric value of the TCP flags byte.
+
+---
+
+## `tcp.flags.ack`
+
+`tcp.flags.ack` <Type text='Boolean' />
+
+TCP acknowledgment flag.
+
+---
+
+## `tcp.flags.cwr`
+
+`tcp.flags.cwr` <Type text='Boolean' />
+
+TCP congestion window reduced flag.
+
+---
+
+## `tcp.flags.ecn`
+
+`tcp.flags.ecn` <Type text='Boolean' />
+
+TCP ECN-Echo flag.
+
+---
+
+## `tcp.flags.fin`
+
+`tcp.flags.fin` <Type text='Boolean' />
+
+TCP flag indicating this is the last packet from sender.
+
+---
+
+## `tcp.flags.push`
+
+`tcp.flags.push` <Type text='Boolean' />
+
+TCP push flag.
+
+---
+
+## `tcp.flags.reset`
+
+`tcp.flags.reset` <Type text='Boolean' />
+
+TCP reset flag.
+
+---
+
+## `tcp.flags.syn`
+
+`tcp.flags.syn` <Type text='Boolean' />
+
+TCP synchronize flag.
+
+---
+
+## `tcp.flags.urg`
+
+`tcp.flags.urg` <Type text='Boolean' />
+
+TCP urgent flag.
+
+---
+
+## `tcp.srcport`
+
+`tcp.srcport` <Type text='Number' />
+
+Source port number of the IP packet. Only applies to TCP packets.
+
+---
+
+## `tcp.dstport`
+
+`tcp.dstport` <Type text='Number' />
+
+Destination port number of the IP packet. Only applies to TCP packets.
+
+---
+
+## `udp`
+
+`udp` <Type text='String' />
+
+The raw UDP packet as a list of bytes. It should be used in conjunction with the bit_slice function when other structured fields are lacking.
+
+---
+
+## `udp.dstport`
+
+`udp.dstport` <Type text='Number' />
+
+Destination port number of the IP packet. Only applies to UDP packets.
+
+---
+
+## `udp.srcport`
+
+`udp.srcport` <Type text='Number' />
+
+Source port number of the IP packet. Only applies to UDP packets.
+
+---
+
+_GeoIP is the registered trademark of MaxMind, Inc._

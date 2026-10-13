@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains a hotfix for [managed networks](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) for the 2025.4.929.0
+  release.
+
+
+  **Changes and improvements**
+
+  - Fixed an issue where it could take up to 3 minutes for the correct device profile
+  to be applied in some circumstances. In the worst case, it should now only
+  take up to 40 seconds. This will be improved further in a future release.
+
+
+
+  **Known issues**
+
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP
+  client may not behave as expected. Cloudflare recommends the use of macOS 15.4
+  or later.
+version: 2025.4.943.0
+releaseDate: 2025-05-22T21:34:06.555Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.4.943.0
+packageSize: 96424353
+platformName: macOS

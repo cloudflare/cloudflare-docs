@@ -1,11 +1,11 @@
 ---
-title: Overview
+title: Cloudflare Web Application Firewall
 pcx_content_type: overview
 sidebar:
   order: 1
 head:
   - tag: title
-    content: Cloudflare Web Application Firewall
+    content: Overview
 description: The Cloudflare Web Application Firewall (WAF) provides automatic
   protection from vulnerabilities and the flexibility to create custom rules.
 ---
@@ -16,6 +16,7 @@ import {
 	Plan,
 	RelatedProduct,
 	Render,
+	Stream,
 } from "~/components";
 
 <Description>
@@ -26,9 +27,15 @@ Get automatic protection from vulnerabilities and the flexibility to create cust
 
 <Plan type="all" />
 
-<Render file="waf-intro" /> <br />
+<Render file="waf-intro" product="waf" />
 
 Learn how to [get started](/waf/get-started/).
+
+<Stream
+  id="81d50c9845612128e65bf6d04bcf9e3a"
+  title="Application Security dashboard walkthrough"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Application%20security%20demo.png"
+/>
 
 ---
 
@@ -37,8 +44,8 @@ Learn how to [get started](/waf/get-started/).
 <Feature header="Custom rules" href="/waf/custom-rules/">
 	Create your own custom rules to protect your website and your APIs from
 	malicious incoming traffic. Use advanced features like [WAF attack
-	score](/waf/about/waf-attack-score/) and [uploaded content
-	scanning](/waf/about/content-scanning/) in your custom rules.
+	score](/waf/detections/attack-score/) and [malicious uploads
+	detection](/waf/detections/malicious-uploads/) in your custom rules.
 </Feature>
 
 <Feature header="Rate limiting rules" href="/waf/rate-limiting-rules/">
@@ -52,13 +59,18 @@ Learn how to [get started](/waf/get-started/).
 	vulnerability protections, and you can adjust their behavior.
 </Feature>
 
+<Feature header="Account-level configuration" href="/waf/account/">
+	<Plan type="ent-add-on" />
+	Create and deploy rulesets to multiple Enterprise zones.
+</Feature>
+
 <Feature
 	header="Security Events"
 	href="/waf/analytics/security-events/"
 	cta="Explore Security Events"
 >
 	Review mitigated requests (rule matches) using an intuitive interface. Tailor
-	your security configurations based on the activity log.
+	your security configurations based on sampled logs.
 </Feature>
 
 <Feature
@@ -66,7 +78,6 @@ Learn how to [get started](/waf/get-started/).
 	href="/waf/analytics/security-analytics/"
 	cta="Explore Security Analytics"
 >
-	<Plan type="business" />
 	Displays information about all incoming HTTP requests, including those not
 	affected by security measures.
 </Feature>

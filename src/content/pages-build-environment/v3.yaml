@@ -1,0 +1,67 @@
+major_version: 3
+enable_date: "2025-05-30"
+languages:
+  - name: Go
+    default: "1.24.3"
+    supported: "Any version"
+    environment_variable: "GO_VERSION"
+  - name: Node.js
+    default: "22.16.0"
+    supported: "Any version"
+    environment_variable: "NODE_VERSION"
+    file:
+      - ".nvmrc"
+      - ".node-version"
+  - name: Bun
+    default: "1.2.15"
+    supported: "Any version"
+    environment_variable: "BUN_VERSION"
+  - name: Python
+    default: "3.13.3"
+    supported: "Any version"
+    environment_variable: "PYTHON_VERSION"
+    file:
+      - ".python-version"
+      - "runtime.txt"
+  - name: Ruby
+    default: "3.4.4"
+    supported: "Any version"
+    environment_variable: "RUBY_VERSION"
+    file:
+      - ".ruby-version"
+tools:
+  - name: Bundler
+    default: "2.6.9"
+    supported: "Corresponds with Ruby version"
+  - name: Embedded Dart Sass
+    default: "1.62.1"
+    supported: "Up to 1.62.1"
+    environment_variable: "EMBEDDED_DART_SASS_VERSION"
+  - name: gem
+    default: "3.6.9"
+    supported: "Corresponds with Ruby version"
+  - name: Hugo
+    default: "0.147.7"
+    supported: "Any version"
+    environment_variable: "HUGO_VERSION"
+  - name: npm
+    default: "10.9.2"
+    supported: "Corresponds with Node.js version"
+  - name: pip
+    default: "25.1.1"
+    supported: "Corresponds with Python version"
+  - name: pipx
+    default: "1.7.1"
+  - name: pnpm
+    default: "10.11.1"
+    supported: "Any version"
+    environment_variable: "PNPM_VERSION"
+  - name: Poetry
+    default: "2.1.3"
+  - name: Yarn
+    default: "4.9.1"
+    supported: "Any version"
+    environment_variable: "YARN_VERSION"
+build_environment:
+  operating_system: "Ubuntu `22.04.2`"
+  architecture: "x86_64"

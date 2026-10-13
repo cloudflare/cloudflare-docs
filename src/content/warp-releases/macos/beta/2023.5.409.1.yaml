@@ -1,0 +1,38 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes. No new
+  features are introduced with this release.
+   
+  **Notable updates**
+
+  - Improved performance of client when in Proxy Only mode
+
+  - Modified `warp-cli settings` to now show if setting came from local (mdm) or
+  network (warp settings profile) policy to make debugging issues easier
+
+  - Fixed issue that could result in latency increases every few minutes
+
+  - Fixed a consumer only issue where a license key of excessive length could
+  result in 100% cpu usage
+
+  - Fixed a minor memory leak every time we did a DNS query
+
+  - Fixed issue when service token information was removed from .plist the
+  client would not prompt for user authentication as expected
+
+  - Fixed 3rd party VPN Compatibility by adding a default /32 subnet to
+  interfaces that don't have them by default (this was specifically to fix
+  compat with NordLayer but may help others)
+
+  - Fixed issue where re-authentication button could show up in consumer 1.1.1.1
+  mode even though it is just a Zero Trust feature
+   
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2023.5.409.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.5.409.1
+packageSize: 56877166
+releaseDate: 2023-05-26T19:54:07.126Z
+platformName: macOS

@@ -1,0 +1,32 @@
+---
+title: WranglerNamespace
+styleGuide:
+  component: WranglerNamespace
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `WranglerNamespace` component documents the available commands for a given namespace.
+
+This is generated using the Wrangler version in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
+
+## Import
+
+```mdx
+import { WranglerNamespace } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { WranglerNamespace } from "~/components";
+
+<WranglerNamespace namespace="d1" />
+```
+
+## Arguments
+
+- `namespace` <Type text="string" /> <MetaInfo text="required" />
+  - The namespace to pull the related commands from (`d1`, `hyperdrive`).
+- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+  - The heading level that the commands should be added at on the page, i.e `2` for `h2`.

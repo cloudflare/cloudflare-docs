@@ -2,45 +2,26 @@
 pcx_content_type: reference
 source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding-the-Cloudflare-Security-Level
 title: Security Level
-
 ---
 
-import { Render } from "~/components"
+In the old Cloudflare dashboard, security level has the value _Always protected_ and you cannot change this setting. To turn [Under Attack mode](/fundamentals/reference/under-attack-mode/) on or off, use the separate toggle.
 
-<Render file="security-level-description" product="waf" />
+In the new security dashboard, the Cloudflare API, and in Terraform, use security level to turn Under Attack mode on or off.
 
-***
+Cloudflare's [Under Attack mode](/fundamentals/reference/under-attack-mode/) performs additional security checks to help mitigate layer 7 DDoS attacks. When you enable Under Attack mode, Cloudflare will present a JS challenge page.
 
-<Render file="security-level-scores" product="waf" />
+:::caution
 
-***
+Only use [Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. Under Attack mode may affect some actions on your domain, such as your API traffic.
 
-## Customize security level
+To enable or disable Under Attack mode for your API or any other part of your domain, create a [configuration rule](/rules/configuration-rules/).
 
-The default security level is *Medium*.
+:::
 
-### Update globally
+## Threat score
 
-To update the security level for your entire zone:
+Previously, a threat score represented a Cloudflare threat score from 0–100, where 0 indicates low risk. Now, the threat score is always `0` (zero).
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
-2. Go to **Security** > **Settings**.
-3. For **Security Level**, select an option.
-
-### Update selectively
-
-To set the security level more selectively, do one of the following:
-
-* Configure it via a [configuration rule](/rules/configuration-rules/).
-* Use the **Threat Score** as a **Field** criteria within [custom rules](/waf/custom-rules/). If you are using the Expression Editor, use the `cf.threat_score` field.
-
-***
-
-## Recommendations
-
-To prevent bot IPs from attacking a website:
-
-* A new website owner might set a *Medium* or *High* **Security Level** and lower [**Challenge Passage**](/waf/tools/challenge-passage/) to a value below **30 minutes** to ensure that Cloudflare is constantly protecting the site.
-* An experienced website administrator confident in their security settings might set **Security Level** to *Essentially Off* or *Low* while setting a higher [**Challenge Passage**](/waf/tools/challenge-passage/) for a week, month, or even year to provide a less obtrusive visitor experience.
-
-You can also create [WAF custom rules](/waf/custom-rules/) to protect sensitive areas of your website — like comment form pages or login forms — using the [threat score](#threat-score) in your rule expression. The flexibility of custom rules allows you to select the action to take (for example, challenge or block) and exclude specific IP addresses.
+:::note[Recommendation]
+Currently we do not recommend creating rules based on the threat score, since this score is no longer being populated.
+:::

@@ -1,0 +1,31 @@
+---
+title: Enable Notifications
+pcx_content_type: learning-unit
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel-health/magic-tunnel-health-alerts"
+	product="networking-services"
+	params={{
+		magicWord: "Magic Transit",
+		productName: "Magic Transit",
+		magicTunnelHealthCheckCalculation: "/magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/",
+		networkAnalyticsPath: "/magic-transit/analytics/network-analytics/",
+		healthChecks: "/magic-transit/reference/tunnel-health-checks/",
+	}}
+/>
+
+## Other notifications
+
+Cloudflare also recommends that you enable the following account notifications for your Magic Transit service:
+
+- Layer 3/4 DDoS Attack Alert
+- Route Leak Detection Alert (to detect BGP Hijacks)
+- (Optional) Advanced Layer 3/4 DDoS Attack Alert
+- (Optional) Cloudflare status - Maintenance Notification (in case you want to be alerted regarding maintenance in specific Cloudflare data centers).
+
+Refer to [Cloudflare Notifications](/notifications/) for more information on how to enable these notifications.

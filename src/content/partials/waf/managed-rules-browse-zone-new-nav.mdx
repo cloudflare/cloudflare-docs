@@ -1,0 +1,21 @@
+---
+{}
+---
+
+import { Steps, DashButton } from "~/components";
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. (Optional) Filter by **Managed rules**.
+
+3. Search for the managed ruleset you want to configure/browse. Look for a rule with an _Execute_ action.
+
+4. Select the rule name (containing the name of the managed ruleset), and then select **Browse rules**.
+
+   ![The Cloudflare dashboard displaying the list of rules in the Cloudflare Managed Ruleset](~/assets/images/waf/waf-browse-rules.png)
+
+</Steps>

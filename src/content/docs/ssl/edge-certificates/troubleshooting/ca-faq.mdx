@@ -21,9 +21,9 @@ Yes. Cloudflare can issue both RSA and ECDSA certificates.
 
 ### Which certificate authorities does Cloudflare use?
 
-Cloudflare uses Let’s Encrypt, Google Trust Services, Sectigo, and DigiCert. You can see a complete list of products and available CAs and algorithms in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
+Cloudflare uses Let's Encrypt, Google Trust Services, SSL.com, and Sectigo. You can see a complete list of products and available CAs and algorithms in the [certificate authorities reference page](/ssl/reference/certificate-authorities/).
 
-[DigiCert will soon be removed as a CA from the Cloudflare pipeline](/ssl/reference/migration-guides/digicert-update/) and Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-certificates/).
+Sectigo is only used for [backup certificates](/ssl/edge-certificates/backup-certificates/).
 
 ### Are there any CA limitations I should know about?
 
@@ -64,3 +64,11 @@ Universal certificates on free zones only receive an ECDSA certificate. Paid zon
 When [ordering an advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/), you can choose the CA through the UI or API.
 
 [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) allows you to get full certificate coverage. When enabling Total TLS, you can choose the CA that will be used for all Total TLS certificates.
+
+## Renewal
+
+### Error when clicking `Approve Certificate` on a Certificate Approval renewal email
+
+The full error message is: `An error occurred while attempting to validate your domain. Please try again later or contact support for assistance.`
+
+Check the status of the certificate on the [Cloudflare dashboard](https://dash.cloudflare.com?to=/:account/:zone/ssl-tls). If the status is `Active`, you can disregard this email and the error message.

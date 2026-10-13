@@ -1,0 +1,134 @@
+---
+title: Create Custom Recording App Using Recording SDKs
+sidebar_position: 9
+slug: realtime/realtimekit/recording-guide/create-record-app-using-sdks
+description: >-
+  Learn how to create a recording app using RealtimeKit's SDKs. Follow our guide for
+  effective app creation and integration.
+---
+
+When you join a RealtimeKit meeting, the meeting layout is automatically designed to optimize your experience. This includes focusing on shared content and highlighting active speakers, while participants are shown in small thumbnail views. When you start recording the meeting, it is recorded with the same layout using the default UI kit component called [RtkGrid](https://docs.realtime.cloudflare.com/react-ui-kit/components/rtk-grid).
+
+If you wish to have a customized layout for your recording application, RealtimeKit's custom recording SDKs provide the flexibility to tailor the appearance of your recordings according to your preferences. You can choose from options like:
+
+- Show only active speaker view
+- Shared screen with thumbnail gallery view
+- Shared screen with large active speaker thumbnail
+- Shared screen without active speaker or gallery view
+- Customized background for your recording
+- Portrait layout, and so on and so forth
+
+Let's dive in to understand the steps involved in creating a custom appearance for your RealtimeKit recording app.
+
+The custom recording SDKs are used on top of the [UI Kit](/realtime/realtimekit/ui-kit) or [Core SDK](/realtime/realtimekit/core). The `RealtimeKitRecording` class is used for managing the recording functionality within the SDK.
+
+## Constructor
+
+`constructor(options)`
+
+Creates an instance of the `RealtimeKitRecording` class.
+
+### Parameters
+
+`options (object)`: The options object.
+
+| **options (object)**            | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options.waitTimeMs (number)`   | The time (in milliseconds) to wait after all peers have left before leaving the meeting. This option is ignored if `autoStop` is set to true.                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `options.autoStart (boolean)`   | Set to true if you want to manually call the `startRecording` function. By default, the `autoStart` parameter is set to `true`. If you wish to delay the start of the recording, you can set the value of this parameter to `false`. In that case, you can manually call the `startRecording()` function later. Note that there is a timeout of 2 minutes associated with the `startRecording()` method. If this method is not called within 2 minutes of the WebSocket connection being established, the recording process will encounter an error. |
+| `options.autoStop (boolean)`    | Set to true if you want to disable automatic peer leave and manually call the `stopRecording` function.                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `options.scanInterval (number)` | The interval (in milliseconds) between scans for automatic peer leave.                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `options.devMode (boolean)`     | Set to true to enable development mode, which enables logs and disables certain functionality. Also you must ensure that this is set this to true when testing your recording-app locally.                                                                                                                                                                                                                                                                                                                                                           |
+
+### Methods
+
+```js
+init(client: RealtimeKitClient)
+```
+
+Initiates the SDK by providing a `RealtimeKitClient` object. Call this after creating the meeting object and before calling `meeting.joinRoom()`.
+
+```js
+startRecording();
+```
+
+Manually starts the recording. Ensure that `autoStart` is passed as true in the constructor options.
+
+```js
+stopRecording();
+```
+
+Manually stops the recording. Ensure that `autoStop` is passed as true in the constructor options.
+
+```js
+cleanup();
+```
+
+Performs cleanup tasks after leaving the meeting, such as clearing added listeners and closing WebSocket connections.
+
+## Usage Example
+
+Perform the following steps to create the recording app for your RealtimeKit meetings.
+
+### Step 1: Install the SDK
+
+```js
+npm i @cloudflare/realtimekit-recording-sdk
+```
+
+### Step 2: Import the `RealtimeKitRecording` object
+
+```js
+import { RealtimeKitRecording } from '@cloudflare/realtimekit-recording-sdk';
+```
+
+### Step 3: Create the `RealtimeKitRecording` object
+
+```js
+const recordingSdk = new RealtimeKitRecording(options);
+```
+
+### Step 4: Initialize the recording SDK
+
+Call `init` after creating the meeting object and before `joinRoom` is called.
+
+```js
+// Call this after you have called initMeeting
+await recordingSdk.init();
+```
+
+### (Optional) Step 5: Manually start the recording
+
+To manually start the recording, call the `startRecording()` function. For example, you want to start a recording after you have loaded your UI content in the app and `autoStart` is not set to true. In such cases, you can manually call the `startRecording()` function when you are ready to begin the recording.
+
+```js
+// This throws an exception if autoStart is set to false.
+await recordingSdk.startRecording();
+```
+
+### (Optional) Step 6: Manually stop the recording
+
+To manually stop the recording, use `stopRecording`.
+
+```js
+// This throws an exception if autoStop is set to false.
+await recordingSdk.stopRecording();
+```
+
+Once `stopRecording` is called, the recorder in your recording app will exit after a few seconds. After this point, you won't be able to perform any further actions within your recording app.
+
+### Step 7: Deploy the recording app
+
+Once you've created the app, deploy it using a platform like [Cloudflare Workers](https://cloudflare.com/workers). Make sure to note the URL where you have deployed the app, as you will have to enter this URL in RealtimeKit's recording API.
+
+### Step 8: Specify the custom URL
+
+In the [Start Recording a Meeting](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/) API, provide the custom URL (obtained from the previous step) to indicate the location of your deployed app.
+
+<head>
+  <title>Create Custom Recording App Using Recording SDKs Guide</title>
+  <meta
+    name="description"
+    content="Learn how to create a recording app using RealtimeKit's SDKs. Follow our guide for effective app creation and integration."
+  />
+</head>

@@ -1,0 +1,20 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Fixed connectivity issues switching between managed network profiles with different configured protocols.
+  - Added support for multiple users on shared Windows 10 and Windows 11 devices. Once a user completes the Windows login, all traffic to Cloudflare will be attributed to the currently active Windows user account. Contact your Customer Success Manager to request participation in this beta.
+
+  **Known issues:**
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+
+version: 2024.12.326.1
+releaseDate: 2024-12-13T18:48:56.668Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.12.326.1
+packageSize: 125767680
+platformName: Windows

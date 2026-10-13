@@ -1,0 +1,85 @@
+---
+title: Configure exposed credentials checks using Terraform
+pcx_content_type: configuration
+sidebar:
+  order: 5
+  label: Configure using Terraform
+---
+
+import { Render } from "~/components";
+
+The following Terraform configuration example addresses a common use case of exposed credentials checks.
+
+For more information, refer to the [Terraform Cloudflare provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
+If you are using the Cloudflare API, refer to [Configure via API](/waf/managed-rules/check-for-exposed-credentials/configure-api/).
+
+<Render file="leaked-credentials-recommend-detection" product="waf" />
+
+## Add a custom rule to check for exposed credentials
+
+The following configuration creates a custom ruleset with a single rule that [checks for exposed credentials](/waf/managed-rules/check-for-exposed-credentials/configure-api/#create-a-custom-rule-checking-for-exposed-credentials).
+
+You can only add exposed credential checks to rules in a custom ruleset (that is, a ruleset with `kind = "custom"`).
+
+<Render file="v4-code-snippets" product="terraform" />
+
+```tf
+resource "cloudflare_ruleset" "account_firewall_custom_ruleset_exposed_creds" {
+  account_id  = "<ACCOUNT_ID>"
+  name        = "Custom ruleset checking for exposed credentials"
+  description = ""
+  kind        = "custom"
+  phase       = "http_request_firewall_custom"
+
+  rules {
+    ref         = "check_for_exposed_creds_add_header"
+    description = "Add header when there is a rule match and exposed credentials are detected"
+    expression  = "http.request.method == \"POST\" && http.request.uri == \"/login.php\""
+    action      = "rewrite"
+    action_parameters {
+      headers {
+        name      = "Exposed-Credential-Check"
+        operation = "set"
+        value     = "1"
+      }
+    }
+    exposed_credential_check {
+      username_expression = "url_decode(http.request.body.form[\"username\"][0])"
+      password_expression = "url_decode(http.request.body.form[\"password\"][0])"
+    }
+  }
+}
+```
+
+<Render file="add-new-rule" params={{ ruleType: "rule" }} product="terraform" />
+
+The following configuration deploys the custom ruleset. It defines a dependency on the `account_firewall_custom_ruleset_exposed_creds` resource and obtains the ID of the created custom ruleset:
+
+<Render file="v4-code-snippets" product="terraform" />
+
+```tf
+resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {
+  account_id  = "<ACCOUNT_ID>"
+  name        = "Account-level entry point ruleset for the http_request_firewall_custom phase deploying a custom ruleset checking for exposed credentials"
+  description = ""
+  kind        = "root"
+  phase       = "http_request_firewall_custom"
+
+  depends_on = [cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds]
+
+  rules {
+    ref         = "deploy_custom_ruleset_example_com"
+    description = "Deploy custom ruleset for example.com"
+    expression  = "(cf.zone.name eq \"example.com\")"
+    action      = "execute"
+    action_parameters {
+      id = cloudflare_ruleset.account_firewall_custom_ruleset_exposed_creds.id
+    }
+  }
+}
+```
+
+## More resources
+
+For additional Terraform configuration examples, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/).

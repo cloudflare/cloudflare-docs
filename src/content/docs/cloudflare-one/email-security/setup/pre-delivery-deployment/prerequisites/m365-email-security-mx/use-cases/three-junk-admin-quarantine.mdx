@@ -1,0 +1,58 @@
+---
+title: 3 - Junk email and administrative quarantine
+pcx_content_type: integration-guide
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Junk email and administrative quarantine - Microsoft 365
+---
+
+import { Render } from "~/components";
+
+In this tutorial, you will learn how to deliver `BULK` messages to the users's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the administrative quarantine (this requires an administrator to release the emails).
+
+## Create quarantine policies
+
+<Render
+	file="email-security/deployment/m365-use-case-1-3-create-quarantine-policy"
+	product="cloudflare-one"
+/>
+
+## Configure quarantine notifications
+
+<Render
+	file="email-security/deployment/m365-use-case-configure-quarantine-notifications"
+	product="cloudflare-one"
+/>
+
+## Configure anti-spam policies
+
+<Render
+	file="email-security/deployment/m365-use-cases-antispam"
+	product="cloudflare-one"
+	params={{
+		one: "_UserNotifyAdminRelease_",
+		two: "_UserNotifyAdminRelease_",
+		three: "_UserNotifyAdminRelease_",
+	}}
+/>
+
+## Create transport rules
+
+<Render
+	file="email-security/deployment/m365-use-case-transport-rules"
+	product="cloudflare-one"
+	params={{
+		one: "`Email security Deliver to Junk Email folder`",
+		two: "BULK",
+		three:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_",
+		four: "step4-rules.png",
+		five: "`Email security User Quarantine Message`",
+		six: "`MALICIOUS`, `UCE`, `SPOOF`",
+		seven:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_",
+		eight: "step10-user-quarantine.png",
+	}}
+/>

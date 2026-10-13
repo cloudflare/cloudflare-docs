@@ -1,0 +1,148 @@
+---
+title: "WAF Release - 2025-09-26"
+description: Cloudflare WAF managed rulesets 2025-09-26 release
+date: 2025-09-26
+---
+
+import { RuleID } from "~/components";
+
+**Managed Ruleset Updated**
+
+This update introduces 11 new detections in the Cloudflare Managed Ruleset (all currently set to Disabled mode to preserve remediation logic and allow quick activation if needed). The rules cover a broad spectrum of threats - SQL injection techniques, command and code injection, information disclosure of common files, URL anomalies, and cross-site scripting.
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="3ffd242b4ba242ca965022d3a67d8561" />
+      </td>
+      <td>100859A</td>
+      <td>SQLi - UNION - 3</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="91d9cf56355b4ab88481b2fd4de80468" />
+      </td>
+      <td>100889</td>
+      <td>Command Injection - Generic 9</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="c15ca8e8290f485287037665f2be3ddf" />
+      </td>
+      <td>100890</td>
+      <td>Information Disclosure - Common Files - 2</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="56669615f2984c2cac8c608980a252a8" />
+      </td>
+      <td>100891</td>
+      <td>Anomaly:URL - Relative Paths</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="c41789fb6370431d809567d17e7d3865" />
+      </td>
+      <td>100894</td>
+      <td>XSS - Inline Function</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="b995d0b930604fa6b8d9b2a13792565c" />
+      </td>
+      <td>100895</td>
+      <td>XSS - DOM</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="ab8277e3f432400bbd9403dd42978e38" />
+      </td>
+      <td>100896</td>
+      <td>SQLi - MSSQL Length Enumeration</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="3ec33bc5ac77495a9f55020e3ab43f7e" />
+      </td>
+      <td>100897</td>
+      <td>Generic Rules - Code Injection - 3</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="4375dc90c7af4c55908f6b95c1686741" />
+      </td>
+      <td>100898</td>
+      <td>SQLi - Evasion</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="945c5aa9f45141dd872d7ec920999be0" />
+      </td>
+      <td>100899</td>
+      <td>SQLi - Probing 2</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="2c20b5e8684043f48620ff77b4026c88" />
+      </td>
+      <td>100900</td>
+      <td>SQLi - Probing</td>
+      <td>N/A</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>

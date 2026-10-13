@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release.
+   
+  **Notable updates**
+   
+  - Added support for Device Information only mode. This allows for posture to
+  be used for Access policies without Gateway being enabled.
+
+  - Fixed issue for Zero Trust accounts with Captive Portal disabled where they
+  client may not always reconnect when it should
+
+  - Fixed issue where the UI would show disconnected when the client was instead
+  just temporarily paused
+
+  - Fixed issue where serial numbers with spaces in the string were not
+  correctly reported
+   
+
+   
+  **Known issues** 
+
+  - No known issues
+version: 2022.3.36.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.3.36.0
+packageSize: 42642183
+releaseDate: 2022-03-08T22:13:14.766Z
+platformName: macOS

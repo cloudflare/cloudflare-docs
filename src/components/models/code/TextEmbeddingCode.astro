@@ -1,11 +1,12 @@
 ---
-import { z } from "astro:content";
-import { Aside, Code, Details } from "~/components";
+import { z } from "astro:schema";
+import { Aside, Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
 
 const props = z.object({
-	name: z.string()
+	name: z.string(),
 });
 
 const { name } = props.parse(Astro.props);
@@ -58,36 +59,34 @@ response = requests.post(
 )
 
 print(response.json())
-`
-
+`;
 
 const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
   -X POST  \\
   -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
   -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }'
-`
+`;
 ---
 
-<h2>Code Examples</h2>
-<Details header="Workers - Typescript">
-  <Code code={worker} lang="ts" />
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
 </Details>
 
 <Details header="Python">
-  <Code code={python} lang="py" />
+	<Code code={python} lang="py" />
 </Details>
 
 <Details header="curl">
-  <Code code={curl} lang="sh" />
+	<Code code={curl} lang="sh" />
 </Details>
 
 <Aside type="note" title="OpenAI compatible endpoints">
-  Workers AI also supports OpenAI compatible API endpoints for{" "}
-  <code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For
-  more details, refer to{" "}
-  <a href="/workers-ai/configuration/open-ai-compatibility/">
-    Configurations
-  </a>
-  .
+	Workers AI also supports OpenAI compatible API endpoints for{" "}
+	<code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For more
+	details, refer to{" "}
+	<a href="/workers-ai/configuration/open-ai-compatibility/">
+		Configurations
+	</a>
+	.
 </Aside>

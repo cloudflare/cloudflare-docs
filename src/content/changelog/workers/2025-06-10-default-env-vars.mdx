@@ -1,0 +1,25 @@
+---
+title: Access git commit sha and branch name as environment variables in Workers Builds
+description: Workers Builds now automatically injects environment variables containingGit metadata, including the commit SHA and branch name.
+products:
+  - workers
+date: 2025-06-10
+---
+
+[Workers Builds](/workers/ci-cd/builds/) connects your Worker to a [Git repository](/workers/ci-cd/builds/git-integration/), and automates building and deploying your code on each pushed change.
+
+To make CI/CD pipelines even more flexible, Workers Builds now automatically injects [default environment variables](/workers/ci-cd/builds/configuration/#environment-variable) into your build process (much like the defaults in [Cloudflare Pages projects](/pages/configuration/build-configuration/#environment-variables)). You can use these variables to customize your build process based on the deployment context, such as the branch or commit.
+
+The following environment variables are injected by default:
+
+| Environment Variable    | Injected value                  | Example use-case                                                                        |
+| ----------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| `CI`                    | `true`                          | Changing build behavior when run on CI versus locally                                   |
+| `WORKERS_CI`            | `1`                             | Changing build behavior when run on Workers Builds versus locally                       |
+| `WORKERS_CI_BUILD_UUID` | `<build-uuid-of-current-build>` | Passing the Build UUID along to custom workflows                                        |
+| `WORKERS_CI_COMMIT_SHA` | `<sha1-hash-of-current-commit>` | Passing current commit ID to error reporting, for example, Sentry                       |
+| `WORKERS_CI_BRANCH`     | `<branch-name-from-push-event`  | Customizing build based on branch, for example, disabling debug logging on `production` |
+
+You can override these default values and add your own custom environment variables by navigating to **your Worker** > **Settings** > **Environment variables**.
+
+Learn more in the [Build configuration documentation](/workers/ci-cd/builds/configuration/#environment-variables).

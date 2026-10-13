@@ -1,19 +1,24 @@
 ---
-title: Configure in the dashboard
+title: Configure URL normalization in the dashboard
 pcx_content_type: how-to
 sidebar:
   order: 4
-head:
-  - tag: title
-    content: Configure URL normalization in the dashboard
+  label: Configure in the dashboard
 description: How to configure URL normalization in the Cloudflare dashboard.
-
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+import { Steps, DashButton } from "~/components";
 
-2. Go to **Rules** > **Settings**.
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Rules **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/settings" />
+
+2. Go to the **URL Normalization** tab.
+
+3. Configure the [available URL normalization settings](/rules/normalization/settings/).
 
    ![Available URL normalization settings in the Cloudflare dashboard](~/assets/images/rules/normalization/url-normalization-settings.png)
 
-3. Under **Configure Normalization**, configure the [available URL normalization settings](/rules/normalization/settings/).
+</Steps>

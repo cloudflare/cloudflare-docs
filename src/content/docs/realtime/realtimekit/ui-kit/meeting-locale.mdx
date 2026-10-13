@@ -1,0 +1,401 @@
+---
+pcx_content_type: navigation
+title: Meeting Locale
+sidebar:
+  order: 7
+---
+
+import { Tabs, TabItem } from '~/components';
+
+RealtimeKit's UI Kit allows you to customize all the text within the video call interface. You can personalize the text to align with your specific locale needs.
+
+:::note[Prerequisites]
+This page builds upon the [Render Default Meeting UI](/realtime/realtimekit/ui-kit/) & [Build Your Own UI](/realtime/realtimekit/ui-kit/build-your-own-ui/) guides. Make sure you've read it first and understand how to use the default meeting UI components.
+:::
+
+## Customize the Language Pack
+
+RealtimeKit's default language pack can be customized to match your application's locale requirements. You can override any text string used in the UI Kit components.
+
+:::note
+The custom language pack can be passed to `rtk-meeting` / `RtkMeeting` components as well as `rtk-ui-provider` / `RtkUIProvider` components using the `t` prop.
+:::
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### Import the Language Utilities
+
+RealtimeKit's default language pack can be imported like this:
+
+```html
+<script type="module">
+    import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
+</script>
+```
+
+### Create Your Custom Language Pack
+
+To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
+
+```html
+<body>
+    <rtk-meeting id="my-meeting"></rtk-meeting>
+
+    <script type="module">
+        import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
+        import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
+
+        // Customize RealtimeKit's default locale object
+        const myLanguagePack = useLanguage({
+            ...defaultLanguage,
+            'mute_all': 'Mute All Users',
+            'leave': 'Exit Call',
+            'join': 'Join Now'
+        });
+
+        const init = async () => {
+            const meeting = await RealtimeKitClient.init({
+                authToken: '<participant_auth_token>'
+            });
+
+            const meetingEl = document.getElementById('my-meeting');
+            meetingEl.meeting = meeting;
+            meetingEl.showSetupScreen = true;
+            
+            // Pass custom language pack
+            meetingEl.t = myLanguagePack;
+        };
+
+        init();
+    </script>
+</body>
+```
+
+The `useLanguage` function takes in your custom locale object as an argument and generates a function that retrieves the value associated with the provided key.
+
+### Using Custom Locale with UI Provider
+
+You can also pass the custom language pack to the `rtk-ui-provider` component when building your own custom UI:
+
+```html
+<body>
+    <rtk-ui-provider id="ui-provider">
+        <!-- Your custom UI components -->
+    </rtk-ui-provider>
+
+    <script type="module">
+        import RealtimeKitClient from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit@latest/dist/index.es.js';
+        import { useLanguage, defaultLanguage } from 'https://cdn.jsdelivr.net/npm/@cloudflare/realtimekit-ui/dist/esm/index.js';
+
+        const myLanguagePack = useLanguage({
+            ...defaultLanguage,
+            'mute_all': 'Mute All Users'
+        });
+
+        const meeting = await RealtimeKitClient.init({
+            authToken: '<participant_auth_token>'
+        });
+
+        const uiProvider = document.getElementById('ui-provider');
+        uiProvider.meeting = meeting;
+        uiProvider.t = myLanguagePack;
+    </script>
+</body>
+```
+
+</TabItem>
+<TabItem label="React">
+
+### Import the Language Utilities
+
+RealtimeKit's default language pack can be imported like this:
+
+```jsx
+import { defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
+```
+
+### Create Your Custom Language Pack
+
+To replace RealtimeKit's default locale with your own, create a custom language pack by spreading the `defaultLanguage` object and overriding specific keys:
+
+```jsx
+import { RealtimeKitProvider, useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+import { RtkMeeting, defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
+import { useEffect, useState } from 'react';
+
+function App() {
+    const [meeting, initMeeting] = useRealtimeKitClient();
+    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+
+    // Customize RealtimeKit's default locale object
+    const myLanguagePack = useLanguage({
+        ...defaultLanguage,
+        'mute_all': 'Mute All Users',
+        'leave': 'Exit Call',
+        'join': 'Join Now'
+    });
+
+    useEffect(() => {
+        if (authToken) {
+            initMeeting({
+                authToken: authToken
+            });
+        }
+    }, [authToken]);
+
+    return (
+        <RealtimeKitProvider value={meeting}>
+            <RtkMeeting 
+                showSetupScreen={true} 
+                meeting={meeting}
+                t={myLanguagePack}
+            />
+        </RealtimeKitProvider>
+    );
+}
+```
+
+The `useLanguage` hook takes in your custom locale object as an argument and generates a function that retrieves the value associated with the provided key.
+
+### Using Custom Locale with UI Provider
+
+You can also pass the custom language pack to the `RtkUIProvider` component when building your own custom UI:
+
+```jsx
+import { RealtimeKitProvider, useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+import { RtkUIProvider, defaultLanguage, useLanguage } from '@cloudflare/realtimekit-react-ui';
+import { useEffect, useState } from 'react';
+
+function App() {
+    const [meeting, initMeeting] = useRealtimeKitClient();
+    const [authToken, setAuthToken] = useState('<participant_auth_token>');
+
+    const myLanguagePack = useLanguage({
+        ...defaultLanguage,
+        'mute_all': 'Mute All Users'
+    });
+
+    useEffect(() => {
+        if (authToken) {
+            initMeeting({
+                authToken: authToken
+            });
+        }
+    }, [authToken]);
+
+    return (
+        <RealtimeKitProvider value={meeting}>
+            <RtkUIProvider meeting={meeting} t={myLanguagePack}>
+                {/* Your custom UI components */}
+            </RtkUIProvider>
+        </RealtimeKitProvider>
+    );
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Default Language Reference
+
+RealtimeKit provides a comprehensive default language pack with all the text strings used throughout the UI Kit. You can override any of these keys to customize the text displayed in your meeting interface.
+
+Here is the complete default language pack offered by RealtimeKit:
+
+```json
+{
+  "about_call": "About Call",
+  "screen": "Screen",
+  "camera": "Camera",
+  "leave": "Leave",
+  "dismiss": "Dismiss",
+  "logo": "Logo",
+  "page": "Page",
+  "more": "More",
+  "page.prev": "Previous Page",
+  "page.next": "Next Page",
+  "layout": "Layout",
+  "layout.auto": "Auto Layout",
+  "settings": "Settings",
+  "file": "File",
+  "image": "Image",
+  "connection": "Connection",
+  "leave_confirmation": "Are you sure you want to leave the call?",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "(you)": "(you)",
+  "you": "You",
+  "everyone": "Everyone",
+  "to": "To",
+  "mute": "Mute",
+  "kick": "Kick",
+  "pin": "Pin",
+  "pinned": "Pinned",
+  "accept": "Accept",
+  "unpin": "Unpin",
+  "pip_on": "Show PiP",
+  "pip_off": "Hide PiP",
+  "viewers": "Viewers",
+  "join": "Join",
+  "joined": "Joined",
+  "create": "Create",
+  "close": "Close",
+  "ask": "Ask",
+  "type": "Type",
+  "activate": "Activate",
+  "mic_off": "Mic Off",
+  "disable_mic": "Disable Mic",
+  "mic_on": "Mic On",
+  "enable_mic": "Enable Mic",
+  "audio": "Audio",
+  "test": "Test",
+  "mute_all": "Mute all",
+  "mute_all.description": "Everyone in the meeting will be muted.",
+  "mute_all.header": "Are you sure?",
+  "mute_all.allow_unmute": "Allow others to unmute",
+  "video_off": "Video Off",
+  "disable_video": "Disable Video",
+  "video_on": "Video On",
+  "enable_video": "Enable Video",
+  "video": "Video",
+  "offline": "You're offline",
+  "offline.description": "Please ensure that you are connected to the internet.",
+  "disconnected": "You haven't joined the meeting.",
+  "disconnected.description": "Please join the meeting in order to see and interact with other participants.",
+  "participants": "Participants",
+  "participants.errors.empty_results": "Couldn't find a participant with the specified name or ID.",
+  "participants.empty_list": "It looks like nobody is here.",
+  "participants.turn_off_video": "Turn off video",
+  "polls": "Polls",
+  "polls.by": "Poll by",
+  "polls.question": "Poll Question",
+  "polls.question.placeholder": "What is your poll for?",
+  "polls.answers": "Answers",
+  "polls.option": "Add an option.",
+  "polls.option.placeholder": "Enter an option",
+  "polls.results.anon": "Anonymous",
+  "polls.results.hide": "Hide results before voting",
+  "polls.create": "Create Poll",
+  "polls.cancel": "Cancel Poll Creation",
+  "polls.errors.question_required": "Question is required.",
+  "polls.errors.empty_option": "Empty options not allowed.",
+  "screenshare": "Screen Share",
+  "screenshare.min_preview": "Minimize Preview",
+  "screenshare.max_preview": "Expand Preview",
+  "screenshare.shared": "Your screen is being shared.",
+  "screenshare.start": "Share Screen",
+  "screenshare.stop": "Stop Sharing",
+  "screenshare.error.unknown": "An error occurred while starting screenshare.",
+  "screenshare.error.max_count": "Maximum screen share limit reached.",
+  "plugins": "Plugins",
+  "perm_denied": "Permission denied by browser.",
+  "perm_denied.audio": "Mic Permission denied by browser",
+  "perm_denied.video": "Camera Permission denied by browser",
+  "perm_denied.screenshare": "Screenshare Permission denied by browser",
+  "chat": "Chat",
+  "chat.new": "New",
+  "chat.new_channel": "Create new channel",
+  "chat.channel_name": "Enter channel name",
+  "chat.member_name": "Enter member name",
+  "chat.add_members": "Add members",
+  "chat.delete_msg": "Delete",
+  "chat.edit_msg": "Edit",
+  "chat.send_msg": "Send message",
+  "chat.send_attachment": "Drop files/images to send",
+  "chat.send_img": "Send an image",
+  "chat.send_file": "Send a file",
+  "chat.send_emoji": "Send an emoji",
+  "chat.update_msg": "Update message",
+  "chat.channel_members": "Channel Members",
+  "chat.img.loading": "Loading image",
+  "chat.error.img_not_found": "Image not found",
+  "chat.error.empty_results": "Couldn't find a member with the specified name.",
+  "chat.img.shared_by": "Shared by",
+  "chat.reply": "Reply",
+  "chat.message_placeholder": "Message..",
+  "chat.click_to_send": "Click to send as message",
+  "chat.search_msgs": "Search messages",
+  "chat.search_conversations": "Search conversations",
+  "chat.start_conversation": "Start a conversation..",
+  "chat.empty_search": "No messages found",
+  "chat.empty_channel": "Send a message to get started",
+  "chat.cancel_upload": "Cancel upload",
+  "chat.view_chats": "View chats",
+  "chat.everyone": "everyone",
+  "chat.pinned_msgs": "Pinned messages",
+  "chat.toggle_pinned_msgs": "Toggle pinned messages",
+  "date.today": "Today",
+  "date.yesteday": "Yesterday",
+  "date.sunday": "Sunday",
+  "date.monday": "Monday",
+  "date.tuesday": "Tuesday",
+  "date.wednesday": "Wednesday",
+  "date.thursday": "Thursday",
+  "date.friday": "Friday",
+  "date.saturday": "Saturday",
+  "list.empty": "No items found",
+  "grid.listening": "Listening",
+  "transcript.off": "Turn off Transcripts",
+  "transcript.on": "Turn on Transcripts",
+  "settings.notification_sound": "Notification sound",
+  "settings.microphone_input": "Microphone (input)",
+  "settings.speaker_output": "Speaker (output)",
+  "settings.mirror_video": "Mirror my Video",
+  "settings.camera_off": "Camera is off",
+  "dialog.close": "Close dialog",
+  "notifications.joined": "just joined",
+  "notifications.left": "left",
+  "notifications.requesting_to_join_meeting": "is requesting to join the meeting",
+  "notifications.requested_to_join_stage": "has requested to join stage",
+  "notifications.joined_stage": "has joined stage",
+  "notifications.request_to_join_accepted": "Request to join accepted",
+  "notifications.request_to_join_rejected": "Request to join rejected",
+  "notifications.accept": "Accept",
+  "notifications.new_poll_created_by": "New poll created by",
+  "search": "Search",
+  "search.could_not_find": "Couldn't find a participant with the specified name or ID.",
+  "search.empty": "It looks like nobody is here.",
+  "end": "End Meeting",
+  "end.all": "End meeting for all",
+  "ended": "The meeting ended.",
+  "ended.rejected": "Your request to join the meeting was denied.",
+  "ended.left": "You left the meeting.",
+  "ended.kicked": "You were removed from the meeting.",
+  "ended.disconnected": "The call ended because the connection was lost.",
+  "ended.network": "Please check your internet connection and try again.",
+  "network": "Network",
+  "network.reconnecting": "Connection lost. Trying to reconnect...",
+  "network.delay": "Taking too long to reconnect...",
+  "network.delay_extended": "Taking too long to reconnect. Please check your network connection.",
+  "network.restored": "Connection restored",
+  "network.lost": "Connection lost",
+  "network.lost_extended": "Connection lost. Please check your network connection.",
+  "network.disconnected": "Could not reconnect. Please leave the meeting and try refreshing the window.",
+  "network.leaving": "Automatically leaving the meeting in 10 seconds.",
+  "livestream": "Livestream",
+  "livestream.indicator": "This meeting is being livestreamed.",
+  "livestream.skip": "Skip to Live",
+  "livestream.idle": "Waiting to go live.",
+  "livestream.starting": "Livestream is starting...",
+  "livestream.stopping": "Livestream is stopping...",
+  "cta.help": "Need help on how to do this?",
+  "cta.continue": "Continue as it is",
+  "cta.reload": "Reload",
+  "cta.confirmation": "Are you sure?"
+}
+```
+
+You can override any of these keys in your custom language pack. For example, to translate the interface to Spanish:
+
+```javascript
+const spanishLanguagePack = useLanguage({
+    ...defaultLanguage,
+    'leave': 'Salir',
+    'join': 'Unirse',
+    'mute': 'Silenciar',
+    'participants': 'Participantes',
+    'chat': 'Chat',
+    'settings': 'Configuración'
+});
+```

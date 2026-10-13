@@ -6,14 +6,15 @@ sidebar:
 head:
   - tag: title
     content: zaraz.ecommerce
-
 ---
+
+import { DashButton } from "~/components";
 
 You can use `zaraz.ecommerce()` anywhere inside the `<body>` tag of a page.
 
 `zaraz.ecommerce()` allows you to track common events of the e-commerce user journey, such as when a user adds a product to cart, starts the checkout funnel or completes an order on your website. It is an `async` function, so you can choose to `await` it if you would like to make sure it completed before running other code.
 
-To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and on the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
+To start using `zaraz.ecommerce()`, you first need to enable it in your Zaraz account and enable the E-commerce action for the tool you plan to send e-commerce data to. Then, add `zaraz.ecommerce()` to the `<body>` element of your website.
 
 Right now, Zaraz e-commerce is compatible with Google Analytics 3 (Universal Analytics), Google Analytics 4, Bing, Facebook Pixel, Amplitude, Pinterest Conversions API, TikTok and Branch.
 
@@ -25,15 +26,16 @@ It is crucial you follow the guidelines set by third-party tools, such as Google
 
 You do not need to map e-commerce events to triggers. Zaraz automatically forwards data using the right format to the tools with e-commerce support.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Select **Zaraz** > **Settings**.
-3. Enable **E-commerce tracking**.
-4. Select **Save**.
-5. Go to **Zaraz** > **Tools Configuration** > **Third-party tools**.
-6. Locate the tool you want to use with e-commerce tracking and select **Edit**.
-7. Select **Settings**.
-8. Under **Advanced**, enable **E-commerce tracking**.
-9. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+	<DashButton url="/?to=/:account/tag-management/settings" />
+2. Enable **E-commerce tracking**.
+3. Select **Save**.
+4. Go to **Zaraz** > **Tools Configuration** > **Third-party tools**.
+5. Locate the tool you want to use with e-commerce tracking and select **Edit**.
+6. Select **Settings**.
+7. Under **Advanced**, enable **E-commerce tracking**.
+8. Select **Save**.
 
 E-commerce tracking is now enabled. If you add additional tools to your website that you want to use with `zaraz.ecommerce()`, you will need to repeat steps 6-9 for that tool.
 
@@ -42,32 +44,32 @@ E-commerce tracking is now enabled. If you add additional tools to your website 
 After enabling e-commerce tracking on your Zaraz dashboard, you need to add `zaraz.ecommerce()` to the `<body>` element of your website:
 
 ```js
-zaraz.ecommerce('Event Name', { parameters });
+zaraz.ecommerce("Event Name", { parameters });
 ```
 
 To create a complete tracking event, you need to add an event and one or more parameters. Below you will find a list of events and parameters Zaraz supports, as well as code examples for different types of events.
 
 ## List of supported events
 
-* `Product List Viewed`
-* `Products Searched`
-* `Product Clicked`
-* `Product Added`
-* `Product Added to Wishlist`
-* `Product Removed`
-* `Product Viewed`
-* `Cart Viewed`
-* `Checkout Started`
-* `Checkout Step Viewed`
-* `Checkout Step Completed`
-* `Payment Info Entered`
-* `Order Completed`
-* `Order Updated`
-* `Order Refunded`
-* `Order Cancelled`
-* `Clicked Promotion`
-* `Viewed Promotion`
-* `Shipping Info Entered`
+- `Product List Viewed`
+- `Products Searched`
+- `Product Clicked`
+- `Product Added`
+- `Product Added to Wishlist`
+- `Product Removed`
+- `Product Viewed`
+- `Cart Viewed`
+- `Checkout Started`
+- `Checkout Step Viewed`
+- `Checkout Step Completed`
+- `Payment Info Entered`
+- `Order Completed`
+- `Order Updated`
+- `Order Refunded`
+- `Order Cancelled`
+- `Clicked Promotion`
+- `Viewed Promotion`
+- `Shipping Info Entered`
 
 ## List of supported parameters:
 
@@ -115,110 +117,109 @@ To create a complete tracking event, you need to add an event and one or more pa
 ### Product viewed
 
 ```js
-zaraz.ecommerce('Product Viewed', {
-  product_id: '999555321',
-  sku: '2671033',
-  category: 'T-shirts',
-  name: 'V-neck T-shirt',
-  brand: 'Cool Brand',
-  variant: 'White',
-  price: 14.99,
-  currency: 'usd',
-  value: 18.99,
+zaraz.ecommerce("Product Viewed", {
+	product_id: "999555321",
+	sku: "2671033",
+	category: "T-shirts",
+	name: "V-neck T-shirt",
+	brand: "Cool Brand",
+	variant: "White",
+	price: 14.99,
+	currency: "usd",
+	value: 18.99,
 });
 ```
 
 ### Product List Viewed
 
 ```js
-zaraz.ecommerce('Product List Viewed',
-  {  products:
-    [
-    {
-      product_id: '999555321',
-      sku: '2671033',
-      category: 'T-shirts',
-      name: 'V-neck T-shirt',
-      brand: 'Cool Brand',
-      variant: 'White',
-      price: 14.99,
-      currency: 'usd',
-      value: 18.99,
-      position: 1,
-    },{
-      product_id: '999555322',
-      sku: '2671034',
-      category: 'T-shirts',
-      name: 'T-shirt',
-      brand: 'Cool Brand',
-      variant: 'Pink',
-      price: 10.99,
-      currency: 'usd',
-      value: 16.99,
-      position: 2,
-    },
-    ],
-  }
-);
+zaraz.ecommerce("Product List Viewed", {
+	products: [
+		{
+			product_id: "999555321",
+			sku: "2671033",
+			category: "T-shirts",
+			name: "V-neck T-shirt",
+			brand: "Cool Brand",
+			variant: "White",
+			price: 14.99,
+			currency: "usd",
+			value: 18.99,
+			position: 1,
+		},
+		{
+			product_id: "999555322",
+			sku: "2671034",
+			category: "T-shirts",
+			name: "T-shirt",
+			brand: "Cool Brand",
+			variant: "Pink",
+			price: 10.99,
+			currency: "usd",
+			value: 16.99,
+			position: 2,
+		},
+	],
+});
 ```
 
 ### Product added
 
 ```js
-zaraz.ecommerce('Product Added', {
-  product_id: '999555321',
-  sku: '2671033',
-  category: 'T-shirts',
-  name: 'V-neck T-shirt',
-  brand: 'Cool Brand',
-  variant: 'White',
-  price: 14.99,
-  currency: 'usd',
-  quantity: 1,
-  coupon: 'SUMMER-SALE',
-  position: 2,
+zaraz.ecommerce("Product Added", {
+	product_id: "999555321",
+	sku: "2671033",
+	category: "T-shirts",
+	name: "V-neck T-shirt",
+	brand: "Cool Brand",
+	variant: "White",
+	price: 14.99,
+	currency: "usd",
+	quantity: 1,
+	coupon: "SUMMER-SALE",
+	position: 2,
 });
 ```
 
 ### Checkout Step Viewed
 
 ```js
-zaraz.ecommerce('Checkout Step Viewed', {
-  step: 1,
+zaraz.ecommerce("Checkout Step Viewed", {
+	step: 1,
 });
 ```
 
 ### Order completed
 
 ```js
-zaraz.ecommerce('Order Completed', {
-  checkout_id: '616727740',
-  order_id: '817286897056801',
-  affiliation: 'affiliate.com',
-  total: 30.0,
-  revenue: 20.0,
-  shipping: 3,
-  tax: 2,
-  discount: 5,
-  coupon: 'winter-sale',
-  currency: 'USD',
-  products: [
-    {
-      product_id: '999666321',
-      sku: '8251511',
-      name: 'Boy’s shorts',
-      price: 10,
-      quantity: 2,
-      category: 'shorts',
-    },
-    {
-      product_id: '742566131',
-      sku: '7251567',
-      name: 'Blank T-shirt',
-      price: 5,
-      quantity: 2,
-      category: 'T-shirts',
-    },
-  ],
+zaraz.ecommerce("Order Completed", {
+	checkout_id: "616727740",
+	order_id: "817286897056801",
+	affiliation: "affiliate.com",
+	total: 30.0,
+	revenue: 20.0,
+	shipping: 3,
+	tax: 2,
+	discount: 5,
+	coupon: "winter-sale",
+	currency: "USD",
+	products: [
+		{
+			product_id: "999666321",
+			sku: "8251511",
+			name: "Boy’s shorts",
+			price: 10,
+			quantity: 2,
+			category: "shorts",
+		},
+		{
+			product_id: "742566131",
+			sku: "7251567",
+			name: "Blank T-shirt",
+			price: 5,
+			quantity: 2,
+			category: "T-shirts",
+		},
+	],
 });
 ```

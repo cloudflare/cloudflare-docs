@@ -1,18 +1,15 @@
 ---
-title: Overview
-type: overview
+title: Cloudflare Queues
+
 pcx_content_type: overview
 sidebar:
   order: 1
-  badge:
-    text: Beta
 head:
   - tag: title
-    content: Cloudflare Queues
-
+    content: Overview
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, LinkButton } from "~/components"
 
 <Description>
 
@@ -24,15 +21,9 @@ Send and receive messages with guaranteed delivery and no charges for egress ban
 
 <Plan type="paid" />
 
-:::undefined
+Cloudflare Queues integrate with [Cloudflare Workers](/workers/) and enable you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/configuration/configure-queues/), and [buffer or batch data](/queues/configuration/batching-retries/).
 
-
-[Cloudflare Queues is now in open Beta](https://blog.cloudflare.com/cloudflare-queues-open-beta/). Join the [`#queues-beta`](https://discord.cloudflare.com) channel in our Developer Discord to learn more.
-
-
-:::
-
-Cloudflare Queues integrates with [Cloudflare Workers](/workers/) and enables you to build applications that can [guarantee delivery](/queues/reference/delivery-guarantees/), [offload work from a request](/queues/reference/how-queues-works/), [send data from Worker to Worker](/queues/configuration/configure-queues/), and [buffer or batch data](/queues/configuration/batching-retries/).
+<LinkButton href="/queues/get-started/">Get started</LinkButton>
 
 ***
 
@@ -109,6 +100,10 @@ Learn how to configure Cloudflare Queues using Wrangler.
 
 <LinkTitleCard title="JavaScript APIs" href="/queues/configuration/javascript-apis/" icon="open-book">
 Learn how to use JavaScript APIs to send and receive messages to a Cloudflare Queue.
+</LinkTitleCard>
+
+<LinkTitleCard title="Event subscriptions" href="/queues/event-subscriptions/" icon="open-book">
+Learn how to configure and manage event subscriptions for your queues.
 </LinkTitleCard>
 
 </CardGrid>

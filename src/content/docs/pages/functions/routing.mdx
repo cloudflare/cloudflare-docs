@@ -3,22 +3,25 @@ pcx_content_type: reference
 title: Routing
 sidebar:
   order: 2
-
 ---
+
+import { Details, FileTree, PagesBuildPresetsTable, DashButton } from "~/components";
 
 Functions utilize file-based routing. Your `/functions` directory structure determines the designated routes that your Functions will run on. You can create a `/functions` directory with as many levels as needed for your project's use case. Review the following directory:
 
-```
-|---- …
-|---- functions
-      |___ index.js
-      |___ helloworld.js
-      |___ howdyworld.js
-      |___ fruits
-            |___ index.js
-            |___ apple.js
-            |___ banana.js
-```
+<FileTree>
+
+- ...
+- functions
+  - index.js
+  - helloworld.js
+  - howdyworld.js
+  - fruits
+    - index.js
+    - apple.js
+    - banana.js
+
+</FileTree>
 
 The following routes will be generated based on the above file structure. These routes map the URL pattern to the `/functions` file that will be invoked when a visitor goes to the URL:
 
@@ -33,9 +36,7 @@ The following routes will be generated based on the above file structure. These 
 
 :::note[Trailing slash]
 
-
 Trailing slash is optional. Both `/foo` and `/foo/` will be routed to `/functions/foo.js` or `/functions/foo/index.js`. If your project has both a `/functions/foo.js` and `/functions/foo/index.js` file, `/foo` and `/foo/` would route to `/functions/foo/index.js`.
-
 
 :::
 
@@ -72,9 +73,7 @@ By placing two sets of brackets around your filename – for example, `/users/[[
 
 :::note[Route specificity]
 
-
 More specific routes (routes with fewer wildcards) take precedence over less specific routes.
-
 
 :::
 
@@ -82,15 +81,17 @@ More specific routes (routes with fewer wildcards) take precedence over less spe
 
 Review the following `/functions/` directory structure:
 
-```
-|---- …
-|---- functions
-      |___ date.js
-      |___ users/
-            |___ special.js
-            |___ [user].js
-            |___ [[catchall]].js
-```
+<FileTree>
+
+- ...
+- functions
+  - date.js
+  - users
+    - special.js
+    - [user].js
+    - [[catchall]].js
+
+</FileTree>
 
 The following requests will match the following files:
 
@@ -103,13 +104,13 @@ The following requests will match the following files:
 | /users/special        | /users/special.js                                 |
 | /users/daniel/xyz/123 | /users/\[\[catchall]].js                          |
 
-The URL segment(s) that match the placeholder (`[user]`) will be available in the request [`context`](/pages/functions/api-reference/#eventcontext) object. The [`context.params`](/pages/functions/api-reference/#params) object can be used to find the matched value for a given filename placeholder.
+The URL segment(s) that match the placeholder (`[user]`) will be available in the request [`context`](/pages/functions/api-reference/#eventcontext) object. The [`context.params`](/pages/functions/api-reference/#eventcontext) object can be used to find the matched value for a given filename placeholder.
 
 For files which match a single URL segment (use a single set of brackets), the values are returned as a string:
 
 ```js
 export function onRequest(context) {
-  return new Response(context.params.user)
+	return new Response(context.params.user);
 }
 ```
 
@@ -119,7 +120,7 @@ For files which match against multiple URL segments (use a double set of bracket
 
 ```js
 export function onRequest(context) {
-  return new Response(JSON.stringify(context.params.catchall))
+	return new Response(JSON.stringify(context.params.catchall));
 }
 ```
 
@@ -131,27 +132,31 @@ On a purely static project, Pages offers unlimited free requests. However, once 
 
 :::note
 
-
-Some frameworks (such as Remix, SvelteKit) will also automatically generate a `_routes.json` file. However, if your preferred framework does not, create an issue on their framework repository with a link to this page or let us know on [Discord](https://discord.cloudflare.com). Refer to the [Framework guide](/pages/framework-guides/) for more information on full-stack frameworks.
-
+Some frameworks (such as [Remix](/pages/framework-guides/deploy-a-remix-site/), [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)) will also automatically generate a `_routes.json` file. However, if your preferred framework does not, create an issue on their framework repository with a link to this page or let us know on [Discord](https://discord.cloudflare.com). Refer to the [Framework guide](/pages/framework-guides/) for more information on full-stack frameworks.
 
 :::
 
 ### Create a `_routes.json` file
 
-Create a `_routes.json` file to control when your Function is invoked. It should be placed in the output directory of your project.
+Create a `_routes.json` file to control when your Function is invoked. It should be placed in the build directory of your project.
+
+<Details header="Default build directories">
+
+Below are some standard build commands and directories for popular frameworks and tools.
+
+<PagesBuildPresetsTable />
+
+</Details>
 
 This file will include three different properties:
 
-* **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
-* **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
-* **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
+- **version**: Defines the version of the schema. Currently there is only one version of the schema (version 1), however, we may add more in the future and aim to be backwards compatible.
+- **include**: Defines routes that will be invoked by Functions. Accepts wildcard behavior.
+- **exclude**: Defines routes that will not be invoked by Functions. Accepts wildcard behavior. `exclude` always take priority over `include`.
 
 :::note
 
-
 Wildcards match any number of path segments (slashes). For example, `/users/*` will match everything after the`/users/` path.
-
 
 :::
 
@@ -161,9 +166,9 @@ Below is an example of a `_routes.json`.
 
 ```json
 {
-   "version": 1,
-   "include": ["/*"],
-   "exclude": []
+	"version": 1,
+	"include": ["/*"],
+	"exclude": []
 }
 ```
 
@@ -173,16 +178,30 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 
 ```json
 {
-   "version": 1,
-   "include": ["/*"],
-   "exclude": ["/build/*"]
+	"version": 1,
+	"include": ["/*"],
+	"exclude": ["/build/*"]
 }
 ```
+
+## Fail open / closed
+
+If on the Workers Free plan, you can configure how Pages behaves when your daily free tier allowance of Pages Functions requests is exhausted. If, for example, you are performing authentication checks or other critical functionality in your Pages Functions, you may wish to disable your Pages project when the allowance is exhausted.
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Settings** > **Runtime** > **Fail open / closed**.
+
+"Fail open" means that static assets will continue to be served, even if Pages Functions would ordinarily have run first. "Fail closed" means an error page will be returned, rather than static assets.
+
+The daily request limit for Pages Functions can be removed entirely by upgrading to [Workers Standard](/workers/platform/pricing/#workers).
 
 ### Limits
 
 Functions invocation routes have the following limits:
 
-* You must have at least one include rule.
-* You may have no more than 100 include/exclude rules combined.
-* Each rule may have no more than 100 characters.
+- You must have at least one include rule.
+- You may have no more than 100 include/exclude rules combined.
+- Each rule may have no more than 100 characters.

@@ -1,11 +1,12 @@
 {
-	"recommendations":[
+	"recommendations": [
 		"mhutchie.git-graph",
 		"EditorConfig.EditorConfig",
 		"astro-build.astro-vscode",
 		"unifiedjs.vscode-mdx",
 		"bradlc.vscode-tailwindcss",
 		"redhat.vscode-yaml",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint"
 	]
 }

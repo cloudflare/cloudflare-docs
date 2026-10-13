@@ -3,9 +3,16 @@ title: Traceroutes
 pcx_content_type: how-to
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="analytics/traceroutes" product="magic-wan" params={{ one: "Transit" }} />
+<Render
+	file="analytics/traceroutes"
+	product="networking-services"
+	params={{
+		productName: "Magic Transit",
+		dashButtonPath: "/?to=/:account/magic-transit/tunnel-healthchecks",
+		magicWord: "magic-transit",
+	}}
+/>

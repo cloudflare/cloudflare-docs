@@ -1,7 +1,8 @@
 ---
 {}
-
 ---
+
+import { APIRequest } from "~/components";
 
 ## Receive email
 
@@ -9,12 +10,7 @@ If you only need to **receive** emails, Cloudflare offers [Email Routing](/email
 
 ## Send and receive email
 
-To **send and receive** emails from your domain, you need:
-
-* An SMTP provider.
-* To create two DNS records within Cloudflare.
-
-To route emails through Cloudflare and to your mail server:
+To **send and receive** emails from your domain, you need an SMTP provider. Then, create two DNS records within Cloudflare, following the steps below:
 
 1. Get the IP address and MX record details from your SMTP provider ([vendor-specific guidelines](/dns/manage-dns-records/reference/vendor-specific-records/)).
 
@@ -28,19 +24,17 @@ To route emails through Cloudflare and to your mail server:
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"A",
-     "name":"www.example.com",
-     "content":"192.0.2.1",
-     "ttl":3600,
-     "proxied":false
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+       "type":"A",
+       "name":"mail.example.com",
+       "content":"192.0.2.1",
+       "ttl":3600,
+       "proxied":false
+     }}
+   />
 
    ```json title="Response"
    {
@@ -48,17 +42,14 @@ To route emails through Cloudflare and to your mail server:
        "id": "<ID>",
        "zone_id": "<ZONE_ID>",
        "zone_name": "example.com",
-       "name": "www.example.com",
+       "name": "mail.example.com",
        "type": "A",
        "content": "192.0.2.1",
        "proxiable": true,
        "proxied": false,
-       "ttl": 1,
+       "ttl": 3600,
        "locked": false,
        "meta": {
-         "auto_added": false,
-         "managed_by_apps": false,
-         "managed_by_argo_tunnel": false,
          "source": "primary"
        },
        "comment": null,
@@ -77,26 +68,25 @@ To route emails through Cloudflare and to your mail server:
 
 3. [Add an `MX` record](/dns/manage-dns-records/how-to/create-dns-records/) that points to that subdomain.
 
-   | **Type** | **Name** | **Mail server**    | **TTL** |
-   | -------- | -------- | ------------------ | ------- |
-   | MX       | `@`      | `mail.example.com` | Auto    |
+   | **Type** | **Name** | **Mail server**    | **TTL** | **Priority** |
+   | -------- | -------- | ------------------ | ------- | ------------ |
+   | MX       | `@`      | `mail.example.com` | Auto    | 5            |
 
       <details>
       <summary>API example</summary>
       <div>
 
-   ```bash title="Request"
-   curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
-   --header "x-auth-email: <EMAIL>" \
-   --header "x-auth-key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "type":"MX",
-     "name":"example.com",
-     "content":"mail.example.com",
-     "ttl":3600
-   }'
-   ```
+	 <APIRequest
+   	path="/zones/{zone_id}/dns_records"
+   	method="POST"
+   	json={{
+      "type":"MX",
+      "name":"example.com",
+      "content":"mail.example.com",
+			"priority": 5,
+      "ttl":3600
+    }}
+   />
 
    ```json title="Response"
    {
@@ -107,15 +97,12 @@ To route emails through Cloudflare and to your mail server:
        "name": "example.com",
        "type": "MX",
        "content": "mail.example.com",
-       "priority": 10,
+       "priority": 5,
        "proxiable": false,
        "proxied": false,
        "ttl": 3600,
        "locked": false,
        "meta": {
-         "auto_added": false,
-         "managed_by_apps": false,
-         "managed_by_argo_tunnel": false,
          "source": "primary"
        },
        "comment": null,
@@ -136,6 +123,5 @@ To route emails through Cloudflare and to your mail server:
 
 
 If you encounter issues with your email setup, refer to our [troubleshooting guide](/dns/troubleshooting/email-issues/).
-
 
 :::

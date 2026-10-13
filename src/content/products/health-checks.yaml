@@ -7,16 +7,5 @@ product:
 
 meta:
   title: Cloudflare Health Checks docs
-  description: Standalone Health Checks monitors an IP address or hostname for origin servers or applications.
+  description: Monitor IPs or hostnames and get notified of issues
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/traffic/health-checks
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com
-algolia:
-  index: TEST - Re-dev docs
-  apikey: 4edb0a6cef3338ff4bcfbc6b3d2db56b
-  product: health-checks

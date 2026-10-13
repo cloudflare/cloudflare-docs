@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Functions - Get started
-
 ---
 
 This guide will instruct you on creating and deploying a Pages Function.
@@ -17,13 +16,11 @@ You must have a Pages project set up on your local machine or deployed on the Cl
 
 ## Create a Function
 
-To get started with generating a Pages Function, create a `/functions` directory at the root of your Pages project.
+To get started with generating a Pages Function, create a `/functions` directory. Make sure that the `/functions` directory is at the root of your Pages project (and not in the static root, such as `/dist`).
 
 :::note[Advanced mode]
 
-
 For existing applications where Pages Functions’ built-in file path based routing and middleware system is not desirable, use [Advanced mode](/pages/functions/advanced-mode/). Advanced mode allows you to develop your Pages Functions with a `_worker.js` file rather than the `/functions` directory.
-
 
 :::
 
@@ -33,7 +30,7 @@ Copy and paste the following code into a `helloworld.js` file that you create in
 
 ```js
 export function onRequest(context) {
-  return new Response("Hello, world!")
+	return new Response("Hello, world!");
 }
 ```
 
@@ -45,7 +42,7 @@ Refer to [Routing](/pages/functions/routing/) for more information on route cust
 
 ### Runtime features
 
-Workers runtime features, including compatibility with a subset of Node.js APIs and setting a [compatibility date or compatibility flag](/workers/configuration/compatibility-dates/) are configurable on Pages Functions.
+[Workers runtime features](/workers/runtime-apis/) are configurable on Pages Functions, including [compatibility with a subset of Node.js APIs](/workers/runtime-apis/nodejs) and the ability to set a [compatibility date or compatibility flag](/workers/configuration/compatibility-dates/).
 
 Set these configurations by passing an argument to your [Wrangler](/workers/wrangler/commands/#dev-1) command or by setting them in the dashboard. To set Pages compatibility flags in the Cloudflare dashboard:
 
@@ -60,16 +57,16 @@ Additionally, use other Cloudflare products such as [D1](/d1/) (serverless DB) a
 
 After you have set up your Function, deploy your Pages project. Deploy your project by:
 
-* Connecting your [Git provider](/pages/get-started/git-integration/).
-* Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
+- Connecting your [Git provider](/pages/get-started/git-integration/).
+- Using [Wrangler](/workers/wrangler/commands/#pages) from the command line.
 
 :::caution
 
-[Direct Upload](/pages/get-started/direct-upload/) from the Cloudflare dashboard is currently not supported with Functions. 
+[Direct Upload](/pages/get-started/direct-upload/) from the Cloudflare dashboard is currently not supported with Functions.
 :::
 
 ## Related resources
 
-* Customize your [Function's routing](/pages/functions/routing/)
-* Review the [API reference](/pages/functions/api-reference/)
-* Learn how to [debug your Function](/pages/functions/debugging-and-logging/)
+- Customize your [Function's routing](/pages/functions/routing/)
+- Review the [API reference](/pages/functions/api-reference/)
+- Learn how to [debug your Function](/pages/functions/debugging-and-logging/)

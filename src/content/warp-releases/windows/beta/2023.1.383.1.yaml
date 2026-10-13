@@ -1,0 +1,26 @@
+releaseNotes: >-
+  This release primarily contains bug fixes and improvements, no new features
+  are included in this release.
+   
+  **Notable updates**
+
+  - Improve timeouts with broken CNAME records that could result in very long
+  load times for certain apps (Office 365 apps, etc.)
+
+  - Fixed issue where systems with significantly out of sync system clocks could
+  fail registration
+
+  - Fixed a number of GUI crash bugs that would cause the app to disappear from
+  the system tray
+
+  - Fixed issue that could cause the application to be hidden behind the Windows
+  system tray expanded list UI
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.1.383.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.1.383.1
+packageSize: 105414656
+releaseDate: 2023-02-02T00:33:33.817Z
+platformName: Windows

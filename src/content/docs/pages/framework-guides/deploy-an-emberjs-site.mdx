@@ -30,17 +30,20 @@ cd ember-quickstart
 npm start
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository_no_init" />
+<Render
+	file="framework-guides/create-github-repository_no_init"
+	product="pages"
+/>
 
 ## Deploy with Cloudflare Pages
 
-To deploy your site to Pages:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, select _Ember_ as your **Framework preset**. Your selection will provide the following information:
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	product="pages"
+	params={{ name: "Ember.js" }}
+/>
 
 <PagesBuildPreset framework="ember-js" />
 
@@ -50,4 +53,8 @@ Every time you commit new code to your Ember site, Cloudflare Pages will automat
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-<Render file="framework-guides/learn-more" params={{ one: "Ember" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Ember" }}
+/>

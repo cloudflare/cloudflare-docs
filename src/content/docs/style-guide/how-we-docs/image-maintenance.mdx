@@ -1,0 +1,55 @@
+---
+pcx_content_type: how-to
+title: Image maintenance
+meta:
+  title: Image maintenance | How we docs
+---
+
+import { GitHubCode } from "~/components";
+
+Though valuable for user understanding, images are difficult to maintain. We have a few strategies that we use to help make this easier.
+
+## Guidelines
+
+We support a few different types of images in our docs, including:
+
+- [Diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/)
+- [Mermaid diagrams](/style-guide/components/mermaid/)
+- [Screenshots](/style-guide/documentation-content-strategy/component-attributes/screenshots/)
+
+Of these, we prefer Mermaid diagrams because they are searchable and easily changeable. The "cost" of updating a Mermaid diagram is much lower than re-taking a screenshot or working with a designer to update a diagram.
+
+## Maintenance
+
+The best way to improve image maintenance is to avoid using them.
+
+The other way to streamline maintenance is to remove images that are no longer referenced in your documentation. This pattern becomes particularly helpful if you need to audit images for UI changes or leaked information, because then you are not wasting time looking at unused images too.
+
+We do that through a combination of GitHub actions.
+
+### Flag unused images
+
+We have a specific GitHub action to [flag unused images](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/image-audit.yml).
+
+What the GitHub action does is:
+
+1. Finds all `.png` or `.svg` files in our content.
+2. Checks to see if those files are referenced in any of our MDX files.
+3. Ceates a [GitHub issue](https://github.com/cloudflare/cloudflare-docs/issues/23343) if there are unreferenced files.
+
+### Evaluate image paths
+
+In combination with [flagging unused images](#flag-unused-images), we also have logic in our [build process](https://github.com/cloudflare/cloudflare-docs/blob/production/astro.config.ts) to validate image paths.
+
+<GitHubCode
+	repo="cloudflare/cloudflare-docs"
+	file="astro.config.ts"
+	commit="aaacc3c3c2a7517ee307ddfc56962cbea9847202"
+	lang="ts"
+	lines="62-76"
+	code={{ title: "astro.config.ts", mark: 5 }}
+/>
+
+This line ensures that our custom [Remark plugin](https://github.com/cloudflare/cloudflare-docs/blob/production/src/plugins/remark/validate-images.ts) validates all images paths. If the path does not exist, we throw an error and prevent the site from building.
+
+When paired with [flagging unused images](#flag-unused-images), this path validation ensures that a tech writer can safely delete unused files in a pull request. So long as the site builds correctly, you have only deleted image files that are not referenced anywhere.

@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This release contains a minor bug fix from the previous beta
+   
+  **Notable updates**
+   
+  - Fix issue where app UI would not disappear consistently when bringing up
+  preferences
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.7.172.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.7.172.1
+packageSize: 45566108
+releaseDate: 2022-07-14T17:40:05.663Z
+platformName: macOS

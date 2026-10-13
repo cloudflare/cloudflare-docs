@@ -1,13 +1,17 @@
 ---
-updated: 2021-07-27
+reviewed: 2021-07-27
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating a Jekyll-based site from GitHub Pages
 tags:
-  - Jekyll
-languages:
   - Ruby
+sidebar:
+  hidden: true
+description: >-
+  Learn how to migrate a Jekyll-based site from GitHub Pages to Cloudflare Pages.
 ---
+
+import { DashButton } from "~/components";
 
 In this tutorial, you will learn how to migrate an existing [GitHub Pages site using Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll) to Cloudflare Pages. Jekyll is one of the most popular static site generators used with GitHub Pages, and migrating your GitHub Pages site to Cloudflare Pages will take a few short steps.
 
@@ -49,6 +53,13 @@ Your existing Jekyll-based repository must specify a `Gemfile` (Ruby's dependenc
 
 Specifically, you will need to create a `Gemfile` and install the `github-pages` gem, which includes all of the dependencies that the GitHub Pages environment assumes.
 
+[Version 2 of the Pages build environment](/pages/configuration/build-image/#languages-and-runtime) will use Ruby 3.2.2 for the default Jekyll build. Please make sure your local development environment is compatible.
+
+```sh title="Set Ruby Version"
+brew install ruby@3.2
+export PATH="/usr/local/opt/ruby@3.2/bin:$PATH"
+```
+
 ```sh title="Create a Gemfile"
 cd my-github-pages-repo
 bundle init
@@ -57,7 +68,7 @@ bundle init
 Open the `Gemfile` that was created for you, and add the following line to the bottom of the file:
 
 ```ruby title="Specifying the github-pages version"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Your `Gemfile` should resemble the below:
@@ -70,7 +81,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # gem "rails"
-gem "github-pages", "~> 215", group: :jekyll_plugins
+gem "github-pages", group: :jekyll_plugins
 ```
 
 Run `bundle update`, which will install the `github-pages` gem for you, and create a `Gemfile.lock` file with the resolved dependency versions.
@@ -102,8 +113,11 @@ If you are configuring your Cloudflare Pages site for the first time, refer to t
 
 To deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create application** > **Pages** > **Import an existing Git repository**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>

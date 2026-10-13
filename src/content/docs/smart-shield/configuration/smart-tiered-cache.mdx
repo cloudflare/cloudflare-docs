@@ -1,0 +1,16 @@
+---
+pcx_content_type: concept
+title: Smart Tiered Cache
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+:::note[Availability]
+Available in all Smart Shield packages.
+:::
+
+With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare data centers must contact the origin server to receive the cacheable content. Tiered cache works by dividing Cloudflare's data centers into a hierarchy of lower-tiers and upper-tiers, where only upper-tiers can ask your origin for content.
+
+<Render file="smart-tiered-cache" product="cache" />

@@ -5,9 +5,9 @@ sidebar:
   order: 3
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-<Render file="vectorize-beta" />
+<Render file="vectorize-ga" product="vectorize" />
 
 Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
@@ -48,20 +48,20 @@ Open your terminal and create a new project named `embeddings-tutorial` by runni
 	file="c3-post-run-steps"
 	product="workers"
 	params={{
-		one: "Hello World example",
-		two: "Hello World Worker",
-		three: "TypeScript",
+		category: "hello-world",
+		type: "Worker only",
+		lang: "TypeScript",
 	}}
 />
 
 This will create a new `embeddings-tutorial` directory. Your new `embeddings-tutorial` directory will include:
 
 - A `"Hello World"` [Worker](/workers/get-started/guide/#3-write-code) at `src/index.ts`.
-- A [`wrangler.toml`](/workers/wrangler/configuration/) configuration file. `wrangler.toml` is how your `embeddings-tutorial` Worker will access your index.
+- A [`wrangler.jsonc`](/workers/wrangler/configuration/) configuration file. `wrangler.jsonc` is how your `embeddings-tutorial` Worker will access your index.
 
 :::note
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an [environmental variable](/workers/configuration/environment-variables/) when running `create cloudflare@latest`.
 
 For example: `CI=true npm create cloudflare@latest embeddings-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
@@ -77,7 +77,7 @@ To create your first Vectorize index, change into the directory you just created
 cd embeddings-tutorial
 ```
 
-<Render file="vectorize-legacy" />
+<Render file="vectorize-legacy" product="vectorize" />
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
@@ -87,7 +87,7 @@ To create an index, use the `wrangler vectorize create` command and provide a na
 
 In addition, define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command, ensuring that the `dimensions` are set to `768`: this is important, as the Workers AI model used in this tutorial outputs vectors with 768 dimensions.
 
@@ -107,15 +107,19 @@ This will create a new vector database, and output the [binding](/workers/runtim
 
 ## 3. Bind your Worker to your index
 
-You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your `wrangler.toml` file.
+You must create a binding for your Worker to connect to your Vectorize index. [Bindings](/workers/runtime-apis/bindings/) allow your Workers to access resources, like Vectorize or R2, from Cloudflare Workers. You create bindings by updating your Wrangler file.
 
-To bind your index to your Worker, add the following to the end of your `wrangler.toml` file:
+To bind your index to your Worker, add the following to the end of your Wrangler file:
+
+<WranglerConfig>
 
 ```toml
 [[vectorize]]
 binding = "VECTORIZE" # available in your Worker on env.VECTORIZE
 index_name = "embeddings-index"
 ```
+
+</WranglerConfig>
 
 Specifically:
 
@@ -127,7 +131,9 @@ Specifically:
 
 Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
-From within the `embeddings-tutorial` directory, open your `wrangler.toml` file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+From within the `embeddings-tutorial` directory, open your Wrangler file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
+
+<WranglerConfig>
 
 ```toml
 [[vectorize]]
@@ -137,6 +143,8 @@ index_name = "embeddings-index"
 [ai]
 binding = "AI" # available in your Worker on env.AI
 ```
+
+</WranglerConfig>
 
 With Workers AI ready, you can write code in your Worker.
 
@@ -271,6 +279,6 @@ By finishing this tutorial, you have successfully created a Vectorize index, use
 
 ## Next steps
 
-- Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
+- Build a [generative AI chatbot](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.

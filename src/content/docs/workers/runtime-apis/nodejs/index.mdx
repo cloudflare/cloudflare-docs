@@ -2,67 +2,111 @@
 pcx_content_type: concept
 title: Node.js compatibility
 head: []
-description: Implemented Node.js runtime APIs and enablement instructions for
-  your Worker project.
+description: Node.js APIs available in Cloudflare Workers
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, WranglerConfig } from "~/components";
 
-Most Workers import one or more packages of JavaScript or TypeScript code from [npm](https://www.npmjs.com/) as dependencies in `package.json`. Many of these packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these APIs are present.
+When you write a Worker, you may need to import packages from [npm](https://www.npmjs.com/). Many npm packages rely on APIs from the [Node.js runtime](https://nodejs.org/en/about), and will not work unless these Node.js APIs are available.
 
-To ensure compatibility with a wider set of npm packages, and make it easier for you to run existing applications on Cloudflare Workers, the following APIs from the [Node.js runtime](https://nodejs.org/en/about) are available directly as Workers runtime APIs, with no need to add polyfills to your own code:
+Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
-<DirectoryListing />
+1. As built-in APIs provided by the Workers Runtime. Most of these APIs are
+   full implementations of the corresponding Node.js APIs, while a few are
+   partially supported or non-functional stubs intended for the APIs to be
+   available for import only but not for actual use.
+2. As polyfill shim implementations that [Wrangler](/workers/wrangler/) adds to your Worker's code, allowing it to import the module, but calling API methods will throw errors.
 
-Node.js APIs are available under the `node:` prefix, and this prefix must be used when importing modules, both in your code and the npm packages you depend on.
+## Get Started
 
-```js
-// Do this:
-import { Buffer } from "node:buffer";
+To enable built-in Node.js APIs and add polyfills, add the `nodejs_compat` compatibility flag to your [wrangler configuration file](/workers/wrangler/configuration/), and ensure that your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later. [Learn more about the Node.js compatibility flag and v2](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 
-// Do not do this:
-import { Buffer } from "buffer";
-```
-
-Unless otherwise specified, implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
-
-## Enable Node.js with Workers
-
-Add the [`nodejs_compat`](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) [compatibility flag](/workers/configuration/compatibility-dates/#nodejs-compatibility-flag) to your `wrangler.toml`:
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 compatibility_flags = [ "nodejs_compat" ]
+compatibility_date = "2024-09-23"
 ```
 
-## Enable Node.js with Pages Functions
+</WranglerConfig>
 
-### Enable Node.js with Wrangler
+## Supported Node.js APIs
 
-To enable `nodejs_compat` in local development, pass the [`--compatibility-flags`](/workers/wrangler/commands/#dev-1) argument with the `nodejs_compat` flag to `wrangler pages dev`:
+The runtime APIs from Node.js listed below as "🟢 supported" are currently natively supported in the Workers Runtime. Item listed as "🟡 partially supported" are either only partially implemented or are implemented as non-functional stubs.
 
-```sh
-npx wrangler pages dev [<DIRECTORY>] --compatibility-flags="nodejs_compat"
+[Deprecated or experimental APIs from Node.js](https://nodejs.org/docs/latest/api/documentation.html#stability-index), and APIs that do not fit in a serverless context, are not included as part of the list below:
+
+| API Name                                                                         | Natively supported by the Workers Runtime                                                    |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [Assertion testing](/workers/runtime-apis/nodejs/assert/)                        | 🟢 supported                                                                                 |
+| [Asynchronous context tracking](/workers/runtime-apis/nodejs/asynclocalstorage/) | 🟢 supported                                                                                 |
+| [Async hooks](https://nodejs.org/docs/latest/api/async_hooks.html)               | 🟡 partially supported (non-functional)                                                      |
+| [Buffer](/workers/runtime-apis/nodejs/buffer/)                                   | 🟢 supported                                                                                 |
+| [Child processes](https://nodejs.org/docs/latest/api/child_process.html)         | 🟡 partially supported (non-functional)                                                      |
+| [Cluster](https://nodejs.org/docs/latest/api/cluster.html)                       | 🟡 partially supported (non-functional)                                                      |
+| [Console](https://nodejs.org/docs/latest/api/console.html)                       | 🟡 partially supported                                                                       |
+| [Crypto](/workers/runtime-apis/nodejs/crypto/)                                   | 🟢 supported                                                                                 |
+| [Debugger](/workers/observability/dev-tools/)                                    | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/)           |
+| [Diagnostics Channel](/workers/runtime-apis/nodejs/diagnostics-channel/)         | 🟢 supported                                                                                 |
+| [DNS](/workers/runtime-apis/nodejs/dns/)                                         | 🟢 supported                                                                                 |
+| Errors                                                                           | 🟢 supported                                                                                 |
+| [Events](/workers/runtime-apis/nodejs/eventemitter/)                             | 🟢 supported                                                                                 |
+| [File system](/workers/runtime-apis/nodejs/fs/)                                  | 🟢 supported                                                                                 |
+| Globals                                                                          | 🟢 supported                                                                                 |
+| [HTTP](/workers/runtime-apis/nodejs/http/)                                       | 🟢 supported                                                                                 |
+| [HTTP/2](https://nodejs.org/docs/latest/api/http2.html)                          | 🟡 partially supported (non-functional)                                                      |
+| [HTTPS](/workers/runtime-apis/nodejs/https/)                                     | 🟢 supported                                                                                 |
+| [Inspector](https://nodejs.org/docs/latest/api/inspector.html)                   | 🟡 partially supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
+| [Module](https://nodejs.org/docs/latest/api/module.html)                         | 🟡 partially supported                                                                       |
+| [Net](/workers/runtime-apis/nodejs/net/)                                         | 🟢 supported                                                                                 |
+| [OS](https://nodejs.org/docs/latest/api/os.html)                                 | 🟡 partially supported                                                                       |
+| [Path](/workers/runtime-apis/nodejs/path/)                                       | 🟢 supported                                                                                 |
+| [Performance hooks](https://nodejs.org/docs/latest/api/perf_hooks.html)          | 🟡 partially supported                                                                       |
+| [Process](/workers/runtime-apis/nodejs/process/)                                 | 🟢 supported                                                                                 |
+| [Punycode](https://nodejs.org/docs/latest/api/punycode.html) (deprecated)        | 🟢 supported                                                                                 |
+| [Readline](https://nodejs.org/docs/latest/api/readline.html)                     | 🟡 partially supported (non-functional)                                                      |
+| [REPL](https://nodejs.org/docs/latest/api/repl.html)                             | 🟡 partially supported (non-functional)                                                      |
+| [Query strings](https://nodejs.org/docs/latest/api/querystring.html)             | 🟢 supported                                                                                 |
+| [SQLite](https://nodejs.org/docs/latest/api/sqlite.html)                         | ⚪ not yet supported                                                                         |
+| [Stream](/workers/runtime-apis/nodejs/streams)                                   | 🟢 supported                                                                                 |
+| [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                   | 🟢 supported                                                                                 |
+| [Test runner](https://nodejs.org/docs/latest/api/test.html)                      | ⚪ not supported                                                                             |
+| [Timers](/workers/runtime-apis/nodejs/timers/)                                   | 🟢 supported                                                                                 |
+| [TLS/SSL](/workers/runtime-apis/nodejs/tls/)                                     | 🟡 partially supported                                                                       |
+| [UDP/datagram](https://nodejs.org/docs/latest/api/dgram.html)                    | 🟡 partially supported (non-functional)                                                      |
+| [URL](/workers/runtime-apis/nodejs/url/)                                         | 🟢 supported                                                                                 |
+| [Utilities](/workers/runtime-apis/nodejs/util/)                                  | 🟢 supported                                                                                 |
+| [V8](https://nodejs.org/docs/latest/api/v8.html)                                 | 🟡 partially supported (non-functional)                                                      |
+| [VM](https://nodejs.org/docs/latest/api/vm.html)                                 | 🟡 partially supported (non-functional)                                                      |
+| [Web Crypto API](/workers/runtime-apis/web-crypto/)                              | 🟢 supported                                                                                 |
+| [Web Streams API](/workers/runtime-apis/streams/)                                | 🟢 supported                                                                                 |
+| [Zlib](/workers/runtime-apis/nodejs/zlib/)                                       | 🟢 supported                                                                                 |
+
+Unless otherwise specified, native implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
+
+If an API you wish to use is missing and you want to suggest that Workers support it, please add a post or comment in the
+[Node.js APIs discussions category](https://github.com/cloudflare/workerd/discussions/categories/node-js-apis) on GitHub.
+
+### Node.js API Polyfills
+
+Node.js APIs that are not yet supported in the Workers runtime are polyfilled via [Wrangler](/workers/wrangler/), which uses [unenv](https://github.com/unjs/unenv). If the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/) is enabled, and your Worker's [compatibility date](/workers/configuration/compatibility-dates/) is 2024-09-23 or later, Wrangler will automatically inject polyfills into your Worker's code.
+
+Adding polyfills maximizes compatibility with existing npm packages by providing modules with mocked methods. Calling these mocked methods will either noop or will throw an error with a message like:
+
+```
+[unenv] <method name> is not implemented yet!
 ```
 
-For additional options, refer to the list of [Pages-specific CLI commands](/workers/wrangler/commands/#dev-1).
+This allows you to import packages that use these Node.js modules, even if certain methods are not supported.
 
-### Enable Node.js from the Cloudflare dashboard
+## Enable only AsyncLocalStorage
 
-To enable Node.js for your Pages Function from the Cloudflare dashboard:
+If you need to enable only the Node.js `AsyncLocalStorage` API, you can enable the `nodejs_als` compatibility flag:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and in **Overview**, select your Pages project.
-3. Select **Settings** > **Functions** > **Compatibility Flags**.
-4. Add the `nodejs_compat` compatibility flag to your Preview and Production deployments.
-
-### Enable only AsyncLocalStorage
-
-To enable the Node.js `AsyncLocalStorage` API only, use the `nodejs_als` compatibility flag.
+<WranglerConfig>
 
 ```toml
 compatibility_flags = [ "nodejs_als" ]
 ```
 
-## Related resources
-
-- Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
+</WranglerConfig>

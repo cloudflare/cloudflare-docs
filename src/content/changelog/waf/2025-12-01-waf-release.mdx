@@ -1,0 +1,55 @@
+---
+title: "WAF Release - 2025-12-01"
+description: Cloudflare WAF managed rulesets 2025-12-01 release
+date: 2025-12-01
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces new detections for remote code execution attempts targeting Monsta FTP (CVE-2025-34299), alongside improvements to an existing XSS detection to enhance coverage.
+
+**Key Findings**
+
+- CVE-2025-34299 is a critical remote code execution flaw in Monsta FTP, arising from improper handling of user-supplied parameters within the file-handling interface. Certain builds allow crafted requests to bypass sanitization and reach backend PHP functions that execute arbitrary commands. Attackers can send manipulated parameters through the web panel to trigger command execution within the application’s runtime environment.
+
+**Impact**
+
+If exploited, the vulnerability enables full remote command execution on the underlying server, allowing takeover of the hosting environment, unauthorized file access, and potential lateral movement. As the flaw can be triggered without authentication on exposed Monsta FTP instances, it represents a severe risk for publicly reachable deployments.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="480da5e7984542a6b8d8d88da4fcc8a8" />
+			</td>
+			<td>N/A</td>
+			<td>Monsta FTP - Remote Code Execution - CVE:CVE-2025-34299</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection</td>
+		</tr>    
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="2380b125c53d42ac94479c42b7492846" />
+			</td>
+			<td>N/A</td>
+			<td>XSS - JS Context Escape - Beta</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This rule is merged into the original rule "XSS - JS Context Escape" (ID: <RuleID id="c1ad1bc37caa4cbeb104f44f7a3769d3" />)</td>
+		</tr>  
+	</tbody>
+</table>

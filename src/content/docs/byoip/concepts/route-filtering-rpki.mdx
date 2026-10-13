@@ -1,0 +1,16 @@
+---
+title: Route filtering and RPKI
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip } from "~/components";
+
+As referred in the [IRR concept page](/byoip/concepts/irr-entries/), network operators use IRR records to configure backbone routers. In summary, it is the IRR records that provide information about IP prefixes and the <GlossaryTooltip term="autonomous system numbers (ASNs)">autonomous systems (ASN)</GlossaryTooltip> authorized to announce them. Then, network operators will apply filtering policies to avoid invalid announcements.
+
+Considering this important role of IRR records, validation via Resource Public Key Infrastructure (RPKI) was introduced. With RPKI, the IP/ASN association is cryptographically validated before being passed on to the routers.
+
+When registering your prefix under one of the five Regional Internet Registries (RIRs)[^1], you can generate a cryptographically-signed object called Route Origin Authorization (ROA). ROAs are public and you can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) or other sources, such as [Routinator](https://rpki-validator.ripe.net/ui/), to check your prefixes.
+
+[^1]: AFRINIC, APNIC, ARIN, LACNIC, and RIPE.

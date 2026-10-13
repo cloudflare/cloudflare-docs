@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Draw overlays and watermarks
 sidebar:
-  order: 23
+  order: 5
 
 ---
 
@@ -68,6 +68,39 @@ The `draw` property is an array. Overlays are drawn in the order they appear in 
 * `rotate`
   * Number of degrees to rotate the overlay image by. Same as [for the main image](/images/transform-images/transform-via-workers/#fetch-options).
 
+## Draw using the Images binding
+
+When [interacting with Images through a binding](/images/transform-images/bindings/), the Images API supports a `.draw()` method.
+
+The accepted options for the overlaid image are `opacity`, `repeat`, `top`, `left`, `bottom`, and `right`.
+
+```js
+// Fetch image and watermark
+const img = await fetch('https://example.com/image.png');
+const watermark = await fetch('https://example.com/watermark.png');
+
+const response = await env.IMAGES.input(img.body)
+  .transform({ width: 1024 })
+  .draw(watermark.body, { "opacity": 0.25, "repeat": true })
+  .output({ format: "image/avif" })
+  .response();
+
+return response;
+```
+
+To apply [parameters](/images/transform-images/transform-via-workers/) to the overlaid image, you can pass a child `.transform()` function inside the `.draw()` request.
+
+In the example below, the watermark is manipulated with `rotate` and `width` before being drawn over the base image with the `opacity` and `rotate` options.
+
+```js
+// Fetch image and watermark
+const response = (
+  await env.IMAGES.input(img.body)
+    .transform({ width: 1024 })
+    .draw(watermark.body, { "opacity": 0.25, "repeat": true })
+    .output({ format: "image/avif" })
+).response();
+```
 
 ## Examples
 

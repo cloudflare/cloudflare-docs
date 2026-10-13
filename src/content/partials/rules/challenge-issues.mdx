@@ -1,11 +1,8 @@
 ---
-inputParameters: featureName
-
+params:
+  - featureName
 ---
 
-import { Markdown } from "~/components"
-
 :::caution
-
-Using Cloudflare challenges along with {props.one} may cause challenge loops. Refer to [Rules troubleshooting](/rules/reference/troubleshooting/) for more information. 
+Using Cloudflare challenges along with {props.featureName} may cause challenge loops. Refer to [Rules troubleshooting](/rules/reference/troubleshooting/) for more information.
 :::

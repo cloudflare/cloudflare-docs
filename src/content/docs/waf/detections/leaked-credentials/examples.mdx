@@ -1,0 +1,60 @@
+---
+title: Example mitigation rules
+pcx_content_type: configuration
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Leaked credentials example mitigation rules
+description: Examples of rules for mitigating requests containing leaked credentials.
+---
+
+import { Example } from "~/components";
+
+## Rate limit suspicious logins with leaked credentials
+
+:::note
+Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
+:::
+
+[Create a rate limiting rule](/waf/rate-limiting-rules/create-zone-dashboard/) using [account takeover (ATO) detection](/bots/additional-configurations/detection-ids/#account-takeover-detections) and leaked credentials fields to limit volumetric attacks from particular IP addresses, JA4 Fingerprints, or countries.
+
+The following example rule applies rate limiting to requests with a specific [ATO detection ID](/bots/additional-configurations/detection-ids/#account-takeover-detections) (corresponding to `Observes all login traffic to the zone`) that contain a previously leaked username and password:
+
+<Example>
+
+**When incoming requests match**:<br/>
+`(any(cf.bot_management.detection_ids[*] eq 201326593 and cf.waf.credential_check.username_and_password_leaked))`
+
+**With the same characteristics**: _IP_
+
+When rate exceeds:
+
+- **Requests**: `5`
+- **Period**: _1 minute_
+
+</Example>
+
+## Challenge requests containing leaked credentials
+
+:::note
+Access to the _User and Password Leaked_ (`cf.waf.credential_check.username_and_password_leaked`) field requires a Pro plan or above.
+:::
+
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that challenges requests containing a previously leaked set of credentials (username and password).
+
+- **Expression**: If you use the Expression Builder, configure the following expression:
+
+  | Field                    | Operator | Value |
+  | ------------------------ | -------- | ----- |
+  | User and Password Leaked | equals   | True  |
+
+  If you use the Expression Editor, enter the following expression:
+
+  ```txt
+  (cf.waf.credential_check.username_and_password_leaked)
+  ```
+
+- **Action**: _Managed Challenge_
+
+---

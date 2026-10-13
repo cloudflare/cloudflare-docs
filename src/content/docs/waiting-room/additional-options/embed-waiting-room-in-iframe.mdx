@@ -6,19 +6,19 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, APIRequest } from "~/components"
 
 Because of how a waiting room [tracks visitor progress](#background), you need to [specify certain cookie attributes](#allow-cookies-to-pass-through-iframes) to properly embed a waiting room in an iFrame.
 
 ## Background
 
-The [`SameSite` attribute of a cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) specifies whether that cookie can be shared with other domains that load on the same page (ad banners, iFrames). By default, browsers do not send cookies on cross-site subrequests to prevent attackers from stealing or manipulating information present in your cookies.
+The [`SameSite` attribute of a cookie](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) specifies whether that cookie can be shared with other domains that load on the same page (ad banners, iFrames). By default, browsers do not send cookies on cross-site subrequests to prevent attackers from stealing or manipulating information present in your cookies.
 
 However, this behavior can prevent a waiting room from queueing a user properly if that waiting room is embedded in an iFrame. The waiting room depends on the [`__cfwaitingroom` cookie](/waiting-room/reference/waiting-room-cookie/) to track a user in the queue. But, since the browser blocks the cookie from reaching the waiting room by default, an active and queueing waiting room cannot queue the user and will never let them access the application.
 
 ## Available options
 
-To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a waiting room](/api/operations/waiting-room-create-waiting-room) (only available via the API).
+To customize how your waiting room responds to cookies, include the `cookie_attributes` object when you [create a waiting room](/api/resources/waiting_rooms/methods/create/) (only available via the API).
 
 Available options include:
 
@@ -37,7 +37,7 @@ Available options include:
 
 ## Allow cookies to pass through iFrames
 
-If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a waiting room](/api/operations/waiting-room-create-waiting-room) (only available via the API):
+If you are embedding a waiting room in an iFrame, specify the following values on `cookie_attributes` object when [creating a waiting room](/api/resources/waiting_rooms/methods/create/) (only available via the API):
 
 * `samesite`: `none`
 * `secure`: If you have [**Always Use HTTPS**](/ssl/edge-certificates/additional-options/always-use-https/) enabled, set to `auto`. If you have it disabled, set to `always`.
@@ -47,28 +47,27 @@ If you are embedding a waiting room in an iFrame, specify the following values o
 
 <Details header="Request">
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "shop_waiting_room",
-  "description": "Waiting room for webshop",
-  "host": "shop.example.com",
-  "path": "/shop",
-  "queue_all": true,
-  "new_users_per_minute": 200,
-  "total_active_users": 300,
-  "session_duration": 1,
-  "disable_session_renewal": false,
-  "json_response_enabled": false,
-  "queueing_method": "FIFO",
-  "cookie_attributes": {
-    "samesite": "none",
-    "secure": "auto"
-  }
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/waiting_rooms"
+  method="POST"
+  json={{
+    name: "shop_waiting_room",
+    description: "Waiting room for webshop",
+    host: "shop.example.com",
+    path: "/shop",
+    queue_all: true,
+    new_users_per_minute: 200,
+    total_active_users: 300,
+    session_duration: 1,
+    disable_session_renewal: false,
+    json_response_enabled: false,
+    queueing_method: "FIFO",
+    cookie_attributes: {
+      samesite: "none",
+      secure: "auto"
+    }
+  }}
+/>
 
 
 </Details>

@@ -1,0 +1,169 @@
+---
+title: Security settings
+pcx_content_type: concept
+sidebar:
+  order: 6
+  label: Settings
+description: Configure different Cloudflare security features that protect your web applications, APIs, and resources.
+---
+
+import { DashButton } from "~/components";
+
+This page describes the security settings available in the new security dashboard for a given domain.
+
+To access security settings in the new security dashboard, go to the **Settings** page.
+
+<DashButton url="/?to=/:account/:zone/security/settings" />
+
+## Security setting categories
+
+Security settings and detection tools are categorized by the type of threat that they detect and mitigate.
+
+### Web application exploits
+
+In the **Web application exploits** security category you can manage the following settings:
+
+- Detection tools:
+  - [Leaked credentials detection](/waf/detections/leaked-credentials/)
+  - [Malicious uploads detection](/waf/detections/malicious-uploads/)
+  - [Sensitive data detection](/waf/managed-rules/reference/sensitive-data-detection/)
+  - [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)
+  - [OWASP Core](/waf/managed-rules/reference/owasp-core-ruleset/) ruleset
+  - [Firewall for AI](/waf/detections/firewall-for-ai/)
+- [Under Attack mode](/fundamentals/reference/under-attack-mode/) in Security Level
+- Managed [security.txt](/security-center/infrastructure/security-file/)
+
+Refer to each linked page for details.
+
+:::note
+The web application exploits security category includes features and settings from the [Cloudflare WAF](/waf/) in the previous dashboard navigation structure.
+:::
+
+### DDoS attacks
+
+The **DDoS attacks** security category shows the multiple mitigation services against DDoS attacks provided by Cloudflare.
+
+You can create rules to override DDoS attack protection tools. DDoS attack protection overrides are only available to Enterprise customers with the Advanced DDoS Protection subscription.
+
+To learn more about DDoS protection overrides, refer to the following resources:
+
+- [HTTP DDoS attack protection overrides](/ddos-protection/managed-rulesets/http/http-overrides/)
+- [Network-layer DDoS attack protection overrides](/ddos-protection/managed-rulesets/network/network-overrides/)
+
+:::note
+You define overrides for the Network-layer DDoS attack protection managed ruleset at the account level in Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**.
+:::
+
+Additionally, you can manage the following settings:
+
+- [Block AI Bots](/bots/concepts/bot/#ai-bots)
+- [Bot Management](/bots/get-started/bot-management/) (depending on your Enterprise subscriptions)
+- [Browser Integrity Check](/waf/tools/browser-integrity-check/)
+- [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/)
+- [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)
+- [Firewall for AI](/waf/detections/firewall-for-ai/)
+- [Schema learning](/api-shield/management-and-monitoring/endpoint-management/schema-learning/)
+- [Schema validation](/api-shield/security/schema-validation/) (requires you to upload a schema or apply a learned schema)
+- [Under Attack mode](/fundamentals/reference/under-attack-mode/) (under Security Level)
+- SSL/TLS DDoS attack protection
+
+### Bot traffic
+
+In the **Bot traffic** security category you can manage the following settings:
+
+- [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/)
+- [Block AI Bots](/bots/concepts/bot/#ai-bots)
+- [Bot fight mode](/bots/get-started/bot-fight-mode/) (depending on your Cloudflare plan)
+- [Super Bot fight mode](/bots/get-started/super-bot-fight-mode/) (depending on your Cloudflare plan)
+- [Bot Management](/bots/get-started/bot-management/) (depending on your Enterprise subscriptions)
+- AI bot traffic management with [robots.txt](/bots/additional-configurations/managed-robots-txt/)
+- API [sequence detection](/api-shield/security/sequence-analytics/) (requires you to configure a session identifier)
+
+:::note
+The bot traffic security category includes features and settings from [Bots](/bots/) in the previous dashboard navigation structure.
+:::
+
+### API abuse
+
+In the **API abuse** security category you can manage the following settings:
+
+- [Developer portal](/api-shield/management-and-monitoring/developer-portal/) creation
+- [Endpoint discovery](/api-shield/security/api-discovery/) (always enabled if included in your Enterprise subscriptions; requires you to configure a [session identifier](/api-shield/management-and-monitoring/session-identifiers/))
+- [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)
+- [JWT validation](/api-shield/security/jwt-validation/) (requires you to add a [JWT configuration](/api-shield/security/jwt-validation/api/#token-configurations))
+
+:::note
+The API abuse security category includes features and settings from [API Shield](/api-shield/) in the previous dashboard navigation structure.
+:::
+
+### Client-side abuse
+
+In the **Client-side abuse** security category you can manage the following settings:
+
+- [Continuous script monitoring](/page-shield/how-it-works/) (previously [Page Shield](/page-shield/)):
+  - [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint) to use your hostname instead of a Cloudflare-owned endpoint (only for Enterprise customers with a paid add-on)
+  - [Data logged in client-side abuse reports](/page-shield/reference/settings/#connection-target-details) (only the hostname or the full URI)
+
+:::note
+The client-side abuse security category includes features and settings from [Page Shield](/page-shield/) in the previous dashboard navigation structure.
+:::
+
+## All settings
+
+The following table links to additional information about each available setting:
+
+| Setting                                                                                                               | Location in previous dashboard navigation                                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [AI Labyrinth](/bots/additional-configurations/ai-labyrinth/)                                                         | **Security** > **Bots** > **Configure Bot Fight Mode<br/>Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Block AI Bots](/bots/concepts/bot/#ai-bots)                                                                          | **Security** > **Bots** > **Configure Bot Fight Mode<br/>Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [Bot Management](/bots/get-started/bot-management/):                                                                  | **Security** > **Bots**                                                                                                                                                    |
+| — [JS detections](/bots/additional-configurations/javascript-detections/)                                             | **Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management**                                                        |
+| — [Auto-update machine learning](/bots/reference/machine-learning-models/)                                            | **Security** > **Bots** > **Configure Bot Management**                                                                                                                     |
+| [Browser integrity check](/waf/tools/browser-integrity-check/)                                                        | **Security** > **Settings**                                                                                                                                                |
+| Challenge Passage: [Timeout](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/)               | **Security** > **Settings**                                                                                                                                                |
+| [Client certificates](/ssl/client-certificates/)                                                                      | **SSL** > **Client Certificates**                                                                                                                                          |
+| [Cloudflare managed ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/)                                | **Security** > **WAF** > **Managed rules** tab                                                                                                                             |
+| [Continuous script monitoring](/page-shield/how-it-works/):                                                           | **Security** > **Page Shield**                                                                                                                                             |
+| — [Reporting endpoint](/page-shield/reference/settings/#reporting-endpoint)                                           | **Security** > **Page Shield** > **Settings**                                                                                                                              |
+| — [Data processing](/page-shield/reference/settings/#connection-target-details)                                       | **Security** > **Page Shield** > **Settings**                                                                                                                              |
+| — [Alerts](/page-shield/alerts/configure/)                                                                            | **Security** > **Page Shield** > **Settings**<br/>Account Home > **Notifications**                                                                                         |
+| [Create a developer portal](/api-shield/management-and-monitoring/developer-portal/)                                  | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Custom fallthrough rules](/api-shield/security/schema-validation/#add-validation-by-adding-a-fallthrough-rule)       | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Endpoint discovery](/api-shield/security/api-discovery/):                                                            | **API Shield** > **Discovery**                                                                                                                                             |
+| — [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                                   | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Endpoint labels](/api-shield/management-and-monitoring/endpoint-labels/)                                             | **Security** > **Settings** > **Labels**                                                                                                                                   |
+| [Firewall for AI](/waf/detections/firewall-for-ai/)                                                                   | _N/A_                                                                                                                                                                      |
+| [HTTP DDoS attack protection](/ddos-protection/managed-rulesets/http/):                                               | **Security** > **DDoS**                                                                                                                                                    |
+| — [Configure overrides](/ddos-protection/managed-rulesets/http/http-overrides/configure-dashboard/)                   | **Security** > **DDoS**                                                                                                                                                    |
+| [IP access rules](/waf/tools/ip-access-rules/)                                                                        | **Security** > **WAF** > **Tools** tab<br/>**Security** > **WAF** > **Custom rules** tab                                                                                   |
+| [IP lists](/waf/tools/lists/custom-lists/#ip-lists)                                                                   | Account Home > **Manage Account** > **Configurations**                                                                                                                     |
+| [JWT validation](/api-shield/security/jwt-validation/):                                                               | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| — [JWT validation rules](/api-shield/security/jwt-validation/#add-a-jwt-validation-rule)                              | **Security** > **API Shield** > **API Rules**                                                                                                                              |
+| — [Token configurations](/api-shield/security/jwt-validation/#add-a-token-validation-configuration)                   | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Leaked credentials detection](/waf/detections/leaked-credentials/):                                                  | **Security** > **Settings**                                                                                                                                                |
+| — [Custom username and password location](/waf/detections/leaked-credentials/#custom-detection-locations)             | **Security** > **Settings**                                                                                                                                                |
+| [Malicious uploads detection](/waf/detections/malicious-uploads/):                                                    | **Security** > **Settings**                                                                                                                                                |
+| — [Custom content location](/waf/detections/malicious-uploads/#custom-scan-expressions)                               | **Security** > **Settings**                                                                                                                                                |
+| [Manage AI bot traffic with robots.txt](/bots/additional-configurations/managed-robots-txt/)                          | **Security** > **Bots** > **Configure Bot Fight Mode<br/>Security** > **Bots** > **Configure Super Bot Fight Mode<br/>Security** > **Bots** > **Configure Bot Management** |
+| [mTLS rules](/api-shield/security/mtls/configure/)                                                                    | **SSL/TLS** > **Client Certificates**                                                                                                                                      |
+| [Network-layer DDoS attack protection](/ddos-protection/managed-rulesets/network/)                                    | Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**                                                                                                           |
+| [OWASP Core](/waf/managed-rules/reference/owasp-core-ruleset/) ruleset                                                | **Security** > **WAF** > **Managed rules** tab                                                                                                                             |
+| Rate limit authentication requests                                                                                    | **Security** > **WAF** > **Rate limiting rules** tab                                                                                                                       |
+| [Replace insecure JavaScript libraries](/waf/tools/replace-insecure-js-libraries/)                                    | **Security** > **Settings**                                                                                                                                                |
+| [Schema learning](/api-shield/security/schema-validation/):                                                           | **Security** > **API Shield** > **Schema Validation**                                                                                                                      |
+| — [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                                   | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Schema validation](/api-shield/security/schema-validation/)                                                          | **Security** > **API Shield** > **Schema Validation**                                                                                                                      |
+| — [Endpoints](/api-shield/management-and-monitoring/endpoint-management/)                                             | **Security** > **API Shield**                                                                                                                                              |
+| — [Active schemas](/api-shield/security/schema-validation/#view-active-schemas)                                       | **Security** > **API Shield** > **Schema Validation**                                                                                                                      |
+| — [Default action](/api-shield/security/schema-validation/#change-the-global-default-action-of-schema-validation)     | **Security** > **API Shield** > **Schema Validation**                                                                                                                      |
+| [Security Level: Under Attack mode](/fundamentals/reference/under-attack-mode/)                                       | **Security** > **Settings**                                                                                                                                                |
+| [Security.txt](/security-center/infrastructure/security-file/)                                                        | **Security** > **Settings**                                                                                                                                                |
+| [Sensitive data detection](/waf/managed-rules/reference/sensitive-data-detection/#configure-in-the-dashboard) ruleset | **Security** > **Sensitive Data**                                                                                                                                          |
+| [Sequence detection](/api-shield/security/sequence-analytics/):                                                       | **Security** > **API Shield** > **API Rules**                                                                                                                              |
+| — [Endpoints](/api-shield/management-and-monitoring/endpoint-management/)                                             | **Security** > **API Shield**                                                                                                                                              |
+| — [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                                   | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [Session identifiers](/api-shield/management-and-monitoring/session-identifiers/)                                     | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [SSL/TLS DDoS attack protection](/ddos-protection/managed-rulesets/)                                                  | **Security** > **DDoS**                                                                                                                                                    |
+| [Token configurations](/api-shield/security/jwt-validation/)                                                          | **Security** > **API Shield** > **Settings**                                                                                                                               |
+| [User agent blocking](/waf/tools/user-agent-blocking/)                                                                | **Security** > **WAF** > **Tools** tab<br/>**Security** > **WAF** > **Custom rules** tab                                                                                   |
+| [Zone lockdown](/waf/tools/zone-lockdown/)                                                                            | **Security** > **WAF** > **Tools** tab<br/>**Security** > **WAF** > **Custom rules** tab                                                                                   |

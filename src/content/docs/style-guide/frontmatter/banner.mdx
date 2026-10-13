@@ -1,0 +1,112 @@
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Do <strong>not</strong> use banners in the <a href="/style-guide/frontmatter/">Frontmatter</a> unless a change will cause customer application to break.
+---
+
+import { Steps, FileTree } from "~/components";
+
+One of the fields you can add to the [Frontmatter](/style-guide/frontmatter/) is `banner`. It displays a prominent section at the top of the page and supports the use of HTML for links and formatting.
+
+Only use it to alert about disruptive situations and take note to remove it when applicable.
+
+## Example
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Do <strong>not</strong> use banners in the <a href="/style-guide/frontmatter/">Frontmatter</a> unless a change will cause customer application to break.
+---
+```
+
+## Dismissible
+
+You can make a banner dismissible (for some number of days) by adding the `dismissible` property to the banner object.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Do <strong>not</strong> use banners in the <a href="/style-guide/frontmatter/">Frontmatter</a> unless a change will cause customer application to break.
+  dismissible:
+    id: banner-example
+		days: 7 # default
+---
+```
+
+Any other banner with the same `dismissible_id` will be dismissed when the banner is displayed.
+
+## Styles / Types
+
+### Note
+
+The note banner is used to alert about important information.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Ensure you read this!
+  type: note
+---
+```
+
+### Tip
+
+The tip banner is used to alert about important suggestions.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Consider this alternative!
+  type: tip
+---
+```
+
+### Caution
+
+The caution banner is used to warn readers of upcoming disruptive changes.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: This is deprecated and will break on <strong>1970-01-01</strong>!
+  type: caution
+---
+```
+
+### Danger
+
+The danger banner is used to alert about errors.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: This has been removed!
+  type: danger
+---
+```
+
+### Default
+
+The default banner is used in all other circumstances.
+
+```mdx wrap
+---
+title: Banner
+description: How to display a banner at the top of the page and when to use it.
+banner:
+  content: Do <strong>not</strong> use banners in the <a href="/style-guide/frontmatter/">Frontmatter</a> unless a change will cause customer application to break.
+---
+```

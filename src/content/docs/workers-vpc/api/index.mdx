@@ -1,0 +1,127 @@
+---
+title: Workers Binding API
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+VPC Service bindings provide a convenient API for accessing VPC Services from your Worker. Each binding represents a connection to a service in your private network through a Cloudflare Tunnel.
+
+Each request made on the binding will route to the specific service that was configured for the VPC Service, while restricting access to the rest of your private network.
+
+:::note
+
+Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
+
+:::
+
+## VPC Service binding
+
+A VPC Service binding is accessed via the `env` parameter in your Worker's fetch handler. It provides a `fetch()` method for making HTTP requests to your private service.
+
+## fetch()
+
+Makes an HTTP request to the private service through the configured tunnel.
+
+```js
+const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
+```
+
+:::note
+The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
+
+The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
+
+The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
+:::
+
+### Parameters
+
+- `resource` (string | URL | Request) - The URL to fetch. This must be an absolute URL including protocol, host, and path (for example, `http://internal-api/api/users`)
+- `options` (optional RequestInit) - Standard fetch options including:
+  - `method` - HTTP method (GET, POST, PUT, DELETE, etc.)
+  - `headers` - Request headers
+  - `body` - Request body
+  - `signal` - AbortSignal for request cancellation
+
+:::note[Absolute URLs Required]
+VPC Service fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
+:::
+
+### Return value
+
+Returns a `Promise<Response>` that resolves to a [standard Fetch API Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
+
+### Examples
+
+#### Basic GET request
+
+```js
+export default {
+	async fetch(request, env) {
+		const privateRequest = new Request(
+			"http://internal-api.company.local/users",
+		);
+		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+		const users = await response.json();
+
+		return new Response(JSON.stringify(users), {
+			headers: { "Content-Type": "application/json" },
+		});
+	},
+};
+```
+
+#### POST request with body
+
+```js
+export default {
+	async fetch(request, env) {
+		const privateRequest = new Request(
+			"http://internal-api.company.local/users",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${env.API_TOKEN}`,
+				},
+				body: JSON.stringify({
+					name: "John Doe",
+					email: "john@example.com",
+				}),
+			},
+		);
+
+		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+
+		if (!response.ok) {
+			return new Response("Failed to create user", { status: response.status });
+		}
+
+		const user = await response.json();
+		return new Response(JSON.stringify(user), {
+			headers: { "Content-Type": "application/json" },
+		});
+	},
+};
+```
+
+#### Request with HTTPS and IP address
+
+```js
+export default {
+	async fetch(request, env) {
+		const privateRequest = new Request("https://10.0.1.50/api/data");
+		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
+
+		return response;
+	},
+};
+```
+
+## Next steps
+
+- Configure [service bindings in wrangler.toml](/workers-vpc/configuration/vpc-services/)
+- Refer to [usage examples](/workers-vpc/examples/)

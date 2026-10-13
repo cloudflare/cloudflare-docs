@@ -1,0 +1,160 @@
+---
+pcx_content_type: concept
+title: Transform videos
+sidebar:
+  order: 4
+---
+import { DashButton } from "~/components";
+
+:::note[Media Transformations is now GA:]
+
+
+Billing for Media Transformations will begin on November 1st, 2025.
+
+
+:::
+
+
+You can optimize and manipulate videos stored _outside_ of Cloudflare Stream with Media Transformations. Transformed videos and images are served from one of your zones on Cloudflare.
+
+To transform a video or image, you must [enable transformations](/stream/transform-videos/#getting-started) for your zone. If your zone already has Image Transformations enabled, you can also optimize videos with Media Transformations.
+
+## Getting started
+
+You can dynamically optimize and generate still images from videos that are stored _outside_ of Cloudflare Stream with Media Transformations.
+
+Cloudflare will automatically cache every transformed video or image on our global network so that you store only the original image at your origin.
+
+To enable transformations on your zone:
+
+1. In the Cloudflare dashboard, go to the **Transformations** page.
+
+   <DashButton url="/?to=/:account/stream/video-transformations" />
+
+2. Locate the specific zone where you want to enable transformations.
+3. Select **Enable** for the zone.
+
+## Transform a video by URL
+
+You can convert and resize videos by requesting them via a specially-formatted URL, without writing any code. The URL format is:
+
+```
+https://example.com/cdn-cgi/media/<OPTIONS>/<SOURCE-VIDEO>
+```
+
+- `example.com`: Your website or zone on Cloudflare, with Transformations enabled.
+- `/cdn-cgi/media/`: A prefix that identifies a special path handled by Cloudflare's built-in media transformation service.
+- `<OPTIONS>`: A comma-separated list of options. Refer to the available options below.
+- `<SOURCE-VIDEO>`: A full URL (starting with `https://` or `http://`) of the original asset to resize.
+
+For example, this URL will source an HD video from an R2 bucket, shorten it, crop and resize it as a square, and remove the audio.
+
+```
+https://example.com/cdn-cgi/media/mode=video,time=5s,duration=5s,width=500,height=500,fit=crop,audio=false/https://pub-8613b7f94d6146408add8fefb52c52e8.r2.dev/aus-mobile-demo.mp4
+```
+
+The result is an MP4 that can be used in an HTML video element without a player library.
+
+## Options
+
+### `mode`
+
+Specifies the kind of output to generate.
+
+- `video`: Outputs an H.264/AAC optimized MP4 file.
+- `frame`: Outputs a still image.
+- `spritesheet`: Outputs a JPEG with multiple frames.
+- `audio`: Outputs an AAC encoded M4A file.
+
+### `time`
+
+Specifies when to start extracting the output in the input file. Depends on `mode`:
+
+- When `mode` is `spritesheet`, `video`, or `audio`, specifies the timestamp where the output will start.
+- When `mode` is `frame`, specifies the timestamp from which to extract the still image.
+- Formats as a time string, for example: 5s, 2m
+- Acceptable range: 0 – 10m
+- Default: 0
+
+### `duration`
+
+The duration of the output video or spritesheet. Depends on `mode`:
+
+- When `mode` is `video` or `audio`, specifies the duration of the output.
+- When `mode` is `spritesheet`, specifies the time range from which to select frames.
+- Acceptable range: 1s - 60s (or 1m)
+- Default: input duration or 60 seconds, whichever is shorter
+
+### `fit`
+
+In combination with `width` and `height`, specifies how to resize and crop the output. If the output is resized, it will always resize proportionally so content is not stretched.
+
+- `contain`: Respecting aspect ratio, scales a video up or down to be entirely contained within output dimensions.
+- `scale-down`: Same as contain, but downscales to fit only. Do not upscale.
+- `cover`: Respecting aspect ratio, scales a video up or down to entirely cover the output dimensions, with a center-weighted crop of the remainder.
+
+### `height`
+
+Specifies maximum height of the output in pixels. Exact behavior depends on `fit`.
+
+- Acceptable range: 10-2000 pixels
+
+### `width`
+
+Specifies the maximum width of the image in pixels. Exact behavior depends on `fit`.
+
+- Acceptable range: 10-2000 pixels
+
+### `audio`
+
+When `mode` is `video`, specifies whether or not to include the source audio in the output.
+
+- `true`: Includes source audio.
+- `false`: Output will be silent.
+- Default: `true`
+
+When `mode` is `audio`, audio cannot be false.
+
+### `format`
+
+If `mode` is `frame`, specifies the image output format.
+
+- Acceptable options: `jpg`, `png`
+
+If `mode` is `audio`, specifies the audio output format.
+
+- Acceptable options: `m4a` (default)
+
+### `filename`
+
+Specifies the filename to use in the returned Content-Disposition header. If not specified, the filename will be derived from the source URL.
+
+- Acceptable values:
+  - Maximum of 120 characters in length.
+  - Can only contain lowercase letters (a-z), numbers (0-9), hyphens (-), underscores (\_), and an optional extension. A valid name satisfies this regular expression: `^[a-zA-Z0-9-_]+.?[a-zA-Z0-9-_]+$`.
+- Examples: `default.mp4`, `shortened-clip_5s`
+
+## Source video requirements
+
+- Input video must be less than 100MB.
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Origin must support either HTTP HEAD and range requests, and must return a Content-Range header.
+
+## Limitations
+
+Media Transformations are currently in beta. During this period:
+
+- Transformations are available for all enabled zones free-of-charge.
+- Outputs from Media Transformations will be cached, but if they must be regenerated, the origin fetch is not cached and may result in subsequent requests to the origin asset.
+- Maximum input file size is 100 MB. Maximum duration of input video is 10 minutes.
+- Media Transformations are not compatible with [Bring Your Own IP (BYOIP)](/byoip/).
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+
+## Pricing
+
+After November 1st, 2025, Media Transformations and Image Transformations will use the same subscriptions and usage metrics.
+
+- Generating a still frame (single image) from a video counts as 1 transformation.
+- Generating an optimized video or extracting audio counts as 1 transformation _per second of the output_ content.
+- Each unique transformation, as determined by input and unique combination of flags, is only billed once per calendar month.
+- All Media and Image Transformations cost $0.50 per 1,000 monthly unique transformation operations, with a free monthly allocation of 5,000.

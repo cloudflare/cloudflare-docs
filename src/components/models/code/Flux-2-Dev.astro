@@ -1,0 +1,63 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const workerCode = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const form = new FormData();
+		form.append('prompt', 'a sunset with a dog');
+		form.append('width', '1024');
+		form.append('height', '1024');
+
+		const formRequest = new Request('http://dummy', {
+			method: 'POST',
+			body: form
+		});
+		const formStream = formRequest.body;
+		const formContentType = formRequest.headers.get('content-type') || 'multipart/form-data';
+
+		const resp = await env.AI.run("${name}", {
+			multipart: {
+				body: formStream,
+				contentType: formContentType
+			}
+		});
+
+		return Response.json(resp);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl --request POST \\
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/ai/run/${name}' \\
+  --header 'Authorization: Bearer {TOKEN}' \\
+  --header 'Content-Type: multipart/form-data' \\
+  --form 'prompt=a sunset at the alps' \\
+  --form steps=25 \\
+  --form width=1024 \\
+  --form height=1024
+`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={workerCode} lang="ts" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

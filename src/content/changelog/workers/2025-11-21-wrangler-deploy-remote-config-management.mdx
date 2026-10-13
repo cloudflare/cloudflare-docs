@@ -1,0 +1,34 @@
+---
+title: Better local deployment flow for Cloudflare Workers
+description: Wrangler now provides a better user experience when deploying a worker that was previously deployed via the Cloudflare dashboard.
+products:
+  - workers
+date: 2025-11-21
+---
+
+import { Example } from "~/components";
+
+Until now, if a Worker had been previously deployed via the [Cloudflare Dashboard](https://dash.cloudflare.com), a subsequent deployment done via the Cloudflare Workers CLI, [**Wrangler**](/workers/wrangler/)
+(through the [`deploy` command](/workers/wrangler/commands/#deploy)), would allow the user to override the Worker's dashboard settings without providing details on
+what dashboard settings would be lost.
+
+Now instead, `wrangler deploy` presents a helpful representation of the differences between the [local configuration](/workers/wrangler/configuration/)
+and the remote dashboard settings, and offers to update your local configuration file for you.
+
+See example below showing a before and after for `wrangler deploy` when a local configuration is expected to override a Worker's dashboard settings:
+
+<Example title="Before">
+
+![`wrangler deploy` run before the improved workflow](src/assets/images/changelog/workers/wrangler-deploy-remote-conflict-managemenet/before.png)
+
+</Example>
+
+<Example title="After">
+
+![`wrangler deploy` run after the improved workflow](src/assets/images/changelog/workers/wrangler-deploy-remote-conflict-managemenet/after.png)
+
+</Example>
+
+Also, if instead Wrangler detects that a deployment would override remote dashboard settings but in an additive way, without modifying or removing any of them, it will simply proceed with the deployment without requesting any user interaction.
+
+Update to [Wrangler](/workers/wrangler/) v4.50.0 or greater to take advantage of this improved deploy flow.

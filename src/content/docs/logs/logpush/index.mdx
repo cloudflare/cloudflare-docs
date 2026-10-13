@@ -1,0 +1,33 @@
+---
+pcx_content_type: concept
+title: Logpush
+sidebar:
+  order: 21
+
+---
+
+import { FeatureTable, LinkButton } from "~/components"
+
+Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes. Users can configure the batch size [using the API](/logs/logpush/logpush-job/api-configuration/#max-upload-parameters) for improved control in case the log destination has specific requirements.
+
+Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
+
+Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log management providers via the Cloudflare dashboard or API.
+
+Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
+
+## Limits
+
+There is currently a max limit of **4 Logpush jobs per zone**. Trying to create a job once the limit has been reached will result in an error message: `creating a new job is not allowed: exceeded max jobs allowed`.
+
+## Availability
+
+<FeatureTable id="analytics.logpush" />
+
+:::note
+
+
+Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/observability/logs/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
+
+
+:::

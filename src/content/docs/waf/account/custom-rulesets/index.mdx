@@ -1,0 +1,29 @@
+---
+pcx_content_type: concept
+title: Custom rulesets (account level)
+sidebar:
+  order: 2
+  group:
+    label: Custom rulesets
+---
+
+import { Render } from "~/components";
+
+:::note
+Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+:::
+
+<Render
+	file="custom-rulesets/intro"
+	product="waf"
+	params={{ scope: "account" }}
+/>
+
+## Next steps
+
+Refer to the following pages for more information on working with custom rulesets:
+
+- [Work with custom rulesets in the dashboard](/waf/account/custom-rulesets/create-dashboard/)
+- [Work with custom rulesets using the API](/waf/account/custom-rulesets/create-api/)
+
+For Terraform examples, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).

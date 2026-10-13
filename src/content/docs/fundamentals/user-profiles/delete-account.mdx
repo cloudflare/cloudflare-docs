@@ -1,0 +1,62 @@
+---
+pcx_content_type: how-to
+title: Delete your Cloudflare account
+
+---
+
+import { DashButton } from "~/components";
+
+:::note
+These steps do not apply to accounts under contract. Contact your account team for more information.
+:::
+
+## Who can delete their account
+
+If your account uses [Single-Sign On (SSO)](/fundamentals/manage-members/dashboard-sso/), your super administrator may need to delete your account on your behalf.
+
+If your account does not use SSO, you can delete your account on your own.
+
+## Prerequisites
+
+Before Cloudflare can cancel your account and delete your personal information, you will need to follow the process below for each domain associated with your Cloudflare account:
+
+- [Cancel your subscriptions or add-on services](/billing/cancel-subscription/)
+- [Remove your domain from Cloudflare](/fundamentals/manage-domains/remove-domain/)
+- [Remove Cloudflare nameservers at your domain registrar](/dns/zone-setups/full-setup/setup/)
+- [Disable auto-renew for your Registrar domain(s)](/registrar/account-options/renew-domains#set-up-automatic-renewals)
+- If you are using a Cloudflare [CNAME setup](/dns/zone-setups/partial-setup/), [update your DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) at your DNS provider to point to your website IPs or hostnames instead of Cloudflare.
+- [Delete payment information](/billing/update-billing-info/#delete-your-current-payment-method)
+- (*Optional*) [Download a copy of your invoices](/billing/invoices/#download-invoice). Once deleted, the invoices will no longer be accessible and cannot be re-sent to you.
+
+## Delete your Cloudflare account
+
+When you sign up for Cloudflare, we create a user profile for you and an account named `youremail@example.com's account`, and your user profile is the admin for the newly create account. Your user profile is where you manage preferences like your password or language, while your account is where you'll manage Cloudflare product configurations.
+
+:::note
+
+Your user profile can be invited to other Cloudflare accounts, so you may have access to more than one account.
+
+:::
+
+When you delete your profile, the account associated with your profile and any accounts where you are the last active member will also be deleted. Deleting your account is permanent. Any accounts where you are the primary owner will also be deleted and any other users on those accounts will be removed.
+
+After you delete your profile, you can use the email address with your profile to create a new account. In most cases, your email should be freed up to be used in a new signup right away.
+However, this may not be the same for users who have a lock on their account (for legal purposes).
+
+All domains, subscriptions, and billing information on your account will be removed from Cloudflare.
+
+1. Log in to the Cloudflare dashboard.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Select **My Profile**.
+3. Select **Delete this user**.
+4. Select **Delete user**.
+5. Follow the prompts to finish deleting your account.
+
+:::note
+
+Cloudflare will purge your personal information within a year of a deletion request unless required to retain it for legal obligations (such as ongoing abuse investigations or pending litigation). Refer to the [Cloudflare Data Processing Addendum](https://www.cloudflare.com/cloudflare-customer-dpa/) for further information about the deletion of personal information following the cancellation of your account.
+
+:::
+

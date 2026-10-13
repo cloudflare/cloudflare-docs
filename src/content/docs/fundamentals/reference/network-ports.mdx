@@ -59,7 +59,7 @@ Enterprise customers that want to enable caching on these ports can do so by cre
 
 If traffic for your domain is destined for a different port than the ones listed above, for example you have an SSH server that listens for incoming connections on port 22, either:
 
-- Change your subdomain to be [gray-clouded](/dns/manage-dns-records/reference/proxied-dns-records/), via your Cloudflare DNS app, to bypass the Cloudflare network and connect directly to your origin.
+- Change your subdomain to be [gray-clouded](/dns/proxy-status/), via your Cloudflare DNS app, to bypass the Cloudflare network and connect directly to your origin.
 - Configure a [Spectrum application](/spectrum/get-started/) for the hostname running the server. Spectrum supports all ports. Spectrum for all TCP and UDP ports is only available on the Enterprise plan. If you would like to know more about Cloudflare plans, please reach out to your Cloudflare account team.
 
 ## How to block traffic on additional ports
@@ -71,8 +71,7 @@ Block traffic on ports other than 80 and 443 in Cloudflare paid plans by doing o
 
 Ports 80 and 443 are the only ports compatible with:
 
-- HTTP/HTTPS traffic within China data centers for domains that have the **China Network** enabled, and
-- Proxying of [Cloudflare Apps](https://cloudflareapps.com/apps/developer/docs/getting-started)
+- HTTP/HTTPS traffic within China data centers for domains that have the **China Network** enabled
 
 <Render file="open-ports-blocked-traffic" product="waf" /> <br />
 

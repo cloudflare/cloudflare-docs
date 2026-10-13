@@ -1,10 +1,15 @@
 ---
 pcx_content_type: how-to
 title: HTTP/2 to Origin
-
 ---
 
-import { FeatureTable } from "~/components"
+import {
+	FeatureTable,
+	Details,
+	Render,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 A protocol is a set of rules governing the exchange or transmission of data between devices. One of the most important protocols that run on the human-computer interaction layer, where applications can access the network services, is HTTP (Hypertext Transfer Protocol).
 
@@ -20,10 +25,49 @@ At Cloudflare, HTTP/2 connection to the origin is enabled by default.
 
 If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
+
+## Connection multiplexing
+
+Cloudflare’s HTTP/2 multiplexing to origin reduces active connections by pooling many requests into fewer TCP connections. If a request arrives and the current connection has not reached the stream limit, Cloudflare reuses the existing connection. If the limit has not been reached, Cloudflare may open additional connections to handle more requests. Because multiplexing reuses fewer TCP connections, the overall number of active connections to your origin will typically be lower, which is often helpful for systems sensitive to connection overhead. During surges (like failovers), Cloudflare scales connections by first using available streams, then opening new ones as needed.
+
+### Configuration
+
+Connection multiplexing is enabled by default on Free, Pro and Business zones and uses up to 100 concurrent streams by default. Enterprise plans can explicitly configure the maximum number of concurrent streams (often called the “multiplexing ratio”) for a zone in the dashboard or via API.
+
+<Details header="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Choose the domain that will use HTTP/2 to Origin.
 3. Select **Speed > Optimization**.
-4. Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
+4. Open the **Protocol Optimization** tab.
+5. Under **HTTP/2 to Origin**, select **Configure** and adjust the stream settings as needed.
+
+</Details>
+
+<Details header="API">
+
+<APIRequest
+	path="/zones/{zone_id}/settings/origin_h2_max_streams"
+	method="PATCH"
+	json={{
+		value: 100,
+	}}
+/>
+
+Refer to the [API documentation](/api/python/resources/zones/subresources/settings/methods/edit/) for more information.
+
+</Details>
+
+:::note
+If your origin does not support multiplexing, enabling HTTP/2 to origin may result in 5xx errors, particularly 520s.
+
+During the HTTP/2 handshake, our edge reads the SETTINGS_MAX_CONCURRENT_STREAMS that your origin advertises, and it will respect that lower limit if your origin is configured with a stricter concurrency cap than Cloudflare’s setting. This allows you to control concurrency on a per-origin basis, while still benefiting from Cloudflare’s multiplexing framework.
+:::
 
 ## Protocol compatibility
 
@@ -31,8 +75,3 @@ Note that if the origin does not support HTTP/2, Cloudflare will initiate an HTT
 We connect to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2).
 
 If you are unsure if your server supports HTTP/2, we suggest checking your origin server’s documentation or using a testing tool for HTTP/2 implementation (for example, [h2spec](https://github.com/summerwind/h2spec)).
-
-:::note[Note]
-
-Connection multiplexing is currently being rolled out. It has been enabled by default on Free, Pro and Business zones. Enterprise zones will be enabled at a later date. 
-:::

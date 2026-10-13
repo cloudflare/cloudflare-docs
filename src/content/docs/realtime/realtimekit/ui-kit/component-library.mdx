@@ -1,0 +1,294 @@
+---
+pcx_content_type: navigation
+title: Component Library
+slug: realtime/realtimekit/ui-kit/component-library
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem } from "~/components";
+
+<Tabs>
+<TabItem syncKey="realtimeKitFrameworkTypeTabs" label="Web Frameworks">
+
+The UI Kit components library provides a comprehensive set of pre-built, customizable components that you can use to build your own custom meeting interface.
+
+:::note
+All UI Kit components are built on top of Web Components, regardless of which framework (React/Angular) you use. They render as Web Components in the browser DOM.
+
+**Component naming conventions:**
+
+- **Web Components and Angular**: Use kebab-case (e.g., `rtk-meeting`)
+- **React**: Use PascalCase (e.g., `RtkMeeting`)
+
+React and Angular components are wrappers around the same underlying Web Components, so functionality is identical across all frameworks.
+:::
+
+## Basic Components
+
+Small, reusable building blocks for your UI.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div style="text-align: center;" id="rtk-audio-visualizer">
+	![Audio
+	Visualizer](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-audio-visualizer.svg)
+	`rtk-audio-visualizer`
+</div>
+
+<div style="text-align: center;" id="rtk-avatar">
+	![Avatar](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-avatar.svg)
+	`rtk-avatar`
+</div>
+
+<div style="text-align: center;" id="rtk-button">
+	![Button](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-button.svg)
+	`rtk-button`
+</div>
+
+<div style="text-align: center;" id="rtk-clock">
+	![Clock](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-clock.svg)
+	`rtk-clock`
+</div>
+
+<div style="text-align: center;" id="rtk-header">
+	![Header](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-header.svg)
+	`rtk-header`
+</div>
+
+<div style="text-align: center;" id="rtk-logo">
+	![Logo](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-logo.svg)
+	`rtk-logo`
+</div>
+
+<div style="text-align: center;" id="rtk-meeting-title">
+	![Meeting
+	Title](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-meeting-title.svg)
+	`rtk-meeting-title`
+</div>
+
+<div style="text-align: center;" id="rtk-recording-indicator">
+	![Recording
+	Indicator](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-recording-indicator.svg)
+	`rtk-recording-indicator`
+</div>
+
+<div style="text-align: center;" id="rtk-spinner">
+	![Spinner](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-spinner.svg)
+	`rtk-spinner`
+</div>
+
+<div style="text-align: center;" id="rtk-switch">
+	![Switch](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-switch.svg)
+	`rtk-switch`
+</div>
+
+<div style="text-align: center;" id="rtk-tooltip">
+	![Tooltip](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-tooltip.svg)
+	`rtk-tooltip`
+</div>
+
+</div>
+
+## UI Components
+
+Interactive controls and interface elements.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div style="text-align: center;" id="rtk-controlbar">
+	![Control
+	Bar](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-controlbar.svg)
+	`rtk-controlbar`
+</div>
+
+<div style="text-align: center;" id="rtk-controlbar-button">
+	![Control Bar
+	Button](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-controlbar-button.svg)
+	`rtk-controlbar-button`
+</div>
+
+<div style="text-align: center;" id="rtk-dialog">
+	![Dialog](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-dialog.svg)
+	`rtk-dialog`
+</div>
+
+<div style="text-align: center;" id="rtk-emoji-picker">
+	![Emoji
+	Picker](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-emoji-picker.svg)
+	`rtk-emoji-picker`
+</div>
+
+<div style="text-align: center;" id="rtk-grid-pagination">
+	![Grid
+	Pagination](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-grid-pagination.svg)
+	`rtk-grid-pagination`
+</div>
+
+<div style="text-align: center;" id="rtk-menu">
+	![Menu](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-menu.svg)
+	`rtk-menu`
+</div>
+
+<div style="text-align: center;" id="rtk-name-tag">
+	![Name
+	Tag](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-name-tag.svg)
+	`rtk-name-tag`
+</div>
+
+<div style="text-align: center;" id="rtk-notification">
+	![Notification](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-notification.svg)
+	`rtk-notification`
+</div>
+
+<div style="text-align: center;" id="rtk-participant-count">
+	![Participant
+	Count](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-participant-count.svg)
+	`rtk-participant-count`
+</div>
+
+<div style="text-align: center;" id="rtk-participant-tile">
+	![Participant
+	Tile](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-participant-tile.svg)
+	`rtk-participant-tile`
+</div>
+
+<div style="text-align: center;" id="rtk-plugin-main">
+	![Plugin Main
+	View](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-plugin-main.svg)
+	`rtk-plugin-main`
+</div>
+
+</div>
+
+## Composite Components
+
+Complete, feature-rich components combining multiple elements.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div style="text-align: center;" id="rtk-chat">
+	![Chat](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-chat.svg)
+	`rtk-chat`
+</div>
+
+<div style="text-align: center;" id="rtk-grid">
+	![Grid](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-grid.svg)
+	`rtk-grid`
+</div>
+
+<div style="text-align: center;" id="rtk-image-viewer">
+	![Image
+	Viewer](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-image-viewer.svg)
+	`rtk-image-viewer`
+</div>
+
+<div style="text-align: center;" id="rtk-leave-meeting">
+	![Leave
+	Meeting](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-leave-meeting.svg)
+	`rtk-leave-meeting`
+</div>
+
+<div style="text-align: center;" id="rtk-mixed-grid">
+	![Mixed
+	Grid](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-mixed-grid.svg)
+	`rtk-mixed-grid`
+</div>
+
+<div style="text-align: center;" id="rtk-participants">
+	![Participants](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-participants.svg)
+	`rtk-participants`
+</div>
+
+<div style="text-align: center;" id="rtk-participants-audio">
+	![Participants
+	Audio](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-participants-audio.svg)
+	`rtk-participants-audio`
+</div>
+
+<div style="text-align: center;" id="rtk-plugins">
+	![Plugins](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-plugins.svg)
+	`rtk-plugins`
+</div>
+
+<div style="text-align: center;" id="rtk-polls">
+	![Polls](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-polls.svg)
+	`rtk-polls`
+</div>
+
+<div style="text-align: center;" id="rtk-screenshare-view">
+	![Screenshare
+	View](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-screenshare-view.svg)
+	`rtk-screenshare-view`
+</div>
+
+<div style="text-align: center;" id="rtk-settings">
+	![Settings](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-settings.svg)
+	`rtk-settings`
+</div>
+
+<div style="text-align: center;" id="rtk-settings-audio">
+	![Settings
+	Audio](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-settings-audio.svg)
+	`rtk-settings-audio`
+</div>
+
+<div style="text-align: center;" id="rtk-settings-video">
+	![Settings
+	Video](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-settings-video.svg)
+	`rtk-settings-video`
+</div>
+
+<div style="text-align: center;" id="rtk-sidebar">
+	![Sidebar](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-sidebar.svg)
+	`rtk-sidebar`
+</div>
+
+<div style="text-align: center;" id="rtk-simple-grid">
+	![Simple
+	Grid](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-simple-grid.svg)
+	`rtk-simple-grid`
+</div>
+
+<div style="text-align: center;" id="rtk-spotlight-grid">
+	![Spotlight
+	Grid](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-spotlight-grid.svg)
+	`rtk-spotlight-grid`
+</div>
+
+</div>
+
+## Screen Components
+
+Full-screen views for different meeting states.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+
+<div style="text-align: center;" id="rtk-ended-screen">
+	![Ended
+	Screen](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-ended-screen.svg)
+	`rtk-ended-screen`
+</div>
+
+<div style="text-align: center;" id="rtk-idle-screen">
+	![Idle
+	Screen](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-idle-screen.svg)
+	`rtk-idle-screen`
+</div>
+
+<div style="text-align: center;" id="rtk-meeting">
+	![Meeting
+	Screen](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-meeting.svg)
+	`rtk-meeting`
+</div>
+
+<div style="text-align: center;" id="rtk-setup-screen">
+	![Setup
+	Screen](~/assets/images/realtime/realtimekit/web/components-gallery/rtk-setup-screen.svg)
+	`rtk-setup-screen`
+</div>
+
+</div>
+
+</TabItem>
+</Tabs>

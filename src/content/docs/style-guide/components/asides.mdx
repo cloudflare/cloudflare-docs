@@ -2,10 +2,14 @@
 title: Asides
 ---
 
-Asides are a built-in component provided by [Starlight](https://starlight.astro.build/guides/components/#asides).
+Asides are a built-in component provided by [Starlight](https://starlight.astro.build/components/asides/). Although there are more options, use only the ones below.
 
 ## Note
 
+Use Note for small additions or when you need to provide extra context that is not essential to the main content.
+
+If you do not provide a header, this aside will default to `Note`.
+
 ```mdx
 :::note[Header]
 Hello, world!
@@ -13,41 +17,37 @@ Hello, world!
 ```
 
 :::note[Header]
-Hello, world!
-:::
-
-## Tip
-
-```mdx
-:::tip[Header]
-Hello, world!
-:::
-```
-
-:::tip[Header]
 Hello, world!
 :::
 
 ## Caution
 
+Use Caution to highlight actions that could cause issues for a user.
+
+If you do not provide a header, this aside will default to `Warning`.
+
 ```mdx
-:::caution[Header]
-Hello, world!
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
 :::
 ```
 
-:::caution[Header]
-Hello, world!
+:::caution[Feature conflict]
+If you use feature A and feature B together, your configuration will not work.
 :::
 
-## Danger
+## Tip
+
+Use Tip to share best practices or opinionated use cases that do not fit into the main documentation.
+
+If you do not provide a header, this aside will default to `Tip`.
 
 ```mdx
-:::danger[Header]
-Hello, world!
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
 :::
 ```
 
-:::danger[Header]
-Hello, world!
+:::tip[Best practice]
+Cloudflare recommends you use [1.1.1.1](/1.1.1.1/) as your DNS resolver.
 :::

@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets";
-import { z } from "astro:content";
+import { z } from "astro:schema";
 import { marked } from "marked";
 
-import { CardGrid, Card, LinkCard } from "~/components";
+import { CardGrid, Card, LinkCard } from "@astrojs/starlight/components";
+import YouTube from "../YouTube.astro";
 
 const props = z.object({
 	title: z.string(),
@@ -31,7 +32,7 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 <div class="flex h-1/3 items-center">
 	{
 		imagePosition === "before" && (
-			<div class="w-full m-8">
+			<div class="m-8 w-full">
 				<Image
 					src={image.light}
 					alt={`${title} section image`}
@@ -47,20 +48,37 @@ const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
 			</div>
 		)
 	}
-	<CardGrid>
+
+	<div class="w-full">
 		{
-			cards.map((card) => (
-				<Card title={card.title}>
-					<span set:html={marked.parse(card.text)} />
-					<br />
-					<LinkCard title={card.cta.title} href={card.cta.href} />
-				</Card>
-			))
+			title === "Developer Platform" ? (
+				<div class="[&>article]:gap-0">
+					<Card title="">
+						<YouTube id="FH5-m0aiO5g" />
+
+						<LinkCard
+							title={"Explore our Developer Platform"}
+							href={"/directory/?product-group=Developer+platform"}
+						/>
+					</Card>
+				</div>
+			) : (
+				<CardGrid>
+					{cards.map((card) => (
+						<Card title={card.title}>
+							<span set:html={marked.parse(card.text)} />
+							<br />
+							<LinkCard title={card.cta.title} href={card.cta.href} />
+						</Card>
+					))}
+				</CardGrid>
+			)
 		}
-	</CardGrid>
+	</div>
+
 	{
 		imagePosition === "after" && (
-			<div class="w-full m-8">
+			<div class="m-8 w-full">
 				<Image
 					src={image.light}
 					alt={`${title} section image`}

@@ -1,0 +1,21 @@
+---
+params:
+  - requestUrl
+  - targetUrl
+---
+
+import { Details } from "~/components";
+
+<Details header="Notes about the rule equivalence">
+
+The provided example using Single Redirects is not an exact match for the previously existing Page Rule in the same example.
+
+The exact equivalent would need to match both HTTP and HTTPS incoming requests, which you could achieve using a wildcard pattern like the following (notice the extra `*` after `http`):
+
+- **Request URL**: <code>{props.requestUrl}</code>
+
+This would require you to also change the **Target URL** to use the second wildcard capture group instead of the first one (corresponding to the text captured by second `*` in the wildcard pattern above):
+
+- **Target URL**: <code>{props.targetUrl}</code>
+
+</Details>

@@ -56,9 +56,9 @@ You have a limit of five events per waiting room. To create a new event after yo
 
 ## Create an event via API
 
-To create an event, make a [POST request](/api/operations/waiting-room-create-event) including [required and optional parameters](#parameters). Any properties set on the event will override the default property on the waiting room for the duration of the event.
+To create an event, make a [POST request](/api/resources/waiting_rooms/subresources/events/methods/create/) including [required and optional parameters](#parameters). Any properties set on the event will override the default property on the waiting room for the duration of the event.
 
-If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](/api/operations/waiting-room-update-waiting-room) to your template (listed under the `json_response_enabled` parameter).
+If you are using a [custom template](/waiting-room/how-to/customize-waiting-room/#custom-waiting-room), you may want to add [relevant variables](/api/resources/waiting_rooms/methods/update/) to your template (listed under the `json_response_enabled` parameter).
 
 :::note
 
@@ -70,7 +70,7 @@ If you need to create overlapping events, use different waiting rooms.
 
 ### Parameters
 
-Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](/api/operations/waiting-room-create-event).
+Though most parameters are identical to those in a regular waiting room, there are a few unique to creating an event. For a complete list of event settings, please refer to [Create an Event](/api/resources/waiting_rooms/subresources/events/methods/create/).
 
 * `name` (required): Unique name with alphanumeric characters, hyphens, and underscores.
 * `event_start_time` (required): ISO 8601 timestamp that marks the start of the event. At this time, queued users will be processed with the event's configuration. Must occur at least 1 minute before `event_end_time`.
@@ -101,13 +101,13 @@ To set up a "lottery", include the [following parameters](#parameters) in your A
 
 ## Preview an event configuration
 
-Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](/api/operations/waiting-room-preview-active-event-details) before it begins.
+Since some properties set on an event will override the default property of a waiting room for the duration of an event, you should use the API to [preview an event configuration](/api/resources/waiting_rooms/subresources/events/subresources/details/methods/get/) before it begins.
 
 This command shows you the event's configuration as if it were active, meaning that inherited fields from the waiting room will display their current values.
 
 ## Edit an event
 
-To edit an event, use a [PATCH request](/api/operations/waiting-room-patch-event).
+To edit an event, use a [PATCH request](/api/resources/waiting_rooms/subresources/events/methods/edit/).
 
 ## Disable events
 
@@ -128,6 +128,6 @@ After the scheduled event has ended, users will have access to your site.  You c
 
 | Function                                                          | Command  |
 | ----------------------------------------------------------------- | -------- |
-| [Get event details](/api/operations/waiting-room-event-details)   | `GET`    |
-| [List scheduled events](/api/operations/waiting-room-list-events) | `GET`    |
-| [Delete event](/api/operations/waiting-room-delete-event)         | `DELETE` |
+| [Get event details](/api/resources/waiting_rooms/subresources/events/methods/get/)   | `GET`    |
+| [List scheduled events](/api/resources/waiting_rooms/subresources/events/methods/list/) | `GET`    |
+| [Delete event](/api/resources/waiting_rooms/subresources/events/methods/delete/)         | `DELETE` |

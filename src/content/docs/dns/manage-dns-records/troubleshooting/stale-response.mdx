@@ -1,0 +1,29 @@
+---
+title: Stale response for upstream DNS resolution
+pcx_content_type: troubleshooting
+sidebar:
+  order: 15
+  label: Stale response
+---
+
+import { GlossaryTooltip } from "~/components";
+
+In one of the scenarios below, you notice that stale DNS responses are used. Depending on the scenario and other aspects of your configuration, this can cause wrong content or no content to be returned.
+
+- A <GlossaryTooltip term="proxy status">proxied</GlossaryTooltip> CNAME record ([flattened by default](/dns/cname-flattening/)).
+- A DNS-only CNAME record that has flattening enabled. This can happen either via the specific record configuration or as a consequence of the [zone settings](/dns/cname-flattening/set-up-cname-flattening/).
+- A [Workers](/workers/) script making a subrequest to an external hostname[^1].
+
+## Cause
+
+In the event that an upstream DNS server takes too long to respond, or the upstream returns a SERVFAIL, Cloudflare will use the expired DNS response from the cache and then attempt to update that cache asynchronously.
+
+## Solutions
+
+- If possible, temporarily replace the proxied CNAME with a proxied A record. This may not always be possible, especially if the upstream target is a load balancer or if it returns dynamic responses.
+
+- Report the issues to the zone owner or DNS provider for the upstream target that is unresponsive.
+
+- You can also raise the issue through the DNS Operations Analysis and Research Center (DNS OARC). Consider its [chat platform](https://www.dns-oarc.net/oarc/services/chat) or [email lists](https://www.dns-oarc.net/oarc/lists).
+
+[^1]: A hostname that is not using Cloudflare as its [authoritative DNS provider](/dns/concepts/#authoritative-dns).

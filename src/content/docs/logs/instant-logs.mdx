@@ -5,7 +5,7 @@ sidebar:
   order: 116
 ---
 
-import { FeatureTable } from "~/components";
+import { FeatureTable, APIRequest, DashButton } from "~/components";
 
 Instant Logs allows Cloudflare customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
 
@@ -15,15 +15,15 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 ## Instant Logs via Cloudflare Dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the [zone](/fundamentals/setup/accounts-and-zones/#zones) you want to use with Instant Logs.
+1. In the Cloudflare dashboard, go to the **Instant Logs** page.
 
-2. Go to **Analytics** > **Instant Logs**.
+   <DashButton url="/?to=/:account/:zone/analytics/instant-logs" />
 
-3. Select **Start streaming**.
+2. Select **Start streaming**.
 
-4. (optional) Select **Add filter** to narrow down the events to be shown.
+3. (optional) Select **Add filter** to narrow down the events to be shown.
 
-Fields supported in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
+Fields supported in our [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 
 Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.
 
@@ -33,7 +33,7 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 Create a session by sending a `POST` request to the Instant Logs job endpoint with the following parameters:
 
-- **Fields** - List any field available in the [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/).
+- **Fields** - List any field available in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/).
 
 - **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 
@@ -45,57 +45,56 @@ Instant Logs has a maximum data rate supported. For high volume domains, we samp
 
 - **Filters** - Use filters to drill down into specific events. Filters consist of three parts: key, operator and value.
 
-All supported operators can be found in the [Filters](/logs/reference/filters/) page.
+All supported operators can be found in the [Filters](/logs/logpush/logpush-job/filters/) page.
 
 Below we have three examples of filters:
 
 ```bash
 # Filter when client IP country is not Canada:
-"filter":"{\"where\":{\"and\":[{\"key\":\"ClientCountry\",\"operator\":\"neq\",\"value\":\"ca\"}]}}"
+"filter": "{\"where\":{\"and\":[{\"key\":\"ClientCountry\",\"operator\":\"neq\",\"value\":\"ca\"}]}}"
 ```
 
 ```bash
 # Filter when the status code returned from Cloudflare is either 200 or 201:
-"filter":"{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":\"200,201\"}]}}"
+"filter": "{\"where\":{\"and\":[{\"key\":\"EdgeResponseStatus\",\"operator\":\"in\",\"value\":\"200,201\"}]}}"
 ```
 
 ```bash
 # Filter when the request path contains "/static" and the request hostname is "example.com":
-"filter":"{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"}, {\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}"
+"filter": "{\"where\":{\"and\":[{\"key\":\"ClientRequestPath\",\"operator\":\"contains\",\"value\":\"/static\"}, {\"where\":{\"and\":[{\"key\":\"ClientRequestHost\",\"operator\":\"eq\",\"value\":\"example.com\"}]}}"
 ```
 
 Example request using cURL:
 
-```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/logpush/edge/jobs' \
--H 'X-Auth-Key: <KEY>' \
--H 'X-Auth-Email: <EMAIL>' \
--H 'Content-Type: application/json' \
--d '{
-    "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
-    "sample": 1,
-    "filter": "",
-    "kind": "instant-logs"
-}' | jq .
-```
+<APIRequest
+	path="/zones/{zone_id}/logpush/edge/jobs"
+	method="POST"
+	json={{
+		fields:
+			"ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
+		sample: 100,
+		filter: "",
+		kind: "instant-logs",
+	}}
+/>
 
 Response:
 
 The response will include a new field called **destination_conf**. The value of this field is your unique WebSocket address that will receive messages from Cloudflare's global network.
 
-```bash
+```json
 {
-    "errors": [],
-    "messages": [],
-    "result": {
-        "id": 401,
-        "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
-        "sample": 100,
-        "filter": "",
-        "destination_conf": "wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987",
-        "kind": "instant-logs"
-    },
-    "success": true
+  "errors": [],
+  "messages": [],
+  "result": {
+    "id": <JOB_ID>,
+    "fields": "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
+    "sample": 100,
+    "filter": "",
+    "destination_conf": "wss://logs.cloudflare.com/instant-logs/ws/sessions/<SESSION_ID>",
+    "kind": "instant-logs"
+  },
+  "success": true
 }
 ```
 
@@ -103,8 +102,8 @@ The response will include a new field called **destination_conf**. The value of 
 
 Using a CLI utility like [Websocat](https://github.com/vi/websocat), you can connect to the WebSocket and start immediately receiving logs.
 
-```sh
-websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987
+```bash
+websocat wss://logs.cloudflare.com/instant-logs/ws/sessions/<SESSION_ID>
 ```
 
 Response:
@@ -115,8 +114,8 @@ Once connected to the websocket, you will receive messages of line-delimited JSO
 
 Now that you have a connection to Cloudflare's websocket and are receiving logs from Cloudflare's global network, you can start slicing and dicing the logs. A handy tool for this is [Angle Grinder](https://github.com/rcoh/angle-grinder). Angle Grinder lets you apply filtering, transformations and aggregations on stdin with first class JSON support. For example, to get the number of visitors from each country you can sum the number of events by the `ClientCountry` field.
 
-```sh
-awebsocat wss://logs.cloudflare.com/instant-logs/ws/sessions/99d471b1ca3c23cc8e30b6acec5db987 | agrind '* | json | sum(sampleInterval) by ClientCountry'
+```bash
+awebsocat wss://logs.cloudflare.com/instant-logs/ws/sessions/<SESSION_ID> | agrind '* | json | sum(sampleInterval) by ClientCountry'
 ```
 
 Response:

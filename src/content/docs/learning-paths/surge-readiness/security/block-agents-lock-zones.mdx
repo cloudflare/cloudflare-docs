@@ -1,0 +1,19 @@
+---
+title: Block user agents and lock zones
+pcx_content_type: overview
+sidebar:
+  order: 6
+---
+
+
+[User Agent (UA) Blocking](/waf/tools/user-agent-blocking/) rules match against specific User-Agent request headers sent by the browser or application accessing your site. UA rules are applied against the entire domain, and after a rule is triggered, you can decide which action to take against the visitor.
+
+Actions:
+
+- Block: Ensures that an IP address will never be allowed to access your site
+- CAPTCHA Challenge: Rules will be shown a CAPTCHA before allowed access
+- Javascript Challenge: Rules will be shown 5 second javascript confirmation
+
+## Zone Lockdown
+
+[Zone Lockdown](/waf/tools/zone-lockdown/) rules allow you to define paths and only allow specific, trusted IPs to those paths. Any requests to those paths from non-whitelisted IPs will be automatically blocked with an 1106 HTTP code. This ability is particularly useful for locking down administrative or staging portions of your application.

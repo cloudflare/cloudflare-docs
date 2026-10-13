@@ -1,0 +1,53 @@
+---
+title: Gateway will now evaluate Network policies before HTTP policies from July 14th, 2025
+description: Gateway Network policies (Layer 4) will be evaluated before HTTP (Layer 7) policies from July 14th, 2025
+products:
+  - gateway
+hidden: false
+date: 2025-06-18
+---
+
+[Gateway](/cloudflare-one/traffic-policies/) will now evaluate [Network (Layer 4) policies](/cloudflare-one/traffic-policies/network-policies/) **before** [HTTP (Layer 7) policies](/cloudflare-one/traffic-policies/http-policies/). This change preserves your existing security posture and does not affect which traffic is filtered — but it may impact how notifications are displayed to end users.
+
+This change will roll out progressively between **July 14–18, 2025**. If you use HTTP policies, we recommend reviewing your configuration ahead of rollout to ensure the user experience remains consistent.
+
+### Updated order of enforcement
+
+**Previous order:**
+
+1. DNS policies
+2. HTTP policies
+3. Network policies
+
+**New order:**
+
+1. DNS policies
+2. **Network policies**
+3. **HTTP policies**
+
+### Action required: Review your Gateway HTTP policies
+
+This change may affect block notifications. For example:
+
+- You have an **HTTP policy** to block `example.com` and display a block page.
+- You also have a **Network policy** to block `example.com` silently (no client notification).
+
+With the new order, the Network policy will trigger first — and the user will no longer see the HTTP block page.
+
+To ensure users still receive a block notification, you can:
+
+- Add a client notification to your Network policy, or
+- Use only the HTTP policy for that domain.
+
+---
+
+### Why we’re making this change
+
+This update is based on user feedback and aims to:
+
+- Create a more intuitive model by evaluating network-level policies before application-level policies.
+- Minimize [526 connection errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/#error-526-in-the-zero-trust-context) by verifying the network path to an origin before attempting to establish a decrypted TLS connection.
+
+---
+
+To learn more, visit the [Gateway order of enforcement documentation](/cloudflare-one/traffic-policies/order-of-enforcement/).

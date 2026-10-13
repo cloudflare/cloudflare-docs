@@ -1,0 +1,34 @@
+releaseNotes: >-
+  **Notable Updates**
+
+
+  - Add ability for Teams admins to allow users to switch between DoH only and
+  WARP.
+
+  - Improved stability of DoH resolver.
+
+  - Fixed UI bug with admin override where disconnected message would persist
+  when it shouldn't.
+
+  - Several other bug fixes and improvements.
+
+
+  **Known issues**
+
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop.
+
+  - Localization parity with mobile is coming in a future update.
+
+  - Wired networks via a USB dongle are not excluded properly.
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.294.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/1.5.294.0
+packageSize: 34729215
+releaseDate: 2021-07-01T14:46:12.765Z
+platformName: macOS

@@ -1,0 +1,75 @@
+---
+title: Contributions
+description: |
+sidebar:
+    order: 1
+---
+import { Details } from "~/components";
+
+The [Cloudflare Docs](https://developers.cloudflare.com/) are open source and hosted on the [cloudflare-docs repository](https://github.com/cloudflare/cloudflare-docs) on GitHub. This means that anyone, including those who are not part of the Cloudflare organization, can contribute to them. We welcome all suggestions that help keep our docs high quality and up to date.
+
+To contribute to our docs, you will need to [create an account on GitHub](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github) (if you do not have one already) and log in. Then you have three options:
+* [GitHub issue](#create-a-github-issue): Quickly submit a general suggestion.
+* [Quick edit (edit button)](#quick-edit): Quickly create a pull request. This is best if you want to edit a single page in your web browser and do not need to preview your changes.
+* [Full development](#full-development): Create a pull request. This is best if you want to edit multiple pages and preview your changes. This can be done in your web browser (with [Codespaces](https://docs.github.com/codespaces)) or on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)).
+
+In addition to using the [Cloudflare Style Guide](/style-guide/) for guidance on grammar and style, we recommend browsing our [components](/style-guide/components/) to add additional formatting such as buttons, tabs, and collapsible sections.
+
+## Create a GitHub issue
+To create a GitHub issue:
+1. [Log in to GitHub](https://github.com/login) and go to the [cloudflare-docs repository](https://github.com/cloudflare/cloudflare-docs).
+2. Select **Issues** and then **New issue**.
+3. Select the issue type, fill out the form, and select **Create**.
+
+[Learn more about creating GitHub issues.](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue)
+
+## Quick edit
+To quickly create a pull request using the edit button:
+1. [Log in to GitHub](https://github.com/login).
+2. Go to the page you want to edit in the [Cloudflare Docs](https://developers.cloudflare.com/)
+3. Select <Details header="**Edit** or **Edit page**">Every page in the Cloudflare Docs (including this one) has an **Edit** button on the right sidebar and an **Edit page** button on the very bottom of the page.
+ ![Edit icon](~/assets/images/style-guide/ui-elements/edit.png)</Details>
+The page's Markdown opens.
+	:::note
+	The first time you create a pull request in the cloudflare-docs repo, you will see a GitHub landing page that says "You need to fork this repository to propose changes." Select **Fork this repository**. All of your future pull requests for cloudflare-docs will write to a new branch on your fork.
+	:::
+4. Make your edits and select **Commit changes**.
+5. In the form, update the **Commit message** with the product you changed in brackets and a brief description of your changes. For example “[Images] Fixed broken link."
+6. Update the **Extended description** with more details about what you changed and why. The more details, the better.
+7. Select **Propose changes** > **Create pull request** > **Create pull request** again.
+
+## Full development
+To edit and create a pull request with the [full development workflow](https://docs.github.com/en/codespaces/developing-in-a-codespace/using-source-control-in-your-codespace):
+1. [Log in to GitHub](https://github.com/login) and [fork the cloudflare-docs repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
+2. If you are editing in your web browser (with [Codespaces](https://docs.github.com/en/codespaces)), move on to step 3.
+<br/>If you are editing on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)):
+	* (Required) Install [Node.js](https://nodejs.org/en) (version 22 or later).
+	* (Recommended, but not required) Install [Volta](https://volta.sh/) for easier package management.
+	* (Required) [Clone the fork to your local machine.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
+3. Create a branch from your fork (or from your clone).
+3. Make your edits.
+:::note[Preview your edits]
+To preview your edits, you need to install `npm`.
+ ```bash
+ npm install
+ ```
+Then, run `npm run dev`.
+ ```bash
+ npm run dev
+ ```
+A link will appear in the terminal, `https://localhost:1111/`, where you can preview your edits. This link automatically updates with any new edits you make.
+:::
+5. Commit your changes.
+6. Push your commits to your branch and then back to your fork.
+7. Return to GitHub and create a pull request from your committed changes. In the description form, add the product you changed in brackets and a brief description of your changes. For example “[Images] Fixed broken link."
+
+## After you create an issue or PR
+After you create an issue or PR, a member of the Cloudflare organization will review your suggestion. Here is what to expect:
+* A member of the Cloudflare organization may tag others for technical or content reviews or feedback.
+* If your suggestion requires more information, a member of the Cloudflare organization may comment with a follow-up or clarification question. If they add the `more-information-needed` tag, the issue or pull request will automatically close if you do not respond within 14 days.
+* If your changes are approved:
+	* For GitHub issues, a Cloudflare member might create and link a new pull request that addresses your request. When they merge the PR, they will also close your issue.
+	* For GitHub PRs, the Cloudflare member will merge your PR.
+* If your suggestion is not approved, the Cloudflare member will respond with the reasoning and close your issue or PR.
+
+Thank you for contributing to our open-source ecosystem and being a part of the Cloudflare community.

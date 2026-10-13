@@ -1,0 +1,243 @@
+---
+pcx_content_type: concept
+title: Custom rulesets (zone level)
+sidebar:
+  order: 7
+  label: Custom rulesets
+---
+
+import { Render, APIRequest } from "~/components";
+
+<Render file="custom-rulesets/intro" product="waf" params={{ scope: "zone" }} />
+
+:::tip[Use case: Different teams managing different sets of custom rules]
+Consider creating custom rulesets instead of managing individual custom rules at the zone level to allow different teams in your company to manage different sets of rules independently, including [via Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
+:::
+
+## Deploy a custom ruleset via API
+
+:::note
+Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
+:::
+
+To deploy a custom ruleset for a zone:
+
+1. Create a custom ruleset at the zone level with one or more rules. Alternatively, identify the existing custom ruleset you want to deploy using the [List zone rulesets](/api/resources/rulesets/methods/list/) API operation.
+2. Deploy the custom ruleset so that it gets executed. To deploy a custom ruleset, create a rule with the `execute` action.
+
+### 1. Create custom ruleset
+
+The following request creates a new custom ruleset at the zone level with two rules. The response will include the ID of the new custom ruleset in the `id` field.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets"
+	method="POST"
+	json={{
+		name: "Custom Ruleset 1",
+		description: "My First Custom Ruleset (zone)",
+		kind: "custom",
+		phase: "http_request_firewall_custom",
+		rules: [
+			{
+				expression:
+					'(ip.src.country in {"GB" "FR"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)',
+				action: "challenge",
+				description: "challenge GB and FR based on bot score",
+			},
+			{
+				expression: 'not http.request.uri.path wildcard "/api/*"',
+				action: "challenge",
+				description: "challenge not /api",
+			},
+		],
+	}}
+	roles="zone waf"
+/>
+
+```json output {3}
+{
+	"result": {
+		"id": "f82ccda3d21f4a02825d3fe45b5e1c10",
+		"name": "Custom Ruleset 1",
+		"description": "My First Custom Ruleset (zone)",
+		"kind": "custom",
+		"version": "1",
+		"rules": [
+			{
+				"expression": "(ip.src.country in {\"GB\" \"FR\"} and cf.bot_management.score < 20 and not cf.bot_management.verified_bot)",
+				"action": "challenge",
+				"description": "challenge GB and FR based on bot score"
+			},
+			{
+				"expression": "not http.request.uri.path wildcard \"/api/*\"",
+				"action": "challenge",
+				"description": "challenge not /api"
+			}
+		],
+		"last_updated": "2025-11-09T10:27:30.636197Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+<Render
+	file="custom-ruleset-zone-limitation"
+	params={{ skipLink: true }}
+	product="ruleset-engine"
+/>
+
+### 2. Deploy custom ruleset
+
+Deploy the custom ruleset by adding a rule with `"action": "execute"` to the `http_request_firewall_custom` phase entry point ruleset.
+
+1.  <Render
+    	file="rulesets/api-zone/step1-get-entrypoint"
+    	product="waf"
+    	params={{ phaseName: "http_request_firewall_custom" }}
+    />
+
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+    	method="GET"
+    	parameters={{
+    		ruleset_phase: "http_request_firewall_custom",
+    	}}
+    	roles="zone waf"
+    />
+
+    ```json output {4}
+    {
+    	"result": {
+    		"description": "Zone-level phase entry point",
+    		"id": "<ENTRY_POINT_RULESET_ID>",
+    		"kind": "zone",
+    		"last_updated": "2025-11-16T15:40:08.202335Z",
+    		"name": "zone",
+    		"phase": "http_request_firewall_custom",
+    		"rules": [
+    			// ...
+    		],
+    		"version": "10"
+    	},
+    	"success": true,
+    	"errors": [],
+    	"messages": []
+    }
+    ```
+
+2.  <Render
+    	file="rulesets/api-zone/step2-create-rule"
+    	product="waf"
+    	params={{
+    		deploymentItem:
+    			"custom ruleset you created in Step 1 (replace `f82ccda3d21f4a02825d3fe45b5e1c10` with your custom ruleset ID).<br/>Since the expression is `true`, the custom ruleset will run for all incoming requests",
+    	}}
+    />
+
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+    	method="POST"
+    	parameters={{ ruleset_id: "$ENTRY_POINT_RULESET_ID" }}
+    	json={{
+    		action: "execute",
+    		expression: "true",
+    		action_parameters: {
+    			id: "f82ccda3d21f4a02825d3fe45b5e1c10",
+    		},
+    		description: "Execute custom ruleset",
+    	}}
+    	roles="zone waf"
+    />
+
+    ```json output
+    {
+    	"result": {
+    		"id": "<ENTRY_POINT_RULESET_ID>",
+    		"name": "zone",
+    		"description": "Zone-level phase entry point",
+    		"kind": "zone",
+    		"version": "11",
+    		"rules": [
+    			// ... any existing rules
+    			{
+    				"id": "<RULE_ID>",
+    				"version": "1",
+    				"action": "execute",
+    				"action_parameters": {
+    					"id": "f82ccda3d21f4a02825d3fe45b5e1c10"
+    				},
+    				"expression": "true",
+    				"description": "Execute custom ruleset",
+    				"last_updated": "2025-11-18T18:08:14.003361Z",
+    				"ref": "<RULE_REF>",
+    				"enabled": true
+    			}
+    		],
+    		"last_updated": "2025-11-18T18:08:14.003361Z",
+    		"phase": "http_request_firewall_custom"
+    	},
+    	"success": true,
+    	"errors": [],
+    	"messages": []
+    }
+    ```
+
+3.  <Render
+    	file="rulesets/api-zone/step3-create-ruleset"
+    	product="waf"
+    	params={{
+    		deploymentItem: "custom ruleset",
+    		scope: "all incoming requests in the zone",
+    		finalNote:
+    			"Replace `f82ccda3d21f4a02825d3fe45b5e1c10` with your custom ruleset ID.",
+    	}}
+    />
+
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets"
+    	method="POST"
+    	json={{
+    		name: "zone",
+    		description: "Zone-level phase entry point",
+    		kind: "zone",
+    		phase: "http_request_firewall_custom",
+    		rules: [
+    			{
+    				action: "execute",
+    				action_parameters: {
+    					id: "f82ccda3d21f4a02825d3fe45b5e1c10",
+    				},
+    				expression: "true",
+    				description: "Execute custom ruleset",
+    			},
+    		],
+    	}}
+    	roles="zone waf"
+    />
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the custom ruleset you created and deployed. The following table has a list of common tasks for working with custom rulesets at the account level:
+
+| Task                               | Procedure                                                                                                                                                                                                                                                    |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Get list of custom rulesets        | <p>Use the [List zone rulesets][1] operation and search for rulesets with `"kind": "custom"` and `"phase": "http_request_firewall_custom"`. The response will include the ruleset IDs.</p><p>For more information, refer to [List existing rulesets][2].</p> |
+| List all rules in a custom ruleset | <p>Use the [Get a zone ruleset][3] operation with the custom ruleset ID to obtain the list of configured rules and their IDs.</p><p>For more information, refer to [View a specific ruleset][4].</p>                                                         |
+| Update a custom rule               | <p>Use the [Update a zone ruleset rule][5] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Update a rule in a ruleset][6].</p>                                                              |
+| Delete a custom rule               | <p>Use the [Delete a zone ruleset rule][7] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Delete a rule in a ruleset][8].</p>                                                              |
+
+[1]: /api/resources/rulesets/methods/list/
+[2]: /ruleset-engine/rulesets-api/view/#list-existing-rulesets
+[3]: /api/resources/rulesets/methods/get/
+[4]: /ruleset-engine/rulesets-api/view/#view-a-specific-ruleset
+[5]: /api/resources/rulesets/subresources/rules/methods/edit/
+[6]: /ruleset-engine/rulesets-api/update-rule/
+[7]: /api/resources/rulesets/subresources/rules/methods/delete/
+[8]: /ruleset-engine/rulesets-api/delete-rule/
+
+## More resources
+
+For more information on working with custom rulesets via Cloudflare API, refer to [Work with custom rulesets](/ruleset-engine/custom-rulesets/) in the Ruleset Engine documentation.

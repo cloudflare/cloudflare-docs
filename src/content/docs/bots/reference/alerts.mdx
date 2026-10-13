@@ -1,0 +1,74 @@
+---
+pcx_content_type: reference
+title: Bot Detection Alerts
+sidebar:
+  order: 4
+
+---
+
+import { AvailableNotifications, Steps, DashButton } from "~/components"
+
+Bot alerts inform you when Cloudflare detects spikes in your traffic with any of the following characteristics:
+
+- A global spike in traffic that have a bot score of less than 30.
+- An increase in traffic on available dimensions in [Custom Bot Detection Alerts](#custom-bot-detection-alerts).
+- Filters of your choosing in [Custom Bot Detection Alerts](#custom-bot-detection-alerts).
+
+--- 
+
+## Alert types
+
+<AvailableNotifications product="Bots" />
+
+### Set up a bot detection alert
+
+To receive Bot alerts, you must [configure a notification](/notifications/get-started/). Notifications help you stay up to date with your Cloudflare account through email, PagerDuty, or webhooks, depending on your Cloudflare plan.
+
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Notifications** page.
+  
+      <DashButton url="/?to=/:account/notifications" />
+  3. Select **Add**.
+  4. Select **Bot Management** from the Product list.
+  5. Choose one of the available bot detection alerts (depending on whether you want to set up custom filters and/or grouping):
+      - Bot Detection Alert
+      - Custom Bot Detection Alert
+  6. Enter a notification name and (optionally) a description.
+  7. Select the domain(s) to monitor for this alert.
+  8. Configure a delivery method for the notification. The available delivery methods depend on your Cloudflare plan. For more information, refer to [Cloudflare Notifications](/notifications/).
+  9. If you are creating a notification for Custom Bot Detection Alert, define the parameters that will filter the notifications you will receive.
+  10. Select **Save**.
+</Steps>
+
+---
+
+## Alert logic
+
+The Bot Detection Alert notifies users when Cloudflare detects an abnormal spike to their zone where the Z-score > [3.5](https://blog.cloudflare.com/introducing-thresholds-in-security-event-alerting-a-z-score-love-story/) and bot requests > 200/5 minutes in bot traffic (bot score < 30).
+
+Z-score is calculated with a long window duration of six hours and short window duration of five minutes.
+
+Bot Detection Alerts are delivered with Cloudflare’s Notifications system via email, webhook, or Pager Duty.
+
+You will not receive duplicate alerts within the same one-hour time frame, except in rare cases where different alert values simultaneously trigger alerts.
+
+In addition to the information above, Custom Bot Detection Alerts allow you to include or exclude certain conditions:
+
+- User-agent
+- Hostname
+- URI Path
+- IP Source Address
+- AS Num
+- JA3 Fingerprint
+- JA4 Fingerprint
+- Bot Detection IDs
+
+You can also choose to group by the following dimensions so that they can be alerted of volumetric anomalies based on:
+
+- JA4 Fingerprint (removes the filter of bot score < 30)
+- AS Num
+- Bot Detection IDs
+
+:::note
+Bot Detection Alerts exclude [verified bots](/bots/concepts/bot/verified-bots/). 
+:::

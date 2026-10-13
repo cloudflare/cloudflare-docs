@@ -1,0 +1,175 @@
+---
+pcx_content_type: overview
+title: Cloudforce One
+sidebar:
+  order: 5
+
+---
+
+import { Details, DashButton } from "~/components"
+
+:::note
+You must have a Cloudforce One subscription to access Cloudforce One on the dashboard.
+:::
+
+Cloudforce One is a threat intelligence solution that offers threat research reports, brand protection, Request for Information (RFIs), and more.
+
+To access Cloudforce One:
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+You can also use Cloudforce One via [REST API](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/requests/subresources/assets/).
+
+Cloudforce One Threat Intelligence displays the following information:
+
+- **Threat Events** to analyze threat intelligence data.
+- **Priority Intelligence Requirements** to review and manage Cloudforce One Priority Intelligence Requirements (PIRs). PIRs are a structured approach to identifying intelligence gaps.
+- **Requests for Information** to submit specific queries and requests directly into Cloudforce One's analysis queue.
+- **Reports** to get the latest Cloudforce One Threat reports.
+
+## Submit RFIs
+
+To submit RFIs (Request for Information):
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Select **Requests for Information**.
+3. Select **New Request**.
+4. Fill in the required fields, then select **Save**.
+
+<Details header="List of RFI types">
+
+The Cloudflare dashboard presents the following request types when you want to configure a Cloudforce One Requests for Information:
+
+- **Binary Analysis - IOCs**: Conduct high level malware analysis to produce [indicators](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) such as a call-back domain or IP address.
+
+- **Binary Analysis - Report**: A thorough analysis of a malware sample to produce an attribution assessment and extract the configuration of the sample for further analysis. Useful for customers that are investigating a problem or trying to develop detection logic in an [EDR](https://en.wikipedia.org/wiki/Endpoint_detection_and_response) or network sensor.
+
+- **DDoS Attack**: Confirm if an attack is happening against a specific website to share any available indicators and potential attribution.
+
+- **Indicator Analysis - IOCs**: Conduct DNS lookups, origin pivots, and account pivots to provide indicators such as DNS resolutions, origin IPs, and subdomains. Analysis can include account registration patterns and victimology.
+
+- **Indicator Analysis - Report**: A thorough analysis of indicators written in a formal, structured format. In addition to listing [Indicator of compromise (IOCs)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/), the report explains how IOCs function within the attack chain, and adds context by linking IOCs to specific campaigns and/or threat actors and their TTPs.
+
+- **Passive DNS Resolution**: Research the pair of an IP address to the domain it resolved to during a specified period of time.
+
+- **Strategic Threat Research**: Strategic Threat Research goes beyond simple indicators to analyze broader, long-term trends, threat actors, and industries — often supplemented by open-source intelligence to inform high-level management and planning rather than providing immediately actionable intelligence.
+
+- **Threat Detection Signature - IOCs**: Develop a rule such as Yara that will detect a sample, behavior, or network observable such as an IP address, domain, file hash, or attribute of a file or HTTP request.
+
+- **Threat Detection Signature - Report**: A thorough analysis report that investigates the details of a threat detection alert or report for the benefit of customers that are trying to prioritize their response effort or to attribute activity to a threat actor.
+
+- **Traffic Analysis - IOCs**: Review HTTP telemetry of IOCs in question and provide relevant, sanitized traffic which can include victim country and in some cases victim ASNs. Identify malicious files/payloads, and unusual file paths or request patterns.
+
+- **Traffic Analysis - Report**: Report that analyzes HTTP telemetry to identify patterns, anomalies, and data pointing to malicious behavior. Provides context for observed network behaviors and maps them to known TTPs of specific threat groups.
+
+- **Vulnerability**: Investigation to attribute vulnerability exploitation to a threat actor or investigation of IPs, domains, or threat actor groups exploiting the vulnerability. Response can include relevant, sanitized traffic demonstrating exploitation and identification of victim countries and industries.
+
+</Details>
+
+Once you select **Save**, the dashboard will display an overview of the shared information consisting of:
+
+- **Status**: When you submit the RFI, the status is `Open`. Once the team accepts the RFI, the status changes to `Accept`. When the team commits to answer your RFI, the status changes to `Complete`.
+- **Priority**: Priority of request.
+- **Request type**: Choose among a selection of request types, such as DDos Attack, Passive DNS Resolution, and more.
+- **Request content**: The content of the request.
+
+The **Responses** section allows you to add clarifying questions and comments.
+
+To view your RFI, select **Cloudforce One Requests** on the sidebar, locate your RFI, then select **View**. From here, you can also choose to edit your existing RFI by selecting **Edit**.
+
+To delete your RFI, the status must be `Open`. Go to the RFI you want to delete, and select **Delete**. On the pop-up, select **Delete** to confirm deletion. Once Cloudflare accepts and begins processing RFIs, you will not be able to delete RFIs.
+
+### Upload and download attachment
+
+You can also choose to upload and download an attachment.
+
+Under **Attachments**, select the file you want to upload, then select **Save**.
+
+To download an attachment, select **Download** on the attachment.
+
+## Analyze threat events
+
+Threat events allow you to protect your assets and respond to emerging threats.
+
+To access and analyze threat intelligence data on the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
+
+Cloudforce One customers have access to the following existing datasets:
+
+- APTs (default)
+- DDoS attacks 
+- Cybercrime
+- Compromised devices
+- Residential Proxies
+- WAF attacks 
+
+You can filter **Threat Events** by:
+
+- Attacker
+- Attacker Country
+- Target Country
+- Target Industry
+- TLP (Traffic Light Protocol)
+- Indicator Type
+- [Kill Chain](https://en.wikipedia.org/wiki/Cyber_kill_chain)
+- Tags
+- Event Category
+
+You can also filter by **Date range**.
+
+Some events will not display **Target Country** and **Target Industry** because they are unknown information. There may be situations where the attacker's information is unknown. When Cloudflare finds a new attacker, the attacker will be assigned a new name.
+
+## Use Cloudy to analyze threat events
+
+You can use Cloudy, Cloudflare's AI Agent, to receive an analysis and summary of threat events.
+
+To analyze threat events using Cloudy:
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Go to **Threat Events** > **Analyze with Cloudy**.
+
+Cloudy will show you the top threat events, analyze them, and give you a summary of threat events. You can also decide to receive an analysis based on **Attacker**, **Indicator**, and more. For example, you can enter "Give me a summary of threat events for ABC Attacker". Cloudy will then summarize threat events for ABC attacker.
+
+## Receive help for an incident
+
+Cloudforce One allows you to receive help to improve your security posture or recover from a past incident. This allows you to easily report security incidents directly within the Cloudflare dashboard.
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Go to **Incident response services** then complete the following instructions:
+
+- **Choose service**: 
+   - Select among **Receive post-incident support**, **Request penetration tests**, **Conduct table-top exercises**, **Ask for general security advice**. 
+   - Once you have chosen your desired service, select **Next**.
+- **Provide request details**: 
+   - Fill in the information needed based on the service you previously selected. Once you entered all the information, select **Next**.
+   - Review and submit your request. Then, select **Submit**.
+- Once you submit your request, Cloudforce One will reply to you as soon as possible.
+
+## Request help for active attack
+
+If you want to stop an active cyber attack, you can request assistance via the Cloudflare dashboard.
+
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account.
+
+<DashButton url="/?to=/:account/home" />
+
+2. On the top bar, select **Support** > **Get help** > **Under attack**.
+3. Under **Request help to stop active cyberattacks**, select **Request help**.
+4. The dashboard will show you a pop-up where you will need to enter and confirm your phone number.
+5. Once you have entered your phone number, select **Confirm number and request help**. Requesting help from the dashboard will page an incident responder and you can expect a call-back as soon as possible. We advise you to wait for the call-back, and only use the phone-line in case you have not heard back from the team within 10 minutes.

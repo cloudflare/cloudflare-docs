@@ -1,0 +1,61 @@
+---
+title: Onboard a domain
+pcx_content_type: tutorial
+description: >-
+  Learn how to connect the domain to Cloudflare, even if you purchased your domain name from another provider.
+---
+
+import { DashButton, GlossaryTooltip, Render } from "~/components"
+
+If you purchased your domain from a different provider, you can still connect the domain to Cloudflare. After you connect your domain to Cloudflare, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
+
+The information below applies to a [full DNS setup](/dns/zone-setups/full-setup) which is the most common configuration.
+
+:::note
+To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [partial setup](/dns/zone-setups/partial-setup/). To use one or more DNS providers, refer to or [DNS Zone transfers](/dns/zone-setups/zone-transfers/).
+:::
+
+## Prerequisites
+
+[Disable DNSSEC](/dns/dnssec/#disable-dnssec) at the registrar where you purchased your domain name to avoid connectivity errors when you change your nameservers.
+
+## 1. Onboard a domain in Cloudflare
+
+1. Log in to the Cloudflare dashboard.
+
+      <DashButton url="/?to=/:account/home" />
+
+2. Select **Onboard a domain**.
+3. Enter your website's <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`), choose how you would like to add your [DNS records](/dns/manage-dns-records/), and select **Continue**.
+   :::note
+   If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).
+
+   Cloudflare requires your apex domain to be one level below a valid TLD defined in the [Public Suffix List (PSL)](https://github.com/publicsuffix/list/blob/master/public_suffix_list.dat). Enterprise customers can onboard lower-level subdomains using [Subdomain setup](/dns/zone-setups/subdomain-setup/).
+   :::
+
+4. Select a [plan](https://www.cloudflare.com/plans/#compare-features).
+5. [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) to ensure none are missing. Your DNS records must accurate for your domain to work properly.
+
+   <Render file="dns-scan-intro" product="dns" /> <br />
+
+   1. <Render file="dns-scan-procedure" product="dns" />
+
+      <Render file="dns-nxdomain-warning" product="dns" />
+
+   2. If you find any missing records, [manually add](/dns/manage-dns-records/how-to/create-dns-records/) those records.
+   3. Depending on your site setup, you may want to adjust the [proxy status](/dns/proxy-status/) for certain `A`, `AAAA`, or `CNAME` records.
+   4. Select **Continue**.
+
+## 2. Update nameservers
+
+<Render file="nameserver-preamble" product="dns" /> <br/>
+
+<Render file="update-nameservers" product="fundamentals" />
+
+<Render file="minimize-downtime-tip" product="dns" />
+
+## 3. Complete SSL/TLS setup
+
+To prevent insecure connections and visitor browser errors, [enable SSL/TLS protection](/ssl/get-started/). Many Cloudflare services will automatically protect and speed up your web traffic after your nameservers are updated.
+
+If you encounter unexpected results when changing your nameservers, refer to the [DNS Full Setup troubleshooting](/dns/zone-setups/full-setup/troubleshooting/).

@@ -11,7 +11,7 @@ For more detailed information about Load Balancing — including how-to guides, 
 :::note
 
 Are you trying to turn on Load Balancing? [Enable Load
-Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing). 
+Balancing](https://dash.cloudflare.com/?to=/:account/:zone/traffic/load-balancing).
 :::
 
 ***
@@ -59,6 +59,18 @@ To learn more about how endpoints and pools become unhealthy, refer to [Endpoint
 ***
 
 ## What happens when a pool or endpoint becomes unhealthy?
+
+When a pool or endpoint becomes unhealthy, traffic may be rerouted to other healthy pools or endpoints based on your configuration. You might experience this behavior when using:
+
+1 - Pools with **All-Datacenters** monitoring and the monitor fails in a specific data center. In this case, all traffic will be steered away from impacted endpoints in that datacenter until the monitor succeeds again. These instances are reflected in LB request analytics as steering away from an unhealthy endpoint or pool.
+
+2 - Pools with FQDN endpoint addresses and the recursive DNS lookup fails in a specific data center. In this case, only requests for which the DNS request fails will be steered away from impacted endpoints. This could be sporadic, especially if upstream authoritative resolvers occasionally time out or fail, when the local DNS cache TTL expires and a remote lookup is required in the hot path. This also appears in LB request analytics as steering away from an unhealthy endpoint, and the resolved endpoint IP will be missing from the request log.
+
+To avoid these scenarios:
+
+1 - Do not use **All-Datacenters** monitoring.
+
+2 - Use IP addresses for endpoint configurations. If that is not feasible, use domains for which Cloudflare is authoritative (primary or secondary).
 
 To learn more about how endpoints and pools become unhealthy, refer to [Endpoint and pool health](/load-balancing/understand-basics/health-details).
 

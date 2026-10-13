@@ -9,6 +9,8 @@ head:
 description: Use the Cloudflare Workers AI REST API to deploy a large language model (LLM).
 ---
 
+import { DashButton } from "~/components"
+
 This guide will instruct you through setting up and deploying your first Workers AI project. You will use the Workers AI REST API to experiment with a large language model (LLM).
 
 ## Prerequisites
@@ -21,16 +23,17 @@ You need your API token and Account ID to use the REST API.
 
 To get these values:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **AI** > **Workers AI**.
-3. Select **Use REST API**.
-4. Get your API token:
+1. In the Cloudflare dashboard, go to the **Workers AI** page.
+
+   <DashButton url="/?to=/:account/ai/workers-ai" />
+2. Select **Use REST API**.
+3. Get your API token:
    1. Select **Create a Workers AI API Token**.
    2. Review the prefilled information.
    3. Select **Create API Token**.
    4. Select **Copy API Token**.
    5. Save that value for future use.
-5. For **Get Account ID**, copy the value for **Account ID**. Save that value for future use.
+4. For **Get Account ID**, copy the value for **Account ID**. Save that value for future use.
 
 :::note
 
@@ -42,7 +45,7 @@ If you choose to [create an API token](/fundamentals/api/get-started/create-toke
 
 After creating your API token, authenticate and make requests to the API using your API token in the request.
 
-You will use the [Execute AI model](/api/operations/workers-ai-post-run-model) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
+You will use the [Execute AI model](/api/resources/ai/methods/run/) endpoint to run the [`@cf/meta/llama-3.1-8b-instruct`](/workers-ai/models/llama-3.1-8b-instruct/) model:
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/meta/llama-3.1-8b-instruct \
@@ -72,3 +75,4 @@ By completing this guide, you have created a Cloudflare account (if you did not 
 ## Related resources
 
 - [Models](/workers-ai/models/) - Browse the Workers AI models catalog.
+- [AI SDK](/workers-ai/configuration/ai-sdk) - Learn how to integrate with an AI model.

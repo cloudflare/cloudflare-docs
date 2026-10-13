@@ -1,0 +1,69 @@
+---
+title: Remove Cloudflare branding with Offlabel
+pcx_content_type: reference
+sidebar:
+  order: 4
+  label: Offlabel
+---
+
+Offlabel is an Enterprise-only feature that removes Cloudflare branding and logo from Turnstile widgets. When enabled, widgets display without any visual references to Cloudflare, allowing for a seamless integration with your brand identity.
+
+When Offlabel is enabled:
+
+- The Cloudflare logo and color schemes are removed from all widget states.
+- The widget maintains the same functionality, behavior, and WCAG 2.1 AA accessibility compliance.
+- All security features remain unchanged.
+
+The widget will display with a clean, unbranded appearance that integrates seamlessly with your website's design.
+
+---
+
+## Implementation
+
+### Enable Offlabel
+
+After your account team enables the Offlabel entitlement, you can activate it for specific widgets using the Cloudflare API.
+
+    ```bash title="cURL command" wrap
+    curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
+    -H "Authorization: Bearer $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "offlabel": true
+    }'
+    ```
+
+### Create new widgets with Offlabel
+
+You can enable Offlabel when creating new widgets.
+
+    ```bash title="cURL command" wrap
+    curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets" \
+    -H "Authorization: Bearer $API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "name": "Branded Widget",
+        "domains": ["example.com"],
+        "mode": "managed",
+        "offlabel": true
+    }'
+    ```
+
+### Verification
+
+Confirm Offlabel is enabled by checking your widget configuration.
+
+    ```bash title="cURL command" wrap
+    curl -X GET "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
+    -H "Authorization: Bearer $API_TOKEN"
+    ```
+
+The response will include `"offlabel": true` when the feature is active.
+
+---
+
+## Availability
+
+Offlabel is available exclusively to Enterprise customers with the Enterprise Turnstile add-on or Standalone Enterprise Turnstile customers.
+
+Contact your account team for access to the Offlabel feature.

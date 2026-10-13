@@ -1,0 +1,33 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+You can configure all traffic on a device to egress through WARP Connector with its local source IP. All traffic will be filtered by your Gateway network policies.
+
+<Tabs> <TabItem label="Linux">
+
+```sh
+sudo ip route add default via <WARP-CONNECTOR-IP> dev eth0 metric 101
+```
+
+Ensure that the `metric` value is lower than other default gateways.
+
+</TabItem> <TabItem label="macOS">
+
+```sh
+sudo route -n change default <WARP-CONNECTOR-IP> -interface en0
+```
+
+</TabItem>
+
+<TabItem label="Windows">
+
+```bash
+route /p add 0.0.0.0 mask 0.0.0.0 <WARP-CONNECTOR-IP> metric 101
+```
+
+Ensure that the `metric` value is lower than other default gateways.
+
+</TabItem> </Tabs>

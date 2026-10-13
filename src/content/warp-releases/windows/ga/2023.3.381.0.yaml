@@ -1,0 +1,75 @@
+releaseNotes: >-
+  **Major change**
+
+  WARP On Windows now uses a new tunnel architecture that more closely matches
+  our macOS and Linux implementations. WARP will now create a virtual interface
+  that is visible in your network connections and directly modify the routing
+  table to control where traffic flows. Please thoroughly test this release
+  before deploying in your organization.
+    
+  **Notable updates**
+
+  - Added support for Windows Subsystem for Linux 2 (WSL2)
+
+  - Added support for Zero Trust Digital Experience Monitoring
+
+  - Added new log message to help customers and support identify when a users
+  local network IP space overlaps with a remote network configured to go through
+  the tunnel
+
+  - Added support for Zero Trust customers to opt in to having the WARP Client
+  install the root CA for your organization if TLS Decryption is enabled.
+
+  - Improve timeouts with broken CNAME records that could result in very long
+  load times for certain apps (Office 365 apps, etc.)
+
+  - Improved compatibility with apps like Firefox and Zoom that use custom MTU
+  settings
+
+  - Improved UI states for WARP client
+
+  - Improved user validation logic during manual ZT login
+
+  - Improved logging of application posture checks to understand rationale
+  behind statuses of application checks (file missing, process not found, etc.)
+
+  - Modified behavior of Managed networks tests to always happen outside the
+  tunnel as per original intent
+
+  - Fixed issue where systems with significantly out of sync system clocks could
+  fail registration
+
+  - Fixed a number of GUI crash bugs that would cause the app to disappear from
+  the system tray
+
+  - Fixed issue that could cause the application to be hidden behind the Windows
+  system tray expanded list UI
+
+  - Fixed issue where warp-diag could run traceroutes longer than expected.
+  Traceroute tests will now timeout after 65 seconds.
+
+  - Fixed issue where the WARP service can crash and lose connectivity
+
+  - Fixed issue where manually logging into a ZT org could fail if certificate
+  authentication was used
+
+  - Fixed issue where GUI could miss a status message from the WARP Service
+  resulting in the wrong state being reflected to users. An example is the GUI
+  could show `Connecting` even though device was `Connected`
+
+  - Fix issue where IPv6 being disabled via the registered wasn't properly
+  detected
+
+  - Fixed issue when running in local proxy mode where too many log entries were
+  written
+   
+  **Known issues**
+
+  - Customers who have modified the default split tunnel configuration or use
+  managed networks may find some of the routes that should go through the tunnel
+  are unreachable. This is now fixed in a hotfix release.
+version: 2023.3.381.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.3.381.0
+packageSize: 106668032
+releaseDate: 2023-04-04T23:03:24.520Z
+platformName: Windows

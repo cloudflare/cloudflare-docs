@@ -1,0 +1,176 @@
+---
+title: Override examples
+pcx_content_type: reference
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Override examples for HTTP DDoS Attack Protection
+---
+
+import { Details, GlossaryTooltip, Tabs, TabItem, DashButton } from "~/components"
+
+## Use cases
+
+The following scenarios detail how you can make use of override rules as a solution to common HTTP DDoS Protection issues.
+
+### Traffic from your mobile application is blocked by a DDoS Managed Rule
+
+The traffic from your mobile application may have appeared suspicious, causing a DDoS Managed Rule to block it.
+
+You should identify the Managed Rule blocking the traffic and change the sensitivity level to `Medium`. If traffic continues to be blocked by the managed rule, set the sensitivity level to `Low` or `Essentially off`.
+
+If you have access to filter expressions, you can create an override to target the specific affected traffic.
+
+### Traffic is flagged by an adaptive rule based on the location and may be an attack
+
+If you recognize that the traffic flagged by an adaptive rule may be considered an attack, you can create an override rule to enable the adaptive rule in mitigation mode to `challenge` (if it is browser traffic) or `block` (for other suspicious traffic).
+
+### Legitimate traffic is incorrectly identified as an attack and causes a false positive
+
+A false positive is an incorrect identification. In the case of DDoS protection, there is a false positive when legitimate traffic is mistakenly classified as attack traffic. This can occur when legacy applications, Internet services, or faulty client applications generate legitimate traffic that appears suspicious, has odd traffic patterns, deviates from best practices, or violates protocols.
+
+In these cases, Cloudflare's DDoS Protection systems may flag that traffic as malicious and apply mitigation actions. If the traffic is in fact legitimate and not part of an attack, the mitigation actions can cause service disruptions and outages to your Internet properties.
+
+To remedy a false positive:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+1. In the Cloudflare dashboard, go to the Network analytics page.
+      
+      <DashButton url="/?to=/:account/network-analytics" />
+ 2. Apply filters to the displayed data.
+  <Details header="For WAF/CDN customers">
+    1. Select the zone that is experiencing DDoS attack false positives.
+    2. Go to **Security** > **Events**.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+  </Details>
+  <Details header="For Magic Transit and Spectrum customers">
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    2. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+  </Details>
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
+4. Copy the rule name.
+5. Go to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
+6. Select **Browse rules** and paste the rule name in the search field.
+7. Decrease the rule's **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
+8. Select **Next** and then select **Save**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the Network analytics page.
+      
+      <DashButton url="/?to=/:account/network-analytics" />
+2. Apply filters to the displayed data.
+  <Details header="For WAF/CDN customers">
+    1. Select the zone that is experiencing DDoS attack false positives.
+    2. Go to **Security** > **Analytics** > **Events** tab.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+  </Details>
+  <Details header="For Magic Transit and Spectrum customers">
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    2. Identify the legitimate traffic that is causing the false positives. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+  </Details>
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
+4. Copy the rule name.
+5. Go to your zone > **Security** > **Security rules** > **DDoS protection** tab and select **Create override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
+6. Select **Browse rules** and paste the rule name in the search field.
+7. Decrease the rule's **Sensitivity Level** to _Essentially Off_ or change the rule action to _Log_ (if supported by your current plan and subscriptions).
+8. Select **Next** and then select **Save**.
+
+</TabItem> </Tabs>
+
+Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
+
+#### Update the adjusted rules later
+
+Later, you can change the [sensitivity level](/ddos-protection/managed-rulesets/network/override-parameters/#sensitivity-level) of the rule causing the false positives to avoid future issues, and change the rule action back to its default value.
+
+:::note[Recommendation: Enable DDoS alerts]
+
+Cloudflare recommends that you create notifications for [DDoS alerts](/ddos-protection/reference/alerts/) to get real-time notifications on detected and mitigated attacks automatically performed by Cloudflare's systems. When you receive these notifications, you can review if it is in fact a real DDoS attack, or if it is a false positive, and then take action to remedy it.
+:::
+
+#### Avoid false positives while retaining protection and visibility
+
+To see what DDoS Managed Rules do in a high sensitivity level while remaining protected by blocking attacks at a low sensitivity level, Advanced DDoS protection customers can [create a first override](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/#create-a-ddos-override) that blocks attacks at a low sensitivity and a second override to log at a high sensitivity.
+
+The overrides must be set in that order. Otherwise, it will not work. This is because overrides are evaluated in order and will stop at the first override that matches both expression and sensitivity. Setting the overrides in the wrong order would cause the `Log` override at a high sensitivity to match all instances. As a result, Cloudflare will never evaluate the `Block` override that would be placed behind it, causing all rules to be set in `Log` mode.
+
+If an override without an expression matches, Cloudflare will not evaluate the expressions that follow it.
+
+### An attack is incorrectly identified as legitimate traffic and causes a false negative
+
+A false negative is a lack of identification. In the case of DDoS protection, there is a false negative when attack traffic is mistakenly classified as legitimate traffic and is not mitigated. This can occur when the attack traffic is not sufficiently high to trigger mitigation actions or if there are no rules matching the attack.
+
+To address a false negative:
+
+- If you are a WAF/CDN customer, follow the steps in the [Respond to DDoS attacks](/ddos-protection/best-practices/respond-to-ddos-attacks/) page, which guides you on enabling the _Under Attack_ mode and creating <GlossaryTooltip term="rate limiting">rate limiting</GlossaryTooltip> rules and WAF custom rules as needed.
+- If you are a Magic Transit customer, [use Magic Firewall rules](/cloudflare-one/traffic-policies/packet-filtering/add-rules/) to help mitigate the attack.
+
+### Incomplete mitigations
+
+An incomplete mitigation is a case when the DDoS protection systems have applied mitigation, but not all the attack was mitigated. This can happen when Cloudflare's systems apply a mitigation action that is less strict than what the attack requires.
+
+The system chooses the mitigation action based on the logic and the DDoS protection system's confidence that the traffic is indeed part of an attack:
+
+- For high-confidence rules, the system will apply a strict mitigation action such as the _Block_ action.
+- For low-confidence rules, the system will apply a less strict mitigation rule such as _Challenge_ or _Force Connection Close_.
+
+If you are experiencing a DDoS attack detected by Cloudflare and the applied mitigation action is not sufficiently strict, change the rule action to _Block_:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+1. In the Cloudflare dashboard, go to the Network analytics page.
+      <DashButton url="/?to=/:account/network-analytics" />
+2. Apply filters to the displayed data.
+  <Details header="For WAF/CDN customers">
+    1. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+    2. Go to **Security** > **Events**.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+  </Details>
+  <Details header="For Magic Transit and Spectrum customers">
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    2. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+  </Details>
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
+4. Copy the rule name.
+5. Go to your zone > **Security** > **DDoS** and select **Deploy a DDoS override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
+6. Select **Browse rules** and paste the rule name in the search field.
+7. Change the rule's **Action** to *Block*.
+8. Select **Next** and then select **Save**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the Network analytics page.
+      <DashButton url="/?to=/:account/network-analytics" />
+2. Apply filters to the displayed data.
+  <Details header="For WAF/CDN customers">
+    1. Select the zone that is experiencing an incomplete mitigation of a DDoS attack.
+    2. Go to **Security** > **Analytics** > **Events** tab.
+    3. Select **Add filter** and filter by `Service equals HTTP DDoS`.
+  </Details>
+  <Details header="For Magic Transit and Spectrum customers">
+    1. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+    2. Identify the DDoS attack that is having incomplete mitigations. Use the Attack ID number included in the DDoS alert (if you received one), or apply dashboard filters such as destination IP address and port.
+  </Details>
+3. Scroll down to **Top events by source** > **HTTP DDoS rules**.
+4. Copy the rule name.
+5. Go to your zone > **Security** > **Security rules** > **DDoS protection** tab and select **Create override**. If you cannot deploy any additional overrides, edit an existing override to adjust rule configuration.
+6. Select **Browse rules** and paste the rule name in the search field.
+7. Change the rule's **Action** to *Block*.
+8. Select **Next** and then select **Save**.
+
+</TabItem> </Tabs>
+
+Once saved, the rule takes effect within one or two minutes. The rule adjustment should provide immediate remedy, which you can view in the [analytics dashboard](/ddos-protection/reference/analytics/).
+
+#### Alternate procedure
+
+If you cannot stop an attack from overloading your origin web server using the above steps, [contact Cloudflare Support](/support/contacting-cloudflare-support/) for assistance, providing the following details:
+
+- Time period of the attack (UTC timestamp)
+- Domain/path being targeted (zone name/ID)
+- Attack frequency
+- Steps to reproduce the issue, with actual results versus expected results
+- Any relevant additional information such as site URLs, error messages, screenshots, or relevant logs from your origin web server

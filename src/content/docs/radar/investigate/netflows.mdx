@@ -1,14 +1,14 @@
 ---
 pcx_content_type: reference
-title: Netflows
+title: NetFlows
 sidebar:
   order: 2
 
 ---
 
-[Netflows](https://en.wikipedia.org/wiki/NetFlow) shows network traffic data from end users collected from Cloudflare's edge routers. Netflows' data also feeds the [Internet traffic change](https://radar.cloudflare.com/) chart.
+[NetFlows](https://en.wikipedia.org/wiki/NetFlow) shows network traffic data from end users collected from Cloudflare's edge routers. NetFlows' data also feeds the [Internet traffic change](https://radar.cloudflare.com/) chart.
 
-Netflows includes all types of traffic from Cloudflare's routers, not just traffic to websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
+NetFlows includes all types of traffic from Cloudflare's routers, not just traffic to websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/).
 
 ## List of endpoints
 
@@ -16,11 +16,11 @@ Netflows includes all types of traffic from Cloudflare's routers, not just traff
 
 #### Example: filtering by product
 
-Besides comparing time series across locations or date ranges (discussed in [Make comparisons](/radar/get-started/making-comparisons/)), we can also examine `ALL` traffic versus only `HTTP` traffic using the `product` filter. For more information, refer to the [API reference](/api/operations/radar-get-netflows-timeseries) for this endpoint.
+Besides comparing time series across locations or date ranges (discussed in [Make comparisons](/radar/get-started/making-comparisons/)), we can also examine `ALL` traffic versus only `HTTP` traffic using the `product` filter. For more information, refer to the [API reference](/api/resources/radar/subresources/netflows/methods/timeseries/) for this endpoint.
 
 :::note[NetFlow products]
 
-`HTTP` traffic only includes web traffic to Cloudflare's zones, while `ALL` also includes traffic to all other services, like [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), [1.1.1.1](/1.1.1.1/), and others. 
+`HTTP` traffic only includes web traffic to Cloudflare's zones, while `ALL` also includes traffic to all other services, like [Spectrum](/spectrum/), [Magic Transit](/magic-transit/), [1.1.1.1](/1.1.1.1/), and others.
 :::
 
 In the following example, we will examine both `ALL` and `HTTP` traffic in two [autonomous systems](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/). First, we will examine [AS3243](https://radar.cloudflare.com/as3243), a Portuguese local Internet Service Provider (ISP). The parameters for all traffic are `name=AS3243_all&product=ALL&dateRange=1d&asn=3243`, and for just the HTTP traffic are `name=AS3243_http&product=HTTP&dateRange=1d&asn=3243`):
@@ -33,14 +33,20 @@ curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=meo_al
 This is the abbreviated response:
 
 ```json
-"AS3243_all": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.565885", "0.586434", "..."]
-},
-"AS3243_http": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.548564", "0.568329", "..."]
-},
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"AS3243_all": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.565885", "0.586434", "..."]
+		},
+		"AS3243_http": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.548564", "0.568329", "..."]
+		}
+	}
+}
 ```
 
 `HTTP` traffic values are similar to `ALL` traffic values. This means that most traffic Cloudflare receives from this AS is traffic to websites served by Cloudflare's [CDN](https://www.cloudflare.com/en-gb/learning/cdn/what-is-a-cdn/) product.
@@ -55,13 +61,19 @@ curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_
 The abbreviated response is:
 
 ```json
-"AS174_all": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.917348", "1.0", "..."]
-},
-"AS174_http": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.381777", "0.408091", "..."]
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"AS174_all": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.917348", "1.0", "..."]
+		},
+		"AS174_http": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.381777", "0.408091", "..."]
+		}
+	}
 }
 ```
 
@@ -77,21 +89,27 @@ curl "https://api.cloudflare.com/client/v4/radar/netflows/timeseries?name=AS174_
 which would lead to a response like this:
 
 ```json
-"AS174_all": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.917348", "1.0", "..."]
-},
-"AS174_http": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.381777", "0.408091", "..."]
-},
-"AS3243_all": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.317136", "0.328652", "..."]
-},
-"AS3243_http": {
-  "timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
-  "values": ["0.307429", "0.318505", "..."]
+{
+  "success": true,
+  "errors": [],
+  "result": {
+		"AS174_all": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.917348", "1.0", "..."]
+		},
+		"AS174_http": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.381777", "0.408091", "..."]
+		},
+		"AS3243_all": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.317136", "0.328652", "..."]
+		},
+		"AS3243_http": {
+			"timestamps": ["2022-11-08T14:00:00Z", "2022-11-08T15:00:00Z", "..."],
+			"values": ["0.307429", "0.318505", "..."]
+		}
+	}
 }
 ```
 

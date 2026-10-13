@@ -1,0 +1,21 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1011
+source: null
+---
+
+## Error 1011: Access Denied (Hotlinking Denied)
+
+This error indicates that access to the resource is denied due to hotlinking protection.
+
+### Common cause
+
+A request is made for a resource that uses [Cloudflare hotlink protection](/waf/tools/scrape-shield/hotlink-protection/).
+
+### Resolution
+
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). **Hotlink Protection** is managed via the Cloudflare **Scrape Shield** app.
+
+:::note
+Since the website owner performed the blocking, Cloudflare support cannot override a customer's security settings.
+:::

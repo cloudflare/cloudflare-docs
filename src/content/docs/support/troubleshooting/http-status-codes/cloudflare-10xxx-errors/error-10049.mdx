@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10049
+source: null
+---
+
+## Error 10049: Invalid scheme in redirect source URL
+
+This error indicates that the source URL's scheme is invalid.
+
+### Common causes
+
+This error occurs when the source URL of a URL redirect has an invalid scheme, which may be due to a misspelled or unsupported scheme or because the scheme is missing or improperly formatted.
+
+### Resolution
+
+Review the source URL and ensure that it uses one of the supported schemes: `http`, `https`, or empty (no scheme information, which means that it applies to both schemes). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the supported URL components for redirect source URLs.

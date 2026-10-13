@@ -3,7 +3,6 @@ description: Report an issue with the live documentation website; for example, i
 labels: ["engineering"]
 assignees:
   - kodster28
-  - KianNH
 body:
   - type: textarea
     id: location-urls

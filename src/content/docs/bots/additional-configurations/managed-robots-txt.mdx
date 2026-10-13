@@ -1,0 +1,183 @@
+---
+pcx_content_type: reference
+title: robots.txt setting
+sidebar:
+  order: 10
+  label: robots.txt setting
+---
+
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
+
+Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training.
+
+AI bots are expected to follow the `robots.txt` directives.
+
+`robots.txt` files express your preferences. They do not prevent crawler operators from crawling your content at a technical level. Some crawler operators may disregard your `robots.txt` preferences and crawl your content regardless of what your `robots.txt` file says.  
+
+:::note
+Respecting `robots.txt` is voluntary. If you want to prevent crawling, use AI Crawl Control's [manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) feature.
+:::
+
+## Compatibility with existing `robots.txt` files
+
+Cloudflare will independently check whether your website has an existing `robots.txt` file and update the behavior of this feature based on your website.
+
+### Existing robots.txt file
+
+If your website already has a `robots.txt` file — verified by a HTTP `200` response — Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.
+
+For example, without this feature enabled, the `robots.txt` content of `crawlstop.com` would be:
+
+```txt title="Feature not enabled"
+User-agent: *
+Disallow: /lp
+Disallow: /feedback
+Disallow: /langtest
+
+Sitemap: https://www.crawlstop.com/sitemap.xml
+```
+
+With the managed `robots.txt` enabled, Cloudflare will prepend our managed content before your original content, resulting in what you can view at https://www.crawlstop.com/robots.txt.
+
+```txt title="Feature enabled"
+# As a condition of accessing this website, you agree to abide by the
+# following content signals:
+
+# (a)  If a content-signal = yes, you may collect content for the
+#      corresponding use.
+# (b)  If a content-signal = no, you may not collect content for the
+#      corresponding use.
+# (c)  If the website operator does not include a content signal for a
+#      corresponding use, the website operator neither grants nor restricts
+#      permission via content signal with respect to the corresponding use.
+
+# The content signals and their meanings are:
+
+# search: building a search index and providing search results (e.g., returning
+#         hyperlinks and short excerpts from your website's contents). Search
+#         does not include providing AI-generated search summaries.
+# ai-input: inputting content into one or more AI models (e.g., retrieval
+#           augmented generation, grounding, or other real-time taking of
+#           content for generative AI search answers).
+# ai-train: training or fine-tuning AI models.
+
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
+# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
+# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
+
+# BEGIN Cloudflare Managed content
+
+User-Agent: *
+Content-signal: search=yes, ai-train=no
+Allow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+# END Cloudflare Managed Content
+User-agent: *
+Disallow: /lp
+Disallow: /feedback
+Disallow: /langtest
+
+Sitemap: https://www.crawlstop.com/sitemap.xml
+```
+
+### No robots.txt file
+
+If your website does not have a `robots.txt` file, Cloudflare creates a new file with our managed block directives and serves it for you.
+
+## Implementation
+
+To implement a `robots.txt` file on your domain:
+
+<Tabs syncKey="dashNewNav">
+	<TabItem label="Old dashboard">
+		<Steps>
+			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+			2. Go to **Security** > **Bots**.
+			3. Select **Configure Bot Fight Mode**.
+			4. Turn **Instruct bot traffic with robots.txt** on.
+		</Steps>
+	</TabItem>
+	<TabItem label="New dashboard" icon="rocket">
+		<Steps>
+			1. In the Cloudflare dashboard, go to the **Security Settings** page.
+				
+				<DashButton url="/?to=/:account/:zone/security/settings" />
+			2. Filter by **Bot traffic**.
+			3. Go to **robots.txt setting**.
+			4. Turn **robots.txt setting** on.
+		</Steps>
+	</TabItem>
+</Tabs>
+
+## Content Signals Policy
+
+Free zones that do not have their own `robots.txt` file and do not use the managed `robots.txt` feature will display the Content Signals Policy when a crawler requests the `robots.txt` file for your zone. 
+
+This file only outlines the Content Signals framework. It does not express your preferences or rights associated with your content.
+
+```txt title="Content Signals Policy"
+# As a condition of accessing this website, you agree to abide by the
+# following content signals:
+
+# (a)  If a content-signal = yes, you may collect content for the
+#      corresponding use.
+# (b)  If a content-signal = no, you may not collect content for the
+#      corresponding use.
+# (c)  If the website operator does not include a content signal for a
+#      corresponding use, the website operator neither grants nor restricts
+#      permission via content signal with respect to the corresponding use.
+
+# The content signals and their meanings are:
+
+# search: building a search index and providing search results (e.g., returning
+#         hyperlinks and short excerpts from your website's contents). Search
+#         does not include providing AI-generated search summaries.
+# ai-input: inputting content into one or more AI models (e.g., retrieval
+#           augmented generation, grounding, or other real-time taking of
+#           content for generative AI search answers).
+# ai-train: training or fine-tuning AI models.
+
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF
+# RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT
+# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.
+```
+
+Cloudflare's Content Signals Policy is included by default in the `robots.txt` file when you turn on **robots.txt setting**.
+
+If you would like to opt out of displaying the policy in your `robots.txt` file, you can uncheck **Display Content Signals Policy** under **Control AI Crawlers** in your zone's overview.
+
+<DashButton url="/?to=/:account/:zone/" />
+
+Alternatively, you can use [Security Settings](#implementation). 
+
+:::caution
+Google Search Console may occasionally report `Syntax not understood` for Content Signals and newer directives in the `robots.txt` standard. However, we have observed no impact on crawling rates or SEO as a result of these reports.
+:::
+
+## Availability
+
+Managed `robots.txt` for AI crawlers is available on all plans.

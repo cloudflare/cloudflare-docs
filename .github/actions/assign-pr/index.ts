@@ -78,21 +78,18 @@ async function list(
 					}
 				}
 			}
-
-			if (assignees.size === 0) {
-				assignees.add("kodster28");
-			}
-
 			// don't self-assign
 			assignees.delete(author);
 
 			try {
-				await client.rest.issues.addAssignees({
-					repo: repository.name,
-					owner: repository.owner.login,
-					issue_number: prnumber,
-					assignees: [...assignees],
-				});
+				if (assignees.size > 0) {
+					await client.rest.issues.addAssignees({
+						repo: repository.name,
+						owner: repository.owner.login,
+						issue_number: prnumber,
+						assignees: [...assignees],
+					});
+				}
 			} catch (error) {
 				core.setFailed(error.message);
 			}

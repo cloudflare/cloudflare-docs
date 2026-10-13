@@ -1,0 +1,14 @@
+---
+import { z } from "astro:schema";
+import CodeSnippet from "./RTKCodeSnippet";
+
+const props = z.object({
+	id: z.string(),
+});
+
+const { id } = props.parse(Astro.props);
+---
+
+<CodeSnippet client:load id={id}>
+	<slot />
+</CodeSnippet>

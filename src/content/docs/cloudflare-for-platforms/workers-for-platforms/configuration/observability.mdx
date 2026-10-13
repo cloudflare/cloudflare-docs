@@ -12,12 +12,12 @@ Learn how to access logs with Workers for Platforms.
 
 ### Workers Trace Events Logpush
 
-Workers Trace Events logpush is used to get raw Workers execution logs. Refer to [Logpush](/workers/observability/logging/logpush/) for more information.
+Workers Trace Events logpush is used to get raw Workers execution logs. Refer to [Logpush](/workers/observability/logs/logpush/) for more information.
 
 Logpush can be enabled for an entire dispatch namespace or a single user Worker. To capture logs for all of the user Workers in a dispatch namespace:
 
-1. Create a [Logpush job](/workers/observability/logging/logpush/#create-a-logpush-job).
-2. Enable [logging](/workers/observability/logging/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
+1. Create a [Logpush job](/workers/observability/logs/logpush/#create-a-logpush-job).
+2. Enable [logging](/workers/observability/logs/logpush/#enable-logging-on-your-worker) on your dispatch Worker.
 
 Enabling logging on your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, skip step 1 and complete step 2 on your user Worker.
 
@@ -25,11 +25,11 @@ All logs are forwarded to the Logpush job that you have setup for your account. 
 
 ### Tail Workers
 
-A [Tail Worker](/workers/observability/logging/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
+A [Tail Worker](/workers/observability/logs/tail-workers/) receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions.
 
-Use [Tail Workers](/workers/observability/logging/tail-workers/) instead of Logpush if you want granular control over formatting before logs are sent to their destination to receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or if you want logs delivered in real-time.
+Use [Tail Workers](/workers/observability/logs/tail-workers/) instead of Logpush if you want granular control over formatting before logs are sent to their destination to receive [diagnostics channel events](/workers/runtime-apis/nodejs/diagnostics-channel), or if you want logs delivered in real-time.
 
-Adding a Tail Worker to  your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, add the [Tail Worker configuration](/workers/observability/logging/tail-workers/#configure-tail-workers) directly to the user Worker.
+Adding a Tail Worker to  your dispatch Worker collects logs for both the dispatch Worker and for any user Workers in the dispatch namespace. Logs are automatically collected for all new Workers added to a dispatch namespace. To enable logging for an individual user Worker rather than an entire dispatch namespace, add the [Tail Worker configuration](/workers/observability/logs/tail-workers/#configure-tail-workers) directly to the user Worker.
 
 ## Analytics
 

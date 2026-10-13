@@ -2,30 +2,38 @@
 pcx_content_type: concept
 title: Custom rules
 sidebar:
-  order: 4
+  order: 5
+---
+
+import { Render, FeatureTable } from "~/components";
+
+<Render file="custom-rules-intro" product="waf" />
+
+Custom rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
+
+To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/). At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+
+:::note
+Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to [use the Cloudflare API](/waf/custom-rules/create-api/) to configure or deploy these rulesets.
+:::
+
+## Availability
+
+<FeatureTable id="security.waf_c_custom_rules" />
+
+The maximum number of custom rules applies to an entire [phase](/ruleset-engine/about/phases/). Each scope (zone or account) has a separate maximum number of rules, counted in the following way:
+
+- Zone: All custom rules plus all the rules across custom rulesets defined at the zone level.
+- Account: All the rules across custom rulesets defined at the account level.
 
 ---
 
-Custom rules allow you to control incoming traffic by filtering requests to a zone. You can perform actions like *Block* or *Managed Challenge* on incoming requests according to rules you define.
-
-Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), custom rules have the following basic parameters:
-
-* An [expression](/ruleset-engine/rules-language/expressions/) that specifies the criteria you are matching traffic on using the [Rules language](/ruleset-engine/rules-language/).
-* An [action](/ruleset-engine/rules-language/actions/) that specifies what to perform when there is a match for the rule.
-
-Custom rules are evaluated in order, and some actions like *Block* will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
-
-:::note[Did you migrate from Cloudflare Firewall Rules?]
-
-Refer to the [migration guide](/waf/reference/migration-guides/firewall-rules-to-custom-rules/#main-differences) to learn more about the differences between firewall rules and custom rules. 
-:::
-
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/custom-rules/custom-rulesets/), which require an Enterprise plan with a paid add-on.
-
-***
-
 ## Next steps
 
-To create custom rules using the Cloudflare dashboard, refer to [Create custom rules in the dashboard](/waf/custom-rules/create-dashboard/).
+Refer to the following pages for instructions on creating custom rules:
 
-You can also create custom rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create custom rules via API](/waf/custom-rules/create-api/) for more information.
+- [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/)
+- [Create a custom rule via API](/waf/custom-rules/create-api/)
+- [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/)
+
+For examples of using custom rules to address common use cases, refer to [Common use cases](/waf/custom-rules/use-cases/).

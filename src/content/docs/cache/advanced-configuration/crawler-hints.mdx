@@ -4,7 +4,7 @@ title: Crawler Hints
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 Crawler Hints aims to increase the proportion of relevant crawls and limit crawls that do not find fresh content to reduce the need for repeated crawls.
 
@@ -26,9 +26,11 @@ Crawler Hints also means less traffic hitting your origin, improving resource co
 
 ## Enable Crawler Hints
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2. Go to **Caching** > **Configuration**.
-3. Enable **Crawler Hints**.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Enable **Crawler Hints**.
 
 After enabling Crawler Hints, Cloudflare will begin sending hints to search engines about when they should crawl particular parts of your website.
 

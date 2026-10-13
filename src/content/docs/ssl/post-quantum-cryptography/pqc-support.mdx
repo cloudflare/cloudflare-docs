@@ -1,0 +1,66 @@
+---
+pcx_content_type: reference
+title: PQC support
+sidebar:
+  order: 2
+head: []
+description: Consider information about post-quantum cryptography at Cloudflare - deployed key agreements and software support.
+---
+
+Cloudflare's deployment of post-quantum [hybrid key agreements](/ssl/post-quantum-cryptography/#hybrid-key-agreement) is supported by different software as listed below. [Contributions](/style-guide/contributions/) to keep the listing up-to-date are welcome.
+
+:::caution
+The list below is for reference only. Responsibility for third-party software lies with their respective maintainers. Use them at your own discretion.
+:::
+
+## X25519MLKEM768
+- Default for [Firefox 132+](https://www.mozilla.org/firefox/) (Desktop) and Firefox 145+ (Android)
+    - For QUIC/HTTP3, use Firefox 135+ (Desktop)
+- Default for [Chrome 131+](https://www.google.com/chrome/)
+- Default for [Safari 26+](https://www.apple.com/safari/)
+    - System-wide support in iOS 26, macOS Tahoe 26, and other [Apple operating systems](https://support.apple.com/122756)
+- Default for [Edge 131+](https://microsoft.com/edge/)
+- Default for recent [Opera](https://opera.com) and [Brave](https://brave.com)
+- Default for [Tor Browser 15.0+](https://www.torproject.org/)
+- Cloudflare's [fork of Go](https://github.com/cloudflare/go)
+- Default for [Go 1.24+](https://go.dev/doc/go1.24#cryptotlspkgcryptotls)
+- Default for [OpenSSL 3.5.0+](https://www.openssl.org/)
+- Default for [Node 24.5.0+](https://nodejs.org/) and 22.20.0+ ([backported](https://nodejs.org/en/blog/release/v22.20.0#openssl-updated-to-352))
+- [BoringSSL](https://boringssl.googlesource.com/boringssl/)
+- [GnuTLS](https://www.gnutls.org)
+    - 3.8.9+ compiled with leancrypto 1.2.0+
+    - 3.8.8-3.8.9 compiled with liboqs 0.11.0+
+- [rustls 0.23.22+](https://crates.io/crates/rustls)
+- Default for [rpxy 0.9.4+](https://github.com/junkurihara/rust-rpxy)
+- Default for [NGINX](https://github.com/nginx/nginx) compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288))
+- [Open Quantum Safe](https://openquantumsafe.org/)
+    - C library: liboqs 0.10.0+
+    - OpenSSL provider: oqs-provider 0.7.0+
+- [Zig 0.14.0+](https://ziglang.org/) (client)
+- Default for [Caddy HTTP server 2.10.0+](https://caddyserver.com/)
+- [Traefik](https://traefik.io/traefik/)
+    - Default for 3.4.2+, 2.11.26+ ([commit](https://github.com/traefik/traefik/commit/cd16321dd9c25bb47a2e9417b2a4a75959be63d0))
+    - Configurable with `curvePreferences` in [3.5.0-rc.1+](https://github.com/traefik/traefik/releases/tag/v3.5.0-rc1)
+- [Botan C++ library 3.7.0+](https://botan.randombit.net/)
+
+## X25519Kyber768Draft00
+
+- Default for [Chrome 124-130](https://www.google.com/chrome/) on Desktop
+    - For older Chrome or on mobile, toggle _TLS 1.3 hybridized Kyber support_ (`enable-tls13-kyber`) in `chrome://flags`.
+- Default for [Edge 124-130](https://microsoft.com/edge/)
+- [Firefox 124-131](https://www.mozilla.org/firefox) if you turn on `security.tls.enable_kyber` in `about:config`
+    - For QUIC/HTTP3, use Firefox 128+ with `network.http.http3.enable_kyber`.
+- Cloudflare's [fork of Go](https://github.com/cloudflare/go)
+- Default for [Go 1.23](https://github.com/golang/go/issues/67061)
+- [BoringSSL](https://boringssl.googlesource.com/boringssl/)
+- [GnuTLS](https://www.gnutls.org)
+    - 3.8.8-3.8.9 compiled with liboqs 0.11.0+
+    - 3.8.7 compiled with liboqs 0.10.1+
+- Cloudflare's [fork of QUIC-go](https://github.com/cloudflare/qtls-pq)
+- Goutam Tamvada's [fork of Firefox](https://github.com/xvzcf/firefox-pq-demos)
+- [Open Quantum Safe](https://openquantumsafe.org/)
+    - C library: liboqs 0.5.0+
+    - OpenSSL provider: oqs-provider 0.5.0-0.8.0
+- [Zig 0.11.0-0.13.0](https://ziglang.org/) (client)
+- [nginx](https://www.nginx.org/) when [compiled with BoringSSL](https://mailman.nginx.org/pipermail/nginx/2023-August/NOISOYU3QTB2DGIYUBGF7CAMQHDI2QLT.html) ([guide](https://blog.centminmod.com/2023/10/03/2860/how-to-enable-cloudflare-post-quantum-x25519kyber768-key-exchange-support-in-centmin-mod-nginx/))
+- [Botan C++ library 3.2.0+](https://botan.randombit.net/) ([instructions](https://github.com/randombit/botan/discussions/3747))

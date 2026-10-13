@@ -1,0 +1,24 @@
+releaseNotes: >-
+  This release contains no new features and is focused exclusively on
+  improvements.
+
+
+  **Notable updates**
+
+  - macOS client downloads will now contain version numbers in the file name to
+  allow easy identification.
+
+  - Improved the re-connection logic to minimize impact to existing tunneled TCP
+  sessions.
+
+  - Increased the data collected by warp-diag to improve debugging capabilities.
+
+  - Improved compatibility with multicast DNS (mDNS) systems.
+     
+  **Known issues**
+   - No known issues.
+version: 2024.3.236.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.3.236.1
+packageSize: 73484898
+releaseDate: 2024-03-22T16:46:20.328Z
+platformName: macOS

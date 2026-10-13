@@ -24,34 +24,45 @@ curl "https://api.cloudflare.com/client/v4/radar/ranking/top?name=top&limit=5" \
 
 ```json
 {
-  "rank": 1,
-  "domain": "google.com"
-},
-{
-  "rank": 2,
-  "domain": "googleapis.com"
-},
-{
-  "rank": 3,
-  "domain": "facebook.com"
-},
-{
-  "rank": 4,
-  "domain": "gstatic.com"
-},
-{
-  "rank": 5,
-  "domain": "apple.com"
+  "success": true,
+  "errors": [],
+  "result": {
+    "top_0": [
+			{
+				"rank": 1,
+				"domain": "google.com"
+			},
+			{
+				"rank": 2,
+				"domain": "googleapis.com"
+			},
+			{
+				"rank": 3,
+				"domain": "facebook.com"
+			},
+			{
+				"rank": 4,
+				"domain": "gstatic.com"
+			},
+			{
+				"rank": 5,
+				"domain": "apple.com"
+			}
+    ]
+  },
+	"meta": {
+		// ...
+	}
 }
 ```
 
-For more information refer to [Get top domains](/api/operations/radar-get-ranking-top-domains).
+For more information refer to [Get top domains](/api/resources/radar/subresources/ranking/methods/top/).
 
 #### Example: Download top `x` ranking bucket file
 
 As mentioned in the [blog post](https://blog.cloudflare.com/radar-domain-rankings/), Cloudflare provides an ordered rank
 for the top 100 domains, but for the remainder it only provides ranking buckets — like top 200 thousand, top one million,
-etc.. These are available through Cloudflare's [datasets endpoints](/api/operations/radar-get-reports-datasets).
+etc.. These are available through Cloudflare's [datasets endpoints](/api/resources/radar/subresources/datasets/methods/list/).
 
 In the following example we will request the last available domain ranking buckets:
 
@@ -62,27 +73,31 @@ curl "https://api.cloudflare.com/client/v4/radar/datasets?limit=10&datasetType=R
 
 ```json
 {
-  "datasets": [
-    {
-      "id": 213,
-      "title": "Top 1000000 ranking domains",
-      "description": "Unordered top 1000000 from 2023-01-02 to 2023-01-09",
-      "type": "RANKING_BUCKET",
-      "tags": [
-        "GLOBAL",
-        "top_1000000"
-      ],
-      "meta": {
-        "top": 1000000
-      },
-      "alias": "ranking_top_1000000"
-    },
-    ...
-  ]
+  "success": true,
+  "errors": [],
+  "result": {
+		"datasets": [
+			{
+				"id": 213,
+				"title": "Top 1000000 ranking domains",
+				"description": "Unordered top 1000000 from 2023-01-02 to 2023-01-09",
+				"type": "RANKING_BUCKET",
+				"tags": [
+					"GLOBAL",
+					"top_1000000"
+				],
+				"meta": {
+					"top": 1000000
+				},
+				"alias": "ranking_top_1000000"
+			},
+			// ...
+		]
+	}
 }
 ```
 
-If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset download url`](/api/operations/radar-post-reports-dataset-download-url) endpoint.
+If you are interested in a specific top (like the top one million), go through the `meta.top` property. After finding the top you are looking for, get its `id` to fetch the dataset using the [`GET dataset download url`](/api/resources/radar/subresources/datasets/methods/download/) endpoint.
 
 Then you can request a download url:
 
@@ -97,18 +112,22 @@ curl "https://api.cloudflare.com/client/v4/radar/datasets/download" \
 
 ```json
 {
-  "dataset": {
-    "url": "https://example.com/download"
-  }
+  "success": true,
+  "errors": [],
+  "result": {
+		"dataset": {
+			"url": "https://example.com/download"
+		}
+	}
 }
 ```
 
 #### Example: Get the last top `x` ranking bucket
 
 This endpoint allows you to directly request the latest top x bucket available (optionally at a given date)
-[Get dataset stream](/api/operations/radar-get-reports-dataset-download) endpoint.
+[Get dataset stream](/api/resources/radar/subresources/datasets/methods/get/) endpoint.
 
-The dataset alias can be retrieved from the [Get datasets](/api/operations/radar-get-reports-datasets) endpoint
+The dataset alias can be retrieved from the [Get datasets](/api/resources/radar/subresources/datasets/methods/list/) endpoint
 as the example above.
 
 This stream endpoint is only available for datasets generated after 2023-01-08.

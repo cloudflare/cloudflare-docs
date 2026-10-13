@@ -1,0 +1,22 @@
+---
+import { z } from "astro:content";
+import { zodEnumFromObjKeys } from "~/util/helpers";
+
+type Props = z.infer<typeof props>;
+
+const mappings = {
+	data_center_cities: "over 330 cities",
+	total_bandwidth: "over 405 Tbps network capacity",
+	network_peers: "over 13,000 network peers",
+} as const satisfies Record<string, string>;
+
+const props = z.object({
+	id: zodEnumFromObjKeys(mappings),
+});
+
+const { id } = props.parse(Astro.props);
+
+const stat = mappings[id];
+---
+
+{stat}

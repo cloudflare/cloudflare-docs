@@ -1,0 +1,69 @@
+---
+pcx_content_type: integration-guide
+title: Area 1
+reviewed: 2024-07-18
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+<Render file="contact-support" product="email-security" />
+
+[Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. This guide covers how to configure Area 1 as a SAML application in Cloudflare One.
+
+## Prerequisites
+
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
+- Admin access to your Area 1 account
+- Your user's email in Area 1 matches their email in Cloudflare One
+
+## 1. Add Area 1 to Cloudflare One
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **SaaS**.
+
+4. In the **Application** field, enter `Area 1` and select **Area 1**. (Area 1 is not currently listed in the default drop-down menu.)
+
+5. Enter the following values for your application configuration:
+   | | |
+   | ---------------------------------- | -------------------------------------------------- |
+   | **Entity ID** | `https://horizon.area1security.com` |
+   | **Assertion Consumer Service URL** | `https://horizon.area1security.com/api/users/saml` |
+   | **Name ID Format** | _Email_ |
+
+6. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
+
+7. Save the application.
+
+## 2. Configure SSO for Area 1
+
+Finally, you will need to configure Area 1 to allow users to log in through Cloudflare Access.
+
+1. In your [Area 1 portal](https://horizon.area1security.com/), go to **Settings** > **SSO**.
+
+2. Turn on **Single Sign On**.
+
+3. (Optional) To require users to sign in through Access, set **SSO Enforcement** to _All_. When SSO is enforced, users will no longer be able to sign in with their Area 1 credentials.
+
+4. In **SAML SSO Domain**, enter `<your-team-name>.cloudflareaccess.com`.
+
+5. Get your Metadata XML file:
+   1. In Cloudflare One, copy the **SSO Endpoint** for your application.
+
+      ![Copy SSO settings for a SaaS application from Cloudflare One](~/assets/images/cloudflare-one/applications/saas-sso-endpoint.png)
+
+   2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
+
+   3. Copy the resulting metadata.
+
+6. Return to the Area 1 portal and paste the metadata into **Metadata XML**.
+
+   ![Configure SSO in the Area 1 portal](~/assets/images/cloudflare-one/applications/area1-sso-config.png)
+
+7. Select **Update Settings**.
+
+If you added the application to your App Launcher, you can test the integration by going to `<your-team-name>.cloudflareaccess.com`.

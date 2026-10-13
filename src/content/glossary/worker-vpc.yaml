@@ -1,0 +1,6 @@
+---
+productName: Workers VPC
+entries:
+  - term: Virtual Private Cloud
+    general_definition: |-
+      A logically isolated section of cloud infrastructure that provides secure, private networking within a public cloud environment.

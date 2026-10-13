@@ -1,67 +1,145 @@
 ---
 pcx_content_type: get-started
-title: Get started
-updated: 2024-06-19
+title: Getting started
+reviewed: 2024-06-19
 sidebar:
   order: 2
-
 ---
 
+import {
+	Details,
+	DirectoryListing,
+	LinkButton,
+	Render,
+	TabItem,
+	Tabs,
+	Badge,
+} from "~/components";
 
 
-import { Details, DirectoryListing, LinkButton, Render } from "~/components"
+In this guide, you will learn how to create and use your first AI Gateway.
 
-In this guide, you will learn how to create your first AI Gateway. You can create multiple gateways to control different applications.
+<Render file="create-gateway" product="ai-gateway" />
 
-## Prerequisites
+### Authenticated gateway
 
-Before you get started, you need a Cloudflare account.
+When you enable authentication on gateway each request is required to include a valid Cloudflare API token, adding an extra layer of security. We recommend using an authenticated gateway to prevent unauthorized access. [Learn more](/ai-gateway/configuration/authentication/).
 
-<LinkButton variant="primary" href="https://dash.cloudflare.com/sign-up">Sign up</LinkButton>
+## Provider Authentication
 
-## Create gateway
+Authenticate with your upstream AI provider using one of the following options:
 
-Then, create a new AI Gateway.
+- **Unified Billing:** Use the AI Gateway billing to pay for and authenticate your inference requests. Refer to [Unified Billing](/ai-gateway/features/unified-billing/).
+- **BYOK (Store Keys):** Store your API Keys with Cloudflare, and AI Gateway will include them at runtime. Refer to [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+- **Request headers:** Include your provider key in the request headers as you normally would (for example, `Authorization: Bearer <OPENAI_API_KEY>`).
 
-<Render file="create-gateway" />
+## Integration Options
 
-## Connect application
+### Unified API (OpenAI-Compatible) Endpoint
 
-Next, connect your AI provider to your gateway.
+<Badge text="recommended" variant="success" size="small" />
+<br />
+<br />
 
-AI Gateway offers multiple endpoints for each Gateway you create - one endpoint per provider, and one Universal Endpoint.
+The easiest way to get started with AI Gateway is through our OpenAI-compatible `/chat/completions` endpoint. This allows you to use existing OpenAI SDKs and tools with minimal code changes while gaining access to multiple AI providers.
 
+```txt ins="{account_id}" ins="{gateway_name}"
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/compat/chat/completions
+```
 
-<Details header="Supported providers">
+**Key benefits:**
 
-<DirectoryListing folder="ai-gateway/providers" />
+- Drop-in replacement for OpenAI API, works with existing OpenAI SDKs and other OpenAI compliant clients
+- Switch between providers by changing the `model` parameter
+- Dynamic Routing - Define complex routing scenarios requiring conditional logic, conduct A/B tests, set rate / budget limits, etc
 
+#### Example:
 
+<Details header="With Key in Request">
+<Tabs>
+<TabItem label="With Authenticated Gateway">
+```js title=""
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY",
+	defaultHeaders: {
+		"cf-aig-authorization": `Bearer {cf_api_token}`,
+	},
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+// Use different providers by changing the model parameter
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini", "anthropic/claude-sonnet-4-5"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+</TabItem>
+<TabItem label="Unauthenticated Gateway">
+```js title=""
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+// Use different providers by changing the model parameter
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini", "anthropic/claude-sonnet-4-5"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+</TabItem>
+</Tabs>
+</Details>
+<Details header="With Stored Keys (BYOK) / Unified Billing" open>
+```js title="OpenAI JS SDK"
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "{cf_api_token}",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+// Ensure either your LLM Keys are stored with BYOK
+// or Unified Billing has credits
+const response = await client.chat.completions.create({
+	// Use different providers by changing the model parameter
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
 </Details>
 
-If you do not have a provider preference, start with one of our dedicated tutorials.
 
 
-<Details header="Onboarding tutorials">
+Refer to [Unified API](/ai-gateway/usage/chat-completion/) to learn more about OpenAI compatibility.
 
-* [OpenAI](/ai-gateway/tutorials/deploy-aig-worker/)
-* [Worker AI](/ai-gateway/tutorials/create-first-aig-workers/)
+### Provider-specific endpoints
 
+For direct integration with specific AI providers, use dedicated endpoints that maintain the original provider's API schema while adding AI Gateway features.
 
-</Details>
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/{provider}
+```
 
-## View analytics
+**Available providers:**
 
-Now that your provider is connected to the AI Gateway, you can view analytics for requests going through your gateway.
-
-<Render file="analytics-overview" /> <br/>
-
-<Render file="analytics-dashboard" />
-
-<Render file="analytics-warning" />
+- [OpenAI](/ai-gateway/usage/providers/openai/) - GPT models and embeddings
+- [Anthropic](/ai-gateway/usage/providers/anthropic/) - Claude models
+- [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/) - Gemini models
+- [Workers AI](/ai-gateway/usage/providers/workersai/) - Cloudflare's inference platform
+- [AWS Bedrock](/ai-gateway/usage/providers/bedrock/) - Amazon's managed AI service
+- [Azure OpenAI](/ai-gateway/usage/providers/azureopenai/) - Microsoft's OpenAI service
+- [and more...](/ai-gateway/usage/providers/)
 
 ## Next steps
 
-* Learn more about [caching](/ai-gateway/configuration/caching/) for faster requests and cost savings and [rate limiting](/ai-gateway/configuration/rate-limiting/) to control how your application scales.
-* Explore how to specify model or provider [fallbacks](/ai-gateway/configuration/fallbacks/) for resiliency.
-* Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/providers/workersai/) - our AI inference service.
+- Learn more about [caching](/ai-gateway/features/caching/) for faster requests and cost savings and [rate limiting](/ai-gateway/features/rate-limiting/) to control how your application scales.
+- Explore how to specify model or provider [fallbacks, ratelimits, A/B tests](/ai-gateway/features/dynamic-routing/) for resiliency.
+- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/usage/providers/workersai/) - our AI inference service.

@@ -18,5 +18,5 @@ The `Access-Control-Allow-Origin` header allows servers to specify rules for sha
 If you add or change CORS configuration at your origin web server, purging the Cloudflare cache by URL does not update the CORS headers. Force Cloudflare to retrieve the new CORS headers via one of the following options:
 
 * Change the filename or URL to bypass cache to instruct Cloudflare to retrieve the latest CORS headers.
-* Use the [single-file purge API](/api/operations/zone-purge#purge-cached-content-by-url) to specify the appropriate CORS headers along with the purge request.
+* Use the [single-file purge API](/api/resources/cache/methods/purge/#purge-cached-content-by-url) to specify the appropriate CORS headers along with the purge request.
 * Update the resource’s last-modified time at your origin web server. Then, complete a [full purge](/cache/how-to/purge-cache/purge-everything/) to retrieve the latest version of your assets including updated CORS headers.

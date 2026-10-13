@@ -1,0 +1,84 @@
+---
+pcx_content_type: how-to
+title: Tanium
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Tanium - Posture checks
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="posture/service-provider-intro"
+	params={{ one: "Tanium" }}
+	product="cloudflare-one"
+/>
+
+## Prerequisites
+
+- Either Tanium Cloud or on-premise installations of Tanium with the Benchmark entitlement
+- Tanium agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/integrations/service-providers/",
+  	}}
+  />
+
+## Set up Tanium as a service provider
+
+### 1. Get Tanium settings
+
+The following Tanium values are needed to set up the Tanium posture check:
+
+- Client Secret
+- REST API URL
+
+To retrieve the client secret, create an API token:
+
+1. Log in to your Tanium instance.
+2. Go to **Administration** > **API Tokens**.
+3. Select **New API Token**.
+4. Set **Expire in days** to an appropriate value for your organization. When this token expires, all device posture results will begin to fail unless updated.
+5. Set **Trusted IP addresses** to `0.0.0.0/0`.
+6. Select **Save**.
+7. Copy the **Client Secret** to a safe place.
+
+To retrieve the API URL, determine your Tanium Gateway root endpoint:
+
+- Tanium Cloud: `https://<customerName>-api.cloud.tanium.com/plugin/products/gateway/graphql`
+- Tanium On Prem: `https://<server>/plugin/products/gateway/graphql`
+
+### 2. Add Tanium as a service provider
+
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Tanium" }}
+/>
+
+5. Enter the **Client Secret** and **REST API URL** you noted down above.
+6. Choose a **Polling frequency** for how often Cloudflare One should query Tanium for information.
+7. Select **Test and save**.
+
+### 3. Configure the posture check
+
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "Tanium" }}
+/>
+
+## Device posture attributes
+
+Device posture data is gathered from [Tanium's EndpointRisk API](https://developer.tanium.com/site/global/apis/graphql/spectaql/index.gsp#definition-EndpointRisk). To learn more about how scores are calculated, refer to the [Tanium risk score documentation](https://help.tanium.com/bundle/ug_benchmark_cloud/page/benchmark/risk_score.html).
+
+| Selector      | Description                                                                     | Value                                                                                           |
+| ------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Total score   | `totalScore` of the device.                                                     | `1` to `1000`                                                                                   |
+| Risk level    | `riskLevel` of the device.                                                      | Low, medium, high, or critical                                                                  |
+| EID last seen | Elapsed time since the device was last seen, based on its `datetime` attribute. | In the last 1 hour, 3 hours, 6 hours, 12 hours, 24 hours, 7 days, 30 days, or more than 30 days |

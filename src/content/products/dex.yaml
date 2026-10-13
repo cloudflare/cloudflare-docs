@@ -5,5 +5,8 @@ product:
   group: Cloudflare One
   additional_groups: [Analytics]
   url: /cloudflare-one/insights/dex/
-  grid_placeholder: true
+
   wrap: true
+
+meta:
+  description: Monitor device, network, and application health across your Zero Trust organization

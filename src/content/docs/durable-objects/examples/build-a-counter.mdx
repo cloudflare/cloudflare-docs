@@ -1,17 +1,13 @@
 ---
-type: example
 summary: Build a counter using Durable Objects and Workers with RPC methods.
-tags:
-  - Durable Objects
 pcx_content_type: example
 title: Build a counter
 sidebar:
   order: 3
 description: Build a counter using Durable Objects and Workers with RPC methods.
-
 ---
 
-import { TabItem, Tabs } from "~/components"
+import { TabItem, Tabs, WranglerConfig } from "~/components";
 
 This example shows how to build a counter using Durable Objects and Workers with [RPC methods](/workers/runtime-apis/rpc) that can print, increment, and decrement a `name` provided by the URL query string parameter, for example, `?name=A`.
 
@@ -22,71 +18,63 @@ import { DurableObject } from "cloudflare:workers";
 
 // Worker
 export default {
-  async fetch(request, env) {
-    let url = new URL(request.url);
-    let name = url.searchParams.get("name");
-    if (!name) {
-      return new Response(
-        "Select a Durable Object to contact by using" +
-          " the `name` URL query string parameter, for example, ?name=A"
-      );
-    }
+	async fetch(request, env) {
+		let url = new URL(request.url);
+		let name = url.searchParams.get("name");
+		if (!name) {
+			return new Response(
+				"Select a Durable Object to contact by using" +
+					" the `name` URL query string parameter, for example, ?name=A",
+			);
+		}
 
-    // Every unique ID refers to an individual instance of the Counter class that
-    // has its own state. `idFromName()` always returns the same ID when given the
-    // same string as input (and called on the same class), but never the same
-    // ID for two different strings (or for different classes).
-    let id = env.COUNTERS.idFromName(name);
+		// A stub is a client Object used to send messages to the Durable Object.
+		let stub = env.COUNTERS.getByName(name);
 
-    // Construct the stub for the Durable Object using the ID.
-    // A stub is a client Object used to send messages to the Durable Object.
-    let stub = env.COUNTERS.get(id);
+		// Send a request to the Durable Object using RPC methods, then await its response.
+		let count = null;
+		switch (url.pathname) {
+			case "/increment":
+				count = await stub.increment();
+				break;
+			case "/decrement":
+				count = await stub.decrement();
+				break;
+			case "/":
+				// Serves the current value.
+				count = await stub.getCounterValue();
+				break;
+			default:
+				return new Response("Not found", { status: 404 });
+		}
 
-    // Send a request to the Durable Object using RPC methods, then await its response.
-    let count = null;
-    switch (url.pathname) {
-      case "/increment":
-        count = await stub.increment();
-        break;
-      case "/decrement":
-        count = await stub.decrement();
-        break;
-      case "/":
-        // Serves the current value.
-        count = await stub.getCounterValue();
-        break;
-      default:
-        return new Response("Not found", { status: 404 });
-    }
-
-    return new Response(`Durable Object '${name}' count: ${count}`);
-  }
+		return new Response(`Durable Object '${name}' count: ${count}`);
+	},
 };
 
 // Durable Object
 export class Counter extends DurableObject {
+	async getCounterValue() {
+		let value = (await this.ctx.storage.get("value")) || 0;
+		return value;
+	}
 
-  async getCounterValue() {
-    let value = (await this.ctx.storage.get("value")) || 0;
-    return value;
-  }
+	async increment(amount = 1) {
+		let value = (await this.ctx.storage.get("value")) || 0;
+		value += amount;
+		// You do not have to worry about a concurrent request having modified the value in storage.
+		// "input gates" will automatically protect against unwanted concurrency.
+		// Read-modify-write is safe.
+		await this.ctx.storage.put("value", value);
+		return value;
+	}
 
-  async increment(amount = 1) {
-    let value = (await this.ctx.storage.get("value")) || 0;
-    value += amount;
-    // You do not have to worry about a concurrent request having modified the value in storage.
-    // "input gates" will automatically protect against unwanted concurrency.
-    // Read-modify-write is safe.
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
-
-  async decrement(amount = 1) {
-    let value = (await this.ctx.storage.get("value")) || 0;
-    value -= amount;
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
+	async decrement(amount = 1) {
+		let value = (await this.ctx.storage.get("value")) || 0;
+		value -= amount;
+		await this.ctx.storage.put("value", value);
+		return value;
+	}
 }
 ```
 
@@ -96,84 +84,141 @@ export class Counter extends DurableObject {
 import { DurableObject } from "cloudflare:workers";
 
 export interface Env {
-  COUNTERS: DurableObjectNamespace<Counter>;
+	COUNTERS: DurableObjectNamespace<Counter>;
 }
 
 // Worker
 export default {
-  async fetch(request, env) {
-    let url = new URL(request.url);
-    let name = url.searchParams.get("name");
-    if (!name) {
-      return new Response(
-        "Select a Durable Object to contact by using" +
-          " the `name` URL query string parameter, for example, ?name=A"
-      );
-    }
+	async fetch(request, env) {
+		let url = new URL(request.url);
+		let name = url.searchParams.get("name");
+		if (!name) {
+			return new Response(
+				"Select a Durable Object to contact by using" +
+					" the `name` URL query string parameter, for example, ?name=A",
+			);
+		}
 
-    // Every unique ID refers to an individual instance of the Counter class that
-    // has its own state. `idFromName()` always returns the same ID when given the
-    // same string as input (and called on the same class), but never the same
-    // ID for two different strings (or for different classes).
-    let id = env.COUNTERS.idFromName(name);
+		// A stub is a client Object used to send messages to the Durable Object.
+		let stub = env.COUNTERS.get(name);
 
-    // Construct the stub for the Durable Object using the ID.
-    // A stub is a client Object used to send messages to the Durable Object.
-    let stub = env.COUNTERS.get(id);
+		let count = null;
+		switch (url.pathname) {
+			case "/increment":
+				count = await stub.increment();
+				break;
+			case "/decrement":
+				count = await stub.decrement();
+				break;
+			case "/":
+				// Serves the current value.
+				count = await stub.getCounterValue();
+				break;
+			default:
+				return new Response("Not found", { status: 404 });
+		}
 
-    let count = null;
-    switch (url.pathname) {
-      case "/increment":
-        count = await stub.increment();
-        break;
-      case "/decrement":
-        count = await stub.decrement();
-        break;
-      case "/":
-        // Serves the current value.
-        count = await stub.getCounterValue();
-        break;
-      default:
-        return new Response("Not found", { status: 404 });
-    }
-
-    return new Response(`Durable Object '${name}' count: ${count}`);
-  }
+		return new Response(`Durable Object '${name}' count: ${count}`);
+	},
 } satisfies ExportedHandler<Env>;
 
 // Durable Object
 export class Counter extends DurableObject {
+	async getCounterValue() {
+		let value = (await this.ctx.storage.get("value")) || 0;
+		return value;
+	}
 
-  async getCounterValue() {
-    let value = (await this.ctx.storage.get("value")) || 0;
-    return value;
-  }
+	async increment(amount = 1) {
+		let value: number = (await this.ctx.storage.get("value")) || 0;
+		value += amount;
+		// You do not have to worry about a concurrent request having modified the value in storage.
+		// "input gates" will automatically protect against unwanted concurrency.
+		// Read-modify-write is safe.
+		await this.ctx.storage.put("value", value);
+		return value;
+	}
 
-  async increment(amount = 1) {
-    let value: number = (await this.ctx.storage.get("value")) || 0;
-    value += amount;
-    // You do not have to worry about a concurrent request having modified the value in storage.
-    // "input gates" will automatically protect against unwanted concurrency.
-    // Read-modify-write is safe.
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
-
-  async decrement(amount = 1) {
-    let value: number = (await this.ctx.storage.get("value")) || 0;
-    value -= amount;
-    await this.ctx.storage.put("value", value);
-    return value;
-  }
+	async decrement(amount = 1) {
+		let value: number = (await this.ctx.storage.get("value")) || 0;
+		value -= amount;
+		await this.ctx.storage.put("value", value);
+		return value;
+	}
 }
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import DurableObject, Response, WorkerEntrypoint
+from urllib.parse import urlparse, parse_qs
+
+# Worker
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		parsed_url = urlparse(request.url)
+		query_params = parse_qs(parsed_url.query)
+		name = query_params.get('name', [None])[0]
+
+		if not name:
+			return Response(
+				"Select a Durable Object to contact by using"
+				+ " the `name` URL query string parameter, for example, ?name=A"
+			)
+
+		# A stub is a client Object used to send messages to the Durable Object.
+		stub = self.env.COUNTERS.getByName(name)
+
+		# Send a request to the Durable Object using RPC methods, then await its response.
+		count = None
+
+		if parsed_url.path == "/increment":
+			count = await stub.increment()
+		elif parsed_url.path == "/decrement":
+			count = await stub.decrement()
+		elif parsed_url.path == "" or parsed_url.path == "/":
+			# Serves the current value.
+			count = await stub.getCounterValue()
+		else:
+			return Response("Not found", status=404)
+
+		return Response(f"Durable Object '{name}' count: {count}")
+
+# Durable Object
+class Counter(DurableObject):
+	def __init__(self, ctx, env):
+		super().__init__(ctx, env)
+
+	async def getCounterValue(self):
+		value = await self.ctx.storage.get("value")
+		return value if value is not None else 0
+
+	async def increment(self, amount=1):
+		value = await self.ctx.storage.get("value")
+		value = (value if value is not None else 0) + amount
+		# You do not have to worry about a concurrent request having modified the value in storage.
+		# "input gates" will automatically protect against unwanted concurrency.
+		# Read-modify-write is safe.
+		await self.ctx.storage.put("value", value)
+		return value
+
+	async def decrement(self, amount=1):
+		value = await self.ctx.storage.get("value")
+		value = (value if value is not None else 0) - amount
+		await self.ctx.storage.put("value", value)
+		return value
 ```
 
 </TabItem> </Tabs>
 
-Finally, configure your `wrangler.toml` file to include a Durable Object [binding](/durable-objects/get-started/#5-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
+Finally, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the namespace and class name chosen previously.
 
-```toml
+<WranglerConfig>
+
+```toml title="wrangler.toml"
 name = "my-counter"
+main = "src/index.ts"
 
 [[durable_objects.bindings]]
 name = "COUNTERS"
@@ -181,10 +226,12 @@ class_name = "Counter"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["Counter"]
+new_sqlite_classes = ["Counter"]
 ```
+
+</WranglerConfig>
 
 ### Related resources
 
-* [Workers RPC](/workers/runtime-apis/rpc/)
-* [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- [Workers RPC](/workers/runtime-apis/rpc/)
+- [Durable Objects: Easy, Fast, Correct — Choose three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).

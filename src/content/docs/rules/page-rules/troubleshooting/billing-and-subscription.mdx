@@ -1,16 +1,14 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
-title: Billing and subscription
-head:
-  - tag: title
-    content: Billing and subscription FAQ | Page Rules
-
+title: Troubleshoot Page Rules - Billing and subscription
+sidebar:
+  label: Billing and subscription
 ---
 
-import { Render } from "~/components"
+import { Render, Steps, DashButton } from "~/components";
 
-<Render file="page-rules-migration" />
+<Render file="page-rules-migration" product="rules" />
 
 ## If I run out of Page Rules, can I buy more?
 
@@ -20,13 +18,18 @@ No, you cannot buy additional Page Rules. You will need to [migrate to modern Ru
 
 To cancel a purchase:
 
-1. Go to [your Account Subscriptions settings](http://dash.cloudflare.com/?to=/:account/billing/subscriptions).
+<Steps>
 
-2. Find the associated website (listed in alphabetical order) and select **Edit**.
+1. In the Cloudflare dashboard, go to the **Billing** page.
 
-3. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing page rules (paused or active).
+   <DashButton url="/?to=/:account/billing" />
 
-4. Finish the updates to your subscription.
+2. Go to **Subscriptions**.
+3. Find the associated website (listed in alphabetical order) and select **Edit**.
+4. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing page rules (paused or active).
+5. Finish the updates to your subscription.
+
+</Steps>
 
 ## When I change plans will I keep my add-on subscriptions?
 
@@ -36,4 +39,4 @@ When you change plans, you will keep your Page Rules add-on subscription.
 
 You will be billed for and have access to your additional Page Rules until the end of your current billing cycle.
 
-Your plan will adjust at the start of your next billing cycle. For more details, refer to our [billing policy](/support/account-management-billing/billing-cloudflare-plans/cloudflare-billing-policy/).
+Your plan will adjust at the start of your next billing cycle. For more details, refer to our [billing policy](/billing/billing-policy/).

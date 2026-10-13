@@ -1,0 +1,32 @@
+---
+pcx_content_type: troubleshooting
+title: Error 500
+source: null
+---
+
+## Error 500: internal server error
+
+This error indicates a problem with your origin web server, preventing it from fulfilling the request.
+
+### Common causes
+
+The `Error establishing database connection message` is a common HTTP `500` error, typically indicating an origin web server issue. If you encounter this error, contact your hosting provider for assistance.
+
+### Resolution
+
+When dealing with most `5XX` errors, the first step is to reach out to your hosting provider or site administrator to help troubleshoot the issue. Share the necessary [error details](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to your hosting provider to assist troubleshooting the issue.
+
+However, if the `500` error contains `cloudflare` or `cloudflare-nginx` in the HTML response body, contact [Cloudflare support](/support/contacting-cloudflare-support/) and provide the following details:
+
+- Your domain name
+- The time and timezone of the `500` error occurrence
+- The output of `www.example.com/cdn-cgi/trace` from the browser where the `500` error was observed (replace `www.example.com` with your actual domain and hostname)
+
+:::note
+
+If you observe blank or white pages when visiting your website, confirm whether the issue occurs when [temporarily pausing Cloudflare](/fundamentals/manage-domains/pause-cloudflare/) and contact your hosting provider for assistance.
+:::
+
+### Known Cloudflare issue leading to HTTP Error 500
+
+- A configuration issue on Page Rules can generate HTTP Error `500`. Refer to [Page Rules troubleshooting](/rules/page-rules/troubleshooting/general/#error-500-internal-server-error) for more details and resolution.

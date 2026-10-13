@@ -1,0 +1,100 @@
+---
+title: Hostname management
+pcx_content_type: reference
+sidebar:
+  order: 2
+
+---
+
+import { DashButton, Steps, Tabs, TabItem, Details } from "~/components"
+
+Hostname management controls where your Turnstile widgets can be used by specifying which domains are authorized to load and execute your widgets. This security measure prevents unauthorized use of your widgets on domains that you do not control.
+
+You can associate hostnames with your widget to control where it can be used via Hostname Management. Managing your hostnames ensures that Turnstile works seamlessly with your setup, whether you add standalone hostnames or leverage zones registered to your Cloudflare account.
+
+---
+
+## Hostname requirements
+
+### Standard configuration
+
+By default, every widget requires at least one hostname to be configured. You cannot create a widget without specifying at least one authorized hostname.
+
+### Hostname format requirements
+
+When adding hostnames, follow these requirements:
+
+- The hostname must be fully qualified domain names (FQDNs): `example.com` or `subdomain.example.com`
+- No wildcards are supported. You must specify each hostname individually.
+
+:::caution[Invalid formats]
+The following formats are not valid and will not be accepted:
+
+- Schemes such as `http://example.com` or `https://example.com`
+- Ports such as `example.com:443` or `subdomain.example.com:8080`
+- Paths such as `example.com/path` or `subdomain.example.com/login`
+:::
+
+### Subdomain behavior
+
+Specifying a subdomain provides additional security by restricting widget usage. 
+
+For example, adding `www.example.com` as a hostname will allow widgets to work on:
+
+- `www.example.com`
+- `abc.www.example.com:8080` (subdomains of the specified hostname). 
+
+However, it will not work on:
+
+- `example.com` (parent domain)
+- `dash.example.com` (sibling subdomain)
+- `cloudflare.com` (unrelated domain)
+
+## Add hostnames
+
+<Tabs>
+  <TabItem label="Dashboard">
+    <Details header="Existing widget">
+      <Steps>
+          1. In the Cloudflare dashboard, go to the **Turnstile** page.
+            
+              <DashButton url="/?to=/:account/turnstile" />
+          2. Select an existing widget.
+          3. Go to **Settings**.
+          4. Under **Hostname Management**, select **Add Hostnames**.
+          5. Add a custom hostname or choose from an existing hostname.
+          6. Select **Add**.
+      </Steps>
+    </Details>
+    <Details header="New widget">
+      <Steps>
+          1. In the Cloudflare dashboard, go to the **Turnstile** page.
+            
+                <DashButton url="/?to=/:account/turnstile" />
+          2. Select **Add widget**.
+          3. In the hostname field, enter your domain(s).
+          4. If you have zones registered with Cloudflare, you can select from existing zones
+      </Steps>
+    </Details>
+  </TabItem>
+  <TabItem label="API">
+    
+    ```bash title="cURL command" wrap
+      curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets/$WIDGET_ID" \
+      -H "Authorization: Bearer $API_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d '{
+      "domains": ["example.com", "app.example.com", "api.example.com"]
+      }'
+    ```
+    
+  </TabItem>
+</Tabs>
+
+---
+
+## Limitations
+
+Free users are entitled to a maximum of 15 hostnames per widget.
+
+Enterprise customers can have up to 200 hostnames per widget.

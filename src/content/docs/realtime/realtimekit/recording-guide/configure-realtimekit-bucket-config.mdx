@@ -1,0 +1,28 @@
+---
+title: Disable Upload to RealtimeKit Bucket
+pcx_content_type: how-to
+sidebar:
+  order: 8
+---
+
+Once the recording is complete, by default, RealtimeKit uploads all recordings to RealtimeKit's AWS S3 bucket. Additionally, a presigned URL is generated with a 7-day expiry. The recording can be accessed using the `downloadUrl` associated with each recording.
+
+However, RealtimeKit provides users with the flexibility to choose whether or not to upload their recordings to RealtimeKit's S3 bucket. If you wish to disable uploads to RealtimeKit's bucket, you can set the `realtimekit_bucket_config` parameter to false in the [Start Recording API](/api/resources/realtime_kit/subresources/recordings/methods/start_recordings/).
+
+For example:
+
+```json
+{
+  "realtimekit_bucket_config": {
+    "enabled": false
+  }
+}
+```
+
+:::note
+
+If you haven't specified an external storage configuration and also disabled uploads to RealtimeKit's bucket, then the recording will not be uploaded to any location. It is considered as an invalid recording.
+
+For more information on how to set your external storage configuration, see [Publish Recorded File to Your Cloud Provider](/realtime/realtimekit/recording-guide/custom-cloud-storage/).
+
+:::

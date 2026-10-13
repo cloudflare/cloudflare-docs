@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This release contains only stability and bug fixes.
+   
+  **Hotfix Updates**
+
+  - Fixed issue where clients would attempt to configure DNS even when in
+  posture-only, or proxy modes.
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.12.581.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.12.581.1
+packageSize: 105140224
+releaseDate: 2023-01-11T20:51:06.149Z
+platformName: Windows

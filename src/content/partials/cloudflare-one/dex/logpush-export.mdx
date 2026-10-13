@@ -1,0 +1,14 @@
+---
+{}
+---
+
+
+{props.applicationTests ? (
+  <>
+    <p>The log data for all <a href="/logs/logpush/logpush-job/datasets/account/dex_application_tests/">DEX application tests</a> (including HTTP tests) can be exported to <a href="/r2/">R2</a>, a cloud bucket, or a SIEM via <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a>.</p>
+  </>
+) : (
+  <>
+    <p>The log data for all <a href="/logs/logpush/logpush-job/datasets/account/dex_device_state_events/">DEX device state events</a> can be exported to <a href="/r2/">R2</a>, a cloud bucket, or a SIEM via <a href="/cloudflare-one/insights/logs/logpush/">Logpush</a>.</p>
+  </>
+)}

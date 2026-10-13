@@ -1,0 +1,47 @@
+releaseNotes: >-
+  This release contains bug fixes and new features from the previous Beta
+  release. With this release we are now feature complete for the quarter and
+  will begin focusing exclusively on QA and bug fixes only. We encourage
+  customers to test with this version and report issues ASAP.
+   
+  **Notable updates**
+
+  - Added support for Zero Trust Digital Experience Monitoring. More information
+  coming soon for customers who signed up for the beta
+
+  - Added new log message to help customers and support identify when a users
+  local network IP space overlaps with a remote network configured to go through
+  the tunnel
+
+  - Added support for Zero Trust customers to opt in to having the WARP Client
+  install the root CA for your organization if TLS Decryption is enabled. A new
+  toggle switch will appear in the dashboard under Settings->WARP Client soon to
+  enable this
+
+  - Modified behavior of Managed networks tests to always happen outside the
+  tunnel as per original intent
+
+  - Modified firewall behavior to allow incoming UDP traffic on ports 67-68 over
+  split tunnel routes configured to be protected by Gateway. This change should
+  allow organizations with overlapping networks to an end users local network,
+  to not leave their users in a completely broken state without internet
+  connectivity
+
+  - Fixed issue introduced in previous beta with delays in initial registration
+  and onboarding flows
+
+  - Fixed issue introduced in previous beta where entering the admin override
+  code would not turn off the toggle switch for the user
+
+  - Fixed issue where GUI could miss a status message from the WARP Service
+  resulting in the wrong state being reflected to users. An example is the GUI
+  could show `Connecting` even though device was `Connected`
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.3.165.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.3.165.1
+packageSize: 49285066
+releaseDate: 2023-03-14T22:08:27.600Z
+platformName: macOS

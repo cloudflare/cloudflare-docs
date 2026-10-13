@@ -1,0 +1,557 @@
+---
+pcx_content_type: content
+title: Error Codes
+slug: realtime/realtimekit/core/error-codes
+sidebar:
+  order: 14
+---
+
+import { Tabs, TabItem } from '~/components';
+
+This page describes RealtimeKit error codes to help you identify and troubleshoot issues.
+
+<Tabs syncKey="realtimeKitFrameworkTypeTabs">
+<TabItem label="Web Frameworks">
+
+All Web Frameworks (Web Components, React, Angular) share the same error codes.
+
+## RealtimeKitClient
+
+#### Error code: 0001
+
+- **Error message**: Failed to initialize
+- **Possible reason**: RealtimeKitClient is not getting initialized.
+- **Possible solution**: Verify if you initialized the RealtimeKitClient correctly `await RealtimeKitClient.init({ ... })`. See [RealtimeKitClient](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient). If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0002
+
+- **Error message**: Failed to join room
+- **Possible reason**: Indicates a problem with the RealtimeKitClient.
+- **Possible solution**: The `join()` method is used to join a meeting room in RealtimeKit. Try calling this method again on the RealtimeKitClient:
+
+```javascript
+await meeting.join();
+```
+
+Once the join room process completes, you'll see the `roomJoined` event is emitted on the `meeting.self` namespace.
+
+#### Error code: 0003
+
+- **Error message**: Failed to leave room
+- **Possible reason**: Indicates a problem with the RealtimeKitClient.
+- **Possible solution**: The `leave()` method is used to leave a meeting room in RealtimeKit. Try calling this method again on the RealtimeKitClient:
+
+```javascript
+await meeting.leave();
+```
+
+#### Error code: 0004
+
+- **Error message**: Invalid auth token
+- **Possible reason**: Indicates a problem with the passed participant auth token.
+- **Possible solution**: Ensure that the passed auth token is a valid JWT auth token that is not expired yet.
+
+#### Error code: 0010
+
+- **Error message**: Browser not supported
+- **Possible reason**: Browser is too old and does not support WebRTC
+- **Possible solution**: Upgrade browser to the latest version. Google Chrome is preferred.
+
+#### Error code: 0011
+
+- **Error message**: HTTP Network Error
+- **Possible reason**: Either internet issues are present or the API requests are failing due to a faulty auth token among other cases
+- **Possible solution**: Ensure that the internet connection is proper. Speed test can be performed at [fast.com](https://fast.com/). Make sure that the meeting is active and the token has not expired.
+
+#### Error code: 0012
+
+- **Error message**: Websocket Network Error
+- **Possible reason**: Either internet issues are present or the Websocket connection failed due to a faulty auth token among other cases
+- **Possible solution**: Ensure that the internet connection is proper. Speed test can be performed at [fast.com](https://fast.com/). Make sure that the meeting is active and the token has not expired.
+
+#### Error code: 0013
+
+- **Error message**: Rate Limited
+- **Possible reason**: SDK API that you are calling is being called too often
+- **Possible solution**: API rate limiting generally occurs when the webpage is making an unusually high number of requests within a short period. To resolve this, analyze your code to determine why so many requests are being sent and implement optimizations to reduce unnecessary calls.
+
+## Controller
+
+#### Error code: 0100
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Controller module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0101
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 0102
+
+- **Error message**: Prerequisite module missing
+- **Possible reason**: A required module such as `self` for the Controller is missing or not initialized.
+- **Possible solution**: Ensure all prerequisite modules are properly passed in RealtimeKitClient initialization.
+
+## RoomNodeClient
+
+#### Error code: 0200
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the RoomNodeClient module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+## HiveNodeClient
+
+#### Error code: 0300
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the HiveNodeClient module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+## SocketService
+
+#### Error code: 0400
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the SocketService module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0404
+
+- **Error message**: Missing prerequisites to establish a websocket connection
+- **Possible reason**: Required prerequisites for establishing a WebSocket connection are missing.
+- **Possible solution**: Ensure all prerequisites (e.g., JWT auth token with meetingId, network connectivity) are met. This is an extremely rare case and usually indicates an issue in RealtimeKit SDK.
+
+## Chat
+
+#### Error code: 0500
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Chat module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0501
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 0502
+
+- **Error message**: Invalid message body
+- **Possible reason**: The message body does not conform to the expected format.
+- **Possible solution**: The `Message` type is not defined correctly. See [Chat](https://docs.realtime.cloudflare.com/web-core/chat/introduction).
+
+#### Error code: 0503
+
+- **Error message**: Text message is too large
+- **Possible reason**: The message exceeds the allowed character limit.
+- **Possible solution**: Reduce the message length and try again.
+
+#### Error code: 0504
+
+- **Error message**: Message not found by the given ID
+- **Possible reason**: The message ID provided does not correspond to an existing message.
+- **Possible solution**: Verify the message ID and ensure the message exists before querying.
+
+#### Error code: 0505
+
+- **Error message**: Action not permitted without joining room
+- **Possible reason**: The participant attempted to perform an action that requires them to join the meeting first.
+- **Possible solution**: The participant must first join the meeting using `meeting.join()` before attempting the action again.
+
+#### Error code: 0506
+
+- **Error message**: Message search is disabled
+- **Possible reason**: The message search feature is turned off.
+- **Possible solution**: Please reach out to Cloudflare support for assistance.
+
+#### Error code: 0510
+
+- **Error message**: Invalid channel name
+- **Possible reason**: The channel name provided does not meet the required format or does not exist.
+- **Possible solution**: Ensure the channel name is correctly formatted and exists in the system.
+
+## Plugin
+
+#### Error code: 0600
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Plugin module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0601
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 0602
+
+- **Error message**: Plugin not found
+- **Possible reason**: The specified plugin does not exist or is not available.
+- **Possible solution**: Verify the plugin ID and ensure the plugin is enabled for your meeting.
+
+#### Error code: 0603
+
+- **Error message**: Action not permitted without joining room
+- **Possible reason**: The participant attempted to perform an action that requires them to join the meeting first.
+- **Possible solution**: The participant must first join the meeting using `meeting.join()` before attempting the action again.
+
+## Polls
+
+#### Error code: 0700
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Polls module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0705
+
+- **Error message**: Action not permitted without joining room
+- **Possible reason**: The participant attempted to perform an action that requires them to join the meeting first.
+- **Possible solution**: The participant must first join the meeting using `meeting.join()` before attempting the action again.
+
+## Meta
+
+#### Error code: 0800
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Meta module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0801
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+## Preset
+
+#### Error code: 0900
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Preset module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 0904
+
+- **Error message**: Invalid preset configuration
+- **Possible reason**: The preset configuration contains invalid or incompatible settings.
+- **Possible solution**: Review your preset configuration and ensure all settings are valid.
+
+## Recording
+
+#### Error code: 1000
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Recording module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1001
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 1004
+
+- **Error message**: Recording not started
+- **Possible reason**: Attempted to stop or interact with a recording that hasn't been started.
+- **Possible solution**: Start a recording before attempting to stop or interact with it.
+
+#### Error code: 1005
+
+- **Error message**: Recording already in progress
+- **Possible reason**: Attempted to start a recording when one is already active.
+- **Possible solution**: Stop the current recording before starting a new one.
+
+## Self
+
+#### Error code: 1100
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Self module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1101
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 1102
+
+- **Error message**: Device not found
+- **Possible reason**: The specified media device (microphone/camera) is not available.
+- **Possible solution**: Ensure the device is connected and browser permissions are granted.
+
+#### Error code: 1103
+
+- **Error message**: Failed to access media device
+- **Possible reason**: Browser permissions were denied or device is in use by another application.
+- **Possible solution**: Grant browser permissions and ensure the device is not being used by another application.
+
+#### Error code: 1104
+
+- **Error message**: Invalid device configuration
+- **Possible reason**: The device configuration provided is invalid or incompatible.
+- **Possible solution**: Verify the device configuration and ensure it meets the required specifications.
+
+#### Error code: 1105
+
+- **Error message**: Screen share not supported
+- **Possible reason**: Browser does not support screen sharing or permissions were denied.
+- **Possible solution**: Use a supported browser (Chrome, Edge, Firefox) and grant screen share permissions.
+
+#### Error code: 1106
+
+- **Error message**: Action not permitted without joining room
+- **Possible reason**: The participant attempted to perform an action that requires them to join the meeting first.
+- **Possible solution**: The participant must first join the meeting using `meeting.join()` before attempting the action again.
+
+## Participant
+
+#### Error code: 1200
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Participant module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1201
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 1202
+
+- **Error message**: Participant not found
+- **Possible reason**: The specified participant ID does not exist in the meeting.
+- **Possible solution**: Verify the participant ID and ensure they have joined the meeting.
+
+#### Error code: 1203
+
+- **Error message**: Cannot perform action on self
+- **Possible reason**: Attempted to perform an action on yourself that should target other participants.
+- **Possible solution**: Use the appropriate `meeting.self` methods for self-actions.
+
+#### Error code: 1204
+
+- **Error message**: Invalid participant ID
+- **Possible reason**: The participant ID format is invalid.
+- **Possible solution**: Ensure you're using a valid participant or peer ID.
+
+#### Error code: 1205
+
+- **Error message**: Participant already exists
+- **Possible reason**: Attempted to add a participant that is already in the meeting.
+- **Possible solution**: Check if the participant has already joined before attempting to add them.
+
+#### Error code: 1206
+
+- **Error message**: Max participants limit reached
+- **Possible reason**: The meeting has reached its maximum participant capacity.
+- **Possible solution**: Wait for participants to leave or upgrade your plan for higher limits.
+
+#### Error code: 1207
+
+- **Error message**: Participant is in waiting room
+- **Possible reason**: Attempted to perform an action on a participant who is still in the waiting room.
+- **Possible solution**: Admit the participant from the waiting room first.
+
+#### Error code: 1208
+
+- **Error message**: Action not permitted without joining room
+- **Possible reason**: The participant attempted to perform an action that requires them to join the meeting first.
+- **Possible solution**: The participant must first join the meeting using `meeting.join()` before attempting the action again.
+
+#### Error code: 1209
+
+- **Error message**: Participant has been removed
+- **Possible reason**: Attempted to interact with a participant who has been removed from the meeting.
+- **Possible solution**: Verify participant status before performing actions.
+
+## Spotlight
+
+#### Error code: 1300
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Spotlight module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+## Webinar
+
+#### Error code: 1500
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Webinar module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+## LocalMediaHandler
+
+#### Error code: 1601
+
+- **Error message**: Media constraints not supported
+- **Possible reason**: The media constraints provided are not supported by the browser or device.
+- **Possible solution**: Adjust media constraints to supported values.
+
+#### Error code: 1602
+
+- **Error message**: Failed to get user media
+- **Possible reason**: Browser could not access camera/microphone due to permissions or hardware issues.
+- **Possible solution**: Grant browser permissions and ensure devices are properly connected.
+
+#### Error code: 1603
+
+- **Error message**: No audio device found
+- **Possible reason**: No microphone is available or connected.
+- **Possible solution**: Connect a microphone and ensure it's recognized by the system.
+
+#### Error code: 1604
+
+- **Error message**: No video device found
+- **Possible reason**: No camera is available or connected.
+- **Possible solution**: Connect a camera and ensure it's recognized by the system.
+
+#### Error code: 1605
+
+- **Error message**: Device in use
+- **Possible reason**: The requested device is already in use by another application.
+- **Possible solution**: Close other applications using the device and try again.
+
+#### Error code: 1606
+
+- **Error message**: Device disconnected
+- **Possible reason**: The media device was disconnected during the session.
+- **Possible solution**: Reconnect the device and refresh the connection.
+
+#### Error code: 1607
+
+- **Error message**: Track ended unexpectedly
+- **Possible reason**: The media track ended due to device disconnection or system error.
+- **Possible solution**: Restart the media track or reconnect the device.
+
+#### Error code: 1608
+
+- **Error message**: Failed to switch device
+- **Possible reason**: Error occurred while switching between media devices.
+- **Possible solution**: Verify the new device is available and try again.
+
+#### Error code: 1609
+
+- **Error message**: Screen share permission denied
+- **Possible reason**: User denied screen share permission in the browser.
+- **Possible solution**: Grant screen share permission when prompted.
+
+#### Error code: 1610
+
+- **Error message**: Screen share canceled
+- **Possible reason**: User canceled the screen share selection.
+- **Possible solution**: Retry screen sharing and select a window/screen to share.
+
+#### Error code: 1611
+
+- **Error message**: Invalid media track
+- **Possible reason**: The provided media track is invalid or has ended.
+- **Possible solution**: Ensure the media track is active before using it.
+
+## End-to-End Encryption
+
+#### Error code: 1701
+
+- **Error message**: E2EE not supported
+- **Possible reason**: End-to-end encryption is not supported in the current browser or configuration.
+- **Possible solution**: Use a browser that supports E2EE or check your configuration.
+
+## AI
+
+#### Error code: 1800
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the AI module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1801
+
+- **Error message**: AI feature not enabled
+- **Possible reason**: The AI feature you're trying to use is not enabled in your preset.
+- **Possible solution**: Enable the AI feature in your preset configuration.
+
+## Livestream
+
+#### Error code: 1900
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Livestream module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 1901
+
+- **Error message**: Livestream not started
+- **Possible reason**: Attempted to stop or interact with a livestream that hasn't been started.
+- **Possible solution**: Start a livestream before attempting to stop or interact with it.
+
+#### Error code: 1902
+
+- **Error message**: Livestream already in progress
+- **Possible reason**: Attempted to start a livestream when one is already active.
+- **Possible solution**: Stop the current livestream before starting a new one.
+
+## Stage
+
+#### Error code: 2000
+
+- **Error message**: Internal exception
+- **Possible reason**: An unexpected error occurred within the Stage module.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+#### Error code: 2001
+
+- **Error message**: Permission denied
+- **Possible reason**: The participant does not have the required permissions to perform the action.
+- **Possible solution**: Verify the participant's permissions in their respective preset and try again.
+
+#### Error code: 2002
+
+- **Error message**: Participant not on stage
+- **Possible reason**: Attempted to perform a stage action on a participant who is not on stage.
+- **Possible solution**: Ensure the participant is on stage before performing stage-specific actions.
+
+#### Error code: 2003
+
+- **Error message**: Stage is full
+- **Possible reason**: The stage has reached its maximum participant capacity.
+- **Possible solution**: Remove participants from stage or upgrade your plan for higher limits.
+
+#### Error code: 2004
+
+- **Error message**: Participant already on stage
+- **Possible reason**: Attempted to add a participant to stage who is already on stage.
+- **Possible solution**: Check stage status before attempting to add participants.
+
+#### Error code: 2005
+
+- **Error message**: Invalid stage request
+- **Possible reason**: The stage request contains invalid parameters or configuration.
+- **Possible solution**: Review the stage request parameters and ensure they are valid.
+
+#### Error code: 2006
+
+- **Error message**: Stage feature not enabled
+- **Possible reason**: The stage feature is not enabled in your preset or plan.
+- **Possible solution**: Enable the stage feature in your preset configuration.
+
+## General
+
+#### Error code: 9900
+
+- **Error message**: Unknown error
+- **Possible reason**: An unexpected error occurred that doesn't fall into other categories.
+- **Possible solution**: Check the logs for more details and retry the operation. If you continue to experience issues, please reach out to Cloudflare support.
+
+</TabItem>
+</Tabs>

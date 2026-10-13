@@ -1,0 +1,21 @@
+name: Issue - Label and assign
+
+# **What it does**: Labels Issues with associated products. Updates assignees to match our CODEOWNERS file.
+# **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
+# **Who does it impact**: PCX team
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  compile:
+    name: Label and assign
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/issue-label-assign
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

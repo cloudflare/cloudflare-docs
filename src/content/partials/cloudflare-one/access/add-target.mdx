@@ -1,0 +1,89 @@
+---
+params:
+  - protocol
+---
+
+import { Tabs, TabItem, Render, Details, APIRequest, GlossaryTooltip } from "~/components";
+
+A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
+
+{
+  props.protocol === "rdp" ? (
+		<p> Create a target for each Windows machine that requires RDP access.
+To create a new target:</p>) :
+	(<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>)
+}
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Targets**.
+2. Select **Add a target**.
+3. In **Target hostname**, enter a user-friendly name for the <GlossaryTooltip term="target">target</GlossaryTooltip>. We recommend using the server hostname, for example `production-server`. The target hostname does not need to be unique and can be reused for multiple targets. Hostnames are used to define the targets secured by an Access application; they are not used for DNS address resolution.
+	<Details header="Hostname format restrictions">
+			- Case insensitive
+			- Contain no more than 253 characters
+			- Contain only alphanumeric characters, `-`, or `.` (no spaces allowed)
+			- Start and end with an alphanumeric character
+	</Details>
+4. In **IP addresses**, enter the IPv4 and/or IPv6 address of the target resource. The dropdown menu will not populate until you type in the full IP address.
+:::note
+If the target IP does not appear in the dropdown, go to **Networks** > **Routes** and confirm that the IP routes through Cloudflare Tunnel.
+:::
+5. In the dropdown menu, select the IP address and [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) where the resource is located. This IP address and virtual network pairing is now assigned to this target and cannot be reused in another target by design.
+6. Select **Add target**.
+</TabItem>
+<TabItem label="API">
+
+Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero_trust/subresources/access/subresources/infrastructure/subresources/targets/methods/create/) endpoint:
+
+<APIRequest
+  path="/accounts/{account_id}/infrastructure/targets"
+  method="POST"
+  json={{
+    hostname: "infra-access-target",
+    ip: {
+      ipv4: {
+        ip_addr: "187.26.29.249",
+        virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
+      },
+      ipv6: {
+        ip_addr: "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0",
+        virtual_network_id: "c77b744e-acc8-428f-9257-6878c046ed55",
+      },
+    },
+  }}
+/>
+
+</TabItem>
+<TabItem label="Terraform">
+
+:::note[Provider versions]
+The following example requires Cloudflare provider version `>=4.45.0`.
+:::
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Configure the [`cloudflare_zero_trust_infrastructure_access_target`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_infrastructure_access_target) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_infrastructure_access_target" "infra-ssh-target" {
+		account_id = var.cloudflare_account_id
+			hostname   = "infra-access-target"
+			ip = {
+				ipv4 = {
+					ip_addr = "187.26.29.249"
+					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
+				ipv6 = {
+					ip_addr = "64c0:64e8:f0b4:8dbf:7104:72b0:ec8f:f5e0"
+					virtual_network_id = "c77b744e-acc8-428f-9257-6878c046ed55"
+				}
+			}
+	}
+	```
+
+</TabItem>
+</Tabs>
+
+Next, create an Access application to secure the target.

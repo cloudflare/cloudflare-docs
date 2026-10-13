@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10051
+source: null
+---
+
+## Error 10051: Missing authority in redirect source URL
+
+This error indicates that the source URL is missing a required authority component.
+
+### Common causes
+
+This error occurs when the source URL of a URL redirect does not include an authority component (for example, `http:///path`, without a hostname), which is mandatory.
+
+### Resolution
+
+Add an authority component to the redirect source URL (for example, include a hostname). Refer to [Supported URL components in Bulk Redirects](/rules/url-forwarding/bulk-redirects/reference/url-components/) for details on the required URL components for redirect source URLs.

@@ -1,208 +1,339 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Sidebar.astro";
 
-import { AstroIcon } from "~/components";
-import { getEntry } from "astro:content";
+import { Icon as AstroIcon } from "astro-icon/components";
+import { lookupProductTitle } from "~/util/sidebar";
 
-const { sidebar, slug } = Astro.props;
-
-interface Link {
-	type: "link";
-	label: string;
-	href: string;
-	isCurrent: boolean;
-	badge: any | undefined;
-	attrs: any;
-	order: number;
-}
-
-interface Group {
-	type: "group";
-	label: string;
-	entries: (Link | Group)[];
-	collapsed: boolean;
-	badge: Badge | undefined;
-	order: number;
-}
-``;
-
-type SidebarEntry = Link | Group;
-
-const currentSection = slug?.split("/")[0];
-
-let filtered = sidebar.filter(
-	(x) => x.label.toLowerCase() === currentSection,
-)[0] as Group;
-
-if (currentSection === "learning-paths") {
-	const module = slug.split("/")[1];
-	filtered.entries = filtered.entries.filter(
-		(x) => x.label.toLowerCase() === module,
-	);
-	filtered.entries = (filtered.entries[0] as Group).entries.filter(
-		(x) => x.type === "group",
-	);
-}
-
-if (!filtered.entries) {
-	throw new Error(`[Sidebar] Failed to find entries for ${currentSection}`);
-}
-
-function sortGroup(a: SidebarEntry, b: SidebarEntry): number {
-	const collator = new Intl.Collator("en");
-
-	if (a.order !== b.order) return a.order - b.order;
-
-	return collator.compare(a.label, b.label);
-}
-
-async function handleGroup(group: Group): Promise<SidebarEntry> {
-	const indexLink = group.entries.find(
-		(x) => x.type === "link" && x.href.endsWith(`/${group.label}/`),
-	) as Link | undefined;
-
-	if (!indexLink) {
-		throw new Error(`Unable to find index link in group ${group.label}`);
-	}
-
-	const indexPage = await getEntry("docs", indexLink.href.slice(1, -1));
-
-	if (!indexPage) {
-		throw new Error(`Unable to find index page with href ${indexLink}`);
-	}
-
-	const frontmatter = indexPage.data;
-
-	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
-	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-
-	if (frontmatter.hideChildren) {
-		return {
-			type: "link",
-			href: indexLink.href,
-			label: group.label,
-			order: group.order,
-			attrs: {},
-			isCurrent: indexLink.href.slice(1, -1) === Astro.params.slug,
-		} as Link;
-	}
-
-	for (const entry of group.entries.keys()) {
-		if (group.entries[entry].type === "group") {
-			group.entries[entry] = await handleGroup(group.entries[entry] as Group);
-		} else {
-			group.entries[entry] = await handleLink(group.entries[entry] as Link);
-		}
-	}
-
-	group.entries = group.entries.sort(sortGroup);
-
-	const indexIdx = group.entries.findIndex(
-		(x) => x.type === "link" && x.href === indexLink.href,
-	) as number;
-
-	if (indexPage.data.sidebar.group?.hideIndex) {
-		group.entries.splice(indexIdx, 1)[0];
-		return group;
-	}
-
-	group.entries.unshift(group.entries.splice(indexIdx, 1)[0]);
-	group.entries[0].label = indexPage.data.sidebar.label ?? "Overview";
-
-	return group;
-}
-
-async function handleLink(link: Link): Promise<Link> {
-	const slug = link.href.slice(1, -1);
-	const page = await getEntry("docs", slug);
-
-	if (!page) {
-		throw new Error(`Oops`);
-	}
-
-	const frontmatter = page.data;
-	link.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
-
-	if (slug === currentSection) {
-		link.order = 0;
-	}
-
-	if (frontmatter.external_link) {
-		return {
-			...link,
-			label: link.label.concat(" ↗"),
-			href: frontmatter.external_link,
-			badge: frontmatter.external_link.startsWith("/api") && {
-				text: "API",
-			},
-		};
-	}
-
-	return link;
-}
-
-filtered.entries = await Promise.all(
-	filtered.entries.map((entry) => {
-		if (entry.type === "group") {
-			return handleGroup(entry);
-		} else {
-			return handleLink(entry);
-		}
-	}),
-);
-
-filtered.entries = filtered.entries.sort(sortGroup);
-
-filtered.entries[0].label = "Overview";
-
-const lookupProductTitle = async (slug: string) => {
-	const segments = slug.split("/");
-	const product = segments[0];
-
-	if (product === "learning-paths") {
-		const path = segments[1];
-
-		const { data } = await getEntry("learning-paths", path);
-
-		return `${data.title} (Learning Paths)`;
-	}
-
-	const { data } = await getEntry("products", product);
-
-	return data.product.title;
-};
+const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 ---
 
-<a
-	href={"/" + currentSection + "/"}
-	class="items-center flex hover:opacity-80 decoration-[color:var(--orange-accent-200)]"
->
-	<AstroIcon name={currentSection} class="text-[color:var(--orange-accent-200)] text-4xl mr-2" />
-	<span class="text-black dark:text-white">
+<a href={"/" + product + "/"} class="flex items-center gap-2 px-1 no-underline">
+	<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+	<span class="text-xl text-black">
 		<strong>
-			{lookupProductTitle(slug)}
+			{lookupProductTitle(product, module)}
 		</strong>
 	</span>
 </a>
-<Default {...Astro.props} sidebar={filtered.entries}><slot /></Default>
+
+<!-- Search Input -->
+<div class="relative">
+	<input
+		type="text"
+		id="sidebar-search"
+		placeholder="Search sidebar..."
+		class="w-full px-3 py-2 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
+	/>
+	<div class="sidebar-search-icon"></div>
+</div>
+
+<!-- No Results Message -->
+<div
+	id="sidebar-no-results"
+	class="text-sm text-gray-500 dark:text-gray-400 text-center p-4 hidden"
+>
+	No results found. Try a different search term, or use our <button id="global-search-link" class="text-blue-500 dark:text-orange-500 underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit">global search</button>.
+</div>
+
+<Default><slot /></Default>
+
+<script>
+	import { track } from "~/util/zaraz";
+	import { openGlobalSearch } from "~/util/search";
+
+	function initSidebarSearch() {
+		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
+		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
+		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
+		const sidebarContent = document.querySelector('.sidebar-content');
+
+		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
+
+		const originalState: Map<Element, boolean> = new Map();
+
+		// Store original state of details elements
+		function storeOriginalState() {
+			if (originalState.size === 0) {
+				const detailsElements = sidebarContent!.querySelectorAll('details');
+				detailsElements.forEach(details => {
+					originalState.set(details, details.open);
+				});
+			}
+		}
+
+
+		// Check if text matches all search terms (for multi-word searches)
+		function matchesAllTerms(text: string, searchTerms: string[]): boolean {
+			const lowerText = text.toLowerCase();
+			return searchTerms.every(term => lowerText.includes(term));
+		}
+
+		// Show only direct children of a folder (not recursive)
+		function showDirectChildren(details: HTMLDetailsElement) {
+			details.open = true;
+			const directList = details.querySelector(':scope > ul');
+			if (directList) {
+				const directChildren = directList.querySelectorAll(':scope > li');
+				directChildren.forEach(child => {
+					(child as HTMLElement).style.display = '';
+				});
+			}
+		}
+
+		// Show parent chain for a specific item
+		function showParentChain(element: Element) {
+			let parent = element.parentElement;
+			while (parent && parent !== sidebarContent) {
+				if (parent.tagName === 'LI') {
+					(parent as HTMLElement).style.display = '';
+				}
+				if (parent.tagName === 'DETAILS') {
+					(parent as HTMLDetailsElement).open = true;
+				}
+				parent = parent.parentElement;
+			}
+		}
+
+		// Filter sidebar items based on search query
+		function filterSidebarItems(query: string) {
+			const items = sidebarContent!.querySelectorAll('li');
+			const detailsElements = sidebarContent!.querySelectorAll('details');
+			track("use sidebar search", { query: query });
+
+			if (!query.trim()) {
+				// Reset to original state
+				items.forEach(item => {
+					(item as HTMLElement).style.display = '';
+				});
+
+				// Restore original details state
+				detailsElements.forEach(details => {
+					const originalOpen = originalState.get(details);
+					if (originalOpen !== undefined) {
+						(details as HTMLDetailsElement).open = originalOpen;
+					}
+				});
+
+				// Hide no results message
+				noResultsMessage.classList.add('hidden');
+
+				return;
+			}
+
+			// Split search query into terms for more precise matching
+			const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+
+			// First, hide all items and close all details
+			items.forEach(item => {
+				(item as HTMLElement).style.display = 'none';
+			});
+			detailsElements.forEach(details => {
+				(details as HTMLDetailsElement).open = false;
+			});
+
+			// Track what we've matched to avoid duplicates
+			const matchedItems = new Set<Element>();
+
+			// 1. Check for folder/subfolder matches first (highest priority)
+			detailsElements.forEach(details => {
+				const summary = details.querySelector('summary');
+				if (summary) {
+					const summaryText = summary.textContent || '';
+
+					if (matchesAllTerms(summaryText, searchTerms)) {
+						// This is a folder match - show the folder and its direct children
+						const parentLi = details.closest('li');
+						if (parentLi && !matchedItems.has(parentLi)) {
+							(parentLi as HTMLElement).style.display = '';
+							showDirectChildren(details);
+							showParentChain(parentLi);
+							matchedItems.add(parentLi);
+						}
+					}
+				}
+			});
+
+			// 2. Check for specific page matches (show page + parent chain)
+			items.forEach(item => {
+				if (matchedItems.has(item)) return; // Skip if already matched as folder
+
+				const link = item.querySelector('a');
+				const summary = item.querySelector('summary');
+
+				// Skip if this is a folder (has summary) - those are handled above
+				if (summary) return;
+
+				if (link) {
+					const linkText = link.textContent || '';
+
+					if (matchesAllTerms(linkText, searchTerms)) {
+						// This is a specific page match - show page + parent chain
+						(item as HTMLElement).style.display = '';
+						showParentChain(item);
+						matchedItems.add(item);
+					}
+				}
+			});
+
+			// 3. Fallback: if no exact matches, show partial matches (less specific)
+			if (matchedItems.size === 0) {
+				items.forEach(item => {
+					const textContent = item.textContent?.toLowerCase() || '';
+					const link = item.querySelector('a');
+					const linkText = link?.textContent?.toLowerCase() || '';
+					const summary = item.querySelector('summary');
+					const summaryText = summary?.textContent?.toLowerCase() || '';
+
+					// Check if any search term is found (partial matching)
+					const hasPartialMatch = searchTerms.some(term =>
+						textContent.includes(term) || linkText.includes(term) || summaryText.includes(term)
+					);
+
+					if (hasPartialMatch) {
+						(item as HTMLElement).style.display = '';
+
+						// If it's a folder, show direct children only
+						if (summary) {
+							const details = item.querySelector('details');
+							if (details) {
+								showDirectChildren(details);
+							}
+						}
+
+						showParentChain(item);
+						matchedItems.add(item);
+					}
+				});
+			}
+
+			// Show/hide no results message based on matches
+			if (matchedItems.size === 0) {
+				noResultsMessage.classList.remove('hidden');
+			} else {
+				noResultsMessage.classList.add('hidden');
+			}
+		}
+
+		// Event listeners
+		searchInput.addEventListener('input', (e) => {
+			storeOriginalState();
+			const query = (e.target as HTMLInputElement).value;
+			filterSidebarItems(query);
+		});
+
+		// Clear search on Escape key
+		searchInput.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				searchInput.value = '';
+				filterSidebarItems('');
+			}
+		});
+
+		// Global search link click handler
+		globalSearchLink.addEventListener('click', () => {
+			const currentQuery = searchInput.value.trim();
+			if (currentQuery) {
+				openGlobalSearch(currentQuery);
+			}
+		});
+
+		document.addEventListener(
+			"keydown",
+			(keyboardEvent) => {
+				const target = keyboardEvent.target;
+
+				const isInput =
+					target instanceof EventTarget &&
+					(("tagName" in target &&
+						(target.tagName === "INPUT" ||
+							target.tagName === "TEXTAREA" ||
+							target.tagName === "SELECT")) ||
+						("isContentEditable" in target && target.isContentEditable));
+
+				if (keyboardEvent.key === "/" && !isInput) {
+					keyboardEvent.preventDefault();
+					keyboardEvent.stopPropagation();
+					searchInput.focus();
+				}
+			},
+			{
+				capture: true,
+			},
+		);
+	}
+
+	// Initialize when DOM is loaded
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initSidebarSearch);
+	} else {
+		initSidebarSearch();
+	}
+
+	// Re-initialize on navigation (for SPA-like behavior)
+	initSidebarSearch();
+</script>
 
 <style is:global>
-:root {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-blue-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--blue-accent-900) !important;
-		color: var(--sidebar-blue-text) !important;
+	.sidebar-search-icon {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 1em;
+		height: 1em;
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		-webkit-mask-size: 100%;
+		mask-size: 100%;
+		background-color: currentColor;
+		pointer-events: none;
 	}
-}
 
-:root[data-theme="dark"] {
-	a[aria-current="page"] {
-		background-color: var(--sidebar-orange-accent-600) !important;
-		border: 1px solid !important;
-		border-color: var(--orange-accent-200) !important;
-		color: var(--sl-color-white) !important;
+	:root {
+		.sidebar-content {
+			--sl-color-hairline-light: #cacaca !important;
+
+			& > * {
+				a {
+					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
+
+					&[aria-current="page"] {
+						background-color: unset !important;
+						border: unset !important;
+						border-color: unset !important;
+						color: var(--sl-color-accent) !important;
+						font-weight: 600 !important;
+					}
+				}
+
+				summary {
+					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
+				}
+
+				.large {
+					color: var(--sl-color-gray-2) !important;
+					font-weight: unset !important;
+					font-size: unset !important;
+
+					@media (min-width: 50rem) {
+						font-size: var(--sl-text-sm) !important;
+					}
+				}
+
+				.caret {
+					font-size: 1rem !important;
+				}
+			}
+		}
 	}
-}
+
+	:root[data-theme="dark"] {
+		.sidebar-content {
+			--sl-color-hairline-light: #444444 !important;
+
+			& > * a[aria-current="page"] {
+				color: var(--sl-color-accent-high) !important;
+			}
+		}
+	}
 </style>

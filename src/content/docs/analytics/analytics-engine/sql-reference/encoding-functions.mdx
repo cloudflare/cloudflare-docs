@@ -1,0 +1,50 @@
+---
+title: Encoding functions
+pcx_content_type: reference
+sidebar:
+  order: 8
+head:
+  - tag: title
+    content: SQL Reference
+
+---
+
+import { Badge } from "~/components"
+
+## bin <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+bin(<expression>)
+```
+
+`bin` returns a string containing the binary representation of its argument.
+
+Examples:
+
+```sql
+-- get the binary representation of 1
+bin(1)
+-- get the binary representation of a string`
+bin('abc')
+```
+
+## hex <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+hex(<expression>)
+```
+
+`hex` returns a string containing the hexadecimal representation of its argument.
+
+Examples:
+
+```sql
+-- get the hexadecimal representation of 1
+hex(1)
+-- get the hexadecimal representation of a string`
+hex('abc')
+```

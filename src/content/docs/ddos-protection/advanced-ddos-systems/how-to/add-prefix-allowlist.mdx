@@ -1,0 +1,25 @@
+---
+title: Add an IP or prefix to the allowlist
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Add an IP address/prefix to the Advanced DDoS Protection allowlist
+---
+
+import { Render, Steps, DashButton } from "~/components";
+
+To add an IP address or prefix to the Advanced DDoS Protection [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist):
+
+<Steps>
+	1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+ 
+		<DashButton url="/?to=/:account/network-security/ddos" />
+	2. Go to **Advanced Protection**. 
+	3. Under **General settings** > **Allowlist**, select **Edit**.
+	4. Enter a prefix and (optionally) a description in **Prefix** and **Description**, respectively.
+	5. To exclude the current prefix from the allowlist instead of including it, uncheck the **Enabled** checkbox. 6. Select **Add**.
+</Steps>
+
+<Render file="allowlist-ip-spoofing" product="ddos-protection" />

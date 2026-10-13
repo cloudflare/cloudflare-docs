@@ -1,0 +1,21 @@
+---
+title: Eliminate long-lived credentials and enhance SSH security with Cloudflare Access for Infrastructure
+description: Use short-lived SSH certificates and fine-grained policy to secure access to your SSH servers.
+date: 2024-10-01
+products:
+  - access
+---
+
+Organizations can now eliminate long-lived credentials from their SSH setup and enable strong multi-factor authentication for SSH access, similar to other Access applications, all while generating access and command logs.
+
+SSH with [Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) uses short-lived SSH certificates from Cloudflare, eliminating SSH key management and reducing the security risks associated with lost or stolen keys. It also leverages a common deployment model for Cloudflare One customers: [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/).
+
+SSH with Access for Infrastructure enables you to:
+
+- **Author fine-grained policy** to control who may access your SSH servers, including specific ports, protocols, and SSH users.
+- **Monitor infrastructure access** with Access and SSH command logs, supporting regulatory compliance and providing visibility in case of security breach.
+- **Preserve your end users' workflows.** SSH with Access for Infrastructure supports native SSH clients and does not require any modifications to users’ SSH configs.
+
+![Example of an infrastructure Access application](~/assets/images/changelog/access/infrastructure-app.png)
+
+To get started, refer to [SSH with Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/).

@@ -1,0 +1,47 @@
+---
+pcx_content_type: concept
+title: CLUE
+sidebar:
+  order: 1
+---
+
+At Cloudflare, we believe that high-quality, customer-facing content is a critical part of the user experience. But as teams scale, maintaining a consistent voice, tone, and terminology across thousands of UI strings, error messages, and API descriptions becomes a monumental challenge. Traditional style guides and glossaries are essential, but they are static. They cannot provide real-time feedback or help us _measure_ content quality.
+
+To solve this, we built CLUE: Content Legibility for User Ease. CLUE is an internal tool that functions as a personal writing assistant for everyone at Cloudflare. It empowers anyone, from engineers to product managers, to feel confident in their content creation.
+
+When a stakeholder shares content with CLUE, it provides a score and actionable recommendations. This simple feedback loop is a powerful mechanism for measuring and improving our content over time.
+
+## The goal: Quantifying "good content"
+
+The core challenge CLUE addresses is that "good" content is easy to recognize but hard to measure. We know that effective copy uses an active voice, has an action-led structure, and removes unnecessary words, but how do you quantify that improvement at scale?
+
+Our answer was **content scorecards**. Scorecards are a scalable evaluation tool that creates consistency. They allow us to assign measurable value to the elements that define "good content," focusing on the criteria most critical for user success, satisfaction, and understanding.
+
+The user flow is designed to be straightforward: you select your content type, enter your content, and CLUE provides instant feedback. It supports a wide range of critical content, including:
+
+- General UI content and page descriptions
+- Error messages
+- API endpoint and parameter descriptions
+- Customer-facing emails
+
+## How it is built: A hybrid, model-driven approach
+
+CLUE was truly built by Cloudflare, for Cloudflare, on Cloudflare. The application itself is built on Cloudflare Pages and protected by Cloudflare Access.
+
+We adopted a model-driven approach for content evaluation, which provides a systematic, data-driven, and consistent assessment, removing the subjectivity of manual reviews. This model allows us to assess content in seconds, handle complex criteria like readability, and weight criteria based on what we find to be most critical for users.
+
+Critically, CLUE is not just one thing, it is a hybrid solution of AI and traditional checks. This combination allows us to evaluate context while still having the granular control needed for some elements of our style guide.
+
+## The workflow: Using CLUE as an LLM copy editor
+
+The rise of Generative AI and LLMs, like Gemini, has been a boon for generating text quickly. However, an LLM does not inherently understand or apply Cloudflare's specific content guidelines, voice, and tone.
+
+This is where CLUE's role becomes essential. CLUE is not designed to _write_ content for you; it is designed to make sure the content you _do_ write meets our standards.
+
+Think of CLUE as a specialized copy editor. It ensures that any piece of content — whether human-generated or created with an LLM's help — is ready for our users. This pairing is incredibly powerful:
+
+- **Generate:** A stakeholder uses an LLM to quickly draft initial versions of API descriptions or an error message.
+- **Refine:** They paste that LLM-generated content into CLUE.
+- **Iterate:** CLUE provides targeted tips on how to better meet Cloudflare's glossary, style guide, voice, tone, and UX best practices, turning a generic draft into a polished, effective piece of content.
+
+This democratizes UX writing, improves our efficiency by reducing manual reviews, and ultimately builds user trust through a consistent, high-quality experience. It helps users learn our products faster and resolve issues more efficiently, which is our ultimate goal.

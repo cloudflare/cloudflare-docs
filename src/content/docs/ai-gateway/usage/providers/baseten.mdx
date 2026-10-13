@@ -1,0 +1,123 @@
+---
+title: Baseten
+pcx_content_type: get-started
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+[Baseten](https://www.baseten.co/) provides infrastructure for building and deploying machine learning models at scale. Baseten offers access to various language models through a unified chat completions API.
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/baseten
+```
+
+## Prerequisites
+
+When making requests to Baseten, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Baseten API token.
+- The name of the Baseten model you want to use.
+
+## OpenAI-compatible chat completions API
+
+Baseten provides an OpenAI-compatible chat completions API for supported models.
+
+### cURL
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/baseten/v1/chat/completions \
+  --header 'Authorization: Bearer {baseten_api_token}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "openai/gpt-oss-120b",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+### Use OpenAI SDK with JavaScript
+
+```js title="JavaScript"
+import OpenAI from "openai";
+
+const apiKey = "{baseten_api_token}";
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/baseten`;
+
+const openai = new OpenAI({
+  apiKey,
+  baseURL,
+});
+
+const model = "openai/gpt-oss-120b";
+const messages = [{ role: "user", content: "What is Cloudflare?" }];
+
+const chatCompletion = await openai.chat.completions.create({
+  model,
+  messages,
+});
+
+console.log(chatCompletion);
+```
+
+<Render
+  file="chat-completions-providers"
+  product="ai-gateway"
+  params={{
+    name: "Baseten",
+    jsonexample: `
+{
+  "model": "baseten/{model}"
+}`
+  }}
+/>
+
+## Model-specific endpoints
+
+For models that don't use the OpenAI-compatible API, you can access them through their specific model endpoints.
+
+### cURL
+
+```bash title="Example fetch request"
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/baseten/model/{model_id} \
+  --header 'Authorization: Bearer {baseten_api_token}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "prompt": "What is Cloudflare?",
+    "max_tokens": 100
+  }'
+```
+
+### Use with JavaScript
+
+```js title="JavaScript"
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const basetenApiToken = "{baseten_api_token}";
+const modelId = "{model_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/baseten`;
+
+const response = await fetch(`${baseURL}/model/${modelId}`, {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${basetenApiToken}`,
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    prompt: "What is Cloudflare?",
+    max_tokens: 100,
+  }),
+});
+
+const result = await response.json();
+console.log(result);
+```

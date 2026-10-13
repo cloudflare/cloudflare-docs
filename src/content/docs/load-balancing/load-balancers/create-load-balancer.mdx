@@ -7,9 +7,22 @@ head: []
 description: Learn how to set up and maintain load balancers.
 ---
 
-import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
+import {
+	AvailableNotifications,
+	Render,
+	TabItem,
+	Tabs,
+	Stream,
+} from "~/components";
 
-<Render file="load-balancer-definition" /> <br />
+<Render file="load-balancer-definition" product="load-balancing" /> <br />
+
+<Stream
+	id="ce39fdf599aed3661f60e8f780761808"
+	title="Set up Load Balancer"
+	thumbnail="2s"
+	showMoreVideos={false}
+/>
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/load-balancers/).
 
@@ -17,11 +30,11 @@ For more details about load balancers, refer to [Load balancers](/load-balancing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="load-balancer-create" />
+<Render file="load-balancer-create" product="load-balancing" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="load-balancer-create-api" />
+<Render file="load-balancer-create-api" product="load-balancing" />
 
 </TabItem> </Tabs>
 
@@ -45,16 +58,16 @@ Sharing load balancers across sites is only supported if the target zone is on a
 
 To edit a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-2. On a specific load balancer, click **Edit**.
+1. Go to **Load Balancing**.
+2. On a specific load balancer, select **Edit**.
 3. While going through the [creation workflow](#create-a-load-balancer), update settings as needed.
-4. On the **Review** step, click **Save**.
+4. On the **Review** step, select **Save**.
 
 </TabItem> <TabItem label="API">
 
 When you edit a load balancer with the API, your request type depends on how much you want to edit.
 
-To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/operations/load-balancers-patch-load-balancer) request. For broader changes, use a [PUT](/api/operations/load-balancers-update-load-balancer) request.
+To update specific settings without having to resubmit the entire configuration, use a [PATCH](/api/resources/load_balancers/methods/edit/) request. For broader changes, use a [PUT](/api/resources/load_balancers/methods/update/) request.
 
 </TabItem> </Tabs>
 
@@ -68,12 +81,12 @@ If you delete or disable a load balancer, your endpoint's response to requests w
 
 To delete a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
+1. Go to **Load Balancing**.
 2. On a specific load balancer, click **Delete**.
 
 </TabItem> <TabItem label="API">
 
-To delete a load balancer using the API, send a [DELETE](/api/operations/load-balancers-delete-load-balancer) request.
+To delete a load balancer using the API, send a [DELETE](/api/resources/load_balancers/methods/delete/) request.
 
 </TabItem> </Tabs>
 

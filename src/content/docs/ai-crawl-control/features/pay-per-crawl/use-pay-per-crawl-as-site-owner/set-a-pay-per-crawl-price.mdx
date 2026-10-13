@@ -1,0 +1,42 @@
+---
+title: Set a pay per crawl price
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { Steps, DashButton } from "~/components";
+
+```mermaid
+graph LR
+A[Enable in<br>account settings] --> B[Set a pay per <br/>crawl price ]:::highlight
+B --> C[Select crawlers<br>to charge]
+C --> D[Monitor<br>activity]
+D --> E[Manage<br>payouts]
+classDef highlight fill:#F6821F,color:white
+
+click A "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/"
+click C "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/select-crawlers-to-charge/"
+click D "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/"
+click E "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/"
+```
+
+Once your domain's visibility is set to **Visible** in Account Settings, you can set a pay per crawl price and enable pay per crawl for that domain.
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. Go to the **Settings** tab.
+3. In the **Pay Per Crawl** card, select **Enable**.
+4. Set your per crawl price - this is the amount charged for each successful content retrieval (HTTP 200 response) by an AI crawler.
+5. Select **Save**.
+</Steps>
+
+After enabling and setting a price, the domain's status in Account Settings will change to **Enabled**.
+
+:::note[Pricing considerations]
+The minimum price is $0.01 USD per crawl. Consider your content value and expected crawler volume when setting your price.
+:::

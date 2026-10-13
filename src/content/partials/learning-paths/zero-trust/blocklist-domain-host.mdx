@@ -1,14 +1,6 @@
 ---
-inputParameters: blocklistPolicyType
-
+params:
+  - blocklistPolicyType
 ---
 
-import { Markdown } from "~/components"
-
-Block specific domains or hosts that are malicious or pose a threat to your organization. Like **All-{props.one}-ResolvedIP-Blocklist**, this blocklist can be updated manually or via API automation.
-
-| Selector | Operator      | Value              | Logic | Action |
-| -------- | ------------- | ------------------ | ----- | ------ |
-| Domain   | in list       | *Domain Blocklist* | Or    | Block  |
-| Host     | in list       | *Host Blocklist*   | Or    |        |
-| Host     | matches regex | `.*example\.com`   |       |        |
+Block specific domains or hosts that are malicious or pose a threat to your organization. Like **All-{props.blocklistPolicyType}-ResolvedIP-Blocklist**, this blocklist can be updated manually or via API automation.

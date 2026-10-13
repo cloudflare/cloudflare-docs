@@ -1,0 +1,211 @@
+---
+pcx_content_type: navigation
+title: Meeting Metadata
+slug: realtime/realtimekit/core/meeting-metadata
+sidebar:
+  order: 3
+---
+
+import { Tabs, TabItem } from "~/components";
+
+All metadata pertaining to a meeting is stored in `meeting.meta`. This includes important information about the meeting state, type, and connections.
+
+## Available metadata
+
+The `meeting.meta` object contains the following properties:
+
+- **`viewType`** - Indicates the type of the meeting. Possible values are `WEBINAR`, `GROUP_CALL`
+- **`roomType`** - Indicates whether the meeting is a group-call or a webinar
+- **`meetingTitle`** - The title of the meeting
+- **`meetingStartedTimestamp`** - The timestamp when the meeting started
+- **`mediaState`** - Media connection state
+- **`socketState`** - Socket connection state
+
+## Access meeting metadata
+
+To access meeting metadata, use the `meeting.meta` object.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+```javascript
+// Destructure the metadata to get meetingTitle
+const { meetingTitle } = meeting.meta;
+
+if (meeting.self.roomJoined) {
+	console.log(
+		`The local user has joined a meeting with title ${meetingTitle}.`,
+	);
+}
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
+
+function MeetingInfo() {
+	const [meetingTitle, roomJoined] = useRealtimeKitSelector((m) => [
+		m.meta.meetingTitle,
+		m.self.roomJoined,
+	]);
+
+	useEffect(() => {
+		if (roomJoined) {
+			console.log(
+				`The local user has joined a meeting with title ${meetingTitle}.`,
+			);
+		}
+	}, [roomJoined, meetingTitle]);
+
+	return null;
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Connection events
+
+The `meta` object also emits events for indicating changes in the connection state of the meeting.
+
+### Media connection updates
+
+Updates to the media connection (WebRTC connection used for the transfer of actual media) are sent via the `mediaConnectionUpdate` event.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+```javascript
+meeting.meta.on("mediaConnectionUpdate", ({ transport, state }) => {
+	// transport - 'consuming' | 'producing'
+	// state - 'new' | 'connecting' | 'connected' | 'disconnected' | 'reconnecting' | 'failed'
+
+	console.log(`Media connection ${transport} is now ${state}`);
+});
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
+
+function MediaConnectionMonitor() {
+	const [meeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		if (meeting) {
+			const handleMediaConnection = ({ transport, state }) => {
+				// transport - 'consuming' | 'producing'
+				// state - 'new' | 'connecting' | 'connected' | 'disconnected' | 'reconnecting' | 'failed'
+
+				console.log(`Media connection ${transport} is now ${state}`);
+			};
+
+			meeting.meta.on("mediaConnectionUpdate", handleMediaConnection);
+
+			return () => {
+				meeting.meta.off("mediaConnectionUpdate", handleMediaConnection);
+			};
+		}
+	}, [meeting]);
+
+	return null;
+}
+```
+
+</TabItem>
+</Tabs>
+
+The `mediaConnectionUpdate` event provides:
+
+- **`transport`** - Either `'consuming'` (receiving media) or `'producing'` (sending media)
+- **`state`** - Connection state: `'new'`, `'connecting'`, `'connected'`, `'disconnected'`, `'reconnecting'`, or `'failed'`
+
+### Socket connection updates
+
+Updates to the WebSocket connection (used for chat, polls, and other basic signaling) are sent via the `socketConnectionUpdate` event.
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+```javascript
+meeting.meta.on(
+	"socketConnectionUpdate",
+	({ state, reconnectionAttempt, reconnected }) => {
+		// state - 'connected' | 'disconnected' | 'reconnecting' | 'failed'
+
+		console.log(`Socket connection is now ${state}`);
+
+		if (reconnectionAttempt) {
+			console.log(`Reconnection attempt: ${reconnectionAttempt}`);
+		}
+
+		if (reconnected) {
+			console.log("Successfully reconnected");
+		}
+	},
+);
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { useRealtimeKitClient } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
+
+function SocketConnectionMonitor() {
+	const [meeting] = useRealtimeKitClient();
+
+	useEffect(() => {
+		if (meeting) {
+			const handleSocketConnection = ({
+				state,
+				reconnectionAttempt,
+				reconnected,
+			}) => {
+				// state - 'connected' | 'disconnected' | 'reconnecting' | 'failed'
+
+				console.log(`Socket connection is now ${state}`);
+
+				if (reconnectionAttempt) {
+					console.log(`Reconnection attempt: ${reconnectionAttempt}`);
+				}
+
+				if (reconnected) {
+					console.log("Successfully reconnected");
+				}
+			};
+
+			meeting.meta.on("socketConnectionUpdate", handleSocketConnection);
+
+			return () => {
+				meeting.meta.off("socketConnectionUpdate", handleSocketConnection);
+			};
+		}
+	}, [meeting]);
+
+	return null;
+}
+```
+
+</TabItem>
+</Tabs>
+
+The `socketConnectionUpdate` event provides:
+
+- **`state`** - Connection state: `'connected'`, `'disconnected'`, `'reconnecting'`, or `'failed'`
+- **`reconnectionAttempt`** - The number of reconnection attempts made (if reconnecting)
+- **`reconnected`** - Boolean indicating if the connection was successfully reestablished
+
+## Next steps
+
+Explore related topics:
+
+- [Meeting Object Explained](/realtime/realtimekit/core/meeting-object-explained/) - Comprehensive meeting object reference
+- [Session Lifecycle](/realtime/realtimekit/concepts/session-lifecycle/) - Understanding meeting states and transitions

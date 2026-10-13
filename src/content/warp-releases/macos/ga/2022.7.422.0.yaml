@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains bug fixes and user experience change for customers using
+  Zero Trust `Enforce WARP session duration` Gateway policies
+   
+  **Notable updates**
+   
+  - Modified client behavior to no longer automatically open a new browser tab
+  when user needs to reauthenticate as this was causing some users to return to
+  their devices with 100s of tabs open. Instead the client will now use the
+  built in operating system notification framework to inform users of the need
+  to authenticate.
+
+  - Fixed issue where file device posture checks wouldn't work correctly when
+  the file path was changed for an existing rule.
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.7.422.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.7.422.0
+packageSize: 45309401
+releaseDate: 2022-08-01T20:20:23.143Z
+platformName: macOS

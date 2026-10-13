@@ -1,0 +1,77 @@
+---
+title: Build TanStack Start apps with the Cloudflare Vite plugin
+description: TanStack Start can now be used with the Cloudflare Vite plugin
+products:
+  - workers
+date: 2025-10-24
+---
+
+import { PackageManagers, WranglerConfig } from "~/components";
+
+The [Cloudflare Vite plugin](/workers/vite-plugin/) now supports [TanStack Start](https://tanstack.com/start/) apps.
+Get started with new or existing projects.
+
+## New projects
+
+Create a new TanStack Start project that uses the Cloudflare Vite plugin via the `create-cloudflare` CLI:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-tanstack-start-app --framework=tanstack-start"
+/>
+
+## Existing projects
+
+Migrate an existing TanStack Start project to use the Cloudflare Vite plugin:
+
+1. Install `@cloudflare/vite-plugin` and `wrangler`
+
+<PackageManagers type="add" pkg="@cloudflare/vite-plugin wrangler" dev />
+
+2. Add the Cloudflare plugin to your Vite config
+
+```ts {4, 8} title="vite.config.ts"
+import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [
+		cloudflare({ viteEnvironment: { name: "ssr" } }),
+		tanstackStart(),
+		viteReact(),
+	],
+});
+```
+
+3. Add your Worker config file
+
+<WranglerConfig>
+
+```toml
+name = "my-tanstack-start-app"
+compatibility_date = "2025-10-11"
+compatibility_flags = ["nodejs_compat"]
+main = "@tanstack/react-start/server-entry"
+```
+
+</WranglerConfig>
+
+4. Modify the scripts in your `package.json`
+
+```json title="package.json" del={5} ins={6-8}
+{
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build && tsc --noEmit",
+		"start": "node .output/server/index.mjs",
+		"preview": "vite preview",
+		"deploy": "npm run build && wrangler deploy",
+		"cf-typegen": "wrangler types"
+	}
+}
+```
+
+See the [TanStack Start framework guide](/workers/framework-guides/web-apps/tanstack-start/) for more info.

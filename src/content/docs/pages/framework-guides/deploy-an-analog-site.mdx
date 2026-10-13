@@ -5,7 +5,13 @@ head: []
 description: The fullstack Angular meta-framework
 ---
 
-import { PagesBuildPreset, Render, TabItem, Tabs } from "~/components";
+import {
+	PagesBuildPreset,
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+} from "~/components";
 
 [Analog](https://analogjs.org/) is a fullstack meta-framework for Angular, powered by [Vite](https://vitejs.dev/) and [Nitro](https://nitro.unjs.io/).
 
@@ -15,25 +21,11 @@ In this guide, you will create a new Analog application and deploy it using Clou
 
 The easiest way to create a new Analog project and deploy to Cloudflare Pages is to use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (also known as C3). To get started, open a terminal and run:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest my-analog-app -- --framework=analog
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> <TabItem label="bun">
-
-```sh
-bun create cloudflare@latest my-analog-app --framework=analog
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-analog-app --framework=analog --platform=pages"
+/>
 
 C3 will walk you through the setup process and create a new project using `create-analog`, the official Analog creation tool. It will also install the necessary adapters along with the [Wrangler CLI](/workers/wrangler/install-and-update/#check-your-wrangler-version).
 
@@ -87,7 +79,7 @@ export default defineConfig({
 });
 ```
 
-This module in turn loads a plugin which adds bindings to the event context in dev:
+This module in turn loads a plugin which adds bindings to the request context in dev:
 
 ```typescript
 import { NitroApp } from "nitropack";
@@ -110,15 +102,15 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 });
 ```
 
-In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's `wrangler.toml` file and emulate those bindings in local development. Review [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings) for more information on how to configure bindings in `wrangler.toml`.
+In the code above, the `getPlatformProxy` helper function will automatically detect any bindings defined in your project's Wrangler file and emulate those bindings in local development. You may wish to refer to [Wrangler configuration information on bindings](/workers/wrangler/configuration/#bindings).
 
-A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from `wrangler.toml` with the following command:
+A new type definition for the `Env` type (used by `context.cloudflare.env`) can be generated from the [Wrangler configuration file](/workers/wrangler/configuration/) with the following command:
 
 ```sh
 npm run cf-typegen
 ```
 
-This should be done any time you add new bindings to `wrangler.toml`.
+This should be done any time you add new bindings to your Wrangler configuration.
 
 ### Setup bindings in deployed applications
 
@@ -132,11 +124,11 @@ When creating your new project, C3 will give you the option of deploying an init
 npm run deploy
 ```
 
-<Render file="framework-guides/git-integration" />
+<Render file="framework-guides/git-integration" product="pages" />
 
 ### Create a GitHub repository
 
-<Render file="framework-guides/create-gh-repo" />
+<Render file="framework-guides/create-gh-repo" product="pages" />
 
 ```sh
 # Skip the following three commands if you have built your application
@@ -152,12 +144,11 @@ git push -u origin main
 
 ### Create a Pages project
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git** and create a new Pages project.
-
-You will be asked to authorize access to your GitHub account if you have not already done so. Cloudflare needs this so that it can monitor and deploy your projects from the source. You may narrow access to specific repositories if you prefer; however, you will have to manually update this list [within your GitHub settings](https://github.com/settings/installations) when you want to add more repositories to Cloudflare Pages.
-
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Analog" }}
+/>
 
 <PagesBuildPreset framework="analog" />
 

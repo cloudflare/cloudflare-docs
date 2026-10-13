@@ -1,0 +1,35 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+
+import { ResourcesBySelector } from "~/components";
+
+const props = {
+	frontmatter: {
+		title: "Resources",
+		template: "splash",
+		description:
+			"Explore our resources to learn more about Cloudflare products and services",
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<ResourcesBySelector
+		directory=""
+		types={[
+			"tutorial",
+			"video",
+			"reference-architecture",
+			"reference-architecture-diagram",
+			"implementation-guide",
+			"design-guide",
+			"learning-path",
+		]}
+		filterables={["pcx_content_type", "products"]}
+		filterPlacement="left"
+		columns={1}
+	/>
+</StarlightPage>

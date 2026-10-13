@@ -1,0 +1,36 @@
+---
+pcx_content_type: navigation
+title: Accessing your bucket from Cloudflare Workers
+sidebar:
+  order: 5
+tableOfContents: false
+description: |
+  In this video, you will set up a Cloudflare Workers project and connect it to an existing or new R2 bucket. You will secure file uploads using authentication tokens, configure the Wrangler settings, and enable Smart Tiered Cache for optimal performance. Finally, you will deploy and test your serverless API to upload and retrieve files such as podcast episodes.
+---
+
+import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode" icon="seti:video">
+
+    In this video, you will set up a Cloudflare Workers project and connect it to an existing or new R2 bucket. You will secure file uploads using authentication tokens, configure the Wrangler settings, and enable Smart Tiered Cache for optimal performance. Finally, you will deploy and test your serverless API to upload and retrieve files such as podcast episodes.
+
+    <Card>
+        <YouTube id="ywIZmfMk138" />
+
+      **Related content**
+
+      If you want to dive into detail, refer to the following pages:
+
+    - [C3 CLI](/pages/get-started/c3/)
+    - [AWS CLI example](/r2/examples/aws/aws-cli/)
+    - [Wrangler configuration file](/workers/wrangler/configuration/)
+
+    </Card>
+
+  </TabItem>
+
+  <TabItem label="Series overview" icon="list-format">
+    <Render file="r2-series-navigation" product="learning-paths" />
+  </TabItem>
+</Tabs>

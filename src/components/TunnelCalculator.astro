@@ -1,6 +1,5 @@
 ---
-import { Card } from "~/components";
-import { slug } from "github-slugger";
+import { Card } from "@astrojs/starlight/components";
 
 const configuration = Object.entries({
 	available_ports_per_host: {
@@ -64,7 +63,13 @@ const metrics = Object.entries({
 			<div>
 				<label for={key}>{value.title}</label>
 				<br />
-				<input type="number" id={key} name={key} value={value.default} data-tunnel-calculator />
+				<input
+					type="number"
+					id={key}
+					name={key}
+					value={value.default}
+					data-tunnel-calculator
+				/>
 			</div>
 		))
 	}
@@ -117,59 +122,90 @@ const metrics = Object.entries({
 </sup>
 
 <script>
-	import { evaluate, round } from "mathjs";
+	import { track } from "~/util/zaraz";
 
-	function calculate() {
-		const non_dns_udp_req_per_sec = document.querySelector(
-			"#non_dns_udp_req_per_sec",
-		)?.value;
-		const avg_non_dns_udp_session_timeout = document.querySelector(
-			"#avg_non_dns_udp_session_timeout",
-		)?.value;
-		const private_dns_req_per_sec = document.querySelector(
-			"#private_dns_req_per_sec",
-		)?.value;
-		const dns_udp_timeout_in_sec = document.querySelector(
-			"#dns_udp_timeout_in_sec",
-		)?.value;
-		const tcp_per_sec = document.querySelector("#tcp_per_sec")?.value;
-		const available_ports_per_host = document.querySelector(
-			"#available_ports_per_host",
-		)?.value;
-		const cloudflared_replicas = document.querySelector(
-			"#cloudflared_replicas",
-		)?.value;
+	function getValueOfInputById(id: string) {
+		const element = document.querySelector<HTMLInputElement>(id);
 
-		// const percent_capacity_per_replica = (((non_dns_udp_req_per_sec * avg_non_dns_udp_session_timeout) + (private_dns_req_per_sec * dns_udp_timeout_in_sec) + tcp_per_sec) / available_ports_per_host) * 100;
-		const percent_capacity_per_replica = evaluate(
-			`(((${non_dns_udp_req_per_sec} * ${avg_non_dns_udp_session_timeout}) + (${private_dns_req_per_sec} * ${dns_udp_timeout_in_sec}) + ${tcp_per_sec}) / ${available_ports_per_host}) * 100`,
-		);
-		const percent_capacity_across_all_replicas = evaluate(
-			`((${non_dns_udp_req_per_sec} * ${avg_non_dns_udp_session_timeout} +
-				${private_dns_req_per_sec} * ${dns_udp_timeout_in_sec} +
-				${tcp_per_sec}) /
-				(${available_ports_per_host} * ${cloudflared_replicas})) *
-			100`,
-		);
-		const max_dns_request_per_min = evaluate(
-			`((${available_ports_per_host} * ${cloudflared_replicas}) /
-				${dns_udp_timeout_in_sec}) *
-			60`,
-		);
+		if (!element)
+			throw new Error(`[TunnelCalculator] Unable to find element with ${id}.`);
 
-		document.querySelector("#percent_capacity_per_replica").value = round(
-			percent_capacity_per_replica,
-			2,
-		);
-		document.querySelector("#percent_capacity_across_all_replicas").value =
-			round(percent_capacity_across_all_replicas, 2);
-		document.querySelector("#max_dns_request_per_min").value = round(
-			max_dns_request_per_min,
-			2,
-		);
+		return Number(element.value);
 	}
 
-	document
-		.querySelectorAll("input[data-tunnel-calculator]")
-		.forEach((input) => input.addEventListener("change", calculate));
+	function calculate() {
+		const non_dns_udp_req_per_sec = getValueOfInputById(
+			"#non_dns_udp_req_per_sec",
+		);
+		const avg_non_dns_udp_session_timeout = getValueOfInputById(
+			"#avg_non_dns_udp_session_timeout",
+		);
+		const private_dns_req_per_sec = getValueOfInputById(
+			"#private_dns_req_per_sec",
+		);
+		const tcp_per_sec = getValueOfInputById("#tcp_per_sec");
+		const dns_udp_timeout_in_sec = getValueOfInputById(
+			"#dns_udp_timeout_in_sec",
+		);
+		const available_ports_per_host = getValueOfInputById(
+			"#available_ports_per_host",
+		);
+		const cloudflared_replicas = getValueOfInputById("#cloudflared_replicas");
+
+		const percent_capacity_per_replica =
+			((non_dns_udp_req_per_sec * avg_non_dns_udp_session_timeout +
+				private_dns_req_per_sec * dns_udp_timeout_in_sec +
+				tcp_per_sec) /
+				available_ports_per_host) *
+			100;
+
+		const percent_capacity_across_all_replicas =
+			((non_dns_udp_req_per_sec * avg_non_dns_udp_session_timeout +
+				private_dns_req_per_sec * dns_udp_timeout_in_sec +
+				tcp_per_sec) /
+				(available_ports_per_host * cloudflared_replicas)) *
+			100;
+
+		const max_dns_request_per_min =
+			((available_ports_per_host * cloudflared_replicas) /
+				dns_udp_timeout_in_sec) *
+			60;
+
+		const perceptCapacityPerReplicaInput =
+			document.querySelector<HTMLInputElement>("#percent_capacity_per_replica");
+
+		if (perceptCapacityPerReplicaInput) {
+			perceptCapacityPerReplicaInput.value = String(
+				percent_capacity_per_replica.toFixed(2),
+			);
+		}
+
+		const percentCapacityAcrossAllReplicasInput =
+			document.querySelector<HTMLInputElement>(
+				"#percent_capacity_across_all_replicas",
+			);
+
+		if (percentCapacityAcrossAllReplicasInput) {
+			percentCapacityAcrossAllReplicasInput.value = String(
+				percent_capacity_across_all_replicas.toFixed(2),
+			);
+		}
+
+		const maxDnsRequestPerMinInput = document.querySelector<HTMLInputElement>(
+			"#max_dns_request_per_min",
+		);
+
+		if (maxDnsRequestPerMinInput) {
+			maxDnsRequestPerMinInput.value = String(
+				max_dns_request_per_min.toFixed(2),
+			);
+		}
+	}
+
+	document.querySelectorAll("input[data-tunnel-calculator]").forEach((input) =>
+		input.addEventListener("change", () => {
+			calculate();
+			track("interacted with docs calculator", { value: "tunnel calculator" });
+		}),
+	);
 </script>

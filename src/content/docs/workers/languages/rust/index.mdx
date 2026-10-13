@@ -8,8 +8,10 @@ sidebar:
 head:
   - tag: title
     content: Cloudflare Workers — Rust language support
-description: Write Workers in 100% Rust using the [`workers-rs`crate](https://github.com/cloudflare/workers-rs)
+description: Write Workers in 100% Rust using the [`workers-rs` crate](https://github.com/cloudflare/workers-rs)
 ---
+
+import { WranglerConfig } from "~/components";
 
 Cloudflare Workers provides support for Rust via the [`workers-rs` crate](https://github.com/cloudflare/workers-rs), which makes [Runtime APIs](/workers/runtime-apis) and [bindings](/workers/runtime-apis/bindings/) to developer platform products, such as [Workers KV](/kv/concepts/how-kv-works/), [R2](/r2/), and [Queues](/queues/), available directly from your Rust code.
 
@@ -140,7 +142,7 @@ Preview your Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 :::note
 
-When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/cloudflare-errors/troubleshooting-cloudflare-5xx-errors/#error-523-origin-is-unreachable) while DNS is propagating. These errors should resolve themselves after a minute or so.
+When pushing to your `*.workers.dev` subdomain for the first time, you may see [`523` errors](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-523/) while DNS is propagating. These errors should resolve themselves after a minute or so.
 
 :::
 
@@ -206,7 +208,7 @@ To run the resulting Wasm binary on Workers, `workers-rs` includes a build tool 
 2. Invokes `web-pack` to minify and bundle the JavaScript code.
 3. Outputs a directory structure that Wrangler can use to bundle and deploy the final Worker.
 
-`worker-build` is invoked by default in the template project using a custom build command specified in `wrangler.toml`.
+`worker-build` is invoked by default in the template project using a custom build command specified in the `wrangler.toml` file.
 
 ### Binary Size (`wasm-opt`)
 
@@ -223,4 +225,4 @@ Finally, `worker-bundle` automatically invokes [`wasm-opt`](https://github.com/b
 
 ## Related resources
 
-- [Rust Wasm Book](https://rustwasm.github.io/book/introduction.html)
+- [Rust Wasm Book](https://rustwasm.github.io/docs/book/)

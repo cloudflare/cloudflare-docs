@@ -1,0 +1,254 @@
+---
+pcx_content_type: overview
+title: Verified bots
+sidebar:
+  order: 2
+learning_center:
+  title: What is a bot?
+  link: https://www.cloudflare.com/learning/bots/what-is-a-bot/
+
+---
+
+import { GlossaryTooltip } from "~/components";
+
+A verified bot is a bot which has been added to Cloudflare's list of <GlossaryTooltip term="verified bot">verified bots</GlossaryTooltip>.
+
+You can request for your bot to be added to Cloudflare's bots and agents directory by filling out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard.
+
+:::note
+A bot cannot be registered as both a verified bot and a signed agent. Review Cloudflare's [signed agents](/bots/concepts/bot/signed-agents/) to determine how to identify your bot.
+:::
+
+## Verified bot requirement
+
+For a bot to be verified, it must meet the following requirements:
+
+1. The bot must follow [verified bots policy](/bots/concepts/bot/verified-bots/policy/).
+2. The bot must be verified using one of the following verification methods:
+   - [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/)
+   - [IP validation](/bots/reference/bot-verification/ip-validation/)
+
+Once Cloudflare approves a verified bot, it should appear on [Cloudflare Radar's bots and agents directory](https://radar.cloudflare.com/verified-bots).
+
+---
+
+## Verification methods
+
+The bot must be verified using one of the following validation methods:
+
+- [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/)
+- [IP validation](/bots/reference/bot-verification/ip-validation/)
+
+---
+
+## Categories
+
+You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
+
+:::caution
+The Verified Bot Categories field is not compatible with legacy Firewall rules.
+:::
+
+:::note[Availability]
+Verified Bot Categories is available on all plans.
+:::
+
+<details>
+<summary>Academic research</summary>
+
+**String value**: `Academic Research`
+
+**Definition**: Gathers data for scholarly research or academic purposes.
+
+**Example**: Library of Congress, TurnItInBot, Bibliothèque nationale de France
+</details>
+
+<details>
+<summary>Accessibility</summary>
+
+**String value**: `Accessibility`
+
+**Definition**: Scans websites to identify their accessibility.
+
+**Example**: Accessible Web Bot
+</details>
+
+<details>
+<summary>Advertising or marketing</summary>
+
+**String value**: `Advertising & Marketing`
+
+**Definition**: Automates marketing tasks including, but not limited to, ad placement and performance tracking.
+
+**Example**: Google Adsbot
+</details>
+
+<details>
+<summary>Aggregators</summary>
+
+**String value**: `Aggregator`
+
+**Definition**: Collects content from various online sources and consolidates it in one place.
+
+**Example**: Pinterest, Indeed Jobsbot
+</details>
+
+<details>
+<summary>AI Assistant</summary>
+
+**String value**: `AI Assistant`
+
+**Definition**: Automated AI bot driven by user action.
+
+**Example**: Perplexity-User, DuckAssistBot
+</details>
+
+<details>
+<summary>AI Crawler</summary>
+
+**String value**: `AI Crawler`
+
+**Definition**: Crawls websites for content that is used for training AI models.
+
+**Example**: Google Bard, ChatGPT bot
+</details>
+
+<details>
+<summary>AI Search</summary>
+
+**String value**: `AI Search`
+
+**Definition**: Powers AI-driven search experiences.
+
+**Example**: OAI-SearchBot
+</details>
+
+<details>
+<summary>Archiver</summary>
+
+**String value**: `Archiver`
+
+**Definition**: Saves snapshots of websites to preserve digital content for historical records.
+
+**Example**: Internet Archive, CommonCrawl
+</details>
+
+<details>
+<summary>Feed fetcher</summary>
+
+**String value**: `Feed Fetcher`
+
+**Definition**: Retrieves updates from feeds to power readers or other applications.
+
+**Example**: RSS or Podcast feed updaters
+</details>
+
+<details>
+<summary>Monitoring or analytics</summary>
+
+**String value**: `Monitoring & Analytics`
+
+**Definition**: Tracks a website's uptime, performance, and user traffic to gather key monitoring metrics.
+
+**Example**: Uptime Monitors
+</details>
+
+<details>
+<summary>Page preview</summary>
+
+**String value**: `Page Preview`
+
+**Definition**: Generates previews for links shared on social media or in messaging apps.
+
+**Example**: Facebook, Slack, Twitter, or Discord Link Preview tools
+</details>
+
+<details>
+<summary>Search engine crawler</summary>
+
+**String value**: `Search Engine Crawler`
+
+**Definition**: A bot that discovers and indexes web pages for search results.
+
+**Example**: Googlebot, Bingbot, Yandexbot, Baidubot
+</details>
+
+<details>
+<summary>Search engine optimization</summary>
+
+**String value**: `Search Engine Optimization`
+
+**Definition**: Analyzes websites to improve their standing in search engine results pages.
+
+**Example**: Google Lighthouse, GT Metrix, Pingdom, AddThis
+</details>
+
+<details>
+<summary>Security</summary>
+
+**String value**: `Security`
+
+**Definition**: Scans websites to detect security vulnerabilities and potential threats.
+
+**Example**: Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools
+</details>
+
+<details>
+<summary>Social media marketing</summary>
+
+**String value**: `Social Media Marketing`
+
+**Definition**: Manages and automates activities on social platforms.
+
+**Example**: Brandwatch
+</details>
+
+<details>
+<summary>Webhooks</summary>
+
+**String value**: `Webhooks`
+
+**Definition**: An automated messenger that sends data from one application to another for specific events.
+
+**Example**: Payment processors, WordPress Integration tools
+</details>
+
+<details>
+<summary>Other</summary>
+
+**String value**: `Other`
+
+**Definition**: A dedicated category for bots that do not fit into the other classifications.
+</details>
+
+Cloudflare reserves the right to re-assign verified bot categories if the bot's public documentation and observed behavior differ from the category listed in the bot submission form.
+
+---
+
+## Inactive verified bots
+
+Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.
+
+It takes approximately 24 hours for an inactive IP to be removed as a verified bot.
+
+---
+
+### Known issues
+
+The Yandex bot is classified as a Verified Bot, but traffic may occasionally be blocked by a [WAF Managed Rule](/waf/managed-rules/) (such as the rule with ID `...f6cbb163`).
+
+This typically occurs when Yandex updates its source IP address ranges. The new IPs are temporarily unrecognized by the WAF Managed Rules until the updated Verified Bot IP list is fully synchronized across the Cloudflare network.
+
+To restore Yandex traffic, deploy a [WAF exception](/waf/managed-rules/waf-exceptions/) that temporarily skips the managed rule with ID `<RuleID id="2854e3f18ad946049e6d90ccf6cbb163" />` when a request is coming from the **Yandex IP** and the user-agent contains **Yandex**. This ensures that legitimate Yandex traffic bypasses the blocking rule without disabling security features for other traffic.
+
+You can also create a [WAF Custom Rule](/waf/custom-rules/skip/) with the _Skip_ action targeting the managed ruleset that contains the blocking rule. The rule expression should specifically match the request's Yandex IP and User-Agent.
+
+The issue is transient and will resolve automatically once the new Yandex IP addresses are fully propagated to Cloudflare's systems. This propagation typically takes up to 48 hours. If the bot remains blocked after 48 hours, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+---
+
+## Availability
+
+Verified bots are excluded by default when [Bot Fight Mode](/bots/get-started/bot-fight-mode/) is enabled to block definite bots.
+
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) and [Enterprise Bot Management](/bots/get-started/bot-management/) customers have the option to block or allow verified bots.

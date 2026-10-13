@@ -1,0 +1,42 @@
+---
+type: example
+summary: Connect Hyperdrive to a PlanetScale PostgreSQL database.
+pcx_content_type: example
+title: PlanetScale
+sidebar:
+  order: 8
+description: Connect Hyperdrive to a PlanetScale PostgreSQL database.
+---
+
+import { Render } from "~/components";
+
+This example shows you how to connect Hyperdrive to a [PlanetScale](https://planetscale.com/) PostgreSQL database.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing PlanetScale PostgreSQL database by creating a new role (optional) and retrieving a connection string to your database.
+
+### PlanetScale Dashboard
+
+1. Go to the [**PlanetScale dashboard**](https://app.planetscale.com/) and select the database you wish to connect to.
+2. Click **Connect**.
+3. Create a new role for your Hyperdrive configuration (recommended):
+   1. Ensure the minimum required permissions for Hyperdrive to read and write data to your tables:
+      - **pg_read_all_data**: Read data from all tables, views, and sequences
+      - **pg_write_all_data**: Write data to all tables, views, and sequences
+   2. Click **Create role**.
+4. Note the user, the password, the database host, and the database name (or `postgres` as the default database). You will need these to create a database configuration in Hyperdrive.
+
+With the host, database name, username and password, you can now create a Hyperdrive database configuration.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" product="hyperdrive" />
+
+:::note
+
+When connecting to a PlanetScale PostgreSQL database with Hyperdrive, you should use a driver like [node-postgres (pg)](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/) or [Postgres.js](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/) to connect directly to the underlying database instead of the [PlanetScale serverless driver](https://planetscale.com/docs/tutorials/planetscale-serverless-driver). Hyperdrive is optimized for database access for Workers and will perform global connection pooling and fast query routing by connecting directly to your database.
+
+:::
+
+<Render file="create-hyperdrive-config-next-steps" product="hyperdrive" />

@@ -1,0 +1,46 @@
+releaseNotes: >-
+  This release contains a number of exciting new features and several
+  improvements and bug fixes.
+
+
+  **Notable updates**
+
+  - Added the ability for the Client to display Gateway NETWORK and HTTP block
+  notifications to the user.
+
+  - Added the ability for administrators to specify multiple configurations in
+  MDM files that users can toggle between. This allows users to more easily
+  switch between production and test environments or for China users to switch
+  between their override endpoints within the UI.
+
+  - Added the ability for administrators to allow their end users to temporarily
+  obtain access to local network resources in the event their home IP space
+  overlaps with traffic normally routed through the WARP tunnel.
+
+  - Improved existing re-auth notifications to be more visible and time
+  sensitive.
+
+  - Improved the retry mechanisms for DEX test results.
+
+  - Fixed an issue where DEX tests would run before the client was fully
+  connected.
+
+
+  **Known issues**
+
+  - Registration may silently fail for users if they had previously used the
+  beta feature 'switch between multiple orgs/configurations' and uninstalled the
+  beta client before installing this GA client. It is recommended that the new
+  GA client be installed over the beta client (without first uninstalling the
+  beta client). If the beta client has already been uninstalled, simply
+  re-install the GA client a second time to clear this issue.
+
+  - When `Install CA to system certificate store` is enabled, the certificate is
+  not always properly left behind in `/Library/Application
+  Support/Cloudflare/installed_cert.pem`. This issue will be fixed in a future
+  release.
+version: 2024.1.160.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.1.160.0
+packageSize: 67358686
+releaseDate: 2024-01-24T18:36:39.621Z
+platformName: macOS

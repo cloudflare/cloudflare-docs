@@ -1,0 +1,25 @@
+---
+{}
+---
+
+### Mitigating stuck BGP routes
+
+When you prepare to remove traffic for a [Bring Your Own IP (BYOIP)](/byoip/) prefix from the Cloudflare edge, a direct BGP withdrawal action carries the risk of a stuck BGP route. This state occurs when a route becomes stuck in the Internet's [Default-Free Zone (DFZ)](https://en.wikipedia.org/wiki/Default-free_zone), meaning core routers that missed the withdrawal announcement continue forwarding traffic to a now-inactive next-hop (what is know as the blackhole). You can read more on this in our blog post [BGP zombies and excessive path hunting](https://blog.cloudflare.com/going-bgp-zombie-hunting).
+
+This risk is especially evident in the use case where the global routing table relies on more-specific to less-specific prefix routing fallback. Since this fallback mechanism is highly prone to route instability, Cloudflare recommends a multi-step draining process.
+
+### Multi-step BYOIP withdrawal process
+
+When draining traffic, use the same prefix length on Cloudflare and on your ISP, since matching prefix lengths gives the most effective and deterministic behavior.
+
+The following steps outline the recommended multi-step draining process to achieve a clean traffic cutover and prevent blackholing.
+
+1. **Initiate advertisement from your origin network**: Begin announcing the exact same-length prefix (for example, `192.0.2.0/24`) from your local infrastructure to your upstream Internet Service Providers (ISPs). This action introduces a competing route of the same length into the global routing table. BGP best path selection will favor your native route based on other metrics (for example, shorter AS path length or local preference), allowing traffic to begin draining away from the Cloudflare edge. Note that some of your traffic may not route as expected, since this depends on how your ISP prefers routes (for example, the Cloudflare route may be treated as a less-preferred path if not fully withdrawn).
+2. **Wait for global BGP convergence**: Allow a period of time (typically five to ten minutes) for the new native advertisement to propagate fully across the global routing table, and for routes to converge. This passive waiting period ensures that the majority of traffic has shifted to your local network before the next step.
+3. **Signal BGP withdrawal from the Cloudflare edge**: Once you have verified that traffic has successfully drained, use one of the BGP control methods to stop the advertisement of the prefix from the Cloudflare edge.
+
+	:::caution[ISP route refresh delays may impact traffic]
+	Cloudflare's action to withdraw the route is near-instantaneous across our global network. However, Cloudflare has no control over how quickly external ISPs refresh their BGP tables after the withdrawal.
+	:::
+
+4. The draining process is complete.

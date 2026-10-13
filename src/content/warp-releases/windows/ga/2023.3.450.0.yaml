@@ -1,0 +1,21 @@
+releaseNotes: >-
+  This is a Windows only hotfix from the 2023.3.412.0 release
+   
+  **Notable updates**
+
+  - Fixed issue where certain split tunnel configurations with certain multicast
+  IPs not excluded couldn't connect. 224.0.0.0/4 and ff00::/8 are now always
+  excluded from the tunnel on Windows.
+
+  - Fixed a connectivity issue that was more likely to happen for clients with
+  large host-based split tunnel rules
+
+
+  **Known issues**
+
+  No known issues
+version: 2023.3.450.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.3.450.0
+packageSize: 106725376
+releaseDate: 2023-04-27T23:02:29.285Z
+platformName: Windows

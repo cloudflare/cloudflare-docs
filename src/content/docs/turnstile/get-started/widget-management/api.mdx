@@ -1,0 +1,66 @@
+---
+title: Create and manage widgets using Cloudflare API
+pcx_content_type: how-to
+sidebar:
+    order: 2
+    label: API
+---
+
+import { APIRequest } from "~/components"
+
+Use the [Cloudflare API](/api/resources/turnstile/) for programmatic widget management and automation.
+
+## Prerequisites
+
+Before you begin, you must have:
+
+- A Cloudflare API token with `Account:Turnstile:Edit` permissions
+- An account ID found in your Cloudflare dashboard
+
+### Create a widget via the API
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets"
+  method="POST"
+  json={{
+    domains: ["example.com"],
+    mode: "managed",
+    name: "My Example Turnstile Widget",
+  }}
+/>
+
+### Manage widgets via the API
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets"
+  method="GET"
+/>
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets/{sitekey}"
+  method="GET"
+/>
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets/{sitekey}"
+  method="PUT"
+  json={{
+    domains: ["203.0.113.1", "cloudflare.com", "blog.example.com"],
+    mode: "invisible",
+    name: "blog.cloudflare.com login form",
+    clearance_level: "interactive",
+  }}
+/>
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets/{sitekey}/rotate_secret"
+  method="POST"
+  json={{
+    invalidate_immediately: false,
+  }}
+/>
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets/{sitekey}"
+  method="DELETE"
+/>

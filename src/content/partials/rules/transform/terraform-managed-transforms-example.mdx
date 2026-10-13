@@ -1,0 +1,23 @@
+---
+{}
+---
+
+Use the `cloudflare_managed_headers` Terraform resource to configure Managed Transforms. For example:
+
+```tf
+resource "cloudflare_managed_headers" "tf_example" {
+  zone_id = "<ZONE_ID>"
+
+  managed_request_headers {
+    id      = "add_visitor_location_headers"
+    enabled = true
+  }
+
+  managed_response_headers {
+    id      = "remove_x-powered-by_header"
+    enabled = true
+  }
+}
+```
+
+Make sure you include the Managed Transforms you are updating in the correct object (`managed_request_headers` or `managed_response_headers`).

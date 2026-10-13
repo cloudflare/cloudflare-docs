@@ -1,0 +1,122 @@
+---
+import Details from "./Details.astro";
+import { marked } from "marked";
+import { z } from "astro:schema";
+import prettyBytes from "pretty-bytes";
+import { warpReleasesSchema } from "~/schemas";
+import platforms from "~/util/warp-platforms.json";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	header: z.string(),
+	open: z.boolean().optional(),
+	release: warpReleasesSchema,
+});
+
+const { header, open, release } = props.parse(Astro.props);
+
+const getPrettyLinuxName = (platform: string) => {
+	const platformInfo = platforms.find(p => p.platform === platform);
+
+	if (platformInfo) {
+		return platformInfo.display_name;
+	}
+
+	return platform;
+};
+
+const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
+	(a, b) => {
+		return getPrettyLinuxName(a[0]).localeCompare(getPrettyLinuxName(b[0]));
+	},
+);
+---
+
+<Details header={header} open={open}>
+	<warp-download data-version={release.version} data-platforms={JSON.stringify(sortedPlatforms)}>
+		<p>
+			<div class="flex gap-2">
+				<span>
+					<strong>Version: </strong>
+					{release.platformName}
+					{release.version}
+				</span>
+				<span>
+					<strong>Date: </strong>
+					{release.releaseDate.toISOString().split("T")[0]}
+				</span>
+				{
+					release.packageSize && (
+						<span>
+							<strong>Size: </strong>
+							<span data-size>{prettyBytes(release.packageSize)}</span>
+						</span>
+					)
+				}
+			</div>
+		</p>
+		<p>
+			<span>
+				{
+					sortedPlatforms.length > 0 ? (
+							<select>
+								{sortedPlatforms.map(([platform]) => (
+									<option value={platform}>
+										{getPrettyLinuxName(platform)}
+									</option>
+								))}
+							</select>
+							<a
+								class="inline-block"
+								data-linux-download
+								href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
+							>
+								Download
+							</a>
+					) : (
+						<a href={release.packageURL}>Download</a>
+					)
+				}
+			</span>
+		</p>
+		<p>
+			<span>
+				<h4>Release notes</h4>
+			</span>
+			<Fragment set:html={marked.parse(release.releaseNotes)} />
+		</p>
+	</warp-download>
+</Details>
+
+<script>
+	import prettyBytes from "pretty-bytes";
+
+	class WarpDownload extends HTMLElement {
+		connectedCallback() {
+			const platforms = JSON.parse(this.dataset.platforms as string);
+
+			const dropdown = this.querySelector<HTMLSelectElement>("select");
+
+			dropdown?.addEventListener("change", () => {
+				const platform = dropdown?.value;
+
+				const download = this.querySelector<HTMLAnchorElement>("a[data-linux-download]");
+				const size = this.querySelector<HTMLSpanElement>("span[data-size]");
+
+				download?.setAttribute(
+					"href",
+					`https://downloads.cloudflareclient.com/v1/download/${platform}/version/${this.dataset.version}`,
+				);
+
+				if (size) {
+					const platformInfo = platforms.find(([p]: [string, number]) => p === platform);
+
+					size.textContent = prettyBytes(Number(platformInfo?.[1] ?? 0));
+				}
+			});
+		}
+	}
+
+	customElements.define("warp-download", WarpDownload);
+</script>

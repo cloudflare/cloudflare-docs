@@ -1,0 +1,20 @@
+releaseNotes: |
+  This release contains improvements to support custom Gateway certificate installation in addition to the changes and improvements included in version 2024.12.492.0.
+
+  **Changes and improvements:**
+  - Adds support for installing all available custom Gateway certificates from an account to the system store.
+  - Users can now get a list of installed certificates by running `warp-cli certs`.
+
+  **Known issues:**
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+
+version: 2024.12.554.0
+releaseDate: 2024-12-19T22:24:55.168Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.12.554.0
+packageSize: 126205952
+platformName: Windows

@@ -1,0 +1,101 @@
+---
+title: Publish to a Queue via Workers
+summary: Publish to a Queue directly from your Worker.
+pcx_content_type: example
+sidebar:
+  order: 30
+head:
+  - tag: title
+    content: Queues - Publish Directly via a Worker
+description: Publish to a Queue directly from your Worker.
+---
+
+import { WranglerConfig } from "~/components";
+
+The following example shows you how to publish messages to a Queue from a Worker. The example uses a Worker that receives a JSON payload from the request body and writes it as-is to the Queue, but in a real application you might have more logic before you queue a message.
+
+## Prerequisites
+
+- A [queue created](/queues/get-started/#3-create-a-queue) via the [Cloudflare dashboard](https://dash.cloudflare.com) or the [wrangler CLI](/workers/wrangler/install-and-update/).
+- A [configured **producer** binding](/queues/configuration/configure-queues/#producer-worker-configuration) in the Cloudflare dashboard or Wrangler file.
+
+Configure your Wrangler file as follows:
+
+<WranglerConfig>
+
+```toml
+name = "my-worker"
+
+[[queues.producers]]
+  queue = "my-queue"
+  binding = "YOUR_QUEUE"
+
+```
+
+</WranglerConfig>
+
+### 1. Create the Worker
+
+The following Worker script:
+
+1. Validates that the request body is valid JSON.
+2. Publishes the payload to the queue.
+
+```ts
+interface Env {
+	YOUR_QUEUE: Queue;
+}
+
+export default {
+	async fetch(req, env): Promise<Response> {
+		// Validate the payload is JSON
+		// In a production application, we may more robustly validate the payload
+		// against a schema using a library like 'zod'
+		let messages;
+		try {
+			messages = await req.json();
+		} catch (e) {
+			// Return a HTTP 400 (Bad Request) if the payload isn't JSON
+			return Response.json({ err: "payload not valid JSON" }, { status: 400 });
+		}
+
+		// Publish to the Queue
+		try {
+			await env.YOUR_QUEUE.send(messages);
+		} catch (e: any) {
+			console.log(`failed to send to the queue: ${e}`);
+			// Return a HTTP 500 (Internal Error) if our publish operation fails
+			return Response.json({ error: e.message }, { status: 500 });
+		}
+
+		// Return a HTTP 200 if the send succeeded!
+		return Response.json({ success: true });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+To deploy this Worker:
+
+```sh
+npx wrangler deploy
+```
+
+### 2. Send a test message
+
+To make sure you successfully write a message to your queue, use `curl` on the command line:
+
+```sh
+# Make sure to replace the placeholder with your shared secret
+curl -XPOST "https://YOUR_WORKER.YOUR_ACCOUNT.workers.dev" --data '{"messages": [{"msg":"hello world"}]}'
+```
+
+```sh output
+{"success":true}
+```
+
+This will issue a HTTP POST request, and if successful, return a HTTP 200 with a `success: true` response body.
+
+- If you receive a HTTP 400, this is because you attempted to send malformed JSON to your queue.
+- If you receive a HTTP 500, this is because the message was not written to your Queue successfully.
+
+You can use [`wrangler tail`](/workers/observability/logs/real-time-logs/) to debug the output of `console.log`.

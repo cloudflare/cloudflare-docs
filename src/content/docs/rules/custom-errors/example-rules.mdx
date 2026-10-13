@@ -1,0 +1,250 @@
+---
+title: Example custom error rules
+pcx_content_type: configuration
+sidebar:
+  order: 4
+  label: Example rules
+---
+
+import { Tabs, TabItem, APIRequest, Render } from "~/components";
+
+The provided examples use the following fields in their rule expressions:
+
+- [`http.response.code`](/ruleset-engine/rules-language/fields/reference/http.response.code/) (Response Status Code): Represents the HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server. Use this field to customize the response for error codes returned by the origin server or by a Cloudflare product such as a Worker.
+
+- [`cf.response.1xxx_code`](/ruleset-engine/rules-language/fields/reference/cf.response.1xxx_code/): Contains the specific error code for Cloudflare-generated errors. This field will only work for Cloudflare-generated errors such as [52X](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/) and [1XXX](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/).
+
+### Custom JSON response for all 5XX errors
+
+This example configures a custom JSON error response for all 5XX errors (`500`-`599`) in a zone. The HTTP status code of the custom error response will be set to `530`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+**Custom error rule configuration:**
+
+- **Name**: `Custom JSON response for all 5XX errors`
+
+- **If incoming requests match** > **Custom filter expression**:
+
+  | Field                | Operator                 | Value | Logic |
+  | -------------------- | ------------------------ | ----- | ----- |
+  | Response Status Code | greater than or equal to | `500` | And   |
+  | Response Status Code | less than or equal to    | `599` |       |
+
+  If using the Expression Editor:<br/>
+  `(http.response.code ge 500 and http.response.code le 599)`
+
+- **Response type**: _JSON response_
+- **Response code**: `530`
+- **JSON response**: `{"message": "A server error occurred."}`
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_custom_errors",
+	}}
+	json={{
+		rules: [
+			{
+				ref: "json_response_for_5xx_errors",
+				action: "serve_error",
+				action_parameters: {
+					content: '{"message": "A server error occurred."}',
+					content_type: "application/json",
+					status_code: 530,
+				},
+				expression: "http.response.code ge 500 and http.response.code lt 600",
+				enabled: true,
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+</TabItem> </Tabs>
+
+### Custom HTML response with updated status code
+
+This example configures a custom HTML error response for responses with a `500` HTTP status code, and redefines the response status code to `503`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+**Custom error rule configuration:**
+
+- **Name**: `Custom HTML response for 500 errors`
+
+- **If incoming requests match** > **Custom filter expression**:
+
+  | Field                | Operator | Value |
+  | -------------------- | -------- | ----- |
+  | Response Status Code | equal to | `500` |
+
+  If using the Expression Editor:<br/>
+  `(http.response.code eq 500)`
+
+- **Response type**: _HTML response_
+- **Response code**: `503`
+- **HTML response**:
+
+  ```txt
+  <!DOCTYPE html><html><head><meta charset="utf-8"><title>Application unavailable</title></head><body><h1>Application temporarily unavailable</h1><p>Please try again later.</p></body></html>
+  ```
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_custom_errors",
+	}}
+	json={{
+		rules: [
+			{
+				ref: "html_response_500_to_503",
+				action: "serve_error",
+				action_parameters: {
+					content:
+						'<!DOCTYPE html><html><head><meta charset="utf-8"><title>Application unavailable</title></head><body><h1>Application temporarily unavailable</h1><p>Please try again later.</p></body></html>',
+					content_type: "text/html",
+					status_code: 503,
+				},
+				expression: "http.response.code eq 500",
+				enabled: true,
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+</TabItem> </Tabs>
+
+### Custom HTML response for Cloudflare 1020 errors
+
+This example configures a custom HTML error response for [Cloudflare error 1020](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1020/) (Access Denied).
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+**Custom error rule configuration:**
+
+- **Name**: `Custom HTML response for 1020 errors`
+
+- **If incoming requests match** > **Custom filter expression**
+
+  Use the Expression Editor:<br/>
+  `(cf.response.1xxx_code eq 1020)`
+
+- **Response type**: _HTML response_
+- **HTML response**:
+
+  ```txt
+  <!DOCTYPE html><html><head><meta charset="utf-8"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>
+  ```
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_custom_errors",
+	}}
+	json={{
+		rules: [
+			{
+				ref: "html_response_cf_1020",
+				action: "serve_error",
+				action_parameters: {
+					content:
+						'<!DOCTYPE html><html><head><meta charset="utf-8"><title>Access denied</title></head><body><h1>You do not have access to this page</h1><p>Contact us if you think this is an error.</p></body></html>',
+					content_type: "text/html",
+				},
+				expression: "cf.response.1xxx_code eq 1020",
+				enabled: true,
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+</TabItem> </Tabs>
+
+### Custom error asset created from a URL
+
+This example configures a custom error rule returning a previously created custom error asset named `500_error_template` for responses with a `500` HTTP status code.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+**Custom error rule configuration:**
+
+- **Name**: `Serve asset for HTTP 500 errors`
+
+- **If incoming requests match** > **Custom filter expression**:
+
+  | Field                | Operator | Value |
+  | -------------------- | -------- | ----- |
+  | Response Status Code | equal to | `500` |
+
+  If using the Expression Editor:<br/>
+  `(http.response.code eq 500)`
+
+- **Response type**: _Custom error asset_
+- **Asset**: `500_error_template`
+
+</TabItem> <TabItem label="API">
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_custom_errors",
+	}}
+	json={{
+		rules: [
+			{
+				ref: "serve_error_500_asset",
+				action: "serve_error",
+				action_parameters: {
+					asset_name: "500_error_template",
+					content_type: "text/html",
+				},
+				expression: "http.response.code eq 500",
+				enabled: true,
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+</TabItem> </Tabs>

@@ -1,0 +1,59 @@
+---
+title: WranglerCommand
+styleGuide:
+  component: WranglerCommand
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `WranglerCommand` component documents the available options for a given command.
+
+This is generated using the Wrangler version in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
+
+## Import
+
+```mdx
+import { WranglerCommand } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { WranglerCommand } from "~/components";
+
+<WranglerCommand
+	command="deploy"
+	description={"Deploy a [Worker](/workers/)"}
+/>
+
+<WranglerCommand command="d1 execute" />
+```
+
+## With ExtraFlagDetails
+
+You can add or replace help text for specific flags using the `ExtraFlagDetails` component:
+
+```mdx live
+import { WranglerCommand, ExtraFlagDetails } from "~/components";
+
+<WranglerCommand command="deploy">
+	<ExtraFlagDetails key="dry-run">
+		Additional details about the dry-run flag that will be appended to the
+		original help text. Here is a [link](https://cloudflare.com) for more
+		information.
+	</ExtraFlagDetails>
+	<ExtraFlagDetails key="compatibility-date" mode="replace">
+		Custom help text that completely replaces the original description for this
+		flag.
+	</ExtraFlagDetails>
+</WranglerCommand>
+```
+
+## Arguments
+
+- `command` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the command, i.e `d1 execute`.
+- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+  - The heading level that the command name should be added at on the page, i.e `2` for a `h2`.
+- `description` <Type text="string" /> <MetaInfo text="optional" />
+  - A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.

@@ -1,0 +1,119 @@
+---
+{}
+
+---
+
+import { Render, Tabs, TabItem } from "~/components"
+
+To add a domain to the Local Domain Fallback list:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="warp/view-local-domains" product="cloudflare-one" />
+
+4. In **Domain**, enter the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`).
+
+5. In **DNS Servers**, enter the IP address of the DNS servers that should resolve that domain name.
+
+6. Enter an optional description and select **Save domain**.
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+A Local Domain Fallback list is scoped to a specific [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/). If a device profile does not have a corresponding Local Domain Fallback resource, those devices will use the default local domains shown in Step 2.
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. (Optional) Create a list of domains that you can reuse across multiple device profiles. For example, you can declare a local value in the same module as your device profiles:
+
+	```tf title="local-domains.local.tf"
+	locals {
+		default_local_domains = [
+			# Default Local Domain Fallback entries recommended by Cloudflare
+	    {
+      suffix = "corp"
+    },
+    {
+      suffix = "domain"
+    },
+    {
+      suffix = "home"
+    },
+    {
+      suffix = "home.arpa"
+    },
+    {
+      suffix = "host"
+    },
+    {
+      suffix = "internal"
+    },
+    {
+      suffix = "intranet"
+    },
+    {
+      suffix = "invalid"
+    },
+    {
+      suffix = "lan"
+    },
+    {
+      suffix = "local"
+    },
+    {
+      suffix = "localdomain"
+    },
+    {
+      suffix = "localhost"
+    },
+    {
+      suffix = "private"
+    },
+    {
+      suffix = "test"
+    }
+		]
+	}
+	```
+4. To configure Local Domain Fallback for the default device profile, use the [`cloudflare_zero_trust_device_default_profile_local_domain_fallback`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_default_profile_local_domain_fallback) resource. To configure Local Domain Fallback for a custom device profile, use[`cloudflare_zero_trust_device_custom_profile_local_domain_fallback`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_custom_profile_local_domain_fallback). For example:
+
+	```tf title="device-profiles.tf"
+	resource "cloudflare_zero_trust_device_custom_profile_local_domain_fallback" "example" {
+		account_id = var.cloudflare_account_id
+		policy_id  = cloudflare_zero_trust_device_custom_profile.example.id
+		domains = concat(
+			# Global entries
+			local.default_local_domains,
+
+			# Profile-specific entries
+			[
+				{
+				suffix = "example.com"
+				description = "Domain for local development"
+				dns_server = ["1.1.1.1", "192.168.0.1"]
+				}
+			]
+		)
+	}
+	```
+
+For `suffix`, specify the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`). For `dns_server`, enter the IP address of the DNS servers that should resolve that domain name.
+
+</TabItem>
+</Tabs>
+
+WARP tries all servers and always uses the fastest response, even if that response is `no records found`. We recommend specifying at least one DNS server for each domain. If a value is not specified, the WARP client will try to identify the DNS server (or servers) used on the device before it started, and use that server for each domain in the Local Domain Fallback list.
+
+### Route traffic to fallback server
+
+The WARP client routes DNS traffic to your [Local Domain Fallback server](#add-a-domain) according to your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/). To ensure that queries can reach your private DNS server:
+
+- If your DNS server is only reachable inside of the WARP tunnel (for example, via `cloudflared` or Magic WAN):
+
+   1. Go to **Networks** > **Routes** and verify that the DNS server is connected to Cloudflare. To connect a DNS server, refer to [Private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
+
+   2. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), verify that the DNS server IP routes through the WARP tunnel.
+
+- If your DNS server is only reachable outside of the WARP tunnel (for example, via a third-party VPN), verify that the DNS server IP is [excluded from the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
+
+For more information, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).

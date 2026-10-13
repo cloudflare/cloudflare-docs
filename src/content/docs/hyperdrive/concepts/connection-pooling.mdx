@@ -1,0 +1,41 @@
+---
+pcx_content_type: concept
+title: Connection pooling
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+Hyperdrive maintains a pool of connections to your database. These are optimally placed to minimize the latency for your applications. You can configure
+the amount of connections your Hyperdrive configuration uses to connect to your origin database. This enables you to right-size your connection pool based on your database capacity and application requirements.
+
+For instance, if your Worker makes many queries to your database (which cannot be resolved by Hyperdrive's caching), you may want to allow Hyperdrive to make more connections to your database.
+Conversely, if your Worker makes few queries that actually need to reach your database or if your database allows a small number of database connections, you can reduce the amount of connections Hyperdrive will make to your database.
+
+All configurations have a minimum of 5 connections, and with a maximum depending on your Workers plan. Refer to the [limits](/hyperdrive/platform/limits/) for details.
+
+## How Hyperdrive pools database connections
+
+Hyperdrive will automatically scale the amount of database connections held open by Hyperdrive depending on your traffic and the amount of load that is put on your database.
+
+The `max_size` parameter acts as a soft limit - Hyperdrive may temporarily create additional connections during network issues or high traffic periods to ensure high availability and resiliency.
+
+## Pooling mode
+
+<Render file="pooling-mode" product="hyperdrive" />
+
+## Best practices
+
+You can configure connection counts using the Cloudflare dashboard or the Cloudflare API. Consider the following best practices to determine the right limit for your use-case:
+
+- **Start conservatively**: Begin with a lower connection count and increase as needed based on your application's performance.
+- **Monitor database metrics**: Watch your database's connection usage and performance metrics to optimize the connection count.
+- **Consider database limits**: Ensure your configured connection count doesn't exceed your database's maximum connection limit.
+- **Account for multiple configurations**: If you have multiple Hyperdrive configurations connecting to the same database, consider the total connection count across all configurations.
+
+## Next steps
+
+- Learn more about [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/).
+- Review [Hyperdrive limits](/hyperdrive/platform/limits/) for your Workers plan.
+- Learn how to [Connect to PostgreSQL](/hyperdrive/examples/connect-to-postgres/) from Hyperdrive.

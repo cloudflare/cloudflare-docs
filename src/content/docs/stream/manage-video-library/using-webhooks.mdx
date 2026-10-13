@@ -6,13 +6,15 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, DashButton } from "~/components"
 
 Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
 ## Subscribe to webhook notifications
 
-To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens).
+To subscribe to receive webhook notifications on your service or modify an existing subscription, generate an API token on the **Account API tokens** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/api-tokens" />
 
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 
@@ -160,7 +162,7 @@ At this point, you should discard requests with timestamps that are too old for 
 
 Prepare the signature source string and concatenate the following strings:
 
-* Value of the `time` field e.g. `1230811200`
+* Value of the `time` field for example `1230811200`
 * Character `.`
 * Webhook request body (complete with newline characters, if applicable)
 
@@ -247,7 +249,7 @@ func main() {
 
     const getUtf8Bytes = str =>
       new Uint8Array(
-        [...unescape(encodeURIComponent(str))].map(c => c.charCodeAt(0))
+        [...decodeURIComponent(encodeURIComponent(str))].map(c => c.charCodeAt(0))
       );
 
     const keyBytes = getUtf8Bytes(key);

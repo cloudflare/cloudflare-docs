@@ -1,0 +1,28 @@
+---
+title: Add a prefix
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Add a prefix to Advanced DDoS Protection
+
+---
+import { Steps, DashButton } from "~/components"
+
+To add a [prefix](/ddos-protection/advanced-ddos-systems/concepts/#prefixes) to Advanced DDoS Protection:
+
+<Steps>
+  1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+ 
+      <DashButton url="/?to=/:account/network-security/ddos" />
+  2. Go to **Advanced Protection**. 
+  3. Under **General settings** > **Prefixes**, select **Edit**.
+  4. Expand the **Add existing prefix** section and select **Add** next to the prefix you wish to add.<br/>
+    Alternatively, enter a prefix and (optionally) a description in **Prefix** and **Description**, respectively, and select **Add**.
+</Steps>
+
+:::note[Note]
+
+The **Add existing prefix** list will not display leased prefixes, but you can add them manually in the Cloudflare dashboard or [using the API](/ddos-protection/advanced-ddos-systems/api/). You cannot add [delegated prefixes](/byoip/concepts/prefix-delegations/) to Advanced TCP Protection.
+:::

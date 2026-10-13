@@ -1,0 +1,39 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+import FourOhFour from "~/components/404.astro";
+
+export const getStaticPaths = (async () => {
+	const sections = await getCollection("docs", (e) => {
+		return e.id.split("/").length === 1;
+	});
+
+	return sections.map((section) => {
+		return {
+			params: {
+				product: section.id,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const props = {
+	frontmatter: {
+		title: "404 - Page Not Found",
+		tableOfContents: false,
+		editUrl: false,
+		feedback: false,
+		noindex: true,
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<FourOhFour />
+</StarlightPage>

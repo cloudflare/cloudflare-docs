@@ -1,0 +1,134 @@
+---
+pcx_content_type: navigation
+title: Use cron triggers to develop time-aware applications
+sidebar:
+  order: 3
+tableOfContents: false
+description: |
+  Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
+---
+
+import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode">
+
+Cloudflare Workflows provide a powerful way to manage asynchronous, durable processes. The ability to explicitly schedule tasks using cron triggers and pause execution with `step.sleep` allows developers to build sophisticated, time-aware applications.
+
+    <Card>
+         <YouTube id="L6gR4Yr3UW8" />
+
+      **Related content**
+
+      If you want to dive into detail, refer to the following pages:
+
+    - [Source code for the Punderful repository](https://github.com/craigsdennis/punderful-workflows)
+    - [Cloudflare Workflows](/workflows/)
+    - [Cloudflare Workers AI](/workers-ai/)
+
+    </Card>
+
+  </TabItem>
+
+  <TabItem label="Step-by-step tutorial">
+
+      Workflows allow you to kick off asynchronous processes without blocking the user. This is demonstrated in the `addInteraction` function, which creates a new instance of the `INTERACTION` workflow.
+
+      Locate the `addInteraction` function in `src/index.tsx`:
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L237)
+
+      This function is called when a user interacts with a pun (for example, likes it). Instead of performing the interaction logic directly, it offloads the work to a workflow.
+
+      Examine the `InteractionWorkflow` definition in `src/workflows/interaction.ts`. This workflow performs tasks like checking if the user/session exists and recording the interaction in the database.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/interaction.ts)
+
+      ### Leaderboard Code
+
+      A common use case for background processes is crunching data and caching results, such as building a leaderboard.
+
+      Examine the `LeaderboardWorkflow` in `src/workflows/leaderboard.ts`. This workflow performs a database query to find trending puns and then stores the results in Cloudflare KV (Key-Value Store).
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/leaderboard.ts)
+
+      This workflow can be scheduled to run periodically to update the leaderboard data.
+
+      ### Wrangler.toml Configuration
+
+      The `wrangler.toml` file is used to configure your Worker and Workflows. This includes defining bindings to resources like KV namespaces and setting up triggers for workflows.
+
+      Open `wrangler.toml` and find the `[triggers]` section.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/wrangler.toml#L68)
+
+      The `crons` array allows you to define scheduled triggers for your main Worker. The example shows a cron job configured to run every 30 minutes.
+
+      Locate the `scheduled` handler in your main Worker code (`src/index.tsx`). This handler is executed when a cron trigger fires.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/index.tsx#L315)
+
+      This handler creates an instance of the `LEADERBOARD_WORKFLOW`, initiating the leaderboard update process on a schedule.
+
+      ### Puntificator: Using AI to Develop More Puns Automatically
+
+      Workflows can also be used for more complex, multi-step processes, including interacting with AI models. The `PuntificatorWorkflow` is an example that leverages AI to generate and evaluate new puns.
+
+      Examine the `PuntificatorWorkflow` definition in `src/workflows/puntificator.ts`.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts)
+
+      This workflow includes steps to:
+
+      1.  Retrieve trending puns.
+      2.  Create a new pun based on trends using an AI model.
+      3.  Judge the quality of the created pun using another AI model.
+      4.  Save the pun if it meets a certain rating threshold.
+
+      Crucially, this workflow includes a `step.sleep` call:
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L135)
+
+      This step pauses the workflow execution for a specified duration. This is useful for waiting to consider user feedback on a published pun before potentially taking further action based on its popularity.
+
+      ### Nested Workflows
+
+      Workflows can initiate other workflows, allowing you to compose complex processes from smaller, modular units.
+
+      In the `PuntificatorWorkflow`, find where it calls the `PUBLISH` workflow.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/puntificator.ts#L115)
+
+      This demonstrates how one workflow can trigger another, enabling the separation of concerns and modular design.
+
+      Examine the `PublishWorkflow` in `src/workflows/publish.ts`.
+
+      [See here](https://github.com/craigsdennis/punderful-workflows/blob/main/src/workflows/publish.ts)
+
+      This workflow handles the logic for publishing a pun, likely involving saving it to the database and making it visible on the site.
+
+      ### Workflow Instances
+
+      You can trigger workflows manually and inspect their execution status and output using the `wrangler` command-line tool.
+
+      To trigger the `PuntificatorWorkflow` manually:
+
+      ```bash
+      npx wrangler workflows trigger puntificator
+      ```
+
+      This command will queue an instance of the workflow. You will receive a success message and the instance ID.
+
+      To describe the latest instance of a workflow:
+
+      ```bash
+      npx wrangler workflows instances describe puntificator latest
+      ```
+
+      This command will show details about the most recent run of the specified workflow, including its start time, end time, duration, state, and the state of each individual step within the workflow. You can observe steps like `create-new-pun-based-on-trends`, `judge-pun`, `save-pun`, `publish`, and `wait-for-publish` (which shows a 'Sleeping' state).
+
+  </TabItem>
+  <TabItem label="Series overview">
+    <Render file="workflows-series-navigation" product="learning-paths" />
+  </TabItem>
+</Tabs>

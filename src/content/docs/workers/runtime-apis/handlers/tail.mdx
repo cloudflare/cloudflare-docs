@@ -6,11 +6,11 @@ title: Tail Handler
 
 ## Background
 
-The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/logging/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
+The `tail()` handler is the handler you implement when writing a [Tail Worker](/workers/observability/logs/tail-workers/). Tail Workers can be used to process logs in real-time and send them to a logging or analytics service.
 
 The `tail()` handler is called once each time the connected producer Worker is invoked.
 
-To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/logging/tail-workers/).
+To configure a Tail Worker, refer to [Tail Workers documentation](/workers/observability/logs/tail-workers/).
 
 ## Syntax
 
@@ -101,6 +101,7 @@ export default {
     * `exceededMemory`: The Worker invocation exceeded memory limits.
     * `scriptNotFound`: An internal error from difficulty retrieving the Worker script.
     * `canceled`: The worker invocation was canceled before it completed. Commonly because the client disconnected before a response could be sent.
+    * `responseStreamDisconnected`: The response stream was disconnected during deferred proxying. Happens when either the client or server hangs up early.
 
 
 
@@ -109,7 +110,7 @@ export default {
 Outcome is equivalent to the exit status of a script and an indicator of whether it has fully run to completion. A Worker outcome may differ from a response code if, for example:
 
 * a script successfully processes a request but is logically designed to return a `4xx`/`5xx` response.
-* a script sends a successful `200` response but an asynchronous task registered via `waitUntil()` later exceeds CPU or memory limits. 
+* a script sends a successful `200` response but an asynchronous task registered via `waitUntil()` later exceeds CPU or memory limits.
   :::
 
 ### `FetchEventInfo`
@@ -225,4 +226,4 @@ Records an unhandled exception that occurred during the Worker invocation.
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/logging/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.
+* [Tail Workers](/workers/observability/logs/tail-workers/) - Configure a Tail Worker to receive information about the execution of other Workers.

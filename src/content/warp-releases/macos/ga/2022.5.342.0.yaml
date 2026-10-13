@@ -1,0 +1,12 @@
+releaseNotes: |-
+  This release is a hotfix for 2022.5.310.0.
+  **Notable updates**
+   
+  - Fixed a crash from reading /etc/resolv.conf while it was being updated
+  - Removed large memory leak causing ~1GB/day memory growth
+  - Bug fixes and connection stability improvement
+version: 2022.5.342.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.5.342.0
+packageSize: 46913974
+releaseDate: 2022-06-16T22:27:30.715Z
+platformName: macOS

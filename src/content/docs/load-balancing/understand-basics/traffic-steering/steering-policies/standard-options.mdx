@@ -23,8 +23,18 @@ If all pools are marked unhealthy, Load Balancing will direct traffic to the fal
 
 If no monitors are attached to the load balancer, it will direct traffic to the primary pool exclusively.
 
+### Failback behavior
+
+In an active/standby setup, with two origin pools:
+
+- Traffic always routes to Pool 1 (the primary pool) unless it becomes unhealthy.
+- If Pool 1 is marked unhealthy, traffic shifts to Pool 2 (the standby pool).
+- Once Pool 1 becomes healthy again, traffic automatically shifts back to Pool 1, assuming no [session affinity](/load-balancing/understand-basics/session-affinity/) or other settings require subsequent requests to stay at Pool 2.
+
+This behavior is known as failback and ensures traffic resumes normal routing when the primary pool recovers.
+
 ## Random steering
 
 Choose **Random** to route traffic to a healthy pool at random. Customers can use this option to set up [active - active failover](/load-balancing/load-balancers/common-configurations/#active---active-failover) (also known as round robin), where traffic is split equally between multiple pools.
 
-Similar to setting Weights to direct the amount of traffic going to each endpoint, customers can also set Weights on pools via the [API's](/api/operations/load-balancers-create-load-balancer) `random_steering` object to determine the percentage of traffic sent to each pool.
+Similar to setting Weights to direct the amount of traffic going to each endpoint, customers can also set Weights on pools via the [API's](/api/resources/load_balancers/methods/create/) `random_steering` object to determine the percentage of traffic sent to each pool.

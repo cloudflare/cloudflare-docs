@@ -1,0 +1,61 @@
+rules:
+  - id: style-guide-coming-soon
+    languages: [generic]
+    message: "Found forbidden string 'coming soon'. Too often we set expectations unfairly by attaching this phrase to a feature that may not actually arrive soon. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "[Cc]oming [Ss]oon"
+
+  - id: style-guide-potential-date-month
+    languages: [generic]
+    message: "Potential month found. Documentation should strive to represent universal truth, not something time-bound. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      - pattern-regex: "Jan|Feb|Mar[^k]|Apr|May[^b]|Jun[^k]|Jul|Aug|Sep|Nov|Dec[^i]"
+
+  - id: style-guide-potential-date-year
+    languages: [generic]
+    message: "Potential year found. Documentation should strive to represent universal truth, not something time-bound. (add [skip style guide checks] to commit message to skip)"
+    severity: MEDIUM
+    paths:
+      include:
+        - "*.htm"
+        - "*.html"
+        - "*.md"
+        - "*.mdx"
+        - "*.yaml"
+        - "*.yml"
+      exclude:
+        - "/src/content/changelog/**"
+        - "/src/content/release-notes/**"
+        - "/.semgrep/**"
+        - "/.github/**"
+    patterns:
+      # ignore 2xxx- with a - at the end (double-escape because in string and not a range operator!)
+      - pattern-regex: "20[0-9][0-9][^\\-]"

@@ -22,76 +22,20 @@ A colored info box or aside with content (text, images, lists, code blocks) that
 
 ## Templates
 
-```
-{{</*Aside type="note" header="Header text"*/>}} 
-
-This is a "note" aside. 
-
-{{</*/Aside*/>}}
-```
-
-```
-{{</*Aside type="warning" header="Header text"*/>}} 
-
-This is a "warning" aside. 
-
-{{</*/Aside*/>}}
-```
-
-```
-{{</*Aside type="note"*/>}} 
-
-This is a "note" aside without a header.
-
-{{</*/Aside*/>}}
-```
-
-There is no need to add buffer lines between the `{{</*/Aside*/>}}` elements, but you can add them if you want. Supported ways of building asides are:
-
-```
-{{</*Aside type="note" header="Header text"*/>}} 
-    Newlines are not required and you can still use markdown.
-{{</*/Aside*/>}}
-```
-
-```
-{{</*Aside type="note"*/>}} This is also valid.{{</*/Aside*/>}}
-```
-
-Make sure you use double quitation marks in the `header=` section. If you use single quotation marks, building locally will error out.
+Refer to [Asides](/style-guide/components/asides/) to learn how to build Asides.
 
 ## Rendered examples
 
 :::note[Header text]
-
-
 This is a "note" aside.
-
-
 :::
 
 :::caution[Header text]
-
-
 This is a "warning" aside.
-
-
 :::
 
 :::note
-
-
 This is a `note` aside without a header.
-
-
-:::
-
-:::unrecognized
-
-
-This is an aside with an unrecognized type (*do not use*).
-
-
 :::
 
 ## Additional information
@@ -99,16 +43,11 @@ This is an aside with an unrecognized type (*do not use*).
 The aside background color depends on the aside type:
 
 * Aside with "note" type — blue
-* Aside with "warning" type— orange
-* Unrecognized aside type — grey (should not be used)
-
-The default type is "note", but you should enter a type explicitly as an attribute of the `{{</*Aside*/>}}` element: `type="(warning|note)`".
+* Aside with "warning" type — orange
 
 An aside has an optional header displayed at the top (inside the colored box) in **bold**.
 
 The aside can contain a single sentence or additional content (lists, code blocks, images).
-
-An `{{</*Aside...*/>}}` element, as it appears in Markdown files, is a Hugo shortcode defined in our docs repo, while `<aside>` is a standard HTML element that has no associated default styling.
 
 ## When should I use a note/warning?
 

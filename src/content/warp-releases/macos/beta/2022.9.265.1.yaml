@@ -1,0 +1,22 @@
+releaseNotes: >-
+  This release primarily contains bug fixes for beta release 2022.9.214.1
+   
+  **Notable updates**
+   
+  -  Fixed issue where GUI would show no text and only the toggle after updating
+     mdm.plist file
+
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.9.265.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.9.265.1
+packageSize: 49606616
+releaseDate: 2022-09-23T21:10:23.783Z
+platformName: macOS

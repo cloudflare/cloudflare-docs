@@ -1,0 +1,49 @@
+---
+pcx_content_type: how-to
+title: Reference zones
+description: Learn about reference zones. Cloudflare Internal DNS allows zones to reference others for query resolution when no direct record is found.
+sidebar:
+  order: 4
+---
+
+import { Example, Render, Tabs, TabItem, DashButton } from "~/components";
+
+<Render file="internal-reference-zone-intro" product="dns" />
+
+:::note
+A wildcard record (`*.example.local`) in the matching internal zone will take precedence over an exact match in a reference zone.
+:::
+
+## Configuration conditions
+
+- Each internal zone can only reference one other zone.
+- The same zone can be referenced by multiple internal zones.
+- Public zones cannot be used as reference zones.
+- Reference zones do not have to be linked to the same [DNS view](/dns/internal-dns/dns-views/) as the zone referencing them. They may also not be linked to any view at all.
+
+## Set up
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Select a zone.
+3. Within the selected zone, go to **Reference zone**.
+4. Select **Add reference zone**. If your zone already has a reference zone set up, you must first remove it. As explained in the [configuration conditions](#configuration-conditions), each internal zone can only reference one other zone at a time.
+5. Find the zone you want to use as reference and choose **Select** in the respective row.
+
+</TabItem>
+<TabItem label="API">
+
+Use the [Update DNS settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint. In `--json`, specify the `internal_dns` object with the parameter `reference_zone_id`.
+
+<Example>
+<Render file="internal-reference-zone-api" product="dns" />
+
+A third zone (C) could also point to zone B as a reference, but zone A cannot add another zone as a reference while also having zone B configured as its reference zone.
+
+</ Example>
+
+</TabItem> </Tabs>

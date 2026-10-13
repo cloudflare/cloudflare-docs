@@ -1,0 +1,65 @@
+---
+pcx_content_type: how-to
+title: PingOne (SAML)
+description: Learn how to integrate PingOne as a SAML identity provider with Cloudflare One.
+---
+
+import { GlossaryTooltip } from "~/components";
+
+The PingOne cloud platform from PingIdentity provides SSO identity management. Cloudflare Access supports PingOne as a SAML identity provider.
+
+## Set up PingOne as a SAML provider
+
+## 1. Create an application in PingOne
+
+1. In your PingIdentity environment, go to **Connections** > **Applications**.
+
+2. Select **Add Application**.
+
+3. Enter an **Application Name**.
+
+4. Select **SAML Application**.
+
+5. Select **Configure**.
+
+6. To fill in your Cloudflare Access metadata:
+   1. Select **Import from URL**.
+   2. Set the **Import URL** to:
+
+   ```txt
+   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
+   ```
+
+   where `<your-team-name>` is your Cloudflare One <GlossaryTooltip term="team domain">team name</GlossaryTooltip>. 3. Select **Import**. 4. **Save** the configuration.
+
+7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to Cloudflare One.
+
+8. In the **Attribute Mappings** tab, add the following required attributes (case sensitive) and select **Save**.
+
+   | Application attribute | Outgoing value |
+   | --------------------- | -------------- |
+   | `email`               | Email Address  |
+   | `givenName`           | Given Name     |
+   | `surName`             | Family Name    |
+
+   These [SAML attributes](/cloudflare-one/integrations/identity-providers/generic-saml/#saml-attributes) tell Cloudflare Access who the user is.
+
+9. Set the application to **Active**.
+
+### 2. Add PingOne to Cloudflare One
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+
+2. Under **Your identity providers**, select **Add new identity provider**.
+
+3. Select **SAML**.
+
+4. Upload your PingOne XML metadata file.
+
+5. (Optional) To enable SCIM, refer to [Synchronize users and groups](/cloudflare-one/integrations/identity-providers/generic-saml/#synchronize-users-and-groups).
+
+6. (Optional) Under **Optional configurations**, configure [additional SAML options](/cloudflare-one/integrations/identity-providers/generic-saml/#optional-configurations).
+
+7. Select **Save**.
+
+You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) and create [Access policies](/cloudflare-one/access-controls/policies/) based on the configured login method and SAML attributes.

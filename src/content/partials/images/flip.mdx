@@ -1,0 +1,27 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Flips the image horizontally, vertically, or both. Can be used with the `rotate` parameter to set the orientation of an image.
+
+Flipping is performed before rotation. For example, if you apply `flip=h,rotate=90,` then the image will be flipped horizontally, then rotated by 90 degrees.
+
+Available options are:
+
+- `h`: Flips the image horizontally.
+- `v`: Flips the image vertically.
+- `hv`: Flips the image vertically and horizontally.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    flip=h
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {flip: "h"}}
+  ```
+  </TabItem>
+</Tabs>

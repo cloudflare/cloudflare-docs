@@ -1,0 +1,31 @@
+releaseNotes: >-
+  This release contains the following changes since the previous 2022.12 beta
+  release
+   
+  **Notable updates**
+
+  - Added support for new Zero Trust network location aware WARP feature. More
+  info to be released soon on how you can test.
+
+  - Fixed issue where `warp-cli teams-enroll` wouldn't work when an mdm file was
+  present
+
+  - Fixed issue where our localhost dns endpoints (ex. 127.0.2.2) could appear
+  in the fallback configuration potentially causing DNS lookups to fail
+
+  - Fixed issue that could cause the Cloudflare WARP Service to crash (and then
+  potentially the GUI)
+
+  - Fixed issue that could cause some DNS queries to take upto 15 seconds to
+  complete
+   
+
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.12.440.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.12.440.1
+packageSize: 105148416
+releaseDate: 2022-12-21T21:52:17.028Z
+platformName: Windows

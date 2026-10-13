@@ -2,8 +2,13 @@
 import { getEntry } from "astro:content";
 
 const entry = await getEntry("pages-framework-presets", "index");
+
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
 const presets = entry.data.build_configs;
-const entries = Object.entries(presets);
+const entries = Object.values(presets);
 ---
 
 <table>
@@ -14,7 +19,7 @@ const entries = Object.entries(presets);
 	</thead>
 	<tbody>
 		{
-			entries.map(([_, value]) => (
+			entries.map((value) => (
 				<tr>
 					<td>{value.display_name}</td>
 					<td>

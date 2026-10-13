@@ -1,0 +1,28 @@
+---
+title: Deploy a Workers application in seconds with one-click
+description: You can now add a Deploy to Cloudflare button to your repository's README to help other developers set up and deploy your project. 
+products:
+  - workers
+date: 2025-04-08 00:00:00 UTC
+---
+You can now add a [Deploy to Cloudflare](/workers/platform/deploy-buttons/) button to the README of your Git repository containing a Workers application — making it simple for other developers to quickly set up and deploy your project! 
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/saas-admin-template)
+
+
+The Deploy to Cloudflare button: 
+1. **Creates a new Git repository on your GitHub/ GitLab account**: Cloudflare will automatically clone and create a new repository on your account, so you can continue developing. 
+2. **Automatically provisions resources the app needs**: If your repository requires Cloudflare primitives like a [Workers KV namespace](/kv/), a [D1 database](/d1/), or an [R2 bucket](/r2/), Cloudflare will automatically provision them on your account and bind them to your Worker upon deployment. 
+3. **Configures Workers Builds (CI/CD)**: Every new push to your production branch on your newly created repository will automatically build and deploy courtesy of [Workers Builds](/workers/ci-cd/builds/).
+4. **Adds preview URLs to each pull request**: If you'd like to test your changes before deploying, you can push changes to a [non-production branch](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) and [preview URLs](/workers/configuration/previews/) will be generated and [posted back to GitHub as a comment](/workers/ci-cd/builds/git-integration/github-integration/#pull-request-comment).   
+
+![Import repo or choose template](~/assets/images/workers/dtw-user-flow.png)
+
+
+To create a Deploy to Cloudflare button in your README, you can add the following snippet, including your Git repository URL: 
+
+```md
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=<YOUR_GIT_REPO_URL>)
+```
+
+Check out our [documentation](/workers/platform/deploy-buttons/) for more information on how to set up a deploy button for your application and best practices to ensure a successful deployment for other developers. 

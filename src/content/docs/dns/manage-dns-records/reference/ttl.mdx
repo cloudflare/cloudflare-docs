@@ -6,24 +6,28 @@ sidebar:
 
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 **Time to Live (TTL)** is a field on [DNS records](/dns/manage-dns-records/how-to/create-dns-records/) that controls how long each record is cached and — as a result — how long it takes for record updates to reach your end users.
 
 Longer TTLs speed up [DNS lookups](https://www.cloudflare.com/learning/dns/what-is-dns/) by increasing the chance of cached results, but a longer TTL also means that updates to your records take longer to go into effect.
 
 ## Proxied records
 
-By default, all [proxied records](/dns/manage-dns-records/reference/proxied-dns-records/) have a TTL of **Auto**, which is set to 300 seconds.
+By default, all <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied records</GlossaryTooltip> have a TTL of **Auto**, which is set to 300 seconds. This value cannot be edited.
 
-Since only [IP resolution records](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) can be proxied, this setting ensures that queries to your domain name resolve fairly quickly. This setting also means that any changes to proxied `A`, `AAAA`, or `CNAME` records will take place within five minutes or less.
+Since only [records used for IP address resolution](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) can be proxied, this setting ensures that potential changes to the assigned [anycast IP address](/fundamentals/concepts/cloudflare-ip-addresses/) will take effect quickly, as recursive resolvers will not cache them for longer than 300 seconds (five minutes).
 
 :::note
-
-
 It may take longer than 5 minutes for you to actually experience record changes, as your local DNS cache may take longer to update.
-
-
 :::
 
 ## Unproxied records
 
 For **DNS only** records, you can choose a TTL between **30 seconds** (Enterprise) or **60 seconds** (non-Enterprise) and **1 day**.
+
+A TTL of **Auto** is set to 300 seconds (five minutes).
+
+## Nameserver TTL
+
+[Nameserver TTL](/dns/nameservers/nameserver-options/#nameserver-ttl) is a separate feature and only affects Cloudflare nameservers and custom nameservers. For other [NS records](/dns/manage-dns-records/reference/dns-record-types/#ns) on your DNS records table, TTL is controlled by their respective TTL fields.

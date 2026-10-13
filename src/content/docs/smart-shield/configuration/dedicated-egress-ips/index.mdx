@@ -1,0 +1,40 @@
+---
+pcx_content_type: concept
+title: Dedicated CDN Egress IPs
+sidebar:
+  order: 10
+  group:
+    label: Dedicated Egress IPs
+---
+
+import { GlossaryTooltip, DirectoryListing } from "~/components";
+
+Enterprise customers can leverage dedicated egress[^1] IPs for layer 7 [WAF](/waf/) and <GlossaryTooltip term="content delivery network (CDN)">CDN</GlossaryTooltip> services, as well as [Spectrum](/spectrum/). The egress IPs are reserved exclusively for your account so that you can increase your origin security by only allowing traffic from a small list of IP addresses.
+
+:::note
+If you are interested in using Smart Shield Advanced with Dedicated CDN Egress IPs, reach out to your account team.
+:::
+
+Dedicated CDN Egress IPs was formerly known as Cloudflare Aegis ([release blog post](https://blog.cloudflare.com/cloudflare-aegis/)).
+
+## Benefits
+
+With Dedicated CDN Egress IPs, you can:
+
+* Lock down your network firewall to only allow traffic from your dedicated IPs.
+* Use [Cloudflare Access and CNI](/smart-shield/configuration/dedicated-egress-ips/other-products/#access-and-cni) to secure your applications without installing software or customizing code on your server.
+* Ensure only authorized [Workers](/smart-shield/configuration/dedicated-egress-ips/other-products/#workers) can access your origin services.
+
+## Scope
+
+You can assign Dedicated CDN Egress IPs to single or multiple Cloudflare zones, and across different Cloudflare accounts.
+
+Dedicated CDN Egress IPs are included within [BGP advertisement over CNI](/network-interconnect/).
+
+Each dedicated egress pool can consist of either IPs from a [BYOIP prefix](/byoip/) or Cloudflare-leased IPs. A single dedicated egress pool cannot contain both BYOIPs and leased IPs.
+
+## Resources
+
+<DirectoryListing />
+
+[^1]: From Cloudflare to your origin. Refer to [how it works](/smart-shield/configuration/dedicated-egress-ips/how-it-works/egress-ips/) for details.

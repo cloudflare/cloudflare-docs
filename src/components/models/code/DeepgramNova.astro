@@ -1,0 +1,52 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+	lora: z.boolean(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const URL = "https://URL_TO_MP3_FILE/audio.mp3";
+    const mp3 = await fetch(URL);
+
+
+    const resp = await env.AI.run("${name}", {
+      "audio": {
+        body: mp3.body,
+        contentType: "audio/mpeg"
+      },
+      "detect_language": true
+    }, {
+      returnRawResponse: true
+    });
+    return resp;
+  },
+} satisfies ExportedHandler<Env>;`;
+
+const curl = `
+curl --request POST \
+  --url 'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/deepgram/nova-3?detect_language=true' \
+  --header 'Authorization: Bearer {TOKEN}' \
+  --header 'Content-Type: audio/mpeg' \
+  --data-binary "@/path/to/your-mp3-file.mp3"
+`;
+---
+
+<>
+	<Details header="Worker">
+		<Code code={worker} lang="ts" />
+	</Details>
+
+	<Details header="curl">
+		<Code code={curl} lang="sh" />
+	</Details>
+</>

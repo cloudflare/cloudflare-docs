@@ -10,6 +10,10 @@ import { Render } from "~/components";
 
 Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
 
+In the [new security dashboard](/security/), rate limiting rules are one of the available types of [security rules](/security/rules/). Security rules perform security-related actions on incoming requests that match specified filters.
+
+Some Enterprise customers can create [rate limiting rulesets](/waf/account/rate-limiting-rulesets/) at the account level that they can deploy to multiple Enterprise zones.
+
 ## Rule parameters
 
 Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), rate limiting rules have the following basic parameters:
@@ -26,7 +30,7 @@ Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/r
 
 - Rate limiting rules are not designed to allow a precise number of requests to reach the origin server. In some situations, there may be a delay (up to a few seconds) between detecting a request and updating internal counters. Due to this delay, excess requests could still reach the origin server before Cloudflare enforces a mitigation action (such as blocking or challenging) in our global network.
 
-- Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/basic-tasks/improve-seo/).
+- Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/performance/improve-seo/).
 
 ---
 
@@ -38,17 +42,17 @@ Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/r
 
 ## Next steps
 
-You can configure rate limiting rules at the zone level and at the account level, depending on your plan and product subscriptions.
+Refer to the following resources:
 
-To configure rate limiting rules in the Cloudflare dashboard, refer to the following resources:
+- [Create a rate limiting rule in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
+- [Create a rate limiting rule via API for a zone](/waf/rate-limiting-rules/create-api/)
 
-- [Create rate limiting rules in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
-- [Create rate limiting rules in the dashboard for an account](/waf/rate-limiting-rules/create-account-dashboard/)
-
-You can also configure rate limiting rules using the [Rulesets API](/ruleset-engine/rulesets-api/). Refer to [Create rate limiting rules via API](/waf/rate-limiting-rules/create-api/) for more information.
+For Terraform examples, refer to [Rate limiting rules configuration using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
 
 ---
 
 ## Related resources
 
-For guidance on the previous version of rate limiting rules (billed based on usage and now deprecated), refer to [Cloudflare Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/).
+- [Learning Center: What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/)
+
+- [Cloudflare Rate Limiting (previous version, now deprecated)](/waf/reference/legacy/old-rate-limiting/): Documentation for the previous version of rate limiting rules (billed based on usage).

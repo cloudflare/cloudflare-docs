@@ -2,7 +2,9 @@
 pcx_content_type: tutorial
 title: Configure your mobile app or IoT device
 sidebar:
-  order: 4
+  order: 9
+description: >-
+  This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with API Shield.
 ---
 
 This tutorial demonstrates how to configure your Internet-of-things (IoT) device and mobile application to use client certificates with [API Shield](/api-shield/).
@@ -13,7 +15,7 @@ This walkthrough uses the example of a device that captures temperature readings
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app/)).
 
-Temperatures are stored in [Workers KV](/kv/concepts/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
+Temperatures are stored in [Workers KV](/kv/concepts/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
@@ -83,22 +85,18 @@ async function getTemperatures(request) {
 	}
 }
 
-async function handleRequest(request) {
-	if (request.method === "POST") {
-		return addTemperature(request);
-	} else {
-		return getTemperatures(request);
-	}
-}
-
-addEventListener("fetch", (event) => {
-	event.respondWith(handleRequest(event.request));
-});
+export default {
+	async fetch(request, env, ctx) {
+		return request.method === "POST"
+			? addTemperature(request)
+			: getTemperatures(request);
+	},
+};
 ```
 
 ---
 
-## Step 1 — Validate API
+## 1. Validate API
 
 ### POST sample data to API
 
@@ -141,7 +139,7 @@ $ curl --silent https://shield.upinatoms.com/temps | jq .
 
 ---
 
-## Step 2 — Create Cloudflare-issued certificates
+## 2. Create Cloudflare-issued certificates
 
 Before you can use API Shield to protect your API or web application, create Cloudflare-issued client certificates.
 
@@ -262,7 +260,7 @@ $ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/client_certificates 
 
 ---
 
-## Step 3 — Embed the client certificate in your mobile app
+## 3. Embed the client certificate in your mobile app
 
 To configure the mobile app to securely request temperature data submitted by the IoT device, embed the client certificate in the mobile app.
 
@@ -274,7 +272,7 @@ Enter Export Password:
 Verifying - Enter Export Password:
 ```
 
-In a real-world deployment, a bootstrap certificate should only be used in conjunction with users’ credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
+In a real-world deployment, a bootstrap certificate should only be used in conjunction with users' credentials to authenticate with an API endpoint that can return a unique user certificate. Corporate users will want to use mobile device management (MDM) to distribute certificates.
 
 ### Embed the client certificate in an Android app
 
@@ -351,7 +349,7 @@ The above function returns an `OkHttpClient` embedded with the client certificat
 
 ---
 
-## Step 4 — Embed the client certificate on your IoT device
+## 4. Embed the client certificate on your IoT device
 
 To prepare the IoT device for secure communication with the API endpoint, embed the certificate on the device and configure the device to use the certificate when making POST requests.
 
@@ -411,12 +409,12 @@ Response status code: 201
 
 ---
 
-## Step 5 — Enable mTLS
+## 5. Enable mTLS
 
 After creating Cloudflare-issued certificates, the next step is to [enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you want to protect with API Shield.
 
 ---
 
-## Step 6 — Configure API Shield to require client certificates
+## 6. Configure API Shield to require client certificates
 
-To configure API Shield to require client certificates, [create a mTLS rule](/api-shield/security/mtls/configure/#create-an-mtls-rule/).
+To configure API Shield to require client certificates, [create a mTLS rule](/api-shield/security/mtls/configure/#create-an-mtls-rule).

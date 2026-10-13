@@ -1,0 +1,9 @@
+---
+{}
+---
+
+Cloudflare WARP evaluates device profiles dynamically based on a hierarchy. When a device connects, WARP checks the profiles from top to bottom as they appear in the dashboard. WARP follows the first match principle — once a device matches a profile, WARP stops evaluating and no subsequent profiles can override the decision.
+
+The **Default** profile is always at the bottom of the list. It will only be applied if the device does not meet the criteria of any profile listed above it. If you make another custom profile the default, all settings will be copied over into the **Default** profile.
+
+Administrators can create multiple profiles to apply different settings based on specific criteria such as user identity, location, or operating system. Understanding this top-to-bottom evaluation order is crucial for ensuring that the correct policies are applied to devices.

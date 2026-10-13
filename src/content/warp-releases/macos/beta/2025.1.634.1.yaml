@@ -1,0 +1,17 @@
+releaseNotes: >-
+  This release contains only a hotfix from the 2025.1.447.1 release.
+
+  Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or
+  later. With macOS 15.2, Apple addressed several issues that may have caused
+  the WARP client to not behave as expected when used with macOS 15.0.x.
+
+  **Changes and improvements**
+  - Improved device registration retrieval for graceful restarts
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.2 or later.
+version: 2025.1.634.1
+releaseDate: 2025-02-07T16:37:49.597Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.1.634.1
+packageSize: 92352774
+platformName: macOS

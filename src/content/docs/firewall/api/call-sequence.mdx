@@ -3,14 +3,13 @@ title: Call sequence
 pcx_content_type: reference
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The API call examples in this site illustrate the **recommended sequence** of calling the two APIs (the [Cloudflare Filters API](/firewall/api/cf-filters/) and the [Firewall Rules API](/firewall/api/cf-firewall-rules/)).
 
-<Render file="deprecation-notice" />
+<Render file="deprecation-notice" product="firewall" />
 
 The image below depicts this sequence, which can be applied for creating and editing rules. The reverse would apply for delete operations.
 
@@ -45,29 +44,29 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/firewall/rules" \
 
 ```json title="Response"
 {
-  "result": [
-    {
-      "id": "<RULE_ID>",
-      "paused": false,
-      "action": "block",
-      "priority": null,
-      "filter": {
-        "id": "<FILTER_ID>",
-        "expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34",
-        "paused": false
-      }
-    }
-  ],
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": [
+		{
+			"id": "<RULE_ID>",
+			"paused": false,
+			"action": "block",
+			"priority": null,
+			"filter": {
+				"id": "<FILTER_ID>",
+				"expression": "http.request.uri.path contains \"/api/\" and ip.src eq 93.184.216.34",
+				"paused": false
+			}
+		}
+	],
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 However, this approach has some disadvantages:
 
-* The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
-* To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
+- The firewall rules client has to implement error and exception handling for every potential failure occurring in both the firewall rules and the filters APIs.
+- To protect against accidentally modifying or deleting filters used by other Cloudflare features, the `PUT` or `DELETE` operations are not allowed.
 
 By default, if either the filter or rule is invalid, neither will be created.
 

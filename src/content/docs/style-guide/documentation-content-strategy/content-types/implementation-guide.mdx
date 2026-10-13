@@ -1,24 +1,35 @@
 ---
 pcx_content_type: concept
 title: Implementation guide
-
+meta:
+  title: Content type - Implementation guide
 ---
 
 ## Purpose
 
-Walk the reader through best practices for the implementation of a solution using Cloudflare.
+Walk the reader through best practices for the [implementation](/reference-architecture/implementation-guides/) of a solution using Cloudflare.
+
+:::note[Disambiguation]
+
+This page describes the content strategy for an implementation guide. For help with Cloudflare products, refer to [Implementation guides](/reference-architecture/implementation-guides/).
+
+:::
 
 ## Tone
 
 instructional, straightforward
 
-## content\_type
+## content_type
 
-`implementation-guide`
+```yaml
+pcx_content_type: implementation-guide
+```
 
-## Structure
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-### Required components
+## Components
+
+### Required
 
 [**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases.
 
@@ -26,7 +37,7 @@ instructional, straightforward
 
 [**Next steps**](/style-guide/documentation-content-strategy/component-attributes/next-steps/): What users should see as the end result of the steps and/or actionable next steps.
 
-### Optional components
+### Optional
 
 [**Prerequisites**](/style-guide/documentation-content-strategy/component-attributes/prerequisites/): Tasks or conditions that must be completed before a user can complete a series of steps.
 

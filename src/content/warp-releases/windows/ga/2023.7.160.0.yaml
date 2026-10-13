@@ -1,0 +1,32 @@
+releaseNotes: >-
+  This is a critical hotfix for organizations that have long running deployment
+  cycles. The certificate used to sign and validate our installer will expire on
+  August 9th 2023 and may cause windows SmartScreen warnings on installation.
+   
+  This update is recommended for all customers and includes an important
+  reliability fix.
+   
+  **Notable updates**
+
+  - Updated signing certificate
+
+  - Fixed issue where client could take up to 1-2 minutes to recover
+  connectivity instead of 1-2 seconds in the event of a service issue
+   
+  **Known issues**
+
+  - Customers may experience a DPC_WATCHDOG_VIOLATION Blue Screen when
+  connecting. This error was introduced with the 2023.3 GA release and happens
+  more frequently with larger split tunnel configurations, especially on more
+  resource constrained machines. We are actively working on a fix. Until then we
+  recommend staying on 2022.12 GA release OR reducing your split tunnel
+  configuration if possible.
+
+  - Managed network detection on certain Windows machines doesn't consistently
+  apply the expected profile upon network changes. We will address this issue in
+  a future release.
+version: 2023.7.160.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.7.160.0
+packageSize: 110792704
+releaseDate: 2023-07-21T01:11:04.325Z
+platformName: Windows

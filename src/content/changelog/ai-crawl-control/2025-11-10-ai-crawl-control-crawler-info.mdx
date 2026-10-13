@@ -1,0 +1,36 @@
+---
+title: Crawler drilldowns with extended actions menu
+description: Drill down into individual crawler behavior with status code charts and export data for use in WAF rules, Redirect Rules, and robots.txt files.
+date: 2025-11-10
+---
+
+AI Crawl Control now supports per-crawler drilldowns with an extended actions menu and status code analytics. Drill down into Metrics, Cloudflare Radar, and Security Analytics, or export crawler data for use in [WAF custom rules](/waf/custom-rules/), [Redirect Rules](/rules/url-forwarding/), and robots.txt files.
+
+## What's new
+
+### Status code distribution chart
+
+The **Metrics** tab includes a status code distribution chart showing HTTP response codes (2xx, 3xx, 4xx, 5xx) over time. Filter by individual crawler, category, operator, or time range to analyze how specific crawlers interact with your site.
+
+![AI Crawl Control status code distribution chart](~/assets/images/ai-crawl-control/ai-crawl-control-status-codes.png)
+
+### Extended actions menu
+
+Each crawler row includes a three-dot menu with per-crawler actions:
+
+- **View Metrics** — Filter the AI Crawl Control Metrics page to the selected crawler.
+- **View on Cloudflare Radar** — Access verified crawler details on Cloudflare Radar.
+- **Copy User Agent** — Copy user agent strings for use in WAF custom rules, Redirect Rules, or robots.txt files.
+- **View in Security Analytics** — Filter Security Analytics by detection IDs (Bot Management customers).
+- **Copy Detection ID** — Copy detection IDs for use in WAF custom rules (Bot Management customers).
+
+![AI Crawl Control crawler actions menu](~/assets/images/ai-crawl-control/ai-crawl-control-crawler-info.png)
+
+## Get started
+
+1. Log in to the Cloudflare dashboard, and select your account and domain.
+2. Go to **AI Crawl Control** > **Metrics** to access the status code distribution chart.
+3. Go to **AI Crawl Control** > **Crawlers** and select the three-dot menu for any crawler to access per-crawler actions.
+4. Select multiple crawlers to use bulk copy buttons for user agents or detection IDs.
+
+Learn more about [AI Crawl Control](/ai-crawl-control/).

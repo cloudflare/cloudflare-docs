@@ -1,0 +1,24 @@
+---
+pcx_content_type: concept
+title: Connection reuse
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+Smart Shield leverages Cloudflare's optimized infrastructure to package multiple requests from an [upper-tier](/smart-shield/configuration/smart-tiered-cache/) into a single connection to your origin. This means overall connections to your origin are lowered by 30% on average. Refer to the [blog post](https://blog.cloudflare.com/introducing-observatory-and-smart-shield/#protecting-and-accelerating-origins-with-smart-connection-reuse) for details.
+
+## About connection reuse
+
+Implemented by HTTP/1.1, connection reuse describes multiple requests passing through one same connection (between one source IP:port and one destination IP:port). It is commonly the case even for simple websites nowadays.
+
+For example, when a connection is initiated for `shop.example.com`, several embedded subresources may be requested - CSS, image files, advertisement, etc. This can mean hundreds of requests just for the website to load. Instead of having a one to one ratio of request per connection, a single connection is used for multiple requests.
+
+With HTTP/2, requests can use the same connection even if they are for different domains (also known as connection coalescing).
+
+For example, a connection initiated for `shop.example.com` can be used for requests for `blog.example.com` as well - as long as the requests have the same destination IP:port and the server TLS certificate is authoritative for both hostnames.
+
+## Egress IPs allocation
+
+Connection reuse and connection coalescing are also considered when allocating your [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/).

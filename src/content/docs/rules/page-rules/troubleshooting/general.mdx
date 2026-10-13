@@ -1,18 +1,15 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/218411427-What-do-the-custom-caching-options-mean-in-Page-Rules-#summary-of-page-rules-settings
-title: General
+title: Troubleshoot Page Rules - General
 sidebar:
   order: 6
-head:
-  - tag: title
-    content: General troubleshooting | Page Rules
-
+  label: General
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="page-rules-migration" />
+<Render file="page-rules-migration" product="rules" />
 
 ## Why is a page rule not working?
 
@@ -24,7 +21,7 @@ Consider an example where you have a page rule that redirects a subdomain (`subd
 
 ### Root cause
 
-This may be due to a configuration issue on a page rule. When creating a page rule that uses two wildcards, like a *Forwarding URL* rule, it is possible to create a rule that mentions the second wildcard with the `$2` placeholder. Refer to the example below:
+This may be due to a configuration issue on a page rule. When creating a page rule that uses two wildcards, like a _Forwarding URL_ rule, it is possible to create a rule that mentions the second wildcard with the `$2` placeholder. Refer to the example below:
 
 ![Example Page Rule configuration with two wildcards. The forwarding URL contains a $2 placeholder, which will be replaced with the content matched by the second ](~/assets/images/support/page-rule-create.png)
 

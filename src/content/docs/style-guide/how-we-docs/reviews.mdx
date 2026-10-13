@@ -1,0 +1,104 @@
+---
+pcx_content_type: how-to
+title: Content reviews
+meta:
+  title: Content reviews | How we docs
+---
+
+import { GitHubCode } from "~/components";
+
+We work (and appreciate working) in [GitHub](https://github.com/cloudflare/cloudflare-docs), but it's not a perfect tool by any means.
+
+We've added several ergonomic improvements to help us triage incoming work, streamline reviews, and automate communication.
+
+## Triage work
+
+To help our writers triage work (and help with backend reporting), we automate a few labels and issue / pull request assignment.
+
+### Pull requests
+
+For pull requests, we use a specific [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/pr-label-assign.yml) to add labels and assign codeowners.
+
+- [Label products](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-products/): We add labels for the top-level product folder, which helps writers scan incoming pull requests and see which are relevant to them.
+- [Label size](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/actions/label-size/): We add labels for the size of the pull request, which helps writers see the relative size of the difference. It's not a perfect measure, but we use the lines changed to estimate the size of the pull request:
+
+	<GitHubCode
+		repo="cloudflare/cloudflare-docs"
+		file=".github/actions/label-size/index.ts"
+		commit="3dd03fdad79b2663631a6530794dfd1ad15bdc03"
+		lines="20-36"
+		lang="ts"
+		code={{ title: "label-size.ts" }}
+	/>
+
+- [Assign codeowners](https://github.com/cloudflare/cloudflare-docs/tree/production/.github/actions/assign-pr): We use our [CODEOWNERS](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/CODEOWNERS) file to automatically assign people to pull requests based on the files changed. This assignment helps writers scan and filter to see which pull requests are relevant to them.
+
+### Issues
+
+For issues, we use a similar [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/issue-label-assign.yml) to add labels and assign codeowners.
+
+Our [script](https://github.com/cloudflare/cloudflare-docs/tree/production/.github/actions/issue-label-assign) treats issues because usually they contain links to our site instead of files within the repository. We grab the associated links in the issue description fields and then use those to assign writers (again based on `CODEOWNERS`) and add product labels.
+
+
+## Streamline reviews
+
+To streamline reviews, we use several automations to help solve common reviewer issues.
+
+### Will this break anything?
+
+We have one required check that runs on every commit, [CI](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml).
+
+This check makes sure that:
+
+- The site builds correctly.
+- All [internal links](/style-guide/how-we-docs/links/#internal-links) are valid.
+- There are no [infinite redirects](/style-guide/how-we-docs/redirects/#infinite-redirects).
+- Specific pages and functionality in our docs [behave as expected](https://github.com/cloudflare/cloudflare-docs/blob/production/worker/index.worker.test.ts).
+
+### Who needs to approve this?
+
+We commonly get questions about approvals, especially for pull requests that touch multiple product areas (or our components).
+
+We have a specific part of [CI](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml#L32) that [posts a comment](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/post-codeowners-comment/index.ts) with the relevant codeowners.
+
+![Codeowners comment](~/assets/images/style-guide/how-we-docs/codeowners-comment.png)
+
+### What changed?
+
+We use a [GitHub action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/publish-preview.yml) to publish preview builds for every commit on a pull request (and [comment those links](https://github.com/cloudflare/cloudflare-docs/tree/production/bin/post-preview-url-comment) on the pull request). This action ensures that reviewers can see exactly what the site and content will look like when they're rendered (and not just look at the changed markdown in GitHub). 
+
+We are in the process of migrating to [Workers Builds](/workers/ci-cd/builds/git-integration/github-integration/), which provides that functionality natively.
+
+Based on feedback, we have also added a before/after table of links to help reviewers easily find links in the preview builds.
+
+![Before/after table](~/assets/images/style-guide/how-we-docs/preview-comment.png)
+
+### Is there anything else I need to check?
+
+Two difficult things to check are potential redirects and changes to [content snippets (partials)](/style-guide/components/render/) that are used on multiple pages.
+
+We have a [specific action](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/potential-redirects-or-partials.yml) that posts a comment to help reviewers identify and then check these attributes.
+
+![Potential redirects or partials comment](~/assets/images/style-guide/how-we-docs/potential-redirects-partials-comment.png)
+
+The partials part of the comment specifically [links to the usage for that partial](/style-guide/components/render/?partial=1.1.1.1/all-ipv4), which helps writers know the various pages where it appears.
+
+## Automate communication
+
+We automate communication primarily through the [`no-response`](https://github.com/lee-dohm/no-response) GitHub Action.
+
+Being open source means that we accept issues and pull requests from anyone! And a lot of these are either self explanatory or have enough context for us to follow up on them.
+
+The ones without enough context, however, are often painful (especially in a [busy repo](https://github.com/cloudflare/cloudflare-docs/pulse) like ours). A writer has to ask for more detail, then remember to check back in, and then sometimes re-ask for more detail, and then check in again.
+
+To help avoid some of this mental toil, we'll ask a question and then apply the `more-information-needed` label. This label starts a [14-day clock](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/no-response.yml) for the author to respond. If they do respond, the label gets removed and the conversation can continue. If they don't respond, the issue automatically gets closed with a [comment explaining why](https://github.com/cloudflare/cloudflare-docs/issues/22943#issuecomment-3002211164).
+
+![No response comment](~/assets/images/style-guide/how-we-docs/no-response-comment.png)
+
+This workflow - we hope - balances the needs our of team with a healthy respect for our contributors.
+
+### Stale issues
+
+We intentionally avoid the [`stale` workflow](https://github.com/github/docs/blob/main/.github/workflows/stale.yml) that closes pull requests or issues that have been inactive for a specific period of time.
+
+In our opinion, this workflow causes more friction and frustration than it solves. Just because something has been around for a year doesn't mean it's not still relevant.

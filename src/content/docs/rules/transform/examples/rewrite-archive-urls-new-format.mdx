@@ -3,10 +3,9 @@ pcx_content_type: example
 summary: Create a transform rule to rewrite the URL format
   `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format
   `/posts/<YYYY>/<MM>/<DD>/<TITLE>`.
-products:
-  - Transform Rules
-operation:
-  - Rewrite URL
+products: [transform-rules]
+tags:
+  - URL rewrite
 title: Rewrite blog archive URLs
 description: Create a transform rule to rewrite the URL format
   `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format
@@ -15,7 +14,7 @@ description: Create a transform rule to rewrite the URL format
 
 import { Example } from "~/components";
 
-To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following rewrite URL rule:
+To rewrite the URLs of a blog archive that follow the URL format `/posts/<YYYY>-<MM>-<DD>-<TITLE>` to the new format `/posts/<YYYY>/<MM>/<DD>/<TITLE>`, create the following URL rewrite rule:
 
 <Example>
 
@@ -25,7 +24,7 @@ Text in **Expression Editor**:
 http.request.uri.path ~ "^/posts/[0-9]+-[0-9]+-[0-9]+-.*"
 ```
 
-Text after **Path** > **Rewrite to...** > _Dynamic_:
+Text after **Path** > **Rewrite to** > _Dynamic_:
 
 ```txt
 regex_replace(http.request.uri.path, "^/posts/([0-9]+)-([0-9]+)-([0-9]+)-(.*)$", "/posts/${1}/${2}/${3}/${4}")

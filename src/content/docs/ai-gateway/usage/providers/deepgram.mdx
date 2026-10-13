@@ -1,0 +1,61 @@
+---
+title: Deepgram
+pcx_content_type: get-started
+---
+
+[Deepgram](https://developers.deepgram.com/home) provides Voice AI APIs for speech-to-text, text-to-speech, and voice agents.
+
+:::note
+
+Deepgram is also available through Workers AI, see [Deepgram Workers AI](/ai-gateway/usage/websockets-api/realtime-api/#deepgram-workers-ai).
+
+:::
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepgram
+```
+
+## URL Structure
+
+When making requests to Deepgram, replace `https://api.deepgram.com/` in the URL you are currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepgram/`.
+
+## Prerequisites
+
+When making requests to Deepgram, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active Deepgram API token.
+
+## Example
+
+### SDK
+
+```ts title="TS"
+import { createClient, LiveTranscriptionEvents } from "@deepgram/sdk";
+
+
+const deepgram = createClient("{deepgram_api_key}", {
+    global: {
+      websocket: {
+        options: {
+          url: "wss://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/deepgram/",
+          _nodeOnlyHeaders: {
+            "cf-aig-authorization": "Bearer {CF_AIG_TOKEN}"
+          }
+        }
+      }
+    }
+});
+
+
+const connection = deepgram.listen.live({
+    model: "nova-3",
+    language: "en-US",
+    smart_format: true,
+});
+
+connection.send(...);
+```

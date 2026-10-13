@@ -1,0 +1,71 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+
+import { Stream, Width, Details } from "~/components";
+
+export const getStaticPaths = (async () => {
+	const entries = await getCollection("stream");
+
+	return entries.map(({ data }) => {
+		return {
+			params: {
+				slug: data.url,
+			},
+			props: {
+				entry: data,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+
+const props = {
+	frontmatter: {
+		title: entry.title,
+		description: entry.description,
+		template: "splash",
+		pcx_content_type: "video"
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+
+let parts;
+if (entry.transcript) {
+	let replaced = entry.transcript.replace("WEBVTT", "");
+
+	replaced = replaced.replace(/.+ --> .+/g, "");
+	replaced = replaced.replace(/<\/c>/g, "");
+	replaced = replaced.replace(/<.+?>/g, "");
+	replaced = replaced.replace(/^\s*$/g, "");
+	replaced = replaced.replace(/&nbsp;/g, " ");
+
+	parts = replaced.split("\n\n");
+
+	parts = parts.map((line) => line.trim().replaceAll("\n", ""));
+	parts = parts.filter(Boolean);
+	parts = parts.filter((line) => !/\d/.test(line));
+	parts = parts.filter((line, index, lines) => line !== lines[index + 1]);
+}
+---
+
+<StarlightPage {...props}>
+	<p>{entry.description}</p>
+	<Width size="large" center={true}>
+		<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
+			{
+				parts && (
+					<br/>
+					<Details header="Transcript">
+						{parts.map((part) => (
+							<p>{part}</p>
+						))}
+					</Details>
+				)
+			}
+	</Width>
+</StarlightPage>

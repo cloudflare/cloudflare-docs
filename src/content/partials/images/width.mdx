@@ -3,22 +3,30 @@
 ---
 import { Tabs, TabItem } from "~/components"
 
-Specifies maximum width of the image in pixels. Exact behavior depends on the `fit` mode (described below).
+Specifies maximum width of the image. Exact behavior depends on the `fit` mode; use the `fit=scale-down` option to ensure that the image will not be enlarged unnecessarily.
+
+Available options are a specified width in pixels or `auto`.
 
 <Tabs>
   <TabItem label="URL format">
-    ```js 
+    ```js
     width=250
     ```
   </TabItem>
   <TabItem label="URL format alias">
-    ```js 
+    ```js
     w=250
     ```
   </TabItem>
   <TabItem label="Workers">
-  ```js 
+  ```js
   cf: {image: {width: 250}}
   ```
   </TabItem>
 </Tabs>
+
+Ideally, image sizes should match the exact dimensions at which they are displayed on the page. If the page contains thumbnails with markup such as `<img width="200">`, then you can resize the image by applying `width=200`.
+
+[To serve responsive images](/images/transform-images/make-responsive-images/#transform-with-html-srcset), you can use the HTML `srcset` element and apply width parameters.
+
+`auto` - Automatically serves the image in the most optimal width based on available information about the browser and device. This method is supported only by Chromium browsers. For more information about this works, refer to [Transform width parameter](/images/transform-images/make-responsive-images/#transform-with-width-parameter).

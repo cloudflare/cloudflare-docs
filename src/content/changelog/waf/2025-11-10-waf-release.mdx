@@ -1,0 +1,66 @@
+---
+title: "WAF Release - 2025-11-10"
+description: Cloudflare WAF managed rulesets 2025-11-10 release
+date: 2025-11-10
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces new detections for Prototype Pollution across three common vectors: URI, Body, and Header/Form.
+
+**Key Findings**
+
+- These attacks can affect both API and web applications by altering normal behavior or bypassing security controls.
+
+**Impact**
+
+Exploitation may allow attackers to change internal logic or cause unexpected behavior in applications using JavaScript or Node.js frameworks. Developers should sanitize input keys and avoid merging untrusted data structures.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="32405a50728746dd8caa057b606285e6" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Prototype Pollution - URI</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>This is a new detection</td>
+		</tr>    
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="a7da00c63c4243d2a72456fe4f59ff26" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Prototype Pollution - Body</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>This is a new detection</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="833078bdcfa04bb7aa7b8fb67efbeb39" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Prototype Pollution - Header - Form</td>
+			<td>Log</td>
+			<td>Disabled</td>
+			<td>This is a new detection</td>
+		</tr>        
+	</tbody>
+</table>

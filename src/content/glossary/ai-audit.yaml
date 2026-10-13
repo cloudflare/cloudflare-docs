@@ -1,0 +1,14 @@
+---
+productName: AI Crawl Control
+entries:
+  - term: robots.txt
+    general_definition: |-
+      A text file which lists pages in your website that are off-limits for bots. Well-behaved bots respect this file, but some bots may violate it. You can enforce `robots.txt` with Cloudflare WAF custom rules.
+
+  - term: Merchant of Record
+    general_definition: |-
+      The entity who facilitates "buying and selling". For pay per crawl, Cloudflare is the merchant of record.
+
+  - term: AI crawler
+    general_definition: |-
+      A bot which scrapes content from websites in support of an AI model, including by scraping content for indexing, retrieval augmented generation, or training.

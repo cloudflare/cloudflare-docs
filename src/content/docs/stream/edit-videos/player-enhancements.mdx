@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: Add player enhancements
 
 ---
+import { DashButton } from "~/components";
 
 With player enhancements, you can modify your video player to incorporate elements of your branding such as your logo, and customize additional options to present to your viewers.
 
@@ -52,9 +53,11 @@ You can also pull the JSON by using the endpoint below.
 
 ## Update player properties via the Cloudflare dashboard
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Stream** > **Videos**.
-3. Select a video from the list to edit it.
+1. In the Cloudflare dashboard, go to the **Videos** page.
+
+   <DashButton url="/?to=/:account/stream/videos" />
+
+2. Select a video from the list to edit it.
 4. Select the **Public Details** tab.
 5. From **Public Details**, enter information in the text fields for the properties you want to set.
 6. When you are done, select **Save**.

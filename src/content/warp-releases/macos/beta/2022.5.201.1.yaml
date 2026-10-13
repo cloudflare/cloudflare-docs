@@ -1,0 +1,12 @@
+releaseNotes: >-
+  This release contains bug fixes from the previous beta release
+   
+  **Notable updates**
+   
+  - Fixed issue with warp-cli where  enable/disable with wifi was allowed in
+  Zero Trust mode
+version: 2022.5.201.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.5.201.1
+packageSize: 46880045
+releaseDate: 2022-05-24T18:39:27.396Z
+platformName: macOS

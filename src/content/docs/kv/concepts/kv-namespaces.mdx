@@ -5,6 +5,7 @@ sidebar:
   order: 7
 
 ---
+import { Type, MetaInfo, WranglerConfig, DashButton } from "~/components";
 
 A KV namespace is a key-value database replicated to Cloudflare’s global network.
 
@@ -20,19 +21,21 @@ KV namespace IDs are public and bound to your account.
 
 To bind KV namespaces to your Worker, assign an array of the below object to the `kv_namespaces` key.
 
-* `binding` string required
+* `binding` <Type text="string" /> <MetaInfo text="required" />
 
   * The binding name used to refer to the KV namespace.
 
-* `id` string required
+* `id` <Type text="string" /> <MetaInfo text="required" />
 
   * The ID of the KV namespace.
 
-* `preview_id` string optional
+* `preview_id` <Type text="string" /> <MetaInfo text="optional" />
 
   * The ID of the KV namespace used during `wrangler dev`.
 
 Example:
+
+<WranglerConfig>
 
 ```toml title="wrangler.toml"
 kv_namespaces = [
@@ -40,13 +43,19 @@ kv_namespaces = [
 ]
 ```
 
+</WranglerConfig>
+
 ## Bind your KV namespace via the dashboard
 
 To bind the namespace to your Worker in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Workers & Pages**.
-3. Select your **Worker**.
-4. Select **Settings** > **Variables**.
-5. Go to **KV Namespace Bindings**.
-6. Select **Add binding**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your **Worker**.
+3. Select **Settings** > **Bindings**.
+4. Select **Add**.
+5. Select **KV Namespace**.
+6. Enter your desired variable name (the name of the binding).
+7. Select the KV namespace you wish to bind the Worker to.
+8. Select **Deploy**.

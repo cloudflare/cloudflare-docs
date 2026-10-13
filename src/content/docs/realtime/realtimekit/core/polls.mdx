@@ -1,0 +1,266 @@
+---
+pcx_content_type: navigation
+title: Polls
+slug: realtime/realtimekit/core/polls
+sidebar:
+  order: 12
+---
+
+import { Tabs, TabItem } from "~/components";
+
+This guide explains how to create, vote on, and interact with polls in a meeting using Cloudflare RealtimeKit.
+
+## Introduction
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
+
+```js
+console.log("Polls object:", meeting.polls);
+```
+
+The `meeting.polls.items` property returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
+
+```js
+console.log("All polls:", meeting.polls.items);
+```
+
+### Poll Type
+
+The `Poll` type is defined as follows:
+
+```typescript
+interface Poll {
+	id: string;
+	question: string;
+	options: PollOption[];
+	anonymous: boolean;
+	hideVotes: boolean;
+	createdBy: string;
+	createdByUserId: string;
+	voted: string[]; // stores participant ID
+}
+
+interface PollOption {
+	text: string;
+	votes: {
+		id: string; // stores participant ID
+		name: string;
+	}[];
+	count: number;
+}
+```
+
+</TabItem>
+<TabItem label="React">
+
+The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
+
+```jsx
+console.log("Polls object:", meeting.polls);
+```
+
+The `meeting.polls.items` property returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
+
+```jsx
+console.log("All polls:", meeting.polls.items);
+```
+
+### Poll Type
+
+The `Poll` type is defined as follows:
+
+```typescript
+interface Poll {
+	id: string;
+	question: string;
+	options: PollOption[];
+	anonymous: boolean;
+	hideVotes: boolean;
+	createdBy: string;
+	createdByUserId: string;
+	voted: string[]; // stores participant ID
+}
+
+interface PollOption {
+	text: string;
+	votes: {
+		id: string; // stores participant ID
+		name: string;
+	}[];
+	count: number;
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Creating a Poll
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
+
+- `question` (string) - The poll question
+- `options` (string[]) - Array of poll options
+- `anonymous` (boolean) - Whether votes are anonymous
+- `hideVotes` (boolean, optional) - Whether to hide vote counts
+
+The following snippet creates a poll where votes are anonymous:
+
+```js
+await meeting.polls.create(
+	"Are you an early bird or a night owl?",
+	["Early bird", "Night owl"],
+	true,
+);
+```
+
+</TabItem>
+<TabItem label="React">
+
+A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
+
+- `question` (string) - The poll question
+- `options` (string[]) - Array of poll options
+- `anonymous` (boolean) - Whether votes are anonymous
+- `hideVotes` (boolean, optional) - Whether to hide vote counts
+
+The following snippet creates a poll where votes are anonymous:
+
+```jsx
+await meeting.polls.create(
+	"Are you an early bird or a night owl?",
+	["Early bird", "Night owl"],
+	true,
+);
+```
+
+</TabItem>
+</Tabs>
+
+## Voting on a Poll
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
+
+- `pollId` (string) - The ID of the poll
+- `optionIndex` (number) - The index of the selected option
+
+The following snippet votes for the first option on the first poll created in the meeting:
+
+```js
+const poll = meeting.polls.items[0];
+await meeting.polls.vote(poll.id, 0);
+```
+
+</TabItem>
+<TabItem label="React">
+
+The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
+
+- `pollId` (string) - The ID of the poll
+- `optionIndex` (number) - The index of the selected option
+
+The following snippet votes for the first option on the first poll created in the meeting:
+
+```jsx
+const poll = meeting.polls.items[0];
+await meeting.polls.vote(poll.id, 0);
+```
+
+</TabItem>
+</Tabs>
+
+## Other Poll Functions
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+### View Poll Results
+
+The total votes on a poll can be accessed in the following manner:
+
+```js
+const poll = meeting.polls.items[0];
+const votes = poll.voted;
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```js
+const poll = meeting.polls.items[0];
+const options = poll.options;
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+### Get Notified When a Poll is Created or Updated
+
+An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
+
+- `polls` - List of all polls
+- `newPoll` - A boolean variable which is `true` when a new poll has been created
+
+```js
+meeting.polls.on("pollsUpdate", ({ polls, newPoll }) => {
+	console.log("Polls updated:", polls);
+	console.log("Is new poll:", newPoll);
+});
+```
+
+</TabItem>
+<TabItem label="React">
+
+### View Poll Results
+
+The total votes on a poll can be accessed in the following manner:
+
+```jsx
+const poll = meeting.polls.items[0];
+const votes = poll.voted;
+```
+
+`votes` is an array of participant IDs (`meeting.participant.id`).
+
+The total votes on a poll option can be accessed in the following manner:
+
+```jsx
+const poll = meeting.polls.items[0];
+const options = poll.options;
+```
+
+`options` returns an array of objects, where each object is of type `PollOption`.
+
+### Get Notified When a Poll is Created or Updated
+
+An event is fired each time `meeting.polls.items` is updated or created. You can listen for this to get the updated list of polls. The response object contains the following properties:
+
+- `polls` - List of all polls
+- `newPoll` - A boolean variable which is `true` when a new poll has been created
+
+```jsx
+meeting.polls.on("pollsUpdate", ({ polls, newPoll }) => {
+	console.log("Polls updated:", polls);
+	console.log("Is new poll:", newPoll);
+});
+```
+
+Alternatively, you can use React hooks to listen for poll updates:
+
+```jsx
+import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+
+// useRealtimeKitSelector hook only works when `RealtimeKitProvider` is used.
+const polls = useRealtimeKitSelector((m) => m.polls.items);
+```
+
+</TabItem>
+</Tabs>

@@ -1,0 +1,21 @@
+---
+{}
+---
+import { Tabs, TabItem } from "~/components"
+
+Automatically isolates the subject of an image by replacing the background with transparent pixels.
+
+	This feature uses an open-source model called BiRefNet through Workers AI. Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    segment=foreground
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {segment: "foreground"}
+  ```
+  </TabItem>
+</Tabs>

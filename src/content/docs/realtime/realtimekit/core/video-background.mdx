@@ -1,0 +1,325 @@
+---
+pcx_content_type: content
+title: Video Background
+slug: realtime/realtimekit/core/video-background
+sidebar:
+  order: 13
+---
+
+import { Tabs, TabItem, PackageManagers } from "~/components";
+
+Add video background effects and blur to participant video feeds in your RealtimeKit meetings using the Core SDK.
+
+:::note
+If you are using the `rtk-meeting` component with UI Kit and prefer a higher-level abstraction, refer to [UI Kit Addons](/realtime/realtimekit/ui-kit/addons/) instead.
+:::
+
+<Tabs syncKey="realtimeKitFrameworkTabs">
+<TabItem label="Web Components">
+
+## Installation
+
+<PackageManagers pkg="@cloudflare/realtimekit-virtual-background" />
+
+## Usage
+
+### 1. Disable default per frame rendering
+
+Disable the default per frame rendering of video middleware to improve speed and quality by letting this middleware control it on its own:
+
+```javascript
+await meeting.self.setVideoMiddlewareGlobalConfig({ 
+  disablePerFrameCanvasRendering: true 
+});
+```
+
+### 2. Initialize the transformer
+
+Create a video background transformer object:
+
+```javascript
+import RealtimeKitVideoBackgroundTransformer from '@cloudflare/realtimekit-virtual-background';
+
+const videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.init({
+  meeting,
+});
+```
+
+### 3. Apply background effects
+
+The `videoBackgroundTransformer` exposes two types of middlewares:
+
+#### Static background image
+
+Use `createStaticBackgroundVideoMiddleware` to set an image as the background:
+
+```javascript
+const imageUrl = 'https://images.unsplash.com/photo-1487088678257-3a541e6e3922';
+
+meeting.self.addVideoMiddleware(
+  await videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(imageUrl)
+);
+```
+
+#### Background blur
+
+Use `createBackgroundBlurVideoMiddleware` to blur the background. Pass `blurStrength` (0-100) as a parameter (50% by default):
+
+```javascript
+meeting.self.addVideoMiddleware(
+  await videoBackgroundTransformer.createBackgroundBlurVideoMiddleware(50)
+);
+```
+
+## Browser support
+
+Check browser support before initializing:
+
+```javascript
+if (RealtimeKitVideoBackgroundTransformer.isSupported()) {
+  const videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.init({
+    meeting: meeting,
+  });
+  
+  meeting.self.addVideoMiddleware(
+    await videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(imageUrl)
+  );
+}
+```
+
+:::note[Image CORS requirements]
+Image URLs must allow CORS to avoid tainting the canvas. You can find CORS-enabled images on [Unsplash](https://unsplash.com/) and [Imgur](https://imgur.com).
+:::
+
+## Advanced configuration
+
+For better, sharper results, pass a custom segmentation configuration:
+
+```javascript
+const videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.init({
+  meeting,
+  segmentationConfig: {
+    model: 'mlkit', // 'meet' | 'mlkit'
+    backend: 'wasmSimd',
+    inputResolution: '256x256', // '256x144' for meet
+    pipeline: 'webgl2', // 'webgl2' | 'canvas2dCpu'
+    // canvas2dCpu gives sharper blur, webgl2 is faster
+    targetFps: 35,
+  }
+});
+```
+
+</TabItem>
+<TabItem label="React">
+
+## Installation
+
+<PackageManagers pkg="@cloudflare/realtimekit-virtual-background" />
+
+## Usage
+
+```jsx
+import { useState, useEffect } from 'react';
+import { useRealtimeKitClient } from '@cloudflare/realtimekit-react';
+import RealtimeKitVideoBackgroundTransformer from '@cloudflare/realtimekit-virtual-background';
+
+function App() {
+  const [meeting] = useRealtimeKitClient();
+  const [videoBackgroundTransformer, setVideoBackgroundTransformer] = useState(null);
+
+  useEffect(() => {
+    const initializeTransformer = async () => {
+      if (!meeting) return;
+
+      // Check browser support
+      if (!RealtimeKitVideoBackgroundTransformer.isSupported()) {
+        console.warn('Video background not supported in this browser');
+        return;
+      }
+
+      // Disable default per frame rendering
+      await meeting.self.setVideoMiddlewareGlobalConfig({ 
+        disablePerFrameCanvasRendering: true 
+      });
+
+      // Initialize transformer
+      const transformer = await RealtimeKitVideoBackgroundTransformer.init({
+        meeting,
+      });
+
+      setVideoBackgroundTransformer(transformer);
+    };
+
+    initializeTransformer();
+  }, [meeting]);
+
+  const applyStaticBackground = async (imageUrl) => {
+    if (!videoBackgroundTransformer) return;
+
+    meeting.self.addVideoMiddleware(
+      await videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(imageUrl)
+    );
+  };
+
+  const applyBlur = async (blurStrength = 50) => {
+    if (!videoBackgroundTransformer) return;
+
+    meeting.self.addVideoMiddleware(
+      await videoBackgroundTransformer.createBackgroundBlurVideoMiddleware(blurStrength)
+    );
+  };
+
+  const removeBackground = () => {
+    // Remove all video middlewares
+    meeting.self.removeVideoMiddleware();
+  };
+
+  return (
+    <div>
+      <button onClick={() => applyStaticBackground('https://images.unsplash.com/photo-1487088678257-3a541e6e3922')}>
+        Apply Background
+      </button>
+      <button onClick={() => applyBlur(50)}>
+        Apply Blur
+      </button>
+      <button onClick={removeBackground}>
+        Remove Background
+      </button>
+    </div>
+  );
+}
+```
+
+:::note[Image CORS requirements]
+Image URLs must allow CORS to avoid tainting the canvas. You can find CORS-enabled images on [Unsplash](https://unsplash.com/) and [Imgur](https://imgur.com).
+:::
+
+## Advanced configuration
+
+For better, sharper results, pass a custom segmentation configuration:
+
+```jsx
+const transformer = await RealtimeKitVideoBackgroundTransformer.init({
+  meeting,
+  segmentationConfig: {
+    model: 'mlkit', // 'meet' | 'mlkit'
+    backend: 'wasmSimd',
+    inputResolution: '256x256', // '256x144' for meet
+    pipeline: 'webgl2', // 'webgl2' | 'canvas2dCpu'
+    // canvas2dCpu gives sharper blur, webgl2 is faster
+    targetFps: 35,
+  }
+});
+```
+
+</TabItem>
+<TabItem label="Angular">
+
+## Installation
+
+<PackageManagers pkg="@cloudflare/realtimekit-virtual-background" />
+
+## Usage
+
+In your component TypeScript file:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import RealtimeKitClient from '@cloudflare/realtimekit';
+import RealtimeKitVideoBackgroundTransformer from '@cloudflare/realtimekit-virtual-background';
+
+@Component({
+  selector: 'app-meeting',
+  templateUrl: './meeting.component.html',
+})
+export class MeetingComponent implements OnInit {
+  meeting: any;
+  videoBackgroundTransformer: any;
+
+  async ngOnInit() {
+    // Initialize meeting
+    this.meeting = await RealtimeKitClient.init({
+      authToken: '<participant_auth_token>',
+    });
+
+    await this.meeting.join();
+
+    // Check browser support
+    if (!RealtimeKitVideoBackgroundTransformer.isSupported()) {
+      console.warn('Video background not supported in this browser');
+      return;
+    }
+
+    // Disable default per frame rendering
+    await this.meeting.self.setVideoMiddlewareGlobalConfig({ 
+      disablePerFrameCanvasRendering: true 
+    });
+
+    // Initialize transformer
+    this.videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.init({
+      meeting: this.meeting,
+    });
+  }
+
+  async applyStaticBackground(imageUrl: string) {
+    if (!this.videoBackgroundTransformer) return;
+
+    this.meeting.self.addVideoMiddleware(
+      await this.videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(imageUrl)
+    );
+  }
+
+  async applyBlur(blurStrength: number = 50) {
+    if (!this.videoBackgroundTransformer) return;
+
+    this.meeting.self.addVideoMiddleware(
+      await this.videoBackgroundTransformer.createBackgroundBlurVideoMiddleware(blurStrength)
+    );
+  }
+
+  removeBackground() {
+    // Remove all video middlewares
+    this.meeting.self.removeVideoMiddleware();
+  }
+}
+```
+
+In your component template:
+
+```html
+<button (click)="applyStaticBackground('https://images.unsplash.com/photo-1487088678257-3a541e6e3922')">
+  Apply Background
+</button>
+<button (click)="applyBlur(50)">
+  Apply Blur
+</button>
+<button (click)="removeBackground()">
+  Remove Background
+</button>
+```
+
+:::note[Image CORS requirements]
+Image URLs must allow CORS to avoid tainting the canvas. You can find CORS-enabled images on [Unsplash](https://unsplash.com/) and [Imgur](https://imgur.com).
+:::
+
+## Advanced configuration
+
+For better, sharper results, pass a custom segmentation configuration:
+
+```typescript
+this.videoBackgroundTransformer = await RealtimeKitVideoBackgroundTransformer.init({
+  meeting: this.meeting,
+  segmentationConfig: {
+    model: 'mlkit', // 'meet' | 'mlkit'
+    backend: 'wasmSimd',
+    inputResolution: '256x256', // '256x144' for meet
+    pipeline: 'webgl2', // 'webgl2' | 'canvas2dCpu'
+    // canvas2dCpu gives sharper blur, webgl2 is faster
+    targetFps: 35,
+  }
+});
+```
+
+</TabItem>
+</Tabs>
+

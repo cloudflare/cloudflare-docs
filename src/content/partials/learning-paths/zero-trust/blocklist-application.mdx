@@ -1,12 +1,7 @@
 ---
 {}
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-Block unauthorized applications to limit your users' access to certain web-based tools and minimize the risk of <GlossaryTooltip term="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">shadow IT</GlossaryTooltip>. For example, the following policy blocks popular AI chatbots.
-
-| Selector    | Operator | Value                                           | Action |
-| ----------- | -------- | ----------------------------------------------- | ------ |
-| Application | in       | *Microsoft Copilot*, *ChatGPT*, *Google Gemini* | Block  |
+Block unauthorized applications to limit your users' access to certain web-based tools and minimize the risk of <GlossaryTooltip term="shadow IT" link="https://www.cloudflare.com/learning/access-management/what-is-shadow-it/">shadow IT</GlossaryTooltip>. For example, the following policy blocks known AI tools:

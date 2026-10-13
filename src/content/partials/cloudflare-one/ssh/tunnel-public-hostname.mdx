@@ -1,0 +1,13 @@
+---
+{}
+---
+
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
+
+2. In the **Published application routes** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `ssh.example.com`).
+
+3. For **Service**, select _SSH_ and enter `localhost:22`. If the SSH server is on a different machine from where you installed the tunnel, enter `<server IP>:22`.
+
+4. Select **Save**.
+
+5. (Recommended) Add a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to Cloudflare Access in order to manage access to your server.

@@ -1,0 +1,14 @@
+---
+{}
+
+---
+
+import { Markdown } from "~/components"
+
+:::caution
+
+Providing a type parameter does _not_ validate that the incoming event matches your type definition. In TypeScript, properties (fields) that do not exist or conform to the type you provided will be dropped. If you need to validate incoming events, we recommend a library such as [zod](https://zod.dev/) or your own validator logic.
+
+:::
+
+You can also provide a type parameter to the `Workflows` type when creating (triggering) a Workflow instance using the `create` method of the [Workers API](/workflows/build/workers-api/#workflow). Note that this does _not_ propagate type information into the Workflow itself, as TypeScript types are a build-time construct. To provide the type of an incoming `WorkflowEvent`, refer to the [TypeScript and type parameters](/workflows/build/events-and-parameters/#typescript-and-type-parameters) section of the Workflows documentation.

@@ -1,0 +1,22 @@
+---
+pcx_content_type: reference
+title: Salesforce
+rss: file
+head:
+  - tag: title
+    content: Salesforce - CASB
+sidebar:
+  order: 15
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/salesforce-integration"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Salesforce",
+		environmentName: "Salesforce environment",
+		slugifiedName: "salesforce",
+	}}
+/>

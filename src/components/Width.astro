@@ -1,0 +1,22 @@
+---
+import { z } from "astro:schema";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	size: z.enum(["large", "medium", "small"]),
+	center: z.boolean().default(false),
+});
+
+const { size, center } = props.parse(Astro.props);
+
+const widthClasses = {
+	large: "w-3/4",
+	medium: "w-1/2",
+	small: "w-1/4",
+};
+---
+
+<div class:list={[widthClasses[size], center ? "mx-auto" : ""]}>
+	<slot />
+</div>

@@ -1,0 +1,18 @@
+---
+{}
+
+---
+
+import { Example } from "~/components";
+
+<Example>
+
+DNS management for **example.com**:
+
+| Type |  Name  |   Content   | Proxy status |   TTL  |
+| :--: | :----: | :---------: | :----------: | :----: |
+|  A | `blog` | `192.0.2.1` |   Proxied  | Auto |
+|  A | `shop` | `192.0.2.2` |  DNS only  | Auto |
+</Example>
+
+In the example DNS table above, there are two DNS records. The record with the name `blog` has proxy on, while the record named `shop` has the proxy off (that is, **DNS only**).

@@ -1,0 +1,34 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes. No new
+  features are introduced with this release.
+   
+  **Notable updates**
+
+  - Added support for IPv6 DEX Traceroute tests
+
+  - Improved reliability and efficiency in configurating split tunnel rules.
+  Most `error petting the dog` errors should now be gone and organizations with
+  large split tunnel configuration should see reliability improvements
+
+  - Fixed issue where DEX tests would not properly run immediately after a
+  device came out of sleep
+
+  - Fixed issue where DEX tests will all execute at the same time causing
+  performance issues for accounts with a large number of tests configured
+   
+
+   
+  **Known issues**
+
+  - Improved reliability and efficiency in configurating split tunnel rules.
+  Most `error petting the dog` errors should now be gone and organizations with
+  large split tunnel configuration should see reliability improvements.
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2023.7.76.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.7.76.1
+packageSize: 65514112
+releaseDate: 2023-07-14T23:03:07.654Z
+platformName: macOS

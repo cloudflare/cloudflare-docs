@@ -1,0 +1,27 @@
+---
+{}
+---
+
+import { Details } from "~/components";
+
+When you turn on **Send policy context**, Gateway will append details of the matching request to the redirected URL as a query string. Not every context field will be included. Potential policy context fields include:
+
+<Details header="Policy context fields">
+
+| Field                 | Definition                                                                                                    | Example                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| User email            | Email of the user that made the query.                                                                        | `&cf_user_email=user@example.com`                                        |
+| Site URL              | Full URL of the original HTTP request or domain name in DNS query.                                            | `&cf_site_uri=https%3A%2F%2Fmalware.testcategory.com%2F`                 |
+| URL category          | [Domain categories](/cloudflare-one/traffic-policies/domain-categories/) of the URL to be redirected.         | `&cf_request_categories=New%20Domains,Newly%20Seen%20Domains`            |
+| Original HTTP referer | For HTTP traffic, the original HTTP referer header of the HTTP request.                                       | `&cf_referer=https%3A%2F%2Fexample.com%2F`                               |
+| Rule ID               | ID of the Gateway policy that matched the request.                                                            | `&cf_rule_id=6d48997c-a1ec-4b16-b42e-d43ab4d071d1`                       |
+| Source IP             | Source IP address of the device that matched the policy.                                                      | `&cf_source_ip=203.0.113.5`                                              |
+| Device ID             | UUID of the device that matched the policy.                                                                   | `&cf_device_id=6d48997c-a1ec-4b16-b42e-d43ab4d071d1`                     |
+| Application names     | Name of the application the redirected domain corresponds to, if any.                                         | `&cf_application_name=Salesforce`                                        |
+| Filter                | The traffic type filter that triggered the block.                                                             | `&cf_filter=http`, `&cf_filter=dns`, `&cf_filter=av`, or `&cf_filter=l4` |
+| Account ID            | [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/) of the associated Zero Trust account. | `&cf_account_id=d57c3de47a013c03ca7e237dd3e61d7d`                        |
+| Query ID              | ID of the DNS query for which the redirect took effect.                                                       | `&cf_query_id=f8dc6fd3-a7a5-44dd-8b77-08430bb4fac3`                      |
+| Connection ID         | ID of the proxy connection for which the redirect took effect.                                                | `&cf_connection_id=f8dc6fd3-a7a5-44dd-8b77-08430bb4fac3`                 |
+| Request ID            | ID of the HTTP request for which the redirect took effect.                                                    | `&cf_request_id=f8dc6fd3-a7a5-44dd-8b77-08430bb4fac3`                    |
+
+</Details>

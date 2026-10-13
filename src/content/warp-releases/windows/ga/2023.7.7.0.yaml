@@ -1,0 +1,74 @@
+releaseNotes: >-
+  This release contains new features, reliability improvements and bug fixes
+  from both the previous beta and the previous GA build. We strongly encourage
+  customers with domain based split tunneling rules to upgrade to this version.
+   
+  **Notable updates**
+
+  - Added more status messages to the UI when the client is unable to connect
+
+  - Added support for "SWG without DNS Filtering" mode. All DNS functionality
+  from the WARP client is disabled while in this service mode 
+
+  - Improved performance of the client when in the "Proxy Only" service mode
+
+  - Improved performance of domain-based split tunneling when the IP was already
+  split tunneled (seen frequently with Zoom domains and IPs being used)
+
+  - Modified `warp-cli settings` to show if the applied settings came from local
+  (mdm) or network (warp settings profile) policy to make debugging profile
+  issues easier
+
+  - Fixed an issue that could result in increased latency when resolving queries
+
+  - Fixed an issue where the GUI could indicate the incorrect service mode after
+  entering an admin override code
+
+  - Fixed an issue with re-authentication policies that could result in the
+  browser loading a broken URL
+
+  - Optimized the performance of DNS queries to prevent minor memory leaks
+
+  - Fixed an issue when service token information was removed from an mdm.xml
+  file the client would not prompt for user authentication as expected
+
+  - Fixed an issue where localhost DNS proxy could not be set properly in
+  certain VPN and VM configuration
+
+  - Fixed localization issues in en-MX UI that caused longer strings to get
+  truncated
+
+  - Fixed an issue with certain tools like nslookup that was introduced in
+  previous beta where DNS could appear broken
+
+  - Fixed an issue where the WARP Client wouldn't properly detect if IPv6 was
+  disabled via
+  "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters"
+
+  - Fixed an issue where onboarding being set to False would not work if the GUI
+  app started before the service 
+
+  - Fixed an issue where the client would attempt to connect even when the "AUTO
+  CONNECT" setting was Disabled in WARP Settings or not specified either in an
+  MDM file
+
+  - Fixed an issue where the client would not correctly detect and apply
+  alternate network configuration between network changes
+   
+  **Known issues**
+
+  - Customers may experience a DPC_WATCHDOG_VIOLATION Blue Screen when
+  connecting. This error was introduced with the 2023.3 GA release and happens
+  more frequently with larger split tunnel configurations, especially on more
+  resource constrained machines. We are actively working on a fix. Until then we
+  recommend staying on 2022.12 GA release OR reducing your split tunnel
+  configuration if possible.
+
+  - Managed network detection on certain Windows machines doesn't consistently
+  apply the expected profile upon network changes. We will address this issue in
+  a future release.
+version: 2023.7.7.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.7.7.0
+packageSize: 110821376
+releaseDate: 2023-07-07T18:46:21.316Z
+platformName: Windows

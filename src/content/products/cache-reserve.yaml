@@ -4,4 +4,7 @@ product:
   title: Cache Reserve
   group: Application performance
   url: /cache/advanced-configuration/cache-reserve/
-  grid_placeholder: true
+
+meta:
+  description: Cache your website content on a persistent data store
+  author: "@cloudflare"

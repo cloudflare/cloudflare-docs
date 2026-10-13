@@ -1,0 +1,17 @@
+releaseNotes: >-
+  This release primarily updates the beta to match GA 2022.9.384.0
+
+  **Notable updates**
+
+  - None
+
+
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+version: 2022.9.387.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.9.387.1
+packageSize: 49721742
+releaseDate: 2022-09-30T19:43:00.456Z
+platformName: macOS

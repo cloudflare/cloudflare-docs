@@ -5,6 +5,8 @@ title: PCI compliance and vulnerabilities mitigation
 
 ---
 
+import { DashButton } from "~/components";
+
 Both [TLS 1.0 and TLS 1.1](/ssl/reference/protocols/) are insufficient for protecting information due to known vulnerabilities. Specifically for Cloudflare customers, the primary impact of PCI is that TLS 1.0 and TLS 1.1 are insufficient to secure payment card related traffic.
 
 PCI standards recommend using TLS 1.2 or higher. Refer to [Compliance standards](/ssl/edge-certificates/additional-options/cipher-suites/compliance-status/) for a list of recommended cipher suites.
@@ -15,13 +17,11 @@ Cloudflare also [implements mitigations against known vulnerabilities](#known-vu
 
 To configure your Cloudflare domain to only allow connections using TLS 1.2 or newer protocols:
 
-1. Log in to the Cloudflare dashboard.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
 
-2. Select your Cloudflare account and website or application.
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
 
-3. Go to **SSL/TLS** > **Edge Certificates**.
-
-4. For **Minimum TLS Version**, select **TLS 1.2** or higher.
+2. For **Minimum TLS Version**, select **TLS 1.2** or higher.
 
 Refer to [Minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/) for more information about this setting and other setup options.
 

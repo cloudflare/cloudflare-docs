@@ -1,5 +1,5 @@
 ---
-import { LinkCard } from "~/components";
+import { LinkCard } from "@astrojs/starlight/components";
 
 interface Props {
 	header: string;
@@ -20,7 +20,7 @@ if (cta) {
 	<div>
 		<slot />
 	</div>
-	<div class="!mt-0 self-center">
+	<div class="mt-0! self-center">
 		<LinkCard title={title} href={href} />
 	</div>
 </div>

@@ -1,8 +1,9 @@
 ---
 title: Navigation
 pcx_content_type: concept
-
 ---
+
+import { Render } from "~/components";
 
 ## Purpose
 
@@ -10,13 +11,15 @@ The purpose of a navigation page is to direct users deeper into the doc set and 
 
 ## content_type
 
-`navigation`
+```yaml
+pcx_content_type: navigation
+```
 
-## Structure
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
-Use the `{{</*directory-listing*/>}}` component
+## Components
 
-**Title**: Verb or noun phrase that describes the sub-pages in the section.
+[`DirectoryListing`](/style-guide/components/directory-listing/): <Render file="directory-listing-definition" product="style-guide" />
 
 ## Template
 
@@ -26,15 +29,15 @@ weight: xx
 pcx_content_type: navigation
 ---
 
-import { DirectoryListing } from "~/components"
- 
+import { DirectoryListing } from "~/components";
+
 # Name of section
- 
+
 <DirectoryListing />
 ```
 
 ## Examples
 
-[Logs: Enable destinations](/logs/get-started/enable-destinations/)
+[Logs: Enable destinations](/logs/logpush/logpush-job/enable-destinations/)
 
-[Cloudflare Tunnel: Get Started](/cloudflare-one/connections/connect-networks/get-started/)
+[Cloudflare Tunnel: Get Started](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
