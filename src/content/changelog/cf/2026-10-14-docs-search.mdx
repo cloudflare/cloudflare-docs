@@ -1,0 +1,38 @@
+---
+title: Search Cloudflare documentation with the Cloudflare CLI
+description: Find Cloudflare guides and examples from the terminal with cf docs search, available in Cloudflare CLI 1.0.0-beta.16.
+products:
+  - workers
+date: 2026-10-14
+---
+
+import { PackageManagers } from "~/components";
+
+Cloudflare CLI `1.0.0-beta.16` includes `cf docs search`, so you and your coding agent can find Cloudflare documentation without leaving the terminal. Search for guides, tutorials, and examples across Cloudflare products.
+
+To install or update to the latest release:
+
+<PackageManagers type="add" pkg="cf@latest" global />
+
+Describe what you want to do, or ask a question:
+
+```sh
+cf docs search "proxy a DNS record"
+cf docs search "rate limit requests with WAF"
+cf docs search "schedule a worker"
+```
+
+The command searches live Cloudflare documentation and returns up to five ranked JSON results. Each result includes a title, description, and documentation URL. An Internet connection is required.
+
+![Terminal demo of Cloudflare CLI beta-16 searching DNS and WAF documentation](~/assets/images/cf/docs-search-demo.gif)
+
+Agents can parse the results and fetch a complete page as Markdown. For example, use `jq` to select the first result, then request its URL with the `Accept: text/markdown` header:
+
+```sh
+url=$(cf docs search "proxy a DNS record" | jq -r '.[0].url')
+curl -H "Accept: text/markdown" "$url"
+```
+
+This release also standardizes generated command names to kebab-case. For example, `cf accounts billing getCredits` becomes `cf accounts billing get-credits`. For the full list of breaking command and flag changes, refer to the [Cloudflare CLI release notes](https://github.com/cloudflare/cf/blob/main/packages/cli/CHANGELOG.md).
+
+For more information, refer to [Find Cloudflare documentation with a coding agent](/cf/agents/#find-cloudflare-documentation).
