@@ -93,6 +93,7 @@ jobs:
             if [ -n "$(gh pr list --head "$branch" --base "$base" --state open --json number --jq '.[0].number // empty')" ]; then
               continue
             fi
+            remote_sha=$(git ls-remote --heads origin "refs/heads/$branch" | cut -f1)
             git checkout --force -B "$branch" "origin/$base"
             while IFS= read -r file; do
               if [ "$(basename "$file" .json)" = "$model" ]; then
@@ -104,6 +105,6 @@ jobs:
             git config user.name "$bot_name"
             git config user.email "$bot_email"
             git commit --no-verify -m "docs: add $model model"
-            git_auth push origin "HEAD:refs/heads/$branch"
+            git_auth push --force-with-lease="refs/heads/$branch:$remote_sha" origin "HEAD:refs/heads/$branch"
             gh pr create --base "$base" --head "$branch" --title "docs: add $model model" --body "Adds the newly published \`$model\` model data from the automated catalog sync."
           done < <(while IFS= read -r file; do basename "$file" .json; done < "$manifest" | sort -u)
