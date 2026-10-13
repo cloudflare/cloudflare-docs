@@ -50,6 +50,14 @@ For more information, refer to [DNS over TLS](/cloudflare-one/traffic-controls/r
 
 Gateway requires a DoH endpoint for default DNS locations. For more information, refer to [DNS over HTTPS](/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/).
 
+## DNS64
+
+Gateway can synthesize `AAAA` records from `A` records for IPv6-only networks. These networks require network address translation from IPv6 to IPv4 (NAT64).
+
+Turn on **Enable DNS64** for a location, or request synthesis for an individual query.
+
+For configuration and request examples, refer to [DNS64](/cloudflare-one/traffic-controls/resolver-endpoints/dns64/).
+
 ## Secure DNS locations
 
 Secure DNS locations provide additional protection against malicious domains for use in services such as [protective DNS (PDNS)](/reference-architecture/diagrams/sase/gateway-for-protective-dns/). For a DNS location to be considered secure, Gateway requires that:
