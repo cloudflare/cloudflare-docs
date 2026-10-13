@@ -13,11 +13,9 @@ products:
 - The origin server should include an explanation, which should be displayed by the User-Agent, except in the case of a `HEAD` request.
 - [Custom rules](/waf/custom-rules/) can return any response code in the range of `400–499` on your HTML page if the site owner has created a rule with the _Block_ action and configured a custom response code. For more details, refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests).
 
-## Log Explorer
+## Observability Logs
 
-[Log Explorer](/observability/logs/unsampled-security-datasets/) provides access to Cloudflare logs with all the context available within the Cloudflare platform. 
-You can monitor security and performance issues with custom dashboards or investigate and troubleshoot issues with log search.
-Log explorer [allows you to build queries](/observability/logs/unsampled-security-datasets/log-search/) filtering for a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), which can be useful to investigate HTTP Errors.
+[Unsampled security datasets](/observability/logs/unsampled-security-datasets/) (legacy Log Explorer) provide access to Cloudflare logs with all the context available within the Cloudflare platform. If your account has the Log Explorer add-on, go to **Observability** > **Logs** in the dashboard and [build a query](/observability/logs/unsampled-security-datasets/log-search/) that filters for a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/) to investigate HTTP errors.
 
 ## 400 Bad Request
 
