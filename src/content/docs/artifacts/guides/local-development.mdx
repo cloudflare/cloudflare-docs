@@ -35,7 +35,7 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
 
    Use an up-to-date, security-patched Git release.
 
-   If Git is unavailable or older than 2.32, local Artifacts fails at startup with installation or upgrade instructions. Restart your dev tool after changing `PATH`. This version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future; it is not included in this version. Deployed Artifacts does not require Git on your development machine.
+   If Git is unavailable or older than 2.32, local Artifacts fails at startup with installation or upgrade instructions. Restart your dev tool after changing `PATH`. This version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future. It is not included in this version. Deployed Artifacts does not require Git on your development machine.
 
 2. Add a binding to your Wrangler config file. If your project already has a binding, leave `remote` unset or set it to `false`:
 
@@ -79,7 +79,7 @@ To reset local Artifacts, stop the dev server and back up any repositories you n
 
 ## Use an HTTPS import explicitly
 
-Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git on your development machine contacts the specified host, including private-network hosts. Only import URLs you trust. Imports do not follow HTTP redirects; supply the final HTTPS Git URL, especially when using credentials. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
+Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git on your development machine contacts the specified host, including private-network hosts. Only import URLs you trust. Imports do not follow HTTP redirects. Supply the final HTTPS Git URL, especially when using credentials. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
 
 A successful local import does not retain URL credentials in repository metadata or the Git configuration. If the process exits during an import, treat any partial local storage as sensitive until you inspect or reset it. Keep import URLs with credentials out of logs. For the binding arguments, refer to [Workers binding](/artifacts/api/workers-binding/#importparams).
 
