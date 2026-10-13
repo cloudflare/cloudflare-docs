@@ -26,7 +26,7 @@ Cloudflare prevents traffic interference by decrypting, inspecting, and re-encry
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
-The [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) also requires TLS decryption for HTTPS traffic. Traffic matching Do Not Inspect bypasses Worker middleware. If you configure a Worker to archive decrypted content, that storage is controlled by your Worker code and bindings.
+The [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) also requires TLS decryption for HTTPS traffic. Gateway does not invoke a Worker for traffic matching Do Not Inspect. If you configure a Worker to archive decrypted content, that storage is controlled by your Worker code and bindings.
 
 ## Turn on TLS decryption
 

@@ -8,7 +8,7 @@ import { Render, Details } from "~/components";
 flowchart TB
     %% Accessibility
     accTitle: Gateway order of enforcement
-    accDescr: Flowchart describing request enforcement for Gateway policies. For permitted HTTP requests, the first matching Forward policy invokes a Worker before continuing upstream. Final responses are inspected after middleware.
+    accDescr: Flowchart describing request enforcement for Gateway policies. For permitted HTTP requests, the first matching Forward policy invokes a Worker before continuing upstream. Gateway inspects the final response returned by the Worker.
 
  subgraph Resolution["Resolution"]
         dns2["1.1.1.1"]
@@ -25,7 +25,7 @@ flowchart TB
         http2["Isolate policies  <br>(with Browser Isolation add-on)"]
         http3["Allow, Block, Do Not Scan, Quarantine, and Redirect policies, DLP, and anti-virus scanning"]
         forward["First matching Forward policy, if any"]
-        worker["Worker middleware"]
+        worker["Worker selected by the policy"]
         https["HTTP or HTTPS?"]
   end
  subgraph Proxy["Proxy"]
@@ -49,7 +49,7 @@ flowchart TB
     http2 --> http3
     http0 --> magic["Cloudflare Network Firewall (Enterprise users only)"]
     magic --> egress1
-    egress1 --> timing{"Defer upstream connection for middleware?"}
+    egress1 --> timing{"Defer upstream connection for a Worker?"}
     timing -- No --> tcp["Check for origin availability (TCP SYN)"]
     timing -- Yes --> network1
     tcp --> network1
@@ -83,13 +83,13 @@ On 2025-07-14, Gateway began evaluating network-level policies before applicatio
 
 ## Connection establishment
 
-For traffic without Forward middleware, Gateway first establishes a TCP connection with the destination server on the port the user requested. Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
+For traffic that Gateway does not forward to a Worker, Gateway first establishes a TCP connection with the destination server on the port the user requested. Because TCP traffic is proxied by Cloudflare, the connection Gateway establishes with the origin is independent from the connection users establish with Gateway. This means Gateway assigns a new source IP and port to the user's connection and no details from the user's TCP handshake are included in the TCP handshake with the origin server.
 
 If the TCP connection to the destination server is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
 
-For requests handled by [Forward middleware](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works), Gateway defers the original upstream connection until the Worker calls `next()`. A Worker that returns a synthetic response without calling `next()` does not send the request to the origin.
+For requests handled by a Worker invoked through the [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works), Gateway defers the original upstream connection until the Worker calls `next()`. A Worker that returns a synthetic response without calling `next()` does not send the request to the origin.
 
-The following flowchart describes connections without Forward middleware:
+The following flowchart describes connections that Gateway does not forward to a Worker:
 
 <Render file="gateway/tcp-flowchart" product="cloudflare-one" />
 
@@ -97,7 +97,7 @@ Connections to Zero Trust will always appear in your [Zero Trust network session
 
 ### Filter TCP SYN packets with Cloudflare Network Firewall
 
-For traffic without Forward middleware, Gateway sends a TCP SYN to the destination server before evaluating policies. Therefore, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-controls/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
+For traffic that Gateway does not forward to a Worker, Gateway sends a TCP SYN to the destination server before evaluating policies. Therefore, Gateway Network or HTTP Block policies do not prevent the initial TCP SYN from reaching the destination server. If you need to prevent TCP SYN packets from being sent to specific destination IP addresses, you can create a [Cloudflare Network Firewall](/cloudflare-one/traffic-controls/packet-filtering/) rule to block traffic at the packet level. As shown in the [enforcement flowchart](#order-of-enforcement), Cloudflare Network Firewall evaluates traffic before Gateway checks for origin availability.
 
 :::note
 Cloudflare Network Firewall is available to Enterprise users only.
@@ -177,7 +177,7 @@ Next, Gateway evaluates all Allow, Block, and Do Not Scan policies. These polici
 
 Gateway then inspects the body of the HTTP request by evaluating it against DLP policies, and running anti-virus scanning and file sandboxing. If DLP Block policies are present, the action Gateway ultimately takes may not match the action it initially logs. For more information, refer to [DLP policy precedence](#dlp-policy-precedence).
 
-A matching Allow policy does not skip the Forward phase. Blocked requests do not invoke a Worker. Gateway inspects the original request before middleware and the final response after middleware. Modified request bytes do not receive another request-side inspection. Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works).
+A matching Allow policy does not skip the Forward phase. Blocked requests do not invoke a Worker. Gateway inspects the original request before invoking the Worker and the final response returned by the Worker. Modified request bytes do not receive another request-side inspection. Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works).
 
 ### Resolver policies
 

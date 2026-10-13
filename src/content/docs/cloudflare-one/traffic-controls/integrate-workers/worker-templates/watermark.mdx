@@ -1,6 +1,6 @@
 ---
 title: Watermark HTML pages
-description: Add a visible user watermark to HTML responses with Gateway Worker middleware and HTMLRewriter.
+description: Add a visible user watermark to HTML responses using the Gateway Forward action and HTMLRewriter.
 pcx_content_type: tutorial
 difficulty: Beginner
 products:
@@ -16,7 +16,7 @@ Add a visible user label to HTML pages from an application you control. The Work
 
 ## Configure the Worker
 
-Use this script as `src/index.ts` in the [middleware project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
+Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
 
 <TypeScriptExample filename="src/index.ts">
 

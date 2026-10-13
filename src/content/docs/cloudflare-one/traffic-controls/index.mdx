@@ -201,7 +201,7 @@ flowchart LR
 2. The request reaches Cloudflare through an **on-ramp** — the Cloudflare One Client, a DNS resolver configuration, a proxy endpoint, or a network tunnel.
 3. Cloudflare processes the request at the **nearest edge location**, not a centralized data center. This keeps latency low regardless of where the user connects from.
 4. Gateway evaluates the request against your configured policies in [order of enforcement](/cloudflare-one/traffic-controls/order-of-enforcement/): DNS policies first, then network policies, then HTTP policies.
-5. For permitted HTTP requests, Gateway invokes the first matching [Forward Worker](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/). Permitted traffic without a Forward match is proxied directly. Gateway inspects the final response on the return path.
+5. For permitted HTTP requests, Gateway invokes the Worker selected by the first matching policy using the [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/). Permitted traffic without a Forward match is proxied directly. Gateway inspects the final response on the return path.
 
 For details on how Gateway proxies traffic and establishes connections, refer to [Proxy](/cloudflare-one/traffic-controls/proxy/).
 
