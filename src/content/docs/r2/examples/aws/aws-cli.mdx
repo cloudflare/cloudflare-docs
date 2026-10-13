@@ -18,7 +18,11 @@ Until this is resolved, configure the `aws` CLI to use the classic transfer clie
 aws configure set default.s3.preferred_transfer_client classic
 ```
 
-If you use a named profile, run `aws configure set s3.preferred_transfer_client classic --profile <PROFILE_NAME>` instead.
+If you use a named profile, run the following instead:
+
+```sh
+aws configure set s3.preferred_transfer_client classic --profile <PROFILE_NAME>
+```
 :::
 
 <Render file="keys" product="r2" />
