@@ -213,18 +213,18 @@ http://localhost:5173?authToken=<auth_token>
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-angular">
-	Load the RTKComponentsModule into your app module. This is typically the app.module.ts file.
+	Load the RealtimeKitComponentsModule into your app module. This is typically the app.module.ts file.
 	This allows you to use the UI components in your component HTML files.
 
     ```ts
     import { NgModule } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
-    import { RTKComponentsModule } from '@cloudflare/realtimekit-angular';
+    import { RealtimeKitComponentsModule } from '@cloudflare/realtimekit-angular-ui';
     import { AppComponent } from './app.component';
 
     @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, RTKComponentsModule],
+    imports: [BrowserModule, RealtimeKitComponentsModule],
     providers: [],
     bootstrap: [AppComponent],
     })
