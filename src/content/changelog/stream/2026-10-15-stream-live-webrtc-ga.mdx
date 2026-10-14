@@ -10,15 +10,15 @@ date: 2026-10-15
 
 Usage-based billing for WebRTC begins today, October 15, 2026 and follows the standard rates for minutes of video delivered. Refer to [pricing](https://developers.cloudflare.com/stream/pricing/) for rates.
 
-### What changed?
+### What changed
 
 While in beta, Stream’s WebRTC support was rebuilt from the ground up to leverage [Cloudflare Realtime](https://developers.cloudflare.com/realtime/)’s primitives for stability and scale while managing these components in Stream’s familiar, unified API that makes it easy to build. We also adopted the latest WHIP and WHEP protocol standards for Trickle ICE, server and client offer modes, and counter-offer support for improved player library compatibility and network traversal adaptability. Finally, WebRTC delivery will now be visible in Stream’s [analytics](https://developers.cloudflare.com/stream/getting-analytics/) and billable usage charts.
 
-### How does this relate to Cloudflare Realtime?
+### How does this relate to Cloudflare Realtime
 
 Realtime exposes a set of tools and primitives to build applications that connect people, AI systems, and devices together in many-to-many experiences powered by WebRTC. Stream leverages these building-blocks to deliver one-to-many broadcast capabilities, controlled and managed by a single, unified API with features like the [built-in player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/) and [analytics](https://developers.cloudflare.com/stream/getting-analytics/) that make it easy to get started.
 
-### How to get started?
+### How to get started
 
 First, [create a live input](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/#1-create-a-live-input) using [cf](https://developers.cloudflare.com/cf/), the API, or in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs):
 
@@ -65,7 +65,6 @@ Finally, you can play using WHEP using Stream’s [built-in player](https://deve
 	// 5. Apply the SDP answer returned by Cloudflare.
 	const answer = await response.text();
 	await pc.setRemoteDescription({ type: "answer", sdp: answer });
-
 ```
 
 Learn more in the [Stream WebRTC](https://developers.cloudflare.com/stream/webrtc-beta/) docs or [try the all-in-one tutorial](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/) for yourself.
