@@ -42,7 +42,7 @@ dig +short www.example.com
 2. Test each IP address directly. Replace `203.0.113.34` with one of the addresses from the previous step:
 
 ```sh
-curl -svo /dev/null https://www.example.com/ --resolve www.example.com:443:203.0.113.34
+curl -svo /dev/null https://www.example.com/ --connect-to ::203.0.113.34
 ```
 
 3. Compare the results with the same tests run from a different network.
