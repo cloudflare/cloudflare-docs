@@ -1,0 +1,19 @@
+src/content/docs/workers/framework-guides/web-apps/nextjs.mdx
+  s_f5db92bdddbd51::t_fd05e5023e445f 164-166
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9540829cab742bc28b171f1b048b320635181b0f",
+  "prompts": {},
+  "sessions": {
+    "s_f5db92bdddbd51": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fd3bd46d2ffedeFZFb3FIZ5968",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

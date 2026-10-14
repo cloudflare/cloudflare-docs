@@ -1,0 +1,19 @@
+src/content/changelog/durable-objects/2026-08-26-durable-objects-error-groups.mdx
+  s_a914529abfdd03::t_40d89ec6a38337 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f0319a786841aacf4ef893a1fd66804b628e6ac7",
+  "prompts": {},
+  "sessions": {
+    "s_a914529abfdd03": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc6253d0cffeYyTtR7nca0yra8",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Zin Khant <zin@cloudflare.com>"
+    }
+  }
+}

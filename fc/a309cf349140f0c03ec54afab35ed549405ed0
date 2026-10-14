@@ -1,0 +1,19 @@
+src/content/docs/sandbox/guides/devin-outpost.mdx
+  s_95e23e0411e222::t_5bcf1fb802ddcf 19,52,107,109,113,125
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fca309cf349140f0c03ec54afab35ed549405ed0",
+  "prompts": {},
+  "sessions": {
+    "s_95e23e0411e222": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f3799-f081-709e-9378-f76f4bbe6bb2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scuffi <aferguson@cloudflare.com>"
+    }
+  }
+}

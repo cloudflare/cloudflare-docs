@@ -1,0 +1,39 @@
+package.json
+  s_b553625579d1ad::t_6fafc3c6209f93 132
+pnpm-lock.yaml
+  s_d161f87b820022::t_91de419246f1da 8,284-286,838,844,850,856,862,1641-1642,1645-1646,1757-1759,1764-1766,1771-1773,1778-1780,1785-1787,1792-1794,1799-1801,1806-1808,1813-1815,1820-1822,1827-1829,1834-1836,1841-1843,1846-1848,1853-1855,5080-5082,7436,7576,7579,7582,7585,7588,7591,7594,7597,7600,7603,7606,7609,7612,7616,7619,7622,11623,11628-11642,12344
+pnpm-workspace.yaml
+  s_6e28eb19db538c::t_1e26a6b838825b 18,24-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c0f806128d1ba641b9f8baaa1588a7db669ebfd3",
+  "prompts": {},
+  "sessions": {
+    "s_6e28eb19db538c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb648-8e86-7262-b83a-c40d1dbb2fbf",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_b553625579d1ad": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fb63d-f79a-7e11-b6c3-13521c27e4a5",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    },
+    "s_d161f87b820022": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019faa1d-271a-7160-954d-964de4f79c0f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

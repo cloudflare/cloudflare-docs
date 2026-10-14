@@ -1,0 +1,23 @@
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_c6e3e21fb446c9 19,21,33,55,59
+src/content/docs/agents/model-context-protocol/codemode.mdx
+  s_8045362b510a8c::t_4fe8d362ad3602 92
+src/content/docs/docs-for-agents/index.mdx
+  s_8045362b510a8c::t_1176b276d43ca8 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6788b4be2aa60d60d1e33aa5bfde07ad9d9bc70c",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

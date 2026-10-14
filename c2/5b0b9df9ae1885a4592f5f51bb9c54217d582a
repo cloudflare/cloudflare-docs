@@ -1,0 +1,19 @@
+src/content/docs/workers/previews/custom-domains.mdx
+  s_e337456d88bf9c::t_e864138befa809 43-47,50-51,55-58,108-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c25b0b9df9ae1885a4592f5f51bb9c54217d582a",
+  "prompts": {},
+  "sessions": {
+    "s_e337456d88bf9c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_faa96411affebVf6cUu95BszkA",
+        "model": "gpt-5.5"
+      },
+      "human_author": "yomna <yomna@cloudflare.com>"
+    }
+  }
+}

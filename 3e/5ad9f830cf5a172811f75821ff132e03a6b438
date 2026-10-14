@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-12-agents-harnesses-lifecycle.mdx
+  s_80fab4cbbeef01::t_815a25a7997b05 2-3,7,12,39,41,43-49,51,53,55-74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3e5ad9f830cf5a172811f75821ff132e03a6b438",
+  "prompts": {},
+  "sessions": {
+    "s_80fab4cbbeef01": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11d77-b402-77a1-bfff-639f8e6da640",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

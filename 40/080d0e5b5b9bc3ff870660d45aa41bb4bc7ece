@@ -1,0 +1,19 @@
+src/content/docs/durable-objects/observability/metrics-and-analytics.mdx
+  s_e5d4252a06b6fa::t_d7dcbc213d1b3d 11-17,43-53,111-115,123-124,165
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "40080d0e5b5b9bc3ff870660d45aa41bb4bc7ece",
+  "prompts": {},
+  "sessions": {
+    "s_e5d4252a06b6fa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_094649748ffeP20xvpXB75gzOk",
+        "model": "gpt-5.6"
+      },
+      "human_author": "iglesiasbrandon <5313116+iglesiasbrandon@users.noreply.github.com>"
+    }
+  }
+}

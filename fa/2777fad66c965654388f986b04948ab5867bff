@@ -1,0 +1,19 @@
+src/content/changelog/cloudflare-one-client/2025-08-29-warp-AI-diag-analyzer.mdx
+  s_2db6df890518b9::t_f386f49072a2f3 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fa2777fad66c965654388f986b04948ab5867bff",
+  "prompts": {},
+  "sessions": {
+    "s_2db6df890518b9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0381cac36ffeNTOqF1SS8efsz9",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Rhett Griggs <rhett@cloudflare.com>"
+    }
+  }
+}

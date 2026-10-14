@@ -1,0 +1,19 @@
+src/content/docs/d1/best-practices/use-indexes.mdx
+  s_951530d1df5020::t_46f09581e4bf9e 19-22,116-137,140,152-153,159-161,179-182
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e81b3516aa2e5789d4c0f7c21a9b733cc14878da",
+  "prompts": {},
+  "sessions": {
+    "s_951530d1df5020": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05609ebc0ffeIxIYRvizeWDHQq",
+        "model": "unknown"
+      },
+      "human_author": "David Laban <dlaban@cloudflare.com>"
+    }
+  }
+}
