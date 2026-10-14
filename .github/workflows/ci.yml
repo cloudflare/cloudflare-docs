@@ -134,7 +134,7 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          fetch-depth: ${{ github.event_name == 'merge_group' && 0 || 1 }}
+          fetch-depth: ${{ github.event_name != 'merge_group' && 1 || 0 }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
