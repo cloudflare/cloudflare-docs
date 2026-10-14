@@ -135,24 +135,25 @@ export default async function () {
 
 `ws:tools` does not export tools that need approval or tools that run in the browser, because nothing can approve or run them from code. Calls from code do not go through `beforeToolCall`. Refer to [`ws:tools`](https://github.com/cloudflare/computer/blob/main/docs/17_isolate_javascript.md#wstools) for how calls and results work.
 
-### Configure the tools
+### Limit the tools
 
-`workspaceTools` takes the options of `createAITools` from `@cloudflare/computer/tools/ai-sdk`. Use `exec` to choose which backends the model can run on and to describe them. Your text comes before each backend's own description:
+The model gets `exec` for every backend on the Workspace. Each backend describes itself to the model, so there is nothing to configure in Think.
+
+To narrow the tools for a turn, return `activeTools` from `beforeTurn`. This turn only reads files:
 
 <TypeScriptExample>
 
 ```ts
 export class MyAgent extends Think<Env> {
-	override workspaceTools = {
-		exec: { js: { description: "Use for multi-file edits and git." } },
-		read: { maxBytes: 32 * 1024, maxLines: 800 },
-	};
+	beforeTurn() {
+		return { activeTools: ["read", "ls", "find", "grep"] };
+	}
 }
 ```
 
 </TypeScriptExample>
 
-Set `readonly: true` to keep only `read`, `ls`, `find`, and `grep`. Set `workspaceTools = false` to omit the workspace tools entirely.
+To replace a workspace tool, return a tool with the same name from `getTools()`. Refer to [Tool merge order](#tool-merge-order).
 
 ### Share a workspace
 
@@ -183,7 +184,7 @@ The upgrade also changes the tools:
 
 - `list` is now `ls`.
 - The in-process `bash` tool is gone. Add a backend to the Workspace to get `exec`.
-- `workspaceBash`, `createWorkspaceTools`, and `@cloudflare/think/tools/workspace` are removed.
+- `workspaceBash`, `createWorkspaceTools`, and `@cloudflare/think/tools/workspace` are removed. Use `activeTools` in `beforeTurn` to limit the tools.
 
 Refer to [Upgrading to a Computer workspace](https://github.com/cloudflare/agents/blob/main/docs/think/index.md#upgrading-to-a-computer-workspace) for the full list.
 

@@ -9,7 +9,7 @@ date: 2026-10-14
 
 import { TypeScriptExample } from "~/components";
 
-[Think](/agents/harnesses/think/) and [Agent Skills](/agents/runtime/execution/agent-skills/) now work in a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer). Think's built-in workspace tools are now Computer's tools, and you configure them with `workspaceTools`. Add an execution backend to the Workspace to give the model an `exec` tool.
+[Think](/agents/harnesses/think/) and [Agent Skills](/agents/runtime/execution/agent-skills/) now work in a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer). Think's built-in workspace tools are now Computer's tools. Add an execution backend to the Workspace and the model gets an `exec` tool.
 
 `@cloudflare/shell` is deprecated, and so is Think's `createExecuteTool`.
 
@@ -27,10 +27,6 @@ export class MyAgent extends Think<Env> {
 			new WorkerJavaScriptBackend({ id: "js", loader: this.env.LOADER }),
 		],
 	});
-
-	override workspaceTools = {
-		exec: { js: { description: "Run JavaScript against workspace files." } },
-	};
 }
 ```
 
