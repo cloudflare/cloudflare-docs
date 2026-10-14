@@ -34,6 +34,6 @@ export class MyAgent extends Think<Env> {
 
 ## Migrate your workspace data
 
-This is a breaking change. Computer stores files in different tables from Shell, and nothing moves your data automatically. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). If you do not, your agent starts with an empty workspace.
+This is a breaking change. Computer stores files in different tables from Shell, and there is no automatic data migration between workspace formats. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). If you do not, your agent starts with an empty workspace.
 
 For more information, refer to [Think tools](/agents/harnesses/think/tools/#built-in-workspace-tools).
