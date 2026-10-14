@@ -16,7 +16,7 @@ To use custom nameservers, a zone must be using Cloudflare as Primary ([Full set
 
 There are two custom nameserver configurations, and a zone can only use one of them:
 
-- [Nameserver sets](/dns/nameservers/custom-nameservers/nameserver-sets/) (beta) are created at the account level and assigned to individual zones. This is a modern feature that supports Advanced Nameservers and more.
+- [Nameserver sets](/dns/nameservers/custom-nameservers/nameserver-sets/) are created at the account level and assigned to individual zones. This is a modern feature that supports Advanced Nameservers and more.
 - Legacy zone, account, and tenant custom nameservers are configured with an `ns_set` number between 1 and 5.
 
 ## Configuration options
@@ -25,7 +25,7 @@ There are two custom nameserver configurations, and a zone can only use one of t
 
 ## Availability
 
-- Nameserver sets are in beta and available for Enterprise customers, via API only. Once created, a nameserver set can be used by zones in the same account.
+- Nameserver sets are available for Enterprise customers, via API only. Once created, a nameserver set can be used by zones in the same account.
 - Zone custom nameservers are available for zones on Business or Enterprise plans. Via API or on the dashboard.
 - Account custom nameservers are available for customers on Business (after [contacting Cloudflare Support](/support/contacting-cloudflare-support/)) or Enterprise plans. Once configured, account custom nameservers can be used by all zones in the account, regardless of the zone plan. Via API or on the dashboard.
 - Tenant custom nameservers, if created by the tenant owner, will be available to all zones belonging to any account that is part of the tenant. Via API only.
