@@ -1,0 +1,128 @@
+---
+title: Run Hermes in a sandbox
+description: Run the Hermes web dashboard and coding tools in a per-user sandbox, with Cloudflare Access and AI Gateway.
+pcx_content_type: how-to
+sidebar:
+  order: 4.5
+  label: Hermes
+products:
+  - sandbox
+  - containers
+  - durable-objects
+  - ai-gateway
+  - workers
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Run [Hermes Agent](https://github.com/nousresearch/hermes-agent), an open-source agent from Nous Research, in a Linux sandbox. The [Hermes template](https://github.com/cloudflare/templates/tree/main/hermes-agent-template) runs its web dashboard, embedded terminal, and coding tools in a separate container for each signed-in user.
+
+[Cloudflare Access](/cloudflare-one/access-controls/) authenticates users. A Worker forwards dashboard requests and routes model calls through [AI Gateway](/ai-gateway/), keeping inference credentials outside the container.
+
+This template uses the [Container API](/containers/api/durable-object-container/) directly. It includes its own dashboard and does not require the coding agent runner from the other guides.
+
+## Prerequisites
+
+- A Cloudflare account on the [Workers Paid plan](/workers/platform/pricing/).
+- [Node.js](https://nodejs.org/) 22 or later and [Docker](https://docs.docker.com/get-started/get-docker/) running locally.
+- An [AI Gateway](/ai-gateway/get-started/) with [Unified Billing](/ai-gateway/features/unified-billing/) configured for `openai/gpt-4.1-mini`.
+- A [Cloudflare Zero Trust organization](/cloudflare-one/setup/) for Access authentication.
+
+## Deploy the template
+
+<Steps>
+
+1. Create a project from the template:
+
+   <PackageManagers type="create" pkg="cloudflare@latest" args="hermes-agent --template=cloudflare/templates/hermes-agent-template" />
+
+   If prompted to deploy, choose **No**. Configure Access and AI Gateway first.
+
+   ```sh
+   cd hermes-agent
+   ```
+
+2. In `wrangler.jsonc`, choose a Worker `name`. Its hostname is `<WORKER_NAME>.<WORKERS_SUBDOMAIN>.workers.dev`.
+
+   Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for that entire hostname. Choose an [identity provider](/cloudflare-one/integrations/identity-providers/) and an **Allow** policy for your intended users. Copy the application audience tag and your team domain.
+
+3. In `wrangler.jsonc`, configure your gateway and Access application:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+     "vars": {
+       "AI_GATEWAY_ID": "<GATEWAY_ID>",
+       "MODEL": "openai/gpt-4.1-mini",
+       "ACCESS_TEAM_DOMAIN": "<TEAM_NAME>.cloudflareaccess.com",
+       "ACCESS_AUD": "<ACCESS_APPLICATION_AUD>"
+     }
+   }
+   ```
+
+   </WranglerConfig>
+
+   These values are identifiers, not API keys. The [AI binding](/ai-gateway/usage/worker-binding-methods/) authenticates model requests without a model API key or Cloudflare API token in the container.
+
+   Each admitted user can consume your model and container budget. Configure [AI Gateway rate limits](/ai-gateway/features/rate-limiting/) for your deployment.
+
+4. Deploy the Worker and container image:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+5. Open your Worker URL and sign in through Access. The first request starts your container and may take a minute. In **Chat**, enter:
+
+   ```txt
+   Create hello.py and a unittest for it in /workspace.
+   Run the test and explain what you changed.
+   ```
+
+   Approve tool requests when prompted. Hermes writes the files and runs the test inside your container. Check AI Gateway to verify the model requests.
+
+</Steps>
+
+:::caution[Temporary workspace]
+The template stops containers after 15 minutes of inactivity. Files, sessions, memory, and settings are lost when the container stops or is replaced. Refreshing the page reuses a running container; an open WebSocket can keep it active. Export your work before leaving.
+:::
+
+## How the template works
+
+The Dockerfile pins a Hermes commit and builds its dashboard and terminal assets. A startup script configures the `custom` model provider and the `terminal` and `file` toolsets, then starts the unmodified Hermes dashboard.
+
+### Authentication and isolation
+
+The Worker verifies the Access JSON Web Token (JWT), including its signature, issuer, audience, and expiry. It derives the Durable Object ID from the verified identity. Each Durable Object starts its own container and proxies HTTP and WebSocket requests to the dashboard on port `9119`.
+
+Hermes also requires authentication for its dashboard. The Durable Object generates a private backend password and obtains a session over the container port. It replaces incoming credentials with that session when forwarding requests. Backend session cookies stay in the Worker, so users do not need a second Hermes login.
+
+### Model requests and network access
+
+Hermes sends OpenAI-compatible requests to `https://model.internal/v1`. The container intercepts this hostname and sends requests to the Worker's outbound handler. The handler validates the selected model and calls the AI binding:
+
+<TypeScriptExample>
+
+```ts
+const response = await this.env.AI.run(model, inputs, {
+	gateway: { id: this.env.AI_GATEWAY_ID, skipCache: true },
+	returnRawResponse: true,
+});
+```
+
+</TypeScriptExample>
+
+The raw response preserves streaming output and tool calls. `OPENAI_API_KEY=provided-by-worker` is a placeholder required by the Hermes client. The handler removes Hermes's default `reasoning_effort` option for GPT-4.1 mini, which does not accept that option.
+
+Direct Internet access is disabled. The outbound handler allows only the configured model endpoint and HTTPS requests to `github.com` for public repositories. Runtime package downloads, private repositories, other model providers, and Hermes external integrations require changes to the template.
+
+## Related resources
+
+- [Hermes template source](https://github.com/cloudflare/templates/tree/main/hermes-agent-template)
+- [Hermes web dashboard](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-dashboard)
+- [Call an authenticated API from a sandbox](/sandbox/network/call-an-authenticated-api/)
+- [Save and restore a workspace](/sandbox/files/save-and-restore-a-workspace/)
