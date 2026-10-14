@@ -14,7 +14,9 @@ In instances where performance and reliability are in conflict, our systems are 
 
 ### Can I choose or pin the data center that serves my traffic?
 
-No. Cloudflare uses [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to announce the same IP addresses from many data centers at the same time. The data center that serves each request is selected automatically based on the best available network path from the visitor's network. Internet routing, peering decisions, and Cloudflare's traffic engineering all influence this selection, and it cannot be configured per zone, per account, or by support request.
+No. Cloudflare uses anycast to announce the same IP addresses from many data centers at the same time. Cloudflare does not pick a data center for each visitor. The visitor's Internet service provider (ISP) decides which Cloudflare data center receives the request, based on its own routing and peering policies. These policies do not always favor the geographically closest location. For example, an ISP may send traffic to a distant city where it has a direct connection with Cloudflare instead of a nearby one where it does not.
+
+Cloudflare's traffic engineering can influence these paths across the network as a whole, but it cannot direct individual visitors to a specific data center. Data center selection cannot be configured per zone, per account, or by support request.
 
 ### Why do consecutive requests or tests show different data centers?
 
@@ -30,11 +32,13 @@ The set of data centers that can serve a given domain varies between Cloudflare 
 
 Data center selection is not fixed. It can change due to scheduled or unscheduled maintenance at a data center, changes in Internet routing between your visitors' networks and Cloudflare, network congestion, and Cloudflare's automated traffic engineering, which shifts traffic between locations to keep performance and reliability balanced.
 
-To check whether a specific data center is affected by maintenance or a service disruption, refer to the [Cloudflare status page](https://www.cloudflarestatus.com). For more information on maintenance that may affect customers, refer to [Disruptive maintenance](/support/troubleshooting/disruptive-maintenance/).
+To check whether a specific data center is affected by maintenance or a service disruption, refer to the [Cloudflare status page](https://www.cloudflarestatus.com). For more information on maintenance that may affect customers, refer to [Disruptive maintenance](/support/disruptive-maintenance/).
 
 ### My traceroute shows traffic entering Cloudflare in one city, but the cf-ray value shows another. Why?
 
 Traffic can enter Cloudflare's network at one location and be processed at another. A traceroute ending at a nearby Cloudflare location shows where the traffic entered the network, while the three-letter code at the end of [`cf-ray`](/fundamentals/reference/http-headers/#cf-ray) identifies the data center that processed the request. These are not always the same location, and traffic entering near a visitor does not guarantee that it is processed at the nearest data center.
+
+If you compare `cf-ray` values in your origin server logs with the values visitors receive, the codes may also differ when [Argo Smart Routing](/argo-smart-routing/) or [Tiered Cache](/cache/how-to/tiered-cache/) is enabled. With these features, requests can travel across Cloudflare's network before reaching your origin, and the `cf-ray` header sent to your origin identifies the data center that connected to your origin, not the data center that received the visitor's request.
 
 ### Do IPv4 and IPv6 requests use the same data center?
 
