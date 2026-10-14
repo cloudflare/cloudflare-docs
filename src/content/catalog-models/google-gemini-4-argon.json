@@ -348,7 +348,12 @@
 			}
 		}
 	],
-	"banner": null,
+	"banner": {
+		"title": "50% off through November 30",
+		"text": "Gemini 4 Argon is 50% off through November 30, 2026: $2.00 input, $0.10 cached input, and $10.00 output per 1M tokens. Starting December 1, 2026, pricing returns to $4.00 input, $0.20 cached input, and $20.00 output per 1M tokens.",
+		"severity": "info",
+		"dismissible": true
+	},
 	"created_at": "2026-10-13 17:41:34",
 	"schema": {
 		"input": {
