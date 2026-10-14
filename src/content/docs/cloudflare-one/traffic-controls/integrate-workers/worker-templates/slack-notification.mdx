@@ -16,7 +16,7 @@ Send a Slack notification when a request to a selected application endpoint comp
 
 ## Configure the Worker
 
-Create a [Slack incoming webhook](https://api.slack.com/messaging/webhooks) for your chosen channel. Store its URL as a [Worker secret](/workers/configuration/secrets/) named `SLACK_WEBHOOK_URL`:
+Create a [Slack incoming webhook](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for your chosen channel. Store its URL as a [Worker secret](/workers/configuration/secrets/) named `SLACK_WEBHOOK_URL`:
 
 <PackageManagers
 	type="exec"
@@ -79,4 +79,4 @@ Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls
 
 Trigger one test request and confirm that its response is unchanged and one message appears in Slack. A filtering Block policy prevents both the upstream request and this notification.
 
-This script sends a notification for every invocation, including application error responses. To notify only on success, guard `waitUntil()` with `if (response.ok)`. For higher-volume policies, add sampling or a queued notification pipeline and account for [Slack rate limits](https://api.slack.com/apis/rate-limits). A broad host policy can generate a message for every page asset.
+This script sends a notification for every invocation, including application error responses. To notify only on success, guard `waitUntil()` with `if (response.ok)`. For higher-volume policies, add sampling or a queued notification pipeline and account for [Slack rate limits](https://docs.slack.dev/apis/web-api/rate-limits/). A broad host policy can generate a message for every page asset.
