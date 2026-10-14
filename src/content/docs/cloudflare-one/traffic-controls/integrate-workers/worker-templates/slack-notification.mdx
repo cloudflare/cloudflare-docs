@@ -10,11 +10,13 @@ sidebar:
   order: 1
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 Send a Slack notification when a request to a selected application endpoint completes. The Worker returns the upstream response and sends the notification in the background.
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 Create a [Slack incoming webhook](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for your chosen channel. Store its URL as a [Worker secret](/workers/configuration/secrets/) named `SLACK_WEBHOOK_URL`:
 

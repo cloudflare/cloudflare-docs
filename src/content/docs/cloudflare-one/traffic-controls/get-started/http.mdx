@@ -60,6 +60,4 @@ An HTTP policy defines which requests to match (for example, uploads to file-sha
 
 ## 4. Add optional policies
 
-To run custom code on permitted requests and responses, [integrate Workers](/cloudflare-one/traffic-controls/integrate-workers/) with the HTTP Forward action. Start with a narrow test policy and a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/).
-
 Refer to our list of [common HTTP policies](/cloudflare-one/traffic-controls/http-policies/common-policies/) for other policies you may want to create. Common additions include blocking file downloads by type, isolating risky websites in a [remote browser](/cloudflare-one/remote-browser-isolation/), and adding Do Not Inspect rules for applications that break under TLS decryption (for example, apps that use certificate pinning to enforce their own certificates). Do Not Inspect rules tell Gateway to skip decryption for specific destinations so those applications continue to work.

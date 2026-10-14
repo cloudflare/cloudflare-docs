@@ -35,8 +35,6 @@ Cloudflare does not publish Cloudflare One Client egress IP ranges. Cloudflare O
 
 <Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
 
-When a Worker invoked by a policy using the [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) calls `next()`, the user's request continues through Gateway with its egress configuration. A normal Workers `fetch()` call is an independent subrequest and does not inherit that egress configuration.
-
 ## Load balancing
 
 Traffic that does not match any egress policy attempts to use the closest dedicated egress IP location.

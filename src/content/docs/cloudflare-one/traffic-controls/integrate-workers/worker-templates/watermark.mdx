@@ -10,11 +10,13 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 Add a visible user label to HTML pages from an application you control. The Worker retrieves [Gateway identity](/cloudflare-one/traffic-controls/integrate-workers/available-context/#identity) and streams the response through [HTMLRewriter](/workers/runtime-apis/html-rewriter/).
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
 
@@ -53,7 +55,7 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 		) {
 			return response;
 		}
-		const identity = await context.identity();
+		const identity = await context.identity().catch(() => undefined);
 		const label = escapeHtml(identity?.email ?? "Unidentified user");
 		const headers = new Headers(response.headers);
 		for (const name of [

@@ -10,13 +10,15 @@ sidebar:
   order: 7
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 Replace the top-level `customerId` field in a JSON request with `[REDACTED]` before sending it to an application. Use this template for a specific endpoint with a known schema and uncompressed UTF-8 JSON bodies.
 
 This is field-based transformation. It does not detect sensitive data throughout arbitrary text or files, and it does not use DLP match results. Gateway inspects the original request before the Worker. A request blocked by DLP never reaches this script, and Gateway does not scan the modified request again before forwarding it.
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
 

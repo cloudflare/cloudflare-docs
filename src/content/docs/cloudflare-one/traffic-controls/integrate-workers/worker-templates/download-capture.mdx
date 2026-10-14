@@ -11,11 +11,13 @@ sidebar:
   order: 3
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 Save a copy of a downloaded attachment to R2 while returning the original response to the user. This script captures complete files up to 25 MiB and skips larger files. It detects attachments using `Content-Disposition`.
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 [Create a private R2 bucket](/r2/buckets/create-buckets/) named `gateway-downloads`. Add this binding to the [Worker configuration](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward):
 

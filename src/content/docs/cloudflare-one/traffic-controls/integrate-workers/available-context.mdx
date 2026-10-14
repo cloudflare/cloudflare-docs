@@ -21,39 +21,39 @@ Install the published [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cl
 
 <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
 
-Use type-only imports, as shown in the [example](#example). The package exports the following Gateway types:
+Use `import type` for Gateway types, as shown in the [example](#example) and each [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/). These imports are removed when TypeScript compiles and add no runtime dependency. JavaScript examples omit the type imports and annotations and do not need this package. The package exports the following Gateway types:
 
-| Type | Description |
-| --- | --- |
-| `GatewayMiddlewareContext` | Request metadata, identity getter, and device posture getter. |
-| `GatewayMiddlewareNext` | Continuation that sends a `Request` through Gateway and returns a `Promise<Response>`. |
-| `GatewayIdentity` | User identity returned by `identity()`. |
-| `GatewayIdentityGroup` | A group in the user's identity. |
-| `GatewayDevicePosture` | Device posture returned by `devicePosture()`. |
-| `GatewayDevicePostureChecks` | Passed posture check identifiers. |
+| Type                         | Description                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------- |
+| `GatewayMiddlewareContext`   | Request metadata, identity getter, and device posture getter.                          |
+| `GatewayMiddlewareNext`      | Continuation that sends a `Request` through Gateway and returns a `Promise<Response>`. |
+| `GatewayIdentity`            | User identity returned by `identity()`.                                                |
+| `GatewayIdentityGroup`       | A group in the user's identity.                                                        |
+| `GatewayDevicePosture`       | Device posture returned by `devicePosture()`.                                          |
+| `GatewayDevicePostureChecks` | Passed posture check identifiers.                                                      |
 
 The types mark metadata fields and lists as read-only. The Gateway exports do not provide a runtime base class. Extend `WorkerEntrypoint` from `cloudflare:workers` and export the class as `GatewayMiddleware`.
 
 ## Request and connection fields
 
-| Field               | Type                 | Description                                                                                  |
-| ------------------- | -------------------- | -------------------------------------------------------------------------------------------- |
-| `srcIp`             | `string`             | Source IP address as seen by Gateway. Use this field instead of a client-supplied IP header. |
-| `srcPort`           | `number`             | Source port.                                                                                 |
-| `dstIp`             | `string`, optional   | Destination IP address, when available.                                                      |
-| `dstPort`           | `number`, optional   | Destination port, when available.                                                            |
-| `networkProtocol`   | `string`             | Network transport protocol, such as `tcp`. |
-| `sni`               | `string`, optional   | Server Name Indication from the TLS connection.                                              |
-| `onrampType`        | `string`, optional   | Connection method used to reach Gateway.                                                     |
-| `vnetId`            | `string`, optional   | Virtual network identifier.                                                                  |
-| `proxyEndpoint`     | `string`, optional   | Proxy endpoint associated with the connection.                                               |
-| `internalSrcIp`     | `string`, optional   | Internal source IP address, when available.                                                  |
-| `accountId`         | `string`             | Cloudflare account identifier.                                                               |
-| `policyId`          | `string`             | UUID of the Forward policy that selected this Worker.                                        |
-| `host`              | `string`             | Original request host.                                                                       |
-| `uri`               | `string`             | Normalized original request URL.                                                             |
+| Field               | Type                          | Description                                                                                  |
+| ------------------- | ----------------------------- | -------------------------------------------------------------------------------------------- |
+| `srcIp`             | `string`                      | Source IP address as seen by Gateway. Use this field instead of a client-supplied IP header. |
+| `srcPort`           | `number`                      | Source port.                                                                                 |
+| `dstIp`             | `string`, optional            | Destination IP address, when available.                                                      |
+| `dstPort`           | `number`, optional            | Destination port, when available.                                                            |
+| `networkProtocol`   | `string`                      | Network transport protocol, such as `tcp`.                                                   |
+| `sni`               | `string`, optional            | Server Name Indication from the TLS connection.                                              |
+| `onrampType`        | `string`, optional            | Connection method used to reach Gateway.                                                     |
+| `vnetId`            | `string`, optional            | Virtual network identifier.                                                                  |
+| `proxyEndpoint`     | `string`, optional            | Proxy endpoint associated with the connection.                                               |
+| `internalSrcIp`     | `string`, optional            | Internal source IP address, when available.                                                  |
+| `accountId`         | `string`                      | Cloudflare account identifier.                                                               |
+| `policyId`          | `string`                      | UUID of the Forward policy that selected this Worker.                                        |
+| `host`              | `string`                      | Original request host.                                                                       |
+| `uri`               | `string`                      | Normalized original request URL.                                                             |
 | `embeddedProtocols` | `readonly string[]`, optional | Detected protocols embedded in HTTP traffic.                                                 |
-| `domainCategories`  | `readonly string[]`, optional | Destination domain category names, such as `Technology`.                                     |
+| `domainCategories`  | `readonly number[]`, optional | Destination domain category IDs.                                                             |
 
 `context.uri` includes the scheme and authority. Normalization removes default ports and fragments, sorts query parameters, and normalizes encoding. It can differ from `request.url`. Use `request.url` when operating on the request itself and `context.uri` when comparing normalized metadata.
 
@@ -61,15 +61,15 @@ Use standard `Request` APIs to access the method, headers, cookies, and body. Co
 
 ## Identity
 
-Call `await context.identity()` to retrieve identity associated with the Gateway session. It returns an identity object or `undefined` when there is no identity. Call it only when your script needs identity.
+Call `await context.identity()` only when your script needs identity associated with the Gateway session. It rejects when identity is unavailable because there is no identified user or the lookup failed. Wrap the call in `try/catch` if your Worker requires a user.
 
-| Field            | Type                             | Description                                                                                   |
-| ---------------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
-| `email`          | `string`, optional               | User email address.                                                                           |
-| `name`           | `string`, optional               | User display name.                                                                            |
+| Field            | Type                                        | Description                                                                                   |
+| ---------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `email`          | `string`, optional                          | User email address.                                                                           |
+| `name`           | `string`, optional                          | User display name.                                                                            |
 | `groups`         | `readonly GatewayIdentityGroup[]`, optional | Group memberships. Each group can have optional `id`, `email`, and `name` fields.             |
-| `samlAttributes` | `readonly string[]`, optional             | SAML attributes associated with the identity.                                                 |
-| `oidcClaims`     | `readonly string[]`, optional             | OIDC claims associated with the identity. This is a list, rather than a decoded token object. |
+| `samlAttributes` | `readonly string[]`, optional               | SAML attributes associated with the identity.                                                 |
+| `oidcClaims`     | `readonly string[]`, optional               | OIDC claims associated with the identity. This is a list, rather than a decoded token object. |
 
 Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute. A missing identity must be handled explicitly if your Worker requires an authenticated user.
 
@@ -87,7 +87,7 @@ Call `await context.devicePosture()` to retrieve passed posture check identifier
 
 `checks.passed` is a read-only list of posture check UUIDs. An empty array means no checks passed. Gateway retrieves these results separately from identity when evaluating Forward policies.
 
-If posture retrieval fails, Gateway still invokes the Worker, but `devicePosture()` rejects. Handle this separately from a session with no passed checks. The published return type also permits `undefined`, so check for a missing result. The getter does not return raw test results or a list of failed checks.
+If posture retrieval fails, Gateway still invokes the Worker, but `devicePosture()` rejects. Handle this separately from a session with no passed checks. The getter does not return raw test results or a list of failed checks.
 
 ## Example
 
@@ -108,14 +108,13 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 		context: GatewayMiddlewareContext,
 		next: GatewayMiddlewareNext,
 	): Promise<Response> {
-		const identity = await context.identity();
-		let passed: readonly string[];
 		try {
-			passed = (await context.devicePosture())?.checks.passed ?? [];
+			const identity = await context.identity();
+			const passed = (await context.devicePosture())?.checks.passed ?? [];
+			if (!identity?.email || !passed.includes("<POSTURE_CHECK_UUID>")) {
+				return new Response(null, { status: 403 });
+			}
 		} catch {
-			return new Response(null, { status: 403 });
-		}
-		if (!identity?.email || !passed.includes("<POSTURE_CHECK_UUID>")) {
 			return new Response(null, { status: 403 });
 		}
 		return next(request);

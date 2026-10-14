@@ -25,7 +25,9 @@ These templates use the `GatewayMiddleware.handle(request, context, next)` entry
 
 Follow [Set up Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward), replace the pass-through script with a template, and configure its bindings. Deploy the Worker before selecting it in a Forward policy. Each template lists a test and the traffic scope it expects.
 
-The TypeScript examples import the published [Gateway types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types) from `@cloudflare/zt-types`. The Forward setup includes installation instructions. JavaScript examples do not require the type-only imports.
+Every TypeScript template includes `import type` declarations for `GatewayMiddlewareContext` and `GatewayMiddlewareNext` from [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types). Install this package as a development dependency in your Worker project before using a template. Each template includes the installation command.
+
+The package supplies [Gateway types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types). Continue to import the runtime `WorkerEntrypoint` class from `cloudflare:workers`. The `import type` declarations are removed when TypeScript compiles. The JavaScript version omits them and the type annotations, so it does not need `@cloudflare/zt-types`.
 
 Begin with a test host and test user group. Page loads produce multiple HTTP requests, so scope notifications and screenshots to a specific method and path, rather than every request to a domain. Keep capture buckets private and configure [R2 lifecycle rules](/r2/buckets/object-lifecycles/) for retention. Capture only data your organization permits you to store.
 

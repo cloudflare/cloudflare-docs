@@ -12,13 +12,15 @@ sidebar:
   order: 2
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 Use [Browser Run](/browser-run/) to capture a screenshot after a selected request. Save the image in R2 while returning the original response to the user.
 
 The browser makes an independent visit to a fixed public URL. It does not inherit the user's cookies, authorization, Gateway session, or egress configuration. The result is a screenshot of the public page, rather than an exact capture of what the user saw. Use this template for a public page you control.
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 [Create a private R2 bucket](/r2/buckets/create-buckets/) named `gateway-screenshots`, then add browser and R2 bindings to the [Worker configuration](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward):
 

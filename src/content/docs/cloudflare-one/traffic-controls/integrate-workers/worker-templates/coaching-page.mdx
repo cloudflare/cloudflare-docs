@@ -10,13 +10,15 @@ sidebar:
   order: 6
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 Display an explanation when a user visits a selected page. The Worker returns a synthetic response without calling `next()`, so Gateway does not send the request to the original destination.
 
 This template displays a notice with a link to an approved alternative. It does not implement a temporary exception, approval workflow, or an acknowledgement that unlocks the original site.
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). Replace the approved application URL and explanation with your organization's guidance. It needs no bindings.
 

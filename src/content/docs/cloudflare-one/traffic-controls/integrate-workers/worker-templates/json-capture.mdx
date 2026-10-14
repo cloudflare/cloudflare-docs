@@ -11,13 +11,15 @@ sidebar:
   order: 5
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 Store a JSON record of an application request and response in R2. This template records selected headers and JSON body text up to 256 KiB per body, without changing the request or response.
 
 Use a controlled test endpoint whose bodies are approved for capture. The script omits query parameters, cookies, and authorization headers, but bodies and URL paths can still contain sensitive data. Keep the bucket private and configure [retention rules](/r2/buckets/object-lifecycles/).
 
 ## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
 
 [Create an R2 bucket](/r2/buckets/create-buckets/) named `gateway-json-captures`. Add this binding to the [Worker configuration](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward):
 

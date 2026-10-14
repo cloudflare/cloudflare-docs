@@ -82,9 +82,11 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 
    Gateway invokes `GatewayMiddleware.handle()` through [Workers RPC](/workers/runtime-apis/rpc/). Keep the exported class name `GatewayMiddleware` exactly as shown.
 
-   Install the [Gateway TypeScript types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types):
+   Install [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types) as a development dependency in this Worker project. It supplies the [Gateway context and continuation types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types):
 
    <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
+
+   Keep the type-only imports in TypeScript examples. They are removed when TypeScript compiles. Import the runtime `WorkerEntrypoint` class from `cloudflare:workers`. The JavaScript version omits the type imports and annotations and does not need this package.
 
    This example passes the request through and adds a response header so you can verify the Worker ran. The [context reference](/cloudflare-one/traffic-controls/integrate-workers/available-context/) describes the fields you can use in other scripts.
 
