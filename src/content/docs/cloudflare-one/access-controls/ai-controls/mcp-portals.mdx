@@ -1116,6 +1116,12 @@ For MCP clients with server configuration files:
 
 For more information on the Code Mode pattern behind `search_and_execute`, refer to [Code Mode](/agents/tools/codemode/).
 
+### Local OAuth callback ports
+
+Desktop and CLI clients can choose a different local callback port from the one in their registered redirect URI. Only the port can change; the scheme, host, path, and query must still match. Public clients must use PKCE with `S256` and send the exact authorization-time `redirect_uri` at token exchange when the port changes.
+
+For supported loopback hosts and matching rules, refer to [Loopback callback ports](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/#loopback-callback-ports). This client callback is separate from the [upstream OAuth callback URLs](#upstream-oauth-callback-urls).
+
 ## Manage portal sessions
 
 Once connected to a portal, users can manage their upstream MCP server sessions without leaving their MCP client. The portal uses [MCP elicitations](https://modelcontextprotocol.io/specification/2025-03-26/server/elicitation) to provide a server selection page where you can enable or disable servers, log out of individual servers, and reauthenticate.
