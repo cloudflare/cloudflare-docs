@@ -148,7 +148,7 @@ If all recipients are suppressed while dropping is on, SMTP may return `250 2.0.
 
 Use [Email sending logs](/email-service/observability/logs/) to confirm delivery. Suppressed recipients appear with a **Rejected** result.
 
-Suppression produces a `message.rejected` event in [Email Sending event subscriptions](/email-service/platform/event-subscriptions/) with `rejection.reason` set to `suppressed`.
+Suppression produces a `message.rejected` event in [Email Sending event subscriptions](/email-service/reference/event-subscriptions/) with `rejection.reason` set to `suppressed`.
 
 ## Troubleshooting
 
