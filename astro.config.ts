@@ -1,7 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig, passthroughImageService } from "astro/config";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import nimbus, {
@@ -297,6 +297,16 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
+	env: {
+		schema: {
+			DEPLOYMENT_ENV: envField.enum({
+				context: "server",
+				access: "public",
+				values: ["preview", "production"],
+				default: "preview",
+			}),
+		},
+	},
 	experimental: {
 		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
 	},
