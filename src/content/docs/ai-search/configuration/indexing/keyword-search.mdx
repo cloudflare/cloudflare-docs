@@ -8,6 +8,8 @@ products:
   - ai-search
 ---
 
+import { Aside } from "~/components";
+
 Enable keyword search to match chunks that contain your query terms exactly. For an overview of search modes, refer to [Search modes](/ai-search/concepts/search-modes/).
 
 ## Enable keyword search
@@ -41,6 +43,13 @@ The `keyword_tokenizer` field (inside `indexing_options`) controls how text is s
 | --------- | ------- | --------------------------------------------------------------------------------- |
 | `porter`  | Yes     | Applies Porter stemming. "running" matches "run." Best for natural language.      |
 | `trigram` | No      | Overlapping 3-character windows. "config" matches "configuration." Best for code. |
+
+<Aside type="caution" title="Japanese content">
+	The `porter` tokenizer splits text on spaces and punctuation, so it does not
+	work for Japanese, which does not separate words with spaces. Keyword search
+	with `porter` may return no results for Japanese queries. If your content is
+	in Japanese, use the `trigram` tokenizer.
+</Aside>
 
 ## Keyword match mode
 
