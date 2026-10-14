@@ -12,6 +12,8 @@ products:
   - moq
 ---
 
+import { CopyPromptButton, Tabs, TabItem } from "~/components";
+
 MoQ (Media over QUIC) is a protocol for delivering live media content using QUIC transport. It provides efficient, low-latency media streaming by leveraging QUIC's multiplexing and connection management capabilities.
 
 MoQ is designed to be an Internet infrastructure level service that provides media delivery to applications, similar to how HTTP provides content delivery and WebRTC provides real-time communication.
@@ -22,13 +24,41 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
 
 ## Get started
 
-Cloudflare MoQ relays are available through the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [API](/api/resources/moq). They are free to use during the beta period.
+Provision a relay with a coding agent, the [`cf` CLI](/cf/), the [Cloudflare dashboard](https://dash.cloudflare.com/), or the [API](/api/resources/moq/). Relays are free to use during the beta period.
 
 ### Provision a relay
 
 Each relay provides an isolated scope — your namespaces, tracks, and objects are separated from those belonging to other relays. You control who can publish and who can subscribe by issuing tokens scoped to the operations each client needs.
 
-To create a relay via the API:
+#### Set up with your coding agent
+
+Copy this prompt to create a relay using the `cf` CLI:
+
+<CopyPromptButton
+	tooltip="Create a MoQ relay with cf"
+	prompt="Create a Cloudflare Media over QUIC relay and securely save its two one-time token secrets. Read https://developers.cloudflare.com/moq/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI (install if needed). Inspect commands with cf cli search, --help, or cf schema. Confirm my account and relay name, and help me authenticate as needed. Use the publish-and-subscribe token for publishers and the subscribe-only token for subscribers. Verify the relay and token permissions. Report the relay ID, token storage location, provisioning results, and publisher and subscriber commands with token placeholders. State whether media transfer was tested and identify any remaining tests or blockers. Keep secrets out of chat and source control, and explain the logging risks of tokens in connection URLs."
+/>
+
+#### Provision the relay manually
+
+<Tabs>
+<TabItem label="Dashboard" class="space-y-4">
+
+In the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and go to **Media** > **Realtime** > **MoQ Relay**. Create a relay and save its tokens.
+
+</TabItem>
+<TabItem label="CLI" class="space-y-4">
+
+[Install and sign in to `cf`](/cf/get-started/), then create the relay:
+
+```sh
+cf realtime moq relays create --name "My Relay"
+```
+
+</TabItem>
+<TabItem label="API" class="space-y-4">
+
+Use the [Create relay API](/api/resources/moq/subresources/relays/methods/create/):
 
 ```sh
 curl -X POST \
@@ -38,15 +68,17 @@ curl -X POST \
   -d '{"name": "My Relay"}'
 ```
 
-Cloudflare returns a relay ID and two default tokens: one that can publish and subscribe, and one that can only subscribe. Token secrets are shown once in the response and never stored.
+</TabItem>
+</Tabs>
 
-You can also create and manage relays in the Cloudflare dashboard under **Media** > **Realtime** > **MoQ Relay**.
+The CLI and API return a relay ID and two default tokens: one that can publish and subscribe, and one that can only subscribe. Token secrets are shown once in the response and never stored by Cloudflare. Save them securely before closing the terminal.
 
 ### Connect a publisher and subscriber (draft-16)
 
 Draft-16 requires authentication. Clients send a token in the URL path when opening a MoQ session. Using the open-source [moq-rs](https://github.com/cloudflare/moq-rs) tools:
 
 **Publisher:**
+
 ```sh
 ffmpeg -stream_loop -1 -re -i input.mp4 \
   -f mp4 -movflags empty_moov+frag_every_frame+separate_moof+omit_tfhd_offset - \
@@ -55,6 +87,7 @@ ffmpeg -stream_loop -1 -re -i input.mp4 \
 ```
 
 **Subscriber:**
+
 ```sh
 moq-sub --name my-namespace \
   "https://draft-16.cloudflare.mediaoverquic.com/<subscribe_token>" \

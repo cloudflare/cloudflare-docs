@@ -1,0 +1,8 @@
+import { CopyPromptButton } from "~/components";
+
+To create your SFU app with a coding agent, copy this prompt:
+
+<CopyPromptButton
+	tooltip="Create a Realtime SFU app with cf"
+	prompt="Create a Cloudflare Realtime SFU app for my backend and save its App ID and App Secret in backend secret storage. Read https://developers.cloudflare.com/realtime/sfu/llms.txt and https://developers.cloudflare.com/cf/llms.txt, following the relevant pages for current instructions. Use the Cloudflare cf CLI (install if needed). Inspect commands with cf cli search, --help, or cf schema. Confirm my account and app name, and help me authenticate as needed. Verify the app belongs to that account. Report its ID, secret storage location, verification result, and instructions for using the App Secret with the SFU Connection API, including any blockers. Keep credentials out of frontend code, source control, chat, and logs. Do not deploy."
+/>

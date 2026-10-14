@@ -11,7 +11,7 @@ products:
   - realtime
 ---
 
-import { CardGrid, Description, LinkButton, LinkTitleCard } from "~/components";
+import { CardGrid, Description, LinkButton, LinkTitleCard, Render } from "~/components";
 import RealtimeSfuArchitecture from "~/components/realtime/sfu/RealtimeSfuArchitecture.astro";
 
 <Description>
@@ -69,6 +69,12 @@ Your endpoints exchange media and DataChannels with Realtime SFU. A separate app
 <RealtimeSfuArchitecture />
 
 The backend holds the SFU App Secret and manages application state and permissions. Refer to [application architecture](/realtime/sfu/concepts/architecture/) for the responsibilities and trust boundaries.
+
+## Set up with your coding agent
+
+<Render file="sfu/create-app-prompt" product="realtime" />
+
+This creates the SFU app and backend credentials. To create the app through the dashboard, `cf` CLI, or API and run a working video room, follow [Get started](/realtime/sfu/get-started/).
 
 ## Choose a starting point
 
