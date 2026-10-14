@@ -22,6 +22,10 @@ This is expected behavior. Because data center selection depends on network cond
 
 If requests are failing or consistently slow, refer to [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) for the details support needs to investigate.
 
+### Why is another domain on Cloudflare served from a data center closer to me than mine?
+
+The set of data centers that can serve a given domain varies between Cloudflare customers. Seeing another domain served from a closer data center does not indicate a problem with your zone, and it does not mean your traffic is being misrouted.
+
 ### Why did the data center serving my traffic change?
 
 Data center selection is not fixed. It can change due to scheduled or unscheduled maintenance at a data center, changes in Internet routing between your visitors' networks and Cloudflare, network congestion, and Cloudflare's automated traffic engineering, which shifts traffic between locations to keep performance and reliability balanced.
