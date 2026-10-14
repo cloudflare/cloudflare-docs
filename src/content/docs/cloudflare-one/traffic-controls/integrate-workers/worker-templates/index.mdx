@@ -25,6 +25,8 @@ These templates use the `GatewayMiddleware.handle(request, context, next)` entry
 
 Follow [Set up Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward), replace the pass-through script with a template, and configure its bindings. Deploy the Worker before selecting it in a Forward policy. Each template lists a test and the traffic scope it expects.
 
+The TypeScript examples import the published [Gateway types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types) from `@cloudflare/zt-types`. The Forward setup includes installation instructions. JavaScript examples do not require the type-only imports.
+
 Begin with a test host and test user group. Page loads produce multiple HTTP requests, so scope notifications and screenshots to a specific method and path, rather than every request to a domain. Keep capture buckets private and configure [R2 lifecycle rules](/r2/buckets/object-lifecycles/) for retention. Capture only data your organization permits you to store.
 
 Background examples use [`this.ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil). They return the user's response without awaiting the background operation. A background failure is logged and does not change the returned response. Background work has [limited execution time](/workers/platform/limits/#duration); use Queues or Workflows when you need durable processing.

@@ -35,6 +35,10 @@ Use this script as `src/index.ts`:
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
 
 interface Env {
 	CAPTURES: R2Bucket;
@@ -73,8 +77,8 @@ async function readBounded(
 export class GatewayMiddleware extends WorkerEntrypoint<Env> {
 	async handle(
 		request: Request,
-		context: unknown,
-		next: (request: Request) => Promise<Response>,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
 	): Promise<Response> {
 		const response = await next(request);
 		const disposition = response.headers.get("content-disposition") ?? "";

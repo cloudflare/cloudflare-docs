@@ -43,6 +43,10 @@ Replace `https://example.com/` with a public test page you control. The local br
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
 
 const PAGE = "https://example.com/";
 
@@ -63,8 +67,8 @@ interface Env {
 export class GatewayMiddleware extends WorkerEntrypoint<Env> {
 	async handle(
 		request: Request,
-		context: unknown,
-		next: (request: Request) => Promise<Response>,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
 	): Promise<Response> {
 		const response = await next(request);
 		const url = new URL(request.url);

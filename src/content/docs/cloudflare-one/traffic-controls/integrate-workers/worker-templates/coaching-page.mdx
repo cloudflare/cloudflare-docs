@@ -24,12 +24,16 @@ Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffi
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
 
 export class GatewayMiddleware extends WorkerEntrypoint {
 	async handle(
 		request: Request,
-		context: unknown,
-		next: (request: Request) => Promise<Response>,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
 	): Promise<Response> {
 		if (
 			request.method !== "GET" ||

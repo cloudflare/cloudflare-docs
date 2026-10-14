@@ -30,6 +30,10 @@ Use this script as `src/index.ts`:
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
 
 interface Env {
 	SLACK_WEBHOOK_URL: string;
@@ -38,8 +42,8 @@ interface Env {
 export class GatewayMiddleware extends WorkerEntrypoint<Env> {
 	async handle(
 		request: Request,
-		context: { host: string },
-		next: (request: Request) => Promise<Response>,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
 	): Promise<Response> {
 		const response = await next(request);
 		this.ctx.waitUntil(

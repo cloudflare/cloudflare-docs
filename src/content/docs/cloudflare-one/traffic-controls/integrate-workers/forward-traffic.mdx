@@ -82,18 +82,26 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 
    Gateway invokes `GatewayMiddleware.handle()` through [Workers RPC](/workers/runtime-apis/rpc/). Keep the exported class name `GatewayMiddleware` exactly as shown.
 
-   This example passes the request through and adds a response header so you can verify the Worker ran. The `unknown` context type is sufficient because this script does not read context fields. The [context reference](/cloudflare-one/traffic-controls/integrate-workers/available-context/) describes the fields you can use in other scripts.
+   Install the [Gateway TypeScript types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types):
+
+   <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
+
+   This example passes the request through and adds a response header so you can verify the Worker ran. The [context reference](/cloudflare-one/traffic-controls/integrate-workers/available-context/) describes the fields you can use in other scripts.
 
    <TypeScriptExample filename="src/index.ts">
 
    ```ts
    import { WorkerEntrypoint } from "cloudflare:workers";
+   import type {
+     GatewayMiddlewareContext,
+     GatewayMiddlewareNext,
+   } from "@cloudflare/zt-types";
 
    export class GatewayMiddleware extends WorkerEntrypoint {
      async handle(
        request: Request,
-       context: unknown,
-       next: (request: Request) => Promise<Response>,
+       context: GatewayMiddlewareContext,
+       next: GatewayMiddlewareNext,
      ): Promise<Response> {
        const response = await next(request);
        const headers = new Headers(response.headers);
@@ -127,7 +135,7 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 
 ### Configure with the API
 
-Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint with `action: "forward"` and the Worker's ID in `settings.custom.worker_id`. The Worker ID is a 32-character lowercase hexadecimal identifier. Use its ID, rather than its name or a `workers.dev` URL.
+Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint with `action: "forward"` and the Worker's ID in `rule_settings.forward.worker_id`. The Worker ID is a 32-character lowercase hexadecimal identifier. Use its ID, rather than its name or a `workers.dev` URL.
 
 <APIRequest
 	path="/accounts/{account_id}/gateway/rules"
@@ -139,8 +147,8 @@ Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresource
 		action: "forward",
 		filters: ["http"],
 		traffic: 'http.request.host == "example.com"',
-		settings: {
-			custom: { worker_id: "<WORKER_ID>" },
+		rule_settings: {
+			forward: { worker_id: "<WORKER_ID>" },
 		},
 	}}
 />
