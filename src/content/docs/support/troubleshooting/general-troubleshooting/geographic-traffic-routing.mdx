@@ -9,3 +9,15 @@ products:
 Due to the way routing on [Cloudflare's Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works, requests may be sent to data center locations that are not necessarily the closest geographically. We are continuously adding capacity to our global network and enhancing our automated traffic engineering systems to intelligently manage congestion and other network events. While we always strive to provide the best possible performance by serving traffic from the closest location, our top priority is reliability. 
 
 In instances where performance and reliability are in conflict, our systems are designed to prioritize a stable connection over a local one.
+
+## Frequently asked questions
+
+### Can I choose or pin the data center that serves my traffic?
+
+No. Cloudflare uses [anycast](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) to announce the same IP addresses from many data centers at the same time. The data center that serves each request is selected automatically based on the best available network path from the visitor's network. Internet routing, peering decisions, and Cloudflare's traffic engineering all influence this selection, and it cannot be configured per zone, per account, or by support request.
+
+### Why do consecutive requests or tests show different data centers?
+
+This is expected behavior. Because data center selection depends on network conditions at the time of each request, consecutive requests from the same visitor may be served by different data centers, and tests performed from different networks, locations, or at different times will often show different results. This variability is normal for anycast routing and does not indicate a problem with your zone or a misconfiguration.
+
+If requests are failing or consistently slow, refer to [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) for the details support needs to investigate.
