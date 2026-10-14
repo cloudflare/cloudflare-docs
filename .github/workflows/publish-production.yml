@@ -93,7 +93,6 @@ jobs:
         with:
           name: site-html
           path: dist
-          include-hidden-files: true
 
       - name: Notify Google Chat on failure
         if: failure()
