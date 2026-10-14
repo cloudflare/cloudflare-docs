@@ -1,0 +1,27 @@
+---
+title: Develop with Artifacts locally
+description: Create and test Artifacts repositories in Wrangler, Workers Vitest, and the Cloudflare Vite plugin.
+products:
+  - artifacts
+date: 2026-10-14
+---
+
+import { WranglerConfig } from "~/components";
+
+We are excited to bring Artifacts to local development! In `wrangler dev`, Workers Vitest, and the Cloudflare Vite plugin, you can create repos, import existing Git repositories over HTTPS, push commits, and test read and write tokens without deploying or changing your deployed repositories.
+
+To get started, add an Artifacts binding for your namespace:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+Make sure Git 2.32 or newer is installed and available on your `PATH`. The binding uses local storage by default. If your development setup already uses deployed Artifacts, set `remote = true` to keep that behavior.
+
+For setup and persistence details, refer to [Local development](/artifacts/guides/local-development/).
