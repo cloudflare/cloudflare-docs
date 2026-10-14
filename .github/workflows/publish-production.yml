@@ -47,7 +47,8 @@ jobs:
           }
 
           run_id=$(gh run list --workflow ci.yml --event merge_group --commit "$GITHUB_SHA" \
-            --json databaseId,conclusion --jq '[.[] | select(.conclusion == "success")][0].databaseId // empty')
+            --json databaseId,conclusion --jq '[.[] | select(.conclusion == "success")][0].databaseId // empty') \
+            || reuse "could not list merge queue runs"
           [ -n "$run_id" ] || reuse "no successful merge queue run for $GITHUB_SHA"
 
           gh run download "$run_id" --name dist --dir dist || reuse "could not download dist from run $run_id"
