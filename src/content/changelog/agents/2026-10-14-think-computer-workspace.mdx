@@ -1,0 +1,43 @@
+---
+title: Think agents now use a @cloudflare/computer Workspace
+description: Think and Agent Skills now work in a Workspace from @cloudflare/computer. @cloudflare/shell is deprecated.
+products:
+  - agents
+  - workers
+date: 2026-10-14
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Think](/agents/harnesses/think/) and [Agent Skills](/agents/runtime/execution/agent-skills/) now work in a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer). Think's built-in workspace tools are now Computer's tools, and you configure them with `workspaceTools`. Add an execution backend to the Workspace to give the model an `exec` tool.
+
+`@cloudflare/shell` is deprecated, and so is Think's `createExecuteTool`.
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+
+export class MyAgent extends Think<Env> {
+	override workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({ id: "js", loader: this.env.LOADER }),
+		],
+	});
+
+	override workspaceTools = {
+		exec: { js: { description: "Run JavaScript against workspace files." } },
+	};
+}
+```
+
+</TypeScriptExample>
+
+## Migrate your workspace data
+
+This is a breaking change. Computer stores files in different tables from Shell, and nothing moves your data automatically. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). If you do not, your agent starts with an empty workspace.
+
+For more information, refer to [Think tools](/agents/harnesses/think/tools/#built-in-workspace-tools).
