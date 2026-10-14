@@ -1,6 +1,6 @@
 ---
 title: Agents SDK model providers take AI Gateway catalog ids and resume dropped streams
-description: createAI in the Agents SDK now calls AI Gateway catalog models and dynamic routes by id, sends vendor model objects to provider-native endpoints, and resumes streams after a dropped connection.
+description: createAI in the Agents SDK now runs AI Gateway catalog ids on env.AI.run, sends model objects to provider-native endpoints, and resumes a stream that drops mid-answer.
 products:
   - agents
   - workers
@@ -9,7 +9,7 @@ date: 2026-10-14
 
 import { TypeScriptExample } from "~/components";
 
-The [Agents SDK model providers](/agents/models/) can now call any model in the [AI Gateway catalog](/ai/models/) by its id, with no vendor package and no vendor key in your Worker. Streams from those models resume on their own after a dropped connection.
+The [Agents SDK model providers](/agents/models/) now take any model id from the [AI Gateway catalog](/ai/models/), such as `anthropic/claude-opus-4.8`. You do not need a vendor package or a vendor key in your Worker.
 
 <TypeScriptExample>
 
@@ -22,9 +22,7 @@ export default {
 		const ai = createAI({ binding: env.AI, id: "my-gateway" });
 
 		const result = streamText({
-			model: ai("anthropic/claude-opus-4.8", {
-				fallback: ["dynamic/support"],
-			}),
+			model: ai("anthropic/claude-opus-4.8"),
 			prompt: "Write a haiku about Durable Objects",
 		});
 
@@ -35,17 +33,14 @@ export default {
 
 </TypeScriptExample>
 
-This release changes `createAI` in `agents/models/ai-sdk`, `agents/models/pi-ai`, and `agents/models/opencode`:
+`createAI` no longer uses AI Gateway's deprecated [Universal Endpoint](/ai-gateway/usage/universal/). Model ids, catalog ids included, run on `env.AI.run()`. A vendor's own model object, such as `ai(anthropic("claude-opus-4-8"))`, goes through the binding to AI Gateway's [provider-native endpoint](/ai-gateway/usage/providers/) for that vendor.
 
-- **Catalog ids.** `ai("anthropic/claude-opus-4.8")` calls a catalog model. Use the catalog's spelling of the id, not the vendor's.
-- **Dynamic routes.** `ai("dynamic/support")` calls an [AI Gateway dynamic route](/ai-gateway/features/dynamic-routing/) by name.
-- **Model objects on provider-native endpoints.** A vendor's own model object, such as `ai(anthropic("claude-opus-4-8"))`, now goes to AI Gateway's [provider-native endpoint](/ai-gateway/usage/providers/) instead of the deprecated [Universal Endpoint](/ai-gateway/usage/universal/). File uploads work.
-- **Pi AI catalog models on `env.AI.run()`.** Pi AI sends Anthropic and OpenAI catalog models in their native Messages and Responses formats.
-- **OpenCode.** The `agents/models/opencode` provider takes catalog ids and dynamic routes, and is now named "Cloudflare" in OpenCode.
-- **New options.** `byokAlias` picks a stored key by alias. `zdr` turns Zero Data Retention on or off for a model object. `vendorKey: "request"` sends a key you hold with an AI SDK model object.
-- **Stream resume.** If the connection drops mid-stream, the provider replays the run from the last complete event. The stream continues with nothing lost or repeated.
+This release also:
 
-Every request still goes through the `AI` binding. Workers AI ids, catalog ids, and dynamic routes run on `env.AI.run()`. AI Gateway picks a provider for a catalog model and bills it through [Unified Billing](/ai-gateway/features/unified-billing/) or a [key stored on the gateway](/ai-gateway/configuration/bring-your-own-keys/). A model object goes through the binding's `fetch` to the vendor's provider-native endpoint. AI Gateway keeps the events of each streamed run, which is what lets the provider resume it. Workers AI streams and model object streams do not resume.
+- Adds the `byokAlias` option, which picks a [stored key](/ai-gateway/configuration/bring-your-own-keys/) by alias.
+- Fixes catalog models and [dynamic routes](/ai-gateway/features/dynamic-routing/) in `agents/models/pi-ai`.
+- Lets `agents/models/opencode` take catalog ids.
+- Resumes a catalog or dynamic route stream that drops mid-answer, with nothing lost or repeated.
 
 `createAI` from `agents/models/ai-sdk` replaces the `AI` binding mode of `workers-ai-provider` and `ai-gateway-provider`, which are now deprecated.
 

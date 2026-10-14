@@ -31,7 +31,7 @@ ai("dynamic/support"); // AI Gateway dynamic route
 ai(anthropic("claude-opus-4-8"));
 ```
 
-A string needs no vendor package and no vendor key. A model object keeps the vendor's own request builder and parser, so every feature of the vendor's package works.
+A string needs no vendor package and no vendor key. A model object keeps the vendor's own request builder and parser.
 
 `createAI` replaces the `AI` binding mode of `workers-ai-provider` (`createWorkersAI({ binding })`) and `ai-gateway-provider` (`createAiGateway({ binding })`). Both are deprecated.
 
@@ -194,7 +194,7 @@ wrapLanguageModel({ model: ai(anthropic("claude-opus-4-8")), middleware });
 
 A model that is already wrapped in middleware hides the settings the provider needs, so `ai()` rejects it.
 
-### Use your own vendor key
+### Unified billing and BYOK
 
 By default, the provider removes the vendor's credential header (`authorization`, `x-api-key`, `x-goog-api-key`, or `api-key`) so AI Gateway supplies the key. To use a key you hold, give it to the vendor's provider and set `vendorKey: "request"` on the model:
 
@@ -204,8 +204,6 @@ const model = ai(anthropic("claude-opus-4-8"), { vendorKey: "request" });
 ```
 
 `vendorKey` belongs to the model you set it on. A fallback model does not inherit it, so one chain can mix a model on your key with a model on Unified Billing.
-
-### Choose a stored key or Zero Data Retention
 
 `byokAlias` picks a [stored key by alias](/ai-gateway/configuration/bring-your-own-keys/) when the gateway holds several keys for one provider. The provider sends it as `cf-aig-byok-alias` for catalog models and model objects.
 
@@ -541,7 +539,7 @@ globalThis.AI_SDK_DEFAULT_PROVIDER = createAI({ binding: env.AI });
 await generateText({ model: "@cf/zai-org/glm-4.7-flash", prompt: "Hi" });
 ```
 
-A string can be a Workers AI id, a catalog id, or a dynamic route. Reach a vendor's model through its own package with a model object.
+A string can be a Workers AI id, a catalog id, or a dynamic route.
 
 ## Limitations
 
