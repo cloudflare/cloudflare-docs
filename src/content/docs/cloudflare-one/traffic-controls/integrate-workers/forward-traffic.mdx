@@ -149,6 +149,8 @@ For deployed Worker identifiers, refer to [List Workers](/api/resources/workers/
 
 ## Known limitations
 
+Gateway drops HTTP traffic sent from the Cloudflare compute platform through [Workers VPC](/workers-vpc/) if it matches a Forward policy. Gateway does not invoke the selected Worker. Exclude this traffic from your Forward policies.
+
 WebSocket traffic bypasses the Worker selected by a Forward policy. Gateway connects directly to the original upstream service. The Worker does not receive the WebSocket upgrade request or messages, so its logic does not apply to those connections.
 
 | Area            | Behavior                                                                                                                                                                                            |
