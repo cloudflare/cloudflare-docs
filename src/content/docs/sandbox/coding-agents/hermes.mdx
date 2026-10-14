@@ -49,9 +49,11 @@ This template uses the [Container API](/containers/api/durable-object-container/
 
 2. In `wrangler.jsonc`, choose a Worker `name`. Its hostname is `<WORKER_NAME>.<WORKERS_SUBDOMAIN>.workers.dev`.
 
-   Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for that entire hostname. Choose an [identity provider](/cloudflare-one/integrations/identity-providers/) and an **Allow** policy for your intended users. Copy the application audience tag and your team domain.
+   Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for that entire hostname. Choose an [identity provider](/cloudflare-one/integrations/identity-providers/) and an **Allow** policy for your intended users.
 
-3. In `wrangler.jsonc`, configure your gateway and Access application:
+   Use a hostname-based application. [Worker-level Access policies](/workers/configuration/cloudflare-access/#protect-one-worker) do not support the terminal's WebSocket connections.
+
+3. In `wrangler.jsonc`, configure your gateway and model:
 
    <WranglerConfig>
 
@@ -59,9 +61,7 @@ This template uses the [Container API](/containers/api/durable-object-container/
    {
      "vars": {
        "AI_GATEWAY_ID": "<GATEWAY_ID>",
-       "MODEL": "openai/gpt-4.1-mini",
-       "ACCESS_TEAM_DOMAIN": "<TEAM_NAME>.cloudflareaccess.com",
-       "ACCESS_AUD": "<ACCESS_APPLICATION_AUD>"
+       "MODEL": "openai/gpt-4.1-mini"
      }
    }
    ```
@@ -97,7 +97,7 @@ The Dockerfile pins a Hermes commit and builds its dashboard and terminal assets
 
 ### Authentication and isolation
 
-The Worker verifies the Access JSON Web Token (JWT), including its signature, issuer, audience, and expiry. It derives the Durable Object ID from the verified identity. Each Durable Object starts its own container and proxies HTTP and WebSocket requests to the dashboard on port `9119`.
+The Worker reads the authenticated user's UUID through [`ctx.access`](/workers/configuration/cloudflare-access/#read-authenticated-user-identity-with-ctxaccess) and derives the Durable Object ID from it. Requests without an authenticated user cannot start a container. Each Durable Object starts its own container and proxies HTTP and WebSocket requests to the dashboard on port `9119`.
 
 Hermes also requires authentication for its dashboard. The Durable Object generates a private backend password and obtains a session over the container port. It replaces incoming credentials with that session when forwarding requests. Backend session cookies stay in the Worker, so users do not need a second Hermes login.
 
