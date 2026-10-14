@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-02-pi-harness.mdx
+  s_41e15f96bbbada::t_71560d54dffeb7 1-175
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a7f84728ff6a4677f65aecb75177cf16b4346c40",
+  "prompts": {},
+  "sessions": {
+    "s_41e15f96bbbada": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0fcca-7a99-73cf-84bb-ccfe6ae39bd3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

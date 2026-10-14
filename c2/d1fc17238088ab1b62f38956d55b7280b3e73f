@@ -1,0 +1,21 @@
+src/content/docs/workers/runtime-apis/bindings/analytics-sql.mdx
+  s_06aec84e422a49::t_535dd832ea3b4c 15,46,48-49,96
+src/content/docs/workers/wrangler/configuration.mdx
+  s_06aec84e422a49::t_efa95c0bfcfe4a 1123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c2d1fc17238088ab1b62f38956d55b7280b3e73f",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}
