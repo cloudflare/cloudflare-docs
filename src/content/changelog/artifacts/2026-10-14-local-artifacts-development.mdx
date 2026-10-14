@@ -1,20 +1,25 @@
 ---
-title: Develop with Artifacts locally
-description: Create and test Artifacts repositories in Wrangler, Workers Vitest, and the Cloudflare Vite plugin.
+title: Artifacts now supports local development
+description: Create, import, clone, and push Artifacts repos locally with Wrangler, the Cloudflare Vite plugin, and Workers Vitest.
 products:
   - artifacts
+  - workers
 date: 2026-10-14
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
-We are excited to bring Artifacts to local development! In `wrangler dev`, Workers Vitest, and the Cloudflare Vite plugin, you can create repos, import existing Git repositories over HTTPS, push commits, and test read and write tokens without deploying or changing your deployed repositories.
+You can now develop and test [Artifacts](/artifacts/) locally using `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), and the [Workers Vitest integration](/workers/testing/vitest-integration/). Create repos, import Git repositories over HTTPS, issue repo tokens, and clone or push with Git on your machine before deploying to Cloudflare's global network. Local repos are separate from your deployed repos, so you can test changes without affecting production data.
 
-To get started, add an Artifacts binding for your namespace:
+Artifacts bindings now use a local simulator by default:
 
 <WranglerConfig>
 
-```toml title="wrangler.toml"
+```toml
+name = "artifacts-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
 [[artifacts]]
 binding = "ARTIFACTS"
 namespace = "default"
@@ -22,6 +27,23 @@ namespace = "default"
 
 </WranglerConfig>
 
-Make sure Git 2.32 or newer is installed and available on your `PATH`. The binding uses local storage by default. If your development setup already uses deployed Artifacts, set `remote = true` to keep that behavior.
+Then use the binding the same way you would in production:
 
-For setup and persistence details, refer to [Local development](/artifacts/guides/local-development/).
+<TypeScriptExample>
+
+```ts
+const created = await env.ARTIFACTS.create("starter-repo");
+
+return Response.json({
+	remote: created.remote,
+	token: created.token,
+});
+```
+
+</TypeScriptExample>
+
+The returned `remote` points to your local dev session, so you can use it with a standard Git client to clone and push.
+
+Local development requires Git 2.32 or later on your `PATH`. If you already use deployed Artifacts during local development, set `remote = true` on the binding to keep that behavior.
+
+To get started, refer to [Local development](/artifacts/guides/local-development/).
