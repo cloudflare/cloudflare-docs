@@ -1,14 +1,14 @@
 ---
 title: Bot Management's machine learning model now retrains more frequently instead of shipping fixed versions
-description: The machine learning model behind your bot score now retrains more frequently on live traffic instead of shipping as numbered versions.
+description: The machine learning model behind your bot score now retrains more frequently instead of shipping as numbered versions.
 date: 2026-08-31
 ---
 
 We have launched Adaptive Intelligence, a new bot detection engine built to close the gap between when an attack pattern first appears and when protection against it reaches every customer. You can [read the announcement blog](https://blog.cloudflare.com/introducing-adaptive-intelligence/) for the full story behind why we built it.
 
-Its first component is live today: the machine learning model behind your bot score now retrains more frequently on live traffic, instead of shipping as a fixed, numbered version. As new bypass tools and bot frameworks appear, the model learns from them and folds that knowledge in without waiting for a scheduled release.
+The machine learning model behind your bot score now retrains more frequently instead of shipping as a fixed, numbered version. As new bypass tools and bot frameworks appear, the model learns from them and folds that knowledge in without waiting for a scheduled release.
 
-Every update is validated before it affects you. New model versions run in shadow mode against live traffic first, scored but not acted on, and are compared against the current model on catch rate and false-positive rate before rolling out gradually.
+Every update is validated before it affects you. New model versions run in shadow mode against live traffic first, scored but not acted on, and are compared against the current model before rolling out gradually.
 
 Enterprise customers with **Auto-update machine learning** switched on under Bot Management configurations get Adaptive Intelligence automatically, with no version to migrate and nothing else to configure.
 
