@@ -48,6 +48,7 @@ jobs:
         run: pnpm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOYMENT_ENV: production
 
       - name: Deploy to Cloudflare Workers
         run: pnpm exec wrangler deploy
