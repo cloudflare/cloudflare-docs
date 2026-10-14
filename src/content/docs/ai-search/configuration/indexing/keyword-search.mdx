@@ -49,6 +49,13 @@ The `keyword_tokenizer` field (inside `indexing_options`) controls how text is s
 	work for Japanese, which does not separate words with spaces. Keyword search
 	with `porter` may return no results for Japanese queries. If your content is
 	in Japanese, use the `trigram` tokenizer.
+
+    With `trigram`, each space-separated query term must appear in the content
+    exactly as written, and terms shorter than three characters are ignored. A
+    full Japanese sentence used as a query is treated as one term, so it usually
+    returns no keyword results. Use [hybrid search](/ai-search/configuration/indexing/hybrid-search/)
+    so vector search can match natural-language questions.
+
 </Aside>
 
 ## Keyword match mode
