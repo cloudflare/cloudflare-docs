@@ -2,7 +2,6 @@
 	"name": "cloudflare-docs",
 	"private": true,
 	"type": "module",
-	"packageManager": "pnpm@11.28.2",
 	"scripts": {
 		"preinstall": "npx --yes only-allow pnpm",
 		"astro": "astro",
