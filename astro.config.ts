@@ -299,8 +299,6 @@ export default defineConfig({
 	outDir: "./dist",
 	env: {
 		schema: {
-			// Which deployment this build is for. Defaults to preview so local and
-			// preview builds never ship production-only values.
 			DEPLOYMENT_ENV: envField.enum({
 				context: "server",
 				access: "public",
