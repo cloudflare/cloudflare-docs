@@ -8,6 +8,6 @@ You can run [Hermes Agent](https://github.com/nousresearch/hermes-agent) on Clou
 
 [Cloudflare Access](/cloudflare-one/access-controls/) authenticates users before the Worker starts their container. Model requests go through [AI Gateway](/ai-gateway/) using the Worker's AI binding, so model API keys and Cloudflare API tokens stay outside the sandbox.
 
-Use the template to give users a browser-based coding agent that can read and write files and run commands in an isolated environment. Workspaces are temporary: files and sessions are lost when a container stops or is replaced.
+Use the template to try a browser-based coding agent that can read and write files and run commands in an isolated environment. Workspaces are temporary: project files, conversation history, saved memories, and settings are lost when a container stops or is replaced. The template does not include backups, and interrupted tasks do not resume automatically.
 
 To get started, refer to [Run Hermes in a sandbox](/sandbox/coding-agents/hermes/).

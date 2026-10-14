@@ -26,6 +26,10 @@ Run [Hermes Agent](https://github.com/nousresearch/hermes-agent), an open-source
 
 This template uses the [Container API](/containers/api/durable-object-container/) directly. It includes its own dashboard and does not require the coding agent runner from the other guides.
 
+:::caution[Temporary workspaces only]
+This template does not preserve files, conversation history, saved memories, or settings across container restarts. It does not back up or restore workspace data. Review [workspace lifetime and data loss](#workspace-lifetime-and-data-loss) before deploying.
+:::
+
 ## Prerequisites
 
 - A Cloudflare account on the [Workers Paid plan](/workers/platform/pricing/).
@@ -87,9 +91,21 @@ This template uses the [Container API](/containers/api/durable-object-container/
 
 </Steps>
 
-:::caution[Temporary workspace]
-The template stops containers after 15 minutes of inactivity. Files, sessions, memory, and settings are lost when the container stops or is replaced. Refreshing the page reuses a running container; an open WebSocket can keep it active. Export your work before leaving.
-:::
+## Workspace lifetime and data loss
+
+Use this template to try Hermes or run tasks whose outputs you save elsewhere. Hermes stores its state on the local filesystem. This template does not preserve that filesystem when the container stops or is replaced.
+
+A stopped container loses:
+
+- Project files in `/workspace`, including uncommitted changes and local Git commits.
+- Conversation history, saved memories, and settings in `/workspace/.hermes`, the Hermes home directory.
+- Running agent turns and terminal commands. Interrupted work does not resume automatically.
+
+The template sets a 15-minute inactivity timeout. [Platform events and process failures](/containers/faq/#how-long-can-instances-run-for-what-happens-when-a-host-server-is-shut-down) can also stop an active container. An open terminal can keep it active, but cannot guarantee that it stays running.
+
+The next request starts a fresh workspace from the image. The same signed-in user reaches the same Durable Object, but its storage retains only the private backend password. It does not preserve the container filesystem or Hermes history. No snapshots, R2 backups, or restore logic are included.
+
+Save required files and outputs outside the container while it is running. A local Git commit alone does not protect your work. The template does not provide Hermes with memory or conversation continuity across container restarts.
 
 ## How the template works
 
