@@ -1,0 +1,771 @@
+{
+	"model_id": "google/gemini-4-argon",
+	"provider_id": "google",
+	"name": "Gemini 4 Argon",
+	"description": "Google's frontier model for deep work on complex, real-world tasks across coding, finance, legal, cybersecurity and science. The first model in the Gemini 4 family.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Multimodal",
+		"Reasoning",
+		"Agentic",
+		"Coding"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": 65536,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Cached input tokens (per 1M)": 0.1,
+		"Output tokens (per 1M)": 10
+	},
+	"examples": [
+		{
+			"name": "Simple Question",
+			"description": "Basic generateContent request",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "What are the key differences between optimistic and pessimistic concurrency control in distributed systems?"
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "In distributed systems, concurrency control mechanisms ensure that multiple nodes can access and modify shared data simultaneously without violating data integrity (ACID properties). \n\nThe choice between **Pessimistic Concurrency Control (PCC)** and **Optimistic Concurrency Control (OCC)** comes down to a fundamental philosophical question: *How likely is it that two nodes will try to change the same data at the exact same time?*\n\nHere are the key differences between the two approaches in a distributed context.\n\n---\n\n### 1. Core Philosophy\n*   **Pessimistic (PCC):** Assumes conflicts are **frequent**. It prevents conflicts before they happen by blocking other transactions from accessing the data currently being used. Philosophy: *\"Ask for permission.\"*\n*   **Optimistic (OCC):** Assumes conflicts are **rare**. It allows transactions to proceed without locking resources and only checks for conflicts right before committing the data. Philosophy: *\"Ask for forgiveness.\"*\n\n### 2. Mechanism of Action\n*   **Pessimistic:** Uses **Distributed Locks** (e.g., Two-Phase Locking, or 2PL). \n    1. A node requests a lock on a record from a lock manager (or via consensus).\n    2. Once acquired, it reads, modifies, and writes the data.\n    3. It releases the lock. Other nodes must wait in a queue until the lock is released.\n*   **Optimistic:** Uses **Timestamps or Version Numbers** (e.g., Multi-Version Concurrency Control, or MVCC).\n    1. **Read Phase:** A node reads the data and its version number into a local workspace.\n    2. **Modify Phase:** The node makes changes locally.\n    3. **Validate & Write Phase:** The node checks if the shared data’s version number has changed since the Read Phase. If it hasn't, it commits and increments the version. If it *has* changed (a conflict occurred), the transaction is aborted and must be retried.\n\n### 3. Impact of Network Latency (The Distributed Factor)\nIn a single-node database, locks take microseconds. In a distributed system, locks require network round-trips, which take milliseconds. This magnifies the differences:\n*   **Pessimistic:** Holding a lock over a network is expensive. If Node A locks a row and experiences a network delay, Nodes B, C, and D are completely blocked. This drastically reduces system throughput.\n*   **Optimistic:** Because there are no locks, nodes do not wait on network round-trips from other nodes to read or process data. Network overhead is only incurred during the final validation phase, leading to much higher throughput in low-conflict scenarios.\n\n### 4. Failure Modes: Deadlocks vs. Starvation\n*   **Pessimistic (Deadlocks):** Because nodes hold locks while waiting for other locks, **distributed deadlocks** are a major risk (Node A waits for Node B, while Node B waits for Node A). Detecting and resolving deadlocks across a network is complex and resource-intensive. Furthermore, if a node crashes while holding a lock, the system stalls until a timeout occurs.\n*   **Optimistic (Starvation/Live-locks):** OCC is deadlock-free because no locks are held. However, it suffers from **wasted work**. If contention is high, transactions will constantly fail validation and roll back. A long-running transaction might be repeatedly aborted by shorter transactions, leading to \"starvation\" (never being able to complete).\n\n### 5. Performance Under Contention\n*   **High Contention (Many writes to the same data):** **PCC wins.** Although nodes have to wait in line, every transaction that gets a lock is guaranteed to succeed. In OCC, high contention leads to a \"retry storm,\" where the network is flooded with aborted transactions trying to run again.\n*   **Low Contention (Read-heavy, or writes to different data):** **OCC wins.** Transactions fly through the system without the heavy overhead of acquiring and releasing distributed locks. \n\n---\n\n### Summary Comparison Table\n\n| Feature | Pessimistic Concurrency (PCC) | Optimistic Concurrency (OCC) |\n| :--- | :--- | :--- |\n| **Conflict Assumption** | Conflicts are likely. | Conflicts are rare. |\n| **When is conflict detected?** | When requesting access to data. | At the very end, before committing. |\n| **Conflict Resolution** | Block/Wait until the lock is free. | Abort/Rollback and retry the transaction. |\n| **Primary Overhead** | Lock management and network wait times. | Wasted compute/network on rollbacks. |\n| **Major Risk** | Distributed Deadlocks & Node Crashes. | Transaction Starvation & Retry Storms. |\n| **Best Workload** | Write-heavy, high contention. | Read-heavy, low contention. |\n\n### Real-World Distributed Examples\n*   **Pessimistic:** Financial ledgers (preventing double-spending), ticket/inventory booking systems (where 1,000 users try to buy the last concert ticket simultaneously). *Tech: Google Cloud Spanner (uses Paxos and 2PL for writes), Apache ZooKeeper (for distributed locking).*\n*   **Optimistic:** Content management systems, Wikipedia, e-commerce product catalogs, and most microservices APIs (using HTTP `ETags` for optimistic locking). *Tech: CockroachDB (uses Timestamp Ordering), Amazon DynamoDB (supports conditional writes/optimistic locking).*"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "In distributed systems, concurrency control mechanisms ensure that multiple nodes can access and modify shared data simultaneously without violating data integrity (ACID properties). \n\nThe choice between **Pessimistic Concurrency Control (PCC)** and **Optimistic Concurrency Control (OCC)** comes down to a fundamental philosophical question: *How likely is it that two nodes will try to change the same data at the exact same time?*\n\nHere are the key differences between the two approaches in a distributed context.\n\n---\n\n### 1. Core Philosophy\n*   **Pessimistic (PCC):** Assumes conflicts are **frequent**. It prevents conflicts before they happen by blocking other transactions from accessing the data currently being used. Philosophy: *\"Ask for permission.\"*\n*   **Optimistic (OCC):** Assumes conflicts are **rare**. It allows transactions to proceed without locking resources and only checks for conflicts right before committing the data. Philosophy: *\"Ask for forgiveness.\"*\n\n### 2. Mechanism of Action\n*   **Pessimistic:** Uses **Distributed Locks** (e.g., Two-Phase Locking, or 2PL). \n    1. A node requests a lock on a record from a lock manager (or via consensus).\n    2. Once acquired, it reads, modifies, and writes the data.\n    3. It releases the lock. Other nodes must wait in a queue until the lock is released.\n*   **Optimistic:** Uses **Timestamps or Version Numbers** (e.g., Multi-Version Concurrency Control, or MVCC).\n    1. **Read Phase:** A node reads the data and its version number into a local workspace.\n    2. **Modify Phase:** The node makes changes locally.\n    3. **Validate & Write Phase:** The node checks if the shared data’s version number has changed since the Read Phase. If it hasn't, it commits and increments the version. If it *has* changed (a conflict occurred), the transaction is aborted and must be retried.\n\n### 3. Impact of Network Latency (The Distributed Factor)\nIn a single-node database, locks take microseconds. In a distributed system, locks require network round-trips, which take milliseconds. This magnifies the differences:\n*   **Pessimistic:** Holding a lock over a network is expensive. If Node A locks a row and experiences a network delay, Nodes B, C, and D are completely blocked. This drastically reduces system throughput.\n*   **Optimistic:** Because there are no locks, nodes do not wait on network round-trips from other nodes to read or process data. Network overhead is only incurred during the final validation phase, leading to much higher throughput in low-conflict scenarios.\n\n### 4. Failure Modes: Deadlocks vs. Starvation\n*   **Pessimistic (Deadlocks):** Because nodes hold locks while waiting for other locks, **distributed deadlocks** are a major risk (Node A waits for Node B, while Node B waits for Node A). Detecting and resolving deadlocks across a network is complex and resource-intensive. Furthermore, if a node crashes while holding a lock, the system stalls until a timeout occurs.\n*   **Optimistic (Starvation/Live-locks):** OCC is deadlock-free because no locks are held. However, it suffers from **wasted work**. If contention is high, transactions will constantly fail validation and roll back. A long-running transaction might be repeatedly aborted by shorter transactions, leading to \"starvation\" (never being able to complete).\n\n### 5. Performance Under Contention\n*   **High Contention (Many writes to the same data):** **PCC wins.** Although nodes have to wait in line, every transaction that gets a lock is guaranteed to succeed. In OCC, high contention leads to a \"retry storm,\" where the network is flooded with aborted transactions trying to run again.\n*   **Low Contention (Read-heavy, or writes to different data):** **OCC wins.** Transactions fly through the system without the heavy overhead of acquiring and releasing distributed locks. \n\n---\n\n### Summary Comparison Table\n\n| Feature | Pessimistic Concurrency (PCC) | Optimistic Concurrency (OCC) |\n| :--- | :--- | :--- |\n| **Conflict Assumption** | Conflicts are likely. | Conflicts are rare. |\n| **When is conflict detected?** | When requesting access to data. | At the very end, before committing. |\n| **Conflict Resolution** | Block/Wait until the lock is free. | Abort/Rollback and retry the transaction. |\n| **Primary Overhead** | Lock management and network wait times. | Wasted compute/network on rollbacks. |\n| **Major Risk** | Distributed Deadlocks & Node Crashes. | Transaction Starvation & Retry Storms. |\n| **Best Workload** | Write-heavy, high contention. | Read-heavy, low contention. |\n\n### Real-World Distributed Examples\n*   **Pessimistic:** Financial ledgers (preventing double-spending), ticket/inventory booking systems (where 1,000 users try to buy the last concert ticket simultaneously). *Tech: Google Cloud Spanner (uses Paxos and 2PL for writes), Apache ZooKeeper (for distributed locking).*\n*   **Optimistic:** Content management systems, Wikipedia, e-commerce product catalogs, and most microservices APIs (using HTTP `ETags` for optimistic locking). *Tech: CockroachDB (uses Timestamp Ordering), Amazon DynamoDB (supports conditional writes/optimistic locking).*",
+									"thoughtSignature": "AY89a1+B/ZlSIwm2seo+oToVuzFZ5gjCKXjrIWKdFu30/x3yV+dRnCO9o7n92KLTY3Q+yNN4+qz1hJ/uneonSSCnmL+wmT8GAGquO9yknltULvbJEQ=="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 46,
+					"candidatesTokenCount": 1151,
+					"totalTokenCount": 1197,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 46
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 1151
+						}
+					]
+				},
+				"modelVersion": "gemini-4-argon",
+				"createTime": "2026-10-13T17:07:24.709810Z",
+				"responseId": "TGXOarKpK_2p8sYPuKPGoQI"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-4-argon',\n  {\n    contents: [\n      {\n        parts: [\n          {\n            text: 'What are the key differences between optimistic and pessimistic concurrency control in distributed systems?',\n          },\n        ],\n        role: 'user',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-4-argon\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"What are the key differences between optimistic and pessimistic concurrency control in distributed systems?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Agentic Coding",
+			"description": "Coding task with a system instruction",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "Write a Python function that merges two sorted lists into one sorted list."
+							}
+						],
+						"role": "user"
+					}
+				],
+				"systemInstruction": {
+					"parts": [
+						{
+							"text": "You are an expert software engineering agent. Write concise, correct, well-documented code."
+						}
+					]
+				}
+			},
+			"output": {
+				"text": "Here are the two best ways to merge two sorted lists in Python: one using the standard library (recommended for production) and one using the classic two-pointer algorithm (common in interviews).\n\n### 1. The Pythonic Way (Recommended)\nPython’s built-in `heapq.merge` is specifically designed for this. It is implemented in C, making it fast and memory-efficient.\n\n```python\nimport heapq\nfrom typing import List, TypeVar\n\nT = TypeVar(\"T\")\n\n\ndef merge_sorted_lists(list1: List[T], list2: List[T]) -> List[T]:\n    \"\"\"Merges two sorted lists into a single sorted list using heapq.\n\n    Time Complexity: O(n + m)\n    Space Complexity: O(n + m) to store the resulting list.\n    \"\"\"\n    return list(heapq.merge(list1, list2))\n\n\n# Example usage:\n# print(merge_sorted_lists([1, 3, 5], [2, 4, 6]))  # Output: [1, 2, 3, 4, 5, 6]\n```\n\n### 2. The Algorithmic Way (Two-Pointer Approach)\nIf you are in a coding interview and cannot use built-in libraries, use the two-pointer approach.\n\n```python\nfrom typing import List, TypeVar\n\nT = TypeVar(\"T\")\n\n\ndef merge_sorted_lists_manual(list1: List[T], list2: List[T]) -> List[T]:\n    \"\"\"Merges two sorted lists into a single sorted list using two pointers.\n\n    Args:\n        list1: The first sorted list.\n        list2: The second sorted list.\n\n    Returns:\n        A new sorted list containing all elements from list1 and list2.\n\n    Time Complexity: O(n + m) where n and m are the lengths of the lists.\n    Space Complexity: O(n + m) for the output list.\n    \"\"\"\n    merged = []\n    i, j = 0, 0\n    len1, len2 = len(list1), len(list2)\n\n    # Traverse both lists and append the smaller element\n    while i < len1 and j < len2:\n        if list1[i] <= list2[j]:\n            merged.append(list1[i])\n            i += 1\n        else:\n            merged.append(list2[j])\n            j += 1\n\n    # Append any remaining elements (only one of these will execute)\n    merged.extend(list1[i:])\n    merged.extend(list2[j:])\n\n    return merged\n\n\n# Example usage:\n# print(merge_sorted_lists_manual([1, 3, 5], [2, 4, 6, 8]))  # Output: [1, 2, 3, 4, 5, 6, 8]\n```\n\n*Note: For very small lists, `sorted(list1 + list2)` is also very fast in Python because Python's built-in Timsort algorithm is optimized to detect already-sorted subsections, giving it $O(n + m)$ performance in this specific case.*"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "Here are the two best ways to merge two sorted lists in Python: one using the standard library (recommended for production) and one using the classic two-pointer algorithm (common in interviews).\n\n### 1. The Pythonic Way (Recommended)\nPython’s built-in `heapq.merge` is specifically designed for this. It is implemented in C, making it fast and memory-efficient.\n\n```python\nimport heapq\nfrom typing import List, TypeVar\n\nT = TypeVar(\"T\")\n\n\ndef merge_sorted_lists(list1: List[T], list2: List[T]) -> List[T]:\n    \"\"\"Merges two sorted lists into a single sorted list using heapq.\n\n    Time Complexity: O(n + m)\n    Space Complexity: O(n + m) to store the resulting list.\n    \"\"\"\n    return list(heapq.merge(list1, list2))\n\n\n# Example usage:\n# print(merge_sorted_lists([1, 3, 5], [2, 4, 6]))  # Output: [1, 2, 3, 4, 5, 6]\n```\n\n### 2. The Algorithmic Way (Two-Pointer Approach)\nIf you are in a coding interview and cannot use built-in libraries, use the two-pointer approach.\n\n```python\nfrom typing import List, TypeVar\n\nT = TypeVar(\"T\")\n\n\ndef merge_sorted_lists_manual(list1: List[T], list2: List[T]) -> List[T]:\n    \"\"\"Merges two sorted lists into a single sorted list using two pointers.\n\n    Args:\n        list1: The first sorted list.\n        list2: The second sorted list.\n\n    Returns:\n        A new sorted list containing all elements from list1 and list2.\n\n    Time Complexity: O(n + m) where n and m are the lengths of the lists.\n    Space Complexity: O(n + m) for the output list.\n    \"\"\"\n    merged = []\n    i, j = 0, 0\n    len1, len2 = len(list1), len(list2)\n\n    # Traverse both lists and append the smaller element\n    while i < len1 and j < len2:\n        if list1[i] <= list2[j]:\n            merged.append(list1[i])\n            i += 1\n        else:\n            merged.append(list2[j])\n            j += 1\n\n    # Append any remaining elements (only one of these will execute)\n    merged.extend(list1[i:])\n    merged.extend(list2[j:])\n\n    return merged\n\n\n# Example usage:\n# print(merge_sorted_lists_manual([1, 3, 5], [2, 4, 6, 8]))  # Output: [1, 2, 3, 4, 5, 6, 8]\n```\n\n*Note: For very small lists, `sorted(list1 + list2)` is also very fast in Python because Python's built-in Timsort algorithm is optimized to detect already-sorted subsections, giving it $O(n + m)$ performance in this specific case.*",
+									"thoughtSignature": "AY89a1+/LrK2jXxLmBaHprRBVeDNnI475SQ66hmgm0NAESde+zMoKWM25WR7J+tZyCu7245dEioqKBKXMg/oF8/iXUehMAw9jEXuwL4MyN9GhOjFXw=="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 68,
+					"candidatesTokenCount": 715,
+					"totalTokenCount": 783,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 68
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 715
+						}
+					]
+				},
+				"modelVersion": "gemini-4-argon",
+				"createTime": "2026-10-13T17:07:38.420541Z",
+				"responseId": "WmXOar3VGZ2skPsPzIu6wAY"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-4-argon',\n  {\n    contents: [\n      {\n        parts: [\n          { text: 'Write a Python function that merges two sorted lists into one sorted list.' },\n        ],\n        role: 'user',\n      },\n    ],\n    systemInstruction: {\n      parts: [\n        {\n          text: 'You are an expert software engineering agent. Write concise, correct, well-documented code.',\n        },\n      ],\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-4-argon\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"Write a Python function that merges two sorted lists into one sorted list.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"systemInstruction\": {\n      \"parts\": [\n        {\n          \"text\": \"You are an expert software engineering agent. Write concise, correct, well-documented code.\"\n        }\n      ]\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-turn Conversation",
+			"description": "Continuing a multi-step coding conversation, typical of an agentic loop",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "I have a bug where my recursive fibonacci function is too slow for n=40."
+							}
+						],
+						"role": "user"
+					},
+					{
+						"parts": [
+							{
+								"text": "That's expected with naive recursion since it recomputes overlapping subproblems exponentially. You can fix it with memoization or an iterative approach. Which would you like to see?"
+							}
+						],
+						"role": "model"
+					},
+					{
+						"parts": [
+							{
+								"text": "Show me the memoized version."
+							}
+						],
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "Here is how to fix it using memoization. Since you didn't specify a language, here are examples in Python and JavaScript (let me know if you are using something else).\n\n### Python\n\nIn Python, the easiest way is to use the built-in `@lru_cache` (or `@cache` in Python 3.9+) decorator. It automatically stores the results of previous function calls.\n\n```python\nfrom functools import lru_cache\n\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\n\nprint(fib(40))  # Runs instantly: 102334155\n```\n\n**Manual approach (without imports):**\nYou can also pass a dictionary to store the results manually.\n\n```python\ndef fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n\n    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)\n    return memo[n]\n\n\nprint(fib(40))  # 102334155\n```\n\n### JavaScript\n\nIn JavaScript, you can pass an object (`memo`) as a default parameter to cache the results.\n\n```javascript\nfunction fib(n, memo = {}) {\n    if (n in memo) return memo[n];\n    if (n <= 1) return n;\n    \n    memo[n] = fib(n - 1, memo) + fib(n - 2, memo);\n    return memo[n];\n}\n\nconsole.log(fib(40)); // Runs instantly: 102334155\n```\n\n### Why this fixes the bug:\n* **Before (Naive):** Calculating `fib(40)` required roughly **331 million** function calls ($O(2^n)$ time complexity) because it recalculated `fib(38)`, `fib(37)`, etc., millions of times.\n* **After (Memoized):** Each number's Fibonacci value is calculated only once and then retrieved from memory. Calculating `fib(40)` now takes only **79** function calls ($O(n)$ time complexity)."
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "Here is how to fix it using memoization. Since you didn't specify a language, here are examples in Python and JavaScript (let me know if you are using something else).\n\n### Python\n\nIn Python, the easiest way is to use the built-in `@lru_cache` (or `@cache` in Python 3.9+) decorator. It automatically stores the results of previous function calls.\n\n```python\nfrom functools import lru_cache\n\n\n@lru_cache(maxsize=None)\ndef fib(n):\n    if n <= 1:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\n\nprint(fib(40))  # Runs instantly: 102334155\n```\n\n**Manual approach (without imports):**\nYou can also pass a dictionary to store the results manually.\n\n```python\ndef fib(n, memo={}):\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n\n    memo[n] = fib(n - 1, memo) + fib(n - 2, memo)\n    return memo[n]\n\n\nprint(fib(40))  # 102334155\n```\n\n### JavaScript\n\nIn JavaScript, you can pass an object (`memo`) as a default parameter to cache the results.\n\n```javascript\nfunction fib(n, memo = {}) {\n    if (n in memo) return memo[n];\n    if (n <= 1) return n;\n    \n    memo[n] = fib(n - 1, memo) + fib(n - 2, memo);\n    return memo[n];\n}\n\nconsole.log(fib(40)); // Runs instantly: 102334155\n```\n\n### Why this fixes the bug:\n* **Before (Naive):** Calculating `fib(40)` required roughly **331 million** function calls ($O(2^n)$ time complexity) because it recalculated `fib(38)`, `fib(37)`, etc., millions of times.\n* **After (Memoized):** Each number's Fibonacci value is calculated only once and then retrieved from memory. Calculating `fib(40)` now takes only **79** function calls ($O(n)$ time complexity).",
+									"thoughtSignature": "AY89a1/uBOBhQ0qUKNEsYwE4H9cWHXsKJeFhfnYkTwwTCLxszJv1hhQupgjY78MG1tiB7lewI70d3pD8vELzR5yam/Fy84daQ/NRt0Y1wlj/ZWq11A=="
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 101,
+					"candidatesTokenCount": 522,
+					"totalTokenCount": 623,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 101
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 522
+						}
+					]
+				},
+				"modelVersion": "gemini-4-argon",
+				"createTime": "2026-10-13T17:07:44.524175Z",
+				"responseId": "YGXOao__H8mn8sYPvI7UuAU"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-4-argon',\n  {\n    contents: [\n      {\n        parts: [{ text: 'I have a bug where my recursive fibonacci function is too slow for n=40.' }],\n        role: 'user',\n      },\n      {\n        parts: [\n          {\n            text: \"That's expected with naive recursion since it recomputes overlapping subproblems exponentially. You can fix it with memoization or an iterative approach. Which would you like to see?\",\n          },\n        ],\n        role: 'model',\n      },\n      { parts: [{ text: 'Show me the memoized version.' }], role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-4-argon\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"I have a bug where my recursive fibonacci function is too slow for n=40.\"\n          }\n        ],\n        \"role\": \"user\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"That'\\''s expected with naive recursion since it recomputes overlapping subproblems exponentially. You can fix it with memoization or an iterative approach. Which would you like to see?\"\n          }\n        ],\n        \"role\": \"model\"\n      },\n      {\n        \"parts\": [\n          {\n            \"text\": \"Show me the memoized version.\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Spatial Reasoning",
+			"description": "A reasoning-heavy puzzle with the thinking level set to HIGH",
+			"input": {
+				"contents": [
+					{
+						"parts": [
+							{
+								"text": "A cube is painted red on all faces, then cut into 27 equal smaller cubes. How many of the smaller cubes have exactly two red faces?"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"generationConfig": {
+					"thinkingConfig": {
+						"thinkingLevel": "HIGH"
+					}
+				}
+			},
+			"output": {
+				"text": "There are **12** smaller cubes that have exactly two red faces.\n\nHere is the breakdown of why:\n\nSince the large cube is cut into 27 equal smaller cubes, it is divided into a **3 x 3 x 3 grid** (just like a standard Rubik's Cube). \n\nThe smaller cubes can be categorized by their position on the original large cube:\n*   **3 red faces (Corners):** A cube has 8 corners, so there are **8** of these.\n*   **2 red faces (Edges):** These are the cubes in the middle of each edge, between the corners. A cube has 12 edges, and since it is a 3x3x3 grid, there is 1 middle cube per edge. (12 edges × 1 cube = **12**).\n*   **1 red face (Centers):** These are in the very center of each of the 6 faces. (6 faces × 1 center cube = **6**).\n*   **0 red faces (Core):** This is the single cube hidden in the very center of the large cube (**1**).\n\n*(Total: 8 + 12 + 6 + 1 = 27 cubes)*"
+			},
+			"raw_response": {
+				"candidates": [
+					{
+						"content": {
+							"role": "model",
+							"parts": [
+								{
+									"text": "There are **12** smaller cubes that have exactly two red faces.\n\nHere is the breakdown of why:\n\nSince the large cube is cut into 27 equal smaller cubes, it is divided into a **3 x 3 x 3 grid** (just like a standard Rubik's Cube). \n\nThe smaller cubes can be categorized by their position on the original large cube:\n*   **3 red faces (Corners):** A cube has 8 corners, so there are **8** of these.\n*   **2 red faces (Edges):** These are the cubes in the middle of each edge, between the corners. A cube has 12 edges, and since it is a 3x3x3 grid, there is 1 middle cube per edge. (12 edges × 1 cube = **12**).\n*   **1 red face (Centers):** These are in the very center of each of the 6 faces. (6 faces × 1 center cube = **6**).\n*   **0 red faces (Core):** This is the single cube hidden in the very center of the large cube (**1**).\n\n*(Total: 8 + 12 + 6 + 1 = 27 cubes)*",
+									"thoughtSignature": "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"
+								}
+							]
+						},
+						"finishReason": "STOP"
+					}
+				],
+				"usageMetadata": {
+					"promptTokenCount": 62,
+					"candidatesTokenCount": 266,
+					"totalTokenCount": 1152,
+					"trafficType": "ON_DEMAND",
+					"promptTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 62
+						}
+					],
+					"candidatesTokensDetails": [
+						{
+							"modality": "TEXT",
+							"tokenCount": 266
+						}
+					],
+					"thoughtsTokenCount": 824
+				},
+				"modelVersion": "gemini-4-argon",
+				"createTime": "2026-10-13T17:07:50.028403Z",
+				"responseId": "ZmXOavPdAbyt8sYPi8rYkAE"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-4-argon',\n  {\n    contents: [\n      {\n        parts: [\n          {\n            text: 'A cube is painted red on all faces, then cut into 27 equal smaller cubes. How many of the smaller cubes have exactly two red faces?',\n          },\n        ],\n        role: 'user',\n      },\n    ],\n    generationConfig: { thinkingConfig: { thinkingLevel: 'HIGH' } },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-4-argon\",\n  \"input\": {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"A cube is painted red on all faces, then cut into 27 equal smaller cubes. How many of the smaller cubes have exactly two red faces?\"\n          }\n        ],\n        \"role\": \"user\"\n      }\n    ],\n    \"generationConfig\": {\n      \"thinkingConfig\": {\n        \"thinkingLevel\": \"HIGH\"\n      }\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/4-argon",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Default thinking level": "medium",
+		"Output per request": "65,536 tokens (up to 1,048,576 with long decodes)"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 10,
+				"input_cached_tokens": 0.1
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-13 17:41:34",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"contents": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"model"
+										]
+									},
+									"parts": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"text": {
+													"type": "string"
+												}
+											},
+											"additionalProperties": {}
+										}
+									}
+								},
+								"required": [
+									"parts"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"systemInstruction": {
+							"type": "object",
+							"properties": {
+								"parts": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"text": {
+												"type": "string"
+											}
+										},
+										"additionalProperties": {}
+									}
+								}
+							},
+							"required": [
+								"parts"
+							],
+							"additionalProperties": {}
+						},
+						"generationConfig": {
+							"type": "object",
+							"properties": {
+								"temperature": {
+									"type": "number"
+								},
+								"topP": {
+									"type": "number"
+								},
+								"topK": {
+									"type": "number"
+								},
+								"maxOutputTokens": {
+									"type": "number"
+								},
+								"candidateCount": {
+									"type": "number"
+								},
+								"stopSequences": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"responseMimeType": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"safetySettings": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"category": {
+										"type": "string"
+									},
+									"threshold": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"category",
+									"threshold"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"toolConfig": {}
+					},
+					"required": [
+						"contents"
+					],
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"candidates": {
+							"type": "array",
+							"items": {}
+						},
+						"usageMetadata": {
+							"type": "object",
+							"properties": {
+								"promptTokenCount": {
+									"type": "number"
+								},
+								"candidatesTokenCount": {
+									"type": "number"
+								},
+								"totalTokenCount": {
+									"type": "number"
+								}
+							},
+							"additionalProperties": {}
+						},
+						"modelVersion": {
+							"type": "string"
+						}
+					},
+					"additionalProperties": {},
+					"title": "Generate Content"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}
