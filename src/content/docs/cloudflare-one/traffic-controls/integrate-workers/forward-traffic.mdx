@@ -51,6 +51,7 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 
 ## Prerequisites
 
+- Have a [Cloudflare account](/fundamentals/account/create-account/) with Workers set up. If you have not used Workers before, follow the [Workers getting started guide](/workers/get-started/guide/). Use the same account for Workers and Gateway.
 - Set up [Gateway HTTP filtering](/cloudflare-one/traffic-controls/get-started/http/) and route your test device's traffic through Gateway.
 - Enable [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) and install a trusted [root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) for HTTPS traffic.
 - Use a deployed Worker in the same Cloudflare account as your Gateway policy. Configure a [Workers subdomain](/workers/configuration/routing/workers-dev/) for the account. The Worker does not need a public route.
