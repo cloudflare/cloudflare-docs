@@ -36,11 +36,13 @@ title: <TITLE>
 description: <ONE_SENTENCE_SUMMARY>
 products:
   - <PRODUCT>
-date: <YYYY-MM-DD>
+date: <YYYY-MM-DDTHH:MM:SSZ>
 ---
 ```
 
 The `products` field is optional — the changelog folder name is automatically added as a product reference. Add `products` only when the entry should appear under additional product changelogs beyond the folder product.
+
+For every new entry, set `date` to the current UTC date and time as an ISO 8601 timestamp ending in `Z` (for example, `2026-10-14T17:42:00Z`). Do not use a date-only value. The complete timestamp ensures that entries published on the same day sort newest first; the rendered changelog still displays only the calendar date. For a scheduled entry, use its intended UTC publication time. When editing an existing entry, preserve its original `date` unless the user specifically asks to change its publication date.
 
 ## Writing style
 
@@ -88,7 +90,7 @@ When updating an existing changelog entry, preserve the original structure and v
 
 When reviewing, validate against every section above: frontmatter fields, file path conventions, writing style, code example quality, and documentation links. Flag issues by severity:
 
-- **Error**: Missing required frontmatter fields, wrong product folder, broken links
+- **Error**: Missing required frontmatter fields, a date-only `date` on a new entry, a non-UTC timestamp, wrong product folder, broken links
 - **Warning**: Style violations, missing code examples for API changes, vague descriptions
 - **Nit**: Minor phrasing improvements
 
