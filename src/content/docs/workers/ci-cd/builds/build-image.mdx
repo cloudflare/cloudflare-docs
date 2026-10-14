@@ -45,12 +45,18 @@ The build image preinstalls Node.js 22.23.3 and 24.21.0.
 | **uv**      | 0.12.10          |                      |
 | **bundler** | 2.6.9            |                      |
 
-:::caution[npm 11 and pnpm 10 default updates]
-On January 14, 2027, Workers Builds will update npm from 10.9.2 to 11.19.0 and pnpm from 9.10.0 to 10.34.6. These major updates may affect dependency installation.
+:::caution[npm 12 and pnpm 12 default updates]
+On January 14, 2027, Workers Builds will update npm from 10.9.2 to the latest tested npm 12 release. Workers Builds will also update pnpm from 9.10.0 to the latest tested pnpm 12 release. These major updates may affect dependency installation.
 
-To test or upgrade to npm 11 before the default changes, set `"packageManager": "npm@11.19.0"` in `package.json`. To test or upgrade to pnpm 10, set the `PNPM_VERSION` build variable to `10.34.6`.
+To test with the current npm 12 release, set `"packageManager": "npm@12.2.0"` in `package.json`. To test with the current pnpm 12 release, set the `PNPM_VERSION` build variable to `12.11.2`.
 
-pnpm 10 prevents dependencies from running lifecycle scripts unless you explicitly approve them. If a dependency requires a `preinstall`, `install`, or `postinstall` script, run [`pnpm approve-builds`](https://pnpm.io/10.x/cli/approve-builds) locally. Approve the dependencies you trust, then commit the resulting `pnpm-workspace.yaml` changes.
+npm 12 prevents dependencies from running lifecycle scripts unless you explicitly approve them. If your build requires these scripts, run [`npm install-scripts approve <PACKAGE>`](https://docs.npmjs.com/cli/v12/commands/npm-install-scripts) locally for the dependencies you trust. Commit the resulting `package.json` changes, then run `npm rebuild`.
+
+npm 12 also blocks Git and remote URL dependencies by default. If your project intentionally uses these dependencies, configure [`allow-git` or `allow-remote`](https://docs.npmjs.com/cli/v12/using-npm/config#allow-git) in your project `.npmrc` file. npm 12 rejects unknown configuration settings and command flags instead of warning about them.
+
+pnpm 12 also prevents dependencies from running lifecycle scripts unless you explicitly approve them. If your build requires these scripts, run [`pnpm approve-builds`](https://pnpm.io/12.x/cli/approve-builds) locally, approve the dependencies you trust, and commit the resulting `pnpm-workspace.yaml` changes.
+
+pnpm 12 resolves GitHub, GitLab, and Bitbucket dependencies through canonical HTTPS URLs. To use SSH access for private repositories, [skip automatic dependency installation](/workers/ci-cd/builds/build-image/#skip-dependency-install). Configure Git URL rewriting before running `pnpm install` in your build command.
 
 After the change, you can continue using npm 10 by setting `"packageManager": "npm@10.9.2"` in `package.json`. To continue using pnpm 9, set `PNPM_VERSION` to `9.10.0`.
 :::
