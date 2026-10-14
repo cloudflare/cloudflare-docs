@@ -29,3 +29,23 @@ Below is a list of Workers AI errors.
 | Aborted                               | `3008`            | `408`         | Request was aborted                                                                                                                                  |
 | Account limited                       | `3036`            | `429`         | You have used up your daily free allocation of 10,000 neurons. Please upgrade to Cloudflare's Workers Paid plan if you would like to continue usage. |
 | Out of capacity                       | `3040`            | `429`         | `Capacity temporarily exceeded, please try again.` Also returned when `rejectIfBusy` rejects a request because capacity is unavailable.              |
+| Inference failure                     | `5026`            | `500`         | Internal inference failure. May indicate a capacity issue, internal timeout, or transient fault. Retry the request, or set `rejectIfBusy: true` in your inference parameters to receive an immediate `429` instead of waiting in queue. |
+
+## Request queuing and the rejectIfBusy option
+
+When Workers AI is at capacity, the behavior depends on whether `rejectIfBusy` is set in your inference parameters:
+
+- **Without `rejectIfBusy` (default):** Requests are **queued** until capacity becomes available. This can cause significant pre-header latency — the request appears to hang before any response headers are returned. If the queued request exceeds the timeout threshold, it is aborted with error code `3008`.
+- **With `rejectIfBusy: true`:** Requests that cannot be served immediately are rejected at once with HTTP `429` and error code `3040`. Use this when you prefer fast failure over waiting.
+
+To set `rejectIfBusy`, pass it as an inference parameter:
+
+```js
+const response = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
+  messages: [{ role: "user", content: "Hello" }],
+}, { rejectIfBusy: true });
+```
+
+## AI Gateway logging for direct REST calls
+
+Requests made directly to the Workers AI REST API — without routing through [AI Gateway](/ai-gateway/) — do not appear in AI Gateway logs. If you rely on AI Gateway for observability, request tracing, or caching, route your requests through an AI Gateway endpoint rather than calling the Workers AI API directly.
