@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/core/meeting-object-explained.mdx
+  s_d79556356365cb::t_f642dd92c68055 32,86,140,365,423,884,966,978,990,1063,1079,1104,1129,1262,1291,1313,1335,1437,1635
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "51c37f6ec26134a9fdb53dffa99fa27d0afdce29",
+  "prompts": {},
+  "sessions": {
+    "s_d79556356365cb": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "comet-delphinium",
+        "model": "unknown"
+      },
+      "human_author": "Aman Kumar <amankumar@cloudflare.com>"
+    }
+  }
+}
