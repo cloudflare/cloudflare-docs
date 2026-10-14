@@ -53,6 +53,8 @@ If visitors on a specific network consistently reach a distant data center and s
 
 Support can review the network path and raise it with Cloudflare's network team where appropriate. A routing change is not guaranteed, because it depends on the ISP's routing policies. Affected visitors can also report the issue to their ISP.
 
+If visitors on a specific network cannot reach Cloudflare and their requests time out without a `cf-ray` header, refer to [Potential ISP blocking of Cloudflare IP addresses](/support/troubleshooting/general-troubleshooting/potential-isp-blocking/).
+
 ### My traceroute shows traffic entering Cloudflare in one city, but the cf-ray value shows another. Why?
 
 Traffic can enter Cloudflare's network at one location and be processed at another. A traceroute ending at a nearby Cloudflare location shows where the traffic entered the network, while the three-letter code at the end of [`cf-ray`](/fundamentals/reference/http-headers/#cf-ray) identifies the data center that processed the request. These are not always the same location, and traffic entering near a visitor does not guarantee that it is processed at the nearest data center.
