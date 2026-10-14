@@ -1,6 +1,6 @@
 ---
 title: OpenCode
-description: Run OpenCode 2.0 in a plain Durable Object with the Agents SDK, Workers AI models, bundled plugins, and durable sessions.
+description: Run OpenCode 2.0 in a plain Durable Object with the Agents SDK, Workers AI and AI Gateway models, bundled plugins, and durable sessions.
 pcx_content_type: overview
 sidebar:
   order: 11
@@ -18,7 +18,7 @@ import {
 
 [OpenCode](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its Workerd SDK inside a plain Durable Object. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
 
-OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCodeHarness` supplies SQLite storage and wakes the object after an interrupted run. The `agents/models/opencode` provider connects OpenCode to Workers AI through your `AI` binding.
+OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCodeHarness` supplies SQLite storage and wakes the object after an interrupted run. The `agents/models/opencode` provider connects OpenCode to Workers AI models, [AI Gateway](/ai-gateway/) catalog models, and dynamic routes through your `AI` binding.
 
 <CopyPromptButton
 	tooltip="Build and deploy an OpenCode agent"
@@ -40,7 +40,7 @@ flowchart LR
         host <--> sqlite[("SQLite: opencode_ tables")]
         host <--> plugins["Bundled plugins"]
     end
-    host --> ai["Workers AI binding"]
+    host --> ai["AI binding"]
     plugins --> mcp["Remote MCP server"]
     plugins --> workspace["External execution environment"]
 ```
@@ -52,7 +52,7 @@ flowchart LR
 | Capability                                     | Support                                                  |
 | ---------------------------------------------- | -------------------------------------------------------- |
 | Durable sessions and interrupted-turn recovery | OpenCode persists state; Lifecycle jobs wake the object. |
-| Workers AI models                              | Register the `agents/models/opencode` plugin.            |
+| Workers AI and AI Gateway models               | Register the `agents/models/opencode` plugin.            |
 | Custom tools, agents, and skills               | Bundle OpenCode plugins with your Worker.                |
 | Remote Model Context Protocol (MCP) servers    | Register remote servers through a plugin.                |
 | Live events and durable event replay           | Use `session.events()` and `session.log()`.              |
@@ -65,7 +65,7 @@ Install the Agents SDK and OpenCode packages:
 
 Use `agents` version 0.28.1 or later. The OpenCode packages are optional peer dependencies, required by this integration, with a supported range of `^2.0.24`.
 
-Add the Workers AI binding, a SQLite-backed Durable Object, and `nodejs_compat` to your Wrangler configuration:
+Add the `AI` binding, a SQLite-backed Durable Object, and `nodejs_compat` to your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -172,11 +172,25 @@ export default {
 
 </TypeScriptExample>
 
-Pass the factory's `storage` to `OpenCodeWorkerd.create()` so OpenCode uses the prefixed database. Register `this.ai.plugin` to make the Workers AI models available. `models: { fetch: false }` skips OpenCode's external model catalog refresh; the provider registers models you name with `this.ai()`.
+Pass the factory's `storage` to `OpenCodeWorkerd.create()` so OpenCode uses the prefixed database. Register `this.ai.plugin` to add a provider named "Cloudflare" (id `cloudflare`) to OpenCode. `models: { fetch: false }` skips OpenCode's external model catalog refresh. The provider registers the models you name with `this.ai()`.
 
 The Lifecycle manages host startup. The factory runs again when the harness reopens an idle host, so it must support repeated calls.
 
 The `"demo"` object name is for this example. In an application, choose an object name based on an authenticated user or conversation.
+
+## Choose a model
+
+`this.ai()` takes the same model ids as the [AI SDK provider](/agents/models/ai-sdk/), and accepts its model options:
+
+```ts
+this.ai("@cf/moonshotai/kimi-k2.7-code"); // Workers AI
+this.ai("anthropic/claude-opus-4.8"); // AI Gateway catalog
+this.ai("dynamic/support"); // AI Gateway dynamic route
+```
+
+A catalog id uses the [model catalog](/ai/models/)'s spelling, such as `anthropic/claude-opus-4.8`. A dynamic route belongs to one gateway, so pass that gateway's `id` to `createAI`. An id that is not one of these three forms throws a `TypeError` on the line that names it. Streams from catalog models and dynamic routes [resume after a dropped connection](/agents/models/ai-sdk/#resume-a-dropped-stream).
+
+Each call returns OpenCode's model reference, `{ providerID, id }`. Pass it to `defaults.model` or `session.setModel()`. To set how OpenCode budgets a model's context, pass `limit: { context, output }`. The default is 128,000 context tokens and 8,192 output tokens.
 
 ## Send prompts
 
