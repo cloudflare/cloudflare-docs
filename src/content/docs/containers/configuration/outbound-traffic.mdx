@@ -313,6 +313,10 @@ If you set `enableInternet = false`, that traffic is denied. DNS lookups never r
 
 Other lookups time out. For the exact rules, refer to [`interceptOutboundHttp`](/containers/api/durable-object-container/#interceptoutboundhttp).
 
+The draft [Tailscale guide](/containers/guides/connect-to-tailscale/) uses `ctx.container.start({ image, enableInternet: true })` with `durable_object` scheduling and no HTTP interception. That configuration allows Tailscale's outbound transport; the proposed TUN and split-DNS setup still needs engineering confirmation and a deployed test.
+
+HTTP interception does not carry a private Postgres TCP connection or supply the tailnet's restricted nameserver. Do not copy an HTTP-only coding-agent configuration with `enableInternet: false` unchanged. Inside the Tailscale overlay, use tailnet permissions to restrict DNS and Postgres access. HTTP host filters do not inspect or restrict the destinations carried inside that encrypted overlay. Setting `enableInternet: true` also permits public Internet egress.
+
 ## Change policies at runtime
 
 Use `outboundHandlers` to define named handlers, then assign them to specific hosts at runtime using `setOutboundByHost()`. You can also apply a handler globally with `setOutboundHandler()`.

@@ -107,6 +107,12 @@ This location will again be the nearest location to the originating request with
 
 Each container instance runs in a Firecracker microVM with its own kernel and network. No other workload on the Cloudflare network shares that kernel. Your image runs as a Linux container inside the VM.
 
+:::caution[Draft — TUN support awaiting engineering review]
+Kernel-mode Tailscale requires a usable `/dev/net/tun`, the `TUNSETIFF` operation, interface configuration, and route installation. These capabilities and their differences between `default` and `durable_object` scheduling are awaiting engineering confirmation. Refer to the draft [Connect to Tailscale](/containers/guides/connect-to-tailscale/#configuration-and-scope) for the configuration under review. Do not infer support from the presence of a device file alone.
+:::
+
+Containers using `durable_object` scheduling cannot enable IP forwarding. A client initiating its own connections, including through an existing subnet router, does not forward traffic for other machines. Acting as a subnet router or exit node requires forwarding and is outside the client configuration described in the guide.
+
 Containers should be built for the `linux/amd64` architecture, and should stay within
 [size limits](/containers/platform/limits/).
 
