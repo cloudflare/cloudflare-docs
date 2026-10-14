@@ -76,7 +76,7 @@ export default {
 `ai.stream()` returns Pi AI's `AssistantMessageEvent` stream. `ai.completeSimple()` and `ai.streamSimple()` take Pi AI's simple options, such as a `reasoning` level and `maxTokens`:
 
 ```ts
-const model = ai("anthropic/claude-opus-4.8");
+const model = ai("anthropic/claude-opus-5.5");
 const context = {
 	messages: [{ role: "user", content: "Hi", timestamp: Date.now() }],
 };
@@ -107,18 +107,18 @@ ai("@cf/zai-org/glm-4.7-flash");
 ai("dynamic/support");
 
 // 3. A model from Pi AI's Cloudflare AI Gateway catalog, by <provider>/<id>.
-ai("anthropic/claude-opus-4.8");
+ai("anthropic/claude-opus-5.5");
 ai("openai/gpt-5.4");
 
 // 4. Any Pi AI model object, from any Pi AI registry.
-ai(getBuiltinModel("anthropic", "claude-opus-4-8"));
+ai(getBuiltinModel("anthropic", "claude-opus-5-5"));
 ```
 
 Any other string throws a `TypeError`. The provider does not guess what a prefix means.
 
 A [dynamic route](/ai-gateway/features/dynamic-routing/) runs on `env.AI.run()` under the gateway you created it on, so set that gateway's `id`. The route picks the model and answers in the chat completions format. It takes the same metadata defaults and overrides as a Workers AI id.
 
-A catalog id uses the gateway's spelling (`anthropic/claude-opus-4.8`). A model object from a vendor registry uses the vendor's spelling (`claude-opus-4-8`).
+A catalog id uses the gateway's spelling (`anthropic/claude-opus-5.5`). A model object from a vendor registry uses the vendor's spelling (`claude-opus-5-5`).
 
 The third and fourth forms keep Pi AI's model metadata, including `api`, `compat`, `thinkingLevelMap`, cost, context window, and maximum tokens. That metadata decides how each vendor is asked to think. For example, Claude Opus gets `thinking: { type: "adaptive" }` and GPT-5 gets `reasoning.effort`. `ai(model)` does not change the object you pass.
 
@@ -140,12 +140,12 @@ models.setProvider(ai.provider);
 // defaults: { model: ai("@cf/moonshotai/kimi-k2.7-code") }
 
 // For one session:
-await session.setModel(ai("anthropic/claude-opus-4.8"));
+await session.setModel(ai("anthropic/claude-opus-5.5"));
 ```
 
 A Pi session stores only its model's provider and id, then looks the model up in the `Models` registry. Use the `@cf/`, `dynamic/`, and `<provider>/<id>` forms there. They belong to the `cloudflare` provider (`CLOUDFLARE_PROVIDER_ID`) that you registered. A model object keeps its vendor's provider id, which this registry does not know. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
 
-The provider's model list is every Workers AI model Pi AI knows, plus every `<provider>/<id>` in Pi AI's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-4.8")` resolves.
+The provider's model list is every Workers AI model Pi AI knows, plus every `<provider>/<id>` in Pi AI's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-5.5")` resolves.
 
 ## Cache, tag, and time out requests
 
@@ -154,7 +154,7 @@ Gateway options go on `createAI`, on a model, or on a call. They can be flat or 
 ```ts
 const ai = createAI({ binding: env.AI, id: "prod", cacheTtl: 60 });
 
-const model = ai("anthropic/claude-opus-4.8", {
+const model = ai("anthropic/claude-opus-5.5", {
 	cacheTtl: 3600,
 	cacheKey: "greeting-v1",
 	metadata: { team: "growth" },
@@ -178,7 +178,7 @@ A Pi AI model is plain data. Per-model options are stored on it under symbol key
 ## Fall back to another model
 
 ```ts
-ai(getBuiltinModel("anthropic", "claude-opus-4-8"), {
+ai(getBuiltinModel("anthropic", "claude-opus-5-5"), {
 	fallback: ["@cf/zai-org/glm-4.7-flash"],
 });
 ```
