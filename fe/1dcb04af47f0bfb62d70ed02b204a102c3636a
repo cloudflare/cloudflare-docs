@@ -1,0 +1,48 @@
+src/content/docs/k2/get-started/index.mdx
+  s_76ad8b2ea376aa::t_57e9c8fa8e16b5 3-12,14-27,29-257,259-325
+  s_76ad8b2ea376aa::t_3c923f9b950989 28
+  s_76ad8b2ea376aa::t_b37ab8c8219512 258
+  s_76ad8b2ea376aa::t_1c9f47df93e3ea 1-2
+  s_76ad8b2ea376aa::t_9c2482afd998a5 13
+  s_76ad8b2ea376aa::t_9a08082db70969 326-328
+src/content/docs/k2/platform/index.mdx
+  s_76ad8b2ea376aa::t_b122482a733367 8
+  s_76ad8b2ea376aa::t_839f5def66713c 1-7,9-15
+src/content/docs/k2/concepts/index.mdx
+  s_76ad8b2ea376aa::t_d796c0a8eb6d10 1-10
+  s_76ad8b2ea376aa::t_c4565a2519408a 11-13
+src/content/docs/k2/platform/limits.mdx
+  s_76ad8b2ea376aa::t_fd35467136bb33 3-46
+  s_76ad8b2ea376aa::t_1edb01ec2f2062 1-2
+  s_76ad8b2ea376aa::t_10331b11c60b60 47-49
+src/components/landing/BuildFromScratch.astro
+  s_9a4f3e415ad479::t_8f6af990115dac 69
+src/components/landing/sidebar-data.ts
+  s_9a4f3e415ad479::t_883cfcaf05fac0 116
+src/content/directory/k2.yaml
+  s_9a4f3e415ad479::t_c227a5fc36b60e 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fe1dcb04af47f0bfb62d70ed02b204a102c3636a",
+  "prompts": {},
+  "sessions": {
+    "s_76ad8b2ea376aa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f310453a6ffe772Bz4uTEvazXh",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_9a4f3e415ad479": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0cb2d-d0e6-7f61-8e62-b96f5728ebcf",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    }
+  }
+}
