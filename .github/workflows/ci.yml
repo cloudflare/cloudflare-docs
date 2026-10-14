@@ -134,7 +134,7 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          fetch-depth: 1
+          fetch-depth: ${{ github.event_name != 'merge_group' && 1 || 0 }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
@@ -166,6 +166,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=8192"
+          DEPLOYMENT_ENV: ${{ github.event_name == 'merge_group' && 'production' || 'preview' }}
         run: |
           set -o pipefail
           pnpm run build 2>&1 | tee build.log
@@ -176,6 +177,7 @@ jobs:
         with:
           name: dist
           path: dist
+          include-hidden-files: true
 
       - name: Tests (Workers)
         run: pnpm run test:postbuild
