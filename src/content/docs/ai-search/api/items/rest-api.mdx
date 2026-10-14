@@ -22,18 +22,21 @@ The Items API uploads files to an instance's built-in storage. For more details,
 
 ## API paths
 
-AI Search APIs are available at two base paths:
+Item APIs are scoped to a [namespace](/ai-search/concepts/namespaces/):
 
-| Path                                                                      | Description                                                                 |
-| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `/accounts/{account_id}/ai-search/instances/{id}/`                        | Operates on a specific instance                                             |
-| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on instances within a [namespace](/ai-search/concepts/namespaces/) |
+| Path                                                                      | Description                              |
+| ------------------------------------------------------------------------- | ---------------------------------------- |
+| `/accounts/{account_id}/ai-search/namespaces/{namespace}/instances/{id}/` | Operates on instances within a namespace |
 
-The available operations are the same for both paths. For the namespace-scoped API, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+Every account has a `default` namespace. Use `default` unless you created a custom namespace. For the full specification, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
 
 ## Items
 
 Upload, list, get, delete, and download items within an instance. For the full specification, refer to the [Items API reference](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/).
+
+:::note[Bulk delete is not supported]
+AI Search does not provide a bulk-delete endpoint. Items must be deleted individually using the DELETE endpoint. To delete many items, loop over them in your client and apply throttling and exponential back-off to stay within rate limits.
+:::
 
 | Operation                                                                                                                | Method   | Description                    |
 | ------------------------------------------------------------------------------------------------------------------------ | -------- | ------------------------------ |
@@ -48,7 +51,7 @@ Upload, list, get, delete, and download items within an instance. For the full s
 Upload a file to an instance:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -F "file=@/path/to/your/file.pdf"
 ```
@@ -58,14 +61,14 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 List all items in an instance:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
 To find a single item by its exact object key, pass the `key` query parameter:
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/items?key=docs/readme.md" \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
