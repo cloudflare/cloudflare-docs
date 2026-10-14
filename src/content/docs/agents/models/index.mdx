@@ -34,15 +34,15 @@ Name a model with a string, or pass a model object built by the vendor's own pac
 
 ```ts
 ai("@cf/zai-org/glm-4.7-flash"); // Workers AI
-ai("anthropic/claude-opus-4.8"); // AI Gateway catalog
+ai("anthropic/claude-opus-5.5"); // AI Gateway catalog
 ai("dynamic/support"); // AI Gateway dynamic route
-ai(anthropic("claude-opus-4-8")); // the vendor's own model object
+ai(anthropic("claude-opus-5-5")); // the vendor's own model object
 ```
 
 - **A Workers AI model** is a `@cf/` id. It runs through `env.AI.run()`. A compatibility layer turns each model's response into the standard OpenAI chat completions shape.
-- **An AI Gateway catalog model** is an `<author>/<model>` id from the [model catalog](/ai/models/), such as `anthropic/claude-opus-4.8` or `openai/gpt-5.5`. It also runs through `env.AI.run()`, which sends it to AI Gateway. The gateway picks a provider and bills the call. Use the catalog's spelling, not the vendor's: `anthropic/claude-opus-4.8`, not `claude-opus-4-8`.
+- **An AI Gateway catalog model** is an `<author>/<model>` id from the [model catalog](/ai/models/), such as `anthropic/claude-opus-5.5` or `openai/gpt-5.5`. It also runs through `env.AI.run()`, which sends it to AI Gateway. The gateway picks a provider and bills the call. Use the catalog's spelling, not the vendor's: `anthropic/claude-opus-5.5`, not `claude-opus-5-5`.
 - **A [dynamic route](/ai-gateway/features/dynamic-routing/)** is `dynamic/<route>`. The route you configured on the gateway picks the model.
-- **A model object** comes from the vendor's provider package, such as `anthropic("claude-opus-4-8")`. The vendor's code builds the request and parses the response. The provider sends that request unchanged through the binding to AI Gateway's [provider-native endpoint](/ai-gateway/usage/providers/) for that vendor.
+- **A model object** comes from the vendor's provider package, such as `anthropic("claude-opus-5-5")`. The vendor's code builds the request and parses the response. The provider sends that request unchanged through the binding to AI Gateway's [provider-native endpoint](/ai-gateway/usage/providers/) for that vendor.
 
 The providers do not use the deprecated [Universal Endpoint](/ai-gateway/usage/universal/).
 
@@ -54,7 +54,7 @@ The providers do not use the deprecated [Universal Endpoint](/ai-gateway/usage/u
 - **Stream resume.** A stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything.
 - **Gateway metadata on every result.** Each response carries the gateway log id, cache status, run id, and the model that actually answered.
 
-`createAI` from `agents/models/ai-sdk` replaces the `AI` binding mode of `workers-ai-provider` (`createWorkersAI({ binding })`) and `ai-gateway-provider` (`createAiGateway({ binding })`), which are deprecated.
+`createAI` from `agents/models/ai-sdk` replaces the `AI` binding mode of `workers-ai-provider` (`createWorkersAI({ binding })`) and `ai-gateway-provider` (`createAiGateway({ binding })`). Those packages will be deprecated once `createAI` covers everything they do.
 
 ## Configure the binding
 

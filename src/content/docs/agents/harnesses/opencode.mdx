@@ -184,11 +184,11 @@ The `"demo"` object name is for this example. In an application, choose an objec
 
 ```ts
 this.ai("@cf/moonshotai/kimi-k2.7-code"); // Workers AI
-this.ai("anthropic/claude-opus-4.8"); // AI Gateway catalog
+this.ai("anthropic/claude-opus-5.5"); // AI Gateway catalog
 this.ai("dynamic/support"); // AI Gateway dynamic route
 ```
 
-A catalog id uses the [model catalog](/ai/models/)'s spelling, such as `anthropic/claude-opus-4.8`. A dynamic route belongs to one gateway, so pass that gateway's `id` to `createAI`. An id that is not one of these three forms throws a `TypeError` on the line that names it. Streams from catalog models and dynamic routes [resume after a dropped connection](/agents/models/ai-sdk/#resume-a-dropped-stream).
+A catalog id uses the [model catalog](/ai/models/)'s spelling, such as `anthropic/claude-opus-5.5`. A dynamic route belongs to one gateway, so pass that gateway's `id` to `createAI`. An id that is not one of these three forms throws a `TypeError` on the line that names it. Streams from catalog models and dynamic routes [resume after a dropped connection](/agents/models/ai-sdk/#resume-a-dropped-stream).
 
 Each call returns OpenCode's model reference, `{ providerID, id }`. Pass it to `defaults.model` or `session.setModel()`. To set how OpenCode budgets a model's context, pass `limit: { context, output }`. The default is 128,000 context tokens and 8,192 output tokens.
 
