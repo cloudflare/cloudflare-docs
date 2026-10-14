@@ -177,13 +177,25 @@ jobs:
           name: dist
           path: dist
 
-      - name: Upload Nimbus link data
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
-        with:
-          name: nimbus
-          path: .nimbus
-          include-hidden-files: true
-          if-no-files-found: error
+      - name: Tests (Workers)
+        run: pnpm run test:postbuild
+
+      # Lint steps use `!cancelled()` so a lint failure doesn't skip the
+      # others. The report step is the gate: it prints the findings and fails.
+      - name: Run Nimbus lint
+        id: nimbus-lint
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: |
+          set +e
+          pnpm exec nimbus-docs lint --format json > "$RUNNER_TEMP/nimbus-lint.json"
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check internal links
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          LINT_EXIT_CODE: ${{ steps.nimbus-lint.outputs.exit_code }}
+        run: pnpm exec tsx bin/nimbus-lint-report.ts "$RUNNER_TEMP/nimbus-lint.json"
 
       - name: Upload build log
         if: always()
@@ -193,70 +205,9 @@ jobs:
           path: build.log
           if-no-files-found: ignore
 
-  post-build:
-    name: Post Build
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          fetch-depth: 1
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
-        with:
-          version: 11.28.2
-
-      - name: Set up node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
-        id: setup-node
-        with:
-          node-version: 24.x
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: dist
-          path: dist
-
-      - name: Tests (Workers)
-        run: pnpm run test:postbuild
-
-      # Lint steps use `!cancelled()` so a lint failure doesn't skip the
-      # others. The report step is the gate: it prints the findings and fails.
-      - name: Download Nimbus link data
-        if: ${{ !cancelled() }}
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: nimbus
-          path: .nimbus
-
-      - name: Run Nimbus lint
-        id: nimbus-lint
-        if: ${{ !cancelled() }}
-        run: |
-          set +e
-          pnpm exec nimbus-docs lint --format json > "$RUNNER_TEMP/nimbus-lint.json"
-          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
-          exit 0
-
-      - name: Check internal links
-        if: ${{ !cancelled() }}
-        env:
-          LINT_EXIT_CODE: ${{ steps.nimbus-lint.outputs.exit_code }}
-        run: pnpm exec tsx bin/nimbus-lint-report.ts "$RUNNER_TEMP/nimbus-lint.json"
-
   notify:
     name: Notify
-    needs: [pre-build, post-build]
+    needs: [pre-build, build]
     if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
@@ -292,7 +243,7 @@ jobs:
   publish-preview:
     name: Deploy Preview
     needs: build
-    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true'
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
