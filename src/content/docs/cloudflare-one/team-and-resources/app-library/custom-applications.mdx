@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { DashButton, Steps } from "~/components";
+import { Steps } from "~/components";
 
 Create a custom application to identify an internal service or an application that is not in the Cloudflare-managed catalog. Custom applications belong to your account and appear alongside Cloudflare-managed applications in the App Library. You can use them in [DNS](/cloudflare-one/traffic-controls/dns-policies/#application), [HTTP](/cloudflare-one/traffic-controls/http-policies/#application), and [Network](/cloudflare-one/traffic-controls/network-policies/#application) policies with the existing **Application** selector.
 
@@ -16,10 +16,7 @@ Create a custom application to identify an internal service or an application th
 
 <Steps>
 
-1. Go to **Zero Trust** > **Team & Resources** > **Application library**.
-
-   <DashButton url="/?to=/:account/team-resources/application-library" zeroTrust />
-
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Application library**.
 2. Select **Add custom application**.
 3. Enter an **Application name** and **Application ID**, and select a **Category**. The Application ID field contains a human-readable identifier generated from the name, which you can change before saving. Cloudflare also assigns a numeric application ID for use in Gateway rule expressions.
 4. In **Network identifiers**, enter at least one **Hostname** or **IP subnet**. You can include both hostnames and IP subnets in the same application.
