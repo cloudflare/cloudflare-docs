@@ -1496,7 +1496,7 @@ This pattern does not scale. As traffic increases, the single Durable Object bec
 
 ### Do not reschedule alarms without a delay and a stop condition
 
-If `alarm()` calls `setAlarm()` with the current time or a time in the past, the alarm runs again immediately. If the condition that caused the reschedule does not change, the handler reschedules itself again. This creates an alarm loop.
+If `alarm()` calls `setAlarm()` with the current time or a time in the past, the alarm is rescheduled to run immediately. If the condition that caused the reschedule does not change, the handler reschedules itself again. This creates an alarm loop.
 
 A single Durable Object in an alarm loop can run its alarm hundreds of times per second. The alarm is stored with the object, so the loop continues across evictions and deployments. It stops only when the handler stops rescheduling or the alarm is deleted.
 
@@ -1511,7 +1511,7 @@ Compute duration stays relatively low, because a looping object is billed as one
 To prevent alarm loops:
 
 - **Enforce a minimum delay when you reschedule from `alarm()`.** Route every reschedule through one helper that clamps the time to at least `Date.now()` plus a minimum delay.
-- **Back off on failure.** Increase the delay after each failed attempt instead of retrying at a fixed short interval.
+- **Back off for retried operations.** Increase the delay after each failed attempt instead of retrying at a fixed short interval.
 - **Stop at a deadline.** Base it on state the object already stores, such as when the work became due. Unlike an in-memory counter, this survives eviction and needs no extra storage writes. `alarmInfo.retryCount` does not count alarms you schedule yourself.
 - **Return without rescheduling when there is no work.** An alarm handler does not need to call `setAlarm()` on every run.
 - **Test the next alarm time.** Refer to [Test that alarms reschedule safely](/durable-objects/examples/testing-with-durable-objects/#test-that-alarms-reschedule-safely).
@@ -1557,7 +1557,7 @@ export class Session extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-Instead, enforce a minimum delay, back off on failure, and stop at a deadline. The following example derives both the backoff and the deadline from `refreshAt`, so retries need no extra storage writes:
+Instead, enforce a minimum delay, back off for retried operations, and stop at a deadline. The following example derives both the backoff and the deadline from `refreshAt`, so retries need no extra storage writes:
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -1604,8 +1604,10 @@ export class Session extends DurableObject<Env> {
 			return;
 		}
 
-		// Back off: wait about as long as the refresh has been failing
-		await this.rescheduleAlarm(Date.now() + Math.min(overdueMs, MAX_DELAY_MS));
+		// Back off: wait one to two times as long as the refresh has been failing.
+		// The random factor spreads out retries from objects that fail at the same time.
+		const backoff = overdueMs * (1.0 + Math.random());
+		await this.rescheduleAlarm(Date.now() + Math.min(backoff, MAX_DELAY_MS));
 	}
 
 	// Every reschedule from alarm() goes through this helper
