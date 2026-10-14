@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-description: Application Library in Zero Trust.
+description: View and manage applications in Cloudflare One, including custom applications.
 products:
   - cloudflare-one
 title: Application Library
@@ -17,6 +17,8 @@ The Application Library allows users to manage their SaaS applications in Cloudf
 To access the App Library in the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Application library**. Each application card will list the number of hostnames associated with the application, the supported Cloudflare One product usage, and the [app type](/cloudflare-one/traffic-controls/application-app-types/#app-types).
 
 The App Library groups [Do Not Inspect applications](/cloudflare-one/traffic-controls/application-app-types/#do-not-inspect-applications) within the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**. Traffic that does not match a known application will not be included in the App Library.
+
+You can also [create custom applications](/cloudflare-one/team-and-resources/app-library/custom-applications/) to identify internal services or applications that are not in the Cloudflare-managed catalog. Use custom applications in [DNS](/cloudflare-one/traffic-controls/dns-policies/#application), [HTTP](/cloudflare-one/traffic-controls/http-policies/#application), and [Network](/cloudflare-one/traffic-controls/network-policies/#application) policies with the existing **Application** selector.
 
 ## View application details
 

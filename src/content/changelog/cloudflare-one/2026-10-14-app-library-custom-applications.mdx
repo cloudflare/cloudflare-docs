@@ -1,0 +1,18 @@
+---
+title: Application Library now supports custom applications
+description: Create custom applications in the Application Library and reference them in Gateway DNS, Network, and HTTP policies.
+products:
+  - cloudflare-one
+  - gateway
+date: 2026-10-14
+---
+
+Starting today, you can create [custom applications](/cloudflare-one/team-and-resources/app-library/custom-applications/) in the [Application Library](/cloudflare-one/team-and-resources/app-library/) and reference them in Gateway DNS, Network, and HTTP policies. You can define an application with hostnames, IP subnets, or both. Then, optionally add TCP or UDP ports or port ranges to restrict HTTP and Network matching.
+
+![Custom application form with a name, application ID, category, two hostnames, and a TCP port 443 constraint](~/assets/images/changelog/cloudflare-one/custom-application-create.png)
+
+This release also improves search and filtering in the Application Library, updates the interfaces, data, and metrics used to review applications, and makes it easier to select and manage applications in the Gateway policy builder.
+
+![Gateway HTTP policy builder with a custom application selected in the Application selector under the Artificial Intelligence category](~/assets/images/changelog/cloudflare-one/custom-application-gateway-policy-builder.png)
+
+For more information, refer to [Custom applications](/cloudflare-one/team-and-resources/app-library/custom-applications/) and [Applications and app types](/cloudflare-one/traffic-controls/application-app-types/).
