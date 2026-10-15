@@ -1,18 +1,39 @@
 ---
-title: Workers tracing now surfaces warning attributes on spans
-description: Workers tracing attaches `cloudflare.warning.type` and `cloudflare.warning.message` attributes to spans when a non-fatal telemetry error condition is encountered, such as a span that was never closed.
+title: Workers Observability now surfaces warning attributes on spans for non-fatal errors
+description: Workers Observability now adds warning attributes to spans to help identify non-fatal telemetry issues.
 products:
   - workers
 date: 2026-07-07
 ---
 
-Workers tracing may now attach warning attributes to a span when a non-fatal error condition is encountered while recording telemetry for that span. These are diagnostic indicators about the span's telemetry state — for example, a span that was created but never closed before its parent invocation span ended.
+import { TypeScriptExample } from "~/components";
+
+Workers Observability now attaches warning attributes to spans for non-fatal telemetry issues. These attributes help you identify instrumentation issues.
 
 When a warning is present, both attributes are set together:
 
-- `cloudflare.warning.type` — A closed-set identifier indicating the type of warning condition. The currently defined value is `span_not_ended`, which indicates the span was still open when its parent invocation span closed and was force-closed by Workers tracing.
+- `cloudflare.warning.type` — An identifier indicating the type of warning condition.
 - `cloudflare.warning.message` — A free-form, human-readable explanation of the warning condition.
 
-Use these attributes to detect instrumentation issues in your Workers, such as spans that are started but never ended.
+For example, recording an entire webhook payload as a span attribute can exceed the span data limit:
+
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    const payload = await request.text();
+
+    return ctx.tracing.enterSpan("receive-webhook", (span) => {
+      span.setAttribute("webhook.payload", payload);
+      return new Response("Accepted", { status: 202 });
+    });
+  },
+};
+```
+
+</TypeScriptExample>
+
+The Worker still returns `202 Accepted`, but tracing drops the oversized attribute. The span includes `cloudflare.warning.type` set to `span_data_limit_exceeded` and a `cloudflare.warning.message` identifying the rejected attribute and its size. Record a payload size or event identifier instead of the full payload to keep span data within the limit.
 
 For more information, refer to [Warning attributes](/workers/observability/traces/spans-and-attributes/#warning-attributes).
