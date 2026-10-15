@@ -8,19 +8,21 @@ products:
   - realtime
 ---
 
-A human participant joins a meeting with the [RealtimeKit SDKs](/realtime/realtimekit/humans/sdk-selection/). An agent joins with the [Agent WebSocket](/realtime/realtimekit/agents/get-started/). This page compares what each can do once it is in the meeting.
+A human participant joins a meeting with the [RealtimeKit SDKs](/realtime/realtimekit/humans/sdk-selection/). An agent joins with the [Agent WebSocket](/realtime/realtimekit/agents/get-started/). The table compares what each can do once it is in the meeting.
 
-The agent is receive-only. It can listen to meeting events, but it cannot send audio, video, or messages. To act on a meeting from your backend, call the [RealtimeKit REST API](/api/resources/realtime_kit/).
+:::note
+Agents can only receive meeting events today. Sending is planned, and those capabilities are marked explicitly below.
+:::
 
-| Capability                                                                                                  | Human | Agent |
-| ----------------------------------------------------------------------------------------------------------- | ----- | ----- |
-| Receive live transcripts                                                                                    | ✅    | ✅    |
-| Receive participant joins and leaves                                                                        | ✅    | ✅    |
-| Receive [broadcasts](/realtime/realtimekit/collaboration/message-broadcast/)                                | ✅    | ✅    |
-| Send broadcasts                                                                                             | ✅    | No    |
-| Send or receive audio, video, and screen share                                                              | ✅    | No    |
-| Send or receive chat and polls                                                                              | ✅    | No    |
-| Use plugins and the [meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/) | ✅    | No    |
-| Meeting controls, such as stage, removing participants, and recording                                       | ✅    | No    |
+| Capability                                                                                                  | Human | Agent        |
+| ----------------------------------------------------------------------------------------------------------- | ----- | ------------ |
+| Receive live transcripts                                                                                    | ✅    | ✅           |
+| Receive participant joins and leaves                                                                        | ✅    | ✅           |
+| Receive [broadcasts](/realtime/realtimekit/collaboration/message-broadcast/)                                | ✅    | ✅           |
+| Send broadcasts                                                                                             | ✅    | No (Planned) |
+| Send or receive audio, video, and screen share                                                              | ✅    | No (Planned) |
+| Send or receive chat and polls                                                                              | ✅    | No (Planned) |
+| Use plugins and the [meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/) | ✅    | No           |
+| Meeting controls, such as stage, removing participants, and recording                                       | ✅    | No           |
 
 For what the agent receives, refer to [Events](/realtime/realtimekit/agents/events/).
