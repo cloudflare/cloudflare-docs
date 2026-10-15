@@ -1,25 +1,31 @@
 /**
- * Clears per-PR review state (diffs/pr-*) from the local R2 bucket — review
- * JSONs, pending rendezvous namespaces, auto-review counters, and ignore-limit
- * flags. Leaves Durable Object run history intact.
+ * Clears per-PR review state from the local R2 bucket: v2 state and run
+ * artifacts under reviews/v2/pr-*, plus legacy diffs/pr-* flags.
  *
  * For a full local reset (Durable Objects + R2), stop the dev server and run
  * `pnpm run flue:reset:local` instead — that is what reclaims the multi-GB DO
  * SQLite state that accumulates across runs.
  *
  * Usage:
- *   pnpm flue:clear-r2-pr-data:local   (--local flag, uses wrangler dev state)
+ *   pnpm flue:clear-r2-pr-data:local -- --local [--pr <number>]
  */
 import { execFileSync } from "node:child_process";
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const isLocal = process.argv.includes("--local");
+const prIndex = process.argv.indexOf("--pr");
+const pr = prIndex === -1 ? undefined : process.argv[prIndex + 1];
 
 if (!isLocal) {
 	console.error(
 		"Only --local is supported. Use the Cloudflare dashboard to manage remote R2 data.",
 	);
+	process.exit(1);
+}
+
+if (pr !== undefined && !/^\d+$/.test(pr)) {
+	console.error("--pr must be a pull request number.");
 	process.exit(1);
 }
 
@@ -64,10 +70,10 @@ if (dbPaths.length === 0) {
 	process.exit(1);
 }
 
-// Scope to PR-specific keys only: diffs/pr-* (review JSONs, pending rendezvous
-// namespaces, counters, ignore-limit flags). The broader 'diffs/%' pattern
-// would also delete any future non-PR keys stored under diffs/.
-const WHERE = "key LIKE 'diffs/pr-%'";
+// Scope to PR-specific v2 review data and legacy flags only.
+const WHERE = pr
+	? `(key LIKE 'reviews/v2/pr-${pr}/%' OR key LIKE 'diffs/pr-${pr}/%')`
+	: "(key LIKE 'reviews/v2/pr-%' OR key LIKE 'diffs/pr-%')";
 
 let total = 0;
 for (const dbPath of dbPaths) {

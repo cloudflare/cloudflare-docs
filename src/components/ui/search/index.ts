@@ -1,1 +1,1 @@
-export { default as DocSearch } from "./DocSearch.astro";
+export { default as Search } from "./Search.astro";

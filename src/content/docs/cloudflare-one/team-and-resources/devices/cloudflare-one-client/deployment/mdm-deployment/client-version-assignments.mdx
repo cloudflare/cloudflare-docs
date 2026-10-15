@@ -47,7 +47,7 @@ When you save a deployment group, the Cloudflare API pushes the assignment to ev
 2. If the versions differ, downloads the target installer and verifies its cryptographic signature.
 3. Runs the installer silently and resumes normal operation once the new version is in place.
 
-The client coordinates the install through a separate persistent OS service that ships alongside the existing service in client version `2026.6.0` and later. If any step fails — download, signature verification, or install — the device stays on its previous version and remains functional.
+The client coordinates the install through a separate persistent OS service that ships alongside the existing service in client version `2026.6.0` and later. The signed-in user does not need administrator privileges to upgrade or downgrade the client because the client and updater services already run with the privileges required to install the assigned version. If any step fails — download, signature verification, or install — the device stays on its previous version and remains functional.
 
 :::note
 

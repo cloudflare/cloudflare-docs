@@ -10,7 +10,7 @@ tags:
   - Redirects
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 URL forwarding, also known as URL redirection, navigates the user from a source URL to a target URL with a specific HTTP status code.
 
@@ -38,7 +38,12 @@ Single Redirects and Bulk Redirects are available on all Cloudflare plans. The e
 
 ### Bulk redirects
 
-<FeatureTable id="rules.bulk_redirects" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Bulk Redirect Rules | 15 | 15 | 15 | 50 |
+| Bulk Redirect Lists | 5 | 5 | 5 | 25 |
+| URL redirects across lists | 10,000 | 25,000 | 50,000 | 1,000,000 |
 
 For _URL redirects across lists_, this table provides the default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
 
@@ -46,7 +51,12 @@ Bulk Redirects features and quotas are per account and they depend on the highes
 
 ### Single Redirects
 
-<FeatureTable id="rules.single_redirects" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
+| Wildcard support | Yes | Yes | Yes | Yes |
+| Regex support | No | No | Yes | Yes |
 
 Single Redirects features and quotas are per zone and depend on the zone plan.
 

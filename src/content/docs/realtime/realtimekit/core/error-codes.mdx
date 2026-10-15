@@ -26,7 +26,7 @@ All Web Frameworks (Web Components, React, Angular) share the same error codes.
 
 - **Error message**: Failed to initialize
 - **Possible reason**: RealtimeKitClient is not getting initialized.
-- **Possible solution**: Verify if you initialized the RealtimeKitClient correctly `await RealtimeKitClient.init({ ... })`. See [RealtimeKitClient](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient). If you continue to experience issues, please reach out to Cloudflare support.
+- **Possible solution**: Verify if you initialized the RealtimeKitClient correctly `await RealtimeKitClient.init({ ... })`. See [RealtimeKitClient](/realtime/realtimekit/core/api-reference/realtimekitclient/). If you continue to experience issues, please reach out to Cloudflare support.
 
 #### Error code: 0002
 
@@ -154,7 +154,7 @@ await meeting.leave();
 
 - **Error message**: Invalid message body
 - **Possible reason**: The message body does not conform to the expected format.
-- **Possible solution**: The `Message` type is not defined correctly. See [Chat](https://docs.realtime.cloudflare.com/web-core/chat/introduction).
+- **Possible solution**: The `Message` type is not defined correctly. See [Chat](/realtime/realtimekit/core/chat/#message-type).
 
 #### Error code: 0503
 
@@ -566,13 +566,12 @@ await meeting.leave();
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android","mobile-ios","mobile-flutter","mobile-react-native"]}>
+<RTKCodeSnippet id={["mobile-android","mobile-ios","mobile-react-native"]}>
 
 :::note
 React Native shares the same error codes as Web Frameworks. Refer to the Web Frameworks tab for the complete list of error codes and solutions.
 :::
 
-All mobile platforms (iOS, Android, Flutter) share the same error codes. All fallible APIs in RealtimeKit mobile SDKs return an operation-specific error type that implements the `RtkError` interface with `code: Int` (or `ErrorCode` for iOS) and `message: String` fields.
 
 ## Meeting
 

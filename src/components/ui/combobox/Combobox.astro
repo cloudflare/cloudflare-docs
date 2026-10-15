@@ -30,7 +30,8 @@
  * Accessible name: pass `label` (visible) or `aria-label` (hidden).
  */
 import { cn } from "@/lib/cn";
-import { Icon } from "astro-icon/components";
+import { stableId } from "~/util/stable-id";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends Omit<HTMLAttributes<"div">, "size"> {
@@ -76,7 +77,14 @@ const {
 	...attrs
 } = Astro.props;
 
-const id = idProp ?? `nb-combobox-${crypto.randomUUID().slice(0, 8)}`;
+const id =
+	idProp ??
+	stableId(Astro.locals, "nb-combobox", {
+		name,
+		label,
+		ariaLabel,
+		placeholder,
+	});
 const inputId = `${id}-input`;
 const labelId = `${id}-label`;
 const listId = `${id}-list`;
@@ -102,20 +110,18 @@ const icon = {
 	class={cn("grid gap-1.5", className)}
 	{...attrs}
 >
-	{
-		label && (
-			<label
-				id={labelId}
-				for={inputId}
-				class="text-foreground text-sm font-medium select-none"
-			>
-				{label}
-				{required === false && (
-					<span class="text-muted-foreground ml-1 font-normal">(optional)</span>
-				)}
-			</label>
-		)
-	}
+	{label && (
+		<label
+			id={labelId}
+			for={inputId}
+			class="text-foreground text-sm font-medium select-none"
+		>
+			{label}
+			{required === false && (
+				<span class="text-muted-foreground ml-1 font-normal">(optional)</span>
+			)}
+		</label>
+	)}
 
 	<div class="relative">
 		<input
@@ -195,31 +201,27 @@ const icon = {
 			</div>
 		</div>
 
-		{
-			name && (
-				<input
-					type="hidden"
-					data-nb-combobox-value-input
-					name={name}
-					value={value ?? ""}
-				/>
-			)
-		}
+		{name && (
+			<input
+				type="hidden"
+				data-nb-combobox-value-input
+				name={name}
+				value={value ?? ""}
+			/>
+		)}
 	</div>
 
-	{
-		error ? (
-			<span id={errId} class="text-danger text-sm">
-				{error}
+	{error ? (
+		<span id={errId} class="text-danger text-sm">
+			{error}
+		</span>
+	) : (
+		description && (
+			<span id={descId} class="text-muted-foreground text-sm leading-snug">
+				{description}
 			</span>
-		) : (
-			description && (
-				<span id={descId} class="text-muted-foreground text-sm leading-snug">
-					{description}
-				</span>
-			)
 		)
-	}
+	)}
 </div>
 
 <script>

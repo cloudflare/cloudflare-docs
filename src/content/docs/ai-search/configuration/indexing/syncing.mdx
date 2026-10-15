@@ -20,7 +20,7 @@ You can view job status and history in the **Jobs** tab in the dashboard or usin
 
 By default, AI Search runs a sync job every 6 hours. To change how often scheduled syncs run, use the **Sync interval** setting in the dashboard, or set the `sync_interval` field when you [create](/ai-search/api/instances/workers-binding/#create) or [update](/ai-search/api/instances/workers-binding/#update) an instance through the Workers binding or [REST API](/ai-search/api/instances/rest-api/).
 
-The interval can be 1, 2, 4, 6, 12, or 24 hours. In the API, `sync_interval` is specified in seconds, so the allowed values are `3600` (1 hour), `7200` (2 hours), `14400` (4 hours), `21600` (6 hours, the default), `43200` (12 hours), and `86400` (24 hours).
+The interval can be 15 minutes, 30 minutes, 1 hour, 2 hours, 4 hours, 6 hours, 12 hours, or 24 hours. In the API, `sync_interval` is specified in seconds. The allowed values are `900`, `1800`, `3600`, `7200`, `14400`, `21600` (the default), `43200`, and `86400`.
 
 ### Trigger syncs from automated pipelines
 

@@ -8,7 +8,7 @@ products:
   - logpush
 ---
 
-import { FeatureTable, LinkButton } from "~/components"
+import { LinkButton } from "~/components"
 
 Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes.
 
@@ -21,8 +21,6 @@ Logpush only pushes logs once as they become available and cannot backfill histo
 Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 
 Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log management providers via the Cloudflare dashboard or API.
-
-Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
 
 ## Estimating log volume
 
@@ -53,12 +51,10 @@ There is currently a max limit of **4 Logpush jobs per zone**. Trying to create 
 
 ## Availability
 
-<FeatureTable id="analytics.logpush" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
 
-:::note
+Dataset availability depends on the Cloudflare products on your account. Workers Trace Events Logpush requires the [Workers Paid](/workers/platform/pricing/#workers-trace-events-logpush) plan and retains separate request-based pricing.
 
-
-Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/observability/logs/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
-
-
-:::
+For usage rates and included monthly usage, refer to [Pricing](/logs/logpush/pricing/).

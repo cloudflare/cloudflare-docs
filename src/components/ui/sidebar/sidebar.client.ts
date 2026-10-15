@@ -1,6 +1,7 @@
 /** Sidebar runtime: filter, persistence, "/" shortcut. */
 
 import { mount } from "@cloudflare/nimbus-docs/client";
+import { isEditableKeyboardTarget } from "~/util/keyboard";
 
 const STORAGE_KEY = "sidebar-state";
 
@@ -217,16 +218,7 @@ function initPersistence(root: HTMLElement): (() => void) | null {
 	document.documentElement.setAttribute("data-nb-sidebar-shortcut-bound", "");
 
 	document.addEventListener("keydown", (e) => {
-		if (e.key !== "/") return;
-		const active = document.activeElement as HTMLElement | null;
-		if (
-			active &&
-			(active.tagName === "INPUT" ||
-				active.tagName === "TEXTAREA" ||
-				active.isContentEditable)
-		) {
-			return;
-		}
+		if (e.key !== "/" || isEditableKeyboardTarget(e)) return;
 		// Prefer the on-screen filter (mobile drawer when open, else desktop).
 		// getClientRects is empty for display:none (closed dialog / hidden aside).
 		const inputs = Array.from(
@@ -238,8 +230,7 @@ function initPersistence(root: HTMLElement): (() => void) | null {
 			inputs.find((el) => el.getClientRects().length > 0) ?? inputs[0];
 		if (!target) return;
 		e.preventDefault();
-		// Reaches document before window (bubble), so this preempts DocSearch's
-		// window-level "/" handler and keeps "/" scoped to the filter.
+		// Keep "/" scoped to the sidebar filter instead of other global shortcuts.
 		e.stopPropagation();
 		target.focus();
 	});

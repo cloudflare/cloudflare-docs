@@ -1,0 +1,27 @@
+---
+title: Package Managers
+styleGuide:
+  component: PackageManagers
+description: Show commands across npm, yarn, and pnpm.
+products:
+  - style-guide
+---
+
+This component is based on the [Nimbus package manager component](https://nimbus-docs.com/components/package-managers/) and adds repository-specific support for global installs and reviewed Cloudflare CLI alternatives.
+
+```mdx
+import { PackageManagers } from "~/components";
+
+<PackageManagers pkg="wrangler" />
+
+<PackageManagers pkg="cf" global />
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy"
+	cfCommand="cf deploy"
+/>
+```
+
+Use `global` only for packages designed to be installed globally. Use `cfCommand` only for a reviewed, single-line Cloudflare CLI equivalent of a Wrangler execution command. The value must begin with `cf `. Supplying this prop displays the shared CLI selector.

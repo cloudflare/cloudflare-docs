@@ -47,6 +47,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "my-agent-app",
 	"main": "src/server.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -706,6 +707,7 @@ Define environments in the Wrangler configuration file:
 {
 	"name": "my-agent",
 	"main": "src/server.ts",
+	"upload_source_maps": true,
 
 	// Base configuration (shared)
 	"compatibility_date": "$today",
@@ -721,12 +723,18 @@ Define environments in the Wrangler configuration file:
 	"env": {
 		"staging": {
 			"name": "my-agent-staging",
+			"durable_objects": {
+				"bindings": [{ "name": "MyAgent", "class_name": "MyAgent" }],
+			},
 			"vars": {
 				"ENVIRONMENT": "staging",
 			},
 		},
 		"production": {
 			"name": "my-agent-production",
+			"durable_objects": {
+				"bindings": [{ "name": "MyAgent", "class_name": "MyAgent" }],
+			},
 			"vars": {
 				"ENVIRONMENT": "production",
 			},
@@ -753,7 +761,7 @@ npx wrangler secret put OPENAI_API_KEY --env production
 
 ### Separate Durable Objects
 
-Each environment gets its own Durable Objects. Staging agents do not share state with production agents.
+Named environments do not inherit Durable Object bindings. Repeat the bindings for each environment, as in the [multi-environment setup](#multi-environment-setup). Each environment gets its own Durable Objects. Staging agents do not share state with production agents.
 
 To explicitly separate:
 

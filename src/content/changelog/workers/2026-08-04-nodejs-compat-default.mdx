@@ -1,0 +1,42 @@
+---
+title: "Node.js compatibility is now enabled by default"
+description: Workers with a compatibility date of 2026-08-04 or later enable Node.js compatibility by default.
+products:
+  - workers
+date: 2026-08-04
+---
+
+import { WranglerConfig } from "~/components";
+
+Workers now enable the `nodejs_compat` and `nodejs_compat_v2` compatibility
+flags by default for [compatibility dates](/workers/configuration/compatibility-dates/)
+of `2026-08-04` or later. These flags are not used for these compatibility
+dates because the compatibility date enables the same behavior.
+
+This means all [Node.js built-in APIs](/workers/runtime-apis/nodejs/) supported
+by the Workers runtime are available by default, including `node:crypto`,
+`node:buffer`, `node:stream`, `node:net`, `node:dns`, `node:fs`, `node:http`,
+and more. npm packages that depend on these APIs will work without additional
+configuration.
+
+Workers using an earlier compatibility date are not affected. They can still
+opt in by adding `nodejs_compat` to `compatibility_flags`.
+
+New projects do not need to add either flag. Existing projects can update their
+compatibility date without removing them. Wrangler, Miniflare, the Cloudflare
+Vite plugin, and Vitest Pool Workers ignore these redundant flags when starting
+the runtime.
+
+To turn off Node.js compatibility completely, remove any `nodejs_compat` and
+`nodejs_compat_v2` flags. Then add both of the following flags:
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "$today"
+compatibility_flags = ["no_nodejs_compat", "no_nodejs_compat_v2"]
+```
+
+</WranglerConfig>
+
+For more information, refer to the [Node.js compatibility documentation](/workers/runtime-apis/nodejs/).

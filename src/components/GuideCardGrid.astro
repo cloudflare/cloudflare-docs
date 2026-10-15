@@ -1,0 +1,10 @@
+---
+import CornerMarks from "./CornerMarks.astro";
+---
+
+<div class="not-content border-border relative border-t border-l">
+	<CornerMarks />
+	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+		<slot />
+	</div>
+</div>

@@ -5,7 +5,7 @@ params:
   - slugifiedName
 ---
 
-import { Render } from "~/components";
+import { Aside, Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
@@ -20,6 +20,10 @@ import { Render } from "~/components";
 
 - `admin` access to a {props.environmentName}
 - Ability to [create an OAuth API endpoint for external clients](https://docs.servicenow.com/csh?topicname=t_CreateEndpointforExternalClients)
+
+<Aside type="note">
+	If a **Scope Restriction** field appears, set it to **Broadly scoped**.
+</Aside>
 
 ## Integration permissions
 

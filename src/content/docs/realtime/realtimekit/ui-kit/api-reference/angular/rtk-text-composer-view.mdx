@@ -5,6 +5,17 @@ description: API reference for rtk-text-composer-view component (Angular Library
 products:
   - realtime
 ---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-text-composer-view/rtk-text-composer-view.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
 A component which renders a text composer
 
 ## Properties
@@ -13,11 +24,11 @@ A component which renders a text composer
 |----------|------|----------|---------|-------------|
 | `disabled` | `boolean` | ✅ | - | Disable the text input (default = false) |
 | `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
-| `keyDownHandler` | `(e: KeyboardEvent)` | ✅ | - | Keydown event handler function |
+| `keyDownHandler` | `(e: KeyboardEvent) => void` | ✅ | - | Keydown event handler function |
 | `maxLength` | `number` | ✅ | - | Max length for text input |
 | `placeholder` | `string` | ✅ | - | Placeholder text |
 | `rateLimitBreached` | `boolean` | ✅ | - | Boolean to indicate if rate limit is breached |
-| `setText` | `(text: string, focus?: boolean)` | ❌ | - | Sets value of the text input |
+| `setText` | `(text: string, focus?: boolean) => Promise<void>` | ❌ | - | Sets value of the text input |
 | `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
 | `value` | `string` | ✅ | - | Default value for text input |
 
@@ -36,7 +47,7 @@ A component which renders a text composer
 <!-- component.html -->
 <rtk-text-composer-view
  [disabled]="true"
- [keyDownHandler]="(e: keyboardevent)"
+ keyDownHandler="handleEvent"
  maxLength="42">
 </rtk-text-composer-view>
 ```

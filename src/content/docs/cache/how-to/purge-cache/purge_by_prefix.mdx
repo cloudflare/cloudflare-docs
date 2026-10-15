@@ -33,7 +33,7 @@ Purging by prefix is useful in different scenarios, such as:
 3. Under **Purge by**, select **Prefix**.
 4. Follow the syntax instructions.
    * One prefix per line.
-   * Maximum 30 prefixes per API call.
+   * Maximum 100 prefixes per request.
 5. Enter the appropriate value(s) in the text field using the format shown in the example.
 6. Select **Purge**.
 
@@ -59,7 +59,7 @@ Depending on whether the upper tier has the resource or not, and whether the end
 There are several limitations regarding purge by prefix:
 
 * Path separators are limited to 31 for a prefix `(example.com/a/b/c/d/e/f/g/h/i/j/k/l/m…)`.
-* Purge requests are limited to 30 prefixes per request.
+* Purge requests are limited to 100 prefixes per request.
 * [Purge rate-limits apply](/api/resources/cache/methods/purge/).
 * URI query strings & fragments cannot purge by prefix:
   * `www.example.com/foo?a=b` (query string)

@@ -5,12 +5,12 @@
  * CF source: cloudflare-docs/src/components/RSSButton.astro
  *
  * Mapping notes:
- *   - Starlight's <Icon> is swapped for astro-icon. The Starlight icon name
- *     `rss` maps to Phosphor `ph:rss-simple`; an explicit `ph:`/`:`-qualified
- *     name passes through unchanged.
+ *   - astro-icon's <Icon> is swapped for Nimbus Icon. The Starlight icon name
+ *     `rss` maps to Phosphor `ph:rss-simple`; any other name passes through
+ *     unchanged (callers should pass a qualified `set:name` string).
  */
 import { z } from "astro/zod";
-import { Icon } from "astro-icon/components";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 const props = z
 	.object({
@@ -32,7 +32,7 @@ const props = z
 	);
 
 const input = props.parse(Astro.props);
-const iconName = input.icon.includes(":") ? input.icon : "ph:rss-simple";
+const iconName = input.icon === "rss" ? "ph:rss-simple" : input.icon;
 ---
 
 <a

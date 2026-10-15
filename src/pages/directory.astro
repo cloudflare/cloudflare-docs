@@ -8,8 +8,7 @@
  * grouped, sorted product list) is unchanged.
  */
 import { getCollection, type CollectionEntry } from "astro:content";
-// @ts-expect-error virtual module provided by astro-icon
-import iconCollection from "virtual:astro-icon";
+import iconCollection from "virtual:nimbus/icons";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Header from "~/components/Header.astro";
@@ -25,9 +24,18 @@ const products: CollectionEntry<"directory">[] = await getCollection(
 	},
 );
 
+const iconAliases: Record<string, string> = {
+	"basin-catalog": "r2-data-catalog",
+	"basin-pipelines": "pipelines",
+	"basin-sql": "r2-sql",
+};
+
 const productData: ProductData[] = products
 	.map((product) => {
-		const iconData = getIconData(iconCollection.local, product.id);
+		const iconData = getIconData(
+			iconCollection.local,
+			iconAliases[product.id] ?? product.id,
+		);
 		let icon = undefined;
 		if (iconData) {
 			icon = iconToSVG(iconData);

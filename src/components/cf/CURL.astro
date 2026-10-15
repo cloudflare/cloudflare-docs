@@ -21,7 +21,7 @@ const props = z.object({
 	method: z
 		.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
 		.default("GET"),
-	url: z.string().url(),
+	url: z.url(),
 	headers: z.record(z.string(), z.string()).default({}),
 	json: z.union([Record, z.array(Record)]).optional(),
 	form: Record.optional(),

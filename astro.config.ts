@@ -1,14 +1,13 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "astro/config";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import icon from "astro-icon";
-import skills from "astro-skills";
 import nimbus, {
 	defineConfig as defineNimbusConfig,
 } from "@cloudflare/nimbus-docs";
+import { satteri } from "@astrojs/markdown-satteri";
 import { hastPlugins } from "./src/plugins/satteri";
 import { createSitemapLastmodSerializer } from "./sitemap.serializer";
 import { isDisallowedByRobots } from "./src/util/robots";
@@ -55,7 +54,12 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 
 const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
-const serializeSitemapLastmod = createSitemapLastmodSerializer();
+// Previews build from a shallow clone, so git dates are wrong, and any
+// per-build date forces every page to be re-uploaded. `astro:env` isn't
+// available here; unset means preview, matching the env schema default.
+const serializeSitemapLastmod = createSitemapLastmodSerializer({
+	lastmod: process.env.DEPLOYMENT_ENV === "production",
+});
 
 // Mirrors production's sitemap `filter` (root astro.config.ts).
 function isExcludedFromSitemap(url: string): boolean {
@@ -84,7 +88,7 @@ const nimbusConfig = defineNimbusConfig({
 	socialImage: "/og-docs.png",
 	socialImageAlt: "Cloudflare Docs",
 	// "custom" renders the search UI slot but skips the built-in Pagefind index;
-	// Nimbus mounts Algolia DocSearch instead (see ui/search/DocSearch.astro).
+	// Nimbus mounts AI Search instead (see ui/search/Search.astro).
 	search: { provider: "custom" },
 	sidebar: {
 		items: sidebarItems,
@@ -105,8 +109,8 @@ const iconAlias = {
 		if (!pathOnly?.endsWith(".mdx") && !pathOnly?.endsWith(".md")) return null;
 		if (!/icon\s*=/.test(code)) return null;
 
-		// Starlight ships a native `seti:` file-icon set; Nimbus routes icons
-		// through astro-icon, which has no `seti` set. Map every `seti:` name the
+		// Starlight ships a native `seti:` file-icon set; Nimbus's icon system
+		// has no `seti` set. Map every `seti:` name the
 		// shared content uses onto an installed set (vscode-icons / ph /
 		// simple-icons). The substitute glyphs differ visually from Starlight's
 		// seti set — a parity item tracked for the parity gate (Epic F), not a
@@ -140,8 +144,8 @@ const iconAlias = {
 			plan: "ph:file-text",
 		};
 		// Bare icon names (no set prefix) resolve against Starlight's built-in
-		// icon set in the default build; under Nimbus they go through astro-icon
-		// (local `src/icons` + installed iconify sets). Names not present locally
+		// icon set in the default build; under Nimbus they go through the Icon
+		// component (local `src/icons` + installed iconify sets). Names not present locally
 		// are mapped here onto an installed set. Glyphs differ visually from
 		// Starlight's — a parity item for the parity gate (Epic F).
 		const BARE: Record<string, string> = {
@@ -200,17 +204,24 @@ const markdown = {
 		type: "shiki" as const,
 		excludeLangs: ["math", "mermaid"],
 	},
-	smartypants: false,
 };
 
 const integrations = [
-	icon(),
 	react(),
-	// Injects /.well-known/agent-skills/* routes (index.json, SKILL.md, tarballs).
-	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
-		markdown: { hastPlugins },
+		markdown: {
+			processor: satteri({
+				features: { smartPunctuation: false },
+				hastPlugins,
+			}),
+			// Match Render.astro: `file` is relative to `src/content/partials/<product>/`.
+			// The revision invalidates prepared Markdown assets; bump it if this mapping changes.
+			partialResolver: {
+				revision: "partial-resolver-v1",
+				resolve: ({ file, product }) => (product ? `${product}/${file}` : file),
+			},
+		},
 		validateMdx: false,
 		// Sitemap parity (T3): drop excluded URLs, stamp lastmod on the rest.
 		sitemap: {
@@ -222,17 +233,35 @@ const integrations = [
 							item as Parameters<typeof serializeSitemapLastmod>[0],
 						),
 		},
-		// Partial resolution ( <Render file="..." product="..." /> ) is handled
-		// entirely by our own Render.astro component via astro:content's
-		// `getEntry("partials", id)` — no integration-level hook needed.
 		rules: {
 			"nimbus/frontmatter-shape": "error",
 			"nimbus/image-ref": [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "error",
+			// Paths below are served by the Worker or another deployment, so the
+			// build's route list never contains them.
+			"nimbus/internal-link": [
+				"error",
+				{
+					ignore: [
+						"/api/**",
+						"/openapi.json",
+						"/.well-known/**",
+						"**/llms-full.txt",
+						"**/og.png",
+						"**/index.md",
+						// Model 404s are handled directly via custom worker/index.ts logic.
+						"/workers-ai/models/**",
+						"/ai/models/**",
+					],
+				},
+			],
+			// Reuses internal-link's `ignore` list.
+			"nimbus/redirected-link": "error",
 		},
+		// The Worker reads redirects from this file, not from `_redirects`.
+		redirectsFile: "public/__redirects",
 	}),
 ];
 
@@ -273,15 +302,27 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
-	cacheDir: ".astro-cache",
+	env: {
+		schema: {
+			DEPLOYMENT_ENV: envField.enum({
+				context: "server",
+				access: "public",
+				values: ["preview", "production"],
+				default: "preview",
+			}),
+		},
+	},
+	experimental: {
+		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
+	},
 	markdown,
 	image: {
-		service: {
-			entrypoint: "astro/assets/services/sharp",
-			config: {
-				limitInputPixels: false,
-			},
-		},
+		// /cdn-cgi/image/ only exists on Cloudflare's edge, so dev serves
+		// originals directly; production keeps edge resizing.
+		service:
+			process.env.NODE_ENV === "production"
+				? { entrypoint: "@astrojs/cloudflare/image-service" }
+				: passthroughImageService(),
 	},
 	server: {
 		port: 1111,
@@ -291,7 +332,7 @@ export default defineConfig({
 		...appVite,
 		server: {
 			watch: {
-				ignored: ["**/dist/**", "**/.astro-cache/**"],
+				ignored: ["**/dist/**"],
 			},
 		},
 	},

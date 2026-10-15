@@ -29,7 +29,7 @@ To add interactivity to your RealtimeKit recording, perform the following steps:
 
 This parameter enables you to add timed metadata to your recordings, which is made available to clients in HLS format via ID3 tags. The output files are packaged as a tar file.
 
-2. In [RealtimeKitClient](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient), call the `broadcastMessage` method with the parameters, `ID3` (as a string) and `yourData` (the data you want to send as timed metadata) on the [participants](https://docs.realtime.cloudflare.com/web-core/reference/RealtimeKitClient#module_RealtimeKitClient+participants) object.
+2. In [RealtimeKitClient](/realtime/realtimekit/core/api-reference/realtimekitclient/), call the `broadcastMessage` method with the parameters, `ID3` (as a string) and `yourData` (the data you want to send as timed metadata) on the [participants](/realtime/realtimekit/core/api-reference/realtimekitclient/#module_RealtimeKitClient+participants) object.
 
 ```ts
 meeting.participants.broadcastMessage(“ID3Data”, yourData);

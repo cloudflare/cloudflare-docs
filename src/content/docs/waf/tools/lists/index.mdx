@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { FeatureTable, Render, GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 Lists allow you to group items such as IP addresses, hostnames, or autonomous system numbers (ASNs), and reference them by name in Cloudflare [rule expressions](/ruleset-engine/rules-language/expressions/). Instead of adding each item individually to every rule that needs it, you define the group once and reuse it across rules and zones.
 
@@ -75,7 +75,14 @@ For Bulk Redirect Lists, Cloudflare returns entries where the source URL or targ
 
 List availability varies according to the list type and your Cloudflare plan and subscriptions.
 
-<FeatureTable id="global_configurations.lists" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of custom lists (any type) | 1 | 10 | 10 | 1,000 |
+| Max. number of list items (across all custom lists) | 10,000 | 10,000 | 10,000 | 500,000 |
+| IP lists | Yes | Yes | Yes | Yes |
+| Other custom lists (hostnames, ASNs) | No | No | No | Yes |
+| Managed IP Lists | No | No | No | Yes |
 
 Notes:
 

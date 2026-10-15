@@ -1,0 +1,94 @@
+---
+import RealtimeSequenceDiagram from "./RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "browser", label: "Browser participant" },
+	{ id: "worker", label: "Worker" },
+	{ id: "room", label: "Room Durable Object" },
+	{ id: "producer", label: "Producer session", tone: "blue" as const },
+	{ id: "consumer", label: "Consumer session", tone: "blue" as const },
+];
+
+const groups = [
+	{
+		label: "Trusted application boundary",
+		from: "worker",
+		to: "room",
+		tone: "accent" as const,
+	},
+	{
+		label: "Realtime SFU",
+		from: "producer",
+		to: "consumer",
+		tone: "blue" as const,
+	},
+];
+
+const events = [
+	{
+		type: "note" as const,
+		from: "browser",
+		to: "room",
+		label:
+			"Access identity + member capability · HTTP owns snapshots, SDP, and mutations",
+	},
+	{ from: "browser", to: "worker", label: "Authenticated HTTP request" },
+	{ from: "worker", to: "room", label: "Typed RPC" },
+	{ from: "room", to: "worker", label: "Tagged result", dashed: true },
+	{
+		from: "worker",
+		to: "browser",
+		label: "Authorized JSON + SDP",
+		dashed: true,
+	},
+	{
+		type: "note" as const,
+		from: "browser",
+		to: "consumer",
+		label:
+			"Separate producer and consumer PeerConnections · Separate per-session SDP queues",
+	},
+	{
+		from: "room",
+		to: "producer",
+		label: "SFU API with server credential",
+	},
+	{ from: "browser", to: "producer", label: "Publish audio + video" },
+	{
+		from: "room",
+		to: "consumer",
+		label: "SFU API with server credential",
+	},
+	{
+		from: "consumer",
+		to: "browser",
+		label: "Remote audio + video",
+		dashed: true,
+	},
+	{
+		from: "browser",
+		to: "worker",
+		label: "WebSocket upgrade + single-use ticket",
+	},
+	{ from: "worker", to: "room", label: "fetch() for upgrade only" },
+	{
+		from: "room",
+		to: "browser",
+		label: "room-changed revision",
+		dashed: true,
+	},
+	{
+		type: "note" as const,
+		from: "browser",
+		to: "room",
+		label: "Notification triggers an authorized HTTP snapshot",
+	},
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="A browser participant authenticates through a Worker and Room Durable Object. The application manages separate producer and consumer sessions with Realtime SFU, while a WebSocket notification tells the browser when to fetch a new authorized room snapshot."
+	participants={participants}
+	events={events}
+	groups={groups}
+/>

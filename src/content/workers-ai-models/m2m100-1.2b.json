@@ -1,15 +1,5 @@
 {
-    "id": "617e7ec3-bf8d-4088-a863-4f89582d91b5",
-    "source": 1,
     "name": "@cf/meta/m2m100-1.2b",
-    "description": "Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation",
-    "task": {
-        "id": "f57d07cb-9087-487a-bbbf-bc3e17fecc4b",
-        "name": "Translation",
-        "description": "Translation models convert a sequence of text from one language to another."
-    },
-    "created_at": "2023-09-25 19:21:11.898",
-    "tags": [],
     "properties": [
         {
             "property_id": "async_queue",
@@ -20,12 +10,12 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.34,
+                    "price": 0.342,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M output tokens",
-                    "price": 0.34,
+                    "price": 0.342,
                     "currency": "USD"
                 }
             ]
@@ -43,6 +33,16 @@
             "value": "https://github.com/facebookresearch/fairseq/blob/main/LICENSE"
         }
     ],
+    "id": "617e7ec3-bf8d-4088-a863-4f89582d91b5",
+    "source": 1,
+    "description": "Multilingual encoder-decoder (seq-to-seq) model trained for Many-to-Many multilingual translation",
+    "task": {
+        "id": "f57d07cb-9087-487a-bbbf-bc3e17fecc4b",
+        "name": "Translation",
+        "description": "Translation models convert a sequence of text from one language to another."
+    },
+    "created_at": "2023-09-25 19:21:11.898",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -130,5 +130,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

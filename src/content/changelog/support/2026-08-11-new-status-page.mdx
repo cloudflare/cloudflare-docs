@@ -1,0 +1,34 @@
+---
+title: New Cloudflare Status page
+description: The Cloudflare Status page has a new design, Markdown output for AI agents, and a notification system that runs independently of Cloudflare.
+date: 2026-08-11
+---
+
+The Cloudflare Status page at [www.cloudflarestatus.com](https://www.cloudflarestatus.com/) has been rebuilt. It is available at the same address, and every previously documented [Status API](https://www.cloudflarestatus.com/api) endpoint remains supported, so existing bookmarks, integrations, and monitoring continue to work.
+
+## Notifications that fire even when Cloudflare is down
+
+The status page now has its own notification system, delivered independently of Cloudflare infrastructure. You can subscribe by email, webhook, Slack, Discord, or Google Chat.
+
+The **Maintenance Notification** and **Incident Alerts** in [Cloudflare Notifications](/notifications/) remain supported, and deliver to the destinations already configured on your account.
+
+## Markdown for AI agents
+
+Every page on the status page returns Markdown when requested with an `Accept: text/markdown` header, so agents can read the current status without parsing HTML:
+
+```sh
+curl -H "Accept: text/markdown" https://www.cloudflarestatus.com/locations
+```
+
+## Separate feeds for incidents and maintenance
+
+Incidents and maintenance are published as separate feeds, each available in RSS and Atom, so you can subscribe to one without the other:
+
+```txt
+https://www.cloudflarestatus.com/api/v3/incidents.rss
+https://www.cloudflarestatus.com/api/v3/incidents.atom
+https://www.cloudflarestatus.com/api/v3/maintenance.rss
+https://www.cloudflarestatus.com/api/v3/maintenance.atom
+```
+
+For more information, refer to [Cloudflare Status](/support/cloudflare-status/).

@@ -15,18 +15,18 @@ Generate new API tokens on the fly via the API. Before you can do this, you must
 
 :::note
 
-The API Token Template [**Create additional tokens**](/fundamentals/api/reference/template/) must be used to generate the token. The option for **API Tokens::Edit** is not available in any other template or in the Custom Token builder.
+To create user-owned API tokens, use the [**Create additional tokens**](/fundamentals/api/reference/template/) template. The **User** > **API Tokens** > **Edit** permission is not available in any other template or in the Custom Token builder.
 :::
 
 ## Generating the initial token
 
-Before you can create tokens via the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard.
+Before you can use the API, you need to [generate an initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard. The required permission depends on the API operation. To grant users access to an account as members, create a token with **Account** > **Account Settings** > **Edit**. To create account-owned API tokens, create a token with **Account** > **Account API Tokens** > **Edit**. To create user-owned API tokens, use the **Create additional tokens** template.
 
 <Render file="new-token-warning" product="fundamentals" />
 
 ### Recommendations
 
-Cloudflare highly recommends that you do not grant other permissions to the token when using this template. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
+When using the **Create additional tokens** template, Cloudflare highly recommends that you do not grant other permissions to the token. Make sure you safeguard the new token because it can create tokens with access to any of a user's resources.
 
 Cloudflare also recommends limiting the use of the token via client IP address filtering or TTL to reduce the potential for abuse in the event that the token is compromised. Refer to [Restrict token use](/fundamentals/api/how-to/restrict-tokens/) for more information.
 
@@ -108,7 +108,16 @@ For user resources, you can only reference yourself, which is denoted as:`"com.c
 
 Add permission groups to the API token by specifying their `id` values. We recommend using `id` as the key for interacting with Cloudflare APIs; the permission `name` is cosmetic and subject to change. Permission groups are scoped to specific resources (user, account, or zone), so a permission group in a policy will only apply to the resource type it is scoped for.
 
-To fetch all available permission groups and their IDs, use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint:
+Use the permission-group endpoint for the token type you want to create:
+
+<Tabs>
+  <TabItem label="Account owned token">
+Use the [List permission groups](/api/resources/accounts/subresources/tokens/subresources/permission_groups/methods/list/) endpoint. To help ensure you are only adding permission groups which are available through your membership policy, reference the `is_selectable` parameter present in each permission group.
+
+<APIRequest path="/accounts/{account_id}/tokens/permission_groups" method="GET" />
+  </TabItem>
+  <TabItem label="User owned token">
+Use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint.
 
 <APIRequest path="/user/tokens/permission_groups" method="GET" />
 
@@ -135,6 +144,8 @@ To fetch all available permission groups and their IDs, use the [List permission
 	]
 }
 ```
+  </TabItem>
+</Tabs>
 
 ### 2. Define the restrictions
 

@@ -11,14 +11,7 @@ head:
     content: Configure HTTP DDoS Attack Protection in the dashboard
 ---
 
-import {
-	Details,
-	Render,
-	Tabs,
-	TabItem,
-	Steps,
-	DashButton,
-} from "~/components";
+import { Details, Render, Steps, DashButton } from "~/components";
 
 Configure the HTTP DDoS Attack Protection managed ruleset by defining [overrides](/ruleset-engine/managed-rulesets/override-managed-ruleset/) in the Cloudflare dashboard. DDoS overrides allow you to customize the **action** and **sensitivity** of one or more rules in the managed ruleset.
 
@@ -35,27 +28,13 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 ## Access
 
-<Tabs syncKey="dashNewNav">
+<Steps>
+	1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-    <TabItem label="New dashboard" icon="rocket">
-    	<Steps>
-    		1. In the Cloudflare dashboard, go to the **Security rules** page.
-
-					<DashButton url="/?to=/:account/:zone/security/security-rules" />
-    		2. Go to the **DDoS protection** tab.
-    		3. On **HTTP DDoS attack protection**, select **Create override**.
-    	</Steps>
-    </TabItem>
-
-    <TabItem label="Old dashboard">
-    	<Steps>
-    		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-    		2. Go to **Security** > **DDoS**.
-    		3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
-    	</Steps>
-    </TabItem>
-
-</Tabs>
+		<DashButton url="/?to=/:account/:zone/security/security-rules" />
+	2. Go to the **DDoS protection** tab.
+	3. On **HTTP DDoS attack protection**, select **Create override**.
+</Steps>
 
 ### Create a DDoS override
 
@@ -92,10 +71,8 @@ If you cannot deploy any additional overrides, consider editing an existing over
 	file="managed-rulesets/delete-override"
 	product="ddos-protection"
 	params={{
-		selectAccountOrDomain: "select your account and domain",
 		dashButtonUrl: "/?to=/:account/:zone/security/security-rules",
-		newDashPage: "Security rules",
-		newDashTab: "DDoS protection",
-		oldDashNav: "Security > DDoS",
+		dashPage: "Security rules",
+		dashTab: "DDoS protection",
 	}}
 />

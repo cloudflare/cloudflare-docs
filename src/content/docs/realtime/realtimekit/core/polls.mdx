@@ -65,15 +65,6 @@ The meetings polls object can be accessed using `meeting.polls`. It provides met
 `meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
-
-`meeting.polls.items` returns an array of all polls created in a meeting, where each element is an object of type `Poll`.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The meetings polls object can be accessed using `meeting.polls`. It provides methods to create polls, vote, and more.
@@ -209,50 +200,6 @@ class PollVote {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The `Poll` type is defined as follows:
-
-```dart
-class Poll {
-  final String id;
-  final String question;
-  final bool anonymous;
-  final bool hideVotes;
-  final String createdBy;
-  final List<PollOption> options;
-  final List<String> voted;
-}
-```
-
-The `Poll` class has the following properties:
-
-- `id`: Unique ID assigned to each poll.
-- `question`: Question of the poll.
-- `anonymous`: To hide the votes of each user even after completion. (false by default)
-- `hideVotes`: Hide votes until the voting is complete. (enabled if anonymous is enabled)
-- `createdBy`: Name of creator the poll.
-- `options`: Array of `PollOption` object, contains all the options to the poll question.
-- `voted`: Array of String which contains User IDs that have voted.
-
-The type `Poll` represents a poll in a RealtimeKit meeting. It also contains list of `PollOption` which are options for a given poll. And every `PollOption` has list of votes inside of it. Votes are objects of class `PollVote` which internally has id and name of the vote.
-
-```dart
-class PollOption(
-  final String text;   // Option text.
-  final List<PollVote> votes;   // List of votes.
-  final int count;    // Number of votes.
-);
-
-class PollVote {
-  final String id;    // ID of the voter.
-  final String name;  // Name of the voter.
-}
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The `Poll` type is defined as follows:
@@ -372,31 +319,6 @@ let pollsCreateError: PollsError? = meeting.polls.createPoll(
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create(...)` method accepts the following parameters:
-
-| Param     | Type           | Default Value | Required | Description                                |
-| --------- | -------------- | ------------- | -------- | ------------------------------------------ |
-| question  | `String`       | -             | yes      | The question that is to be voted for.      |
-| options   | `List<String>` | -             | yes      | The options of the poll.                   |
-| anonymous | `bool`         | -             | yes      | If true, the poll votes are anonymous.     |
-| hideVotes | `bool`         | -             | yes      | If true, the votes on the poll are hidden. |
-
-The following snippet creates a poll where votes are anonymous.
-
-```dart
-meeting.polls.create(
-    question: "Are you an early bird or a night owl?",
-    options: ["Early bird", "Night owl"],
-    anonymous: true,
-    hideVotes: false,
-);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 A new poll can be created using the `create` method from the `meeting.polls` object. The `meeting.polls.create()` method accepts the following parameters:
@@ -493,27 +415,6 @@ meeting.poll.vote(poll, selectedPollOption)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
-
-| Param       | Type         | Default Value | Required | Description                                                |
-| ----------- | ------------ | ------------- | -------- | ---------------------------------------------------------- |
-| pollMessage | `Poll`       | -             | yes      | Contains all the poll properties (question, options, etc.) |
-| pollOption  | `PollOption` | yes           | yes      | Option on which the user voted                             |
-
-The following snippet votes for the first option on the first poll created in the meeting.
-
-```dart
-final poll = meeting.polls.items[0];
-final selectedPollOption = poll.options[0];
-
-meeting.polls.vote(poll: poll, pollOption: selectedPollOption);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The `meeting.polls.vote()` method can be used to register a vote on a poll. It accepts the following parameters:
@@ -623,29 +524,6 @@ let options = poll.options
 `options` returns an array of objects, where each object is of type `PollOption`.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The total votes on a poll can be accessed in the following manner:
-
-```dart
-final poll = meeting.polls.items.first;
-final votes = poll.voted;
-```
-
-`votes` is an array of participant IDs (`meeting.participant.id`).
-
-The total votes on a poll option can be accessed in the following manner:
-
-```dart
-final poll = meeting.polls.items.first;
-final options = poll.options;
-```
-
-`options` returns an array of objects, where each object is of type `PollOption`.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The total votes on a poll can be accessed in the following manner:
@@ -766,34 +644,6 @@ extension MeetingViewModel: RtkPollsEventListener {
 
   func onPollUpdate(poll: Poll) {}
 }
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-To be able to receive new poll messages you need to implement a method `onPollUpdates()` method from callback `RtkPollsEventListener`:
-
-To get poll updates, listen to `onPollUpdates()` callback:
-
-```dart
-class PollEventsListener extends RtkPollsEventListener {
-  @override
-  void onPollUpdates(List<Poll> pollItems) {
-    /// code to handle polls
-  }
-
-  @override
-  void onNewPoll(Poll poll) {
-    /// code to handle new poll
-  }
-}
-```
-
-You can subscribe to these events as follows:
-
-```dart
-meeting.addPollsEventListener(PollEventsListener());
 ```
 
 </RTKCodeSnippet>

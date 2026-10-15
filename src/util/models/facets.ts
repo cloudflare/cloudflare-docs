@@ -31,11 +31,10 @@ export interface FacetGroup {
  * array index) in both directions; the rest sort by `created_at`. No-op if none
  * are present.
  */
-export const pinnedModelNames = [
-	"@cf/moonshotai/kimi-k2.7-code",
-	"@cf/zai-org/glm-4.7-flash",
-	"@cf/openai/gpt-oss-120b",
-	"@cf/meta/llama-4-scout-17b-16e-instruct",
+export const pinnedModelNames: string[] = [
+	"@cf/cloudflare/clef",
+	"@cf/cloudflare/clef-omni",
+	"@cf/cloudflare/clef-flash",
 ];
 
 const providerSlug = (model: ModelCardData): string =>

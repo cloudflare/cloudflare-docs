@@ -55,7 +55,7 @@ If you are using Split Tunnels in Include mode, you must include the following d
 
 #### Block page
 
-If you are using Split Tunnels in Include mode and have [DNS policies](/cloudflare-one/traffic-policies/dns-policies/) with the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) enabled, you must include the IPs that blocked domains will resolve to. Unless you are using a [dedicated or BYOIP resolver IP](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/#dns-resolver-ip) the block page will resolve to:
+If you are using Split Tunnels in Include mode and have [DNS policies](/cloudflare-one/traffic-controls/dns-policies/) with the [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) enabled, you must include the IPs that blocked domains will resolve to. Unless you are using a [dedicated or BYOIP resolver IP](/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/#dns-resolver-ip) the block page will resolve to:
 
 - `162.159.36.12`
 - `162.159.46.12`
@@ -67,13 +67,28 @@ In [Traffic only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one
 - `104.19.194.29`
 - `104.19.195.29`
 
+## Device IP ranges
+
+In Exclude mode, default device profiles exclude the CGNAT range (`100.64.0.0/10`), which contains the default [device IP range](/cloudflare-one/networks/routes/reserved-ips/#device-ips) (`100.96.0.0/12`). The Mesh setup wizard updates the default profile to route the device IP range through Cloudflare. If you did not use the wizard, or if another profile applies to the device, verify that the profile does not exclude the device IP range or a parent range that contains it.
+
+## Automatically managed ranges
+
+The Cloudflare One Client automatically includes the following ranges in Include mode, and automatically removes them from any exclusions configured in Exclude mode. This happens at runtime on the device: the ranges are not stored in your device profile, do not appear in the Split Tunnels list in the dashboard, and do not need to be added manually.
+
+- **IPv4**: `172.64.128.0/20` — the default [Gateway initial resolved IP range](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips)
+- **IPv6**: `2606:4700:0cf1::/48` — covers [device IPs](/cloudflare-one/networks/routes/reserved-ips/#device-ips), [Cloudflare source IPs](/cloudflare-one/networks/routes/reserved-ips/#cloudflare-source-ips), and [Gateway initial resolved IPs](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips)
+
+You do not need to add these ranges to your Split Tunnels configuration. If you are troubleshooting a feature that depends on one of these ranges (for example, [hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [Cloudflare Mesh](/mesh/)), you can still add the range explicitly as a diagnostic step, but this should not be required for normal operation.
+
+If your account uses a [custom initial resolved IP range](/cloudflare-one/networks/routes/configure-initial-resolved-ips/) instead of the default `172.64.128.0/20`, add that custom range to your Split Tunnels configuration.
+
 ## Domain-based Split Tunnels
 
 Domain-based split tunneling has a few ramifications you should be aware of before deploying in your organization:.
 
 - Routes excluded or included from Cloudflare One Client and Gateway visibility may change day to day, and may be different for each user depending on where they are.
 - You may inadvertently exclude or include additional hostnames that happen to share an IP address. This commonly occurs if you add a domain hosted by a CDN or large Internet provider such as Cloudflare, AWS, or Azure. For example, if you wanted to exclude a VPN hosted on AWS, do not add `*.amazonaws.com` as that will open up your devices to all traffic on AWS. Instead, add the specific VPN endpoint (`*.cvpn-endpoint-<UUID>.prod.clientvpn.us-west-2.amazonaws.com`).
-- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/traffic-policies/application-app-types/), you will need to manually add all domains used by a particular app or service.
+- Most services are a collection of hostnames. Until Split Tunnels mode supports [App Types](/cloudflare-one/traffic-controls/application-app-types/), you will need to manually add all domains used by a particular app or service.
 - The Cloudflare One Client must handle the DNS lookup request for the domain. If a DNS result has been previously cached by the operating system or otherwise intercepted (for example, via your browser's secure DNS settings), the IP address will not be dynamically added to your Split Tunnel.
 
 ### Valid domains
@@ -91,6 +106,8 @@ Domain-based Split Tunnels work differently on mobile clients than on desktop cl
 #### Windows, Linux and macOS
 
 Clients on these platforms work by dynamically inserting the IP address of the domain immediately after it is resolved into the routing table for split tunneling. This allows the desktop clients to support wildcard domain prefixes (for example, `*.example.com`), not just a singular domain (like `example.com` or `www.example.com`).
+
+Cloudflare One Client versions `2026.8.1755.1` and above attempt to maintain name-based Split Tunnel rule results across tunnel connections. Earlier versions did not maintain these results, so access to these domains was not maintained while the client was disconnected or reconnecting. Before the first tunnel connection, however, the client firewall blocks these domains. This is because the client has not yet queried which IP addresses are associated with each domain and therefore defaults to blocking this traffic to avoid unintended leaks.
 
 #### iOS, Android and ChromeOS
 

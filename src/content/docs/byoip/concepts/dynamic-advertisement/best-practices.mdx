@@ -46,6 +46,12 @@ Disablement takes approximately 15 minutes.
 
 ## Configure dynamic advertisement
 
+:::caution[Rate limit]
+
+After you change a prefix's advertisement status, wait at least 15 minutes before changing it again. Requests made during this interval return a `429` response with error code `1004` (`rate_limit_exceeded`).
+
+:::
+
 ### Via the Cloudflare dashboard
 
 1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.

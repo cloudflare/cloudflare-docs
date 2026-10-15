@@ -57,35 +57,35 @@ These credentials follow the principle of least privilege so that only the minim
 
 Detect API keys that may be unused or overdue for rotation.
 
-| Finding type              | Severity |
-| ------------------------- | -------- |
-| Anthropic: Unused API key | Medium   |
+| Finding type              | FindingTypeID                          | Severity |
+| ------------------------- | -------------------------------------- | -------- |
+| Anthropic: Unused API key | `7e9bcc48-9548-4404-9bb2-83847150fc17` | Medium   |
 
 ### Access security
 
 Flag organization access issues to help enforce best practices.
 
-| Finding type                                                | Severity |
-| ----------------------------------------------------------- | -------- |
-| Anthropic: High-privilege invite                            | High     |
-| Anthropic: Stale pending invite                             | Low      |
-| Anthropic: Claude Project visible across organization       | Low      |
-| Anthropic: Claude Cowork enabled for role                   | High     |
-| Anthropic: Claude Connector always allowed enabled for role | High     |
-| Anthropic: Claude for Chrome enabled for role               | High     |
+| Finding type                                                | FindingTypeID                          | Severity |
+| ----------------------------------------------------------- | -------------------------------------- | -------- |
+| Anthropic: High-privilege invite                            | `c4658dc8-3edf-4f14-920c-3843eabab095` | High     |
+| Anthropic: Stale pending invite                             | `43d50e14-9b07-48bc-a060-111a629fe19a` | Low      |
+| Anthropic: Claude Project visible across organization       | `019e4777-9f9a-7285-b46a-5590116a6c50` | Medium   |
+| Anthropic: Claude Cowork enabled for role                   | `019e4777-9fa0-7b0e-9ce3-dfc3ac86c840` | High     |
+| Anthropic: Claude Connector Always Allowed enabled for role | `019e4777-9fa3-7155-b92d-c9fa5979803a` | High     |
+| Anthropic: Claude for Chrome enabled for role               | `019e4777-9fa5-736a-85c9-4cfa73e23a09` | High     |
 
 ### Data Loss Prevention (optional)
 
 <Render file="casb/data-loss-prevention" product="cloudflare-one" />
 
-| Finding type                                                  | Severity |
-| ------------------------------------------------------------- | -------- |
-| Anthropic: Downloadable File with DLP Profile match           | High     |
-| Anthropic: Claude Chat User Prompt with DLP Profile match     | High     |
-| Anthropic: Claude Chat Assistant Response with DLP Profile match | High  |
-| Anthropic: Claude Chat Uploaded File with DLP Profile match   | High     |
-| Anthropic: Claude Chat Generated File with DLP Profile match  | High     |
-| Anthropic: Claude Project File with DLP Profile match         | High     |
-| Anthropic: Claude Project Document with DLP Profile match     | High     |
-| Anthropic: Claude Chat Artifact with DLP Profile match        | High     |
-| Anthropic: Claude Project Instructions with DLP Profile match | High     |
+| Finding type                                                     | FindingTypeID                          | Severity |
+| ---------------------------------------------------------------- | -------------------------------------- | -------- |
+| Anthropic: Downloadable File with DLP Profile match              | `c6546fee-b2b0-4151-9546-6008f9430706` | High     |
+| Anthropic: Claude Chat User Prompt with DLP Profile match        | `719e347a-2fef-40f0-bd70-52d85996dfd2` | High     |
+| Anthropic: Claude Chat Assistant Response with DLP Profile match | `f2cd2eaf-b592-4bcc-8308-5975ac9a12bc` | High     |
+| Anthropic: Claude Chat Uploaded File with DLP Profile match      | `c6afd6fa-6969-4214-afa8-a83a08cc611c` | High     |
+| Anthropic: Claude Chat Generated File with DLP Profile match     | `15206512-4af6-466c-8f08-82a9151d4b79` | High     |
+| Anthropic: Claude Project File with DLP Profile match            | `9e5d6c1d-66d7-4a5a-93f4-aa7971e4815a` | High     |
+| Anthropic: Claude Project Document with DLP Profile match        | `40438417-a3f2-41ed-b370-51390e8c7594` | High     |
+| Anthropic: Claude Chat Artifact with DLP Profile match           | `c3fc58b0-24f6-4cea-a99d-67555bceca01` | High     |
+| Anthropic: Claude Project Instructions with DLP Profile match    | `e1d66413-79d6-46be-a841-a38a541d94a6` | High     |

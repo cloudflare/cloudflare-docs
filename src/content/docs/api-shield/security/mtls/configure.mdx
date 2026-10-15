@@ -15,7 +15,7 @@ tags:
 
 import { Render } from "~/components";
 
-When you specify API hosts in [mTLS authentication](/api-shield/security/mtls/), Cloudflare will block all requests that do not have a [client certificate](/ssl/client-certificates/) for mTLS authentication.
+When you configure [mTLS authentication](/api-shield/security/mtls/) for API hosts, Cloudflare can block requests that do not have a [client certificate](/ssl/client-certificates/) for mTLS authentication. Blocking applies only to requests that match the hostname and path conditions in your mTLS rule.
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ The first expression — `not cf.tls_client_auth.cert_verified` — returns `tru
 
 The second expression uses the `http.request.uri.path` field, combined with the `in` operator, to capture the URI paths your mTLS rule applies to.
 
-Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, only requests that present a valid client certificate can access the specified hosts.
+Because the [action](/ruleset-engine/rules-language/actions/) for your rule is _Block_, requests that match the configured hostname and path conditions must present a valid client certificate.
 
 Cloudflare recommends also validating the issuer Subject Key Identifier (SKI) hash. Without this check, any valid client certificate is accepted regardless of which certificate authority (CA) issued it. Adding the SKI hash restricts access to certificates from a specific CA.
 

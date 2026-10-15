@@ -1,0 +1,271 @@
+---
+title: Wrangler to cf reference
+description: Find cf equivalents for Wrangler commands, and map Wrangler configuration, build settings, and environments to cf.
+pcx_content_type: reference
+sidebar:
+  order: 3
+  label: Command and config mapping
+products:
+  - cf
+  - workers
+---
+
+import { AnnotatedConfigExplorer } from "~/components";
+
+`cf migrate` converts a Wrangler project to `cf` for you. It writes
+`cloudflare.config.ts` from the Wrangler configuration file, adds `cf` to the
+project, and lists the items that you finish by hand. Start with
+[Migrate a Wrangler project](/cf/wrangler/migrate/), then use this page to
+understand what `cf migrate` changed or to finish a conversion by hand.
+
+## Commands
+
+Most Wrangler commands have a `cf` equivalent, although the command name and
+arguments can differ. For example, Worker versions and deployments are under
+`cf workers versions` and `cf workers deployments`.
+
+To find the `cf` command for a task, use any of the following:
+
+- **Search**: describe the task to `cf cli search`, then inspect the match with
+  `cf schema`:
+
+  ```sh
+  cf cli search "create a D1 database"
+  cf schema d1 create
+  ```
+
+- **Help**: add `--help` to a command group, such as `cf d1 --help`, to list
+  its commands and options.
+- **Coding agent**: ask your agent for the `cf` equivalent of a Wrangler
+  command. To set up your agent, refer to
+  [Use cf with coding agents](/cf/agents/).
+
+Resource commands in `cf` take the identifiers that the Cloudflare API
+expects, such as a D1 database ID rather than its name. They act on remote
+resources. `--local` works only for a few resources that local development
+provides, such as KV keys, D1 through `cf d1 raw`, `cf d1 migrations list`, and
+`cf d1 migrations apply`, and R2 objects. For the full list, refer to
+[Local resource data](/cf/projects/#local-resource-data). Commands without a
+local equivalent, such as `cf d1 query`, return an error.
+
+### Commands not yet supported {/* commands-not-yet-supported */}
+
+`cf` is in beta, and some Wrangler commands are not supported yet. Run these
+with `npx wrangler` instead of installing Wrangler. Wrangler does not read
+`cloudflare.config.ts`, so pass the Worker name.
+
+- **`wrangler tail`**: `cf` cannot stream live logs yet. Run:
+
+  ```sh
+  npx wrangler tail <WORKER_NAME>
+  ```
+
+- **`wrangler secret put`**: `cf` cannot set a single secret yet. Run
+  `npx wrangler secret put <SECRET_NAME> --name <WORKER_NAME>`, or upload
+  secrets with a new Worker version by passing `--secrets-file <PATH>` to
+  `cf deploy` or `cf workers versions create`.
+
+## Configuration fields {/* configuration-fields */}
+
+`cf migrate` converts Wrangler fields as the following table shows. Worker
+settings go under `worker` in `cloudflare.config.ts`, and bindings go under
+`worker.env`. A required item is a follow-up that you resolve by hand, as
+described in
+[Resolve follow-up items](/cf/wrangler/migrate/#resolve-follow-up-items).
+
+| Wrangler field                                                   | `cloudflare.config.ts`                                 | Notes                                                                                            |
+| ---------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `name`                                                           | `worker.name`                                          | —                                                                                                |
+| `main`                                                           | `worker.entrypoint`                                    | Written as a string path. You can replace it with a `cf-worker` import.                          |
+| `compatibility_date`                                             | `worker.compatibilityDate`                             | —                                                                                                |
+| `compatibility_flags`                                            | `worker.compatibilityFlags`                            | —                                                                                                |
+| `account_id`                                                     | `accountId`                                            | Top level                                                                                        |
+| `compliance_region`                                              | `complianceRegion`                                     | Top level. `fedramp_high` becomes `fedramp-high`.                                                |
+| `vars`                                                           | `bindings.text()` or `bindings.json()`                 | Strings use `text()`. Other values use `json()`.                                                 |
+| `secrets.required`                                               | `bindings.secret()`                                    | —                                                                                                |
+| KV, D1, R2, Hyperdrive, and other bindings                       | The matching `bindings` builder                        | Preview resource fields are a required item.                                                     |
+| `services`                                                       | `bindings.worker({ worker })`                          | A legacy service environment is a required item.                                                 |
+| `queues.producers`                                               | `bindings.queue({ name })`                             | —                                                                                                |
+| `queues.consumers`                                               | `triggers.queue({ name })`                             | Consumer settings become camelCase options, such as `maxBatchSize`.                              |
+| Hyperdrive `localConnectionString`                               | `dev: { connectionString }` on `bindings.hyperdrive()` | —                                                                                                |
+| `remote: true` on a binding                                      | `dev: { remote: true }`                                | —                                                                                                |
+| `routes` with `zone_name`                                        | `triggers.fetch({ pattern, zone })`                    | —                                                                                                |
+| `routes` with `zone_id`                                          | `triggers.fetch({ pattern, zone })`                    | Required item. `zone` accepts a zone name or a zone ID.                                          |
+| `routes` with `custom_domain: true`                              | `worker.domains`                                       | —                                                                                                |
+| `triggers.crons`                                                 | `triggers.scheduled({ schedule })`                     | —                                                                                                |
+| `durable_objects.bindings`                                       | `bindings.durableObject({ worker, exportName })`       | Required item. Review each binding.                                                              |
+| `migrations`                                                     | `worker.exports`                                       | Not converted. Refer to [Convert Durable Object migrations](#convert-durable-object-migrations). |
+| `workflows`                                                      | `bindings.workflow()` and `exports.workflow()`         | Required item. Refer to [Workflows](/cf/projects/cloudflare-config/#declare-exports).            |
+| `containers`                                                     | `defineContainer()` in top-level `containers`          | Required item. Refer to [Containers](/cf/projects/cloudflare-config/#attach-a-container).        |
+| `assets.binding`                                                 | `bindings.assets()`                                    | —                                                                                                |
+| `assets.html_handling`, `not_found_handling`, `run_worker_first` | `worker.assets`                                        | Keys become camelCase, such as `notFoundHandling`.                                               |
+| `assets.directory`                                               | Build settings                                         | Refer to [Build settings](#build-settings).                                                      |
+| `observability`                                                  | `worker.observability`                                 | Keys become camelCase, such as `headSamplingRate`.                                               |
+| `limits`                                                         | `worker.limits`                                        | Keys become camelCase, such as `cpuMs`.                                                          |
+| `placement`                                                      | `worker.placement`                                     | —                                                                                                |
+| `tail_consumers`                                                 | `worker.tailConsumers`                                 | —                                                                                                |
+| `streaming_tail_consumers`                                       | `worker.tailConsumers`                                 | Each entry gets `streaming: true`.                                                               |
+| `workers_dev`                                                    | `worker.workersDev`                                    | —                                                                                                |
+| `preview_urls`                                                   | `worker.previewUrls`                                   | —                                                                                                |
+| `env.<NAME>`                                                     | A `case` in `switch (ctx.mode)`                        | Refer to [Convert environments to modes](#environments-to-modes).                                |
+| `previews`                                                       | A branch on `ctx.isPreview`                            | Required item. Review the branch.                                                                |
+| `site`                                                           | —                                                      | Not supported. Move the site to [Workers Static Assets](/workers/static-assets/).                |
+| D1 `migrations_dir`, `migrations_pattern`, `migrations_table`    | —                                                      | Pass `--dir`, `--pattern`, and `--table` to `cf d1 migrations apply`.                            |
+| `build`, `minify`, `alias`, and other build fields               | Build settings                                         | Refer to [Build settings](#build-settings).                                                      |
+
+For every field and builder, refer to
+[Programmatic configuration](/cf/projects/cloudflare-config/) and the
+[Configuration explorer](/cf/projects/config-explorer/).
+
+## Build settings {/* build-settings */}
+
+Build settings do not go in `cloudflare.config.ts`. Where they go depends on
+the bundler:
+
+| Wrangler field                                                                                 | Vite bundler: `vite.config.ts`                         | Wrangler bundler: `wrangler.config.ts`           |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------ |
+| `alias`                                                                                        | `resolve.alias`                                        | `alias`                                          |
+| `define`                                                                                       | `define`                                               | `define`                                         |
+| `minify`                                                                                       | `build.minify`                                         | `minify`                                         |
+| `upload_source_maps`                                                                           | `build.sourcemap` in the Worker's Vite environment     | `uploadSourceMaps`                               |
+| `assets.directory`                                                                             | `publicDir`                                            | `assetsDirectory`                                |
+| `build`                                                                                        | Run the command yourself before `cf build`             | `build`, with camelCase keys                     |
+| `dev`                                                                                          | `server` options                                       | `dev`, with camelCase keys                       |
+| `rules`, `tsconfig`, `no_bundle`, `find_additional_modules`, `base_dir`, `preserve_file_names` | Not used. Vite handles module resolution and bundling. | camelCase keys, such as `noBundle` and `baseDir` |
+
+With the Wrangler bundler, `cf migrate` writes these settings to
+`wrangler.config.ts` for you and adds `types: { generate: false }`. With the
+Vite bundler, it lists the fields in a required item for you to move.
+`wrangler.config.ts` is experimental and can change during the beta.
+
+## Convert environments to modes {/* environments-to-modes */}
+
+Wrangler environments inherit some top-level fields. `cloudflare.config.ts`
+does not merge environments. It returns one complete configuration for each
+mode instead. `cf migrate` writes a `switch (ctx.mode)` statement with one
+`case` for each environment. For the generated shape, refer to
+[Environments](/cf/wrangler/migrate/#environments).
+
+Replace `--env <NAME>` with `--mode <NAME>` on project commands, such as
+`cf dev`, `cf build`, `cf deploy`, `cf workers versions create`, and
+`cf workers triggers deploy`.
+
+Without `--mode`, the mode depends on the command and the bundler:
+
+| Command                            | Vite bundler  | Wrangler bundler |
+| ---------------------------------- | ------------- | ---------------- |
+| `cf dev`                           | `development` | `undefined`      |
+| `cf build` and `cf deploy`         | `production`  | `undefined`      |
+| API commands, such as `cf d1 list` | `undefined`   | `undefined`      |
+
+API commands evaluate `cloudflare.config.ts` only to read `accountId` and
+`complianceRegion`. If `accountId` depends on the mode, a Vite build and an API
+command can resolve different accounts. Keep `accountId` independent of the
+mode, or pass the same `--mode` to every command.
+
+For more information, refer to [Modes](/cf/projects/#modes).
+
+## Convert Durable Object migrations {/* convert-durable-object-migrations */}
+
+`worker.exports` replaces the ordered `migrations` history. `cf migrate` does
+not convert it.
+
+On the first deployment that switches from `migrations` to `worker.exports`,
+declare every class whose namespace is live today. Use `storage: "sqlite"` or
+`storage: "legacy-kv"` to match its existing storage.
+
+Do not copy the full migration history. Omit rename and delete operations that
+have already been applied. If you add them, they become stale tombstones that
+the deployment reports as safe to remove.
+
+Add a tombstone only for a lifecycle change that has not been applied yet:
+
+<AnnotatedConfigExplorer
+	id="durable-object-tombstones"
+	code={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "orders-api",
+		entrypoint,
+		compatibilityDate: "2026-08-24",
+		exports: {
+			Counter: exports.durableObject({ storage: "sqlite" }),
+			OldCounter: exports.durableObject({
+				state: "renamed",
+				renamedTo: "Counter",
+			}),
+			UnusedCounter: exports.durableObject({ state: "deleted" }),
+		},
+	},
+});`}
+/>
+
+Keep a tombstone until a deployment response reports that it is stale, then
+remove it. Use `cf deploy`, rather than a version upload, for a version that
+creates, deletes, renames, or transfers a Durable Object class. You cannot roll
+back a Durable Object lifecycle change to a version from before the change.
+
+For transfers between Workers and the full list of states, refer to
+[Manage Durable Object lifecycle](/cf/projects/cloudflare-config/#manage-durable-object-lifecycle).
+
+## Complete example {/* complete-example */}
+
+This example finishes the migration of `orders-api`, the Worker used in
+[Migrate a Wrangler project](/cf/wrangler/migrate/). It has a D1 database, a
+queue, a cron trigger, a route, and a Durable Object. After `cf migrate` and
+the follow-up steps, `cloudflare.config.ts` is:
+
+<AnnotatedConfigExplorer
+	id="orders-api-config"
+	code={`import { bindings, defineConfig, exports, triggers } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+type Job = { orderId: string };
+
+export default defineConfig({
+	accountId: "<ACCOUNT_ID>",
+	worker: {
+		name: "orders-api",
+		entrypoint,
+		compatibilityDate: "2026-08-24",
+		compatibilityFlags: ["nodejs_compat"],
+		env: {
+			ENVIRONMENT: bindings.text("production"),
+			DB: bindings.d1({
+				name: "orders-db",
+				id: "<DATABASE_ID>",
+			}),
+			JOBS: bindings.queue<Job>({ name: "orders-jobs" }),
+			COUNTERS: bindings.durableObject({
+				worker: "orders-api",
+				exportName: "Counter",
+			}),
+		},
+		exports: {
+			Counter: exports.durableObject({ storage: "sqlite" }),
+		},
+		triggers: [
+			triggers.fetch({
+				pattern: "api.example.com/*",
+				zone: "example.com",
+			}),
+			triggers.queue({ name: "orders-jobs", maxBatchSize: 10 }),
+			triggers.scheduled({ schedule: "0 * * * *" }),
+		],
+	},
+});`}
+/>
+
+Compared with the file that `cf migrate` generates, the finished file:
+
+- Imports the entrypoint with the `cf-worker` attribute instead of a string
+  path, so the Worker module exports are typed.
+- Declares the `Counter` class under `exports`, replacing the `migrations`
+  history.
+- Types the queue messages with `bindings.queue<Job>()`.
+- Has no `TODO(@cloudflare)` comments or `throw` statement.
+
+To see the generated file, refer to
+[Read the output](/cf/wrangler/migrate/#read-the-output).

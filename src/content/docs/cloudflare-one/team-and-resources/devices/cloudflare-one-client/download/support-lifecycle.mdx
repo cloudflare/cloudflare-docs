@@ -39,7 +39,7 @@ Cloudflare will provide a minimum 90-day notice prior to removing major features
 
 ### Release schedule
 
-Cloudflare does not operate on a fixed release schedule; all releases for the Cloudflare One Client are incremental. When a new Cloudflare One Client version is released, Cloudflare will publish release notes on the [Downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) and in the [changelog](/changelog/cloudflare-one-client/).
+Cloudflare does not operate on a fixed release schedule; all releases for the Cloudflare One Client are incremental. When a new Cloudflare One Client version is released, Cloudflare will publish release notes on the [Downloads page](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/) and in the [changelog](/changelog/product/cloudflare-one-client/).
 
 ## Supported operating systems
 
@@ -78,15 +78,15 @@ Windows Subsystem for Linux v2 (WSLv2) is supported by the Cloudflare One Client
 
 ### macOS
 
-The Cloudflare One Client supports the current major version of macOS and the two previous major versions. Devices on a previous major version must have the latest minor and patch updates installed (for example, `14.8.3`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new macOS versions compared to other desktop operating systems.
+The Cloudflare One Client supports the current major version of macOS and the two previous major versions. Devices on a previous major version must have the latest minor and patch updates installed (for example, `26.6.1`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new macOS versions compared to other desktop operating systems.
 
-As of December 2025, the following major versions of macOS are supported:
+As of September 2026, the following major versions of macOS are supported:
 
-| macOS version                | Supported until               |
-| ---------------------------- | ----------------------------- |
-| macOS&nbsp;26&nbsp;(Tahoe)   | Release of 2028 major version |
-| macOS&nbsp;15&nbsp;(Sequoia) | Release of 2027 major version |
-| macOS&nbsp;14&nbsp;(Sonoma)  | Release of 2026 major version |
+| macOS version                          | Supported until               |
+| -------------------------------------- | ----------------------------- |
+| macOS&nbsp;27&nbsp;(Golden&nbsp;Gate) | Release of 2029 major version |
+| macOS&nbsp;26&nbsp;(Tahoe)             | Release of 2028 major version |
+| macOS&nbsp;15&nbsp;(Sequoia)           | Release of 2027 major version |
 
 ### Debian
 
@@ -96,8 +96,8 @@ As of December 2025, the following versions of Debian are supported:
 
 | Debian version                 | Supported until |
 | ------------------------------ | --------------- |
-| Debian&nbsp;13&nbsp;(Trixie)   | August 2028     |
-| Debian&nbsp;12&nbsp;(Bookworm) | June 2026       |
+| Debian&nbsp;13&nbsp;(Trixie)   | June 2030       |
+| Debian&nbsp;12&nbsp;(Bookworm) | June 2028       |
 
 ### Ubuntu
 
@@ -117,26 +117,31 @@ As of December 2025, the following versions of Ubuntu are supported:
 
 Cloudflare One Client support for RHEL is pending. Once testing is complete, our policy will be to support all major versions of RHEL within their [Full Support window](https://access.redhat.com/product-life-cycles). Devices must be updated to the latest minor release (for example, `9.4`) to receive support.
 
-As of April 2026, only RHEL 8 has completed full compatibility testing, which is now out of the Red Hat Full Support window. Starting with Cloudflare One Client version 2026.3.846.0, RHEL 9 is supported for [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) functionality only.
+As of April 2026, only RHEL 8 has completed full compatibility testing, which is now out of the Red Hat Full Support window. Starting with Cloudflare One Client version 2026.6.822.0, RHEL 9 and RHEL 10 are supported for [Cloudflare Mesh](/mesh/) functionality only.
 
 This section will be updated as we add RHEL support to match Red Hat's support lifecycle.
 
-| RHEL version | Supported until                                                        |
-| ------------ | ---------------------------------------------------------------------- |
-| RHEL&nbsp;10 | Pending full testing. Once complete, will be supported until May 2030. |
-| RHEL&nbsp;9  | Pending full testing. Once complete, will be supported until May 2027. |
+| RHEL version | Supported until                                                     |
+| ------------ | ------------------------------------------------------------------- |
+| RHEL&nbsp;10 | Pending full testing. Supported for Cloudflare Mesh until May 2030. |
+| RHEL&nbsp;9  | Pending full testing. Supported for Cloudflare Mesh until May 2027. |
 
 ### iOS and iPadOS
 
 The Cloudflare One Client supports the current major version of iOS and iPadOS as well as the two previous major versions. Devices must have the latest available update installed (for example, `17.7.2`) to receive support. This policy aligns with Apple's standard security update cycle, as well as the comparatively rapid release of new iOS and iPadOS versions compared to other mobile operating systems.
 
-As of December 2025, the following versions of iOS and iPadOS are supported:
+:::note
+Starting with iOS and iPadOS 27, Apple introduced [Connectivity Assist](https://support.apple.com/127686) on by default, which falls back to cellular network connectivity when Wi-Fi connectivity is failing. This means unless Connectivity Assist is actively turned off, then protections provided by Cloudflare One Client (and any other Zero Trust networking or VPN app) may be unintentionally bypassed when Wi-Fi connectivity exists but is slow. This is because Wi-Fi remains the active network connection, whereas turning Wi-Fi off entirely and using cellular network connectivity would result in expected functionality. To avoid this edge case, turn off Connectivity Assist.
+:::
+
+As of October 2026, the following versions of iOS and iPadOS are supported:
 
 | iOS or iPadOS version            | Supported until               |
 | -------------------------------- | ----------------------------- |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;27 | Release of 2029 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;26 | Release of 2028 major version |
 | iOS&nbsp;and&nbsp;iPadOS&nbsp;18 | Release of 2027 major version |
-| iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | Release of 2026 major version |
+| iOS&nbsp;and&nbsp;iPadOS&nbsp;17 | November 2026 |
 
 ### Android
 

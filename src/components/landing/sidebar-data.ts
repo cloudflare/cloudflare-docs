@@ -4,6 +4,8 @@ export interface SidebarLink {
 	type: "link";
 	label: string;
 	href: string;
+	/** Product icon name (src/icons/<icon>.svg). */
+	icon?: string;
 }
 
 export interface SidebarGroup {
@@ -22,10 +24,11 @@ export interface SidebarSection {
 	nodes: SidebarNode[];
 }
 
-const link = (label: string, href: string): SidebarLink => ({
+const link = (label: string, href: string, icon?: string): SidebarLink => ({
 	type: "link",
 	label,
 	href,
+	icon,
 });
 
 export const sidebarSections: SidebarSection[] = [
@@ -65,6 +68,10 @@ export const sidebarSections: SidebarSection[] = [
 		],
 	},
 	{
+		heading: "Developer Tools",
+		nodes: [link("Cloudflare CLI", "/cf/", "cf")],
+	},
+	{
 		heading: "Build",
 		nodes: [
 			{
@@ -96,9 +103,11 @@ export const sidebarSections: SidebarSection[] = [
 					link("AI Gateway", "/ai-gateway/"),
 					link("Agents", "/agents/"),
 					link("Agent Memory", "/agent-memory/"),
-					link("Sandbox SDK", "/sandbox/"),
+					link("Wallets", "/wallets/"),
+					link("Sandboxes", "/sandbox/"),
 					link("Vectorize", "/vectorize/"),
 					link("AI Search", "/ai-search/"),
+					link("Web Search API", "/web-search/"),
 					link("AI Crawl Control", "/ai-crawl-control/"),
 				],
 			},
@@ -109,12 +118,22 @@ export const sidebarSections: SidebarSection[] = [
 				collapsed: true,
 				nodes: [
 					link("R2", "/r2/"),
-					link("R2 Data Catalog", "/r2/data-catalog/"),
-					link("R2 SQL", "/r2-sql/"),
-					link("Pipelines", "/pipelines/"),
+					{
+						type: "group",
+						label: "Basin",
+						collapsed: true,
+						nodes: [
+							link("Overview", "/basin/"),
+							link("Basin Pipelines", "/basin-pipelines/"),
+							link("Basin Catalog", "/basin-catalog/"),
+							link("Basin SQL", "/basin-sql/"),
+						],
+					},
+					link("K2", "/k2/"),
 					link("D1", "/d1/"),
 					link("KV", "/kv/"),
 					link("Hyperdrive", "/hyperdrive/"),
+					link("Artifacts", "/artifacts/"),
 				],
 			},
 			{
@@ -160,7 +179,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Team & Resources", "/cloudflare-one/team-and-resources/"),
 					link("Networks", "/cloudflare-one/networks/"),
 					link("Access controls", "/cloudflare-one/access-controls/"),
-					link("Traffic policies", "/cloudflare-one/traffic-policies/"),
+					link("Traffic controls", "/cloudflare-one/traffic-controls/"),
 					link(
 						"Cloud & SaaS findings",
 						"/cloudflare-one/cloud-and-saas-findings/",
@@ -205,6 +224,13 @@ export const sidebarSections: SidebarSection[] = [
 			},
 			{
 				type: "group",
+				label: "Monetize",
+				icon: "ph:coins",
+				collapsed: true,
+				nodes: [link("Monetization Gateway", "/monetization-gateway/")],
+			},
+			{
+				type: "group",
 				label: "Delivery & Performance",
 				icon: "speed",
 				collapsed: true,
@@ -228,10 +254,11 @@ export const sidebarSections: SidebarSection[] = [
 				icon: "analytics",
 				collapsed: true,
 				nodes: [
+					link("Observability", "/observability/"),
 					link("Analytics", "/analytics/"),
 					link("Web Analytics", "/web-analytics/"),
 					link("Logs", "/logs/"),
-					link("Log Explorer", "/log-explorer/"),
+					link("Log Explorer", "/observability/logs/log-explorer/"),
 					link("Health Checks", "/health-checks/"),
 				],
 			},

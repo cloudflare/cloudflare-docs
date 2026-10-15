@@ -1,0 +1,8 @@
+---
+import ModelCatalog from "~/components/models/ModelCatalog.astro";
+import { getResolvedModels, toModelCardData } from "~/util/models";
+
+const models = (await getResolvedModels()).map(toModelCardData);
+---
+
+<ModelCatalog models={models} />

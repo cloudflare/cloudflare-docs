@@ -29,6 +29,9 @@ Use R2 [bindings](/workers/runtime-apis/bindings/) in Workers to download object
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
 		const object = await env.MY_BUCKET.get("image.png");
+		if (object === null) {
+			return new Response("Object not found", { status: 404 });
+		}
 		return new Response(object.body);
 	},
 } satisfies ExportedHandler<Env>;

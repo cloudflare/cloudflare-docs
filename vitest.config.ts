@@ -1,4 +1,4 @@
-import { defineConfig, defineProject } from "vitest/config";
+import { configDefaults, defineConfig, defineProject } from "vitest/config";
 import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
 import { getViteConfig } from "astro/config";
 
@@ -14,6 +14,26 @@ export default defineConfig({
 				test: {
 					name: "Workers",
 					include: ["**/*.worker.test.ts"],
+					exclude: [...configDefaults.exclude, "**/*.preview.worker.test.ts"],
+					deps: {
+						optimizer: {
+							ssr: {
+								enabled: true,
+								include: ["node-html-parser", "yaml"],
+							},
+						},
+					},
+				},
+			}),
+			defineConfig({
+				plugins: [
+					cloudflareTest({
+						wrangler: { configPath: "./wrangler.preview.test.json" },
+					}),
+				],
+				test: {
+					name: "Workers (Preview)",
+					include: ["**/*.preview.worker.test.ts"],
 					deps: {
 						optimizer: {
 							ssr: {

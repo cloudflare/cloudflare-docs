@@ -50,13 +50,6 @@ The Android UI Kit manages component communication internally. When you build th
 The iOS UI Kit manages component communication internally through the `RealtimeKitUI` module. To observe meeting state changes from your application, implement event listener protocols and register them on the Core SDK's `meeting` object.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The Flutter UI Kit manages component communication internally through the `RealtimeKitUIBuilder`. To observe meeting state changes from your application, create event listener classes and attach them to the Core SDK's meeting object.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The React Native UI Kit components communicate and synchronize with each other because they are nested under the `RtkMeeting` component, wrapped in `RealtimeKitProvider` and `RtkUIProvider`. To observe state changes, use hooks from the Core SDK such as `useRealtimeKitSelector`.
@@ -94,7 +87,7 @@ flowchart LR
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 1. **UI Kit manages internal state**: The UI Kit handles all component communication and state synchronization internally
 2. **Your app registers event listeners**: You attach event listeners (such as `RtkMeetingRoomEventListener` and `RtkSelfEventListener`) to the Core SDK's `meeting` object
@@ -126,12 +119,12 @@ Store the states in a state management solution (like React's `useState` or a pl
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 Attach event listeners to the Core SDK's `meeting` object to observe meeting state changes. The mobile UI Kit handles its own internal state, and your app interacts with the underlying meeting object directly.
 
 :::note
-Use your platform's state management (for example, LiveData or StateFlow on Android, `@Published` properties on iOS, Riverpod or ChangeNotifier on Flutter) to propagate state changes to your UI.
+Use your platform state management, such as LiveData or StateFlow on Android and `@Published` properties on iOS, to propagate state changes to your UI.
 :::
 
 </RTKCodeSnippet>
@@ -525,102 +518,6 @@ meeting.addSelfEventListener(selfEventListener: self)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-For Flutter, create event listener classes and attach them to the `meeting` object. Use `RtkMeetingRoomEventListener` for meeting lifecycle events and `RtkSelfEventListener` for local participant state changes.
-
-```dart
-import 'package:realtimekit_ui/realtimekit_ui.dart';
-import 'package:flutter/material.dart';
-
-// Create a listener for meeting room state changes
-class MeetingRoomListener extends RtkMeetingRoomEventListener {
-  final Function(String) onStateChange;
-
-  MeetingRoomListener({required this.onStateChange});
-
-  @override
-  void onMeetingRoomJoinStarted() {
-    onStateChange('joining');
-  }
-
-  @override
-  void onMeetingRoomJoinCompleted() {
-    onStateChange('joined');
-  }
-
-  @override
-  void onMeetingRoomJoinFailed(exception) {
-    onStateChange('failed');
-  }
-
-  @override
-  void onMeetingRoomLeaveStarted() {
-    onStateChange('leaving');
-  }
-
-  @override
-  void onMeetingRoomLeft() {
-    onStateChange('left');
-  }
-
-  @override
-  void onMeetingEnded() {
-    onStateChange('ended');
-  }
-
-  @override
-  void onActiveTabUpdate(activeTab) {
-    // Sidebar/tab state changed (chat, polls, participants)
-  }
-}
-
-// Create a listener for local participant state changes
-class SelfListener extends RtkSelfEventListener {
-  final Function(bool) onAudioChange;
-  final Function(bool) onVideoChange;
-
-  SelfListener({
-    required this.onAudioChange,
-    required this.onVideoChange,
-  });
-
-  @override
-  void onAudioUpdate(bool isEnabled) {
-    onAudioChange(isEnabled);
-  }
-
-  @override
-  void onVideoUpdate(bool isEnabled) {
-    onVideoChange(isEnabled);
-  }
-
-  @override
-  void onRemovedFromMeeting() {
-    // Local user was removed by host
-  }
-}
-
-// Register listeners after building the UI Kit
-final meeting = realtimeKitUI.meeting;
-meeting.addMeetingRoomEventListener(MeetingRoomListener(
-  onStateChange: (state) {
-    debugPrint('Meeting state: $state');
-  },
-));
-meeting.addSelfEventListener(SelfListener(
-  onAudioChange: (enabled) {
-    debugPrint('Audio: ${enabled ? "on" : "off"}');
-  },
-  onVideoChange: (enabled) {
-    debugPrint('Video: ${enabled ? "on" : "off"}');
-  },
-));
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 For React Native, use the `useRealtimeKitSelector` hook to observe specific properties on the meeting object. This pattern is similar to the web Core SDK.
@@ -750,7 +647,7 @@ These are **UI Kit internal states** for managing the interface. For meeting dat
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 On mobile platforms, state is observed through Core SDK event listeners rather than a single state object. The key event listeners and their callbacks include:
 
@@ -832,16 +729,6 @@ For the full list of available properties, refer to the [Core SDK meeting object
 - **Understand the difference**: Event listeners provide **meeting lifecycle and participant state** changes. The UI Kit manages its own internal UI state separately.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-- **Remove listeners on cleanup**: Always remove event listeners in your widget's `dispose()` method to prevent memory leaks.
-- **Use Riverpod or ChangeNotifier**: Propagate meeting state changes through Riverpod providers or `ChangeNotifier` classes to keep your widget tree in sync.
-- **Rebuild only what changed**: Use `Consumer` widgets or `select` on Riverpod providers to minimize unnecessary widget rebuilds when meeting state changes.
-- **Understand the difference**: Event listeners provide **meeting lifecycle and participant state** changes. The UI Kit manages its own internal UI state separately.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 - **Use selectors for efficiency**: The `useRealtimeKitSelector` hook only re-renders your component when the selected value changes. Select only the specific properties you need rather than the entire meeting object.

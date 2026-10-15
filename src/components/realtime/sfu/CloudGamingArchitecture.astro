@@ -1,0 +1,59 @@
+---
+import RealtimeSequenceDiagram from "./RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "browser", label: "Browser tab" },
+	{ id: "worker", label: "Worker" },
+	{ id: "state", label: "Game state" },
+	{ id: "sfu", label: "Realtime SFU", tone: "accent" as const },
+	{ id: "container", label: "Container publisher" },
+];
+
+const groups = [
+	{
+		label: "Application boundary",
+		from: "worker",
+		to: "state",
+		tone: "accent" as const,
+	},
+];
+
+const events = [
+	{
+		type: "note" as const,
+		from: "browser",
+		to: "state",
+		label:
+			"Access identity + per-tab capability · One SFU session and PeerConnection per browser tab",
+	},
+	{ from: "browser", to: "worker", label: "App request" },
+	{ from: "worker", to: "state", label: "Typed RPC" },
+	{ from: "state", to: "container", label: "Start or stop" },
+	{ from: "container", to: "state", label: "Register publisher" },
+	{ from: "state", to: "sfu", label: "Create SFU resources" },
+	{ from: "container", to: "sfu", label: "Publish H.264 + Opus" },
+	{ from: "container", to: "sfu", label: "Publish two input channels" },
+	{
+		from: "sfu",
+		to: "browser",
+		label: "Subscribe to media + channels",
+		dashed: true,
+	},
+	{ from: "state", to: "sfu", label: "Enable controller replies" },
+	{ from: "browser", to: "sfu", label: "Reliable keyboard + buttons" },
+	{ from: "browser", to: "sfu", label: "Replaceable pointer movement" },
+	{
+		from: "sfu",
+		to: "container",
+		label: "Forward controller input",
+		dashed: true,
+	},
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="A Container publishes game media and input channels through Realtime SFU. A Worker and game state service create SFU resources, browsers subscribe to media, and one authorized browser returns controls."
+	participants={participants}
+	events={events}
+	groups={groups}
+/>

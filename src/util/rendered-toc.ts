@@ -1,15 +1,18 @@
 import { getCollection } from "astro:content";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { loadRenderers } from "astro:container";
-import { getContainerRenderer as getMdxRenderer } from "@astrojs/mdx";
-import { getContainerRenderer as getReactRenderer } from "@astrojs/react";
+import reactRenderer from "@astrojs/react/server.js";
+import mdxRenderer from "@astrojs/mdx/server.js";
 import { getHeadingsFromHtml, type Heading } from "@cloudflare/nimbus-docs";
 import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 
-// AnchorHeading emits its <h*> at runtime via set:html, so those headings are
-// absent from compile-time `render().headings`. Pages using it (directly or
-// through a partial) must read headings from rendered HTML instead.
-const RENDER_MARKER = "AnchorHeading";
+// Some components emit headings at runtime, so those headings are absent from
+// compile-time `render().headings`. Pages using them must read headings from
+// rendered HTML instead.
+const RENDER_MARKERS = ["AnchorHeading", "ChangelogSection"];
+
+function hasRenderMarker(body: string): boolean {
+	return RENDER_MARKERS.some((marker) => body.includes(marker));
+}
 
 function resolvePartialId(file?: string, product?: string): string | undefined {
 	if (!file) return undefined;
@@ -43,7 +46,7 @@ async function computeDynamicPartials(): Promise<Set<string>> {
 
 	const dynamic = new Set<string>();
 	for (const [id, body] of bodies) {
-		if (body.includes(RENDER_MARKER)) dynamic.add(id);
+		if (hasRenderMarker(body)) dynamic.add(id);
 	}
 	let changed = true;
 	while (changed) {
@@ -61,7 +64,7 @@ async function computeDynamicPartials(): Promise<Set<string>> {
 
 export async function pageHasRuntimeHeadings(body: string): Promise<boolean> {
 	if (!body) return false;
-	if (body.includes(RENDER_MARKER)) return true;
+	if (hasRenderMarker(body)) return true;
 	const dynamic = await (dynamicPartials ??= computeDynamicPartials());
 	return renderRefs(body).some((ref) => dynamic.has(ref));
 }
@@ -71,10 +74,15 @@ export async function scrapeRenderedHeadings(
 	Content: AstroComponentFactory,
 	components: Record<string, unknown>,
 ): Promise<Heading[]> {
-	containerPromise ??= loadRenderers([
-		getMdxRenderer(),
-		getReactRenderer(),
-	]).then((renderers) => AstroContainer.create({ renderers }));
+	containerPromise ??= (async () => {
+		const container = await AstroContainer.create({});
+		container.addServerRenderer({ name: "astro:jsx", renderer: mdxRenderer });
+		container.addServerRenderer({
+			name: "@astrojs/react",
+			renderer: reactRenderer,
+		});
+		return container;
+	})();
 	const html = await (
 		await containerPromise
 	).renderToString(Content, { props: { components } });

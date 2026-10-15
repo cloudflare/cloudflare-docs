@@ -1,0 +1,14 @@
+---
+title: Independent MFA supports FIDO2 for infrastructure applications
+description: Enforce FIDO2 hardware key authentication on SSH connections to infrastructure applications.
+date: 2026-08-12
+products:
+  - cloudflare-one
+  - access
+---
+
+[Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) applications support independent multi-factor authentication (MFA) with FIDO2 keys. You can allow `ssh_fido2_key`, `piv_key`, or both in application-level and policy-level MFA settings.
+
+Users enroll FIDO2 keys through the App Launcher and connect with the generated SSH identity. FIDO2 keys for SSH are separate from browser-based WebAuthn security keys and Personal Identity Verification (PIV) keys.
+
+For setup instructions, refer to [Enroll a FIDO2 key for infrastructure apps](/cloudflare-one/access-controls/access-settings/independent-mfa/#enroll-a-fido2-key-for-infrastructure-apps) and [Configure MFA for infrastructure applications](/cloudflare-one/access-controls/policies/mfa-requirements/#infrastructure-applications).

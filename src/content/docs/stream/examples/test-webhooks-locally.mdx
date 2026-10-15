@@ -23,7 +23,7 @@ This example covers webhooks for on-demand (VOD) videos only. Live stream webhoo
 
 This example shows how to:
 
-1. Start a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to get a public URL for your local environment.
+1. Start a [Quick Tunnel](/tunnel/get-started/quick-tunnels/) to get a public URL for your local environment.
 2. Register that URL as your webhook endpoint, which returns the signing secret.
 3. Create a Cloudflare Worker that receives Stream webhook events and verifies their signatures.
 
@@ -43,7 +43,7 @@ npm create cloudflare@latest stream-webhook-handler
 
 ## 2. Start a Cloudflare Tunnel
 
-Before registering a webhook URL, you need a public URL that points to your local machine. In a terminal, start a [quick tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) that forwards to the default Wrangler dev server port (`8787`):
+Before registering a webhook URL, you need a public URL that points to your local machine. In a terminal, start a [Quick Tunnel](/tunnel/get-started/quick-tunnels/) that forwards to the default Wrangler dev server port (`8787`):
 
 ```sh
 npx cloudflared tunnel --url http://localhost:8787

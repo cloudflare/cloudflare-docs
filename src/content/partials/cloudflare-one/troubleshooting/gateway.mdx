@@ -24,7 +24,7 @@ If users see certificate warnings for every page, ensure that the [Cloudflare ro
 ### Gateway analytics not displayed
 If you do not see analytics on the Gateway Overview page:
 
-- **Verify DNS traffic**: Ensure your devices are actually sending queries to Gateway. Check your [DNS locations](/cloudflare-one/networks/resolvers-and-proxies/dns/locations/) and verify the source IPv4 address.
+- **Verify DNS traffic**: Ensure your devices are actually sending queries to Gateway. Check your [DNS locations](/cloudflare-one/traffic-controls/resolver-endpoints/) and verify the source IPv4 address.
 - **Check other resolvers**: Ensure that no other DNS resolvers are configured on the device, as they might be bypassing Gateway.
 - **Wait for processing**: It can take up to 5 minutes for analytics to appear in the dashboard.
 
@@ -38,7 +38,7 @@ Even with an active egress policy, you may find that traffic is egressing from a
 
 | Common cause                                | Solution                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| DNS resolution to CGNAT (carrier-grade NAT) | When an egress policy uses a _Domain_ or _Host_ selector, Gateway must first resolve that domain. For traffic proxied through Cloudflare, this often resolves to a CGNAT IP address from the `100.64.0.0/10` range. Because this IP is internal to Cloudflare's network, it may not be subject to egress policies, which apply to traffic leaving the network. Change the selector in your egress policy from _Domain_ or _Host_ to _Destination IP_. Use the public IP addresses of the service you are trying to reach. |
+| DNS resolution to an initial resolved IP | When an egress policy uses a _Domain_ or _Host_ selector, Gateway must first resolve that domain to an [initial resolved IP](/cloudflare-one/networks/routes/reserved-ips/#gateway-initial-resolved-ips). If your account still uses a legacy range within CGNAT (carrier-grade NAT) address space, this IP may be treated as internal to Cloudflare's network and may not be subject to egress policies, which apply to traffic leaving the network. Change the selector in your egress policy from _Domain_ or _Host_ to _Destination IP_ (using the public IP addresses of the service you are trying to reach), or [move your initial resolved IP range off CGNAT](/cloudflare-one/networks/routes/configure-initial-resolved-ips/). |
 | Policy precedence                           | A different egress policy with a higher precedence (a lower number) is matching the traffic first. Remember that egress policies follow the same first-match-wins logic.                                                                                                                                                                                                                                                                                                                                                  |
 | Split Tunnel configuration                  | The destination IP or domain is excluded from the WARP tunnel via your Split Tunnel configuration. Traffic that is excluded from the tunnel will not be subject to any Gateway policies, including egress.                                                                                                                                                                                                                                                                                                                |
 | No egress logs                              | Egress logging is available via Logpush with the Gateway Egress dataset. This is essential for troubleshooting. You can also use a third-party IP check service to verify the egress IP from a test device.                                                                                                                                                                                                                                                                                                               |
@@ -68,7 +68,7 @@ A common point of confusion is how Gateway evaluates its different policy types 
 
 You have a high-precedence Allow or Do Not Scan policy for a specific application (such as Allow finance.example.com), but Gateway still block traffic with a low-precedence Block policy (such as Block All High-Risk Sites).
 
-The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-policies/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
+The most important concept is [Gateway policy precedence](/cloudflare-one/traffic-controls/order-of-enforcement/), which Gateway enforces based on the policy's order number. A lower order number in the list means a higher precedence. Gateway stops processing further policies when it encounters the first rule that matches.
 
 To resolve Gateway policy precedence issues:
 
@@ -79,7 +79,7 @@ To resolve Gateway policy precedence issues:
 
 ## TLS decryption breaks applications
 
-Turning on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is required for Gateway features such as Data Loss Prevention (DLP), Browser Isolation, and application-aware HTTP policies. However, it can cause issues with certain types of software.
+Turning on [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) is required for Gateway features such as Data Loss Prevention (DLP), Browser Isolation, and application-aware HTTP policies. However, it can cause issues with certain types of software.
 
 ### Symptom: command-line tools (CLI tools) or native applications fail with certificate errors
 
