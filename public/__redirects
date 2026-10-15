@@ -636,6 +636,7 @@
 /realtime/realtimekit/legal/3rdparty/ /realtime/realtimekit/platform/legal/3rdparty/ 301
 /realtime/realtimekit/collaborative-stores/ /realtime/realtimekit/collaboration/meeting-key-value-store/ 301
 /realtime/realtimekit/broadcast-apis/ /realtime/realtimekit/collaboration/message-broadcast/ 301
+/realtime/realtimekit/collaborative-stores/broadcast/ /realtime/realtimekit/collaboration/message-broadcast/ 301
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/agents/ /realtime/ 301
 /realtime/agents/getting-started/ /realtime/ 301
