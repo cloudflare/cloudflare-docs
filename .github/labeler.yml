@@ -679,7 +679,13 @@ product:log-explorer:
 product:logs:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/logs/**
+          - src/content/docs/observability/logpush/**
+          - src/content/docs/observability/logs/logpull/**
+          - src/content/docs/observability/logs/reference/**
+          - src/content/docs/observability/logs/changelog/**
+          - src/content/docs/observability/logs/instant-logs.mdx
+          - src/content/docs/observability/logs/logs-engine.mdx
+          - src/content/docs/observability/logs/glossary.mdx
           - src/content/partials/logs/**
           - src/assets/images/logs/**
           - src/content/changelog/logs/**

@@ -39,7 +39,7 @@ Cloudflare updates the candidate pool as data-center availability, capacity, and
 
 Unlike Smart Tiered Cache, Generic Global does not use latency measurements between a particular origin and candidate upper-tier data centers to make this selection. Instead, it emphasizes regional locality and shared-cache efficiency. Smart Tiered Cache can use origin-specific performance and latency data to select upper tiers when that data is available.
 
-To confirm whether a request used Tiered Cache, refer to the `CacheTieredFill` field in your [http_requests](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) logs.
+To confirm whether a request used Tiered Cache, refer to the `CacheTieredFill` field in your [http_requests](/observability/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) logs.
 
 ### Regional Tiered Cache
 
@@ -180,7 +180,7 @@ Custom Tiered Cache settings take precedence over cloud region hint mappings. If
 :::note
 
 
-To confirm that Tiered Cache is working, make sure you have the value of [CacheTieredFill](/logs/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) in your http\_requests logs, this will indicate if Tiered Cache was used to serve the request.
+To confirm that Tiered Cache is working, make sure you have the value of [CacheTieredFill](/observability/logpush/logpush-job/datasets/zone/http_requests/#cachetieredfill) in your http\_requests logs, this will indicate if Tiered Cache was used to serve the request.
 
 
 :::

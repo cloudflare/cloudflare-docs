@@ -38,9 +38,9 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 
 - Audit logs are retained for 18 months before being deleted. No additional setup is required.
 
-- In the Audit Logs v2 UI, queries are limited to the most recent 90 days for performance reasons. To access the full 18 months of data, use the API or [Logpush](/logs/logpush/).
+- In the Audit Logs v2 UI, queries are limited to the most recent 90 days for performance reasons. To access the full 18 months of data, use the API or [Logpush](/observability/logpush/).
 
-- Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs beyond 18 months.
+- Enterprise customers can use [Logpush](/observability/logpush/) to store audit logs beyond 18 months.
 
 :::note
 Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
@@ -140,7 +140,7 @@ Account analytics are available for account-level audit logs. They are not avail
 ### Logpush
 
 :::note
-For customers who already have a Logpush job set up for Audit Logs v1, note that a separate Logpush job must be configured for [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset). We will communicate the timeline for when Logpush Audit Logs v1 will be deprecated and turned off.
+For customers who already have a Logpush job set up for Audit Logs v1, note that a separate Logpush job must be configured for [Audit Logs v2](/observability/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset). We will communicate the timeline for when Logpush Audit Logs v1 will be deprecated and turned off.
 :::
 
 To create a Logpush job:
@@ -151,7 +151,7 @@ To create a Logpush job:
 
 2. Select **Create a Logpush job**.
 3. In **Select a destination**, select the destination of your choice and add the destination details.
-4. In the datasets section, select the [Audit Logs v2 dataset](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/). Audit Logs v2 is an account-based dataset.
+4. In the datasets section, select the [Audit Logs v2 dataset](/observability/logpush/logpush-job/datasets/account/audit_logs_v2/). Audit Logs v2 is an account-based dataset.
 5. Once you are done configuring your logpush job, select **Submit**.
 
 ## Resource History

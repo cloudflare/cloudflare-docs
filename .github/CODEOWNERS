@@ -580,7 +580,6 @@ package.json @cloudflare/content-engineering
 # logs
 
 /src/content/changelog/logs/ @adepke-cf @angelampcosta @cf-ypark @dcpena @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 /src/assets/images/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 /src/content/partials/logs/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 /src/content/directory/logs.yaml @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
@@ -670,6 +669,15 @@ package.json @cloudflare/content-engineering
 /src/content/docs/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
 /src/assets/images/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
 /src/content/release-notes/observability.yaml @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+
+# logs (within observability)
+/src/content/docs/observability/logpush/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/logpull/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/reference/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/changelog/ @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/instant-logs.mdx @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/logs-engine.mdx @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
+/src/content/docs/observability/logs/glossary.mdx @adepke-cf @angelampcosta @cf-ypark @hc2116 @jeehoon-cf @kvap @rianvdm @rtaylor-cf @sahidya @soheiokamoto @cloudflare/product-owners
 
 # pages
 

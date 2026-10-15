@@ -17,7 +17,8 @@ const MIDDLECACHE_BASE_URL = `${(
 ).replace(/\/+$/, "")}/`;
 const ARCHIVE_MIDDLECACHE_PATH = "v1/logpush-datasets/datasets.tar.gz";
 const ARCHIVE_DOT_TMP_PATH = `middlecache/${ARCHIVE_MIDDLECACHE_PATH}`;
-const DATASETS_DIR = "./src/content/docs/logs/logpush/logpush-job/datasets";
+const DATASETS_DIR =
+	"./src/content/docs/observability/logpush/logpush-job/datasets";
 const EXTRACTED_DIR = join(".tmp", "logpush-datasets-extracted");
 
 // --soft: warn and continue on failure instead of exiting non-zero.
@@ -35,7 +36,7 @@ const fail = (message: string): never => {
 		console.warn(
 			hasPages
 				? `Warning: ${message} — continuing with existing Logpush dataset pages`
-				: `Warning: ${message} — Logpush dataset pages are missing, /logs/logpush/logpush-job/datasets/ will not work`,
+				: `Warning: ${message} — Logpush dataset pages are missing, /observability/logpush/logpush-job/datasets/ will not work`,
 		);
 		process.exit(0);
 	}

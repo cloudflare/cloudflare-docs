@@ -3,7 +3,7 @@ name: Logpush Connectors
 
 entry:
   title: Logpush Connectors
-  url: /logs/logpush/logpush-job/enable-destinations/
+  url: /observability/logpush/logpush-job/enable-destinations/
   show: false
 
 meta:

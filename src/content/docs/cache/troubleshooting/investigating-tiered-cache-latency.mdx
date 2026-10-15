@@ -14,7 +14,7 @@ This page describes how to use Log Explorer to confirm whether Tiered Cache is i
 
 ## Confirm Tiered Cache routing with Log Explorer
 
-The [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset exposes fields that show whether a request was routed through an upper tier:
+The [HTTP Requests](/observability/logpush/logpush-job/datasets/zone/http_requests/) dataset exposes fields that show whether a request was routed through an upper tier:
 
 - **`CacheTieredFill`**: `true` when the lower-tier data center fetched from an upper-tier data center for this request.
 - **`EdgeColoCode`**: the IATA airport code for the lower-tier data center that received the request.
@@ -26,7 +26,7 @@ The [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) data
 
 To check whether the slow requests are the ones going through Tiered Cache:
 
-1. Open [Log Explorer](/logs/) for the zone.
+1. Open [Log Explorer](/observability/logs/) for the zone.
 2. Filter by the affected URL or path and set a time window that includes both slow and fast samples.
 3. Group by `CacheTieredFill` and compare `OriginResponseDurationMs` between the two groups.
 
@@ -61,4 +61,4 @@ If a specific upper-tier data center consistently produces high `OriginResponseD
 
 - [Investigate uncached responses](/cache/troubleshooting/investigating-uncached-responses/)
 - [Tiered Cache](/cache/how-to/tiered-cache/)
-- [HTTP Requests log fields](/logs/logpush/logpush-job/datasets/zone/http_requests/)
+- [HTTP Requests log fields](/observability/logpush/logpush-job/datasets/zone/http_requests/)

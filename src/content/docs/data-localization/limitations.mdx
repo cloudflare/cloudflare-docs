@@ -52,9 +52,9 @@ Regional Services does not apply to [subrequests](/workers/platform/limits/#subr
 
 There are certain limitations and caveats when using Customer Metadata Boundary.
 
-When you configure Customer Metadata Boundary to EU, most of the analytics and logging sections in the Cloudflare dashboard will show no data. To view your data, use [Security Analytics](/waf/analytics/security-analytics/) (which respects CMB) or set up [Logpush](/logs/logpush/) to export [HTTP request](/logs/logpush/logpush-job/datasets/zone/http_requests/) logs to a storage destination you control.
+When you configure Customer Metadata Boundary to EU, most of the analytics and logging sections in the Cloudflare dashboard will show no data. To view your data, use [Security Analytics](/waf/analytics/security-analytics/) (which respects CMB) or set up [Logpush](/observability/logpush/) to export [HTTP request](/observability/logpush/logpush-job/datasets/zone/http_requests/) logs to a storage destination you control.
 
-To configure Customer Metadata Boundary to EU, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/logs/logpull/) (an older API for downloading logs, now superseded by Logpush).
+To configure Customer Metadata Boundary to EU, you must disable Log Retention for all zones within your account. Log Retention is a legacy feature of [Logpull](/observability/logs/logpull/) (an older API for downloading logs, now superseded by Logpush).
 
 For product-specific caveats, refer to [Cloudflare product compatibility](/data-localization/compatibility/) page.
 
