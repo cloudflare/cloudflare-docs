@@ -1336,6 +1336,28 @@ entries:
       # Block requests to a specific endpoint whose content was not fully scanned
       cf.waf.content_scan.truncated and http.request.uri.path eq "/upload"
 
+  - name: cf.waf.content_scan.has_encrypted_obj
+    data_type: Boolean
+    categories: [Request]
+    keywords:
+      [
+        request,
+        cloudflare,
+        content scanning,
+        malicious uploads,
+        client,
+        visitor,
+      ]
+    plan_info_label: Enterprise add-on
+    summary: Indicates whether the request contains at least one password-protected (encrypted) content object.
+    description: |-
+      Requires a Cloudflare Enterprise plan with [malicious uploads detection](/waf/detections/malicious-uploads/).
+
+      Refer to [Encrypted content](/waf/detections/malicious-uploads/#encrypted-content) for the file types this field covers.
+    example_block: |-
+      # Block requests containing password-protected uploads
+      cf.waf.content_scan.has_encrypted_obj and http.request.uri.path eq "/upload"
+
   - name: cf.waf.content_scan.num_obj
     data_type: Integer
     categories: [Request]
