@@ -1,0 +1,32 @@
+---
+title: Crawl results include URL outcomes and robots.txt diagnostics
+description: Browser Run crawl results now identify each URL outcome and report robots.txt availability by origin.
+products:
+  - browser-run
+date: 2026-10-15
+---
+
+Browser Run [`/crawl` results](/browser-run/quick-actions/crawl-endpoint/#request-results-of-the-crawl-job) now include more detailed diagnostics. Each URL record can include an `outcome` that identifies the specific processing result, such as `success`, `robots_disallowed`, `timeout`, or `page_error`.
+
+The job-level `robots` array reports the `robots.txt` state for up to 50 origins encountered by the crawl. Each entry includes the origin, whether usable rules were available, and the HTTP status when the crawler received a response.
+
+```json
+{
+	"robots": [
+		{
+			"origin": "https://example.com",
+			"state": "available",
+			"status": 200
+		}
+	],
+	"records": [
+		{
+			"url": "https://example.com/docs/",
+			"status": "completed",
+			"outcome": "success"
+		}
+	]
+}
+```
+
+For field definitions and all possible outcome values, refer to [URL outcomes](/browser-run/quick-actions/crawl-endpoint/#url-outcomes) and [robots.txt diagnostics](/browser-run/quick-actions/crawl-endpoint/#robotstxt-diagnostics).
