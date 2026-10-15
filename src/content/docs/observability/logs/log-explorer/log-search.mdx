@@ -10,7 +10,7 @@ products:
 
 import { TabItem, Tabs, Render, DashButton } from "~/components";
 
-Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
+Log Explorer (Legacy) lets you store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
 
 :::note[Log Search is now part of Observability Logs]
 Log Explorer datasets are queried from the [Logs](/observability/logs/) page under **Observability** in the Cloudflare dashboard. The **Log Explorer** menu is no longer shown in the dashboard navigation. Your enabled datasets, saved queries, and SQL queries continue to work on the Logs page, and the previous Log Search page remains available at its direct URL.
@@ -98,11 +98,11 @@ After building your query, you can save it by selecting **Save search**. Provide
 
 ## Integration with Security Analytics
 
-You can also access the Log Explorer dashboard directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query in Log Explorer.
+You can also open Log Search directly from the [Security Analytics dashboard](/waf/analytics/security-analytics/#logs). When doing so, the filters you applied in Security Analytics will automatically carry over to your query.
 
 ## Optimize your queries
 
-All the tables supported by Log Explorer contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`.
+All Log Explorer datasets contain a special column called `date`, which helps to narrow down the amount of data that is scanned to respond to your query, resulting in faster query response times. The value of `date` must be in the form of `YYYY-MM-DD`. For example, to query logs that occurred on October 12, 2023, add the following to your `WHERE` clause: `date = '2023-10-12'`. The column supports the standard operators of `<`, `>`, and `=`.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 2. Go to **Observability** > **Logs**, select a Log Explorer dataset, and select **Open SQL editor**.
