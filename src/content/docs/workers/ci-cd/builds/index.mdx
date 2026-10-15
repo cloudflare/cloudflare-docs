@@ -14,19 +14,17 @@ The Cloudflare [Git integration](/workers/ci-cd/builds/git-integration/) lets yo
 
 ## Get started
 
-To connect a repository hosted in Artifacts, refer to the [Artifacts integration](/workers/ci-cd/builds/git-integration/artifacts-integration/).
-
 ### Connect a new Worker
 
-To create a new Worker and connect it to a GitHub or GitLab repository:
+To create a new Worker and connect it to a repository:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select **Create application**.
-3. Select **Get started** next to **Import a repository**.
-4. Under **Import a repository**, select a **Git account**.
+3. Select **Artifacts**, **GitHub**, or **GitLab**.
+4. If prompted, authenticate with your Git provider.
 5. Select the repository you want to import from the list. You can also use the search bar to narrow the results.
 6. Configure your project and select **Save and Deploy**.
 7. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
