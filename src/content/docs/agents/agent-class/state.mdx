@@ -3,7 +3,7 @@ title: Store and sync state
 description: Persist and sync Agent state across clients in real time using setState, SQL storage, and bidirectional updates.
 pcx_content_type: concept
 sidebar:
-  order: 7
+  order: 2
 products:
   - agents
 ---
@@ -27,7 +27,7 @@ State within an Agent is:
 Agent state is stored in a SQL database embedded within each individual Agent instance. You can interact with it using the higher-level `this.setState` API (recommended), which allows you to sync state and trigger events on state changes, or by directly querying the database with `this.sql`.
 
 :::note[State vs Props]
-**State** is persistent data that survives restarts and syncs across clients. **[Props](/agents/runtime/communication/routing/#props)** are one-time initialization arguments passed when an agent is instantiated - use props for configuration that does not need to persist.
+**State** is persistent data that survives restarts and syncs across clients. **[Props](/agents/agent-class/routing/#props)** are one-time initialization arguments passed when an agent is instantiated - use props for configuration that does not need to persist.
 :::
 
 <TypeScriptExample>
@@ -186,7 +186,7 @@ export class MinimalAgent extends Agent {
 Use `setState()` to update state. This:
 
 1. Saves to SQLite (persistent)
-2. Broadcasts to all connected clients (excluding connections where [`shouldSendProtocolMessages`](/agents/runtime/communication/protocol-messages/) returned `false`)
+2. Broadcasts to all connected clients (excluding connections where [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) returned `false`)
 3. Triggers `onStateChanged()` (after broadcast; best-effort)
 
 <TypeScriptExample>
@@ -426,7 +426,7 @@ flowchart TD
 
 ## State from Workflows
 
-When using [Workflows](/agents/runtime/execution/run-workflows/), you can update agent state from workflow steps:
+When using [Workflows](/agents/agent-class/run-workflows/), you can update agent state from workflow steps:
 
 <TypeScriptExample>
 
@@ -642,7 +642,7 @@ onStateChanged(state: State, source: Connection | "server") {
 
 ## Use Agent state as model context
 
-You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/runtime/operations/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
+You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/agent-class/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
 
 For example, you can use an Agent's built-in SQL database to pull history, query a model with it, and append to that history ahead of the next call to the model:
 
@@ -719,7 +719,7 @@ This works because each instance of an Agent has its own database, and the state
 
 <LinkCard
 	title="Agents API"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Complete API reference for the Agents SDK."
 />
 
@@ -731,12 +731,12 @@ This works because each instance of an Agent has its own database, and the state
 
 <LinkCard
 	title="WebSockets"
-	href="/agents/runtime/communication/websockets/"
+	href="/agents/agent-class/websockets/"
 	description="Build interactive agents with real-time data streaming."
 />
 
 <LinkCard
 	title="Run Workflows"
-	href="/agents/runtime/execution/run-workflows/"
+	href="/agents/agent-class/run-workflows/"
 	description="Orchestrate asynchronous workflows from your agent."
 />

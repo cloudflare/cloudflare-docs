@@ -3,7 +3,7 @@ title: Agent class internals
 description: Explore how the Agent class extends Durable Objects to provide state, WebSockets, scheduling, and RPC.
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 1
 products:
   - agents
 ---
@@ -210,7 +210,7 @@ class MyAgent extends Agent<Env, { count: number }> {
 }
 ```
 
-State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since `agents` provides [JS and React clients](/agents/runtime/lifecycle/state/#synchronizing-state), real-time state updates are available out of the box.
+State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since `agents` provides [JS and React clients](/agents/agent-class/state/#synchronizing-state), real-time state updates are available out of the box.
 
 ### `this.sql`
 
@@ -507,7 +507,7 @@ class MyAgent extends Agent {
 }
 ```
 
-`AIChatAgent` uses `keepAliveWhile` internally to keep the agent alive during streaming LLM responses. For more details, refer to [Schedule tasks — Keeping the agent alive](/agents/runtime/execution/schedule-tasks/#keeping-the-agent-alive).
+`AIChatAgent` uses `keepAliveWhile` internally to keep the agent alive during streaming LLM responses. For more details, refer to [Schedule tasks — Keeping the agent alive](/agents/agent-class/schedule-tasks/#keeping-the-agent-alive).
 
 ### Routing
 
@@ -525,7 +525,7 @@ return new Response("Not found", { status: 404 });
 
 ## Layer 3: `AIChatAgent`
 
-The [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) class from `@cloudflare/ai-chat` extends `Agent` with an opinionated layer for AI chat. It adds automatic message persistence to SQLite, resumable streaming, tool support (server-side, client-side, and human-in-the-loop), and a React hook (`useAgentChat`) for building chat UIs.
+The [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) class from `@cloudflare/ai-chat` extends `Agent` with an opinionated layer for AI chat. It adds automatic message persistence to SQLite, resumable streaming, tool support (server-side, client-side, and human-in-the-loop), and a React hook (`useAgentChat`) for building chat UIs.
 
 The full hierarchy is: **DurableObject** > **Server** > **Agent** > **AIChatAgent**.
 

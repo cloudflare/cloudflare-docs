@@ -50,7 +50,7 @@ export class MyMCP extends McpAgent {
 
 </TypeScriptExample>
 
-This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/runtime/lifecycle/state/).
+This means that each instance of your MCP server has its own durable state, backed by a [Durable Object](/durable-objects/), with its own [SQL database](/agents/agent-class/state/).
 
 A stateless server can define [tools](/agents/model-context-protocol/protocol/tools/) with `@modelcontextprotocol/server` and serve them through `createMcpHandler`.
 
@@ -202,13 +202,13 @@ When a user authenticates to your MCP server, their identity information and tok
 
 ## State synchronization APIs
 
-The `McpAgent` class provides full access to the [Agent state APIs](/agents/runtime/lifecycle/state/):
+The `McpAgent` class provides full access to the [Agent state APIs](/agents/agent-class/state/):
 
-- [`state`](/agents/runtime/lifecycle/state/) — Current persisted state
-- [`initialState`](/agents/runtime/lifecycle/state/#set-the-initial-state-for-an-agent) — Default state when instance starts
-- [`setState`](/agents/runtime/lifecycle/state/) — Update and persist state
-- [`onStateChanged`](/agents/runtime/lifecycle/state/#synchronizing-state) — React to state changes
-- [`sql`](/agents/runtime/agents-api/#sql-api) — Execute SQL queries on embedded database
+- [`state`](/agents/agent-class/state/) — Current persisted state
+- [`initialState`](/agents/agent-class/state/#set-the-initial-state-for-an-agent) — Default state when instance starts
+- [`setState`](/agents/agent-class/state/) — Update and persist state
+- [`onStateChanged`](/agents/agent-class/state/#synchronizing-state) — React to state changes
+- [`sql`](/agents/agent-class/#sql-api) — Execute SQL queries on embedded database
 
 :::note[State resets after the session ends]
 Currently, each client session is backed by an instance of the `McpAgent` class. This is handled automatically for you, as shown in the [getting started guide](/agents/model-context-protocol/guides/remote-mcp-server/). This means that when the same client reconnects, they will start a new session, and the state will be reset.

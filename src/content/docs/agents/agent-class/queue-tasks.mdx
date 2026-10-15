@@ -3,7 +3,7 @@ title: Queue tasks
 description: Add background tasks to a built-in FIFO queue for asynchronous processing within Cloudflare Agents.
 pcx_content_type: concept
 sidebar:
-  order: 12
+  order: 10
 products:
   - agents
 ---
@@ -47,7 +47,7 @@ async queue<T>(
 - `callback` - The name of the method to call when processing the task
 - `payload` - Data to pass to the callback method
 - `options` - Optional configuration:
-  - `retry` - Retry options for the callback execution. If the callback throws, it is retried with exponential backoff. Refer to [Retries](/agents/runtime/execution/retries/) for details on `RetryOptions`
+  - `retry` - Retry options for the callback execution. If the callback throws, it is retried with exponential backoff. Refer to [Retries](/agents/agent-class/retries/) for details on `RetryOptions`
 
 **Returns:** The unique ID of the queued task
 
@@ -338,7 +338,7 @@ class RobustAgent extends Agent {
 
 </TypeScriptExample>
 
-If no `retry` option is provided, the class-level defaults from `static options.retry` are used (3 attempts, 100ms base delay, 3s max delay). Refer to [Retries](/agents/runtime/execution/retries/) for full details.
+If no `retry` option is provided, the class-level defaults from `static options.retry` are used (3 attempts, 100ms base delay, 3s max delay). Refer to [Retries](/agents/agent-class/retries/) for full details.
 
 ## Best practices
 
@@ -353,7 +353,7 @@ If no `retry` option is provided, the class-level defaults from `static options.
 The queue system works with other Agent SDK features:
 
 - **State management**: Access agent state within queued callbacks.
-- **Scheduling**: Combine with [`schedule()`](/agents/runtime/execution/schedule-tasks/) for time-based queue processing.
+- **Scheduling**: Combine with [`schedule()`](/agents/agent-class/schedule-tasks/) for time-based queue processing.
 - **Context**: Queued tasks maintain the original request context.
 - **Database**: Uses the same database as other agent data.
 
@@ -365,7 +365,7 @@ The queue system works with other Agent SDK features:
 
 ## Queue vs Schedule
 
-Use **queue** when you want tasks to execute as soon as possible in order. Use [**schedule**](/agents/runtime/execution/schedule-tasks/) when you need tasks to run at specific times or on a recurring basis.
+Use **queue** when you want tasks to execute as soon as possible in order. Use [**schedule**](/agents/agent-class/schedule-tasks/) when you need tasks to run at specific times or on a recurring basis.
 
 | Feature          | Queue                    | Schedule                    |
 | ---------------- | ------------------------ | --------------------------- |
@@ -377,18 +377,18 @@ Use **queue** when you want tasks to execute as soon as possible in order. Use [
 
 <LinkCard
 	title="Agents API"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Complete API reference for the Agents SDK."
 />
 
 <LinkCard
 	title="Schedule tasks"
-	href="/agents/runtime/execution/schedule-tasks/"
+	href="/agents/agent-class/schedule-tasks/"
 	description="Time-based execution with cron and delays."
 />
 
 <LinkCard
 	title="Run Workflows"
-	href="/agents/runtime/execution/run-workflows/"
+	href="/agents/agent-class/run-workflows/"
 	description="Durable multi-step background processing."
 />
