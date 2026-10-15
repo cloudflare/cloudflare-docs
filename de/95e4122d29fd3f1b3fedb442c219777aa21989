@@ -1,0 +1,19 @@
+src/content/docs/fundamentals/manage-members/roles.mdx
+  s_11896f9d22b210::t_4fd617dec8b725 124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "de95e4122d29fd3f1b3fedb442c219777aa21989",
+  "prompts": {},
+  "sessions": {
+    "s_11896f9d22b210": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f139b0701ffeSQB7RqwqWjguEW",
+        "model": "@cf/moonshotai/kimi-k3"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

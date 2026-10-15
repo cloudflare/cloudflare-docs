@@ -1,0 +1,36 @@
+src/content/docs/workers/get-started/guide.mdx
+  s_daaded6f94a376::t_b8eb499881c663 204
+src/content/docs/workers/ci-cd/builds/automatic-prs.mdx
+  s_daaded6f94a376::t_b8eb499881c663 11
+src/content/docs/workers/ci-cd/builds/git-integration/gitlab-integration.mdx
+  s_daaded6f94a376::t_c625c63a3470e2 6
+src/content/docs/workers/ci-cd/builds/git-integration/index.mdx
+  s_daaded6f94a376::t_b8eb499881c663 4,19,25-27
+  s_daaded6f94a376::t_c1839375af3229 13
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_daaded6f94a376::t_c625c63a3470e2 87
+  s_daaded6f94a376::t_b8eb499881c663 13,55-56,71
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_daaded6f94a376::t_b8eb499881c663 17,21,23,27-31,33-42,45,56-62,65-68,70,74
+  s_daaded6f94a376::t_c625c63a3470e2 1-16,18-20,22,24-26,32,43-44,46-55,63-64,69,71-73,75-76
+src/content/docs/workers/ci-cd/index.mdx
+  s_daaded6f94a376::t_b8eb499881c663 24,33
+src/content/directory/workers-builds.yaml
+  s_daaded6f94a376::t_c625c63a3470e2 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1680b6c59f93d0ae16002d0d70c0b595476ee1d7",
+  "prompts": {},
+  "sessions": {
+    "s_daaded6f94a376": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2b87c1abffem2x87y1AmKcXDV",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

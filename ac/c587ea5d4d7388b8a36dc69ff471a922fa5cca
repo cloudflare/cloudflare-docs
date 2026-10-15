@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-10-cloudflare-mcp-skills.mdx
+  s_0d768e1dfbc208::t_08424eeb0b5602 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "acc587ea5d4d7388b8a36dc69ff471a922fa5cca",
+  "prompts": {},
+  "sessions": {
+    "s_0d768e1dfbc208": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11d74-80ac-7234-8533-734a6acf4f10",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
