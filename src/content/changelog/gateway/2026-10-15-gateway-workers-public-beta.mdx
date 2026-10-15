@@ -11,6 +11,8 @@ Cloudflare Gateway now integrates with Cloudflare Workers in public beta. You ca
 
 The **Forward** action lets you transform HTTP requests and responses, return a coaching page, or run background tasks such as Slack notifications and R2 captures. Your Worker receives the request and [Gateway context](/cloudflare-one/traffic-controls/integrate-workers/available-context/), including connection metadata, user identity, and device posture when available.
 
+![A matching Gateway Forward policy sends HTTP traffic to a Worker, which processes requests and responses for Internet or private-network upstream services.](~/assets/images/changelog/gateway/gateway-workers-forward.png)
+
 Gateway handles the proxy connection, TLS decryption, and upstream routing. It evaluates HTTP request policies before Forward policies and inspects the final response before returning it to the user.
 
 Gateway inspects the original request body before delivering it to your Worker. A body-inspection Block decision can interrupt the Worker.
