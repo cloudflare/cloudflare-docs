@@ -7,6 +7,7 @@ sidebar:
 products:
   - stream
 ---
+
 import { DashButton } from "~/components";
 
 Stream provides analytics about both live video and video uploaded to Stream, via the GraphQL API described below, as well as on the Stream **Analytics** page of the Cloudflare dashboard.
@@ -26,27 +27,47 @@ The Stream Analytics API uses the Cloudflare GraphQL Analytics API, which can be
 
 Refer to the sections below for available metrics, dimensions, fields, and example queries.
 
-## Server side analytics
+Query Stream datasets under `viewer.accounts`. Use `filter` to select records and `dimensions` to group results in grouped datasets.
 
-Stream collects data about the number of minutes of video delivered to viewers for all live and on-demand videos played via HLS or DASH, regardless of whether or not you use the [Stream Player](/stream/viewing-videos/using-the-stream-player/).
+Grouped datasets expose aggregates such as `avg`, `sum`, and `count`. Raw datasets return fields directly, without an aggregate object.
 
-### Filters and Dimensions
+Dotted field paths indicate nested selections: `sum.minutesViewed` means `sum { minutesViewed }`.
 
-| Field               | Description                                                                                              |
-| ------------------- | -------------------------------------------------------------------------------------------------------- |
-| `date`              | Date                                                                                                     |
-| `datetime`          | DateTime                                                                                                 |
-| `uid`               | UID of the video                                                                                         |
-| `clientCountryName` | ISO 3166 alpha2 country code from the client who viewed the video                                        |
-| `creator`           | The [Creator ID](/stream/manage-video-library/creator-id/) associated with individual videos, if present |
+To find current fields and filter operators, [explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/) using introspection.
+
+## Video delivered via HLS/DASH and WebRTC
+
+Stream collects minutes delivered for live and on-demand video. Delivery includes HTTP Live Streaming (HLS), Dynamic Adaptive Streaming over HTTP (DASH), and Web Real-Time Communication (WebRTC), regardless of your player.
+
+Use `streamMinutesViewedAdaptiveGroups` to query these delivery metrics. They measure delivery for billing, rather than player quality of experience.
+
+### Filters and dimensions
+
+The dataset supports these filters and grouping dimensions:
+
+| Field                    | Description                                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| `date`                   | Date                                                                                         |
+| `datetime`               | Date and time                                                                                |
+| `datetimeMinute`         | Date and time, truncated to the minute                                                       |
+| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval                                           |
+| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval                                             |
+| `datetimeHour`           | Date and time, truncated to the hour                                                         |
+| `uid`                    | Video ID                                                                                     |
+| `clientCountryName`      | ISO 3166-1 alpha-2 country code for the viewer                                               |
+| `creator`                | [Creator ID](/stream/manage-video-library/creator-id/) associated with the video, if present |
+| `mediaType`              | Delivery type: `playback` or `downloads`                                                     |
 
 Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
 ### Metrics
 
-| Node                                | Field           | Description                |
-| ----------------------------------- | --------------- | -------------------------- |
-| `streamMinutesViewedAdaptiveGroups` | `minutesViewed` | Minutes of video delivered |
+The dataset exposes these metrics:
+
+| Field               | Description                          |
+| ------------------- | ------------------------------------ |
+| `count`             | Number of values per dimension group |
+| `sum.minutesViewed` | Minutes of video delivered           |
 
 ### Example
 
@@ -84,7 +105,7 @@ query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
 						{
 							"dimensions": {
 								"clientCountryName": "US",
-								"uid": "73c514082b154945a753d0011e9d7525"
+								"uid": "<VIDEO_ID>"
 							},
 							"sum": {
 								"minutesViewed": 2234
@@ -93,7 +114,7 @@ query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
 						{
 							"dimensions": {
 								"clientCountryName": "CN",
-								"uid": "73c514082b154945a753d0011e9d7525"
+								"uid": "<VIDEO_ID>"
 							},
 							"sum": {
 								"minutesViewed": 700
@@ -102,7 +123,7 @@ query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
 						{
 							"dimensions": {
 								"clientCountryName": "IN",
-								"uid": "73c514082b154945a753d0011e9d7525"
+								"uid": "<VIDEO_ID>"
 							},
 							"sum": {
 								"minutesViewed": 553
@@ -117,13 +138,211 @@ query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
 }
 ```
 
+## RTMP and SRT input metrics
+
+Use these datasets to inspect Real-Time Messaging Protocol (RTMP) and Secure Reliable Transport (SRT) inputs. Query `liveInputEventsAdaptive` for event logs and `liveInputEventsAdaptiveGroups` for stored segment metrics.
+
+### Event fields
+
+`liveInputEventsAdaptive` returns event log fields directly, not segment metrics. It excludes events with an empty `eventDescription`.
+
+You can select and filter these fields:
+
+| Field              | Description             |
+| ------------------ | ----------------------- |
+| `datetime`         | Event date and time     |
+| `inputId`          | Live input ID           |
+| `coloCode`         | Ingest data center code |
+| `eventCode`        | Event code              |
+| `eventDescription` | Event description       |
+
+### Filters and dimensions
+
+`liveInputEventsAdaptiveGroups` contains only stored segment events. It supports these filters and grouping dimensions:
+
+| Field                    | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `date`                   | Date                                               |
+| `datetime`               | Date and time                                      |
+| `datetimeMinute`         | Date and time, truncated to the minute             |
+| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval |
+| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval   |
+| `datetimeHour`           | Date and time, truncated to the hour               |
+| `eventCode`              | Stored segment event code                          |
+| `inputId`                | Live input ID                                      |
+
+### Metrics
+
+A group of pictures (GOP) is a sequence of video frames. The grouped dataset exposes these segment metrics:
+
+| Field                                                                           | Description                                        |
+| ------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `count`                                                                         | Number of segments stored                          |
+| `avg.gopUploadTime`, `min.gopUploadTime`, `max.gopUploadTime`                   | GOP upload time, in milliseconds                   |
+| `avg.gopDuration`, `min.gopDuration`, `max.gopDuration`                         | GOP duration, in milliseconds                      |
+| `avg.uploadDurationRatio`, `min.uploadDurationRatio`, `max.uploadDurationRatio` | Upload time divided by GOP duration, without units |
+| `avg.gopByteSize`, `min.gopByteSize`, `max.gopByteSize`                         | GOP size, in bytes                                 |
+
+Bitrate fields divide total bits by the fixed time bucket duration. They are not ordinary averages of per-segment bitrates.
+
+Match each bitrate field to its grouping dimension:
+
+| Field                       | Required dimension       | Description                                   |
+| --------------------------- | ------------------------ | --------------------------------------------- |
+| `avg.bitRate`               | `datetime`               | Bitrate in bits per second                    |
+| `avg.bitRateMinute`         | `datetimeMinute`         | Bitrate over a minute, in bits per second     |
+| `avg.bitRateFiveMinutes`    | `datetimeFiveMinutes`    | Bitrate over five minutes, in bits per second |
+| `avg.bitRateFifteenMinutes` | `datetimeFifteenMinutes` | Bitrate over 15 minutes, in bits per second   |
+| `avg.bitRateHour`           | `datetimeHour`           | Bitrate over an hour, in bits per second      |
+
+## HLS/DASH quality of experience metrics
+
+Common Media Client Data (CMCD) reports client-side playback measurements. Stream built-in players and supported custom players provide CMCD.
+
+Use `streamCMCDAdaptiveGroups` to query quality of experience (QoE) metrics. These measurements describe player experience, not billable minutes delivered.
+
+### Filters and dimensions
+
+The dataset supports these filters and grouping dimensions:
+
+| Field                             | Description                                                                        |
+| --------------------------------- | ---------------------------------------------------------------------------------- |
+| `videoId`                         | Video ID                                                                           |
+| `creatorId`                       | Creator ID                                                                         |
+| `inputId`                         | Live input ID                                                                      |
+| `sessionId`                       | CMCD session ID                                                                    |
+| `contentId`                       | Content ID                                                                         |
+| `country`                         | ISO 3166-1 alpha-3 country code, unlike delivery's alpha-2 code                    |
+| `resolution`                      | Video resolution                                                                   |
+| `bufferStarvation`                | `1` if the buffer starved between the previous and current requests, otherwise `0` |
+| `bufferStarvationDuration`        | Buffer starvation duration, in milliseconds                                        |
+| `initialBufferStarvationDuration` | Initial buffer starvation duration, in milliseconds                                |
+| `bufferLength`                    | Buffer length for the requested object                                             |
+| `measuredThroughput`              | Measured throughput between client and server                                      |
+| `streamType`                      | `l` for live or `v` for video on demand                                            |
+| `encodedBitrate`                  | Encoded bitrate of the requested object                                            |
+| `objectDuration`                  | Requested object duration, in milliseconds                                         |
+| `startup`                         | `1` if the requested object is needed for startup, otherwise `0`                   |
+| `streamingFormat`                 | `h` for HLS or low-latency HLS (LL-HLS), or `d` for DASH                           |
+| `hlsType`                         | `hls` or `ll-hls`, otherwise blank                                                 |
+| `topBitrate`                      | Highest bitrate rendition                                                          |
+| `playbackRate`                    | Playback rate: `1` for real time, `2` for twice real time, or `0` when not playing |
+| `date`                            | Date                                                                               |
+| `datetime`                        | Date and time                                                                      |
+| `datetimeMinute`                  | Date and time, truncated to the minute                                             |
+| `datetimeFiveMinutes`             | Date and time, truncated to a five-minute interval                                 |
+| `datetimeFifteenMinutes`          | Date and time, truncated to a 15-minute interval                                   |
+| `datetimeHour`                    | Date and time, truncated to the hour                                               |
+| `datetimeSixHours`                | Date and time, truncated to a six-hour interval                                    |
+
+### Metrics
+
+The dataset exposes these aggregates:
+
+| Field                                 | Description                                                              |
+| ------------------------------------- | ------------------------------------------------------------------------ |
+| `count`                               | Number of values per dimension group                                     |
+| `sum.millisecondsViewed`              | Estimated viewing time in milliseconds, from successful requests only    |
+| `uniq.viewers`                        | Unique CMCD session IDs from successful requests only, not unique people |
+| `avg.bufferStarvationDuration`        | Average buffer starvation duration, in milliseconds                      |
+| `avg.initialBufferStarvationDuration` | Average initial buffer starvation duration, in milliseconds              |
+| `avg.bufferLength`                    | Average buffer length                                                    |
+| `avg.encodedBitrate`                  | Average encoded bitrate                                                  |
+| `avg.measuredThroughput`              | Average measured throughput                                              |
+| `max.latestDatetime`                  | Last time the combination of dimensions was seen                         |
+
+Select percentile fields under `quantiles`. All durations are in milliseconds, and `P999` means the 99.9th percentile:
+
+| Field                                 | Description                                             |
+| ------------------------------------- | ------------------------------------------------------- |
+| `bufferStarvationDurationP25`         | 25th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP50`         | 50th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP75`         | 75th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP90`         | 90th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP95`         | 95th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP99`         | 99th percentile of buffer starvation duration           |
+| `bufferStarvationDurationP999`        | 99.9th percentile of buffer starvation duration         |
+| `initialBufferStarvationDurationP25`  | 25th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP50`  | 50th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP75`  | 75th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP90`  | 90th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP95`  | 95th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP99`  | 99th percentile of initial buffer starvation duration   |
+| `initialBufferStarvationDurationP999` | 99.9th percentile of initial buffer starvation duration |
+
+## WebRTC WHIP/WHEP metrics
+
+Use `streamWHIPBroadcastMetricsAdaptive` and `streamWHIPBroadcastMetricsAdaptiveGroups` to inspect WebRTC-HTTP Ingestion Protocol (WHIP) ingest. For WebRTC-HTTP Egress Protocol (WHEP) playback, query [minutes delivered](/stream/getting-analytics/fetching-bulk-analytics/#video-delivered-via-hlsdash-and-webrtc).
+
+Stream collects WHIP observations every 15 seconds. They can take two to three minutes to become queryable.
+
+### Raw fields
+
+`streamWHIPBroadcastMetricsAdaptive` returns these fields directly. You can also use these fields in filters:
+
+| Field                        | Description                                                                             |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| `sampleInterval`             | Adaptive sampling interval, not the observation duration                                |
+| `datetime`                   | Observation date and time                                                               |
+| `inputId`                    | Live input ID                                                                           |
+| `peerConnectionState`        | Peer connection state                                                                   |
+| `iceConnectionState`         | Interactive Connectivity Establishment (ICE) connection state                           |
+| `trackIngestState`           | Track ingest state                                                                      |
+| `codecName`                  | Codec name                                                                              |
+| `codecMimeType`              | Codec media type                                                                        |
+| `peerConnectionId`           | Peer connection ID                                                                      |
+| `trackId`                    | Track ID                                                                                |
+| `mediaKind`                  | `audio` or `video`                                                                      |
+| `receivedBytes`              | Bytes received during the observation                                                   |
+| `receivedPackets`            | Real-time Transport Protocol (RTP) packets received during the observation              |
+| `droppedPackets`             | RTP packets dropped from the ingest buffer during the observation, not all network loss |
+| `observationDurationSeconds` | Observed time, in seconds                                                               |
+
+### Filters and dimensions
+
+`streamWHIPBroadcastMetricsAdaptiveGroups` supports these filters and grouping dimensions:
+
+| Field                    | Description                                        |
+| ------------------------ | -------------------------------------------------- |
+| `date`                   | Date                                               |
+| `datetime`               | Date and time                                      |
+| `datetimeMinute`         | Date and time, truncated to the minute             |
+| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval |
+| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval   |
+| `datetimeHour`           | Date and time, truncated to the hour               |
+| `sampleInterval`         | Adaptive sampling interval                         |
+| `inputId`                | Live input ID                                      |
+| `peerConnectionState`    | Peer connection state                              |
+| `iceConnectionState`     | ICE connection state                               |
+| `trackIngestState`       | Track ingest state                                 |
+| `codecName`              | Codec name                                         |
+| `codecMimeType`          | Codec media type                                   |
+| `peerConnectionId`       | Peer connection ID                                 |
+| `trackId`                | Track ID                                           |
+| `mediaKind`              | `audio` or `video`                                 |
+
+### Metrics
+
+The grouped dataset exposes these metrics. Select `count` directly, and nested fields under `sum` or `avg`:
+
+| Field                            | Description                                                   |
+| -------------------------------- | ------------------------------------------------------------- |
+| `count`                          | Estimated number of observations                              |
+| `sum.receivedBytes`              | Estimated total bytes received                                |
+| `sum.receivedPackets`            | Estimated total RTP packets received                          |
+| `sum.droppedPackets`             | Estimated total RTP packets dropped from the ingest buffer    |
+| `sum.observationDurationSeconds` | Estimated total observed time, in seconds                     |
+| `avg.sampleInterval`             | Average adaptive sampling interval                            |
+| `avg.ingestBitrate`              | Received bits divided by observed seconds, in bits per second |
+| `avg.ingestPacketRate`           | Ingest packet rate, in packets per second                     |
+
 ## Pagination
 
 GraphQL API supports seek pagination: using filters, you can specify the last video UID so the response only includes data for videos after the last video UID.
 
-The query below will return data for 2 videos that follow video UID `5646153f8dea17f44d542a42e76cfd`:
+The query returns data for two videos after `$uId`. Set `$uId` to the last video UID from the previous response:
 
-```graphql graphql-api-explorer='{"uId": "5646153f8dea17f44d542a42e76cfd"}' title="GraphQL query"
+```graphql graphql-api-explorer title="GraphQL query"
 query StreamPaginationExample(
 	$accountTag: string!
 	$start: Date
@@ -132,14 +351,14 @@ query StreamPaginationExample(
 ) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
-			videoPlaybackEventsAdaptiveGroups(
+			streamMinutesViewedAdaptiveGroups(
 				filter: { date_geq: $start, date_lt: $end, uid_gt: $uId }
 				orderBy: [uid_ASC]
 				limit: 2
 			) {
 				count
 				sum {
-					timeViewedMinutes
+					minutesViewed
 				}
 				dimensions {
 					uid
@@ -160,5 +379,15 @@ For more on pagination, refer to the [Cloudflare GraphQL Analytics API docs](/an
 
 ## Limitations
 
-- The maximum query interval in a single query is 31 days
-- The maximum data retention period is 90 days
+Query intervals and retention periods have dataset-specific defaults:
+
+| Dataset                                    | Maximum query interval | Data retention        |
+| ------------------------------------------ | ---------------------- | --------------------- |
+| `streamMinutesViewedAdaptiveGroups`        | 32 days (768 hours)    | 92 days (2,208 hours) |
+| `liveInputEventsAdaptive`                  | 30 days                | 31 days               |
+| `liveInputEventsAdaptiveGroups`            | 30 days                | 31 days               |
+| `streamCMCDAdaptiveGroups`                 | 30 days                | 31 days               |
+| `streamWHIPBroadcastMetricsAdaptive`       | 30 days                | 30 days               |
+| `streamWHIPBroadcastMetricsAdaptiveGroups` | 30 days                | 30 days               |
+
+Use the [settings node](/analytics/graphql-api/features/discovery/settings/) under `viewer.accounts` to check limits for your account. The `maxDuration` and `notOlderThan` fields report the query interval and retention period in seconds.
