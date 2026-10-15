@@ -34,6 +34,16 @@ Public hostname routes proxy traffic through Cloudflare. On Free, Pro, and Busin
 Refer to [Delivering videos with Cloudflare](/fundamentals/reference/policies-compliances/delivering-videos-with-cloudflare/) for more information. To transfer large files privately, use a [private network route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) instead.
 :::
 
+### Published application limits
+
+Published applications do not count toward the account limit for [routes](/cloudflare-one/networks/routes/add-routes/). Routes are CIDR and hostname routes for private network traffic, and have a separate limit of 50,000 per account.
+
+There is no fixed limit on the number of published applications per tunnel. Instead, the number is limited by the size of the tunnel configuration. Each published application adds an ingress rule to the configuration, and the configuration of a remotely-managed tunnel can be up to 1 MB.
+
+A typical ingress rule is 100–200 bytes, so a single tunnel can usually hold 5,000–10,000 published applications. Rules with long hostnames, paths, or many [origin parameters](/tunnel/reference/origin-parameters/) take up more space and reduce this number.
+
+If you need to publish more applications, distribute them across multiple tunnels. Each account includes 1,000 tunnels. To run more, refer to [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/).
+
 ## Supported protocols
 
 <Render
