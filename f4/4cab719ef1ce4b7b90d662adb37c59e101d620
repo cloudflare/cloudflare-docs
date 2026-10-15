@@ -1,0 +1,19 @@
+src/content/docs/ai-search/troubleshooting/api-error-codes.mdx
+  s_a0145a040cd686::t_8abc593f9fdef5 93-94,212-214
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f44cab719ef1ce4b7b90d662adb37c59e101d620",
+  "prompts": {},
+  "sessions": {
+    "s_a0145a040cd686": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_02e64860cffelCYXPQnrhJHSfh",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    }
+  }
+}

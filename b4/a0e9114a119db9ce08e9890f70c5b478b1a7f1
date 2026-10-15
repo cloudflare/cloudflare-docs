@@ -1,0 +1,19 @@
+src/content/docs/waf/detections/attack-signature-detection/analyze-attack-signatures.mdx
+  s_cbe154ed79ef78::t_162c0ae6fa5caf 45-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b4a0e9114a119db9ce08e9890f70c5b478b1a7f1",
+  "prompts": {},
+  "sessions": {
+    "s_cbe154ed79ef78": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f83fd49f2ffeXFXpSY8wLgl4D2",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Daniele <daniele@cloudflare.com>"
+    }
+  }
+}

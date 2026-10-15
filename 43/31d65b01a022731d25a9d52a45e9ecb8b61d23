@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels.mdx
+  s_5a7641d591f260::t_162b85d9dfe1c6 110-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4331d65b01a022731d25a9d52a45e9ecb8b61d23",
+  "prompts": {},
+  "sessions": {
+    "s_5a7641d591f260": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ac06-1870-7680-b84e-3aa02a68516b",
+        "model": "unknown"
+      },
+      "human_author": "Logan Praneis <lpraneis@cloudflare.com>"
+    }
+  }
+}

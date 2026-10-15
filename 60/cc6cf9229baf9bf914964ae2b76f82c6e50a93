@@ -1,0 +1,43 @@
+src/components/landing/sidebar-data.ts
+  s_0fcc477b198ee9::t_275718cf6ee6db 232
+src/content/directory/observability.yaml
+  s_7f80eba0c4c876::t_71d74f5c4521b6 1-13
+src/content/docs/observability/export/index.mdx
+  s_de10a84387f1c9::t_d395bb5fac8ba7 1-26
+src/content/docs/observability/logs/index.mdx
+  s_de10a84387f1c9::t_efdc2fccda26a3 1-30
+src/content/docs/observability/traces/index.mdx
+  s_de10a84387f1c9::t_147ab02af3bd41 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "60cc6cf9229baf9bf914964ae2b76f82c6e50a93",
+  "prompts": {},
+  "sessions": {
+    "s_0fcc477b198ee9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ab91-d422-7091-961d-e26225ab3373",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    },
+    "s_7f80eba0c4c876": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ab00-a264-7d10-905d-38efa43a54b2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    },
+    "s_de10a84387f1c9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0aa96-c428-7e91-8c7d-66f08b0f8bb9",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

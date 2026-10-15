@@ -1,0 +1,19 @@
+src/content/docs/waf/managed-rules/reference/sensitive-data-detection.mdx
+  s_4b7eff857e2961::t_1e33a870cbce55 33,37-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fe32a8810902462251adc62da69723c9e49b434a",
+  "prompts": {},
+  "sessions": {
+    "s_4b7eff857e2961": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f039cc772ffe4pSPou24RvIWs2",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

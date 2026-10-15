@@ -1,0 +1,19 @@
+src/content/docs/realtime/sfu/datachannels.mdx
+  s_da767a7b151901::t_a34203bf9b8a59 4,11,13-15,19-20,23,25,27-34,36,38,40,42-44,46,48,72,81,92-94,96,98-101,103,112,120,157,160,162,166-170,173,175-178,180,189,199-204,206,208,215,225-229,232-250,252-256,260,262,266-268
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8c17f7a21f84f48a57336a164a50b03ff92d9f04",
+  "prompts": {},
+  "sessions": {
+    "s_da767a7b151901": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_003ae2be3ffegF40um8eK44e3P",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
