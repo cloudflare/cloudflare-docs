@@ -3,7 +3,7 @@ title: File system
 pcx_content_type: concept
 sidebar:
   order: 0
-description: Give an agent a durable file system stored in its Durable Object, with file tools for the model and an optional JavaScript runtime.
+description: Give an agent a virtual file system stored in its Durable Object, with model tools for and an optional JavaScript runtime.
 products:
   - agents
 ---
@@ -15,19 +15,20 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Give an agent a durable working directory with [Cloudflare Computer](https://github.com/cloudflare/computer). Computer stores a virtual file system in the SQLite storage of a [Durable Object](/durable-objects/). The agent reads and writes files through an API that resembles `node:fs/promises`, and the model works with them through ready-made tools such as `read`, `write`, `edit`, and `grep`.
+[Cloudflare Computer](https://github.com/cloudflare/computer) provides an agent a persistent working directory backed by SQLite along with the standard set of tools for working with the filesystem including `read`, `write`, `edit`, and `grep`. An optional `exec` tool can be provided to allow the agent to manipulate the filesystem and programmatically run tools.
 
 Use a file system when an agent needs to:
 
 - Keep notes, drafts, plans, or generated files across turns and restarts.
 - Read, search, and edit text files with tools built for a model.
-- Run model-written JavaScript against its files, without starting a container.
+- Write and run JavaScript against files, without starting a container.
+- Provide skills, source files and other external documents to the agent without filling it's context window. 
 
 ## How it works
 
-A `Workspace` lives inside a Durable Object and keeps every file in the SQLite storage of that object. Agents with different names get separate workspaces, and every request sent to the same agent reaches the same files. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
+A `Workspace` lives inside a Durable Object and keeps every file in the SQLite storage of that object. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
 
-`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend. A workspace can have no backend at all, which gives you the file system on its own.
+`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend. We provide a JavaScript runtime out of the box as well as an experimental container based runtime for running shell commands.
 
 ## Install
 
@@ -37,7 +38,7 @@ A `Workspace` lives inside a Durable Object and keeps every file in the SQLite s
 
 ## Add a workspace to a Durable Object
 
-Create a `Workspace` in your Durable Object class and pass it the storage of the Durable Object. The file system is ready to use immediately.
+Create a `Workspace` in your Durable Object class and pass it the `storage` object. The file system is ready to use immediately.
 
 <TypeScriptExample>
 
@@ -76,7 +77,6 @@ export default {
 
 </TypeScriptExample>
 
-Each call to `addTodo()` on the `user-123` instance appends to the same file, which remains after the Durable Object restarts.
 
 Configure the Durable Object binding and a SQLite migration in your Wrangler configuration:
 
@@ -107,7 +107,7 @@ Configure the Durable Object binding and a SQLite migration in your Wrangler con
 
 ### Work with files
 
-`workspace.fs` is asynchronous and uses absolute paths. Strings are stored as UTF-8. Pass a `Uint8Array` or a `ReadableStream` for binary content.
+The `workspace.fs` object provides common methods for working with the filesystem. It takes `string` or binary `Uint8Array` types; use a `ReadableStream` when reading/writing large files.
 
 <TypeScriptExample>
 
@@ -205,7 +205,7 @@ The tool set contains the following tools:
 | `delete` | Deletes a file or directory.                                                     |
 | `exec`   | Runs code on an execution backend. Present only when the workspace has one.      |
 
-Think merges custom tools with its [built-in workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), and a custom tool replaces a built-in tool with the same name. `workspaceBash = false` removes the built-in `bash` tool, because the Computer workspace provides its own way to run code.
+Think merges custom tools with its [built-in workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools). A custom tool overrides a built-in. The `workspaceBash = false` call is required to remove the built-in `bash` tool because the Computer workspace provides its own way to run code.
 
 ### Configure the tools
 
@@ -240,7 +240,7 @@ The same tools, with the same names and options, are available for other agent l
 
 ## Run JavaScript in the workspace
 
-Add a `WorkerJavaScriptBackend` to let the agent, or the model, run JavaScript against workspace files. Each run is an ECMAScript module that executes in a new [Dynamic Worker](/dynamic-workers/). It starts faster than a container, has no network access by default, and reaches files through a `node:fs/promises` module that reads and writes the workspace.
+Add a `WorkerJavaScriptBackend` to let the agent, or the model, run JavaScript against workspace files. Each run is an ECMAScript module that executes in a new [Dynamic Worker](/dynamic-workers/). It is faster and cheaper to run than a container, network access is configurable but off by default and provides the `node:fs/promises` module to interact with the workspace.
 
 <TypeScriptExample>
 
@@ -307,7 +307,7 @@ export default async function (input) {
 }
 ```
 
-The module must have a default export. A default-exported function is called with the input of the run, and its return value becomes the result. Put file and module calls inside that function. The Workers runtime does not allow I/O while a module loads, so a call at the top level of the module fails the run.
+The module must have a default export. A default-exported function is called with the input of the run, and its return value becomes the result. Put file and module calls inside that function. The Workers runtime does not allow I/O while a module loads so accesing the filesystem at the module level will error.
 
 ### Run code from the agent
 
@@ -351,7 +351,7 @@ const { exitCode, value, stdout, stderr } = await run.result();
 
 ### Give code access to your own functions
 
-A host module is a set of functions that run in the Durable Object of the agent, which code in the Dynamic Worker can import by a `ws:` name. Use a host module to give model-written code a narrow, typed capability, such as access to your data, without giving it your bindings or credentials.
+Custom modules can be registered under the `ws:` namespace. Use these modules to provide the model access to your application logic, filesystem tools or perform external actions.
 
 <TypeScriptExample>
 
