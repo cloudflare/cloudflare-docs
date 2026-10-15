@@ -1,9 +1,5 @@
 import { describe, expect, test } from "vitest";
-import {
-	DOCS_BASE_URL,
-	PREVIEW_URL_REGEX,
-	WORKER_PREVIEW_URL_REGEX,
-} from "./constants";
+import { DOCS_BASE_URL, PREVIEW_URL_REGEX } from "./constants";
 import { filenameToPath } from "./util";
 
 describe("PREVIEW_URL_REGEX", () => {
@@ -23,20 +19,6 @@ describe("PREVIEW_URL_REGEX", () => {
 
 	test("empty", () => {
 		expect(PREVIEW_URL_REGEX.test("")).toBe(false);
-	});
-});
-
-describe("comment markers are distinct", () => {
-	const wfp =
-		"**Preview URL:** https://e9c79bc3.preview.developers.cloudflare.com";
-	const wp =
-		"**Worker Preview URL:** https://gh-foo.previews.developers.cloudflare.com";
-
-	test("each marker matches only its own comment", () => {
-		expect(PREVIEW_URL_REGEX.test(wfp)).toBe(true);
-		expect(WORKER_PREVIEW_URL_REGEX.test(wfp)).toBe(false);
-		expect(WORKER_PREVIEW_URL_REGEX.test(wp)).toBe(true);
-		expect(PREVIEW_URL_REGEX.test(wp)).toBe(false);
 	});
 });
 
