@@ -6,8 +6,19 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  group:
+    badge:
+      text: Beta
+      variant: caution
+  badge:
+    text: Beta
+    variant: caution
   order: 5.5
 ---
+
+import { Render } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Use Cloudflare Workers to add your own logic to HTTP traffic that passes through Gateway. A Gateway HTTP policy with the **Forward** action sends matching, permitted traffic to a Worker in your account. The Worker can modify a request, transform a response, return its own response, or start background work such as a notification or an R2 write.
 

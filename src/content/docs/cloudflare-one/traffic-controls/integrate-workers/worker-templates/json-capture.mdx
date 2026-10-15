@@ -8,10 +8,15 @@ products:
   - workers
   - r2
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 5
 ---
 
 import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Store a JSON record of an application request and response in R2. This template records selected headers and JSON body text up to 256 KiB per body, without changing the request or response.
 

@@ -7,10 +7,15 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 6
 ---
 
 import { Render, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Display an explanation when a user visits a selected page. The Worker returns a synthetic response without calling `next()`, so Gateway does not send the request to the original destination.
 

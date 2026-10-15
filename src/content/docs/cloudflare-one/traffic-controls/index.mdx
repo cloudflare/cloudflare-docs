@@ -93,7 +93,7 @@ Use egress policies to connect to partners or services that only allow traffic f
 
 </Details>
 
-<Details header="Integrate Workers">
+<Details header="Integrate Workers (beta)">
 
 Use the HTTP [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) to run a Worker on permitted requests and responses. Gateway handles proxy connections and routing while your Worker runs custom transformations or background tasks. Refer to [Integrate Workers](/cloudflare-one/traffic-controls/integrate-workers/).
 
@@ -153,7 +153,7 @@ The following table maps common traffic-filtering goals to the best Cloudflare G
 | Block domains (all pages)              | DNS              | Prevents the domain from resolving                                     |
 | Block non-HTTP traffic (SSH, RDP)      | Network          | Inspects TCP/UDP packets on any port                                   |
 | Block malware and threats              | DNS _and_ HTTP   | DNS blocks known-bad domains. HTTP catches threats in allowed traffic. |
-| Run custom logic on permitted web traffic | HTTP Forward | Invokes a Worker to transform requests or responses, or start background work |
+| Run custom logic on permitted web traffic | HTTP Forward (beta) | Invokes a Worker to transform requests or responses, or start background work |
 | Assign static egress IPs               | Egress           | Lets third-party services identify your organization                   |
 | Drop traffic before other policies run | Packet filtering | Blocks by packet attributes without user context                       |
 | Route DNS to custom nameservers        | Resolver         | Overrides the default Cloudflare resolver                              |

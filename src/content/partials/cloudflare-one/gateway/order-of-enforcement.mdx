@@ -26,7 +26,7 @@ flowchart TB
         http1{{"Do Not Inspect policies"}}
         http2["Isolate policies  <br>(with Browser Isolation add-on)"]
         http3["HTTP request policies: Allow, Block, Do Not Scan, Quarantine, and Redirect"]
-        forward["First matching Forward policy, if any"]
+        forward["First matching Forward policy (beta), if any"]
         worker["Worker selected by the policy"]
         body["Body policies and inspection: DLP, anti-virus scanning, and file sandboxing"]
         blocked["Block response"]
@@ -96,7 +96,7 @@ For traffic that Gateway does not forward to a Worker, Gateway first establishes
 
 If the TCP connection to the destination server is successful, Gateway will apply policies. If Gateway policies allow the connection, Gateway will connect the user to the destination server. If Gateway policies block the connection, Gateway will end the connection and will not send any data between the user and the destination server. If the TCP connection to the destination server is unsuccessful, Gateway will not run any policies and retry TCP connections from the user to the server.
 
-For requests handled by a Worker invoked through the [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works), Gateway defers the original upstream connection until the Worker calls `next()`. A Worker that returns a synthetic response without calling `next()` does not send the request to the origin.
+For requests handled by a Worker invoked through the [Forward action](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works) (beta), Gateway defers the original upstream connection until the Worker calls `next()`. A Worker that returns a synthetic response without calling `next()` does not send the request to the origin.
 
 The following flowchart describes connections that Gateway does not forward to a Worker:
 

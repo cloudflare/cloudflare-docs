@@ -6,8 +6,19 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  group:
+    badge:
+      text: Beta
+      variant: caution
+  badge:
+    text: Beta
+    variant: caution
   order: 3
 ---
+
+import { Render } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 These templates use the `GatewayMiddleware.handle(request, context, next)` entrypoint. Each script implements one task so you can adapt it to your own application.
 

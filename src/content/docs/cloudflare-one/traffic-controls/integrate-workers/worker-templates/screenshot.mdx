@@ -9,10 +9,15 @@ products:
   - r2
   - browser-run
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 2
 ---
 
 import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Use [Browser Run](/browser-run/) to capture a screenshot after a selected request. Save the image in R2 while returning the original response to the user.
 

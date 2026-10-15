@@ -7,10 +7,15 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 4
 ---
 
 import { Render, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Add a visible user label to HTML pages from an application you control. The Worker retrieves [Gateway identity](/cloudflare-one/traffic-controls/integrate-workers/available-context/#identity) and streams the response through [HTMLRewriter](/workers/runtime-apis/html-rewriter/).
 

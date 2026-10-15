@@ -166,9 +166,11 @@ When you turn on both options, Gateway will preserve the original path and query
 cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&cf_user_email=user@example.com
 ```
 
-### Forward
+### Forward <Badge text="Beta" variant="caution" />
 
 API value: `forward`
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Forward invokes a Worker on permitted HTTP traffic. The Worker can modify a request before sending it to its original destination, transform the response, return a synthetic response, or run background work.
 

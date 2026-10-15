@@ -7,10 +7,15 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 1
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Send a Slack notification when a request to a selected application endpoint completes. The Worker returns the upstream response and sends the notification in the background.
 

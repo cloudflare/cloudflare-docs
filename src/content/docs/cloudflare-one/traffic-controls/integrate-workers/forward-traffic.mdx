@@ -6,6 +6,9 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 1
 ---
 
@@ -13,10 +16,13 @@ import {
 	APIRequest,
 	DashButton,
 	PackageManagers,
+	Render,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 The **Forward** action invokes a Worker on HTTP traffic that Gateway permits. Use it to implement request and response transformations, application-specific controls, or background tasks without operating a separate HTTP proxy.
 

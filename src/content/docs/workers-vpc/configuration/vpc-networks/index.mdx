@@ -64,7 +64,7 @@ Use `cf1:network` when:
 - Your private network topology may change (new connections, new nodes, new routes) and you do not want to update Worker configuration each time
 - You want Worker egress to public destinations to flow through Cloudflare Gateway for policy enforcement and visibility
 
-Gateway drops HTTP traffic from Workers VPC if it matches a [Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations). Exclude Workers VPC traffic from your Forward policies.
+Gateway drops HTTP traffic from Workers VPC if it matches a [Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations) (beta). Exclude Workers VPC traffic from your Forward policies.
 
 :::note
 

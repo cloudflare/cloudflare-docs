@@ -7,10 +7,15 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 7
 ---
 
 import { Render, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Replace the top-level `customerId` field in a JSON request with `[REDACTED]` before sending it to an application. Use this template for a specific endpoint with a known schema and uncompressed UTF-8 JSON bodies.
 

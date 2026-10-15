@@ -12,7 +12,7 @@ tags:
   - Logging
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Badge, GlossaryTooltip } from "~/components";
 
 You can scan HTTP traffic for sensitive data through [Secure Web Gateway](/cloudflare-one/traffic-controls/) policies. To enforce <GlossaryTooltip term="Cloudflare Data Loss Prevention (DLP)">DLP</GlossaryTooltip> policies, first configure a **DLP profile** that defines what sensitive data patterns to detect. Then build a **Gateway HTTP policy** that defines what action to take (allow, block, or log) when Gateway finds matching data.
 
@@ -50,7 +50,7 @@ DLP Profiles may be used alongside other Cloudflare One rules in a [Gateway HTTP
 
 Gateway now applies the configured action when traffic matches the complete HTTP policy.
 
-### DLP with the Forward action
+### DLP with the Forward action <Badge text="Beta" variant="caution" />
 
 When you use [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) to invoke a Worker, Gateway scans the original request body before delivering it to the Worker. A DLP Block decision can interrupt an already-running Worker.
 

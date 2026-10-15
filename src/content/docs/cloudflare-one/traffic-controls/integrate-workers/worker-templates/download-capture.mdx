@@ -8,10 +8,15 @@ products:
   - workers
   - r2
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 3
 ---
 
 import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Save a copy of a downloaded attachment to R2 while returning the original response to the user. This script captures complete files up to 25 MiB and skips larger files. It detects attachments using `Content-Disposition`.
 

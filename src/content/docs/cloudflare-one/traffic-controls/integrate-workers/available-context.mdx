@@ -6,10 +6,15 @@ products:
   - cloudflare-one
   - workers
 sidebar:
+  badge:
+    text: Beta
+    variant: caution
   order: 2
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
 
 Gateway passes `context` as the second argument to `GatewayMiddleware.handle(request, context, next)`. Context describes the original request when Gateway selects a [Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/). Modifying the `Request` does not update context.
 

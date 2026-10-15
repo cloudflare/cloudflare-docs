@@ -16,7 +16,7 @@ Gateway HTTP policies with Allow actions can modify the headers of matching requ
 
 Header manipulation requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/), because HTTP headers are only visible on traffic which Gateway can decrypt.
 
-For header changes that require custom code or response transformations, use [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) to invoke a Worker after HTTP filtering. Built-in Allow-policy header operations remain available for changes expressed directly in the policy.
+For header changes that require custom code or response transformations, use [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) (beta) to invoke a Worker after HTTP filtering. Built-in Allow-policy header operations remain available for changes expressed directly in the policy.
 
 ## Header operations
 
