@@ -26,6 +26,8 @@ import {
 
 The **Forward** action invokes a Worker on HTTP traffic that Gateway permits. Use it to implement request and response transformations, application-specific controls, or background tasks without operating a separate HTTP proxy.
 
+Write your own Worker or adapt a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/). The [gateway-workers skill](https://github.com/cloudflare/skills/blob/main/skills/gateway-workers/SKILL.md) provides guidance for coding agents working with this integration.
+
 ## How it works
 
 Gateway evaluates Forward policies after HTTP request policies and before body policies and inspection. It invokes the Worker selected by the first matching Forward policy, in [order of precedence](/cloudflare-one/traffic-controls/order-of-enforcement/#order-of-precedence).
