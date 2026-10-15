@@ -1,159 +1,40 @@
+// Posts the Workers for Platforms preview comment. Runs in the
+// `publish-preview` job; the Worker Preview comment is posted separately by
+// `worker-preview.ts` in its own job.
 import * as core from "@actions/core";
-import * as github from "@actions/github";
 
+import { PREVIEW_URL_REGEX } from "./constants";
 import {
-	CONTENT_BASE_PATH,
-	DOCS_BASE_URL,
-	GITHUB_ACTIONS_BOT_ID,
-	PREVIEW_URL_REGEX,
-} from "./constants";
-
-import { filenameToPath } from "./util";
+	filesTable,
+	getChangedPaths,
+	getPullContext,
+	upsertComment,
+} from "./shared";
 
 async function run(): Promise<void> {
 	try {
-		if (!process.env.GITHUB_TOKEN) {
-			core.setFailed(`Could not find GITHUB_TOKEN in env`);
-			process.exit();
-		}
-
-		const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-		const ctx = github.context;
-		const payload = ctx.payload;
-
-		// Support both pull_request and push event contexts
-		let branch: string;
-		let commitSha: string;
-		let pull_number: number | undefined;
-
-		if (payload.pull_request) {
-			branch = payload.pull_request.head.ref;
-			commitSha = payload.pull_request.head.sha;
-			pull_number = payload.pull_request.number;
-		} else {
-			branch = ctx.ref.replace("refs/heads/", "");
-			commitSha = ctx.sha;
-
-			core.info(`Finding pull requests for ${ctx.ref}`);
-			const { data: pulls } = await octokit.rest.pulls.list({
-				...ctx.repo,
-				head: `${ctx.repo.owner}:${branch}`,
-			});
-			pull_number = pulls.at(0)?.number;
-		}
-
-		if (!pull_number) {
-			core.setFailed(`Could not find pull request number`);
-			process.exit();
-		}
 		if (!process.env.BRANCH_SLUG) {
-			core.setFailed(`Could not find BRANCH_SLUG in env`);
-			process.exit();
+			throw new Error("Could not find BRANCH_SLUG in env");
 		}
+
+		const pull = await getPullContext();
 
 		const previewUrl = {
 			branch: `https://${process.env.BRANCH_SLUG}.preview.developers.cloudflare.com`,
-			commit: `https://${commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
+			commit: `https://${pull.commitSha.slice(0, 8)}.preview.developers.cloudflare.com`,
 		};
 
 		core.info(
 			`Commit URL: ${previewUrl.commit}\nBranch URL: ${previewUrl.branch}`,
 		);
 
-		core.info(`Found PR #${pull_number}`);
+		const paths = await getChangedPaths(pull);
 
-		const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
-			...ctx.repo,
-			pull_number,
-			per_page: 100,
-		});
-
-		core.info(`Found ${files.length} changed files for ${pull_number}`);
-
-		const { data: comments } = await octokit.rest.issues.listComments({
-			...ctx.repo,
-			issue_number: pull_number,
-			per_page: 100,
-		});
-
-		const existingComment = comments.find(
-			(comment) =>
-				comment.user?.id === GITHUB_ACTIONS_BOT_ID &&
-				PREVIEW_URL_REGEX.test(comment.body ?? ""),
+		await upsertComment(
+			pull,
+			PREVIEW_URL_REGEX,
+			`**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}${filesTable(paths, previewUrl.branch)}`,
 		);
-
-		if (existingComment) {
-			core.info(`Found existing comment with ID ${existingComment.id}`);
-		} else {
-			core.info(`No existing comment found`);
-		}
-
-		const changedFiles = files
-			.filter(
-				(file) =>
-					file.filename.endsWith(".mdx") &&
-					(file.filename.startsWith(`${CONTENT_BASE_PATH}/docs/`) ||
-						file.filename.startsWith(`${CONTENT_BASE_PATH}/changelog/`)),
-			)
-			.sort((a, b) => b.changes - a.changes)
-			.slice(0, 15) // Limit to 15 entries
-			.map(({ filename }) => {
-				const original = `${DOCS_BASE_URL}/${filenameToPath(filename)}`;
-				const preview = `${previewUrl.branch}/${filenameToPath(filename)}`;
-
-				core.info(
-					`Filename: ${filename}\nOriginal: ${original}\nPreview: ${preview}`,
-				);
-
-				return { original, preview };
-			});
-
-		let comment = `**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}`;
-
-		// Set when the Worker Preview deploy succeeded.
-		const workerPreviewUrl = process.env.WORKER_PREVIEW_URL;
-		const workerPreviewDeploymentUrl =
-			process.env.WORKER_PREVIEW_DEPLOYMENT_URL;
-		if (workerPreviewUrl) {
-			comment = comment.concat(
-				`\n**Worker Preview URL:** ${workerPreviewUrl}`,
-				workerPreviewDeploymentUrl
-					? `\n**Worker Preview Deployment URL:** ${workerPreviewDeploymentUrl}`
-					: "",
-			);
-		}
-		if (changedFiles.length !== 0) {
-			core.info(`Found ${changedFiles.length} after filtering paths`);
-
-			comment = comment.concat(
-				`\n\n**Files with changes (up to 15)**\n\n| Original Link | Updated Link |\n| --- | --- |\n${changedFiles
-					.map(
-						(file) =>
-							`| [${file.original}](${file.original}) | [${file.preview}](${file.preview}) |`,
-					)
-					.join("\n")}`,
-			);
-		}
-
-		if (existingComment) {
-			core.info(
-				`Updating ${existingComment.id} with ${JSON.stringify(comment)}`,
-			);
-			await octokit.rest.issues.updateComment({
-				owner: ctx.repo.owner,
-				repo: ctx.repo.repo,
-				comment_id: existingComment.id,
-				body: comment,
-			});
-		} else {
-			core.info(`Creating new comment with ${JSON.stringify(comment)}`);
-			await octokit.rest.issues.createComment({
-				owner: ctx.repo.owner,
-				repo: ctx.repo.repo,
-				issue_number: pull_number,
-				body: comment,
-			});
-		}
 	} catch (error) {
 		if (error instanceof Error) {
 			core.setFailed(error.message);
