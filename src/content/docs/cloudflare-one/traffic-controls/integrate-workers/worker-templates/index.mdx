@@ -36,6 +36,8 @@ These templates use the `GatewayMiddleware.handle(request, context, next)` entry
 
 Follow [Set up Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward), replace the pass-through script with a template, and configure its bindings. Deploy the Worker before selecting it in a Forward policy. Each template lists a test and the traffic scope it expects.
 
+To adapt or review a template with a coding agent, [install the gateway-workers skill](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#use-a-coding-agent). It guides your agent through the named entrypoint, Gateway context, and validation.
+
 Every TypeScript template includes `import type` declarations for `GatewayMiddlewareContext` and `GatewayMiddlewareNext` from [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types). Install this package as a development dependency in your Worker project before using a template. Each template includes the installation command.
 
 The package supplies [Gateway types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types). Continue to import the runtime `WorkerEntrypoint` class from `cloudflare:workers`. The `import type` declarations are removed when TypeScript compiles. The JavaScript version omits them and the type annotations, so it does not need `@cloudflare/zt-types`.

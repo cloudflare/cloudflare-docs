@@ -14,6 +14,7 @@ sidebar:
 
 import {
 	APIRequest,
+	CopyPrompt,
 	DashButton,
 	PackageManagers,
 	Render,
@@ -73,6 +74,22 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 - Set up [Gateway HTTP filtering](/cloudflare-one/traffic-controls/get-started/http/) and route your test device's traffic through Gateway.
 - Enable [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) and install a trusted [root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) for HTTPS traffic.
 - Use a deployed Worker in the same Cloudflare account as your Gateway policy. Configure a [Workers subdomain](/workers/configuration/routing/workers-dev/) for the account. The Worker does not need a public route.
+
+## Use a coding agent
+
+The [gateway-workers skill](https://github.com/cloudflare/skills/blob/main/skills/gateway-workers/SKILL.md) gives your coding agent guidance on the Forward entrypoint, Gateway context, and validation. Refer to [Agent setup](/agent-setup/) to configure your agent.
+
+From your Worker project directory, install the skill:
+
+<PackageManagers
+	type="dlx"
+	pkg="skills"
+	args="add cloudflare/skills --skill gateway-workers"
+/>
+
+Ask your agent to adapt a template, for example:
+
+<CopyPrompt text="Use the gateway-workers skill to adapt the Slack notification template for a Gateway Forward policy and validate the Worker." />
 
 ## Set up Forward
 
