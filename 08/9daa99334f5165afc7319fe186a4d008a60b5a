@@ -1,0 +1,33 @@
+src/content/docs/realtime/realtimekit/ai/index.mdx
+  s_3e37f5c6aee81b::t_617de8c351ce99 19-23
+src/components/realtime/realtimekit/AgentWebSocketFlow.astro
+  s_773750e40254e5::t_e56e7661c71b4a 1-41
+src/content/docs/realtime/realtimekit/ai/agent-websocket/index.mdx
+  s_773750e40254e5::t_34e9956e1d9186 1-54
+src/content/docs/realtime/realtimekit/ai/agent-websocket/events.mdx
+  s_3e37f5c6aee81b::t_5e70e65f5e1e49 1-257
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "089daa99334f5165afc7319fe186a4d008a60b5a",
+  "prompts": {},
+  "sessions": {
+    "s_3e37f5c6aee81b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ef3dea18bffenSjcTEQQiu7f1q",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    },
+    "s_773750e40254e5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ef2157842ffeMxVYPC1MNIjhuj",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

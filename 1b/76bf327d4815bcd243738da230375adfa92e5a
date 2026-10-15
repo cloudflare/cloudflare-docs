@@ -1,0 +1,46 @@
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_daaded6f94a376::t_988a65448b3290 27-41
+src/content/docs/artifacts/get-started/workers.mdx
+  s_daaded6f94a376::t_14e720217fdaef 3,14-23,25-29,33,35,37-41,43,47-62,64,66-68,72-244,246-249,251,253,255,257,260-262,266-268,274
+src/content/docs/artifacts/get-started/index.mdx
+  s_daaded6f94a376::t_14e720217fdaef 3,18
+src/content/docs/artifacts/api/workers-binding.mdx
+  s_daaded6f94a376::t_14e720217fdaef 381,383
+src/content/docs/artifacts/index.mdx
+  s_daaded6f94a376::t_14e720217fdaef 7-8,24-29,41-42,51
+src/content/docs/artifacts/examples/isomorphic-git.mdx
+  s_daaded6f94a376::t_14e720217fdaef 21
+src/content/docs/artifacts/get-started/rest-api.mdx
+  s_daaded6f94a376::t_14e720217fdaef 32
+src/content/docs/workers/get-started/guide.mdx
+  s_daaded6f94a376::t_2f136c59b6ebd5 204
+  s_daaded6f94a376::t_14e720217fdaef 53-57
+src/content/docs/workers/ci-cd/builds/git-integration/index.mdx
+  s_daaded6f94a376::t_a6d7cd0738a4f1 4,13,19,25,27
+  s_daaded6f94a376::t_0e72239390e488 17,21,23,29,33,41,55
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_daaded6f94a376::t_0985c754eec9b6 13
+  s_daaded6f94a376::t_a6d7cd0738a4f1 19,36,58-59
+  s_daaded6f94a376::t_0e72239390e488 4,11,21,28-32,38,57
+src/content/docs/workers/ci-cd/builds/configuration.mdx
+  s_daaded6f94a376::t_0e72239390e488 42-52,70,83-85,92,102
+src/content/docs/workers/ci-cd/index.mdx
+  s_daaded6f94a376::t_0e72239390e488 28-29,37
+  s_daaded6f94a376::t_a6d7cd0738a4f1 24,33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1b76bf327d4815bcd243738da230375adfa92e5a",
+  "prompts": {},
+  "sessions": {
+    "s_daaded6f94a376": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2b87c1abffem2x87y1AmKcXDV",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

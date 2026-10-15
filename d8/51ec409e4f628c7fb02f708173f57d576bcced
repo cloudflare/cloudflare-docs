@@ -1,0 +1,73 @@
+src/components/landing/sidebar-data.ts
+  s_f3d1cb99424c6f::t_4412615fba6eb9 135
+src/content/changelog/access/2026-05-19-cloudflare-as-identity-provider.mdx
+  s_f3d1cb99424c6f::t_804f29954a7232 15
+src/content/changelog/rules/2026-10-01-coalesce-function.mdx
+  s_f3d1cb99424c6f::t_a0ed1b8037bc4f 2-4,7,9-13
+src/content/changelog/rules/2026-10-01-dynamic-comparison-values.mdx
+  s_f3d1cb99424c6f::t_35c54be3d7dd8a 1-15
+src/content/changelog/waf/2026-10-01-emergency-waf-release.mdx
+  s_f3d1cb99424c6f::t_03ba8972be89a7 1-46
+src/content/directory/workers-builds.yaml
+  s_f3d1cb99424c6f::t_fd31c8eda8180d 11
+src/content/docs/ai-search/configuration/retrieval/public-endpoint/cloudflare-access.mdx
+  s_f3d1cb99424c6f::t_23990fa749aa33 87
+src/content/docs/artifacts/api/workers-binding.mdx
+  s_f3d1cb99424c6f::t_97564fbeac262e 22,51,53-60,103-109,115,202,204-222,234-235,251,271-272,292,307-312,318,329-331,337-338,347-349,355-374,380-416,441,446-463,465
+src/content/docs/artifacts/guides/build-and-deploy-on-push.mdx
+  s_f3d1cb99424c6f::t_fb8a1f03e2864b 25-29
+src/content/docs/artifacts/index.mdx
+  s_f3d1cb99424c6f::t_5ffa27d1e7aa9d 22,24,26-30,32,34,36
+src/content/docs/artifacts/platform/limits.mdx
+  s_f3d1cb99424c6f::t_289abfef5897b3 15-25
+src/content/docs/artifacts/platform/pricing.mdx
+  s_f3d1cb99424c6f::t_7473a83fa664e3 11-18,26-29
+src/content/docs/cloudflare-one/access-controls/policies/index.mdx
+  s_f3d1cb99424c6f::t_4ba2f068d56981 25,100,142
+src/content/docs/ruleset-engine/rules-language/expressions/index.mdx
+  s_f3d1cb99424c6f::t_59f6cefc5f9173 38
+src/content/docs/ruleset-engine/rules-language/functions.mdx
+  s_f3d1cb99424c6f::t_2913556f708823 133-146
+src/content/docs/ruleset-engine/rules-language/operators.mdx
+  s_f3d1cb99424c6f::t_b0f713adfdf71f 191-209
+src/content/docs/ruleset-engine/rules-language/values.mdx
+  s_f3d1cb99424c6f::t_36a9869080cceb 161,174,229-260
+src/content/docs/workers/ci-cd/builds/automatic-prs.mdx
+  s_f3d1cb99424c6f::t_cf1c1567e328e4 11,56
+src/content/docs/workers/ci-cd/builds/build-branches.mdx
+  s_f3d1cb99424c6f::t_2c5e8da8169db8 13
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_f3d1cb99424c6f::t_95c4dd1fb3ed76 1-75
+src/content/docs/workers/ci-cd/builds/git-integration/gitlab-integration.mdx
+  s_f3d1cb99424c6f::t_608211729da0be 6
+src/content/docs/workers/ci-cd/builds/git-integration/index.mdx
+  s_f3d1cb99424c6f::t_878ec79a86d9c3 4,13,19,25-27
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_f3d1cb99424c6f::t_83a874ebbf1f72 13,17-18,57-58,73,89
+src/content/docs/workers/ci-cd/index.mdx
+  s_f3d1cb99424c6f::t_f3cd2bba2e4d2e 24,28-29,33
+src/content/docs/workers/get-started/guide.mdx
+  s_f3d1cb99424c6f::t_9f4980375a83af 53-57,204
+src/content/docs/workers/previews/examples.mdx
+  s_f3d1cb99424c6f::t_c5a42b1aacf5d2 15
+src/content/workers-ai-models/apertus-v1.5-8b.json
+  s_f3d1cb99424c6f::t_d1fe14a6a0651d 1-27
+src/content/workers-ai-models/eurollm-9b-it.json
+  s_f3d1cb99424c6f::t_4372284b51bf1b 1-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d851ec409e4f628c7fb02f708173f57d576bcced",
+  "prompts": {},
+  "sessions": {
+    "s_f3d1cb99424c6f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0c6ec78cffeqjnrs3wlxb3FJt",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "sahidya <sahidya@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+src/content/docs/waf/analytics/security-analytics.mdx
+  s_06aec84e422a49::t_7bfd904d91f230 44-45
+src/content/changelog/analytics/2026-10-02-30-days-analytics-on-every-plan.mdx
+  s_06aec84e422a49::t_8fff82515fc38f 1-13
+src/content/docs/analytics/account-and-zone-analytics/zone-analytics.mdx
+  s_06aec84e422a49::t_4f3169e92163ae 41
+src/content/docs/analytics/graphql-api/limits.mdx
+  s_06aec84e422a49::t_efb1eb54384177 69-70
+src/content/docs/waf/analytics/security-events.mdx
+  s_06aec84e422a49::t_bd13408e2753a0 43-44
+src/content/partials/waf/analytics-dataset-limits.mdx
+  s_06aec84e422a49::t_0903cafb7e83a2 5-8,10-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c61e7b3b77900777849b588488e538ec8733e352",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

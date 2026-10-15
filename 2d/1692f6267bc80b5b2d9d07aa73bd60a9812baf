@@ -1,0 +1,29 @@
+src/content/docs/cf/environment-variables.mdx
+  s_4641041c8e896c::t_07b86708cbca12 1-48
+src/content/docs/cf/get-started/index.mdx
+  s_e4b6fc7e80fdf4::t_4c632ab11443b6 246
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2d1692f6267bc80b5b2d9d07aa73bd60a9812baf",
+  "prompts": {},
+  "sessions": {
+    "s_4641041c8e896c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ecd8-57d8-7d63-8458-658c1b6dfa11",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    },
+    "s_e4b6fc7e80fdf4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ecd8-5703-7562-aa56-718ec28dc8ad",
+        "model": "unknown"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

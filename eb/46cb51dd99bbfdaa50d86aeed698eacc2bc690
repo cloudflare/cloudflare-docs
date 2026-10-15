@@ -1,0 +1,31 @@
+src/components/cf/AgentsPlatformDiagram.astro
+  s_7131be7e5a394e::t_99560ca431e4b7 98
+src/content/docs/agents/agent-class/index.mdx
+  s_7131be7e5a394e::t_f3ab30c385e06f 23
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_7131be7e5a394e::t_b4d18067471219 32,122
+src/content/docs/agents/harnesses/ai-sdk.mdx
+  s_7131be7e5a394e::t_0675a6aac6260a 20
+src/content/docs/agents/harnesses/index.mdx
+  s_7131be7e5a394e::t_d18d6de44056a1 71,78
+src/content/docs/agents/harnesses/think/index.mdx
+  s_7131be7e5a394e::t_5869c4fbab2ad8 2,27
+src/content/docs/agents/index.mdx
+  s_7131be7e5a394e::t_0ff658209dd7ba 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "eb46cb51dd99bbfdaa50d86aeed698eacc2bc690",
+  "prompts": {},
+  "sessions": {
+    "s_7131be7e5a394e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11212-d70d-71e4-aea3-bae68f8d2bc4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
