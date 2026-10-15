@@ -172,7 +172,11 @@ API value: `forward`
 
 Forward invokes a Worker on permitted HTTP traffic. The Worker can modify a request before sending it to its original destination, transform the response, return a synthetic response, or run background work.
 
-Forward policies run in a separate phase after HTTP request filtering and original request body inspection. An Allow decision does not skip this phase, and a Forward policy does not override a Block decision. Gateway invokes the first matching Forward policy in order of precedence.
+Forward policies run in a separate phase after HTTP request policies and before body policies and inspection. Gateway invokes the Worker selected by the first matching Forward policy in order of precedence.
+
+Gateway inspects the original body before delivering it to the Worker. A body-inspection Block decision can interrupt the Worker.
+
+An Allow decision does not skip the Forward phase. A Forward policy does not override a Block decision.
 
 Use request metadata selectors, identity, and device posture conditions to select traffic. Body inspection results, DLP matches, and response selectors cannot select a Worker.
 

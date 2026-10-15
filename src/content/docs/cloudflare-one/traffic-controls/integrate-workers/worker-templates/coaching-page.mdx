@@ -74,4 +74,8 @@ Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls
 
 Visit the selected page in a browser and confirm that the coaching page appears. Check the test origin's logs to confirm that no upstream request was made for this visit. A request without an HTML `Accept` header passes through normally.
 
-The method and `Accept` checks select when to show a page. They are not access controls because clients can change request headers. Use Gateway Block policies when you need to prevent access. A filtering Block decision occurs before Forward, so blocked traffic receives the Gateway block behavior rather than this coaching page. Synthetic responses still undergo Gateway response inspection.
+The method and `Accept` checks select when to show a page. They are not access controls because clients can change request headers.
+
+Use Gateway Block policies when you need to prevent access. An HTTP request policy with a Block action prevents Worker invocation, while a Block decision from body policies or inspection can interrupt the Worker.
+
+Synthetic responses still undergo Gateway response inspection.

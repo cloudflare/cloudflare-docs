@@ -13,7 +13,9 @@ Use Cloudflare Workers to add your own logic to HTTP traffic that passes through
 
 Gateway handles the proxy connection, TLS decryption, and upstream routing. Your Worker receives standard `Request` and `Response` objects and [Gateway context](/cloudflare-one/traffic-controls/integrate-workers/available-context/) about the connection, policy, and user.
 
-Gateway evaluates its HTTP filtering policies before invoking the Worker. A Forward policy does not override a Block policy or replace Gateway inspection. Refer to [How Forward works](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works) for the request and response inspection order.
+Gateway evaluates HTTP request policies before Forward policies. Body policies and inspection run after Worker invocation and can interrupt the Worker if they block the request.
+
+A Forward policy does not override a Block policy or replace Gateway inspection. Refer to [How Forward works](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works) for the request and response inspection order.
 
 WebSocket traffic connects directly to the original upstream service and bypasses the Worker. Refer to [Known limitations](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations) for protocol restrictions and other constraints.
 

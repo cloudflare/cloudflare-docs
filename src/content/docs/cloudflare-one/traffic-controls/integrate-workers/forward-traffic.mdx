@@ -22,15 +22,25 @@ The **Forward** action invokes a Worker on HTTP traffic that Gateway permits. Us
 
 ## How it works
 
-Forward policies run in a dedicated phase after Gateway evaluates HTTP request headers and inspects the original request body. Gateway invokes the Worker selected by the first matching Forward policy, in [order of precedence](/cloudflare-one/traffic-controls/order-of-enforcement/#order-of-precedence). A request that is blocked does not reach the Worker. Permitted traffic that matches no Forward policy continues without invoking a Worker.
+Gateway evaluates Forward policies after HTTP request policies and before body policies and inspection. It invokes the Worker selected by the first matching Forward policy, in [order of precedence](/cloudflare-one/traffic-controls/order-of-enforcement/#order-of-precedence).
+
+An HTTP request policy with a Block action prevents Worker invocation. Traffic that matches no Forward policy continues without invoking a Worker.
+
+Gateway inspects the original body before delivering it to the Worker. A Block decision from body policies or inspection can interrupt an already-running Worker.
+
+Worker invocation does not confirm that body inspection succeeded.
 
 ```mermaid
 flowchart LR
     accTitle: Gateway Forward request and response flow
-    accDescr: Gateway filters the original request, invokes the first matching Worker for permitted traffic, and inspects the final response before returning it to the user.
-    A["Original request"] --> B["Gateway request filtering and inspection"]
-    B -->|Permitted, Forward matches| C["Worker"]
+    accDescr: Gateway evaluates HTTP request policies, then Forward policies, and invokes the first matching Worker before body policies and inspection. It inspects the original body before delivering it to the Worker. A Block decision from body policies or inspection can interrupt the Worker. Gateway inspects the final response before returning it to the user.
+    A["Original request"] --> B["Gateway HTTP request policies"]
+    B -->|Permitted, Forward matches| C["Invoke Worker"]
     B -->|Blocked| X["Block response"]
+    B -->|Original body, Forward matches| I["Gateway body policies and inspection"]
+    I -->|Inspected body stream| C
+    I -->|Blocked| X
+    I -.->|Body Block interrupts Worker| C
     C -->|next: at most once| D["Original destination"]
     D --> C
     C -->|Final or synthetic response| E["Gateway response inspection"]
@@ -45,7 +55,9 @@ Gateway calls the named `GatewayMiddleware` entrypoint's `handle(request, contex
 
 The Worker can modify the method, headers, cookies, or body before calling `next()`. It can modify the upstream response or return a synthetic response without calling `next()`. Call `next()` at most once per invocation. You cannot use it to change the destination URL or host, retry an upstream request, or send requests to several destinations.
 
-Gateway inspects the **original request before the Worker** and the **final response after the Worker**, including synthetic responses. Gateway does not inspect modified request bytes a second time before sending them upstream. For example, a Worker cannot redact a request that Gateway has already blocked with DLP, and data the Worker adds to a permitted request does not receive another request-side DLP scan.
+Gateway inspects the **original request body before delivering it to the Worker** and the **final response after the Worker**, including synthetic responses. Gateway does not inspect modified request bytes a second time before sending them upstream.
+
+For example, a Worker cannot use redaction to bypass request-side Data Loss Prevention (DLP) inspection. Data the Worker adds to a permitted request does not receive another request-side DLP scan.
 
 A normal Workers `fetch()` is an independent subrequest. Use `next()` to continue the user's request with Gateway's routing and egress configuration. Do not assume a `fetch()` call uses the user's Gateway policies or egress IP.
 
@@ -82,7 +94,7 @@ A normal Workers `fetch()` is an independent subrequest. Use `next()` to continu
 
    Gateway invokes `GatewayMiddleware.handle()` through [Workers RPC](/workers/runtime-apis/rpc/). Keep the exported class name `GatewayMiddleware` exactly as shown.
 
-   Install [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types) as a development dependency in this Worker project. It supplies the [Gateway context and continuation types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types):
+   Install [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types) version `2026.10.1` or later as a development dependency in this Worker project. It supplies the [Gateway context and continuation types](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types):
 
    <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
 
@@ -163,7 +175,10 @@ Gateway resolves the selected Worker only when a Forward policy is saved. Deleti
 
 Gateway drops HTTP traffic sent from the Cloudflare compute platform through [Workers VPC](/workers-vpc/) if it matches a Forward policy. Gateway does not invoke the selected Worker. Exclude this traffic from your Forward policies.
 
-WebSocket traffic bypasses the Worker selected by a Forward policy. Gateway connects directly to the original upstream service. The Worker does not receive the WebSocket upgrade request or messages, so its logic does not apply to those connections.
+WebSocket traffic connects directly to the original upstream service and bypasses the selected Worker.
+The Worker does not receive the WebSocket upgrade request or messages, so its logic does not apply to those connections.
+
+Proxy HTTP `CONNECT` tunnels connect directly to the original upstream service and bypass the selected Worker.
 
 | Area            | Behavior                                                                                                                                                                                            |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -185,7 +200,7 @@ If your Worker does not run, confirm that the device uses Gateway HTTP filtering
 
 If requests fail after enabling Forward, confirm that the Worker exports `GatewayMiddleware`, its `handle()` method returns a `Response`, and it calls `next()` at most once. Check for exceptions, unsupported status codes, and bodies on responses that must have no body. Use [Workers Logs](/workers/observability/logs/workers-logs/) to inspect invocation errors. Disable the test Forward policy while correcting a failing script.
 
-For identity and device posture lookup failures, refer to [Handle lookup errors](/cloudflare-one/traffic-controls/integrate-workers/available-context/#handle-lookup-errors).
+For identity and device posture errors, refer to [Handle identity and posture errors](/cloudflare-one/traffic-controls/integrate-workers/available-context/#handle-identity-and-posture-errors).
 
 If matching requests return HTTP `500` after a Worker was deleted, update the Forward policy to select an existing Worker, or delete the policy. Saving a policy that still references the deleted Worker fails with API error `2294`.
 

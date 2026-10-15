@@ -90,7 +90,7 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 
 The script escapes the user label before inserting it into HTML. It removes stale length and integrity headers and marks the personalized response as non-cacheable. Other response headers, including Content Security Policy, are preserved.
 
-This template deliberately allows anonymous traffic. It uses `Unidentified user` when identity is `null` or the identity lookup fails.
+This template deliberately allows anonymous traffic. It uses `Unidentified user` when identity is `null` or Gateway cannot retrieve identity.
 
 ## Forward and test
 

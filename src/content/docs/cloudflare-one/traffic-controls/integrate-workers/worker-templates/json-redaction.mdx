@@ -14,7 +14,11 @@ import { Render, TypeScriptExample } from "~/components";
 
 Replace the top-level `customerId` field in a JSON request with `[REDACTED]` before sending it to an application. Use this template for a specific endpoint with a known schema and uncompressed UTF-8 JSON bodies.
 
-This is field-based transformation. It does not detect sensitive data throughout arbitrary text or files, and it does not use DLP match results. Gateway inspects the original request before the Worker. A request blocked by DLP never reaches this script, and Gateway does not scan the modified request again before forwarding it.
+This is field-based transformation. It does not detect sensitive data throughout arbitrary text or files, and it does not use Data Loss Prevention (DLP) match results.
+
+Gateway inspects the original request body before delivering it to the Worker. A DLP Block decision can interrupt the Worker, so this script cannot use redaction to bypass request-side DLP inspection.
+
+Gateway does not scan the modified request again before forwarding it.
 
 ## Configure the Worker
 

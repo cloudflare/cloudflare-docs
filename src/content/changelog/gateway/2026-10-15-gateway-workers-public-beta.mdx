@@ -13,6 +13,8 @@ Custom actions let you transform HTTP requests and responses, return a coaching 
 
 {/* TODO: Add the blog's custom actions flow diagram before publication. Follow the diagram layout in WorkersVPCEgressDiagram.astro. */}
 
-Gateway handles the proxy connection, TLS decryption, and upstream routing. It inspects the original request before invoking your Worker and the final response before returning it to the user. Requests blocked by Gateway do not reach the Worker.
+Gateway handles the proxy connection, TLS decryption, and upstream routing. It evaluates HTTP request policies before Forward policies and inspects the final response before returning it to the user.
+
+Gateway inspects the original request body before delivering it to your Worker. A body-inspection Block decision can interrupt the Worker.
 
 To get started, [deploy a Worker and configure a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/), or adapt one of the [Worker templates](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/).

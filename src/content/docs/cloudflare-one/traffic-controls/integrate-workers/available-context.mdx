@@ -17,7 +17,7 @@ Field names use camelCase. Optional fields are omitted when unavailable, and emp
 
 ## TypeScript types
 
-Install the published [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types) package in your Worker project:
+Install [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types) version `2026.10.1` or later in your Worker project:
 
 <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
 
@@ -31,8 +31,6 @@ Use `import type` for Gateway types, as shown in the [example](#example) and eac
 | `GatewayIdentityGroup`       | A group in the user's identity.                                                        |
 | `GatewayDevicePosture`       | Device posture returned by `devicePosture()`.                                          |
 | `GatewayDevicePostureChecks` | Passed posture check identifiers.                                                      |
-
-The types mark metadata fields and lists as read-only. The Gateway exports do not provide a runtime base class. Extend `WorkerEntrypoint` from `cloudflare:workers` and export the class as `GatewayMiddleware`.
 
 ## Request and connection fields
 
@@ -61,11 +59,13 @@ Use standard `Request` APIs to access the method, headers, cookies, and body. Co
 
 ## Identity
 
-Call `await context.identity()` only when your script needs identity associated with the Gateway session. Its return type is `Promise<GatewayIdentity | null>`:
+Call `await context.identity()` only when your script needs identity associated with the Gateway session. Its return type is `Promise<GatewayIdentity | null>`.
 
-- Resolves to an identity object when the user is identified.
-- Resolves to `null` when there is no identified user.
-- Rejects when the identity lookup fails.
+The awaited call behaves as follows:
+
+- Returns an identity object when the user is identified.
+- Returns `null` when there is no identified user.
+- Throws an error if Gateway cannot retrieve identity.
 
 | Field            | Type                                        | Description                                                                                   |
 | ---------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -75,7 +75,9 @@ Call `await context.identity()` only when your script needs identity associated 
 | `samlAttributes` | `readonly string[]`, optional               | SAML attributes associated with the identity.                                                 |
 | `oidcClaims`     | `readonly string[]`, optional               | OIDC claims associated with the identity. This is a list, rather than a decoded token object. |
 
-Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute. Check for `null` to explicitly allow or deny anonymous traffic.
+Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute.
+
+Check for a missing identity (`!identity`) to explicitly allow or deny anonymous traffic.
 
 ## Device posture
 
@@ -91,19 +93,25 @@ Call `await context.devicePosture()` to retrieve passed posture check identifier
 
 `checks.passed` is a read-only list of posture check UUIDs. An empty array means no checks passed. When no device is registered, the getter resolves to `{ checks: { passed: [] } }`. A Worker that requires a specific passed check must deny this request.
 
-Gateway retrieves these results separately from identity when evaluating Forward policies.
+If Gateway cannot retrieve device posture, awaiting `devicePosture()` throws an error. Handle this separately from a session with no passed checks.
 
-If posture retrieval fails, Gateway still invokes the Worker, but `devicePosture()` rejects. Handle this separately from a session with no passed checks. The getter does not return raw test results or a list of failed checks.
+The getter does not return raw test results or a list of failed checks.
 
-## Handle lookup errors
+## Handle identity and posture errors
 
-An uncaught rejection from `identity()` or `devicePosture()` escapes `handle()`, and Gateway returns HTTP `500`. Use `try/catch` to choose how your Worker handles lookup failures. The [example](#example) returns HTTP `503` for a lookup failure and HTTP `403` when identity or a required posture check is missing.
+Gateway still invokes the Worker if it cannot retrieve identity or device posture. If either awaited call throws and your Worker does not catch the error, Gateway returns HTTP `500`.
 
-If your application deliberately allows traffic when a lookup fails, you can return `next(request)` from the `catch` block. This continues the request without requiring the missing identity or posture result. Only use this approach before calling `next()`. [Call `next()` at most once per invocation](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works).
+Use `try/catch` to choose how your Worker handles these errors. The [example](#example) returns HTTP `503` for retrieval errors and HTTP `403` when identity or a required posture check is missing.
+
+If your application deliberately allows traffic when Gateway cannot retrieve identity or posture, return `next(request)` from the `catch` block. This continues the request without requiring the missing result.
+
+Only use this approach before calling `next()`. [Call `next()` at most once per invocation](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works).
 
 ## Example
 
-This script requires an identity email and a specific passed posture check before continuing. Anonymous traffic and devices without the required check receive a synthetic `403` response. Identity or posture lookup failures receive `503`. Replace `<POSTURE_CHECK_UUID>` with a check in your account.
+This script requires an identity email and a specific passed posture check before continuing. Anonymous traffic and devices without the required check receive a synthetic `403` response.
+
+Identity or posture retrieval errors receive `503`. Replace `<POSTURE_CHECK_UUID>` with a check in your account.
 
 <TypeScriptExample filename="src/index.ts">
 
