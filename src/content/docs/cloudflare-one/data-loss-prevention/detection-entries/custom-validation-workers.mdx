@@ -1,0 +1,66 @@
+---
+pcx_content_type: how-to
+title: Use Workers to validate DLP pattern matches
+description: Use a custom Worker to adjust DLP confidence or reject matches from custom pattern entries.
+products:
+  - cloudflare-one
+sidebar:
+  order: 3
+tags:
+  - Compliance
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Data loss prevention (DLP) can run a custom Worker when a pattern matches. Use it to apply your organization-specific checks. The Worker can adjust confidence or reject the match.
+
+Custom functions appear in the entry editor when this feature is available for your account. You can attach them to custom pattern entries.
+
+## Create a validation Worker
+
+Deploy the Worker to the account where you configure DLP. Export a class named `DlpValidationEntrypoint` with a `validate` method. Import its base class and types from `@cloudflare/zt-types`.
+
+<PackageManagers pkg="@cloudflare/zt-types" />
+
+The method receives a `DlpValidationInput` with the entry ID, match offsets, and request method and URL. Its `excerpt` is base64-encoded and contains the match with surrounding context. The `userId` field is optional.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import {
+  DlpValidation,
+  type DlpValidationInput,
+  type DlpValidationResult,
+} from "@cloudflare/zt-types";
+
+export class DlpValidationEntrypoint extends DlpValidation {
+  async validate(input: DlpValidationInput): Promise<DlpValidationResult> {
+    if (input.entryId === "entry-id-to-reject") {
+      return { score: "veto" };
+    }
+
+    return { score: 0 };
+  }
+}
+```
+
+</TypeScriptExample>
+
+Replace the example condition with your validation logic. Return a score from `-1` to `1` to adjust confidence. Positive scores increase confidence; negative scores decrease it. A score of `0` leaves confidence unchanged. Return `"veto"` to reject the match.
+
+## Attach a Worker to a pattern entry
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
+2. From the **Pattern** tab, add a pattern entry or edit an existing custom pattern entry.
+3. In **Validators**, select **Custom functions**.
+4. Select **Add custom function**.
+5. Select **Create new**, or select **Use existing** and choose a saved function.
+6. For a new function, enter a name and select an eligible Worker.
+7. (Optional) For a new function, choose the default behavior for Worker errors or timeouts.
+8. For a new function, select **Create**. Select **Save** on the pattern entry.
+</Steps>
+
+Default behavior options are *No fallback*, *Veto*, or *Score*. Scores range from `-1` to `1`.
+
+To use the pattern entry in DLP scanning, add it to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
