@@ -8,4 +8,4 @@ In your Worker project, install [`@cloudflare/zt-types`](https://www.npmjs.com/p
 
 <PackageManagers type="add" pkg="@cloudflare/zt-types" dev />
 
-Keep the `import type` declarations for `GatewayMiddlewareContext` and `GatewayMiddlewareNext` in the script below. They describe the [Gateway context and continuation](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types) and are removed when TypeScript compiles. Import the runtime `WorkerEntrypoint` class from `cloudflare:workers`.
+Keep the `import type` declarations for `GatewayMiddlewareContext` and `GatewayMiddlewareNext` in `src/index.ts`. They describe the [Gateway context and continuation](/cloudflare-one/traffic-controls/integrate-workers/available-context/#typescript-types) and are removed when TypeScript compiles. Import the runtime `WorkerEntrypoint` class from `cloudflare:workers`.

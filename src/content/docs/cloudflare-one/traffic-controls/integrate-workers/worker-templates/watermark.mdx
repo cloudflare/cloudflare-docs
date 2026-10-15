@@ -55,7 +55,7 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 		) {
 			return response;
 		}
-		const identity = await context.identity().catch(() => undefined);
+		const identity = await context.identity().catch(() => null);
 		const label = escapeHtml(identity?.email ?? "Unidentified user");
 		const headers = new Headers(response.headers);
 		for (const name of [
@@ -89,6 +89,8 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 </TypeScriptExample>
 
 The script escapes the user label before inserting it into HTML. It removes stale length and integrity headers and marks the personalized response as non-cacheable. Other response headers, including Content Security Policy, are preserved.
+
+This template deliberately allows anonymous traffic. It uses `Unidentified user` when identity is `null` or the identity lookup fails.
 
 ## Forward and test
 

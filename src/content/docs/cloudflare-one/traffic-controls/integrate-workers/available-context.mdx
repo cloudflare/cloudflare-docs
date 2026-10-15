@@ -61,7 +61,11 @@ Use standard `Request` APIs to access the method, headers, cookies, and body. Co
 
 ## Identity
 
-Call `await context.identity()` only when your script needs identity associated with the Gateway session. It rejects when identity is unavailable because there is no identified user or the lookup failed. Wrap the call in `try/catch` if your Worker requires a user.
+Call `await context.identity()` only when your script needs identity associated with the Gateway session. Its return type is `Promise<GatewayIdentity | null>`:
+
+- Resolves to an identity object when the user is identified.
+- Resolves to `null` when there is no identified user.
+- Rejects when the identity lookup fails.
 
 | Field            | Type                                        | Description                                                                                   |
 | ---------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -71,7 +75,7 @@ Call `await context.identity()` only when your script needs identity associated 
 | `samlAttributes` | `readonly string[]`, optional               | SAML attributes associated with the identity.                                                 |
 | `oidcClaims`     | `readonly string[]`, optional               | OIDC claims associated with the identity. This is a list, rather than a decoded token object. |
 
-Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute. A missing identity must be handled explicitly if your Worker requires an authenticated user.
+Use Gateway-provided identity for user-aware logic. Client-supplied identity headers are not an authoritative substitute. Check for `null` to explicitly allow or deny anonymous traffic.
 
 ## Device posture
 
@@ -85,13 +89,21 @@ Call `await context.devicePosture()` to retrieve passed posture check identifier
 }
 ```
 
-`checks.passed` is a read-only list of posture check UUIDs. An empty array means no checks passed. Gateway retrieves these results separately from identity when evaluating Forward policies.
+`checks.passed` is a read-only list of posture check UUIDs. An empty array means no checks passed. When no device is registered, the getter resolves to `{ checks: { passed: [] } }`. A Worker that requires a specific passed check must deny this request.
+
+Gateway retrieves these results separately from identity when evaluating Forward policies.
 
 If posture retrieval fails, Gateway still invokes the Worker, but `devicePosture()` rejects. Handle this separately from a session with no passed checks. The getter does not return raw test results or a list of failed checks.
 
+## Handle lookup errors
+
+An uncaught rejection from `identity()` or `devicePosture()` escapes `handle()`, and Gateway returns HTTP `500`. Use `try/catch` to choose how your Worker handles lookup failures. The [example](#example) returns HTTP `503` for a lookup failure and HTTP `403` when identity or a required posture check is missing.
+
+If your application deliberately allows traffic when a lookup fails, you can return `next(request)` from the `catch` block. This continues the request without requiring the missing identity or posture result. Only use this approach before calling `next()`. [Call `next()` at most once per invocation](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#how-it-works).
+
 ## Example
 
-This script requires an identity and a specific passed posture check before continuing. Missing identity or unavailable posture returns a synthetic `403` response. Replace `<POSTURE_CHECK_UUID>` with a check in your account.
+This script requires an identity email and a specific passed posture check before continuing. Anonymous traffic and devices without the required check receive a synthetic `403` response. Identity or posture lookup failures receive `503`. Replace `<POSTURE_CHECK_UUID>` with a check in your account.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -110,12 +122,15 @@ export class GatewayMiddleware extends WorkerEntrypoint {
 	): Promise<Response> {
 		try {
 			const identity = await context.identity();
+			if (!identity?.email) {
+				return new Response(null, { status: 403 });
+			}
 			const passed = (await context.devicePosture())?.checks.passed ?? [];
-			if (!identity?.email || !passed.includes("<POSTURE_CHECK_UUID>")) {
+			if (!passed.includes("<POSTURE_CHECK_UUID>")) {
 				return new Response(null, { status: 403 });
 			}
 		} catch {
-			return new Response(null, { status: 403 });
+			return new Response(null, { status: 503 });
 		}
 		return next(request);
 	}

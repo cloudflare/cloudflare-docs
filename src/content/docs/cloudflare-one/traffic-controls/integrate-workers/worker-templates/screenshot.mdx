@@ -115,6 +115,6 @@ The script uses a fixed browser destination and does not copy query parameters o
 
 Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for the test page's **Host**, **URL Path**, and **HTTP Method** `GET`, scoped to your test user group.
 
-Visit the page through Gateway. Confirm that the page loads normally and a PNG object appears in R2. Open the object to check the screenshot. Browser Run Quick Actions require a remote browser binding; they cannot be validated entirely with local emulation.
+Visit the page through Gateway. Confirm that the page loads normally and a PNG object appears in R2. Open the object to check the screenshot. Browser Run Quick Actions require a remote browser binding. They cannot be validated entirely with local emulation.
 
 Screenshots consume [Browser Run usage](/browser-run/pricing/). Scope or sample captures to control volume. Browser queueing, navigation, and the R2 write must fit within [background execution limits](/workers/platform/limits/#duration). Use Queues or Workflows for reliable captures of slow pages.

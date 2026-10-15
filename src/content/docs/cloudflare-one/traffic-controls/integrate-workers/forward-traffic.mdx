@@ -185,6 +185,8 @@ If your Worker does not run, confirm that the device uses Gateway HTTP filtering
 
 If requests fail after enabling Forward, confirm that the Worker exports `GatewayMiddleware`, its `handle()` method returns a `Response`, and it calls `next()` at most once. Check for exceptions, unsupported status codes, and bodies on responses that must have no body. Use [Workers Logs](/workers/observability/logs/workers-logs/) to inspect invocation errors. Disable the test Forward policy while correcting a failing script.
 
+For identity and device posture lookup failures, refer to [Handle lookup errors](/cloudflare-one/traffic-controls/integrate-workers/available-context/#handle-lookup-errors).
+
 If matching requests return HTTP `500` after a Worker was deleted, update the Forward policy to select an existing Worker, or delete the policy. Saving a policy that still references the deleted Worker fails with API error `2294`.
 
 Start with a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/) once the pass-through example works.
