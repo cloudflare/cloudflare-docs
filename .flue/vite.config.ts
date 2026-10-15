@@ -60,6 +60,7 @@ const LOCAL_DEV_SETTINGS = [
 	"DOCS_FLUE_REVIEW_MODE",
 	"DOCS_FLUE_RECOMMENDATIONS_MODE",
 	"DOCS_FLUE_REVIEW_DEBOUNCE_SECONDS",
+	"DOCS_FLUE_EFFORT_LABEL_MODE",
 ] as const;
 
 function localDevSettings(mode: string): Record<string, string> {

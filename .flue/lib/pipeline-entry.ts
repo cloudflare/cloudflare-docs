@@ -23,6 +23,8 @@
  *         directly for a non-draft PR.
  *       · otherwise → `INGEST`, which runs the spam gate and, for a clean
  *         non-draft PR, kicks the review itself.
+ *   - effort label event (issue opened / reopened / edited) → `EFFORT_LABEL`
+ *     (additive; never replaces the spam routing below).
  *   - comment spam event (issue_comment created by a non-exempt author) →
  *     `COMMENT_SPAM`, which re-checks exemptions (including codeowner) and
  *     deletes high-confidence spam comments.
@@ -34,6 +36,7 @@
 import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 import type { RebaseParams } from "../orchestrators/rebase-workflow";
 import type { IngestParams } from "../orchestrators/ingest-workflow";
+import type { EffortLabelParams } from "../orchestrators/effort-label-workflow";
 import type { CommentSpamParams } from "./comment-spam";
 import {
 	addReactionToComment,
@@ -60,6 +63,7 @@ export interface PipelineEnv {
 	REBASE: Workflow<RebaseParams>;
 	INGEST: Workflow<IngestParams>;
 	COMMENT_SPAM: Workflow<CommentSpamParams>;
+	EFFORT_LABEL: Workflow<EffortLabelParams>;
 	[key: string]: unknown;
 }
 
@@ -90,6 +94,24 @@ export async function startReviewPipeline(
 	// ── 1.6 Size label (additive; runs for every PR, Dependabot included) ───
 	if (c.isSizeLabelEvent) {
 		await runSizeLabelSafely(env, c, number);
+	}
+
+	// ── 1.7 Effort label (additive; issues only) ────────────────────────────
+	// An AI call, so it runs as a Workflow. On `opened` the workflow waits for
+	// the spam gate before reading the issue.
+	if (c.isEffortLabelEvent) {
+		try {
+			await env.EFFORT_LABEL.create({ params: { number, action: c.action } });
+			log("effort-label", c, number, "effort_label_kicked");
+		} catch (err) {
+			log(
+				"effort-label",
+				c,
+				number,
+				"effort_label_kick_failed",
+				err instanceof Error ? err.message : String(err),
+			);
+		}
 	}
 
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────

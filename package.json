@@ -42,6 +42,7 @@
 		"flue:replay:dependabot": "tsx .flue/bin/replay-dependabot.ts",
 		"flue:replay:spam": "tsx .flue/bin/replay-spam.ts",
 		"flue:replay:size-label": "tsx .flue/bin/replay-size-label.ts",
+		"flue:replay:effort-label": "tsx .flue/bin/replay-effort-label.ts",
 		"flue:replay:comment-spam": "tsx .flue/bin/replay-comment-spam.ts",
 		"lint": "eslint",
 		"lint:nimbus": "nimbus-docs lint",

@@ -308,3 +308,48 @@ describe("classifyWebhook — comment spam gate", () => {
 		}
 	});
 });
+
+describe("classifyWebhook — effort label", () => {
+	it.each(["opened", "reopened"])("routes issue %s", (action) => {
+		const c = classifyWebhook("issues", {
+			action,
+			issue: { number: 60 },
+			sender: { login: "octocat" },
+		});
+		expect(c.isEffortLabelEvent).toBe(true);
+		expect(isActionable(c)).toBe(true);
+	});
+
+	it("routes title or body edits only", () => {
+		const edit = (changes: Record<string, unknown>) =>
+			classifyWebhook("issues", {
+				action: "edited",
+				issue: { number: 61 },
+				changes,
+				sender: { login: "octocat" },
+			}).isEffortLabelEvent;
+		expect(edit({ body: { from: "old" } })).toBe(true);
+		expect(edit({ title: { from: "old" } })).toBe(true);
+		expect(edit({})).toBe(false);
+	});
+
+	it("ignores PRs, labeled events and bot senders", () => {
+		expect(
+			classifyWebhook("pull_request", {
+				action: "opened",
+				pull_request: { number: 62, user: { login: "octocat" } },
+			}).isEffortLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", { action: "labeled", issue: { number: 63 } })
+				.isEffortLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", {
+				action: "opened",
+				issue: { number: 64 },
+				sender: { login: "cloudflare-docs-bot[bot]" },
+			}).isEffortLabelEvent,
+		).toBe(false);
+	});
+});

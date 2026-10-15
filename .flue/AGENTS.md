@@ -145,6 +145,30 @@ Labels are added and removed one at a time, never replaced wholesale, so product
 
 Real webhooks ignore the mode and always act.
 
+## Issue Effort Labels
+
+`EffortLabelWorkflow` (`EFFORT_LABEL`, `orchestrators/effort-label-workflow.ts`) gives each open issue exactly one `effort:*` label: how much work the docs team still has to do to close it, including coordination. The pipeline entry kicks it for issue `opened`, `reopened`, and title or body `edited` events from non-bot senders. It is additive and never replaces the spam routing.
+
+The model only answers questions. Gemma (`EFFORT_MODEL` in `lib/agents/models.ts`) is called directly through the `AI` binding, and through AI Gateway when `DOCS_FLUE_AI_GATEWAY_ID` is set, with `prompts/effort-label.md` and the issue, human comments, cross-referenced PRs with their merge status, and live docs evidence (`lib/effort-assessment.ts`, `lib/docs-evidence.ts`): up to 3 docs pages linked in the thread, read as Markdown from `<page>/index.md` and cut to the most relevant sections; whether text quoted in the issue is still on the whole page; commits to each page's source file since the issue opened; and files plus a diff excerpt for up to 2 merged or open docs PRs. Missing or unreadable pages degrade to "can't tell"; they never fail the run. It returns a decision, issue type, requirement statuses, owner, pages, and its own estimate, validated with Valibot. Trusted code scores those answers into points and a level (`scoreEffort` in `lib/effort-label.ts`), using product codeowner areas from `.github/CODEOWNERS` for the pages involved (`lib/codeowners.ts`). The rules match the DevDocs triage dashboard's effort score, so the label and the dashboard agree.
+
+| Label              | Points    | Meaning                                                                   |
+| ------------------ | --------- | ------------------------------------------------------------------------- |
+| `effort:low`       | Under 2.5 | Under an hour: close it, or a small edit on one page                      |
+| `effort:medium`    | Under 5   | A few hours: one page of writing, or a PR review with some back and forth |
+| `effort:high`      | Under 8   | A day or more: new content, several pages, or waiting on a product team   |
+| `effort:very-high` | 8 or more | A new guide, cross-team work, an initiative                               |
+
+- On `opened`, the workflow sleeps 3 minutes so the spam gate can close spam first. PRs, closed issues, and items labeled `spam` or `off topic` are skipped without a model call.
+- `effort:*` labels are never a scoring input, so labeling cannot feed back.
+- A model or validation error leaves labels unchanged.
+- Labels are re-read before writing, then added and removed one at a time like `size/*`. Retries are no-ops.
+- `DOCS_FLUE_EFFORT_LABEL_MODE=label` lets webhooks write. Any other value, including unset, logs the planned change only.
+- Create the four labels in the repository before switching to `label`; otherwise GitHub creates them with a default color.
+
+### Effort Label Replay
+
+`pnpm run flue:replay:effort-label --issue <n,...>` replays the workflow against existing issues and prints the decision, score, target label, and planned changes. Run `pnpm run flue:dev` first. It uses `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` like the other replays and follows `DOCS_FLUE_REVIEW_MODE`: `log` is a dry run, `comment` applies the labels. Webhooks ignore the replay mode and follow `DOCS_FLUE_EFFORT_LABEL_MODE`.
+
 ## Spam Gates
 
 Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.
