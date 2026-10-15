@@ -60,8 +60,6 @@ The filter runs on the ISP network, so the ISP is the only party that can remove
 - The Cloudflare IP ranges that the addresses belong to, from [Cloudflare's published IP ranges](https://www.cloudflare.com/ips/)
 - A request for the ISP to verify that its routers are not filtering or blackholing those prefixes
 
-## What Cloudflare can verify
-
-Cloudflare support can confirm that the Border Gateway Protocol (BGP) announcements for the affected prefixes are healthy, and can raise the network path with Cloudflare's network team where appropriate. To request this check, contact [Cloudflare support](/support/contacting-cloudflare-support/) with the failing IP addresses, the dates and times of the failures, and your traceroute or MTR output.
+## What Cloudflare cannot do
 
 Cloudflare cannot remove an ISP's filters or reassign the anycast IP addresses of your zone. For dedicated address options available to Enterprise users, refer to [static IPs](/byoip/concepts/static-ips/) or [Bring Your Own IP (BYOIP)](/byoip/).
