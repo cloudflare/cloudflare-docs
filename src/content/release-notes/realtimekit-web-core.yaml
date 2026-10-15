@@ -9,7 +9,7 @@ entries:
       **Enhancements**
 
       - Generated API documentation now identifies class names correctly, providing more accurate type suggestions for TypeScript users.
-      - Starting a recording that is already in progress now returns error code `1005` instead of the generic error code `1000`. If your [`onError` callback](/realtime/realtimekit/core/#advanced-options) handles error code `1000` for this case, update it to handle `1005`.
+      - Starting a recording that is already in progress now returns error code `1005` instead of the generic error code `1000`. If your [`onError` callback](/realtime/realtimekit/humans/core/#advanced-options) handles error code `1000` for this case, update it to handle `1005`.
 
       **Fixes**
 
@@ -203,7 +203,7 @@ entries:
     description: |-
       **Features**
 
-      - Simulcast support is now available to all RealtimeKit clients. Configure it per participant in Preset via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), [Preset API](https://developers.cloudflare.com/api/resources/realtime_kit/subresources/presets/methods/create) using the `config.media.video.simulcast` field, or while [initializing the SDK](/realtime/realtimekit/core/).
+      - Simulcast support is now available to all RealtimeKit clients. Configure it per participant in Preset via the [RealtimeKit dashboard](https://dash.cloudflare.com/?to=/:account/realtime/kit), [Preset API](https://developers.cloudflare.com/api/resources/realtime_kit/subresources/presets/methods/create) using the `config.media.video.simulcast` field, or while [initializing the SDK](/realtime/realtimekit/humans/core/).
       - Added 4K UHD video support in media production (configurable in Preset and API). Falls back to the maximum supported resolution if the camera does not support 4K.
   - publish_date: "2026-03-10"
     title: RealtimeKit Web Core 1.2.5
@@ -306,7 +306,7 @@ entries:
 
       - Fixed an issue where camera switching between front and rear cameras was not working on Android devices
       - Fixed device selection logic to prioritize media devices more effectively
-      - Added PIP support for [Reactions](https://developers.cloudflare.com/realtime/realtimekit/ui-kit/addons/#reactions-1)
+      - Added PIP support for [Reactions](https://developers.cloudflare.com/realtime/realtimekit/humans/ui-kit/addons/#reactions-1)
 
   - publish_date: "2025-11-18"
     title: RealtimeKit Web Core 1.2.1

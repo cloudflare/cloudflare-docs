@@ -21,7 +21,7 @@ entries:
     description: |-
       **Fixes**
 
-      - The `joinError` state has been superseded by `preJoinError` to cover all errors that occur before or during joining the meeting. Refer to [State management](/realtime/realtimekit/ui-kit/state-management/) for details on UI Kit states.
+      - The `joinError` state has been superseded by `preJoinError` to cover all errors that occur before or during joining the meeting. Refer to [State management](/realtime/realtimekit/humans/ui-kit/state-management/) for details on UI Kit states.
       - The `rtk-idle-screen` now displays user-friendly error messages instead of just an infinite loader, helping customers identify issues and retry.
       - Fixed errors thrown by the Core SDK not being captured and shown properly by the UI Kit.
 
