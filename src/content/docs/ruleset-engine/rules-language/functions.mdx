@@ -583,6 +583,85 @@ to_string(ssl)                       will return "true"
 You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
 
+### `trim`
+
+<code>trim(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from both ends of `source`. Bytes within the remaining value are unaffected.
+
+The `source` must be a field or a function result. It cannot be a literal value.
+
+By default, the function removes these ASCII whitespace bytes:
+
+- Tab (`\x09`)
+- Line feed (`\x0a`)
+- Vertical tab (`\x0b`)
+- Form feed (`\x0c`)
+- Carriage return (`\x0d`)
+- Space (`\x20`)
+
+The optional `trim_set` argument replaces the default whitespace set. It must be a constant string without duplicate bytes.
+
+The function matches individual bytes rather than substrings or Unicode characters.
+
+An empty `trim_set` string leaves `source` unchanged. Empty input, or input containing only matching bytes, returns an empty value.
+
+If `source` is nil, the function returns nil. For details, refer to [Missing values](/ruleset-engine/rules-language/values/#missing-values).
+
+All HTTP products support this function on all plans.
+
+For example, if `http.request.headers["x-label"][0]` is `"  hello world  "`, this expression returns `"hello world"`:
+
+```txt
+trim(http.request.headers["x-label"][0])
+```
+
+To remove surrounding slashes, provide a custom byte set. If `http.request.uri.path` is `"//blog/post//"`, this expression returns `"blog/post"`:
+
+```txt
+trim(http.request.uri.path, "/")
+```
+
+### `trim_end`
+
+<code>trim_end(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from the end of `source`. By default, it removes trailing ASCII whitespace.
+
+If `source` is nil, the function returns nil.
+
+All HTTP products support this function on all plans.
+
+The `source` must be a field or a function result. It cannot be a literal value. The optional `trim_set` argument must be a constant string without duplicate bytes.
+
+For default bytes and custom byte matching, refer to [`trim()`](#trim).
+
+For example, if `http.request.uri.path` is `"//blog/post//"`, this expression returns `"//blog/post"`:
+
+```txt
+trim_end(http.request.uri.path, "/")
+```
+
+### `trim_start`
+
+<code>trim_start(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from the start of `source`. By default, it removes leading ASCII whitespace.
+
+If `source` is nil, the function returns nil.
+
+All HTTP products support this function on all plans.
+
+The `source` must be a field or a function result. It cannot be a literal value. The optional `trim_set` argument must be a constant string without duplicate bytes.
+
+For default bytes and custom byte matching, refer to [`trim()`](#trim).
+
+For example, if `http.request.uri.path` is `"//blog/post//"`, this expression returns `"blog/post//"`:
+
+```txt
+trim_start(http.request.uri.path, "/")
+```
+
 ### `upper`
 
 <code>upper(<Type text="String" />)</code>: <Type text="String" />

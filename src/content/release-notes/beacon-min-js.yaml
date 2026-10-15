@@ -3,6 +3,13 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
+  - publish_date: "2026-10-05"
+    description: |-
+      1. Allow `__cfBeacon` JavaScript object to override `data-cf-beacon` configuration
+      2. Improved OS version collection on iOS/MacOS
+      3. Improved backwards compatibility with ES2017 transpilation
+      4. Google's web-vitals library upgraded to version 6.2.2
+
   - publish_date: "2026-09-02"
     description: |-
       1. Bug fix to prevent rounding of Cumulative Layout Shift (CLS)

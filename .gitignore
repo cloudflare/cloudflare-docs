@@ -72,3 +72,4 @@ tools/relevant_changed_files.txt
 .nimbus/coordinates.json
 .nimbus/lint.json
 .nimbus/routes.json
+.nimbus/page-collections.json

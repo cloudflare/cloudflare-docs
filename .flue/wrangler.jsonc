@@ -62,6 +62,11 @@
 			"binding": "COMMENT_SPAM",
 			"class_name": "CommentSpamWorkflow",
 		},
+		{
+			"name": "cloudflare-docs-flue-effort-label",
+			"binding": "EFFORT_LABEL",
+			"class_name": "EffortLabelWorkflow",
+		},
 	],
 	"migrations": [
 		{

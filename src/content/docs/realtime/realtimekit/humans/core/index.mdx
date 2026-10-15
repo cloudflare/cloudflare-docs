@@ -76,12 +76,15 @@ Alternatively, you can also use the CDN.
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```js
+	// Skip this import if you are using the CDN. RealtimeKitClient is available globally.
+	import RealtimeKitClient from "@cloudflare/realtimekit";
+
 	const authToken = <auth-token>;
 
-  const meetingDefaultOptions = {
-    audio: true,
-    video: true,
-  };
+	const meetingDefaultOptions = {
+		audio: true,
+		video: true,
+	};
 
 	RealtimeKitClient.init({
 	  authToken,
@@ -98,14 +101,14 @@ Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/
 <RTKCodeSnippet id="web-angular">
 Install the client SDK.
 ```bash
-npm i @cloudflare/realtimekit-angular
+npm i @cloudflare/realtimekit
 ```
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```ts
+import RealtimeKitClient from "@cloudflare/realtimekit";
 class AppComponent {
 	title = "MyProject";
-	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
 	async ngAfterViewInit() {
@@ -293,7 +296,7 @@ init({
 ```
 
 :::tip
-`onError` callback is used to handle SDK errors. These errors could be due to invalid auth token, network issues, media permissions, etc. Each error is thrown with a unique error code. Learn more about SDK [error codes](/realtime/realtimekit/humans/core/error-codes/).
+`onError` callback is used to handle SDK errors. These errors can be caused by an invalid auth token, network issues, media permissions, and so on. Each error is thrown with a unique error code. Refer to [Error codes](/realtime/realtimekit/humans/core/error-codes/).
 :::
 
 You can pass the following options as `defaults` to alter default behavior.

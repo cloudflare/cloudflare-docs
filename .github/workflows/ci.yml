@@ -8,14 +8,19 @@ on:
       - ".flue/**"
       - ".github/workflows/flue-ci.yml"
       - ".github/workflows/flue-deploy.yml"
+  # Merge queue runs. Path filters don't apply, so the required checks always
+  # report. Steps that need a PR are skipped for this event.
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # PR-only: per-file checks are redundant in the merge queue.
   typos:
     name: Typos
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -56,6 +61,7 @@ jobs:
           cache: pnpm
 
       - name: Check for CRLF line endings
+        if: github.event_name == 'pull_request'
         run: |
           if git grep -Il $'\r'; then
             echo "::error::CRLF line endings detected. Configure your editor to use LF line endings (this repo has an .editorconfig file that most editors respect automatically)."
@@ -63,6 +69,7 @@ jobs:
           fi
 
       - name: Check for invalid file extensions
+        if: github.event_name == 'pull_request'
         run: |
           FILES=$(
             find src/content \
@@ -88,11 +95,13 @@ jobs:
         run: pnpm run check
 
       - name: Set up reviewdog
+        if: github.event_name == 'pull_request'
         uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
         with:
           reviewdog_version: v0.21.0
 
       - name: Run eslint
+        if: github.event_name == 'pull_request'
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -100,6 +109,7 @@ jobs:
             reviewdog -f=checkstyle -name=eslint -reporter=github-pr-review -fail-level=error -filter-mode=nofilter
 
       - name: Check formatting
+        if: github.event_name == 'pull_request'
         # The codebase is always fully formatted, so checking all
         # prettier-scoped files is equivalent to checking only changed files.
         run: pnpm run format:check
@@ -115,7 +125,6 @@ jobs:
 
   build:
     name: Build
-    needs: pre-build
     runs-on: ubuntu-latest
     outputs:
       succeeded: ${{ steps.build.outputs.succeeded }}
@@ -125,7 +134,7 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
-          fetch-depth: 1
+          fetch-depth: ${{ github.event_name != 'merge_group' && 1 || 0 }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
@@ -157,6 +166,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=8192"
+          DEPLOYMENT_ENV: ${{ github.event_name == 'merge_group' && 'production' || 'preview' }}
         run: |
           set -o pipefail
           pnpm run build 2>&1 | tee build.log
@@ -167,6 +177,27 @@ jobs:
         with:
           name: dist
           path: dist
+          include-hidden-files: true
+
+      - name: Tests (Workers)
+        run: pnpm run test:postbuild
+
+      # Lint steps use `!cancelled()` so a lint failure doesn't skip the
+      # others. The report step is the gate: it prints the findings and fails.
+      - name: Run Nimbus lint
+        id: nimbus-lint
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: |
+          set +e
+          pnpm exec nimbus-docs lint --format json > "$RUNNER_TEMP/nimbus-lint.json"
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Check internal links
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        env:
+          LINT_EXIT_CODE: ${{ steps.nimbus-lint.outputs.exit_code }}
+        run: pnpm exec tsx bin/nimbus-lint-report.ts "$RUNNER_TEMP/nimbus-lint.json"
 
       - name: Upload build log
         if: always()
@@ -176,47 +207,10 @@ jobs:
           path: build.log
           if-no-files-found: ignore
 
-  post-build:
-    name: Post Build
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          fetch-depth: 1
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
-        with:
-          version: 11.28.2
-
-      - name: Set up node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
-        id: setup-node
-        with:
-          node-version: 24.x
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download artifact
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
-        with:
-          name: dist
-          path: dist
-
-      - name: Tests (Workers)
-        run: pnpm run test:postbuild
-
   notify:
     name: Notify
-    needs: [pre-build, post-build]
-    if: always()
+    needs: [pre-build, build]
+    if: always() && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -251,7 +245,7 @@ jobs:
   publish-preview:
     name: Deploy Preview
     needs: build
-    if: github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true'
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read

@@ -9,7 +9,9 @@ products:
 ---
 
 import {
+	APIRequest,
 	Details,
+	PackageManagers,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
@@ -65,16 +67,15 @@ The agent joins the meeting with a [preset](/realtime/realtimekit/concepts/prese
 
 To hide the agent from other participants, set `hidden_participant` with the [Update a preset API](/api/resources/realtime_kit/subresources/presets/methods/update/):
 
-```bash
-curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/presets/$PRESET_ID" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "permissions": {
-      "hidden_participant": true
-    }
-  }'
-```
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/presets/{preset_id}"
+	method="PATCH"
+	json={{
+		permissions: {
+			hidden_participant: true,
+		},
+	}}
+/>
 
 `hidden_participant` changes only what other participants see. The agent receives the same events either way. For what a hidden agent looks like to others, refer to [Hidden agent](#hidden-agent).
 
@@ -82,29 +83,27 @@ curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtim
 
 If you do not have a meeting yet, create one with the [Create a meeting API](/api/resources/realtime_kit/subresources/meetings/methods/create/):
 
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "title": "Weekly product review"
-  }'
-```
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/meetings"
+	method="POST"
+	json={{
+		title: "Weekly product review",
+	}}
+/>
 
 The response `data.id` is the meeting ID. Use it as `$MEETING_ID` in the next request.
 
 Then [add a participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to the meeting with the agent preset:
 
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings/$MEETING_ID/participants" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Notes bot",
-    "preset_name": "agent",
-    "custom_participant_id": "notes-bot"
-  }'
-```
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/meetings/{meeting_id}/participants"
+	method="POST"
+	json={{
+		name: "Notes bot",
+		preset_name: "agent",
+		custom_participant_id: "notes-bot",
+	}}
+/>
 
 The response `data.token` is the agent's participant token. Reuse the same participant for every session of the meeting. A [participant token](/realtime/realtimekit/concepts/participant/#participant-tokens) is valid for 100 days.
 
@@ -143,7 +142,7 @@ Subscribe only to what you use. Fewer events means less queueing during reconnec
 
 ## 5. Run the agent in a Durable Object
 
-This example puts the steps above together. A Worker adds the agent to a meeting, and a Durable Object holds the agent's WebSocket and logs final transcripts and participant joins.
+This example puts steps 1 to 4 together. A Worker adds the agent to a meeting, and a Durable Object holds the agent's WebSocket and logs final transcripts and participant joins.
 
 A Durable Object fits the agent: one instance per meeting, a long-lived outbound WebSocket, and storage for the resume `connection_id`.
 
@@ -173,9 +172,12 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
 
    Store the API token as a secret:
 
-   ```sh
-   npx wrangler secret put CLOUDFLARE_API_TOKEN
-   ```
+   <PackageManagers
+   	type="exec"
+   	pkg="wrangler"
+   	args="secret put CLOUDFLARE_API_TOKEN"
+   />
+
 
 2. **Add and remove the agent.** `POST` adds a participant with the agent preset and starts the meeting's Durable Object. `DELETE` removes the agent from the meeting:
 

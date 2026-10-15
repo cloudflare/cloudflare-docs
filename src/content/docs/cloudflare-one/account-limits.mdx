@@ -34,6 +34,12 @@ This page lists the default account limits for rules, applications, fields, and 
 | Custom domains per MCP portal | 5 |
 | MCP portal session inactivity timeout | 24 hours |
 
+## Application Library
+
+| Feature                                                                                                | Zero Trust Free | Zero Trust Pay-as-you-go | Zero Trust Enterprise |
+| ------------------------------------------------------------------------------------------------------ | --------------- | ------------------------ | --------------------- |
+| [Custom applications per account](/cloudflare-one/team-and-resources/app-library/custom-applications/) | 50              | 50                       | 100                   |
+
 ## Gateway
 
 | Feature                                   | Limit |
@@ -57,6 +63,8 @@ This page lists the default account limits for rules, applications, fields, and 
 | List API requests per minute              | 600   |
 | DNS Logpush jobs                          | 5     |
 | HTTP Logpush jobs                         | 5     |
+
+HTTP policies using [Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) (beta) count toward the HTTP policy limit. Invoked Workers are subject to [Workers limits](/workers/platform/limits/), including memory, CPU, subrequest, and background execution limits.
 
 ## Data Loss Prevention (DLP)
 

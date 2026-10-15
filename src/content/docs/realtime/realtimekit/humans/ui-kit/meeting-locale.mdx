@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Meeting Locale
 description: Customize text and localize the RealtimeKit UI Kit meeting interface for different languages.
 sidebar:
-  order: 9
+  order: 10
 products:
   - realtime
 ---
@@ -180,7 +180,7 @@ The `useLanguage` hook takes in your custom locale object as an argument and gen
 
 ```typescript
 import { Component, OnInit } from "@angular/core";
-import RealtimeKitClient from "@cloudflare/realtimekit-angular";
+import RealtimeKitClient from "@cloudflare/realtimekit";
 import {
 	defaultLanguage,
 	useLanguage,
@@ -339,7 +339,7 @@ function App() {
 
 ```typescript
 import { Component, OnInit } from "@angular/core";
-import RealtimeKitClient from "@cloudflare/realtimekit-angular";
+import RealtimeKitClient from "@cloudflare/realtimekit";
 import {
 	defaultLanguage,
 	useLanguage,

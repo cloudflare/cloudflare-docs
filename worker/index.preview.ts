@@ -13,6 +13,7 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
+import { unavailableModelRedirect } from "./unavailable-model";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
 import { handleOg } from "./og/route";
 
@@ -307,6 +308,9 @@ export default class extends WorkerEntrypoint<Env> {
 			if (requestsMarkdown(request)) {
 				return markdownNotFound();
 			}
+
+			const modelRedirect = unavailableModelRedirect(pathname);
+			if (modelRedirect) return modelRedirect;
 
 			const section = new URL(response.url).pathname.split("/").at(1);
 

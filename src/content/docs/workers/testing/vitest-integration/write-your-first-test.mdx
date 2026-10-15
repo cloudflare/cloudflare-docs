@@ -114,6 +114,7 @@ We will use this simple Worker as an example. It returns a 404 response for the 
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
+		const { pathname } = new URL(request.url);
 		if (pathname === "/404") {
 			return new Response("Not found", { status: 404 });
 		}
@@ -144,7 +145,7 @@ By importing the Worker we can write a unit test for its `fetch` handler.
     const IncomingRequest = Request<unknown, IncomingRequestCfProperties>;
 
     describe("Hello World worker", () => {
-    	it("responds with Hello World!", async () => {
+    	it("responds with not found and proper status for /404", async () => {
     		const request = new IncomingRequest("http://example.com/404");
     		// Create an empty context to pass to `worker.fetch()`
     		const ctx = createExecutionContext();

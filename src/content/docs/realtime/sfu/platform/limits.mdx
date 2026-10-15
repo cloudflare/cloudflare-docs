@@ -45,7 +45,7 @@ Operations that require an established transport wait up to five seconds for con
 
 ## Adapter recovery
 
-For WebRTC-to-WebSocket streaming, the SFU retries the same endpoint for up to five seconds after a temporary disconnect. An exhausted reconnect window closes the adapter. Ingest adapters do not automatically reconnect.
+For WebRTC-to-WebSocket streaming, the SFU retries the same endpoint for up to 15 seconds after a temporary disconnect. An exhausted reconnect window closes the adapter. Ingest adapters do not automatically reconnect.
 
 Refer to [WebSocket adapter reconnect](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#automatic-reconnection-for-streaming) for buffering, delivery behavior, and application recovery.
 

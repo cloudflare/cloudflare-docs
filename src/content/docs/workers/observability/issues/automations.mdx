@@ -88,7 +88,7 @@ Generic webhooks use the standard Cloudflare Notifications webhook payload. For 
 
 An automation sends an issue to its destination. It does not give the destination permission to query your Cloudflare account.
 
-To let an agent investigate related logs and traces, configure the [Workers Observability MCP server](/workers/observability/mcp-server/) separately. Review the agent's proposed code and test changes before deploying them.
+To let an agent investigate related logs and traces, configure the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) separately. Review the agent's proposed code and test changes before deploying them.
 
 Issue data can include error messages, stack traces, request metadata, logs, and application context. Before you configure a destination, review its access controls and data-handling policies. Do not include secrets, access tokens, or sensitive request content in telemetry. Handle application identifiers and personal data according to your privacy and data-handling policies.
 

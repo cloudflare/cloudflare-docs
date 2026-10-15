@@ -9,6 +9,22 @@ products:
 
 import { Render } from "~/components";
 
+:::caution[aws CLI v2.38.0 and later]
+Starting with v2.38.0, the `aws` CLI uses the AWS Common Runtime (CRT) S3 transfer client by default. Some `aws s3` operations against R2, such as downloading or deleting objects, may fail with a signature mismatch error.
+
+Until this is resolved, configure the `aws` CLI to use the classic transfer client:
+
+```sh
+aws configure set default.s3.preferred_transfer_client classic
+```
+
+If you use a named profile, run the following instead:
+
+```sh
+aws configure set s3.preferred_transfer_client classic --profile <PROFILE_NAME>
+```
+:::
+
 <Render file="keys" product="r2" />
 <br />
 

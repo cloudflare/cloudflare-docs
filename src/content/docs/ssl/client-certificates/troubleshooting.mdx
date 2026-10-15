@@ -127,7 +127,7 @@ To list and revoke certificates, refer to the [client certificates API](/api/res
 
 ### Bring your own CA (BYOCA)
 
-Each Enterprise account can upload up to five CA certificates for [BYOCA](/ssl/client-certificates/byo-ca/). This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+Each Enterprise account can upload up to five CA certificates for [BYOCA](/ssl/client-certificates/byo-ca/). This quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-controls/).
 
 If you exceed this limit, the API returns:
 
@@ -141,7 +141,7 @@ If you exceed this limit, the API returns:
 To free a slot, you must first remove all hostname associations from the CA before deleting it. To increase your quota, contact your account team.
 
 :::note
-CAs uploaded through [Cloudflare Access](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described in [Bring your own CA (BYOCA)](#bring-your-own-ca-byoca).
+CAs uploaded through [Cloudflare Access](/cloudflare-one/reusable-components/posture-checks/client-checks/client-certificate/) use a separate quota. Error `12130` ("maximum number of certificates has been reached") in Access refers to the Access-specific certificate limit, not the BYOCA quota described in [Bring your own CA (BYOCA)](#bring-your-own-ca-byoca).
 :::
 
 ---

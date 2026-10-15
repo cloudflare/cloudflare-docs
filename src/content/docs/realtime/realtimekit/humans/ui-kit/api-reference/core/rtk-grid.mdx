@@ -5,6 +5,17 @@ description: API reference for rtk-grid component (Web Components (HTML) Library
 products:
   - realtime
 ---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-grid/rtk-grid.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
 The main grid component which abstracts all the grid handling logic and renders it for you.
 
 ## Properties
@@ -18,7 +29,7 @@ The main grid component which abstracts all the grid handling logic and renders 
 | `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
 | `layout` | `GridLayout` | ✅ | - | Grid Layout |
 | `meeting` | `Meeting` | ✅ | - | Meeting object |
-| `overrides` | `any` | ✅ | - | @deprecated |
+| `overrides` | `any` | ✅ | - | **Deprecated** |
 | `size` | `Size` | ✅ | - | Size |
 | `states` | `States` | ✅ | - | States |
 | `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
@@ -36,7 +47,8 @@ The main grid component which abstracts all the grid handling logic and renders 
 ```html
 <rtk-grid
  aspectRatio="example"
- gridSize="md">
+ gridSize="md"
+ size="md">
 </rtk-grid>
 ```
 
@@ -45,6 +57,7 @@ The main grid component which abstracts all the grid handling logic and renders 
 <script>
   const el = document.querySelector("rtk-grid");
 
-  el.gap= 42;
+  el.meeting = meeting;
+  el.gap = 42;
 </script>
 ```

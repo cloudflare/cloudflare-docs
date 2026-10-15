@@ -98,6 +98,7 @@ Add the bindings to your Wrangler configuration file:
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 
 	// Email sending
@@ -108,11 +109,7 @@ Add the bindings to your Wrangler configuration file:
 	],
 
 	// Email routing
-	"email": [
-		{
-			"name": "EMAIL_HANDLER"
-		}
-	]
+	"addresses": ["support@yourdomain.com"]
 }
 ```
 
