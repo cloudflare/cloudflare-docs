@@ -7,6 +7,7 @@
 // `count` prompts are randomly selected at build time (SSG) — each build picks
 // a different set, which is good enough for "feels fresh" without client JS.
 import { Code } from "~/components";
+import { seededRandom, shuffle } from "~/util/stable-id";
 
 interface Props {
 	prompts: string[];
@@ -15,7 +16,7 @@ interface Props {
 
 const { prompts, count = 5 } = Astro.props;
 
-const shuffled = [...prompts].sort(() => Math.random() - 0.5);
+const shuffled = shuffle(prompts, seededRandom(Astro.url.pathname));
 const selected = shuffled.slice(0, count);
 ---
 

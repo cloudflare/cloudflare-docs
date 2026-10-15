@@ -54,7 +54,12 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 
 const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
-const serializeSitemapLastmod = createSitemapLastmodSerializer();
+// Previews build from a shallow clone, so git dates are wrong, and any
+// per-build date forces every page to be re-uploaded. `astro:env` isn't
+// available here; unset means preview, matching the env schema default.
+const serializeSitemapLastmod = createSitemapLastmodSerializer({
+	lastmod: process.env.DEPLOYMENT_ENV === "production",
+});
 
 // Mirrors production's sitemap `filter` (root astro.config.ts).
 function isExcludedFromSitemap(url: string): boolean {
