@@ -301,10 +301,37 @@ jobs:
           wait "$short_sha_pid"
           wait "$branch_slug_pid"
 
+      # Worker Previews is in open beta, so a failure here must not fail CI.
+      - name: Deploy Worker Preview
+        id: worker-preview
+        continue-on-error: true
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
+        run: |
+          PREVIEW_NAME=$(pnpm exec tsx bin/preview-name.ts "$PR_HEAD_REF")
+          OUTPUT_FILE="$RUNNER_TEMP/wrangler-preview.ndjson"
+
+          WRANGLER_OUTPUT_FILE_PATH="$OUTPUT_FILE" \
+            pnpm exec wrangler preview --config wrangler.preview.json \
+              --name "$PREVIEW_NAME" --tag "$SHORT_SHA" --message "$PR_HEAD_SHA"
+
+          # Use the URLs wrangler reports instead of building them by hand.
+          PREVIEW_URL=$(jq -r 'select(.type == "preview") | .preview_urls[0] // empty' "$OUTPUT_FILE" | tail -n 1)
+          DEPLOYMENT_URL=$(jq -r 'select(.type == "preview") | .deployment_urls[0] // empty' "$OUTPUT_FILE" | tail -n 1)
+          [ -n "$PREVIEW_URL" ] || { echo "::error::No Preview URL in wrangler output"; exit 1; }
+
+          echo "preview_url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
+          echo "deployment_url=${DEPLOYMENT_URL}" >> "$GITHUB_OUTPUT"
+
       - name: Post preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
           SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
+          WORKER_PREVIEW_URL: ${{ steps.worker-preview.outputs.preview_url }}
+          WORKER_PREVIEW_DEPLOYMENT_URL: ${{ steps.worker-preview.outputs.deployment_url }}
         run: pnpm exec tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true

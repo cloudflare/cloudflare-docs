@@ -109,6 +109,19 @@ async function run(): Promise<void> {
 			});
 
 		let comment = `**Preview URL:** ${previewUrl.commit}\n**Preview Branch URL:** ${previewUrl.branch}`;
+
+		// Set when the Worker Preview deploy succeeded.
+		const workerPreviewUrl = process.env.WORKER_PREVIEW_URL;
+		const workerPreviewDeploymentUrl =
+			process.env.WORKER_PREVIEW_DEPLOYMENT_URL;
+		if (workerPreviewUrl) {
+			comment = comment.concat(
+				`\n**Worker Preview URL:** ${workerPreviewUrl}`,
+				workerPreviewDeploymentUrl
+					? `\n**Worker Preview Deployment URL:** ${workerPreviewDeploymentUrl}`
+					: "",
+			);
+		}
 		if (changedFiles.length !== 0) {
 			core.info(`Found ${changedFiles.length} after filtering paths`);
 
