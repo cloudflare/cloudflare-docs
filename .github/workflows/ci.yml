@@ -351,7 +351,7 @@ jobs:
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          PREVIEW_NAME=$(pnpm exec tsx bin/preview-name.ts "$PR_HEAD_REF")
+          PREVIEW_NAME=$(pnpm exec tsx bin/print-worker-preview-name.ts "$PR_HEAD_REF")
           OUTPUT_FILE="$RUNNER_TEMP/wrangler-preview.ndjson"
 
           WRANGLER_OUTPUT_FILE_PATH="$OUTPUT_FILE" \

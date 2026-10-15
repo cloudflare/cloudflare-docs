@@ -11,7 +11,7 @@ const PREFIX = "gh-";
 // A DNS label is at most 63 characters.
 const MAX_LENGTH = 63;
 
-export function branchSlug(branch: string): string {
+function slugifyBranch(branch: string): string {
 	return branch
 		.normalize("NFKD")
 		.replace(/[\u0300-\u036f]/g, "")
@@ -20,19 +20,10 @@ export function branchSlug(branch: string): string {
 		.toLowerCase();
 }
 
-export function previewName(branch: string): string {
+export function getWorkerPreviewName(branch: string): string {
 	// Don't strip a leading `gh-` from the branch: that would map `gh-foo` and
 	// `foo` to the same Preview and make two PRs overwrite each other.
-	return `${PREFIX}${branchSlug(branch)}`
+	return `${PREFIX}${slugifyBranch(branch)}`
 		.slice(0, MAX_LENGTH)
 		.replace(/-+$/, "");
-}
-
-if (process.argv[1]?.endsWith("preview-name.ts")) {
-	const branch = process.argv[2];
-	if (!branch) {
-		console.error("Usage: preview-name.ts <branch>");
-		process.exit(1);
-	}
-	console.log(previewName(branch));
 }

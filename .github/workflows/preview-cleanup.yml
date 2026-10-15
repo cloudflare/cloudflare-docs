@@ -39,6 +39,6 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          PREVIEW_NAME=$(pnpm exec tsx bin/preview-name.ts "$PR_HEAD_REF")
+          PREVIEW_NAME=$(pnpm exec tsx bin/print-worker-preview-name.ts "$PR_HEAD_REF")
           pnpm exec wrangler preview delete --config wrangler.preview.json \
             --name "$PREVIEW_NAME" --skip-confirmation
