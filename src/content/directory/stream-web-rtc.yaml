@@ -3,7 +3,7 @@ name: stream-web-rtc
 
 entry:
   title: WebRTC
-  url: /stream/webrtc-beta/
+  url: /stream/webrtc/
   show: false
 
 meta:
