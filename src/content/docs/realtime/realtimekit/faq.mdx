@@ -292,13 +292,13 @@ When you pass a watermark image URL via the [Start Recording](/api/resources/rea
 
 <Details header="Which domains and ports must I allowlist when my network restricts outbound traffic?">
 
-If your network restricts outbound traffic, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/) for the domains and ports required for your RealtimeKit integration.
+If your network restricts outbound traffic, refer to [Network allowlist](/realtime/realtimekit/platform/network-allowlist/) for the domains and ports required for your RealtimeKit integration.
 
 </Details>
 
 <Details header="How can I check if my network and devices are ready for a RealtimeKit meeting?">
 
-Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting. For required domains and ports, refer to [Network allowlist](/realtime/realtimekit/network-allowlist/).
+Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting. For required domains and ports, refer to [Network allowlist](/realtime/realtimekit/platform/network-allowlist/).
 
 </Details>
 
@@ -352,7 +352,7 @@ For composite recordings, a recorder joins the meeting as a hidden virtual parti
 
 After the final participant leaves, the recorder remains active for the meeting's <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20session_keep_alive_time_in_secs%20%3E%20(schema)"><code>session_keep_alive_time_in_secs</code></a>. The default is 60 seconds, and the maximum is 600 seconds.
 
-RealtimeKit does not charge participant minutes for the recorder. Instead, it charges export minutes for the recorded duration. Refer to [RealtimeKit pricing](/realtime/realtimekit/pricing/) for current rates.
+RealtimeKit does not charge participant minutes for the recorder. Instead, it charges export minutes for the recorded duration. Refer to [RealtimeKit pricing](/realtime/realtimekit/platform/pricing/) for current rates.
 
 <br/>
 When <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20record_on_start%20%3E%20(schema)"><code>record_on_start</code></a> is `true`:

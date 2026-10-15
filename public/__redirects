@@ -606,6 +606,14 @@
 /realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
 /realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/core/api-reference/rtkparticipants/ 301
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
+/realtime/realtimekit/pricing/ /realtime/realtimekit/platform/pricing/ 301
+/realtime/realtimekit/limits/ /realtime/realtimekit/platform/limits/ 301
+/realtime/realtimekit/data-retention/ /realtime/realtimekit/platform/data-retention/ 301
+/realtime/realtimekit/network-allowlist/ /realtime/realtimekit/platform/network-allowlist/ 301
+/realtime/realtimekit/legal/ /realtime/realtimekit/platform/legal/ 301
+/realtime/realtimekit/legal/3rdparty/ /realtime/realtimekit/platform/legal/3rdparty/ 301
+/realtime/realtimekit/collaborative-stores/ /realtime/realtimekit/collaboration/meeting-key-value-store/ 301
+/realtime/realtimekit/broadcast-apis/ /realtime/realtimekit/collaboration/message-broadcast/ 301
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/agents/ /realtime/ 301
 /realtime/agents/getting-started/ /realtime/ 301

@@ -29,7 +29,7 @@ A plugin has two parts:
 - A **component**: a DOM element (`HTMLElement`) that holds your plugin's UI and logic.
 - A **registration**: a configuration object you pass to the SDK so it can list, activate, and render the component.
 
-RealtimeKit synchronizes activation state across the session. To share plugin data between participants, use [collaborative stores](/realtime/realtimekit/collaborative-stores/).
+RealtimeKit synchronizes activation state across the session. To share plugin data between participants, use the [meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/).
 
 ## 1. Build the plugin component
 
@@ -180,8 +180,8 @@ For the full list of plugin events, refer to [Listen to plugin events](/realtime
 
 Each participant runs their own copy of the plugin component, so you need a way to share state between them. RealtimeKit offers two built-in options for real-time communication:
 
-- [Collaborative stores](/realtime/realtimekit/collaborative-stores/) — a shared key-value store that syncs state across the session.
-- [Message broadcasts](/realtime/realtimekit/broadcast-apis/) — send custom events to every participant in a meeting.
+- [Meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/) — a shared key-value store that syncs state across the session.
+- [Message broadcast](/realtime/realtimekit/collaboration/message-broadcast/) — send custom events to every participant in a meeting.
 
 For plugins with simple requirements, these built-in APIs are enough to handle your collaborative logic.
 
@@ -212,5 +212,5 @@ For richer, full-featured collaboration, you can pair your plugin with a dedicat
 ## Next steps
 
 - Review the [Plugins](/realtime/realtimekit/core/plugins/) API for the complete `Plugin` and `Plugins` reference.
-- Use [collaborative stores](/realtime/realtimekit/collaborative-stores/) to build richer shared experiences.
+- Use the [meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/) to build richer shared experiences.
 - Get started with the [RealtimeKit plugins example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/plugins) for a working React implementation.
