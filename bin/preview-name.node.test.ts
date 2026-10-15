@@ -10,8 +10,9 @@ describe("previewName", () => {
 		expect(previewName("café-fix")).toBe("gh-cafe-fix");
 	});
 
-	test("does not double the prefix", () => {
-		expect(previewName("gh-foo")).toBe(previewName("foo"));
+	test("distinct branches get distinct names", () => {
+		expect(previewName("gh-foo")).toBe("gh-gh-foo");
+		expect(previewName("gh-foo")).not.toBe(previewName("foo"));
 	});
 
 	test("fits in one DNS label", () => {

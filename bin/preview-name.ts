@@ -3,6 +3,9 @@
 //
 // The `gh-` prefix keeps these Previews separate from the ones Workers Builds
 // creates on the same Worker (which are named after the bare branch slug).
+// A branch whose slug itself starts with `gh-` (e.g. `gh-foo`) can still share
+// a name with this workflow's Preview for another branch (`foo`) in Workers
+// Builds, because a slug can't be told apart from a prefixed name.
 
 const PREFIX = "gh-";
 // A DNS label is at most 63 characters.
@@ -18,10 +21,11 @@ export function branchSlug(branch: string): string {
 }
 
 export function previewName(branch: string): string {
-	// Strip an existing prefix so a branch named `gh-foo` can't collide with
-	// the Preview for branch `foo`.
-	const slug = branchSlug(branch).replace(/^(gh-)+/, "");
-	return `${PREFIX}${slug}`.slice(0, MAX_LENGTH).replace(/-+$/, "");
+	// Don't strip a leading `gh-` from the branch: that would map `gh-foo` and
+	// `foo` to the same Preview and make two PRs overwrite each other.
+	return `${PREFIX}${branchSlug(branch)}`
+		.slice(0, MAX_LENGTH)
+		.replace(/-+$/, "");
 }
 
 if (process.argv[1]?.endsWith("preview-name.ts")) {
