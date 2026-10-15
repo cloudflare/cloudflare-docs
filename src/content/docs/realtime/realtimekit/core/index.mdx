@@ -107,12 +107,9 @@ npm i @cloudflare/realtimekit
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```ts
-import { ViewChild } from "@angular/core";
 import RealtimeKitClient from "@cloudflare/realtimekit";
-import { RtkMeeting } from "@cloudflare/realtimekit-angular-ui";
 class AppComponent {
 	title = "MyProject";
-	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
 	async ngAfterViewInit() {
