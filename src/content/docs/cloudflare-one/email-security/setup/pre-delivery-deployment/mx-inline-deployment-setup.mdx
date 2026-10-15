@@ -72,6 +72,18 @@ If you have verified zones on Cloudflare, continue with the following steps:
    - Select **Continue**.
 5. **Review details**: Review your domain, then select **Go to domains**.
 
+:::note[Domain verification]
+
+Domains you connect from an active Cloudflare zone are verified automatically. Domains you add from other sources are created with a **Pending** status and require you to verify ownership with a DNS TXT record. Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
+
+:::
+
+:::caution
+
+Only point your MX records at Email security after the domain status is **Active**. While a domain is pending verification, email routed to Email security is dropped.
+
+:::
+
 ## Users who do not have domains with Cloudflare
 
 If you do not have domains with Cloudflare, the dashboard will display two options:
@@ -81,12 +93,24 @@ If you do not have domains with Cloudflare, the dashboard will display two optio
 
 ## Enter domain manually
 
+When you enter a domain manually, Email security creates the domain with a **Pending** status and verifies your ownership after you add a DNS TXT record. You can complete the remaining setup while the verification is in progress, but you can only update the MX records after the domain status is **Active**.
+
+On the **Set up Email security** page:
+
 1. **Add domains**: Manually enter domain names.
-2. **Review all domains**: Review all your domains, then select **Continue**.
-3. **Verify your domains**: It may take up to 24 hours for your domains to be verified. Select **Done**.
-4. Once your domains have been verified, the dashboard will display a message like this: **You have verified domains ready to connect to Email security**. This means that you can now set up Email security via MX/Inline.
-5. Select **Set up**, then select **MX/Inline**.
-6. Follow the steps to [initiate MX/Inline configuration](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/#initiate-mxinline-configuration).
+2. **Select position**: Choose where Email security fits into your mail flow. Refer to [Connect a domain](#connect-a-domain) for the position settings.
+3. **Domain verification**: Copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours. Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
+4. (**Optional**, select **Skip for now** to skip this step) **Configure quarantine policy**: Select dispositions to automatically prevent certain types of incoming messages from reaching a recipient's inbox.
+5. **Select processing region**: Under **Your mail processing location**, select where Email security processes mail for your domain. You can refer to [Regional processing](/cloudflare-one/email-security/reference/regional-processing/) for more information.
+6. **Review details**: Review your domain, then select **Go to domains**.
+
+:::caution
+
+While the domain status is **Pending**, do not point your MX records at Email security. Email routed to Email security for a domain that is not verified is dropped.
+
+When the domain status changes to **Active**, update your MX records at your DNS provider.
+
+:::
 
 ### Add a domain to Cloudflare
 
