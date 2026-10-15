@@ -34,6 +34,6 @@ export default {
 
 </TypeScriptExample>
 
-The Worker still returns `202 Accepted`, but tracing drops the oversized attribute. The span includes `cloudflare.warning.type` set to `span_data_limit_exceeded` and a `cloudflare.warning.message` identifying the rejected attribute and its size. Record a payload size or event identifier instead of the full payload to keep span data within the limit.
+The Worker still returns `202 Accepted`, but tracing drops the oversized attribute. The span includes `cloudflare.warning.type` set to `span_data_limit_exceeded` and a `cloudflare.warning.message` identifying the rejected attribute and its size.
 
 For more information, refer to [Warning attributes](/workers/observability/traces/spans-and-attributes/#warning-attributes).
