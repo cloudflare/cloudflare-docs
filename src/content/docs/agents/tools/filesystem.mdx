@@ -1,0 +1,423 @@
+---
+title: File system
+pcx_content_type: concept
+sidebar:
+  order: 0
+description: Give an agent a durable file system stored in its Durable Object, with file tools for the model and an optional JavaScript runtime.
+products:
+  - agents
+---
+
+import {
+	LinkCard,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Give an agent a durable working directory with [Cloudflare Computer](https://github.com/cloudflare/computer). Computer stores a virtual file system in the SQLite storage of a [Durable Object](/durable-objects/). The agent reads and writes files through an API that resembles `node:fs/promises`, and the model works with them through ready-made tools such as `read`, `write`, `edit`, and `grep`.
+
+Use a file system when an agent needs to:
+
+- Keep notes, drafts, plans, or generated files across turns and restarts.
+- Read, search, and edit text files with tools built for a model.
+- Run model-written JavaScript against its files, without starting a container.
+
+## How it works
+
+A `Workspace` lives inside a Durable Object and keeps every file in the SQLite storage of that object. Agents with different names get separate workspaces, and every request sent to the same agent reaches the same files. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
+
+`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend. A workspace can have no backend at all, which gives you the file system on its own.
+
+## Install
+
+<PackageManagers pkg="@cloudflare/computer zod ai" />
+
+`zod` is required by every tool entry point, and `ai` by the [AI SDK](https://ai-sdk.dev/) tools. Your Worker needs the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/).
+
+## Add a workspace to a Durable Object
+
+Create a `Workspace` in your Durable Object class and pass it the storage of the Durable Object. The file system is ready to use immediately.
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { DurableObject } from "cloudflare:workers";
+
+export class NotesAgent extends DurableObject<Env> {
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	async addTodo(item: string) {
+		const path = "/workspace/notes/todo.md";
+		await this.workspace.fs.mkdir("/workspace/notes", { recursive: true });
+
+		let todo = "";
+		try {
+			todo = await this.workspace.fs.readFile(path, "utf8");
+		} catch (error) {
+			// A missing file means there are no to-do items yet.
+			if ((error as { code?: string }).code !== "ENOENT") throw error;
+		}
+
+		todo += `- [ ] ${item}\n`;
+		await this.workspace.fs.writeFile(path, todo);
+		return todo;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = env.NotesAgent.getByName("user-123");
+		return new Response(await agent.addTodo("Ship it"));
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Each call to `addTodo()` on the `user-123` instance appends to the same file, which remains after the Durable Object restarts.
+
+Configure the Durable Object binding and a SQLite migration in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "NotesAgent",
+				"name": "NotesAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["NotesAgent"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+### Work with files
+
+`workspace.fs` is asynchronous and uses absolute paths. Strings are stored as UTF-8. Pass a `Uint8Array` or a `ReadableStream` for binary content.
+
+<TypeScriptExample>
+
+```ts
+const { fs } = this.workspace;
+
+// Write a string, bytes, or a stream.
+await fs.writeFile("/workspace/data/blob.bin", new Uint8Array([1, 2, 3]));
+await fs.writeFile("/workspace/uploads/report.csv", request.body!);
+
+// Read a file as text, or as a stream when you omit the encoding.
+const text = await fs.readFile("/workspace/uploads/report.csv", "utf8");
+const stream = await fs.readFile("/workspace/uploads/report.csv");
+
+// List, search, and remove.
+for (const entry of await fs.readdir("/workspace/notes")) {
+	console.log(entry.isDirectory ? `d ${entry.name}` : `f ${entry.name}`);
+}
+const matches = await fs.grep("TODO", "/workspace", { ignoreCase: true });
+await fs.rm("/workspace/notes", { recursive: true });
+```
+
+</TypeScriptExample>
+
+For the full list of file operations, refer to the [file system interface](https://github.com/cloudflare/computer/blob/main/docs/04_filesystem_interface.md).
+
+## Give the model file tools
+
+`createAITools()` from `@cloudflare/computer/tools/ai-sdk` returns an AI SDK `ToolSet` for a workspace. Pass it to `generateText()`, `streamText()`, or the `getTools()` method of an agent.
+
+The following [Think](/agents/harnesses/think/) agent replaces its default workspace with a Computer workspace and gives the model the Computer file tools.
+
+<TypeScriptExample>
+
+```ts
+import {
+	type ThinkWorkspaceCompatibility,
+	Workspace,
+} from "@cloudflare/computer";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { Think } from "@cloudflare/think";
+import { routeAgentRequest } from "agents";
+import { createWorkersAI } from "workers-ai-provider";
+
+export class WriterAgent extends Think<Env> {
+	// The file tools below replace the built-in workspace tools.
+	override workspaceBash = false;
+
+	override workspace = new Workspace({
+		storage: this.ctx.storage,
+		// Adds the methods that Think expects from its workspace.
+		useThink: true,
+	}) as Workspace & ThinkWorkspaceCompatibility;
+
+	override getModel() {
+		return createWorkersAI({ binding: this.env.AI })(
+			"@cf/moonshotai/kimi-k2.6",
+		);
+	}
+
+	override getSystemPrompt() {
+		return "You are a writing assistant. Keep drafts and notes as files under /workspace.";
+	}
+
+	override getTools() {
+		return createAITools({
+			workspace: this.workspace,
+			read: { maxBytes: 32 * 1024, maxLines: 800 },
+		});
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The tool set contains the following tools:
+
+| Tool     | What it does                                                                     |
+| -------- | -------------------------------------------------------------------------------- |
+| `read`   | Reads a text file by line, or passes an image or PDF to a model that accepts it. |
+| `ls`     | Lists one directory, page by page.                                               |
+| `find`   | Finds paths with `*`, `**`, and `?` globs.                                       |
+| `grep`   | Searches file contents with a regular expression or a fixed string.              |
+| `write`  | Writes a whole file.                                                             |
+| `edit`   | Replaces targeted text in a file and returns a diff.                             |
+| `delete` | Deletes a file or directory.                                                     |
+| `exec`   | Runs code on an execution backend. Present only when the workspace has one.      |
+
+Think merges custom tools with its [built-in workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools), and a custom tool replaces a built-in tool with the same name. `workspaceBash = false` removes the built-in `bash` tool, because the Computer workspace provides its own way to run code.
+
+### Configure the tools
+
+`createAITools()` accepts the following options:
+
+| Option      | Default       | Description                                                                         |
+| ----------- | ------------- | ----------------------------------------------------------------------------------- |
+| `workspace` | Required      | A `Workspace`, or a client from `getWorkspace()`.                                   |
+| `readonly`  | `false`       | Offers only `read`, `ls`, `find`, and `grep`.                                       |
+| `read`      | Default caps  | Limits for `read`, such as `maxBytes`, `maxLines`, and `includeLineNumbers`.        |
+| `write`     | Default caps  | Limits for `write`.                                                                 |
+| `edit`      | Default caps  | Limits for `edit`.                                                                  |
+| `exec`      | Every backend | A map from backend ID to `{ description }`. Pass `{}` to leave out the `exec` tool. |
+
+To let the model read and search files but not change them, pass `readonly: true`:
+
+<TypeScriptExample>
+
+```ts
+createAITools({ workspace: this.workspace, readonly: true });
+```
+
+</TypeScriptExample>
+
+The same tools, with the same names and options, are available for other agent libraries:
+
+| Library                                | Entry point                              | Function                |
+| -------------------------------------- | ---------------------------------------- | ----------------------- |
+| [AI SDK](https://ai-sdk.dev/)          | `@cloudflare/computer/tools/ai-sdk`      | `createAITools()`       |
+| [Pi AI](/agents/models/pi-ai/)         | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()`       |
+| [TanStack AI](https://tanstack.com/ai) | `@cloudflare/computer/tools/tanstack-ai` | `createTanStackTools()` |
+
+## Run JavaScript in the workspace
+
+Add a `WorkerJavaScriptBackend` to let the agent, or the model, run JavaScript against workspace files. Each run is an ECMAScript module that executes in a new [Dynamic Worker](/dynamic-workers/). It starts faster than a container, has no network access by default, and reaches files through a `node:fs/promises` module that reads and writes the workspace.
+
+<TypeScriptExample>
+
+```ts
+import {
+	type ThinkWorkspaceCompatibility,
+	Workspace,
+} from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { Think } from "@cloudflare/think";
+
+export class WriterAgent extends Think<Env> {
+	override workspaceBash = false;
+
+	override workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [new WorkerJavaScriptBackend({ loader: this.env.LOADER })],
+		useThink: true,
+	}) as Workspace & ThinkWorkspaceCompatibility;
+
+	// getModel() and getSystemPrompt() as before.
+
+	override getTools() {
+		// The workspace now has a backend, so the tool set includes `exec`.
+		return createAITools({ workspace: this.workspace });
+	}
+}
+```
+
+</TypeScriptExample>
+
+The backend needs a [Worker Loader binding](/workers/runtime-apis/bindings/worker-loader/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"worker_loaders": [
+		{
+			"binding": "LOADER"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+The `exec` tool describes the backend to the model, including the modules that its code can import, so the model can write a module like the following without further instructions:
+
+```js
+import fs from "node:fs/promises";
+
+export default async function (input) {
+	const names = await fs.readdir("/workspace/notes");
+	const counts = {};
+	for (const name of names) {
+		const text = await fs.readFile(`/workspace/notes/${name}`, "utf8");
+		counts[name] = text.split(/\s+/).filter(Boolean).length;
+	}
+	return counts;
+}
+```
+
+The module must have a default export. A default-exported function is called with the input of the run, and its return value becomes the result. Put file and module calls inside that function. The Workers runtime does not allow I/O while a module loads, so a call at the top level of the module fails the run.
+
+### Run code from the agent
+
+Your own code can run a module through `workspace.runtime.exec()`. Pass structured data as `input`, and read the return value from `value`:
+
+<TypeScriptExample>
+
+```ts
+using run = await this.workspace.runtime.exec(
+	`
+	import fs from "node:fs/promises";
+
+	export default async function ({ path }) {
+		const text = await fs.readFile(path, "utf8");
+		return { lines: text.split("\\n").length };
+	}
+	`,
+	{ input: { path: "/workspace/notes/todo.md" }, encoding: "utf8" },
+);
+
+const { exitCode, value, stdout, stderr } = await run.result();
+```
+
+</TypeScriptExample>
+
+`console.log()` writes to `stdout`, and `console.error()` writes to `stderr`. The input and the return value must be JSON-compatible plain data. A module can also import other files in the workspace with relative imports, such as `import { summarize } from "./lib/summarize.js"`, which resolve from the `cwd` option of the run.
+
+### Configure the backend
+
+`WorkerJavaScriptBackend` accepts the following common options:
+
+| Option             | Default        | Description                                                                                       |
+| ------------------ | -------------- | ------------------------------------------------------------------------------------------------- |
+| `loader`           | Required       | The Worker Loader binding.                                                                        |
+| `root`             | `/workspace`   | The directory that code can access. Paths outside it are rejected.                                |
+| `access`           | `"read-write"` | Set to `"read"` to let code read files but not change them.                                       |
+| `defaultTimeoutMs` | `60000`        | How long a run can take when the caller does not set a timeout.                                   |
+| `maxTimeoutMs`     | `180000`       | The longest timeout that a caller can request.                                                    |
+| `globalOutbound`   | `null`         | A `Fetcher` that receives every outbound request from the code. `null` blocks network access.     |
+| `modules`          | —              | Extra modules that code can import, such as bundled libraries or functions that run in the agent. |
+
+### Give code access to your own functions
+
+A host module is a set of functions that run in the Durable Object of the agent, which code in the Dynamic Worker can import by a `ws:` name. Use a host module to give model-written code a narrow, typed capability, such as access to your data, without giving it your bindings or credentials.
+
+<TypeScriptExample>
+
+```ts
+// In the `backends` list of the workspace.
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	modules: {
+		"ws:orders": {
+			// Arguments arrive as an array of JSON-compatible values.
+			lookup: ([orderId]) => this.lookUpOrder(String(orderId)),
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+Code imports the module like any other:
+
+```js
+import { lookup } from "ws:orders";
+
+export default async function ({ ids }) {
+	return Promise.all(ids.map((id) => lookup(id)));
+}
+```
+
+Arguments come from model-written code, so validate them before use. Computer also includes prebuilt host modules for Git, [Artifacts](/artifacts/), and the agent's own tools. For more information, refer to the [isolate JavaScript runtime documentation](https://github.com/cloudflare/computer/blob/main/docs/17_isolate_javascript.md#modules).
+
+## Limits
+
+- Each workspace shares the storage of its Durable Object. For storage limits, refer to [Durable Objects limits](/durable-objects/platform/limits/). Size workspaces for an agent's working files, not for full monorepos or large dependency trees.
+- The JavaScript backend runs ECMAScript modules, not shell commands or native binaries. When an agent needs a Linux environment, use a [sandbox](/agents/tools/sandbox/).
+- Each JavaScript run is bounded in CPU time, wall-clock time, output size, and the number and size of file operations. Completed runs are kept for 60 minutes by default.
+
+## Security considerations
+
+The model reads everything that the file tools and `exec` return. A file can contain text written to steer the model, such as an instruction to delete other files. Check tool results before the agent acts on them outside the workspace, and require [approval](/agents/harnesses/think/tools/#tool-approval) for tools with side effects.
+
+Code that the JavaScript backend runs cannot read the environment variables, bindings, or storage of the agent. It reaches only the files under `root`, the modules you configure, and the network when you pass a `globalOutbound`. Host modules run with the full access of the agent, so expose only the functions that model-written code needs.
+
+Every user who talks to the same agent instance shares its workspace. Give each user their own agent instance when their files must stay apart.
+
+## Related resources
+
+<LinkCard
+	title="Cloudflare Computer"
+	href="https://github.com/cloudflare/computer"
+	description="Source code, examples, and design documentation for @cloudflare/computer."
+/>
+
+<LinkCard
+	title="Sandbox"
+	href="/agents/tools/sandbox/"
+	description="Give an agent a Linux sandbox to run shell commands, scripts, and tests."
+/>
+
+<LinkCard
+	title="Think tools"
+	href="/agents/harnesses/think/tools/"
+	description="Built-in workspace tools, custom tools, and approvals for Think agents."
+/>
+
+<LinkCard
+	title="Dynamic Workers"
+	href="/dynamic-workers/"
+	description="Load and run Workers on demand from another Worker."
+/>
