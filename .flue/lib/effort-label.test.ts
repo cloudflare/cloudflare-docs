@@ -59,7 +59,7 @@ describe("scoreEffort", () => {
 		expect(s).toMatchObject({ level: "Low", score: 0 });
 	});
 
-	it("matches the dashboard's Help page example (Docs fix → High, SME → Very High)", () => {
+	it("scores a worked example (Docs fix → High, SME → Very High)", () => {
 		const base = assessment({
 			requirements: [
 				{ text: "a", status: "not_met" },

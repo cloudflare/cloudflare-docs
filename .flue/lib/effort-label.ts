@@ -5,8 +5,7 @@ import { addLabels, removeLabel } from "./github";
  * issue, including coordination (waiting on a product team or the reporter,
  * lining up codeowner reviews). The model only answers questions about the
  * issue (`EffortAssessment`); trusted code scores the answers into points and a
- * level here, with the same rules as the DevDocs triage dashboard
- * (`src/lib/effort.ts` there), so the label and the dashboard agree.
+ * level here.
  */
 
 export const EFFORT_LEVELS = ["Low", "Medium", "High", "Very High"] as const;

@@ -1,7 +1,6 @@
 /**
- * Live-docs evidence for the effort assessment, ported from the DevDocs triage
- * dashboard (`src/server/evidence.ts` there) so both judge requirements from
- * the same evidence:
+ * Live-docs evidence for the effort assessment, so requirements are judged
+ * against what is published today:
  *   - the live page as Markdown (`<page>/index.md`), cut to the sections most
  *     relevant to the issue;
  *   - whether text the issue quotes is still on the page (checked against the

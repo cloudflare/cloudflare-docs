@@ -194,7 +194,7 @@ export function buildEffortMessage(ctx: EffortContext): string {
 	].join("\n");
 }
 
-/** One live page as the model sees it (same shape as the dashboard's prompt). */
+/** One live page as the model sees it. */
 export function renderDocsPage(p: DocsPage): string {
 	const head = `<docs_page url="${p.url ?? p.requestedUrl}" status="${p.status}">`;
 	if (p.status === "not_found")
