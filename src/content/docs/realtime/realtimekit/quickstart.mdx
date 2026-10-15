@@ -221,6 +221,9 @@ http://localhost:5173?authToken=<auth_token>
     import { BrowserModule } from '@angular/platform-browser';
     import { RealtimeKitComponentsModule } from '@cloudflare/realtimekit-angular-ui';
     import { AppComponent } from './app.component';
+    import { ViewChild } from '@angular/core';
+    import RealtimeKitClient from '@cloudflare/realtimekit';
+    import { RtkMeeting } from '@cloudflare/realtimekit-angular-ui';
 
     @NgModule({
     declarations: [AppComponent],
