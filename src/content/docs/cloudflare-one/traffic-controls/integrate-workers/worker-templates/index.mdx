@@ -20,7 +20,7 @@ import { Render } from "~/components";
 
 <Render file="gateway/forward-availability" product="cloudflare-one" />
 
-These templates use the `GatewayMiddleware.handle(request, context, next)` entrypoint. Each script implements one task so you can adapt it to your own application.
+These templates are starting points for Workers invoked by Forward policies. You can adapt them or write your own Worker using the `GatewayMiddleware.handle(request, context, next)` entrypoint. Each script implements one task.
 
 | Template                                                                                                              | What it does                                                                         |
 | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
@@ -36,7 +36,7 @@ These templates use the `GatewayMiddleware.handle(request, context, next)` entry
 
 Follow [Set up Forward](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward), replace the pass-through script with a template, and configure its bindings. Deploy the Worker before selecting it in a Forward policy. Each template lists a test and the traffic scope it expects.
 
-To adapt or review a template with a coding agent, [install the gateway-workers skill](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#use-a-coding-agent). It guides your agent through the named entrypoint, Gateway context, and validation.
+The [gateway-workers skill](https://github.com/cloudflare/skills/blob/main/skills/gateway-workers/SKILL.md) provides guidance for coding agents on the named entrypoint, Gateway context, and validation.
 
 Every TypeScript template includes `import type` declarations for `GatewayMiddlewareContext` and `GatewayMiddlewareNext` from [`@cloudflare/zt-types`](https://www.npmjs.com/package/@cloudflare/zt-types). Install this package as a development dependency in your Worker project before using a template. Each template includes the installation command.
 
