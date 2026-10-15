@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare WebRTC docs
-  description: WebRTC provides sub-second latency live streaming using WHIP and playback using WHEP to unlimited concurrent viewers.
+  description: WebRTC provides ultra-low latency live streaming using WHIP and playback using WHEP to thousands of concurrent viewers.
   author: "@cloudflare"
