@@ -77,12 +77,15 @@ Alternatively, you can also use the CDN.
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```js
+	// Skip this import if you are using the CDN. RealtimeKitClient is available globally.
+	import RealtimeKitClient from "@cloudflare/realtimekit";
+
 	const authToken = <auth-token>;
 
-  const meetingDefaultOptions = {
-    audio: true,
-    video: true,
-  };
+	const meetingDefaultOptions = {
+		audio: true,
+		video: true,
+	};
 
 	RealtimeKitClient.init({
 	  authToken,
@@ -104,9 +107,9 @@ npm i @cloudflare/realtimekit
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```ts
+import RealtimeKitClient from "@cloudflare/realtimekit";
 class AppComponent {
 	title = "MyProject";
-	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
 	async ngAfterViewInit() {
