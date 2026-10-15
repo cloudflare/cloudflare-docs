@@ -1,5 +1,9 @@
 ---
-{}
+params:
+  - antiReplayLink
+  - tunnelInstabilityLink
+  - antiReplayMismatchLink
+  - configureTunnelsLink
 ---
 
 This guide describes how to turn off IPsec anti-replay protection on a Check Point Security Gateway for use with Cloudflare WAN anycast IPsec tunnels, and how to validate, troubleshoot, and roll back the change.
@@ -8,7 +12,7 @@ This guide describes how to turn off IPsec anti-replay protection on a Check Poi
 This guide focuses only on anti-replay protection for existing Cloudflare WAN and Check Point deployments. It does not provide end-to-end deployment instructions. Cloudflare will update this guide with comprehensive instructions covering the complete deployment process, including prerequisites, IPsec tunnel configuration on Cloudflare and Check Point, routing, tunnel health checks, validation, and troubleshooting.
 :::
 
-Cloudflare recommends turning off anti-replay protection for Cloudflare WAN anycast IPsec tunnels. For an explanation of why, and for security considerations, refer to [Anti-replay protection](/cloudflare-wan/reference/anti-replay-protection/).
+Cloudflare recommends turning off anti-replay protection for Cloudflare WAN anycast IPsec tunnels. For an explanation of why, and for security considerations, refer to <a href={props.antiReplayLink}>Anti-replay protection</a>.
 
 If anti-replay protection is turned on in Check Point but turned off in Cloudflare, Check Point drops IKE and IPsec traffic. Connectivity through the tunnels is inconsistent, and the Check Point logs show IKE drops with the following message:
 
@@ -16,7 +20,7 @@ If anti-replay protection is turned on in Check Point but turned off in Cloudfla
 Encryption failure: Warning - possible replay attack
 ```
 
-For help with tunnel instability or packet drops, refer to [Troubleshoot tunnel health](/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops).
+For help with tunnel instability or packet drops, refer to <a href={props.tunnelInstabilityLink}>Troubleshoot tunnel health</a>.
 
 This interim procedure was developed with Check Point Support.
 
@@ -260,10 +264,10 @@ When contacting Check Point Support, include sanitized gateway and management ve
 
 Cloudflare documentation:
 
-- [Anti-replay protection](/cloudflare-wan/reference/anti-replay-protection/)
-- [IPsec tunnel instability or packet drops](/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops)
-- [Health checks fail at a low, steady rate](/cloudflare-wan/troubleshooting/ipsec-troubleshoot/#anti-replay-mismatch)
-- [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/)
+- <a href={props.antiReplayLink}>Anti-replay protection</a>
+- <a href={props.tunnelInstabilityLink}>IPsec tunnel instability or packet drops</a>
+- <a href={props.antiReplayMismatchLink}>Health checks fail at a low, steady rate</a>
+- <a href={props.configureTunnelsLink}>Configure tunnel endpoints</a>
 
 Check Point documentation:
 

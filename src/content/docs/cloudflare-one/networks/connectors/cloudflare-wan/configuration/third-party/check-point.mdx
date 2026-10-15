@@ -1,6 +1,6 @@
 ---
 pcx_content_type: integration-guide
-description: Turn off IPsec anti-replay protection on a Check Point Security Gateway for use with Cloudflare WAN anycast IPsec tunnels. Requires administrator access to SmartConsole, GuiDBedit, and expert-mode access to the Security Gateway.
+description: Integrate Check Point with Zero Trust networking.
 products:
   - cloudflare-one
 title: Check Point
@@ -10,6 +10,17 @@ tags:
 
 import { Render } from "~/components";
 
-<Render file="cloudflare-wan/third-party/check-point"
-  product="networking-services"
+<Render
+	file="cloudflare-wan/third-party/check-point"
+	product="networking-services"
+	params={{
+		antiReplayLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/reference/anti-replay-protection/",
+		tunnelInstabilityLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops",
+		antiReplayMismatchLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/ipsec-troubleshoot/#anti-replay-mismatch",
+		configureTunnelsLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+	}}
 />

@@ -5,8 +5,19 @@ products:
   - cloudflare-wan
 title: Check Point
 ---
+
 import { Render } from "~/components";
 
-<Render file="cloudflare-wan/third-party/check-point"
-  product="networking-services"
+<Render
+	file="cloudflare-wan/third-party/check-point"
+	product="networking-services"
+	params={{
+		antiReplayLink: "/cloudflare-wan/reference/anti-replay-protection/",
+		tunnelInstabilityLink:
+			"/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops",
+		antiReplayMismatchLink:
+			"/cloudflare-wan/troubleshooting/ipsec-troubleshoot/#anti-replay-mismatch",
+		configureTunnelsLink:
+			"/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+	}}
 />
