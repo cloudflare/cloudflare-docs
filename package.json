@@ -152,7 +152,7 @@
 		"ts-blank-space": "0.9.0",
 		"tsm": "2.3.0",
 		"tsx": "4.23.15",
-		"typescript": "5.9.3",
+		"typescript": "6.0.3",
 		"typescript-eslint": "8.71.2",
 		"unified": "11.0.5",
 		"unist-util-visit": "5.1.0",
