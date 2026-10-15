@@ -37,7 +37,7 @@ If you require a higher rate limit, contact your account team.
 
 ## Purge cache
 
-To remove specific files from Cloudflare’s cache, [purge the cache](/cache/how-to/purge-cache/purge-by-hostname/) while specifying one or more hostnames.
+To remove specific files from Cloudflare's cache, [purge the cache](/cache/how-to/purge-cache/purge-by-hostname/) while specifying one or more hostnames.
 
 ---
 
@@ -67,6 +67,22 @@ In this case there are two ways forward:
 
 - (Recommended) Ask the new SaaS provider to provision a specific custom hostname for you instead of the wildcard - `mystore.example.com` instead of `*.example.com`.
 - Ask the Super Administrator of your account to contact [Cloudflare Support](/support/contacting-cloudflare-support/) to request an update of the SaaS configuration.
+
+### If the previous provider's configuration keeps reappearing
+
+Some hosting platforms automatically re-provision Cloudflare custom hostname records for domains still registered in their systems, even after those hostnames have been manually deleted. If the old provider's certificate returns repeatedly after removal, this is likely caused by an automated process on the previous provider's platform — not a Cloudflare issue.
+
+In this case, repeatedly deleting the custom hostname is not a permanent fix. Each deletion may trigger the previous provider's system to re-add the hostname, including its associated certificate pack, within a few days.
+
+The permanent resolution requires the previous provider to remove the domain from their platform entirely — not just delete the custom hostname record:
+
+1. Contact the previous hosting provider and request that they **remove the domain from their platform database** (for example, deleting the WordPress site or hosting environment associated with the domain).
+2. If the previous provider is unresponsive, contact your billing partner or account team to facilitate a formal request, including any contractual obligations the previous provider may have to release the domain on migration.
+3. While waiting for the previous provider to act, contact [Cloudflare Support](/support/contacting-cloudflare-support/) — in some cases, Cloudflare Support can coordinate directly with the previous provider's account team.
+
+:::note
+An uploaded (custom) certificate on a custom hostname takes priority over a Cloudflare-managed certificate in another SaaS zone, regardless of whether the custom hostname has passed ownership verification. Refer to [Certificate and hostname priority](/ssl/reference/certificate-and-hostname-priority/) for details.
+:::
 
 ---
 
@@ -98,7 +114,7 @@ As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/cer
 
 Consider the following solutions:
 
-- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let's Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
 
   <Details header="Example API call">
 
