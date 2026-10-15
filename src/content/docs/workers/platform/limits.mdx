@@ -27,7 +27,7 @@ import {
 | [Simultaneous outgoing<br/>connections/request](#simultaneous-open-connections)  | 6            | 6              |
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker     |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
-| [Worker size](#worker-size)                                                      | 64 MiB       | 64 MiB         |
+| [Worker size](#worker-size)                                                      | 63.9 MiB     | 63.9 MiB       |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
 | [Number of Workers](#number-of-workers)                                          | 100          | 500[^1]        |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
@@ -265,7 +265,7 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 | Limit                      | Workers Free | Workers Paid |
 | -------------------------- | ------------ | ------------ |
-| Worker size (uncompressed) | 64 MiB       | 64 MiB       |
+| Worker size (uncompressed) | 63.9 MiB     | 63.9 MiB     |
 
 There is no compressed size limit. Only the uncompressed bundle size counts.
 
