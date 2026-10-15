@@ -1717,6 +1717,11 @@ You can configure various aspects of local development, such as the local protoc
 
 * Port for the local dev server to listen on. Defaults to `8787`.
 
+- `inspector_port` <Type text="number" /> <MetaInfo text="optional" />
+  - Port for the local dev server's inspector (DevTools) to listen on. Defaults to `9229`. If you do not set this and the default port is in use, Wrangler picks another available port. Set this when you run several dev servers at once and need each inspector on a predictable port. The [`--inspector-port`](/workers/wrangler/commands/workers/#dev) flag overrides this value.
+- `inspector_ip` <Type text="string" /> <MetaInfo text="optional" />
+  - IP address for the local dev server's inspector to listen on. Defaults to `127.0.0.1`.
+
 - `local_protocol` <Type text="string" /> <MetaInfo text="optional" />
   - Protocol that local dev server listens to requests on. Defaults to `http`.
 - `upstream_protocol` <Type text="string" /> <MetaInfo text="optional" />
@@ -1737,6 +1742,7 @@ You can configure various aspects of local development, such as the local protoc
 	"dev": {
 		"ip": "192.168.1.1",
 		"port": 8080,
+		"inspector_port": 9230,
 		"local_protocol": "http",
 	},
 }
