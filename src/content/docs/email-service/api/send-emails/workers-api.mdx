@@ -94,7 +94,7 @@ const response = await env.EMAIL.send({
 });
 ```
 
-For multiple recipients, CC/BCC, and named addresses, see [Specify recipients](/email-service/examples/email-sending/recipients/).
+For multiple recipients, CC/BCC, and named addresses, refer to [Specify recipients](/email-service/examples/email-sending/recipients/).
 
 ### Attachments
 
@@ -117,7 +117,7 @@ const response = await env.EMAIL.send({
 });
 ```
 
-For inline images and file uploads, see [Email attachments](/email-service/examples/email-sending/email-attachments/).
+For inline images and file uploads, refer to [Email attachments](/email-service/examples/email-sending/email-attachments/).
 
 ## Error handling
 
@@ -182,7 +182,7 @@ export default {
 
 The following error codes may be returned when sending emails:
 
-| Error Code                      | Description                                 | Common Causes                                                                              |
+| Error code                      | Description                                 | Common causes                                                                              |
 | ------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | `E_VALIDATION_ERROR`            | Validation error in the payload             | Invalid email format, missing required fields, malformed data                              |
 | `E_FIELD_MISSING`               | Required field is missing                   | Missing `to`, `from`, or `subject` fields                                                  |
@@ -242,8 +242,8 @@ export default {
 
 ## Next steps
 
-- See the [REST API](/email-service/api/send-emails/rest-api/) for sending emails without Workers
-- See [SMTP](/email-service/api/send-emails/smtp/) for sending from any SMTP-capable application or mail client
-- See [practical examples](/email-service/examples/) of email sending patterns
-- Learn about [email routing](/email-service/api/route-emails/) for handling incoming emails
+- Refer to the [REST API](/email-service/api/send-emails/rest-api/) for sending emails without Workers
+- Refer to [SMTP](/email-service/api/send-emails/smtp/) for sending from any SMTP-capable application or mail client
+- Refer to [email sending examples](/email-service/examples/email-sending/) for common patterns
+- Refer to the [Email Routing API](/email-service/api/route-emails/) for handling incoming emails
 - Explore [email authentication](/email-service/concepts/email-authentication/) for better deliverability

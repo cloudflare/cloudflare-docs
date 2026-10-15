@@ -37,7 +37,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
   }'
 ```
 
-For multiple recipients, CC/BCC, and named addresses, see [Specify recipients](/email-service/examples/email-sending/recipients/).
+For multiple recipients, CC/BCC, and named addresses, refer to [Specify recipients](/email-service/examples/email-sending/recipients/).
 
 ## Attachments
 
@@ -63,7 +63,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
   }'
 ```
 
-For inline images and file uploads, see [Email attachments](/email-service/examples/email-sending/email-attachments/).
+For inline images and file uploads, refer to [Email attachments](/email-service/examples/email-sending/email-attachments/).
 
 ## Custom headers
 
@@ -129,9 +129,9 @@ The REST API returns standard Cloudflare API error responses. A failed request r
 }
 ```
 
-REST API error codes:
+The REST API returns the following error codes:
 
-| HTTP Status | Code  | Message                                             | Description                                    |
+| HTTP status | Code  | Message                                             | Description                                    |
 | ----------- | ----- | --------------------------------------------------- | ---------------------------------------------- |
 | 400         | 10001 | `email.sending.error.invalid_request_schema`        | Invalid request format                         |
 | 400         | 10200 | `email.sending.error.email.too_big`                 | Email exceeds size limit                       |
@@ -156,5 +156,5 @@ The REST API returns standard Cloudflare API numeric error codes, while the [Wor
 
 - Refer to the [Email Sending API reference](/api/resources/email_sending/methods/send/) for the full request and response schemas.
 - Refer to the [Email Sending Workers API](/email-service/api/send-emails/workers-api/) for sending emails directly from Cloudflare Workers using bindings.
-- See [SMTP](/email-service/api/send-emails/smtp/) for sending from any SMTP-capable application or mail client.
+- Refer to [SMTP](/email-service/api/send-emails/smtp/) for sending from any SMTP-capable application or mail client.
 - Review [email headers](/email-service/reference/headers/) for threading, list management, and custom tracking headers.

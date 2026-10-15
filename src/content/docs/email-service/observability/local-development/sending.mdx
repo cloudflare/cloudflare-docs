@@ -39,7 +39,9 @@ Configure your Wrangler file with the email binding:
 
 ## Remote bindings (recommended)
 
-Using [remote bindings](/workers/local-development/#remote-bindings) is the recommended way to develop with Email Service locally. By default, `wrangler dev` simulates the email binding locally -- emails are logged to the console but not actually sent. With remote bindings, your Worker runs locally but sends real emails through Email Service.
+Use [remote bindings](/workers/local-development/#remote-bindings) to develop with Email Service locally. With remote bindings, your Worker runs locally but sends real emails through Email Service.
+
+By default, `wrangler dev` simulates the email binding locally. It logs emails to the console but does not send them.
 
 Set `remote: true` on the email binding in your Wrangler configuration:
 
@@ -60,7 +62,7 @@ Set `remote: true` on the email binding in your Wrangler configuration:
 
 </WranglerConfig>
 
-Then run `wrangler dev` as usual. Calls to `env.EMAIL.send()` will send actual emails through Email Service while your Worker code runs locally.
+Then run `wrangler dev` as usual. Calls to `env.EMAIL.send()` send actual emails through Email Service while your Worker code runs locally.
 
 :::caution
 Remote bindings send real emails to real recipients. Use test email addresses to avoid sending unintended emails during development.
@@ -68,7 +70,7 @@ Remote bindings send real emails to real recipients. Use test email addresses to
 
 ## Local simulation
 
-When running `wrangler dev` without remote bindings, the email binding is simulated locally. Emails are not sent -- instead, the email content is logged to the console and saved to local files for inspection.
+When running `wrangler dev` without remote bindings, the email binding is simulated locally. Emails are not sent. Instead, the email content is logged to the console and saved to local files for inspection.
 
 ## Basic sending worker
 
@@ -115,7 +117,7 @@ export default {
 };
 ```
 
-## Testing locally
+## Test locally
 
 Start your development server:
 
@@ -137,9 +139,9 @@ curl -X POST http://localhost:8787/ \
   }'
 ```
 
-Wrangler will show output like:
+Wrangler shows output like:
 
-```txt
+```txt output
 [wrangler:info] send_email binding called with MessageBuilder:
 From: sender@yourdomain.com
 To: recipient@example.com
@@ -154,7 +156,7 @@ The email content (text and HTML) is saved to local files that you can inspect t
 
 ### Binary attachments
 
-Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you will see an error like:
+Local development simulates the `send_email` binding locally, but `ArrayBuffer` values in attachment `content` cannot be serialized by the local simulator. If you pass an `ArrayBuffer` (for example, for image or PDF attachments), you receive an error like:
 
 ```txt
 Cannot serialize value: [object ArrayBuffer]
@@ -167,4 +169,4 @@ This limitation only affects local development — `ArrayBuffer` content works c
 ## Next steps
 
 - Deploy your sending worker: [Send emails get started](/email-service/get-started/send-emails/)
-- See advanced patterns: [Email sending examples](/email-service/examples/email-sending/)
+- Explore advanced patterns: [Email sending examples](/email-service/examples/email-sending/)
