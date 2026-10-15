@@ -30,7 +30,7 @@ Each recipient account is subject to the default Zero Trust [account limits](/cl
 
 Gateway evaluates source account policies before any recipient account policies. Shared policies always take priority in recipient accounts — recipient accounts cannot bypass, modify, or reorder shared policies, and cannot move any of their own policies above shared ones. If you update the relative priority of shared policies in the source account, the change will be reflected in recipient accounts within approximately two minutes.
 
-All traffic and corresponding policies, logs, and configurations for a recipient account will be contained to that recipient account. Organization owners can view logs for recipient accounts on a per-account basis, and [Logpush jobs](/logs/logpush/) must be configured separately. When using DLP policies with [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules), each recipient account must configure its own [encryption public key](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
+All traffic and corresponding policies, logs, and configurations for a recipient account will be contained to that recipient account. Organization owners can view logs for recipient accounts on a per-account basis, and [Logpush jobs](/observability/logpush/) must be configured separately. When using DLP policies with [payload logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules), each recipient account must configure its own [encryption public key](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
 
 ```mermaid
 flowchart TD

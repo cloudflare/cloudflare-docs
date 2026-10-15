@@ -214,7 +214,7 @@ entries:
       * You can choose the trigger that fires the notification when the event source health status changes in **pool**, **origin**, or **either pool or origin**.
 
   - name: Failing Logpush Job Disabled
-    audience: Enterprise customers who use [Logpush](/logs/) and want to monitor their job health.
+    audience: Enterprise customers who use [Logpush](/observability/logs/) and want to monitor their job health.
     availability: Enterprise plans.
     associatedProducts: Logpush
     nextSteps: In the email for the notification, you can find the destination name for the failing Logpush job. With this destination name, you should be able to figure out which zone this relates to. There can be multiple reasons why a job fails, but it is best to test that the destination endpoint is healthy, and that necessary credentials are still working. You can also check that the destination has allowlisted [Cloudflare IPs](https://www.cloudflare.com/ips/).

@@ -135,7 +135,7 @@ Users who have authenticated through Access have access to authorized URL paths 
 
 ### Using Cloudflare Logs
 
-Enterprise customers have access to detailed logs of requests on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API. For more information about Cloudflare HTTP and infrastructure logging, refer to [Cloudflare Logs](/logs/).
+Enterprise customers have access to detailed logs of requests on their Cloudflare dashboard. Enterprise customers also have access to Cloudflare's Logpush service, which can be configured from the Cloudflare dashboard or API. For more information about Cloudflare HTTP and infrastructure logging, refer to [Cloudflare Logs](/observability/logs/).
 
 Once a member of your team authenticates to reach an HTTP resource behind Access, Cloudflare generates a <GlossaryTooltip term="JSON web token">JSON Web Token (JWT)</GlossaryTooltip> for that user that contains their SSO identity. Cloudflare signs this token using RS256 (RSA Signature with SHA-256), an asymmetric algorithm, and makes the public key available so that you can verify the token is authentic.
 
@@ -172,6 +172,6 @@ When a user requests a URL, Access appends the user identity from that token as 
 
 ### Using the `cf-access-user` field
 
-In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Custom fields](/logs/logpush/logpush-job/custom-fields/) for instructions.
+In addition to the HTTP request fields available in Cloudflare Enterprise logging, requests made to applications behind Access include the `cf-access-user` field, which contains the user identity string. This offers another tool for auditing user behavior. To add the `cf-access-user` field to your HTTP request logs, you must add it as a custom field. Refer to [Custom fields](/observability/logpush/logpush-job/custom-fields/) for instructions.
 
 Keep in mind that Access does not log all interactions. Per-request audit logs can indicate that a specific user visited `domain.com/admin` and then `domain.com/admin/panel`, but the logs only capture interactions that result in a new HTTP request. Purely client-side interactions that do not generate server requests are not logged.

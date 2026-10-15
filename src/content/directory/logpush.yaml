@@ -3,7 +3,7 @@ name: logpush
 
 entry:
   title: Logpush
-  url: /logs/logpush/
+  url: /observability/logpush/
   show: false
 
 meta:

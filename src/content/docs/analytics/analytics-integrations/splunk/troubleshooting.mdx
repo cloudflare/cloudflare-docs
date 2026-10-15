@@ -12,7 +12,7 @@ products:
 Use this guide to resolve common issues when analyzing [Cloudflare Logs](https://www.cloudflare.com/products/cloudflare-logs/) through the [Cloudflare App for Splunk](/analytics/analytics-integrations/splunk/).
 
 :::note[Support scope]
-Cloudflare Support can help you troubleshoot Cloudflare-side log delivery, including [Logpush](/logs/logpush/) job configuration. Configuring or troubleshooting your Splunk environment — including index administration, HTTP Event Collector (HEC) configuration, dashboards, or app deployment — is outside the scope of Cloudflare Support. Contact your Splunk representative or your integration partner for assistance with those components.
+Cloudflare Support can help you troubleshoot Cloudflare-side log delivery, including [Logpush](/observability/logpush/) job configuration. Configuring or troubleshooting your Splunk environment — including index administration, HTTP Event Collector (HEC) configuration, dashboards, or app deployment — is outside the scope of Cloudflare Support. Contact your Splunk representative or your integration partner for assistance with those components.
 :::
 
 ## Firewall Events carry incorrect `_time` values
@@ -44,7 +44,7 @@ MAX_TIMESTAMP_LOOKAHEAD = 150
 
 The `Cloudflare – Security (WAF)` dashboard in the Cloudflare App for Splunk loads without errors, but all panels are empty. Other dashboards (Overview, Performance, Reliability) populate normally, and running the WAF panels' underlying SPL directly in the search bar also returns zero results — even when WAF and security events are confirmed present in the target index.
 
-**Cause:** In older versions of the Cloudflare App for Splunk, the WAF dashboard SPL references Cloudflare log fields that were [removed from the HTTP Requests dataset](/logs/reference/change-notices/2023-02-01-security-fields-updates/#http-requests-dataset-changes):
+**Cause:** In older versions of the Cloudflare App for Splunk, the WAF dashboard SPL references Cloudflare log fields that were [removed from the HTTP Requests dataset](/observability/logs/reference/change-notices/2023-02-01-security-fields-updates/#http-requests-dataset-changes):
 
 | Deprecated field           | Current field             |
 | :------------------------- | :------------------------ |
@@ -64,6 +64,6 @@ If you maintain a customized fork of the app, replace all references to `Firewal
 If your issue is not covered here:
 
 - Consult the [Cloudflare App for Splunk page](https://splunkbase.splunk.com/app/4501/) on Splunkbase for the latest version and release notes.
-- Review the [Cloudflare Logs change notices](/logs/reference/change-notices/) for recent schema changes that may affect your searches or dashboards.
+- Review the [Cloudflare Logs change notices](/observability/logs/reference/change-notices/) for recent schema changes that may affect your searches or dashboards.
 - [Contact Cloudflare Support](/support/contacting-cloudflare-support/) for issues involving Cloudflare-side log delivery.
 - Contact your Splunk representative or your integration partner for issues within your Splunk environment.

@@ -3,7 +3,7 @@ name: Logs
 
 entry:
   title: Logs
-  url: /logs/
+  url: /observability/logs/
   group: Core platform
   additional_groups: [Analytics]
 

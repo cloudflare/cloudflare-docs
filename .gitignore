@@ -16,7 +16,7 @@ skills/
 !.flue/.agents/**
 
 # Logpush dataset pages are fetched from middlecache via bin/fetch-logpush-datasets.ts
-src/content/docs/logs/logpush/logpush-job/datasets/*/*.md
+src/content/docs/observability/logpush/logpush-job/datasets/*/*.md
 
 # dependencies
 node_modules/

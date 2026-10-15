@@ -17,7 +17,7 @@ Examples of `499` response code include situations where a client times out and 
 
 ### Cloudflare-specific information
 
-The `499 Client Closed Request` status code is specific to nginx and indicates that the client closed the connection while the server was still processing the request, preventing the server from sending a status code in response. This status code appears in [Cloudflare Logs](/logs/) and status code analytics for Enterprise customers.
+The `499 Client Closed Request` status code is specific to nginx and indicates that the client closed the connection while the server was still processing the request, preventing the server from sending a status code in response. This status code appears in [Cloudflare Logs](/observability/logs/) and status code analytics for Enterprise customers.
 
 :::note
 Since Cloudflare is built on nginx, the 499 HTTP code is also logged in Cloudflare Logs and analytics for connections terminated by clients before Cloudflare has finished processing the request. It is expected to occasionally see these entries in your logs as clients close connections.
