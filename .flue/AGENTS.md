@@ -145,6 +145,26 @@ Labels are added and removed one at a time, never replaced wholesale, so product
 
 Real webhooks ignore the mode and always act.
 
+## Issue Effort Labels
+
+`EffortLabelWorkflow` (`EFFORT_LABEL`) gives each open issue one `effort:*` label: how much docs-team work is left to close it. It runs on issue `opened`, `reopened`, and title or body `edited` events from non-bot senders, alongside spam routing.
+
+Gemma (`EFFORT_MODEL`) answers `prompts/effort-label.md` from the issue, human comments, linked PRs, and live docs evidence (`lib/docs-evidence.ts`): up to 3 linked pages, quote checks, recent commits to their source files, and diffs of up to 2 docs PRs. Unreadable evidence becomes "can't tell". Trusted code validates the answer and scores it with CODEOWNERS areas (`scoreEffort` in `lib/effort-label.ts`).
+
+| Label              | Points    | Meaning                                                      |
+| ------------------ | --------- | ------------------------------------------------------------ |
+| `effort:low`       | Under 2.5 | Under an hour: close it, or a small edit on one page         |
+| `effort:medium`    | Under 5   | A few hours: one page of writing, or a PR review             |
+| `effort:high`      | Under 8   | A day or more: new content, several pages, or a product team |
+| `effort:very-high` | 8 or more | A new guide, cross-team work, an initiative                  |
+
+- On `opened` and `reopened`, it waits 3 minutes for the spam gate. PRs, closed issues, and `spam` or `off topic` items are skipped.
+- `effort:*` labels are never a scoring input. A model error leaves labels unchanged.
+- Labels are re-read, then added and removed one at a time, so retries are no-ops.
+- Webhooks write only when the `DOCS_FLUE_EFFORT_LABEL_MODE` Worker secret is `label`; otherwise they log the plan. Create the four labels first.
+
+`pnpm run flue:replay:effort-label --issue <n,...>` replays existing issues (run `pnpm run flue:dev` first). It follows `DOCS_FLUE_REVIEW_MODE`: `log` is a dry run, `comment` writes labels.
+
 ## Spam Gates
 
 Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.

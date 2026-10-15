@@ -362,6 +362,41 @@ export async function getPullRequestFiles(
 	);
 }
 
+export interface GitHubCommitListItem {
+	sha: string;
+	commit: {
+		message: string;
+		author?: { date?: string } | null;
+		committer?: { date?: string } | null;
+	};
+}
+
+/** Commits on `production` touching `path` since `since`, newest first (one page). */
+export async function listCommitsForPath(
+	token: string,
+	path: string,
+	since: string,
+	perPage = 6,
+): Promise<GitHubCommitListItem[]> {
+	const query = new URLSearchParams({
+		sha: "production",
+		path,
+		since,
+		per_page: String(perPage),
+	});
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/commits?${query}`,
+		{ headers: apiHeaders(token) },
+	);
+	if (res.status === 404) return [];
+	if (!res.ok) {
+		throw new Error(
+			`Failed to list commits for ${path} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	return (await res.json()) as GitHubCommitListItem[];
+}
+
 /** Remove a label from an issue or PR. A 404 is treated as success (not applied). */
 export async function removeLabel(
 	token: string,
@@ -483,6 +518,57 @@ export async function listIssueEvents(
 		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/events?per_page=100`,
 		`list events for ${issueNumber}`,
 	);
+}
+
+/** A PR that mentions an issue (timeline `cross-referenced` event). */
+export interface GitHubCrossReferencedPullRequest {
+	number: number;
+	title: string;
+	repo: string;
+	state: "open" | "closed";
+	merged: boolean;
+}
+
+/** PRs that reference an issue, from the first 100 timeline events. */
+export async function listCrossReferencedPullRequests(
+	token: string,
+	issueNumber: number,
+): Promise<GitHubCrossReferencedPullRequest[]> {
+	const res = await fetch(
+		`https://api.github.com/repos/${REPO}/issues/${issueNumber}/timeline?per_page=100`,
+		{ headers: apiHeaders(token) },
+	);
+	if (!res.ok) {
+		throw new Error(
+			`Failed to get timeline for ${issueNumber} (HTTP ${res.status}): ${await res.text()}`,
+		);
+	}
+	const events = (await res.json()) as Array<{
+		event: string;
+		source?: {
+			issue?: {
+				number: number;
+				title: string;
+				state: "open" | "closed";
+				pull_request?: { merged_at?: string | null };
+				repository?: { full_name?: string };
+			};
+		};
+	}>;
+	const prs = new Map<string, GitHubCrossReferencedPullRequest>();
+	for (const e of events) {
+		const item = e.source?.issue;
+		if (e.event !== "cross-referenced" || !item?.pull_request) continue;
+		const repo = item.repository?.full_name ?? REPO;
+		prs.set(`${repo}#${item.number}`, {
+			number: item.number,
+			title: item.title,
+			repo,
+			state: item.state,
+			merged: !!item.pull_request.merged_at,
+		});
+	}
+	return [...prs.values()];
 }
 
 export interface GitHubBranchActivity {
