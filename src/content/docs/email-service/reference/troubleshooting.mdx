@@ -8,7 +8,7 @@ products:
   - email-service
 ---
 
-import { DashButton } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 Email authentication is critical for successful email delivery. This guide helps you troubleshoot common SPF, DKIM, and DMARC issues with Email Service.
 
@@ -201,6 +201,52 @@ To reduce bounce rates:
 2. Maintain clean lists: Remove hard bounces immediately
 3. Monitor feedback loops: Subscribe to ISP feedback loops
 4. Gradual warm-up: For new domains, start with small volumes
+
+### Suppressed recipient
+
+Each sending domain has a [**Drop suppressed recipients** setting](/email-service/configuration/domains/#drop-suppressed-recipients). The setting is off by default.
+
+When the setting is off, the REST API returns `400`, the Workers binding throws `E_RECIPIENT_SUPPRESSED`, and SMTP rejects the message. Any suppressed recipient causes the send to fail.
+
+When the setting is on, Email Service removes suppressed recipients and processes the remaining recipients. If none remain, SMTP may return `250 2.0.0 Ok` without a Message-ID and deliver nothing.
+
+To investigate a suppressed recipient:
+
+<Steps>
+1. Query the exact recipient:
+
+   <APIRequest path="/accounts/{account_id}/email/sending/suppressions" method="GET" parameters={{ email: "recipient@example.com" }} />
+
+2. Use the `reason`, `expires_at`, and `read_only` fields to choose an action. For the complete decision table, refer to [Suppression rules](/email-service/concepts/suppressions/#suppression-rules).
+3. If `result` is empty, confirm that you queried the correct account. Then check the sending logs.
+4. If the logs still report a suppression, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+</Steps>
+
+### Recipient blocked after expiration or deletion
+
+Expired entries stop appearing in the public list after their `expires_at` timestamp passes. Delivery enforcement can take additional time to stop.
+
+Updates and deletions also propagate asynchronously. The management list and delivery enforcement can briefly differ.
+
+To investigate delayed enforcement:
+
+<Steps>
+1. Confirm that the entry no longer appears in the account list.
+2. Retry later because suppression updates propagate asynchronously.
+3. If the recipient remains blocked, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+</Steps>
+
+### Bounces before suppression enforcement
+
+Bounce suppressions are created through background delivery processing. Messages already in progress can bounce before a new suppression takes effect.
+
+### Complaint suppression does not appear
+
+Complaint suppressions appear after Cloudflare receives and validates the provider report. The provider determines when that report arrives.
+
+### Missing suppression after a bounce
+
+Not every failure results in a suppression. Email Service creates automatic entries only for eligible recipient-side failures. Sender authentication, sender reputation, and unrelated infrastructure failures do not suppress the recipient. Check [Email sending logs](/email-service/observability/logs/) for the specific failure.
 
 ### ISP-specific issues
 

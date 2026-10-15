@@ -1,0 +1,233 @@
+/**
+ * Pure GitHub-webhook classification.
+ *
+ * Keeps the webhook routing decision as a
+ * plain, unit-testable function with no transport, no GitHub API calls, and no
+ * bindings. `app.ts` verifies the HMAC, calls `classifyWebhook`, and acts on
+ * the result (dispatching the durable orchestrator or handling a codeowner
+ * command). Codeowner authorization and any GitHub/R2 side effects stay in the
+ * caller — this function only reads the payload.
+ */
+import {
+	getIssueOrPullRequestNumber,
+	getIssueOrPullRequestTitle,
+} from "./github-webhook";
+
+/** Codeowner-only slash commands, commented on a PR. */
+export type WebhookCommand =
+	| "review"
+	| "full-review"
+	| "disable-auto-review"
+	| "draft-never-stale"
+	| "rebase";
+
+export interface WebhookClassification {
+	eventType: string;
+	action: string | undefined;
+	number: number | undefined;
+	title: string | undefined;
+	senderLogin: string | undefined;
+	/** PR author login from a `pull_request` payload (Dependabot detection). */
+	prAuthorLogin: string | undefined;
+	isDependabotPr: boolean;
+	/** Dependabot PR event that should route to the Dependabot review path. */
+	isDependabotReviewEvent: boolean;
+	/** Non-Dependabot issue/PR event that should run the spam/off-topic gate. */
+	isSpamFilterEvent: boolean;
+	/** Non-Dependabot PR event that should run code review (after the gate). */
+	isCodeReviewEvent: boolean;
+	/**
+	 * PR event that should run the changelog date check (new changelog files
+	 * dated in the past). Additive to review routing — it never replaces it.
+	 */
+	isChangelogDateEvent: boolean;
+	/**
+	 * PR event that should reconcile the `size/*` label. Includes Dependabot
+	 * and draft PRs.
+	 */
+	isSizeLabelEvent: boolean;
+	/** Issue opened, reopened, or title/body edited by a non-bot: assess `effort:*`. */
+	isEffortLabelEvent: boolean;
+	/** Whether the PR is a draft (code review is suppressed unless ready_for_review). */
+	isDraft: boolean;
+	/** Codeowner slash command, if the event is an actionable PR comment. */
+	command: WebhookCommand | null;
+	/** Comment id for a slash-command event (for reactions). */
+	commentId: number | undefined;
+	/** PR author login read from an `issue_comment` payload (`issue.user.login`). */
+	commentPrAuthorLogin: string | undefined;
+	/**
+	 * New comment from a non-exempt author on an issue or PR that should run
+	 * the comment spam gate. Payload-derived exemptions (write access, bots,
+	 * item author) are applied here; the codeowner check needs GitHub API
+	 * calls, so it happens in the CommentSpamWorkflow.
+	 */
+	isCommentSpamEvent: boolean;
+	/** Whether an `issue_comment` event targets a PR (as opposed to an issue). */
+	commentIsOnPullRequest: boolean;
+}
+
+const PR_REVIEW_ACTIONS = [
+	"opened",
+	"reopened",
+	"synchronize",
+	"ready_for_review",
+];
+
+/**
+ * PR events that trigger the changelog date check: every review action (the
+ * check rides along with review routing) plus `closed` so the marker comment
+ * is removed when a PR merges or closes.
+ */
+const CHANGELOG_DATE_ACTIONS = [...PR_REVIEW_ACTIONS, "closed"];
+
+function asRecord(value: unknown): Record<string, unknown> | undefined {
+	return typeof value === "object" && value !== null
+		? (value as Record<string, unknown>)
+		: undefined;
+}
+
+function commandFromComment(
+	comment: string | undefined,
+): WebhookCommand | null {
+	switch (comment?.trim()) {
+		case "/full-review":
+			return "full-review";
+		case "/review":
+			return "review";
+		case "/disable-auto-review":
+			return "disable-auto-review";
+		case "/draft-never-stale":
+			return "draft-never-stale";
+		case "/rebase":
+			return "rebase";
+		default:
+			return null;
+	}
+}
+
+/** Classify a GitHub webhook payload into the pipeline routing decision. */
+export function classifyWebhook(
+	eventType: string,
+	body: Record<string, unknown>,
+): WebhookClassification {
+	const action = body.action as string | undefined;
+	const number = getIssueOrPullRequestNumber(eventType, body);
+	const title = getIssueOrPullRequestTitle(eventType, body);
+	const senderLogin = asRecord(body.sender)?.login as string | undefined;
+
+	const pullRequest = asRecord(body.pull_request);
+	const prAuthorLogin = asRecord(pullRequest?.user)?.login as
+		string | undefined;
+	const isDependabotPr =
+		eventType === "pull_request" && prAuthorLogin === "dependabot[bot]";
+
+	const isPrReviewAction =
+		action !== undefined && PR_REVIEW_ACTIONS.includes(action);
+
+	const isSpamFilterEvent =
+		!isDependabotPr &&
+		(eventType === "issues" || eventType === "pull_request") &&
+		(["opened", "reopened", "synchronize"].includes(action ?? "") ||
+			(eventType === "pull_request" && action === "ready_for_review"));
+
+	const isCodeReviewEvent =
+		!isDependabotPr && eventType === "pull_request" && isPrReviewAction;
+
+	const isDependabotReviewEvent = isDependabotPr && isPrReviewAction;
+
+	// Dependabot PRs never add changelog entries; exclude them so the check
+	// runs only where a changelog file is plausible.
+	const isChangelogDateEvent =
+		!isDependabotPr &&
+		eventType === "pull_request" &&
+		action !== undefined &&
+		CHANGELOG_DATE_ACTIONS.includes(action);
+
+	const isSizeLabelEvent = eventType === "pull_request" && isPrReviewAction;
+
+	const changes = asRecord(body.changes);
+	const isEffortLabelEvent =
+		eventType === "issues" &&
+		(action === "opened" ||
+			action === "reopened" ||
+			(action === "edited" &&
+				(changes?.body !== undefined || changes?.title !== undefined))) &&
+		!/\[bot\]$/.test(senderLogin ?? "");
+
+	const isDraft = pullRequest?.draft === true;
+
+	// Slash commands: issue_comment created on a PR.
+	const issue = asRecord(body.issue);
+	const comment = asRecord(body.comment);
+	const commentIsOnPullRequest =
+		eventType === "issue_comment" && issue?.pull_request !== undefined;
+	const isOnPullRequest = commentIsOnPullRequest && action === "created";
+	const commentBody = comment?.body as string | undefined;
+	const command = isOnPullRequest ? commandFromComment(commentBody) : null;
+	const commentId = comment?.id as number | undefined;
+	const commentPrAuthorLogin = asRecord(issue?.user)?.login as
+		string | undefined;
+
+	// Comment spam gate: a new comment on an issue or PR (open or closed)
+	// whose author survives the payload-derived exemptions. Exact-match slash
+	// commands route to command handling instead, and codeowners are filtered
+	// in the workflow where the API-backed check belongs.
+	const commentAuthorLogin = asRecord(comment?.user)?.login as
+		string | undefined;
+	const commentAuthorAssociation = comment?.author_association as
+		string | undefined;
+	const hasWriteAccess =
+		commentAuthorAssociation === "OWNER" ||
+		commentAuthorAssociation === "MEMBER" ||
+		commentAuthorAssociation === "COLLABORATOR";
+	const isBotAuthor =
+		commentAuthorLogin !== undefined && /\[bot\]$/.test(commentAuthorLogin);
+	const isItemAuthor =
+		commentAuthorLogin !== undefined &&
+		commentAuthorLogin === commentPrAuthorLogin;
+	const isCommentSpamEvent =
+		eventType === "issue_comment" &&
+		action === "created" &&
+		command === null &&
+		!hasWriteAccess &&
+		!isBotAuthor &&
+		!isItemAuthor;
+
+	return {
+		eventType,
+		action,
+		number,
+		title,
+		senderLogin,
+		prAuthorLogin,
+		isDependabotPr,
+		isDependabotReviewEvent,
+		isSpamFilterEvent,
+		isCodeReviewEvent,
+		isChangelogDateEvent,
+		isSizeLabelEvent,
+		isEffortLabelEvent,
+		isDraft,
+		command,
+		commentId,
+		commentPrAuthorLogin,
+		isCommentSpamEvent,
+		commentIsOnPullRequest,
+	};
+}
+
+/** Whether any pipeline should run for this classification. */
+export function isActionable(c: WebhookClassification): boolean {
+	if (c.number === undefined) return false;
+	return (
+		c.isDependabotReviewEvent ||
+		c.isSpamFilterEvent ||
+		c.isCodeReviewEvent ||
+		c.isChangelogDateEvent ||
+		c.isSizeLabelEvent ||
+		c.isEffortLabelEvent ||
+		c.isCommentSpamEvent ||
+		c.command !== null
+	);
+}

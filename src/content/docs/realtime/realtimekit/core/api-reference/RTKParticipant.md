@@ -1,7 +1,6 @@
 ---
 title: RTKParticipant
 sidebar_position: 7
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -15,281 +14,197 @@ present in the `meeting.participants` object. For example,
 const participant1 = meeting.participants.active.get(participantId);
 const participant2 = meeting.participants.joined.get(participantId);
 const participant3 = meeting.participants.active.toArray()[0];
-const participant4 = meeting.participants.active.toArray().filter((p) => p.name === 'John');
+const participantsNamedJohn = meeting.participants.active.toArray()
+  .filter((p) => p.name === 'John');
 ```
 
 
 * [RTKParticipant](#module_RTKParticipant)
-    * [module.exports](#exp_module_RTKParticipant--module.exports) ⏏
-        * [new module.exports(context, participant, self, roomSocket)](#new_module_RTKParticipant--module.exports_new)
-        * [.id](#module_RTKParticipant--module.exports+id)
-        * [.userId](#module_RTKParticipant--module.exports+userId)
-        * [.name](#module_RTKParticipant--module.exports+name)
-        * [.picture](#module_RTKParticipant--module.exports+picture)
-        * [.customRTKParticipantId](#module_RTKParticipant--module.exports+customRTKParticipantId)
-        * ~~[.clientSpecificId](#module_RTKParticipant--module.exports+clientSpecificId)~~
-        * [.device](#module_RTKParticipant--module.exports+device)
-        * [.videoTrack](#module_RTKParticipant--module.exports+videoTrack)
-        * [.audioTrack](#module_RTKParticipant--module.exports+audioTrack)
-        * [.screenShareTracks](#module_RTKParticipant--module.exports+screenShareTracks)
-        * [.videoEnabled](#module_RTKParticipant--module.exports+videoEnabled)
-        * [.audioEnabled](#module_RTKParticipant--module.exports+audioEnabled)
-        * [.screenShareEnabled](#module_RTKParticipant--module.exports+screenShareEnabled)
-        * [.producers](#module_RTKParticipant--module.exports+producers)
-        * [.manualProducerConfig](#module_RTKParticipant--module.exports+manualProducerConfig)
-        * [.supportsRemoteControl](#module_RTKParticipant--module.exports+supportsRemoteControl)
-        * [.presetName](#module_RTKParticipant--module.exports+presetName)
-        * [.stageStatus](#module_RTKParticipant--module.exports+stageStatus)
-        * [.telemetry](#module_RTKParticipant--module.exports+telemetry)
-        * [.isPinned](#module_RTKParticipant--module.exports+isPinned)
-        * [.setVideoEnabled(videoEnabled, [emitEvent])](#module_RTKParticipant--module.exports+setVideoEnabled)
-        * [.setAudioEnabled(audioEnabled, [emitEvent])](#module_RTKParticipant--module.exports+setAudioEnabled)
-        * [.setScreenShareEnabled(screenShareEnabled, [emitEvent])](#module_RTKParticipant--module.exports+setScreenShareEnabled)
-        * [.pin()](#module_RTKParticipant--module.exports+pin)
-        * [.unpin()](#module_RTKParticipant--module.exports+unpin)
-        * [.setIsPinned(isPinned, [emitEvent])](#module_RTKParticipant--module.exports+setIsPinned)
-        * [.disableAudio()](#module_RTKParticipant--module.exports+disableAudio)
-        * [.kick()](#module_RTKParticipant--module.exports+kick)
-        * [.disableVideo()](#module_RTKParticipant--module.exports+disableVideo)
-        * [.registerVideoElement(videoElem)](#module_RTKParticipant--module.exports+registerVideoElement)
-        * [.deregisterVideoElement([videoElem])](#module_RTKParticipant--module.exports+deregisterVideoElement)
-        * [.updateVideo(e)](#module_RTKParticipant--module.exports+updateVideo)
+    * [.id](#module_RTKParticipant+id)
+    * [.userId](#module_RTKParticipant+userId)
+    * [.name](#module_RTKParticipant+name)
+    * [.picture](#module_RTKParticipant+picture)
+    * [.customParticipantId](#module_RTKParticipant+customParticipantId)
+    * [.device](#module_RTKParticipant+device)
+    * [.videoTrack](#module_RTKParticipant+videoTrack)
+    * [.audioTrack](#module_RTKParticipant+audioTrack)
+    * [.screenShareTracks](#module_RTKParticipant+screenShareTracks)
+    * [.videoEnabled](#module_RTKParticipant+videoEnabled)
+    * [.audioEnabled](#module_RTKParticipant+audioEnabled)
+    * [.screenShareEnabled](#module_RTKParticipant+screenShareEnabled)
+    * [.producers](#module_RTKParticipant+producers)
+    * [.manualProducerConfig](#module_RTKParticipant+manualProducerConfig)
+    * [.supportsRemoteControl](#module_RTKParticipant+supportsRemoteControl)
+    * [.presetName](#module_RTKParticipant+presetName)
+    * [.stageStatus](#module_RTKParticipant+stageStatus)
+    * [.isPinned](#module_RTKParticipant+isPinned)
+    * [.pin()](#module_RTKParticipant+pin)
+    * [.unpin()](#module_RTKParticipant+unpin)
+    * [.disableAudio()](#module_RTKParticipant+disableAudio)
+    * [.kick()](#module_RTKParticipant+kick)
+    * [.disableVideo()](#module_RTKParticipant+disableVideo)
+    * [.registerVideoElement(videoElem)](#module_RTKParticipant+registerVideoElement)
+    * [.deregisterVideoElement([videoElem])](#module_RTKParticipant+deregisterVideoElement)
 
-<a name="exp_module_RTKParticipant--module.exports"></a>
+<a name="module_RTKParticipant+id"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKParticipant--module.exports_new"></a>
-
-#### new module.exports(context, participant, self, roomSocket)
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| participant | <code>IRTKParticipant</code> | 
-| self | <code>Self</code> | 
-| roomSocket | <code>RoomSocketHandler</code> | 
-
-<a name="module_RTKParticipant--module.exports+id"></a>
-
-#### module.exports.id
+### participant.id
 The peer ID of the participant.
 The participants are indexed by this ID in the participant map.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+userId"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+userId"></a>
 
-#### module.exports.userId
+### participant.userId
 The user ID of the participant.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+name"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+name"></a>
 
-#### module.exports.name
+### participant.name
 The name of the participant.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+picture"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+picture"></a>
 
-#### module.exports.picture
+### participant.picture
 The picture of the participant.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+customRTKParticipantId"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+customParticipantId"></a>
 
-#### module.exports.customRTKParticipantId
-The custom id of the participant set during Add RTKParticipant REST API
+### participant.customParticipantId
+The custom id of the participant set during https://developers.cloudflare.com/api/resources/realtime_kit/subresources/meetings/methods/add_participant REST API
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+clientSpecificId"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+device"></a>
 
-#### ~~module.exports.clientSpecificId~~
-***Deprecated***
-
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+device"></a>
-
-#### module.exports.device
+### participant.device
 The device configuration of the participant.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+videoTrack"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+videoTrack"></a>
 
-#### module.exports.videoTrack
+### participant.videoTrack
 The participant's video track.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+audioTrack"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+audioTrack"></a>
 
-#### module.exports.audioTrack
+### participant.audioTrack
 The participant's audio track.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+screenShareTracks"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+screenShareTracks"></a>
 
-#### module.exports.screenShareTracks
+### participant.screenShareTracks
 The participant's screenshare video and audio track.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+videoEnabled"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+videoEnabled"></a>
 
-#### module.exports.videoEnabled
+### participant.videoEnabled
 This is true if the participant's video is enabled.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+audioEnabled"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+audioEnabled"></a>
 
-#### module.exports.audioEnabled
+### participant.audioEnabled
 This is true if the participant's audio is enabled.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+screenShareEnabled"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+screenShareEnabled"></a>
 
-#### module.exports.screenShareEnabled
+### participant.screenShareEnabled
 This is true if the participant is screensharing.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+producers"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+producers"></a>
 
-#### module.exports.producers
+### participant.producers
 producers created by participant
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+manualProducerConfig"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+manualProducerConfig"></a>
 
-#### module.exports.manualProducerConfig
+### participant.manualProducerConfig
 producer config passed during manual subscription
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+supportsRemoteControl"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+supportsRemoteControl"></a>
 
-#### module.exports.supportsRemoteControl
+### participant.supportsRemoteControl
 This is true if the participant supports remote control.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+presetName"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+presetName"></a>
 
-#### module.exports.presetName
+### participant.presetName
 The preset of the participant.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+stageStatus"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+stageStatus"></a>
 
-#### module.exports.stageStatus
+### participant.stageStatus
 Denotes the participants's current stage status.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+telemetry"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+isPinned"></a>
 
-#### module.exports.telemetry
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+isPinned"></a>
-
-#### module.exports.isPinned
+### participant.isPinned
 Returns true if the participant is pinned.
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+setVideoEnabled"></a>
+**Kind**: instance property of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+pin"></a>
 
-#### module.exports.setVideoEnabled(videoEnabled, [emitEvent])
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| videoEnabled | <code>boolean</code> |  | 
-| [emitEvent] | <code>boolean</code> | <code>true</code> | 
-
-<a name="module_RTKParticipant--module.exports+setAudioEnabled"></a>
-
-#### module.exports.setAudioEnabled(audioEnabled, [emitEvent])
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| audioEnabled | <code>boolean</code> |  | 
-| [emitEvent] | <code>boolean</code> | <code>true</code> | 
-
-<a name="module_RTKParticipant--module.exports+setScreenShareEnabled"></a>
-
-#### module.exports.setScreenShareEnabled(screenShareEnabled, [emitEvent])
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| screenShareEnabled | <code>boolean</code> |  | 
-| [emitEvent] | <code>boolean</code> | <code>true</code> | 
-
-<a name="module_RTKParticipant--module.exports+pin"></a>
-
-#### module.exports.pin()
+### participant.pin()
 Returns `participant.id` if user has permission
 to pin participants.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+unpin"></a>
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+unpin"></a>
 
-#### module.exports.unpin()
+### participant.unpin()
 Returns `participant.id` if user has permission
 to unpin participants.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+setIsPinned"></a>
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+disableAudio"></a>
 
-#### module.exports.setIsPinned(isPinned, [emitEvent])
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-
-| Param | Type | Default |
-| --- | --- | --- |
-| isPinned | <code>boolean</code> |  | 
-| [emitEvent] | <code>boolean</code> | <code>true</code> | 
-
-<a name="module_RTKParticipant--module.exports+disableAudio"></a>
-
-#### module.exports.disableAudio()
+### participant.disableAudio()
 Disables audio for this participant.
 Requires the permission to disable participant audio.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+kick"></a>
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+kick"></a>
 
-#### module.exports.kick()
+### participant.kick()
 Kicks this participant from the meeting.
 Requires the permission to kick a participant.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+disableVideo"></a>
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+disableVideo"></a>
 
-#### module.exports.disableVideo()
+### participant.disableVideo()
 Disables video for this participant.
 Requires the permission to disable video for a participant.
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-<a name="module_RTKParticipant--module.exports+registerVideoElement"></a>
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
+<a name="module_RTKParticipant+registerVideoElement"></a>
 
-#### module.exports.registerVideoElement(videoElem)
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
+### participant.registerVideoElement(videoElem)
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
 
 | Param | Type |
 | --- | --- |
 | videoElem | <code>HTMLVideoElement</code> | 
 
-<a name="module_RTKParticipant--module.exports+deregisterVideoElement"></a>
+<a name="module_RTKParticipant+deregisterVideoElement"></a>
 
-#### module.exports.deregisterVideoElement([videoElem])
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
+### participant.deregisterVideoElement([videoElem])
+**Kind**: instance method of [<code>RTKParticipant</code>](#module_RTKParticipant)  
 
 | Param | Type |
 | --- | --- |
 | [videoElem] | <code>HTMLVideoElement</code> | 
-
-<a name="module_RTKParticipant--module.exports+updateVideo"></a>
-
-#### module.exports.updateVideo(e)
-Internal method, do not use
-
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKParticipant--module.exports)  
-
-| Param | Type |
-| --- | --- |
-| e | <code>HTMLVideoElement</code> | 
 

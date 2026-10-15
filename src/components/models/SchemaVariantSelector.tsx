@@ -2,6 +2,11 @@ import { useState } from "react";
 import SchemaTree from "./SchemaTree.tsx";
 import type { SchemaRowData } from "./types";
 
+/**
+ * SchemaVariantSelector — inline request-format picker (e.g. Prompt vs
+ * Messages) that owns its own tree rendering.
+ */
+
 interface SchemaVariant {
 	title: string;
 	description?: string;
@@ -45,18 +50,18 @@ export default function SchemaVariantSelector({
 								onClick={() => setSelectedIndex(index)}
 								className={`mt-0 flex flex-1 cursor-pointer flex-col justify-start rounded-lg border p-3 text-left transition-colors ${
 									isSelected
-										? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-950"
-										: "border-gray-200 bg-white hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
+										? "border-primary bg-primary/10"
+										: "border-border bg-card hover:border-muted-foreground/40"
 								}`}
 							>
 								<span
-									className={`text-sm font-medium ${isSelected ? "text-blue-700 dark:text-blue-300" : "text-gray-900 dark:text-gray-100"}`}
+									className={`text-sm font-medium ${isSelected ? "text-primary" : "text-foreground"}`}
 								>
 									{variant.title}
 								</span>
 								{description && (
 									<p
-										className={`text-xs ${isSelected ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"}`}
+										className={`text-xs ${isSelected ? "text-primary/80" : "text-muted-foreground"}`}
 									>
 										{description}
 									</p>
@@ -69,9 +74,7 @@ export default function SchemaVariantSelector({
 
 			{/* Selected variant content */}
 			{selectedVariant.rows.length === 0 ? (
-				<p className="text-sm text-gray-500 dark:text-gray-400">
-					No parameters defined.
-				</p>
+				<p className="text-muted-foreground text-sm">No parameters defined.</p>
 			) : (
 				<SchemaTree
 					rows={selectedVariant.rows}

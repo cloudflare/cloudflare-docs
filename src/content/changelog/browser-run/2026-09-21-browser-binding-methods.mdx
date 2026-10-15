@@ -1,0 +1,31 @@
+---
+title: Browser Run adds session and DevTools methods to browser bindings
+description: Browser Run browser bindings now support typed session management, outbound Worker routing, and DevTools methods.
+products:
+  - browser-run
+date: 2026-09-21
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Browser Run](/browser-run/) browser bindings now provide typed methods for session management and DevTools operations. You can acquire a session, connect a browser client, create Live View URLs, manage targets, and close sessions without constructing HTTP requests.
+
+The new `acquire()` and `launch()` methods also accept [`outboundByHost`](/browser-run/features/outbound-workers/). This lets you route requests for selected hostnames through another Worker, including a Worker that adds authentication or reaches a private service.
+
+<TypeScriptExample>
+
+```ts
+const connection = await env.BROWSER.launch({
+	outboundByHost: {
+		"private.example.test": env.OUTBOUND,
+	},
+});
+```
+
+</TypeScriptExample>
+
+Use `connectSession(sessionId)` when you need to acquire and connect in separate steps. The method returns a session-pinned `webSocket` Fetcher for a CDP client.
+
+The binding also includes session methods for Live View, active sessions, session history, limits, session details, and cleanup. The nested `devtools` binding provides typed methods for browser version information, protocol descriptions, and target operations such as listing, creating, activating, and closing targets.
+
+Refer to the [Browser binding API documentation](/browser-run/reference/browser-binding-api/) for method signatures and the [outbound Worker feature guide](/browser-run/features/outbound-workers/) for routing examples.

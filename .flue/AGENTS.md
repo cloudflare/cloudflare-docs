@@ -1,123 +1,252 @@
-# AGENTS.md — Flue
+# Flue Review Bot
 
-This directory contains the Flue-powered docs bot for `cloudflare-docs`, deployed as a Cloudflare Worker.
+`.flue/` is the Cloudflare Worker that reviews pull requests for `cloudflare/cloudflare-docs`. It uses Flue 2.1.0, Cloudflare Workflows, R2, Workers AI, and Hono.
 
-## Architecture
+## Operating Rules
 
-The bot is a single Cloudflare Worker (`cloudflare-docs-flue`) that reviews pull requests on `cloudflare/cloudflare-docs`. It runs three independent specialist reviews — **code review**, **conventions**, and **style-guide review** — and posts all three as one GitHub comment with `### Code Review`, `### Conventions`, and `### Style Guide Review` sections.
+- **Trusted code drives; agents only decide.** TypeScript owns control flow, GitHub/R2 writes, reactions, labels, and all other side effects. Agents return one validated structured result through `submit_result` and terminate.
+- Agents use plain Markdown instruction imports. Do not add skills to agents.
+- Keep Workflow step results well below 1 MiB. Store plans, patches, prompts, findings, and rendered output as R2 run artifacts.
+- Make external writes idempotent. Workflow steps can retry.
+- Do not add model rules for failures CI reliably catches, such as builds, types, lint, links, or schemas.
 
-### Entry point and routing (`app.ts`)
+## Review Architecture
 
-- A Hono app mounts `flue()` at `/`. `registerProvider("cloudflare", …)` runs at module scope so the Workers AI binding + AI Gateway are configured in every isolate, including the per-agent Durable Objects that make model calls.
-- `GET /health` is public.
-- `requireInternalToken` guards `/runs/*` and `/workflows/*`. The one exception is `/workflows/orchestrate`, which GitHub calls directly — it verifies the webhook HMAC signature itself before doing any work.
-- The internal auth header and helpers live in `lib/internal-auth.ts`; `getInternalHeaders` mints the header for worker-to-worker admits.
+`app.ts` verifies GitHub webhooks and delegates to the pipeline entry. The review path is:
 
-### Workflows (each is a Durable Object)
+1. Debounce `synchronize` automatic runs for `DOCS_FLUE_REVIEW_DEBOUNCE_SECONDS` (default 120 seconds).
+2. Admit the run, claim it in v2 state, supersede an older run, and abort that run's agents.
+3. Prepare paginated PR files, classify noise, create numbered patches, calculate line fingerprints, select targets, and collect eligible author/maintainer comments.
+4. Optionally write a pending placeholder in comment mode.
+5. Dispatch and read the `code`, `style`, and `conventions` specialists in parallel.
+6. Deterministically reject off-target output, assign stable IDs, deduplicate, and carry untouched findings.
+7. Prepare and run one judge over new and touched findings.
+8. Finalize state, render one summary comment, publish or log it, then clean run artifacts.
 
-| Workflow (`workflows/`)        | DO class                             | Role                                                                                          |
-| ------------------------------ | ------------------------------------ | --------------------------------------------------------------------------------------------- |
-| `orchestrate.ts`               | `FlueOrchestrateWorkflow`            | Webhook entry. Verifies signature, classifies the event, routes.                              |
-| `spam-and-off-topic-filter.ts` | `FlueSpamAndOffTopicFilterWorkflow`  | Spam/off-topic gate for issues + PRs.                                                         |
-| `code-review-orchestrator.ts`  | `FlueCodeReviewOrchestratorWorkflow` | **Dispatch-only**: limit check, placeholder, context → R2, admits all three specialists F&F.  |
-| `code-review-specialist.ts`    | `FlueCodeReviewSpecialistWorkflow`   | Generic code-review fan-out (its own isolate).                                                |
-| `style-guide-specialist.ts`    | `FlueStyleGuideSpecialistWorkflow`   | Style-guide fan-out (its own isolate).                                                        |
-| `conventions-specialist.ts`    | `FlueConventionsSpecialistWorkflow`  | PR-level conventions check (title, description, scope) via a light AI session; findings use `CV-` ids. |
-| `finalize-review.ts`           | `FlueFinalizeReviewWorkflow`         | Reconciles, renders, and posts the review comment (admitted by the last specialist to finish). |
-| `dependabot-review.ts`         | `FlueDependabotReviewWorkflow`       | Separate review path for Dependabot PRs.                                                      |
+The fail path renders a failure state when publication is allowed. A failed specialist carries its active findings forward rather than resolving them. A failed judge publishes filtered specialist findings as unverified.
 
-Workflows are invoked in **accepted mode** via `admitWorkflow` (`lib/poll-run.ts`). The orchestrator admits all three specialists **fire-and-forget** (no poll). `pollRun` is only used for the spam filter (fast, needs a `closed` verdict before routing to code review).
+### Routing
 
-### Request flow
+| Specialist    | Reviews                                                                                         |
+| ------------- | ----------------------------------------------------------------------------------------------- |
+| `code`        | Every added line of non-MDX files, and added lines inside code blocks or code components in MDX |
+| `style`       | Added lines of MDX files under `src/content/docs`, `partials`, and `changelog`                  |
+| `conventions` | PR title, description, and the changed-file index                                               |
 
-1. GitHub → `POST /workflows/orchestrate`. Signature verified, then routed:
-   - **Dependabot PR** (opened/reopened/synchronize/ready_for_review) → admit `dependabot-review` (skips the spam filter).
-   - **Issue/PR opened/reopened/synchronize** (+ PR `ready_for_review`), non-Dependabot → admit `spam-and-off-topic-filter` and **poll** for its `closed` verdict. Codeowners skip the filter. If it closed the item, stop.
-   - **PR** events that survive the filter → admit `code-review-orchestrator` **fire-and-forget** (no poll). Draft PRs are skipped unless the action is `ready_for_review`.
-2. `code-review-orchestrator` (**dispatch-only**):
-   - Enforces the **auto-review limit** (max 2 automatic reviews per PR, tracked in R2; `/ignore-review-limit` lifts it; codeowner commands bypass it).
-   - Posts a "review in progress" placeholder comment (comment mode only).
-   - Decides the **diff mode**: `incremental` (from the last reviewed head SHA to the current head) when a prior review exists, else `full`.
-   - Writes `context.json` to the **R2 rendezvous namespace** (`diffs/pr-<n>/pending/<headSha>/<dispatchId>/`) containing everything `finalize-review` needs (diffMode, humanComments, previousReviewedSha, reviewMode, etc.) so the orchestrator's DO is not needed again.
-    - Writes crash-protection **placeholder results** (`code.json`, `style.json`, `conventions.json` with `final:false`) so each stream key always exists in R2. Placeholders do NOT trigger finalize — `tryClaimFinalize` requires every stream to be `final:true`. Their purpose is to ensure R2 reads in finalize never return null due to a specialist being evicted before it could write anything.
-    - Admits all three specialists **fire-and-forget** and returns immediately.
-3. Each specialist runs in its **own DO** (own ~128 MB isolate):
-   - Self-fetches its diff for the requested mode. Incremental is SHA-pinned via `comparePullRequestHeads`; if the base SHA is gone (force-push since the orchestrator decided), it self-heals to the full PR diff.
-   - Selects eligible files; the code-review specialist fans out one session per file at bounded concurrency; the style-guide specialist stages the diff into a run-scoped Workspace path (`diffs/pr-<n>/runs/<runId>`) and fans out per-file sessions.
-   - On completion (or any error), writes `{ok, result, final:true}` to its R2 rendezvous key (overwriting the placeholder), then calls `tryClaimFinalize`. The **last specialist** to write wins the atomic conditional-PUT lock and admits `finalize-review`.
-   - If a specialist DO is hard-evicted before writing `final:true`, the sibling will not claim the lock (it checks `final:true`), leaving the review needing a `/review` retry — the accepted residual case.
-4. `finalize-review`:
-    - Reads `context.json` + all three stream results from R2.
-    - **Head-guards**: skips posting if the PR head has moved on (newer push already owns the comment).
-    - **Idempotency-guards** (comment mode only): skips if this headSha is already finalized, unless the existing comment is in a retryable state (`pending` placeholder or `failure`), which allows re-finalization.
-    - **Reconciles** each stream separately against previous findings (from R2) and captured human comments. Degraded streams (`ok:false`) carry their previous findings forward as active rather than reconciling.
-    - Persists `review-<headSha>.json` (`{ code, style, conventions }`) to R2, renders and posts (or logs) the comment, swaps 👀→👍 on trigger comments, and calls `markAutoReviewCompleted` if code and style both succeeded.
-    - Cleans up the pending rendezvous namespace (`cleanupPending`).
+`prepareRun` reads each changed MDX file at the head to find its code lines, because a diff shows only a few lines around each edit and can hide the fence that opens a long code block. If a read fails, the plan falls back to scanning the hunks.
 
-### Per-file fan-out (`lib/code-review-inproc.ts`, `lib/style-guide-inproc.ts`)
+No specialist reviews the technical accuracy of documentation prose, such as product behavior, limits, or pricing. The source of truth for those claims usually lives outside this repository, and the bot cannot tell an intended product change from an error. Do not add prose accuracy checks.
 
-- One named harness over the shell-sandbox Workspace (`connectors/cloudflare-shell.ts`), then one **detached session per changed file**, run with bounded concurrency (`withConcurrency`).
-- **Each session is deleted in a `finally` as soon as its file finishes** (`session.delete()`), so peak heap is bounded to ~concurrency live sessions instead of growing with the file count. This is what fixed the specialist DO OOM.
-- **Per-file sessions must be run-scoped and created fresh.** Specialist DOs are reused across workflow runs. If a run is hard-evicted before `finally` runs, its named sessions survive in the DO's SQLite. To prevent a new run from resuming stale session history from a prior run: (1) include `runId` in every session name (e.g. `` `${runId}:sg:${index}` ``), and (2) acquire sessions via `harness.sessions.create(name)` (throws if already exists) rather than `harness.session(name)` (silent get-or-create). The `create()` API makes any unexpected name collision loud rather than silently wrong.
-- Caps: both fan-outs review at most **20** files (largest-diff-first) at **concurrency 5**. A single file's failure is caught and degraded to an empty result — it never aborts the pool. Per-file results are merged and deduped by finding id.
-- **Code review** reviews _all_ changed text files (excluding lockfiles, `dist`/`skills`/`node_modules`, `.wrangler`, `src/assets`, and binary/image types). It emits `critical`/`warning`/`suggestion` severities with `CR-` ids and gives the model GitHub-API-backed tools (`read_repo_file` pinned to the PR head SHA, `search_repo`) so it can read full post-change file content for context — the diff patch alone is staged, but correctness review needs the surrounding code. The token stays in trusted code; only tool results cross into the sandbox. The repo's root `AGENTS.md` is fetched from the **PR base ref** (trusted, not head) and injected as agent `instructions`.
-- **Style guide** reviews only `src/content/(docs|partials|changelog)/**.mdx`, emits `warning`/`suggestion` only, and uses the bundled `style-guide-review` skill and its reference tree.
+### Agents
 
-### State, comment, and rendering
+Agents are Durable Objects driven by shared helpers in `lib/agents/`:
 
-- **R2** (`DOCS_FLUE_BUCKET`) holds cross-run review state under `diffs/pr-<n>/`: `review-<headSha>.json` (`{ code: […], style: […], conventions: […] }`; a legacy bare array means style-only), `auto-review-count.json`, `ignore-review-limit.json`, `auto-review-disabled.json`. The staged diff lives in the specialist DO's Workspace filesystem, not R2. The **rendezvous namespace** `diffs/pr-<n>/pending/<headSha>/<dispatchId>/` is short-lived (context.json, code.json, style.json, conventions.json, finalize.lock) and deleted by `finalize-review` on completion.
-- The bot keeps **one** comment per PR, located via the `BOT_COMMENT_MARKER` HTML comment. It embeds `reviewed-head-sha`, `reviewed-at`, and `status` markers used to detect prior state and to partition the human comments posted after it (`lib/code-review-state.ts`).
-- `lib/code-review-render.ts` renders the single comment under a `## Review` heading: a status line, then a collapsed "Fix in your agent" prompt block (only when there is at least one active finding), then `### Code Review` (a beta-disclaimer note plus Critical/Warnings/Suggestions tables), `### Conventions`, `### Style Guide Review` (Warnings/Suggestions only), an "Acknowledged by author" block, and a Commands block. Findings are tables only — there are no inline review comments.
-- **Models**: all model calls (reviews and reconciliation) use `cloudflare/@cf/moonshotai/kimi-k2.7-code`.
-- **Review mode** (`DOCS_FLUE_REVIEW_MODE`): `log` (default) renders and logs the comment without mutating GitHub; `comment` posts/updates the bot comment.
+1. `init(Agent, { id })`
+2. `dispatch(message)`
+3. `read()`
 
-### Slash commands (codeowner-only, commented on a PR)
+Each agent gets one durable instance ID per run. Use `agentStep` helpers for dispatch/read durability and deadlines. The `submit_result` tool ends the agent turn (`terminate`); trusted code validates its output against the Valibot schema. Instructions are static plain `.md` imports; per-run data belongs in the dispatched message or run artifacts.
 
-- `/review` — run now (incremental if a prior review exists, else full); bypasses the auto-review limit.
-- `/full-review` — re-review the entire diff from scratch (clears prior review JSONs); bypasses the limit.
-- `/ignore-review-limit` — permanently lift the 2-review automatic cap for the PR.
-- `/disable-auto-review` — stop push-triggered automatic reviews for the PR. Manual `/review` and `/full-review` still work.
-- All commands swap 👀 → 👍 on the trigger comment when done.
-- On Dependabot PRs, `/review` and `/full-review` route to `dependabot-review` instead.
+Specialists use `cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731`; the judge uses `cloudflare/@cf/zai-org/glm-5.3`. Model IDs live in `lib/agents/models.ts`. Agents with `read_repo_file` and `search_repo` also get `prompts/repo-tools.md`, which describes what each tool can and cannot see. The judge receives reduced context and decides only whether a new finding is kept or dropped, and whether each touched prior finding remains active, is resolved, or is dismissed.
 
-### Bindings & migrations (`wrangler.jsonc`)
+### Rules and verification
 
-- Bindings: `AI` (Workers AI), `LOADER` (`worker_loaders`, backs the shell sandbox), `DOCS_FLUE_BUCKET` (R2). The AI Gateway id comes from `DOCS_FLUE_AI_GATEWAY_ID`.
-- DO migrations: v1 initial classes; v2 Dependabot; v3 `Flue…`-prefix renames; v4 deleted the standalone style-guide workflow (its fan-out had moved in-process); v5 added the two specialist classes (the fan-outs split back into their own DOs for isolated memory budgets); v6 added `FlueFinalizeReviewWorkflow` (the new finalize-review workflow); v7 added `FlueConventionsSpecialistWorkflow` and `FlueRedirectSpecialistWorkflow`; v8 deleted `FlueRedirectSpecialistWorkflow` (redirect check removed from pipeline).
+Each specialist's rules live apart from its agent instructions, and `lib/agents/review-rules.ts` exports them. The specialist and the judge load the same export, so the judge checks findings against the rules they were found with.
 
-### Roles, build config, and dev/deploy scripts
+| Specialist    | Rules                                   |
+| ------------- | --------------------------------------- |
+| `code`        | `prompts/code-rules.md`                 |
+| `style`       | Every file under `prompts/style-guide/` |
+| `conventions` | `prompts/conventions-rules.md`          |
 
-- **Roles** (`roles/`): `cloudflare-docs-bot.md` holds the bot's identity and operating guidelines (stay scoped to cloudflare-docs, never leak internal info, be conservative and transparent). Flue auto-discovers the `roles/` directory at build time — it is not imported explicitly the way skills are.
-- **Build config** (`flue.config.ts`): a one-line `defineConfig({ target: "cloudflare" })`. This is the Flue CLI build entry (`flue build` / `flue dev`).
-- **Maintenance script** (`bin/clear-r2-pr-data.ts`): clears the `diffs/pr-<n>/` R2 state for a PR (or all PRs). Run against local dev state via the `flue:clear-r2-pr-data:local` script.
-- **Repo-root scripts** (`package.json` at the repository root, not `.flue/package.json`): `flue:dev` (local dev with an 8 GB heap), `flue:dev:wrangler` (build + `wrangler dev --remote`), `flue:build`, `flue:deploy` (build + `wrangler deploy` with `--secrets-file .env`), `flue:clear-r2-pr-data:local`, and `flue:reset:local` (wipe local Durable Object + R2 dev state). Use these to develop and deploy the worker; the `flue docs` CLI below is only for reading Flue documentation.
+The judge keeps a new finding only when it can verify that the finding is true and that a rule covers it. It drops findings it cannot verify, including code findings that depend on API, library, or service behavior that the diff, files at the head, and repository search do not show. The code reviewer applies the same standard before reporting. This repository's docs count as evidence for Cloudflare API behavior.
 
-## Reading Flue documentation
+The judge's reasoning length varies widely between runs, even on small inputs, so its durability timeout is 20 minutes. The Workflow read step adds a 2-minute buffer and must stay within the 30-minute Workflow step timeout; a unit test enforces this.
 
-Use the installed Flue CLI for docs so guidance matches the version in `.flue/package.json`:
+## Diffs And Re-reviews
 
-```bash
-pnpm exec flue docs search "workflow routing"
-pnpm exec flue docs read guide/workflows
-pnpm exec flue docs read ecosystem/deploy/cloudflare
+`lib/review/diff/` builds `PatchFile` data and a `ReviewPlan`.
+
+| Tier        | Rule                               | Dispatch                                      |
+| ----------- | ---------------------------------- | --------------------------------------------- |
+| `inline`    | At most 250k estimated tokens      | Target patch included in message              |
+| `tool`      | At most 1M tokens                  | Agents read patch artifacts with `read_patch` |
+| `too-large` | More than 1M tokens or 1,000 files | Conventions only                              |
+
+Every skipped, excluded, collapsed, or patchless file is included in the rendered **Not reviewed** list.
+
+Incremental reviews track fingerprints of added lines. A fingerprint includes the path, normalized line, and adjacent new-file lines: editing a neighboring line means the target is touched. Untouched active findings carry forward. A re-raised matching finding keeps the prior ID and adopts its new fingerprint.
+
+Finding IDs are deterministic and specialist-scoped. A new finding with a dismissed finding's ID is deterministically suppressed. A differently worded re-raise goes to the judge, which receives dismissed findings as context.
+
+A full review clears successful-review fingerprints and the conventions input hash, but preserves active and dismissed findings, comments, and completion metadata. It dispatches specialists across the whole diff. Located active findings for targeted specialists are treated as touched and re-judged; dismissed findings remain dismissal context.
+
+## Comments And Dismissals
+
+The bot maintains one marker-located summary comment per PR. It has grouped Code Review, Style Guide, and Conventions sections, an optional fix prompt, a collapsed Not reviewed section, history, and command help. It never creates inline review comments.
+
+Each finding renders as a list block: a location and title line, an explanation, and an optional `snippet` block for code excerpts only. Findings state the problem only, never a fix; the author and their agent decide how to fix it. Finding IDs stay in the agent prompt and internal state, not the visible comment. Empty specialist sections are omitted. Renderer input is untrusted model text: preserve the single marker and safely render prose.
+
+`/rebase` writes a transient, marker-delimited status block into that singleton comment while the rebase runs. The next review render removes the block, so normal review output does not retain stale rebase status.
+
+Only the PR author or a maintainer (`OWNER`, `MEMBER`, or `COLLABORATOR`) can dismiss findings. Reasoned dismissals are honored for style and conventions. Code dismissals require proof at the current head, or a maintainer who dismisses the finding or explains why it is wrong. The judge is the dismissal authority; trusted code applies its decision.
+
+## State And Artifacts
+
+v2 state is at `reviews/v2/pr-<number>/state.json`; old review state is intentionally ignored.
+
+| State field                   | Purpose                                                            |
+| ----------------------------- | ------------------------------------------------------------------ |
+| `activeRun`                   | Current owner, workflow ID, SHA, and agent IDs for supersession    |
+| `reviewed`                    | Successful specialist line fingerprints                            |
+| `findings`                    | Active and dismissed findings; resolved findings are not persisted |
+| `conventionsInputHash`        | Prevents unnecessary conventions work                              |
+| `commentsSeenThrough`         | Bounds comments sent to the judge                                  |
+| `commentId` / `lastCompleted` | Published comment and completion metadata                          |
+
+Use ETag-conditional state writes. Only the currently active run may commit. Run artifacts live at `reviews/v2/pr-<number>/runs/<run-id>/`; their names are centralized in `RUN_ARTIFACTS` in `lib/review/run-context.ts`.
+
+The local clear-R2 script deletes both `reviews/v2/pr-<number>/` state and run artifacts and legacy `diffs/pr-<number>/` flags.
+
+## Commands And Modes
+
+Codeowner commands are authorized in the pipeline entry:
+
+- `/review`: run an incremental review from the last completed run; the first run reviews the whole PR.
+- `/full-review`: re-review the complete PR diff while preserving dismissals and prior-comment context.
+- `/disable-auto-review`: disable automatic reviews for the PR.
+- `/draft-never-stale`: opt the draft PR out of stale-draft reminders.
+- `/rebase`: start the rebase workflow.
+
+`/review` and `/full-review` route Dependabot PRs to `DEPENDABOT_REVIEW`. `/draft-never-stale` only applies to open draft PRs. Draft PRs skip automatic review; commands can still run. `DOCS_FLUE_REVIEW_MODE=log` is the default and only logs rendered output. `comment` updates the singleton summary comment.
+
+## PR Size Labels
+
+Deterministic and inline (no agent, no Workflow), in `lib/pr-size-label.ts`. On every `opened`, `reopened`, `synchronize`, and `ready_for_review` PR event, including drafts and Dependabot, `runSizeLabelSafely` re-reads the PR and makes it carry exactly one `size/*` label from additions + deletions. It always acts and ignores `DOCS_FLUE_REVIEW_MODE`.
+
+| Label     | Additions + deletions |
+| --------- | --------------------- |
+| `size/xs` | Under 10              |
+| `size/s`  | Under 100             |
+| `size/m`  | Under 500             |
+| `size/l`  | Under 1,000           |
+| `size/xl` | 1,000 or more         |
+
+Labels are added and removed one at a time, never replaced wholesale, so product labels set by `actions/labeler` are untouched. Failures are logged and never block review routing. Counts are read after the push and GitHub computes them asynchronously, so a stale count self-corrects on the next event.
+
+### Size Label Replay
+
+`pnpm run flue:replay:size-label --pr <n,...>` replays size labeling against existing PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as the other replays and follows `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                          |
+| --------- | -------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the current labels, target label, and what it would add and remove     |
+| `comment` | Real path. Adds the target label and removes stale `size/*` labels; also fixes old PRs |
+
+Real webhooks ignore the mode and always act.
+
+## Issue Effort Labels
+
+`EffortLabelWorkflow` (`EFFORT_LABEL`) gives each open issue one `effort:*` label: how much docs-team work is left to close it. It runs on issue `opened`, `reopened`, and title or body `edited` events from non-bot senders, alongside spam routing.
+
+Gemma (`EFFORT_MODEL`) answers `prompts/effort-label.md` from the issue, human comments, linked PRs, and live docs evidence (`lib/docs-evidence.ts`): up to 3 linked pages, quote checks, recent commits to their source files, and diffs of up to 2 docs PRs. Unreadable evidence becomes "can't tell". Trusted code validates the answer and scores it with CODEOWNERS areas (`scoreEffort` in `lib/effort-label.ts`).
+
+| Label              | Points    | Meaning                                                      |
+| ------------------ | --------- | ------------------------------------------------------------ |
+| `effort:low`       | Under 2.5 | Under an hour: close it, or a small edit on one page         |
+| `effort:medium`    | Under 5   | A few hours: one page of writing, or a PR review             |
+| `effort:high`      | Under 8   | A day or more: new content, several pages, or a product team |
+| `effort:very-high` | 8 or more | A new guide, cross-team work, an initiative                  |
+
+- On `opened` and `reopened`, it waits 3 minutes for the spam gate. PRs, closed issues, and `spam` or `off topic` items are skipped.
+- `effort:*` labels are never a scoring input. A model error leaves labels unchanged.
+- Labels are re-read, then added and removed one at a time, so retries are no-ops.
+- Webhooks write only when the `DOCS_FLUE_EFFORT_LABEL_MODE` Worker secret is `label`; otherwise they log the plan. Create the four labels first.
+
+`pnpm run flue:replay:effort-label --issue <n,...>` replays existing issues (run `pnpm run flue:dev` first). It follows `DOCS_FLUE_REVIEW_MODE`: `log` is a dry run, `comment` writes labels.
+
+## Spam Gates
+
+Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.
+
+| Gate                     | Workflow              | Questions                                                                                                                   | Acts when                                                     |
+| ------------------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Item (`INGEST`)          | `IngestWorkflow`      | `is_spam` (yes/no) and `category`: `spam`, `bot_or_test`, `irrelevant_change`, `support_request`, `feature_request`, `none` | Spam probability >= 0.5 (category does not matter); item open |
+| Comment (`COMMENT_SPAM`) | `CommentSpamWorkflow` | `is_spam` (yes/no) and `category`: `link_promo`, `scam_phishing`, `bot_flood`, `gibberish`, `email_reply_artifact`, `none`  | Spam probability >= 0.8 (high) and category is not `none`     |
+
+Item gate: new issues and non-Dependabot PRs. The category picks the response: `support_request` and `feature_request` get the `off topic` label and `OFF_TOPIC_COMMENT`; `spam`, `bot_or_test`, and `irrelevant_change` get the `spam` label and `SPAM_COMMENT`. Any other category, including `none`, gets the `spam` label and `SPAM_COMMENT`. Then the item is closed.
+
+Comment gate: new `issue_comment` events, on open and closed items. Off-topic content is never deletable at the comment level; support questions, short reactions, and email replies with a real question or correction are normal conversation. An email-reply artifact is a brief acknowledgment plus a quoted GitHub notification email.
+
+The comment gate skips comments from authors with write access (`OWNER`, `MEMBER`, or `COLLABORATOR` via `author_association`), any `[bot]` account, the item's own author, and exact-match slash commands (payload-derived, zero API calls in the classifier). Codeowners are skipped via an API check inside the workflow, keeping the webhook fast.
+
+Before deleting, the comment workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
+
+Clef requests go through AI Gateway when `DOCS_FLUE_AI_GATEWAY_ID` is set.
+
+## Spam Replay
+
+`pnpm run flue:replay:spam --issue <n,...> --pr <n,...>` replays the item gate against existing issues and PRs. `pnpm run flue:replay:comment-spam [--comment <id,...>]` replays the comment gate against existing comments (default: the three #33799 email-reply comments). Run `pnpm run flue:dev` first. Both follow `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                                               |
+| --------- | ----------------------------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the verdict and `wouldClose` / `wouldDelete`; no labels, close, comment, audit, or delete   |
+| `comment` | Real path. The item gate labels, comments, and closes; the comment gate writes the audit record and deletes |
+
+An item replay never starts a review. Comment exemptions (write access, bots, item author, codeowners) still apply, and a deleted comment replays as `comment-missing`. Real webhooks ignore replay mode and always act.
+
+## Replay And Evals
+
+`pnpm run flue:replay --pr <number>` runs the real-PR replay harness. Run `pnpm run flue:dev` first. It reads `DOCS_FLUE_INTERNAL_TOKEN` and optional `FLUE_BASE_URL` (default `http://localhost:5173`) from the environment or `.flue/.env(.local)`. `--pr` accepts any PR number or a comma-separated list, such as `--pr 33622,33305`; omit it to replay every PR in `bin/replay-prs.json`, and use `--concurrency <number>` to run several at once.
+
+Replay calls the dev review route with `replay: true`. It always runs a full review from empty state, so prior dismissals do not apply. It publishes according to the dev server's `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                                                                                                        |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`     | Prints the rendered comment in the replay terminal and the dev server log                                                                                            |
+| `comment` | Writes the PR's singleton summary comment, even on a closed PR: first a "Full review in progress" note, then the finished review, or a failure note if the run fails |
+
+In comment mode, replaying the whole list comments on every PR in it. Replay never writes review state or reactions, and has no debounce, supersession, or cleanup. Results and rendered markdown go to the ignored `.flue/replay-results/` directory.
+
+## Dependabot Replay
+
+`pnpm run flue:replay:dependabot --pr <number,...>` replays the Dependabot review for existing Dependabot PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as `flue:replay` and follows `DOCS_FLUE_REVIEW_MODE` from `.flue/.env.local`:
+
+| Mode      | Replay output                                                                                    |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| `log`     | Prints the rendered comment in the terminal and writes `.flue/replay-results/dependabot-<pr>.md` |
+| `comment` | Creates or updates the PR's Dependabot review comment                                            |
+
+The replay runs `DependabotReviewWorkflow` with `replay: true`, which only adds the rendered comment to the workflow output.
+
+Evals live in `evals/` and exercise structured agent output with fixtures. `pnpm run flue:evals` starts a local dev server with `DOCS_FLUE_AGENT_EVALS=1`, waits for it, runs evals, and tears it down. It requires `DOCS_FLUE_INTERNAL_TOKEN` in the environment or `.flue/.env(.local)`:
+
+```sh
+pnpm run flue:evals
 ```
 
-Do not rely on pre-trained Flue knowledge. Flue has changed substantially across the 0.5-0.11 releases.
+## Local Development And Deployment
 
-## Flue Patterns
+| Task                     | Command                                              |
+| ------------------------ | ---------------------------------------------------- |
+| Local dev                | `pnpm run flue:dev`                                  |
+| Remote Worker dev        | `pnpm run flue:dev:wrangler`                         |
+| Build                    | `pnpm run flue:build`                                |
+| Deploy                   | `pnpm run flue:deploy`                               |
+| Clear local review state | `pnpm run flue:clear-r2-pr-data:local --pr <number>` |
+| Reset local Worker state | `pnpm run flue:reset:local`                          |
+| Focused tests            | `pnpm --dir .flue exec vitest run <file>`            |
 
-- Use the Hono `app.ts` pattern from current Flue docs: mount `flue()` explicitly and put auth middleware before `/workflows/*` and `/runs/*`.
-- Keep GitHub webhook verification before privileged work. Sub-workflows should not be directly callable without an internal auth header.
-- Protect `/runs/*`; run history can include payloads, model activity, logs, and errors.
-- Workflows do not resume from checkpoints after Cloudflare Durable Object interruptions. Treat retries and external side effects as application-owned and idempotent.
-- Scope temporary R2 diff/context data by run ID or head SHA. Do not key mutable in-flight context only by PR number, or concurrent reviews can mix state.
-- Store durable review state separately from temporary run context. PR/head-scoped review JSON is okay; per-run patch manifests should be run-scoped.
-- Prefer `log.info`, `log.warn`, and `log.error` from `FlueContext` for workflow facts that should appear in run history. Use `console.log` only for low-value runtime debugging.
-- Keep model output structured with Valibot when trusted code consumes it. Skill instructions must match the schema exactly; do not ask for Markdown when the workflow expects JSON-like structured data.
-- Keep side-effecting operations (GitHub labels, comments, close/update actions) in trusted TypeScript code, not in model tools.
+`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`. Migration `v13` created `FlueCommentSpamFilterAgent` and `v14` deletes it along with `FlueSpamFilterAgent`.
 
-## Review Rule Policy
+Because `wrangler.jsonc` declares `secrets.required`, local dev loads only those secrets from `.flue/.env(.local)` and drops every other key. `vite.config.ts` forwards the non-secret settings in `LOCAL_DEV_SETTINGS` (review mode, recommendations mode, and debounce) as Worker vars during `vite dev` only, and logs them at startup. Restart `flue dev` after editing these values. `flue:dev:wrangler` does not forward them.
 
-Do not add agent review rules for issues that are already reliably caught by CI, including build failures, type checking, linting, link validation, and schema validation. Agent review rules should focus on style, clarity, maintainability, and conventions that CI cannot enforce.
+`pnpm run flue:deploy` builds first, then deploys with `dist/cloudflare_docs_flue/wrangler.json`. Use that generated configuration for `wrangler deploy --dry-run` after a build.
 
-Before adding a rule, verify whether the repository already catches the issue in CI. If it does, do not duplicate it in agent review output. For MDX/code structure checks, prefer AST-aware checks; avoid raw line pattern matching unless the rule explicitly ignores fenced code blocks and JSX component syntax.
+## Adding Or Changing Review Logic
+
+1. Update shared types in `lib/review/types.ts` deliberately; all review code imports this contract.
+2. Put pure diff, state, reducer, and renderer behavior in focused modules with Vitest tests.
+3. Keep agent prompts aligned with their Valibot schemas and return only structured results.
+4. Preserve tier limits, off-target filtering, stable IDs, carry-forward behavior, and single-comment rendering.
+5. Run Prettier and focused tests. Run `.flue` typecheck and build when practical; report unrelated failures rather than changing concurrent work.

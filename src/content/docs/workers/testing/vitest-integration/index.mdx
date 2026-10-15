@@ -10,7 +10,7 @@ products:
 
 import { DirectoryListing, Render, LinkButton } from "~/components";
 
-For most users, Cloudflare recommends using the Workers Vitest integration for testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a very fast watch mode, Jest compatibility, and out-of-the-box support for TypeScript. In this integration, Cloudflare provides a custom pool that allows your Vitest tests to run _inside_ the Workers runtime.
+For most users, Cloudflare recommends using the Workers Vitest integration for unit testing Workers and [Pages Functions](/pages/functions/) projects. [Vitest](https://vitest.dev/) is a popular JavaScript testing framework featuring a fast watch mode, Jest compatibility, and default TypeScript support. Cloudflare provides the `@cloudflare/vitest-plugin` Vite plugin, which runs your Vitest tests inside the Workers runtime.
 
 The Workers Vitest integration:
 
@@ -24,3 +24,5 @@ The Workers Vitest integration:
 <LinkButton href="/workers/testing/vitest-integration/write-your-first-test/">
 	Write your first test
 </LinkButton>
+
+If you use `@cloudflare/vitest-pool-workers`, refer to [Migrate to Vitest plugin](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/).

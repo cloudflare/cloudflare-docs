@@ -73,7 +73,7 @@ npx wrangler dev
 Send a test email using the local endpoint. The request body must be a raw email message in [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) format, and the message must include a `Message-ID` header:
 
 ```bash
-curl --request POST 'http://localhost:8787/cdn-cgi/handler/email' \
+curl --request POST 'http://localhost:8787/cdn-cgi/local/email' \
   --url-query 'from=sender@example.com' \
   --url-query 'to=recipient@example.com' \
   --data-raw 'Received: from smtp.example.com (127.0.0.1)

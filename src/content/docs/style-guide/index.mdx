@@ -1,26 +1,105 @@
 ---
 title: Style Guide
 pcx_content_type: overview
-description: Improve your contributions to Cloudflare's documentation. Ensure consistency, professionalism, and clarity in your content across all products.
+description: Write and review Cloudflare content so the whole site reads as if one careful author wrote it, from contributing through planning, style, and build.
 sidebar:
   order: 1
 products:
   - style-guide
 ---
 
-import { DirectoryListing } from "~/components";
+import { CardGrid, LinkCard } from "~/components";
 
-Use this guide when writing any content for product, including the dashboard and documentation.
+Use this guide whenever you write or review Cloudflare content, whether it lives in the documentation or in the product dashboard. Following it is what keeps the whole site reading as though one careful author wrote every page, which also makes the content clearer for readers and simpler to translate.
 
-Understanding Cloudflare style is the first step in being able to write, review, and edit documentation. Adhering to Cloudflare style ensures consistency across the company's documentation and promotes the following benefits:
+The guide is organized around the way you actually work, in five stages: contribute a change, plan the content, write it in the Cloudflare style, build the page, and, for the Cloudflare team, run the site.
 
-- A professional and reliable product image
-- A seamless customer experience across Cloudflare products
-- Minimized customer confusion
-- Simplified translation process
+## Contribute
 
-To contribute to the documentation, visit the [contributor guide](/style-guide/contributions/).
+Start here. Make a change and get it merged.
 
-## Available resources
+<CardGrid>
+	<LinkCard
+		title="Contributions"
+		description="Open an issue or raise a pull request, then follow it through the review that merges it."
+		href="/style-guide/contributions/"
+	/>
+</CardGrid>
 
-<DirectoryListing folder="style-guide" maxDepth={4} />
+## Plan your content
+
+Decide what kind of page you are writing and where it lives.
+
+<CardGrid>
+	<LinkCard
+		title="Content strategy"
+		description="Choose a content type, structure the page, and place it in the information architecture."
+		href="/style-guide/documentation-content-strategy/"
+	/>
+	<LinkCard
+		title="API content"
+		description="Follow the conventions for documenting endpoints, parameters, and resources."
+		href="/style-guide/api-content-strategy/"
+	/>
+</CardGrid>
+
+## Style and grammar
+
+Write the page in the house voice, grammar, and formatting.
+
+<CardGrid>
+	<LinkCard
+		title="Voice and tone"
+		description="Write in the Cloudflare house voice and tone."
+		href="/style-guide/style-and-grammar/voice-and-tone/"
+	/>
+	<LinkCard
+		title="Accessibility"
+		description="Write content that everyone can read and use."
+		href="/style-guide/style-and-grammar/accessibility/"
+	/>
+	<LinkCard
+		title="Grammar"
+		description="Apply the rules for parts of speech, punctuation, and capitalization."
+		href="/style-guide/style-and-grammar/grammar/"
+	/>
+	<LinkCard
+		title="Formatting"
+		description="Format dates, numbers, code, lists, tables, and UI elements consistently."
+		href="/style-guide/style-and-grammar/formatting/"
+	/>
+</CardGrid>
+
+## Build the page
+
+Author the page in MDX, set its metadata, and add components.
+
+<CardGrid>
+	<LinkCard
+		title="Markdown and MDX"
+		description="Learn the MDX syntax, how to import components, and how to escape special characters."
+		href="/style-guide/build-the-page/markdown-and-mdx/"
+	/>
+	<LinkCard
+		title="Frontmatter"
+		description="Declare the required and optional metadata that every page carries."
+		href="/style-guide/build-the-page/frontmatter/"
+	/>
+	<LinkCard
+		title="Components"
+		description="Assemble pages from the MDX components that add buttons, tabs, and more."
+		href="/style-guide/build-the-page/components/"
+	/>
+</CardGrid>
+
+## How we docs
+
+How the Cloudflare team runs the site. This section is Cloudflare-specific internal process.
+
+<CardGrid>
+	<LinkCard
+		title="How we docs"
+		description="See how the team handles the site framework, redirects, links, metadata, AI, and video."
+		href="/style-guide/how-we-docs/"
+	/>
+</CardGrid>

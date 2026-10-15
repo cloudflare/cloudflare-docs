@@ -3,7 +3,8 @@
  * Spec: https://webmachinelearning.github.io/webmcp/
  */
 
-import { ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX } from "~/util/algolia";
+const AI_SEARCH_URL =
+	"https://ai-search.developers.cloudflare.com/api/ai-search/search";
 const LLMS_TXT_URL = "https://developers.cloudflare.com/llms.txt";
 
 // Cache for list-directories results — fetched once per session.
@@ -16,26 +17,20 @@ interface DirectoryEntry {
 	group: string;
 }
 
-interface AlgoliaHit {
-	objectID: string;
-	url?: string;
-	hierarchy?: {
-		lvl0?: string;
-		lvl1?: string;
-		lvl2?: string;
+interface AiSearchResponse {
+	success: boolean;
+	result?: {
+		chunks: Array<{
+			item: {
+				key: string;
+				metadata?: {
+					title?: string;
+					description?: string;
+				};
+			};
+		}>;
 	};
-	content?: string;
-	_snippetResult?: {
-		content?: { value?: string };
-		hierarchy?: {
-			lvl1?: { value?: string };
-			lvl2?: { value?: string };
-		};
-	};
-}
-
-interface AlgoliaResponse {
-	hits: AlgoliaHit[];
+	error?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -46,44 +41,38 @@ async function executeSearch(input: object): Promise<unknown> {
 
 	const clampedLimit = Math.min(Math.max(1, limit), 20);
 
-	const response = await fetch(
-		`https://${ALGOLIA_APP_ID}-dsn.algolia.net/1/indexes/${ALGOLIA_INDEX}/query`,
-		{
-			method: "POST",
-			headers: {
-				"X-Algolia-Application-Id": ALGOLIA_APP_ID,
-				"X-Algolia-API-Key": ALGOLIA_API_KEY,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				query,
-				filters: "type:content",
-				hitsPerPage: clampedLimit,
-				attributesToRetrieve: ["url", "hierarchy", "content"],
-				attributesToSnippet: ["content:20", "hierarchy.lvl1:10"],
-			}),
+	const response = await fetch(AI_SEARCH_URL, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+			"cf-ai-search-source": "snippet-search",
 		},
-	);
+		body: JSON.stringify({
+			messages: [{ role: "user", content: query }],
+			stream: false,
+			ai_search_options: {
+				retrieval: {
+					metadata_only: true,
+					max_num_results: clampedLimit,
+				},
+			},
+		}),
+	});
 
 	if (!response.ok) {
 		throw new Error(`Search failed: ${response.status} ${response.statusText}`);
 	}
 
-	const data = (await response.json()) as AlgoliaResponse;
+	const data = (await response.json()) as AiSearchResponse;
+	if (!data.success || !data.result) {
+		throw new Error(data.error ?? "Search returned an invalid response");
+	}
 
-	return data.hits.map((hit) => ({
-		title:
-			hit.hierarchy?.lvl2 ??
-			hit.hierarchy?.lvl1 ??
-			hit.hierarchy?.lvl0 ??
-			"Untitled",
-		url: hit.url ?? "",
-		snippet:
-			hit._snippetResult?.content?.value ??
-			hit._snippetResult?.hierarchy?.lvl1?.value ??
-			hit._snippetResult?.hierarchy?.lvl2?.value ??
-			hit.content?.slice(0, 200) ??
-			"",
+	return data.result.chunks.map(({ item }) => ({
+		title: item.metadata?.title ?? "Untitled",
+		url: item.key,
+		snippet: item.metadata?.description ?? "",
 	}));
 }
 

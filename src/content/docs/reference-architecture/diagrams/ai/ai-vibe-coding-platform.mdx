@@ -5,7 +5,7 @@ products: [ai-gateway, workers-for-platforms]
 sidebar:
   order: 0
   label: AI Vibe Coding Platform
-updated: 2025-08-28
+updated: 2026-09-24
 description: Cloudflare's low-latency, fully serverless compute platform, Workers offers powerful capabilities to enable A/B testing using a server-side implementation.
 ---
 
@@ -52,11 +52,16 @@ When using various AI providers, you need visibility into costs, the ability to 
 If you’re building an AI code generator and want it to be more knowledgeable about how to best build applications on Cloudflare, there are two tools we recommend using:
 
 - **[Cloudflare Workers Prompt](/workers/get-started/prompting/#build-workers-using-a-prompt):** Structured prompt with examples that teach AI models about Cloudflare's APIs, configuration patterns, and best practices. Include these in your AI system for higher quality code output.
-- **[Cloudflare’s Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize):** If your AI tool supports [Model Context Protocol (MCP)](/agents/model-context-protocol/), connect it to Cloudflare's documentation MCP server to get up-to-date knowledge about Cloudflare’s platform.
+- **[Cloudflare’s Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search):** If your AI tool supports [Model Context Protocol (MCP)](/agents/model-context-protocol/), connect it to Cloudflare's documentation MCP server to get up-to-date knowledge about Cloudflare’s platform.
 
 ## Development environment for executing AI-generated code
 
-Both [Sandboxes](/sandbox/) and [Containers](/containers/) provide secure, isolated environments for executing untrusted AI-generated code. They offer:
+[Sandboxes](/sandbox/) run untrusted AI-generated code in one of two environments:
+
+- Linux sandboxes run on [Containers](/containers/). Each one has a shell, a filesystem, and processes, for code that installs packages, builds a project, or runs a development server.
+- [Dynamic Workers](/dynamic-workers/) run generated JavaScript, Python, or WebAssembly in a new Worker that can reach only the APIs you grant.
+
+For how to choose, refer to [Choose a sandbox environment](/sandbox/concepts/). Linux sandboxes offer:
 
 - **Strong isolation and sandboxing controls** to prevent malicious or buggy code from affecting other instances
 - **Fast startup times** to enable rapid iteration cycles with real-time feedback
@@ -64,9 +69,9 @@ Both [Sandboxes](/sandbox/) and [Containers](/containers/) provide secure, isola
 - **Preview URLs** to allow users to test applications during development
 - **Global edge deployment** on Cloudflare's network for low-latency execution worldwide
 
-**Sandboxes provide a fully-managed solution** that works out-of-the-box, with [pre-built APIs](/sandbox/api/) for code execution, output formatting, and developer tools, making them ideal for most AI code execution use cases.
+Each user gets their own sandbox. A code generation Worker sends code updates to it, and a Worker serves the application that runs in each sandbox on a preview URL:
 
-![Figure 3: Vibe Code Development - Sandbox SDK](~/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg)
+![Figure 3: Vibe code development in a sandbox](~/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg)
 
 **Containers offer complete runtime control** through custom Docker images, allowing you to run any language or framework with up to 4GB RAM and dedicated vCPU and are best when you need custom runtimes or resource-intensive workloads.
 

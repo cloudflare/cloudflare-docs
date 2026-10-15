@@ -43,10 +43,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 
 ## 3. Mitigate requests with leaked credentials
 
-If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in:
-
-- Old dashboard: **WAF** > **Rate limiting rules**
-- New security dashboard: **Security** > **Security rules**
+If you are on a Free plan, deploy the suggested [rate limiting rule](/waf/rate-limiting-rules/) template available in **Security** > **Security rules**.
 
 When you deploy a rule using this template, you get instant protection against IPs attempting to access your application with a leaked password more than five times per 10 seconds. This rule can delay attacks by blocking them for a period of time. Alternatively, you can create a custom rule.
 
@@ -114,7 +111,7 @@ Only available for Enterprise customers.
 
 To check for leaked credentials in a way that is not covered by the default configuration, add a [custom detection location](/waf/detections/leaked-credentials/#custom-detection-locations).
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard" icon="rocket">
 
 <Steps>
 
@@ -140,31 +137,6 @@ To check for leaked credentials in a way that is not covered by the default conf
    Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 6. Select **Save**.
-
-</Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
-4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
-   - Username location:<br/>
-     `lookup_json_string(http.request.body.raw, "user")`
-   - Password location:<br/>
-     `lookup_json_string(http.request.body.raw, "secret")`
-
-   This configuration will scan incoming HTTP requests containing a JSON body with a structure similar to the following:
-
-   ```js
-   {"user": "<USERNAME>", "secret": "<PASSWORD>"}
-   ```
-
-   Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
-
-5. Select **Save**.
 
 </Steps>
 

@@ -13,6 +13,13 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.12,
+		"@480p video input (per second)": 0.132,
+		"@720p video input (per second)": 0.286,
+		"@480p non-video input (per second)": 0.06,
+		"@720p non-video input (per second)": 0.12
+	},
 	"examples": [
 		{
 			"name": "Quick Video",
@@ -81,6 +88,43 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-fast\",\n  \"input\": {\n    \"prompt\": \"A barista pouring latte art in a cozy coffee shop, close-up with shallow depth of field\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Virtual Avatar Reference",
+			"description": "Use a virtual character avatar from the trusted asset library",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The scene gently animates with subtle motion",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p",
+				"use_virtual_avatar": true,
+				"generate_audio": false
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-fast/virtual-avatar-reference.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-2.0-fast/virtual-avatar-reference.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-2.0-fast',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt: 'The scene gently animates with subtle motion',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n    use_virtual_avatar: true,\n    generate_audio: false,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-2.0-fast\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The scene gently animates with subtle motion\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\",\n    \"use_virtual_avatar\": true,\n    \"generate_audio\": false\n  }\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -98,6 +142,19 @@
 		"Resolutions": "480p, 720p"
 	},
 	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.12,
+				"480p_video_in": 0.132,
+				"720p_video_in": 0.286,
+				"480p_non_video_in": 0.06,
+				"720p_non_video_in": 0.12
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:04",
 	"schema": {
@@ -106,9 +163,9 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video to generate",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 2000,
+					"description": "Text prompt describing the video to generate"
 				},
 				"image": {
 					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
@@ -131,15 +188,15 @@
 					}
 				},
 				"duration": {
-					"description": "Video duration in seconds",
 					"default": 5,
+					"description": "Video duration in seconds",
 					"type": "integer",
 					"minimum": 4,
 					"maximum": 12
 				},
 				"resolution": {
-					"description": "Video resolution",
 					"default": "720p",
+					"description": "Video resolution",
 					"type": "string",
 					"enum": [
 						"480p",
@@ -147,8 +204,8 @@
 					]
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio. Ignored if an image is used.",
 					"default": "16:9",
+					"description": "Video aspect ratio. Ignored if an image is used.",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -161,14 +218,14 @@
 					]
 				},
 				"fps": {
-					"description": "Frame rate (frames per second)",
 					"default": 24,
+					"description": "Frame rate (frames per second)",
 					"type": "number",
 					"const": 24
 				},
 				"camera_fixed": {
-					"description": "Whether to fix camera position",
 					"default": false,
+					"description": "Whether to fix camera position",
 					"type": "boolean"
 				},
 				"generate_audio": {
@@ -176,8 +233,8 @@
 					"type": "boolean"
 				},
 				"watermark": {
-					"description": "Whether to add a watermark to the output video",
 					"default": false,
+					"description": "Whether to add a watermark to the output video",
 					"type": "boolean"
 				},
 				"seed": {
@@ -185,6 +242,11 @@
 					"type": "integer",
 					"minimum": -9007199254740991,
 					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"type": "boolean"
 				}
 			},
 			"required": [
@@ -194,7 +256,8 @@
 				"aspect_ratio",
 				"fps",
 				"camera_fixed",
-				"watermark"
+				"watermark",
+				"use_virtual_avatar"
 			],
 			"additionalProperties": false
 		},
@@ -203,9 +266,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

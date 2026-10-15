@@ -1,0 +1,13 @@
+---
+title: Temporarily turn off Access service tokens
+description: Stop a service token from authenticating without deleting its configuration.
+date: 2026-08-25
+products:
+  - access
+---
+
+Cloudflare Access administrators can now temporarily turn off service tokens without deleting them. A disabled token cannot authenticate, but its configuration remains available so administrators can turn it on again later.
+
+Turning off a token also stops any previous secret in an active rotation grace period. Use this control to contain suspected credential exposure or pause an automated service.
+
+For configuration instructions, refer to [Turn a service token on or off](/cloudflare-one/access-controls/service-credentials/service-tokens/#turn-a-service-token-on-or-off).

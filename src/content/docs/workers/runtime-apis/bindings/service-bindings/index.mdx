@@ -53,7 +53,7 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 </WranglerConfig>
 
 - `binding`: The name of the key you want to expose on the `env` object.
-- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
+- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account. If the target Worker uses an [environment](/workers/wrangler/environments/#service-bindings), use `<WORKER_NAME>-<ENVIRONMENT_NAME>`.
 
 ## Interfaces
 
@@ -61,6 +61,11 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 1. [RPC](/workers/runtime-apis/bindings/service-bindings/rpc) lets you communicate between Workers using function calls that you define. For example, `await env.BINDING_NAME.myMethod(arg1)`. This is recommended for most use cases, and allows you to create your own internal APIs that your Worker makes available to other Workers.
 2. [HTTP](/workers/runtime-apis/bindings/service-bindings/http) lets you communicate between Workers by calling the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) from other Workers, sending `Request` objects and receiving `Response` objects back. For example, `env.BINDING_NAME.fetch(request)`.
+3. [Connect](/workers/runtime-apis/handlers/connect/) forwards a raw TCP connection to the [`connect()` handler](/workers/runtime-apis/handlers/connect/) of another Worker.
+
+:::note[Cloudflare Access context]
+Cloudflare Access does not propagate `ctx.access` from Worker A to Worker B. This applies to HTTP requests and RPC invocations. Do not treat the downstream invocation as authenticated by the caller's Access context. For more information, refer to [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations).
+:::
 
 ## Example — build your first Service binding using RPC
 
@@ -73,7 +78,8 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_b",
-	"main": "./src/workerB.js"
+	"main": "./src/workerB.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -103,6 +109,7 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_a",
 	"main": "./src/workerA.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "WORKER_B",

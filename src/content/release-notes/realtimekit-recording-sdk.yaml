@@ -1,0 +1,25 @@
+---
+link: "/realtime/realtimekit/release-notes/recording-sdk/"
+productName: RealtimeKit Recording SDK
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-07-28"
+    title: RealtimeKit Recording SDK 0.0.3
+    description: |-
+      **Enhancements**
+
+      - Improved debug mode.
+
+  - publish_date: "2026-07-02"
+    title: RealtimeKit Recording SDK 0.0.2
+    description: |-
+      **Compatibility**
+
+      - Added support for RealtimeKit Web Core 2.x, which uses `meeting.join()` instead of the removed `meeting.joinRoom()` method.
+
+  - publish_date: "2025-07-14"
+    title: RealtimeKit Recording SDK 0.0.1
+    description: |-
+      **Features**
+
+      - Initial release of the RealtimeKit Recording SDK. Supports RealtimeKit Web Core versions through 1.5.1.

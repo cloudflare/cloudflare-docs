@@ -10,7 +10,6 @@ export const GET: APIRoute = async ({ locals }) => {
 	const items = await getRSSItems({
 		notes,
 		locals,
-		markdown: true,
 	});
 
 	return rss({

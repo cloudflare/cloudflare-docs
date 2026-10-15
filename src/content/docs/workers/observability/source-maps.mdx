@@ -8,14 +8,13 @@ products:
   - workers
 ---
 
-import { Render, WranglerConfig } from "~/components";
-import { FileTree } from "@astrojs/starlight/components";
+import { Render, WranglerConfig, FileTree } from "~/components";
 
 <Render file="source-maps" product="workers" />
 
-## Source Maps
+## Enable source maps
 
-To enable source maps, add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
+Enable source maps for every JavaScript or TypeScript Worker to get stack traces with original file names and line numbers. Add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -27,7 +26,7 @@ To enable source maps, add the following to your Worker's [Wrangler configuratio
 
 </WranglerConfig>
 
-When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy).
+When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload).
 ​​
 
 :::note
@@ -36,12 +35,40 @@ Miniflare can also [output source maps](https://miniflare.dev/developing/source-
 
 :::
 
+### Frameworks and custom builds
+
+When Vite or another build tool bundles your Worker, that tool must generate source maps. Setting `upload_source_maps` only enables uploading maps from an existing build.
+
+With the [Cloudflare Vite plugin](/workers/vite-plugin/), enable external maps for your [Worker environment](/workers/vite-plugin/reference/vite-environments/). For a Worker environment named `my_worker`, use:
+
+```ts title="vite.config.ts"
+import { defineConfig } from "vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+
+export default defineConfig({
+	plugins: [cloudflare()],
+	environments: {
+		my_worker: {
+			build: { sourcemap: true },
+		},
+	},
+});
+```
+
+Use `ssr` when your framework assigns the Worker to that environment. The plugin adds `upload_source_maps: true` to its output configuration when map generation is enabled. An explicit `upload_source_maps: false` disables uploads.
+
+For other build tools, emit external map files and preserve their `sourceMappingURL` references in the generated JavaScript. Keep server maps out of your public assets directory.
+
+To disable uploads, set `upload_source_maps` to `false` or pass `--no-upload-source-maps` when deploying or uploading a version.
+
 ## Stack traces
 
 ​​
 When your Worker throws an uncaught exception, we fetch the source map and use it to map the stack trace of the exception back to lines of your Worker’s original source code.
 
-You can then view the stack trace when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
+You can then view the source-mapped stack trace when streaming [real-time logs](/workers/observability/logs/real-time-logs/) or in [Tail Workers](/workers/observability/logs/tail-workers/).
+
+[Workers Issues](/workers/observability/issues/) groups production failures and displays captured stack traces when available.
 
 :::note
 
@@ -88,6 +115,6 @@ With **source maps uploaded**: all methods reference the correct files and line 
 
 ## Related resources
 
-* [Tail Workers](/workers/observability/logs/logpush/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
+* [Tail Workers](/workers/observability/logs/tail-workers/) - Learn how to attach Tail Workers to transform your logs and send them to HTTP endpoints.
 * [Real-time logs](/workers/observability/logs/real-time-logs/) - Learn how to capture Workers logs in real-time.
 * [RPC error handling](/workers/runtime-apis/rpc/error-handling/) - Learn how exceptions are handled over RPC (Remote Procedure Call).

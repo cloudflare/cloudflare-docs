@@ -1,6 +1,7 @@
 ---
 import { z } from "astro/zod";
-import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
 
 type Props = z.infer<typeof props>;
 
@@ -9,6 +10,27 @@ const props = z.object({
 });
 
 const { name } = props.parse(Astro.props);
+
+const INDIC_TRANS2_MODELS = new Set(["@cf/ai4bharat/indictrans2-en-indic-1B"]);
+const isIndicTrans2 = INDIC_TRANS2_MODELS.has(name);
+
+const workerInput = isIndicTrans2
+	? `        text: "Hello, how are you?",
+        target_language: "hin_Deva",`
+	: `        text: "I'll have an order of the moule frites",
+        source_lang: "english", // defaults to english
+        target_lang: "french",`;
+
+const pythonInput = isIndicTrans2
+	? `  "text": "Hello, how are you?",
+  "target_language": "hin_Deva"`
+	: `  "text": "I'll have an order of the moule frites",
+  "source_lang": "english",
+  "target_lang": "french"`;
+
+const curlInput = isIndicTrans2
+	? `{ "text": "Hello, how are you?", "target_language": "hin_Deva" }`
+	: `{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }`;
 
 const worker = `
 export interface Env {
@@ -21,9 +43,7 @@ export default {
     const response = await env.AI.run(
       "${name}",
       {
-        text: "I'll have an order of the moule frites",
-        source_lang: "english", // defaults to english
-        target_lang: "french",
+${workerInput}
       }
     );
 
@@ -43,9 +63,7 @@ def run(model, input):
     return response.json()
 
 output = run('${name}', {
-  "text": "I'll have an order of the moule frites",
-  "source_lang": "english",
-  "target_lang": "french"
+${pythonInput}
 })
 
 print(output)
@@ -55,18 +73,18 @@ const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
     -X POST  \\
     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
-    -d '{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'
+    -d '${curlInput}'
 `;
 ---
 
 <Tabs syncKey="workersAiExamples">
-	<TabItem label="TypeScript" icon="seti:typescript">
+	<TabItem label="TypeScript">
 		<Code code={worker} lang="ts" title="" />
 	</TabItem>
-	<TabItem label="Python" icon="seti:python">
+	<TabItem label="Python">
 		<Code code={python} lang="py" title="" />
 	</TabItem>
-	<TabItem label="curl" icon="seti:shell">
+	<TabItem label="curl">
 		<Code code={curl} lang="sh" />
 	</TabItem>
 </Tabs>

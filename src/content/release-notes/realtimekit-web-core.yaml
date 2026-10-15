@@ -3,6 +3,46 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-10-12"
+    title: RealtimeKit Web Core 2.0.3
+    description: |-
+      **Enhancements**
+
+      - When the signaling WebSocket disconnects but the media connection remains healthy, audio, video, and screen sharing continue without restarting. This avoids media dropouts and reduces reconnection time from 20–30 seconds to a fraction of a second.
+      - The SDK now establishes the signaling connection and fetches participant details in parallel, reducing meeting initialization time.
+      - Web Core API, signaling, logging, and call-statistics traffic now use `api.realtime.cloudflare.com`. With Web Core 2.0.3, you no longer need to separately allowlist `api-silos.realtime.cloudflare.com`, `da-collector.realtime.cloudflare.com`, or `socket-edge.realtime.cloudflare.com`. Refer to the [Network allowlist](/realtime/realtimekit/network-allowlist/) for all required domains.
+      - Participant order, pinned participants, selected views, pagination, and manual media subscriptions are now preserved during reconnection.
+
+      **Fixes**
+
+      - Fixed participants losing audio or video from others after reconnecting.
+      - Fixed transient signaling failures interrupting SDK initialization or meeting joins. The meeting object is now created even if the initial signaling attempt fails, and join requests are retried automatically.
+      - Fixed Picture-in-Picture closing during temporary disconnections. It now remains active during reconnection, and its pin and hand-raise icons use the configured design system colors.
+      - Fixed an issue where an error thrown by a customer's callback for an SDK event stopped other listeners from running. The SDK now calls each listener for an SDK event independently. If a customer's callback throws an error, the remaining listeners still run.
+      - Fixed participant grids flickering, temporarily appearing empty, or displaying duplicate or stale tiles during mass reconnections.
+
+  - publish_date: "2026-08-24"
+    title: RealtimeKit Web Core 2.0.2
+    description: |-
+      **Enhancements**
+
+      - Generated API documentation now identifies class names correctly, providing more accurate type suggestions for TypeScript users.
+      - Starting a recording that is already in progress now returns error code `1005` instead of the generic error code `1000`. If your [`onError` callback](/realtime/realtimekit/core/#advanced-options) handles error code `1000` for this case, update it to handle `1005`.
+
+      **Fixes**
+
+      - Fixed a Babel transpilation error that could occur when consuming ES2015 builds containing `RequestError`.
+      - Fixed session recovery after SFU timeouts. Participants can now continue hearing and seeing others after a transient SFU API timeout.
+      - Fixed bulk media consumer creation batching to support participant grids with up to 100 participants per page, increased from 24 per page.
+
+  - publish_date: "2026-07-17"
+    title: RealtimeKit Web Core 2.0.1
+    description: |-
+      **Fixes**
+
+      - Fixed ES5 builds containing `VERSION_PLACEHOLDER` in the bundle instead of the actual SDK version.
+      - Fixed SDK initialization failure when the initial socket connection attempt failed, which also prevented plugin store creation. The SDK now retries store creation based on the socket connection state.
+
   - publish_date: "2026-06-18"
     title: RealtimeKit Web Core 2.0.0
     description: |-

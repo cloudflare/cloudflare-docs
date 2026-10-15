@@ -42,10 +42,9 @@ To get started, create a Worker application using the [`create-cloudflare` CLI](
 />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}
@@ -110,6 +109,7 @@ Your final Wrangler file should look similar to the example below.
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "resend-rate-limit-queue",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": [
 		"nodejs_compat"

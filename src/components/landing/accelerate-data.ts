@@ -1,7 +1,4 @@
-/**
- * Product data for the Accelerate section. Consumed by
- * AccelerateSection.astro to render a grid of product cards.
- */
+// Product data for the Accelerate section.
 
 export type ProductCategory = "compute" | "ai" | "storage" | "media";
 

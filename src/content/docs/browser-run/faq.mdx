@@ -11,7 +11,7 @@ products:
   - browser-run
 ---
 
-import { GlossaryTooltip, Render, DashButton, Steps } from "~/components";
+import { GlossaryTooltip, Render, DashButton, Steps, Tabs, TabItem } from "~/components";
 
 Below you will find answers to our most commonly asked questions about Browser Run (formerly Browser Rendering).
 
@@ -188,6 +188,49 @@ There is no fixed limit on the number of requests per browser session. A single 
 Yes. If your webpage or PDF requires a font that is not pre-installed, you can load custom fonts at render time using `addStyleTag`. This works with [Quick Actions](/browser-run/quick-actions/), [Puppeteer](/browser-run/puppeteer/), and [Playwright](/browser-run/playwright/). For instructions and examples, refer to [Custom fonts](/browser-run/features/custom-fonts/).
 
 <Render file="manage-concurrency-faq" product="browser-run" />
+
+---
+
+## Session management
+
+### Should I open a new browser for every task, or reuse a session and open tabs
+
+For most workloads, reuse an existing browser session and open a new tab instead of launching a fresh browser for each task. Browser Run counts browser instances against your [concurrent browsers](/browser-run/limits/#workers-paid) and [new browser instance rate](/browser-run/limits/#workers-paid) limits, but tabs inside an existing session do not count against either limit. Reusing a session also avoids the cold-start cost of launching a new browser.
+
+A single browser can run many tabs, but all tabs share the same browser process and memory. Heavy pages (for example, pages with large JavaScript bundles, media, or complex DOMs) consume more memory per tab, so opening too many tabs in the same browser can cause it to crash. Test your workload to find a safe number of tabs per browser. For lightweight pages, tens of tabs may be fine. For heavy pages, only a few.
+
+If you reuse a session but still need isolation between tasks, use an incognito browser context. Incognito contexts isolate cookies, local storage, and cache from each other and from the default context, so you can run separate tasks in tabs within the same browser without data leaking between them.
+
+<Tabs syncKey="workersExamples">
+<TabItem label="Puppeteer">
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+const browser = await puppeteer.connect(env.MYBROWSER, sessionId);
+// or await puppeteer.launch(env.MYBROWSER);
+
+const context = await browser.createBrowserContext();
+const page = await context.newPage();
+```
+
+</TabItem>
+<TabItem label="Playwright">
+
+```ts
+import { connect } from "@cloudflare/playwright";
+
+const browser = await connect(env.BROWSER, sessionId);
+// or use the browser returned by acquire()
+
+const context = await browser.newContext();
+const page = await context.newPage();
+```
+
+</TabItem>
+</Tabs>
+
+Open a fresh browser only when you need full process-level isolation, a different browser configuration, or after a browser has become unstable. For automated screenshot, scrape, and crawl workloads, reusing sessions and tabs is usually the right choice. [Quick Actions](/browser-run/quick-actions/) manage sessions and tabs automatically, so you do not need to handle reuse yourself.
 
 ---
 

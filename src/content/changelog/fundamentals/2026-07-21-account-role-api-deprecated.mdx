@@ -1,0 +1,22 @@
+---
+title: Account Role API deprecated
+description: "Account Role API is deprecated in favor of the Permission Group API."
+products:
+  - fundamentals
+date: 2026-07-21
+---
+
+The [Account Roles API](/api/resources/accounts/subresources/roles/) is deprecated and is being replaced by the [Permission Groups API](/api/resources/iam/subresources/permission_groups/). An end of life date has not yet been established.
+
+## What you need to do
+
+Review the [Permission Groups API](/api/resources/iam/subresources/permission_groups/) documentation; the response schema differs from the legacy Roles response.
+
+## Highlights
+
+- Integrations migrating to the Permission Groups API must obtain Permission Group IDs from that API and use them in the Account Members API policies request shape. Integrations that persist legacy Role IDs will need to remap their assignments.
+- The legacy `Role` response includes a top-level `description` and a `permissions` object keyed by resource type with edit/read flags.
+- The `PermissionGroup` response replaces those with a `meta` object containing `label` and `scopes`. Individual permissions are not returned as part of the permission group.
+- The new API supports the [API Token](/fundamentals/api/get-started/create-token/) authorization scheme. The legacy Email + API Key authorization schema is provided for backwards compatibility.
+
+For more information, refer to [API deprecations](/fundamentals/api/reference/deprecations/).

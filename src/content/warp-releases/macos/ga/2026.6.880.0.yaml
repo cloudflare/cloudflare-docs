@@ -1,0 +1,9 @@
+releaseNotes: This hotfix resolves a regression that caused a large increase in
+  DNS-over-TCP queries to fallback and internal DNS servers. The client now
+  sends fallback DNS queries over UDP first, falling back to TCP only when a
+  response is truncated, instead of querying both protocols in parallel.
+version: 2026.6.880.0
+releaseDate: 2026-07-21T16:55:55.506Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.6.880.0
+packageSize: 151767153
+platformName: macOS

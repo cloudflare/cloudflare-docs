@@ -11,10 +11,10 @@ products:
 
 import { TabItem, Tabs, Details, PackageManagers } from "~/components";
 
-import { FileTree } from "@astrojs/starlight/components";
+import { FileTree } from "~/components";
 
 :::note
-For most users, Cloudflare recommends using the Workers Vitest integration. If you have been using test environments from Miniflare, refer to the [Migrate from Miniflare 2 guide](/workers/testing/vitest-integration/migration-guides/migrate-from-miniflare-2/).
+For most users, Cloudflare recommends using the [Workers Vitest integration](/workers/testing/vitest-integration/) for unit tests and [`createTestHarness()`](/workers/testing/test-harness/) for integration tests. Use Miniflare directly when you need low-level simulator control that is not exposed by those higher-level testing APIs.
 :::
 
 This guide will show you how to set up [Miniflare](/workers/testing/miniflare) to test your Workers. Miniflare is a low-level API that allows you to fully control how your Workers are run and tested.

@@ -55,8 +55,10 @@ S3_ENDPOINT=https://{{unique-id}}.r2.cloudflarestorage.com/   # Change the {{uni
 AWS_ACCESS_KEY_ID={{your-access-key-id}}                      # Change to the Access Key ID retrieved in step 2
 AWS_SECRET_ACCESS_KEY={{your-secret-access-key}}              # Change to the Secret Access Key retrieved in step 2
 S3_PROTOCOL=https
-S3_PERMISSION=private
+S3_PERMISSION=
 ```
+
+Leave `S3_PERMISSION` empty. This prevents Mastodon from sending ACL headers, which R2 does not support.
 
 After configuration, you can run your instance. After the instance is running, upload a media attachment and verify the attachment is retrieved from the hostname set above. When navigating back to the bucket's page in R2, you should see the following structure.
 
@@ -84,7 +86,7 @@ If you had the media files hosted locally, you will likely need to set up redire
 
 ### 3. Verify bucket and redirects
 
-Depending on your migration plan, you can verify if the bucket is accessible publicly and the redirects work correctly. To verify, open an existing uploaded media file with a path like `https://mastodon.example.com/cache/...` and replace the hostname from `mastodon.example.com` to `mastocon-files.example.com` and visit the new path. If the file opened correctly, proceed to the final step.
+Depending on your migration plan, you can verify if the bucket is accessible publicly and the redirects work correctly. To verify, open an existing uploaded media file with a path like `https://mastodon.example.com/cache/...` and replace the hostname from `mastodon.example.com` to `mastodon-files.example.com` and visit the new path. If the file opened correctly, proceed to the final step.
 
 ### 4. Finalize migration
 

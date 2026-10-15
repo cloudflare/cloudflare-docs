@@ -69,23 +69,6 @@ The participant object contains all information related to a particular particip
 - `stageStatus` - Indicates the participant's current stage status (applicable only in stage-enabled meetings)
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-#### Metadata properties
-
-- `id` - Session-specific identifier generated when the participant joins meeting session (also known as `peerId`)
-- `userId` - Permanent identifier of the participant generated when adding the participant to a meeting
-- `name` - Display name of the participant
-- `picture` - String URL to the participant's display picture (if any)
-- `isHost` - Boolean value whether this participant has host privileges
-- `customParticipantId` - Custom identifier that can be set while adding participant to a meeting by customer
-- `stageStatus` - Indicates the participant's current stage status (applicable only in stage-enabled meetings)
-- `isPinned` - Whether this participant is currently pinned in the meeting
-- `presetName` - Name of the preset applied to this participant while adding to meeting
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id={["web-web-components", "web-angular", "web-react", "mobile-react-native"]}>
 
 #### Media properties
@@ -99,7 +82,7 @@ The participant object contains all information related to a particular particip
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 #### Media properties
 
@@ -184,22 +167,6 @@ let canGoPreviousPage = meeting.participants.canGoPreviousPage
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Number of participants joined in the meeting
-final participantCount = meeting.participants.joined.length;
-
-// Access pagination properties
-final currentPageNumber = meeting.participants.currentPageNumber;
-final pageCount = meeting.participants.pageCount;
-final canGoNextPage = meeting.participants.isNextPagePossible;
-final canGoPreviousPage = meeting.participants.isPreviousPagePossible;
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Use the `useRealtimeKitSelector` hook to access properties:
@@ -286,25 +253,6 @@ if let participant = meeting.participants.joined.first(where: { $0.id == partici
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Find a participant by peer ID
-final participant = meeting.participants.joined
-	.where((p) => p.id == "<peerId>")
-	.firstOrNull;
-
-// Access participant properties
-if (participant != null) {
-	print('Participant: ${participant.name} (ID: ${participant.id})');
-	print('Audio: ${participant.audioEnabled ? "On" : "Off"}');
-	print('Video: ${participant.videoEnabled ? "On" : "Off"}');
-}
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -355,24 +303,6 @@ The `meeting.participants` object contains the following lists:
 If you are building a video/audio grid, use the `active` list. To display a list of all participants, use the `joined` list.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-All participants are stored under `meeting.participants`. These do not include the local user.
-
-The `meeting.participants` object contains the following lists:
-
-- **`joined`** - All participants currently in the meeting (excluding the local user)
-- **`waitlisted`** - All participants waiting to join the meeting
-- **`active`** - All participants whose media is subscribed to (participants that should be displayed on screen)
-- **`pinned`** - All pinned participants in the meeting
-
-If you are building a video/audio grid, use the `active` list. To display a list of all participants, use the `joined` list.
-
-Each participant in these lists is of type `RtkRemoteParticipant`.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id={["web-web-components", "web-angular"]}>
 
 ```js
@@ -456,25 +386,6 @@ let screenShareParticipants: [RtkRemoteParticipant] = meeting.participants.scree
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Get all joined participants
-final joinedParticipants = meeting.participants.joined;
-
-// Get active participants (those on screen)
-final activeParticipants = meeting.participants.active;
-
-// Get pinned participants
-final pinnedParticipants = meeting.participants.pinned;
-
-// Get waitlisted participants
-final waitlistedParticipants = meeting.participants.waitlisted;
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Use the `useRealtimeKitSelector` hook to access participant maps:
@@ -549,13 +460,6 @@ Android SDK uses active grid mode by default on page 0. If you switch to the nex
 iOS SDK uses active grid mode by default on page 0. If you switch to the next page, it automatically switches to paginated mode.
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK uses active grid mode by default on page 0. If you switch to the next page, it automatically switches to paginated mode.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -609,13 +513,6 @@ meeting.participants.setPage(1)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Flutter SDK automatically manages participant pagination.
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -645,7 +542,7 @@ const currentPage = useRealtimeKitSelector((m) => m.participants.currentPage);
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 Monitoring view mode is not available on this platform.
 
@@ -740,28 +637,6 @@ if let participant = meeting.participants.joined.first(where: { $0.id == partici
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Disable a remote participant's video
-participant.disableVideo(onResult: (e) {
-	// handle error if any
-});
-
-// Disable a remote participant's audio
-participant.disableAudio(onResult: (e) {
-	// handle error if any
-});
-
-// Remove the participant from the meeting
-participant.kick();
-```
-
-**Required Permission**: `permissions.host.canDisableVideo`, `permissions.host.canDisableAudio` must be `true`
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -822,16 +697,6 @@ meeting.participants.acceptWaitingRoomRequest(id: participantId)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-final participant = meeting.participants.waitlisted[0];
-meeting.participants.acceptWaitlistedParticipant(participant);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -877,16 +742,6 @@ meeting.participants.rejectWaitingRoomRequest(participantId)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-final participant = meeting.participants.waitlisted[0];
-meeting.participants.rejectWaitlistedParticipant(participant);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -959,21 +814,6 @@ if let participant = meeting.participants.joined.first(where: { $0.id == partici
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-```dart
-// Pin a remote participant
-participant.pin();
-
-// Unpin a previously pinned participant
-participant.unpin();
-```
-
-**Required Permission**: `permissions.host.canPinParticipant` must be `true`
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 ```tsx
@@ -1000,7 +840,7 @@ When the host updates the permissions for a participant, the preset is not modif
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 Updating participant permissions is not available on this platform.
 
@@ -1153,21 +993,6 @@ let screenShareView = participant.getScreenShareVideoView()
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-Use the video view methods which return a `Widget` that you can place directly in your UI hierarchy:
-
-```dart
-// Create a widget to display the participant's camera video
-final cameraView = VideoView(meetingParticipant: participant);
-
-// Create a widget to display the participant's screen share
-final screenShareView = ScreenshareView(meetingParticipant: participant);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Use `useRealtimeKitSelector` to get the video track and render it with `RTCView`:

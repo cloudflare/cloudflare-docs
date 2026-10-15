@@ -181,7 +181,7 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
   - A map of custom, user-defined metadata associated with the object.
 
-- `range` <Type text="R2Range" />
+- `range` <Type text="R2Range" /> <MetaInfo text="optional" />
 
   - A `R2Range` object containing the returned range of the object.
 
@@ -197,7 +197,7 @@ Cloudflare recommends using the `httpEtag` field when returning an etag in a res
 
   - The storage class associated with the object. Refer to [Storage Classes](#storage-class).
 
-- `ssecKeyMd5` <Type text="string" />
+- `ssecKeyMd5` <Type text="string" /> <MetaInfo text="optional" />
 
   - Hex-encoded MD5 hash of the [SSE-C](/r2/examples/ssec) key used for encryption (if one was provided). Hash can be used to identify which key is needed to decrypt object.
 
@@ -273,9 +273,9 @@ A multipart upload can be completed or aborted at any time, either through the S
 
   - Specifies that the object should only be returned given satisfaction of certain conditions in the `R2Conditional` or in the conditional Headers. Refer to [Conditional operations](#conditional-operations).
 
-- `range` <Type text="R2Range" />
+- `range` <Type text="R2Range | Headers" /> <MetaInfo text="optional" />
 
-  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned. Refer to [Ranged reads](#ranged-reads).
+  - Specifies that only a specific length (from an optional offset) or suffix of bytes from the object should be returned given the range in the `R2Range` or in the range `Headers`. Refer to [Ranged reads](#ranged-reads).
 
 - `ssecKey` <Type text="ArrayBuffer | string" />
 

@@ -21,7 +21,7 @@ On every turn, Think merges tools from multiple sources. Later sources override 
 3. **Extension tools** — tools from loaded extensions (prefixed by extension name)
 4. **Session tools** — `set_context`, `load_context`, `search_context` (from `configureSession`)
 5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/runtime/execution/agent-skills/))
-6. **MCP tools** — from connected MCP servers
+6. **MCP tools** — from connected MCP servers when `includeMcpTools` is `true`
 7. **Client tools** — from the browser (refer to [Client tools](/agents/harnesses/think/client-tools/))
 
 Tools belong to the agent running the turn. For parent-child orchestration, use [Agents as tools](/agents/runtime/execution/agent-tools/) instead of passing one-off tools through `chat()`.
@@ -100,7 +100,7 @@ bucket_name = "agent-files"
 
 ## Custom tools
 
-Override `getTools()` to add your own tools. These are standard AI SDK `tool()` definitions with Zod schemas:
+Override `getTools()` to add your own tools. These are standard AI SDK `tool()` definitions with schemas from a library like Zod or Valibot:
 
 <TypeScriptExample>
 
@@ -181,7 +181,7 @@ beforeTurn(ctx: TurnContext) {
 
 ## MCP tools
 
-Think inherits MCP client support from the `Agent` base class. MCP tools from connected servers are automatically merged into every turn.
+Think inherits MCP client support from the `Agent` base class. By default, Think converts tools from connected MCP servers to AI SDK tools and adds them to every turn.
 
 Set `waitForMcpConnections` to ensure MCP servers are connected before inference runs:
 
@@ -199,6 +199,27 @@ export class MyAgent extends Think<Env> {
 ```
 
 </TypeScriptExample>
+
+If you expose MCP tools through Code Mode or another mechanism outside Think's automatic tool set, turn off direct AI SDK tool exposure:
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Think<Env> {
+	includeMcpTools = false;
+	waitForMcpConnections = true;
+
+	getModel() {
+		/* ... */
+	}
+}
+```
+
+</TypeScriptExample>
+
+`includeMcpTools` controls only the automatic model tool merge. MCP connections still register, restore, discover, and wait. Raw catalog access, direct calls, Code Mode connectors, and explicit `this.mcp.getAITools()` calls continue to work.
+
+Use this property instead of removing MCP tool names through `activeTools` in `beforeTurn`. Think converts MCP schemas before it calls `beforeTurn`, so `activeTools` cannot avoid that conversion. To configure a connector runtime, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
 
 Add MCP servers programmatically or via `@callable` methods:
 

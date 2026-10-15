@@ -1,36 +1,51 @@
+/**
+ * /workers-ai/models/<short-slug>/<schema>.json — raw JSON-Schema endpoints.
+ *
+ * `detectApiModes` splits the schema into per-mode `{mode.id}-input/-output.json`
+ * when it has modes, else a single `schema-input/-output.json`. Bound to
+ * `getLegacyModels` with the short slug.
+ */
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { getLegacyModels } from "~/util/model-resolver";
-import { detectApiModes } from "~/util/model-schema";
+import { getLegacyModels, detectApiModes } from "~/util/models";
+
+export const prerender = true;
 
 export const getStaticPaths = (async () => {
 	const models = await getLegacyModels();
-	const paths = [];
+	const paths: {
+		params: { schema: string };
+		props: { schema: unknown };
+		cacheKey?: string;
+	}[] = [];
 
 	for (const model of models) {
-		// Short slug is the last segment of the model name, matching the
-		// URL structure used by /workers-ai/models/[...name].astro
 		const slug = model.name.split("/").at(-1)!;
 		const modes = detectApiModes(model.schema);
+		const dk = String(model.digest ?? model.id);
 
 		if (modes) {
 			for (const mode of modes) {
 				paths.push({
 					params: { schema: `${slug}/${mode.id}-input` },
 					props: { schema: mode.input },
+					cacheKey: `${dk}:${mode.id}-input`,
 				});
 				paths.push({
 					params: { schema: `${slug}/${mode.id}-output` },
 					props: { schema: mode.output },
+					cacheKey: `${dk}:${mode.id}-output`,
 				});
 			}
 		} else {
 			paths.push({
 				params: { schema: `${slug}/schema-input` },
 				props: { schema: model.schema.input },
+				cacheKey: `${dk}:schema-input`,
 			});
 			paths.push({
 				params: { schema: `${slug}/schema-output` },
 				props: { schema: model.schema.output },
+				cacheKey: `${dk}:schema-output`,
 			});
 		}
 	}
@@ -40,6 +55,4 @@ export const getStaticPaths = (async () => {
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-export const GET: APIRoute<Props> = ({ props }) => {
-	return Response.json(props.schema);
-};
+export const GET: APIRoute<Props> = ({ props }) => Response.json(props.schema);

@@ -1,0 +1,82 @@
+---
+title: Run integration tests against your Worker's production build
+description: Use Wrangler's `createTestHarness()` API to test production build output from any Node.js test runner.
+products:
+  - workers
+date: 2026-07-27
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+Wrangler now provides `createTestHarness()`, an API for running integration tests against Workers built with [Wrangler or the Cloudflare Vite plugin](/workers/testing/test-harness/configure/#configure-worker-projects) from any Node.js test runner.
+
+The test harness starts a local Worker server with [helpers for dispatching requests, resetting storage, and inspecting runtime logs](/workers/wrangler/api/#createtestharness).
+
+This is useful for tests that need to:
+
+- [Route requests across multiple Workers](/workers/testing/test-harness/interact-with-workers/#test-route-dispatch-across-workers)
+- [Mock outbound `fetch()` requests](/workers/testing/test-harness/integrations/#mock-service-worker) with Node.js request mocking libraries such as [MSW](https://mswjs.io/)
+- [Run Playwright tests against a Worker](/workers/testing/test-harness/integrations/#playwright)
+
+For example, this test starts two Workers and mocks an upstream API:
+
+<TypeScriptExample filename="tests/vitest.test.ts">
+
+```ts
+import { afterAll, afterEach, beforeAll, test } from "vitest";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { createTestHarness } from "wrangler";
+
+const network = setupServer();
+const server = createTestHarness({
+	workers: [
+		/** Includes `"routes": ["example.com/*"]` */
+		{ configPath: "./workers/web/wrangler.jsonc" },
+		/** Includes `"routes": ["api.example.com/v1/*"]` */
+		{ configPath: "./workers/api/wrangler.jsonc" },
+	],
+});
+
+beforeAll(async () => {
+	network.listen({ onUnhandledRequest: "error" });
+	await server.listen();
+});
+
+afterEach(async () => {
+	network.resetHandlers();
+	await server.reset();
+});
+
+afterAll(async () => {
+	network.close();
+	await server.close();
+});
+
+test("routes requests to each Worker", async ({ expect }) => {
+	// Mock the outbound fetch used to load user profiles.
+	network.use(
+		http.get("http://identity.example.com/profile/123", ({ params }) => {
+			return HttpResponse.json({ id: 123, name: "Ada" });
+		}),
+	);
+
+	const apiWorkerResponse = await server.fetch(
+		"http://api.example.com/v1/users/123",
+	);
+	expect(await apiWorkerResponse.json()).toEqual({
+		id: 123,
+		name: "Ada",
+	});
+
+	const webWorkerResponse = await server.fetch("http://example.com/users/123");
+	expect(await webWorkerResponse.text()).toBe("Profile: Ada");
+});
+```
+
+</TypeScriptExample>
+
+Cloudflare now recommends `createTestHarness()` for integration tests instead of [`unstable_startWorker()`](/workers/testing/unstable_startworker/) or [`unstable_dev()`](/workers/wrangler/api/#unstable_dev). To start a development server programmatically, use the Vite [`createServer()`](https://vite.dev/guide/api-javascript.html#createserver) API with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+For more information about `createTestHarness()`, refer to the [Integration test harness guide](/workers/testing/test-harness/).

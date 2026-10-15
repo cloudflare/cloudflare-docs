@@ -19,45 +19,47 @@ This guide explains how to send and receive chat messages in a meeting using Clo
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages, which can combine text, HTML, files, images, and videos in a single message
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+The meeting chat object is stored in `meeting.chat`, which has methods for sending, receiving, and fetching messages.
 
 ```js
 console.log("Chat object:", meeting.chat);
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+To load chat history, use the paginated [fetch methods](#fetching-chat-messages). To react to new, edited, and deleted messages in real time, listen for the [`chatUpdate` event](#receiving-chat-messages).
 
-```js
-console.log("All chat messages:", meeting.chat.messages);
-```
+:::caution[Deprecated]
+`meeting.chat.messages` is deprecated. It only contains the most recent 1,000 messages sent before you joined, plus any messages received after joining. Use `meeting.chat.fetchPublicMessages()`, `meeting.chat.fetchPrivateMessages()`, and `meeting.chat.fetchPinnedMessages()` instead.
+:::
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages, which can combine text, HTML, files, images, and videos in a single message
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+The meeting chat object is stored in `meeting.chat`, which has methods for sending, receiving, and fetching messages.
 
 ```jsx
 meeting.chat;
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+To load chat history, use the paginated [fetch methods](#fetching-chat-messages). To react to new, edited, and deleted messages in real time, listen for the [`chatUpdate` event](#receiving-chat-messages).
 
-```jsx
-meeting.chat.messages;
-```
+:::caution[Deprecated]
+`meeting.chat.messages` is deprecated. It only contains the most recent 1,000 messages sent before you joined, plus any messages received after joining. Use `meeting.chat.fetchPublicMessages()`, `meeting.chat.fetchPrivateMessages()`, and `meeting.chat.fetchPinnedMessages()` instead.
+:::
 
 </RTKCodeSnippet>
 
@@ -104,48 +106,26 @@ meeting.chat.messages
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-There are three types of messages that can be sent in chat:
-
-- Text messages
-- Images
-- Files
-
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
-
-```
-meeting.chat;
-```
-
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `ChatMessage`.
-
-```
-meeting.chat.messages;
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
-There are three types of messages that can be sent in chat:
+There are four types of messages that can be sent in chat:
 
 - Text messages
 - Images
 - Files
+- Custom messages, which can combine text, HTML, files, images, and videos in a single message
 
-The meeting chat object is stored in `meeting.chat`, which has methods for sending and receiving messages.
+The meeting chat object is stored in `meeting.chat`, which has methods for sending, receiving, and fetching messages.
 
 ```jsx
 meeting.chat;
 ```
 
-The `meeting.chat.messages` array contains all the messages that have been sent in the chat. This is an array of objects, where each object is of type `Message`.
+To load chat history, use the paginated [fetch methods](#fetching-chat-messages). To react to new, edited, and deleted messages in real time, listen for the [`chatUpdate` event](#receiving-chat-messages).
 
-```jsx
-meeting.chat.messages;
-```
+:::caution[Deprecated]
+`meeting.chat.messages` is deprecated. It only contains the most recent 1,000 messages sent before you joined, plus any messages received after joining. Use `meeting.chat.fetchPublicMessages()`, `meeting.chat.fetchPrivateMessages()`, and `meeting.chat.fetchPinnedMessages()` instead.
+:::
 
 </RTKCodeSnippet>
 
@@ -161,6 +141,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -183,8 +164,25 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface MediaItem {
+	link: string;
+	type?: string;
+	name?: string;
+	size?: number;
+}
+
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: MediaItem[];
+	images?: MediaItem[];
+	videos?: MediaItem[];
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
+
+`timeMs` is the time the message was sent, in milliseconds since the Unix epoch. Use it as the cursor when [paginating through messages](#fetching-chat-messages). `targetUserIds` is set on private messages and contains the user IDs of the participants in the conversation.
 
 </RTKCodeSnippet>
 
@@ -198,6 +196,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -220,8 +219,25 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface MediaItem {
+	link: string;
+	type?: string;
+	name?: string;
+	size?: number;
+}
+
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: MediaItem[];
+	images?: MediaItem[];
+	videos?: MediaItem[];
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
+
+`timeMs` is the time the message was sent, in milliseconds since the Unix epoch. Use it as the cursor when [paginating through messages](#fetching-chat-messages). `targetUserIds` is set on private messages and contains the user IDs of the participants in the conversation.
 
 </RTKCodeSnippet>
 
@@ -298,40 +314,6 @@ public final class FileMessage: ChatMessage {
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-The `ChatMessage` class is defined as follows:
-
-```dart
-enum MessageType { text, image, file }
-
-class ChatMessage {
-  final String displayName;
-  final MessageType type;
-  final bool read;
-  final String userId;
-  final String? pluginId;
-  final String time;
-}
-
-class TextMessage extends ChatMessage {
-  final String message;
-}
-
-class ImageMessage extends ChatMessage {
-  final String link;
-}
-
-class FileMessage extends ChatMessage {
-  final String name;
-  final String link;
-  final int size;
-}
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 The `Message` type is defined as follows:
@@ -342,6 +324,7 @@ interface BaseMessage<T extends MessageType> {
 	userId: string;
 	displayName: string;
 	time: Date;
+	timeMs?: number;
 	id: string;
 	isEdited?: boolean;
 	read?: boolean;
@@ -364,8 +347,25 @@ interface FileMessage extends BaseMessage<MessageType.file> {
 	link: string;
 }
 
-type Message = TextMessage | ImageMessage | FileMessage;
+interface MediaItem {
+	link: string;
+	type?: string;
+	name?: string;
+	size?: number;
+}
+
+interface CustomMessage extends BaseMessage<MessageType.custom> {
+	message?: string;
+	html?: string;
+	files?: MediaItem[];
+	images?: MediaItem[];
+	videos?: MediaItem[];
+}
+
+type Message = TextMessage | ImageMessage | FileMessage | CustomMessage;
 ```
+
+`timeMs` is the time the message was sent, in milliseconds since the Unix epoch. Use it as the cursor when [paginating through messages](#fetching-chat-messages). `targetUserIds` is set on private messages and contains the user IDs of the participants in the conversation.
 
 </RTKCodeSnippet>
 
@@ -384,6 +384,8 @@ const message = "Is this the real life?";
 await meeting.chat.sendTextMessage(message);
 ```
 
+The method throws an error if the message is empty, exceeds the [maximum text length](#message-limits), or if the local participant does not have permission to send text messages.
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
@@ -396,6 +398,8 @@ To send a text message, use the `meeting.chat.sendTextMessage()` method. This ac
 const message = "Is this the real life?";
 await meeting.chat.sendTextMessage(message);
 ```
+
+The method throws an error if the message is empty, exceeds the [maximum text length](#message-limits), or if the local participant does not have permission to send text messages.
 
 </RTKCodeSnippet>
 
@@ -424,20 +428,6 @@ meeting.chat.sendTextMessage(message)
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-There is a method in `meeting.chat` to send a message of each type.
-
-To send a text message, use the `meeting.chat.sendTextMessage()` method. This accepts a string message and sends it to the room.
-
-```dart
-final message = "Is this the real life?";
-meeting.chat.sendTextMessage(message);
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 There is a method in `meeting.chat` to send a message of each type.
@@ -449,17 +439,24 @@ const message = "Is this the real life?";
 await meeting.chat.sendTextMessage(message);
 ```
 
+The method throws an error if the message is empty, exceeds the [maximum text length](#message-limits), or if the local participant does not have permission to send text messages.
+
 </RTKCodeSnippet>
 
 ### Send an Image
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting. Supported image formats are PNG, JPEG, and GIF.
 
 ```html
 <label for="img">Select image:</label>
-<input type="file" id="img" name="img" accept="image/*" />
+<input
+	type="file"
+	id="img"
+	name="img"
+	accept="image/png, image/jpeg, image/gif"
+/>
 <button onclick="onSendImage()">Send Image</button>
 ```
 
@@ -474,7 +471,7 @@ async function onSendImage() {
 
 <RTKCodeSnippet id="web-react">
 
-You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting.
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type `File`, and sends it to the participants in the meeting. Supported image formats are PNG, JPEG, and GIF.
 
 ```jsx
 import { useRef } from "react";
@@ -496,7 +493,7 @@ function ChatComponent() {
 				type="file"
 				id="img"
 				name="img"
-				accept="image/*"
+				accept="image/png, image/jpeg, image/gif"
 				ref={imageInputRef}
 			/>
 			<button onClick={onSendImage}>Send Image</button>
@@ -530,23 +527,9 @@ meeting.chat.sendImageMessage(imageURL: url) { err in
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-You can send an image with the help of `meeting.chat.sendImageMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
-
-```dart
-final filePath = "file_path_of_image";
-meeting.chat.sendImageMessage(filePath, (error) {
-  // Handle error if any
-});
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
-You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image of type File, and sends it to the participants in the meeting.
+You can send an image with the help of `meeting.chat.sendImageMessage()`. This accepts an image object with `uri`, `name`, `size`, and `type` fields, and sends it to the participants in the meeting. Supported image formats are PNG, JPEG, and GIF.
 
 ```jsx
 import DocumentPicker from "@react-native-documents/picker";
@@ -641,20 +624,6 @@ meeting.chat.sendFileMessage(fileURL: url) { err in
 ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-
-You can send a file with the help of `meeting.chat.sendFileMessage()` which sends it to the participants in the meeting. It takes a string filePath as argument.
-
-```dart
-final filePath = "file_path_of_pdf";
-meeting.chat.sendFileMessage(filePath, (error) {
-  // Handle error if any
-});
-```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 
 Sending a file is similar to sending an image. The only difference is that when you send an image, a preview will be shown in the meeting chat, which is not the case for sending files. That being said, an image can be sent as a file too using `meeting.chat.sendFileMessage()`.
@@ -679,21 +648,125 @@ async function onSendFile() {
 
 </RTKCodeSnippet>
 
+### Send a Custom Message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use `meeting.chat.sendCustomMessage()` to send a single message that combines text, HTML, files, images, and videos. The method accepts a payload of the following type:
+
+```typescript
+interface CustomMessagePayload {
+	type: "custom";
+	message?: string;
+	html?: string;
+	files?: (File | string)[];
+	images?: (File | string)[];
+	videos?: (File | string)[];
+}
+```
+
+Each entry in `files`, `images`, and `videos` can be either a `File`, which is uploaded before the message is sent, or a URL string, which is sent as-is.
+
+```js
+async function onSendCustomMessage() {
+	const file = document.getElementById("file");
+	await meeting.chat.sendCustomMessage({
+		type: "custom",
+		message: "Here are the slides from today's session",
+		files: [file.files[0]],
+		images: ["https://example.com/architecture-diagram.png"],
+	});
+}
+```
+
+Participants receive a message of type `custom`. Each entry in `files`, `images`, and `videos` is a `MediaItem` with a `link` and, for uploaded files, the `name`, `size`, and `type` of the file.
+
+Sending a custom message requires permission to send both text and files.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `meeting.chat.sendCustomMessage()` to send a single message that combines text, HTML, files, images, and videos. The method accepts a payload of the following type:
+
+```typescript
+interface CustomMessagePayload {
+	type: "custom";
+	message?: string;
+	html?: string;
+	files?: (File | string)[];
+	images?: (File | string)[];
+	videos?: (File | string)[];
+}
+```
+
+Each entry in `files`, `images`, and `videos` can be either a `File`, which is uploaded before the message is sent, or a URL string, which is sent as-is.
+
+```jsx
+const onSendCustomMessage = async (file) => {
+	await meeting.chat.sendCustomMessage({
+		type: "custom",
+		message: "Here are the slides from today's session",
+		files: [file],
+		images: ["https://example.com/architecture-diagram.png"],
+	});
+};
+```
+
+Participants receive a message of type `custom`. Each entry in `files`, `images`, and `videos` is a `MediaItem` with a `link` and, for uploaded files, the `name`, `size`, and `type` of the file.
+
+Sending a custom message requires permission to send both text and files.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `meeting.chat.sendCustomMessage()` to send a single message that combines text, HTML, files, images, and videos. The method accepts a payload of the following type:
+
+```typescript
+interface CustomMessagePayload {
+	type: "custom";
+	message?: string;
+	html?: string;
+	files?: (File | string)[];
+	images?: (File | string)[];
+	videos?: (File | string)[];
+}
+```
+
+Each entry in `files`, `images`, and `videos` can be either a file object, which is uploaded before the message is sent, or a URL string, which is sent as-is.
+
+```jsx
+await meeting.chat.sendCustomMessage({
+	type: "custom",
+	message: "Here are the slides from today's session",
+	files: ["https://example.com/slides.pdf"],
+	images: ["https://example.com/architecture-diagram.png"],
+});
+```
+
+Participants receive a message of type `custom`. Each entry in `files`, `images`, and `videos` is a `MediaItem` with a `link` and, for uploaded files, the `name`, `size`, and `type` of the file.
+
+Sending a custom message requires permission to send both text and files.
+
+</RTKCodeSnippet>
+
 ### Send Any Message Type
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `sendMessage()` method accepts a `message` parameter and an optional list of participant IDs to [send the message privately](#send-a-private-message):
 
 ```typescript
+type MessagePayload =
+	| { type: "text"; message: string }
+	| { type: "image"; image: File }
+	| { type: "file"; file: File };
+
 async function sendMessage(
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
+	message: MessagePayload,
+	participantIds?: string[],
+): Promise<void>;
 ```
 
 Here is how you would use the `sendMessage()` method to send a text message:
@@ -703,21 +776,24 @@ const message = "Is this just fantasy?";
 await meeting.chat.sendMessage({ type: "text", message });
 ```
 
+To send a custom message, use [`sendCustomMessage()`](#send-a-custom-message).
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `sendMessage()` method accepts a `message` parameter and an optional list of participant IDs to [send the message privately](#send-a-private-message):
 
 ```typescript
+type MessagePayload =
+	| { type: "text"; message: string }
+	| { type: "image"; image: File }
+	| { type: "file"; file: File };
+
 async function sendMessage(
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
+	message: MessagePayload,
+	participantIds?: string[],
+): Promise<void>;
 ```
 
 Here is how you would use the `sendMessage()` method to send a text message:
@@ -725,30 +801,195 @@ Here is how you would use the `sendMessage()` method to send a text message:
 ```jsx
 const message = "Is this just fantasy?";
 await meeting.chat.sendMessage({ type: "text", message });
+```
+
+To send a custom message, use [`sendCustomMessage()`](#send-a-custom-message).
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+There is also a common method called `meeting.chat.sendMessage()` that can be used to send text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `sendMessage()` method accepts a `message` parameter and an optional list of participant IDs to [send the message privately](#send-a-private-message):
+
+```typescript
+type MessagePayload =
+	| { type: "text"; message: string }
+	| { type: "image"; image: File }
+	| { type: "file"; file: File };
+
+async function sendMessage(
+	message: MessagePayload,
+	participantIds?: string[],
+): Promise<void>;
+```
+
+Here is how you would use the `sendMessage()` method to send a text message:
+
+```jsx
+const message = "Is this just fantasy?";
+await meeting.chat.sendMessage({ type: "text", message });
+```
+
+To send a custom message, use [`sendCustomMessage()`](#send-a-custom-message).
+
+</RTKCodeSnippet>
+
+### Send a Private Message
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+All send methods accept an optional second argument: an array of participant IDs. When you pass it, the message is only delivered to those participants and to the local participant, who is added automatically.
+
+Pass the participant's `id`, not their `userId`.
+
+```js
+// Find the participant with name "Freddie".
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+await meeting.chat.sendTextMessage("Hey Freddie!", [participant.id]);
+
+// Or, using sendMessage()
+await meeting.chat.sendMessage({ type: "text", message: "Hey Freddie!" }, [
+	participant.id,
+]);
+```
+
+Sending private messages requires the private chat permissions (`meeting.self.permissions.chatPrivate`). Received private messages include `targetUserIds`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+All send methods accept an optional second argument: an array of participant IDs. When you pass it, the message is only delivered to those participants and to the local participant, who is added automatically.
+
+Pass the participant's `id`, not their `userId`.
+
+```jsx
+// Find the participant with name "Freddie".
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+await meeting.chat.sendTextMessage("Hey Freddie!", [participant.id]);
+
+// Or, using sendMessage()
+await meeting.chat.sendMessage({ type: "text", message: "Hey Freddie!" }, [
+	participant.id,
+]);
+```
+
+Sending private messages requires the private chat permissions (`meeting.self.permissions.chatPrivate`). Received private messages include `targetUserIds`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+All send methods accept an optional second argument: an array of participant IDs. When you pass it, the message is only delivered to those participants and to the local participant, who is added automatically.
+
+Pass the participant's `id`, not their `userId`.
+
+```jsx
+// Find the participant with name "Freddie".
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+await meeting.chat.sendTextMessage("Hey Freddie!", [participant.id]);
+
+// Or, using sendMessage()
+await meeting.chat.sendMessage({ type: "text", message: "Hey Freddie!" }, [
+	participant.id,
+]);
+```
+
+Sending private messages requires the private chat permissions (`meeting.self.permissions.chatPrivate`). Received private messages include `targetUserIds`.
+
+</RTKCodeSnippet>
+
+### Message Limits
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Text messages are limited to 2,000 characters by default. Sending a longer message throws an error. You can read the current limit from `meeting.chat.maxTextLimit` and change it with `meeting.chat.setMaxTextLimit()`.
+
+```js
+console.log(meeting.chat.maxTextLimit); // 2000
+
+meeting.chat.setMaxTextLimit(500);
+```
+
+The send methods are also rate limited. Calls that exceed the limit throw an error.
+
+| Method                                    | Default limit               |
+| ----------------------------------------- | --------------------------- |
+| `sendTextMessage()`, `sendMessage()`      | 180 messages per 60 seconds |
+| `sendImageMessage()`, `sendFileMessage()` | 20 messages per 60 seconds  |
+
+You can read the rate limit of `sendTextMessage()` from `meeting.chat.rateLimits` and change it with `meeting.chat.updateRateLimits()`, which accepts the maximum number of messages and the period in seconds.
+
+```js
+console.log(meeting.chat.rateLimits); // { maxInvocations: 180, period: 60 }
+
+// Allow 60 messages every 30 seconds
+meeting.chat.updateRateLimits(60, 30);
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Text messages are limited to 2,000 characters by default. Sending a longer message throws an error. You can read the current limit from `meeting.chat.maxTextLimit` and change it with `meeting.chat.setMaxTextLimit()`.
+
+```jsx
+console.log(meeting.chat.maxTextLimit); // 2000
+
+meeting.chat.setMaxTextLimit(500);
+```
+
+The send methods are also rate limited. Calls that exceed the limit throw an error.
+
+| Method                                    | Default limit               |
+| ----------------------------------------- | --------------------------- |
+| `sendTextMessage()`, `sendMessage()`      | 180 messages per 60 seconds |
+| `sendImageMessage()`, `sendFileMessage()` | 20 messages per 60 seconds  |
+
+You can read the rate limit of `sendTextMessage()` from `meeting.chat.rateLimits` and change it with `meeting.chat.updateRateLimits()`, which accepts the maximum number of messages and the period in seconds.
+
+```jsx
+console.log(meeting.chat.rateLimits); // { maxInvocations: 180, period: 60 }
+
+// Allow 60 messages every 30 seconds
+meeting.chat.updateRateLimits(60, 30);
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
 
-There is also a common method called `meeting.chat.sendMessage()` that can be used to send any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `sendMessage()` method accepts a parameter `message` of the following type:
-
-```typescript
-async function sendMessage(
-	message:
-		| { type: "text"; message: string }
-		| { type: "image"; image: File }
-		| { type: "file"; file: File },
-) {
-	// ...
-}
-```
-
-Here is how you would use the `sendMessage()` method to send a text message:
+Text messages are limited to 2,000 characters by default. Sending a longer message throws an error. You can read the current limit from `meeting.chat.maxTextLimit` and change it with `meeting.chat.setMaxTextLimit()`.
 
 ```jsx
-const message = "Is this just fantasy?";
-await meeting.chat.sendMessage({ type: "text", message });
+console.log(meeting.chat.maxTextLimit); // 2000
+
+meeting.chat.setMaxTextLimit(500);
+```
+
+The send methods are also rate limited. Calls that exceed the limit throw an error.
+
+| Method                                    | Default limit               |
+| ----------------------------------------- | --------------------------- |
+| `sendTextMessage()`, `sendMessage()`      | 180 messages per 60 seconds |
+| `sendImageMessage()`, `sendFileMessage()` | 20 messages per 60 seconds  |
+
+You can read the rate limit of `sendTextMessage()` from `meeting.chat.rateLimits` and change it with `meeting.chat.updateRateLimits()`, which accepts the maximum number of messages and the period in seconds.
+
+```jsx
+console.log(meeting.chat.rateLimits); // { maxInvocations: 180, period: 60 }
+
+// Allow 60 messages every 30 seconds
+meeting.chat.updateRateLimits(60, 30);
 ```
 
 </RTKCodeSnippet>
@@ -757,60 +998,72 @@ await meeting.chat.sendMessage({ type: "text", message });
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
+The `meeting.chat` object emits a `chatUpdate` event whenever a message is added, edited, or deleted.
 
 ```js
-meeting.chat.on("chatUpdate", ({ message, messages }) => {
-	console.log(`Received message ${message}`);
-	console.log(`All messages in chat: ${messages.join(", ")}`);
+meeting.chat.on("chatUpdate", ({ action, message }) => {
+	switch (action) {
+		case "add":
+			console.log("New message", message);
+			break;
+		case "edit":
+			console.log("Message edited", message);
+			break;
+		case "delete":
+			console.log("Message deleted", message.id);
+			break;
+	}
 });
 ```
 
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+The event payload has the following fields:
 
-When a chat message is received, the `meeting.chat.messages` list is also updated.
+- `action` - One of `add`, `edit`, or `delete`.
+- `message` - The message that was added, edited, or deleted, of type `Message`.
+- `messages` - Deprecated. The same list as `meeting.chat.messages`.
 
-```js
-console.log(JSON.stringify(meeting.chat.messages));
-
-meeting.chat.on("chatUpdate", () => {
-	console.log(JSON.stringify(meeting.chat.messages));
-});
-```
+To stop listening, pass the same handler to `meeting.chat.off()`.
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
 
-The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
+The `meeting.chat` object emits a `chatUpdate` event whenever a message is added, edited, or deleted.
 
 ```jsx
-import { useRealtimeKitSelector } from "@cloudflare/realtimekit-react";
+import { useEffect } from "react";
 
-// useRealtimeKitSelector hooks only works when `RealtimeKitProvider` is used.
-const messages = useRealtimeKitSelector((m) => m.chat.messages);
+function ChatListener({ meeting }) {
+	useEffect(() => {
+		const onChatUpdate = ({ action, message }) => {
+			switch (action) {
+				case "add":
+					console.log("New message", message);
+					break;
+				case "edit":
+					console.log("Message edited", message);
+					break;
+				case "delete":
+					console.log("Message deleted", message.id);
+					break;
+			}
+		};
+
+		meeting.chat.on("chatUpdate", onChatUpdate);
+		return () => {
+			meeting.chat.off("chatUpdate", onChatUpdate);
+		};
+	}, [meeting]);
+
+	return null;
+}
 ```
 
-Alternatively:
+The event payload has the following fields:
 
-```jsx
-meeting.chat.on("chatUpdate", ({ message, messages }) => {
-	console.log(`Received message ${message}`);
-	console.log(`All messages in chat: ${messages.join(", ")}`);
-});
-```
-
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
-
-When a chat message is received, the `meeting.chat.messages` list is also updated.
-
-```jsx
-console.log(JSON.stringify(meeting.chat.messages));
-
-meeting.chat.on("chatUpdate", () => {
-	console.log(JSON.stringify(meeting.chat.messages));
-});
-```
+- `action` - One of `add`, `edit`, or `delete`.
+- `message` - The message that was added, edited, or deleted, of type `Message`.
+- `messages` - Deprecated. The same list as `meeting.chat.messages`.
 
 </RTKCodeSnippet>
 
@@ -869,73 +1122,252 @@ The `onNewChatMessage()` method will be called whenever a new chat message is sh
 The `onMessageRateLimitReset()` method will be called when the rate limit for sending messages of self is reset and you can send messages again. The default rate limit is 180 messages within 60 seconds.
 
 </RTKCodeSnippet>
+<RTKCodeSnippet id="mobile-react-native">
 
-<RTKCodeSnippet id="mobile-flutter">
+The `meeting.chat` object emits a `chatUpdate` event whenever a message is added, edited, or deleted.
 
-To be able to receive chat messages you need to implement a method `onChatUpdates()` method from callback `RtkChatEventListener`. You can subscribe to this events by calling `meeting.addChatEventListener(rtkChatEventListener)`.
-
-```dart
-class ChatEventListener extends RtkChatEventListener {
-  @override
-  void onChatUpdates(List<ChatMessage> messages) {
-    messages.map((msg) {
-      switch (msg.type) {
-        case MessageType.text:
-          print((msg as TextMessage).displayName);
-          print((msg).message);
-
-          // Show message/return state to show text message UI.
-
-          break;
-        case MessageType.image:
-          print((msg as ImageMessage).displayName);
-          print((msg).link);
-
-          // Show message/return state to show image message UI.
-          break;
-        case MessageType.file:
-          print((msg as FileMessage).name);
-          print((msg).link);
-          print((msg).size);
-          // Show message/return state to show file message UI.
-
-          break;
-      }
-    });
-  }
-
-  void onNewChatMessage(ChatMessage message) {
-    // your code to handle new chat message
-  }
-}
+```jsx
+meeting.chat.on("chatUpdate", ({ action, message }) => {
+	switch (action) {
+		case "add":
+			console.log("New message", message);
+			break;
+		case "edit":
+			console.log("Message edited", message);
+			break;
+		case "delete":
+			console.log("Message deleted", message.id);
+			break;
+	}
+});
 ```
 
-In this context, `messages` refers to a list of all the chat messages in the meeting. The type of message used is `ChatMessage`, which was introduced earlier in the introduction to Chat topic.
+The event payload has the following fields:
 
-Whenever a chat message is received, the `meeting.chat.messages` list is automatically updated.
+- `action` - One of `add`, `edit`, or `delete`.
+- `message` - The message that was added, edited, or deleted, of type `Message`.
+- `messages` - Deprecated. The same list as `meeting.chat.messages`.
+
+To stop listening, pass the same handler to `meeting.chat.off()`.
+
+</RTKCodeSnippet>
+
+## Fetching Chat Messages
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use the fetch methods to load chat history page by page. All of them accept an options object with the following fields:
+
+- `limit` - Required. The maximum number of messages to return.
+- `timestamp` - The cursor, in milliseconds since the Unix epoch. Defaults to the current time.
+- `direction` - Whether to fetch messages sent `before` or `after` `timestamp`. Defaults to `after`.
+
+Each method returns a promise that resolves to an array of `Message` objects.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use the fetch methods to load chat history page by page. All of them accept an options object with the following fields:
+
+- `limit` - Required. The maximum number of messages to return.
+- `timestamp` - The cursor, in milliseconds since the Unix epoch. Defaults to the current time.
+- `direction` - Whether to fetch messages sent `before` or `after` `timestamp`. Defaults to `after`.
+
+Each method returns a promise that resolves to an array of `Message` objects.
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
 
-The `meeting.chat` object emits events when new chat messages are received. You can listen for the `chatUpdate` event to log when a new chat message is received.
+Use the fetch methods to load chat history page by page. All of them accept an options object with the following fields:
 
-```jsx
-meeting.chat.on("chatUpdate", ({ message, messages }) => {
-	console.log(`Received message ${message}`);
-	console.log(`All messages in chat: ${messages.join(", ")}`);
+- `limit` - Required. The maximum number of messages to return.
+- `timestamp` - The cursor, in milliseconds since the Unix epoch. Defaults to the current time.
+- `direction` - Whether to fetch messages sent `before` or `after` `timestamp`. Defaults to `after`.
+
+Each method returns a promise that resolves to an array of `Message` objects.
+
+</RTKCodeSnippet>
+
+### Fetch Public Messages
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use `meeting.chat.fetchPublicMessages()` to fetch messages from the public chat. To load the most recent messages, fetch messages sent before the current time:
+
+```js
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
 });
 ```
 
-Here, `message` is of type `Message`, as defined in the introduction. `messages` is a list of all chat messages in the meeting, which is the same as `meeting.chat.messages`.
+To load the next page of older messages, pass the `timeMs` of the oldest message you have as the new `timestamp`:
 
-When a chat message is received, the `meeting.chat.messages` list is also updated.
+```js
+const oldestTimestamp = Math.min(...messages.map((m) => m.timeMs));
+
+const olderMessages = await meeting.chat.fetchPublicMessages({
+	timestamp: oldestTimestamp,
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `meeting.chat.fetchPublicMessages()` to fetch messages from the public chat. To load the most recent messages, fetch messages sent before the current time:
 
 ```jsx
-console.log(JSON.stringify(meeting.chat.messages));
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
 
-meeting.chat.on("chatUpdate", () => {
-	console.log(JSON.stringify(meeting.chat.messages));
+To load the next page of older messages, pass the `timeMs` of the oldest message you have as the new `timestamp`:
+
+```jsx
+const oldestTimestamp = Math.min(...messages.map((m) => m.timeMs));
+
+const olderMessages = await meeting.chat.fetchPublicMessages({
+	timestamp: oldestTimestamp,
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `meeting.chat.fetchPublicMessages()` to fetch messages from the public chat. To load the most recent messages, fetch messages sent before the current time:
+
+```jsx
+const messages = await meeting.chat.fetchPublicMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+To load the next page of older messages, pass the `timeMs` of the oldest message you have as the new `timestamp`:
+
+```jsx
+const oldestTimestamp = Math.min(...messages.map((m) => m.timeMs));
+
+const olderMessages = await meeting.chat.fetchPublicMessages({
+	timestamp: oldestTimestamp,
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+### Fetch Private Messages
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use `meeting.chat.fetchPrivateMessages()` to fetch the private conversation between the local participant and another participant. In addition to the pagination options, pass the other participant's `userId`.
+
+```js
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const privateMessages = await meeting.chat.fetchPrivateMessages({
+	userId: participant.userId,
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `meeting.chat.fetchPrivateMessages()` to fetch the private conversation between the local participant and another participant. In addition to the pagination options, pass the other participant's `userId`.
+
+```jsx
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const privateMessages = await meeting.chat.fetchPrivateMessages({
+	userId: participant.userId,
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `meeting.chat.fetchPrivateMessages()` to fetch the private conversation between the local participant and another participant. In addition to the pagination options, pass the other participant's `userId`.
+
+```jsx
+const participant = meeting.participants.joined
+	.toArray()
+	.find((p) => p.name === "Freddie");
+
+const privateMessages = await meeting.chat.fetchPrivateMessages({
+	userId: participant.userId,
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+### Fetch Pinned Messages
+
+<RTKCodeSnippet id={["web-angular","web-web-components"]}>
+
+Use `meeting.chat.fetchPinnedMessages()` to fetch messages that have been [pinned](#pinning-a-chat-message).
+
+```js
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="web-react">
+
+Use `meeting.chat.fetchPinnedMessages()` to fetch messages that have been [pinned](#pinning-a-chat-message).
+
+```jsx
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
+});
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Use `meeting.chat.fetchPinnedMessages()` to fetch messages that have been [pinned](#pinning-a-chat-message).
+
+```jsx
+const pinnedMessages = await meeting.chat.fetchPinnedMessages({
+	timestamp: Date.now(),
+	limit: 25,
+	direction: "before",
 });
 ```
 
@@ -952,12 +1384,13 @@ There is a method in `meeting.chat` to edit a message of each type.
 To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
 
 ```js
-const message = meeting.chat.messages[0];
-const messageId = message?.id;
+const messageId = "...";
 const newMessage = "Is this the real life?";
 
 await meeting.chat.editTextMessage(messageId, newMessage);
 ```
+
+When a message is edited, participants receive a `chatUpdate` event with `action` set to `edit`, and the message has `isEdited: true`.
 
 </RTKCodeSnippet>
 
@@ -968,12 +1401,13 @@ There is a method in `meeting.chat` to edit a message of each type.
 To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
 
 ```jsx
-const message = meeting.chat.messages[0];
-const messageId = message?.id;
+const messageId = "...";
 const newMessage = "Is this the real life?";
 
 await meeting.chat.editTextMessage(messageId, newMessage);
 ```
+
+When a message is edited, participants receive a `chatUpdate` event with `action` set to `edit`, and the message has `isEdited: true`.
 
 </RTKCodeSnippet>
 
@@ -984,11 +1418,13 @@ There is a method in `meeting.chat` to edit a message of each type.
 To edit a text message, use the `meeting.chat.editTextMessage()` method. This accepts a `messageId` (type `string`) and a `message` (type `string`).
 
 ```jsx
-const message = meeting.chat.messages[0];
-const messageId = message?.id;
+const messageId = "...";
 const newMessage = "Is this the real life?";
+
 await meeting.chat.editTextMessage(messageId, newMessage);
 ```
+
+When a message is edited, participants receive a `chatUpdate` event with `action` set to `edit`, and the message has `isEdited: true`.
 
 </RTKCodeSnippet>
 
@@ -996,11 +1432,16 @@ await meeting.chat.editTextMessage(messageId, newMessage);
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`. Supported image formats are PNG, JPEG, and GIF.
 
 ```html
 <label for="img">Edit image:</label>
-<input type="file" id="img" name="img" accept="image/*" />
+<input
+	type="file"
+	id="img"
+	name="img"
+	accept="image/png, image/jpeg, image/gif"
+/>
 <button onclick="onEditImage()">Edit Image</button>
 ```
 
@@ -1016,7 +1457,7 @@ async function onEditImage() {
 
 <RTKCodeSnippet id="web-react">
 
-You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`.
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type `File`. Supported image formats are PNG, JPEG, and GIF.
 
 ```jsx
 import { useRef } from "react";
@@ -1039,7 +1480,7 @@ function ChatComponent() {
 				type="file"
 				id="img"
 				name="img"
-				accept="image/*"
+				accept="image/png, image/jpeg, image/gif"
 				ref={imageInputRef}
 			/>
 			<button onClick={onEditImage}>Edit Image</button>
@@ -1052,7 +1493,7 @@ function ChatComponent() {
 
 <RTKCodeSnippet id="mobile-react-native">
 
-You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image of type File.
+You can edit an image with the help of `meeting.chat.editImageMessage()`. This accepts a `messageId` of type `string` and an image object with `uri`, `name`, `size`, and `type` fields. Supported image formats are PNG, JPEG, and GIF.
 
 ```jsx
 import DocumentPicker from "@react-native-documents/picker";
@@ -1156,7 +1597,7 @@ async function onEditFile() {
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
-There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
 
 ```typescript
 async function editMessage(
@@ -1165,9 +1606,7 @@ async function editMessage(
 		| { type: "text"; message: string }
 		| { type: "image"; image: File }
 		| { type: "file"; file: File },
-) {
-	// ...
-}
+): Promise<void>;
 ```
 
 Here is how you would use the `editMessage()` method to edit a text message:
@@ -1182,7 +1621,7 @@ await meeting.chat.editMessage(messageId, { type: "text", message });
 
 <RTKCodeSnippet id="web-react">
 
-There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
 
 ```typescript
 async function editMessage(
@@ -1191,9 +1630,7 @@ async function editMessage(
 		| { type: "text"; message: string }
 		| { type: "image"; image: File }
 		| { type: "file"; file: File },
-) {
-	// ...
-}
+): Promise<void>;
 ```
 
 Here is how you would use the `editMessage()` method to edit a text message:
@@ -1208,7 +1645,7 @@ await meeting.chat.editMessage(messageId, { type: "text", message });
 
 <RTKCodeSnippet id="mobile-react-native">
 
-There is also a common method called `meeting.chat.editMessage()` that can be used to edit any of the three types of messages displayed above. It essentially calls one of the methods from above depending upon the type of payload you send to the method. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
+There is also a common method called `meeting.chat.editMessage()` that can be used to edit text, image, and file messages. It calls one of the methods above depending on the `type` of the payload you send. The `editMessage()` method accepts parameters `messageId` and `message` of the following type:
 
 ```typescript
 async function editMessage(
@@ -1217,9 +1654,7 @@ async function editMessage(
 		| { type: "text"; message: string }
 		| { type: "image"; image: File }
 		| { type: "file"; file: File },
-) {
-	// ...
-}
+): Promise<void>;
 ```
 
 Here is how you would use the `editMessage()` method to edit a text message:
@@ -1234,121 +1669,30 @@ await meeting.chat.editMessage(messageId, { type: "text", message });
 
 ## Other Chat Functions
 
-### Get Messages by a User
-
-<RTKCodeSnippet id={["web-angular","web-web-components"]}>
-
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
-
-```js
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
-
-```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-react-native">
-
-The `meeting.chat` object exposes certain other methods for convenience when working with chat.
-
-You can get messages by a particular user by passing the user's ID to the `meeting.chat.getMessagesByUser()` method.
-
-```jsx
-// Find the userId of the user with name "Freddie".
-const { userId } = meeting.participants.joined
-	.toArray()
-	.find((p) => p.name === "Freddie");
-
-const messages = meeting.chat.getMessagesByUser(userId);
-```
-
-</RTKCodeSnippet>
-
-### Get Messages of a Particular Type
-
-<RTKCodeSnippet id={["web-angular","web-web-components"]}>
-
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
-
-```js
-const imageMessages = meeting.chat.getMessagesByType("image");
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="web-react">
-
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
-
-```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
-```
-
-</RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-react-native">
-
-You can also get messages of a particular type using the `meeting.chat.getMessagesByType()` method. For example, you can get all image messages present in the chat using the following snippet:
-
-```jsx
-const imageMessages = meeting.chat.getMessagesByType("image");
-```
-
-</RTKCodeSnippet>
-
 ### Pinning a Chat Message
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
 
 You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
 
-To pin a message:
+To pin a message, pass its ID to `meeting.chat.pin()`. The local participant must have joined the meeting, otherwise the method throws an error.
 
 ```js
-// Pin the first message in the chat (could be text, image, or file).
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
+const messageId = "...";
+await meeting.chat.pin(messageId);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
-
-```js
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
-```
+To get the list of pinned messages, use [`meeting.chat.fetchPinnedMessages()`](#fetch-pinned-messages).
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```js
-// Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
-await meeting.chat.unpin(id);
+// Unpin the most recently pinned message.
+const [latestPinned] = await meeting.chat.fetchPinnedMessages({
+	limit: 1,
+	direction: "before",
+});
+await meeting.chat.unpin(latestPinned.id);
 ```
 
 You can listen for events to know when a message is pinned or unpinned.
@@ -1369,30 +1713,24 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
 
-To pin a message:
+To pin a message, pass its ID to `meeting.chat.pin()`. The local participant must have joined the meeting, otherwise the method throws an error.
 
 ```jsx
-// Pin the first message in the chat (could be text, image, or file).
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
+const messageId = "...";
+await meeting.chat.pin(messageId);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
-
-```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
-```
+To get the list of pinned messages, use [`meeting.chat.fetchPinnedMessages()`](#fetch-pinned-messages).
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```jsx
-// Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
-await meeting.chat.unpin(id);
+// Unpin the most recently pinned message.
+const [latestPinned] = await meeting.chat.fetchPinnedMessages({
+	limit: 1,
+	direction: "before",
+});
+await meeting.chat.unpin(latestPinned.id);
 ```
 
 You can listen for events to know when a message is pinned or unpinned.
@@ -1413,30 +1751,24 @@ meeting.chat.on("unpinMessage", ({ message }) => {
 
 You can pin a number of messages to the chat. When you pin a message, the message object will have the attribute `pinned: true`, using which you can identify if a message is pinned.
 
-To pin a message:
+To pin a message, pass its ID to `meeting.chat.pin()`. The local participant must have joined the meeting, otherwise the method throws an error.
 
 ```jsx
-// Pin the first message in the chat (could be text, image, or file).
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
+const messageId = "...";
+await meeting.chat.pin(messageId);
 ```
 
-Once you pin a message, it will be added to `meeting.chat.pinned`.
-
-```jsx
-const { id } = meeting.chat.messages[0];
-await meeting.chat.pin(id);
-
-console.log(meeting.chat.pinned);
-console.log(meeting.chat.pinned.length > 0); // Should be true
-```
+To get the list of pinned messages, use [`meeting.chat.fetchPinnedMessages()`](#fetch-pinned-messages).
 
 You can also unpin a pinned message by using the `meeting.chat.unpin()` method.
 
 ```jsx
-// Unpin the first pinned message.
-const { id } = meeting.chat.pinned[0];
-await meeting.chat.unpin(id);
+// Unpin the most recently pinned message.
+const [latestPinned] = await meeting.chat.fetchPinnedMessages({
+	limit: 1,
+	direction: "before",
+});
+await meeting.chat.unpin(latestPinned.id);
 ```
 
 You can listen for events to know when a message is pinned or unpinned.
@@ -1464,6 +1796,8 @@ const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
 
+When a message is deleted, participants receive a `chatUpdate` event with `action` set to `delete`.
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="web-react">
@@ -1475,6 +1809,8 @@ const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
 
+When a message is deleted, participants receive a `chatUpdate` event with `action` set to `delete`.
+
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-react-native">
@@ -1485,6 +1821,8 @@ The `meeting.chat` namespace exposes a method called `deleteMessage()`. It takes
 const messageId = "...";
 await meeting.chat.deleteMessage(messageId);
 ```
+
+When a message is deleted, participants receive a `chatUpdate` event with `action` set to `delete`.
 
 </RTKCodeSnippet>
 

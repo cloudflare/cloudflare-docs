@@ -24,7 +24,7 @@ Refer to [1.1.1.1 resolver](/1.1.1.1/encryption/) to learn more about DNS encryp
 
 Formerly known as **1.1.1.1 with WARP**.
 
-The WARP application uses [MASQUE](https://blog.cloudflare.com/zero-trust-warp-with-a-masque/) to encrypt and send traffic from your device directly to Cloudflare's global network. This ensures Internet traffic between your device and the Internet is secure and private, while also preventing third parties from accessing your traffic. All traffic[^1] tunneled over the MASQUE connection is encrypted using [post-quantum cryptography](https://blog.cloudflare.com/post-quantum-zero-trust/) to protect against [harvest-now-decrypt-later attacks](https://www.nist.gov/cybersecurity/what-post-quantum-cryptography).
+The WARP application uses [MASQUE](https://blog.cloudflare.com/zero-trust-warp-with-a-masque/) to encrypt and send traffic from your device directly to Cloudflare's global network. This ensures Internet traffic between your device and the Internet is secure and private, while also preventing third parties from accessing your traffic. All traffic[^1] tunneled over the MASQUE connection is encrypted using [post-quantum cryptography](https://blog.cloudflare.com/post-quantum-warp/) to protect against [harvest-now-decrypt-later attacks](https://www.nist.gov/cybersecurity/what-post-quantum-cryptography).
 
 [^1]: Post-quantum cryptography requires the following minimum WARP versions: <br/> **Android**: 2.4.3<br/> **iOS**: 1.11.1 <br/> **Windows, macOS, and Linux**: 2025.6.1335.0
 
@@ -57,7 +57,7 @@ Because this feature restricts WARP to just applications configured to use the l
 
 This will enable the **Local proxy** option in the **WARP Settings** menu.
 
-If you enable [FIPS compliance](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/traffic-policies/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
+If you enable [FIPS compliance](/cloudflare-one/traffic-controls/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/traffic-controls/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
 
 ## WARP+ Unlimited
 

@@ -12,12 +12,6 @@ export const warpReleasesSchema = z
 	})
 	.refine(
 		(val) => {
-			if (val.platformName === "Linux") {
-				if (!val.linuxPlatforms) {
-					console.log(val.version);
-				}
-			}
-
 			if (val.platformName !== "Linux" && !val.packageSize) return false;
 			if (val.platformName === "Linux" && !val.linuxPlatforms) return false;
 

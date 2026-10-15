@@ -10,13 +10,11 @@ interface Props {
 }
 
 /**
- * Top-level variant selector used to drive both the Input and Output schema
- * panels from a single control. This component owns no schema rendering — it
- * just toggles `data-active-variant` on its scoping ancestor (or the element
- * referenced by `targetId`). CSS in the parent then shows/hides the matching
- * server-rendered schema panels.
- *
- * Server-rendered default: the first variant is visible without JS.
+ * Top-level variant selector that drives both the Input and Output schema
+ * panels from a single control. Owns no rendering — it toggles
+ * `data-active-variant` on its scoping ancestor (or the element referenced by
+ * `targetId`) and flips `hidden` on every `[data-variant-pane]` under it. The
+ * server-rendered `hidden` attribute is the no-JS default.
  */
 export default function SchemaVariantTabs({ titles, targetId }: Props) {
 	const [selected, setSelected] = useState(0);
@@ -54,12 +52,12 @@ export default function SchemaVariantTabs({ titles, targetId }: Props) {
 								aria-pressed={isSelected}
 								className={`mt-0 flex flex-1 cursor-pointer flex-col justify-start rounded-lg border p-3 text-left transition-colors ${
 									isSelected
-										? "border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-950"
-										: "border-gray-200 bg-white hover:border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
+										? "border-primary bg-primary/10"
+										: "border-border bg-card hover:border-muted-foreground/40"
 								}`}
 							>
 								<span
-									className={`text-sm font-medium ${isSelected ? "text-blue-700 dark:text-blue-300" : "text-gray-900 dark:text-gray-100"}`}
+									className={`text-sm font-medium ${isSelected ? "text-primary" : "text-foreground"}`}
 								>
 									{title}
 								</span>

@@ -1,0 +1,22 @@
+import { parse } from "node-html-parser";
+import { decode } from "he";
+import { stripMarkdownToText } from "./markdown";
+import { stripExternalLinkArrow } from "./external-link-arrow";
+
+// Parity: mirrors production's src/util/props.ts generateDescription (html
+// branch); reimplemented as a standalone function rather than reused.
+
+export function generateDescriptionFromHtml(html: string): string | undefined {
+	const dom = parse(html);
+	const paragraph = dom.querySelector(":root > p");
+
+	if (!paragraph) return undefined;
+
+	return stripExternalLinkArrow(decode(paragraph.innerText)).trim();
+}
+
+// Parity: production strips Markdown from the description only for JSON-LD
+// (via Page.astro), leaving the raw string in <meta>/OG. No-op on plain text.
+export function stripMarkdownDescription(markdown: string): string {
+	return stripMarkdownToText(markdown);
+}

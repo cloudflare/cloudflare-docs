@@ -1,0 +1,144 @@
+---
+/**
+ * WranglerCommand — full reference block for one wrangler command:
+ * heading, description, runnable command (per package manager), arg
+ * list, and collapsible global flags.
+ *
+ * CF source: cloudflare-docs/src/components/WranglerCommand.astro
+ * Mapping notes: command data comes from the `wrangler` package's
+ * `experimental_getWranglerCommands()` registry (same as upstream).
+ * AnchorHeading → plain heading with a slugified id; Starlight Badge →
+ * ui/badge; starlight-package-managers → our PackageManagers port.
+ * ExtraFlagDetails slot machinery dropped (unused by Queues content).
+ */
+import { experimental_getWranglerCommands } from "wrangler";
+import CliPreferenceSwitch from "../ui/cli-preference/CliPreferenceSwitch.astro";
+import CfCommand from "./CfCommand.astro";
+import CommandReference from "./CommandReference.astro";
+import {
+	formatCommandInvocation,
+	type HeadingLevel,
+} from "./command-reference";
+
+interface Props {
+	command: string;
+	headingLevel?: HeadingLevel;
+	description?: string;
+	cfCommand?: string | string[];
+	includeHiddenCf?: boolean;
+}
+
+const {
+	command,
+	headingLevel = 2,
+	cfCommand,
+	includeHiddenCf = false,
+} = Astro.props;
+
+const commands = experimental_getWranglerCommands();
+const { registry, globalFlags } = commands;
+
+let node = registry.subtree;
+let definition;
+for (const segment of command.trim().split(/\s+/)) {
+	const next = node.get(segment);
+	if (!next) break;
+	if (next.subtree.size === 0 && next.definition?.type === "command") {
+		definition = next.definition;
+		break;
+	}
+	node = next.subtree;
+}
+
+if (!definition) {
+	throw new Error(`[WranglerCommand] Command "${command}" not found`);
+}
+
+if (definition.metadata.hidden) {
+	throw new Error(
+		`[WranglerCommand] "${command}" is marked as hidden. If you want to publish, fix upstream in workers-sdk repo.`,
+	);
+}
+
+const description = Astro.props.description ?? definition.metadata.description;
+const epilogue = definition.metadata.epilogue;
+const experimental = definition.metadata.status === "experimental";
+
+const headingId = command.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const invocation = formatCommandInvocation(
+	command,
+	definition.positionalArgs,
+	definition.args,
+);
+const cfCommands =
+	cfCommand === undefined
+		? []
+		: Array.isArray(cfCommand)
+			? cfCommand
+			: [cfCommand];
+
+if (
+	cfCommand !== undefined &&
+	(cfCommands.length === 0 ||
+		cfCommands.some(
+			(target) => typeof target !== "string" || target.trim().length === 0,
+		))
+) {
+	throw new Error(
+		`[WranglerCommand] cfCommand must contain at least one command on "${Astro.url.pathname}".`,
+	);
+}
+
+const normalizedCfCommands = cfCommands.map((target) =>
+	target.trim().replace(/^cf\s+/, ""),
+);
+if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
+	throw new Error(
+		`[WranglerCommand] cfCommand contains duplicate commands on "${Astro.url.pathname}".`,
+	);
+}
+---
+
+{cfCommands.length ? (
+	<CliPreferenceSwitch anchorId={headingId}>
+		<Fragment slot="wrangler">
+			<CommandReference
+				title={command}
+				headingId={headingId}
+				invocation={invocation}
+				description={description}
+				headingLevel={headingLevel}
+				mode="wrangler"
+				epilogue={epilogue}
+				experimental={experimental}
+				args={definition.args}
+				globalFlags={globalFlags}
+				positionals={definition.positionalArgs}
+			/>
+		</Fragment>
+		<Fragment slot="cf">
+			{normalizedCfCommands.map((target) => (
+				<CfCommand
+					command={target}
+					headingLevel={headingLevel}
+					headingId={false}
+					includeHidden={includeHiddenCf}
+				/>
+			))}
+		</Fragment>
+	</CliPreferenceSwitch>
+) : (
+	<CommandReference
+		title={command}
+		headingId={headingId}
+		invocation={invocation}
+		description={description}
+		headingLevel={headingLevel}
+		mode="wrangler"
+		epilogue={epilogue}
+		experimental={experimental}
+		args={definition.args}
+		globalFlags={globalFlags}
+		positionals={definition.positionalArgs}
+	/>
+)}

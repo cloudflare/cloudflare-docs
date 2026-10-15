@@ -22,9 +22,13 @@ Workers Logs lets you automatically collect, store, filter, and analyze logging 
 
 Logs include [invocation logs](/workers/observability/logs/workers-logs/#invocation-logs), [custom logs](/workers/observability/logs/workers-logs/#custom-logs), errors, and uncaught exceptions.
 
+To group related exceptions, failed invocations, and error logs, use [Workers Issues](/workers/observability/issues/).
+
 ![Example showing the Workers Logs Dashboard](~/assets/images/workers-observability/wobs_workers_events_122.png)
 
-To send logs to a third party, use [Workers Logpush](/workers/observability/logs/logpush/) or [Tail Workers](/workers/observability/logs/tail-workers/).
+To send logs to a third party, use [OpenTelemetry export](/workers/observability/opentelemetry-export/) (recommended), [Workers Logpush](/workers/observability/logs/logpush/), or [Tail Workers](/workers/observability/logs/tail-workers/).
+
+Enable [source maps](/workers/observability/source-maps/) so captured JavaScript and TypeScript exception stacks point to the original files and lines. Framework builds must generate maps as well as upload them.
 
 ## Enable Workers Logs
 
@@ -225,10 +229,6 @@ KB](/workers/platform/limits/#log-size). Logs exceeding that size will be
 truncated and the log's `$cloudflare.truncated` field will be set to true.
 
 ## Pricing
-
-:::note[Billing start date]
-Workers Logs billing will begin on April 21, 2025.
-:::
 
 <Render file="workers_logs_pricing" product="workers" />
 

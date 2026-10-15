@@ -24,6 +24,12 @@ If you want to divert traffic from an endpoint to prevent it from becoming unhea
 
 :::
 
+:::caution[Existing connections are not terminated]
+When an endpoint becomes unhealthy, Cloudflare Load Balancing stops routing **new** requests to it. However, existing connections (including long-lived WebSocket connections) are **not** terminated — they remain open until they close naturally.
+
+If you need graceful connection draining, use [endpoint drain](#gradual-rotation) to proactively take endpoints out of rotation before maintenance, rather than relying on health check failures alone.
+:::
+
 ## Before you begin
 
 Before disabling any endpoint, review the settings for any affected load balancers and pools.

@@ -118,5 +118,9 @@
 	{
 		"platform": "fedora44-arm",
 		"display_name": "Fedora 44 (arm64)"
+	},
+	{
+		"platform": "android",
+		"display_name": "Android"
 	}
 ]

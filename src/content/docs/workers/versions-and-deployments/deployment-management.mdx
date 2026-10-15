@@ -91,4 +91,4 @@ Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate
 
 ### Durable Object migrations
 
-Uploading a version with [Durable Object migrations](/durable-objects/reference/durable-objects-migrations/) is not supported. Use [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy) if you are applying a [Durable Object migration](/durable-objects/reference/durable-objects-migrations/).
+Uploading a version that changes Durable Object class lifecycle is not supported. This applies to both the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field and the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array - any change that creates, deletes, renames, or transfers a Durable Object class must be applied through [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy).

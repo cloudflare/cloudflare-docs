@@ -44,6 +44,10 @@ flowchart LR
 
 Please view Cloudflare's [certifications and compliance resources](https://www.cloudflare.com/trust-hub/compliance-resources/) and contact your Cloudflare enterprise account manager for more information.
 
+### Is Cloudflare Realtime TURN FIPS 140-3 compliant?
+
+Cloudflare Realtime TURN supports FIPS 140-3 when encryption is used, such as TURN over TLS. TURN itself does not have any control over the encryption of the data flowing underneath the TURN data layer. For end-to-end encryption of the relayed media or data, the layer above TURN must provide that encryption (for example, DTLS when TURN is used with WebRTC).
+
 ### What regions does Cloudflare Realtime TURN operate at?
 
 Cloudflare Realtime TURN server runs on [Cloudflare's global network](https://www.cloudflare.com/network) - a growing global network of thousands of machines distributed across hundreds of locations, with the notable exception of the Cloudflare's [China Network](/china-network/).

@@ -9,7 +9,7 @@ products:
   - d1
 ---
 
-import { GlossaryTooltip, Details, GitHubCode, APIRequest, Tabs, TabItem, TypeScriptExample, DashButton } from "~/components"
+import { GlossaryTooltip, Details, APIRequest, Tabs, TabItem, TypeScriptExample, DashButton } from "~/components"
 
 D1 read replication can lower latency for read queries and scale read throughput by adding read-only database copies, called read replicas, across regions globally closer to clients.
 
@@ -25,14 +25,50 @@ To checkout D1 read replication, deploy the following Worker code using Sessions
 To simulate how read replication can improve a worst case latency scenario, set your D1 database location hint to be in a farther away region. For example, if you are in Europe create your database in Western North America (WNAM).
 :::
 
-<GitHubCode
-repo="cloudflare/templates"
-file="d1-starter-sessions-api/src/index.ts"
-commit="3912e863acedd2be2438f8758f21374ed426fc54"
-lang="ts"
-useTypeScriptExample={true}
-lines="7-44"
-/>
+<TypeScriptExample>
+
+```ts
+export default {
+  async fetch(request, env, ctx): Promise<Response> {
+    const url = new URL(request.url);
+
+    // A. Create the Session.
+    // When we create a D1 Session, we can continue where we left off from a previous
+    // Session if we have that Session's last bookmark or use a constraint.
+    const bookmark =
+      request.headers.get("x-d1-bookmark") ?? "first-unconstrained";
+    const session = env.DB01.withSession(bookmark);
+
+    try {
+      // Use this Session for all our Workers' routes.
+      const response = await withTablesInitialized(
+        request,
+        session,
+        handleRequest,
+      );
+
+      // B. Return the bookmark so we can continue the Session in another request.
+      response.headers.set("x-d1-bookmark", session.getBookmark() ?? "");
+
+      return response;
+    } catch (e) {
+      console.error({
+        message: "Failed to handle request",
+        error: String(e),
+        errorProps: e,
+        url,
+        bookmark,
+      });
+      return Response.json(
+        { error: String(e), errorDetails: e },
+        { status: 500 },
+      );
+    }
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
 
 ## Primary database instance vs read replicas
 

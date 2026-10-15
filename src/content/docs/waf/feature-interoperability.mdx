@@ -8,14 +8,7 @@ sidebar:
 description: How Cloudflare security features interact and execute in order.
 ---
 
-import {
-	Details,
-	Tabs,
-	TabItem,
-	Steps,
-	DashButton,
-	GlossaryTooltip,
-} from "~/components";
+import { Details, Steps, DashButton, GlossaryTooltip } from "~/components";
 
 Cloudflare applies multiple security features to every incoming request. Each feature runs at a specific stage, and the order determines which feature acts first. Understanding this order helps you avoid conflicts and reduce false positives.
 
@@ -135,8 +128,6 @@ When security features interfere with legitimate traffic, use the following step
 
 Use [Security Events](/waf/analytics/security-events/) to identify the feature that blocked a request:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 1. In the Cloudflare dashboard, go to the **Analytics** page.
 
    <DashButton url="/?to=/:account/:zone/security/analytics" />
@@ -144,15 +135,6 @@ Use [Security Events](/waf/analytics/security-events/) to identify the feature t
 2. Select the **Events** tab.
 3. Find the blocked request in the log.
 4. Check the **Service** field to determine which product took the action. This field tells you which feature to adjust.
-
-</TabItem> <TabItem label="Old dashboard">
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **Events**.
-3. Find the blocked request in the log.
-4. Check the **Service** field to determine which product took the action. This field tells you which feature to adjust.
-
-</TabItem> </Tabs>
 
 ### Resolve Bot Fight Mode false positives
 
@@ -167,8 +149,6 @@ For more information, refer to [Handle false positives from Bot Fight Mode or Su
 
 Create a custom rule with the _Skip_ action to bypass SBFM for the affected traffic:
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
-
 <Steps>
 
 1. In the Cloudflare dashboard, go to the **Security rules** page.
@@ -180,20 +160,6 @@ Create a custom rule with the _Skip_ action to bypass SBFM for the affected traf
 4. Set the action to _Skip_ and select **Super Bot Fight Mode**.
 
 </Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **WAF** > **Custom rules**.
-3. Select **Create rule**.
-4. Define an expression that matches the legitimate traffic (for example, a specific IP range or user agent).
-5. Set the action to _Skip_ and select **Super Bot Fight Mode**.
-
-</Steps>
-
-</TabItem> </Tabs>
 
 For more information, refer to [Handle false positives from Bot Fight Mode or Super Bot Fight Mode](/bots/troubleshooting/false-positives/).
 

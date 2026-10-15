@@ -16,7 +16,7 @@ Detailed planning is the cornerstone of a successful DNS migration.
 2. Review all DNS records within each zone. Remove stale or unnecessary records and verify the accuracy of existing records.  
 3. BIND views (split DNS): If you use BIND views to provide different DNS responses to internal versus external resolvers, Cloudflare authoritative DNS does not replicate per-client views directly.  
    - Continue to use an internal DNS resolver (for example, BIND, Active Directory, or another internal resolver) for internal-only names, while using Cloudflare authoritative DNS for public zones.  
-   - For policy-based internal DNS, consider Cloudflare Zero Trust features such as DNS policies and Internal DNS (Beta). For more details, refer to [Cloudflare DNS](/dns/) and [Internal DNS](/dns/internal-dns/).
+   - For policy-based internal DNS, consider Cloudflare Zero Trust features such as DNS policies and Internal DNS. For more details, refer to [Cloudflare DNS](/dns/) and [Internal DNS](/dns/internal-dns/).
 4. BIND ACLs (access control lists): If you use ACLs in BIND to restrict which clients can query your authoritative DNS or perform zone transfers, plan how these controls will change:  
    - **Authoritative DNS queries:** Cloudflare authoritative DNS nameservers are reachable on the public Internet and do not support per-resolver ACLs for standard DNS queries.  
    - **HTTP and application access:** To restrict or filter HTTP(S) traffic to your applications, use Cloudflare security features such as the [Web Application Firewall (WAF)](/waf/) and other Application Security products. These operate at the HTTP layer, not at the DNS query layer.  

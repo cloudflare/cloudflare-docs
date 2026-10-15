@@ -1,0 +1,13 @@
+---
+import CommandArgument from "./CommandArgument.astro";
+import type { CommandArgumentDefinition } from "./command-reference";
+
+interface Props {
+	key: string;
+	definition: CommandArgumentDefinition;
+}
+
+const { key, definition } = Astro.props;
+---
+
+<CommandArgument key={key} definition={definition} />

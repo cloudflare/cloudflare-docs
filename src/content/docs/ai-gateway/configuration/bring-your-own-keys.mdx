@@ -68,7 +68,7 @@ The `secret_id` returned by Secrets Store is not used by AI Gateway for runtime 
 Once you've configured your API keys in the dashboard:
 
 1. **Remove API keys from your code**: Delete any hardcoded API keys or environment variables.
-2. **Update request headers**: Remove provider authorization headers from your requests. Note that you still need to pass `cf-aig-authorization`.
+2. **Update request headers**: Remove provider authorization headers from your requests. AI Gateway substitutes the stored provider key only when the provider authorization header is absent. If you send a provider authorization header, AI Gateway forwards its value to the provider. Placeholder values cause a provider authentication error. You still need to pass `cf-aig-authorization`.
 3. **Test your integration**: Verify that requests work without including API keys.
 
 ## Example
@@ -142,6 +142,10 @@ AI Gateway supports storing multiple API keys for the same provider. This allows
 Each API key can be assigned an alias to identify it. When you add a key, you can specify a custom alias, or the system will use `default` as the alias.
 
 When making requests, AI Gateway uses the key with the `default` alias by default. To use a different key, include the `cf-aig-byok-alias` header with the alias of the key you want to use.
+
+:::note
+The `cf-aig-byok-alias` header applies to [direct provider-passthrough](/ai-gateway/usage/providers/) requests. On requests routed through [Unified Billing](/ai-gateway/features/unified-billing/) endpoints (for example, `env.AI.run()` or `/ai/v1/chat/completions`), only the `default` alias is consulted — if the `default` key is missing, the request falls through to Unified Billing. See [Credential precedence](/ai-gateway/features/unified-billing/#credential-precedence) for the full order.
+:::
 
 ### Example: Using a specific key alias
 

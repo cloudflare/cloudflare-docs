@@ -17,9 +17,11 @@ Set `index_method.keyword` to `true` when creating or updating an instance. You 
 | Field     | Type    | Default | Description                      |
 | --------- | ------- | ------- | -------------------------------- |
 | `vector`  | boolean | `true`  | Enable vector (semantic) search. |
-| `keyword` | boolean | `false` | Enable keyword (BM25) search.    |
+| `keyword` | boolean | `true`  | Enable keyword (BM25) search.    |
 
 At least one of `vector` or `keyword` must be `true`. Changing `index_method` triggers a full reindex of your content.
+
+The `keyword` field defaults to `true`.
 
 ```ts
 const instance = await env.AI_SEARCH.create({

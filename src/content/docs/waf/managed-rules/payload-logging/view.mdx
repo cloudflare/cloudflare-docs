@@ -10,24 +10,17 @@ tags:
   - Logging
 ---
 
-import { Steps, Tabs, TabItem, DashButton } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 View the content of the matched rule payload in the dashboard by entering your private key.
 
 <Steps>
 	1. Open [Security Events](/waf/analytics/security-events/):
 
-		<Tabs syncKey="dashNewNav">
-			<TabItem label="New dashboard" icon="rocket">
-				1. In the Cloudflare dashboard, go to the **Analytics** page.
+		1. In the Cloudflare dashboard, go to the **Analytics** page.
 
-					<DashButton url="/?to=/:account/:zone/security/analytics" />
-				2. Select the **Events** tab.
-			</TabItem>
-			<TabItem label="Old dashboard">
-				- In the Cloudflare dashboard, go to **Security** > **Events**.
-			</TabItem>
-		</Tabs>
+			<DashButton url="/?to=/:account/:zone/security/analytics" />
+		2. Select the **Events** tab.
 
 	2. Under **Sampled logs**, expand the details of an event triggered by a rule whose managed ruleset has payload logging enabled.
 	3. Under **Matched service**, select **Decrypt payload match**.

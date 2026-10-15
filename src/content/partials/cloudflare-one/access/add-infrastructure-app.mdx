@@ -17,14 +17,15 @@ import {
 2. Select **Create new application**.
 3. Select **Infrastructure**.
 4. Enter any name for the application.
-5. In **Target criteria**, select the <GlossaryTooltip term="target hostname">target hostname(s)</GlossaryTooltip> that you want to secure. This application definition will apply to all targets that share the selected hostname, including any targets added in the future. Similarly, if you later decide to change the hostname for a target, the renamed target will no longer be covered by this application.
-6. Enter the **Protocol** and **Port** that will be used to connect to the server.
-7. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target hostname and protocol with a different port number.
+5. (Optional) Select a **Session duration** from the dropdown menu. This sets the maximum time an infrastructure connection can remain open before it is automatically closed. Defaults to 24 hours.
+6. In **Target criteria**, choose which targets this application covers. Match targets by <GlossaryTooltip term="target hostname">hostname</GlossaryTooltip>, tag, or both. Use `include` to match any value. Use `require` to match all values. Use `exclude` to reject matching targets.
+7. Enter the **Protocol** and **Port** that will be used to connect to the server.
+8. (Optional) If a protocol runs on more than one port, select **Add new target criteria** and reconfigure the same target criteria and protocol with a different port number.
    :::note
    Access for Infrastructure only supports assigning one protocol per port. You can reuse a port/protocol pairing across infrastructure applications, but the port cannot be reassigned to another protocol.
    :::
-8. Select **Next**.
-9. To secure your targets, configure a policy that defines who can connect and how they can connect:
+9. Select **Next**.
+10. To secure your targets, configure a policy that defines who can connect and how they can connect:
    1. Enter any name for your policy.
    2. Create a rule that matches the users who are allowed to reach the targets. For more information, refer to [Access policies](/cloudflare-one/access-controls/policies/) and review the list of [infrastructure policy selectors](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#infrastructure-policy-selectors).
    3. In **Connection context**, configure the following settings:
@@ -35,12 +36,14 @@ import {
       Cloudflare will not create new users on the target. UNIX users must already be present on the server.
       :::
 
-10. Select **Add application**.
+11. Select **Add application**.
 
 </TabItem>
 <TabItem label="API">
 
 Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+
+The following example uses the operator-based target criteria format with `include`, `require`, and `exclude`:
 
 <APIRequest
 	path="/accounts/{account_id}/access/apps"
@@ -48,13 +51,29 @@ Make a `POST` request to the [Access applications](/api/resources/zero_trust/sub
 	json={{
 		name: "Example infrastructure app",
 		type: "infrastructure",
+		session_duration: "24h",
 		target_criteria: [
 			{
-				target_attributes: {
-					hostname: ["infra-access-target"],
-				},
 				port: 22,
 				protocol: "SSH",
+				include: {
+					target_attributes: {
+						hostname: ["infra-access-target"],
+					},
+					tags: {
+						environment: ["production", "staging"],
+					},
+				},
+				require: {
+					tags: {
+						team: ["platform"],
+					},
+				},
+				exclude: {
+					tags: {
+						lifecycle: ["decommissioned"],
+					},
+				},
 			},
 		],
 		policies: [
@@ -78,6 +97,8 @@ Make a `POST` request to the [Access applications](/api/resources/zero_trust/sub
 	}}
 />
 
+For more information about target criteria formats, refer to [Target criteria](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#target-criteria).
+
 </TabItem>
 <TabItem label="Terraform (v4)">
 
@@ -92,9 +113,10 @@ The following example requires Cloudflare provider version `>=4.45.0`.
 
     ```tf
     resource "cloudflare_zero_trust_access_application" "infra-app" {
-    	account_id = var.cloudflare_account_id
-    	name       = "Example infrastructure app"
-    	type       = "infrastructure"
+    	account_id       = var.cloudflare_account_id
+    	name             = "Example infrastructure app"
+    	type             = "infrastructure"
+    	session_duration = "24h"
 
     	target_criteria {
     		port     = 22
@@ -106,6 +128,8 @@ The following example requires Cloudflare provider version `>=4.45.0`.
     	}
     }
     ```
+
+	To match targets by tag, define `include`, `require`, or `exclude` blocks with `tags` selectors.
 
 3.  Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
 

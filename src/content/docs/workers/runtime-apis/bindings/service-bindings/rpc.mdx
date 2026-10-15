@@ -167,7 +167,9 @@ class Default(WorkerEntrypoint):
 
 If your Worker has a [static assets binding](/workers/static-assets/binding/), you can call `this.env.ASSETS.fetch()` from within an RPC method. Since RPC methods do not receive a `request` parameter, construct a `Request` or URL with any hostname — the hostname is ignored by the assets binding, only the pathname matters:
 
-<TypeScriptExample>
+<Tabs> <TabItem label="JavaScript/TypeScript" icon="seti:typescript">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -183,15 +185,39 @@ export class ImageWorker extends WorkerEntrypoint {
 
 </TypeScriptExample>
 
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Request
+
+class ImageWorker(WorkerEntrypoint):
+    async def get_image(self, path: str):
+        return await self.env.ASSETS.fetch(
+            Request.new(f"https://assets.local{path}")
+        )
+```
+
+</TabItem> </Tabs>
+
 The caller can then invoke this method via RPC:
 
-<TypeScriptExample>
+<Tabs> <TabItem label="JavaScript/TypeScript" icon="seti:typescript">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 const response = await env.IMAGE_SERVICE.getImage("/images/logo.png");
 ```
 
 </TypeScriptExample>
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+response = await self.env.IMAGE_SERVICE.get_image("/images/logo.png")
+```
+
+</TabItem> </Tabs>
 
 :::note
 When fetching assets via the binding, the hostname (for example, `assets.local`) is not meaningful — any valid hostname will work. Only the URL pathname is used to match assets. The convention `assets.local` is used for clarity.

@@ -1,0 +1,15 @@
+---
+params:
+  - tailURL
+---
+
+[Zero Trust Network Session Logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) record each private network session that Cloudflare routes to a tunnel. Sessions routed to a Cloudflare Tunnel report `Offramp` as `TUNNEL`. Two fields show exactly where a session was sent:
+
+| Field                  | Description                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `DestinationTunnelID`  | The tunnel that received the session.                                                                                    |
+| `DestinationReplicaID` | The `cloudflared` replica that received the session. This value matches the replica's **Connector ID** in the dashboard. |
+
+If you run multiple [replicas](/tunnel/configuration/#replicas-and-high-availability), use these fields to confirm which tunnel and which replica received traffic for a specific session. To investigate that replica further, <a href={props.tailURL}>stream its logs</a> with `cloudflared tail --connector-id <DESTINATION_REPLICA_ID> <TUNNEL_ID>`.
+
+Network Session Logs are available through [Logpush](/cloudflare-one/insights/logs/logpush/).

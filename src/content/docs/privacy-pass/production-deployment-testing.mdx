@@ -1,0 +1,141 @@
+---
+pcx_content_type: get-started
+title: Production Deployment Testing
+description: Validate a Cloudflare-operated Privacy Pass deployment end to end — discover the issuer configuration, request and redeem a token, and verify issuance works.
+products:
+  - privacy-pass
+sidebar:
+  order: 4
+---
+
+This guide covers obtaining a token from your Cloudflare-operated deployment. By this point, you and Cloudflare have already worked together to build and provision the following components. Use this guide to confirm the deployment issues and redeems tokens end to end.
+
+Privacy Pass is not a self-serve product at the moment: a production deployment is a managed engagement with Cloudflare. If you just want to see Privacy Pass work without any setup, refer to [Getting started](/privacy-pass/getting-started/).
+
+[Contact us](https://www.cloudflare.com/lp/privacy-edge/) to request access and receive your issuer configuration.
+
+---
+
+## Before you begin
+
+**What Cloudflare provisions:**
+
+- An issuer endpoint (referred to here as `https://your-issuer.example.com`), running a public, RFC 9578-compliant issuer.
+- A public directory endpoint at `/.well-known/private-token-issuer-directory`.
+- A `/token-request` endpoint.
+
+**What you operate or need in place:**
+
+- A working **Attester**, the service that verifies your claim and, once the Client is verified, proxies the blinded token request to the Issuer. In Cloudflare Issuer deployments, the Client never contacts the Issuer directly. Generally, you operate the Attester to keep roles separate, but Cloudflare can help build it. Refer to [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) for an implementation for Cloudflare Workers.
+- The **Origin** (the web service, application, or website a Client is trying to access) configured to verify tokens against the issuer's public key (or Cloudflare redemption at the edge).
+- The **mTLS client certificate** your Attester uses to authenticate to the issuer.
+- The **client library** for running the issuance protocol. Library options include TypeScript, Go, and Rust. 
+
+Implement the Client with the Privacy Pass library for your stack:
+
+- **TypeScript** — [@cloudflare/privacypass-ts](https://github.com/cloudflare/privacypass-ts)
+- **Go** — [cloudflare/pat-go](https://github.com/cloudflare/pat-go) (reference implementation, intended for experimental and interop use)
+- **Rust** — [raphaelrobert/privacypass](https://github.com/raphaelrobert/privacypass) (not independently audited)
+
+---
+
+## 1. Discover the issuer configuration
+
+Every issuer publishes its configuration at the standard directory endpoint. This endpoint is public, so you can fetch it to confirm the issuer is reachable and read its public keys:
+
+```sh
+curl https://your-issuer.example.com/.well-known/private-token-issuer-directory
+```
+
+The response lists the token-request endpoint and the issuer's public keys. Token type `2` is Blind RSA:
+
+```json
+{
+  "issuer-request-uri": "/token-request",
+  "token-keys": [
+    {
+      "token-type": 2,
+      "token-key": "<base64url-encoded public key>",
+      "not-before": 1700000000
+    }
+  ]
+}
+```
+
+These are the keys your Origin will verify redeemed tokens against.
+
+---
+
+## 2. Request and redeem a token
+
+In this deployment the Client never contacts the issuer directly. Getting a token is a round trip across all four roles:
+
+1. The **Origin** returns a `WWW-Authenticate` challenge.
+2. The **Client** completes attestation with **your Attester** and sends it a blinded token request.
+3. The **Attester** verifies the Client, then authenticates to the issuer (for example, with mTLS) and proxies the request to the issuer's `/token-request` endpoint.
+4. The **Issuer** signs the blinded request and returns it; the Client unblinds it to recover the finalized token, then redeems it at the Origin.
+
+```txt
+ Origin              Client              Attester            Issuer
+   │                   │                    │                  │
+   │- TokenChallenge ─>│                    │                  │
+   │                   │<=== Attestation ==>│                  │
+   │                   │                    │── TokenRequest ─>│
+   │                   │                    │<─ TokenResponse ─│
+   │                   │<── TokenResponse ──│                  │
+   │<─ Request+Token -─│ [finalize token]   │                  │
+   │────- 200 OK ────->│                    │                  │
+```
+
+Using the TypeScript library for this example, the Client builds the blinded token request, then sends it to your Attester, which proxies it to the issuer and returns the signed response:
+
+```ts
+import { publicVerif } from '@cloudflare/privacypass-ts';
+const { BlindRSAMode, Client } = publicVerif;
+
+// Declare your own sendToAttester transport — see the note below.
+declare function sendToAttester(tokenRequest: Uint8Array): Promise<Uint8Array>;
+
+// `tokenChallenge` comes from the Origin's WWW-Authenticate header.
+// `issuerPublicKey` is the issuer's public key bytes (from the directory in Step 1).
+const client = new Client(BlindRSAMode.PSS);
+const tokenRequest = await client.createTokenRequest(tokenChallenge, issuerPublicKey);
+
+// Send the blinded request to your Attester. It verifies the client, proxies the
+// request to the issuer, and returns the issuer's signed token response.
+const tokenResponseBytes = await sendToAttester(tokenRequest.serialize());
+
+// Deserialize and unblind to recover the finalized token.
+const tokenResponse = client.deserializeTokenResponse(tokenResponseBytes);
+const token = await client.finalize(tokenResponse);
+```
+
+The Client then redeems the token by sending it to the Origin in an `Authorization` header. The Origin (or Cloudflare at the edge – refer to [Deployment Models](/privacy-pass/concepts/deployment-models/)) verifies the signature against the issuer's public key and responds with `200 OK`.
+
+:::note
+`sendToAttester` is your own transport function and is not part of the library. How the Client and Attester exchange the token request is up to you; the Privacy Pass standard does not define this interface. The key point is that the issuer-facing call happens inside your Attester, not in the Client.
+:::
+
+---
+
+## 3. Verify it works
+
+Two signals confirm issuance and redemption are working end to end:
+
+- The directory endpoint returns the issuer's `token-keys`.
+- A redeemed token verifies against the issuer's public key, and the Origin returns `200 OK`.
+
+To check that the directory endpoint is reachable, you can use the [Privacy Pass demo tool](https://privacypass-demo.cloudflare.app/) to fetch the issuer's directory.
+
+:::note
+Against a production issuer, use the demo tool only as a directory reachability check or to validate a production token against a production public key. It cannot complete a token request because production issuers accept requests only from an authenticated Attester (unlike the open demo issuer in [Getting started](/privacy-pass/getting-started/)).
+:::
+
+---
+
+## Related resources
+
+- [Privacy Pass Protocol](/privacy-pass/concepts/privacy-pass-protocol/) — the four roles, the issuance and redemption flow, and the blinded signatures that produce tokens.
+- [Deployment Models](/privacy-pass/concepts/deployment-models/) — who operates each role and the deployment models.
+- [cloudflare/privacypass-attester](https://github.com/cloudflare/privacypass-attester) — reference attester implementation (Turnstile attestation, proxies token requests to an issuer).
+- [cloudflare/privacypass-issuer](https://github.com/cloudflare/privacypass-issuer) — reference issuer implementation (Workers, key rotation).

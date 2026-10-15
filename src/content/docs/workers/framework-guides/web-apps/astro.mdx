@@ -133,7 +133,7 @@ If your Astro project is entirely pre-rendered, follow these steps:
         		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
         		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+        		<PackageManagers type="dlx" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 
@@ -170,6 +170,7 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
         {
         	"name": "my-astro-app",
         	"main": "./dist/_worker.js/index.js",
+            "upload_source_maps": true,
         	// Update to today's date
         	"compatibility_date": "$today",
         	"compatibility_flags": ["nodejs_compat"],
@@ -196,7 +197,7 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
         		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
         		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+        		<PackageManagers type="dlx" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 
@@ -252,4 +253,4 @@ If you want to use Astro as a static site generator, you do not need the Astro C
 
 ## Node.js requirements
 
-Astro 5.x requires Node.js 18.17.1 or higher. Astro 6 (currently in beta) requires Node.js 22 or higher. If you're using [Workers Builds](/workers/ci-cd/builds/), ensure your build environment meets these requirements.
+Astro 5.x supports Node.js 18.20.8, Node.js 20.3.0 and later 20.x releases, or Node.js 22.0.0 or later. Astro 6.x and 7.x require Node.js 22.12.0 or later. If you use [Workers Builds](/workers/ci-cd/builds/), its default Node.js version meets these requirements. If you override the default, select a version that meets [Astro's Node.js requirements](https://docs.astro.build/en/install-and-setup/#prerequisites).

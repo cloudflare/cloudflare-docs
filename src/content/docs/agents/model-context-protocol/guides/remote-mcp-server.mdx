@@ -12,7 +12,7 @@ products:
 
 import { Details, Render, PackageManagers, LinkCard } from "~/components";
 
-This guide will show you how to deploy your own remote MCP server on Cloudflare using [Streamable HTTP transport](/agents/model-context-protocol/protocol/transport/), the current MCP specification standard. You have two options:
+This guide shows how to deploy a remote MCP server on Cloudflare using [Streamable HTTP transport](/agents/model-context-protocol/protocol/transport/). You have two options:
 
 - **Without authentication** — anyone can connect and use the server (no login required).
 - **With [authentication and authorization](/agents/model-context-protocol/guides/remote-mcp-server/#add-authentication)** — users sign in before accessing tools, and you can control which tools an agent can call based on the user's permissions.
@@ -21,17 +21,20 @@ This guide will show you how to deploy your own remote MCP server on Cloudflare 
 
 The Agents SDK provides multiple ways to create MCP servers. Choose the approach that fits your use case:
 
-| Approach                                                       | Stateful? | Requires Durable Objects? | Best for                                       |
-| -------------------------------------------------------------- | --------- | ------------------------- | ---------------------------------------------- |
-| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/) | No        | No                        | Stateless tools, simplest setup                |
-| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)             | Yes       | Yes                       | Stateful tools, per-session state, elicitation |
-| Raw `WebStandardStreamableHTTPServerTransport`                 | No        | No                        | Full control, no SDK dependency                |
+| Approach                                                                                              | Stateful?            | Protocol path                       | Best for                                    |
+| ----------------------------------------------------------------------------------------------------- | -------------------- | ----------------------------------- | ------------------------------------------- |
+| [`createMcpHandler()`](/agents/model-context-protocol/apis/handler-api/)                              | No                   | stateless with legacy compatibility | New stateless tools                         |
+| [`createLegacyMcpHandler()`](/agents/model-context-protocol/apis/handler-api/#createlegacymcphandler) | Optional             | legacy                              | Temporary existing `WorkerTransport` routes |
+| [`McpAgent`](/agents/model-context-protocol/apis/agent-api/)                                          | Yes                  | legacy                              | Deprecated Durable Object and RPC servers   |
+| Raw SDK transport                                                                                     | Depends on transport | Depends on SDK package              | Custom transport ownership                  |
 
-- **`createMcpHandler()`** is the fastest way to get a stateless MCP server running. Use it when your tools do not need per-session state.
-- **`McpAgent`** gives you a Durable Object per session with built-in state management, elicitation support, and both SSE and Streamable HTTP transports.
-- **Raw transport** gives you full control if you want to use the `@modelcontextprotocol/sdk` directly without the Agents SDK helpers.
+Use `createMcpHandler` for a new stateless server. An existing `McpAgent` without legacy stateful dependencies can migrate directly. If it uses MCP session state, RPC, pushed requests, streams, or replay, plan the stateless equivalents and serve stateless and legacy lanes during the transition. Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the staged rollout.
 
 ## Deploy your first MCP server
+
+:::note[Template protocol path]
+The quick-deploy templates in this section still use the deprecated `McpAgent` path. Do not use that path for a new server. Start with the [`mcp-worker` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker). If an existing template deployment needs sessionful behavior, add a stateless route and follow the [migration guide](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/).
+:::
 
 You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/model-context-protocol/guides/remote-mcp-server/#add-authentication).
 

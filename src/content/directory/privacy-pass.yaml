@@ -1,0 +1,13 @@
+id: XigUYf
+name: Privacy Pass
+
+entry:
+  title: Privacy Pass
+  url: /privacy-pass/
+  group: Developer platform
+  additional_groups: [Privacy]
+
+meta:
+  title: Cloudflare Privacy Pass docs
+  description: Privacy Pass tokens let users prove a claim without revealing their identity or being tracked across requests.
+  author: "@cloudflare"

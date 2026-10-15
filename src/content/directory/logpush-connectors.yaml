@@ -1,0 +1,11 @@
+id: LQ7hVR
+name: Logpush Connectors
+
+entry:
+  title: Logpush Connectors
+  url: /logs/logpush/logpush-job/enable-destinations/
+  show: false
+
+meta:
+  title: Cloudflare Logpush Connectors docs
+  author: "@cloudflare"

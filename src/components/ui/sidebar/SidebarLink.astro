@@ -1,0 +1,43 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import { cn } from "@/lib/cn";
+import type { HTMLAttributes } from "astro/types";
+import { Badge } from "@/components/ui/badge";
+import type { SidebarBadge } from "@cloudflare/nimbus-docs/types";
+
+interface Props extends HTMLAttributes<"a"> {
+	label: string;
+	href: string;
+	isCurrent?: boolean;
+	badge?: SidebarBadge;
+	/** Optional leading icon (Icon component name, e.g. a product glyph). */
+	icon?: string;
+}
+
+const {
+	label,
+	href,
+	isCurrent,
+	badge,
+	icon,
+	class: className,
+	...attrs
+} = Astro.props;
+---
+
+<a
+	href={href}
+	aria-current={isCurrent ? "page" : undefined}
+	data-nb-sidebar-link
+	class={className ? cn(className) : undefined}
+	{...attrs}
+>
+	{icon && <Icon name={icon} class="h-4 w-4 shrink-0" aria-hidden="true" />}
+	<span class="break-words">{label}</span>
+	{badge &&
+		(typeof badge === "string" ? (
+			<Badge text={badge} />
+		) : (
+			<Badge text={badge.text} variant={badge.variant} />
+		))}
+</a>

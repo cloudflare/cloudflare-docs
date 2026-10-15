@@ -136,6 +136,23 @@ You need:
 
    Await `codemodeRuntime()`, then pass `runtime.tool()` to your model as the `codemode` tool. Await the helper again before calling approval, rejection, rollback, or snippet methods. This ensures MCP connections have finished restoring after hibernation.
 
+   If the runtime belongs to a `Think` agent, keep MCP tools out of the direct model tool set:
+
+   <TypeScriptExample>
+
+   ```ts
+   import { Think } from "@cloudflare/think";
+
+   export class Chat extends Think<Env> {
+       includeMcpTools = false;
+       waitForMcpConnections = true;
+   }
+   ```
+
+   </TypeScriptExample>
+
+   `includeMcpTools = false` skips Think's automatic `getAITools()` call. The MCP connection remains available to `McpConnector`.
+
 4. **Let the model discover and call tools**
 
    Tell the model to use `codemode.search()` and `codemode.describe()` before calling unfamiliar methods. Model-generated sandbox code can then discover and call the generated methods:
@@ -183,3 +200,5 @@ const codemode = createCodeTool({
 </TypeScriptExample>
 
 This approach exposes the MCP tools under the default `codemode` namespace. It does not use the connector runtime's durable pause, approval, and resume flow. Use `McpConnector` when tools can cause side effects or when the model needs on-demand discovery.
+
+`getAITools()` converts MCP input and output schemas for use by the AI SDK. The Agents SDK reuses those converted schemas while each live connection keeps the same current catalog. Use `this.mcp.listTools()` instead when you only need to inspect the raw MCP catalog.

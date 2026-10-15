@@ -15,6 +15,7 @@ import {
 	FileTree,
 	InlineBadge,
 	Render,
+	Steps,
 	TabItem,
 	Tabs,
 	WranglerConfig,
@@ -159,7 +160,8 @@ Then, update your configuration file's `main` field to point to the location of 
 {
 	"name": "my-worker",
 	"compatibility_date": "$today",
-	"main": "./dist/client/_worker.js", // or some other location if you moved the script out of the static asset directory
+	"main": "./dist/client/_worker.js",
+	"upload_source_maps": true, // or some other location if you moved the script out of the static asset directory
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -189,6 +191,7 @@ Once the Worker script has been compiled, you can update your configuration file
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -210,6 +213,7 @@ Workers, on the other hand, will default to serving static assets ahead of your 
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./dist/worker/index.js",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/",
 		"run_worker_first": true
@@ -244,6 +248,7 @@ export default class extends WorkerEntrypoint {
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/"
 	}
@@ -263,6 +268,7 @@ Pages automatically provided [an `ASSETS` binding](/pages/functions/api-referenc
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"assets": {
 		"directory": "./dist/client/",
 		"binding": "ASSETS"
@@ -284,6 +290,7 @@ If you had customized [placement](/workers/configuration/placement/), or set a [
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"placement": {
 		"mode": "smart"
 	},
@@ -321,33 +328,42 @@ If you are using Pages' built-in CI/CD system, you can swap this for Workers Bui
 
 Pages automatically creates a preview environment for each project, and can be independently configured.
 
-To get a similar experience in Workers, you must:
+To get a similar experience in Workers:
 
-1. Ensure [preview URLs](/workers/versions-and-deployments/preview-urls/) are enabled (they are on by default).
+<Steps>
+
+1. Add a `previews` block and enable `workers.dev` Preview URLs in your Wrangler configuration file.
 
    <WranglerConfig>
 
    ```json
    {
-   	"name": "my-worker",
-   	"compatibility_date": "$today",
-   	"main": "./worker/index.ts",
-   	"assets": {
-   		"directory": "./dist/client/"
-   	},
-   	"preview_urls": true
+       "name": "my-worker",
+       "compatibility_date": "$today",
+       "main": "./worker/index.ts",
+       "upload_source_maps": true,
+       "assets": {
+           "directory": "./dist/client/"
+       },
+       "preview_urls": true,
+       "previews": {}
    }
    ```
 
    </WranglerConfig>
 
-1. [Enable non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds) in Workers Builds.
+2. [Enable preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds) in Workers Builds.
+3. If an existing Workers Builds project still uses the previous preview model, complete the [one-time switch to Worker Previews](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
 
-Optionally, you can also [protect these preview URLs with Cloudflare Access](/workers/versions-and-deployments/preview-urls/#manage-access-to-preview-urls).
+</Steps>
+
+Optionally, you can also [protect these Preview URLs with Cloudflare Access](/workers/previews/#access-control).
 
 :::note
 
-Unlike Pages, Workers does not natively support defining different bindings in production vs. non-production builds. This is something we are actively exploring, but in the meantime, you may wish to consider using [Wrangler Environments](/workers/wrangler/environments/) and an [appropriate Workers Build configuration](/workers/ci-cd/builds/advanced-setups/#wrangler-environments) to achieve this.
+Previews support different runtime settings for preview builds and production builds. Use [Preview settings](/workers/previews/configuration/) or the `previews` block in your Wrangler configuration to point preview builds at test bindings, variables, secrets, and resources.
+
+For new Workers created with Workers Builds, preview builds use `wrangler preview` by default. Existing projects may need to update their [Preview command](/workers/ci-cd/builds/configuration/#preview-command) to `npx wrangler preview`.
 
 :::
 
@@ -366,6 +382,7 @@ Where previously you were offered a `pages.dev` subdomain for your Pages project
 	"name": "my-worker",
 	"compatibility_date": "$today",
 	"main": "./worker/index.ts",
+	"upload_source_maps": true,
 	"workers_dev": true
 }
 ```
@@ -396,7 +413,7 @@ You can add the following [experimental prompt](https://developers.cloudflare.co
 https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt
 ```
 
-You can also use the Cloudflare Documentation [MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize) in your coding assistant to provide better context to your LLM when building with Workers, which includes this prompt when you ask to migrate from Pages to Workers.
+You can also use the Cloudflare Documentation [MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-ai-search) in your coding assistant to provide better context to your LLM when building with Workers, which includes this prompt when you ask to migrate from Pages to Workers.
 
 ## Compatibility matrix
 
@@ -412,11 +429,11 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | ----------------------------------------------------------------------------------------------------------- | ------- | ------- |
 | **Writing, Testing, and Deploying Code**                                                                    |         |         |
 | [Cloudflare Vite plugin](/workers/vite-plugin/)                                                             | ✅      | ❌      |
-| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                     | ✅      | ✅      |
-| [Gradual Deployments](/workers/versions-and-deployments/)                                     | ✅      | ❌      |
-| [Preview URLs](/workers/versions-and-deployments/preview-urls/)                                             | ✅      | ✅      |
+| [Rollbacks](/workers/versions-and-deployments/rollbacks/)                                                   | ✅      | ✅      |
+| [Gradual Deployments](/workers/versions-and-deployments/)                                                   | ✅      | ❌      |
+| [Preview URLs](/workers/previews/)                                                                          | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                                           | ✅      | ✅      |
-| [Local Development](/workers/local-development/)                                                          | ✅      | ✅      |
+| [Local Development](/workers/local-development/)                                                            | ✅      | ✅      |
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                                              | ✅      | ❌      |
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)                                | ✅      | ❌      |
 | **Static Assets**                                                                                           |         |         |
@@ -461,10 +478,10 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Build Caching](/workers/ci-cd/builds/build-caching/)                                                       | ✅      | ✅      |
 | [Deploy Hooks](/workers/ci-cd/builds/deploy-hooks/)                                                         | ✅      | ✅      |
 | [Branch Deploy Controls](/pages/configuration/branch-build-controls/)                                       | 🟡 [^4] | ✅      |
-| [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                                               | ⏳      | ✅      |
+| [Custom Branch Aliases](/pages/how-to/custom-branch-aliases/)                                               | ✅ [^5] | ✅      |
 | **Pages Functions**                                                                                         |         |         |
-| [File-based Routing](/pages/functions/routing/)                                                             | 🟡 [^5] | ✅      |
-| [Pages Plugins](/pages/functions/plugins/)                                                                  | 🟡 [^6] | ✅      |
+| [File-based Routing](/pages/functions/routing/)                                                             | 🟡 [^6] | ✅      |
+| [Pages Plugins](/pages/functions/plugins/)                                                                  | 🟡 [^7] | ✅      |
 | **Domain Configuration**                                                                                    |         |         |
 | [Custom domains](/workers/configuration/routing/custom-domains/#add-a-custom-domain)                        | ✅      | ✅      |
 | [Custom subdomains](/workers/configuration/routing/custom-domains/#set-up-a-custom-domain-in-the-dashboard) | ✅      | ✅      |
@@ -477,8 +494,10 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 
 [^3]: To [use Durable Objects with your Cloudflare Pages project](/pages/functions/bindings/#durable-objects), you must create a separate Worker with a Durable Object and then declare a binding to it in both your Production and Preview environments. Using Durable Objects with Workers is simpler and recommended.
 
-[^4]: Workers Builds supports enabling [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), though does not yet have the same level of configurability as Pages does.
+[^4]: Workers Builds supports enabling [preview builds](/workers/ci-cd/builds/build-branches/#configure-preview-builds), though does not yet have the same level of configurability as Pages does.
 
-[^5]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#pages-functions-with-a-functions-folder) into a Worker to help ease the migration from Pages to Workers.
+[^5]: Use [custom domain Preview URLs](/workers/previews/custom-domains/) to serve branch Previews on your own domain. Unlike Pages, where you can point any hostname at a branch, Workers serves each Preview at `<preview-name>.<your-domain>`, and the Preview name defaults to the branch name. Cloudflare creates a wildcard DNS record and certificate for the domain you choose.
 
-[^6]: As in <sup>5</sup>, Wrangler can [compile your Pages Functions into a Worker](#pages-functions-with-a-functions-folder). Or if you are starting from scratch, everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.
+[^6]: Workers [supports popular frameworks](/workers/framework-guides/), many of which implement file-based routing. Additionally, you can use Wrangler to [compile your folder of `functions/`](#pages-functions-with-a-functions-folder) into a Worker to help ease the migration from Pages to Workers.
+
+[^7]: As in <sup>6</sup>, Wrangler can [compile your Pages Functions into a Worker](#pages-functions-with-a-functions-folder). Or if you are starting from scratch, everything that is possible with Pages Functions can also be achieved by adding code to your Worker or by using framework-specific plugins for relevant third party tools.

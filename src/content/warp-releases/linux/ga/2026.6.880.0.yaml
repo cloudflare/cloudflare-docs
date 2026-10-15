@@ -1,0 +1,28 @@
+releaseNotes: This hotfix resolves a regression that caused a large increase in
+  DNS-over-TCP queries to fallback and internal DNS servers. The client now
+  sends fallback DNS queries over UDP first, falling back to TCP only when a
+  response is truncated, instead of querying both protocols in parallel.
+version: 2026.6.880.0
+releaseDate: 2026-07-21T16:50:41.701Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/trixie-intel/version/2026.6.880.0
+packageSize: 74403154
+platformName: Linux
+linuxPlatforms:
+  trixie-intel: 74403154
+  noble-intel: 74398818
+  trixie-arm: 73778982
+  resolute-intel: 74395460
+  jammy-arm: 73461548
+  jammy-intel: 74642762
+  bookworm-intel: 74645766
+  fedora44-intel: 77147944
+  noble-arm: 73967782
+  fedora43-arm: 76015676
+  resolute-arm: 73732806
+  fedora44-arm: 76053348
+  bookworm-arm: 73487908
+  fedora43-intel: 77136763
+  almalinux9-intel: 77065917
+  almalinux10-arm: 76027642
+  almalinux9-arm: 76245626
+  almalinux10-intel: 77120092

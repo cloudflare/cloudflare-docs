@@ -1,7 +1,6 @@
 ---
 title: RTKStage
 sidebar_position: 17
-web_core_version: 1.2.4
 ---
 
 <!-- Auto Generated Below -->
@@ -15,103 +14,80 @@ but only consuming media from participants who are on RTKStage
 
 
 * [RTKStage](#module_RTKStage)
-    * [module.exports](#exp_module_RTKStage--module.exports) ⏏
-        * [new module.exports(context, self, participants, stageSocketHandler, roomSocketHandler)](#new_module_RTKStage--module.exports_new)
-        * [.telemetry](#module_RTKStage--module.exports+telemetry)
-        * [.peerId](#module_RTKStage--module.exports+peerId)
-        * [.getAccessRequests()](#module_RTKStage--module.exports+getAccessRequests)
-        * [.requestAccess()](#module_RTKStage--module.exports+requestAccess)
-        * [.cancelRequestAccess()](#module_RTKStage--module.exports+cancelRequestAccess)
-        * [.grantAccess()](#module_RTKStage--module.exports+grantAccess)
-        * [.denyAccess()](#module_RTKStage--module.exports+denyAccess)
-        * [.join()](#module_RTKStage--module.exports+join)
-        * [.leave()](#module_RTKStage--module.exports+leave)
-        * [.kick(userIds)](#module_RTKStage--module.exports+kick)
+    * [.peerId](#module_RTKStage+peerId)
+    * [.getAccessRequests()](#module_RTKStage+getAccessRequests)
+    * [.requestAccess()](#module_RTKStage+requestAccess)
+    * [.cancelRequestAccess()](#module_RTKStage+cancelRequestAccess)
+    * [.grantAccess()](#module_RTKStage+grantAccess)
+    * [.denyAccess()](#module_RTKStage+denyAccess)
+    * [.join()](#module_RTKStage+join)
+    * [.leave()](#module_RTKStage+leave)
+    * [.kick(userIds)](#module_RTKStage+kick)
 
-<a name="exp_module_RTKStage--module.exports"></a>
+<a name="module_RTKStage+peerId"></a>
 
-### module.exports ⏏
-**Kind**: Exported class  
-<a name="new_module_RTKStage--module.exports_new"></a>
-
-#### new module.exports(context, self, participants, stageSocketHandler, roomSocketHandler)
-
-| Param | Type |
-| --- | --- |
-| context | <code>Context</code> | 
-| self | <code>Self</code> | 
-| participants | <code>Participants</code> | 
-| stageSocketHandler | <code>RTKStageSocketHandler</code> | 
-| roomSocketHandler | <code>RoomSocketHandler</code> | 
-
-<a name="module_RTKStage--module.exports+telemetry"></a>
-
-#### module.exports.telemetry
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+peerId"></a>
-
-#### module.exports.peerId
+### meeting.stage.peerId
 Returns the peerId of the current user
 
-**Kind**: instance property of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+getAccessRequests"></a>
+**Kind**: instance property of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+getAccessRequests"></a>
 
-#### module.exports.getAccessRequests()
+### meeting.stage.getAccessRequests()
 Method to fetch all RTKStage access requests from viewers
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+requestAccess"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+requestAccess"></a>
 
-#### module.exports.requestAccess()
+### meeting.stage.requestAccess()
 Method to send a request to privileged users to join the stage
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+cancelRequestAccess"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+cancelRequestAccess"></a>
 
-#### module.exports.cancelRequestAccess()
+### meeting.stage.cancelRequestAccess()
 Method to cancel a previous RTKStage join request
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+grantAccess"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+grantAccess"></a>
 
-#### module.exports.grantAccess()
+### meeting.stage.grantAccess()
 Method to grant access to RTKStage.
 	This can be in response to a RTKStage Join request but it can be called on other users as well
 
-`permissions.acceptRTKStageRequests` privilege required
+`permissions.acceptStageRequests` privilege required
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+denyAccess"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+denyAccess"></a>
 
-#### module.exports.denyAccess()
+### meeting.stage.denyAccess()
 Method to deny access to RTKStage.
 This should be called in response to a RTKStage Join request
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+join"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+join"></a>
 
-#### module.exports.join()
+### meeting.stage.join()
 Method to join the stage
 Users either need to have the permission in the preset or must be accepted by a privileged
 user to call this method
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+leave"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+leave"></a>
 
-#### module.exports.leave()
+### meeting.stage.leave()
 Method to leave the stage
 Users must either be on the stage already or be accepted to join the stage
 to call this method
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
-<a name="module_RTKStage--module.exports+kick"></a>
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
+<a name="module_RTKStage+kick"></a>
 
-#### module.exports.kick(userIds)
+### meeting.stage.kick(userIds)
 Method to kick a user off the stage
 
-`permissions.acceptRTKStageRequests` privilege required
+`permissions.acceptStageRequests` privilege required
 
-**Kind**: instance method of [<code>module.exports</code>](#exp_module_RTKStage--module.exports)  
+**Kind**: instance method of [<code>RTKStage</code>](#module_RTKStage)  
 
 | Param | Type |
 | --- | --- |

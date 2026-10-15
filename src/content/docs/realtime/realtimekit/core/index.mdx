@@ -77,12 +77,15 @@ Alternatively, you can also use the CDN.
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```js
+	// Skip this import if you are using the CDN. RealtimeKitClient is available globally.
+	import RealtimeKitClient from "@cloudflare/realtimekit";
+
 	const authToken = <auth-token>;
 
-  const meetingDefaultOptions = {
-    audio: true,
-    video: true,
-  };
+	const meetingDefaultOptions = {
+		audio: true,
+		video: true,
+	};
 
 	RealtimeKitClient.init({
 	  authToken,
@@ -99,14 +102,14 @@ Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/
 <RTKCodeSnippet id="web-angular">
 Install the client SDK.
 ```bash
-npm i @cloudflare/realtimekit-angular
+npm i @cloudflare/realtimekit
 ```
 You can initialise the SDK using `RealtimeKitClient.init`.
 
 ```ts
+import RealtimeKitClient from "@cloudflare/realtimekit";
 class AppComponent {
 	title = "MyProject";
-	@ViewChild("myid") meetingComponent: RtkMeeting;
 	rtkMeeting: RealtimeKitClient;
 
 	async ngAfterViewInit() {
@@ -187,38 +190,6 @@ Use the [Add participant API](/api/resources/realtime_kit/subresources/meetings/
     ```
 
 </RTKCodeSnippet>
-
-<RTKCodeSnippet id="mobile-flutter">
-	Initialize the RealtimeKit SDK by creating an instance of `RealtimeKitClient`.
-
-    ```dart
-    final meeting = RealtimeKitClient();
-    ```
-
-    Configure the meeting properties in the `RtkMeetingInfo` class with a valid participant `authToken` from the [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/).
-
-    ```dart
-    final meetingInfo = RtkMeetingInfo(
-                        authToken: authToken,
-                        enableAudio: false,
-                        enableVideo: false,
-                      );
-    ```
-
-    Initialize the connection by calling the `init()` method. This establishes a connection with the RealtimeKit meeting server.
-
-    ```dart
-    meeting.init(meetingInfo);
-    ```
-
-    Subscribe to the `RtkMeetingRoomEventListener` to receive callbacks for meeting events.
-
-    ```dart
-    meeting.addMeetingRoomEventListener(RoomStateNotifier());
-    ```
-
-</RTKCodeSnippet>
-
 <RTKCodeSnippet id="mobile-react-native">
 	Initialize the RealtimeKit SDK using the `useRealtimeKitClient` hook.
 
@@ -407,7 +378,7 @@ interface Overrides {
 
 </RTKCodeSnippet>
 
-<RTKCodeSnippet id={["mobile-android", "mobile-ios", "mobile-flutter"]}>
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
 
 You can configure meeting defaults using `enableAudio` and `enableVideo` parameters.
 

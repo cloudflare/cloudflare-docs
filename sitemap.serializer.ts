@@ -67,8 +67,7 @@ async function getLastmodViaGitShell(...dirs: string[]) {
 
 /**
  * Attempt to find corresponding source file path for a sitemap item.
- * This only looks for Starlight files in `src/content/docs`.
- * @todo Leverage Astro's IntegrationResolvedRoute.entrypoint to account for pages in `src/pages`.
+ * Looks for content in `src/content/docs` (MDX pages).
  * @returns Relative file path or null if not found
  */
 function getSourceFile(item: SitemapItem) {
@@ -93,17 +92,23 @@ function getSourceFile(item: SitemapItem) {
 	return null;
 }
 
-export function createSitemapLastmodSerializer() {
+export function createSitemapLastmodSerializer({
+	lastmod = true,
+}: { lastmod?: boolean } = {}) {
 	let lastModMetadata: Map<string, Date> | undefined = undefined;
 	const currentDateString = new Date().toISOString();
 	return async (item: SitemapItem) => {
+		item.url = item.url.replace(/@/g, "%40");
+		// Skipping lastmod avoids a full `git log` and keeps the output stable
+		// between builds.
+		if (!lastmod) return item;
 		const filePath = getSourceFile(item);
 		// Only calculate metadata once
 		if (lastModMetadata === undefined) {
 			const startTime = performance.now();
 			lastModMetadata = await getLastmodViaGitShell(
 				"src/content/docs",
-				"src/pages/*.astro",
+				"src/pages/**/*.astro",
 			);
 			const endTime = performance.now();
 
@@ -121,7 +126,6 @@ export function createSitemapLastmodSerializer() {
 		} else {
 			item.lastmod = currentDateString;
 		}
-		item.url = item.url.replace(/@/g, "%40");
 		return item;
 	};
 }

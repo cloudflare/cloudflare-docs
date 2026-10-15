@@ -1,13 +1,10 @@
 ---
-// Bespoke <details> card used inside <PlatformAccess>. Unlike the site-wide
-// <Details>, this one:
-//   - Renders the header as plain text (not marked.parse → <p>), so the
-//     <summary> keeps a tight body-weight look instead of inheriting prose
-//     paragraph styling.
-//   - Uses its own class so it can coexist with the Starlight
-//     `.sl-markdown-content` prose styles WITHOUT needing `.not-content` on an
-//     ancestor. That keeps inline <code>, links, and lists inside the body
-//     correctly themed.
+// Accordion row used inside <PlatformAccess>. Delegates to the shared
+// Accordion so it stays aligned with FAQItem and TroubleshootingItem. The
+// body slot stays in the prose context so inline <code>, links, and lists
+// render naturally.
+import Accordion from "./Accordion.astro";
+
 interface Props {
 	header: string;
 	open?: boolean;
@@ -16,9 +13,6 @@ interface Props {
 const { header, open } = Astro.props;
 ---
 
-<details class="agent-platform-card" open={open}>
-	<summary class="agent-platform-card-summary">{header}</summary>
-	<div class="agent-platform-card-body">
-		<slot />
-	</div>
-</details>
+<Accordion title={header} open={open}>
+	<slot />
+</Accordion>

@@ -17,6 +17,16 @@ For more details about monitors, refer to [Monitors](/load-balancing/monitors/).
 
 ---
 
+## Retry timing
+
+When a health check times out, Cloudflare sends retries immediately — they do not wait for the next interval. The `retries` setting defines the number of additional attempts after the initial check. For example, with five retries:
+
+- Total attempts: 1 (initial) + 5 (retries) = **6**
+- With a 20 s timeout: Cloudflare marks the endpoint unhealthy after approximately 120 s (6 × 20 s)
+- The configured interval (for example, 60 s) only applies between **successful** probe cycles, not between retries
+
+---
+
 ## Create a monitor
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">

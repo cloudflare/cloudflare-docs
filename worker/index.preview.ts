@@ -1,21 +1,21 @@
-// TEMPORARY — Nimbus preview Worker (Starlight -> Nimbus migration).
+// Preview Worker — a self-contained copy of `worker/index.ts` used for
+// PR preview deployments (wrangler.preview.json -> dist).
 //
-// This is a deliberate, self-contained COPY of `worker/index.ts`. It exists so
-// the Nimbus preview (wrangler.preview.json -> dist-nimbus) can run the exact
-// same request-handling logic as production WITHOUT touching or refactoring the
-// production Worker. The only difference from index.ts is the redirects import
-// path (`../dist-nimbus/__redirects` instead of `../dist/__redirects`).
+// It is deployed via CI with:
+//   pnpm exec wrangler deploy --config wrangler.preview.json ...
 //
-// It is deployed manually/locally with:
-//   BUILD_TARGET=nimbus pnpm run build
-//   pnpm exec wrangler preview --config wrangler.preview.json --name nimbus
-//
-// Do NOT invest in deduplicating this against index.ts. At cutover (Epic H1)
-// delete this file and wrangler.preview.json. Production is unaffected by
-// anything here.
+// Anti-indexing measures (preview-only, not in production worker):
+//   - /robots.txt returns Disallow: / with no AI content signals
+//   - X-Robots-Tag header on every response
+//   - <meta name="robots"> injected into HTML responses via HTMLRewriter
+//   - Sitemap endpoints return 404
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
-import redirectsFileContents from "../dist-nimbus/__redirects";
+import redirectsFileContents from "../dist/__redirects";
+import { markdownNotFound, requestsMarkdown } from "./markdown-404";
+import { unavailableModelRedirect } from "./unavailable-model";
+import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleOg } from "./og/route";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -24,6 +24,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 });
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
+
+const PRODUCTION_ORIGIN = "https://developers.cloudflare.com";
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
@@ -39,10 +41,8 @@ const API_CATALOG = JSON.stringify({
 				},
 			],
 			"service-doc": [
-				{
-					href: "https://developers.cloudflare.com/api/index.md",
-					type: "text/markdown",
-				},
+				// TODO: Add a Markdown `service-doc` URL once /api/* supports a real
+				// Markdown representation (e.g. content negotiation or /index.md).
 				{
 					href: "https://developers.cloudflare.com/api/",
 					type: "text/html",
@@ -57,6 +57,57 @@ const API_CATALOG = JSON.stringify({
 		},
 	],
 });
+
+// --- Preview anti-indexing ---
+
+const ROBOTS_POLICY = "noindex, nofollow, noarchive, nosnippet, noimageindex";
+
+const PREVIEW_ROBOTS_TXT = [
+	"User-agent: *",
+	"Disallow: /",
+	"Content-Signal: ai-train=no, search=no, ai-input=no",
+].join("\n");
+
+function withRobotsHeaders(response: Response): Response {
+	const headers = new Headers(response.headers);
+	headers.set("X-Robots-Tag", ROBOTS_POLICY);
+	return new Response(response.body, {
+		status: response.status,
+		statusText: response.statusText,
+		headers,
+	});
+}
+
+// Pages are built with the production origin; point social images at this
+// preview so they show the PR's images.
+function rewriteHtml(response: Response, origin: string): Response {
+	const contentType = response.headers.get("Content-Type") ?? "";
+	if (!contentType.includes("text/html")) return response;
+	return new HTMLRewriter()
+		.on("head", {
+			element(element) {
+				element.append(`<meta name="robots" content="${ROBOTS_POLICY}" />`, {
+					html: true,
+				});
+			},
+		})
+		.on(`meta[property$="image"][content^="${PRODUCTION_ORIGIN}/"]`, {
+			element(meta) {
+				const content = meta.getAttribute("content") ?? "";
+				meta.setAttribute(
+					"content",
+					origin + content.slice(PRODUCTION_ORIGIN.length),
+				);
+			},
+		})
+		.transform(response);
+}
+
+function hardenResponse(response: Response, origin: string): Response {
+	return rewriteHtml(withRobotsHeaders(response), origin);
+}
+
+// --- End preview anti-indexing ---
 
 /**
  * When a redirect response is returned for an index.md request, rewrite the
@@ -96,8 +147,47 @@ function rewriteRedirectForMarkdown(
 
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
+		const response = await this.handleRequest(request);
+		return hardenResponse(response, new URL(request.url).origin);
+	}
+
+	private async handleRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 		const { pathname } = url;
+
+		// Image Resizing makes a subrequest to fetch the source image. Scope the
+		// bypass to /_astro/ so only asset paths skip the Worker, not arbitrary
+		// client requests with a spoofed Via header.
+		if (
+			pathname.startsWith("/_astro/") &&
+			/image-resizing/.test(request.headers.get("via") ?? "")
+		) {
+			return this.env.ASSETS.fetch(request);
+		}
+
+		// Preview-only robots.txt — disallows all crawling and AI content signals
+		if (pathname === "/robots.txt") {
+			return new Response(PREVIEW_ROBOTS_TXT, {
+				headers: {
+					"Content-Type": "text/plain; charset=utf-8",
+					"Cache-Control": "no-store",
+				},
+			});
+		}
+
+		// Block sitemap endpoints on previews
+		if (/^\/sitemap.*\.xml$/.test(pathname)) {
+			return new Response("Not found", {
+				status: 404,
+				headers: {
+					"Content-Type": "text/plain; charset=utf-8",
+				},
+			});
+		}
+
+		if (pathname.endsWith("/og.png")) {
+			return handleOg(request, this.env, this.ctx, { cache: false });
+		}
 
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
@@ -105,6 +195,12 @@ export default class extends WorkerEntrypoint<Env> {
 					"Content-Type":
 						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
 				},
+			});
+		}
+
+		if (pathname === "/.well-known/ai-catalog.json") {
+			return new Response(AI_CATALOG_BODY, {
+				headers: AI_CATALOG_HEADERS,
 			});
 		}
 
@@ -181,10 +277,12 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			try {
-				const forceTrailingSlashURL = new URL(
-					request.url.replace(/([^/])$/, "$1/"),
-					request.url,
-				);
+				// Append the slash to the path only. Doing it on the full URL string
+				// puts it after the query string, so rules never match.
+				const forceTrailingSlashURL = new URL(request.url);
+				if (!forceTrailingSlashURL.pathname.endsWith("/")) {
+					forceTrailingSlashURL.pathname += "/";
+				}
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
 					this.env.ASSETS,
@@ -207,6 +305,13 @@ export default class extends WorkerEntrypoint<Env> {
 		const response = await this.env.ASSETS.fetch(request);
 
 		if (response.status === 404) {
+			if (requestsMarkdown(request)) {
+				return markdownNotFound();
+			}
+
+			const modelRedirect = unavailableModelRedirect(pathname);
+			if (modelRedirect) return modelRedirect;
+
 			const section = new URL(response.url).pathname.split("/").at(1);
 
 			if (!section) return response;

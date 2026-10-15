@@ -1,0 +1,65 @@
+---
+{}
+---
+
+For the fastest possible troubleshooting, ensure your support ticket includes comprehensive details. The more context you provide, the faster your issue can be identified and resolved.
+
+To ensure efficient resolution when [contacting support](/support/contacting-cloudflare-support/), include as much relevant detail as possible in your ticket:
+
+<ul>
+	<li>
+		<label>
+			<input type="checkbox" /> Context: Briefly describe the scenario or use
+			case (for example, where the user was, what they were trying to do).
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Reproduction steps: Describe the steps you took
+			to reproduce the issue during troubleshhooting.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Timestamps: Be specific and include the exact
+			time and time zone when the issue occurred.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Troubleshooting attempts: Outline any
+			troubleshooting steps or changes already attempted to resolve the issue.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Tunnel ID and tunnel name.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> <code>cloudflared</code> version (run <code>cloudflared --version</code>).
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> How the tunnel was set up (locally-managed or remotely-managed via the dashboard).
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Tunnel logs: Include the <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-your-local-machine">logs from your local machine</a>.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Tunnel diagnostic logs: Include <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/diag-logs/">tunnel diagnostic logs</a>.
+		</label>
+	</li>
+</ul>
+
+:::tip[Write a detailed ticket to resolve your issue faster]
+Avoid vague descriptions and include scenario, timestamps, and steps taken to troubleshoot the issue. Refer to the following example:
+
+<p>Acme Corp attempted to establish a tunnel connection on October 30, 2025, at approximately 3:45 PM UTC. DNS resolution and TCP connectivity tests passed, but the <code>cloudflared</code> daemon logs showed <code>failed to sufficiently increase receive buffer size</code> errors. The tunnel diagnostic logs collected at 3:50 PM UTC are attached, along with the output from the DNS and network connectivity pre-checks.</p>
+:::

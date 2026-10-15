@@ -19,7 +19,151 @@ describe("Cloudflare Docs", () => {
 		});
 	});
 
+	describe("markdown 404 handling", () => {
+		it("responds with markdown 404 for /index.md requests", async () => {
+			const request = new Request("http://fakehost/non-existent/index.md");
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+			expect(body).toContain("ai-search.developers.cloudflare.com");
+		});
+
+		it("responds with markdown 404 for Accept: text/markdown requests", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: { Accept: "text/markdown" },
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+		});
+
+		it("responds with markdown 404 for parameterized Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: { Accept: "text/markdown; charset=utf-8, text/html;q=1.0" },
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+			const body = await response.text();
+			expect(body).toContain("# 404 Page not found");
+			expect(body).toContain("/llms.txt");
+		});
+
+		it("returns html 404 for unrelated Accept media types", async () => {
+			const request = new Request("http://fakehost/non-existent", {
+				headers: {
+					Accept: "text/markdown-extra, application/not-text-markdown",
+				},
+			});
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/html");
+			expect(await response.text()).toContain("Check the URL,");
+		});
+	});
+
+	describe(".well-known", () => {
+		it("api-catalog does not advertise a markdown service-doc yet", async () => {
+			const request = new Request("http://fakehost/.well-known/api-catalog");
+			const response = await SELF.fetch(request);
+			expect(response.status).toBe(200);
+			expect(response.headers.get("Content-Type")).toContain(
+				"application/linkset+json",
+			);
+
+			const catalog: any = await response.json();
+			const entry = (catalog.linkset as any[]).find(
+				(e) => e.anchor === "https://developers.cloudflare.com/api/",
+			);
+			expect(entry).toBeDefined();
+
+			const serviceDoc = entry["service-doc"] as any[];
+			expect(serviceDoc.some((d) => d.type === "text/markdown")).toBe(false);
+			expect(
+				serviceDoc.some((d) => String(d.href).endsWith("/api/index.md")),
+			).toBe(false);
+			expect(
+				serviceDoc.some(
+					(d) =>
+						d.type === "text/html" &&
+						d.href === "https://developers.cloudflare.com/api/",
+				),
+			).toBe(true);
+		});
+	});
+
 	describe("redirects", () => {
+		it.each([
+			[
+				"/cloudflare-one/traffic-policies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/traffic-policies/http-policies/example/",
+				"/cloudflare-one/traffic-controls/http-policies/example/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/configure-pac-file-on-device/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/best-practices/",
+			],
+		])("redirects %s to %s", async (source, destination) => {
+			const request = new Request(`http://fakehost${source}`);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(destination);
+		});
+
+		it("redirects an unslashed resolver and proxy request", async () => {
+			const request = new Request(
+				"http://fakehost/cloudflare-one/networks/resolvers-and-proxies",
+			);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/cloudflare-one/traffic-controls/",
+			);
+		});
+
 		it("redirects requests with a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
@@ -32,6 +176,82 @@ describe("Cloudflare Docs", () => {
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/directory/");
+		});
+
+		it.each(["?", "?foo=bar", "?foo=bar%2F", "?cf_page=%2Fpost-slug%2F"])(
+			"redirects requests without a trailing slash and with query %s",
+			async (query) => {
+				const request = new Request(`http://fakehost/docs${query}`);
+				const response = await SELF.fetch(request, { redirect: "manual" });
+				expect(response.status).toBe(301);
+				// The query string is carried over to the destination.
+				expect(response.headers.get("Location")).toBe(
+					`/directory/${new URL(request.url).search}`,
+				);
+			},
+		);
+	});
+
+	describe("unavailable model pages", () => {
+		it.each([
+			[
+				"/workers-ai/models/llama-3-8b-instruct/",
+				"/workers-ai/models/?unavailable=llama-3-8b-instruct",
+			],
+			[
+				// The `@` is percent-encoded by the asset layer before the 404 lands,
+				// so the id must survive the round trip without double-encoding.
+				"/ai/models/%40cf/meta/llama-3-8b-instruct/",
+				"/ai/models/?unavailable=%40cf%2Fmeta%2Fllama-3-8b-instruct",
+			],
+			[
+				"/ai/models/openai/retired-model/",
+				"/ai/models/?unavailable=openai%2Fretired-model",
+			],
+		])("redirects %s to the catalog", async (path, location) => {
+			const response = await SELF.fetch(new Request(`http://fakehost${path}`), {
+				redirect: "manual",
+			});
+			expect(response.status).toBe(302);
+			expect(response.headers.get("Location")).toBe(location);
+		});
+
+		it("serves a model page that still exists", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/ai/models/openai/tts-1/"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(200);
+		});
+
+		it.each(["/workers-ai/models/", "/ai/models/"])(
+			"serves the catalog at %s",
+			async (path) => {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+					{ redirect: "manual" },
+				);
+				expect(response.status).toBe(200);
+			},
+		);
+
+		it("leaves markdown requests as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/workers-ai/models/retired-model/index.md"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+		});
+
+		it("leaves schema endpoints as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request(
+					"http://fakehost/workers-ai/models/retired-model/schema-input.json",
+				),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
 		});
 	});
 
@@ -53,7 +273,7 @@ describe("Cloudflare Docs", () => {
 			expect(urlFlag.experimental).toBe(false);
 
 			expect(nodeJsFlag).toBeDefined();
-			expect(nodeJsFlag.enable_date).toBe(null);
+			expect(nodeJsFlag.enable_date).toBe("2026-08-04");
 		});
 
 		it("pages framework configurations", async () => {
@@ -133,6 +353,19 @@ describe("Cloudflare Docs", () => {
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
 
+		it("llms.txt declares utf-8 charset", async () => {
+			for (const path of ["/llms.txt", "/workers/llms.txt"]) {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+				);
+
+				expect(response.status).toBe(200);
+				expect(response.headers.get("Content-Type")).toBe(
+					"text/plain; charset=utf-8",
+				);
+			}
+		});
+
 		it("agent setup prompt declares utf-8 charset", async () => {
 			const request = new Request("http://fakehost/agent-setup/prompt.md");
 			const response = await SELF.fetch(request);
@@ -200,8 +433,8 @@ describe("Cloudflare Docs", () => {
 				const image = dom.querySelector("meta[property='og:image']")?.attributes
 					.content;
 
-				expect(image).toBe(
-					"https://developers.cloudflare.com/dev-products-preview.png",
+				expect(image).toMatch(
+					/^https:\/\/developers\.cloudflare\.com\/workers\/og\.png\?v=[0-9a-f]{16}$/,
 				);
 			});
 		});

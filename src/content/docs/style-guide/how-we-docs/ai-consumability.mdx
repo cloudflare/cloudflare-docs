@@ -22,7 +22,7 @@ The primary proposal in this space is [`llms.txt`](https://llmstxt.org/), offeri
 
 HTML is easily parsed - after all, the browser has to parse it to decide how to render the page you're reading now - it tends to not be very _portable_. This limitation is especially painful in an AI context, because all the extra presentation information consumes additional tokens.
 
-For example, given our [`Tabs`](/style-guide/components/tabs/), the panels are hidden until the tab itself is clicked:
+For example, given our [`Tabs`](/style-guide/build-the-page/components/tabs/), the panels are hidden until the tab itself is clicked:
 
 <Tabs>
 	<TabItem label="One">One Content</TabItem>
@@ -49,7 +49,7 @@ The references to the panels `id`, usually handled by JavaScript, are visible bu
 To solve this, we use [Markdown for Agents](/fundamentals/reference/markdown-for-agents/), which converts HTML to Markdown at the Cloudflare network layer. It handles:
 
 - Removing non-content tags (`script`, `style`, `link`, etc.)
-- Transforming custom elements like `starlight-tabs` into standard unordered lists
+- Transforming interactive components like `Tabs` into standard unordered lists
 - Adapting code block HTML into clean Markdown fenced code blocks
 
 Taking the `Tabs` example from the previous section, Markdown for Agents will give us a normal unordered list with the content properly associated with a given list item:
@@ -98,7 +98,7 @@ For more details, refer to [Google's AI guidance](https://developers.google.com/
 
 ### `noindex` directives
 
-The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/frontmatter/custom-properties/#noindex)).
+The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/build-the-page/frontmatter/custom-properties/#noindex)).
 
 {/* prettier-ignore */}
 ```html title="noindex meta tag"

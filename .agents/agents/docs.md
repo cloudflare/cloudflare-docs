@@ -98,7 +98,7 @@ Documentation should read as timeless. Do not use:
 | Package install/run commands | `PackageManagers`                         | Shows npm/yarn/pnpm tabs automatically                           |
 | Everything else              | Standard code fences with a language hint | Only when no named component fits                                |
 
-Import components from `~/components`:
+Add reusable components to the `~/components` barrel export (`src/components.ts`) and import them from `~/components`. Page-specific wrapper components or one-off components may use deep paths instead:
 
 ```mdx
 import {
@@ -110,7 +110,7 @@ import {
 ;
 ```
 
-Refer to https://developers.cloudflare.com/style-guide/components/ for full component documentation and https://developers.cloudflare.com/style-guide/formatting/code-block-guidelines/ for code block formatting.
+Refer to https://developers.cloudflare.com/style-guide/build-the-page/components/ for full component documentation and https://developers.cloudflare.com/style-guide/style-and-grammar/formatting/code-block-guidelines/ for code block formatting.
 
 ### Placeholders in code
 
@@ -129,7 +129,7 @@ Every code example should include a description of what it does and any relevant
 
 ## Notes and Warnings
 
-Use Starlight aside syntax:
+Use aside syntax:
 
 ```
 :::note[Optional Title]
@@ -158,7 +158,7 @@ Other commonly used components:
 - `Plan` / `InlineBadge` — plan or status badges
 - `DirectoryListing` — auto-generated list of sub-pages
 
-Refer to https://developers.cloudflare.com/style-guide/components/ for full component documentation. When in doubt, check how existing pages in the same product area use components and follow that pattern.
+Refer to https://developers.cloudflare.com/style-guide/build-the-page/components/ for full component documentation. When in doubt, check how existing pages in the same product area use components and follow that pattern.
 
 ## Pull Request Descriptions
 

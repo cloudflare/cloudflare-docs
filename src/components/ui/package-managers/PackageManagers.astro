@@ -1,0 +1,89 @@
+---
+/**
+ * PackageManagers — code block with a tab per package manager (npm,
+ * pnpm, yarn, bun). Selection syncs across instances via sessionStorage;
+ * an inline custom element restores the saved tab before paint.
+ */
+import { getCfCommand, getTabs } from "~/util/package-managers";
+import { stableId } from "~/util/stable-id";
+import type {
+	CommandType,
+	CommandOptions,
+	Manager,
+} from "~/util/package-managers";
+import CliPreferenceSwitch from "../cli-preference/CliPreferenceSwitch.astro";
+import { Code } from "../code";
+import PackageManagerTabs from "./PackageManagerTabs.astro";
+
+interface Props extends CommandOptions {
+	pkg?: string;
+	type?: CommandType;
+	frame?: "terminal" | "none";
+	cfCommand?: string;
+	managers?: ReadonlyArray<Manager>;
+}
+
+// `frame` is accepted for MDX API parity but intentionally not honored:
+// Nimbus keeps its LayerCard shell regardless of `frame="none"`.
+const {
+	pkg,
+	type = "add",
+	args,
+	dev,
+	global,
+	comment,
+	prefix,
+	cfCommand,
+	managers,
+} = Astro.props;
+const tabs = getTabs(
+	type,
+	pkg,
+	{ args, dev, global, comment, prefix },
+	managers,
+);
+const uid = stableId(Astro.locals, "pm", {
+	type,
+	pkg,
+	args,
+	dev,
+	global,
+	comment,
+	prefix,
+	cfCommand,
+	managers,
+});
+const normalizedCfCommand = cfCommand?.trim();
+const renderedCfCommand = normalizedCfCommand
+	? getCfCommand(normalizedCfCommand, { comment, prefix })
+	: undefined;
+
+if (cfCommand !== undefined) {
+	const invalid =
+		type !== "exec" ||
+		pkg !== "wrangler" ||
+		dev === true ||
+		global === true ||
+		!normalizedCfCommand ||
+		/[\r\n]/.test(normalizedCfCommand) ||
+		!normalizedCfCommand.startsWith("cf ");
+	if (invalid) {
+		throw new Error(
+			`[PackageManagers] Invalid cfCommand on "${Astro.url.pathname}". Use one single-line command beginning with "cf " alongside type="exec" and pkg="wrangler".`,
+		);
+	}
+}
+---
+
+{renderedCfCommand ? (
+	<CliPreferenceSwitch>
+		<Fragment slot="wrangler">
+			<PackageManagerTabs tabs={tabs} uid={uid} />
+		</Fragment>
+		<Fragment slot="cf">
+			<Code code={renderedCfCommand} lang="sh" />
+		</Fragment>
+	</CliPreferenceSwitch>
+) : (
+	<PackageManagerTabs tabs={tabs} uid={uid} />
+)}

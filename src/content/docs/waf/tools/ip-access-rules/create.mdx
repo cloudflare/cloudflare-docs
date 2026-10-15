@@ -19,10 +19,10 @@ Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead
 For [Spectrum](/spectrum/) applications configured with the non-HTTP/HTTPS application type, IP Access rules are the only supported mechanism for filtering traffic by IP address, IP range, country, or ASN. To use them, enable IP Access rules in your [Spectrum app configuration](/spectrum/reference/configuration-options/#ip-access-rules).
 :::
 
-<Tabs syncKey="dashNewNav"> <TabItem label="New dashboard" icon="rocket">
+<Tabs syncKey="dashNewNav"> <TabItem label="Dashboard" icon="rocket">
 
 :::note
-IP Access Rules are only available in the new security dashboard if you have configured at least one IP access rule.
+The **IP access rules** option appears only if you have configured at least one IP access rule.
 :::
 
 <Steps>
@@ -40,24 +40,6 @@ IP Access Rules are only available in the new security dashboard if you have con
    4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
 
 4. Select **Create**.
-
-</Steps>
-
-</TabItem> <TabItem label="Old dashboard">
-
-<Steps>
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-
-2. Go to **Security** > **WAF** > **Tools**.
-
-3. Under **IP Access Rules**, enter the following details:
-   1. For **Value**, enter an IP address, IP range, country code/name, or Autonomous System Number (ASN). For details, refer to [IP Access rules parameters](/waf/tools/ip-access-rules/parameters/).
-   2. Select an [action](/waf/tools/ip-access-rules/actions/).
-   3. For **Zone**, select whether the rule applies to the current website only or to all websites in the account.
-   4. (Optional) Enter a note for the rule (for example, `Payment Gateway`).
-
-4. Select **Add**.
 
 </Steps>
 

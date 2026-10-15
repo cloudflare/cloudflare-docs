@@ -1,15 +1,11 @@
 # build output
 dist/
-dist-nimbus/
 distmd/
 distllms/
 
 # generated types
 .astro/
-
-# Astro build cache
 .astro-cache/
-.astro-cache-nimbus/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
 skills/
@@ -18,6 +14,9 @@ skills/
 !.agents/agents/
 !.flue/.agents/
 !.flue/.agents/**
+
+# Logpush dataset pages are fetched from middlecache via bin/fetch-logpush-datasets.ts
+src/content/docs/logs/logpush/logpush-job/datasets/*/*.md
 
 # dependencies
 node_modules/
@@ -66,6 +65,11 @@ tools/relevant_changed_files.txt
 .flue/.flue-vite/
 .flue/.flue-vite.wrangler.jsonc
 .flue/node_modules/
+.flue/vitest-results.json
+.flue/replay-results/
 
-# nimbus-docs generated lint report (.nimbus/routes.json is a committed manifest)
+# nimbus-docs generated files
+.nimbus/coordinates.json
 .nimbus/lint.json
+.nimbus/routes.json
+.nimbus/page-collections.json

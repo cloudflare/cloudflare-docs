@@ -11,7 +11,7 @@ head:
     content: Configuration Rules
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { Render } from "~/components";
 
 Configuration Rules allow you to customize certain Cloudflare [configuration settings](/rules/configuration-rules/settings/) for matching incoming requests. For example, you can turn off specific features for certain URL paths or change settings based on the visitor's country.
 
@@ -33,7 +33,10 @@ Each configuration rule includes an expression that defines which requests the r
 
 The number of available configuration rules varies according to your Cloudflare plan:
 
-<FeatureTable id="rules.config_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 10 | 25 | 50 | 300 |
 
 ## Execution order
 

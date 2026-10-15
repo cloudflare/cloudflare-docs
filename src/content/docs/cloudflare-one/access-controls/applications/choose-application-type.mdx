@@ -45,7 +45,7 @@ For setup instructions, refer to [Add a self-hosted public application](/cloudfl
 
 You can also use self-hosted applications to protect resources on your private network by targeting specific private IPs, hostnames, or CIDR ranges (blocks of IP addresses, for example `10.0.0.0/8`) with an attached port or port range. This is the primary method for building Zero Trust network access on Cloudflare.
 
-Private network applications require that users route traffic through Cloudflare — typically by running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device. You must also connect your private network to Cloudflare using a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+Private network applications require that users route traffic through Cloudflare — typically by running the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) on their device. You must also connect your private network to Cloudflare using a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/mesh/).
 
 With private network applications, you define the same types of Access policies as you do for public applications, but apply them to private destinations. This gives you granular, identity-aware control over who can reach what on your network — replacing broad VPN-level access with per-application or per-service policies. Access policies are reusable, so you can apply the same policy across multiple applications.
 
@@ -56,6 +56,8 @@ For setup instructions, refer to [Add a self-hosted private application](/cloudf
 Self-hosted applications can also protect a Cloudflare Worker directly by name, rather than by hostname or IP. When you select a Worker as the destination, you can cover the Worker together with all of its preview deployments, or cover the preview deployments only.
 
 This is the safest and most straightforward way to put authentication in front of a Worker. Instead of configuring individual routes on the Worker and managing authentication at the route level, you link the entire Worker (and optionally its preview deployments) to an Access application. Any request to the Worker on any route passes through Access first.
+
+For Workers-specific setup instructions, refer to [Cloudflare Access for Workers](/workers/configuration/cloudflare-access/).
 
 ### CLI access with cloudflared
 
@@ -87,7 +89,7 @@ For setup instructions, refer to [SaaS applications](/cloudflare-one/access-cont
 
 Infrastructure applications provide protocol-aware access control for servers and infrastructure targets, whether reachable over a public hostname or a private network. Unlike self-hosted applications, which evaluate whether a user can reach a destination, infrastructure applications also control what a user can do after connecting — which usernames they can authenticate as, which ports they can access, and which commands they can run.
 
-Infrastructure applications require the Cloudflare One Client. For targets on your private network, you must also connect the network to Cloudflare through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/).
+Infrastructure applications require the Cloudflare One Client. For targets on your private network, you must also connect the network to Cloudflare through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) or [Cloudflare Mesh](/mesh/).
 
 ### When to use infrastructure applications
 

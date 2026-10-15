@@ -12,7 +12,7 @@ To add a domain to the Local Domain Fallback list:
 
 4. In **Domain**, enter the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`).
 
-5. In **DNS Servers**, enter the IP address of the DNS servers that should resolve that domain name.
+5. In **DNS Servers**, enter the IP address of the DNS servers that should resolve that domain name. Cloudflare recommends keeping the list to a maximum of eight servers to avoid performance issues.
 
 6. Enter an optional description and select **Save domain**.
 
@@ -97,7 +97,7 @@ A Local Domain Fallback list is scoped to a specific [device profile](/cloudflar
    }
    ```
 
-For `suffix`, specify the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`). For `dns_server`, enter the IP address of the DNS servers that should resolve that domain name.
+For `suffix`, specify the apex domain (`example.com`) that you want to resolve using your private DNS server. All prefixes under the apex domain are subject to Local Domain Fallback (in other words, `example.com` is interpreted as `*.example.com`). For `dns_server`, enter the IP address of the DNS servers that should resolve that domain name. Cloudflare recommends keeping the list to a maximum of eight servers to avoid performance issues.
 
 </TabItem>
 </Tabs>

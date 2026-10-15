@@ -1,0 +1,287 @@
+---
+interface Props {
+	ariaLabel: string;
+	caption?: string;
+	captionId?: string;
+	className?: string;
+}
+
+const {
+	ariaLabel,
+	caption,
+	captionId = "realtime-diagram-caption",
+	className,
+} = Astro.props;
+---
+
+<figure
+	class:list={["rt-diagram", "not-content", className]}
+	aria-label={caption ? undefined : ariaLabel}
+	aria-labelledby={caption ? captionId : undefined}
+>
+	<div class="rt-diagram__stage">
+		<slot />
+	</div>
+
+	{caption && (
+		<figcaption id={captionId} class="rt-diagram__caption">
+			{caption}
+		</figcaption>
+	)}
+</figure>
+
+<style is:global>
+	.rt-diagram {
+		--rtd-panel: #fbfbfb;
+		--rtd-dot: rgb(0 0 0 / 8%);
+		--rtd-card: #ffffff;
+		--rtd-head: #f4f4f5;
+		--rtd-border: #e3e3e6;
+		--rtd-line: #b9b9c0;
+		--rtd-joint: #ffffff;
+		--rtd-text: #1a1a1c;
+		--rtd-muted: #75757c;
+		--rtd-accent: #f6821f;
+		--rtd-accent-soft: rgb(246 130 31 / 12%);
+		--rtd-blue: #2f6fed;
+		--rtd-blue-soft: rgb(47 111 237 / 10%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .rt-diagram {
+		--rtd-panel: #121213;
+		--rtd-dot: rgb(255 255 255 / 9%);
+		--rtd-card: #1b1b1d;
+		--rtd-head: #242427;
+		--rtd-border: #38383c;
+		--rtd-line: #55555c;
+		--rtd-joint: #1b1b1d;
+		--rtd-text: #f3f3f5;
+		--rtd-muted: #aaaab2;
+		--rtd-accent-soft: rgb(246 130 31 / 16%);
+		--rtd-blue-soft: rgb(74 128 255 / 16%);
+	}
+
+	.rt-diagram__stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		border: 1px solid var(--rtd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtd-dot) 1px, transparent 1px),
+			var(--rtd-panel);
+		background-size: 16px 16px;
+	}
+
+	.rt-diagram__node {
+		display: flex;
+		box-sizing: border-box;
+		min-width: 0;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.25rem;
+		padding: 0.8rem;
+		border: 1px solid var(--rtd-border);
+		border-radius: 0.625rem;
+		background: var(--rtd-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+		color: var(--rtd-text);
+		text-align: center;
+	}
+
+	.rt-diagram__node--accent {
+		border-color: color-mix(in srgb, var(--rtd-accent) 60%, var(--rtd-border));
+		background: color-mix(in srgb, var(--rtd-accent-soft) 60%, var(--rtd-card));
+	}
+
+	.rt-diagram__node--blue {
+		border-color: color-mix(in srgb, var(--rtd-blue) 45%, var(--rtd-border));
+		background: color-mix(in srgb, var(--rtd-blue-soft) 55%, var(--rtd-card));
+	}
+
+	.rt-diagram__node strong {
+		color: var(--rtd-text);
+		font-size: 0.8125rem;
+		font-weight: 600;
+		line-height: 1.25;
+		overflow-wrap: normal;
+		word-break: normal;
+	}
+
+	.rt-diagram__node small {
+		color: var(--rtd-muted);
+		font-size: 0.625rem;
+		line-height: 1.45;
+	}
+
+	.rt-diagram__eyebrow {
+		color: var(--rtd-accent);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.rt-diagram__boundary {
+		position: relative;
+		box-sizing: border-box;
+		min-width: 0;
+		padding: 1.5rem 0.75rem 0.75rem;
+		border: 1px dashed var(--rtd-border);
+		border-radius: 0.75rem;
+	}
+
+	.rt-diagram__boundary--accent {
+		border-color: var(--rtd-accent);
+		background: var(--rtd-accent-soft);
+	}
+
+	.rt-diagram__boundary--blue {
+		border-color: color-mix(in srgb, var(--rtd-blue) 55%, var(--rtd-border));
+		background: var(--rtd-blue-soft);
+	}
+
+	.rt-diagram__boundary-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtd-border);
+		border-radius: 9999px;
+		background: var(--rtd-panel);
+		color: var(--rtd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+	}
+
+	.rt-diagram__boundary--accent > .rt-diagram__boundary-label {
+		border-color: var(--rtd-accent);
+		color: var(--rtd-accent);
+	}
+
+	.rt-diagram__boundary--blue > .rt-diagram__boundary-label {
+		border-color: var(--rtd-blue);
+		color: var(--rtd-blue);
+	}
+
+	.rt-diagram__connector {
+		position: relative;
+		display: flex;
+		min-width: 0;
+		align-items: center;
+		justify-content: center;
+		color: var(--rtd-muted);
+		font-size: 0.625rem;
+		line-height: 1.3;
+		text-align: center;
+	}
+
+	.rt-diagram__connector::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		border-top: 1.5px solid var(--rtd-line);
+	}
+
+	.rt-diagram__connector--dashed::before {
+		border-top-style: dashed;
+	}
+
+	.rt-diagram__connector::after {
+		content: "";
+		position: absolute;
+		top: calc(50% - 3px);
+		right: -1px;
+		width: 6px;
+		height: 6px;
+		border-top: 1.5px solid var(--rtd-line);
+		border-right: 1.5px solid var(--rtd-line);
+		transform: rotate(45deg);
+	}
+
+	.rt-diagram__connector--left::after {
+		left: -1px;
+		right: auto;
+		transform: rotate(-135deg);
+	}
+
+	.rt-diagram__connector--both::after {
+		box-shadow: none;
+	}
+
+	.rt-diagram__connector--both .rt-diagram__connector-start {
+		position: absolute;
+		top: calc(50% - 3px);
+		left: -1px;
+		width: 6px;
+		height: 6px;
+		border-top: 1.5px solid var(--rtd-line);
+		border-right: 1.5px solid var(--rtd-line);
+		transform: rotate(-135deg);
+	}
+
+	.rt-diagram__connector-label {
+		position: relative;
+		z-index: 1;
+		width: max-content;
+		max-width: 8rem;
+		padding: 0.2rem 0.4rem;
+		border-radius: 0.25rem;
+		background: var(--rtd-panel);
+		overflow-wrap: normal;
+		word-break: normal;
+	}
+
+	.rt-diagram__caption {
+		max-width: 42rem;
+		margin: 0.65rem auto 0;
+		color: var(--rtd-muted);
+		font-size: 0.75rem;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	.rt-diagram__mobile-routes {
+		display: none;
+		gap: 0.75rem;
+	}
+
+	.rt-diagram__mobile-route {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem;
+		border: 1px solid var(--rtd-border);
+		border-radius: 0.625rem;
+		background: var(--rtd-card);
+		color: var(--rtd-text);
+		font-size: 0.6875rem;
+		line-height: 1.35;
+		text-align: center;
+	}
+
+	.rt-diagram__mobile-route small {
+		color: var(--rtd-muted);
+		font-size: 0.5625rem;
+	}
+
+	@container (max-width: 40rem) {
+		.rt-diagram__stage {
+			padding: 1.25rem 0.75rem;
+		}
+	}
+</style>

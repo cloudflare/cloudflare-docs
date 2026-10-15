@@ -39,6 +39,10 @@ Cloudflare Tunnel uses an outbound-only connection model to enable bidirectional
 
 Once the connection is established, traffic flows in both directions over the tunnel between your origin and Cloudflare. Most firewalls allow outbound traffic by default. `cloudflared` takes advantage of this standard by connecting out to the Cloudflare network from the server you installed `cloudflared` on. You can then configure your firewall to allow only these outbound connections and block all inbound traffic, effectively blocking access to your origin from anything other than Cloudflare. This setup ensures that all traffic to your origin is securely routed through the tunnel.
 
+:::note[Authenticated Origin Pulls does not apply]
+Because Cloudflare Tunnel does not use an inbound listener on your origin, [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) has no effect on hostnames routed through Cloudflare Tunnel. Origin traffic is already authenticated using your tunnel's connector credentials.
+:::
+
 ## Next steps
 
 - Create a tunnel using the [Cloudflare dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or [API](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel-api/).

@@ -1,0 +1,82 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 1
+head: []
+description: Write your first integration test for a Cloudflare Worker with createTestHarness.
+products:
+  - workers
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows how to write a basic integration test for a Worker with `createTestHarness()`. The example uses Vitest as the test runner and exercises a Worker built with Wrangler.
+
+## Prerequisites
+
+You need:
+
+- A Worker project with a [Wrangler configuration file](/workers/wrangler/configuration/)
+- A Node.js test runner such as [Vitest](https://vitest.dev/)
+- `wrangler` installed as a development dependency
+
+## Create a test harness
+
+Import `createTestHarness()` from `wrangler`. Point the test harness at your Worker configuration file.
+
+<TypeScriptExample filename="test/index.test.ts">
+
+```ts
+import { createTestHarness } from "wrangler";
+
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+```
+
+</TypeScriptExample>
+
+## Manage the test harness lifecycle
+
+For simplicity, we will reuse a single server for the test suite and reset it after each test. You can also start a new server for each test if the tests do not share the same configuration.
+
+<TypeScriptExample filename="test/index.test.ts">
+
+```ts
+import { afterAll, afterEach, beforeAll } from "vitest";
+
+beforeAll(async () => {
+	// Start the server before all tests
+	await server.listen();
+});
+
+afterEach(async () => {
+	// Recreates storage and restores the original Worker options after each test
+	await server.reset();
+});
+
+afterAll(async () => {
+	// Close the server after all tests
+	await server.close();
+});
+```
+
+</TypeScriptExample>
+
+## Write your first test
+
+Use the [helpers](/workers/testing/test-harness/interact-with-workers/) provided by the test harness to interact with the Worker and assert its behavior. For example, you can call `server.fetch()` to send a request to the Worker and assert against its response.
+
+<TypeScriptExample filename="test/index.test.ts">
+
+```ts
+import { test } from "vitest";
+
+test("responds", async ({ expect }) => {
+	const response = await server.fetch("/");
+	expect(await response.text()).toBe("Hello World");
+});
+```
+
+</TypeScriptExample>

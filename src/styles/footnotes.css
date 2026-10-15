@@ -1,7 +1,7 @@
 .footnote {
 	font-size: 0.75rem;
 	line-height: 1rem;
-	color: var(--sl-color-accent);
+	color: var(--nb-link);
 	font-weight: 600;
 	padding: 0.25rem;
 	margin: -0.25rem;

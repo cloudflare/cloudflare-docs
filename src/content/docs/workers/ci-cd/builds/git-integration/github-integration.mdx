@@ -20,7 +20,9 @@ If a commit is on a pull request, Cloudflare will automatically post a comment o
 
 ![GitHub pull request comment](~/assets/images/workers/platform/ci-cd/github-pull-request-comment.png)
 
-A [preview URL](/workers/versions-and-deployments/preview-urls/) will be provided for any builds which perform `wrangler versions upload`. This is particularly useful when reviewing your pull request, as it allows you to compare the code changes alongside an updated version of your Worker.
+A [Preview URL](/workers/previews/) will be provided for builds which perform `wrangler preview`. This is useful when reviewing your pull request, as it lets you test the code changes in an isolated copy of your Worker.
+
+Subsequent pushes to the same branch update the same Preview URL. Each deployment also gets an immutable Deployment URL for testing one exact deployment.
 
 Comment history reveals any builds completed earlier while the PR was open.
 
@@ -44,17 +46,15 @@ Note that when using [build watch paths](/workers/ci-cd/builds/build-watch-paths
 
 You can deploy projects to Cloudflare Workers from your company or side project on GitHub using the [Cloudflare Workers & Pages GitHub App](https://github.com/apps/cloudflare-workers-and-pages).
 
+### Repository access
+
+The Cloudflare Workers & Pages GitHub App settings determine which repositories Cloudflare can connect to. The repository picker shows only repositories included in the GitHub App installation that your authenticated GitHub user can access. Cloudflare asks you to authenticate with GitHub when needed.
+
 ### Organizational access
 
 When authorizing Cloudflare Workers to access a GitHub account, you can specify access to your individual account or an organization that you belong to on GitHub.
 
 To add Cloudflare Workers installation to an organization, your user account must be an owner or have the appropriate role within the organization (i.e. the GitHub Apps Manager role). More information on these roles can be seen on [GitHub's documentation](https://docs.github.com/en/organizations/managing-peoples-access-to-your-organization-with-roles/roles-in-an-organization#github-app-managers).
-
-:::caution[GitHub security consideration]
-
-A GitHub account should only point to one Cloudflare account. If you are setting up Cloudflare with GitHub for your organization, Cloudflare recommends that you limit the scope of the application to only the repositories you intend to build with Pages. To modify these permissions, go to the [Applications page](https://github.com/settings/installations) on GitHub and select **Switch settings context** to access your GitHub organization settings. Then, select **Cloudflare Workers & Pages** > For **Repository access**, select **Only select repositories** > select your repositories.
-
-:::
 
 ### Remove access
 

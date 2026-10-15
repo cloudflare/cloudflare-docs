@@ -9,9 +9,11 @@ products:
   - api
 ---
 
-import { Render } from "~/components";
+import { AnchorHeading, Render } from "~/components";
 
-<Render file="api-rate-limits" product="fundamentals"  params={{showHeading: true}} />
+<AnchorHeading title="API token limits" depth={2} />
+
+<Render file="api-rate-limits" product="fundamentals" />
 
 ## Rate limiting headers
 

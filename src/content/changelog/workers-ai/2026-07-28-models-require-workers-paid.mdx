@@ -1,0 +1,25 @@
+---
+title: Select models now require the Workers Paid plan
+description: Kimi K2.6, Kimi K2.7 Code, and GLM-5.2 are no longer available on the Workers Free plan.
+products:
+  - workers-ai
+date: 2026-07-28
+---
+
+We are limiting Workers Free plan access to a few resource-intensive models so we can prioritize capacity for the broader Workers AI user base. This helps everyone get a more reliable inference experience, with fewer `429` and `3040` (Out of Capacity) errors.
+
+The following models now require the [Workers Paid plan](/workers/platform/pricing/#workers):
+
+- [`@cf/moonshotai/kimi-k2.6`](/workers-ai/models/kimi-k2.6/)
+- [`@cf/moonshotai/kimi-k2.7-code`](/workers-ai/models/kimi-k2.7-code/)
+- [`@cf/zai-org/glm-5.2`](/workers-ai/models/glm-5.2/)
+
+On the Workers Free plan, requests to these models now return a `403` HTTP error ([internal error `5035`](/workers-ai/platform/errors/)) prompting you to upgrade. The Workers Paid plan starts at $5 per month and still includes the 10,000 free Neurons per day allocation, with usage beyond that billed at each [model's pricing](/workers-ai/platform/pricing/).
+
+Many models remain available on the Workers Free plan, including:
+
+- [`@cf/zai-org/glm-4.7-flash`](/workers-ai/models/glm-4.7-flash/)
+- [`@cf/google/gemma-4-26b-a4b-it`](/workers-ai/models/gemma-4-26b-a4b-it/)
+- [`@cf/nvidia/nemotron-3-120b-a12b`](/workers-ai/models/nemotron-3-120b-a12b/)
+
+For the full list, refer to the [Workers AI model catalog](/workers-ai/models/).

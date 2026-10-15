@@ -12,8 +12,7 @@ export function getIssueOrPullRequestNumber(
 ): number | undefined {
 	if (eventType === "issues" || eventType === "issue_comment") {
 		return (body.issue as Record<string, unknown> | undefined)?.number as
-			| number
-			| undefined;
+			number | undefined;
 	}
 	if (eventType === "pull_request") {
 		return (body.pull_request as Record<string, unknown> | undefined)
@@ -30,8 +29,7 @@ export function getIssueOrPullRequestUrl(
 	if (eventType === "issues") {
 		return (
 			((body.issue as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
+				string | undefined) ??
 			(number
 				? `https://github.com/cloudflare/cloudflare-docs/issues/${number}`
 				: undefined)
@@ -40,8 +38,7 @@ export function getIssueOrPullRequestUrl(
 	if (eventType === "pull_request") {
 		return (
 			((body.pull_request as Record<string, unknown> | undefined)?.html_url as
-				| string
-				| undefined) ??
+				string | undefined) ??
 			(number
 				? `https://github.com/cloudflare/cloudflare-docs/pull/${number}`
 				: undefined)
@@ -64,13 +61,11 @@ export function getIssueOrPullRequestTitle(
 ): string | undefined {
 	if (eventType === "issues" || eventType === "issue_comment") {
 		return (body.issue as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
+			string | undefined;
 	}
 	if (eventType === "pull_request") {
 		return (body.pull_request as Record<string, unknown> | undefined)?.title as
-			| string
-			| undefined;
+			string | undefined;
 	}
 }
 

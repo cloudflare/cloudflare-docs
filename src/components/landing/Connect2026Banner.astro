@@ -1,0 +1,453 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import { LinkButton } from "@/components/ui/link-button";
+import ConnectSpeakerLogo from "./ConnectSpeakerLogo.astro";
+
+const speakers = [
+	{
+		name: "Evan You",
+		role: "Vue.js & Vite creator",
+		src: "https://dash.cloudflare.com/images/connect-2026/avatars/evan-you.jpg",
+	},
+	{
+		name: "Tanner Linsley",
+		role: "Owner",
+		src: "https://dash.cloudflare.com/images/connect-2026/avatars/tanner-linsley.jpg",
+	},
+	{
+		name: "Corey Quinn",
+		role: "Chief Cloud Economist",
+		src: "https://dash.cloudflare.com/images/connect-2026/avatars/corey-quinn.jpg",
+	},
+	{
+		name: "Peter Steinberger",
+		role: "Member of Technical Staff",
+		src: "https://dash.cloudflare.com/images/connect-2026/avatars/peter-steinberger.jpg",
+	},
+	{
+		name: "Fred Schott",
+		role: "Astro creator",
+		src: "https://dash.cloudflare.com/images/connect-2026/avatars/fred-schott.jpg",
+	},
+];
+---
+
+<section
+	class="@container relative lg:mr-4"
+	data-connect-card
+	aria-labelledby="connect-card-title"
+>
+	<aside
+		class="connect-card relative flex min-h-24 flex-col rounded-xl"
+		aria-label="Connect 2026 announcement"
+	>
+		<div class="connect-card-content border-border bg-card relative flex min-w-0 flex-1 flex-col gap-4 rounded-xl border p-5">
+			<div class="connect-card-copy flex min-w-0 flex-col gap-1">
+				<div class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+					<h2
+						id="connect-card-title"
+						class="text-foreground min-w-0 text-lg leading-snug font-medium break-words"
+					>
+						Meet the Agentic Internet Builders IRL
+					</h2>
+					<div
+						class="relative flex shrink-0 items-center pl-1"
+						data-connect-speakers
+						aria-label="Featured speakers"
+					>
+						{speakers.map((speaker, index) => (
+							<button
+								type="button"
+								data-connect-avatar
+								data-connect-speaker-index={index}
+								class:list={[
+									"connect-avatar focus-visible:outline-ring relative size-5 shrink-0 cursor-default rounded-full border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-2",
+									index > 0 && "-ml-1.5",
+								]}
+								style={`z-index:${index}`}
+								aria-label={`${speaker.name}, ${speaker.role}`}
+							>
+								<img
+									src={speaker.src}
+									alt=""
+									width="20"
+									height="20"
+									loading="lazy"
+									decoding="async"
+									draggable="false"
+									class="bg-card ring-card size-5 rounded-full object-cover ring-1"
+								/>
+							</button>
+						))}
+						<span
+							class="connect-avatar relative -ml-1.5 grid size-5 shrink-0 place-items-center transition-transform duration-150 motion-reduce:transition-none"
+							data-connect-avatar
+							data-connect-speaker-index={speakers.length}
+							style={`z-index:${speakers.length}`}
+						>
+							<a
+								href="https://www.cloudflare.com/connect/speakers/"
+								target="_blank"
+								rel="noreferrer"
+								aria-label="Browse all Cloudflare Connect speakers"
+								class="border-border bg-muted text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:outline-ring flex size-5 items-center justify-center rounded-full border no-underline transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+							>
+								<Icon name="ph:arrow-up-right" class="size-3" />
+							</a>
+						</span>
+						<div hidden>
+							{speakers.map((speaker) => (
+								<template data-connect-speaker-template>
+									<div class="connect-speaker-tooltip">
+										<span class="flex min-w-0 flex-1 flex-col items-start justify-center">
+											<strong class="text-foreground w-fit max-w-full text-base leading-snug font-medium">
+												{speaker.name}
+											</strong>
+											<small class="text-muted-foreground w-fit max-w-full text-sm leading-snug">
+												{speaker.role}
+											</small>
+										</span>
+										<ConnectSpeakerLogo name={speaker.name} />
+									</div>
+								</template>
+							))}
+							<template data-connect-speaker-template>
+								<a
+									href="https://www.cloudflare.com/connect/speakers/"
+									target="_blank"
+									rel="noreferrer"
+									aria-label="Browse all Cloudflare Connect speakers"
+									class="connect-speaker-tooltip text-inherit no-underline"
+								>
+									<span class="flex min-w-0 flex-1 flex-col items-start justify-center">
+										<strong class="text-foreground w-fit max-w-full text-base leading-snug font-medium">
+											Browse all
+										</strong>
+										<small class="text-muted-foreground w-fit max-w-full text-sm leading-snug">
+											180+ speakers
+										</small>
+									</span>
+									<img
+										src="https://dash.cloudflare.com/images/connect-2026/avatars/connect-speakers.gif"
+										alt=""
+										aria-hidden="true"
+										width="36"
+										height="36"
+										class="size-9 shrink-0 rounded-full object-cover"
+									/>
+								</a>
+							</template>
+						</div>
+					</div>
+				</div>
+				<p class="text-muted-foreground max-w-[500px] text-sm leading-snug font-normal break-words text-pretty">
+					Connect brings the Cloudflare community together once a year to learn,
+					collaborate, and shape what comes next. Oct 19–21, San Francisco.
+				</p>
+			</div>
+
+			<div class="connect-card-actions flex w-full shrink-0 items-center gap-2 self-start">
+				<LinkButton
+					href="https://www.cloudflare.com/connect/"
+					target="_blank"
+					rel="noopener noreferrer"
+					variant="primary"
+					size="base"
+					class="connect-card-cta"
+				>
+					Learn more
+				</LinkButton>
+				<div class="connect-card-dismiss text-foreground grid size-7 place-items-center overflow-hidden">
+					<button
+						type="button"
+						data-connect-card-close
+						aria-label="Dismiss Connect 2026 announcement"
+						class="border-border hover:bg-accent grid size-7 cursor-pointer place-items-center rounded-full border bg-transparent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 motion-reduce:transition-none"
+					>
+						<Icon name="ph:x" class="size-3.5" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</aside>
+</section>
+
+<script is:inline>
+	try {
+		if (localStorage.getItem("connect-2026-announcement")) {
+			document.currentScript?.previousElementSibling?.remove();
+		}
+	} catch {
+		void 0;
+	}
+</script>
+
+<script>
+	import { mount } from "@cloudflare/nimbus-docs/client";
+	import tippy from "tippy.js";
+
+	mount("[data-connect-card]", (card) => {
+		const controller = new AbortController();
+		const { signal } = controller;
+		const close = card.querySelector<HTMLButtonElement>(
+			"[data-connect-card-close]",
+		);
+		const speakerGroup = card.querySelector<HTMLElement>(
+			"[data-connect-speakers]",
+		);
+		const avatars = Array.from(
+			card.querySelectorAll<HTMLElement>("[data-connect-avatar]"),
+		);
+		const templates = Array.from(
+			card.querySelectorAll<HTMLTemplateElement>(
+				"[data-connect-speaker-template]",
+			),
+		);
+		let closeTimer: ReturnType<typeof setTimeout> | undefined;
+		let destroyed = false;
+
+		const dismissTooltip = close
+			? tippy(close, {
+					content: "Dismiss Connect 2026 announcement",
+					placement: "top",
+					offset: [0, 8],
+					arrow: false,
+					theme: "connect-dismiss",
+				})
+			: undefined;
+
+		const speakerTooltip = speakerGroup
+			? tippy(speakerGroup, {
+					trigger: "manual",
+					interactive: true,
+					placement: "top",
+					offset: [0, 8],
+					arrow: false,
+					theme: "connect-speaker",
+					onMount(instance) {
+						if (instance.popper.dataset.connectBound) return;
+						instance.popper.dataset.connectBound = "true";
+						instance.popper.addEventListener(
+							"mouseenter",
+							() => closeTimer && clearTimeout(closeTimer),
+							{ signal },
+						);
+						instance.popper.addEventListener("mouseleave", scheduleClose, {
+							signal,
+						});
+					},
+				})
+			: undefined;
+
+		function hideSpeaker() {
+			avatars.forEach((avatar) => {
+				delete avatar.dataset.active;
+				delete avatar.dataset.spread;
+			});
+			speakerTooltip?.hide();
+		}
+
+		function scheduleClose() {
+			if (closeTimer) clearTimeout(closeTimer);
+			closeTimer = setTimeout(hideSpeaker, 200);
+		}
+
+		function showSpeaker(avatar: HTMLElement) {
+			if (!speakerTooltip) return;
+			if (closeTimer) clearTimeout(closeTimer);
+			const index = Number(avatar.dataset.connectSpeakerIndex);
+			const template = templates[index];
+			const content = template?.content.firstElementChild?.cloneNode(true);
+			if (!(content instanceof HTMLElement)) return;
+
+			avatars.forEach((item, itemIndex) => {
+				item.dataset.active = String(itemIndex === index);
+				item.dataset.spread = String(itemIndex > index);
+			});
+			speakerTooltip.setContent(content);
+			speakerTooltip.show();
+		}
+
+		avatars.forEach((avatar) => {
+			avatar.addEventListener("mouseenter", () => showSpeaker(avatar), {
+				signal,
+			});
+			avatar.addEventListener("focusin", () => showSpeaker(avatar), {
+				signal,
+			});
+		});
+		speakerGroup?.addEventListener("mouseleave", scheduleClose, { signal });
+		speakerGroup?.addEventListener(
+			"focusout",
+			(event) => {
+				if (
+					!(event.relatedTarget instanceof Node) ||
+					!speakerGroup?.contains(event.relatedTarget)
+				) {
+					scheduleClose();
+				}
+			},
+			{ signal },
+		);
+		card.addEventListener(
+			"keydown",
+			(event) => {
+				if (event.key === "Escape") hideSpeaker();
+			},
+			{ signal },
+		);
+
+		const cleanup = () => {
+			if (destroyed) return;
+			destroyed = true;
+			controller.abort();
+			if (closeTimer) clearTimeout(closeTimer);
+			dismissTooltip?.destroy();
+			speakerTooltip?.destroy();
+		};
+
+		const dismiss = () => {
+			cleanup();
+			card.remove();
+			try {
+				localStorage.setItem("connect-2026-announcement", "viewed");
+			} catch {
+				return;
+			}
+		};
+		close?.addEventListener("click", dismiss, { signal });
+		return cleanup;
+	});
+</script>
+
+<style>
+	.connect-avatar {
+		transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	.connect-avatar[data-active="true"] {
+		z-index: 10 !important;
+		transform: translateY(-2px) scale(1.08);
+	}
+
+	.connect-avatar[data-spread="true"] {
+		transform: translateX(6px);
+	}
+
+	.connect-speaker-tooltip {
+		display: flex;
+		width: 15rem;
+		align-items: center;
+		gap: 0.75rem;
+		overflow: hidden;
+		padding: 0.75rem 0.875rem;
+		font-synthesis: none;
+		overflow-wrap: anywhere;
+	}
+
+	:global(.tippy-box[data-theme~="connect-speaker"]) {
+		border: 1px solid var(--color-border) !important;
+		border-radius: 0.75rem !important;
+		background: var(--color-card) !important;
+		color: var(--color-foreground) !important;
+		box-shadow: var(--shadow-md) !important;
+	}
+
+	:global(.tippy-box[data-theme~="connect-speaker"] .tippy-content) {
+		padding: 0 !important;
+	}
+
+	:global(.tippy-box[data-theme~="connect-dismiss"]) {
+		border: 1px solid var(--color-border) !important;
+		border-radius: 0.375rem !important;
+		background: var(--color-card) !important;
+		color: var(--color-foreground) !important;
+		font-size: 0.75rem !important;
+		box-shadow: var(--shadow-lg) !important;
+	}
+
+	:global(.tippy-box[data-theme~="connect-dismiss"] .tippy-content) {
+		padding: 0.375rem 0.75rem !important;
+	}
+
+	.connect-card-cta {
+		flex: 1 1 auto;
+	}
+
+	.connect-card-dismiss {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		z-index: 2;
+		width: 0;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(1rem);
+		transition:
+			width 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+			opacity 220ms ease-out,
+			transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+
+	[data-connect-card]:hover .connect-card-dismiss,
+	[data-connect-card]:focus-within .connect-card-dismiss {
+		width: 1.75rem;
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateY(0);
+	}
+
+	@container (max-width: 767px) {
+		.connect-card-copy {
+			padding-right: 1.5rem;
+		}
+	}
+
+	@container (min-width: 768px) {
+		.connect-card {
+			height: 6rem;
+		}
+
+		.connect-card-content {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			padding-block: 0;
+		}
+
+		.connect-card-actions {
+			width: auto;
+			align-self: auto;
+		}
+
+		.connect-card-cta {
+			flex: none;
+		}
+
+		.connect-card-dismiss {
+			position: static;
+			order: -1;
+		}
+	}
+
+	@media (pointer: coarse) {
+		.connect-card-dismiss {
+			width: 1.75rem;
+			opacity: 1;
+			pointer-events: auto;
+			transform: translateY(0);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.connect-avatar,
+		.connect-card-dismiss {
+			transition: none;
+		}
+
+		.connect-avatar[data-active="true"],
+		.connect-avatar[data-spread="true"] {
+			transform: none;
+		}
+	}
+</style>

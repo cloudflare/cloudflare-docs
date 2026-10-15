@@ -1,9 +1,6 @@
 /**
- * Shared types for schema display components
- */
-
-/**
- * Schema row data structure for rendering parameter trees
+ * Schema row data, produced at build time by `SchemaDisplay.astro`'s tree walk
+ * and consumed by the `SchemaTree` island.
  */
 export interface SchemaRowData {
 	id: string;

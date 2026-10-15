@@ -1,6 +1,6 @@
 import fs from "fs";
 import YAML from "yaml";
-import { marked } from "marked";
+import { markdownToMdast } from "satteri";
 
 const BASE_URL = "https://downloads.cloudflareclient.com/v1";
 
@@ -8,13 +8,40 @@ const platforms = await fetch(`${BASE_URL}/platforms`)
 	.then((res) => res.json())
 	.then((data) => data.result);
 
+const PLATFORMS_PATH = "./src/util/warp-platforms.json";
+
+let existingPlatforms = [];
+if (fs.existsSync(PLATFORMS_PATH)) {
+	try {
+		const parsed = JSON.parse(fs.readFileSync(PLATFORMS_PATH, "utf-8"));
+		if (Array.isArray(parsed)) {
+			existingPlatforms = parsed;
+		} else {
+			console.warn(
+				`${PLATFORMS_PATH} did not contain an array; ignoring existing content.`,
+			);
+		}
+	} catch {
+		console.warn(
+			`Failed to parse ${PLATFORMS_PATH}; ignoring existing content.`,
+		);
+	}
+}
+
+const platformsById = Object.fromEntries(
+	existingPlatforms.map((p) => [p.platform, p]),
+);
+for (const p of platforms) {
+	platformsById[p.platform] = p;
+}
+
 fs.writeFileSync(
-	"./src/util/warp-platforms.json",
-	JSON.stringify(platforms, null, "\t"),
+	PLATFORMS_PATH,
+	JSON.stringify(Object.values(platformsById), null, "\t"),
 	"utf-8",
 );
 
-const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora"];
+const linuxDistributions = ["Ubuntu", "Debian", "CentOS", "Fedora", "Alma"];
 
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
@@ -101,18 +128,46 @@ for (const { platform, display_name } of platforms) {
 
 					markdown = markdown.trim();
 
-					const tokens = marked.lexer(markdown);
+					// Demote headings to bold text (they render inside a collapsible
+					// <Details> block, where real headings would pollute the outline).
+					// Recursively collects headings so ones nested in containers are
+					// demoted too, while `#` lines inside code fences survive. The
+					// heading text is sliced from the first child's offset, which
+					// skips ATX markers and setext underlines alike.
+					const tree = markdownToMdast(markdown);
+					const headings = [];
+					const collectHeadings = (node) => {
+						if (node.type === "heading") headings.push(node);
+						for (const child of node.children ?? []) collectHeadings(child);
+					};
+					collectHeadings(tree);
 
-					marked.walkTokens(tokens, (token) => {
-						if (token.type === "heading") {
-							token.type = "strong";
-							token.raw = `**${token.text}**\n`;
-
-							delete token.depth;
+					let releaseNotes = "";
+					let cursor = 0;
+					for (const node of headings) {
+						const nodeStart = node.position?.start?.offset;
+						const textStart = node.children?.[0]?.position?.start?.offset;
+						const end = node.position?.end?.offset;
+						if (
+							typeof nodeStart !== "number" ||
+							typeof textStart !== "number" ||
+							typeof end !== "number"
+						) {
+							continue;
 						}
-					});
 
-					const releaseNotes = tokens.reduce((s, t) => s + t.raw, "");
+						releaseNotes += markdown.slice(cursor, nodeStart);
+						const text = markdown
+							.slice(textStart, end)
+							.split("\n")[0]
+							.replace(/[ \t]+#+[ \t]*$/, "")
+							.trim();
+						releaseNotes += `**${text}**\n`;
+						// Headings end at a line break; consume it so it is not
+						// duplicated by the following between-heading text.
+						cursor = markdown[end] === "\n" ? end + 1 : end;
+					}
+					releaseNotes += markdown.slice(cursor);
 					const platformName = isLinux ? "Linux" : data.platformName;
 
 					fs.writeFileSync(

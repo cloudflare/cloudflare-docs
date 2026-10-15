@@ -150,9 +150,9 @@ See `.agents/references/style-guide.md` for the full rules. Quick reference:
 | Rule                     | Detail                                                                                                            |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                                       |
-| Component imports        | Every component used must be imported from `~/components`                                                         |
+| Component imports        | Reusable components must be added to the `~/components` barrel and imported from `~/components`; page-specific or one-off components may use deep paths |
 | Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                                           |
-| Config blocks            | Must use `WranglerConfig` with TOML input; use `$today` for `compatibility_date`                                  |
+| Config blocks            | Must use `WranglerConfig`; use `$today` for `compatibility_date`                                                  |
 | Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                                  |
 | Code block languages     | Lowercase, from the supported set — see `.agents/references/style-guide.md`                                       |
 | Internal links           | Root-relative paths, trailing slash, no file extensions, no full `developers.cloudflare.com` URLs                 |
