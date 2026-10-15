@@ -91,7 +91,7 @@ Network analytics data for Spectrum does not reflect the outcomes of IP Access r
 :::
 
 :::caution[Health checks and IP Access Rules]
-When IP Access Rules are enabled with an allowlist model (allow specific IPs, block all others), Cloudflare Load Balancer health check probes may be blocked, causing all endpoints to appear unhealthy. To prevent this, add [Cloudflare IP addresses](https://www.cloudflare.com/ips/) to your allowlist. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#health-checks-fail-when-ip-access-rules-are-enabled) for details.
+When IP Access Rules are enabled with an allowlist model (allow specific IPs, block all others), health checks targeting the Spectrum application may be blocked, causing endpoints to appear unhealthy. This applies when the Spectrum application is the target of a Cloudflare Health Check or a Load Balancer monitor. To prevent this, add [Cloudflare IP addresses](https://www.cloudflare.com/ips/) to your allowlist. Refer to [Spectrum Troubleshooting](/spectrum/reference/troubleshooting/#health-checks-fail-when-ip-access-rules-are-enabled) for details.
 :::
 
 :::note
