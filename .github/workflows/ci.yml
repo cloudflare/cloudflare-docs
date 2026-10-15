@@ -309,14 +309,12 @@ jobs:
         run: pnpm exec tsx bin/post-preview-url-comment/index.ts
         continue-on-error: true
 
-  # Runs in parallel with `publish-preview` (Workers for Platforms). Worker
-  # Previews is in open beta, so this job must never fail CI.
+  # Runs in parallel with `publish-preview` (Workers for Platforms).
   publish-worker-preview:
     name: Deploy Worker Preview
     needs: build
     if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true' }}
     runs-on: ubuntu-latest
-    continue-on-error: true
     permissions:
       contents: read
       pull-requests: write
