@@ -1,0 +1,19 @@
+src/content/docs/realtime/sfu/observability/error-codes.mdx
+  s_8b87deab2c186f::t_8853b4fc6f47cd 43-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "937c0b741abc29595e2d13fc372f94e511ffe99d",
+  "prompts": {},
+  "sessions": {
+    "s_8b87deab2c186f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0c416-74f6-71c3-ba9f-3dc03ac9bf65",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}

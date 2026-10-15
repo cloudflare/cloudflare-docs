@@ -1,0 +1,40 @@
+src/content/docs/k2/platform/index.mdx
+  s_76ad8b2ea376aa::t_77e38d079108f7 8
+src/content/docs/k2/features/index.mdx
+  s_76ad8b2ea376aa::t_48572d0d52241a 1-15
+src/content/docs/k2/configuration/index.mdx
+  s_76ad8b2ea376aa::t_3b81f0e5159971 1-69
+  s_76ad8b2ea376aa::t_081cc8d9189923 70-72
+src/content/docs/k2/features/produce.mdx
+  s_76ad8b2ea376aa::t_1090ef7551c932 1-10,12-25,27-28,31,34-76,79,81-95,98-100,136-219
+  s_76ad8b2ea376aa::t_8d6ce2e9c638f1 77-78,80
+  s_76ad8b2ea376aa::t_c49c402060c2e7 96-97
+  s_76ad8b2ea376aa::t_8a9ba7052d0b84 101-135
+  s_76ad8b2ea376aa::t_4d0996ae9e18e3 11
+  s_76ad8b2ea376aa::t_0617a9b69da84e 26
+  s_76ad8b2ea376aa::t_bfae27c060096a 29-30
+  s_76ad8b2ea376aa::t_6aca3ca00a28c6 32-33
+src/content/docs/k2/features/consume.mdx
+  s_76ad8b2ea376aa::t_cc2515847a637a 1-46,48-60,65,67-119,121-146,148,151-173,177-195,199,202-204,207-215,219-243,259-264
+  s_76ad8b2ea376aa::t_7bfed551e40152 147,149-150,174-176,196-198,200-201,205-206,216-218,244-258
+  s_76ad8b2ea376aa::t_a18c39303c624c 47,61-64,66,120
+src/content/docs/k2/index.mdx
+  s_76ad8b2ea376aa::t_58377c1cb7c012 48,54
+  s_76ad8b2ea376aa::t_e050de300c7378 55-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "eebd28da66c542a430ce2443c56a8e06a985e337",
+  "prompts": {},
+  "sessions": {
+    "s_76ad8b2ea376aa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f310453a6ffe772Bz4uTEvazXh",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    }
+  }
+}
