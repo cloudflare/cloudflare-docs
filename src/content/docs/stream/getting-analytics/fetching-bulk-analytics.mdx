@@ -25,21 +25,21 @@ The Stream Analytics API uses the Cloudflare GraphQL Analytics API, which can be
 2. Generate an API token with the **Account Analytics** permission.
 3. Use a GraphQL client of your choice to make your first query. [Postman](https://www.postman.com/) has a built-in GraphQL client which can help you run your first query and introspect the GraphQL schema to understand what is possible.
 
-Refer to the sections below for available metrics, dimensions, fields, and example queries.
+Refer to the sections below for available metrics, dimensions, fields, and example queries across multiple datasets.
 
-Query Stream datasets under `viewer.accounts`. Use `filter` to select records and `dimensions` to group results in grouped datasets.
+Query Stream datasets under `viewer.accounts`. Use `filter` to select records and `dimensions` to group results.
 
-Grouped datasets expose aggregates such as `avg`, `sum`, and `count`. Raw datasets return fields directly, without an aggregate object.
+Grouped datasets expose aggregates like `avg`, `sum`, and `count`. Raw datasets return fields directly, without an aggregate object.
 
 Dotted field paths indicate nested selections: `sum.minutesViewed` means `sum { minutesViewed }`.
 
-To find current fields and filter operators, [explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/) using introspection.
+To find current fields and filter operators, [explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/) using introspection. The following is a summary with explanations of useful fields.
 
 ## Video delivered via HLS/DASH and WebRTC
 
-Stream collects minutes delivered for live and on-demand video. Delivery includes HTTP Live Streaming (HLS), Dynamic Adaptive Streaming over HTTP (DASH), and Web Real-Time Communication (WebRTC), regardless of your player.
+Stream collects minutes of video delivered for live and on-demand video. These data include minutes delivered via HLS/DASH and WebRTC (WHEP), regardless of your player. This is a [billable metric](/stream/pricing/), but GraphQL data are sampled so it may not precisely match billable usage reported on invoices.
 
-Use `streamMinutesViewedAdaptiveGroups` to query these delivery metrics. They measure delivery for billing, rather than player quality of experience.
+Use `streamMinutesViewedAdaptiveGroups` to query these delivery metrics.
 
 ### Filters and dimensions
 
@@ -53,10 +53,12 @@ The dataset supports these filters and grouping dimensions:
 | `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval                                           |
 | `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval                                             |
 | `datetimeHour`           | Date and time, truncated to the hour                                                         |
-| `uid`                    | Video ID                                                                                     |
+| `uid`                    | Video ID (for HLS/DASH) or Input ID (for WebRTC/WHEP)                                        |
 | `clientCountryName`      | ISO 3166-1 alpha-2 country code for the viewer                                               |
-| `creator`                | [Creator ID](/stream/manage-video-library/creator-id/) associated with the video, if present |
+| `creator`                | [Creator ID](/stream/manage-video-library/creator-id/) associated with the video, if set     |
 | `mediaType`              | Delivery type: `playback` or `downloads`                                                     |
+
+@TODO: NOTE -- INPUT ID LINKS FOR WHEP
 
 Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
@@ -140,7 +142,7 @@ query StreamGetMinutesExample($accountTag: string!, $start: Date, $end: Date) {
 
 ## RTMP and SRT input metrics
 
-Use these datasets to inspect Real-Time Messaging Protocol (RTMP) and Secure Reliable Transport (SRT) inputs. Query `liveInputEventsAdaptive` for event logs and `liveInputEventsAdaptiveGroups` for stored segment metrics.
+Use these datasets to inspect RTMP or SRT inputs. Query `liveInputEventsAdaptive` for events and `liveInputEventsAdaptiveGroups` for stored segment metrics. These datasets are sampled, so consider using webhooks or Workers event subscriptions to receive events in realtime.
 
 ### Event fields
 
@@ -173,7 +175,7 @@ You can select and filter these fields:
 
 ### Metrics
 
-A group of pictures (GOP) is a sequence of video frames. The grouped dataset exposes these segment metrics:
+A GOP (group of pictures) is a sequence of video frames. A "GOP size" is sometimes called a "keyframe interval." These metrics all relate to video segments for each GOP:
 
 | Field                                                                           | Description                                        |
 | ------------------------------------------------------------------------------- | -------------------------------------------------- |
@@ -183,17 +185,15 @@ A group of pictures (GOP) is a sequence of video frames. The grouped dataset exp
 | `avg.uploadDurationRatio`, `min.uploadDurationRatio`, `max.uploadDurationRatio` | Upload time divided by GOP duration, without units |
 | `avg.gopByteSize`, `min.gopByteSize`, `max.gopByteSize`                         | GOP size, in bytes                                 |
 
-Bitrate fields divide total bits by the fixed time bucket duration. They are not ordinary averages of per-segment bitrates.
+To estimate average broadcast bitrate, filter `liveInputEventsAdaptiveGroups` by `inputId` and the broadcast `datetime` range. Select `avg.gopByteSize` and `avg.gopDuration` in the same group.
 
-Match each bitrate field to its grouping dimension:
+Omit `dimensions` to get one result for the whole broadcast. For example, use `avg.gopByteSize` in bytes and `avg.gopDuration` in milliseconds to calculate bits per second:
 
-| Field                       | Required dimension       | Description                                   |
-| --------------------------- | ------------------------ | --------------------------------------------- |
-| `avg.bitRate`               | `datetime`               | Bitrate in bits per second                    |
-| `avg.bitRateMinute`         | `datetimeMinute`         | Bitrate over a minute, in bits per second     |
-| `avg.bitRateFiveMinutes`    | `datetimeFiveMinutes`    | Bitrate over five minutes, in bits per second |
-| `avg.bitRateFifteenMinutes` | `datetimeFifteenMinutes` | Bitrate over 15 minutes, in bits per second   |
-| `avg.bitRateHour`           | `datetimeHour`           | Bitrate over an hour, in bits per second      |
+```txt title="Average broadcast bitrate"
+bitrate_bps = 8000 * avg.gopByteSize / avg.gopDuration
+```
+
+Both averages use the same sampling weights, so their ratio estimates total bytes divided by total media duration. Only calculate the ratio when `avg.gopDuration` is greater than zero.
 
 ## HLS/DASH quality of experience metrics
 
