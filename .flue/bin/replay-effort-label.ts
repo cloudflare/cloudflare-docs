@@ -1,7 +1,6 @@
 import { loadEnvValue } from "./dotenv";
 
-// Replays effort labeling against existing issues. Follows the dev server's
-// DOCS_FLUE_REVIEW_MODE: `log` is a dry run, `comment` applies the labels.
+// Replays effort labeling on existing issues. DOCS_FLUE_REVIEW_MODE=log is a dry run.
 const base = loadEnvValue("FLUE_BASE_URL") ?? "http://localhost:5173";
 const token = loadEnvValue("DOCS_FLUE_INTERNAL_TOKEN");
 if (!token)

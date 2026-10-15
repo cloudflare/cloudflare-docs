@@ -1,9 +1,4 @@
-/**
- * Effort assessment: gather the issue's context from GitHub, ask the model the
- * questions in prompts/effort-label.md (through AI Gateway when configured),
- * and validate the answer. Scoring and labeling stay in trusted code
- * (effort-label.ts); nothing here writes to GitHub.
- */
+/** Effort assessment: gather context, ask the model, validate. Read-only. */
 import * as v from "valibot";
 import type { AiRunner } from "./clef";
 import {
@@ -30,6 +25,7 @@ import {
 } from "./effort-label";
 import { EFFORT_MODEL } from "./agents/models";
 import {
+	clip,
 	collectDocsPages,
 	collectPullRequestDiffs,
 	type DocsPage,
@@ -81,13 +77,10 @@ export function neutralize(text: string): string {
 	);
 }
 
-const clip = (text: string, max: number) =>
-	text.length > max ? `${text.slice(0, max)}… [truncated]` : text;
-
 const isBot = (c: GitHubIssueComment) =>
 	c.user?.type === "Bot" || /\[bot\]$/.test(c.user?.login ?? "");
 
-/** Read the issue's comments and linked PRs. Throws on GitHub errors. */
+/** Read comments, PRs and docs evidence. Bodies are clipped to keep the step result small. */
 export async function getEffortContext(
 	token: string,
 	issue: EffortIssue,
@@ -115,12 +108,12 @@ export async function getEffortContext(
 		collectPullRequestDiffs(token, prs),
 	]);
 	return {
-		issue,
+		issue: { ...issue, body: clip(issue.body ?? "", MAX_BODY_CHARS) },
 		comments: kept.map((c) => ({
 			author: c.user?.login ?? "unknown",
 			association: c.author_association ?? "NONE",
 			date: c.created_at.slice(0, 10),
-			body: c.body ?? "",
+			body: clip(c.body ?? "", MAX_COMMENT_CHARS),
 		})),
 		botComments: allComments.length - human.length,
 		pullRequests: prs,
@@ -142,7 +135,7 @@ export function buildEffortMessage(ctx: EffortContext): string {
 		? ctx.comments
 				.map(
 					(c) =>
-						`<comment author="${c.author}" association="${c.association}" date="${c.date}">\n${neutralize(clip(c.body, MAX_COMMENT_CHARS))}\n</comment>`,
+						`<comment author="${c.author}" association="${c.association}" date="${c.date}">\n${neutralize(c.body)}\n</comment>`,
 				)
 				.join("\n")
 		: "(no human comments)";
@@ -170,7 +163,7 @@ export function buildEffortMessage(ctx: EffortContext): string {
 		`Title: ${neutralize(issue.title)}`,
 		`Labels: ${issue.labels.join(", ") || "(none)"}`,
 		"",
-		neutralize(clip(issue.body ?? "", MAX_BODY_CHARS)),
+		neutralize(issue.body ?? ""),
 		"</issue>",
 		"",
 		`<comments total="${issue.commentsCount}" bot_comments_hidden="${ctx.botComments}">`,
@@ -253,11 +246,7 @@ const AssessmentSchema = v.object({
 	reason: v.string(),
 });
 
-/**
- * JSON schema for strict decoding; mirrors AssessmentSchema. No `maxItems`:
- * with it, Gemma's constrained decoding skipped `requirements` and ran away
- * on whitespace until the token limit.
- */
+/** Strict-decoding schema mirroring AssessmentSchema. No `maxItems`: it makes Gemma run away. */
 export const EFFORT_JSON_SCHEMA = {
 	type: "object",
 	additionalProperties: false,
@@ -292,11 +281,7 @@ export const EFFORT_JSON_SCHEMA = {
 	},
 } as const;
 
-/**
- * Validate a model reply. Tolerates code fences or prose around the object.
- * Enforces "Docs fix needed" never pairs with owner product_team. Throws when
- * malformed.
- */
+/** Validate a model reply; "Docs fix needed" + product_team becomes SME input. */
 export function parseEffortAssessment(text: string): EffortAssessment {
 	const start = text.indexOf("{");
 	const end = text.lastIndexOf("}");
@@ -331,11 +316,7 @@ function replyText(result: unknown): string {
 	return r?.response ? JSON.stringify(r.response) : "";
 }
 
-/**
- * Ask the model. Strict JSON-schema decoding first; one retry in plain JSON
- * mode if the reply is malformed. Goes through AI Gateway when `gatewayId` is
- * set. Throws when both attempts fail.
- */
+/** Ask the model: strict schema first, one json_object retry. Throws if both fail. */
 export async function assessEffort(
 	ai: AiRunner,
 	systemPrompt: string,

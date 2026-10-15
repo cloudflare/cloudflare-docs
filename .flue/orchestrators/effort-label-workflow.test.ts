@@ -146,10 +146,15 @@ describe("EffortLabelWorkflow", () => {
 		expect(mocks.removeLabel).not.toHaveBeenCalled();
 	});
 
-	it("waits for the spam gate on opened (not on replays)", async () => {
-		await run({ number: 9, action: "opened" });
-		expect(sleep).toHaveBeenCalledWith("wait-for-spam-gate", "3 minutes");
-		sleep.mockClear();
+	it.each(["opened", "reopened"])(
+		"waits for the spam gate on %s",
+		async (action) => {
+			await run({ number: 9, action });
+			expect(sleep).toHaveBeenCalledWith("wait-for-spam-gate", "3 minutes");
+		},
+	);
+
+	it("does not wait on replays", async () => {
 		await run({ number: 9, action: "opened", replay: true });
 		expect(sleep).not.toHaveBeenCalled();
 	});

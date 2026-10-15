@@ -46,10 +46,7 @@ export interface WebhookClassification {
 	 * and draft PRs.
 	 */
 	isSizeLabelEvent: boolean;
-	/**
-	 * Issue event that should (re)assess the `effort:*` label: opened, reopened,
-	 * or a title/body edit, by a non-bot sender.
-	 */
+	/** Issue opened, reopened, or title/body edited by a non-bot: assess `effort:*`. */
 	isEffortLabelEvent: boolean;
 	/** Whether the PR is a draft (code review is suppressed unless ready_for_review). */
 	isDraft: boolean;

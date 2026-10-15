@@ -10,7 +10,10 @@ const docs = vi.hoisted(() => ({
 	collectDocsPages: vi.fn().mockResolvedValue([]),
 	collectPullRequestDiffs: vi.fn().mockResolvedValue([]),
 }));
-vi.mock("./docs-evidence", () => docs);
+vi.mock("./docs-evidence", async (original) => ({
+	...(await original<typeof import("./docs-evidence")>()),
+	...docs,
+}));
 
 import {
 	assessEffort,
@@ -97,6 +100,22 @@ describe("getEffortContext", () => {
 			"c4",
 			...Array.from({ length: 10 }, (_, n) => `c${20 + n}`),
 		]);
+	});
+
+	it("clips bodies so the step result stays small", async () => {
+		const huge = "x".repeat(65_536);
+		gh.getIssueComments.mockResolvedValueOnce(
+			Array.from({ length: 15 }, () => comment("u", huge)),
+		);
+		gh.listCrossReferencedPullRequests.mockResolvedValueOnce([]);
+		const ctx = await getEffortContext("t", {
+			...ISSUE,
+			body: huge,
+			commentsCount: 15,
+		});
+		expect(JSON.stringify(ctx).length).toBeLessThan(40_000);
+		expect(ctx.issue.body).toMatch(/… \[truncated\]$/);
+		expect(ctx.comments[0].body).toMatch(/… \[truncated\]$/);
 	});
 });
 

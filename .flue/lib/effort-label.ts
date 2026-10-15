@@ -1,12 +1,6 @@
 import { addLabels, removeLabel } from "./github";
 
-/**
- * Issue effort labels: how much work the docs team still has to do to close an
- * issue, including coordination (waiting on a product team or the reporter,
- * lining up codeowner reviews). The model only answers questions about the
- * issue (`EffortAssessment`); trusted code scores the answers into points and a
- * level here.
- */
+/** Effort labels: score the model's answers into points and a level. */
 
 export const EFFORT_LEVELS = ["Low", "Medium", "High", "Very High"] as const;
 export type EffortLevel = (typeof EFFORT_LEVELS)[number];
@@ -177,8 +171,7 @@ export function scoreEffort(
 	if (facts.commentsCount >= 10)
 		add(0.5, `Long thread (${facts.commentsCount} comments)`);
 
-	// 3. Team and model hints. effort:* labels are never an input, so applying
-	// them cannot feed back into the score.
+	// 3. Hints. effort:* labels are never an input, so labels cannot feed back.
 	const labels = facts.labels.map((l) => l.toLowerCase());
 	if (labels.includes("quick-fix")) add(-1.5, "Labeled quick-fix");
 	if (labels.includes("content:new") && WRITES.has(a.decision))
@@ -214,10 +207,8 @@ export function planEffortLabelChanges(
 }
 
 /**
- * Make the issue carry exactly one effort label. Labels are added and removed
- * individually (never replaced wholesale) so labels managed by other
- * automations are untouched. Idempotent: a retry finds nothing to change.
- * Throws on API failure; the caller owns logging.
+ * Make the issue carry exactly one effort label, adding and removing one label
+ * at a time so other labels are untouched. Idempotent. Throws on API failure.
  */
 export async function reconcileEffortLabel(
 	token: string,

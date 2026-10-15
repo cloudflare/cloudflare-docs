@@ -1,14 +1,7 @@
 /**
- * Live-docs evidence for the effort assessment, so requirements are judged
- * against what is published today:
- *   - the live page as Markdown (`<page>/index.md`), cut to the sections most
- *     relevant to the issue;
- *   - whether text the issue quotes is still on the page (checked against the
- *     whole page, not the excerpt);
- *   - commits to the page's source file since the issue was opened;
- *   - file list and a short diff excerpt for the most relevant docs PRs.
- * Every fetch degrades to "unknown" on failure; nothing here throws for a
- * missing or unreadable page.
+ * Live docs evidence for the effort assessment: page excerpts, quote checks,
+ * source commits since the issue opened, and docs PR diffs. Failed fetches
+ * degrade to "unknown" and never throw.
  */
 import {
 	REPO,
@@ -65,7 +58,7 @@ export interface PullRequestDiff {
 	patch: string;
 }
 
-function clip(text: string, max: number): string {
+export function clip(text: string, max: number): string {
 	const t = text.trim();
 	return t.length <= max ? t : `${t.slice(0, max)}… [truncated]`;
 }
@@ -89,11 +82,7 @@ function normalizeForMatch(text: string): string {
 		.trim();
 }
 
-/**
- * Sentences the issue quotes from the docs: Markdown blockquotes. Headings and
- * lines under 25 characters are skipped because they match too easily. At most
- * 3 quotes, each clipped to 300 characters.
- */
+/** Up to 3 blockquotes from the issue (25 to 300 characters, no headings). */
 export function extractQuotes(body: string): string[] {
 	const quotes: string[] = [];
 	let current: string[] = [];
@@ -148,11 +137,7 @@ function slugify(heading: string): string {
 		.replace(/\s+/g, "-");
 }
 
-/**
- * The most relevant sections of a docs page: the intro, the anchored section
- * (if any), then the sections sharing the most keywords with the issue, kept
- * in document order within `budget` characters.
- */
+/** Intro, anchored section, then the best keyword matches, within `budget`. */
 export function excerptPage(
 	markdown: string,
 	anchor: string,
@@ -342,8 +327,7 @@ export async function collectDocsPage(
 					break;
 				}
 			}
-			// No recent commits: confirm which file exists (a 1.5 KB range read of the
-			// public raw file), so "no commits" isn't mistaken for a generated page.
+			// No recent commits: check the file exists, so it isn't taken for a generated page.
 			if (!page.sourceFound) {
 				for (const path of candidates) {
 					if (await sourceFileExists(path)) {
@@ -382,10 +366,7 @@ export async function collectDocsPages(
 	);
 }
 
-/**
- * Files and a short Markdown/YAML/JSON diff excerpt for the most relevant
- * same-repo PRs (merged first, then open). Closed-unmerged PRs are skipped.
- */
+/** Files and a short docs diff for same-repo PRs, merged first, then open. */
 export async function collectPullRequestDiffs(
 	token: string,
 	prs: GitHubCrossReferencedPullRequest[],

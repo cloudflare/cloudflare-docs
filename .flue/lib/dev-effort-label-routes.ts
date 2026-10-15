@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { hasValidInternalToken } from "./dev-review-routes";
-import { reviewMode, type ReviewRunEnv } from "./review/run-context";
+import { reviewMode } from "./review/run-context";
 import type { EffortLabelParams } from "../orchestrators/effort-label-workflow";
 
 export interface DevEffortLabelEnv {
@@ -34,7 +34,7 @@ devEffortLabelRoutes.post("/:number", async (c) => {
 		return c.text("Invalid number", 400);
 	const id = `replay-effort-label-${number}-${Date.now()}`;
 	await env.EFFORT_LABEL.create({ id, params: { number, replay: true } });
-	return c.json({ id, mode: reviewMode(env as unknown as ReviewRunEnv) }, 202);
+	return c.json({ id, mode: reviewMode(env) }, 202);
 });
 
 devEffortLabelRoutes.get("/:id", async (c) => {

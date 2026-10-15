@@ -529,10 +529,7 @@ export interface GitHubCrossReferencedPullRequest {
 	merged: boolean;
 }
 
-/**
- * Pull requests that reference an issue, from its timeline (first page of 100
- * events, which covers almost every issue). Plain issue references are skipped.
- */
+/** PRs that reference an issue, from the first 100 timeline events. */
 export async function listCrossReferencedPullRequests(
 	token: string,
 	issueNumber: number,

@@ -1,7 +1,6 @@
 /**
- * Pure CODEOWNERS matching for the effort label: which product teams must
- * review a docs PR that touches the given pages. Owners present on almost every
- * rule say nothing about which product team is involved, so they are ignored.
+ * CODEOWNERS matching: which product teams review changes to the given pages.
+ * Owners on almost every rule are ignored.
  */
 
 export interface CodeownersRule {
@@ -73,11 +72,7 @@ export function productCodeownerAreas(
 	return [...areas];
 }
 
-/**
- * Repo path for a developers.cloudflare.com page URL or path, without the file
- * extension (enough for directory rules, which is how CODEOWNERS is written).
- * Returns null for anything that is not a docs page.
- */
+/** Repo path (no extension) for a docs page URL, or null if not a docs page. */
 export function docsSourcePath(page: string): string | null {
 	let path: string;
 	try {

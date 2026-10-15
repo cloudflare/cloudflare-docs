@@ -97,8 +97,6 @@ export async function startReviewPipeline(
 	}
 
 	// ── 1.7 Effort label (additive; issues only) ────────────────────────────
-	// An AI call, so it runs as a Workflow. On `opened` the workflow waits for
-	// the spam gate before reading the issue.
 	if (c.isEffortLabelEvent) {
 		try {
 			await env.EFFORT_LABEL.create({ params: { number, action: c.action } });
@@ -112,6 +110,8 @@ export async function startReviewPipeline(
 				err instanceof Error ? err.message : String(err),
 			);
 		}
+		// Title or body edits have no other route.
+		if (!c.isSpamFilterEvent) return;
 	}
 
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────

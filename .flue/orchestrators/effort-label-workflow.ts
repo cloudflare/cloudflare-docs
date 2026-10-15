@@ -1,20 +1,7 @@
 /**
- * EffortLabelWorkflow: labels an open issue with exactly one `effort:*` label.
- *
- * Kicked from `pipeline-entry.ts` for issue `opened`, `reopened`, and body or
- * title `edited` events, and from the dev replay route. Bound as
- * `EFFORT_LABEL`; re-exported from `cloudflare.ts`.
- *
- * Steps:
- *   1. wait-for-spam-gate: on `opened`, give the spam gate time to close spam
- *      first, so the model is never run on it.
- *   2. issue: re-read the issue; skip PRs, closed issues, and spam or off-topic.
- *   3. context: comments and cross-referenced PRs.
- *   4. assess: the model answers prompts/effort-label.md (through AI Gateway
- *      when configured). Any error leaves the labels unchanged.
- *   5. codeowners: product codeowner areas for the pages involved.
- *   6. label: trusted code scores the answers (effort-label.ts) and reconciles
- *      the label. Writes only when the mode allows it (see `effortLabelMode`).
+ * EffortLabelWorkflow (`EFFORT_LABEL`): gives an open issue one `effort:*` label.
+ * Steps: wait for the spam gate, read the issue, gather context, assess, read
+ * CODEOWNERS, then score and reconcile the label. A model error changes nothing.
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
@@ -33,12 +20,12 @@ import {
 	type EffortAssessment,
 } from "../lib/effort-label";
 import { docsSourcePath } from "../lib/codeowners";
-import { reviewMode, type ReviewRunEnv } from "../lib/review/run-context";
+import { reviewMode } from "../lib/review/run-context";
 import effortPrompt from "../prompts/effort-label.md";
 
 export interface EffortLabelParams {
 	number: number;
-	/** The triggering webhook action (`opened` waits for the spam gate). */
+	/** Webhook action; `opened` and `reopened` wait for the spam gate. */
 	action?: string;
 	/** Dev replay: follows DOCS_FLUE_REVIEW_MODE (`log` is a dry run). */
 	replay?: boolean;
@@ -55,11 +42,7 @@ interface EffortLabelEnv {
 /** Labels that mean the spam gate handled the item. */
 const SKIP_LABELS = ["spam", "off topic"];
 
-/**
- * Whether this run may write labels. Webhooks write only when
- * DOCS_FLUE_EFFORT_LABEL_MODE is `label` (default `log`: log the plan). Replays
- * follow DOCS_FLUE_REVIEW_MODE like the other replays.
- */
+/** Webhooks write when DOCS_FLUE_EFFORT_LABEL_MODE is `label`; replays follow DOCS_FLUE_REVIEW_MODE. */
 export function effortLabelWrites(
 	env: Pick<
 		EffortLabelEnv,
@@ -68,7 +51,7 @@ export function effortLabelWrites(
 	replay: boolean,
 ): boolean {
 	return replay
-		? reviewMode(env as unknown as ReviewRunEnv) === "comment"
+		? reviewMode(env) === "comment"
 		: env.DOCS_FLUE_EFFORT_LABEL_MODE === "label";
 }
 
@@ -86,7 +69,7 @@ export class EffortLabelWorkflow extends WorkflowEntrypoint<
 		const ghEnv = this.env as unknown as Record<string, string>;
 		const writes = effortLabelWrites(this.env, replay);
 
-		if (action === "opened" && !replay) {
+		if ((action === "opened" || action === "reopened") && !replay) {
 			await step.sleep("wait-for-spam-gate", "3 minutes");
 		}
 
@@ -152,7 +135,6 @@ export class EffortLabelWorkflow extends WorkflowEntrypoint<
 		}
 		const assessment = assessed.value;
 
-		// Pages the model named, plus docs URLs found in the thread.
 		const pages = [
 			...new Set(
 				[...assessment.pages, ...context.docsPages].filter(
@@ -162,7 +144,6 @@ export class EffortLabelWorkflow extends WorkflowEntrypoint<
 		];
 		const areas = await step.do<string[]>("codeowners", async () => {
 			const token = await getInstallationToken(ghEnv);
-			// Exact .mdx paths found while reading the live pages, plus mapped URLs.
 			const sources = context.livePages
 				.map((p) => p.sourcePath)
 				.filter((p): p is string => p !== null);
