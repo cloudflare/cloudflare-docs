@@ -10,7 +10,12 @@ tags:
   - Compliance
 ---
 
-import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+import {
+	DashButton,
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+} from "~/components";
 
 Data loss prevention (DLP) can run a Cloudflare Worker in your account when a pattern matches. Use your Worker to apply organization-specific checks, adjust confidence, or reject the match.
 
@@ -55,12 +60,16 @@ export class DlpValidationEntrypoint extends DlpValidation {
 
 </TypeScriptExample>
 
-Replace the example condition with your validation logic. Return a score from `-1` to `1` to adjust confidence. Positive scores increase confidence; negative scores decrease it. A score of `0` leaves confidence unchanged. Return `"veto"` to reject the match.
+Replace the example condition with your validation logic. Return a score from `-1` to `1` to adjust confidence. Positive scores increase confidence. Negative scores decrease it. A score of `0` leaves confidence unchanged. Return `"veto"` to reject the match.
 
 ## Attach a Worker to a pattern entry
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Data loss prevention** > **Detection entries**.
+
+1. Log in to Cloudflare One and go to **Data loss prevention** > **Detection entries**.
+
+   <DashButton url="/?to=/:account/dlp/detection-entries" buttonName="Detection entries" zeroTrust />
+
 2. From the **Pattern** tab, add a pattern entry or edit an existing custom pattern entry.
 3. In **Validators**, select **Custom functions**.
 4. Select **Add custom function**.
@@ -68,6 +77,7 @@ Replace the example condition with your validation logic. Return a score from `-
 6. For a new function, enter a name and select an eligible Worker.
 7. (Optional) For a new function, choose the default behavior for Worker errors or timeouts.
 8. For a new function, select **Create**. Select **Save** on the pattern entry.
+
 </Steps>
 
 Default behavior options are _No fallback_, _Veto_, or _Score_. Scores range from `-1` to `1`.
