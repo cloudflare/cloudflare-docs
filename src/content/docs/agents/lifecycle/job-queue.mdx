@@ -104,7 +104,7 @@ When the alarm fires, Lifecycle:
 
 Every change to the queue resets the alarm, so you never set it yourself. Do not call `ctx.storage.setAlarm()` on an object that uses Lifecycle, because that alarm would replace the one Lifecycle manages.
 
-Keep each `onJob()` call short. Lifecycle awaits jobs one at a time, so a slow job delays every other job on the object. For long work, start it, record its progress in storage, and return. [`Tasks`](/agents/capabilities/#tasks) does this for you with replayable steps.
+Keep each `onJob()` call short. Lifecycle awaits jobs one at a time, so a slow job delays every other job on the object. For long work, start it, record its progress in storage, and return. [`Tasks`](/agents/capabilities/tasks/) does this for you with replayable steps.
 
 ## Memory-limit protection
 
