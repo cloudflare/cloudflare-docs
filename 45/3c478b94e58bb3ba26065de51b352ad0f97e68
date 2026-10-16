@@ -1,0 +1,101 @@
+src/content/catalog-models/anthropic-claude-opus-5.5.json
+  s_b8e1913749fef1::t_2fb68f7c98c7d3 20,1808,1829
+src/content/catalog-models/black-forest-labs-flux-3-image-klein.json
+  s_b8e1913749fef1::t_c1340bebbad1b9 1-267
+src/content/catalog-models/bria-ad-delayer.json
+  s_b8e1913749fef1::t_99ff1dc65ddc59 1-747
+src/content/catalog-models/bytedance-seedance-2.5.json
+  s_b8e1913749fef1::t_6892025187ec77 174
+src/content/catalog-models/fireworks-ember-1.json
+  s_b8e1913749fef1::t_855ceb9450cb49 1-694
+src/content/catalog-models/google-gemini-4-argon.json
+  s_b8e1913749fef1::t_d049ac4952f693 39,48,114,123,271,280,346-347,351-352
+src/content/catalog-models/google-gemini-omni-1.1-flash.json
+  s_b8e1913749fef1::t_289ad2b1522bea 17-18,20,22,173-186
+src/content/catalog-models/krea-krea-3.json
+  s_b8e1913749fef1::t_ea878392a9fceb 1-299
+src/content/catalog-models/minimax-m3.json
+  s_b8e1913749fef1::t_5bee2928a8cf6e 18-20,361-363
+src/content/catalog-models/openai-gpt-5.6-sol.json
+  s_b8e1913749fef1::t_1359bc18834ee3 20,278,297,361,367-369
+src/content/catalog-models/openai-gpt-6-astra.json
+  s_b8e1913749fef1::t_f6fa35fdc464e2 18
+src/content/catalog-models/openai-gpt-6-sol.json
+  s_b8e1913749fef1::t_ab9d0728379656 226
+src/content/catalog-models/openai-gpt-6.1-sol.json
+  s_b8e1913749fef1::t_f417e32473265e 224
+src/content/catalog-models/pruna-p-image-edit.json
+  s_b8e1913749fef1::t_1231f37c779b65 30,35
+src/content/catalog-models/pruna-p-image-try-on.json
+  s_b8e1913749fef1::t_65ea1464f3a2c0 30,35,66,71
+src/content/catalog-models/pruna-p-image-upscale.json
+  s_b8e1913749fef1::t_82652a7e5dc486 34,39
+src/content/catalog-models/pruna-p-image.json
+  s_b8e1913749fef1::t_a354eede8d4250 26,31,59,64
+src/content/catalog-models/recraft-recraftv4-1-flash.json
+  s_b8e1913749fef1::t_317870dc196efe 1-293
+src/content/catalog-models/reflection-ai-beam-1.0-501b-a23b.json
+  s_b8e1913749fef1::t_89bb02480a883b 1-650
+src/content/catalog-models/typesafe-jev.json
+  s_b8e1913749fef1::t_dc3329efd3db81 5,11-12,19-20,70-71,76-77,85-86,108-109,114-115,123-124,255-256,275-276,337-338,346-347,352,365-366,374-375,380,400-531,541,544-545,554-555,591-623
+src/content/catalog-models/unbiased-pareto.json
+  s_b8e1913749fef1::t_e1e2dd2fab580c 41,100,155,218,273
+src/content/workers-ai-models/apertus-v1.5-8b.json
+  s_b8e1913749fef1::t_4139276dc33439 16-463
+src/content/workers-ai-models/clef-flash.json
+  s_b8e1913749fef1::t_1e0171c3ead6aa 8-17,48
+src/content/workers-ai-models/clef-omni.json
+  s_b8e1913749fef1::t_08bf849c822637 6,17-20,31
+src/content/workers-ai-models/clef.json
+  s_b8e1913749fef1::t_795bf4e09e9477 8-17,48
+src/content/workers-ai-models/deepseek-v4-flash-0731.json
+  s_b8e1913749fef1::t_28139179726289 4709
+src/content/workers-ai-models/deepseek-v4-pro-0813.json
+  s_b8e1913749fef1::t_29bd8e55ccf6cb 4705
+src/content/workers-ai-models/eurollm-9b-it.json
+  s_b8e1913749fef1::t_dc5ea38428e665 16-463
+src/content/workers-ai-models/gemma-4-26b-a4b-it.json
+  s_b8e1913749fef1::t_736a3f81149de1 47-51,4644
+src/content/workers-ai-models/glm-4.7-flash.json
+  s_b8e1913749fef1::t_b21c04ae0cec06 2572
+src/content/workers-ai-models/glm-5.2.json
+  s_b8e1913749fef1::t_0c9b3d16df1334 4701
+src/content/workers-ai-models/glm-5.3-flash.json
+  s_b8e1913749fef1::t_bc37a994166045 4721
+src/content/workers-ai-models/glm-5.3.json
+  s_b8e1913749fef1::t_d96583ad58d397 4713
+src/content/workers-ai-models/gpt-oss-120b.json
+  s_b8e1913749fef1::t_438b5c5b56fd8c 39,41,555
+src/content/workers-ai-models/gpt-oss-20b.json
+  s_b8e1913749fef1::t_a53e47962732ae 39,41,555
+src/content/workers-ai-models/kimi-k2.6.json
+  s_b8e1913749fef1::t_2cbc7948a3c6e8 4707
+src/content/workers-ai-models/kimi-k2.7-code.json
+  s_b8e1913749fef1::t_399f1d20db0451 4640
+src/content/workers-ai-models/llava-1.5-7b-hf.json
+  s_b8e1913749fef1::t_e989ef416eebda 25,31-38,42-43,48,50-55,57,59-61,63,65-74,78-80,84-85,89-90,92-97,111-112,114-117
+src/content/workers-ai-models/mistral-small-3.1-24b-instruct.json
+  s_b8e1913749fef1::t_c078bc16a94694 26-29
+src/content/workers-ai-models/nemotron-3-120b-a12b.json
+  s_b8e1913749fef1::t_f2c647a6e88b08 2581
+src/content/workers-ai-models/phonellm-mini-alpha-2.json
+  s_b8e1913749fef1::t_14f97a51897de2 30,32-33,35-37,39-48,50-51,53-54,56,58-61,64-66,68-73,75-79,81-85,87-91,93-97,99-103,106-133,135-138,141-143,145-147,149,151-153,155-159,161-166,169-170,173-177,181,183,187,189,191-195,197,199,201,203-208,210,212-223,225-229,233-234,239-241,248,250,252,255-256,259-260,262-275,277,279-280,283,285,287-289,293-294,300-301,304-308,313-314,318-390,404,406,408-427,429,431,433-435,437,439-442,444,448
+src/content/workers-ai-models/qwen3.8-27b.json
+  s_b8e1913749fef1::t_461f8e0946c6cf 24,26,4702
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "453c478b94e58bb3ba26065de51b352ad0f97e68",
+  "prompts": {},
+  "sessions": {
+    "s_b8e1913749fef1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ebe5bc514ffeeamhJSHUXYxSVz",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "shridharathi <shridharathinarayanan@gmail.com>"
+    }
+  }
+}
