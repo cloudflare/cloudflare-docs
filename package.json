@@ -144,6 +144,7 @@
 		"react-select": "5.10.2",
 		"redirects-in-workers": "0.0.7",
 		"rehype": "13.0.2",
+		"remark-gfm": "4.0.1",
 		"satteri": "^0.10.5",
 		"sharp": "0.35.5",
 		"svgo": "4.1.0",

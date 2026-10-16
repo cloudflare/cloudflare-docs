@@ -281,6 +281,9 @@ importers:
       rehype:
         specifier: 13.0.2
         version: 13.0.2
+      remark-gfm:
+        specifier: 4.0.1
+        version: 4.0.1(supports-color@10.2.2)
       satteri:
         specifier: ^0.10.5
         version: 0.10.5

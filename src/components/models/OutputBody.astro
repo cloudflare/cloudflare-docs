@@ -1,8 +1,15 @@
 ---
-/** OutputBody — renders an example's output (text / image(s) / video / audio). */
+/**
+ * OutputBody — renders an example's output: Markdown text, tool calls, image(s),
+ * video, or audio.
+ */
+import MarkdownOutput from "~/components/models/MarkdownOutput";
+import type { ToolCallView } from "~/util/models/example-content";
+
 interface Props {
 	alt: string;
 	textOutput?: string;
+	toolCalls?: ToolCallView[];
 	imageUrl?: string;
 	imageUrls?: string[];
 	videoUrl?: string;
@@ -12,6 +19,7 @@ interface Props {
 const {
 	alt,
 	textOutput,
+	toolCalls = [],
 	imageUrl,
 	imageUrls = [],
 	videoUrl,
@@ -20,7 +28,14 @@ const {
 ---
 
 <div class="example-output-body">
-	{textOutput && <pre class="example-text">{textOutput}</pre>}
+	{textOutput && <MarkdownOutput text={textOutput} />}
+	{toolCalls.map((call) => (
+		<div class="example-tool-call">
+			<div class="example-tool-call-label">Calls tool</div>
+			<code class="example-tool-call-name">{call.name}</code>
+			<pre class="example-tool-call-args">{call.args}</pre>
+		</div>
+	))}
 	{imageUrl && <img src={imageUrl} alt={alt} loading="lazy" />}
 	{imageUrls.map((url) => (
 		<img src={url} alt={alt} loading="lazy" />
@@ -44,20 +59,74 @@ const {
 		gap: 0.75rem;
 	}
 
-	.example-text {
-		margin: 0;
-		padding: 0.75rem;
+	.example-output-body :global(.example-markdown) {
+		padding: 0.25rem 1rem;
 		border: 1px solid var(--nb-border);
 		border-radius: 0.5rem;
 		background: var(--nb-muted);
 		color: var(--nb-foreground);
-		font-family: var(--nb-font-mono);
-		font-size: 0.875rem;
-		line-height: 1.5;
-		white-space: pre-wrap;
-		word-break: break-word;
-		max-height: 32rem;
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		max-height: 36rem;
 		overflow: auto;
+		overflow-wrap: anywhere;
+	}
+
+	.example-output-body :global(.example-markdown table) {
+		display: block;
+		overflow-x: auto;
+		border-collapse: collapse;
+		font-size: 0.875rem;
+	}
+
+	.example-output-body :global(.example-markdown th),
+	.example-output-body :global(.example-markdown td) {
+		border: 1px solid var(--nb-border);
+		padding: 0.375rem 0.625rem;
+		vertical-align: top;
+	}
+
+	.example-output-body :global(.example-markdown pre) {
+		padding: 0.75rem;
+		border-radius: 0.375rem;
+		background: var(--nb-background);
+		overflow-x: auto;
+		font-size: 0.8125rem;
+	}
+
+	.example-output-body :global(.example-markdown code) {
+		font-family: var(--nb-font-mono);
+		font-size: 0.85em;
+	}
+
+	.example-tool-call {
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--nb-border);
+		border-left: 3px solid var(--nb-accent, #f6821f);
+		border-radius: 0.5rem;
+		background: var(--nb-muted);
+	}
+
+	.example-tool-call-label {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		opacity: 0.7;
+	}
+
+	.example-tool-call-name {
+		display: block;
+		margin: 0.25rem 0 0.5rem;
+		font-family: var(--nb-font-mono);
+		font-size: 1rem;
+		font-weight: 600;
+	}
+
+	.example-tool-call-args {
+		margin: 0;
+		font-family: var(--nb-font-mono);
+		font-size: 0.8125rem;
+		white-space: pre-wrap;
 	}
 
 	.example-output-body :global(img),
