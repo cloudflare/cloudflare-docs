@@ -3,6 +3,12 @@ link: "/web-analytics/changelog/"
 productName: beacon.min.js
 productLink: "/web-analytics/"
 entries:
+  - publish_date: "2026-10-16"
+    description: |-
+      1. Bug fix to ignore same-page soft navigations when the URL doesn't change
+      2. Google's web-vitals library upgraded to version 6.2.3
+      3. Further improvements of OS version collection on iOS/MacOS
+  
   - publish_date: "2026-10-05"
     description: |-
       1. Allow `__cfBeacon` JavaScript object to override `data-cf-beacon` configuration
