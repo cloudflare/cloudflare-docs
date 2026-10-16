@@ -15,9 +15,9 @@
 		"Input <=512k (per 1M)": 0.3,
 		"Cached input <=512k (per 1M)": 0.06,
 		"Output <=512k (per 1M)": 1.2,
-		"Input >512k (per 1M)": 1.2,
-		"Cached input >512k (per 1M)": 0.24,
-		"Output >512k (per 1M)": 4.8
+		"Input >512k (per 1M)": 0.6,
+		"Cached input >512k (per 1M)": 0.12,
+		"Output >512k (per 1M)": 2.4
 	},
 	"examples": [
 		{
@@ -358,9 +358,9 @@
 				"under_512k_per_1m_input_tokens": 0.3,
 				"under_512k_per_1m_input_cached_tokens": 0.06,
 				"under_512k_per_1m_output_tokens": 1.2,
-				"over_512k_per_1m_input_tokens": 1.2,
-				"over_512k_per_1m_input_cached_tokens": 0.24,
-				"over_512k_per_1m_output_tokens": 4.8
+				"over_512k_per_1m_input_tokens": 0.6,
+				"over_512k_per_1m_input_cached_tokens": 0.12,
+				"over_512k_per_1m_output_tokens": 2.4
 			}
 		}
 	],

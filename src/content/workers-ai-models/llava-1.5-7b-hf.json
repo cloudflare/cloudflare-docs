@@ -22,69 +22,79 @@
                 {
                     "type": "string",
                     "format": "binary",
-                    "description": "Binary string representing the image contents."
+                    "description": "Binary image contents. Uses the default prompt and generation settings."
                 },
                 {
                     "type": "object",
                     "properties": {
                         "image": {
-                            "oneOf": [
-                                {
-                                    "type": "array",
-                                    "description": "An array of integers that represent the image data constrained to 8-bit unsigned integer values",
-                                    "items": {
-                                        "type": "number",
-                                        "description": "A value between 0 and 255"
-                                    }
-                                },
-                                {
-                                    "type": "string",
-                                    "format": "binary",
-                                    "description": "Binary string representing the image contents."
-                                }
-                            ]
-                        },
-                        "temperature": {
-                            "type": "number",
-                            "description": "Controls the randomness of the output; higher values produce more random results."
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                            },
+                            "minItems": 1,
+                            "description": "Image contents as an array of unsigned 8-bit integers."
                         },
                         "prompt": {
                             "type": "string",
-                            "description": "The input text prompt for the model to generate a response."
+                            "default": "Describe this image.",
+                            "description": "Question or instruction about the image."
                         },
                         "raw": {
                             "type": "boolean",
                             "default": false,
-                            "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
-                        },
-                        "top_p": {
-                            "type": "number",
-                            "description": "Controls the creativity of the AI's responses by adjusting how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
-                        },
-                        "top_k": {
-                            "type": "number",
-                            "description": "Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises."
-                        },
-                        "seed": {
-                            "type": "number",
-                            "description": "Random seed for reproducibility of the generation."
-                        },
-                        "repetition_penalty": {
-                            "type": "number",
-                            "description": "Penalty for repeated tokens; higher values discourage repetition."
-                        },
-                        "frequency_penalty": {
-                            "type": "number",
-                            "description": "Decreases the likelihood of the model repeating the same lines verbatim."
-                        },
-                        "presence_penalty": {
-                            "type": "number",
-                            "description": "Increases the likelihood of the model introducing new topics."
+                            "description": "Use prompt verbatim instead of applying the LLaVA chat template. When true, prompt must contain exactly one <image> placeholder."
                         },
                         "max_tokens": {
                             "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1024,
                             "default": 512,
-                            "description": "The maximum number of tokens to generate in the response."
+                            "description": "Maximum generated tokens, capped to the remaining context-window space."
+                        },
+                        "temperature": {
+                            "type": "number",
+                            "minimum": 0,
+                            "default": 0.1,
+                            "description": "Sampling temperature. Set to 0 for greedy decoding."
+                        },
+                        "top_p": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1,
+                            "default": 1,
+                            "description": "Nucleus sampling probability. Must be greater than 0 when temperature is greater than 0."
+                        },
+                        "top_k": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "default": 50,
+                            "description": "Top-k sampling limit. Set to 0 to disable."
+                        },
+                        "repetition_penalty": {
+                            "type": "number",
+                            "exclusiveMinimum": 0,
+                            "default": 1,
+                            "description": "Repetition penalty multiplier. Must be strictly positive."
+                        },
+                        "frequency_penalty": {
+                            "type": "number",
+                            "default": 0,
+                            "description": "Penalty proportional to each token's frequency in generated text."
+                        },
+                        "presence_penalty": {
+                            "type": "number",
+                            "default": 0,
+                            "description": "Penalty applied to tokens already present in generated text."
+                        },
+                        "seed": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "description": "Optional random seed for reproducible generation."
                         }
                     },
                     "required": [
@@ -98,9 +108,13 @@
             "contentType": "application/json",
             "properties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Generated description or answer about the image."
                 }
-            }
+            },
+            "required": [
+                "description"
+            ]
         }
     },
     "deprecated": false

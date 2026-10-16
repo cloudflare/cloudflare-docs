@@ -3,19 +3,7 @@
     "properties": [
         {
             "property_id": "context_window",
-            "value": "64000"
-        },
-        {
-            "property_id": "info",
-            "value": "https://huggingface.co/Cloudflare/clef-omni"
-        },
-        {
-            "property_id": "terms",
-            "value": "https://huggingface.co/Cloudflare/clef-omni/blob/main/LICENSE"
-        },
-        {
-            "property_id": "vision",
-            "value": "true"
+            "value": "65536"
         },
         {
             "property_id": "price",
@@ -26,6 +14,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "vision",
+            "value": "true"
         }
     ],
     "id": "543fea3d-dcff-4c3b-af79-b83f601aa1cb",
@@ -36,7 +28,7 @@
         "name": "Text Generation",
         "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
     },
-    "created_at": "2026-10-09 00:00:00.000",
+    "created_at": "2026-10-09 01:37:45.295",
     "tags": [],
     "schema": {
         "input": {

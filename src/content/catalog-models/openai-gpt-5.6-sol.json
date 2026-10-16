@@ -16,8 +16,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2,
-		"Output tokens (per 1M)": 10,
 		"Cached input tokens (per 1M)": 0.25,
+		"Output tokens (per 1M)": 10,
 		"Cache creation tokens (per 1M)": 3.125
 	},
 	"examples": [
@@ -275,7 +275,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://openai.com/",
 	"terms": "https://openai.com/policies/",
@@ -293,8 +293,8 @@
 			"id": "openai",
 			"pricing": {
 				"input_tokens": 2,
-				"output_tokens": 10,
 				"input_cached_tokens": 0.25,
+				"output_tokens": 10,
 				"input_cache_creation_tokens": 3.125
 			}
 		}
@@ -358,12 +358,15 @@
 					"type": "object",
 					"properties": {
 						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
 							"type": "string",
 							"enum": [
 								"none",
 								"low",
 								"medium",
-								"high"
+								"high",
+								"xhigh",
+								"max"
 							]
 						}
 					},

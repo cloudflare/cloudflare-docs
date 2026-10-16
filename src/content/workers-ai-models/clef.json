@@ -6,6 +6,16 @@
             "value": "65536"
         },
         {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.24,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
             "property_id": "info",
             "value": "https://huggingface.co/Cloudflare/clef"
         },
@@ -16,16 +26,6 @@
         {
             "property_id": "vision",
             "value": "true"
-        },
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per M input tokens",
-                    "price": 0.24,
-                    "currency": "USD"
-                }
-            ]
         }
     ],
     "id": "87f39d62-116c-4b26-b2cd-562a9ba01f2f",
@@ -45,6 +45,7 @@
                 "model": {
                     "type": "string",
                     "pattern": "^\\s*(clef|clef-flash)\\s*$",
+                    "default": "clef",
                     "description": "Required. The model selector: \"clef\" for @cf/cloudflare/clef, \"clef-flash\" for @cf/cloudflare/clef-flash."
                 },
                 "state": {

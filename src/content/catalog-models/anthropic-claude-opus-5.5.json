@@ -16,8 +16,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 4,
-		"Output tokens (per 1M)": 20,
 		"Cached input tokens (per 1M)": 0.2,
+		"Output tokens (per 1M)": 20,
 		"Cache creation tokens (per 1M)": 5
 	},
 	"examples": [
@@ -1805,7 +1805,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
@@ -1825,8 +1825,8 @@
 			"id": "anthropic",
 			"pricing": {
 				"input_tokens": 4,
-				"output_tokens": 20,
 				"input_cached_tokens": 0.2,
+				"output_tokens": 20,
 				"input_cache_creation_tokens": 5
 			}
 		}

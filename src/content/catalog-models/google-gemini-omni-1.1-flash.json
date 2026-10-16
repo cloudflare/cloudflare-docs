@@ -13,14 +13,13 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Input text tokens (per 1M)": 1.5,
-		"Input image tokens (per 1M)": 1.5,
 		"Input audio tokens (per 1M)": 1.5,
+		"Input image tokens (per 1M)": 1.5,
+		"Input text tokens (per 1M)": 1.5,
 		"Input video tokens (per 1M)": 1.5,
+		"Reasoning tokens (per 1M)": 10,
 		"output_text_tokens": 9,
-		"Reasoning tokens (per 1M)": 9,
-		"output_video_tokens": 17.5,
-		"Default (per second)": 1.5
+		"output_video_tokens": 17.5
 	},
 	"examples": [
 		{
@@ -171,6 +170,20 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-ai-studio",
+			"pricing": {
+				"input_audio_tokens": 1.5,
+				"input_image_tokens": 1.5,
+				"input_text_tokens": 1.5,
+				"input_video_tokens": 1.5,
+				"output_reasoning_tokens": 10,
+				"output_text_tokens": 9,
+				"output_video_tokens": 17.5
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-09-11 15:09:32",
 	"schema": {

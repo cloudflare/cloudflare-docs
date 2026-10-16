@@ -2,21 +2,22 @@
 	"model_id": "typesafe/jev",
 	"provider_id": "typesafe",
 	"name": "Jev",
-	"description": "Jev is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence.",
+	"description": "Jev 1.13 is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence. Image inputs are beta and dreamer-ready, not recommended for production.",
 	"task": "Text Generation",
 	"tags": [
 		"Structured Output",
 		"Classification",
 		"Evaluation",
-		"Confidence"
+		"Confidence",
+		"Multimodal (Beta)"
 	],
 	"context_length": 32000,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 0.042,
-		"Output tokens (per 1M)": 0,
-		"Cached input tokens (per 1M)": 0
+		"Cached input tokens (per 1M)": 0,
+		"Output tokens (per 1M)": 0
 	},
 	"examples": [
 		{
@@ -66,14 +67,14 @@
 						"confidence": 0.8,
 						"probabilities": {
 							"billing": 0.87,
-							"sales": 0,
-							"technical": 0.13
+							"technical": 0.13,
+							"sales": 0
 						}
 					},
 					"frustration": {
 						"type": "score",
-						"score": 1.04,
-						"confidence": 0.94,
+						"score": 1.05,
+						"confidence": 0.93,
 						"legend": {
 							"0": "Calm",
 							"1": "Frustrated",
@@ -81,8 +82,8 @@
 						},
 						"probabilities": {
 							"0": 0,
-							"1": 0.96,
-							"2": 0.04
+							"1": 0.95,
+							"2": 0.05
 						}
 					}
 				},
@@ -104,14 +105,14 @@
 						"confidence": 0.8,
 						"probabilities": {
 							"billing": 0.87,
-							"sales": 0,
-							"technical": 0.13
+							"technical": 0.13,
+							"sales": 0
 						}
 					},
 					"frustration": {
 						"type": "score",
-						"score": 1.04,
-						"confidence": 0.94,
+						"score": 1.05,
+						"confidence": 0.93,
 						"legend": {
 							"0": "Calm",
 							"1": "Frustrated",
@@ -119,8 +120,8 @@
 						},
 						"probabilities": {
 							"0": 0,
-							"1": 0.96,
-							"2": 0.04
+							"1": 0.95,
+							"2": 0.05
 						}
 					}
 				},
@@ -250,9 +251,9 @@
 						"choice": "account",
 						"confidence": 1,
 						"probabilities": {
-							"technical": 0,
-							"billing": 0,
 							"account": 1,
+							"billing": 0,
+							"technical": 0,
 							"other": 0
 						}
 					}
@@ -270,9 +271,9 @@
 						"choice": "account",
 						"confidence": 1,
 						"probabilities": {
-							"technical": 0,
-							"billing": 0,
 							"account": 1,
+							"billing": 0,
+							"technical": 0,
 							"other": 0
 						}
 					}
@@ -333,8 +334,8 @@
 				"answers": {
 					"risk_level": {
 						"type": "score",
-						"score": 1.84,
-						"confidence": 0.77,
+						"score": 1.86,
+						"confidence": 0.79,
 						"legend": {
 							"0": "Low risk: activity is consistent with the account history",
 							"1": "Moderate risk: some unusual activity needs monitoring",
@@ -342,13 +343,13 @@
 						},
 						"probabilities": {
 							"0": 0,
-							"1": 0.16,
-							"2": 0.84
+							"1": 0.14,
+							"2": 0.86
 						}
 					},
 					"escalate": {
 						"type": "noul",
-						"noul": 0.81
+						"noul": 0.8
 					}
 				},
 				"usage": {
@@ -361,8 +362,8 @@
 				"answers": {
 					"risk_level": {
 						"type": "score",
-						"score": 1.84,
-						"confidence": 0.77,
+						"score": 1.86,
+						"confidence": 0.79,
 						"legend": {
 							"0": "Low risk: activity is consistent with the account history",
 							"1": "Moderate risk: some unusual activity needs monitoring",
@@ -370,13 +371,13 @@
 						},
 						"probabilities": {
 							"0": 0,
-							"1": 0.16,
-							"2": 0.84
+							"1": 0.14,
+							"2": 0.86
 						}
 					},
 					"escalate": {
 						"type": "noul",
-						"noul": 0.81
+						"noul": 0.8
 					}
 				},
 				"usage": {
@@ -396,6 +397,138 @@
 					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": {\n      \"account_age_days\": 12,\n      \"recent_events\": [\n        \"Five failed login attempts\",\n        \"Password reset requested from a new country\",\n        \"Successful login from the usual device\"\n      ],\n      \"account_verified\": true\n    },\n    \"questions\": {\n      \"risk_level\": {\n        \"type\": \"score\",\n        \"instructions\": \"How risky does this account activity appear?\",\n        \"criteria\": [\n          \"Low risk: activity is consistent with the account history\",\n          \"Moderate risk: some unusual activity needs monitoring\",\n          \"High risk: multiple strong indicators of account compromise\"\n        ]\n      },\n      \"escalate\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Should this account be escalated for manual security review?\",\n        \"criteria\": {\n          \"true\": \"The activity warrants immediate human review\",\n          \"false\": \"The activity can be handled with normal automated controls\"\n        }\n      }\n    }\n  }\n}'"
 				}
 			]
+		},
+		{
+			"name": "Beta image classification",
+			"description": "Beta image input: identify whether a photo contains a blue object",
+			"input": {
+				"state": {
+					"photo": "solid-blue-photo"
+				},
+				"assets": {
+					"solid-blue-photo": {
+						"type": "image",
+						"format": "png",
+						"data_base64": "iVBORw0KGgoAAAANSUhEUgAAARgAAAEYAQAAAACv9dQhAAAATklEQVR42u3ZoQ3AMAADwU8X6f47RkpJigqKI52pD5l6rH5zxTAMwzAMwzBMVWtnfpr7rWzIMAzDMAzDMAzDMMzpZvgQGYZhGIZhGKaqB4heFTaRz7VhAAAAAElFTkSuQmCC"
+					}
+				},
+				"questions": {
+					"is_blue": {
+						"type": "noul",
+						"instructions": "Is the object in `photo` blue?"
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"is_blue": {
+						"type": "noul",
+						"noul": 0
+					}
+				},
+				"usage": {
+					"input_tokens": 486,
+					"output_tokens": 21
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"is_blue": {
+						"type": "noul",
+						"noul": 0
+					}
+				},
+				"usage": {
+					"input_tokens": 486,
+					"output_tokens": 21
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: { photo: 'solid-blue-photo' },\n    assets: {\n      'solid-blue-photo': {\n        type: 'image',\n        format: 'jpg',\n        data_base64:\n          '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAEAAQADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAP/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAUG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AoA0SMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=',\n      },\n    },\n    questions: { is_blue: { type: 'noul', instructions: 'Is the object in `photo` blue?' } },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": {\n      \"photo\": \"solid-blue-photo\"\n    },\n    \"assets\": {\n      \"solid-blue-photo\": {\n        \"type\": \"image\",\n        \"format\": \"jpg\",\n        \"data_base64\": \"/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAEAAQADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAP/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAUG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AoA0SMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=\"\n      }\n    },\n    \"questions\": {\n      \"is_blue\": {\n        \"type\": \"noul\",\n        \"instructions\": \"Is the object in `photo` blue?\"\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Beta image criteria",
+			"description": "Beta image input: classify a referenced image in question criteria",
+			"input": {
+				"state": "solid-blue-photo",
+				"assets": {
+					"solid-blue-photo": {
+						"type": "image",
+						"format": "png",
+						"data_base64": "iVBORw0KGgoAAAANSUhEUgAAARgAAAEYAQAAAACv9dQhAAAATklEQVR42u3ZoQ3AMAADwU8X6f47RkpJigqKI52pD5l6rH5zxTAMwzAMwzBMVWtnfpr7rWzIMAzDMAzDMAzDMMzpZvgQGYZhGIZhGKaqB4heFTaRz7VhAAAAAElFTkSuQmCC"
+					}
+				},
+				"questions": {
+					"color": {
+						"type": "choice",
+						"instructions": "Which color best describes the image?",
+						"criteria": {
+							"blue": "A blue image such as solid-blue-photo",
+							"other": "Any image that is not blue"
+						}
+					}
+				}
+			},
+			"output": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"color": {
+						"type": "choice",
+						"choice": "other",
+						"confidence": 0.84,
+						"probabilities": {
+							"blue": 0.08,
+							"other": 0.92
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 726,
+					"output_tokens": 31
+				}
+			},
+			"raw_response": {
+				"model": "jev-1.13.0",
+				"answers": {
+					"color": {
+						"type": "choice",
+						"choice": "other",
+						"confidence": 0.84,
+						"probabilities": {
+							"blue": 0.08,
+							"other": 0.92
+						}
+					}
+				},
+				"usage": {
+					"input_tokens": 726,
+					"output_tokens": 31
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'typesafe/jev',\n  {\n    state: 'solid-blue-photo',\n    assets: {\n      'solid-blue-photo': {\n        type: 'image',\n        format: 'jpg',\n        data_base64:\n          '/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAEAAQADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAP/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAUG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AoA0SMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=',\n      },\n    },\n    questions: {\n      color: {\n        type: 'choice',\n        instructions: 'Which color best describes the image?',\n        criteria: {\n          blue: 'A blue image such as solid-blue-photo',\n          other: 'Any image that is not blue',\n        },\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"typesafe/jev\",\n  \"input\": {\n    \"state\": \"solid-blue-photo\",\n    \"assets\": {\n      \"solid-blue-photo\": {\n        \"type\": \"image\",\n        \"format\": \"jpg\",\n        \"data_base64\": \"/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+JS5ESUM8SDc9Pjv/2wBDAQoLCw4NDhwQEBw7KCIoOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozv/wAARCAEAAQADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAP/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFgEBAQEAAAAAAAAAAAAAAAAAAAUG/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8AoA0SMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//9k=\"\n      }\n    },\n    \"questions\": {\n      \"color\": {\n        \"type\": \"choice\",\n        \"instructions\": \"Which color best describes the image?\",\n        \"criteria\": {\n          \"blue\": \"A blue image such as solid-blue-photo\",\n          \"other\": \"Any image that is not blue\"\n        }\n      }\n    }\n  }\n}'"
+				}
+			]
 		}
 	],
 	"default_example": null,
@@ -405,10 +538,11 @@
 	"zdr_comment": null,
 	"external_info": "https://docs.typesafe.ai/models.md",
 	"terms": "https://docs.typesafe.ai/legal.md",
-	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/typesafe/jev.png",
+	"cover_image_url": null,
 	"metadata": {
 		"Answer types": "Noul, Choice, and Score",
-		"Provider model": "jev-latest"
+		"Image inputs": "Beta / dreamer-ready",
+		"Provider model": "jev-1.13.0"
 	},
 	"request_formats": null,
 	"providers": null,
@@ -417,8 +551,8 @@
 			"id": "typesafe",
 			"pricing": {
 				"input_tokens": 0.042,
-				"output_tokens": 0,
-				"input_cached_tokens": 0
+				"input_cached_tokens": 0,
+				"output_tokens": 0
 			}
 		}
 	],
@@ -453,6 +587,39 @@
 							"type": "null"
 						}
 					]
+				},
+				"assets": {
+					"type": "object",
+					"propertyNames": {
+						"type": "string",
+						"minLength": 1
+					},
+					"additionalProperties": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"type": "string",
+								"const": "image"
+							},
+							"part": {
+								"type": "string",
+								"minLength": 1
+							},
+							"data_base64": {
+								"type": "string",
+								"minLength": 1
+							},
+							"format": {
+								"type": "string",
+								"enum": [
+									"png",
+									"jpg",
+									"jpeg"
+								]
+							}
+						},
+						"additionalProperties": false
+					}
 				},
 				"questions": {
 					"type": "object",
