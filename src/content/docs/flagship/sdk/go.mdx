@@ -121,4 +121,4 @@ The cache is per-provider instance, guarded by a mutex for concurrent use, and c
 
 ## Evaluation context
 
-Context attributes are sent as URL query parameters. Supported values are strings, numeric types, booleans, and `time.Time`. `nil` values are skipped. Maps, slices, structs, and other complex values return `INVALID_CONTEXT` through OpenFeature and do not trigger an HTTP request.
+Context attributes are sent as scalar `GET` query parameters. Supported values are strings, numeric types, booleans, and `time.Time`. `nil` values are skipped. Maps, slices, structs, and other complex values return `INVALID_CONTEXT` through OpenFeature and do not trigger an HTTP request.

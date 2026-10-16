@@ -120,7 +120,9 @@ OpenFeature uses an evaluation context to pass user attributes to the flag provi
 
 Pass additional attributes alongside `targetingKey` to match [targeting rules](/flagship/targeting/). For example, you can include `plan`, `country`, or any custom attribute your rules reference.
 
-Use primitive context values such as strings, numbers, booleans, and `Date` objects. The provider rejects objects and arrays as invalid context.
+Use primitive context values such as strings, numbers, booleans, and `Date` objects. The provider rejects objects and arrays as invalid context, including when configured with a binding.
+
+The provider sends HTTP evaluations through scalar `GET` query parameters. Use the binding directly when your Worker needs structured context.
 
 <TypeScriptExample>
 

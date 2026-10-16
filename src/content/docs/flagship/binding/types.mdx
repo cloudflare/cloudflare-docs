@@ -8,7 +8,7 @@ products:
   - flagship
 ---
 
-The Flagship binding uses the following TypeScript types. These are available from the `@cloudflare/workers-types` package after running `npx wrangler types`.
+The Flagship binding runtime uses the following TypeScript shapes. The published Workers type declarations do not yet include every runtime value.
 
 ## `Flagship`
 
@@ -24,11 +24,30 @@ Refer to the [methods reference](/flagship/binding/methods/) for the full list o
 
 ## `FlagshipEvaluationContext`
 
-A record of attribute names to values passed for [targeting rules](/flagship/targeting/). Use this to provide user attributes such as user ID, country, or plan type.
+A record of attributes passed to [targeting rules](/flagship/targeting/). Values can recursively contain arrays and objects.
 
 ```ts
-type FlagshipEvaluationContext = Record<string, string | number | boolean>;
+type FlagshipEvaluationContextValue =
+	| string
+	| number
+	| boolean
+	| null
+	| FlagshipEvaluationContextValue[]
+	| { [key: string]: FlagshipEvaluationContextValue };
+
+type FlagshipEvaluationContext = Record<
+	string,
+	FlagshipEvaluationContextValue
+>;
 ```
+
+Numbers must be finite. The binding rejects `NaN`, `Infinity`, unsupported objects, and cyclic values.
+
+The runtime also accepts valid JavaScript `Date` values. The binding normalizes each date to an ISO 8601 string. Invalid dates produce an `INVALID_CONTEXT` error.
+
+The public declarations from `wrangler types` and `@cloudflare/workers-types` still define context as `Record<string, string | number | boolean>`. Therefore, TypeScript can reject structured context that the runtime accepts. [workerd pull request #7462](https://github.com/cloudflare/workerd/pull/7462) tracks the recursive public declarations and remains open.
+
+Until those declarations are published, TypeScript requires an explicit cast for structured context. This declaration mismatch does not change runtime support. Serialize `Date` values yourself when you need declaration-compatible code.
 
 ## `FlagshipEvaluationDetails`
 
@@ -41,15 +60,17 @@ interface FlagshipEvaluationDetails<T> {
 	variant?: string;
 	reason?: string;
 	errorCode?: string;
+	errorMessage?: string;
 }
 ```
 
-| Property    | Type     | Description                                                                            |
-| ----------- | -------- | -------------------------------------------------------------------------------------- |
-| `flagKey`   | `string` | The key of the evaluated flag.                                                         |
-| `value`     | `T`      | The resolved flag value.                                                               |
-| `variant`   | `string` | The name of the matched variant, if any.                                               |
-| `reason`    | `string` | Why the flag resolved to this value (for example, `"TARGETING_MATCH"` or `"DEFAULT"`). |
-| `errorCode` | `string` | An error code if evaluation failed (for example, `"TYPE_MISMATCH"` or `"GENERAL"`).    |
+| Property       | Type     | Description                                                                            |
+| -------------- | -------- | -------------------------------------------------------------------------------------- |
+| `flagKey`      | `string` | The key of the evaluated flag.                                                         |
+| `value`        | `T`      | The resolved flag value.                                                               |
+| `variant`      | `string` | The name of the matched variant, if any.                                               |
+| `reason`       | `string` | Why the flag resolved to this value (for example, `"TARGETING_MATCH"` or `"DEFAULT"`). |
+| `errorCode`    | `string` | An error code if evaluation failed (for example, `"TYPE_MISMATCH"` or `"GENERAL"`).    |
+| `errorMessage` | `string` | A description of the evaluation error, if any.                                         |
 
 Refer to [evaluation reasons and error codes](/flagship/reference/evaluation-reasons/) for the full list of possible values.

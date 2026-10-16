@@ -94,7 +94,7 @@ Cached values may be stale until the TTL expires. Keep the TTL short for flags t
 
 ## Evaluation context
 
-Context attributes are sent as URL query parameters. Supported values are strings, integers, floats, booleans, and `datetime` values. Dictionaries, lists, tuples, and other complex values raise `InvalidContextError`.
+Context attributes are sent as scalar `GET` query parameters. Supported values are strings, integers, floats, booleans, and `datetime` values. Dictionaries, lists, tuples, and other complex values raise `InvalidContextError`.
 
 ## Async evaluation
 

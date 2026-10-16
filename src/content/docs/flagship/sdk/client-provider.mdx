@@ -80,6 +80,12 @@ if (showBanner) {
 | `retryDelay`    | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                  |
 | `prefetchFlags` | `string[]`    | Yes      | Flag keys to fetch on initialization and on every context change. Flags not in this list return `FLAG_NOT_FOUND` at evaluation time. |
 
+## Evaluation context
+
+The client provider sends context through scalar `GET` query parameters. Structured object and array values are not supported.
+
+Use strings, numbers, and booleans for context attributes. JSON-looking strings remain strings and do not create nested context.
+
 ## When to use the client provider
 
 Use the client provider in browser applications, single-page apps, or any client-side JavaScript environment.

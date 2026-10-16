@@ -39,6 +39,22 @@ Flagship SDKs are organized by language. The TypeScript SDK has separate setup g
 If you are running inside a Cloudflare Worker, the [binding](/flagship/binding/) is the recommended approach because it avoids HTTP overhead. You can also [pass the binding to the OpenFeature SDK](/flagship/sdk/server-provider/) to get the best of both. Use the SDK without a binding when running in non-Worker runtimes like Node.js or the browser.
 :::
 
+## Context support
+
+Context support depends on the evaluation client and transport:
+
+| Client or API               | Context support                                                   |
+| --------------------------- | ----------------------------------------------------------------- |
+| Direct Workers binding     | Recursive JSON values; valid `Date` values normalize to strings   |
+| TypeScript server provider | Strings, numbers, booleans, and `Date`; rejects objects or arrays |
+| TypeScript client provider | Scalar GET query values; structured values are unsupported        |
+| Python provider            | Scalar GET query values and `datetime`; rejects complex values     |
+| Go provider                | Scalar GET query values and `time.Time`; rejects complex values    |
+| Wrangler                   | String values from each `--context` argument                       |
+| Evaluation API `POST`      | Recursive JSON values                                              |
+
+Use the direct Workers binding for structured context inside Workers. Use the [evaluation API `POST` endpoint](/flagship/reference/evaluation-api/#send-structured-json-context) for structured context over HTTP.
+
 ## Installation
 
 For TypeScript server-side usage:
