@@ -11,7 +11,13 @@ import { GlossaryTooltip } from "~/components";
 
 ## Error 525: SSL handshake failed
 
-This error indicates that the SSL handshake between Cloudflare and the origin web server failed.
+Error `525` means Cloudflare reported an SSL/TLS handshake failure between Cloudflare and the origin web server.
+
+### How this differs from Error 522
+
+[522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/) reports a connection timeout. `525` reports an SSL/TLS handshake failure. These codes do not simply separate TCP errors from TLS errors. A timeout while TLS is pending can be reported as `522` rather than `525`.
+
+For a new TCP-based HTTPS connection, TCP establishment is followed by SSL/TLS negotiation. TCP can already be established while HTTPS setup remains unfinished. Refer to [Connection limits](/fundamentals/reference/connection-limits/#what-connection-means-here) for the qualified terms and documented TCP timeout conditions.
 
 ### Common causes
 
