@@ -79,6 +79,17 @@ By default, the device applies any assignment the dashboard sends. If no assignm
 - `true` — (default) The device applies client version assignments configured for it in the Cloudflare dashboard. If no assignment targets the device, this setting has no effect.
 - `false` — The device ignores client version assignments and stays on its current installed version, regardless of what is configured in the dashboard.
 
+### `allow_updates`
+
+Specifies whether the client should check for updates prior to initial registration.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `true` — (default) The client automatically checks for updates, prompting the user to install them. 
+- `false` — The client does not automatically check for updates.  
+
 ### `auth_client_id`
 
 Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token).
