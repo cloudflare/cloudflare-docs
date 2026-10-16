@@ -10,6 +10,7 @@
 		"build": "astro build",
 		"build:incremental": "INCREMENTAL_BUILD=true astro build",
 		"build:parallel": "PARALLEL_PRERENDER=true PARALLEL_WORKERS=4 astro build",
+		"build:incremental:parallel": "INCREMENTAL_BUILD=true PARALLEL_PRERENDER=true PARALLEL_WORKERS=4 astro build",
 		"typegen:worker": "wrangler types ./worker/worker-configuration.d.ts",
 		"check": "pnpm run check:astro && pnpm run check:worker",
 		"check:astro": "astro check --minimumFailingSeverity=hint",
@@ -51,6 +52,7 @@
 		"prepare": "husky",
 		"prebuild:incremental": "pnpm run fetch:assets && pnpm run generate:config-reference",
 		"prebuild:parallel": "pnpm run fetch:assets && pnpm run generate:config-reference",
+		"prebuild:incremental:parallel": "pnpm run fetch:assets && pnpm run generate:config-reference",
 		"fetch:assets": "tsx bin/fetch-skills.ts && tsx bin/fetch-openapi.ts && tsx bin/fetch-logpush-datasets.ts",
 		"fetch:logpush": "tsx bin/fetch-logpush-datasets.ts --force",
 		"generate:labeler": "tsx bin/generate-labeler.ts"
