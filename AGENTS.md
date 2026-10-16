@@ -235,11 +235,11 @@ node tools/directory-entry-ids --fix  # Auto-fix missing, malformed, or duplicat
 
 Tests use Vitest with three workspace projects (`vitest.config.ts`):
 
-| Suite   | File pattern       | Runtime                           |
-| ------- | ------------------ | --------------------------------- |
-| Workers | `*.worker.test.ts` | `@cloudflare/vitest-pool-workers` |
-| Node    | `*.node.test.ts`   | Node.js                           |
-| Astro   | `*.astro.test.ts`  | Astro Vite config                 |
+| Suite   | File pattern       | Runtime                     |
+| ------- | ------------------ | --------------------------- |
+| Workers | `*.worker.test.ts` | `@cloudflare/vitest-plugin` |
+| Node    | `*.node.test.ts`   | Node.js                     |
+| Astro   | `*.astro.test.ts`  | Astro Vite config           |
 
 Run all tests: `pnpm run test`
 
