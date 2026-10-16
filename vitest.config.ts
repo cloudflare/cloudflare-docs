@@ -13,7 +13,6 @@ export default defineConfig({
 				],
 				test: {
 					name: "Workers",
-					silent: "passed-only",
 					include: ["**/*.worker.test.ts"],
 					exclude: [...configDefaults.exclude, "**/*.preview.worker.test.ts"],
 					deps: {
@@ -34,7 +33,6 @@ export default defineConfig({
 				],
 				test: {
 					name: "Workers (Preview)",
-					silent: "passed-only",
 					include: ["**/*.preview.worker.test.ts"],
 					deps: {
 						optimizer: {

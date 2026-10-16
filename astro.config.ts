@@ -292,9 +292,6 @@ const appVite = {
 	// client islands fail to hydrate with "jsxDEV is not a function".
 	resolve: { dedupe: ["react", "react-dom"] },
 	plugins: [tailwindcss(), componentsBarrelSideEffects, iconAlias],
-	build: {
-		chunkSizeWarningLimit: 700,
-	},
 };
 
 // https://astro.build/config
