@@ -189,7 +189,7 @@ Use this checklist to diagnose inbox placement problems before opening a support
 
 #### Delivery status versus inbox placement
 
-A **Delivered** status in the Activity log means the recipient's mail server accepted the message with a successful SMTP response. What happens after acceptance — inbox, spam, or junk — is determined entirely by the receiving provider. Cloudflare does not receive that placement signal.
+A **Delivered** status in the Activity log means the recipient's mail server accepted the message with a successful SMTP response. The receiving provider determines what happens after acceptance — inbox, spam, or junk. Cloudflare does not receive that placement signal.
 
 This means:
 
@@ -353,7 +353,7 @@ Use these tools to validate your email authentication setup:
 
 ## Getting help
 
-Before opening a support case for email going to spam or junk, complete the [transactional email troubleshooting checklist](#transactional-email-going-to-spam-or-junk). Many inbox placement problems are caused by domain warm-up and resolve without engineering involvement.
+Before opening a support case for email going to spam or junk, complete the [transactional email troubleshooting checklist](#transactional-email-going-to-spam-or-junk). Domain warm-up causes many inbox placement problems, and most resolve without engineering involvement.
 
 Cloudflare cannot force inbox placement. Inbox providers classify messages after accepting them, and that decision is entirely within the provider's own systems. New domains (fewer than four weeks old) being filtered to junk are experiencing expected new-sender treatment. Apple iCloud does not offer a feedback loop or allowlist path for senders on shared infrastructure.
 
