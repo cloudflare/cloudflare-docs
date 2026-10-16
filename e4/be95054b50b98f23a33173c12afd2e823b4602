@@ -1,0 +1,19 @@
+src/content/docs/browser-run/features/live-view.mdx
+  s_97d0655c9a3620::t_32725b9ad8d110 154-159,161,182
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e4be95054b50b98f23a33173c12afd2e823b4602",
+  "prompts": {},
+  "sessions": {
+    "s_97d0655c9a3620": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fe10479c7ffeCiKvEGvlo5FGDY",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Sofia Cardita <scardita@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+src/content/docs/workers/ci-cd/builds/build-image.mdx
+  s_94c602eab0f70b::t_7d72c699ee51e2 25-28,30,36,39-41,43-45,48-57,89-96
+src/content/changelog/workers/2026-10-13-workers-builds-default-tooling.mdx
+  s_94c602eab0f70b::t_7d72c699ee51e2 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e7e6bda4113c7bbf8917a68f12ade24b419da0bc",
+  "prompts": {},
+  "sessions": {
+    "s_94c602eab0f70b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ece2c8cfbffeCS1uPzWf6ajfh6",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

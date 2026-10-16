@@ -1,0 +1,18 @@
+src/content/docs/email-service/api/send-emails/rest-api.mdx
+  h_b6369bf704d487 145
+src/content/docs/email-service/api/send-emails/workers-api.mdx
+  h_b6369bf704d487 194
+src/content/docs/email-service/concepts/deliverability.mdx
+  h_b6369bf704d487 74-75,85-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e7a8c9e830178a8caf11c999f8658a33b785beee",
+  "prompts": {},
+  "humans": {
+    "h_b6369bf704d487": {
+      "author": "Diogo Santos <dsantos@cloudflare.com>"
+    }
+  }
+}

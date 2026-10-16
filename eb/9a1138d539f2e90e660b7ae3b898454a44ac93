@@ -1,0 +1,19 @@
+src/content/docs/agents/runtime/execution/schedule-tasks.mdx
+  s_4b8d26459155eb::t_f7a193454625b4 494,496
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "eb9a1138d539f2e90e660b7ae3b898454a44ac93",
+  "prompts": {},
+  "sessions": {
+    "s_4b8d26459155eb": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a130d5-1e36-74b0-ba1d-548ed45e6b49",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Harshil Agrawal <harshil@cloudflare.com>"
+    }
+  }
+}

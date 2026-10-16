@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/git-integration/github-integration.mdx
+  s_6442e3c5ecd901::t_2b24afd7d7d2e7 53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "df80519a0a9e93e613d25bde7a3ea9e4e3193c64",
+  "prompts": {},
+  "sessions": {
+    "s_6442e3c5ecd901": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ece00d0f2ffeUQgqbcQlTxt5f6",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

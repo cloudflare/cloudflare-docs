@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/automatic-prs.mdx
+  s_daaded6f94a376::t_62afb5ec23add2 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2139a7c62c13521f00753083487433192b1f4404",
+  "prompts": {},
+  "sessions": {
+    "s_daaded6f94a376": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2b87c1abffem2x87y1AmKcXDV",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
