@@ -293,7 +293,7 @@ Specifies the protocol used to establish a connection between `cloudflared` and 
 The `auto` value will automatically configure the `quic` protocol. If `cloudflared` is unable to establish UDP connections, it will fallback to using the `http2` protocol.
 
 :::note[Protocol selection and performance visibility]
-The choice between `quic` and `http2` does not affect rate limits or queuing — Cloudflare applies the same treatment regardless of transport protocol. Throughput differences between the two protocols reflect local network conditions and protocol overhead, not Cloudflare throttling.
+The choice between `quic` and `http2` does not affect rate limits or queuing — Cloudflare applies the same treatment regardless of transport protocol. Throughput differences between the two protocols reflect local network conditions and protocol overhead.
 
 Per-connection loss or ACK statistics are not exposed by `cloudflared`. To inspect connection-level performance metrics, start `cloudflared` with the `--metrics` flag to expose a Prometheus endpoint (default: `localhost:2000`). Refer to <a href={props.metricsURL}>Monitor tunnels</a> for available metrics.
 :::
