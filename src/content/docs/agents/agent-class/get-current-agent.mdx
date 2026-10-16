@@ -3,7 +3,7 @@ title: getCurrentAgent()
 description: Access the current Agent context from external utility functions using getCurrentAgent() in the Agents SDK.
 pcx_content_type: concept
 sidebar:
-  order: 29
+  order: 17
 products:
   - agents
 ---
@@ -284,7 +284,7 @@ The context available depends on how the method was invoked:
 | `onEmail()`             | Yes     | No           | No        | Yes     |
 | Custom method (via RPC) | Yes     | Yes          | No        | No      |
 | Scheduled task          | Yes     | No           | No        | No      |
-| Queue callback          | Yes     | Depends      | Depends   | Depends |
+| Queue callback          | Yes     | No           | No        | No      |
 
 ## Best practices
 

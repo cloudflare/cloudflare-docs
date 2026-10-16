@@ -1,6 +1,6 @@
 ---
 title: Getting started
-description: Start building Agents on Cloudflare that maintain state, make decisions, and execute workflows.
+description: Start running agents on Cloudflare. Pick a harness, run it on a Durable Object, and plug in the capabilities you need.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -12,14 +12,20 @@ products:
 
 import { DirectoryListing, LinkCard } from "~/components";
 
-Start building agents that can remember context, communicate with users, and act on their own. Pick the path that matches what you want to build first.
+An agent on Cloudflare is a [harness](/agents/harnesses/) running on a Durable Object, with the [capabilities](/agents/capabilities/) you plug in. Pick the path that matches what you want to build first.
 
 ## Choose a path
 
 <LinkCard
 	title="Quick start"
 	href="/agents/getting-started/quick-start/"
-	description="Build a small stateful counter agent and learn the core Agent, state, and client SDK model."
+	description="Run the Pi harness on a Durable Object with Workers AI, then plug in a scheduler."
+/>
+
+<LinkCard
+	title="Add to an existing project"
+	href="/agents/getting-started/add-to-existing-project/"
+	description="Add an agent to an existing Worker, or move an existing Durable Object onto the Lifecycle."
 />
 
 <LinkCard
@@ -29,16 +35,12 @@ Start building agents that can remember context, communicate with users, and act
 />
 
 <LinkCard
-	title="Add Agents to an existing project"
-	href="/agents/getting-started/add-to-existing-project/"
-	description="Install the Agents SDK into an existing Workers application and wire up routing."
-/>
-
-<LinkCard
 	title="Testing your Agents"
 	href="/agents/getting-started/testing-your-agent/"
 	description="Write tests with Vitest and the Workers test pool."
 />
+
+To build on the legacy `Agent` class instead, refer to [Get started with the Agent class](/agents/agent-class/get-started/).
 
 ## All getting started pages
 
