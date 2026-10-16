@@ -91,6 +91,8 @@ product:ai-gateway:
           - src/assets/images/ai-gateway/**
           - src/content/changelog/ai-gateway/**
           - src/content/catalog-models/**
+          - src/components/models/**
+          - src/util/models/**
 
 product:ai-search:
   - changed-files:

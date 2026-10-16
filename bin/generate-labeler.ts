@@ -49,7 +49,11 @@ const productRoots: Record<string, string[]> = {
 
 // Collection folders that map wholesale to a single product.
 const collectionGlobs: Record<string, string[]> = {
-	"ai-gateway": ["src/content/catalog-models/**"],
+	"ai-gateway": [
+		"src/content/catalog-models/**",
+		"src/components/models/**",
+		"src/util/models/**",
+	],
 	"ruleset-engine": ["src/content/fields/**"],
 	workers: ["src/content/compatibility-flags/**"],
 	"workers-ai": ["src/content/workers-ai-models/**"],
