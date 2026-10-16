@@ -90,7 +90,6 @@ product:ai-gateway:
           - src/content/partials/ai-gateway/**
           - src/assets/images/ai-gateway/**
           - src/content/changelog/ai-gateway/**
-          - src/content/catalog-models/**
 
 product:ai-search:
   - changed-files:
@@ -1202,6 +1201,10 @@ product:workers-ai:
           - src/content/workers-ai-models/**
           - src/components/models/**
           - src/util/models/**
+          - src/content/catalog-models/**
+          - src/pages/ai/models/**
+          - src/pages/workers-ai/models/**
+          - bin/fetch-catalog-models.ts
 
 product:workers-vpc:
   - changed-files:
