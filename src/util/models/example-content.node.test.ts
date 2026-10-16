@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import {
+	getDocumentLayers,
 	getHtmlDocument,
 	getInputParts,
 	getToolCalls,
@@ -40,7 +41,68 @@ describe("getInputParts", () => {
 			prompt: "Hi",
 			imageUrls: [],
 		});
-		expect(getInputParts({ prompt: "Hi" })).toEqual({ imageUrls: [] });
+		expect(getInputParts("Hi")).toEqual({ imageUrls: [] });
+	});
+});
+
+describe("getInputParts on non-chat inputs", () => {
+	test("reads prompt and image fields, keeping only https URLs", () => {
+		expect(
+			getInputParts({
+				prompt: "Swap the sofa",
+				image_urls: ["https://a.test/1.jpg", "data:image/png;base64,xx"],
+				image: "https://a.test/2.jpg",
+			}),
+		).toEqual({
+			prompt: "Swap the sofa",
+			imageUrls: ["https://a.test/2.jpg", "https://a.test/1.jpg"],
+		});
+	});
+
+	test("returns no prompt for an image-only input", () => {
+		expect(getInputParts({ image: "https://a.test/ad.jpg" })).toEqual({
+			prompt: undefined,
+			imageUrls: ["https://a.test/ad.jpg"],
+		});
+	});
+});
+
+describe("getDocumentLayers", () => {
+	test("returns visible text and image layers in paint order", () => {
+		const layers = getDocumentLayers({
+			document: {
+				layers: [
+					{
+						id: "title",
+						type: "text",
+						z_order: 2,
+						text: "SALE",
+						text_style: {
+							font_family: "Oswald,sans-serif",
+							font_weight: 700,
+							font_size_px: 40,
+							color: "#fff",
+						},
+					},
+					{ id: "bg", type: "vector", z_order: 0 },
+					{
+						id: "logo",
+						type: "image",
+						subtype: "logo",
+						z_order: 1,
+						asset_path: "https://a.test/logo.png",
+					},
+					{ id: "hidden", type: "text", z_order: 3, text: "x", hidden: true },
+				],
+			},
+		});
+		expect(layers.map((l) => l.id)).toEqual(["logo", "title"]);
+		expect(layers[1]).toMatchObject({ font: "Oswald 700 40px", color: "#fff" });
+	});
+
+	test("returns nothing for outputs without a document", () => {
+		expect(getDocumentLayers({ text: "hi" })).toEqual([]);
+		expect(getDocumentLayers(undefined)).toEqual([]);
 	});
 });
 

@@ -9,6 +9,16 @@ export interface ExampleInputParts {
 	imageUrls: string[];
 }
 
+export interface LayerView {
+	id: string;
+	type: string;
+	subtype?: string;
+	text?: string;
+	imageUrl?: string;
+	font?: string;
+	color?: string;
+}
+
 export interface ToolCallView {
 	name: string;
 	args: string;
@@ -17,11 +27,44 @@ export interface ToolCallView {
 const isRecord = (v: unknown): v is Record<string, unknown> =>
 	typeof v === "object" && v !== null && !Array.isArray(v);
 
-/** The last user message's text and image URLs from a chat-style input. */
+const isHttpsUrl = (v: unknown): v is string =>
+	typeof v === "string" && /^https:\/\//.test(v);
+
+// Request fields that carry input images on non-chat (image, video, document)
+// models, in the order providers commonly use them.
+const IMAGE_INPUT_FIELDS = [
+	"image",
+	"images",
+	"image_url",
+	"image_urls",
+	"input_image",
+	"reference_images",
+] as const;
+
+/**
+ * The prompt and input image URLs of an example request. Chat-style inputs use
+ * the last user message; other inputs use a top-level `prompt` and any of the
+ * common image fields. Only `https://` images are returned.
+ */
 export function getInputParts(input: unknown): ExampleInputParts {
 	const empty: ExampleInputParts = { imageUrls: [] };
-	if (!isRecord(input) || !Array.isArray(input.messages)) return empty;
-	const user = [...input.messages]
+	if (!isRecord(input)) return empty;
+	if (Array.isArray(input.messages)) return getChatInputParts(input.messages);
+
+	const imageUrls = IMAGE_INPUT_FIELDS.flatMap((field) => {
+		const value = input[field];
+		return (Array.isArray(value) ? value : [value]).filter(isHttpsUrl);
+	});
+	const prompt =
+		typeof input.prompt === "string" && input.prompt.trim()
+			? input.prompt
+			: undefined;
+	return { prompt, imageUrls };
+}
+
+function getChatInputParts(messages: unknown[]): ExampleInputParts {
+	const empty: ExampleInputParts = { imageUrls: [] };
+	const user = [...messages]
 		.reverse()
 		.find((m) => isRecord(m) && m.role === "user");
 	if (!isRecord(user)) return empty;
@@ -39,8 +82,7 @@ export function getInputParts(input: unknown): ExampleInputParts {
 		if (
 			part.type === "image_url" &&
 			isRecord(part.image_url) &&
-			typeof part.image_url.url === "string" &&
-			/^https:\/\//.test(part.image_url.url)
+			isHttpsUrl(part.image_url.url)
 		) {
 			imageUrls.push(part.image_url.url);
 		}
@@ -79,4 +121,48 @@ export function getHtmlDocument(text: string | undefined): string | undefined {
 	const doc = match?.[1]?.trim();
 	if (!doc || !/<html[\s>]/i.test(doc)) return undefined;
 	return doc;
+}
+
+/**
+ * Layers of a layered design document (for example Bria Ad Delayer output),
+ * in paint order. Hidden layers and layers with nothing to show are skipped.
+ */
+export function getDocumentLayers(
+	output: Record<string, unknown> | undefined,
+): LayerView[] {
+	const doc = output?.document;
+	if (!isRecord(doc) || !Array.isArray(doc.layers)) return [];
+	return doc.layers
+		.filter((l): l is Record<string, unknown> => isRecord(l) && !l.hidden)
+		.sort((a, b) => Number(a.z_order ?? 0) - Number(b.z_order ?? 0))
+		.flatMap((l) => {
+			const text = typeof l.text === "string" ? l.text : undefined;
+			const imageUrl = isHttpsUrl(l.asset_path) ? l.asset_path : undefined;
+			if (!text && !imageUrl) return [];
+			const style = isRecord(l.text_style) ? l.text_style : {};
+			const family =
+				typeof style.font_family === "string"
+					? style.font_family.split(",")[0]
+					: undefined;
+			const font = family
+				? [
+						family,
+						style.font_weight,
+						style.font_size_px && `${style.font_size_px}px`,
+					]
+						.filter(Boolean)
+						.join(" ")
+				: undefined;
+			return [
+				{
+					id: String(l.id ?? ""),
+					type: String(l.type ?? ""),
+					subtype: typeof l.subtype === "string" ? l.subtype : undefined,
+					text,
+					imageUrl,
+					font,
+					color: typeof style.color === "string" ? style.color : undefined,
+				},
+			];
+		});
 }

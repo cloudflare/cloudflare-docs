@@ -9,6 +9,7 @@ import { Tabs, TabItem } from "~/components/ui/tabs";
 import OutputBody from "~/components/models/OutputBody.astro";
 import type { ModelExample, CodeSnippet } from "~/util/models";
 import {
+	getDocumentLayers,
 	getHtmlDocument,
 	getInputParts,
 	getToolCalls,
@@ -57,7 +58,11 @@ const audioUrl = typeof rawAudioUrl === "string" ? rawAudioUrl : undefined;
 const hasImage = !!imageUrl || imageUrls.length > 0;
 const hasVideo = !!videoUrl;
 const hasAudio = !!audioUrl;
-const hasText = !!textOutput;
+// Layered design documents (for example Ad Delayer) show their layers; the
+// short status text that comes with them adds nothing next to the layers.
+const layers = getDocumentLayers(output);
+const hasLayers = layers.length > 0;
+const hasText = !!textOutput && !hasLayers;
 const hasMedia = hasImage || hasVideo || hasAudio;
 
 const toolCalls = getToolCalls(output);
@@ -72,7 +77,7 @@ const hasInputPanel = inputParts.imageUrls.length > 0;
 const htmlDocument = getHtmlDocument(textOutput);
 
 // The Output tab has renderable content if we detected any known shape above.
-const hasOutput = hasText || hasMedia || hasToolCalls;
+const hasOutput = hasText || hasMedia || hasToolCalls || hasLayers;
 const hasRawResponse = !!example.raw_response;
 const hasResponse = hasOutput || hasRawResponse;
 
@@ -188,8 +193,9 @@ function getLabel(label: string): string {
 					<TabItem label="Output">
 						<OutputBody
 							alt={example.name}
-							textOutput={textOutput}
+							textOutput={hasText ? textOutput : undefined}
 							toolCalls={toolCalls}
+							layers={layers}
 							imageUrl={imageUrl}
 							imageUrls={imageUrls}
 							videoUrl={videoUrl}
@@ -205,8 +211,9 @@ function getLabel(label: string): string {
 			) : hasOutput ? (
 				<OutputBody
 					alt={example.name}
-					textOutput={textOutput}
+					textOutput={hasText ? textOutput : undefined}
 					toolCalls={toolCalls}
+					layers={layers}
 					imageUrl={imageUrl}
 					imageUrls={imageUrls}
 					videoUrl={videoUrl}
