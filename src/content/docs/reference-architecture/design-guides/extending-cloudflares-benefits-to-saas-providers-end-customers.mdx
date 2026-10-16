@@ -119,7 +119,12 @@ Cloudflare offers a powerful set of load balancing capabilities. These allow you
 
 For enhanced granularity in application serving and scalability, it is generally recommended to use private networks rather than public hostnames. Private networks enable Cloudflare to preserve and accurately pass the host header to the origin server. In contrast, when using public hostnames, providers must configure the [header value](/load-balancing/additional-options/override-http-host-headers/) on the load balancer, which is restricted to one public hostname per load balancer endpoint, potentially limiting flexibility.
 
-Be aware of the Zero Trust [Tunnel limitations](/cloudflare-one/account-limits/#cloudflare-tunnel), Cloudflare for SaaS [connection request details](/cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/), and the Custom Origin [SNI specification](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites). For further information about the Cloudflare Load Balancer, review its [reference architecture](/reference-architecture/architectures/load-balancing/). If you deploy one tunnel per end customer and need more than 1,000 tunnels in a single account, use [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/).
+Before you design your deployment, review the following:
+
+- [Cloudflare Tunnel limits](/cloudflare-one/account-limits/#cloudflare-tunnel). If you deploy one tunnel per end customer and need more than 1,000 tunnels in a single account, use [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/).
+- Cloudflare for SaaS [connection request details](/cloudflare-for-platforms/cloudflare-for-saas/reference/connection-details/).
+- [SNI rewrites](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites) for custom origins.
+- The Cloudflare Load Balancing [reference architecture](/reference-architecture/architectures/load-balancing/).
 
 ## Automation
 
