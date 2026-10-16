@@ -293,9 +293,6 @@ const appVite = {
 	resolve: { dedupe: ["react", "react-dom"] },
 	plugins: [tailwindcss(), componentsBarrelSideEffects, iconAlias],
 	build: {
-		// Mermaid's shared runtime chunk (~660 kB) is the only chunk over the
-		// default 500 kB limit. It is dynamically imported on pages with diagrams
-		// only and cannot be split further, so the warning is not actionable.
 		chunkSizeWarningLimit: 700,
 	},
 };
