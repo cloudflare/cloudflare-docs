@@ -8,6 +8,9 @@ import { track } from "~/util/zaraz";
  * per-element registration in root is otherwise equivalent.
  */
 function classify(link: HTMLAnchorElement): void {
+	// Tracked by its own handler (src/scripts/preferred-source.ts).
+	if (link.hasAttribute("data-preferred-source")) return;
+
 	if (link.dataset.tagSerpLink) {
 		track("click docs tag", { value: link.innerText });
 		return;

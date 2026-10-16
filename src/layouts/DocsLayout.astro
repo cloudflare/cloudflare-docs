@@ -23,6 +23,7 @@ import { PageActions, PageActionLinks } from "@/components/ui/page-actions";
 import { Badge } from "@/components/ui/badge";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import ComponentUsage from "@/components/cf/ComponentUsage.astro";
+import PreferredSourceButton from "@/components/PreferredSourceButton.astro";
 import FeedbackPrompt from "@/components/react/FeedbackPrompt";
 import type { DocsPageProps } from "@cloudflare/nimbus-docs/types";
 import { renderMarkdown } from "~/util/markdown";
@@ -314,6 +315,9 @@ const showFeedback = feedback !== false && !isCustom;
 											]}
 										>
 											{showFeedback && (
+												<PreferredSourceButton placement="content" />
+											)}
+											{showFeedback && (
 												<FeedbackPrompt
 													client:idle
 													id="feedback-form-content"
@@ -334,6 +338,9 @@ const showFeedback = feedback !== false && !isCustom;
 										{hasToc ? <slot name="toc" /> : <TOC headings={headings} />}
 										{(showFeedback || showActions) && (
 											<div class="border-border mt-8 flex flex-col gap-5 border-t pt-6">
+												{showFeedback && (
+													<PreferredSourceButton placement="toc" />
+												)}
 												{showFeedback && (
 													<FeedbackPrompt
 														client:only="react"
