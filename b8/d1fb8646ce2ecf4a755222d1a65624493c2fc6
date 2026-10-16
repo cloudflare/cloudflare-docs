@@ -1,0 +1,19 @@
+src/content/docs/workers/tutorials/connect-to-mongodb-atlas.mdx
+  s_0c3f61f605b434::t_009a005058674c 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b8d1fb8646ce2ecf4a755222d1a65624493c2fc6",
+  "prompts": {},
+  "sessions": {
+    "s_0c3f61f605b434": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1442c-9388-7590-acbd-00beb464b441",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}
