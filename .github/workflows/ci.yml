@@ -169,7 +169,7 @@ jobs:
           DEPLOYMENT_ENV: ${{ github.event_name == 'merge_group' && 'production' || 'preview' }}
         run: |
           set -o pipefail
-          pnpm run build 2>&1 | tee build.log
+          pnpm run build:parallel 2>&1 | tee build.log
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifact
