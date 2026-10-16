@@ -91,8 +91,6 @@ product:ai-gateway:
           - src/assets/images/ai-gateway/**
           - src/content/changelog/ai-gateway/**
           - src/content/catalog-models/**
-          - src/components/models/**
-          - src/util/models/**
 
 product:ai-search:
   - changed-files:
@@ -1202,6 +1200,8 @@ product:workers-ai:
           - src/content/release-notes/workers-ai.yaml
           - src/content/changelog/workers-ai/**
           - src/content/workers-ai-models/**
+          - src/components/models/**
+          - src/util/models/**
 
 product:workers-vpc:
   - changed-files:
