@@ -59,11 +59,11 @@ const collectionGlobs: Record<string, string[]> = {
 
 // Hand-added globs that are not derivable from the directory structure.
 const extraGlobs: Record<string, string[]> = {
+	ai: ["src/pages/ai/models/**"],
 	"network-flow": ["src/content/partials/networking-services/mnm/**"],
 	"workers-ai": [
 		"src/components/models/**",
 		"src/util/models/**",
-		"src/pages/ai/models/**",
 		"src/pages/workers-ai/models/**",
 		"bin/fetch-catalog-models.ts",
 	],

@@ -73,6 +73,7 @@ product:ai:
   - changed-files:
       - any-glob-to-any-file:
           - src/content/docs/ai/**
+          - src/pages/ai/models/**
 
 product:ai-crawl-control:
   - changed-files:
@@ -1202,7 +1203,6 @@ product:workers-ai:
           - src/components/models/**
           - src/util/models/**
           - src/content/catalog-models/**
-          - src/pages/ai/models/**
           - src/pages/workers-ai/models/**
           - bin/fetch-catalog-models.ts
 
