@@ -8,7 +8,7 @@ sidebar:
   order: 4
 ---
 
-Before Email security scans a domain's email, it verifies that you own or control the domain. Depending on how you add a domain, ownership is verified automatically or through a Domain Name System (DNS) TXT record.
+Before Email security scans a domain's email, it verifies that you own or control the domain. Depending on how you add a domain, ownership is verified automatically or through a Domain Name System (DNS) `TXT` record.
 
 ## Verification methods
 
@@ -16,7 +16,7 @@ Email security verifies domain ownership through one of the following methods:
 
 - **Cloudflare One integration**: Domains you add through a connected integration, such as [Microsoft 365](/cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/) or [Google Workspace](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/), are verified automatically.
 - **Active Cloudflare zone**: Domains connected to your Cloudflare account are verified automatically.
-- **DNS TXT record**: Domains you add manually that are not connected to Cloudflare require a TXT record. In the Email security setup, copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours.
+- **DNS `TXT` record**: Domains you add manually that are not connected to Cloudflare require a `TXT` record. In the Email security setup, copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours.
 
 ## Domain statuses
 
@@ -25,16 +25,16 @@ The **Status** column on the Domains page shows the verification and scanning st
 | Status    | Description                                                                                                          |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
 | Active    | Ownership is verified. Email security can scan the domain's email.                                                   |
-| Pending   | Email security is waiting for the ownership TXT record to be verified.                                               |
+| Pending   | Email security is waiting for the ownership `TXT` record to be verified.                                               |
 | Failed    | Email security verified the DNS record, but the domain is already active in another account.                         |
 | Timed out | The 30-day domain ownership verification window expired. Delete the domain and add it again to restart verification. |
 
 Once a domain is verified and active, its status reflects the health of the email configuration. Refer to [Domain information](/cloudflare-one/email-security/settings/domains-and-directories/domains/) for the full list of statuses.
 
-## MX/Inline domains and MX records
+## MX/Inline domains
 
-For [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/) deployments, only point your domain's MX records at Email security after the domain status is **Active**.
+For [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/) deployments, only point your domain's `MX` records at Email security after the domain status is **Active**.
 
-While a domain is pending verification, email routed to the Email security mail servers is dropped. You can select the mail processing location during setup, but you can only update the MX records after verification completes.
+While a domain is pending verification, email routed to the Email security mail servers is dropped. You can select the mail processing location during setup, but you can only update the `MX` records after verification completes.
 
-If your MX records do not point at Email security after verification, the Domains page shows an **MX records required** status. Select the domain to view the MX records you need to set.
+If your `MX` records do not point at Email security after verification, the Domains page shows an **MX records required** status. Select the domain to view the `MX` records you need to set.

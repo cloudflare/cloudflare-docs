@@ -74,13 +74,13 @@ If you have verified zones on Cloudflare, continue with the following steps:
 
 :::note[Domain verification]
 
-Domains you connect from an active Cloudflare zone are verified automatically. Domains you add from other sources are created with a **Pending** status and require you to verify ownership with a DNS TXT record. Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
+Domains you connect from an active Cloudflare zone are verified automatically. Domains you add from other sources are created with a **Pending** status and require you to verify ownership with a DNS `TXT` record. Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
 
 :::
 
 :::caution
 
-Only point your MX records at Email security after the domain status is **Active**. While a domain is pending verification, email routed to Email security is dropped.
+Only point your `MX` records at Email security after the domain status is **Active**. While a domain is pending verification, email routed to Email security is dropped.
 
 :::
 
@@ -93,7 +93,7 @@ If you do not have domains with Cloudflare, the dashboard will display two optio
 
 ## Enter domain manually
 
-When you enter a domain manually, Email security creates the domain with a **Pending** status and verifies your ownership after you add a DNS TXT record. You can complete the remaining setup while the verification is in progress, but you can only update the MX records after the domain status is **Active**.
+When you enter a domain manually, Email security creates the domain with a **Pending** status and verifies your ownership after you add a DNS `TXT` record. You can complete the remaining setup while the verification is in progress, but you can only update the `MX` records after the domain status is **Active**.
 
 On the **Set up Email security** page:
 
@@ -106,9 +106,9 @@ On the **Set up Email security** page:
 
 :::caution
 
-While the domain status is **Pending**, do not point your MX records at Email security. Email routed to Email security for a domain that is not verified is dropped.
+While the domain status is **Pending**, do not point your `MX` records at Email security. Email routed to Email security for a domain that is not verified is dropped.
 
-When the domain status changes to **Active**, update your MX records at your DNS provider.
+When the domain status changes to **Active**, update your `MX` records at your DNS provider.
 
 :::
 
