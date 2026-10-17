@@ -86,6 +86,7 @@ These rules govern how security features interact:
 - **Skip actions bypass later phases.** You can use the [_Skip_ action](/waf/custom-rules/skip/options/) in custom rules to bypass rate limiting rules (`http_ratelimit`), Super Bot Fight Mode (`http_request_sbfm`), and Managed Rules (`http_request_firewall_managed`).
 - **Bot Fight Mode cannot be skipped.** Because Bot Fight Mode is not part of the Ruleset Engine, custom rules cannot skip it. If you need to exempt traffic from bot protection, upgrade to Super Bot Fight Mode or Bot Management.
 - **Bot Management scores are available in custom rules.** Enterprise customers with Bot Management can use `cf.bot_management.score` in custom rule expressions to define custom thresholds per path, user agent, or any other request property.
+- **Same-zone snippet subrequests are not evaluated by custom rules or managed rules.** When a snippet uses `fetch()` to call a proxied hostname in the same zone, WAF custom rules and WAF managed rules on the target hostname do not apply to that subrequest. Refer to [Subrequests made by a snippet](/rules/snippets/how-it-works/#subrequests-made-by-a-snippet).
 
 ## Common scenarios
 

@@ -14,6 +14,15 @@ export interface LlmsTxtPage {
 	};
 }
 
+/** Minimal model shape needed to render a model page link. */
+export interface ModelPage {
+	/** Link text. */
+	title: string;
+	/** URL segment(s) after the models base path, e.g. `openai/tts-1`. */
+	slug: string;
+	description: string;
+}
+
 /**
  * Normalizes a resolved URL path so that `index.md` can be appended safely:
  * strips any `#fragment` (to be re-attached after `index.md`) and ensures a
@@ -57,4 +66,18 @@ export function formatPage(
 	const { path, fragment } = normalizeForIndexMd(resolved);
 	const line = `- [${e.data.title}](${base}${path}index.md${fragment})`;
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
+}
+
+/**
+ * Renders one generated model page line in a product llms.txt.
+ * `modelsPath` is the models index URL path, e.g. `/ai/models`.
+ */
+export function formatModel(
+	base: string,
+	modelsPath: string,
+	model: ModelPage,
+): string {
+	const description = model.description.replace(/\s+/g, " ").trim();
+	const line = `- [${model.title}](${base}${modelsPath}/${model.slug}/index.md)`;
+	return description ? line.concat(`: ${description}`) : line;
 }

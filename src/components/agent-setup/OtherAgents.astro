@@ -23,53 +23,51 @@ const others = AGENTS.filter((a) => a.slug !== currentSlug);
 	<div class="border-border relative border-t border-l">
 		<CornerMarks />
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-			{
-				others.map((agent) => (
-					<a
-						href={`/agent-setup/${agent.slug}/`}
-						class="group/agent-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
-					>
-						<div class="mb-5 flex items-center gap-3">
-							<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
-								<img
-									src={`/icons/agents/${agent.icon}/light.svg`}
-									alt=""
-									width="24"
-									height="24"
-									class="block size-6 dark:hidden"
-								/>
-								<img
-									src={`/icons/agents/${agent.icon}/dark.svg`}
-									alt=""
-									width="24"
-									height="24"
-									class="hidden size-6 dark:block"
-								/>
-							</span>
-							<div class="min-w-0 leading-tight">
-								<div class="text-primary mb-0.5 font-mono text-xs tracking-widest uppercase">
-									{agent.vendor}
-								</div>
-								<h3 class="text-foreground m-0 text-base leading-snug font-medium md:text-lg">
-									{agent.name}
-								</h3>
-							</div>
-						</div>
-
-						<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
-							{agent.description}
-						</p>
-
-						<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/agent-card:underline">
-							View guide
-							<Icon
-								name="ph:arrow-right"
-								class="h-3.5 w-3.5 transition-transform group-hover/agent-card:translate-x-0.5"
+			{others.map((agent) => (
+				<a
+					href={`/agent-setup/${agent.slug}/`}
+					class="group/agent-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
+				>
+					<div class="mb-5 flex items-center gap-3">
+						<span class="border-border bg-muted flex size-10 shrink-0 items-center justify-center rounded-md border">
+							<img
+								src={`/icons/agents/${agent.icon}/light.svg`}
+								alt=""
+								width="24"
+								height="24"
+								class="block size-6 dark:hidden"
+							/>
+							<img
+								src={`/icons/agents/${agent.icon}/dark.svg`}
+								alt=""
+								width="24"
+								height="24"
+								class="hidden size-6 dark:block"
 							/>
 						</span>
-					</a>
-				))
-			}
+						<div class="min-w-0 leading-tight">
+							<div class="text-primary mb-0.5 font-mono text-xs tracking-widest uppercase">
+								{agent.vendor}
+							</div>
+							<h3 class="text-foreground m-0 text-base leading-snug font-medium md:text-lg">
+								{agent.name}
+							</h3>
+						</div>
+					</div>
+
+					<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
+						{agent.description}
+					</p>
+
+					<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/agent-card:underline">
+						View guide
+						<Icon
+							name="ph:arrow-right"
+							class="h-3.5 w-3.5 transition-transform group-hover/agent-card:translate-x-0.5"
+						/>
+					</span>
+				</a>
+			))}
 		</div>
 	</div>
 </div>

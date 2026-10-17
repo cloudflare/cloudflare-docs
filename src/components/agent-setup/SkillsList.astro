@@ -8,14 +8,12 @@ skills.sort((a, b) => a.id.localeCompare(b.id));
 ---
 
 <ul class="not-content m-0 flex list-none flex-col gap-3 p-0">
-	{
-		skills.map((s) => (
-			<li class="flex flex-col gap-0.5">
-				<span class="text-foreground text-sm font-medium">{s.data.name}</span>
-				<span class="text-muted-foreground text-sm leading-relaxed">
-					{s.data.description}
-				</span>
-			</li>
-		))
-	}
+	{skills.map((s) => (
+		<li class="flex flex-col gap-0.5">
+			<span class="text-foreground text-sm font-medium">{s.data.name}</span>
+			<span class="text-muted-foreground text-sm leading-relaxed">
+				{s.data.description}
+			</span>
+		</li>
+	))}
 </ul>

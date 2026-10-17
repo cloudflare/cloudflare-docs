@@ -207,7 +207,7 @@ To change these options later, select your instance, open the **Settings** tab, 
 Set `parse_type` to `discover`, then pass any non-default settings in `discover_options`.
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{

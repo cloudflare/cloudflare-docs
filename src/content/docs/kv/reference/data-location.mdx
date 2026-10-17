@@ -5,17 +5,13 @@ sidebar:
   order: 4
 ---
 
-:::note
-
-Jurisdictions for Workers KV are currently in private beta. To enroll, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
-
-:::
+import { APIRequest } from "~/components";
 
 Learn how the location of data stored in Workers KV is determined, including how you can restrict a namespace to a specific jurisdiction.
 
-## Automatic (default)
+## Standard (default)
 
-By default, data written to a Workers KV namespace is replicated globally across Cloudflare's network with no jurisdictional restriction, allowing your data to be read with low latency from anywhere in the world.
+By default, data written to a Workers KV namespace is stored in KV's central data stores with no jurisdictional restriction, and then cached globally across Cloudflare's network, allowing your data to be read with low latency from anywhere in the world. Refer to [How KV works](/kv/concepts/how-kv-works/) for more information.
 
 ## Restrict a namespace to a jurisdiction
 
@@ -31,12 +27,26 @@ Jurisdictions can only be set when a namespace is created and cannot be added or
 
 ### Supported jurisdictions
 
-| Parameter | Location                       |
-| --------- | ------------------------------- |
-| eu        | The European Union              |
-| fedramp   | FedRAMP-compliant data centers  |
-| us        | The United States of America    |
+| Parameter | Data Storage Location          |
+| --------- | ------------------------------ |
+| eu        | European Union                 |
+| fedramp   | FedRAMP-compliant data centers |
+| us        | United States of America       |
 
-### Get access
+### Use Wrangler
 
-Workers KV jurisdictions are in private beta. If you are interested in restricting your namespaces to a supported jurisdiction, contact your Cloudflare account team or [Cloudflare Support](/support/contacting-cloudflare-support/) to request access.
+To create a namespace restricted to a jurisdiction, pass the `--jurisdiction` flag to [`wrangler kv namespace create`](/kv/reference/kv-commands/#kv-namespace-create):
+
+```sh
+npx wrangler@latest kv namespace create <NAMESPACE_NAME> --jurisdiction=eu
+```
+
+### Use REST API
+
+To create a namespace restricted to a jurisdiction, include the `jurisdiction` field in the request body when you [create a namespace](/api/resources/kv/subresources/namespaces/methods/create/):
+
+<APIRequest
+	path="/accounts/{account_id}/storage/kv/namespaces"
+	method="POST"
+	json={{ title: "<NAMESPACE_NAME>", jurisdiction: "eu" }}
+/>

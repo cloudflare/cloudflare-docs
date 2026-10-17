@@ -49,8 +49,16 @@ If you have not completed these requirements, refer to [Quickstart](/realtime/re
 If you manage presets programmatically instead of through the dashboard, use the [Create Preset API](/api/resources/realtime_kit/subresources/presets/methods/create/) with the following fields:
 
 - `config.view_type` set to `WEBINAR`.
-- `permissions.stage_access` set to `ALLOWED` for presenters, `CAN_REQUEST` for viewers who can request to join the stage, or `NOT_ALLOWED` for view-only viewers.
+- `permissions.stage_enabled` set to `true` for both presets.
 - `permissions.can_accept_production_requests` set to `true` for participants who moderate stage requests.
+
+Set `permissions.stage_access`, `permissions.media.audio.can_produce`, `permissions.media.video.can_produce`, and `permissions.media.screenshare.can_produce` to the same value, based on the stage behavior you want:
+
+| Stage behavior        | Applies to                                | Value         |
+| --------------------- | ----------------------------------------- | ------------- |
+| _Allowed to join_     | Presenters                                | `ALLOWED`     |
+| _Can request to join_ | Viewers who can request to join the stage | `CAN_REQUEST` |
+| _Can only view_       | View-only viewers                         | `NOT_ALLOWED` |
 
 For the complete request schema, refer to [Presets](/api/resources/realtime_kit/subresources/presets/).
 

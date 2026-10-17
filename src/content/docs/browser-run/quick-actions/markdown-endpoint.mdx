@@ -17,7 +17,7 @@ The `/markdown` endpoint retrieves a webpage's content and converts it into Mark
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/markdown
 ```
 
 ## Required fields
@@ -42,7 +42,7 @@ You must provide either `url` or `html`:
 This example fetches the Markdown representation of a webpage.
 
 ```bash
-curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/markdown' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <apiToken>' \
   -d '{
@@ -97,7 +97,7 @@ export default {
 Instead of fetching the content by specifying the URL, you can provide raw HTML content directly.
 
 ```bash
-curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/markdown' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <apiToken>' \
   -d '{
@@ -123,7 +123,7 @@ Visit the [Browser Run API reference](/api/resources/browser_rendering/subresour
 You can refine the Markdown extraction by using the `rejectRequestPattern` parameter. In this example, requests matching the given regex pattern (such as CSS files) are excluded.
 
 ```bash
-curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown' \
+curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/markdown' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <apiToken>' \
   -d '{

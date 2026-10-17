@@ -3,6 +3,15 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-09-16"
+    title: RealtimeKit Android Core 3.2.0
+    description: |-
+      **Enhancements**
+
+      - **Connection and media reliability** — Improved recovery from connection interruptions and screen-share shutdown.
+      - **Breakout rooms** — Admins can now join child rooms and reassign participants across rooms. Participant assignment and state handling are also improved.
+      - **Polls** — Improved vote acknowledgements and validation for ambiguous options.
+      - **API errors** — Improved reporting for authenticated API failures.
   - publish_date: "2026-07-17"
     title: RealtimeKit Android Core 3.1.0
     description: |-
@@ -237,7 +246,7 @@ entries:
 
       **Features**
 
-      - Reimplemented middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](https://docs.realtime.cloudflare.com/android-core/video-processing/introduction) docs section to learn more
+      - Reimplemented middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](/realtime/realtimekit/core/video-effects/) docs section to learn more
       - `VideoDevice` now properly labels multiple cameras based on their camera characteristics such as wide-angle and telephoto
 
       **Fixes**

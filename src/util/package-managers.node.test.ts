@@ -1,6 +1,11 @@
 import { describe, expect, test } from "vitest";
 
-import { getCommand, getTabs, MANAGERS } from "./package-managers";
+import {
+	getCfCommand,
+	getCommand,
+	getTabs,
+	MANAGERS,
+} from "./package-managers";
 
 describe("getTabs", () => {
 	test("create-cloudflare shows only npm/yarn/pnpm (no bun tab)", () => {
@@ -26,6 +31,24 @@ describe("getTabs", () => {
 		]);
 	});
 
+	test("selects only the requested package managers", () => {
+		expect(
+			getTabs(
+				"dlx",
+				"create-foldkit-app@latest",
+				{
+					args: "--name my-foldkit-app",
+				},
+				["npm"],
+			),
+		).toEqual([
+			{
+				mgr: "npm",
+				cmd: "npx create-foldkit-app@latest --name my-foldkit-app",
+			},
+		]);
+	});
+
 	test("dev flag maps to -D (npm/yarn/pnpm) and -d (bun)", () => {
 		expect(
 			getTabs("add", "@types/pg", { dev: true }).map((t) => t.cmd),
@@ -39,6 +62,15 @@ describe("getTabs", () => {
 });
 
 describe("getCommand", () => {
+	test.each([
+		["npm", "npm install --global cf"],
+		["yarn", "yarn global add cf"],
+		["pnpm", "pnpm add --global cf"],
+		["bun", "bun add --global cf"],
+	] as const)("renders a global add command for %s", (manager, expected) => {
+		expect(getCommand(manager, "add", "cf", { global: true })).toBe(expected);
+	});
+
 	test("bun is omitted from create/dlx/exec/run", () => {
 		for (const type of ["create", "dlx", "exec", "run"] as const) {
 			expect(getCommand("bun", type)).toBeUndefined();
@@ -77,5 +109,16 @@ describe("getCommand", () => {
 				prefix: "NODE_ENV=production",
 			}),
 		).toBe("# build with pnpm\nNODE_ENV=production pnpm run build");
+	});
+});
+
+describe("getCfCommand", () => {
+	test("applies prefix, comment, and package substitution", () => {
+		expect(
+			getCfCommand("cf deploy --tool {PKG}", {
+				prefix: "CI=1",
+				comment: "Run with {PKG}",
+			}),
+		).toBe("# Run with cf\nCI=1 cf deploy --tool cf");
 	});
 });

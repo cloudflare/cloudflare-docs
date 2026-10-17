@@ -11,7 +11,14 @@ sidebar:
   order: 4
 ---
 
-import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
+import {
+	Render,
+	Tabs,
+	TabItem,
+	GlossaryTooltip,
+	Steps,
+	DashButton,
+} from "~/components";
 
 JavaScript Detections is a type of challenge separate from Cloudflare’s Challenge Pages or Turnstile. JavaScript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
@@ -118,6 +125,23 @@ You can explicitly add a script reference to `/cdn-cgi/challenge-platform/script
 It is not recommended to combine both approaches (zone-wide toggle and the manual injection). If you want to selectively deploy JavaScript Detections only on certain pages, disable JavaScript Detections via the Cloudflare dashboard and use the JavaScript Detections API exclusively.
 :::
 
+### Control API results
+
+For Enterprise Bot Management zones, **JavaScript Detections for API traffic** controls whether Cloudflare uses results created through the JavaScript Detections API. This setting is separate from **JavaScript Detections**, which controls zone-wide script injection.
+
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+      <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**.
+  3. Go to **Bot management**.
+  4. Turn **JavaScript Detections for API traffic** on or off.
+</Steps>
+
+You can also set `jsd_api_results_enabled` with the [Bot Management API](/api/resources/bot_management/).
+
+When this setting is off, the API script can still execute and return `success` to the callback. Cloudflare does not consume the JavaScript Detections result for bot scoring or detections.
+
 The following script must be added to every page that you wish to have JavaScript Detections enabled:
 
 ```html wrap
@@ -141,7 +165,7 @@ function jsdOnload(){
 :::
 
 :::note
-When JavaScript Detections is invoked via the API rather than the zone-wide toggle, the result may appear as **Unknown** in Bot Analytics. This is a known limitation. The underlying signal is still factored into bot scoring.
+When JavaScript Detections is invoked via the API rather than the zone-wide toggle, the result may appear as **Unknown** in Bot Analytics. This is a known limitation. When **JavaScript Detections for API traffic** is on, the underlying signal is still factored into bot scoring.
 :::
 
 ## Considerations

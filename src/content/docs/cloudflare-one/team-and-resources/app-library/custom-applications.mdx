@@ -1,0 +1,94 @@
+---
+pcx_content_type: how-to
+description: Create, edit, and delete custom applications in the App Library and use them in Gateway policies.
+products:
+  - cloudflare-one
+title: Custom applications
+sidebar:
+  order: 1
+---
+
+import { DashButton, Steps } from "~/components";
+
+Create a custom application to identify an internal service or an application that is not in the Cloudflare-managed catalog. Custom applications belong to your account and appear alongside Cloudflare-managed applications in the App Library. You can use them in [DNS](/cloudflare-one/traffic-controls/dns-policies/#application), [HTTP](/cloudflare-one/traffic-controls/http-policies/#application), and [Network](/cloudflare-one/traffic-controls/network-policies/#application) policies with the existing **Application** selector.
+
+## Create a custom application
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Zero Trust** > **Team & Resources** > **Application library**.
+
+   <DashButton
+       url="/?to=/:account/team-resources/application-library"
+       buttonName="Application library"
+       zeroTrust
+   />
+
+2. Select **Add custom application**.
+3. Enter an **Application name** and **Application ID**, and select a **Category**. The Application ID field contains a human-readable identifier generated from the name, which you can change before saving. Cloudflare also assigns a numeric application ID for use in Gateway rule expressions.
+4. In **Network identifiers**, enter at least one **Hostname** or **IP subnet**. You can include both hostnames and IP subnets in the same application.
+5. (Optional) Add **Support hostnames** for dependencies such as authentication or content delivery, and **Port protocols** to restrict matching to specific TCP or UDP ports. Refer to [custom application limits](#custom-application-limits) for formats and limits.
+6. Select **Add custom application**.
+
+</Steps>
+
+Creating an application does not create a Gateway policy. To control its traffic, [reference the application in a policy](#use-a-custom-application-in-gateway).
+
+## Edit a custom application
+
+<Steps>
+
+1. In **Application library**, find the custom application and open its actions menu.
+2. Select **Edit custom app**.
+3. Update its **Hostnames**, **Support hostnames**, **IP subnets**, or **Port protocols**. The application must retain at least one primary hostname or IP subnet.
+4. Select **Save**.
+
+</Steps>
+
+The application name, human-readable Application ID, and category are fixed after creation. Editing the network identifiers preserves the numeric application ID, so Gateway policies that reference the application use its updated definition without changing their expressions. Allow time for the updated definition to propagate to Gateway.
+
+You can also [change the application's review status](/cloudflare-one/team-and-resources/app-library/#review-applications) from its actions menu.
+
+## Use a custom application in Gateway
+
+<Steps>
+
+1. In **Traffic policies**, create or edit a DNS, HTTP, or network policy.
+2. For the traffic condition, select **Application** and choose the custom application by name. You can select custom and Cloudflare-managed applications in the same condition.
+3. Choose the policy action and save the policy.
+
+</Steps>
+
+You can also start a policy from the application's actions menu by selecting **Create new Gateway policy** and choosing a policy type.
+
+Custom applications use the same selectors and numeric IDs as other [applications in Gateway](/cloudflare-one/traffic-controls/application-app-types/#custom-applications). Use the assigned numeric ID when configuring a Gateway rule through the API or Terraform.
+
+## Delete a custom application
+
+You cannot delete a custom application while a Gateway rule or reusable profile references it. Remove the application from every referencing rule and profile before deleting it. Turning off a rule does not remove its reference.
+
+<Steps>
+
+1. In **Application library**, find the custom application and open its actions menu.
+2. Select **Delete custom app**.
+3. Confirm the deletion.
+
+</Steps>
+
+If the application is still referenced, deletion fails and the API returns HTTP `409` with the referencing resource IDs, names, and types. If Gateway cannot verify the references, deletion also fails and the application remains available.
+
+## Custom application limits
+
+For the number of custom applications you can create per account, refer to [Application Library account limits](/cloudflare-one/account-limits/#application-library).
+
+The following limits apply to each custom application when creating or editing it.
+
+| Field                           | Limit or supported format                                                                                                                                                                                                                                                                                            |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hostnames and support hostnames | 50 entries combined. For example, 40 primary hostnames leave room for 10 support hostnames.                                                                                                                                                                                                                          |
+| IP subnets                      | 50 entries per application, separate from the hostname limit. Use CIDR notation. IPv4 prefix lengths must be `/8` through `/32`. IPv6 prefix lengths must be `/32` through `/128`. For a single address, use `/32` for IPv4 or `/128` for IPv6.                                                                      |
+| Port protocols                  | TCP and UDP, in `protocol/port` or inclusive `protocol/start-end` format, such as `tcp/443` or `udp/10000-20000`. The dashboard accepts ports `1` through `65535`. The API also accepts port `0`. The start of a range must be less than or equal to its end. There is no separate entry-count limit for this field. |
+
+At least one primary hostname or IP subnet is required. Support hostnames, ports, or a combination of support hostnames and ports cannot satisfy this requirement. You cannot create a custom application identified only by a port and protocol, such as `tcp/443`.
+
+Hostnames and IP subnets are alternative ways to match the application. Port protocols, when configured, restrict those matches in HTTP and network policies. DNS policies do not check destination ports. Refer to [custom application matching](/cloudflare-one/traffic-controls/application-app-types/#custom-application-matching) for examples.

@@ -1,15 +1,5 @@
 {
-    "id": "01bc2fb0-4bca-4598-b985-d2584a3f46c0",
-    "source": 1,
     "name": "@cf/baai/bge-large-en-v1.5",
-    "description": "BAAI general embedding (Large) model that transforms any given text into a 1024-dimensional vector",
-    "task": {
-        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
-        "name": "Text Embeddings",
-        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
-    },
-    "created_at": "2023-11-07 15:43:58.042",
-    "tags": [],
     "properties": [
         {
             "property_id": "async_queue",
@@ -20,7 +10,7 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.2,
+                    "price": 0.204,
                     "currency": "USD"
                 }
             ]
@@ -38,6 +28,16 @@
             "value": "1024"
         }
     ],
+    "id": "01bc2fb0-4bca-4598-b985-d2584a3f46c0",
+    "source": 1,
+    "description": "BAAI general embedding (Large) model that transforms any given text into a 1024-dimensional vector",
+    "task": {
+        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
+        "name": "Text Embeddings",
+        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
+    },
+    "created_at": "2023-11-07 15:43:58.042",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -171,5 +171,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

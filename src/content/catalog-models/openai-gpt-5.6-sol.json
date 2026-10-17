@@ -14,6 +14,12 @@
 	"context_length": 1050000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Output tokens (per 1M)": 10,
+		"Cached input tokens (per 1M)": 0.25,
+		"Cache creation tokens (per 1M)": 3.125
+	},
 	"examples": [
 		{
 			"name": "Launch Checklist",
@@ -282,6 +288,17 @@
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 10,
+				"input_cached_tokens": 0.25,
+				"input_cache_creation_tokens": 3.125
+			}
+		}
+	],
 	"banner": {
 		"id": "e2dc316b-8765-407f-8405-058ab5d502c8",
 		"text": "GPT-5.6 Sol is 50% off through Sept 18",

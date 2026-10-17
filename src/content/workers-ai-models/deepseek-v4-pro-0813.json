@@ -18,6 +18,26 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "supported_efforts": [
+                    "max",
+                    "high",
+                    "low",
+                    "none"
+                ],
+                "default_effort": "high",
+                "default_enabled": true,
+                "mandatory": false,
+                "normalizes_to": {
+                    "null": "high",
+                    "minimal": "low",
+                    "medium": "high",
+                    "xhigh": "high"
+                }
+            }
+        },
+        {
             "property_id": "price",
             "value": [
                 {
@@ -295,16 +315,18 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "max",
+                                                "high",
                                                 "low",
-                                                "medium",
-                                                "high"
+                                                "none"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: max, high, low, none. Compatibility aliases: minimal maps to low; medium maps to high; xhigh maps to high.",
+                                    "default": "high"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -312,7 +334,7 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -410,25 +432,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -1561,16 +1564,18 @@
                                         {
                                             "type": "string",
                                             "enum": [
+                                                "max",
+                                                "high",
                                                 "low",
-                                                "medium",
-                                                "high"
+                                                "none"
                                             ]
                                         },
                                         {
                                             "type": "null"
                                         }
                                     ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                    "description": "Reasoning effort. Supported levels: max, high, low, none. Compatibility aliases: minimal maps to low; medium maps to high; xhigh maps to high.",
+                                    "default": "high"
                                 },
                                 "chat_template_kwargs": {
                                     "type": "object",
@@ -1578,7 +1583,7 @@
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1676,25 +1681,6 @@
                                         }
                                     ],
                                     "description": "If specified, the system will make a best effort to sample deterministically."
-                                },
-                                "service_tier": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "auto",
-                                                "default",
-                                                "flex",
-                                                "scale",
-                                                "priority"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "default": "auto",
-                                    "description": "Specifies the processing type used for serving the request."
                                 },
                                 "stop": {
                                     "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2397,16 +2383,18 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
+                                                            "max",
+                                                            "high",
                                                             "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: max, high, low, none. Compatibility aliases: minimal maps to low; medium maps to high; xhigh maps to high.",
+                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -2414,7 +2402,7 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -2512,25 +2500,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -3663,16 +3632,18 @@
                                                     {
                                                         "type": "string",
                                                         "enum": [
+                                                            "max",
+                                                            "high",
                                                             "low",
-                                                            "medium",
-                                                            "high"
+                                                            "none"
                                                         ]
                                                     },
                                                     {
                                                         "type": "null"
                                                     }
                                                 ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
+                                                "description": "Reasoning effort. Supported levels: max, high, low, none. Compatibility aliases: minimal maps to low; medium maps to high; xhigh maps to high.",
+                                                "default": "high"
                                             },
                                             "chat_template_kwargs": {
                                                 "type": "object",
@@ -3680,7 +3651,7 @@
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3778,25 +3749,6 @@
                                                     }
                                                 ],
                                                 "description": "If specified, the system will make a best effort to sample deterministically."
-                                            },
-                                            "service_tier": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "auto",
-                                                            "default",
-                                                            "flex",
-                                                            "scale",
-                                                            "priority"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "default": "auto",
-                                                "description": "Specifies the processing type used for serving the request."
                                             },
                                             "stop": {
                                                 "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -4726,23 +4678,6 @@
                             "anyOf": [
                                 {
                                     "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
                                 },
                                 {
                                     "type": "null"

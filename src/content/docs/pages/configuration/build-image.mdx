@@ -7,12 +7,10 @@ products:
   - pages
 ---
 
-import {
-	PagesBuildEnvironment,
-	PagesBuildEnvironmentLanguages,
-	PagesBuildEnvironmentTools,
-	DashButton,
-} from "~/components";
+import { DashButton } from "~/components";
+import PagesBuildEnvironment from "~/components/cf/PagesBuildEnvironment.astro";
+import PagesBuildEnvironmentLanguages from "~/components/cf/PagesBuildEnvironmentLanguages.astro";
+import PagesBuildEnvironmentTools from "~/components/cf/PagesBuildEnvironmentTools.astro";
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
 
@@ -99,7 +97,7 @@ The following features are not currently supported when using the v3 build syste
 
 - Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
 - Detecting Yarn version from `yarn.lock` file version.
-- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting pnpm version from `pnpm-lock.yaml` file version.
 - Detecting Node.js and package managers from `package.json` -> `"engines"`.
 - `pipenv` and `Pipfile` support.
 

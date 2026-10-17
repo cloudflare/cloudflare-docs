@@ -258,6 +258,18 @@ These timeframes are estimates. If you need to verify that changes have taken ef
 
 Use filters to select the events to include and/or remove from your logs. For more information, refer to [Filters](/logs/logpush/logpush-job/filters/).
 
+## DDoS attack traffic
+
+In the dashboard, select **Exclude DDoS attack traffic** under **Advanced Options**. For the API, set `filter_attack_traffic` to `true`. The default value is `false`.
+
+This setting supports these datasets:
+
+- HTTP requests (`http_requests`)
+- Firewall events (`firewall_events`)
+- Network Analytics Logs (`network_analytics_logs`)
+
+Logpush then excludes identified DDoS attack traffic from your logs.
+
 ## Sampling rate
 
 Value can range from `0.0` (exclusive) to `1.0` (inclusive). `sample=0.1` means return 10% (1 in 10) of all records. The default value is `1`, meaning logs will be unsampled.

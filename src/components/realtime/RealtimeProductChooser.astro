@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import CornerMarks from "@/components/CornerMarks.astro";
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import globe from "~/assets/images/realtime/global-web-rtc-network.png";
+import globeDark from "~/assets/images/realtime/global-web-rtc-network-dark.png";
+---
+
+<section
+	class="not-content border-border relative my-8 border-t border-l"
+	aria-label="Choose a Cloudflare Realtime product"
+>
+	<CornerMarks />
+	<div class="border-border h-56 overflow-hidden border-r border-b bg-[#fffbf5] dark:bg-[#141414] sm:h-64">
+		<Image
+			src={globe}
+			alt=""
+			widths={[640, 960, 1400]}
+			sizes="(max-width: 768px) 100vw, 800px"
+			class="block h-full w-full object-cover object-[50%_42%] dark:hidden"
+			loading="eager"
+			decoding="async"
+		/>
+		<Image
+			src={globeDark}
+			alt=""
+			widths={[640, 960, 1400]}
+			sizes="(max-width: 768px) 100vw, 800px"
+			class="hidden h-full w-full object-cover object-[50%_42%] dark:block"
+			loading="eager"
+			decoding="async"
+		/>
+	</div>
+
+	<div class="grid grid-cols-1 md:grid-cols-2">
+		<a
+			href="/realtime/realtimekit/"
+			class="group/realtime-path border-border bg-primary/5 hover:bg-primary/10 focus-visible:outline-primary relative flex min-w-0 flex-col border-r border-b p-5 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 sm:p-6"
+		>
+			<p class="text-primary mb-2 font-mono text-xs tracking-widest uppercase">
+				RealtimeKit
+			</p>
+			<h2 class="text-foreground m-0 text-lg leading-snug font-medium text-pretty">
+				Add audio or video calls to your app
+			</h2>
+			<p class="text-muted-foreground mt-3 mb-5 flex-1 text-sm leading-relaxed text-pretty">
+				Use prebuilt meeting UI and SDKs for web and mobile. Add managed
+				recording or transcription if your app needs it.
+			</p>
+			<span class="text-muted-foreground inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/realtime-path:underline">
+				Explore RealtimeKit
+				<Icon
+					name="ph:arrow-right"
+					class="h-3.5 w-3.5 transition-transform group-hover/realtime-path:translate-x-0.5"
+				/>
+			</span>
+		</a>
+
+		<a
+			href="/realtime/sfu/"
+			class="group/realtime-path border-border bg-background hover:bg-muted/40 focus-visible:outline-primary relative flex min-w-0 flex-col border-r border-b p-5 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2 sm:p-6"
+		>
+			<p class="text-primary mb-2 font-mono text-xs tracking-widest uppercase">
+				Realtime SFU
+			</p>
+			<h2 class="text-foreground m-0 text-lg leading-snug font-medium text-pretty">
+				Build custom WebRTC applications
+			</h2>
+			<p class="text-muted-foreground mt-3 mb-5 flex-1 text-sm leading-relaxed text-pretty">
+				Use the Realtime SFU API to control which endpoints publish or receive
+				audio, video, and data. Your application handles signaling and
+				permissions.
+			</p>
+			<span class="text-muted-foreground inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/realtime-path:underline">
+				Explore Realtime SFU
+				<Icon
+					name="ph:arrow-right"
+					class="h-3.5 w-3.5 transition-transform group-hover/realtime-path:translate-x-0.5"
+				/>
+			</span>
+		</a>
+	</div>
+</section>
