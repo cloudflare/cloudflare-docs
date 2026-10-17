@@ -9,12 +9,6 @@ products:
 
 import { Type, MetaInfo, WranglerConfig } from "~/components";
 
-:::note[Dynamic Worker Loading is in closed beta]
-
-The Worker Loader API is available in local development with Wrangler and workerd. But to run dynamic Workers on Cloudflare, you must [sign up for the closed beta](https://forms.gle/MoeDxE9wNiqdf8ri9).
-
-:::
-
 A Worker Loader binding allows you to load additional Workers containing arbitrary code at runtime.
 
 An isolate is like a lightweight container. [The Workers platform uses isolates instead of containers or VMs](/workers/reference/how-workers-works/), so every Worker runs in an isolate already. But, a Worker Loader binding allows your Worker to create additional isolates that load arbitrary code on-demand.
@@ -158,7 +152,7 @@ A module's content can also be specified as an object, in order to specify its t
 
 :::caution[Warning]
 
-While Dynamic Isolates support Python, please note that at this time, Python Workers are much slower to start than JavaScript Workers, which may defeat some of the benefits of dynamic isolate loading. They may also be priced differently, when Worker Loaders become generally available.
+While Dynamic Isolates support Python, please note that at this time, Python Workers are much slower to start than JavaScript Workers, which may defeat some of the benefits of dynamic isolate loading.
 
 :::
 
