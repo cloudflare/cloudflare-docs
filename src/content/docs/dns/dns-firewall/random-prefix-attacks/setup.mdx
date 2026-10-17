@@ -53,3 +53,129 @@ Once you turn on attack mitigation, Cloudflare returns a `REFUSED` response to q
 If you do not specify otherwise, Cloudflare automatically sets the `only_when_upstream_unhealthy` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the upstream is unresponsive (possibly as a result of an attack).
 
 :::
+
+## Choose a mitigation mode
+
+The `only_when_upstream_unhealthy` setting controls when Cloudflare starts blocking queries identified as part of a random prefix attack.
+
+| Mode | `only_when_upstream_unhealthy` | When to use |
+|---|---|---|
+| **Conditional** (default) | `true` | Steady-state protection. Cloudflare blocks attack traffic only when your upstream nameservers are unresponsive. Reduces the risk of false positives — legitimate queries are less likely to be refused. Recommended for most deployments. |
+| **Always on** | `false` | Active attack response. Cloudflare blocks identified attack traffic at all times, regardless of upstream health. Use this when your upstream is being overwhelmed. Some legitimate queries for subdomains not seen before may receive a `REFUSED` response. |
+
+To check your current cluster configuration before making changes, send a [`GET` request](/api/resources/dns_firewall/methods/get/):
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="GET"
+/>
+
+## Identify the type of attack
+
+DNS Firewall provides different levels of protection depending on the type of attack. Before applying mitigations, identify which pattern you are dealing with by inspecting a sample of query names hitting your upstream nameservers.
+
+| Attack pattern | Description | DNS Firewall protection |
+|---|---|---|
+| **Simple DNS flood** | The same query name, or a small set of names, repeated at high volume. | ✅ Strong — cached responses absorb the traffic. Increase cache TTL values. |
+| **Random prefix attack** | Random-looking subdomains all ending with the same suffix (for example, `abc123.example.com`, `xyz456.example.com`). | ⚠️ Best-effort — use `attack_mitigation`. See [During an active random prefix attack](#during-an-active-random-prefix-attack). |
+| **Random-query attack** | Random subdomains across many different suffixes, or the targeted suffix is on the [Public Suffix List](https://publicsuffix.org/) (for example, `co.uk`). | ❌ Cannot be mitigated by DNS Firewall — Cloudflare cannot block an entire public suffix. Consider upstream-side mitigations. |
+
+:::note
+
+If the suffix under attack is listed on the [Public Suffix List](https://publicsuffix.org/), DNS Firewall will not be able to mitigate it. Contact your account team to discuss alternative mitigations.
+
+:::
+
+## Respond to a simple DNS flood
+
+If the same query names are being repeated at high volume, Cloudflare's cache is your primary defense. Apply the following settings via API or dashboard to maximise cache absorption.
+
+### Increase cache TTL
+
+Raising the cache TTL lets Cloudflare serve more responses from cache and reduces queries forwarded to your upstream nameservers:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "minimum_cache_ttl": 3600,
+        "maximum_cache_ttl": 21600,
+	}}
+/>
+
+### Cache negative responses
+
+If the attack includes queries for names that do not exist, enable negative response caching to prevent repeated lookups for `NXDOMAIN`, `REFUSED`, and `SERVFAIL` responses from reaching your upstream nameservers:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "negative_cache_ttl": 900,
+	}}
+/>
+
+### Disable ANY queries
+
+`ANY` queries are frequently used in DNS amplification attacks. If not already disabled, turn them off:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "deprecate_any_requests": true,
+	}}
+/>
+
+## Respond to an active random prefix attack
+
+If your upstream nameservers are being overwhelmed by a random prefix attack, apply the following steps in order. All changes can be made via API. Rate limit configuration is not available in the dashboard.
+
+### 1. Switch attack mitigation to always-on
+
+Set `only_when_upstream_unhealthy` to `false` so that Cloudflare blocks identified attack traffic immediately, without waiting for your upstream to become unresponsive:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "attack_mitigation": {
+          "enabled": true,
+          "only_when_upstream_unhealthy": false,
+        }
+	}}
+/>
+
+### 2. Increase cache TTL
+
+Raising the cache TTL lets Cloudflare serve more responses from cache, reducing the number of queries forwarded to your upstream nameservers:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "minimum_cache_ttl": 3600,
+        "maximum_cache_ttl": 21600,
+	}}
+/>
+
+### 3. Set a rate limit
+
+Rate limiting caps the number of uncached queries per second that Cloudflare forwards to your upstream nameservers, applied per data center. Queries that exceed the limit receive a `REFUSED` response. Rate limiting is disabled by default — set a value based on what your nameservers can sustain under normal load:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+	method="PATCH"
+	json={{
+        "ratelimit": 1000,
+	}}
+/>
+
+:::note
+
+To disable rate limiting, set `ratelimit` to `null`.
+
+:::
+
+Once the attack subsides, revert `only_when_upstream_unhealthy` to `true` and restore your normal cache TTL values to reduce the risk of false positives.
+
