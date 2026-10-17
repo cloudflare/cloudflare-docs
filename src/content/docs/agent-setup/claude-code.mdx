@@ -44,10 +44,12 @@ import { LinkCard } from "~/components";
 
 	3. **Install the Cloudflare plugin**
 
-		In Claude Code, run these two slash commands. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
+		In Claude Code, run these two slash commands one at a time, waiting for the first to finish before running the second. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
 
 		```txt
 		/plugin marketplace add cloudflare/skills
+		```
+		```txt
 		/plugin install cloudflare@cloudflare
 		```
 
