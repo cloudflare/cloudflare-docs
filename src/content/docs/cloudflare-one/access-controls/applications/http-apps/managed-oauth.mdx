@@ -156,7 +156,7 @@ To test, open an MCP client and [connect to the MCP portal](/cloudflare-one/acce
 Configure these settings in the **Advanced settings** tab of your [self-hosted app](#enable-managed-oauth-on-a-self-hosted-application), [MCP server application](#enable-managed-oauth-on-an-mcp-server-application), or [MCP server portal](#enable-managed-oauth-on-an-mcp-server-portal).
 
 - **Allow localhost clients**: Allow any client with redirect URIs on `localhost`.
-- **Allow loopback clients**: Allow any client with redirect URIs on `127.0.0.1`.
+- **Allow loopback clients**: Allow any client with redirect URIs on `127.0.0.1` or `[::1]`.
 - **Allowed redirect URIs**: Redirect URIs allowed for dynamically registered clients (for example, `https://playground.ai.cloudflare.com/*`). The URL must use `https`. Paths may end in `/*` to match all sub-paths.
 - **Grant session duration**: How long the OAuth refresh token remains valid.
 - **Access token lifetime**: How long an OIDC Access token can be used to authenticate with your application. Cloudflare recommends configuring a short **Access token lifetime** (default 15 minutes) in conjunction with a longer **Grant session duration**. When the access token expires, Cloudflare uses the refresh token to issue a new one after re-evaluating the user against your Access policies. When the refresh token expires, the user must re-authenticate with the identity provider.
@@ -217,6 +217,22 @@ Configure these settings via the `oauth_configuration` object on the [Access app
 
 </TabItem>
 </Tabs>
+
+### Loopback callback ports
+
+Desktop and CLI clients can choose an available local callback port at runtime. Managed OAuth and MCP portal client OAuth accept a different port from the one in a registered redirect URI for these hosts:
+
+- `127.0.0.1`
+- `[::1]`
+- `localhost`, when explicitly registered
+
+Only the port can change. The scheme (`http` or `https`), host, path, and query must match the registered URI exactly. For example, a client registered with `http://127.0.0.1:3000/callback` can authorize with `http://127.0.0.1:49152/callback`, but not `http://localhost:49152/callback` or a different callback path. Non-loopback redirect URIs still require an exact registered match.
+
+Public clients must use Proof Key for Code Exchange (PKCE) with `S256`. When the callback port differs from the registered port, the client must send the exact authorization-time `redirect_uri` when exchanging the authorization code for tokens. Omitting it or sending a different URI causes the exchange to fail.
+
+Managed OAuth still checks the application's [Dynamic Client Registration settings](#managed-oauth-settings). This port exception does not bypass those settings or register a different callback host.
+
+This behavior applies to the local callback between an MCP client and Cloudflare. It does not change the [upstream OAuth callback URLs](/cloudflare-one/access-controls/ai-controls/mcp-portals/#upstream-oauth-callback-urls) registered with an upstream MCP server's OAuth provider.
 
 ## Authorization flow
 
