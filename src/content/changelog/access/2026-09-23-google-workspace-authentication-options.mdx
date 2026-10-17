@@ -1,0 +1,15 @@
+---
+title: Authentication options for Google Workspace identity providers
+description: Control Google prompts and use device-scoped login hints with Cloudflare Access.
+date: 2026-09-23
+products:
+  - access
+---
+
+Google Workspace identity provider integrations now include prompt controls and device-scoped login hints in the Cloudflare dashboard and API.
+
+Choose Google's default behavior, silent authentication, consent, or account selection. If silent authentication cannot use an active Google session, Access retries once with Google's default interactive flow.
+
+Access can also send a domain-matched login hint. It sends the hint when one email from a previous Access login on the same device matches the Google Workspace domain.
+
+For configuration details, refer to [Google Workspace authentication options](/cloudflare-one/integrations/identity-providers/google-workspace/#authentication-options).
