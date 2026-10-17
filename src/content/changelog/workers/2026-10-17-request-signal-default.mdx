@@ -1,0 +1,51 @@
+---
+title: Incoming Request.signal will be enabled by default on November 1
+description: Workers with compatibility dates on or after November 1, 2026 will receive abort events when clients disconnect, without an opt-in flag.
+products:
+  - workers
+date: 2026-10-17
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Starting November 1, 2026, Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-11-01` or later will receive client disconnection events through `request.signal` by default. You will no longer need the `enable_request_signal` compatibility flag for these dates.
+
+We [introduced this opt-in behavior in May 2025](/changelog/post/2025-05-22-handle-request-cancellation/). It lets you log cancellations, clean up resources, or explicitly cancel work that accepts an `AbortSignal`.
+
+For example, this Worker logs a disconnection and passes the signal to an outgoing request so that it can be canceled too:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		request.signal.addEventListener(
+			"abort",
+			() => {
+				console.log("Client disconnected");
+			},
+			{ once: true },
+		);
+
+		return fetch("https://example.com/slow-response", {
+			signal: request.signal,
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+Your Worker keeps its current behavior until you update its compatibility date or explicitly opt in. To test before November 1, keep your existing date and add the flag to your [configuration](/workers/configuration/compatibility-flags/#setting-compatibility-flags):
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["enable_request_signal"]
+```
+
+</WranglerConfig>
+
+With a compatibility date of `2026-11-01` or later, you can opt out using `disable_request_signal`. This change does not enable `request_signal_passthrough`; the example passes the signal explicitly.
+
+For more information, refer to the [Request API](/workers/runtime-apis/request/#properties) and the [Request.signal compatibility flag](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests).
