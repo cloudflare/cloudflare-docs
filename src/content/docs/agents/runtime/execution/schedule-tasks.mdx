@@ -490,6 +490,12 @@ class PollingAgent extends Agent {
 
 </TypeScriptExample>
 
+:::caution[Avoid scheduling loops]
+A callback that reschedules itself with a delay of `0`, or with a `Date` that has already passed, runs again almost immediately. If nothing changes between runs, the callback loops continuously. Scheduled tasks run on [Durable Object alarms](/durable-objects/api/alarms/), so a loop adds billed requests and storage operations until it stops.
+
+Only reschedule when there is more work to do, and use a non-zero delay. For work that repeats on a fixed cadence, use [`scheduleEvery()`](#interval) instead of rescheduling from the callback.
+:::
+
 ### Exponential backoff retry
 
 <TypeScriptExample>

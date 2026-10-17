@@ -458,6 +458,65 @@ export class Counter extends DurableObject {
 ```
 </TypeScriptExample>
 
+### Test that alarms reschedule safely
+
+An `alarm()` handler that reschedules itself to the current time creates an [alarm loop](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition). Alarm loops are easy to miss in review and expensive in production. Add regression tests for both guardrails. One test checks that a failed attempt reschedules the alarm at least a minimum delay in the future. Another test checks that the alarm stops rescheduling after the deadline.
+
+The following tests use the `Session` class from [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition). The tests mock `fetch()` so that every refresh fails. Each test stores a checkpoint that became due at a chosen time in the past, runs the alarm once, and checks the next scheduled alarm:
+
+<TypeScriptExample filename="test/alarm-loop.test.ts">
+```ts
+import { env } from "cloudflare:workers";
+import { runInDurableObject, runDurableObjectAlarm } from "cloudflare:test";
+import { afterEach, beforeEach, describe, it, expect, vi } from "vitest";
+
+const MIN_DELAY_MS = 60 * 1000;
+const GIVE_UP_AFTER_MS = 24 * 60 * 60 * 1000;
+
+beforeEach(() => {
+	// Force every refresh attempt to fail
+	vi.spyOn(globalThis, "fetch").mockResolvedValue(
+		new Response(null, { status: 503 }),
+	);
+});
+
+afterEach(() => {
+	vi.restoreAllMocks();
+});
+
+// Store a checkpoint that became due `overdueMs` ago, run its alarm once,
+// and return the next scheduled alarm time
+async function runFailedRefresh(name: string, overdueMs: number) {
+	const stub = env.SESSION.getByName(name);
+
+	await runInDurableObject(stub, async (_instance, state) => {
+		await state.storage.put("checkpoint", { refreshAt: Date.now() - overdueMs });
+		// Schedule in the future so the alarm only runs when the test triggers it
+		await state.storage.setAlarm(Date.now() + MIN_DELAY_MS);
+	});
+
+	expect(await runDurableObjectAlarm(stub)).toBe(true);
+	return runInDurableObject(stub, (_instance, state) => state.storage.getAlarm());
+}
+
+describe("Session alarm", () => {
+	it("reschedules a failed refresh at least the minimum delay in the future", async () => {
+		const nextAlarm = await runFailedRefresh("retry", 1000);
+		expect(nextAlarm).not.toBeNull();
+		// Allow for time that passes while the test runs
+		expect(nextAlarm).toBeGreaterThan(Date.now() + MIN_DELAY_MS / 2);
+	});
+
+	it("stops rescheduling after the deadline", async () => {
+		const nextAlarm = await runFailedRefresh("give-up", GIVE_UP_AFTER_MS + 1000);
+		expect(nextAlarm).toBeNull();
+	});
+});
+```
+</TypeScriptExample>
+
+If a future change reintroduces `setAlarm(Date.now())`, the first test fails. If a change removes the deadline, the second test fails.
+
 ### Testing eviction
 
 Use `evictDurableObject()` to evict a Durable Object instance during tests. Eviction tears down the instance to reset its in-memory state. This lets you test how your Durable Object recovers state from storage after being evicted.
