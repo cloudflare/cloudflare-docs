@@ -11,7 +11,7 @@ tags:
   - TypeScript
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 A [starter template](https://github.com/cloudflare/agents/tree/main/examples/dynamic-workers) for deploying a Worker that loads and runs [Dynamic Workers](/dynamic-workers/).
 
@@ -74,6 +74,8 @@ export default {
 </TypeScriptExample>
 
 ## Running locally
+
+<Render file="local-development-security" product="workers" />
 
 ```sh
 npm install
