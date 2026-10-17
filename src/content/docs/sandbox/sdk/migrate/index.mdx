@@ -15,7 +15,7 @@ products:
 
 To move an application from Sandbox SDK 0.x to 1.0, replace the `Sandbox` class with a Durable Object class that you write. Then replace each 0.x feature that your application uses. Your class starts a container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), which is in public beta. For the reasons behind these changes, refer to [Changes in Sandbox SDK 1.0](/sandbox/sdk/migrate/changes-in-1-0/).
 
-Sandboxes on 1.0 start faster. On a prepared image, the median time from `start()` to the first command is under 600 ms, compared with about 4 s on 0.x. Each `start()` call also chooses its own image, and a deploy does not restart running sandboxes.
+Containers that use the Durable Object scheduling policy start faster. In an independent benchmark that starts 100 sandboxes at once, the median time from creating a sandbox to running a command in it fell from 4.0 seconds to 648 milliseconds. For the measurements, refer to [Cloudflare Containers, rebuilt to scale agent sandboxes](https://blog.cloudflare.com/faster-agent-sandboxes/). Each `start()` call also chooses its own image, and a deploy does not restart running sandboxes.
 
 ## Support for Sandbox SDK 0.x
 
