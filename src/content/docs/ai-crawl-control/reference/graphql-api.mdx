@@ -12,6 +12,8 @@ import { Details } from "~/components";
 
 AI Crawl Control analytics are available through Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can query the same data shown in the dashboard to build custom reports, integrate with monitoring systems, or export for analysis. Test queries using the [GraphQL API Explorer](https://graphql.cloudflare.com/), or capture the exact queries the dashboard uses via [Chrome DevTools](/analytics/graphql-api/tutorials/capture-graphql-queries-from-dashboard/).
 
+AI Crawl Control queries use the `httpRequestsAdaptiveGroups` adaptive dataset. Adaptive datasets retain at least 31 days of data on every plan. Query-window limits vary by plan. Use the [GraphQL Settings node](/analytics/graphql-api/features/discovery/settings/) to retrieve `notOlderThan` (how far back a query can read) and `maxDuration` (the maximum time range per query) for your zone.
+
 ## Key filters
 
 | Filter                            | Description                                                                                    | Availability                                        |
