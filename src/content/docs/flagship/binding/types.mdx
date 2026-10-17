@@ -8,7 +8,7 @@ products:
   - flagship
 ---
 
-The Flagship binding runtime uses the following TypeScript shapes. The published Workers type declarations do not yet include every runtime value.
+The Flagship binding uses the following TypeScript types. Generate binding types with `wrangler types` or use the `@cloudflare/workers-types` package.
 
 ## `Flagship`
 
@@ -35,19 +35,14 @@ type FlagshipEvaluationContextValue =
 	| FlagshipEvaluationContextValue[]
 	| { [key: string]: FlagshipEvaluationContextValue };
 
-type FlagshipEvaluationContext = Record<
-	string,
-	FlagshipEvaluationContextValue
->;
+type FlagshipEvaluationContext = Record<string, FlagshipEvaluationContextValue>;
 ```
 
 Numbers must be finite. The binding rejects `NaN`, `Infinity`, unsupported objects, and cyclic values.
 
 The runtime also accepts valid JavaScript `Date` values. The binding normalizes each date to an ISO 8601 string. Invalid dates produce an `INVALID_CONTEXT` error.
 
-The public declarations from `wrangler types` and `@cloudflare/workers-types` still define context as `Record<string, string | number | boolean>`. Therefore, TypeScript can reject structured context that the runtime accepts. [workerd pull request #7462](https://github.com/cloudflare/workerd/pull/7462) tracks the recursive public declarations and remains open.
-
-Until those declarations are published, TypeScript requires an explicit cast for structured context. This declaration mismatch does not change runtime support. Serialize `Date` values yourself when you need declaration-compatible code.
+Serialize `Date` values to ISO 8601 strings before passing them to the binding in TypeScript. The context type describes JSON values and does not include `Date`.
 
 ## `FlagshipEvaluationDetails`
 

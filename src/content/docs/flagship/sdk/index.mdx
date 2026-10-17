@@ -41,19 +41,21 @@ If you are running inside a Cloudflare Worker, the [binding](/flagship/binding/)
 
 ## Context support
 
-Context support depends on the evaluation client and transport:
+The TypeScript, Python, and Go SDKs support structured context from version `0.6.0`. Context support depends on the evaluation client and transport:
 
-| Client or API               | Context support                                                   |
-| --------------------------- | ----------------------------------------------------------------- |
+| Client or API              | Context support                                                   |
+| -------------------------- | ----------------------------------------------------------------- |
 | Direct Workers binding     | Recursive JSON values; valid `Date` values normalize to strings   |
-| TypeScript server provider | Strings, numbers, booleans, and `Date`; rejects objects or arrays |
-| TypeScript client provider | Scalar GET query values; structured values are unsupported        |
-| Python provider            | Scalar GET query values and `datetime`; rejects complex values     |
-| Go provider                | Scalar GET query values and `time.Time`; rejects complex values    |
-| Wrangler                   | String values from each `--context` argument                       |
-| Evaluation API `POST`      | Recursive JSON values                                              |
+| TypeScript server provider | Recursive JSON values and `Date`, with binding or HTTP evaluation |
+| TypeScript client provider | Recursive JSON values and `Date`                                  |
+| Python provider            | Recursive JSON values and `datetime`                              |
+| Go provider                | Recursive JSON values and `time.Time`                             |
+| Wrangler                   | String values from each `--context` argument                      |
+| Evaluation API `POST`      | Recursive JSON values                                             |
 
-Use the direct Workers binding for structured context inside Workers. Use the [evaluation API `POST` endpoint](/flagship/reference/evaluation-api/#send-structured-json-context) for structured context over HTTP.
+The SDKs send structured context over HTTP using `POST`. Context containing only strings, numbers, booleans, or dates uses `GET` query parameters. Dates normalize to strings, including within nested objects and arrays.
+
+Use the [evaluation API `POST` endpoint](/flagship/reference/evaluation-api/#send-structured-json-context) when sending structured context without an SDK.
 
 ## Installation
 

@@ -82,9 +82,9 @@ if (showBanner) {
 
 ## Evaluation context
 
-The client provider sends context through scalar `GET` query parameters. Structured object and array values are not supported.
+From version `0.6.0`, the client provider accepts strings, finite numbers, booleans, `null`, nested objects, and arrays. It normalizes valid `Date` values to ISO 8601 strings, including within objects and arrays.
 
-Use strings, numbers, and booleans for context attributes. JSON-looking strings remain strings and do not create nested context.
+During initialization and context changes, the provider sends structured context using `POST` with a JSON body. Context containing only strings, numbers, booleans, or dates uses `GET` query parameters. JSON-looking strings remain strings and do not create nested context.
 
 ## When to use the client provider
 
