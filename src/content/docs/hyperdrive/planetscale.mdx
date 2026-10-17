@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { CardGrid, DashButton, Description, Details, LinkTitleCard } from "~/components";
+import { CardGrid, DashButton, Description, Details, LinkTitleCard, Render } from "~/components";
 
 <Description>
 
@@ -72,15 +72,21 @@ Refer to [PlanetScale's documentation](https://planetscale.com/docs/reference/da
 
 With Workers, build your application to deploy anywhere across Cloudflare’s global network spanning 330+ cities. You can deploy with a single step, and users in new locations can reach your application without deploying regional infrastructure.
 
-Workers compute runs close to your users for low latency. PlanetScale Postgres provides regional databases for your application's control plane or any centralized data that doesn't fit Cloudflare's edge distribution model. Use it for records such as customers, billing, account settings, or other relational data.
+Workers compute runs close to your users by default. For requests with multiple sequential database queries, place compute near your database to reduce query round-trip latency. PlanetScale Postgres provides regional databases for your application's control plane or any centralized data that doesn't fit Cloudflare's edge distribution model. Use it for records such as customers, billing, account settings, or other relational data.
 
 Hyperdrive provides the connection glue between Workers and PlanetScale. It pools database connections and uses Cloudflare's [Cache](/cache/) for eligible read queries to make your application fast even when your database is centralized.
 
+### Configure Worker placement
+
+<Render file="planetscale-placement-partial" product="hyperdrive" />
+
 ## How you benefit?
+
+The following flow shows the default Worker placement near users. With a Placement Hint, the Worker and its local Hyperdrive cache run near the specified database region.
 
 ![Request flow from a user request to Workers, Hyperdrive caches, connection pools, and PlanetScale.](~/assets/images/hyperdrive/planetscale-request-flow.svg)
 
-1. **Run near the user.** When a user sends a request, Cloudflare routes it to a nearby location. Your Worker runs in that location, so request handling starts close to the user.
+1. **Run near the user by default.** When a user sends a request, Cloudflare routes it to a nearby location. Without a placement setting, your Worker runs in that location.
 
 2. **Check for cached reads locally.** On the same Cloudflare server handling the Worker request, Hyperdrive sets up your database connection in single digit milliseconds (p90 4ms) so that your database client/driver can send queries immediately. Hyperdrive's connection setup performs [TCP](https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/?cf_target_id=09C713714C8E4B80173505A0C31C63BC) connection startup, [TLS](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/?cf_target_id=F13EF8B8F82B5AFEF99A8D9DA7DA3342) encryption, and client authentication all on the same local machine, removing any network roundtrips and latency to your database. Once the database connection is ready if the Worker sends a cacheable read query and the result is cached, Hyperdrive returns it without leaving that location.
 
