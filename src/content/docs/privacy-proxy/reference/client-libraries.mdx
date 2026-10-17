@@ -1,6 +1,6 @@
 ---
 title: Client libraries
-description: Open source libraries and tools for connecting to Privacy Proxy, including tokio-quiche, Chaussette, and privacypass-ts.
+description: Open source libraries and tools for connecting to Privacy Proxy, including tokio-quiche, Chaussette, pvcli, and privacypass-ts.
 pcx_content_type: reference
 sidebar:
   order: 5
@@ -81,6 +81,36 @@ Then configure your application to use `socks5://127.0.0.1:1987` as its proxy.
 ### Resources
 
 - [GitHub repository](https://github.com/cloudflare/chaussette)
+
+---
+
+## pvcli
+
+[pvcli](https://github.com/cloudflareresearch/pvcli) is a curl-like command-line client for testing HTTP/2 and HTTP/3 requests. It can add authentication and geohash headers to an HTTP CONNECT request.
+
+:::caution
+`pvcli` is experimental software and has not been audited. Use it only for testing.
+:::
+
+### Features
+
+- HTTP/2 and HTTP/3 requests with TLS
+- HTTP CONNECT proxying over HTTP/2
+- Custom proxy headers for authentication and geolocation hints
+- Oblivious HTTP (OHTTP) requests through a relay and gateway
+- Local proxy mode for other applications
+
+### Installation
+
+Install `pvcli` from its public GitHub repository:
+
+```sh
+cargo install --git https://github.com/cloudflareresearch/pvcli
+```
+
+### Resources
+
+- [GitHub repository](https://github.com/cloudflareresearch/pvcli)
 
 ---
 
