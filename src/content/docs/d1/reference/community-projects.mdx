@@ -62,6 +62,13 @@ Drizzle is a headless TypeScript ORM with a head which runs on Node, Bun and Den
 * [GitHub](https://github.com/drizzle-team/drizzle-orm)
 * [D1 example](https://orm.drizzle.team/docs/connect-cloudflare-d1)
 
+### UQL
+
+UQL is a TypeScript ORM that queries with plain JSON objects and generates migrations from your entities. It binds to D1 through `uql-orm/d1`, and keeps to D1's limits, such as the bound-parameter cap, by splitting large writes across statements.
+
+* [Docs](https://uql-orm.dev/cloudflare-d1)
+* [GitHub](https://github.com/rogerpadilla/uql)
+
 ### workers-qb
 
 `workers-qb` is a zero-dependency query builder that provides a simple standardized interface while keeping the benefits and speed of using raw queries over a traditional ORM. While not intended to provide ORM-like functionality, `workers-qb` makes it easier to interact with your database from code for direct SQL access.
