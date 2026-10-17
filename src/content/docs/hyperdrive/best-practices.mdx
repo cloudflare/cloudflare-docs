@@ -1,0 +1,246 @@
+---
+title: Best practices
+pcx_content_type: concept
+description: Apply reliable pooling, caching, placement, and connection patterns.
+sidebar:
+  order: 3.5
+products:
+  - hyperdrive
+---
+
+import { TypeScriptExample } from "~/components";
+
+Use [Hyperdrive](/hyperdrive/) as the standard connection path when a [Worker](/workers/) accesses a remote PostgreSQL or MySQL database.
+
+Hyperdrive performs connection setup at the edge and pools connections near your database. It can also cache eligible read queries.
+
+Refer to [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) for the full request path.
+
+## Understand the request path
+
+Hyperdrive splits every database connection into two halves. A **Client** component runs on the same server as your Worker and handles connection setup locally. An **Endpoint** component runs in the data center closest to your origin database and maintains a pool of warm connections.
+
+When your Worker connects, the database driver handshakes with Client instead of crossing the network to your database. Client inspects the query and serves it from the local Cloudflare cache when possible. On a cache miss, Client forwards the query to Endpoint over a pre-established internal connection with no additional TCP or TLS handshakes.
+
+Endpoint checks its own cache. On a miss, it checks out a warm connection from the pool and sends the query to your origin database. The result flows back through both layers and is stored in both caches for subsequent requests.
+
+Hyperdrive uses transaction-mode pooling. A pool connection is checked out when a query or transaction begins and returned when it ends. This supports high concurrency while preserving transactional semantics.
+
+For diagrams and protocol-level detail, refer to [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/) and [How Hyperdrive speeds up database access](https://blog.cloudflare.com/how-hyperdrive-speeds-up-database-access/).
+
+## Choose an architecture
+
+### Separate cached and cache-disabled reads
+
+If your application has different freshness needs, create two Hyperdrive configurations. Use a cached configuration by default and a cache-disabled configuration for fresh reads.
+
+Use the cache-disabled configuration for authentication, sessions, permissions, billing state, and read-after-write operations. Both configurations still provide connection pooling and fast connection setup.
+
+Create the second configuration with caching disabled. Then [bind both configurations](/hyperdrive/concepts/query-caching/#disable-caching) to your Worker.
+
+Create clients lazily for the bindings each request needs.
+
+Each configuration has an independent origin connection pool. Count their combined capacity against the database connection limit.
+
+### Split distinct traffic policies
+
+Use separate configurations when traffic needs distinct freshness policies. You can also target a read-replica endpoint for read-only traffic.
+
+Hyperdrive does not automatically route queries to replicas. Configure the replica endpoint and any provider-specific replica credentials yourself.
+
+Include every configuration when calculating origin capacity. Refer to [Query caching](/hyperdrive/concepts/query-caching/#read-after-write-behavior) for the cached and fresh pattern.
+
+## Manage client lifecycle
+
+### Create clients inside handlers
+
+Create database clients inside each Worker handler. Never create clients or driver-level pools in global scope.
+
+Hyperdrive owns the origin connection pool. Routine calls to `client.end()` or an equivalent method are unnecessary.
+
+This handler creates one node-postgres client and runs a parameterized query. It assumes you completed the [node-postgres setup](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/).
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Client } from "pg";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const productId = new URL(request.url).searchParams.get("product_id");
+		if (!productId) {
+			return new Response("Missing product_id", { status: 400 });
+		}
+
+		const client = new Client({
+			connectionString: env.HYPERDRIVE.connectionString,
+		});
+
+		try {
+			await client.connect();
+			const result = await client.query<{ id: string; name: string }>(
+				"SELECT id, name FROM products WHERE id = $1",
+				[productId],
+			);
+
+			return Response.json(result.rows);
+		} catch (error) {
+			console.error("Database query failed", error);
+			return Response.json({ error: "Database error" }, { status: 500 });
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+For lifecycle details, refer to [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/).
+
+### Create clients within each runtime unit
+
+In Durable Objects, generally create a client for each request or method call. Persistent clients consume Hyperdrive pool capacity while they remain open.
+
+In Workflows, create the client inside each `step.do()`. Run every query from that client within the same step.
+
+Refer to [Durable Object connection lifecycle](/hyperdrive/concepts/connection-lifecycle/#durable-objects-and-persistent-connections) and [Rules of Workflows](/workflows/build/rules-of-workflows/).
+
+## Size connection pools
+
+### Size pools conservatively
+
+Start with a low origin connection limit. Increase it only when metrics show sustained contention.
+
+Set the limit below the database maximum. The Hyperdrive limit is soft and can be exceeded temporarily.
+
+Add the limits for every independent configuration using the database. Monitor waiting clients and open connections before increasing capacity.
+
+Compare connection and query latency with your database metrics.
+
+Use [Hyperdrive metrics](/hyperdrive/observability/metrics/), [pool tuning guidance](/hyperdrive/configuration/tune-connection-pool/), and [published limits](/hyperdrive/platform/limits/) when sizing pools.
+
+### Understand pool internals
+
+Each connection string has its own pool. Hyperdrive may shard connections across multiple internal pool instances for redundancy. This sharding is an internal implementation detail and may change.
+
+The `max_connections` parameter sets the ceiling on outbound database sockets that a single Hyperdrive pool instance maintains to your origin. It does not limit inbound requests at the edge. Hyperdrive multiplexes many incoming edge requests into a smaller number of persistent connections up to that ceiling, protecting your database from connection exhaustion during traffic spikes. This limit is soft — Hyperdrive can temporarily exceed it during unusual traffic.
+
+When the last active connection in a pool closes, the pool stays alive for an additional idle window before shutting down. This avoids cold starts on subsequent traffic. The idle duration is an internal implementation detail and may change.
+
+### Connect to a direct endpoint
+
+Point Hyperdrive at a direct database endpoint. Do not place PgBouncer or another transaction pooler between Hyperdrive and the database.
+
+Hyperdrive already uses transaction pooling. Chaining poolers adds another pooling layer and complicates connection behavior.
+
+### Keep transactions short
+
+Use transactions only when several statements require atomicity. Keep them short because each transaction holds an origin connection.
+
+Do not perform network requests or heavy computation inside transactions. Complete that work before opening the transaction.
+
+A session-level `SET` does not persist after pool return. Apply settings within query or transaction scope, and account for the connection cost.
+
+Refer to [Pooling mode](/hyperdrive/concepts/connection-pooling/#pooling-mode) and [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/#long-running-transactions).
+
+### Scale with Dynamic Hyperdrive
+
+Static Hyperdrive configurations count against account-level configuration limits. Dynamic Hyperdrive generates connection parameters at runtime in your Worker code, which bypasses static configuration limits. Configuration capacities for the dynamic execution path are a soft limit.
+
+Use Dynamic Hyperdrive when the number of distinct connection targets grows with your user base, for example in multi-tenant applications where each tenant has a separate database.
+
+## Cache queries safely
+
+### Treat caching as best effort
+
+Your database must handle cache misses and early evictions. Cached entries can disappear before their configured expiration.
+
+Hyperdrive caches query results at two layers. The Client component caches results in the data center running your Worker. The Endpoint component caches results near your origin database. A cache hit at the Client layer returns results without leaving the Worker data center. A miss at the Client layer can still hit the Endpoint cache, avoiding a round trip to the origin.
+
+Cache settings apply to each Hyperdrive configuration. Refer to [Query caching](/hyperdrive/concepts/query-caching/#default-cache-settings) for current settings and constraints.
+
+Never cache authorization, session, or permission reads. Use the cache-disabled configuration whenever correctness requires fresh data.
+
+Writes do not invalidate cached reads. Send read-after-write queries through the cache-disabled configuration.
+
+### Isolate tenant-specific reads
+
+Every tenant-specific query must include tenant or user identifiers as bound parameters. Enforce tenant scope in SQL or database policies as well.
+
+Do not rely on session state or row-level security alone to separate cache entries.
+
+A cache-disabled configuration does not replace tenant isolation. Do not depend on application filtering after a cached query.
+
+If you cannot confirm cache safety, also route the query through the cache-disabled configuration.
+
+### Preserve query cacheability
+
+PostgreSQL `STABLE` and `VOLATILE` functions make queries uncacheable. SQL comments containing uncacheable function names can have the same effect.
+
+Refer to [cacheable queries](/hyperdrive/concepts/query-caching/#what-does-hyperdrive-cache) before changing query text. Do not use SQL comments as cache controls.
+
+Postgres.js must keep `prepare: true` for cacheable queries. Refer to the [Postgres.js example](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/) and [uncached query troubleshooting](/hyperdrive/observability/troubleshooting/#uncached-queries).
+
+## Choose Worker placement
+
+### Place Workers near the main dependency
+
+Use [Workers Placement](/workers/configuration/placement/) when multiple sequential queries dominate request time. Placement is not automatically useful for one database query.
+
+Choose a region or host near the main latency dependency. Measure total request latency before and after changing placement.
+
+Refer to the [Hyperdrive placement guidance](/hyperdrive/reference/faq/#should-i-use-placement-with-hyperdrive) for selection criteria.
+
+## Choose a network path
+
+### Use a supported network path
+
+A public database must provide a publicly reachable endpoint. Its firewall must allow the [Cloudflare IP ranges](/hyperdrive/configuration/firewall-and-networking-configuration/).
+
+For private databases, use the recommended [Workers VPC connection](/hyperdrive/configuration/connect-to-private-database-vpc/) (Beta). Do not expose a private database only to satisfy Hyperdrive connectivity.
+
+Hyperdrive requires Transport Layer Security (TLS) to the database. Review the [supported TLS modes](/hyperdrive/reference/supported-databases-and-features/#supported-tls-ssl-modes).
+
+Hyperdrive supports PostgreSQL and MySQL wire-compatible databases. Review the [unsupported PostgreSQL features](/hyperdrive/reference/supported-databases-and-features/#unsupported-postgresql-features).
+
+Before writing MySQL queries, review the [unsupported MySQL features](/hyperdrive/reference/supported-databases-and-features/#unsupported-mysql-features).
+
+### Configure MySQL clients carefully
+
+Hyperdrive does not support MySQL prepared statements or multi-statement queries. Use parameterized text queries that your driver does not prepare.
+
+With `mysql2`, use the documented version and set `disableEval: true`. Refer to the [`mysql2` example](/hyperdrive/examples/connect-to-mysql/mysql-drivers-and-libraries/mysql2/) for setup details.
+
+### Query through runtime bindings
+
+Use Hyperdrive bindings from Workers runtime contexts to query databases. The [Hyperdrive REST API](/hyperdrive/hyperdrive-rest-api/) manages configurations and does not accept database queries.
+
+## Handle failures
+
+### Retry only transient failures
+
+Retry only failures that your application knows are transient. Keep every retry policy bounded.
+
+Before retrying a write, make the operation idempotent. Do not retry every database error.
+
+Refer to [Troubleshoot and debug](/hyperdrive/observability/troubleshooting/) for known error conditions.
+
+### Follow published limits
+
+Design against the current [Hyperdrive limits](/hyperdrive/platform/limits/). Do not copy limit values into application assumptions because they can change.
+
+## Observe per-tenant metrics
+
+Use the [GraphQL Analytics API](/analytics/graphql-api/) to query Hyperdrive metrics programmatically. Filter by `configId` to retrieve connection counts, query latency, error rates, and cache hit ratios for individual Hyperdrive configurations.
+
+In multi-tenant applications, each tenant Hyperdrive configuration maps to a unique `configId`. Query the `hyperdriveQueriesAdaptiveGroups` and `hyperdrivePoolSizesAdaptiveGroups` datasets to build tenant-facing dashboards with live data from your own infrastructure.
+
+Refer to [Metrics and analytics](/hyperdrive/observability/metrics/) for the full dataset schema and example GraphQL queries.
+
+## Related resources
+
+- [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/)
+- [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/)
+- [Query caching](/hyperdrive/concepts/query-caching/)
+- [Metrics and analytics](/hyperdrive/observability/metrics/)
+- [Supported databases and features](/hyperdrive/reference/supported-databases-and-features/)
+- [How Hyperdrive speeds up database access](https://blog.cloudflare.com/how-hyperdrive-speeds-up-database-access/) (blog)
