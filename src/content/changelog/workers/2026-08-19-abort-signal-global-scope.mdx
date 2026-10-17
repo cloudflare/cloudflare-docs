@@ -1,0 +1,27 @@
+---
+title: AbortController and AbortSignal can be created at global scope
+description: AbortController, AbortSignal, and WritableStream no longer throw when constructed during module evaluation.
+products:
+  - workers
+date: 2026-08-19
+---
+
+`new AbortController()`, `AbortSignal.abort()`, `new WritableStream()`, and `request.signal` no longer throw when used during module evaluation (that is, at the top level of your Worker module, outside of a request handler). Previously, these APIs required an active request context and would throw if called at the top level.
+
+```js
+// This now works — no error during module startup
+const controller = new AbortController();
+
+export default {
+	async fetch(request) {
+		// The signal can be used across requests
+		return new Response("OK", { signal: controller.signal });
+	},
+};
+```
+
+Signals can also be observed and aborted across different requests, making it easier to coordinate cancellation in long-lived Workers such as Durable Objects.
+
+`AbortSignal.timeout()` still requires an active request context because it needs to schedule a timer.
+
+For more details, refer to the [AbortController documentation](/workers/runtime-apis/web-standards/abort-controller/).
