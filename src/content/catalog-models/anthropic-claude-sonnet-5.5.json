@@ -15,7 +15,7 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2,
-		"Cached input tokens (per 1M)": 0.2,
+		"Cached input tokens (per 1M)": 0.1,
 		"Cache creation tokens (per 1M)": 2.5,
 		"Output tokens (per 1M)": 10
 	},
@@ -768,7 +768,7 @@
 			"id": "anthropic",
 			"pricing": {
 				"input_tokens": 2,
-				"input_cached_tokens": 0.2,
+				"input_cached_tokens": 0.1,
 				"input_cache_creation_tokens": 2.5,
 				"output_tokens": 10
 			}
