@@ -1,0 +1,215 @@
+#### `worker.created`
+
+Triggered when a Worker is created.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `worker.updated`
+
+Triggered when a Worker's unversioned configuration changes.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.updated",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "changed": {
+      "tags": {
+        "added": ["prod"],
+        "removed": ["staging"]
+      },
+      "logpush": {
+        "from": false,
+        "to": true
+      }
+    },
+    "updatedOn": "2025-05-01T02:48:57Z"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+`updatedOn` is an RFC 3339 UTC timestamp recording when the configuration changed.
+
+The `changed` object is keyed by the unversioned configuration fields that changed, and only fields that changed are present. The possible keys are `name`, `tags`, `subdomain`, `observability`, `logpush`, `tail_consumers`, and `usage_model`.
+
+Each value describes how that field changed:
+
+- Scalar fields report `from` and `to`.
+- Set-valued fields, such as `tags` and `tail_consumers`, report `added` and `removed`. Either key is omitted when it would be empty. If the members stay the same but their order changes, the field reports `from` and `to` instead.
+
+#### `worker.deleted`
+
+Triggered when a Worker is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.worker.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `version.created`
+
+Triggered when a new version of the Worker is created.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.version.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `version.deleted`
+
+Triggered when a version is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.version.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+#### `deployment.created`
+
+Triggered when a deployment is created and rolled out.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.deployment.created",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "workerName": "my-worker",
+    "id": "bcf48806-b317-4351-9ee7-36e7d557d4de",
+    "strategy": "percentage",
+    "versions": [
+      {
+        "versionId": "3f9e2c1a-7b4d-4e8f-9a01-2b3c4d5e6f70",
+        "percentage": 100
+      }
+    ],
+    "annotations": {
+      "workers/message": "Fix redirect handling",
+      "workers/triggered_by": "deployment"
+    },
+    "authorEmail": "developer@example.com",
+    "createdOn": "2025-05-01T02:48:57Z"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
+
+The `versions` array describes the default traffic split, and the `percentage` values always sum to 100.
+
+The `annotations` and `authorEmail` fields are omitted when they are empty.
+
+#### `deployment.deleted`
+
+Triggered when a deployment is deleted.
+
+**Example:**
+
+```json
+{
+  "type": "cf.workers.script.deployment.deleted",
+  "source": {
+    "type": "workers.script",
+    "id": "9a7c3f21b45e4d8a9c0f1e2d3b4a5c6d"
+  },
+  "payload": {
+    "name": "my-worker",
+    "id": "bcf48806-b317-4351-9ee7-36e7d557d4de"
+  },
+  "metadata": {
+    "accountId": "f9f79265f388666de8122cfb508d7776",
+    "eventSubscriptionId": "1830c4bb612e43c3af7f4cada31fbf3f",
+    "eventSchemaVersion": 1,
+    "eventTimestamp": "2025-05-01T02:48:57.132Z"
+  }
+}
+```
