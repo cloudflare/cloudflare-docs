@@ -1,0 +1,318 @@
+---
+title: Connect to Tailscale
+description: Connect an application in a Container to private Postgres through Tailscale, using split DNS and an unmodified Postgres client.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+products:
+  - containers
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+This guide demonstrates **private outbound connectivity with split DNS**: an application in a Container queries private Postgres using its custom hostname and ordinary `psql`.
+
+:::caution[Draft — engineering confirmation required]
+This walkthrough has not yet been verified on deployed Containers. Support for `/dev/net/tun`, `TUNSETIFF`, interface configuration, route installation, and system resolver changes is awaiting Containers engineering confirmation. The `--netfilter-mode=off` setting also needs confirmation. Do not treat this draft as a supported configuration until those checks and the end-to-end query pass.
+:::
+
+## Configuration and scope
+
+The example uses the [Durable Object Container API](/containers/api/durable-object-container/) and the `durable_object` [scheduling policy](/containers/configuration/scheduling-policy/). It runs `tailscaled` with a real `tailscale0` TUN interface. This is Tailscale's kernel networking mode; it does not require a kernel WireGuard module or a modified Postgres client.
+
+| Capability                                                 | `durable_object`                                                                       | `default`                         |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------- |
+| Usable `/dev/net/tun` and `TUNSETIFF`                      | Awaiting engineering confirmation                                                      | Awaiting engineering confirmation |
+| Interface configuration and route/policy-rule installation | Awaiting engineering confirmation                                                      | Awaiting engineering confirmation |
+| Tailscale netfilter requirements                           | `off` proposed; awaiting confirmation                                                  | Awaiting engineering confirmation |
+| Enable IP forwarding                                       | [Not supported](/containers/faq/#can-i-run-docker-inside-a-container-docker-in-docker) | Not established by this guide     |
+
+Joining as a client lets processes in this Container initiate connections to permitted destinations. Accepting routes from an existing subnet router extends those destinations to private subnets. Neither operation requires this Container to forward another machine's traffic.
+
+Acting as a subnet router or exit node is different: it forwards traffic for other nodes. This guide does not advertise routes or an exit node. Do not use its configuration for those roles, which require IP forwarding.
+
+## Prerequisites
+
+- A Cloudflare account with a [Workers Paid plan](/workers/platform/pricing/) and [Docker](https://www.docker.com/) running locally.
+- An existing Tailscale tailnet and a dedicated tag with narrowly scoped [access permissions](https://tailscale.com/docs/manage-access/access-control). Allow this node to reach the private nameserver on UDP and TCP port `53`, and Postgres on TCP port `5432` (or your configured ports).
+- A [restricted nameserver](https://tailscale.com/docs/reference/dns-in-tailscale#restricted-nameservers) for your private suffix, such as `private.example.com`. It must resolve `db.private.example.com` to the database's reachable private address.
+- A Postgres server reachable over the tailnet, either directly or through an existing subnet router. If DNS or Postgres is behind a subnet router, approve the routes covering **both** destinations. The router, destination firewall, and Postgres authentication rules must allow the connection.
+- A read-only database identity and a TLS certificate valid for the custom database hostname. Obtain the appropriate certificate authority (CA) bundle from your database administrator.
+- A tagged, preauthorized, ephemeral Tailscale auth key. For this repeatable example, use a reusable key with a short expiration and rotate it through Worker secrets. A single-use key cannot enroll a replacement node after it has been consumed.
+
+MagicDNS supplies names for Tailscale devices. It does not create records for your custom private suffix. Split DNS sends matching queries to your restricted nameserver. The example uses the complete database hostname, so it does not depend on a DNS search suffix.
+
+:::caution[Access granted to application code]
+Code running in the Container receives the network access granted to its Tailscale node. This includes sandbox commands and dependencies. Limit the node's permissions to the required DNS and database destinations, and use a read-only database identity. This example also allows public Internet egress.
+:::
+
+## Connect and query
+
+<Steps>
+
+1. Create a Worker project, then change into its directory:
+
+   <PackageManagers type="create" pkg="cloudflare@latest" args="tailscale-postgres --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents" />
+
+   ```sh
+   cd tailscale-postgres
+   mkdir container
+   ```
+
+2. Create `container/Dockerfile`. This installs Tailscale from its [Debian package repository](https://pkgs.tailscale.com/stable/#debian-bookworm), an unmodified Postgres client, and tools for checking the interface and resolver:
+
+   ```dockerfile title="container/Dockerfile"
+   FROM debian:bookworm-slim
+
+   RUN apt-get update && apt-get install -y --no-install-recommends \
+       ca-certificates curl iproute2 postgresql-client \
+       && curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.noarmor.gpg \
+          -o /usr/share/keyrings/tailscale-archive-keyring.gpg \
+       && curl -fsSL https://pkgs.tailscale.com/stable/debian/bookworm.tailscale-keyring.list \
+          -o /etc/apt/sources.list.d/tailscale.list \
+       && apt-get update && apt-get install -y --no-install-recommends tailscale \
+       && rm -rf /var/lib/apt/lists/*
+
+   COPY postgres-ca.crt /app/postgres-ca.crt
+   COPY entrypoint.sh query.sh /app/
+   RUN chmod 755 /app/entrypoint.sh /app/query.sh
+   USER root
+   ENTRYPOINT ["/app/entrypoint.sh"]
+   CMD ["/app/query.sh"]
+   ```
+
+   Save the database CA bundle as `container/postgres-ca.crt`. Include only CA certificates, never a private key. No credential belongs in this image or Docker build arguments. Pin the base image and Tailscale package version after validating them for your deployment.
+
+3. Create the startup script. It writes runtime credentials to restricted files, starts the daemon, and waits for enrollment and system DNS resolution before starting the application:
+
+   ```sh title="container/entrypoint.sh"
+   #!/bin/sh
+   set -eu
+   umask 077
+
+   : "${TS_AUTHKEY:?Missing Tailscale auth key}"
+   : "${PGPASS:?Missing Postgres password-file content}"
+   : "${PGHOST:?Missing database hostname}"
+   mkdir -p /run/secrets /var/run/tailscale
+   printf '%s' "$TS_AUTHKEY" > /run/secrets/tailscale-auth-key
+   printf '%s\n' "$PGPASS" > /run/secrets/pgpass
+   unset TS_AUTHKEY PGPASS
+   export PGPASSFILE=/run/secrets/pgpass
+
+   daemon_pid=
+   app_pid=
+   cleanup() {
+     if [ -n "$app_pid" ]; then kill "$app_pid" 2>/dev/null || true; fi
+     timeout 5 tailscale logout >/dev/null 2>&1 || true
+     if [ -n "$daemon_pid" ]; then
+       kill "$daemon_pid" 2>/dev/null || true
+       wait "$daemon_pid" 2>/dev/null || true
+     fi
+     rm -f /run/secrets/tailscale-auth-key /run/secrets/pgpass
+   }
+   trap cleanup EXIT
+   trap 'exit 143' TERM
+   trap 'exit 130' INT
+
+   test -c /dev/net/tun || { echo "TUN device unavailable" >&2; exit 1; }
+   tailscaled --tun=tailscale0 --state=mem: >/dev/null 2>&1 &
+   daemon_pid=$!
+
+   # Wait for the local daemon socket, with a bounded startup time.
+   attempts=0
+   until [ -S /var/run/tailscale/tailscaled.sock ]; do
+     kill -0 "$daemon_pid" 2>/dev/null || { echo "Tailscale daemon failed" >&2; exit 1; }
+     attempts=$((attempts + 1))
+     [ "$attempts" -lt 30 ] || { echo "Tailscale startup timed out" >&2; exit 1; }
+     sleep 1
+   done
+
+   if ! tailscale up --auth-key=file:/run/secrets/tailscale-auth-key \
+       --accept-dns=true --accept-routes=true --netfilter-mode=off \
+       --shields-up --timeout=60s >/dev/null 2>&1; then
+     echo "Tailscale enrollment failed" >&2
+     exit 1
+   fi
+   rm -f /run/secrets/tailscale-auth-key
+   ip link show tailscale0 >/dev/null
+
+   # Check the same system resolver that psql uses, not a direct DNS query.
+   attempts=0
+   until timeout 5 getent ahosts "$PGHOST" >/dev/null; do
+     attempts=$((attempts + 1))
+     [ "$attempts" -lt 12 ] || { echo "Private DNS lookup failed" >&2; exit 1; }
+     sleep 1
+   done
+
+   "$@" &
+   app_pid=$!
+   wait "$app_pid"
+   ```
+
+   `--accept-dns=true` lets Tailscale configure the system resolver. Do not replace the private hostname with an IP address or an `/etc/hosts` entry: neither verifies split DNS. Resolver integration in this image remains part of the pending deployed verification.
+
+   `--accept-routes=true` accepts routes from your existing subnet router. Use `false` if both DNS and Postgres use Tailscale addresses directly. Accepting a route does not advertise one or grant permission to use it.
+
+   The proposed `--netfilter-mode=off` setting prevents Tailscale from managing netfilter rules. It does not enable IP forwarding. `nodivert` still creates rules, so it is not equivalent to `off`. Refer to [Tailscale netfilter modes](https://tailscale.com/docs/reference/tailscale-cli/up#available-flags) and the pending platform confirmation in [Configuration and scope](#configuration-and-scope).
+
+4. Create the application. It makes an ordinary Postgres connection and verifies the result of `SELECT 1`:
+
+   ```sh title="container/query.sh"
+   #!/bin/sh
+   set -eu
+
+   if ! result=$(timeout 20 psql -X -w -At \
+       --set=ON_ERROR_STOP=1 \
+       --dbname="sslmode=verify-full sslrootcert=/app/postgres-ca.crt connect_timeout=10" \
+       --command='SELECT 1;' 2>/dev/null); then
+     echo "Postgres TLS connection or query failed" >&2
+     exit 1
+   fi
+   [ "$result" = "1" ] || { echo "Unexpected query result" >&2; exit 1; }
+   printf 'Postgres query result: %s\n' "$result"
+   ```
+
+   `psql` reads `PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, and `PGPASSFILE` normally. [`sslmode=verify-full`](https://www.postgresql.org/docs/current/libpq-ssl.html) verifies both the CA chain and the custom hostname. Use the database CA, not the Containers HTTPS interception CA. Do not weaken certificate verification to fix a hostname mismatch.
+
+5. Replace `wrangler.jsonc`. Change the database settings to match your environment:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+     "$schema": "node_modules/wrangler/config-schema.json",
+     "name": "tailscale-postgres",
+     "main": "src/index.ts",
+     "compatibility_date": "$today",
+     "observability": { "enabled": true },
+     "secrets": { "required": ["TS_AUTHKEY", "PGPASS"] },
+     "vars": {
+       "PGHOST": "db.private.example.com",
+       "PGPORT": "5432",
+       "PGDATABASE": "app",
+       "PGUSER": "app_readonly"
+     },
+     "containers": [{
+       "class_name": "PrivatePostgres",
+       "scheduling_policy": "durable_object",
+       "images": { "base": { "dockerfile": "./container/Dockerfile" } }
+     }],
+     "durable_objects": {
+       "bindings": [{ "name": "DATABASE_CHECK", "class_name": "PrivatePostgres" }]
+     },
+     "exports": {
+       "PrivatePostgres": { "type": "durable-object", "storage": "sqlite" }
+     }
+   }
+   ```
+
+   </WranglerConfig>
+
+   No Docker-style `privileged`, `devices`, or `cap_add` Wrangler settings are used. Those settings do not establish a Containers platform capability.
+
+6. Replace `src/index.ts`. The Durable Object passes secrets only at startup and waits for the one-shot application to exit:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+
+   export class PrivatePostgres extends DurableObject<Env> {
+     async verify() {
+       const container = this.ctx.container;
+       if (!container) {
+         throw new Error("The container binding is not configured");
+       }
+       if (container.running) {
+         throw new Error("A database check is already running");
+       }
+       container.start({
+         image: container.images.base,
+         enableInternet: true,
+         env: {
+           TS_AUTHKEY: this.env.TS_AUTHKEY,
+           PGPASS: this.env.PGPASS,
+           PGHOST: this.env.PGHOST,
+           PGPORT: this.env.PGPORT,
+           PGDATABASE: this.env.PGDATABASE,
+           PGUSER: this.env.PGUSER,
+         },
+       });
+       await container.monitor();
+     }
+   }
+
+   export default {
+     async fetch(request, env): Promise<Response> {
+       if (request.method !== "POST" || new URL(request.url).pathname !== "/check") {
+         return new Response("Not found", { status: 404 });
+       }
+       try {
+         await env.DATABASE_CHECK.getByName("check").verify();
+         return new Response("Postgres query result: 1\n");
+       } catch {
+         return new Response("Database check failed; inspect Container logs", { status: 503 });
+       }
+     },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   `enableInternet: true` allows the outbound transport that Tailscale needs. This example installs no HTTP interception handlers. Do not copy the coding-agent runner's `enableInternet: false` configuration unchanged: HTTP destination handlers do not carry private Postgres TCP connections or replace tailnet DNS. Refer to [Non-HTTP traffic](/containers/configuration/outbound-traffic/#non-http-traffic).
+
+7. Store credentials with the interactive secret prompts. Never paste their values into commands, source files, or logs:
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put TS_AUTHKEY" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put PGPASS" />
+
+   For `PGPASS`, enter one complete [Postgres password-file record](https://www.postgresql.org/docs/current/libpq-pgpass.html) matching the configured host, port, database, and user. Escape colons and backslashes in its fields as PostgreSQL requires. The script writes it with mode `0600`. Do not enable shell tracing, dump environment variables, or print the file. Runtime injection keeps credentials out of the image; it does not hide them from code in the Container.
+
+8. Generate types, then deploy:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+   Before exposing this check beyond your test, [protect the Worker with Cloudflare Access](/workers/configuration/cloudflare-access/). The endpoint runs a fixed query, but anyone who can invoke it can start a Container and consume resources.
+
+9. Send a request to the deployed Worker URL:
+
+   ```sh
+   curl --fail-with-body --request POST "https://tailscale-postgres.<YOUR_SUBDOMAIN>.workers.dev/check"
+   ```
+
+   Expected response after a successful run:
+
+   ```txt
+   Postgres query result: 1
+   ```
+
+   A successful run establishes that the system resolver resolved the private hostname and `psql` authenticated, verified the database certificate, and executed the query. This is expected output, not a recorded deployed test result. Repeat the request to check enrollment after replacement.
+
+</Steps>
+
+## Lifecycle and cleanup
+
+This example stores Tailscale node state in memory with `--state=mem:`. Each new Container enrolls as a new ephemeral node. The Durable Object's identity does not preserve the node identity, IP address, or credentials across Container replacement.
+
+On a normal exit or `SIGTERM`, the startup script attempts `tailscale logout`, stops the daemon, and removes the credential files. Forced termination can skip cleanup; Tailscale removes inactive [ephemeral nodes](https://tailscale.com/docs/features/ephemeral-nodes) automatically. Check the tailnet device list after testing and revoke the enrollment key when you no longer need it.
+
+For a long-running application, replace `query.sh` with its startup command after retaining the readiness checks. Handle shutdown and choose an [inactivity timeout](/containers/api/durable-object-container/#setinactivitytimeout). Refer to [Container lifecycle](/containers/concepts/architecture/#container-instance-lifecycle) and [Container shutdown](/containers/concepts/architecture/#container-shutdown). Do not clone enrolled node state or credential files into snapshots.
+
+## Troubleshoot the connection
+
+| Failure                         | Check                                                                                                                                                                                         |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TUN unavailable or daemon fails | Confirm the runtime support contract and scheduling policy. Creating a device file alone does not grant `TUNSETIFF` or interface/route permissions.                                           |
+| Enrollment fails                | Check the key's expiration, reuse setting, tag permissions, and device approval. Confirm public egress is enabled.                                                                            |
+| Private DNS lookup fails        | Check the restricted suffix, nameserver reachability on UDP/TCP `53`, accepted subnet routes, and system resolver integration. A successful MagicDNS lookup does not verify custom split DNS. |
+| DNS works but Postgres fails    | Check routes to the returned address, tailnet permissions, server firewall, Postgres authentication rules, and the database CA and hostname.                                                  |
+
+The example suppresses raw daemon, enrollment, and client errors to keep sensitive details out of shared logs. Inspect diagnostics only in a trusted environment, and redact credentials and private network details before sharing them.

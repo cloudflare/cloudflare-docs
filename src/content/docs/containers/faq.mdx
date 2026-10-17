@@ -181,6 +181,8 @@ ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tab
 
 This Dockerfile works with both [scheduling policies](/containers/configuration/scheduling-policy/). Containers that use the `durable_object` policy cannot turn on IP forwarding. In those containers, the Docker daemon exits on startup unless you pass `--ip-forward=false`.
 
+These Docker daemon flags disable Docker's firewall and forwarding setup. They do not establish whether a VPN client can create a TUN interface or install routes. Client-originated connections do not require IP forwarding. The draft [Tailscale guide](/containers/guides/connect-to-tailscale/#configuration-and-scope) tracks the separate TUN and netfilter requirements awaiting engineering confirmation.
+
 Run the Docker daemon as `root`. Rootless Docker does not start in Containers.
 
 If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
@@ -206,3 +208,7 @@ For a complete working example, refer to the [Docker-in-Docker Containers exampl
 ## How do I allow or disallow egress from my container?
 
 Refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/) for how to control outbound traffic and internet access.
+
+## Can an application connect to a private database through Tailscale?
+
+The draft [Connect to Tailscale](/containers/guides/connect-to-tailscale/) walks through private outbound connectivity with split DNS and ordinary `psql`. It uses `durable_object` scheduling, `enableInternet: true`, and a client configuration with netfilter management turned off. TUN support and the required netfilter settings remain unconfirmed pending engineering review and a deployed test. The example does not make the Container a subnet router or exit node.
