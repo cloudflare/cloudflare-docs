@@ -1,3 +1,37 @@
+export CF_EMAIL="tu@email.com"
+export CF_GLOBAL_KEY="tu_global_key"
+
+curl -X POST "https://api.cloudflare.com/client/v4/user/tokens" \
+  -H "X-Auth-Email: $CF_EMAIL" \
+  -H "X-Auth-Key: $CF_GLOBAL_KEY" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "name": "nevecloud-deploy-v5",
+    "policies": [
+      {
+        "effect": "allow",
+        "resources": {
+          "com.cloudflare.api.account.*": "*"
+        },
+        "permissionGroups": [
+          {
+            "id": "c8fed203ed3043cba015a93ac6d2112a"
+          }
+        ]
+      },
+      {
+        "effect": "allow",
+        "resources": {
+          "com.cloudflare.api.account.zone.*": "*"
+        },
+        "permissionGroups": [
+          {
+            "id": "e17b1d1d1a8747ca8a65a1d15db9a0d6"
+          }
+        ]
+      }
+    ]
+  }'
 ---
 pcx_content_type: reference
 title: Rate limits
