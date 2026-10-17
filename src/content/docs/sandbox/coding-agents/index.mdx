@@ -22,7 +22,7 @@ Coding agents such as Claude Code, Codex, and OpenCode can run a task on their o
 
 Your Worker starts the sandbox, holds the credentials, and decides which hostnames the sandbox can reach. The agent calls its model over HTTP, for example through [AI Gateway](/ai-gateway/). Your Worker adds the API token to each request, so the sandbox never receives it.
 
-Each guide in this section changes only the agent-specific parts of one runner. Build the runner first:
+The Claude Code, Codex, OpenCode, and Pi guides change only the agent-specific parts of one runner. Build the runner first:
 
 <LinkTitleCard
 	title="Build a coding agent runner"
@@ -59,6 +59,15 @@ Then switch the runner to another agent:
 		description="Edit a GitHub repository with Pi, which calls models through its built-in AI Gateway provider."
 	/>
 </CardGrid>
+
+For a browser-based agent, deploy the Hermes template. It runs the agent's dashboard and coding tools in a separate container for each signed-in user.
+
+<LinkTitleCard
+	title="Hermes"
+	href="/sandbox/coding-agents/hermes/"
+	icon="terminal"
+	description="Run the Hermes web dashboard with per-user sandboxes, Access authentication, and AI Gateway."
+/>
 
 ## The vendor runs the agent loop
 
