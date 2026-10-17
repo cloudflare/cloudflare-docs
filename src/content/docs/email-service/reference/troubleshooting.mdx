@@ -257,6 +257,23 @@ Different ISPs have specific requirements:
 - Yahoo: Strict DMARC enforcement
 - Corporate: Often have strict filtering rules
 
+
+## Conflicts with external mail providers
+
+### Google Workspace MX conflict
+
+Cloudflare Email Routing (inbound) and Google Workspace cannot be active simultaneously on the same domain. Both services require control of your domain's `MX` records, and only one set can be authoritative at a time. If both are configured, email delivery will be unpredictable.
+
+**To switch to Email Routing from Google Workspace:**
+
+1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing** and configure your routing rules and destination addresses before switching. Refer to [Get started with Email Routing](/email-service/get-started/) for setup steps.
+
+   <DashButton url="/?to=/:account/email-service/routing" />
+
+2. In **DNS** > **Records**, delete the Google Workspace `MX` records and the Google Workspace `SPF` `TXT` record (`v=spf1 include:_spf.google.com ~all`). This causes a brief inbound mail interruption until Email Routing is active.
+
+3. Enable Email Routing for your domain. Cloudflare automatically adds the required `MX` and `SPF` records.
+
 ## Testing tools
 
 Use these tools to validate your email authentication setup:
