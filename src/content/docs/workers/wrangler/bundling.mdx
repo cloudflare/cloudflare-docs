@@ -25,6 +25,12 @@ You can provide `rules` and set `find_additional_modules` in your configuration 
 Furthermore, we have an escape hatch in the form of [Custom Builds](/workers/wrangler/custom-builds/), which lets you run your own build before Wrangler's built-in one.
 :::
 
+## Runtime module loading
+
+The runtime's module registry resolves and loads the modules that your build uploads. For compatibility dates on or after November 1, 2026, JavaScript Workers use the [new module registry](/workers/configuration/compatibility-flags/#new-module-registry) by default. With earlier dates, add `new_module_registry` to opt in. Use `legacy_module_registry` to opt out with a later date.
+
+The new registry supports `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`, URL-based module resolution, and validated import attributes. Your bundler may transform these expressions before the runtime receives your code. To preserve your module graph, use [unbundled deployments](/workers/wrangler/configuration/#bundling) or configure [additional modules](#find-additional-modules).
+
 ## Including non-JavaScript modules
 
 {/* Changes to this section should also be applied to /workers/vite-plugin/reference/non-javascript-modules */}

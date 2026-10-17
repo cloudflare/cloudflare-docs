@@ -1,0 +1,47 @@
+---
+title: The new Workers module registry will be the default on November 1
+description: JavaScript Workers with compatibility dates on or after November 1, 2026 will use URL-based module resolution and import.meta by default.
+products:
+  - workers
+date: 2026-10-17
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Starting November 1, 2026, JavaScript Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-11-01` or later will use the new module registry by default. You will no longer need the `new_module_registry` flag for these dates. Python Workers keep using the legacy registry.
+
+We [announced the registry rewrite in September 2026](https://blog.cloudflare.com/workers-module-registry-nodejs/). It improves compatibility with JavaScript standards and Node.js module loading, including URL-based resolution, validated import attributes, and `require(esm)` behavior.
+
+You can use `import.meta` to inspect the current module and resolve relative specifiers without loading another module:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	fetch(): Response {
+		return Response.json({
+			moduleUrl: import.meta.url,
+			isEntrypoint: import.meta.main,
+			helperUrl: import.meta.resolve("./helper.js"),
+		});
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+When deployed with `src/index.ts` as the unbundled entrypoint, `isEntrypoint` is `true`. `helperUrl` resolves to a URL within your Worker bundle; resolution does not check whether that module exists or load it over the network. Build tools may transform `import.meta`, so use an [unbundled deployment](/workers/wrangler/configuration/#bundling) to try this example directly.
+
+Your Worker keeps its current behavior until you update its compatibility date or explicitly opt in. To test before November 1, keep your existing date and add the flag:
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["new_module_registry"]
+```
+
+</WranglerConfig>
+
+Before updating, check dependencies that rely on ignored import attributes or legacy `require()` behavior. The new registry rejects invalid import attributes and `require()` of module graphs containing top-level `await`. To keep the legacy registry with a compatibility date of `2026-11-01` or later, use `legacy_module_registry`.
+
+For migration details, refer to the [new module registry compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry), [bundling documentation](/workers/wrangler/bundling/#runtime-module-loading), and [Node.js compatibility documentation](/workers/runtime-apis/nodejs/).
