@@ -188,7 +188,7 @@ If a route pattern hostname begins with `*`, then it matches the host and all su
 
 :::caution
 
-Because `*` matches zero or more of **any character** (not just subdomains), `*example.com` will also match hostnames that are not subdomains of `example.com`. If you only want to match `example.com` and its subdomains, use two separate routes (`example.com/*` and `*.example.com/*`) instead.
+Because `*` matches zero or more of **any character** (not just subdomains), `*example.com` matches any hostname ending in `example.com`. This includes `myexample.com` and `not-example.com`. To match only `example.com` and its subdomains, use two separate routes: `example.com/*` and `*.example.com/*`.
 
 :::
 
@@ -199,7 +199,21 @@ The following examples illustrate the difference between `*example.com/*` and `*
 | `https://example.com/` | Matches | Does not match |
 | `https://www.example.com/path` | Matches | Matches |
 | `https://myexample.com/` | Matches | Does not match |
-| `https://not-example.com/` | Does not match | Does not match |
+| `https://not-example.com/` | Matches | Does not match |
+
+:::note[Zone scope]
+
+Cloudflare evaluates a Workers route only within the [zone](/dns/zone-setups/) where you create it. For example, Cloudflare does not evaluate a route in the `example.com` zone for requests to `myexample.com` or `not-example.com`. Those rows illustrate the wildcard's string-matching behavior.
+
+The distinction matters for subdomain patterns within a zone. For example, `*sub.example.com/*` in the `example.com` zone matches `sub.example.com`, `foo.sub.example.com`, and `notsub.example.com`.
+
+| Request URL | `*sub.example.com/*` | `*.sub.example.com/*` |
+|---|---|---|
+| `https://sub.example.com/` | Matches | Does not match |
+| `https://foo.sub.example.com/path` | Matches | Matches |
+| `https://notsub.example.com/` | Matches | Does not match |
+
+:::
 
 #### Paths may optionally end with `*`
 
