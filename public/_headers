@@ -7,20 +7,28 @@
 /_astro/*
 	Cache-Control: public, max-age=604800, immutable
 
-/*/llms.txt:
+/llms.txt
   Content-Type: text/plain; charset=utf-8
 
-/*/llms-full.txt:
+/*/llms.txt
   Content-Type: text/plain; charset=utf-8
 
-/*/index.md:
+/*/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+
+/*/index.md
   Content-Type: text/markdown; charset=utf-8
 
 /agent-setup/prompt.md
   Content-Type: text/markdown; charset=utf-8
 
-/.well-known/agent-skills/index.json
-  Content-Type: application/json; charset=utf-8
+# Nimbus sets CORS on its discovery paths and _headers joins duplicate
+# values ("*, *"), so remove ours there and let Nimbus's apply.
+/.well-known/agent-skills/*
+  ! Access-Control-Allow-Origin
+
+/.well-known/ard.json
+  ! Access-Control-Allow-Origin
 
 /.well-known/mcp/server-card.json
   Content-Type: application/json; charset=utf-8

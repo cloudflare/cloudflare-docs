@@ -1,0 +1,171 @@
+---
+pcx_content_type: how-to
+title: iOS screen sharing
+description: Configure iOS screen sharing for native iOS and React Native RealtimeKit applications.
+slug: realtime/realtimekit/core/ios-screen-sharing
+sidebar:
+  order: 4.5
+products:
+  - realtime
+---
+
+import { Steps } from "~/components";
+
+Configure a Broadcast Upload Extension to add screen sharing to your RealtimeKit iOS application.
+
+## Native iOS
+
+### Add a Broadcast Upload Extension
+
+In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
+
+### Configure app groups
+
+Add your extension to an app group:
+
+<Steps>
+1. Go to your extension's target in the project.
+2. In the **Signing & Capabilities** tab, select **+**.
+3. Add **App Groups**.
+4. Add **App Groups** to your main app, using the same identifier for both targets.
+</Steps>
+
+### Configure `SampleHandler`
+
+Edit your `SampleHandler` class:
+
+```swift
+import RealtimeKit
+
+class SampleHandler: RtkSampleHandler {}
+```
+
+You can find the source to `RtkSampleHandler` and a full implementation of the ScreenShareExtension [on GitHub](https://github.com/cloudflare/realtimekit-ios-core/tree/main/ScreenShareExtension).
+
+### Update `Info.plist`
+
+Ensure both the app and extension `Info.plist` files contain these keys:
+
+```xml
+<key>RTKRTCAppGroupIdentifier</key>
+<string>(name of the group you have created)</string>
+```
+
+Add this key to the main app `Info.plist`:
+
+```xml
+<key>RTKRTCScreenSharingExtension</key>
+<string>(Bundle Identifier of the Broadcast Upload Extension)</string>
+```
+
+### Enable screen sharing
+
+Launch the Broadcast Upload Extension and enable screen sharing:
+
+```swift
+meeting.localUser.enableScreenShare()
+```
+
+To stop screen sharing:
+
+```swift
+meeting.localUser.disableScreenShare()
+```
+
+## React Native
+
+### Add a Broadcast Upload Extension
+
+In Xcode, add a Broadcast Upload Extension through `File` → `New` → `Target`. Choose `iOS` → `Broadcast Upload Extension` and fill out the required information.
+
+### Configure app groups
+
+Add your extension to an app group:
+
+<Steps>
+1. Go to your extension's target in the project.
+2. In the **Signing & Capabilities** tab, select **+** and add **App Groups**.
+3. Add the same App Group to your main app target, using the same identifier for both.
+</Steps>
+
+### Add screen-sharing sources through the Podfile
+
+The SDK includes a Ruby helper script that adds the required screen-sharing Swift source files to your Broadcast Upload Extension target. Add the following to your `Podfile`:
+
+```ruby
+# Add this line at the top
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "@cloudflare/realtimekit-react-native/ios/scripts/screenshare_sources.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+target 'YourApp' do
+  ...
+  post_install do |installer|
+    ...
+    # Add this line here
+    add_screenshare_sources(
+      installer,
+      project_name: 'YourApp',              # your Xcode project name (without .xcodeproj)
+      extension_target_name: 'YourAppScreenshare' # your Broadcast Upload Extension target name
+    )
+    ...
+  end
+end
+
+target 'YourAppScreenshare' do
+# Remove the old steps added if any
+end
+```
+
+Then run:
+
+```bash
+pod install
+```
+
+### Configure `SampleHandler`
+
+In your Broadcast Upload Extension, edit `SampleHandler.swift`:
+
+```swift
+class SampleHandler: RTKScreenshareHandler {
+  override init() {
+    super.init(
+      appGroupIdentifier: "<YOUR_APP_GROUP_IDENTIFIER>",
+      bundleIdentifier: "<YOUR_APP_BUNDLE_IDENTIFIER>"
+    )
+  }
+}
+```
+
+Replace `<YOUR_APP_GROUP_IDENTIFIER>` with the App Group you created. Replace `<YOUR_APP_BUNDLE_IDENTIFIER>` with your main app's bundle identifier.
+
+### Update `Info.plist`
+
+Add the following key to both your main app and extension `Info.plist` files:
+
+```xml
+<key>RTCAppGroupIdentifier</key>
+<string>(YOUR_APP_GROUP_IDENTIFIER)</string>
+```
+
+Add this key to the main app `Info.plist` only:
+
+```xml
+<key>RTCAppScreenSharingExtension</key>
+<string>(Bundle Identifier of the Broadcast Upload Extension)</string>
+```
+
+### Enable screen sharing
+
+```js
+meeting.self.enableScreenShare();
+```
+
+To stop screen sharing:
+
+```js
+meeting.self.disableScreenShare();
+```

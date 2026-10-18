@@ -19,15 +19,17 @@ import { Render } from "~/components"
 
 ### What will change
 
-If you are on an older Machine Learning model, you will see a score change to requests scored by the **Machine Learning** source instantly. If you are already on the latest model, you will see changes only after a new Machine Learning model becomes the global default.
+Enabling auto-updates moves your traffic onto the model behind Adaptive Intelligence. This model retrains more frequently than fixed, numbered versions were released, so your bot score reflects newly identified attack patterns as the model learns them, rather than only when a new version ships.
 
-Customers will be notified via email and dashboard prior to a new Machine Learning model becoming the global default.
+If you are on an older, fixed Machine Learning model, you will see a score change to requests scored by the **Machine Learning** source as soon as you enable auto-updates.
 
 ### Risks of not updating
 
-By not updating to the latest version, you will be using a Machine Learning model no longer maintained or monitored by our engineering team. As Internet traffic changes and new trends evolve, scoring accuracy by older versions may degrade.
+If you do not enable auto-updates, your traffic continues to be scored by your current fixed model version. Cloudflare does not maintain or monitor fixed model versions after they are superseded, and scoring accuracy degrades as attack patterns evolve beyond what that version was trained on.
 
 ### Model versions and release notes
+
+The following table lists released versions through v9, the final fixed version. Enabling auto-updates moves you off numbered versions entirely, onto Adaptive Intelligence.
 
 | Version | Release Notes                                                                                                                                                                                                                               | Launch Date |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |

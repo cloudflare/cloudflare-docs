@@ -1,0 +1,36 @@
+<script is:inline>
+	(() => {
+		const root = document.documentElement;
+		const isPreference = (value) => value === "wrangler" || value === "cf";
+		const readStoredPreference = () => {
+			try {
+				const stored = localStorage.getItem("ui-cli-preference");
+				return isPreference(stored) ? stored : undefined;
+			} catch {
+				return undefined;
+			}
+		};
+		const readDefault = (pathname) =>
+			pathname === "/cf" || pathname.startsWith("/cf/") ? "cf" : "wrangler";
+		const resolvePreference = (pathname) => {
+			if (isPreference(window.__nbCliPreferenceOverride)) {
+				return window.__nbCliPreferenceOverride;
+			}
+			const stored = readStoredPreference();
+			if (stored) return stored;
+			return readDefault(pathname);
+		};
+
+		if (!root.dataset.nbCliPreference) {
+			root.dataset.nbCliPreference = resolvePreference(location.pathname);
+		}
+
+		if (!window.__nbCliPreferenceBound) {
+			document.addEventListener("astro:before-swap", (event) => {
+				const newRoot = event.newDocument.documentElement;
+				newRoot.dataset.nbCliPreference = resolvePreference(event.to.pathname);
+			});
+			window.__nbCliPreferenceBound = true;
+		}
+	})();
+</script>

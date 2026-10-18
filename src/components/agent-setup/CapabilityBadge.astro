@@ -13,26 +13,24 @@ const { capabilities } = Astro.props;
 const active = Object.entries(capabilities).filter(([, v]) => v);
 ---
 
-{
-	active.length > 0 && (
-		<div class="flex flex-wrap gap-1.5">
-			{active.map(([key]) => {
-				const k = key as CapabilityKey;
-				const label = capabilityLabels[k] ?? key;
-				const tooltip = capabilityDefinitions[k] ?? "";
-				return (
-					<span
-						class="border-border bg-muted text-foreground inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium"
-						data-agent-tooltip={tooltip}
-						aria-label={tooltip}
-					>
-						{label}
-					</span>
-				);
-			})}
-		</div>
-	)
-}
+{active.length > 0 && (
+	<div class="flex flex-wrap gap-1.5">
+		{active.map(([key]) => {
+			const k = key as CapabilityKey;
+			const label = capabilityLabels[k] ?? key;
+			const tooltip = capabilityDefinitions[k] ?? "";
+			return (
+				<span
+					class="border-border bg-muted text-foreground inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium"
+					data-agent-tooltip={tooltip}
+					aria-label={tooltip}
+				>
+					{label}
+				</span>
+			);
+		})}
+	</div>
+)}
 
 <script>
 	import { addTooltip } from "~/util/tippy";

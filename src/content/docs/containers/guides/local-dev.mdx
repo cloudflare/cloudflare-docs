@@ -8,10 +8,12 @@ products:
   - containers
 ---
 
-You can run both your container and your Worker locally by simply running [`npx wrangler dev`](/workers/wrangler/commands/general/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
+You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/workers/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
+
+Containers that use the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) require Wrangler 4.136.0 or later for local development. To run the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) locally, use Wrangler 4.141.0 or later.
 
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
@@ -25,7 +27,7 @@ With `vite dev`, image references from external registries such as Docker Hub, A
 
 If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
 
-As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build. Make sure to `EXPOSE` a port for local dev as well.
+As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build.
 :::
 
 Container instances will be launched locally when your Worker code calls to create
@@ -65,28 +67,45 @@ into the local container images to sync code changes. This can be done, but ther
 mechanism for doing so, and best-practices will depend on the languages and frameworks
 you are using in your container code.
 
+## Differences after you deploy
+
+Local development runs your container in Docker. A deployed container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) differs from a local container in the following ways. Code that works locally can fail after you deploy.
+
+{/* Remove this section when the deployed hostname fits in a DNS label and /etc/hosts lists it. */}
+
+### The hostname is longer than a DNS label
+
+The hostname of a container is the name it uses for itself, which the `hostname` command prints. Nothing routes traffic to it. In a deployed container, the hostname is 64 characters, one more than a DNS label allows. `/etc/hosts` does not list it, so it does not resolve. Locally, the hostname is the 12-character Docker container ID, and `/etc/hosts` lists it. Code that looks up its own hostname can fail after you deploy.
+
+For example, `python3 -m http.server` and other servers built on the Python `http.server` module, such as `wsgiref`, exit on startup with this error:
+
+```txt
+UnicodeEncodeError: 'idna' codec can't encode characters in position 0-63: label too long
+```
+
+To serve files with Python, use `socketserver`, which does not look up the hostname:
+
+```sh
+python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer(("", 8000), h.SimpleHTTPRequestHandler).serve_forever()'
+```
+
+### Other Linux users keep root capabilities
+
+Locally, Docker gives no capabilities to a process that runs as a user other than `root`. File permissions apply to that process. In a deployed container, every process has the same Linux capabilities as `root`, regardless of user. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
+
 ## Troubleshooting
 
-### Exposing Ports
+### Ports
 
-In production, all of your container's ports will be accessible by your Worker, so you do not need to specifically expose ports using the [`EXPOSE` instruction](https://docs.docker.com/reference/dockerfile/#expose) in your Dockerfile.
+Your Worker can connect to any port in the container.
 
-But for local development you will need to declare any ports you need to access in your Dockerfile with the EXPOSE instruction; for example: `EXPOSE 4000`, if you will be accessing port 4000.
-
-If you have not exposed any ports, you will see the following error in local development:
+`getTcpPort()` requires a process listening on that port. If the process has not started yet, you will see the following error:
 
 ```txt
-The container "MyContainer" does not expose any ports. In your Dockerfile, please expose any ports you intend to connect to.
+Container is not listening to port 8080
 ```
 
-And if you try to connect to any port that you have not exposed in your `Dockerfile` you will see the following error:
-
-```txt
-connect(): Connection refused: container port not found. Make sure you exposed the port in your container definition.
-```
-
-You may also see this while the container is starting up and no ports are available yet. You should retry until the ports become available.
-This retry logic should be handled for you if you are using the [containers package](https://github.com/cloudflare/containers/tree/main/src).
+Retry until the port becomes available.
 
 ### Socket configuration - `internal error`
 

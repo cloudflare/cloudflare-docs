@@ -53,6 +53,14 @@ The API Token dropdown in Build Configuration settings may show stale tokens tha
 
 There is a maximum build duration of 20 minutes. If a build exceeds this time, then the build will be terminated and the above error log is shown. For more details, see [Workers Builds limits](/workers/ci-cd/builds/limits-and-pricing/).
 
+### Build succeeds but the site returns a 404 or blank page
+
+If the build and deployment succeed but requests to your Worker return a `404` or an empty page, the deployed Worker is likely serving a directory that does not contain your built site. Check that:
+
+- The build command in **Settings** > **Build** > **Build Configuration** runs your framework's build step (for example, `npm run build`).
+- The [`assets.directory`](/workers/static-assets/binding/#directory) in your Wrangler configuration file points to the folder your build writes to (for example, `./dist` or `./build`).
+- For a single-page application, [`assets.not_found_handling`](/workers/static-assets/routing/single-page-application/) is set to `single-page-application` so that client-side routes do not return `404`.
+
 ### Git integration issues
 
 If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.

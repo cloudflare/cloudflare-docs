@@ -27,15 +27,15 @@ const { class: className, ...attrs } = Astro.props;
 ---
 
 <div class={cn("file-tree", className)} data-file-tree {...attrs}>
-	<template data-ft-icon-chev
-		><Icon name="ph:caret-right" class="ft-chev" is:inline /></template
-	>
-	<template data-ft-icon-folder
-		><Icon name="ph:folder" class="ft-icon" is:inline /></template
-	>
-	<template data-ft-icon-file
-		><Icon name="ph:file" class="ft-icon" is:inline /></template
-	>
+	<template data-ft-icon-chev>
+		<Icon name="ph:caret-right" class="ft-chev" is:inline />
+	</template>
+	<template data-ft-icon-folder>
+		<Icon name="ph:folder" class="ft-icon" is:inline />
+	</template>
+	<template data-ft-icon-file>
+		<Icon name="ph:file" class="ft-icon" is:inline />
+	</template>
 	<slot />
 </div>
 
