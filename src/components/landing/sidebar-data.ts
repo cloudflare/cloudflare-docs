@@ -1,11 +1,14 @@
 // Landing mega-nav structure (sections → links / collapsible groups).
 
+import type { SidebarBadge } from "@cloudflare/nimbus-docs/types";
+
 export interface SidebarLink {
 	type: "link";
 	label: string;
 	href: string;
 	/** Product icon name (src/icons/<icon>.svg). */
 	icon?: string;
+	badge?: SidebarBadge;
 }
 
 export interface SidebarGroup {
@@ -185,6 +188,13 @@ export const sidebarSections: SidebarSection[] = [
 						"/cloudflare-one/cloud-and-saas-findings/",
 					),
 					link("Email security", "/cloudflare-one/email-security/"),
+					{
+						...link(
+							"Cloud Workload Security",
+							"/cloudflare-one/cloud-workload-security/",
+						),
+						badge: "Beta",
+					},
 					link("Data loss prevention", "/cloudflare-one/data-loss-prevention/"),
 					link(
 						"Browser isolation",

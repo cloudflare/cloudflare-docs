@@ -1,0 +1,121 @@
+---
+title: Configure policies
+description: Define workloads and Rego policies, group them in policy sets, and attach them to a Cloud Workload Security deployment.
+pcx_content_type: how-to
+products:
+  - cloud-workload-security
+sidebar:
+  order: 1
+---
+
+import { DashButton, Steps } from "~/components";
+
+Use workloads to select requests and policies to check them. Group policies in a policy set, then attach that set to a deployment.
+
+You need access to manage Cloud Workload Security in your account. Before attaching a policy set, [create a deployment](/cloudflare-one/cloud-workload-security/get-started/#create-a-deployment). To connect a proxy, follow [Get started](/cloudflare-one/cloud-workload-security/get-started/).
+
+## Create a workload
+
+A workload is a reusable request filter. For example, you can group requests to the Cloudflare API.
+
+Use separate workloads to [target security profiles for production and non-production environments](/cloudflare-one/cloud-workload-security/#target-security-profiles-with-workloads). Include each workload in the policy set for that environment.
+
+<Steps>
+1. In the Cloudflare dashboard, select your account and go to **Cloud Workload Security** > **Workloads**.
+
+   <DashButton url="/?to=/:account/one/cloud-workload-security/workloads" />
+
+2. Click **Add workload** and enter a **Workload name**.
+
+3. In **Filters**, select **Wirefilter** and enter a filter. This example matches Cloudflare API requests:
+
+   ```txt
+   application.name == "Cloudflare"
+   ```
+
+   You can also use **Visual Builder** to select fields, operators, and values. Select an application before selecting its service or operation.
+
+4. Click **Add workload** to save the workload.
+</Steps>
+
+## Create a policy
+
+Both **Filters** and **Rego source** are required.
+
+A policy filter selects the requests that run its Rego check. The Rego source must declare a package under `policy.` and a Boolean rule named `valid`.
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Cloud Workload Security** > **Policies**.
+
+   <DashButton url="/?to=/:account/one/cloud-workload-security/policies" />
+
+2. Click **Add policy** and enter a **Policy name**.
+
+3. In **Filters**, select **Wirefilter** and enter the request scope. This example selects R2 API requests:
+
+   ```txt
+   application.name == "Cloudflare" and application.service == "r2"
+   ```
+
+4. In **Rego source**, enter the check. This example permits only `GET` requests within the selected scope:
+
+   ```txt title="Rego source"
+   package policy.r2_read_only
+
+   default valid := false
+
+   valid if {
+     input.http.request.method == "GET"
+   }
+   ```
+
+   Use `input.http.request.body` to inspect parsed request content. For a request-body example, refer to the [R2 public-access guardrail](/cloudflare-one/cloud-workload-security/get-started/#create-the-guardrail-policy).
+
+5. Click **Add policy** to save the policy. Correct any filter or Rego errors before continuing.
+</Steps>
+
+## Create a policy set
+
+A policy set groups policies and their workload scope. A request must match an included workload and must not match an excluded workload. Without included workloads, the set has no inclusion restriction.
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Cloud Workload Security** > **Policy sets**.
+
+   <DashButton url="/?to=/:account/one/cloud-workload-security/policy-sets" />
+
+2. Click **Add policy set** and enter a **Policy set name**.
+
+3. In **Workloads**, click **Attach workload**, choose the workloads to include, and confirm the selection. To omit a group of requests, click **Exclude workload**.
+
+4. In **Policies**, click **Attach policy**, choose the policies, and click **Attach policies**.
+
+5. For each policy, turn on **Enforce** to block requests that fail its check. Turn it off to evaluate the policy without blocking on its result.
+
+6. Click **Add policy set** to save the set.
+</Steps>
+
+The policy filter still applies within the policy set's workload scope. A workload match does not bypass a policy filter.
+
+## Attach the set to a deployment
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Cloud Workload Security** > **Deployments** and open the deployment.
+
+   <DashButton url="/?to=/:account/one/cloud-workload-security/deployments" />
+
+2. In **Policy sets**, click **Attach policy set**, choose the set, and click **Attach policy sets**.
+
+3. In **Deployment settings**, choose a **Default mode**. *Default allow* permits requests outside every policy's request scope. *Default block* blocks those requests.
+
+4. Click **Save**. Allow a configuration refresh interval before testing through the proxy.
+</Steps>
+
+### Default mode and enforcement
+
+A policy matches when its policy set's workload scope and its filter both match. The deployment default mode applies when no policy matches. A `false` Rego result is a failed check, not an unmatched request.
+
+For example, a matching policy with **Enforce** off does not block a `false` result, even with _Default block_. Another enforcing policy can still block the request.
+
+Send one request that passes your policy and one that fails it. Confirm the failing request returns a CWS block response when **Enforce** is on.
+
+To change an existing resource, open it from its list and click **Save** after editing. Changes to a policy or policy set affect deployments that reference it.

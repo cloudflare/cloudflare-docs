@@ -1,0 +1,378 @@
+---
+title: Troubleshooting
+description: Diagnose Cloud Workload Security proxy startup, client connections, configuration refresh, and unexpected policy decisions.
+pcx_content_type: troubleshooting
+products:
+  - cloud-workload-security
+sidebar:
+  order: 7
+---
+
+import { Steps } from "~/components";
+
+Diagnose Cloud Workload Security (CWS) proxy, client, and policy issues. This guide covers the proxy setup in [Get started](/cloudflare-one/cloud-workload-security/get-started/).
+
+:::note
+Since this is in Open Beta, please reach out to [cloud-workload-security-open-beta@cloudflare.com](mailto:cloud-workload-security-open-beta@cloudflare.com) if you have any questions
+:::
+
+Use the sections to identify your symptom and verify the fix. Read the logs from the terminal or service running the proxy. For the relevant fields, refer to [Read proxy logs](/cloudflare-one/cloud-workload-security/troubleshooting/#read-proxy-logs).
+
+## Proxy does not start
+
+### Symptoms
+
+The proxy exits before accepting connections. The terminal reports a configuration, file, or listener error.
+
+### Possible causes and solutions
+
+#### Invalid local configuration
+
+Validate the configuration file without starting the proxy:
+
+```sh
+cws-proxy --config config.yaml --config-test
+```
+
+Successful validation prints:
+
+```txt output
+CWS proxy configuration is valid
+```
+
+Correct the reported YAML or schema error, then validate again. Use the `cws`, `proxy`, and `redis` settings from [Proxy configuration](/cloudflare-one/cloud-workload-security/configuration/). Unknown settings are rejected.
+
+This check validates local configuration. It does not verify the API token, fetch the deployment, or prove the listener can start.
+
+#### Unavailable certificate files or listener address
+
+The proxy needs a certificate authority (CA) certificate and its matching private key. Confirm that `proxy.tls_interception.ca_cert` and `ca_private_key` point to files the proxy process can read. Use absolute paths if you start the proxy from another directory.
+
+Check that `proxy.listen_addr` contains an IP address and port, such as `127.0.0.1:8080`. The address must be available on the proxy host, and another process must not already occupy the port.
+
+#### Package or command is unavailable
+
+If `cws-proxy` is not found, confirm that package installation succeeded in the environment that starts the proxy. Check that the installed command is on that process's `PATH`.
+
+If the operating system cannot execute the command, check that the package is compatible with your Linux distribution and CPU architecture. Refer to [Install the proxy](/cloudflare-one/cloud-workload-security/get-started/#install-the-proxy) for the package setup and available-command check.
+
+### Verify the fix
+
+Start the proxy with `cws-proxy --config config.yaml`. Wait for `remote_config_loaded` and `action_mapper_loaded`, then retry your client request. If configuration loading fails, follow [Proxy cannot load the deployment](/cloudflare-one/cloud-workload-security/troubleshooting/#proxy-cannot-load-the-deployment).
+
+## Proxy cannot load the deployment
+
+### Symptoms
+
+The proxy does not reach `remote_config_loaded`. Logs report a missing credential, an unsuccessful API response, or configuration fetch retries.
+
+### Possible causes and solutions
+
+#### Token environment variable is missing or empty
+
+`cws.api_token_env` contains an environment variable name, not a token value. For the setup in Get started, the name is `CWS_DEPLOYMENT_TOKEN`.
+
+In the terminal that starts the proxy, check whether the variable is populated without printing the token:
+
+```sh
+if [ -n "${CWS_DEPLOYMENT_TOKEN:-}" ]; then
+  printf '%s\n' "CWS_DEPLOYMENT_TOKEN is set"
+else
+  printf '%s\n' "CWS_DEPLOYMENT_TOKEN is not set or is empty"
+fi
+```
+
+The `cws_api_token_missing` error means the configured variable is missing or empty. A service or container must receive the variable in its own process environment. Setting it in the client terminal does not set it in the proxy process.
+
+This presence check does not verify token validity. After correcting the proxy process environment, restart the proxy.
+
+#### Account, deployment, or permission mismatch
+
+Confirm that `cws.account_id` and `cws.deployment_id` identify the intended deployment. The API token must have the **Cloud Workload Security Deployment** permission for that account.
+
+For `401` or `403` API responses, check the token's validity and account permissions. For `404`, check the account and deployment IDs and whether the deployment still exists. Refer to [Create the proxy API token](/cloudflare-one/cloud-workload-security/get-started/#create-the-proxy-api-token).
+
+#### API connectivity or trust failure
+
+For the API, use `https://api.cloudflare.com/client/v4` as `cws.api_base_url`. Check that the proxy host can resolve and reach that origin. Use the logged connection, timeout, or certificate error to identify the failing connection.
+
+:::caution
+Do not set client `HTTP_PROXY` or `HTTPS_PROXY` variables in the proxy process environment.
+:::
+
+If your network inspects Transport Layer Security (TLS), configure its approved trust roots through `proxy.tls_interception.extra_root_cas`. Client `NODE_EXTRA_CA_CERTS` does not change the proxy's outbound trust.
+
+#### Deployment configuration cannot be parsed or prepared
+
+Local configuration validation does not validate the downloaded deployment bundle. If the API returns successfully but the proxy cannot parse or compile the configuration, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with the proxy version and sanitized error.
+
+### Verify the fix
+
+Restart after changing local configuration or the process environment. Confirm `remote_config_loaded` and `action_mapper_loaded` before retrying your client. Transient startup fetch failures can retry, but a missing credential or invalid configuration needs correction.
+
+## Client connections or certificate verification fail
+
+### Symptoms
+
+The client reports a refused connection or a certificate verification error. It cannot complete a request through the proxy.
+
+### Possible causes and solutions
+
+#### Client uses an unreachable proxy address
+
+Compare the client's proxy address with `proxy.listen_addr`. In the local setup, both use `127.0.0.1:8080`, and `HTTPS_PROXY` uses the `http://` scheme:
+
+```sh
+export HTTP_PROXY="http://127.0.0.1:8080"
+export HTTPS_PROXY="http://127.0.0.1:8080"
+```
+
+A loopback address only reaches the proxy within the same host or network namespace. A client in another container or host needs a reachable proxy address. Confirm that the proxy has finished startup before retrying.
+
+#### Client does not trust the proxy CA
+
+Use the CA files configured for your proxy. Substitute their paths if they differ from `ca-cert.pem` and `ca-key.pem`.
+
+<Steps>
+1. In the proxy terminal, inspect the CA certificate's validity dates:
+
+   ```sh
+   openssl x509 -in ca-cert.pem -noout -dates
+   ```
+
+   Confirm that the current time falls between `notBefore` and `notAfter`. Correct an expired certificate or an incorrect system clock.
+
+2. Compare the public-key digests of the certificate and private key:
+
+   ```sh
+   openssl x509 -in ca-cert.pem -noout -pubkey | openssl pkey -pubin -outform DER | openssl dgst -sha256
+   openssl pkey -in ca-key.pem -pubout -outform DER | openssl dgst -sha256
+   ```
+
+   The digests must match. These commands print public-key digests, not the private key. If they differ, configure the matching CA certificate and key.
+
+3. In the client terminal, configure trust in the CA certificate. For the Node.js-based `cf` client, set:
+
+   ```sh
+   export NODE_EXTRA_CA_CERTS="<ABSOLUTE_PATH_TO_CA_CERT_PEM>"
+   ```
+
+   Start a new client process after changing its trust settings. Keep the private key on the proxy host. Other clients need their own supported CA trust configuration.
+</Steps>
+
+For CA setup, refer to [Prepare a certificate authority](/cloudflare-one/cloud-workload-security/get-started/#prepare-a-certificate-authority).
+
+### Verify the fix
+
+Retry a read-only request through the proxy, such as the managed-domain list request in [Verify the guardrail](/cloudflare-one/cloud-workload-security/get-started/#verify-the-guardrail). Confirm that connection and certificate verification succeed. Diagnose an HTTP error separately using [Requests receive an unexpected 403](/cloudflare-one/cloud-workload-security/troubleshooting/#requests-receive-an-unexpected-403).
+
+## Requests expected to be blocked succeed
+
+### Symptoms
+
+A client completes a request that your guardrail should block. The proxy may have no corresponding request record, or may record an allowed decision.
+
+### Possible causes and solutions
+
+#### Client bypasses the proxy
+
+Creating a deployment does not route traffic automatically. Confirm that the client process receives the intended proxy settings. Check that `NO_PROXY` and `no_proxy` do not bypass the target origin.
+
+For the documented `cf` setup, use Node.js 24.5 or later. Check the client terminal's version:
+
+```sh
+node --version
+```
+
+Set `NODE_USE_ENV_PROXY=1` before starting the client. Refer to [Route the CLI through the proxy](/cloudflare-one/cloud-workload-security/get-started/#route-the-cli-through-the-proxy).
+
+A connection record alone does not prove that CWS evaluated an HTTP request. Check for the request decision. An unclassified destination can pass through as a raw tunnel without request-policy evaluation.
+
+#### Policy is not attached, in scope, or enforcing
+
+Compare `cws.deployment_id` with the deployment you edited. Verify the configuration path from deployment to policy:
+
+<Steps>
+1. Confirm that the deployment includes the intended policy set.
+2. Confirm that the policy set includes the intended policy and has **Enforce** turned on for it.
+3. Compare the request with the included and excluded workloads. An empty inclusion list includes all requests before exclusions. An excluded workload match removes the request from the set's scope.
+4. Check the policy filter against the request's application, service, operation, and other selected fields. Both workload scope and policy filter must match.
+</Steps>
+
+For the editing procedure, refer to [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/). After a configuration refresh, inspect `request.policy_sets` for the evaluated policies, their decisions, and their `enforce` values.
+
+An enforcing policy that returns `false` blocks a matching request. A non-enforcing policy can record a denial without blocking. The deployment **Default mode** applies when no policy matches. For policy evaluation errors, also inspect **On error action** and the error outcome.
+
+#### Request or identity differs from the policy's assumptions
+
+Confirm that the client sends the operation and request body your Rego check expects. If the proxy reports `request_body_inspection_skipped_too_large`, body inspection was skipped and `input.http.request.body` is `null`. A body-dependent check can produce a different result.
+
+If your filters depend on a Basic Auth identity, check the configured credential and secret expiration or rotation. Refer to [Manage traffic scope](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/). The deployment API token does not identify your client or replace its cloud-provider credentials.
+
+### Verify the fix
+
+Use a controlled test request that should pass and another that should fail. Confirm the expected decision and evaluated policy in the proxy logs. For the empty-R2-bucket walkthrough, follow [Verify the guardrail](/cloudflare-one/cloud-workload-security/get-started/#verify-the-guardrail), including restoring private access if the blocking test succeeds.
+
+## Requests receive an unexpected 403
+
+### Symptoms
+
+The client receives HTTP `403`, a `CWS.Error` response, or a rejected CONNECT request.
+
+### Possible causes and solutions
+
+#### Domain ACL blocks the connection
+
+A domain access control list (ACL) can reject CONNECT before request-policy evaluation. Look for `domain_acl_denied_connect`. Inspect the ACL attached to your deployment and its default action.
+
+Check the destination pattern: `example.com` is an exact match, while `.example.com` includes the parent domain and its subdomains. Correct the entry for the intended destination using [Manage traffic scope](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/).
+
+An ACL allow decision permits the connection. It does not bypass request policies.
+
+#### CWS rejects the request
+
+`CWS.Error` identifies a CWS request denial. Inspect the related request logs for the reason and evaluated policies. If a matching policy denies, compare its Rego check with the request. Another enforcing policy can block even when one policy passes.
+
+If no policy matches, inspect the deployment **Default mode** and intended request scope. If an evaluation error occurs, inspect the error and deployment **On error action**. Correct the underlying configuration or policy using [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/).
+
+If application classification fails before policy evaluation, the logs may report that failure instead of a normal policy decision. Include that error when [contacting the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team).
+
+#### Cloud provider rejects an allowed request
+
+If `request.outcome` is `allowed` and the response record has `upstream_status: 403`, the cloud provider rejected the forwarded request. Check the client's provider credentials, resource permissions, and provider error message.
+
+The CWS deployment token loads proxy configuration. It does not grant access to cloud-provider resources.
+
+### Verify the fix
+
+Retry an authorized, in-scope request. Confirm the proxy decision and the provider response separately. A `403` status alone does not identify which layer rejected the request.
+
+## Saved changes do not affect requests
+
+### Symptoms
+
+You save a policy, policy set, or deployment change, but subsequent requests behave as before.
+
+### Possible causes and solutions
+
+#### Proxy has not refreshed the intended deployment
+
+Confirm that the running proxy uses the account and deployment you edited. Allow the interval configured in `cws.api_poll_interval_secs` before testing again. Its minimum is `30` seconds.
+
+Look for `polling_remote_config` and any fetch or prepare failure. `remote_config_updated` is not emitted for every applied policy change. Verify changes through subsequent request decisions and evaluated policies.
+
+#### Refresh fails and the proxy retains its previous configuration
+
+`remote_config_fetch_failed_keeping_current` and `remote_config_prepare_failed_keeping_current` mean the refresh failed. The running proxy retains its previous valid deployment configuration.
+
+For fetch failures, check [API access and connectivity](/cloudflare-one/cloud-workload-security/troubleshooting/#proxy-cannot-load-the-deployment). For prepare failures, review the reported configuration error and [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) if it persists. A saved dashboard change alone does not prove that the proxy applied it.
+
+#### Local configuration or process environment changed
+
+Restart the proxy after changing its local configuration file or credential environment. A configuration poll does not reload those local settings.
+
+### Verify the fix
+
+After a successful refresh or restart, repeat the controlled policy test. Confirm the expected policy set, enforcement state, and request decision in the logs.
+
+## Requests receive an Action Mapper 503
+
+### Symptoms
+
+The response has HTTP `503` and the message `Action Mapper application data is unavailable`. It can also contain `x-cws-proxy-err: Action Mapper unavailable`.
+
+### Possible causes and solutions
+
+#### Application data is unavailable or invalid
+
+Action Mapper classifies API requests for policy evaluation. The proxy rejects inspected HTTP traffic when it cannot use a complete, valid application data set. A successful deployment configuration load does not prove this data is ready.
+
+Look for `initial_action_mapper_fetch_failed`, `initial_action_mapper_load_failed`, or `initial_action_mapper_incomplete` during startup. During operation, check `action_mapper_application_pending`, `action_mapper_poll_failed_keeping_current`, and any `action_mapper_degraded_denied_connect` or `action_mapper_degraded_denied_request` events.
+
+Use the reported error to check API connectivity and authentication. The proxy retries application-data loading. If validation failures persist, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with sanitized log excerpts.
+
+### Verify the fix
+
+At startup, confirm `action_mapper_loaded`. After a runtime failure, confirm recovery in the mapper logs and retry a read-only request. The request should no longer return the Action Mapper unavailable response. An unrelated `503` needs investigation using its own error and logs.
+
+## Requests receive 421 Misdirected Request
+
+### Symptoms
+
+The client receives HTTP `421`. The proxy logs `request_host_tunnel_mismatch`.
+
+### Possible causes and solutions
+
+#### Request destination differs from the CONNECT destination
+
+Check that the request URL, `Host` header, and CONNECT destination agree on the host and effective port. Inspect any client configuration or intermediary that overrides the destination or rewrites `Host`.
+
+Configure the client to send the intended destination consistently. Retain the proxy's destination checks. Refer to the logged `request_authority`, `context_authority`, and `tunnel_authority` fields to identify the disagreement.
+
+### Verify the fix
+
+Start a new client connection and retry the request. Confirm that it no longer produces `421` or `request_host_tunnel_mismatch`, then inspect its policy decision and provider response.
+
+## Dashboard resources cannot be loaded or saved
+
+### Symptoms
+
+The dashboard reports a loading or saving error. A policy or workload form may report invalid filter or Rego input.
+
+### Possible causes and solutions
+
+#### Wrong account, missing permission, or connection failure
+
+Confirm that the dashboard uses the account containing your resources. Check that your account role permits the resource operation. The proxy's deployment token and your dashboard permissions serve different purposes.
+
+For a loading error, check your connection and reload the page. If a resource is missing, confirm that it still exists in the selected account.
+
+#### Invalid filter or Rego source
+
+Correct the displayed field errors. Filters must use supported Wirefilter fields and operators. Put request-body checks in Rego, using `input.http.request.body`.
+
+For dashboard policies, declare a package under `policy.` and a Boolean `valid` rule. Check the syntax and imported library or metadata paths. Refer to [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/) and [Manage policy reference resources](/cloudflare-one/cloud-workload-security/guides/policy-reference/).
+
+If the operation still fails, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with the sanitized API error code and message, when available. Do not treat a failed save as an applied configuration change.
+
+### Verify the fix
+
+Confirm that the resource saves and reloads successfully. For a policy change, allow a configuration refresh and verify its effect through the proxy.
+
+## Read proxy logs
+
+The configuration in Get started uses JSON logging at `INFO`. Read records from the proxy process that handled the request. Use the timestamp and `cws.request_id`, when present, to relate records.
+
+For evaluated HTTP requests, inspect these events and fields:
+
+| Event or field              | What it tells you                                                                                                  |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `remote_config_loaded`      | Deployment configuration loaded at startup.                                                                        |
+| `action_mapper_loaded`      | Application data loaded at startup.                                                                                |
+| `request.outcome`           | CWS allowed or denied the evaluated request. An allowed decision does not guarantee provider success.              |
+| `request.outcome_reason`    | Reason for a denied request, when present.                                                                         |
+| `request.policy_sets`       | JSON-encoded audit of matching policy sets and evaluated policies, including `enforce` and each policy's decision. |
+| `request.evaluation_result` | Evaluation result, when available. Use the per-policy audit to understand which policy controlled the outcome.     |
+| `response`                  | Response record containing `status` and, for a provider response, `upstream_status`.                               |
+| `request.context`           | Redacted policy input for diagnosis. It can be truncated and is not a complete copy of policy input.               |
+
+JSON-encoded log values can be truncated. A truncated audit is not a complete policy list. CONNECT denials and failures before policy evaluation can have their own events. The absence of a normal request record does not, by itself, prove that the client bypassed the proxy.
+
+## Contact the Open Beta team
+
+If the issue persists, contact [the Open Beta team](mailto:cloud-workload-security-open-beta@cloudflare.com) with:
+
+- The failure timestamp and timezone.
+- The proxy version, operating system, and CPU architecture.
+- The client name, version, and error message.
+- The account, deployment, and relevant policy or policy-set IDs.
+- The target API operation and expected versus actual result.
+- Short, sanitized log excerpts, `cws.request_id`, and any response reference, when available.
+
+To collect the proxy version, run:
+
+```sh
+cws-proxy --version
+```
+
+Include only the relevant configuration keys. Remove API tokens, passwords, private keys, and credential-bearing headers. Redact cookies, sensitive URLs, request bodies, and metadata before sharing. Review logs even when the proxy has already redacted some fields.
